@@ -1,41 +1,43 @@
 /**
- * RDQ service layer responsible for integrating gameplay rewards with RCore and economy engines.
+ * RDQ service layer responsible for presenting edition-specific gameplay features as stable APIs.
  *
- * <p>Calculation flow:</p>
- * <ol>
- *     <li>Resolve the upstream {@code RCoreService} via {@link com.raindropcentral.rdq.service.RCoreBridge}.</li>
- *     <li>Translate gameplay events into balance/statistic mutations and forward
- *     them through the asynchronous RCore APIs.</li>
- *     <li>Schedule any Bukkit-main-thread mutations by re-entering the sync
- *     executor supplied by the platform bootstrap.</li>
- * </ol>
+ * <h2>Lifecycle</h2>
+ * <p>Services are assembled once the staged enable pipeline reaches the repository wiring phase.
+ * {@link com.raindropcentral.rdq.service.BountyService} implementations are then published through
+ * both Bukkit's {@code ServicesManager} and
+ * {@link com.raindropcentral.rdq.service.BountyServiceProvider}. When RDQ shuts down the provider is
+ * reset and services are unregistered, guaranteeing that stale handles are not reused by dependants.</p>
  *
- * <p>Reconciliation:</p>
+ * <h2>Threading model</h2>
  * <ul>
- *     <li>Every deposit or withdrawal request expects a reconciliation token
- *     from RCore; RDQ caches the token until the engine confirms persistence.</li>
- *     <li>Timeouts surface as optional failures that callers must handle by
- *     presenting retry affordances to players.</li>
+ *     <li>All public entry points return {@link java.util.concurrent.CompletableFuture}s. Work is
+ *     executed on RDQ's virtual-thread executor with an automatic fallback to a fixed-size pool.</li>
+ *     <li>Callers must keep Paper/Bukkit main-thread interactions inside
+ *     {@link org.bukkit.scheduler.BukkitScheduler#runTask(org.bukkit.plugin.Plugin, Runnable)} or an
+ *     equivalent {@code runSync} bridge supplied by the platform bootstrap.</li>
+ *     <li>{@link com.raindropcentral.rdq.service.RCoreBridge} coordinates with the companion RCore
+ *     plugin. It inherits the same asynchronous guarantees and surfaces timeout configuration to
+ *     align with RDQ's retry expectations.</li>
  * </ul>
  *
- * <p>Concurrency &amp; persistence guarantees:</p>
+ * <h2>External consumption</h2>
  * <ul>
- *     <li>Services expose only non-blocking {@link java.util.concurrent.CompletableFuture}
- *     contracts; call sites must never block the Paper main thread.</li>
- *     <li>Callbacks run on RDQ's virtual-thread executor by default, with fall
- *     back to the fixed executor when virtual threads are unavailable.</li>
- *     <li>Persistence acknowledgements originate from RCore; RDQ does not commit
- *     any state locally until those futures complete successfully.</li>
+ *     <li>Dependants should resolve {@link com.raindropcentral.rdq.service.BountyService} after RDQ
+ *     reports as enabled—ideally by subscribing to {@code ServiceRegisterEvent}.</li>
+ *     <li>Edition differences are abstracted behind the service contract. Premium deployments expose
+ *     extended limits, whereas free editions return constrained values for queries like
+ *     {@link com.raindropcentral.rdq.service.BountyService#getMaxBountiesPerPlayer()}.</li>
+ *     <li>Retry-friendly semantics: failures propagate as exceptionally-completed futures, allowing
+ *     consumers to offer UI retries or queue compensation work.</li>
  * </ul>
  *
- * <p>Testing expectations:</p>
+ * <h2>Testing expectations</h2>
  * <ul>
- *     <li>MockBukkit-based service tests cover reward issuance, cancellation,
- *     and timeout propagation.</li>
- *     <li>Integration tests validate the bridge wiring across free/premium
- *     editions.</li>
- *     <li>Concurrency regression tests assert that sync hand-offs respect the
- *     staged lifecycle documented in {@code AGENTS.md}.</li>
+ *     <li>MockBukkit-based tests validate reward issuance, cancellation, and timeout propagation.</li>
+ *     <li>Integration suites cover free versus premium service wiring and {@code ServicesManager}
+ *     registration behaviour.</li>
+ *     <li>Concurrency regressions ensure sync hand-offs respect the staged lifecycle described in
+ *     {@code AGENTS.md}.</li>
  * </ul>
  */
 package com.raindropcentral.rdq.service;
