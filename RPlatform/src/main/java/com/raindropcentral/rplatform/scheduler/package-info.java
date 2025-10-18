@@ -19,5 +19,10 @@
  * adapter can be used to register repeating jobs and {@link com.raindropcentral.rplatform.workload.WorkloadExecutor}
  * instances that consume their tick budget safely.
  * </p>
+ * <p>
+ * The expanded Javadoc on {@link ISchedulerAdapter} and its implementations documents the threading
+ * guarantees and fallback behaviours available on Folia versus Bukkit/Paper, providing guidance on
+ * when to select entity, region, or global execution.
+ * </p>
  */
 package com.raindropcentral.rplatform.scheduler;
