@@ -1,42 +1,48 @@
 /**
- * RCore service facade bridging gameplay modules with persistence and statistics engines.
+ * Core service contracts that expose RCore persistence and statistics capabilities to external modules.
  *
- * <p>Typical calculation flow:</p>
- * <ol>
- *     <li>Lookup or create player aggregates through {@code RCoreService}.</li>
- *     <li>Delegate balance/statistic mutations to the shared economy engines,
- *     propagating modifiers collected from RDQ gameplay events.</li>
- *     <li>Flush the aggregate through the persistence adapters exposed by the
- *     database module.</li>
- * </ol>
- *
- * <p>Reconciliation:</p>
+ * <p><strong>Service execution context</strong></p>
  * <ul>
- *     <li>All writes enqueue reconciliation jobs that verify persisted totals
- *     against audit trails before acknowledgements are returned.</li>
- *     <li>Failures trigger automatic retries capped at three attempts and emit
- *     structured warnings via {@code CentralLogger}.</li>
+ *     <li>{@link com.raindropcentral.core.api.RCoreBackend} exposes the shared
+ *     {@link java.util.concurrent.ExecutorService} via {@link com.raindropcentral.core.api.RCoreBackend#getExecutor()}.
+ *     Runtime variants such as {@link com.raindropcentral.core.RCoreFreeImpl} provision
+ *     virtual-thread executors (see {@link com.raindropcentral.core.RCoreFreeImpl#createExecutorService()}) to keep
+ *     database and statistics workflows off the Bukkit main thread.</li>
+ *     <li>{@link com.raindropcentral.core.api.RCoreAdapter} captures the backend executor during construction and
+ *     chains every {@link java.util.concurrent.CompletableFuture} continuation on that executor so callers inherit the
+ *     thread guarantees documented in {@link com.raindropcentral.core.api.RCoreAdapter#RCoreAdapter(com.raindropcentral.core.api.RCoreBackend)}.</li>
+ *     <li>Consumers must never reschedule callbacks onto the common pool; instead, propagate the backend executor when
+ *     composing futures so cross-module flows (RDQ, RPlatform, third-party plugins) remain thread-safe.</li>
  * </ul>
  *
- * <p>Concurrency &amp; lifecycle guarantees:</p>
+ * <p><strong>Lifecycle hooks for consumers</strong></p>
  * <ul>
- *     <li>Every API surface returns {@link java.util.concurrent.CompletableFuture}
- *     instances scheduled on the module executor to prevent Bukkit main-thread
- *     blocking.</li>
- *     <li>Callers should attach continuations on the provided executor and only
- *     re-enter the main thread through platform-specific schedulers.</li>
- *     <li>Persistence adapters commit aggregates atomically; no partial writes are
- *     observable once the returned future completes successfully.</li>
+ *     <li>{@link com.raindropcentral.core.RCoreFreeImpl#onLoad()} registers the
+ *     {@link com.raindropcentral.core.service.RCoreService} provider with Bukkit's {@code ServicesManager}.
+ *     {@link com.raindropcentral.core.RCoreFreeImpl#onDisable()} unregisters the provider and shuts down the executor via
+ *     {@link com.raindropcentral.core.RCoreFreeImpl#shutdownExecutor()} to prevent leaked tasks.</li>
+ *     <li>Consumers should resolve the service through Bukkit or the {@link com.raindropcentral.rplatform.service.ServiceRegistry}
+ *     utility used by RDQ to handle late-binding scenarios. Observe enable/disable ordering: wait for the
+ *     asynchronous enable sequence started in {@link com.raindropcentral.core.RCoreFreeImpl#onEnable()} to complete before
+ *     issuing writes, and release references when the plugin disables.</li>
+ *     <li>Maintain {@link com.raindropcentral.core.service.RCoreService} method signatures and {@link java.util.Optional}-based
+ *     contracts; RDQ invokes them reflectively and expects identical asynchronous semantics.</li>
  * </ul>
  *
- * <p>Testing expectations:</p>
+ * <p><strong>Statistics exposure &amp; RDQ compatibility</strong></p>
  * <ul>
- *     <li>Mock persistence fixtures must validate aggregate creation, mutation,
- *     and rollback flows.</li>
- *     <li>Contract tests cover service registration, timeout handling, and
- *     reflective access used by RDQ.</li>
- *     <li>Concurrency stress tests verify executor saturation and ordering
- *     guarantees.</li>
+ *     <li>{@link com.raindropcentral.core.service.RCoreService} surfaces statistics via operations such as
+ *     {@link com.raindropcentral.core.service.RCoreService#findPlayerStatisticsAsync(java.util.UUID)},
+ *     {@link com.raindropcentral.core.service.RCoreService#findStatisticValueAsync(java.util.UUID, String, String)},
+ *     and {@link com.raindropcentral.core.service.RCoreService#getStatisticCountForPluginAsync(java.util.UUID, String)};
+ *     implementations rely on {@link com.raindropcentral.core.service.RPlayerStatisticService} helpers to keep entity
+ *     mutations consistent.</li>
+ *     <li>{@link com.raindropcentral.rdq.service.RCoreBridge} reflects over this package to integrate RDQ quest and reward
+ *     logic. Keep the service {@linkplain org.bukkit.Server#getServicesManager() registration} under the FQCN
+ *     {@code com.raindropcentral.core.service.RCoreService} and avoid renaming exported types to preserve binary
+ *     compatibility.</li>
+ *     <li>When extending the API, expose new metrics or statistics through additive methods so reflective consumers can
+ *     feature-detect capabilities without breaking older RDQ builds.</li>
  * </ul>
  */
 package com.raindropcentral.core.service;
