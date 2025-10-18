@@ -3,7 +3,7 @@ plugins {
     id("maven-publish")
 }
 
-group = "de.jexcellence.command"
+group = "com.raindropcentral.commands"
 version = "1.0.0"
 description = "Command base for Bukkit/Paper using Evaluable error handling and Adventure messaging"
 
@@ -17,33 +17,29 @@ java {
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "PaperMC"
-    }
     mavenLocal()
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://oss.sonatype.org/content/groups/public/")
 }
 
 val adventureVersion = "4.17.0"
 val paperVersion = "1.21.4-R0.1-SNAPSHOT"
 
 dependencies {
-    // Paper API provides Adventure at runtime, but we need Adventure at compile-time too.
-    compileOnly("io.papermc.paper:paper-api:$paperVersion")
-
-    // Adventure API (provides net.kyori.adventure.util.Buildable)
-    compileOnly("net.kyori:adventure-api:$adventureVersion")
-
-    // Legacy serializer used in BukkitCommand (LegacyComponentSerializer)
-    compileOnly("net.kyori:adventure-text-serializer-legacy:$adventureVersion")
-
-    // ComponentSerializer interface is declared in the gson serializer module
-    compileOnly("net.kyori:adventure-text-serializer-gson:$adventureVersion")
-    compileOnly("net.kyori:adventure-text-minimessage:$adventureVersion")
-    compileOnly("net.kyori:adventure-text-serializer-json:$adventureVersion")
-    compileOnly("net.kyori:adventure-text-serializer-plain:$adventureVersion")
-
-    // JetBrains annotations
-    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("net.kyori:adventure-api:4.17.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.17.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.17.0")
+    compileOnly("net.kyori:adventure-text-serializer-json:4.17.0")
+    compileOnly("net.kyori:adventure-text-serializer-gson:4.17.0")
+    compileOnly("net.kyori:adventure-text-serializer-plain:4.17.0")
+    compileOnly("net.kyori:adventure-platform-bukkit:4.3.4")
+    compileOnly("net.kyori:adventure-nbt:4.17.0")
+    compileOnly("net.kyori:adventure-key:4.17.0")
+    compileOnly("net.kyori:option:1.1.0")
+    compileOnly("de.jexcellence.config:Evaluable:1.0.0")
+    compileOnly("de.jexcellence.config:GPEEE:1.0.0")
+    compileOnly("de.jexcellence.config:ConfigMapper:1.0.0")
 }
 
 tasks {
