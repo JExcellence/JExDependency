@@ -1,44 +1,37 @@
 /**
- * <p>Shared abstractions for Bukkit command entry points and their localization-aware
- * {@link de.jexcellence.evaluable.section.ACommandSection command sections}.</p>
- *
- * <h2>Permission handling workflow</h2>
- * <p>Commands must resolve permissions through the section that bootstrapped them to
- * keep messaging consistent across senders.</p>
+ * <h2>Auto-registration pipeline</h2>
+ * <p>
+ *     Command handlers and configuration sections advance together through the auto-registration pipeline, keeping
+ *     {@code @Command}-annotated classes paired with their corresponding {@code CommandNameSection} implementations.
+ * </p>
  * <ul>
- *         <li><b>PermissionsSection</b> handles player-facing checks. When it reports
- *         that a {@code Player} lacks a node, call
- *         {@link de.jexcellence.evaluable.section.PermissionsSection#sendMissingMessage}
- *         so the localized denial is emitted before returning from the handler.</li>
- *         <li><b>CommandError</b> communicates permission failures for non-player
- *         senders. Console invocations should throw a new
- *         {@link de.jexcellence.evaluable.error.CommandError} with the matching
- *         {@link de.jexcellence.evaluable.error.EErrorType} so the command pipeline
- *         can render the appropriate automation-safe response.</li>
+ *     <li>Command discovery scans for classes annotated with {@code @Command} and links them to their section peers.</li>
+ *     <li>Section bootstrapping prepares the configuration instance before any command constructor receives control.</li>
+ *     <li>Lifecycle alignment ensures new commands comply with the workflow documented in this module's agent guidelines.</li>
  * </ul>
  *
- * <h2>Failure flow examples</h2>
- * <p>The following snippets illustrate the preferred guard clauses for each sender type.</p>
- * <pre>{@code
- * // Player command guard
- * if (this.hasNoPermission(player, permissionNode)) {
- *         return; // sendMissingMessage already localized the error.
- * }
+ * <h2>CommandFactory highlights</h2>
+ * <p>
+ *     The reflection-driven {@code CommandFactory} orchestrates instantiation, validating constructor signatures and
+ *     sequencing section creation according to the steps outlined in the agent's workflow guidelines.
+ * </p>
+ * <ul>
+ *     <li>Section instances are created first and provided as the primary argument to each command.</li>
+ *     <li>Dependencies such as plugin contexts, localization managers, and schedulers follow in the constructor order.</li>
+ *     <li>Failed validations surface as actionable errors so maintainers can reconcile implementations with the guidelines.</li>
+ * </ul>
  *
- * // Console command guard
- * if (permissions != null && !permissions.hasPermission(console, permissionNode)) {
- *         final EErrorType denialErrorType = /* map the node to the console denial error */;
- *         throw new CommandError(
- *                 null,
- *                 denialErrorType
- *         );
- * }
- * }</pre>
- *
- * <h2>Consistency requirements</h2>
- * <p>Always route failures through the section-derived helpers or a thrown
- * <b>CommandError</b>. Doing so guarantees future commands reuse the same
- * localization keys, emit uniform formatting, and keep console automation compatible
- * with the existing error contracts.</p>
+ * <h2>Integration with Paper and Spigot</h2>
+ * <p>
+ *     After commands pass the factory pipeline, they are registered with the Paper and Spigot command APIs, mirroring the
+ *     practices mandated by the repository-wide agent workflow. Paper's asynchronous capabilities and Spigot's legacy
+ *     compatibility both rely on the factory to deliver initialized handlers that respect the platform contracts.
+ * </p>
+ * <ul>
+ *     <li>Paper integrations map command metadata into the asynchronous command manager without additional boilerplate.</li>
+ *     <li>Spigot compatibility is preserved through mirrored registration calls that honor legacy dispatcher rules.</li>
+ *     <li>Shared error handling communicates permission and validation failures back through the Bukkit command framework.</li>
+ * </ul>
  */
 package com.raindropcentral.commands;
+
