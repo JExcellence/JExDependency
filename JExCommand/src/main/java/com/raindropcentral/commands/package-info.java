@@ -1,73 +1,37 @@
 /**
- * <h2>Command discovery overview</h2>
+ * <h2>Auto-registration pipeline</h2>
  * <p>
- *     {@link com.raindropcentral.commands.CommandFactory CommandFactory} scans the plugin classpath for
- *     command handlers and registers them against Bukkit once the discovery rules below are satisfied.
- *     The factory expects each handler to provide a dedicated configuration section so that command
- *     metadata and permission prompts remain synchronized across projects.
+ *     Command handlers and configuration sections advance together through the auto-registration pipeline, keeping
+ *     {@code @Command}-annotated classes paired with their corresponding {@code CommandNameSection} implementations.
  * </p>
- *
- * <h3>Discovery rules</h3>
  * <ul>
- *     <li>
- *         Classes must live in a package containing the word {@code command}; this keeps the discovery
- *         filter lightweight while still matching project conventions.
- *     </li>
- *     <li>
- *         Each handler must be annotated with <strong>{@link com.raindropcentral.commands.utility.Command @Command}</strong>
- *         so the factory can distinguish it from supporting types.
- *     </li>
- *     <li>
- *         A matching <strong>CommandNameSection</strong> type must exist in the same package. The factory
- *         derives the section name by appending {@code Section} to the command class name and loading it as
- *         a {@link de.jexcellence.evaluable.section.ACommandSection command section} implementation.
- *     </li>
- *     <li>
- *         The section is mapped through the command configuration stored under {@code commands/<command>.yml};
- *         make sure the YAML file follows the same casing as the section class to keep automatic mapping
- *         stable.
- *     </li>
+ *     <li>Command discovery scans for classes annotated with {@code @Command} and links them to their section peers.</li>
+ *     <li>Section bootstrapping prepares the configuration instance before any command constructor receives control.</li>
+ *     <li>Lifecycle alignment ensures new commands comply with the workflow documented in this module's agent guidelines.</li>
  * </ul>
  *
- * <h3>Constructor requirements</h3>
+ * <h2>CommandFactory highlights</h2>
  * <p>
- *     Command constructors must expose a two-argument signature so {@code CommandFactory} can supply both the
- *     mapped section and the runtime context. Use the table below to validate new handlers before enabling
- *     auto-registration.
+ *     The reflection-driven {@code CommandFactory} orchestrates instantiation, validating constructor signatures and
+ *     sequencing section creation according to the steps outlined in the agent's workflow guidelines.
  * </p>
+ * <ul>
+ *     <li>Section instances are created first and provided as the primary argument to each command.</li>
+ *     <li>Dependencies such as plugin contexts, localization managers, and schedulers follow in the constructor order.</li>
+ *     <li>Failed validations surface as actionable errors so maintainers can reconcile implementations with the guidelines.</li>
+ * </ul>
  *
- * <table>
- *     <thead>
- *         <tr>
- *             <th>Parameter position</th>
- *             <th>Type requirement</th>
- *             <th>Notes</th>
- *         </tr>
- *     </thead>
- *     <tbody>
- *         <tr>
- *             <td>First</td>
- *             <td>{@link de.jexcellence.evaluable.section.ACommandSection} implementation</td>
- *             <td>
- *                 Provide the {@code CommandNameSection} that mirrors the handler; for example,
- *                 {@link com.raindropcentral.rdq.command.player.rq.PRQSection} pairs with
- *                 {@code PRQ}.
- *             </td>
- *         </tr>
- *         <tr>
- *             <td>Second</td>
- *             <td>{@link org.bukkit.plugin.java.JavaPlugin} or plugin-specific context</td>
- *             <td>
- *                 {@link CommandFactory} first attempts to pass the custom context object (e.g., an RDQ instance)
- *                 and falls back to the active plugin if no better match exists.
- *             </td>
- *         </tr>
- *     </tbody>
- * </table>
- *
+ * <h2>Integration with Paper and Spigot</h2>
  * <p>
- *     Following these requirements keeps command registration deterministic, ensures IDE navigation exposes the
- *     related {@code CommandNameSection} types, and allows contributors to audit new handlers quickly.
+ *     After commands pass the factory pipeline, they are registered with the Paper and Spigot command APIs, mirroring the
+ *     practices mandated by the repository-wide agent workflow. Paper's asynchronous capabilities and Spigot's legacy
+ *     compatibility both rely on the factory to deliver initialized handlers that respect the platform contracts.
  * </p>
+ * <ul>
+ *     <li>Paper integrations map command metadata into the asynchronous command manager without additional boilerplate.</li>
+ *     <li>Spigot compatibility is preserved through mirrored registration calls that honor legacy dispatcher rules.</li>
+ *     <li>Shared error handling communicates permission and validation failures back through the Bukkit command framework.</li>
+ * </ul>
  */
 package com.raindropcentral.commands;
+
