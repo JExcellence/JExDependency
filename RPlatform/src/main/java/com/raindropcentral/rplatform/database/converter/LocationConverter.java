@@ -10,19 +10,30 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 /**
- * JPA attribute converter for mapping {@link Location} to a semicolon-delimited string and back.
+ * Serialises Bukkit {@link Location} values to a semicolon-delimited representation and rebuilds them when
+ * hydrating entities.
  *
- * Format: "worldUUID;x;y;z;yaw;pitch"
+ * <p>The converter writes the world UUID followed by the x, y, z, yaw and pitch values using a fixed order.
+ * {@code null} attributes map to {@code null} columns, while blank column values return {@code null}
+ * attributes. Missing world references or unparseable tokens produce an {@link IllegalArgumentException}.</p>
  *
- * Behavior:
- * - null Location -> null column
- * - null/blank column -> null Location
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Converter(autoApply = true)
 public class LocationConverter implements AttributeConverter<Location, String> {
 
+    /** Delimiter separating the world identifier and coordinate tokens. */
     private static final String DELIM = ";";
 
+    /**
+     * Serialises the supplied {@link Location} to the fixed-token representation.
+     *
+     * @param location the location being persisted; may be {@code null}
+     * @return {@code null} when the location is {@code null}, or the formatted payload otherwise
+     * @throws IllegalArgumentException when the location lacks an associated world
+     */
     @Override
     public String convertToDatabaseColumn(@Nullable final Location location) {
         if (location == null) {
@@ -36,6 +47,13 @@ public class LocationConverter implements AttributeConverter<Location, String> {
         return worldId + DELIM + location.getX() + DELIM + location.getY() + DELIM + location.getZ() + DELIM + location.getYaw() + DELIM + location.getPitch();
     }
 
+    /**
+     * Recreates a {@link Location} from the stored column payload.
+     *
+     * @param columnValue the raw database value; blank and {@code null} values return {@code null}
+     * @return the reconstructed location, or {@code null} when the column value is blank
+     * @throws IllegalArgumentException when the token count is incorrect, parsing fails, or no world matches the stored UUID
+     */
     @Override
     public Location convertToEntityAttribute(@Nullable final String columnValue) {
         if (columnValue == null || columnValue.isBlank()) {

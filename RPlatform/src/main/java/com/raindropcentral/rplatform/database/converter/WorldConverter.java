@@ -4,51 +4,45 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * JPA attribute converter for mapping {@link World} objects to their name representations
- * for database storage and vice versa.
- * <p>
- * This converter enables seamless persistence of Bukkit {@code World} objects
- * by converting them to their name for storage, and reconstructing
- * the world from the stored name when reading from the database.
- * </p>
+ * Converts Bukkit {@link World} references to their world name for persistence and restores them during
+ * entity hydration.
  *
- * <p>
- * The converter is automatically applied to all {@code World} attributes in JPA entities.
- * </p>
+ * <p>{@code null} attributes map to {@code null} columns and blank column values return {@code null}
+ * attributes. When no world matches the stored name, {@code null} is returned so callers can respond to
+ * missing resources.</p>
  *
- * @version 1.0.0
- * @since TBD
  * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Converter(autoApply = true)
 public class WorldConverter implements AttributeConverter<World, String> {
 
     /**
-     * Converts the given {@link World} object to its name for database storage.
+     * Serialises the provided {@link World} to its world-name representation.
      *
-     * @param attribute the {@code World} object to be converted; must not be {@code null}
-     * @return the name of the {@code World} object, suitable for storage in the database
+     * @param attribute the world being persisted; may be {@code null}
+     * @return the world name or {@code null} when {@code attribute} is {@code null}
      */
     @Override
-    public String convertToDatabaseColumn(
-            final @NotNull World attribute
-    ) {
-        return attribute.getName();
+    public String convertToDatabaseColumn(@Nullable final World attribute) {
+        return attribute == null ? null : attribute.getName();
     }
 
     /**
-     * Converts the given world name from the database to its corresponding {@link World} object.
+     * Resolves the stored world name back into a {@link World} instance.
      *
-     * @param dbData the name of the {@code World} as stored in the database; must not be {@code null}
-     * @return the {@code World} object corresponding to the given database value, or {@code null} if not found
+     * @param dbData the raw column value; blank and {@code null} values produce {@code null}
+     * @return the resolved world, or {@code null} if the world cannot be located or the value is blank
      */
     @Override
-    public World convertToEntityAttribute(
-            final @NotNull String dbData
-    ) {
-        return Bukkit.getWorld(dbData);
+    public World convertToEntityAttribute(@Nullable final String dbData) {
+        if (dbData == null || dbData.isBlank()) {
+            return null;
+        }
+        return Bukkit.getWorld(dbData.trim());
     }
 }
