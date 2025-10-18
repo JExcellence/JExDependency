@@ -14,21 +14,62 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Provides a lightweight client for dispatching Discord webhook messages from Bukkit-based plugins.
+ * <p>
+ * This helper supports simple text and embed payloads, performing the HTTP work asynchronously on a
+ * cached thread pool. Failures are logged using the plugin logger so callers can monitor delivery
+ * health without blocking the main server thread.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class DiscordWebhook {
 
+    /**
+     * Dedicated executor used to offload webhook HTTP calls so they do not block the server thread.
+     */
     private static final Executor EXECUTOR = Executors.newCachedThreadPool();
+    /**
+     * JSON content type header applied to every webhook request sent by this client.
+     */
     private static final String CONTENT_TYPE = "application/json";
+    /**
+     * Custom user-agent that identifies webhook calls originating from the RPlatform integration.
+     */
     private static final String USER_AGENT = "RPlatform-Discord-Webhook/2.0";
+    /**
+     * Connection and read timeout used for webhook requests, expressed in milliseconds.
+     */
     private static final int TIMEOUT_MS = 5000;
 
     private final Logger logger;
     private final String webhookUrl;
 
+    /**
+     * Creates a new webhook client bound to the supplied plugin logger and Discord endpoint URL.
+     *
+     * @param plugin     plugin providing the logger used for error reporting
+     * @param webhookUrl full Discord webhook URL that receives payloads
+     */
     public DiscordWebhook(final @NotNull JavaPlugin plugin, final @NotNull String webhookUrl) {
         this.logger = plugin.getLogger();
         this.webhookUrl = webhookUrl;
     }
 
+    /**
+     * Sends a plain text message to the configured Discord webhook asynchronously.
+     * <p>
+     * The payload is encoded as JSON using the {@code content} field and executed on the shared
+     * executor so Bukkit's main thread remains responsive. Any I/O failures are caught, logged at the
+     * warning level, and result in a {@code false} outcome within the returned future.
+     * </p>
+     *
+     * @param content message body to deliver, mapped to the Discord {@code content} field
+     * @return future that completes with {@code true} when Discord responds with a 2xx status
+     */
     public @NotNull CompletableFuture<Boolean> sendMessage(final @NotNull String content) {
         return CompletableFuture.supplyAsync(() -> {
             try {
@@ -41,6 +82,19 @@ public class DiscordWebhook {
         }, EXECUTOR);
     }
 
+    /**
+     * Sends a single-field embed to the Discord webhook asynchronously using the shared executor.
+     * <p>
+     * The generated JSON payload includes the title, description, and color fields expected by the
+     * Discord embeds API. When an exception occurs during transmission the error is logged and the
+     * resulting future resolves to {@code false}.
+     * </p>
+     *
+     * @param title       embed title text
+     * @param description embed body text
+     * @param color       decimal color value applied to the embed sidebar
+     * @return future that completes with {@code true} for successful HTTP 2xx responses
+     */
     public @NotNull CompletableFuture<Boolean> sendEmbed(
             final @NotNull String title,
             final @NotNull String description,
@@ -107,21 +161,42 @@ public class DiscordWebhook {
                 .replace("\t", "\\t");
     }
 
+    /**
+     * Fluent builder that enforces providing both the plugin context and webhook URL before
+     * instantiating a {@link DiscordWebhook}.
+     */
     public static final class Builder {
 
         private JavaPlugin plugin;
         private String webhookUrl;
 
+        /**
+         * Applies the plugin reference whose logger should be used for webhook error reporting.
+         *
+         * @param plugin plugin providing the logger backing the webhook client
+         * @return this builder instance for fluent chaining
+         */
         public @NotNull Builder plugin(final @NotNull JavaPlugin plugin) {
             this.plugin = plugin;
             return this;
         }
 
+        /**
+         * Supplies the Discord webhook URL that the client should post to.
+         *
+         * @param webhookUrl full Discord webhook URL
+         * @return this builder instance for fluent chaining
+         */
         public @NotNull Builder webhookUrl(final @NotNull String webhookUrl) {
             this.webhookUrl = webhookUrl;
             return this;
         }
 
+        /**
+         * Constructs a {@link DiscordWebhook} when all required values are present.
+         *
+         * @return webhook client instance, or {@code null} when validation fails
+         */
         public @Nullable DiscordWebhook build() {
             if (plugin == null || webhookUrl == null || webhookUrl.isBlank()) {
                 return null;
