@@ -6,14 +6,43 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Logger;
 
+/**
+ * Coordinates PlaceholderAPI expansion registration for a plugin-owned
+ * {@link AbstractPlaceholderExpansion}. At construction time the registry captures whether
+ * PlaceholderAPI is currently enabled so subsequent {@link #register()} and {@link #unregister()}
+ * calls can safely no-op when the dependency is unavailable. Successful operations log the
+ * lifecycle transitions while the availability flag enables callers to short-circuit placeholder
+ * access when PlaceholderAPI is missing.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class PlaceholderRegistry {
 
     private static final Logger LOGGER = Logger.getLogger(PlaceholderRegistry.class.getName());
 
+    /**
+     * Owning plugin reported in lifecycle log entries.
+     */
     private final Plugin plugin;
+
+    /**
+     * Expansion instance used to register and unregister placeholder handlers.
+     */
     private final AbstractPlaceholderExpansion expansion;
+
+    /**
+     * Cache of PlaceholderAPI availability captured during construction.
+     */
     private final boolean papiAvailable;
 
+    /**
+     * Creates a registry bound to the supplied plugin and expansion.
+     *
+     * @param plugin    plugin that owns the placeholder expansion.
+     * @param expansion placeholder expansion that should be registered with PlaceholderAPI.
+     */
     public PlaceholderRegistry(
             final @NotNull Plugin plugin,
             final @NotNull AbstractPlaceholderExpansion expansion
@@ -23,6 +52,10 @@ public class PlaceholderRegistry {
         this.papiAvailable = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
+    /**
+     * Registers the expansion when PlaceholderAPI is available. Logs a warning if the dependency
+     * is missing and logs an informational message when registration succeeds.
+     */
     public void register() {
         if (!papiAvailable) {
             LOGGER.warning("PlaceholderAPI not found - placeholders will not be available");
@@ -33,6 +66,10 @@ public class PlaceholderRegistry {
         LOGGER.info("Registered PlaceholderAPI expansion for " + plugin.getName());
     }
 
+    /**
+     * Unregisters the expansion only when PlaceholderAPI was available and registration previously
+     * occurred. Emits an informational log for successful unregister operations.
+     */
     public void unregister() {
         if (papiAvailable && expansion.isRegistered()) {
             expansion.unregister();
@@ -40,10 +77,20 @@ public class PlaceholderRegistry {
         }
     }
 
+    /**
+     * Indicates whether PlaceholderAPI was available when the registry was created.
+     *
+     * @return {@code true} when PlaceholderAPI was enabled.
+     */
     public boolean isAvailable() {
         return papiAvailable;
     }
 
+    /**
+     * Indicates whether the expansion is currently registered.
+     *
+     * @return {@code true} when PlaceholderAPI is available and the expansion reports registration.
+     */
     public boolean isRegistered() {
         return papiAvailable && expansion.isRegistered();
     }
