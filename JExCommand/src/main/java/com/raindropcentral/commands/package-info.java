@@ -1,19 +1,37 @@
 /**
- * ## Command section and YAML pairing
+ * <h2>Auto-registration pipeline</h2>
+ * <p>
+ *     Command handlers and configuration sections advance together through the auto-registration pipeline, keeping
+ *     {@code @Command}-annotated classes paired with their corresponding {@code CommandNameSection} implementations.
+ * </p>
+ * <ul>
+ *     <li>Command discovery scans for classes annotated with {@code @Command} and links them to their section peers.</li>
+ *     <li>Section bootstrapping prepares the configuration instance before any command constructor receives control.</li>
+ *     <li>Lifecycle alignment ensures new commands comply with the workflow documented in this module's agent guidelines.</li>
+ * </ul>
  *
- * The command framework creates a **CommandNameSection** class for every **@Command**-annotated handler and
- * expects a matching `CommandName.yml` resource. The command updater uses the pairing to detect new
- * commands, hydrate their default configuration, and feed the section instance into **CommandFactory**
- * during registration.
+ * <h2>CommandFactory highlights</h2>
+ * <p>
+ *     The reflection-driven {@code CommandFactory} orchestrates instantiation, validating constructor signatures and
+ *     sequencing section creation according to the steps outlined in the agent's workflow guidelines.
+ * </p>
+ * <ul>
+ *     <li>Section instances are created first and provided as the primary argument to each command.</li>
+ *     <li>Dependencies such as plugin contexts, localization managers, and schedulers follow in the constructor order.</li>
+ *     <li>Failed validations surface as actionable errors so maintainers can reconcile implementations with the guidelines.</li>
+ * </ul>
  *
- * ## Checklist
- * - Name section classes with the `CommandNameSection` suffix so they mirror the associated command handler.
- * - Place the default YAML under `CommandName.yml` inside the resources tree so the updater can find it.
- * - Confirm the command is registered through the updater rather than manual plugin hooks to preserve auto-sync.
- *
- * ## Pitfalls
- * - Mismatched section or YAML names break auto-registration because the updater cannot resolve the pair.
- * - Placing YAML files in custom folders prevents the updater from packaging defaults alongside the section.
- * - Skipping the updater in favor of manual registration results in untracked configuration changes.
+ * <h2>Integration with Paper and Spigot</h2>
+ * <p>
+ *     After commands pass the factory pipeline, they are registered with the Paper and Spigot command APIs, mirroring the
+ *     practices mandated by the repository-wide agent workflow. Paper's asynchronous capabilities and Spigot's legacy
+ *     compatibility both rely on the factory to deliver initialized handlers that respect the platform contracts.
+ * </p>
+ * <ul>
+ *     <li>Paper integrations map command metadata into the asynchronous command manager without additional boilerplate.</li>
+ *     <li>Spigot compatibility is preserved through mirrored registration calls that honor legacy dispatcher rules.</li>
+ *     <li>Shared error handling communicates permission and validation failures back through the Bukkit command framework.</li>
+ * </ul>
  */
 package com.raindropcentral.commands;
+
