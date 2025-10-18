@@ -10,73 +10,65 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration section for permission-based perk effect durations.
+ * Configuration section that maps permissions to effect durations by leveraging {@link DurationSection}.
  * <p>
- * This section handles duration configuration based on player permissions,
- * allowing different effect durations for different permission groups.
- * It supports a default duration for players without specific permissions
- * and permission-specific overrides using flexible duration parsing.
- * </p>
- * <p>
- * This is used for perks that have time-limited effects, where different
- * permission levels can grant longer or shorter effect durations.
+ * Administrators can combine structured duration keys with free-form strings to describe how long a
+ * perk lasts for each permission tier. Optional minimum and maximum bounds ensure durations remain
+ * within acceptable limits while the resolver selects the longest applicable duration when multiple
+ * permissions apply.
  * </p>
  *
- * @author ItsRainingHP
- * @version 2.0.0
- * @since TBD
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public class PermissionDurationSection extends APermissionBasedSection<Long> {
-    
+
     /**
-     * Default effect duration for players without specific permissions.
-     * YAML key: "defaultDuration"
+     * Default duration descriptor from {@code defaultDuration} used when no permissions apply.
      */
     private DurationSection defaultDuration;
-    
+
     /**
-     * Map of permissions to their specific effect durations.
-     * YAML key: "permissionDurations"
+     * Map of permission nodes to {@link DurationSection} overrides sourced from {@code permissionDurations}.
      */
     private Map<String, DurationSection> permissionDurations;
-    
+
     /**
-     * Maximum allowed duration to prevent overpowered effects.
-     * YAML key: "maxDuration"
+     * Optional duration bound taken from {@code maxDuration} limiting the longest allowed effect.
      */
     private DurationSection maxDuration;
-    
+
     /**
-     * Minimum allowed duration.
-     * YAML key: "minDuration"
+     * Optional duration bound from {@code minDuration} ensuring effects meet a minimum length.
      */
     private DurationSection minDuration;
-    
+
     /**
-     * Constructs a new PermissionDurationSection.
+     * Creates the permission-aware duration section.
      *
-     * @param evaluationEnvironmentBuilder the evaluation environment builder
+     * @param evaluationEnvironmentBuilder mapper environment shared across sections
      */
     public PermissionDurationSection(
         final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {
         super(evaluationEnvironmentBuilder);
     }
-    
+
     /**
-     * Gets the default duration in seconds.
+     * Returns the default duration in seconds applied when no permission override matches.
      *
-     * @return the default duration in seconds, or 0 if not specified
+     * @return default duration in seconds or {@code 0L}
      */
     public Long getDefaultDurationSeconds() {
         return this.getDefaultValue();
     }
-    
+
     /**
-     * Gets the default duration section.
+     * Provides access to the configured default {@link DurationSection}.
      *
-     * @return the default duration section, or a new empty one if not configured
+     * @return configured duration section or an empty placeholder when absent
      */
     public DurationSection getDefaultDuration() {
         return
@@ -86,22 +78,22 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Gets the map of permission-specific durations in seconds.
+     * Exposes the permission overrides as raw second values.
      *
-     * @return the map of permission to duration in seconds
+     * @return map of permission nodes to duration values in seconds
      */
     public Map<String, Long> getPermissionDurationsSeconds() {
         return this.getPermissionValues();
     }
-    
+
     /**
-     * Gets the map of permission-specific duration sections.
+     * Returns the {@link DurationSection} instances for each configured permission node.
      *
-     * @return the map of permission to duration sections
+     * @return map linking permissions to fully parsed duration sections
      */
     public Map<String, DurationSection> getPermissionDurations() {
         final Map<String, DurationSection> durations = new HashMap<>();
-        
+
         if (
             this.permissionDurations != null
         ) {
@@ -112,9 +104,9 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Gets the maximum allowed duration in seconds.
+     * Returns the maximum allowed duration in seconds if configured.
      *
-     * @return the maximum duration in seconds, or null if no limit
+     * @return maximum duration or {@code null} when no limit is set
      */
     public Long getMaxDurationSeconds() {
         if (
@@ -125,11 +117,11 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
         }
         return null;
     }
-    
+
     /**
-     * Gets the minimum allowed duration in seconds.
+     * Returns the minimum allowed duration in seconds if configured.
      *
-     * @return the minimum duration in seconds, or null if no limit
+     * @return minimum duration or {@code null} when no limit is set
      */
     public Long getMinDurationSeconds() {
         if (
@@ -142,50 +134,51 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Gets the maximum duration section.
+     * Provides the raw {@link DurationSection} describing the maximum duration.
      *
-     * @return the maximum duration section, or null if not configured
+     * @return duration section enforcing the maximum, or {@code null}
      */
     public DurationSection getMaxDuration() {
         return this.maxDuration;
     }
-    
+
     /**
-     * Gets the minimum duration section.
+     * Provides the raw {@link DurationSection} describing the minimum duration.
      *
-     * @return the minimum duration section, or null if not configured
+     * @return duration section enforcing the minimum, or {@code null}
      */
     public DurationSection getMinDuration() {
         return this.minDuration;
     }
-    
+
     /**
-     * Gets the effective duration for a player based on their permissions.
+     * Calculates the duration to apply for the supplied player.
      *
-     * @param player the player to check duration for
-     * @return the effective duration in seconds
+     * @param player player whose duration should be computed
+     * @return resolved duration in seconds after applying bounds
      */
     public Long getEffectiveDuration(
         final Player player
     ) {
         return this.getEffectiveValue(player);
     }
-    
+
     /**
-     * Gets the effective duration based on a set of permissions.
+     * Calculates the duration for a pre-collected permission set.
      *
-     * @param playerPermissions the permissions to check
-     * @return the effective duration in seconds
+     * @param playerPermissions permissions associated with the player
+     * @return resolved duration in seconds after applying bounds
      */
     public Long getEffectiveDuration(final Set<String> playerPermissions) {
         return this.getEffectiveValue(playerPermissions);
     }
-    
+
     /**
-     * Gets a formatted string representation of the effective duration for a player.
+     * Generates a formatted duration string for the supplied player, prioritizing configured
+     * {@link DurationSection} formatting when available.
      *
-     * @param player the player to check duration for
-     * @return formatted duration string
+     * @param player player whose permissions should be evaluated
+     * @return human-readable representation of the effective duration
      */
     public String getFormattedEffectiveDuration(
         final Player player
@@ -201,10 +194,10 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Gets a formatted string representation of the effective duration.
+     * Generates a formatted duration string for a pre-collected permission set.
      *
-     * @param playerPermissions the permissions the player has
-     * @return formatted duration string
+     * @param playerPermissions permissions already associated with the player
+     * @return human-readable representation of the effective duration
      */
     public String getFormattedEffectiveDuration(
         final Set<String> playerPermissions
@@ -245,20 +238,20 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Gets the duration for a specific permission.
+     * Retrieves the duration in seconds associated with a specific permission node.
      *
-     * @param permission the permission to check
-     * @return the duration in seconds for the permission, or null if not found
+     * @param permission permission node to inspect
+     * @return configured duration in seconds or {@code null}
      */
     public Long getDurationForPermission(final String permission) {
         return this.getValueForPermission(permission);
     }
-    
+
     /**
-     * Gets the duration section for a specific permission.
+     * Retrieves the {@link DurationSection} configured for the supplied permission node.
      *
-     * @param permission the permission to check
-     * @return the duration section for the permission, or null if not found
+     * @param permission permission node to inspect
+     * @return duration section when present, otherwise {@code null}
      */
     public DurationSection getDurationSectionForPermission(
         final String permission
@@ -275,19 +268,19 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Checks if any permission-specific durations are configured.
+     * Indicates whether at least one permission-specific duration override exists.
      *
-     * @return true if permission durations exist, false otherwise
+     * @return {@code true} when overrides have been configured
      */
     public boolean hasPermissionDurations() {
         return this.hasPermissionValues();
     }
-    
+
     /**
-     * Checks if the given duration is within the configured bounds.
+     * Determines whether a duration falls within the configured minimum and maximum bounds.
      *
-     * @param durationSeconds the duration in seconds to check
-     * @return true if the duration is within bounds, false otherwise
+     * @param durationSeconds duration in seconds to test
+     * @return {@code true} when {@code durationSeconds} satisfies the configured constraints
      */
     public boolean isDurationWithinBounds(
         final Long durationSeconds
@@ -319,10 +312,10 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     /**
-     * Clamps a duration value to the configured bounds.
+     * Clamps the supplied duration to the configured minimum and maximum bounds.
      *
-     * @param durationSeconds the duration in seconds to clamp
-     * @return the clamped duration in seconds
+     * @param durationSeconds duration in seconds to clamp; may be {@code null}
+     * @return duration in seconds after clamping or the default duration when {@code null}
      */
     public Long clampDuration(
         final Long durationSeconds
@@ -356,6 +349,11 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
     
     
+    /**
+     * Provides the default duration in seconds when no permission override applies.
+     *
+     * @return default duration or {@code 0L}
+     */
     @Override
     protected Long getDefaultValue() {
         if (
@@ -366,11 +364,16 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
         }
         return 0L;
     }
-    
+
+    /**
+     * Supplies the permission-to-duration map expressed in seconds.
+     *
+     * @return mutable copy of permission overrides converted to seconds
+     */
     @Override
     protected Map<String, Long> getPermissionValues() {
         final Map<String, Long> durations = new HashMap<>();
-        
+
         if (
             this.permissionDurations != null
         ) {
@@ -387,13 +390,25 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
         
         return durations;
     }
-    
+
+    /**
+     * Uses the "best" strategy so longer durations win when multiple permissions match.
+     *
+     * @return {@code true} indicating the resolver should search for the optimal value
+     */
     @Override
     protected boolean getDefaultUseBestValue() {
-        
+
         return true;
     }
-    
+
+    /**
+     * Chooses the longer duration when multiple permissions apply.
+     *
+     * @param current   current best duration in seconds
+     * @param candidate candidate duration in seconds
+     * @return longer of {@code current} and {@code candidate}
+     */
     @Override
     protected Long chooseBestValue(
         final Long current,
@@ -401,7 +416,14 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     ) {
         return Math.max(current, candidate);
     }
-    
+
+    /**
+     * Determines whether the candidate duration is longer than the current best.
+     *
+     * @param candidate candidate duration in seconds
+     * @param current   current best duration in seconds
+     * @return {@code true} when {@code candidate} extends the duration
+     */
     @Override
     protected boolean isBetterValue(
         final Long candidate,
@@ -409,14 +431,26 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     ) {
         return candidate > current;
     }
-    
+
+    /**
+     * Applies configured bounds to the resolved duration.
+     *
+     * @param value duration in seconds prior to clamping
+     * @return duration in seconds after enforcing bounds
+     */
     @Override
     protected Long applyBounds(
         final Long value
     ) {
         return this.clampDuration(value);
     }
-    
+
+    /**
+     * Ensures duration values are non-null and non-negative.
+     *
+     * @param value duration in seconds to validate
+     * @return {@code true} when {@code value} is zero or positive
+     */
     @Override
     protected boolean isValidValue(
         final Long value
@@ -425,7 +459,12 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
             value != null &&
             value >= 0;
     }
-    
+
+    /**
+     * Validates duration sections and ensures configured bounds are coherent.
+     *
+     * @throws IllegalStateException when bounds are negative, inverted, or nested duration sections fail validation
+     */
     @Override
     protected void performAdditionalValidation() {
         if (
