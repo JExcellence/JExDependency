@@ -34,10 +34,13 @@ Two main plugins exist in this framework with potential for expansion: `RCore` a
 - **RPlatform** (`RPlatform/`) – Offers shared platform abstractions, placeholder APIs, and metrics utilities. Changes here often cascade across other modules; validate integrations before merging.
 
 ## Code Style
-- Java sources follow an 4-space indentation style rather than tabs. Keep class members, control blocks, and inner scopes aligned using exact eight-space offsets as demonstrated in `RCore/src/main/java/com/raindropcentral/rcore/RCore.java`.
+- Java sources follow an 4-space indentation style rather than tabs. Keep class members, control blocks, and inner scopes aligned using exact four-space offsets as demonstrated in `RCore/src/main/java/com/raindropcentral/rcore/RCore.java`.
 - Place opening braces on the same line as the class or method declaration (K&R style), and close braces on their own line aligned with the corresponding declaration.
 - Annotate overrides directly above the method signature with no blank line in between, and preserve blank lines between lifecycle methods to mirror the spacing pattern present in the reference file.
 - Keep `try`/`catch` blocks vertically aligned: indent the `catch` keyword one level deeper than the `try`, and wrap long parameter lists on new lines while preserving the 8-space indentation for continuation lines.
+- Javadocs added to class files should include an author tag. Unless otherwise specified use JExcellence as the author.
+- Javadocs added to class files should include a `@since` tag should be 1.0.0 and the `@version` tag should be 1.0.1.
+- Javadocs added to methods include any necessary `return` and `param` tags
 
 ## Development Flow
 1. Identify scope and read any relevant documentation within the class files.
