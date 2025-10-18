@@ -18,6 +18,10 @@ import java.util.logging.Level;
 /**
  * Generic CommandFactory that can register commands and listeners for any JavaPlugin.
  * Supports passing custom context objects (like RDQ, RDQFree, RDQPremium) to commands and listeners.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @SuppressWarnings("unchecked")
 public class CommandFactory {

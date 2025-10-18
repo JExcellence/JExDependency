@@ -9,6 +9,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Base command implementation for console-only interactions, ensuring only the server
+ * console can execute the command logic while deferring to subclasses for behavior.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public abstract class ServerCommand extends BukkitCommand {
 	
 	protected ServerCommand(

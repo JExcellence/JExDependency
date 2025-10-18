@@ -11,6 +11,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+/**
+ * Base command implementation that restricts execution to player senders and provides
+ * helper hooks for permission checks and tab completion routing.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public abstract class PlayerCommand extends BukkitCommand {
 	
 	protected PlayerCommand(
