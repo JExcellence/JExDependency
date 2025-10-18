@@ -1,5 +1,7 @@
 # RCore Agent Guidelines
 
+> **Note:** Read the root `AGENTS.md` for repository-wide workflow, commit, and testing guidelines before following the module-specific notes below.
+
 ## Service Implementation Practices
 - Prefer `CompletableFuture`-driven flows for asynchronous work. Chain stages with explicit executor arguments to avoid relying on the common fork-join pool when interacting with Bukkit schedulers or shared thread pools.
 - Use the service-specific `Executor` provided by the module (e.g., `ServiceExecutionContext#getExecutor`) for all asynchronous callbacks to maintain consistent threading guarantees across RCore and consuming modules.

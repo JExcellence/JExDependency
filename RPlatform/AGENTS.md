@@ -1,5 +1,7 @@
 # RPlatform Contribution Guide
 
+> **Note:** Read the root `AGENTS.md` for repository-wide workflow, commit, and testing guidelines before following the module-specific notes below.
+
 ## Lifecycle Expectations
 - Call `RPlatform#initialize()` early in your plugin's `onEnable`. The method delegates to the scheduler returned by `ISchedulerAdapter#create(...)`, so Folia servers use the Folia implementation while Paper/Spigot fall back to the Bukkit adapter. The initialize routine must finish before you register commands or services that depend on the translation manager, command updater, or database layer created inside the async block.
 - Any metrics (`initializeMetrics(int serviceId)`) or placeholder (`initializePlaceholders(String identifier)`) bootstrapping happens **after** the main initialize future completes. This ensures the async setup has populated the translation manager, command updater, and database resources that downstream plugins expect.
