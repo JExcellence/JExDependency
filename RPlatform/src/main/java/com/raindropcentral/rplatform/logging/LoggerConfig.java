@@ -14,31 +14,49 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * LoggerConfig represents the runtime logging configuration and provides a loader
- * that uses the existing ConfigManager/ConfigKeeper + LoggerSection.
+ * LoggerConfig encapsulates runtime configuration flags and per-package overrides consumed by
+ * {@link CentralLogger}'s universal handler. Instances are loaded from {@code logs/logging.yml}
+ * using the shared configuration infrastructure and then consulted whenever a
+ * {@link PlatformLogger} is created or a JUL record is processed.
  *
- * Structure expected in logs/logging.yml:
- *   defaultLevel: INFO
- *   consoleLogging: true
- *   debugMode: false
- *   loggers:
- *     com.raindropcentral: WARNING
- *     de.jexcellence: WARNING
- *     me.devnatan.inventoryframework: WARNING
- *     org.bukkit: INFO
- *     net.minecraft: WARNING
- *     org.hibernate: WARNING
- *     org.apache: WARNING
- *     org.springframework: WARNING
+ * <p>Default values mirror prior behaviour: console logging enabled, debug disabled, and common
+ * package namespaces pinned to warning levels.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class LoggerConfig {
 
+    /**
+     * Indicates whether console mirroring should be active for {@link CentralLogger}.
+     */
     private final boolean consoleEnabled;
+
+    /**
+     * Global debug flag gating {@link PlatformLogger#debug(String)} and trace level logging.
+     */
     private final boolean debugEnabled;
+
+    /**
+     * Baseline severity applied when no package-specific rule is defined.
+     */
     private final LogLevel defaultLevel;
     // For now, keep consoleLevel and fileLevel aligned with defaultLevel to match prior behavior.
+
+    /**
+     * Console severity derived from {@link #defaultLevel} for backward compatibility.
+     */
     private final LogLevel consoleLevel;
+
+    /**
+     * File severity derived from {@link #defaultLevel} for backward compatibility.
+     */
     private final LogLevel fileLevel;
+
+    /**
+     * Immutable map of package prefixes to explicit {@link LogLevel} overrides.
+     */
     private final Map<String, LogLevel> packageLevels;
 
     private LoggerConfig(boolean consoleEnabled,
@@ -53,25 +71,48 @@ public class LoggerConfig {
         this.packageLevels = Collections.unmodifiableMap(new HashMap<>(packageLevels));
     }
 
+    /**
+     * Indicates whether console logging is enabled for the current configuration snapshot.
+     *
+     * @return {@code true} when {@link CentralLogger} should emit to the console handler
+     */
     public boolean isConsoleEnabled() {
         return consoleEnabled;
     }
 
+    /**
+     * Reports whether debug and trace severity helpers should emit log records.
+     *
+     * @return {@code true} when {@link PlatformLogger#debug(String)} and trace logging should fire
+     */
     public boolean isDebugEnabled() {
         return debugEnabled;
     }
 
+    /**
+     * Returns the console severity derived from the default level.
+     *
+     * @return console {@link LogLevel}
+     */
     public @NotNull LogLevel getConsoleLevel() {
         return consoleLevel;
     }
 
+    /**
+     * Returns the file severity derived from the default level.
+     *
+     * @return file {@link LogLevel}
+     */
     public @NotNull LogLevel getFileLevel() {
         return fileLevel;
     }
 
     /**
-     * Resolve the effective log level for a given logger name using longest-prefix match
-     * against configured package levels; falls back to defaultLevel.
+     * Resolves the effective log level for the provided logger name using a longest-prefix lookup
+     * across configured package overrides before falling back to {@link #defaultLevel}.
+     *
+     * @param loggerName name of the logger being evaluated
+     * @return matching {@link LogLevel} for the logger name
      */
     public @NotNull LogLevel getLevelForPackage(final String loggerName) {
         if (loggerName == null || loggerName.isEmpty() || packageLevels.isEmpty()) {
@@ -92,8 +133,12 @@ public class LoggerConfig {
     }
 
     /**
-     * Load configuration from logs/logging.yml using ConfigManager/ConfigKeeper and LoggerSection.
-     * Provides safe defaults if loading fails; optionally attempts to create a default file.
+     * Loads configuration values from {@code logs/logging.yml} using {@link ConfigManager} and
+     * {@link ConfigKeeper}. Safe defaults are applied when the file is absent or invalid, ensuring
+     * {@link CentralLogger} can continue routing records.
+     *
+     * @param plugin plugin requesting the configuration; used to resolve the data directory
+     * @return a populated {@link LoggerConfig} snapshot
      */
     public static @NotNull LoggerConfig load(@NotNull final JavaPlugin plugin) {
         Objects.requireNonNull(plugin, "plugin");

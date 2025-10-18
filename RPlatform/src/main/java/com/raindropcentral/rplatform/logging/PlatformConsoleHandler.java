@@ -7,10 +7,13 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.LogRecord;
 
 /**
- * Console handler that always writes to the OutputStream provided at construction time.
- * - Null-safe during ConsoleHandler(super) construction to avoid NPEs (JUL calls setOutputStream in super()).
- * - Never closes the underlying System streams on close(); only flushes.
- * - Flushes after each publish to keep console output timely.
+ * PlatformConsoleHandler writes {@link CentralLogger} output to a predetermined stream so stdout
+ * and stderr redirection can avoid recursive publication. The handler never closes the supplied
+ * stream, ensuring {@link LoggingPrintStream} can continue to mirror output during shutdown.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class PlatformConsoleHandler extends ConsoleHandler {
 
@@ -24,7 +27,10 @@ public class PlatformConsoleHandler extends ConsoleHandler {
     }
 
     /**
-     * @param out desired output stream; falls back to System.out if null
+     * Constructs a handler that writes to the provided stream and integrates with
+     * {@link CentralLogger}'s handler rotation.
+     *
+     * @param out desired output stream; falls back to {@link System#out} if {@code null}
      */
     public PlatformConsoleHandler(final OutputStream out) {
         super();
@@ -41,6 +47,11 @@ public class PlatformConsoleHandler extends ConsoleHandler {
         super.setOutputStream(effective);
     }
 
+    /**
+     * Publishes a log record and flushes immediately to keep console output responsive.
+     *
+     * @param record record to write
+     */
     @Override
     public synchronized void publish(final LogRecord record) {
         if (!isLoggable(record)) {
@@ -50,6 +61,9 @@ public class PlatformConsoleHandler extends ConsoleHandler {
         flush();
     }
 
+    /**
+     * Flushes buffered data without closing the underlying system stream.
+     */
     @Override
     public synchronized void close() throws SecurityException {
         // Do not close System.out/err; only flush.
