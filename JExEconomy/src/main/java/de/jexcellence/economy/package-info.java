@@ -19,6 +19,10 @@
  *     <li>Shared audit appenders provided by the platform logging infrastructure for
  *     consistent transaction trails.</li>
  * </ul>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 package de.jexcellence.economy;
 

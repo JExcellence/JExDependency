@@ -41,5 +41,9 @@
  *     <li>Reconciliation tests exercise conflict retries and rollback
  *     semantics.</li>
  * </ul>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 package com.raindropcentral.economy.engine;

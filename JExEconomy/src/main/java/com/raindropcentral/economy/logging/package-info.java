@@ -27,5 +27,9 @@
  *     <li>When introducing new appenders, chain them through the {@code AuditTrailMultiplexer} so
  *     that legacy listeners remain subscribed.</li>
  * </ul>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 package com.raindropcentral.economy.logging;
