@@ -13,6 +13,15 @@ import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.regex.Pattern;
 
+/**
+ * EnhancedLogFormatter renders concise console output for {@link CentralLogger} by applying
+ * abbreviated timestamps, optional ANSI coloring, and aggressive sanitization to prevent control
+ * characters from polluting terminal output.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class EnhancedLogFormatter extends Formatter {
 
     private static final DateTimeFormatter STANDARD_FORMATTER = new DateTimeFormatterBuilder()
@@ -32,11 +41,23 @@ public class EnhancedLogFormatter extends Formatter {
 
     private final boolean useColor;
 
+    /**
+     * Creates a formatter configured for console output that optionally applies ANSI color codes.
+     *
+     * @param useColor {@code true} to colorize level tokens when a console is attached
+     */
     public EnhancedLogFormatter(final boolean useColor) {
         // enable color only if console is attached
         this.useColor = useColor && System.console() != null;
     }
 
+    /**
+     * Formats the supplied log record into a single human readable line tailored for console
+     * consumption.
+     *
+     * @param record log record to format
+     * @return formatted record string
+     */
     @Override
     public String format(@NotNull final LogRecord record) {
         // Internal logger lines: keep simple
