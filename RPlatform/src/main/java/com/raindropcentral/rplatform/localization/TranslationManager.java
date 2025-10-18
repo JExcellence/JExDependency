@@ -1,20 +1,17 @@
-package com.raindropcentral.rplatform.translation;
+package com.raindropcentral.rplatform.localization;
 
 import de.jexcellence.jextranslate.api.MessageFormatter;
-import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationRepository;
 import de.jexcellence.jextranslate.api.TranslationService;
 import de.jexcellence.jextranslate.impl.LocaleResolverProvider;
 import de.jexcellence.jextranslate.impl.MiniMessageFormatter;
 import de.jexcellence.jextranslate.impl.YamlTranslationRepository;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 import java.util.Locale;
-import java.util.Map;
 
 public class TranslationManager {
 
