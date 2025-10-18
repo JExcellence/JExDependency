@@ -1,0 +1,550 @@
+displayNameKey: "tree.warrior.name"
+descriptionKey: "tree.warrior.lore"
+displayOrder: 1
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 1
+icon:
+  material: "DIAMOND_SWORD"
+  displayNameKey: "tree.warrior.name"
+  descriptionKey: "tree.warrior.lore"
+prerequisiteRankTrees: [ ]
+connectedRankTrees: [ ]
+switchableRankTiers: [ ]
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: [ ]
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
+ranks:
+  recruit:
+    displayNameKey: "rank.warrior.recruit.name"
+    descriptionKey: "rank.warrior.recruit.lore"
+    tier: 1
+    weight: 10
+    luckPermsGroup: "warrior_recruit"
+    prefixKey: "&8[&7Recruit&8]"
+    suffixKey: ""
+    isInitialRank: true
+    enabled: true
+    icon:
+      material: "WOODEN_SWORD"
+      displayNameKey: "rank.warrior.recruit.name"
+      descriptionKey: "rank.warrior.recruit.lore"
+    nextRanks: [ "fighter" ]
+
+  displayNameKey: "tree.warrior.name"
+  descriptionKey: "tree.warrior.lore"
+  displayOrder: 1
+  isEnabled: true
+  isFinalRankTree: false
+  requiresAllRankTreesToBeDone: false
+  minimumRankTreesToBeDone: 1
+  icon:
+    material: "DIAMOND_SWORD"
+    displayNameKey: "tree.warrior.name"
+    descriptionKey: "tree.warrior.lore"
+  prerequisiteRankTrees: [ ]
+  connectedRankTrees: [ ]
+  switchableRankTiers: [ ]
+  crossTreeProgression:
+    allowSwitching: true
+    switchRankTiers: [ ]
+    requireSameRankTier: false
+    allowDowngrade: false
+    switchingCosts: ""
+    switchingCooldown: 86400
+  ranks:
+    recruit:
+      displayNameKey: "rank.warrior.recruit.name"
+      descriptionKey: "rank.warrior.recruit.lore"
+      tier: 1
+      weight: 10
+      luckPermsGroup: "warrior_recruit"
+      prefixKey: "&8[&7Recruit&8]"
+      suffixKey: ""
+      isInitialRank: true
+      enabled: true
+      icon:
+        material: "WOODEN_SWORD"
+        displayNameKey: "rank.warrior.recruit.name"
+        descriptionKey: "rank.warrior.recruit.lore"
+      nextRanks: [ "fighter" ]
+
+    fighter:
+      displayNameKey: "rank.warrior.fighter.name"
+      descriptionKey: "rank.warrior.fighter.lore"
+      tier: 2
+      weight: 20
+      luckPermsGroup: "warrior_fighter"
+      prefixKey: "&8[&eFighter&8]"
+      suffixKey: ""
+      enabled: true
+      icon:
+        material: "STONE_SWORD"
+        displayNameKey: "rank.warrior.fighter.name"
+        descriptionKey: "rank.warrior.fighter.lore"
+      previousRanks: [ "recruit" ]
+      nextRanks: [ "guardian", "berserker" ]
+      requirements:
+        # Simple item requirement
+        training_materials:
+          type: "ITEM"
+          requiredItems:
+            - material: "IRON_INGOT"
+              amount: 16
+              displayName: "&7Iron Ingot"
+              lore:
+                - "&8Training material"
+
+        # Multiple items with configuration
+        advanced_materials:
+          type: "ITEM"
+          consumeOnComplete: true
+          exactMatch: true
+          description: "Advanced crafting materials"
+          itemBuilders:
+            - material: "DIAMOND"
+              amount: 5
+              displayName: "&bPure Diamond"
+              enchantments:
+                unbreaking: 1
+            - material: "GOLD_INGOT"
+              amount: 10
+              displayName: "&6Gold Ingot"
+
+        # Non-consuming requirement (just checking)
+        equipment_check:
+          type: "ITEM"
+          consumeOnComplete: false
+          exactMatch: false  # Match by type only
+          requiredItems:
+            - material: "IRON_SWORD"
+              amount: 1
+
+        # Simple level requirement (backward compatible)
+        combat_experience:
+          type: "EXPERIENCE_LEVEL"
+          requiredLevel: 5
+
+        # Experience points requirement
+        detailed_experience:
+          type: "EXPERIENCE_LEVEL"
+          requiredLevel: 1000
+          experienceType: "POINTS"
+          consumeOnComplete: true
+          description: "Advanced combat training experience"
+
+        # Non-consuming requirement (just checking)
+        experience_check:
+          type: "EXPERIENCE_LEVEL"
+          requiredLevel: 10
+          experienceType: "LEVEL"
+          consumeOnComplete: false
+
+        # Alternative field names (RequirementSection compatibility)
+        simple_level:
+          type: "EXPERIENCE_LEVEL"
+          level: 15  # Will be mapped to requiredLevel
+
+        # AND Logic (original behavior)
+        basic_training:
+          type: "COMPOSITE"
+          operator: "AND"
+          requirements:
+            - type: "CURRENCY"
+              currency: "VAULT"
+              amount: 500.0
+            - type: "EXPERIENCE_LEVEL"
+              level: 5
+
+        # OR Logic (choice between requirements)
+        alternative_training:
+          type: "COMPOSITE"
+          operator: "OR"
+          requirements:
+            - type: "CURRENCY"
+              currency: "VAULT"
+              amount: 1000.0
+            - type: "PLAYTIME"
+              playtimeHours: 10
+
+        # MINIMUM Logic (complete N out of M requirements)
+        specialization_training:
+          type: "COMPOSITE"
+          operator: "MINIMUM"
+          minimumRequired: 2
+          allowPartialProgress: true
+          description: "Complete at least 2 of these training modules"
+          requirements:
+            - type: "CURRENCY"
+              currency: "VAULT"
+              amount: 500.0
+            - type: "ITEM"
+              requiredItem:
+                material: "DIAMOND"
+                amount: 5
+            - type: "EXPERIENCE_LEVEL"
+              level: 15
+            - type: "PLAYTIME"
+              playtimeHours: 5
+
+        # Advanced choice with multiple requirements
+        specialization_choice:
+          type: "CHOICE"
+          minimumChoicesRequired: 2
+          description: "Choose 2 specializations to master"
+          allowPartialProgress: true
+          choices:
+            - type: "CURRENCY"
+              currency: "VAULT"
+              amount: 1000.0
+            - type: "EXPERIENCE_LEVEL"
+              level: 15
+            - type: "ITEM"
+              requiredItem:
+                material: "DIAMOND"
+                amount: 10
+            - type: "PLAYTIME"
+              playtimeHours: 5
+
+        # Alternative Single Currency (backwards compatibility)
+        equipment_fee:
+          type: "CURRENCY"
+          displayOrder: 3
+          descriptionKey: "requirement.warrior.equipment_fee"
+          consumeOnComplete: true
+          currencyType: "VAULT"
+          currencyAmount: 250.0
+
+        # Playtime with different units
+        combat_time:
+          type: "PLAYTIME"
+          displayOrder: 7
+          descriptionKey: "requirement.warrior.combat_time"
+          consumeOnComplete: false
+          requiredPlaytimeHours: 5  # Will be converted to seconds
+
+        # Multiple Achievements
+        warrior_achievements:
+          type: "ACHIEVEMENT"
+          displayOrder: 8
+          descriptionKey: "requirement.warrior.achievements"
+          consumeOnComplete: false
+          requiredAchievements:
+            - "minecraft:kill_mob_near_sculk_catalyst"
+            - "minecraft:voluntary_exile"
+            - "minecraft:hero_of_the_village"
+
+        # Choice with List Format
+        weapon_specialization:
+          type: "CHOICE"
+          displayOrder: 9
+          descriptionKey: "requirement.warrior.weapon_choice"
+          choiceDescription: "Choose your weapon specialization path"
+          choiceList:
+            - type: "ITEM"
+              descriptionKey: "requirement.warrior.sword_path"
+              consumeOnComplete: true
+              requiredItem:
+                material: "IRON_SWORD"
+                displayName: "&eIron Sword of Training"
+                enchantments:
+                  sharpness: 1
+              requiredAmount: 1
+            - type: "ITEM"
+              descriptionKey: "requirement.warrior.axe_path"
+              consumeOnComplete: true
+              requiredItem:
+                material: "IRON_AXE"
+                displayName: "&eIron Axe of Training"
+                enchantments:
+                  sharpness: 1
+              requiredAmount: 1
+
+        # Composite with List Format
+        advanced_training:
+          type: "COMPOSITE"
+          displayOrder: 10
+          descriptionKey: "requirement.warrior.advanced_training"
+          compositeOperator: "AND"
+          requirements:
+            - type: "CURRENCY"
+              currencyType: "VAULT"
+              currencyAmount: 1000.0
+              consumeOnComplete: true
+            - type: "ITEM"
+              requiredItem:
+                material: "DIAMOND"
+                amount: 5
+              consumeOnComplete: true
+            - type: "EXPERIENCE_LEVEL"
+              requiredLevel: 10
+              consumeOnComplete: false
+
+        # Simple timed requirement (backward compatible)
+        quick_challenge:
+          type: "TIME_BASED"
+          delegate:
+            type: "ITEM"
+            requiredItems:
+              - material: "DIAMOND"
+                amount: 5
+          timeLimitSeconds: 300  # 5 minutes
+
+        # Using different time units
+        daily_challenge:
+          type: "TIME_BASED"
+          delegate:
+            type: "CURRENCY"
+            currency: "VAULT"
+            amount: 1000.0
+          timeLimitHours: 24
+          autoStart: true
+          description: "Complete within 24 hours"
+
+        # Weekly challenge
+        weekly_quest:
+          type: "TIME_BASED"
+          delegate:
+            type: "COMPOSITE"
+            operator: "AND"
+            requirements:
+              - type: "ITEM"
+                requiredItem:
+                  material: "EMERALD"
+                  amount: 10
+              - type: "EXPERIENCE_LEVEL"
+                level: 20
+          timeLimitDays: 7
+          autoStart: false
+          description: "Weekly challenge - start manually"
+
+        # Auto-detect available plugin (default)
+        auto_job:
+          type: "JOBS"
+          job: "Miner"
+          level: 25
+
+        # Specific plugin selection
+        eco_job:
+          type: "JOBS"
+          jobPlugin: "ECO_JOBS"
+          job: "Miner"
+          level: 25
+
+        jobs_reborn:
+          type: "JOBS"
+          jobPlugin: "JOBS_REBORN"
+          job: "Miner"
+          level: 25
+
+        # Single skill requirement with auto-detection
+        mining_expert:
+          type: "SKILLS"
+          skill: "MINING"
+          level: 50
+
+        # Multiple skills requirement
+        combat_mastery:
+          type: "SKILLS"
+          skillPlugin: "MCMMO"
+          skills:
+            SWORDS: 25
+            AXES: 20
+            ARCHERY: 15
+          description: "Master multiple combat skills"
+
+        # Total skill level requirement
+        skill_master:
+          type: "SKILLS"
+          skill: "total"
+          level: 100
+
+        # EcoSkills specific requirement
+        magic_mastery:
+          type: "SKILLS"
+          skillPlugin: "ECO_SKILLS"
+          skills:
+            ENCHANTING: 25
+            ALCHEMY: 20
+            FARMING: 15
+          description: "Master multiple magical arts"
+
+        spawn_area:
+          type: "LOCATION"
+          requiredWorld: "world"
+          requiredCoordinates:
+            x: 0.0
+            y: 64.0
+            z: 0.0
+          requiredDistance: 25.0
+          description: "Must be near spawn"
+
+        training_ground:
+          type: "LOCATION"
+          displayOrder: 12
+          descriptionKey: "requirement.warrior.location"
+          consumeOnComplete: false
+          requiredWorld: "world"
+          requiredRegion: "training_grounds"
+          requiredCoordinates:
+            x: 100.0
+            y: 64.0
+            z: 200.0
+          requiredDistance: 50.0
+
+        safe_zone:
+          type: "LOCATION"
+          requiredWorld: "world"
+          requiredRegion: "safezone"
+          description: "Must be in the safe zone"
+
+        training_locations:
+          type: "CHOICE"
+          description: "Visit any training location"
+          choices:
+            - type: "LOCATION"
+              requiredWorld: "world"
+              requiredRegion: "training_grounds_north"
+            - type: "LOCATION"
+              requiredWorld: "world"
+              requiredRegion: "training_grounds_south"
+            - type: "LOCATION"
+              requiredWorld: "world"
+              requiredCoordinates:
+                x: 500.0
+                y: 64.0
+                z: 500.0
+              requiredDistance: 30.0
+
+        # Custom script with progress calculation
+        special_challenge:
+          type: "CUSTOM"
+          displayOrder: 14
+          descriptionKey: "requirement.warrior.special"
+          consumeOnComplete: false
+          customScript: "getKillCount('ZOMBIE') >= getCustomData('requiredKills', 50)"
+          progressScript: "Math.min(1.0, getKillCount('ZOMBIE') / getCustomData('requiredKills', 50))"
+          customData:
+            mobType: "ZOMBIE"
+            requiredKills: 50
+            trackingEnabled: true
+
+        # Multiple mob kills
+        mob_hunter:
+          type: "CUSTOM"
+          customScript: "getKillCount('ZOMBIE') >= 25 && getKillCount('SKELETON') >= 15"
+          progressScript: |
+            var zombieProgress = Math.min(1.0, getKillCount('ZOMBIE') / 25.0);
+            var skeletonProgress = Math.min(1.0, getKillCount('SKELETON') / 15.0);
+            return (zombieProgress + skeletonProgress) / 2.0;
+
+        # Mining challenge
+        master_miner:
+          type: "CUSTOM"
+          customScript: "getBlocksBroken('STONE') >= 1000 && getBlocksBroken('IRON_ORE') >= 50"
+          customData:
+            requiredStone: 1000
+            requiredIronOre: 50
+
+        # Distance challenge
+        explorer:
+          type: "CUSTOM"
+          customScript: "getDistanceWalked() >= 10000"
+          progressScript: "Math.min(1.0, getDistanceWalked() / 10000.0)"
+
+        # Complex multi-requirement
+        ultimate_warrior:
+          type: "CUSTOM"
+          customScript: |
+            return getKillCount('ZOMBIE') >= 100 && 
+                   getLevel() >= 30 && 
+                   hasPermission('warrior.ultimate') &&
+                   hasItem('DIAMOND_SWORD', 1);
+
+  guardian:
+    displayNameKey: "rank.warrior.guardian.name"
+    descriptionKey: "rank.warrior.guardian.description"
+    tier: 3
+    weight: 30
+    luckPermsGroup: "warrior_guardian"
+    prefixKey: "&8[&bGuardian&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      material: "SHIELD"
+      displayNameKey: "rank.warrior.guardian.name"
+      descriptionKey: "rank.warrior.guardian.description"
+    previousRanks: [ "fighter" ]
+    nextRanks: [ "paladin" ]
+    cross_tree_connections: [ "cleric:priest" ]
+
+  berserker:
+    displayNameKey: "rank.warrior.berserker.name"
+    descriptionKey: "rank.warrior.berserker.description"
+    tier: 3
+    weight: 30
+    luckPermsGroup: "warrior_berserker"
+    prefixKey: "&8[&cBerserker&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      material: "IRON_AXE"
+      displayNameKey: "rank.warrior.berserker.name"
+      descriptionKey: "rank.warrior.berserker.description"
+    previousRanks: [ "fighter" ]
+    nextRanks: [ "warlord" ]
+    cross_tree_connections: [ "rogue:assassin" ]
+
+  paladin:
+    displayNameKey: "rank.warrior.paladin.name"
+    descriptionKey: "rank.warrior.paladin.description"
+    tier: 4
+    weight: 40
+    luckPermsGroup: "warrior_paladin"
+    prefixKey: "&8[&6Paladin&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      material: "GOLDEN_SWORD"
+      displayNameKey: "rank.warrior.paladin.name"
+      descriptionKey: "rank.warrior.paladin.description"
+    previousRanks: [ "guardian" ]
+    nextRanks: [ "champion" ]
+    cross_tree_connections: [ "cleric:bishop" ]
+
+  warlord:
+    displayNameKey: "rank.warrior.warlord.name"
+    descriptionKey: "rank.warrior.warlord.description"
+    tier: 4
+    weight: 40
+    luckPermsGroup: "warrior_warlord"
+    prefixKey: "&8[&4Warlord&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      material: "DIAMOND_SWORD"
+      displayNameKey: "rank.warrior.warlord.name"
+      descriptionKey: "rank.warrior.warlord.description"
+    previousRanks: [ "berserker" ]
+    nextRanks: [ "champion" ]
+
+  champion:
+    displayNameKey: "rank.warrior.champion.name"
+    descriptionKey: "rank.warrior.champion.description"
+    tier: 5
+    weight: 50
+    luckPermsGroup: "warrior_champion"
+    prefixKey: "&8[&5Champion&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      material: "NETHERITE_SWORD"
+      displayNameKey: "rank.warrior.champion.name"
+      descriptionKey: "rank.warrior.champion.description"
+    previousRanks: [ "paladin", "warlord" ]
+    nextRanks: [ ]

@@ -1,0 +1,10 @@
+name: RDQ
+main: com.raindropcentral.rdq.RDQ
+version: 6.0.0
+api-version: "1.16"
+description: RDQ
+authors: [ ItsRainingHP, JExcellence ]
+website: https://www.raindropcentral.com
+depend: [ RCore ]
+softdepend:
+  - LuckPerms

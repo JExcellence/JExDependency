@@ -1,0 +1,136 @@
+bounty:
+  main:
+    title: "&6&lKopfgeld System"
+    view_bounties:
+      name: "&e&lKopfgelder ansehen"
+      lore:
+        - "&7Klicke um alle aktiven Kopfgelder zu sehen"
+        - ""
+        - "&7Aktive Kopfgelder: &e{count}"
+    create_bounty:
+      name: "&a&lKopfgeld erstellen"
+      lore:
+        - "&7Klicke um ein neues Kopfgeld"
+        - "&7auf einen Spieler zu setzen"
+    create_bounty_locked:
+      name: "&c&lKopfgeld erstellen (Gesperrt)"
+      lore:
+        - "&7Diese Funktion erfordert"
+        - "&7die Premium-Version"
+      message: "&cKopfgeld-Erstellung ist nur in der Premium-Version verfügbar!"
+    upgrade_premium:
+      name: "&d&lAuf Premium upgraden"
+      lore:
+        - "&7Schalte unbegrenzte Kopfgelder"
+        - "&7und erweiterte Funktionen frei!"
+        - ""
+        - "&eKlicke für mehr Informationen"
+      message: "&eBesuche unsere Website um auf Premium zu upgraden!"
+
+  overview:
+    title: "&6&lAlle Kopfgelder"
+    entry:
+      name: "&e{target_name}"
+      lore:
+        - "&7Auftraggeber: &f{commissioner_name}"
+        - "&7Erstellt: &f{created_at}"
+        - "&7Belohnungen: &e{reward_count} Gegenstände"
+        - ""
+        - "&eKlicke für Details"
+
+  creation:
+    title: "&6&lKopfgeld erstellen &8- &e{target_name}"
+    select_target:
+      name: "&e&lZiel auswählen"
+      lore:
+        - "&7Aktuell: &f{target_name}"
+        - ""
+        - "&eKlicke um einen Spieler auszuwählen"
+      title: "&6Kopfgeld-Ziel auswählen"
+    add_items:
+      name: "&a&lGegenstände hinzufügen"
+      lore:
+        - "&7Aktuelle Gegenstände: &e{count}"
+        - ""
+        - "&eKlicke um Gegenstände hinzuzufügen"
+      name_disabled: "&c&lGegenstände hinzufügen (Gesperrt)"
+      lore_disabled:
+        - "&7Wähle zuerst ein Ziel"
+      disabled: "&cBitte wähle zuerst einen Zielspieler!"
+    add_currency:
+      name: "&6&lWährung hinzufügen"
+      lore:
+        - "&7Aktuelle Währungen: &e{count}"
+        - ""
+        - "&eKlicke um Währung hinzuzufügen"
+      name_disabled: "&c&lWährung hinzufügen (Gesperrt)"
+      lore_disabled:
+        - "&7Wähle zuerst ein Ziel"
+    confirm_bounty:
+      name: "&a&lKopfgeld bestätigen"
+      lore:
+        - "&7Klicke um das Kopfgeld zu erstellen"
+    confirm:
+      no_player_selected: "&cKein Zielspieler ausgewählt!"
+      no_rewards_selected: "&cKeine Belohnungen hinzugefügt!"
+      confirmation: "&aErstelle Kopfgeld für &e{target_name}&a..."
+      error: "&cFehler beim Erstellen des Kopfgelds für &e{target_name}"
+      success: "&aKopfgeld erfolgreich erstellt für &e{target_name}&a!"
+    left_overs: "&eGegenstände wurden in dein Inventar zurückgegeben"
+
+  player_info:
+    title: "&6&lKopfgeld: &e{target_name}"
+    target:
+      name: "&e{player_name}"
+    rewards:
+      name: "&6&lBelohnungen"
+      lore:
+        - "&7Gesamt Gegenstände: &e{item_amount}"
+        - ""
+        - "&7Gegenstände:"
+        - "{item_list}"
+        - ""
+        - "&eKlicke um alle Belohnungen zu sehen"
+    delete:
+      name: "&c&lKopfgeld löschen"
+      lore:
+        - "&7Lösche dieses Kopfgeld permanent"
+        - ""
+        - "&c&lWarnung: Dies kann nicht rückgängig gemacht werden!"
+    deleted_successfully: "&aKopfgeld #{bounty_id} für &e{target_name} &aerfolgreich gelöscht!"
+    delete_failed: "&cFehler beim Löschen des Kopfgelds!"
+
+  reward:
+    title: "&6&lKopfgeld Belohnungen"
+    pseudo:
+      name: "&7Noch keine Belohnungen"
+      lore:
+        - "&7Füge unten Gegenstände hinzu"
+    reward_item:
+      lore:
+        - "&7Beigetragen von: &e{contributor_name}"
+    target:
+      name: "&eZiel: &f{target_name}"
+      lore:
+        - "&7Dieses Kopfgeld ist für"
+        - "&7Spieler: &f{target_name}"
+    input_slot:
+      name: "&a&lGegenstände hier einfügen"
+      lore:
+        - "&7Linksklick mit einem Gegenstand"
+        - "&7um ihn zum Kopfgeld hinzuzufügen"
+        - ""
+        - "&7Rechtsklick zum Entfernen"
+    no_new_items_inserted: "&cKeine neuen Gegenstände eingefügt!"
+    left_overs: "&eGegenstände wurden in dein Inventar zurückgegeben"
+
+  confirm:
+    delete:
+      title: "&c&lLöschung bestätigen"
+      message: "&cBist du sicher, dass du dieses Kopfgeld löschen möchtest?"
+
+common:
+  pagination:
+    previous: "&e← Vorherige Seite"
+    next: "&eNächste Seite →"
+  back: "&cZurück"
