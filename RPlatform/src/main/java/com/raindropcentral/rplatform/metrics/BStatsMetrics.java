@@ -19,6 +19,16 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * Provides a relocated copy of the bStats metrics implementation that schedules data collection,
+ * builds JSON payloads, and submits them to the bStats service on behalf of a {@link JavaPlugin}.
+ * The implementation mirrors the upstream API while respecting the repository's relocation
+ * requirements, allowing callers to register charts and control log verbosity at runtime.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class BStatsMetrics {
 
     private static final String METRICS_VERSION = "3.0.2";
@@ -29,6 +39,13 @@ public class BStatsMetrics {
     private final JavaPlugin plugin;
     private final MetricsCore core;
 
+    /**
+     * Creates a new metrics facade for the provided plugin.
+     *
+     * @param plugin   the plugin that owns the metrics instance
+     * @param serviceId the bStats service identifier assigned to the plugin
+     * @param isFolia  whether the plugin is currently running on Folia, used to register the folia chart
+     */
     public BStatsMetrics(final @NotNull JavaPlugin plugin, final int serviceId, final boolean isFolia) {
         this.plugin = Objects.requireNonNull(plugin, "Plugin cannot be null");
 
@@ -65,14 +82,29 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Registers a custom chart that will be evaluated during the next submission cycle.
+     *
+     * @param chart the chart to add
+     */
     public void addCustomChart(final @NotNull CustomChart chart) {
         core.addCustomChart(chart);
     }
 
+    /**
+     * Stops the underlying scheduler from submitting additional metrics payloads.
+     */
     public void shutdown() {
         core.shutdown();
     }
 
+    /**
+     * Loads the bStats configuration, creating the file with sensible defaults when missing and
+     * logging a warning if the file cannot be written to disk.
+     *
+     * @param configFile the configuration file to load
+     * @return the populated YAML configuration instance
+     */
     private @NotNull YamlConfiguration loadConfiguration(final @NotNull File configFile) {
         configFile.getParentFile().mkdirs();
         final YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
@@ -101,6 +133,12 @@ public class BStatsMetrics {
         return config;
     }
 
+    /**
+     * Appends platform specific data such as player counts, JVM metadata, and server information to
+     * the provided JSON builder.
+     *
+     * @param builder the JSON builder receiving platform fields
+     */
     private void appendPlatformData(final @NotNull JsonBuilder builder) {
         builder.appendField("playerAmount", Bukkit.getOnlinePlayers().size());
         builder.appendField("onlineMode", Bukkit.getOnlineMode() ? 1 : 0);
@@ -113,10 +151,24 @@ public class BStatsMetrics {
         builder.appendField("coreCount", Runtime.getRuntime().availableProcessors());
     }
 
+    /**
+     * Appends plugin specific data such as the plugin version to the provided JSON builder.
+     *
+     * @param builder the JSON builder receiving service fields
+     */
     private void appendServiceData(final @NotNull JsonBuilder builder) {
         builder.appendField("pluginVersion", plugin.getPluginMeta().getVersion());
     }
 
+    /**
+     * Coordinates the lifecycle of scheduled submissions, including data aggregation and HTTP
+     * transport to the bStats endpoint. Handles logging for lifecycle events and submission
+     * outcomes to aid diagnostics.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class MetricsCore {
 
         private static final int SCHEDULER_POOL_SIZE = 1;
@@ -141,6 +193,23 @@ public class BStatsMetrics {
         private final boolean logResponseStatus;
         private final Set<CustomChart> customCharts = ConcurrentHashMap.newKeySet();
 
+        /**
+         * Creates the metrics core that schedules submission tasks and manages logging.
+         *
+         * @param platform                the platform identifier reported to bStats
+         * @param serverUuid              the unique server UUID stored in the configuration
+         * @param serviceId               the metrics service identifier
+         * @param enabled                 whether metrics submissions should be scheduled
+         * @param platformDataConsumer    callback for populating platform metadata
+         * @param serviceDataConsumer     callback for populating plugin specific metadata
+         * @param taskConsumer            executor used to run submission tasks on the Bukkit scheduler
+         * @param serviceEnabledSupplier  supplier indicating whether the hosting plugin is enabled
+         * @param errorLogger             consumer invoked when an exception occurs
+         * @param infoLogger              consumer invoked for informational messages
+         * @param logErrors               whether caught exceptions should be logged
+         * @param logSentData             whether outbound payloads should be logged
+         * @param logResponseStatus       whether HTTP responses should be logged
+         */
         public MetricsCore(
                 final @NotNull String platform,
                 final @Nullable String serverUuid,
@@ -191,10 +260,18 @@ public class BStatsMetrics {
             }
         }
 
+        /**
+         * Adds the supplied chart to the registry so it contributes to future submissions.
+         *
+         * @param chart the chart to register
+         */
         public void addCustomChart(final @NotNull CustomChart chart) {
             customCharts.add(Objects.requireNonNull(chart));
         }
 
+        /**
+         * Shuts down the scheduler and logs the action when the core is active.
+         */
         public void shutdown() {
             if (!scheduler.isShutdown()) {
                 infoLogger.accept("[bStats] Shutting down metrics scheduler.");
@@ -202,6 +279,10 @@ public class BStatsMetrics {
             }
         }
 
+        /**
+         * Sets up the recurring submission tasks using randomized delays to reduce coordinated
+         * request bursts across servers.
+         */
         private void startSubmitting() {
             final Runnable submitTask = () -> {
                 if (!enabled || !serviceEnabledSupplier.get()) {
@@ -224,6 +305,9 @@ public class BStatsMetrics {
             );
         }
 
+        /**
+         * Collects chart data and enqueues the asynchronous HTTP submission job on the scheduler.
+         */
         private void submitData() {
             final JsonBuilder baseJson = new JsonBuilder();
             platformDataConsumer.accept(baseJson);
@@ -249,6 +333,12 @@ public class BStatsMetrics {
             scheduler.execute(() -> sendDataAsync(data));
         }
 
+        /**
+         * Sends the prepared payload while capturing and optionally logging exceptions using the
+         * provided error consumer.
+         *
+         * @param data the payload to transmit
+         */
         private void sendDataAsync(final @NotNull JsonBuilder.JsonObject data) {
             try {
                 sendData(data);
@@ -259,6 +349,13 @@ public class BStatsMetrics {
             }
         }
 
+        /**
+         * Performs the HTTP POST request to the bStats endpoint, logging the outbound payload and
+         * response when configured to do so.
+         *
+         * @param data the JSON payload to submit
+         * @throws IOException if the HTTP request cannot be completed
+         */
         private void sendData(final @NotNull JsonBuilder.JsonObject data) throws IOException {
             final String dataString = data.toString();
 
@@ -297,6 +394,10 @@ public class BStatsMetrics {
             }
         }
 
+        /**
+         * Verifies that the metrics class has been relocated away from the default bStats package,
+         * throwing an {@link IllegalStateException} when relocation is skipped.
+         */
         private void checkRelocation() {
             if ("false".equals(System.getProperty("bstats.relocatecheck"))) {
                 return;
@@ -314,6 +415,13 @@ public class BStatsMetrics {
             }
         }
 
+        /**
+         * Compresses the JSON payload before transport.
+         *
+         * @param str the payload string
+         * @return the compressed payload bytes
+         * @throws IOException if the compression stream cannot write
+         */
         private static byte[] compress(final @Nullable String str) throws IOException {
             if (str == null || str.isEmpty()) {
                 return new byte[0];
@@ -328,10 +436,23 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Base chart abstraction used by the metrics implementation to transform plugin provided data
+     * into JSON structures suitable for submission.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public abstract static class CustomChart {
 
         protected final String chartId;
 
+        /**
+         * Creates a chart with the supplied identifier.
+         *
+         * @param chartId the non-empty chart identifier registered with bStats
+         */
         protected CustomChart(final @NotNull String chartId) {
             if (chartId.isEmpty()) {
                 throw new IllegalArgumentException("Chart ID cannot be empty");
@@ -339,6 +460,14 @@ public class BStatsMetrics {
             this.chartId = chartId;
         }
 
+        /**
+         * Builds the JSON object representing this chart, logging errors when data gathering fails
+         * and error logging is enabled.
+         *
+         * @param errorLogger the logger used for chart specific failures
+         * @param logErrors   whether failures should be logged
+         * @return the chart JSON object or {@code null} when no data is available
+         */
         protected @Nullable JsonBuilder.JsonObject getRequestJsonObject(
                 final @NotNull BiConsumer<String, Throwable> errorLogger,
                 final boolean logErrors
@@ -363,13 +492,32 @@ public class BStatsMetrics {
             return builder.build();
         }
 
+        /**
+         * Collects the chart data.
+         *
+         * @return the chart JSON structure or {@code null} to skip submission
+         * @throws Exception when data collection fails
+         */
         protected abstract @Nullable JsonBuilder.JsonObject getChartData() throws Exception;
     }
 
+    /**
+     * Simple pie chart implementation that submits a single string value when provided.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class SimplePie extends CustomChart {
 
         private final Callable<String> callable;
 
+        /**
+         * Creates a simple pie chart backed by the provided callable.
+         *
+         * @param chartId the chart identifier
+         * @param callable supplies the chart value during submission
+         */
         public SimplePie(final @NotNull String chartId, final @NotNull Callable<String> callable) {
             super(chartId);
             this.callable = Objects.requireNonNull(callable);
@@ -385,10 +533,23 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Single line chart implementation that forwards integer values to bStats.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class SingleLineChart extends CustomChart {
 
         private final Callable<Integer> callable;
 
+        /**
+         * Creates a single line chart backed by the provided callable.
+         *
+         * @param chartId the chart identifier
+         * @param callable supplies the chart value during submission
+         */
         public SingleLineChart(final @NotNull String chartId, final @NotNull Callable<Integer> callable) {
             super(chartId);
             this.callable = Objects.requireNonNull(callable);
@@ -404,10 +565,23 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Advanced pie chart implementation that aggregates multiple labelled values.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class AdvancedPie extends CustomChart {
 
         private final Callable<Map<String, Integer>> callable;
 
+        /**
+         * Creates an advanced pie chart backed by the provided callable.
+         *
+         * @param chartId the chart identifier
+         * @param callable supplies the labelled values during submission
+         */
         public AdvancedPie(final @NotNull String chartId, final @NotNull Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = Objects.requireNonNull(callable);
@@ -439,10 +613,23 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Multi-line chart implementation that submits multiple integer time series values.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class MultiLineChart extends CustomChart {
 
         private final Callable<Map<String, Integer>> callable;
 
+        /**
+         * Creates a multi-line chart backed by the provided callable.
+         *
+         * @param chartId the chart identifier
+         * @param callable supplies the labelled series values during submission
+         */
         public MultiLineChart(final @NotNull String chartId, final @NotNull Callable<Map<String, Integer>> callable) {
             super(chartId);
             this.callable = Objects.requireNonNull(callable);
@@ -474,10 +661,23 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Drill-down pie chart implementation that emits nested value groups.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class DrillDownPie extends CustomChart {
 
         private final Callable<Map<String, Map<String, Integer>>> callable;
 
+        /**
+         * Creates a drill-down pie chart backed by the provided callable.
+         *
+         * @param chartId the chart identifier
+         * @param callable supplies the nested labelled values during submission
+         */
         public DrillDownPie(
                 final @NotNull String chartId,
                 final @NotNull Callable<Map<String, Map<String, Integer>>> callable
@@ -529,32 +729,71 @@ public class BStatsMetrics {
         }
     }
 
+    /**
+     * Lightweight JSON builder used to construct payloads without bringing in an additional
+     * dependency.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     public static final class JsonBuilder {
 
         private StringBuilder builder = new StringBuilder();
         private boolean firstField = true;
 
+        /**
+         * Creates a new builder instance.
+         */
         public JsonBuilder() {
             builder.append("{");
         }
 
+        /**
+         * Appends a string field to the JSON object.
+         *
+         * @param key   the JSON key
+         * @param value the string value to escape and append
+         * @return this builder for fluent chaining
+         */
         public @NotNull JsonBuilder appendField(final @NotNull String key, final @NotNull String value) {
             Objects.requireNonNull(value);
             appendFieldInternal(key, "\"" + escape(value) + "\"");
             return this;
         }
 
+        /**
+         * Appends an integer field to the JSON object.
+         *
+         * @param key   the JSON key
+         * @param value the integer value
+         * @return this builder for fluent chaining
+         */
         public @NotNull JsonBuilder appendField(final @NotNull String key, final int value) {
             appendFieldInternal(key, String.valueOf(value));
             return this;
         }
 
+        /**
+         * Appends a nested JSON object field.
+         *
+         * @param key    the JSON key
+         * @param object the object to include
+         * @return this builder for fluent chaining
+         */
         public @NotNull JsonBuilder appendField(final @NotNull String key, final @NotNull JsonObject object) {
             Objects.requireNonNull(object);
             appendFieldInternal(key, object.toString());
             return this;
         }
 
+        /**
+         * Appends an array field composed of nested JSON objects.
+         *
+         * @param key    the JSON key
+         * @param values the array of objects to include
+         * @return this builder for fluent chaining
+         */
         public @NotNull JsonBuilder appendField(final @NotNull String key, final @NotNull JsonObject[] values) {
             Objects.requireNonNull(values);
             final String arrayContent = Arrays.stream(values)
@@ -564,6 +803,12 @@ public class BStatsMetrics {
             return this;
         }
 
+        /**
+         * Internal helper that manages JSON commas and ensures keys are escaped.
+         *
+         * @param key          the JSON key
+         * @param escapedValue the already escaped value
+         */
         private void appendFieldInternal(final @NotNull String key, final @NotNull String escapedValue) {
             if (builder == null) {
                 throw new IllegalStateException("JSON has already been built");
@@ -578,6 +823,11 @@ public class BStatsMetrics {
             firstField = false;
         }
 
+        /**
+         * Completes JSON construction and returns the immutable representation.
+         *
+         * @return the resulting JSON object
+         */
         public @NotNull JsonObject build() {
             if (builder == null) {
                 throw new IllegalStateException("JSON has already been built");
@@ -587,6 +837,12 @@ public class BStatsMetrics {
             return result;
         }
 
+        /**
+         * Escapes a JSON string value.
+         *
+         * @param value the value to escape
+         * @return the escaped string
+         */
         private static @NotNull String escape(final @NotNull String value) {
             final StringBuilder sb = new StringBuilder(value.length() + 10);
 
@@ -613,10 +869,22 @@ public class BStatsMetrics {
             return sb.toString();
         }
 
+        /**
+         * Immutable wrapper around the raw JSON string produced by the builder.
+         *
+         * @author JExcellence
+         * @since 1.0.0
+         * @version 1.0.1
+         */
         public static final class JsonObject {
 
             private final String value;
 
+            /**
+             * Creates a new immutable JSON object wrapper.
+             *
+             * @param value the JSON string backing this object
+             */
             private JsonObject(final @NotNull String value) {
                 this.value = value;
             }
