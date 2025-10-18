@@ -171,6 +171,26 @@ metrics.addCustomChart(new BStatsMetrics.AdvancedPie("player_ranks", () -> {
 }));
 ```
 
+### 6. Localization Glue
+
+JExTranslate is configured by `com.raindropcentral.rplatform.localization.TranslationManager`,
+which RPlatform initializes asynchronously. The manager wires together the YAML repository,
+MiniMessage formatter, and auto-detecting locale resolver. Locale selection follows:
+
+1. Explicit overrides passed to `TranslationService.create(key, player, locale)` or `createFresh(...)`
+2. The player's cached locale from the active resolver
+3. The service default configured during bootstrap (defaults to `Locale.ENGLISH`)
+
+Locale caches are cleared whenever `TranslationManager.reload()` completes or when
+`setPlayerLocale(...)` is called. If you hot-swap repository files, formatter implementations,
+or resolver strategies, ensure `TranslationService.clearLocaleCache()` is triggered as part of
+your reload routine.
+
+Always route player-facing messages through the fluent `TranslationService` API so that
+MiniMessage formatting, prefixes, and placeholder chaining remain consistent. Translation YAML
+files live under `<plugin data folder>/translations`; the manager copies bundled defaults and
+reloads them on demand.
+
 ---
 
 ## Documentation
@@ -199,6 +219,8 @@ RPlatform/
 │   │   └── StatisticType.java
 │   ├── metrics/           # bStats integration
 │   │   └── BStatsMetrics.java
+│   ├── localization/      # JExTranslate glue and bootstrap
+│   │   └── TranslationManager.java
 │   ├── logger/            # Logging utilities
 │   │   └── CentralLogger.java
 │   └── RPlatform.java     # Main platform class

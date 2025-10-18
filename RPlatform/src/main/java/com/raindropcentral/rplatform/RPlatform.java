@@ -9,7 +9,7 @@ import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
-import com.raindropcentral.rplatform.translation.TranslationManager;
+import com.raindropcentral.rplatform.localization.TranslationManager;
 import de.jexcellence.evaluable.CommandUpdater;
 import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
