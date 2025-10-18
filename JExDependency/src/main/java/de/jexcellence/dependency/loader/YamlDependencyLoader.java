@@ -15,6 +15,11 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Loads dependency coordinate strings from YAML descriptors bundled alongside plugins or within their jars. The loader
+ * honours server-specific overrides (Paper vs Spigot) and parses simple list-style YAML without requiring additional
+ * libraries during bootstrap.
+ */
 public class YamlDependencyLoader {
 
     private static final String DEPENDENCIES_YAML_PATH = "/dependency/dependencies.yml";
@@ -28,11 +33,22 @@ public class YamlDependencyLoader {
     private final Logger logger;
     private final ServerType serverType;
 
+    /**
+     * Creates a loader that immediately determines the current server type for subsequent lookups.
+     */
     public YamlDependencyLoader() {
         this.logger = Logger.getLogger(getClass().getName());
         this.serverType = detectServerType();
     }
 
+    /**
+     * Loads dependency coordinates from YAML resources bundled alongside the provided anchor class. Server-specific
+     * YAML files are preferred when available and fall back to a generic descriptor.
+     *
+     * @param anchorClass class whose class loader will be used to resolve the YAML resources
+     *
+     * @return list of dependency coordinate strings or {@code null} when no descriptor exists
+     */
     public @Nullable List<String> loadDependencies(@NotNull final Class<?> anchorClass) {
         final String serverSpecificPath = getServerSpecificPath();
         if (serverSpecificPath != null) {
@@ -53,6 +69,14 @@ public class YamlDependencyLoader {
         return dependencies;
     }
 
+    /**
+     * Loads dependency coordinates from YAML resources packaged inside the given plugin jar. The method first attempts
+     * server-specific descriptors before falling back to the generic descriptor.
+     *
+     * @param jarPath path to the plugin jar to inspect
+     *
+     * @return list of dependency coordinate strings or {@code null} when no descriptor exists in the jar
+     */
     public @Nullable List<String> loadDependenciesFromJar(@NotNull final Path jarPath) {
         try (final JarFile jarFile = new JarFile(jarPath.toFile())) {
             final String serverSpecificPath = getServerSpecificPath();

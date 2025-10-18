@@ -30,28 +30,69 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipException;
 
+/**
+ * Paper-specific plugin loader that mirrors the runtime behaviour of {@link de.jexcellence.dependency.JEDependency}.
+ * The loader runs before the plugin's lifecycle methods, downloads dependencies declared in bundled YAML files, applies
+ * optional remapping/relocation rules and registers the resulting jars with Paper's {@link PluginClasspathBuilder}.
+ * It also records its presence via {@code paper.plugin.loader.active} to signal the plugin-side bootstrap to reuse the
+ * already downloaded libraries.
+ */
 @SuppressWarnings({"unused", "UnstableApiUsage"})
 public class PaperPluginLoader implements PluginLoader {
 
-    private static final String REMAP_PROPERTY = "jedependency.remap"; // values: auto (default), true, false
+    /**
+     * System property controlling whether remapping should run: {@code auto} (default), {@code true}, {@code false}.
+     */
+    private static final String REMAP_PROPERTY = "jedependency.remap";
+    /**
+     * System property containing explicit relocation mappings in {@code from=>to} form separated by commas.
+     */
     private static final String RELOCATIONS_PROPERTY = "jedependency.relocations";
+    /**
+     * System property specifying the prefix used for automatically detected package roots.
+     */
     private static final String RELOCATIONS_PREFIX_PROPERTY = "jedependency.relocations.prefix";
+    /**
+     * System property listing package roots that should be excluded from automatic relocation detection.
+     */
     private static final String RELOCATIONS_EXCLUDES_PROPERTY = "jedependency.relocations.excludes";
+    /**
+     * System property toggled to {@code true} while the Paper loader is active so plugin-side initialisation can react.
+     */
     private static final String PAPER_LOADER_PROPERTY = "paper.plugin.loader.active";
+    /**
+     * Directory name that stores remapped jars when remapping succeeds.
+     */
     private static final String REMAPPED_DIRECTORY_NAME = "remapped";
+    /**
+     * Directory name under the plugin data folder that stores downloaded libraries.
+     */
     private static final String LIBRARIES_DIRECTORY_NAME = "libraries";
+    /**
+     * Minimum size threshold used to reject obviously invalid jar outputs.
+     */
     private static final long MINIMUM_JAR_SIZE = 1024L;
 
     private final Logger logger;
     private final DependencyDownloader dependencyDownloader;
     private final YamlDependencyLoader yamlDependencyLoader;
 
+    /**
+     * Creates the loader with fresh downloader and YAML loader instances.
+     */
     public PaperPluginLoader() {
         this.logger = Logger.getLogger(getClass().getName());
         this.dependencyDownloader = new DependencyDownloader();
         this.yamlDependencyLoader = new YamlDependencyLoader();
     }
 
+    /**
+     * Prepares the plugin classpath by downloading declared dependencies, optionally remapping them and adding the
+     * resulting jar files to Paper's bootstrap classpath. The method is invoked by Paper on the main server thread
+     * during plugin discovery and therefore performs logging rather than throwing checked exceptions.
+     *
+     * @param classpathBuilder Paper builder used to register {@link JarLibrary} instances
+     */
     @Override
     public void classloader(@NotNull final PluginClasspathBuilder classpathBuilder) {
         System.setProperty(PAPER_LOADER_PROPERTY, "true");

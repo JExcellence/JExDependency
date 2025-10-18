@@ -11,16 +11,39 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Entry point for plugins to bootstrap the runtime dependency system. The class coordinates YAML discovery,
+ * repository downloads, optional remapping and classpath injection while keeping behaviour consistent with the Paper
+ * plugin loader. All invocations log progress to the hosting {@link JavaPlugin}'s logger so operators can follow the
+ * bootstrap sequence.
+ */
 public class JEDependency {
 
+    /**
+     * Fully qualified name of the optional remapping manager that is loaded reflectively to avoid a hard dependency.
+     */
     private static final String REMAPPING_MANAGER_CLASS = "de.jexcellence.dependency.remapper.RemappingDependencyManager";
+    /**
+     * System property controlling whether the remapping pipeline should be activated. Supported values mirror the
+     * Paper loader ("auto", "true", "false", and common synonyms).
+     */
     private static final String REMAP_PROPERTY = "jedependency.remap";
+    /**
+     * System property set when the Paper bootstrap loader is active to trigger injection of pre-downloaded libraries.
+     */
     private static final String PAPER_LOADER_PROPERTY = "paper.plugin.loader.active";
 
     private JEDependency() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
+    /**
+     * Initializes the dependency system synchronously using dependencies declared next to the supplied anchor class.
+     * The call blocks the server thread while dependencies are downloaded, remapped (if applicable) and injected.
+     *
+     * @param plugin       owning plugin providing the logger and data directory
+     * @param anchorClass  class used to locate dependency descriptors and the runtime class loader to inject into
+     */
     public static void initialize(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
@@ -28,6 +51,15 @@ public class JEDependency {
         initialize(plugin, anchorClass, null);
     }
 
+    /**
+     * Initializes the dependency system synchronously using both YAML descriptors and optional ad-hoc coordinates.
+     * The method is safe to invoke during {@code onLoad()} or {@code onEnable()} provided the caller can tolerate the
+     * blocking download/remapping work.
+     *
+     * @param plugin                  owning plugin providing the logger and data directory
+     * @param anchorClass             class used to locate dependency descriptors and the runtime class loader
+     * @param additionalDependencies  optional coordinates ({@code group:artifact:version[:classifier]}) appended to the YAML list
+     */
     public static void initialize(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass,
@@ -36,6 +68,13 @@ public class JEDependency {
         performInitialization(plugin, anchorClass, additionalDependencies, false);
     }
 
+    /**
+     * Initializes the dependency system synchronously while forcing the remapping pipeline. Use this when the plugin
+     * must guarantee relocations even if {@code -Djedependency.remap} is unset or evaluates to {@code false}.
+     *
+     * @param plugin       owning plugin providing the logger and data directory
+     * @param anchorClass  class used to locate dependency descriptors and the runtime class loader
+     */
     public static void initializeWithRemapping(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
@@ -43,6 +82,14 @@ public class JEDependency {
         initializeWithRemapping(plugin, anchorClass, null);
     }
 
+    /**
+     * Initializes the dependency system synchronously while forcing the remapping pipeline and allowing for additional
+     * dependency coordinates.
+     *
+     * @param plugin                  owning plugin providing the logger and data directory
+     * @param anchorClass             class used to locate dependency descriptors and the runtime class loader
+     * @param additionalDependencies  optional coordinates ({@code group:artifact:version[:classifier]}) appended to the YAML list
+     */
     public static void initializeWithRemapping(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass,
@@ -51,6 +98,15 @@ public class JEDependency {
         performInitialization(plugin, anchorClass, additionalDependencies, true);
     }
 
+    /**
+     * Initializes the dependency system on a separate thread, returning immediately with a {@link CompletableFuture}.
+     * The caller is responsible for awaiting the future before using classes provided by the managed dependencies.
+     *
+     * @param plugin       owning plugin providing the logger and data directory
+     * @param anchorClass  class used to locate dependency descriptors and the runtime class loader
+     *
+     * @return future that completes when downloads, optional remapping and injection have finished
+     */
     public static @NotNull CompletableFuture<Void> initializeAsync(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
@@ -58,6 +114,17 @@ public class JEDependency {
         return initializeAsync(plugin, anchorClass, null);
     }
 
+    /**
+     * Initializes the dependency system on a separate thread using both YAML descriptors and optional coordinates.
+     * The returned future executes downloads and optional remapping on a background worker but still performs logging
+     * via the plugin's logger.
+     *
+     * @param plugin                  owning plugin providing the logger and data directory
+     * @param anchorClass             class used to locate dependency descriptors and the runtime class loader
+     * @param additionalDependencies  optional coordinates ({@code group:artifact:version[:classifier]}) appended to the YAML list
+     *
+     * @return future that completes when downloads, optional remapping and injection have finished
+     */
     public static @NotNull CompletableFuture<Void> initializeAsync(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass,
@@ -68,6 +135,12 @@ public class JEDependency {
         });
     }
 
+    /**
+     * Determines the server distribution currently running so the dependency system can align logging and loader
+     * expectations (e.g. whether the Paper plugin loader pre-downloaded libraries).
+     *
+     * @return human-readable server type string for logging purposes
+     */
     public static @NotNull String getServerType() {
         if (isPaperPluginLoaderActive()) {
             return "Paper (with plugin loader)";
@@ -78,6 +151,12 @@ public class JEDependency {
         }
     }
 
+    /**
+     * Checks whether the runtime includes Paper-specific configuration classes, indicating Paper or a derivative build
+     * is in use. This allows the loader to favour Paper dependency sets when both Paper and Spigot descriptors exist.
+     *
+     * @return {@code true} if Paper classes are present, {@code false} otherwise
+     */
     public static boolean isPaperServer() {
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
@@ -133,6 +212,14 @@ public class JEDependency {
     }
 
     // Replace the injectPreDownloadedLibraries method body with:
+    /**
+     * Injects libraries that were prepared by the Paper plugin loader before the plugin's lifecycle callbacks run.
+     * The method prefers remapped outputs when available, logs successes/failures per file and keeps track of how many
+     * jars ultimately entered the runtime class loader.
+     *
+     * @param plugin       owning plugin used for logging and resolving the data directory
+     * @param anchorClass  class whose class loader receives the injected libraries
+     */
     private static void injectPreDownloadedLibraries(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
@@ -180,6 +267,11 @@ public class JEDependency {
                 + " from " + targetFolder.getName() + " into runtime classloader");
     }
 
+    /**
+     * Logs which dependency flavour (Paper or Spigot) will be preferred based on runtime detection.
+     *
+     * @param plugin plugin used for logging
+     */
     private static void logServerSpecificLoading(@NotNull final JavaPlugin plugin) {
         if (isPaperServer()) {
             plugin.getLogger().info("Server-specific dependency loading: Paper dependencies will be prioritized");
@@ -188,6 +280,12 @@ public class JEDependency {
         }
     }
 
+    /**
+     * Resolves whether remapping should be enabled based on the {@link #REMAP_PROPERTY} system property. The method
+     * recognises common boolean synonyms for user convenience.
+     *
+     * @return {@code true} if remapping is explicitly requested, {@code false} otherwise
+     */
     private static boolean shouldEnableRemapping() {
         final String propertyValue = System.getProperty(REMAP_PROPERTY);
         if (propertyValue == null) {

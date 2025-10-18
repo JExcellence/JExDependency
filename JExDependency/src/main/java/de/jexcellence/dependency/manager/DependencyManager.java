@@ -21,8 +21,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Core coordinator for synchronous dependency handling within a plugin lifecycle. The manager loads dependency
+ * coordinates from bundled YAML files and optional runtime additions, downloads missing artifacts, performs module
+ * de-encapsulation and injects the resulting jars into the plugin's class loader. Logging is routed through the plugin
+ * logger to match Bukkit/Paper diagnostics expectations.
+ */
 public class DependencyManager {
 
+    /**
+     * Directory name under the plugin's data folder where downloaded dependencies are cached.
+     */
     private static final String LIBRARIES_DIRECTORY = "libraries";
 
     private final Logger logger;
@@ -32,6 +41,13 @@ public class DependencyManager {
     private final ClasspathInjector injector;
     private final YamlDependencyLoader yamlLoader;
 
+    /**
+     * Creates a dependency manager bound to a plugin and anchor class. The anchor class determines both where YAML
+     * descriptors are located and which class loader will receive injected jars.
+     *
+     * @param plugin      owning plugin providing loggers and the data directory
+     * @param anchorClass class used to discover dependency descriptors and as injection target
+     */
     public DependencyManager(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass
@@ -44,6 +60,14 @@ public class DependencyManager {
         this.yamlLoader = new YamlDependencyLoader();
     }
 
+    /**
+     * Performs synchronous dependency resolution on the calling thread. The method blocks while downloads complete,
+     * performs module de-encapsulation to allow reflective classpath injection, and injects each successfully
+     * downloaded artifact into the plugin class loader.
+     *
+     * @param additionalDependencies optional coordinates ({@code group:artifact:version[:classifier]}) appended to the
+     *                               YAML-provided list
+     */
     public void initialize(@Nullable final String[] additionalDependencies) {
         logger.info("Initializing dependency management for: " + plugin.getName());
 
@@ -77,6 +101,16 @@ public class DependencyManager {
         logger.info("Dependency management initialization completed in " + duration + "ms");
     }
 
+    /**
+     * Runs dependency resolution asynchronously using virtual threads. Downloading and injection are executed on the
+     * returned {@link CompletableFuture}, while YAML parsing and configuration happen within the async task. Callers
+     * should inspect the resulting {@link ProcessingResult} to surface failures.
+     *
+     * @param additionalDependencies optional coordinates ({@code group:artifact:version[:classifier]}) appended to the
+     *                               YAML-provided list
+     *
+     * @return future reporting successful and failed coordinates together with total processing time
+     */
     public @NotNull CompletableFuture<ProcessingResult> initializeAsync(
             @Nullable final String[] additionalDependencies
     ) {
@@ -246,6 +280,10 @@ public class DependencyManager {
         logger.info("Libraries directory contains " + totalLibraries + " JAR files");
     }
 
+    /**
+     * Shuts down executor-backed collaborators such as {@link DependencyDownloader}. Invoking this during plugin
+     * disable ensures no lingering async download tasks remain.
+     */
     public void shutdown() {
         downloader.shutdown();
     }
