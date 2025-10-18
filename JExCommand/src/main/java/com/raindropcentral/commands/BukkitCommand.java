@@ -18,6 +18,14 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Abstract Bukkit command wrapper that bridges command execution to custom handlers while
+ * providing utility methods for argument parsing, error handling, and tab completion.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public abstract class BukkitCommand extends Command {
 	
 	protected static final List<String>                            EMPTY_STRING_LIST  = Collections.unmodifiableList(new ArrayList<>());
