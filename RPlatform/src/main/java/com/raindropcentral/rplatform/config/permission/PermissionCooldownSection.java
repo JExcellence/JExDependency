@@ -9,108 +9,111 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration section for permission-based cooldowns.
+ * Configuration section that maps permissions to cooldown durations expressed in seconds.
  * <p>
- * This section handles cooldown configuration based on player permissions,
- * allowing different cooldown periods for different permission groups.
- * It supports a default cooldown for players without specific permissions
- * and permission-specific overrides.
+ * Each permission can define its own cooldown override while a default value ensures fallbacks for
+ * players without specific permissions. The section selects the smallest positive cooldown (or zero
+ * for no cooldown) when multiple permissions apply, supporting fast-track permissions that reduce or
+ * remove cooldowns entirely.
  * </p>
  *
- * @author ItsRainingHP
- * @version 2.0.0
- * @since TBD
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public class PermissionCooldownSection extends APermissionBasedSection<Long> {
-    
+
     /**
-     * Default cooldown period in seconds for players without specific permissions.
-     * YAML key: "defaultCooldownSeconds"
+     * Default cooldown in seconds applied when no permission override matches ({@code defaultCooldownSeconds}).
      */
     private Long defaultCooldownSeconds;
-    
+
     /**
-     * Map of permissions to their specific cooldown periods in seconds.
-     * YAML key: "permissionCooldowns"
+     * Mapping of permission nodes to cooldown overrides from {@code permissionCooldowns}.
      */
     private Map<String, Long> permissionCooldowns;
-    
+
     /**
-     * Constructs a new PermissionCooldownSection.
+     * Creates the cooldown section backed by permission-aware overrides.
      *
-     * @param evaluationEnvironmentBuilder the evaluation environment builder
+     * @param evaluationEnvironmentBuilder mapper environment shared across sections
      */
     public PermissionCooldownSection(
         final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {
         super(evaluationEnvironmentBuilder);
     }
-    
+
     /**
-     * Gets the default cooldown in seconds.
+     * Returns the cooldown duration to apply when no permission override matches.
      *
-     * @return the default cooldown in seconds, or 0 if not specified
+     * @return default cooldown in seconds, falling back to {@code 0L}
      */
     public Long getDefaultCooldownSeconds() {
         return this.getDefaultValue();
     }
-    
+
     /**
-     * Gets the map of permission-specific cooldowns.
+     * Exposes the configured permission override map.
      *
-     * @return the map of permission to cooldown in seconds
+     * @return map linking permission nodes to cooldown durations in seconds
      */
     public Map<String, Long> getPermissionCooldowns() {
         return this.getPermissionValues();
     }
-    
+
     /**
-     * Gets the cooldown for a specific permission.
+     * Looks up the cooldown associated with a specific permission string.
      *
-     * @param permission the permission to check
-     * @return the cooldown in seconds for the permission, or null if not found
+     * @param permission permission node to inspect
+     * @return configured cooldown or {@code null} when the permission is absent
      */
     public Long getCooldownForPermission(
         final String permission
     ) {
         return this.getValueForPermission(permission);
     }
-    
+
     /**
-     * Checks if any permission-specific cooldowns are configured.
+     * Indicates whether the configuration defines any permission-based overrides.
      *
-     * @return true if permission cooldowns exist, false otherwise
+     * @return {@code true} when overrides exist
      */
     public boolean hasPermissionCooldowns() {
         return this.hasPermissionValues();
     }
-    
+
     /**
-     * Gets the effective cooldown for a player based on their permissions.
+     * Computes the cooldown for the supplied player, respecting overrides and bounds.
      *
-     * @param player the player to check cooldown for
-     * @return the effective cooldown in seconds
+     * @param player player whose cooldown should be calculated
+     * @return resolved cooldown in seconds
      */
     public Long getEffectiveCooldown(
         final Player player
     ) {
         return this.getEffectiveValue(player);
     }
-    
+
     /**
-     * Gets the effective cooldown based on a set of permissions.
+     * Computes the cooldown for an already-collected permission set.
      *
-     * @param playerPermissions the permissions to check
-     * @return the effective cooldown in seconds
+     * @param playerPermissions permissions associated with the player
+     * @return resolved cooldown in seconds
      */
     public Long getEffectiveCooldown(
         final Set<String> playerPermissions
     ) {
         return this.getEffectiveValue(playerPermissions);
     }
-    
-    
+
+
+    /**
+     * Provides the default cooldown when no permission override applies.
+     *
+     * @return configured default cooldown or {@code 0L}
+     */
     @Override
     protected Long getDefaultValue() {
         if (
@@ -118,29 +121,46 @@ public class PermissionCooldownSection extends APermissionBasedSection<Long> {
         ) {
             return this.defaultCooldownSeconds;
         }
-        
+
         return 0L;
     }
-    
+
+    /**
+     * Supplies a copy of the permission-to-cooldown map.
+     *
+     * @return mutable copy of configured cooldown overrides
+     */
     @Override
     protected Map<String, Long> getPermissionValues() {
         final Map<String, Long> cooldowns = new HashMap<>();
-        
+
         if (
             this.permissionCooldowns != null
         ) {
             cooldowns.putAll(this.permissionCooldowns);
         }
-        
+
         return cooldowns;
     }
-    
+
+    /**
+     * Uses the "best" strategy by default so shorter cooldowns take precedence.
+     *
+     * @return {@code true} indicating the resolver should search for the optimal value
+     */
     @Override
     protected boolean getDefaultUseBestValue() {
-        
+
         return true;
     }
-    
+
+    /**
+     * Chooses the lower non-zero cooldown so high-tier permissions reduce waiting time.
+     *
+     * @param current   current best cooldown
+     * @param candidate candidate cooldown under evaluation
+     * @return smallest cooldown, favouring {@code 0L} when present
+     */
     @Override
     protected Long chooseBestValue(
         final Long current,
@@ -160,7 +180,14 @@ public class PermissionCooldownSection extends APermissionBasedSection<Long> {
         
         return Math.min(current, candidate);
     }
-    
+
+    /**
+     * Determines if the candidate cooldown is preferable to the current best.
+     *
+     * @param candidate candidate cooldown
+     * @param current   current best cooldown
+     * @return {@code true} when {@code candidate} shortens the cooldown window
+     */
     @Override
     protected boolean isBetterValue(
         final Long candidate,
@@ -180,7 +207,13 @@ public class PermissionCooldownSection extends APermissionBasedSection<Long> {
         
         return candidate < current;
     }
-    
+
+    /**
+     * Ensures cooldown values are non-null and not negative.
+     *
+     * @param value cooldown value to validate
+     * @return {@code true} when the cooldown is zero or positive
+     */
     @Override
     protected boolean isValidValue(
         final Long value

@@ -11,9 +11,27 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Configuration section that normalizes duration values declared in YAML.
+ * <p>
+ * The mapper supports both structured entries (for example {@code seconds: 30}) and free-form
+ * strings such as {@code 1d 3h 5m}. All parsed values are exposed in seconds while retaining helper
+ * accessors for alternative time units. This allows downstream features to work with consistent
+ * numeric representations regardless of how administrators describe the duration in configuration
+ * files.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 @CSAlways
 public class DurationSection extends AConfigSection {
 
+    /**
+     * Pattern that captures compound duration strings such as {@code 1w 2d 3h}.
+     * The groups are ordered from weeks down to seconds to simplify the seconds aggregation logic.
+     */
     private static final Pattern DURATION_PATTERN = Pattern.compile(
             "(?:(\\d+)\\s*(?:w|week|weeks)\\s*)?" +
                     "(?:(\\d+)\\s*(?:d|day|days)\\s*)?" +
@@ -23,8 +41,15 @@ public class DurationSection extends AConfigSection {
             Pattern.CASE_INSENSITIVE
     );
 
+    /**
+     * Pattern used to short-circuit pure numeric values which implicitly represent seconds.
+     */
     private static final Pattern NUMBER_PATTERN = Pattern.compile("^\\d+$");
 
+    /**
+     * Lookup table mapping textual units to their second multiplier. This supports abbreviated and
+     * long-form tokens so administrators can use their preferred vocabulary.
+     */
     private static final Map<String, Long> TIME_UNITS = new HashMap<>();
 
     static {
@@ -48,18 +73,56 @@ public class DurationSection extends AConfigSection {
         TIME_UNITS.put("weeks", 604800L);
     }
 
+    /**
+     * Raw duration string as provided via {@code duration:} in YAML.
+     */
     private String duration;
+
+    /**
+     * Alternative legacy key representing a duration string.
+     */
     private String time;
+
+    /**
+     * Secondary alias accepted for backwards compatibility with existing data files.
+     */
     private String period;
+
+    /**
+     * Structured override that defines a fixed number of seconds.
+     */
     private Long seconds;
+
+    /**
+     * Structured override expressed in minutes.
+     */
     private Long minutes;
+
+    /**
+     * Structured override expressed in hours.
+     */
     private Long hours;
+
+    /**
+     * Structured override expressed in days.
+     */
     private Long days;
 
+    /**
+     * Creates a new duration section configured with the provided evaluation environment so that
+     * embedded expressions resolve consistently with other configuration sections.
+     *
+     * @param evaluationEnvironmentBuilder builder that supplies the shared expression context
+     */
     public DurationSection(final @NotNull EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
     }
 
+    /**
+     * Resolves the first non-empty raw duration string supplied by any supported key.
+     *
+     * @return sanitized duration string or {@code null} when all textual entries are blank
+     */
     public @Nullable String getRawDuration() {
         if (this.duration != null && !this.duration.trim().isEmpty()) {
             return this.duration.trim();
@@ -73,6 +136,12 @@ public class DurationSection extends AConfigSection {
         return null;
     }
 
+    /**
+     * Computes the duration in seconds by prioritizing textual entries, falling back to structured
+     * numeric keys when necessary.
+     *
+     * @return duration in seconds, defaulting to {@code 0L} when nothing is configured
+     */
     public @NotNull Long getSeconds() {
         final String rawDuration = this.getRawDuration();
         if (rawDuration != null) {
@@ -98,22 +167,54 @@ public class DurationSection extends AConfigSection {
         return 0L;
     }
 
+    /**
+     * Converts the resolved seconds into milliseconds for APIs that expect millisecond precision.
+     *
+     * @return total milliseconds represented by this configuration (never {@code null})
+     */
     public @NotNull Long getMilliseconds() {
         return this.getSeconds() * 1000L;
     }
 
+    /**
+     * Converts the resolved seconds into whole minutes using integer division.
+     *
+     * @return total minutes represented by this configuration
+     */
     public @NotNull Long getMinutes() {
         return this.getSeconds() / 60L;
     }
 
+    /**
+     * Converts the resolved seconds into whole hours using integer division.
+     *
+     * @return total hours represented by this configuration
+     */
     public @NotNull Long getHours() {
         return this.getSeconds() / 3600L;
     }
 
+    /**
+     * Converts the resolved seconds into whole days using integer division.
+     *
+     * @return total days represented by this configuration
+     */
     public @NotNull Long getDays() {
         return this.getSeconds() / 86400L;
     }
 
+    /**
+     * Attempts to parse the supplied duration string into seconds.
+     * <p>
+     * Compound values (for example {@code 1d 2h}) use {@link #DURATION_PATTERN} while simple
+     * {@code value+unit} pairs rely on {@link #parseSimpleDuration(String)}. Numeric-only tokens are
+     * treated as seconds by default. Invalid tokens quietly return {@code null} so callers can try
+     * additional fallbacks.
+     * </p>
+     *
+     * @param durationStr free-form duration text from configuration
+     * @return parsed seconds, or {@code null} when parsing fails
+     */
     private @Nullable Long parseDurationString(final @Nullable String durationStr) {
         if (durationStr == null || durationStr.trim().isEmpty()) {
             return null;
@@ -138,6 +239,12 @@ public class DurationSection extends AConfigSection {
         return totalSeconds > 0 ? totalSeconds : null;
     }
 
+    /**
+     * Aggregates the regex matcher groups into a total second count.
+     *
+     * @param matcher matcher that already satisfied {@link #DURATION_PATTERN}
+     * @return total seconds represented by the captured groups
+     */
     private long getTotalSeconds(final @NotNull Matcher matcher) {
         long totalSeconds = 0L;
 
@@ -160,6 +267,12 @@ public class DurationSection extends AConfigSection {
         return totalSeconds;
     }
 
+    /**
+     * Parses simple {@code <number><unit>} pairs (for example {@code 30m}) into seconds.
+     *
+     * @param durationStr sanitized string containing a single numeric value and unit token
+     * @return seconds represented by the pair, or {@code null} when no matching unit exists
+     */
     private @Nullable Long parseSimpleDuration(final @NotNull String durationStr) {
         final Pattern simplePattern = Pattern.compile("^(\\d+)\\s*([a-z]+)$", Pattern.CASE_INSENSITIVE);
         final Matcher matcher = simplePattern.matcher(durationStr);
@@ -182,10 +295,20 @@ public class DurationSection extends AConfigSection {
         return null;
     }
 
+    /**
+     * Indicates whether the configuration resolves to a non-zero duration.
+     *
+     * @return {@code true} when at least one supported input produces a positive value
+     */
     public boolean hasDuration() {
         return this.getSeconds() > 0L;
     }
 
+    /**
+     * Renders the configured duration into a human-readable string such as {@code 2 hours 5 minutes}.
+     *
+     * @return formatted duration description, or {@code "0 seconds"} when nothing is configured
+     */
     public @NotNull String getFormattedDuration() {
         final long totalSeconds = this.getSeconds();
 
@@ -224,6 +347,12 @@ public class DurationSection extends AConfigSection {
         return sb.toString();
     }
 
+    /**
+     * Validates that the configured duration resolves to a non-negative value and that any textual
+     * representation can be parsed.
+     *
+     * @throws IllegalStateException when parsing fails or the computed seconds are negative
+     */
     public void validate() {
         final Long seconds = this.getSeconds();
         if (seconds < 0) {
