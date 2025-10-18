@@ -26,28 +26,43 @@ import java.util.logging.Level;
 @SuppressWarnings("unchecked")
 public class CommandFactory {
 
+    /**
+     * Root folder that stores command configuration files under the plugin's data directory.
+     */
     private static final String COMMANDS_FOLDER = "commands";
+    /**
+     * Configuration key that contains permission metadata within each command section.
+     */
     private static final String PERMISSIONS_SECTION = "permissions";
 
+    /**
+     * Plugin whose class loader is scanned for command and listener classes.
+     */
     private final JavaPlugin loadedPlugin;
+    /**
+     * Optional context object forwarded to handlers requiring additional state (for example RDQ variants).
+     */
     private final Object contextObject; // Can be RDQ, RDQFree, RDQPremium, or any other context
+    /**
+     * Synchronizes Paper/Bukkit's command map with the generated command instances.
+     */
     private final CommandUpdater commandUpdater;
 
     /**
-     * Constructor for CommandFactory without context object (legacy support).
+     * Constructor for CommandFactory without a context object (legacy support).
      *
-     * @param loadedPlugin The JavaPlugin instance
+     * @param loadedPlugin the JavaPlugin instance being bootstrapped
      */
     public CommandFactory(final @NotNull JavaPlugin loadedPlugin) {
         this(loadedPlugin, null);
     }
 
     /**
-     * Constructor for CommandFactory with context object.
-     * The context object will be passed to commands and listeners that accept it.
+     * Constructor for CommandFactory with an optional context object.
+     * The context object is forwarded to commands or listeners when their constructors declare it so.
      *
-     * @param loadedPlugin  The JavaPlugin instance
-     * @param contextObject Optional context object (e.g., RDQ instance) to pass to commands/listeners
+     * @param loadedPlugin  the JavaPlugin instance being bootstrapped
+     * @param contextObject optional context object (e.g., RDQ instance) to pass to commands/listeners
      */
     public CommandFactory(
             final @NotNull JavaPlugin loadedPlugin,
@@ -58,6 +73,17 @@ public class CommandFactory {
         this.commandUpdater = new CommandUpdater(this.loadedPlugin);
     }
 
+    /**
+     * Scans the plugin classpath for command and listener implementations annotated with
+     * {@link com.raindropcentral.commands.utility.Command} and registers them.
+     * <p>
+     * The discovery process performs two passes:
+     * <ul>
+     *     <li>Command classes under {@code *command*} packages are instantiated via {@link #registerCommand(Class)}.</li>
+     *     <li>Listener classes under {@code *listener*} packages are instantiated via {@link #registerListener(Class)}.</li>
+     * </ul>
+     * Any exception during discovery is logged and does not halt plugin enablement.
+     */
     public void registerAllCommandsAndListeners() {
         try {
             ClassPath.from(this.loadedPlugin.getClass().getClassLoader())
@@ -93,6 +119,21 @@ public class CommandFactory {
         }
     }
 
+    /**
+     * Instantiates a command class by locating its configuration section, selecting the most specific
+     * constructor, and delegating to the {@link CommandUpdater} for registration.
+     * <p>
+     * Constructor selection follows these precedence rules:
+     * <ol>
+     *     <li>Exact match with the configured context object's class.</li>
+     *     <li>Constructor whose parameter type is assignable from the context object's class.</li>
+     *     <li>Constructor accepting the concrete {@link JavaPlugin} implementation.</li>
+     *     <li>Constructor whose second parameter matches any superclass of the plugin (checked via
+     *     {@link #isAssignableFromSuperclass(Class, Class)}).</li>
+     * </ol>
+     *
+     * @param commandClass discovered command implementation annotated with {@link Command}
+     */
     private void registerCommand(Class<?> commandClass) {
         try {
             String className = commandClass.getSimpleName();
@@ -193,6 +234,16 @@ public class CommandFactory {
         }
     }
 
+    /**
+     * Loads a command configuration section, ensuring the YAML file and section type follow the
+     * naming conventions documented in {@code AGENTS.md}.
+     *
+     * @param configFileName expected YAML file name (e.g. {@code Example.yml})
+     * @param sectionClass   configuration section type corresponding to the command
+     * @param className      command simple name used to compute the configuration path
+     * @return hydrated command section instance ready for use in the command constructor
+     * @throws Exception when the configuration cannot be loaded or mapped to the section class
+     */
     private ACommandSection getACommandSection(String configFileName, Class<? extends ACommandSection> sectionClass, String className) throws Exception {
         final ConfigManager cfgManager = new ConfigManager(
                 this.loadedPlugin,
@@ -210,12 +261,13 @@ public class CommandFactory {
     }
 
     /**
-     * Safely checks if a target type is assignable from any superclass in the hierarchy.
-     * Prevents NullPointerException by checking for null at each step.
+     * Safely checks whether {@code targetType} is assignable from any superclass of {@code sourceClass}.
+     * The helper is used when evaluating constructor compatibility against the plugin type while
+     * guarding against {@code null} superclasses.
      *
-     * @param targetType The type to check against
-     * @param sourceClass The class whose hierarchy to traverse
-     * @return true if targetType is assignable from any superclass in the hierarchy
+     * @param targetType  type being matched (typically the constructor parameter)
+     * @param sourceClass class whose hierarchy should be inspected
+     * @return {@code true} when the target type matches any superclass, otherwise {@code false}
      */
     private boolean isAssignableFromSuperclass(Class<?> targetType, Class<?> sourceClass) {
         Class<?> current = sourceClass.getSuperclass();
@@ -229,11 +281,15 @@ public class CommandFactory {
     }
 
     /**
-     * Enhanced listener registration that supports multiple constructor patterns:
-     * 1. Constructor(JavaPlugin) - legacy pattern
-     * 2. Constructor(ContextObject) - e.g., Constructor(RDQ)
-     * 3. Constructor(ConcreteContextObject) - e.g., Constructor(RDQFree) or Constructor(RDQPremium)
-     * The method tries constructors in order of specificity.
+     * Instantiates a listener class and registers it with Bukkit's {@link org.bukkit.event.PluginManager}.
+     * Constructor precedence mirrors command registration but for single-argument constructors:
+     * <ol>
+     *     <li>Exact match with the context object's class.</li>
+     *     <li>Constructor whose parameter type is assignable from the context object's class.</li>
+     *     <li>Constructor receiving the concrete {@link JavaPlugin} implementation.</li>
+     * </ol>
+     *
+     * @param listenerClass discovered listener implementation under a {@code *listener*} package
      */
     private void registerListener(final @NotNull Class<?> listenerClass) {
         try {
@@ -306,11 +362,21 @@ public class CommandFactory {
         }
     }
 
+    /**
+     * Returns the plugin instance being scanned by the factory.
+     *
+     * @return plugin provided during construction
+     */
     @NotNull
     public JavaPlugin getLoadedPlugin() {
         return this.loadedPlugin;
     }
 
+    /**
+     * Returns the optional context object forwarded to commands and listeners.
+     *
+     * @return configured context object or {@code null} when none was supplied
+     */
     @Nullable
     public Object getContextObject() {
         return this.contextObject;
