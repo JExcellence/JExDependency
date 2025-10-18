@@ -1,5 +1,7 @@
 # RDQ Module Contributor Notes
 
+> **Note:** Read the root `AGENTS.md` for repository-wide workflow, commit, and testing guidelines before following the module-specific notes below.
+
 ## Lifecycle Overview
 - **Staged enable pipeline**
   1. **Platform initialization** occurs before any gameplay components spin up. Use this stage to resolve edition-specific services and bind shared platform primitives.

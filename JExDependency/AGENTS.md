@@ -1,5 +1,7 @@
 # JExDependency Contributor Notes
 
+> **Note:** Read the root `AGENTS.md` for repository-wide workflow, commit, and testing guidelines before following the module-specific notes below.
+
 ## Initialization entrypoints
 - `JEDependency.initialize(plugin, anchorClass[, additionalDependencies])` performs synchronous dependency loading through `DependencyManager`. Use this for the common Paper/Spigot flow when your plugin can block during `onLoad`/`onEnable` and you do **not** need remapping. Internally it collects YAML + optional extras, downloads the jars into `<data>/libraries`, de-encapsulates modules, and injects them before returning.
 - `JEDependency.initializeAsync(plugin, anchorClass[, additionalDependencies])` delegates to `DependencyManager.initializeAsync`. Choose this when startup needs to continue without waiting for downloads; you are responsible for awaiting the returned `CompletableFuture` before touching classes supplied by runtime dependencies.

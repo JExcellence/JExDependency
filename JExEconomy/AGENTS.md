@@ -1,5 +1,7 @@
 # JExEconomy Contributor Notes
 
+> **Note:** Read the root `AGENTS.md` for repository-wide workflow, commit, and testing guidelines before following the module-specific notes below.
+
 ## Architecture Overview
 - Maintain the multi-currency service layout: core balance engines, transaction audit logging, and administrative tooling must stay modular so Paper integrations can compose the pieces independently.
 - Ensure logging hooks cover both player-facing operations and backend reconciliation routines; extending appenders should not bypass existing audit trails.

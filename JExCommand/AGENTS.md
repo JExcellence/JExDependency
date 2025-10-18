@@ -1,5 +1,7 @@
 # JExCommand Agent Notes
 
+> **Note:** Read the root `AGENTS.md` for repository-wide workflow, commit, and testing guidelines before following the module-specific notes below.
+
 ## Documentation standards
 - Keep documentation in this module concise and organized using Markdown headings.
 - When describing command workflows, reference required annotations, classes, and configuration naming conventions explicitly.
