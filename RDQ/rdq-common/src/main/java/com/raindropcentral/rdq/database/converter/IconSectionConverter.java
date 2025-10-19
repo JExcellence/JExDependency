@@ -14,11 +14,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Hibernate converter for {@link IconSection} objects.
- * Converts IconSection instances to/from JSON strings for database storage.
+ * Hibernate converter for {@link IconSection IconSection} objects that serializes and
+ * deserializes section data to JSON for persistence.
+ * <p>
+ * This converter focuses on a minimal subset of {@link IconSection} state that is required
+ * to rebuild icon metadata inside quest definitions. Each conversion lazily instantiates a new
+ * {@link IconSection} backed by {@link EvaluationEnvironmentBuilder} to mirror how sections are
+ * normally created at runtime.
+ * </p>
  *
  * @author JExcellence
- * @version 1.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Converter(autoApply = true)
 public class IconSectionConverter implements AttributeConverter<IconSection, String> {
@@ -28,11 +35,13 @@ public class IconSectionConverter implements AttributeConverter<IconSection, Str
     private static final ConverterTool CONVERTER_TOOL = new ConverterTool();
     
     /**
-     * Converts an IconSection to its JSON string representation for database storage.
+     * Converts an {@link IconSection} to its JSON representation for database persistence.
      *
-     * @param iconSection the IconSection to convert
+     * @param iconSection the {@link IconSection} to convert; may be {@code null}
      *
-     * @return JSON string representation, or null if input is null
+     * @return JSON representation of the section, or {@code null} when the input is {@code null}
+     *
+     * @throws RuntimeException if serialization fails because Jackson cannot process the section
      */
     @Override
     public String convertToDatabaseColumn(@Nullable final IconSection iconSection) {
@@ -63,11 +72,15 @@ public class IconSectionConverter implements AttributeConverter<IconSection, Str
     }
     
     /**
-     * Converts a JSON string back to an IconSection instance.
+     * Converts a JSON payload from the database back into an {@link IconSection} instance.
      *
-     * @param jsonString the JSON string from database
+     * @param jsonString the JSON payload produced by {@link #convertToDatabaseColumn(IconSection)};
+     *                   blank or {@code null} values yield a default {@link IconSection}
      *
-     * @return reconstructed IconSection, or null if input is null
+     * @return reconstructed {@link IconSection} backed by a fresh
+     *         {@link EvaluationEnvironmentBuilder}
+     *
+     * @throws RuntimeException if the payload cannot be deserialized into a valid section snapshot
      */
     @Override
     public IconSection convertToEntityAttribute(
@@ -139,8 +152,9 @@ public class IconSectionConverter implements AttributeConverter<IconSection, Str
     }
     
     /**
-     * Data transfer object for JSON serialization/deserialization.
-     * Contains the essential data from IconSection that needs to be persisted.
+     * Data transfer object representing the persistable properties of an {@link IconSection}.
+     * The {@link ObjectMapper} uses this structure to serialize and deserialize quest icon
+     * metadata cleanly without exposing the internal state of the {@link IconSection} itself.
      */
     private static class IconSectionData {
         
@@ -149,16 +163,16 @@ public class IconSectionConverter implements AttributeConverter<IconSection, Str
         public String descriptionKey;
         
         /**
-         * Default constructor for Jackson deserialization.
+         * Default constructor required by Jackson during deserialization.
          */
         public IconSectionData() {}
         
         /**
-         * Constructor for creating data object from IconSection.
+         * Constructs a snapshot representing an {@link IconSection IconSection's} persisted state.
          *
-         * @param material       the material type
-         * @param displayNameKey the display name localization key
-         * @param descriptionKey the description localization key
+         * @param material       the Bukkit material identifier backing the icon
+         * @param displayNameKey the translation key for the display name
+         * @param descriptionKey the translation key for the description tooltip
          */
         public IconSectionData(
            final @Nullable String material,
