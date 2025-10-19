@@ -14,121 +14,122 @@ import java.util.concurrent.TimeUnit;
 /**
  * Configuration section for playtime-based requirements.
  * <p>
- * This section handles all configuration options specific to PlaytimeRequirement,
- * including required playtime in various units, world-specific requirements,
- * and conversion utilities.
+ * This section handles all configuration options specific to {@code PlaytimeRequirement},
+ * including required playtime in various units, world-specific requirements, and
+ * conversion utilities that normalize each configuration input to seconds for downstream
+ * validation.
  * </p>
  *
  * @author JExcellence
- * @version 1.1.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public class PlaytimeRequirementSection extends AConfigSection {
 	
-	/**
-	 * Required playtime in seconds.
-	 * YAML key: "requiredPlaytimeSeconds"
-	 */
-	private Long requiredPlaytimeSeconds;
-	
-	/**
-	 * Playtime in minutes (converted to seconds).
-	 * YAML key: "requiredPlaytimeMinutes"
-	 */
-	private Long requiredPlaytimeMinutes;
-	
-	/**
-	 * Playtime in hours (converted to seconds).
-	 * YAML key: "requiredPlaytimeHours"
-	 */
-	private Long requiredPlaytimeHours;
-	
-	/**
-	 * Playtime in days (converted to seconds).
-	 * YAML key: "requiredPlaytimeDays"
-	 */
-	private Long requiredPlaytimeDays;
-	
-	/**
-	 * Alternative time field name.
-	 * YAML key: "time"
-	 */
-	private Long time;
-	
-	/**
-	 * Time unit for the time field (seconds, minutes, hours, days).
-	 * YAML key: "timeUnit"
-	 */
-	private String timeUnit;
-	
-	/**
-	 * Whether to use total playtime across all worlds (true) or world-specific playtime (false).
-	 * YAML key: "useTotalPlaytime"
-	 */
-	private Boolean useTotalPlaytime;
-	
-	/**
-	 * Map of world names to required playtime in seconds for world-specific validation.
-	 * YAML key: "worldPlaytimeRequirements"
-	 */
-	private Map<String, Long> worldPlaytimeRequirements;
-	
-	/**
-	 * List of world names where playtime should be tracked.
-	 * YAML key: "worlds"
-	 */
-	private List<String> worlds;
-	
-	/**
-	 * Required playtime for each world in the worlds list (applies to all worlds equally).
-	 * YAML key: "worldPlaytimeSeconds"
-	 */
-	private Long worldPlaytimeSeconds;
-	
-	/**
-	 * Required playtime for each world in minutes.
-	 * YAML key: "worldPlaytimeMinutes"
-	 */
-	private Long worldPlaytimeMinutes;
-	
-	/**
-	 * Required playtime for each world in hours.
-	 * YAML key: "worldPlaytimeHours"
-	 */
-	private Long worldPlaytimeHours;
-	
-	/**
-	 * Required playtime for each world in days.
-	 * YAML key: "worldPlaytimeDays"
-	 */
-	private Long worldPlaytimeDays;
-	
-	/**
-	 * Optional description for this playtime requirement.
-	 * YAML key: "description"
-	 */
-	private String description;
-	
-	/**
-	 * Constructs a new PlaytimeRequirementSection.
-	 *
-	 * @param evaluationEnvironmentBuilder the evaluation environment builder
-	 */
-	public PlaytimeRequirementSection(
-		final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
-	) {
-		super(evaluationEnvironmentBuilder);
-	}
-	
-	/**
-	 * Gets the required playtime in seconds, converting from other units if necessary.
-	 *
-	 * @return the required playtime in seconds
-	 */
-	public Long getRequiredPlaytimeSeconds() {
-		if (this.requiredPlaytimeSeconds != null) {
-			return this.requiredPlaytimeSeconds;
+        /**
+         * Required playtime in seconds as declared in configuration.
+         * YAML key: {@code requiredPlaytimeSeconds}.
+         */
+        private Long requiredPlaytimeSeconds;
+
+        /**
+         * Required playtime in minutes, converted to seconds for evaluation.
+         * YAML key: {@code requiredPlaytimeMinutes}.
+         */
+        private Long requiredPlaytimeMinutes;
+
+        /**
+         * Required playtime in hours, converted to seconds for evaluation.
+         * YAML key: {@code requiredPlaytimeHours}.
+         */
+        private Long requiredPlaytimeHours;
+
+        /**
+         * Required playtime in days, converted to seconds for evaluation.
+         * YAML key: {@code requiredPlaytimeDays}.
+         */
+        private Long requiredPlaytimeDays;
+
+        /**
+         * Alternative time field name that pairs with {@link #timeUnit} for dynamic unit selection.
+         * YAML key: {@code time}.
+         */
+        private Long time;
+
+        /**
+         * Time unit for the {@link #time} field (seconds, minutes, hours, days, or weeks).
+         * YAML key: {@code timeUnit}.
+         */
+        private String timeUnit;
+
+        /**
+         * Whether to use total playtime across all worlds ({@code true}) or world-specific playtime ({@code false}).
+         * YAML key: {@code useTotalPlaytime}.
+         */
+        private Boolean useTotalPlaytime;
+
+        /**
+         * Map of world names to required playtime in seconds for world-specific validation.
+         * YAML key: {@code worldPlaytimeRequirements}.
+         */
+        private Map<String, Long> worldPlaytimeRequirements;
+
+        /**
+         * List of world names where playtime should be tracked.
+         * YAML key: {@code worlds}.
+         */
+        private List<String> worlds;
+
+        /**
+         * Required playtime for each world in {@link #worlds}, applied uniformly across all entries.
+         * YAML key: {@code worldPlaytimeSeconds}.
+         */
+        private Long worldPlaytimeSeconds;
+
+        /**
+         * Required playtime for each world in minutes, converted to seconds.
+         * YAML key: {@code worldPlaytimeMinutes}.
+         */
+        private Long worldPlaytimeMinutes;
+
+        /**
+         * Required playtime for each world in hours, converted to seconds.
+         * YAML key: {@code worldPlaytimeHours}.
+         */
+        private Long worldPlaytimeHours;
+
+        /**
+         * Required playtime for each world in days, converted to seconds.
+         * YAML key: {@code worldPlaytimeDays}.
+         */
+        private Long worldPlaytimeDays;
+
+        /**
+         * Optional description for this playtime requirement that can be surfaced in GUIs.
+         * YAML key: {@code description}.
+         */
+        private String description;
+
+        /**
+         * Constructs a new {@code PlaytimeRequirementSection} bound to the supplied evaluation environment.
+         *
+         * @param evaluationEnvironmentBuilder the evaluation environment builder used to resolve dynamic expressions
+         */
+        public PlaytimeRequirementSection(
+                final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
+        ) {
+                super(evaluationEnvironmentBuilder);
+        }
+
+        /**
+         * Resolves the required playtime in seconds, converting from any alternative units declared in configuration.
+         *
+         * @return the required playtime in seconds, or {@code 0L} when no global requirement is declared
+         */
+        public Long getRequiredPlaytimeSeconds() {
+                if (this.requiredPlaytimeSeconds != null) {
+                        return this.requiredPlaytimeSeconds;
 		}
 		if (this.requiredPlaytimeMinutes != null) {
 			return TimeUnit.MINUTES.toSeconds(this.requiredPlaytimeMinutes);
@@ -145,23 +146,24 @@ public class PlaytimeRequirementSection extends AConfigSection {
 		return 0L;
 	}
 	
-	/**
-	 * Gets the time unit for the generic time field.
-	 *
-	 * @return the time unit, defaulting to "seconds"
-	 */
-	public String getTimeUnit() {
-		return this.timeUnit != null ? this.timeUnit.toLowerCase() : "seconds";
-	}
-	
-	/**
-	 * Gets whether to use total playtime across all worlds.
-	 *
-	 * @return true to use total playtime, false for world-specific, null for auto-detection
-	 */
-	@Nullable
-	public Boolean getUseTotalPlaytime() {
-		if (this.useTotalPlaytime != null) {
+        /**
+         * Gets the time unit for the generic {@link #time} field.
+         *
+         * @return the normalized time unit (lowercase), defaulting to {@code "seconds"}
+         */
+        public String getTimeUnit() {
+                return this.timeUnit != null ? this.timeUnit.toLowerCase() : "seconds";
+        }
+
+        /**
+         * Gets whether to use total playtime across all worlds.
+         *
+         * @return {@code true} to use total playtime, {@code false} for world-specific tracking, or {@code null} when
+         *         configuration should auto-detect based on world-specific settings
+         */
+        @Nullable
+        public Boolean getUseTotalPlaytime() {
+                if (this.useTotalPlaytime != null) {
 			return this.useTotalPlaytime;
 		}
 		
@@ -173,14 +175,14 @@ public class PlaytimeRequirementSection extends AConfigSection {
 		return true; // Default to total playtime
 	}
 	
-	/**
-	 * Gets the world-specific playtime requirements map.
-	 *
-	 * @return map of world names to required playtime in seconds
-	 */
-	@NotNull
-	public Map<String, Long> getWorldPlaytimeRequirements() {
-		Map<String, Long> requirements = new HashMap<>();
+        /**
+         * Gets the world-specific playtime requirements map.
+         *
+         * @return a new mutable map of world names to required playtime in seconds
+         */
+        @NotNull
+        public Map<String, Long> getWorldPlaytimeRequirements() {
+                Map<String, Long> requirements = new HashMap<>();
 		
 		// Add explicit world requirements
 		if (this.worldPlaytimeRequirements != null) {
@@ -202,14 +204,15 @@ public class PlaytimeRequirementSection extends AConfigSection {
 		return requirements;
 	}
 	
-	/**
-	 * Gets the required playtime for individual worlds in seconds.
-	 *
-	 * @return the required playtime per world in seconds
-	 */
-	public Long getWorldPlaytimeSeconds() {
-		if (this.worldPlaytimeSeconds != null) {
-			return this.worldPlaytimeSeconds;
+        /**
+         * Gets the required playtime for individual worlds in seconds, honoring configuration priority
+         * from seconds through days.
+         *
+         * @return the required playtime per world in seconds, or {@code 0L} when no world requirement is declared
+         */
+        public Long getWorldPlaytimeSeconds() {
+                if (this.worldPlaytimeSeconds != null) {
+                        return this.worldPlaytimeSeconds;
 		}
 		if (this.worldPlaytimeMinutes != null) {
 			return TimeUnit.MINUTES.toSeconds(this.worldPlaytimeMinutes);
@@ -223,54 +226,55 @@ public class PlaytimeRequirementSection extends AConfigSection {
 		return 0L;
 	}
 	
-	/**
-	 * Gets the list of worlds for playtime tracking.
-	 *
-	 * @return list of world names
-	 */
-	@Nullable
-	public List<String> getWorlds() {
-		return this.worlds;
-	}
-	
-	/**
-	 * Gets the description for this playtime requirement.
-	 *
-	 * @return the description, or null if not provided
-	 */
-	@Nullable
-	public String getDescription() {
-		return this.description;
-	}
-	
-	/**
-	 * Gets the generic time value.
-	 *
-	 * @return the time value
-	 */
-	@Nullable
-	public Long getTime() {
-		return this.time;
-	}
-	
-	/**
-	 * Checks if this configuration has world-specific settings.
-	 *
-	 * @return true if world-specific configuration is present
-	 */
-	public boolean hasWorldSpecificConfiguration() {
-		return (this.worldPlaytimeRequirements != null && !this.worldPlaytimeRequirements.isEmpty()) ||
-		       (this.worlds != null && !this.worlds.isEmpty() && getWorldPlaytimeSeconds() > 0);
-	}
-	
-	/**
-	 * Validates the configuration for consistency.
-	 *
-	 * @throws IllegalStateException if the configuration is invalid
-	 */
-	public void validate() {
-		// Check that at least one playtime requirement is specified
-		if (getRequiredPlaytimeSeconds() <= 0 && !hasWorldSpecificConfiguration()) {
+        /**
+         * Gets the list of worlds for playtime tracking.
+         *
+         * @return list of world names or {@code null} when no worlds are configured
+         */
+        @Nullable
+        public List<String> getWorlds() {
+                return this.worlds;
+        }
+
+        /**
+         * Gets the description for this playtime requirement.
+         *
+         * @return the description, or {@code null} if not provided
+         */
+        @Nullable
+        public String getDescription() {
+                return this.description;
+        }
+
+        /**
+         * Gets the generic time value used in combination with {@link #getTimeUnit()}.
+         *
+         * @return the time value, or {@code null} when undefined
+         */
+        @Nullable
+        public Long getTime() {
+                return this.time;
+        }
+
+        /**
+         * Checks if this configuration has world-specific settings.
+         *
+         * @return {@code true} if world-specific configuration is present, otherwise {@code false}
+         */
+        public boolean hasWorldSpecificConfiguration() {
+                return (this.worldPlaytimeRequirements != null && !this.worldPlaytimeRequirements.isEmpty()) ||
+                       (this.worlds != null && !this.worlds.isEmpty() && getWorldPlaytimeSeconds() > 0);
+        }
+
+        /**
+         * Validates the configuration for consistency.
+         *
+         * @throws IllegalStateException if the configuration omits required playtime declarations or contains
+         *                               contradictory world requirements
+         */
+        public void validate() {
+                // Check that at least one playtime requirement is specified
+                if (getRequiredPlaytimeSeconds() <= 0 && !hasWorldSpecificConfiguration()) {
 			throw new IllegalStateException("At least one playtime requirement must be specified");
 		}
 		
@@ -291,16 +295,16 @@ public class PlaytimeRequirementSection extends AConfigSection {
 		}
 	}
 	
-	/**
-	 * Converts time value to seconds based on the specified unit.
-	 *
-	 * @param timeValue the time value
-	 * @param unit the time unit
-	 * @return the time in seconds
-	 */
-	private Long convertTimeToSeconds(
-		final @NotNull Long timeValue,
-		final @NotNull String unit
+        /**
+         * Converts a time value to seconds based on the specified unit.
+         *
+         * @param timeValue the time value to convert
+         * @param unit the time unit, accepting common abbreviations (e.g. {@code m}, {@code h}, {@code d})
+         * @return the time in seconds, preserving the original value when the unit is already seconds
+         */
+        private Long convertTimeToSeconds(
+                final @NotNull Long timeValue,
+                final @NotNull String unit
 	) {
 		return switch (unit.toLowerCase()) {
 			case "minutes", "minute", "min", "m" -> TimeUnit.MINUTES.toSeconds(timeValue);
