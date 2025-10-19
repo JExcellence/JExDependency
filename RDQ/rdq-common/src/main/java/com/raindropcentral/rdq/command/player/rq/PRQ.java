@@ -24,6 +24,13 @@ import java.util.List;
  * available to all permitted users.
  * </p>
  *
+ * @implNote The handler intentionally keeps routing logic lightweight so that
+ * per-action methods can describe their own permission checks and view
+ * transitions. This mirrors the rest of the RDQ command suite and keeps
+ * tracking of additions confined to a single switch statement.
+ *
+ * @see PRQSection
+ * @see ERQPermission
  * @author JExcellence
  * @since 1.0.0
  * @version 1.0.1
@@ -42,6 +49,10 @@ public final class PRQ extends PlayerCommand {
      * Creates the command handler with the resolved command section and RDQ
      * runtime.
      *
+     * @implNote The constructor stores the {@link RDQ} instance so that view
+     * lookups remain centralized in the handler methods. This avoids repeated
+     * dependency resolution during command execution.
+     *
      * @param commandSection section metadata produced by {@link PRQSection}
      *                       defining the root command and evaluation context
      * @param rdq            plugin instance exposing views, managers, and
@@ -59,6 +70,12 @@ public final class PRQ extends PlayerCommand {
      * Executes the player command, selecting an {@link EPRQAction} based on the
      * first argument, enforcing base permissions, and delegating to the
      * respective action handler.
+     *
+     * @implSpec The lookup uses {@link #enumParameterOrElse(String[], int, Class,
+     * Enum) enumParameterOrElse} so downstream handlers only run after
+     * permission checks succeed.
+     * Implementations adding new actions should update the {@code switch}
+     * statement so that tab completion and execution stay aligned.
      *
      * @param player invoking player
      * @param label  alias used for invocation
@@ -96,6 +113,11 @@ public final class PRQ extends PlayerCommand {
      * Provides tab completions for the command by filtering available
      * {@link EPRQAction} values when the base permission is satisfied.
      *
+     * @implNote Only the first argument is supported for completions. Further
+     * arguments are ignored intentionally so that future action-specific
+     * completions can be implemented inside each handler without conflicting
+     * with the root command.
+     *
      * @param player player requesting completions
      * @param label  alias used for invocation
      * @param args   current command arguments
@@ -130,6 +152,10 @@ public final class PRQ extends PlayerCommand {
     /**
      * Routes the player to administrative tooling when the admin permission is
      * granted.
+     *
+     * @implNote The administrative view remains disabled while the UI is under
+     * revision. The method keeps the current signature so that the commented
+     * implementation can be restored without altering callers.
      *
      * @param player player executing the command
      * @param args   command arguments including optional plugin name hints
