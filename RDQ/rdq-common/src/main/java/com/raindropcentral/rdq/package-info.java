@@ -41,6 +41,14 @@
  * disable.
  * </p>
  *
+ * <h2>Integration points</h2>
+ * <p>
+ * The {@link com.raindropcentral.rdq.RDQ} base class coordinates with shared modules during
+ * enablement. {@code RPlatform} initialises persistence and metrics services, while the
+ * command layer flows through the JExCommand framework. InventoryFramework powers GUI wiring,
+ * and repository implementations lean on the rdq-database subpackages for ORM access.
+ * </p>
+ *
  * <h2>Subpackage index</h2>
  * <dl>
  *     <dt>{@link com.raindropcentral.rdq.api}</dt>
