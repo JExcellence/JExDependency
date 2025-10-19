@@ -13,7 +13,7 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
  * advanced forge configuration.
  * </p>
  *
- * @author JExcellence
+ * @author ItsRainingHP
  * @version 1.0.1
  * @since 1.0.0
  */
