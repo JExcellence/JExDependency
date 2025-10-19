@@ -32,10 +32,18 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
 
     private RDQ rdq;
 
+    /**
+     * Creates a new plugin delegate for the free RDQ edition.
+     *
+     * @param plugin the plugin bootstrap instance used for lifecycle management
+     */
     public RDQFreeImpl(final @NotNull RDQFree plugin) {
         super(plugin);
     }
 
+    /**
+     * Loads the free RDQ edition, preparing the manager and RDQ instance for later lifecycle phases.
+     */
     @Override
     public void onLoad() {
         try {
@@ -70,6 +78,9 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
         }
     }
 
+    /**
+     * Enables the free RDQ edition after it has been loaded.
+     */
     @Override
     public void onEnable() {
         try {
@@ -81,6 +92,9 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
         }
     }
 
+    /**
+     * Disables the free RDQ edition, ensuring any resources owned by the RDQ instance are released.
+     */
     @Override
     public void onDisable() {
         try {
@@ -94,6 +108,11 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
         }
     }
 
+    /**
+     * Retrieves the RDQ instance backing the free edition.
+     *
+     * @return the managed RDQ instance
+     */
     public @NotNull RDQ getRDQ() {
         return this.rdq;
     }
