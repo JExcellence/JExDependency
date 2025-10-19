@@ -1,48 +1,49 @@
 package com.raindropcentral.rdq.type;
 
 /**
- * Enumeration defining different types of perks and their activation behaviors.
+ * Enumerates the supported perk behavior categories and their activation semantics.
  * <p>
- * This enum categorizes perks based on how they function:
+ * Each constant represents a lifecycle profile that determines whether a perk can be
+ * toggled, reacts to events, or applies cooldown management for balancing purposes.
  * <ul>
- *     <li>{@link #TOGGLEABLE_PASSIVE} - Perks that can be toggled on/off without cooldown</li>
- *     <li>{@link #EVENT_TRIGGERED} - Perks that activate on specific events and have cooldown</li>
- *     <li>{@link #INSTANT_USE} - Perks that provide immediate effects and have cooldown</li>
- *     <li>{@link #DURATION_BASED} - Perks that last for a specific duration with cooldown</li>
+ *     <li>{@link #TOGGLEABLE_PASSIVE} &mdash; Passive perks with manual toggling and no cooldown.</li>
+ *     <li>{@link #EVENT_TRIGGERED} &mdash; Event-driven perks that fire automatically with cooldown handling.</li>
+ *     <li>{@link #INSTANT_USE} &mdash; Immediate-use perks that consume cooldown on activation.</li>
+ *     <li>{@link #DURATION_BASED} &mdash; Time-bound perks that expire after a duration while respecting cooldown.</li>
  * </ul>
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public enum EPerkType {
-    
+
     /**
-     * Toggleable perks that can be enabled/disabled without cooldown.
+     * Toggleable perks that can be enabled or disabled without incurring cooldown.
      * These perks typically provide passive effects while active.
-     * Examples: Night vision toggle, speed boost toggle, flight mode
+     * Examples include night vision toggles, speed boost toggles, or flight modes.
      */
     TOGGLEABLE_PASSIVE(false, true, false),
-    
+
     /**
-     * Event-triggered perks that activate automatically on specific events.
-     * These perks have cooldown and trigger based on game events.
-     * Examples: Strength boost on potion drink, damage reduction on taking damage
+     * Event-triggered perks that activate automatically when qualifying gameplay events occur.
+     * These perks enforce cooldown tracking and respond directly to event data.
+     * Examples include granting strength on potion consumption or damage reduction on taking hits.
      */
     EVENT_TRIGGERED(true, false, true),
-    
+
     /**
-     * Instant-use perks that provide immediate effects when activated.
-     * These perks have cooldown and provide one-time effects.
-     * Examples: Instant heal, teleport to spawn, clear inventory
+     * Instant-use perks that provide one-off effects at the moment of activation.
+     * These perks enforce cooldown and deliver immediate utility.
+     * Examples include instant healing, teleporting to spawn, or clearing inventory.
      */
     INSTANT_USE(true, false, false),
-    
+
     /**
-     * Duration-based perks that last for a specific time period.
-     * These perks have cooldown and automatically deactivate after duration.
-     * Examples: Temporary invincibility, time-limited flight, temporary strength
+     * Duration-based perks that remain active for a configured length of time.
+     * These perks enforce cooldown and automatically expire once the duration lapses.
+     * Examples include temporary invincibility, time-limited flight, or short-term strength boosts.
      */
     DURATION_BASED(true, false, true);
     
@@ -68,36 +69,36 @@ public enum EPerkType {
     }
     
     /**
-     * Checks if this perk type uses cooldown.
+     * Indicates whether this perk profile requires cooldown management between activations.
      *
-     * @return {@code true} if this perk type has cooldown, {@code false} otherwise
+     * @return {@code true} if perks of this type track cooldown, {@code false} otherwise
      */
     public boolean hasCooldown() {
         return this.hasCooldown;
     }
-    
+
     /**
-     * Checks if this perk type can be toggled on/off.
+     * Indicates whether perks following this profile support manual toggling by the player.
      *
-     * @return {@code true} if this perk type is toggleable, {@code false} otherwise
+     * @return {@code true} if the perk type is toggleable, {@code false} otherwise
      */
     public boolean isToggleable() {
         return this.isToggleable;
     }
-    
+
     /**
-     * Checks if this perk type is triggered by events.
+     * Indicates whether perks adhering to this profile are activated by external events.
      *
-     * @return {@code true} if this perk type is event-based, {@code false} otherwise
+     * @return {@code true} if the perk type is event-based, {@code false} otherwise
      */
     public boolean isEventBased() {
         return this.isEventBased;
     }
-    
+
     /**
-     * Gets a description of this perk type's behavior.
+     * Provides a short human-readable description summarizing the perk category.
      *
-     * @return a descriptive string explaining the perk type
+     * @return descriptive text outlining the activation behavior for this perk type
      */
     public String getDescription() {
         return switch (this) {
