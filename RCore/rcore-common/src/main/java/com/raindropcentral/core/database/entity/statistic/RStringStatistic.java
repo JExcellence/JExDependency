@@ -65,6 +65,9 @@ public class RStringStatistic extends RAbstractStatistic {
     }
 
     /**
+     * Determines whether the stored value contains any characters. This delegates directly to
+     * {@link String#isEmpty()} so the call remains O(1) without additional allocations.
+     *
      * @return {@code true} when the stored string is empty
      */
     public boolean isEmpty() {
@@ -72,16 +75,28 @@ public class RStringStatistic extends RAbstractStatistic {
     }
 
     /**
+     * Provides the current length of the persisted string. The value is retrieved via
+     * {@link String#length()} which simply returns the cached character count maintained by the
+     * JVM, ensuring constant-time access.
+     *
      * @return length of the persisted string value
      */
     public int length() {
         return this.value.length();
     }
-    
+
+    /**
+     * Generates a descriptive view of the statistic while avoiding large string allocations in
+     * logs or debugger output. Values longer than fifty characters are truncated to forty-seven
+     * characters with an ellipsis suffix so callers can quickly inspect context without forcing a
+     * full copy of the payload.
+     *
+     * @return formatted representation with truncated value preview when necessary
+     */
     @Override
     public String toString() {
-        final String displayValue = value.length() > 50 
-            ? value.substring(0, 47) + "..." 
+        final String displayValue = value.length() > 50
+            ? value.substring(0, 47) + "..."
             : value;
         return "RStringStatistic[id=%d, identifier=%s, plugin=%s, value=%s]"
             .formatted(getId(), identifier, getPlugin(), displayValue);
