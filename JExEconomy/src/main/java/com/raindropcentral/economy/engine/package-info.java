@@ -42,6 +42,16 @@
  *     semantics.</li>
  * </ul>
  *
+ * <p>Audit &amp; localization coordination:</p>
+ * <ul>
+ *     <li>Every balance mutation must emit the structured transaction payloads defined under
+ *     {@code de.jexcellence.economy.transaction} so that downstream appenders capture identical
+ *     arithmetic to what the engine applied.</li>
+ *     <li>Engines surface human-readable summaries by forwarding balance deltas to the
+ *     {@code JExTranslate}-backed message factories maintained by the service layer, ensuring
+ *     operators receive locale-specific notifications that match console output.</li>
+ * </ul>
+ *
  * @author JExcellence
  * @since 1.0.0
  * @version 1.0.1
