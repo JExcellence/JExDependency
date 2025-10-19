@@ -8,12 +8,13 @@ import java.util.logging.Level;
 /**
  * Bukkit entrypoint for the free RCore distribution.
  *
- * <p>This class is responsible for wiring Paper's lifecycle callbacks to the edition-specific
- * backend implementation. During {@link #onLoad()} the plugin bootstraps the shaded dependency
- * manager, reflectively creates {@link RCoreFreeImpl}, and delegates lifecycle hooks so the
- * implementation can orchestrate database and service initialization. {@link #onEnable()} and
- * {@link #onDisable()} simply forward control to the delegate while ensuring the plugin is safely
- * disabled if bootstrapping fails.</p>
+ * <p>This class wires the Bukkit lifecycle into the edition-specific backend while defending
+ * against partial bootstrap failures. During {@link #onLoad()} the plugin runs synchronously on
+ * the server thread to initialize {@link JEDependency} with class remapping, reflectively
+ * instantiate {@link RCoreFreeImpl}, and register the delegate so that downstream services can be
+ * created. {@link #onEnable()} and {@link #onDisable()} execute on the Bukkit primary thread and
+ * forward to the delegate, ensuring asynchronous work is scheduled through the delegate while the
+ * entrypoint remains thread-safe and disables itself when initialization fails.</p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -31,10 +32,12 @@ public class RCoreFree extends JavaPlugin {
     /**
      * Boots the dependency remapper and instantiates the edition delegate.
      *
-     * <p>Any exception encountered during dependency initialization or reflective instantiation is
-     * logged and prevents later phases from running. The delegate is left {@code null} so
-     * {@link #onEnable()} can disable the plugin gracefully instead of running with partially
-     * configured services.</p>
+     * <p>Invoked synchronously by Bukkit before the plugin is enabled, this method loads shaded
+     * dependencies via {@link JEDependency#initializeWithRemapping(JavaPlugin, Class)} and wires the
+     * {@link RCoreFreeImpl} delegate. Any exception encountered during dependency initialization or
+     * reflective instantiation is logged and prevents later phases from running. The delegate is
+     * left {@code null} so {@link #onEnable()} can disable the plugin gracefully instead of running
+     * with partially configured services.</p>
      */
     @Override
     public void onLoad() {
@@ -51,8 +54,10 @@ public class RCoreFree extends JavaPlugin {
     /**
      * Delegates to the edition implementation to perform asynchronous startup.
      *
-     * <p>If the delegate failed to initialize during {@link #onLoad()}, the plugin is disabled via
-     * Bukkit's plugin manager to avoid running without registered services or repositories.</p>
+     * <p>Executed on the Bukkit primary thread, this method bridges the lifecycle into the delegate
+     * so it can schedule asynchronous tasks, register listeners, and publish services. If the
+     * delegate failed to initialize during {@link #onLoad()}, the plugin is disabled via Bukkit's
+     * plugin manager to avoid running without registered services or repositories.</p>
      */
     @Override
     public void onEnable() {
@@ -68,7 +73,9 @@ public class RCoreFree extends JavaPlugin {
     /**
      * Forwards shutdown to the delegate so it can unregister services and stop executors.
      *
-     * <p>No action is required if the delegate never initialized. The conditional protects against
+     * <p>Bukkit invokes this on the main thread during server shutdown or plugin reload. The
+     * delegate performs orderly cleanup of asynchronous executors and unregisters listeners. No
+     * action is required if the delegate never initialized; the conditional protects against
      * {@code NullPointerException}s when the plugin aborted earlier in the lifecycle.</p>
      */
     @Override
