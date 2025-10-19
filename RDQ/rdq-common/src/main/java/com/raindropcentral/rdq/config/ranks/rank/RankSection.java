@@ -13,11 +13,14 @@ import java.util.*;
 
 /**
  * Represents a configuration section for a rank within a rank tree.
- * Contains all properties, requirements, rewards, and connections for a specific rank.
+ * <p>
+ * The section exposes all configurable properties, including localization keys,
+ * requirements, rewards, and graph connections, for a single rank entry.
+ * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public class RankSection extends AConfigSection {
@@ -93,7 +96,7 @@ public class RankSection extends AConfigSection {
     }
     
     /**
-     * Called after parsing the configuration fields. Sets default localization keys if not provided.
+     * Called after parsing the configuration fields to populate missing localization keys.
      *
      * @param fields the list of fields parsed
      * @throws Exception if an error occurs during post-processing
@@ -215,7 +218,8 @@ public class RankSection extends AConfigSection {
     /**
      * Gets the icon section for this rank.
      *
-     * @return the icon section, or a new default IconSection if not set
+     * @return the icon section, or a new {@link IconSection} with a fresh
+     *     {@link EvaluationEnvironmentBuilder} if not set
      */
     public IconSection getIcon() {
         return
@@ -275,7 +279,8 @@ public class RankSection extends AConfigSection {
     /**
      * Checks if this rank is the initial rank in the tree.
      *
-     * @return true if this is the initial rank, false otherwise
+     * @return {@code true} when the rank is marked as initial and not final;
+     *     {@code false} otherwise
      */
     public Boolean getInitialRank() {
         return
@@ -331,7 +336,7 @@ public class RankSection extends AConfigSection {
     /**
      * Gets the name of the rank tree this rank belongs to.
      *
-     * @return the rank tree name, or a generated name if not set
+     * @return the configured rank tree name, or a generated placeholder if not set
      */
     public String getRankTreeName() {
         return
@@ -352,7 +357,7 @@ public class RankSection extends AConfigSection {
     /**
      * Gets the name of this rank.
      *
-     * @return the rank name, or a generated name if not set
+     * @return the configured rank name, or a generated placeholder if not set
      */
     public String getRankName() {
         return
