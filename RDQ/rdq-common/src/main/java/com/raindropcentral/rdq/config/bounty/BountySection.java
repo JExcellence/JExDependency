@@ -6,54 +6,55 @@ import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
- * Configuration section for bounty-related settings.
+ * Configuration section describing how bounties determine the claimant.
  * <p>
- * This section allows configuration of how bounty claims are handled,
- * such as whether the bounty is awarded to the player with the most damage
- * or the player who lands the last hit.
+ * The section is backed by {@link AConfigSection} and exposes a single property,
+ * {@code claimMode}, which resolves to an {@link EBountyClaimMode}. If the value
+ * is absent the section defaults to {@link EBountyClaimMode#LAST_HIT} to match
+ * the legacy behaviour where the final attacker always receives the bounty.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class BountySection extends AConfigSection {
-	
-	/**
-	 * The claim mode for the bounty.
-	 * <p>
-	 * This should be the name of an {@link EBountyClaimMode} enum constant,
-	 * such as "MOST_DAMAGE" or "LAST_HIT". If null, defaults to {@link EBountyClaimMode#LAST_HIT}.
-	 * </p>
-	 */
-	private String claimMode;
-	
-	/**
-	 * Constructs a new {@code BountySection} with the specified base evaluation environment.
-	 *
-	 * @param baseEnvironment the base evaluation environment used for configuration evaluation
-	 */
-	public BountySection(final EvaluationEnvironmentBuilder baseEnvironment) {
-		super(baseEnvironment);
-	}
-	
-	/**
-	 * Gets the configured bounty claim mode.
-	 * <p>
-	 * If {@code claimMode} is null, returns {@link EBountyClaimMode#LAST_HIT} as the default.
-	 * Otherwise, attempts to parse the string value to an {@link EBountyClaimMode} enum constant.
-	 * </p>
-	 *
-	 * @return the configured {@link EBountyClaimMode}, or {@link EBountyClaimMode#LAST_HIT} if not set
-	 * @throws IllegalArgumentException if the {@code claimMode} string does not match any enum constant
-	 */
-	public EBountyClaimMode getClaimMode() throws IllegalArgumentException {
-		return
-			this.claimMode == null ?
-				EBountyClaimMode.LAST_HIT :
-				EBountyClaimMode.valueOf(this.claimMode)
-			;
-	}
-	
+
+    /**
+     * Raw configuration value resolving to an {@link EBountyClaimMode}.
+     * <p>
+     * The configuration must contain the enum constant name, for example
+     * {@code MOST_DAMAGE}. A null value indicates that the default value of
+     * {@link EBountyClaimMode#LAST_HIT} should be used.
+     * </p>
+     */
+    private String claimMode;
+
+    /**
+     * Creates a new bounty configuration section using the provided evaluation environment.
+     *
+     * @param baseEnvironment the base evaluation environment used while parsing configuration values
+     */
+    public BountySection(final EvaluationEnvironmentBuilder baseEnvironment) {
+        super(baseEnvironment);
+    }
+
+    /**
+     * Resolves the configured {@link EBountyClaimMode}.
+     * <p>
+     * When the configuration omits {@code claimMode} this method falls back to
+     * {@link EBountyClaimMode#LAST_HIT}. Otherwise it validates the configured
+     * enum name and returns the corresponding value.
+     * </p>
+     *
+     * @return the resolved {@link EBountyClaimMode}, defaulting to {@link EBountyClaimMode#LAST_HIT}
+     * @throws IllegalArgumentException if {@code claimMode} does not correspond to a valid enum constant
+     */
+    public EBountyClaimMode getClaimMode() throws IllegalArgumentException {
+        return this.claimMode == null
+                ? EBountyClaimMode.LAST_HIT
+                : EBountyClaimMode.valueOf(this.claimMode);
+    }
+
 }
