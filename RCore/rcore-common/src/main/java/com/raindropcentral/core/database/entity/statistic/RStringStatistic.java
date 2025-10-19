@@ -10,6 +10,13 @@ import java.util.Objects;
 /**
  * String-based statistic stored via the {@code STRING} discriminator. Useful for textual
  * metadata such as titles or serialized JSON blobs.
+ * <p>
+ * Callers should log via {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}
+ * when textual payloads are created, truncated, or replaced. Debug logs capture cache misses prior
+ * to hydrate large blobs, while info logs summarize high-level changes (identifier, plugin, length)
+ * before persistence. Validation errors (null assignments or oversize payloads detected upstream)
+ * should escalate to error severity to highlight serialization issues.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

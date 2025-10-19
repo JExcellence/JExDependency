@@ -17,6 +17,14 @@ import java.util.UUID;
  * human-readable server name. Player inventory snapshots and other aggregates
  * reference this entity through foreign keys to partition data by server.
  * </p>
+ * <p>
+ * Provisioning, renaming, and deleting server descriptors should be accompanied by
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger} events. Emit info logs
+ * when a new server entry is created or when a rename is requested, include debug logs when a cache
+ * miss forces a refresh from the repository, and escalate failures (duplicate UUID, constraint
+ * violations) to error logs that include the UUID and friendly name so cross-cluster routing issues
+ * can be diagnosed.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

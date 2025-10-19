@@ -34,6 +34,15 @@ import java.util.Objects;
  * <p>Construction should occur on synchronous threads interacting with Bukkit
  * APIs, while persistence and retrieval are delegated to repository executors to
  * avoid blocking scheduler threads.</p>
+ * <p>
+ * Snapshot creation, replay, and deletion should generate audit trails through
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}. Emit debug logs for
+ * cache misses that require reloading inventory blobs, info logs when capturing or restoring a
+ * snapshot for a player/server pair, and warnings when snapshot data is skipped (for example,
+ * creative-mode captures). Any serialization failure or persistence exception must be escalated to
+ * an error log containing the player UUID and server identifier so shard synchronization issues can
+ * be diagnosed quickly.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

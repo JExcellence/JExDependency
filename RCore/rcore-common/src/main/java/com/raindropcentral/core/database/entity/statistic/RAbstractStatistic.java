@@ -33,6 +33,13 @@ import java.util.Objects;
  * avoid loading the owning aggregate when querying statistics in isolation. Callers updating
  * bidirectional links must use {@link #setPlayerStatistic(RPlayerStatistic)} (and the
  * corresponding helper on {@link RPlayerStatistic}) to keep both sides aligned.</p>
+ * <p>
+ * Subclasses should log significant lifecycle events through
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}: attaching or detaching
+ * from an aggregate, mutating a value, or encountering validation failures. Value mutations should
+ * be announced prior to committing so audit trails can reconstruct progression, while errors should
+ * log at the appropriate severity and include both the statistic identifier and owning player keys.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

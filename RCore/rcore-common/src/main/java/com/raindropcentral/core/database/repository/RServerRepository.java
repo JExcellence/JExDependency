@@ -20,6 +20,12 @@ import java.util.concurrent.ExecutorService;
  * server availability to other Raindrop Central plugins. Those services rely on the repository to
  * provide consistent persistence semantics while they coordinate synchronization and messaging
  * duties across the cluster.
+ * <p>
+ * Callers should emit {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}
+ * entries when a cache lookup fails (empty optional), before creating, updating, or deleting server
+ * descriptors, and when those write operations succeed. Because server metadata influences
+ * cross-cluster routing, any exceptional future or persistence error must be logged with the server
+ * UUID and human-readable name to streamline incident response.
  *
  * @author JExcellence
  * @since 1.0.0

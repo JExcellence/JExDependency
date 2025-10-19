@@ -20,6 +20,15 @@ import java.util.Set;
  * so callers should avoid mutating the entity from asynchronous contexts without
  * proper synchronization.
  * </p>
+ * <p>
+ * Statistic materialization, replacements, and removals should be paired with
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger} entries. Emit debug
+ * logs whenever a statistic is lazily loaded due to a cache miss, and use info logs when
+ * aggregates are first created or when bulk refresh operations replace the statistic set. Any
+ * mutation that affects player progression (add/remove/replace) should log both the identifier and
+ * plugin namespace before the transaction commits, and failures encountered while mutating the
+ * collection must be escalated to error logs to support incident triage.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

@@ -13,6 +13,13 @@ import java.util.Objects;
 /**
  * Date-backed statistic persisted with the {@code DATE} discriminator. Stores timestamps as
  * epoch milliseconds and exposes helper conversions for temporal comparisons.
+ * <p>
+ * Consumers should log via {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}
+ * when timestamps are initialized, rolled forward, or compared for expiry checks. Debug logs help
+ * track cache misses before conversions, info logs note major lifecycle events (e.g., cooldowns
+ * reset), and unexpected clock drift or invalid inputs should trigger warning/error logs with the
+ * identifier and plugin metadata.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

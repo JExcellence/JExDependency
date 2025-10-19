@@ -17,6 +17,15 @@ import java.util.concurrent.ExecutorService;
  * Repository providing cached CRUD access to {@link RPlayer} entities. Operations run on the
  * supplied executor to avoid blocking Bukkit threads and leverage identifier-based caching for
  * {@code r_player} rows.
+ * <p>
+ * Service layers calling this repository are expected to emit structured logs through
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger} whenever an
+ * asynchronous lookup falls through the cache (an empty {@link Optional} result), prior to
+ * scheduling create, update, or delete mutations, and upon completion of those mutations. Error
+ * paths—both exceptional futures and detected validation failures—must also be logged with
+ * correlation identifiers so cluster-wide auditing can trace persistence issues back to the
+ * originating request.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

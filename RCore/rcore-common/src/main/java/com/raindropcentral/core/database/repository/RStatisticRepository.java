@@ -16,6 +16,13 @@ import java.util.concurrent.ExecutorService;
  * service executor model. Cached lookups remain synchronized with aggregate refresh logic, so
  * callers should invalidate or reload aggregate views after committing mutations through this
  * repository to keep in-memory projections consistent.
+ * <p>
+ * Consumers are required to log via {@link com.raindropcentral.rplatform.logging.CentralLogger
+ * CentralLogger} whenever a cache miss occurs, before issuing batch updates or deletes, and after
+ * those operations complete. Since this repository is commonly used by background jobs, error
+ * handling must include structured log entries for any failed future or constraint violation so
+ * operations staff can correlate the failure with upstream maintenance tasks.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0
