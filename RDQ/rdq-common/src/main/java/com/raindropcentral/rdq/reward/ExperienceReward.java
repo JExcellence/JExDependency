@@ -13,11 +13,14 @@ import org.jetbrains.annotations.Nullable;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class ExperienceReward extends AbstractReward {
 
+    /**
+     * Supported experience reward modes.
+     */
     public enum ExperienceType {
         LEVELS,
         POINTS
@@ -32,7 +35,8 @@ public final class ExperienceReward extends AbstractReward {
     /**
      * Constructs a new {@code ExperienceReward} with the specified levels.
      *
-     * @param levels The number of experience levels to reward.
+     * @param levels the number of experience levels to reward
+     * @since 1.0.0
      */
     public ExperienceReward(final int levels) {
         this(levels, ExperienceType.LEVELS);
@@ -41,8 +45,9 @@ public final class ExperienceReward extends AbstractReward {
     /**
      * Constructs a new {@code ExperienceReward} with full configuration.
      *
-     * @param amount          The amount of experience to reward.
-     * @param experienceType  The type of experience (LEVELS or POINTS).
+     * @param amount         the amount of experience to reward
+     * @param experienceType the type of experience (LEVELS or POINTS)
+     * @since 1.0.0
      */
     @JsonCreator
     public ExperienceReward(
@@ -59,6 +64,12 @@ public final class ExperienceReward extends AbstractReward {
         this.experienceType = experienceType != null ? experienceType : ExperienceType.LEVELS;
     }
 
+    /**
+     * Applies the configured experience reward to the provided player.
+     *
+     * @param player the player receiving the reward
+     * @since 1.0.0
+     */
     @Override
     public void apply(final @NotNull Player player) {
         switch (this.experienceType) {
@@ -67,6 +78,12 @@ public final class ExperienceReward extends AbstractReward {
         }
     }
 
+    /**
+     * Retrieves the translation key used to describe the reward in messages.
+     *
+     * @return the message key representing this reward type
+     * @since 1.0.0
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
@@ -76,10 +93,22 @@ public final class ExperienceReward extends AbstractReward {
         };
     }
 
+    /**
+     * Gets the amount of experience granted by the reward.
+     *
+     * @return the configured experience amount
+     * @since 1.0.0
+     */
     public int getAmount() {
         return this.amount;
     }
 
+    /**
+     * Gets the experience mode applied when rewarding the player.
+     *
+     * @return the configured experience type
+     * @since 1.0.0
+     */
     @NotNull
     public ExperienceType getExperienceType() {
         return this.experienceType;
