@@ -20,6 +20,15 @@ import java.util.logging.Logger;
  * <li>Mock data for demonstration</li>
  * </ul>
  * </p>
+ * <p>
+ * {@link com.raindropcentral.rdq.RDQFreeImpl} drives this manager through the staged enable pipeline
+ * described by {@link com.raindropcentral.rdq.RDQ}. Stage&nbsp;1 prepares the executor that the free
+ * edition shares with premium to maintain consistent scheduling semantics. Stage&nbsp;2 executes inside
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable)}, wiring the lightweight managers before
+ * command and view registration. Stage&nbsp;3 keeps the in-memory repositories aligned with the
+ * resource expectations documented in {@code rdq-common/src/main/resources/}, ensuring free and
+ * premium modules observe the same contract even when persistence strategies differ.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0

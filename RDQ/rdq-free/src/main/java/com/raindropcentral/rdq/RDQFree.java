@@ -9,8 +9,14 @@ import java.util.logging.Level;
 /**
  * Main plugin class for RaindropQuests Free Edition.
  * <p>
- * This class serves as the entry point for the Bukkit plugin system and delegates
- * all functionality to {@link RDQFreeImpl}.
+ * This class serves as the entry point for the Bukkit plugin system and delegates all
+ * functionality to {@link RDQFreeImpl}. The delegate walks through the staged enable pipeline
+ * implemented by {@link com.raindropcentral.rdq.RDQ}, loading platform services on the asynchronous
+ * executor (stage&nbsp;1), running component and view wiring inside the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} boundary (stage&nbsp;2), and
+ * hydrating the shared repositories (stage&nbsp;3) that expose free-edition data to commands and
+ * GUIs. Review the resource README files under {@code rdq-common/src/main/resources/} for details on
+ * when configuration documents are ingested during those stages.
  * </p>
  *
  * @author JExcellence

@@ -1,3 +1,15 @@
+# Rank Definitions
+
+Rank YAML files load during stage 3 when
+[`RDQ#initializeRepositories()`](../../java/com/raindropcentral/rdq/RDQ.java) wires the
+`RRankRepository`, `RRankTreeRepository`, and related progress repositories. Hydration occurs on the
+stage-1 executor (virtual threads with fixed-pool fallback) before managers touch the data inside the
+[`runSync`](../../java/com/raindropcentral/rdq/RDQ.java) stage-2 block.
+
+Both editions consume these definitions through their respective managers, so coordinate changes with
+the package documentation under `com.raindropcentral.rdq.config.ranks` and the lifecycle Javadocs for
+`RDQFreeManager` and `RDQPremiumManager` to keep promotion behaviour aligned.
+
 # MMORPG Rank System Example (42 Ranks, 6 Paths)
 
 This example demonstrates a flexible rank system for RaindropQuests, suitable for MMORPG-style progression.  

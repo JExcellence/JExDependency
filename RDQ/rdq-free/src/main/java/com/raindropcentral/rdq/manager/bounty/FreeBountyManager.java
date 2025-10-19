@@ -18,6 +18,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Free version bounty manager with in-memory storage and limited features.
+ * <p>
+ * Instances are constructed during stage&nbsp;2 of the enable pipeline from inside the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} boundary so Bukkit-facing command
+ * registrations can immediately reference the manager. Repository wiring in stage&nbsp;3 keeps the
+ * mock data aligned with the resource documentation under {@code rdq-common/src/main/resources/bounty/}
+ * to ensure free and premium editions share consistent view models even though persistence differs.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0

@@ -9,8 +9,14 @@ import java.util.logging.Level;
 /**
  * Main plugin class for RaindropQuests Premium Edition.
  * <p>
- * This class serves as the entry point for the Bukkit plugin system and delegates
- * all functionality to {@link RDQPremiumImpl}.
+ * This class serves as the entry point for the Bukkit plugin system and delegates all
+ * functionality to {@link RDQPremiumImpl}. The delegate mirrors the staged enable pipeline defined
+ * by {@link com.raindropcentral.rdq.RDQ}: asynchronous platform and executor preparation
+ * (stage&nbsp;1), {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync}-scoped component and
+ * view wiring (stage&nbsp;2), and repository hydration (stage&nbsp;3) that provides database-backed
+ * services for commands, views, and cross-plugin integrations. Premium contributors should keep the
+ * resource READMEs under {@code rdq-common/src/main/resources/} in sync with these lifecycle
+ * expectations when evolving edition-specific features.
  * </p>
  *
  * @author JExcellence
