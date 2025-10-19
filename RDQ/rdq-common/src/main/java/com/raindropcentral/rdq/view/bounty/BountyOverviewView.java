@@ -34,15 +34,29 @@ public final class BountyOverviewView extends APaginatedView<RBounty> {
 
     private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
 
+    /**
+     * Creates a new bounty overview view that navigates back to the main bounty screen.
+     */
     public BountyOverviewView() {
         super(BountyMainView.class);
     }
 
+    /**
+     * Gets the translation key used to resolve localized resources for this view.
+     *
+     * @return the translation key representing this view
+     */
     @Override
     protected String getKey() {
         return "bounty.overview";
     }
 
+    /**
+     * Loads a paginated collection of bounties to display within this view.
+     *
+     * @param context the rendering context containing the viewing player
+     * @return a future providing the list of bounties to render
+     */
     @Override
     protected CompletableFuture<List<RBounty>> getAsyncPaginationSource(
             final @NotNull Context context
@@ -51,6 +65,14 @@ public final class BountyOverviewView extends APaginatedView<RBounty> {
         return service.getAllBounties(1, 128);
     }
 
+    /**
+     * Populates the item representing a single bounty entry within the overview list.
+     *
+     * @param context the render context for the current frame
+     * @param builder the builder used to configure the item component
+     * @param index   the zero-based index of the bounty in the current page
+     * @param bounty  the bounty being rendered
+     */
     @Override
     protected void renderEntry(
             final @NotNull Context context,
@@ -102,6 +124,12 @@ public final class BountyOverviewView extends APaginatedView<RBounty> {
                 });
     }
 
+    /**
+     * Handles any additional rendering concerns once the paginated layout has been drawn.
+     *
+     * @param render the paginated render context
+     * @param player the player viewing the bounty overview
+     */
     @Override
     protected void onPaginatedRender(
             final @NotNull RenderContext render,
