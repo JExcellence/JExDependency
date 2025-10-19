@@ -15,11 +15,12 @@
  * finishing with {@code build()}.  Menu controllers often keep a cache of the final
  * {@link org.bukkit.inventory.ItemStack} objects per player to avoid refetching textures.</p>
  *
- * <p><strong>Extension points.</strong> New formats can extend
- * {@link com.raindropcentral.rplatform.utility.itembuilder.skull.AHeadBuilder} or compose the
- * existing builders while providing additional validation logic.  When integrating with remote
- * profile APIs, ensure background downloads marshal texture assignment back onto the main
- * thread.</p>
+ * <p><strong>Extension points.</strong> New formats can extend the provided builders such as
+ * {@link com.raindropcentral.rplatform.utility.itembuilder.skull.SafeHeadBuilder} or compose the
+ * existing {@link com.raindropcentral.rplatform.utility.itembuilder.skull.LegacyHeadBuilder} and
+ * {@link com.raindropcentral.rplatform.utility.itembuilder.skull.ModernHeadBuilder} while providing
+ * additional validation logic.  When integrating with remote profile APIs, ensure background
+ * downloads marshal texture assignment back onto the main thread.</p>
  *
  * <p><strong>Performance.</strong> Texture application can trigger expensive Base64 decoding.
  * Reuse encoded texture strings and avoid recomputing safe fallbacks when the requested head is

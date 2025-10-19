@@ -13,10 +13,10 @@
  * starts.</p>
  *
  * <p><strong>Usage patterns.</strong> Head catalogues in the {@code heads} subtree source
- * translated names and lore on demand.  They should be cached by the caller when rendering
- * frequent UI updates to avoid repeated translation lookups.  Item builders favour a fluent
- * pattern that merges Paper-native Adventure APIs with Spigot fallbacks; callers typically
- * start with {@code UnifiedBuilderFactory.item()} or {@code head()} and then apply
+ * translated names and lore on demand, while the {@code heads.view} packages provide
+ * reusable navigation glyphs and numeric badges for pagination overlays. Builders favour
+ * a fluent pattern that merges Paper-native Adventure APIs with Spigot fallbacks; callers
+ * typically start with {@code UnifiedBuilderFactory.item()} or {@code head()} and then apply
  * per-version adjustments through returned builder interfaces.</p>
  *
  * <p><strong>Extension points.</strong> Builders are extension-friendly by design:
@@ -24,7 +24,8 @@
  * extend {@link com.raindropcentral.rplatform.utility.itembuilder.AItemBuilder} to inject
  * new material presets.  Custom head registries can subclass
  * {@link com.raindropcentral.rplatform.utility.heads.RHead} and register the derivative with
- * application specific filters.</p>
+ * application specific filters, while the pagination heads can be expanded with additional
+ * glyphs to represent domain-specific counters.</p>
  *
  * <p><strong>Performance.</strong> Rendering menus at scale should reuse builder instances
  * scoped per refresh cycle to avoid repeatedly reading metadata from {@link org.bukkit.inventory.ItemStack}
