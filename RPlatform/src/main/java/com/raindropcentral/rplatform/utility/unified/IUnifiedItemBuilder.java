@@ -10,34 +10,109 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 /**
- * Unified builder interface for all item types (items, heads, potions).
- * Provides fluent API for common item meta operations.
+ * Unified builder interface for item-like constructs including inventory items, heads, and potions.
+ *
+ * <p>The interface mirrors fluent operations exposed by {@link com.raindropcentral.rplatform.utility.itembuilder.AItemBuilder}
+ * and specialised builders so callers can operate on version specific implementations without
+ * branching. Each method returns the generic builder type to allow method chaining.</p>
+ *
+ * @param <T> concrete {@link ItemMeta} type manipulated by the builder
+ * @param <B> concrete builder type returned from fluent calls
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public interface IUnifiedItemBuilder<T extends ItemMeta, B extends IUnifiedItemBuilder<T, B>> {
-	
-	B setName(@NotNull Component name);
-	
-	B setLore(@NotNull List<Component> lore);
-	
-	B addLoreLine(@NotNull Component line);
-	
-	B addLoreLines(@NotNull List<Component> lore);
-	
-	B addLoreLines(@NotNull Component... lore);
-	
-	B setAmount(int amount);
-	
-	B setCustomModelData(int data);
-	
-	B addEnchantment(
-		@NotNull Enchantment enchantment,
-		int level
-	);
-	
-	B addItemFlags(@NotNull ItemFlag... flags);
-	
-	B setGlowing(boolean glowing);
-	
-	ItemStack build();
-	
+
+        /**
+         * Applies the translated display name component.
+         *
+         * @param name resolved display name
+         * @return fluent builder reference for chaining
+         */
+        B setName(@NotNull Component name);
+
+        /**
+         * Replaces the lore with the provided ordered components.
+         *
+         * @param lore lore components to render
+         * @return fluent builder reference for chaining
+         */
+        B setLore(@NotNull List<Component> lore);
+
+        /**
+         * Appends a single lore line.
+         *
+         * @param line lore component to append
+         * @return fluent builder reference for chaining
+         */
+        B addLoreLine(@NotNull Component line);
+
+        /**
+         * Appends multiple lore lines supplied as a list.
+         *
+         * @param lore lore components to append
+         * @return fluent builder reference for chaining
+         */
+        B addLoreLines(@NotNull List<Component> lore);
+
+        /**
+         * Appends multiple lore lines supplied as varargs.
+         *
+         * @param lore lore components to append
+         * @return fluent builder reference for chaining
+         */
+        B addLoreLines(@NotNull Component... lore);
+
+        /**
+         * Updates the stack size.
+         *
+         * @param amount new stack size
+         * @return fluent builder reference for chaining
+         */
+        B setAmount(int amount);
+
+        /**
+         * Sets the custom model data for resource-pack overrides.
+         *
+         * @param data custom model value
+         * @return fluent builder reference for chaining
+         */
+        B setCustomModelData(int data);
+
+        /**
+         * Adds an enchantment level, forcing unsafe levels when requested.
+         *
+         * @param enchantment enchantment to apply
+         * @param level level to set
+         * @return fluent builder reference for chaining
+         */
+        B addEnchantment(
+                @NotNull Enchantment enchantment,
+                int level
+        );
+
+        /**
+         * Adds one or more {@link ItemFlag ItemFlags} to the item metadata.
+         *
+         * @param flags flags to add
+         * @return fluent builder reference for chaining
+         */
+        B addItemFlags(@NotNull ItemFlag... flags);
+
+        /**
+         * Toggles the glowing appearance.
+         *
+         * @param glowing whether to enable the glow effect
+         * @return fluent builder reference for chaining
+         */
+        B setGlowing(boolean glowing);
+
+        /**
+         * Finalises metadata changes and returns the resulting item stack.
+         *
+         * @return built {@link ItemStack}
+         */
+        ItemStack build();
+
 }
