@@ -15,10 +15,13 @@ RPlatform is a comprehensive utility framework designed for modern Minecraft plu
 ### Key Features
 
 - ⚡ **Workload Management** - Time-budgeted task execution preventing server lag
-- 🔌 **Placeholder Integration** - Simplified PlaceholderAPI expansion creation
+- 🕒 **Scheduler Delegation** - Folia-aware scheduler adapter selection through `ISchedulerAdapter`
+- 🔌 **Placeholder Integration** - Simplified PlaceholderAPI expansion creation backed by `PlaceholderManager`
 - 🎭 **Custom Head System** - Type-safe custom player head management
 - 📊 **Statistics Framework** - Comprehensive player statistics tracking
 - 📈 **Metrics Integration** - bStats integration with custom charts
+- 🧭 **Premium Detection** - Classpath resource probes via `detectPremiumVersion(...)`
+- 🗄️ **Database Safeguards** - Hibernate property bootstrapping with automatic resource copying
 - 🔄 **Async-First Design** - CompletableFuture-based operations
 - 🛡️ **Type Safety** - Extensive @NotNull/@Nullable annotations
 - ☕ **Modern Java** - Java 21+ features and best practices
@@ -54,6 +57,8 @@ public class MyPlugin extends JavaPlugin {
         
         platform.initialize()
             .thenRun(() -> {
+                platform.initializeMetrics(12345);
+                platform.initializePlaceholders("myplugin");
                 getLogger().info("Plugin initialized!");
             });
     }
@@ -107,6 +112,8 @@ public class MyExpansion extends AbstractPlaceholderExpansion {
 }
 ```
 
+> ℹ️ Call `platform.initializePlaceholders("identifier")` inside the `initialize()` completion callback so the asynchronous bootstrap has populated translation, command, and database services before the PlaceholderAPI bridge registers. The `PlaceholderManager` will validate PlaceholderAPI availability and ignore duplicate registrations.
+
 ### 3. Statistics System
 
 Type-safe player statistics tracking:
@@ -157,19 +164,30 @@ public class MyHead extends CustomHead {
 bStats integration with custom charts:
 
 ```java
-platform.initializeMetrics(12345);
+platform.initialize()
+    .thenRun(() -> {
+        platform.initializeMetrics(12345);
 
-// Add custom charts
-metrics.addCustomChart(new BStatsMetrics.SimplePie("server_type", () -> {
-    return platform.getPlatformType().name();
-}));
+        BStatsMetrics metrics = new BStatsMetrics(
+                this,
+                12345,
+                platform.getPlatformType() == PlatformType.FOLIA
+        );
 
-metrics.addCustomChart(new BStatsMetrics.AdvancedPie("player_ranks", () -> {
-    Map<String, Integer> ranks = new HashMap<>();
-    // Populate ranks
-    return ranks;
-}));
+        metrics.addCustomChart(new BStatsMetrics.SimplePie("server_type", () -> {
+            return platform.getPlatformType().name();
+        }));
+
+        metrics.addCustomChart(new BStatsMetrics.AdvancedPie("player_ranks", () -> {
+            Map<String, Integer> ranks = new HashMap<>();
+            // Populate ranks
+            return ranks;
+        }));
+    });
 ```
+
+> ✅ The metrics manager should be initialized only after `initialize()` completes; the guard in `initializeMetrics(int)` prevents duplicate registrations and ignores non-positive service identifiers.
+> 💡 Import `com.raindropcentral.rplatform.api.PlatformType` when using the enum comparison shown above.
 
 ### 6. Localization Glue
 
@@ -206,23 +224,19 @@ For complete documentation, examples, and API reference, see:
 ```
 RPlatform/
 ├── src/main/java/com/raindropcentral/rplatform/
-│   ├── workload/           # Workload management system
-│   │   ├── Workload.java
-│   │   └── WorkloadExecutor.java
-│   ├── placeholder/        # PlaceholderAPI integration
-│   │   ├── AbstractPlaceholderExpansion.java
-│   │   └── PlaceholderRegistry.java
-│   ├── head/              # Custom head system
-│   │   ├── CustomHead.java
-│   │   └── HeadCategory.java
-│   ├── statistic/         # Statistics framework
-│   │   └── StatisticType.java
-│   ├── metrics/           # bStats integration
-│   │   └── BStatsMetrics.java
-│   ├── localization/      # JExTranslate glue and bootstrap
-│   │   └── TranslationManager.java
-│   ├── logger/            # Logging utilities
-│   │   └── CentralLogger.java
+│   ├── api/               # Public-facing platform abstractions
+│   ├── config/            # Configuration and permission descriptors
+│   ├── database/          # Hibernate bootstrap and converters
+│   ├── localization/      # Translation manager and locale support
+│   ├── metrics/           # bStats integration helpers
+│   ├── placeholder/       # PlaceholderAPI expansions and managers
+│   ├── scheduler/         # Adaptive scheduler adapters and implementations
+│   ├── service/           # Service registry and default bindings
+│   ├── translation/       # YAML repository utilities and services
+│   ├── logging/           # Centralized logging utilities
+│   ├── utility/           # Builders, serializers, and shared helpers
+│   ├── view/              # Inventory and anvil view abstractions
+│   ├── workload/          # Workload management system
 │   └── RPlatform.java     # Main platform class
 └── PLATFORM_GUIDE.md      # Complete documentation
 ```
