@@ -5,10 +5,29 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Logger;
 
+/**
+ * Centralizes environment detection for the running server, eagerly resolving the platform type,
+ * package version, and Minecraft branding details once and exposing them via a thread-safe
+ * singleton. Detection leverages lightweight reflection checks and Bukkit access during
+ * construction, with the results cached for the lifetime of the JVM. Concurrency is managed via a
+ * double-checked locking pattern so the expensive detection work executes at most once across
+ * threads.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class ServerEnvironment {
 
+    /**
+     * Shared logger used to report detection results and any fallback resolution steps taken.
+     */
     private static final Logger LOGGER = Logger.getLogger(ServerEnvironment.class.getName());
 
+    /**
+     * Lazily initialized singleton instance guarded by {@link #getInstance()} using double-checked
+     * locking semantics.
+     */
     private static volatile ServerEnvironment instance;
 
     private final ServerType serverType;
@@ -25,6 +44,12 @@ public class ServerEnvironment {
         logEnvironmentInfo();
     }
 
+    /**
+     * Provides access to the cached {@link ServerEnvironment} instance, performing detection only
+     * on the first call while ensuring concurrent threads see a fully initialized environment.
+     *
+     * @return the memoized environment snapshot for the running server
+     */
     public static @NotNull ServerEnvironment getInstance() {
         if (instance == null) {
             synchronized (ServerEnvironment.class) {
@@ -77,6 +102,13 @@ public class ServerEnvironment {
         return serverVersion.compareTo(targetVersion) >= 0;
     }
 
+    /**
+     * Determines the active server distribution by testing for Folia, Paper, and Purpur marker
+     * classes, defaulting to {@link ServerType#SPIGOT} when none match.
+     *
+     * @return the detected {@link ServerType}, or {@link ServerType#SPIGOT} when no specific
+     * distribution is discovered
+     */
     private @NotNull ServerType detectServerType() {
         if (hasClass("io.papermc.paper.threadedregions.RegionizedServer")) {
             return ServerType.FOLIA;
@@ -92,6 +124,12 @@ public class ServerEnvironment {
         return ServerType.SPIGOT;
     }
 
+    /**
+     * Resolves the Minecraft client branding string reported by Bukkit, falling back to
+     * {@code "unknown"} when the version cannot be read.
+     *
+     * @return the Minecraft version string, or {@code "unknown"} if detection fails
+     */
     private @NotNull String detectMinecraftVersion() {
         try {
             return Bukkit.getVersion();
@@ -101,6 +139,12 @@ public class ServerEnvironment {
         }
     }
 
+    /**
+     * Extracts the Bukkit package version from the server implementation name, returning
+     * {@code "unknown"} when the value is absent or an error occurs.
+     *
+     * @return the server package version identifier, or {@code "unknown"} if unavailable
+     */
     private @NotNull String detectServerVersion() {
         try {
             final String packageName = Bukkit.getServer().getClass().getPackage().getName();
@@ -116,6 +160,13 @@ public class ServerEnvironment {
         return "unknown";
     }
 
+    /**
+     * Evaluates whether the detected server package version represents a modern (1.13+) release,
+     * treating {@code "unknown"} versions as modern to preserve compatibility with future or
+     * unrecognized builds.
+     *
+     * @return {@code true} when the server should be treated as modern, otherwise {@code false}
+     */
     private boolean isVersionModern() {
         if ("unknown".equals(serverVersion)) {
             return true;
@@ -132,6 +183,10 @@ public class ServerEnvironment {
         LOGGER.info("=========================");
     }
 
+    /**
+     * Enumerates supported server distributions used to tailor feature toggles and compatibility
+     * checks across the platform.
+     */
     public enum ServerType {
         FOLIA,
         PAPER,
