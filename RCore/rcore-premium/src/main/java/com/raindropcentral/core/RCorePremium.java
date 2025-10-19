@@ -8,12 +8,14 @@ import java.util.logging.Level;
 /**
  * Bukkit entrypoint for the premium RCore distribution.
  *
- * <p>The premium jar follows the same lifecycle as the free edition but delegates to
- * {@link RCorePremiumImpl} so enhanced integrations or overrides can be introduced without changing
- * the {@code JavaPlugin} subclass. {@link #onLoad()} is responsible for bootstrapping the runtime
- * dependency system, reflectively creating the delegate, and propagating any initialization errors
- * through Bukkit's logging facilities. Enable and disable phases forward control to the delegate
- * while ensuring the plugin shuts down safely if bootstrapping fails.</p>
+ * <p>The premium jar follows the same lifecycle as the free edition but wraps it with
+ * premium-specific boot hooks. {@link #onLoad()} wires JExDependency's remapping support so shaded
+ * premium dependencies (for example database connectors or analytics bridges) are relocated before
+ * Spigot loads any premium-only classes. It then reflectively instantiates {@link RCorePremiumImpl}
+ * to allow the delegate to override service bindings, register premium listeners, and describe the
+ * runtime capabilities exposed only to paying customers. Failure to initialize either the remapper
+ * or the delegate is surfaced through Bukkit's logger and leaves the plugin in a safe disabled
+ * state so enable and disable phases cannot progress partially.</p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -23,17 +25,20 @@ public class RCorePremium extends JavaPlugin {
 
     /**
      * Edition-specific delegate that controls lifecycle orchestration, premium service registration,
-     * and repository wiring. Kept {@code null} when dependency bootstrapping fails so subsequent
-     * phases can short-circuit cleanly.
+     * and repository wiring. The delegate augments the base implementation with premium feature
+     * overrides such as cloud sync providers or additional analytics emitters. Kept {@code null}
+     * when dependency bootstrapping fails so subsequent phases can short-circuit cleanly.
      */
     private RCorePremiumImpl rCoreImpl;
 
     /**
      * Initializes the runtime dependency remapper and creates the premium delegate.
      *
-     * <p>Exceptions thrown during dependency setup or reflective construction are logged as severe
-     * events and prevent the delegate from being assigned. Later phases rely on the {@code null}
-     * check to avoid running with an incomplete backend.</p>
+     * <p>JExDependency is invoked with {@link RCorePremium} as the remapping owner so premium-only
+     * jars gain the same relocation rules as the shaded distribution. Exceptions thrown during
+     * dependency setup or reflective construction are logged as severe events and prevent the
+     * delegate from being assigned. Later phases rely on the {@code null} check to avoid running
+     * with an incomplete backend.</p>
      */
     @Override
     public void onLoad() {
@@ -50,7 +55,8 @@ public class RCorePremium extends JavaPlugin {
     }
 
     /**
-     * Delegates enablement to the premium backend, disabling the plugin if boot failed earlier.
+     * Delegates enablement to the premium backend, disabling the plugin if boot failed earlier so
+     * premium listeners and data migrations are only scheduled when dependencies are ready.
      */
     @Override
     public void onEnable() {
@@ -64,7 +70,7 @@ public class RCorePremium extends JavaPlugin {
 
     /**
      * Forwards shutdown to the premium backend so it can unregister services and tear down
-     * executors.
+     * executors tied to premium integrations.
      */
     @Override
     public void onDisable() {
@@ -76,7 +82,8 @@ public class RCorePremium extends JavaPlugin {
     /**
      * Exposes the premium implementation for diagnostics and internal tests.
      *
-     * @return the premium delegate or {@code null} if {@link #onLoad()} failed
+     * @return the premium delegate or {@code null} if {@link #onLoad()} failed, allowing callers to
+     * query which premium overrides were activated.
      */
     public RCorePremiumImpl getImpl() {
         return this.rCoreImpl;
