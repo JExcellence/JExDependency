@@ -1,0 +1,5 @@
+name: pr18n
+description: Pr18n sync command
+usage: /pr18n
+aliases:
+  - pr18nreload
