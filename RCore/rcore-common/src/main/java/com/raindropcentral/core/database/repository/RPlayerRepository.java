@@ -38,10 +38,13 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
     }
 
     /**
-     * Retrieves a player by UUID using asynchronous execution.
+     * Retrieves a player by UUID using asynchronous execution. The lookup first consults the
+     * identifier cache maintained by {@link GenericCachedRepository}, falling back to the entity
+     * manager when needed, and executes on the repository's dedicated executor. The result is
+     * wrapped in an {@link Optional} so callers can safely react to missing records.
      *
      * @param uniqueId player UUID to search for
-     * @return future resolving to the matching player when present
+     * @return future resolving to an optional containing the cached or freshly loaded entity
      */
     public CompletableFuture<Optional<RPlayer>> findByUuidAsync(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
@@ -51,11 +54,13 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
     }
 
     /**
-     * Looks up a player by the stored username. Uses the repository executor for background
-     * execution to maintain thread-safety with Bukkit.
+     * Looks up a player by the stored username. The cache is consulted with the username key
+     * before hitting the database, and the supplied executor keeps the work off the Bukkit
+     * threads. The optional return communicates whether a cached or persisted record exists
+     * without forcing null checks on consumers.
      *
      * @param playerName username to search for
-     * @return future containing the resolved player when found
+     * @return future containing an optional with the resolved player when found
      */
     public CompletableFuture<Optional<RPlayer>> findByNameAsync(final @NotNull String playerName) {
         Objects.requireNonNull(playerName, "playerName cannot be null");
@@ -65,7 +70,8 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
     }
 
     /**
-     * Checks if a player row exists for the provided UUID.
+     * Checks if a player row exists for the provided UUID. This reuses the cached UUID lookup so
+     * repeated probes can short-circuit to cached values while staying on the managed executor.
      *
      * @param uniqueId identifier to probe
      * @return future evaluating to {@code true} when the player exists
@@ -76,7 +82,12 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
     }
 
     /**
-     * Creates or updates the supplied player depending on whether the UUID already exists.
+     * Creates or updates the supplied player depending on whether the UUID already exists. The
+     * player is validated for nullity prior to scheduling, then the cache-backed existence check
+     * determines whether to branch into {@link #updateAsync(Object)} or {@link #createAsync(Object)}.
+     * Both paths execute asynchronously on the repository executor so write operations respect the
+     * same threading guarantees as lookups, and cache state is refreshed by the parent
+     * implementation after persistence.
      *
      * @param player player entity to persist
      * @return future resolving to the managed entity after persistence
