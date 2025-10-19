@@ -10,89 +10,113 @@ import java.util.Map;
 /**
  * Configuration section for job-based requirements.
  * <p>
- * This section handles all configuration options specific to JobRequirement,
- * including required jobs, job levels, and job plugin integration.
+ * Provides accessors for multiple legacy and modern field names so that
+ * configuration files created for different RDQ releases continue to resolve
+ * correctly. The section also exposes sensible defaults for optional
+ * properties, allowing downstream requirement handlers to treat missing values
+ * consistently.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class JobRequirementSection extends AConfigSection {
 	
 	// ~~~ JOB-SPECIFIC PROPERTIES ~~~
 	
-	/**
-	 * Single required job name.
-	 * YAML key: "requiredJob"
-	 */
+        /**
+         * Single required job name.
+         * <p>
+         * YAML key: {@code requiredJob}.
+         * </p>
+         */
 	private String requiredJob;
 	
-	/**
-	 * Alternative job field name.
-	 * YAML key: "job"
-	 */
+        /**
+         * Alternative job field name used by legacy configurations.
+         * <p>
+         * YAML key: {@code job}.
+         * </p>
+         */
 	private String job;
 	
-	/**
-	 * Required job level for single job.
-	 * YAML key: "requiredJobLevel"
-	 */
+        /**
+         * Required job level for the single job slot.
+         * <p>
+         * YAML key: {@code requiredJobLevel}.
+         * </p>
+         */
 	private Integer requiredJobLevel;
 	
-	/**
-	 * Alternative job level field name.
-	 * YAML key: "jobLevel"
-	 */
+        /**
+         * Alternative job level field name recognised for backward compatibility.
+         * <p>
+         * YAML key: {@code jobLevel}.
+         * </p>
+         */
 	private Integer jobLevel;
 	
-	/**
-	 * Map of required jobs with their levels.
-	 * YAML key: "requiredJobs"
-	 */
+        /**
+         * Map of required jobs with their corresponding minimum levels.
+         * <p>
+         * YAML key: {@code requiredJobs}.
+         * </p>
+         */
 	private Map<String, Integer> requiredJobs;
 	
-	/**
-	 * Alternative jobs map field name.
-	 * YAML key: "jobs"
-	 */
+        /**
+         * Alternative jobs map field name that mirrors historical configuration.
+         * <p>
+         * YAML key: {@code jobs}.
+         * </p>
+         */
 	private Map<String, Integer> jobs;
 	
-	/**
-	 * Job plugin identifier (e.g., "jobs", "jobsreborn").
-	 * YAML key: "jobPlugin"
-	 */
+        /**
+         * Job plugin identifier (for example {@code jobs} or {@code jobsreborn}).
+         * <p>
+         * YAML key: {@code jobPlugin}.
+         * </p>
+         */
 	private String jobPlugin;
 	
-	/**
-	 * Whether this requirement should consume job levels when completed.
-	 * YAML key: "consumeOnComplete"
-	 */
+        /**
+         * Whether this requirement should consume job levels when completed.
+         * <p>
+         * YAML key: {@code consumeOnComplete}.
+         * </p>
+         */
 	private Boolean consumeOnComplete;
 	
-	/**
-	 * Whether all jobs must be at required level (AND) or just one (OR).
-	 * YAML key: "requireAll"
-	 */
+        /**
+         * Whether all jobs must be at the required level (logical AND) or just
+         * one needs to match (logical OR).
+         * <p>
+         * YAML key: {@code requireAll}.
+         * </p>
+         */
 	private Boolean requireAll;
 	
-	/**
-	 * Constructs a new JobRequirementSection.
-	 *
-	 * @param evaluationEnvironmentBuilder the evaluation environment builder
-	 */
+        /**
+         * Constructs a new {@link JobRequirementSection}.
+         *
+         * @param evaluationEnvironmentBuilder the evaluation environment builder
+         *                                      used to resolve dynamic values
+         */
 	public JobRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
 		super(evaluationEnvironmentBuilder);
 	}
 	
 	// ~~~ GETTERS ~~~
 	
-	/**
-	 * Gets the single required job, trying multiple field names.
-	 *
-	 * @return the required job name
-	 */
+        /**
+         * Gets the single required job, trying multiple field names.
+         *
+         * @return the resolved required job name or an empty string when none is
+         *         provided
+         */
 	public String getRequiredJob() {
 		if (this.requiredJob != null) {
 			return this.requiredJob;
@@ -103,11 +127,12 @@ public class JobRequirementSection extends AConfigSection {
 		return "";
 	}
 	
-	/**
-	 * Gets the required job level, trying multiple field names.
-	 *
-	 * @return the required job level, defaulting to 1
-	 */
+        /**
+         * Gets the required job level, trying multiple field names.
+         *
+         * @return the resolved required job level, defaulting to {@code 1} when
+         *         unspecified
+         */
 	public Integer getRequiredJobLevel() {
 		if (this.requiredJobLevel != null) {
 			return this.requiredJobLevel;
@@ -118,11 +143,12 @@ public class JobRequirementSection extends AConfigSection {
 		return 1;
 	}
 	
-	/**
-	 * Gets the complete map of required jobs from all sources.
-	 *
-	 * @return combined map of all required jobs
-	 */
+        /**
+         * Gets the complete map of required jobs from all sources.
+         *
+         * @return a mutable map combining single job entries and map-based
+         *         definitions
+         */
 	public Map<String, Integer> getRequiredJobs() {
 		Map<String, Integer> jobMap = new HashMap<>();
 		
@@ -145,29 +171,32 @@ public class JobRequirementSection extends AConfigSection {
 		return jobMap;
 	}
 	
-	/**
-	 * Gets the job plugin identifier.
-	 *
-	 * @return the job plugin identifier
-	 */
+        /**
+         * Gets the job plugin identifier used to satisfy this requirement.
+         *
+         * @return the configured job plugin identifier or {@code jobs} when a
+         *         specific plugin is not supplied
+         */
 	public String getJobPlugin() {
 		return this.jobPlugin != null ? this.jobPlugin : "jobs";
 	}
 	
-	/**
-	 * Gets whether job levels should be consumed on completion.
-	 *
-	 * @return true if job levels should be consumed, false otherwise
-	 */
+        /**
+         * Gets whether job levels should be consumed on completion.
+         *
+         * @return {@code true} if job levels should be consumed, otherwise the
+         *         value defaults to {@code false}
+         */
 	public Boolean getConsumeOnComplete() {
 		return this.consumeOnComplete != null ? this.consumeOnComplete : false;
 	}
 	
-	/**
-	 * Gets whether all jobs must be at required level.
-	 *
-	 * @return true if all jobs are required, false if only one is needed
-	 */
+        /**
+         * Gets whether all jobs must be at the required level.
+         *
+         * @return {@code true} if every configured job must meet the level
+         *         requirement; defaults to {@code true}
+         */
 	public Boolean getRequireAll() {
 		return this.requireAll != null ? this.requireAll : true;
 	}
