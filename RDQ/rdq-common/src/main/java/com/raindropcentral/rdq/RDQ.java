@@ -26,13 +26,17 @@ import java.util.logging.Logger;
 
 /**
  * Base contract shared by every RDQ edition, orchestrating the staged lifecycle described in
- * {@link com.raindropcentral.rdq package documentation}. Implementations bootstrap platform
- * services, bind GUIs, and register repositories while respecting synchronous Bukkit threading
- * boundaries. The lifecycle flows through asynchronous platform initialization, synchronous
- * component/view wiring, and repository registration, re-entering the main thread through
- * {@link #runSync(Runnable)} whenever Bukkit state is touched. Subclasses may extend the
- * lifecycle by chaining additional futures to {@link #onEnable()} while preserving the
- * sequencing guarantees captured here.
+ * {@link com.raindropcentral.rdq package documentation}.
+ *
+ * <p>Implementations bootstrap platform services, bind GUIs, and register repositories while
+ * respecting synchronous Bukkit threading boundaries. The lifecycle flows through asynchronous
+ * platform initialization, synchronous component/view wiring, and repository registration,
+ * re-entering the main thread through {@link #runSync(Runnable)} whenever Bukkit state is
+ * touched.
+ *
+ * <p>Subclasses may extend the lifecycle by chaining additional futures to {@link #onEnable()}
+ * while preserving the sequencing guarantees captured here. Extension points should document any
+ * additional futures they introduce so callers can reason about completion ordering.
  *
  * @author JExcellence
  * @since 1.0.0
@@ -211,10 +215,16 @@ public abstract class RDQ {
 
     /**
      * Begins the staged enable pipeline. Platform setup executes asynchronously before re-entering
-     * the main thread to initialise components, views, repositories, and metrics. The returned
-     * future is stored for cancellation during disable, and failures propagate through chained
-     * {@link CompletionException CompletionExceptions} so the plugin can disable itself. Repeated
-     * invocations while enable is still running short-circuit to avoid double registration.
+     * the main thread to initialise components, views, repositories, and metrics.
+     *
+     * <p>The returned future is stored for cancellation during disable, and failures propagate
+     * through chained {@link CompletionException CompletionExceptions} so the plugin can disable
+     * itself. Repeated invocations while enable is still running short-circuit to avoid double
+     * registration.
+     *
+     * @implSpec Subclasses overriding this method must invoke {@code super.onEnable()} to preserve
+     * the staged lifecycle. Implementations adding new asynchronous steps should chain them to the
+     * returned future before completion so disable-time cancellation remains effective.
      */
     public void onEnable() {
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
@@ -259,9 +269,13 @@ public abstract class RDQ {
     }
 
     /**
-     * Cancels the enable pipeline, shuts down executors, and marks the plugin as disabling. Invoked
-     * on the main thread during {@code JavaPlugin#onDisable()} to prevent further lifecycle work and
-     * ensure asynchronous jobs terminate promptly.
+     * Cancels the enable pipeline, shuts down executors, and marks the plugin as disabling.
+     *
+     * <p>Invoked on the main thread during {@code JavaPlugin#onDisable()} to prevent further
+     * lifecycle work and ensure asynchronous jobs terminate promptly.
+     *
+     * @implNote The shutdown sequence is idempotent so repeated disable hooks—common during forced
+     * shutdowns—remain safe.
      */
     public void onDisable() {
         this.isDisabling = true;
@@ -295,6 +309,9 @@ public abstract class RDQ {
      * the main thread after default RDQ bounty views are configured, providing a hook for
      * thread-confined view mutations.
      *
+     * <p>Implementations should avoid blocking operations to keep the main thread responsive and
+     * should defer asynchronous work until after the returned frame registers.
+     *
      * @param viewFrame pre-configured frame containing default RDQ views
      * @return frame with any edition-specific views included
      */
@@ -320,6 +337,9 @@ public abstract class RDQ {
      * Registers the shared RDQ bounty view frame and allows subclasses to extend it before the
      * frame is committed. Execution occurs on the main thread and must remain lightweight to avoid
      * stalling the server tick while UI elements are wired.
+     *
+     * @implNote Any new views introduced by subclasses should perform their own asynchronous
+     * preparation before invoking Bukkit APIs to respect {@link #runSync(Runnable)} boundaries.
      */
     @SuppressWarnings("UnstableApiUsage")
     private void initializeViews() {
@@ -347,6 +367,9 @@ public abstract class RDQ {
      * Wires repository instances against the active {@link EntityManagerFactory}. Repositories run
      * asynchronous operations on the shared executor to avoid blocking the server thread and honour
      * Bukkit's threading rules, integrating RDQ persistence with the wider database layer.
+     *
+     * @implNote Repository implementations should treat the executor as shared infrastructure and
+     * must not attempt to shut it down.
      */
     private void initializeRepositories() {
         final EntityManagerFactory emf = this.platform.getEntityManagerFactory();
@@ -383,6 +406,9 @@ public abstract class RDQ {
      * thread while propagating failures back into the enable pipeline. Delegates to
      * {@link RPlatform#initialize()} behind the scenes.
      *
+     * <p>The asynchronous boundary ensures platform initialization honours Bukkit's threading rules
+     * and allows disable-time cancellation.
+     *
      * @return future completing when the platform is initialised
      */
     private @NotNull CompletableFuture<Void> initializePlatformAsync() {
@@ -398,8 +424,11 @@ public abstract class RDQ {
     /**
      * Schedules the provided runnable on the Bukkit main thread and returns a future completed when
      * the work finishes. This helper enforces synchronous lifecycle stages and propagates
-     * exceptions back to asynchronous callers. All synchronous lifecycle blocks should invoke this
-     * helper when entered from asynchronous execution.
+     * exceptions back to asynchronous callers.
+     *
+     * <p>All synchronous lifecycle blocks should invoke this helper when entered from asynchronous
+     * execution. Long-running tasks should be re-scheduled back to asynchronous executors to avoid
+     * impacting server ticks.
      *
      * @param runnable action to execute on the main thread
      * @return future that completes once the runnable finishes executing
@@ -419,8 +448,9 @@ public abstract class RDQ {
 
     /**
      * Creates the shared executor, preferring a virtual-thread-per-task implementation and falling
-     * back to a fixed thread pool when the runtime does not support virtual threads. The fallback
-     * pool defaults to five threads, matching historical behaviour.
+     * back to a fixed thread pool when the runtime does not support virtual threads.
+     *
+     * <p>The fallback pool defaults to five threads, matching historical behaviour.
      *
      * @return executor used for asynchronous RDQ work
      */
@@ -510,9 +540,13 @@ public abstract class RDQ {
     }
 
     /**
-     * Returns the rank system factory responsible for asynchronous rank initialisation. Editions
-     * without ranking support should avoid calling this method, otherwise a
-     * {@link NullPointerException} may occur.
+     * Returns the rank system factory responsible for asynchronous rank initialisation.
+     *
+     * <p>Editions without ranking support should avoid calling this method, otherwise a
+     * {@link NullPointerException} may occur when the factory is unset.
+     *
+     * @apiNote Future editions introducing optional ranking should prefer {@link Optional}
+     * exposures or guard the value before invoking rank-specific operations.
      *
      * @return rank system factory
      */
