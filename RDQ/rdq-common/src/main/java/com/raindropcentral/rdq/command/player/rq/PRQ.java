@@ -15,30 +15,38 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Handles the execution and tab completion of the RaindropQuests command for players.
+ * Primary player-facing entry point for the {@code /prq} command tree.
  * <p>
- * This command allows players to interact with various RDQ systems including:
- * <ul>
- * <li>Admin panel (requires admin permission)</li>
- * <li>Bounty system</li>
- * <li>Main overview</li>
- * <li>Quest system</li>
- * <li>Rank system</li>
- * <li>Perk system</li>
- * </ul>
- * Command is automatically registered using {@link Command} annotation.
+ * The root command is auto-registered by the {@link Command} annotation and
+ * orchestrates navigation to edition-aware views such as the bounty browser.
+ * Permission guards sourced from {@link ERQPermission} ensure only eligible
+ * players gain access to administrative tooling while keeping public surfaces
+ * available to all permitted users.
  * </p>
  *
- * @author ItsRainingHP, JExcellence
- * @version 2.0.0
- * @since 2.0.0
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Command
 @SuppressWarnings("unused")
 public final class PRQ extends PlayerCommand {
 
+    /**
+     * Active plugin context that supplies view frames and edition-aware
+     * managers used to fulfil command actions.
+     */
     private final RDQ rdq;
 
+    /**
+     * Creates the command handler with the resolved command section and RDQ
+     * runtime.
+     *
+     * @param commandSection section metadata produced by {@link PRQSection}
+     *                       defining the root command and evaluation context
+     * @param rdq            plugin instance exposing views, managers, and
+     *                       edition controls for downstream actions
+     */
     public PRQ(
             final @NotNull PRQSection commandSection,
             final @NotNull RDQ rdq
@@ -47,6 +55,15 @@ public final class PRQ extends PlayerCommand {
         this.rdq = rdq;
     }
 
+    /**
+     * Executes the player command, selecting an {@link EPRQAction} based on the
+     * first argument, enforcing base permissions, and delegating to the
+     * respective action handler.
+     *
+     * @param player invoking player
+     * @param label  alias used for invocation
+     * @param args   command arguments supplied by the player
+     */
     @Override
     protected void onPlayerInvocation(
             final @NotNull Player player,
@@ -75,6 +92,15 @@ public final class PRQ extends PlayerCommand {
         }
     }
 
+    /**
+     * Provides tab completions for the command by filtering available
+     * {@link EPRQAction} values when the base permission is satisfied.
+     *
+     * @param player player requesting completions
+     * @param label  alias used for invocation
+     * @param args   current command arguments
+     * @return matching completions limited to actions the player can access
+     */
     @Override
     protected List<String> onPlayerTabCompletion(
             final @NotNull Player player,
@@ -101,6 +127,13 @@ public final class PRQ extends PlayerCommand {
         return new ArrayList<>();
     }
 
+    /**
+     * Routes the player to administrative tooling when the admin permission is
+     * granted.
+     *
+     * @param player player executing the command
+     * @param args   command arguments including optional plugin name hints
+     */
     private void handleAdminCommand(
             final @NotNull Player player,
             final @NotNull String[] args
@@ -119,6 +152,11 @@ public final class PRQ extends PlayerCommand {
         );*/
     }
 
+    /**
+     * Opens the bounty view when the player holds the bounty permission.
+     *
+     * @param player player executing the command
+     */
     private void handleBountyCommand(final @NotNull Player player) {
         if (this.hasNoPermission(player, ERQPermission.BOUNTY)) {
             return;
@@ -130,6 +168,11 @@ public final class PRQ extends PlayerCommand {
         );
     }
 
+    /**
+     * Entry point for the main overview guarded by the main permission.
+     *
+     * @param player player executing the command
+     */
     private void handleMainCommand(final @NotNull Player player) {
         if (this.hasNoPermission(player, ERQPermission.MAIN)) {
             return;
@@ -142,6 +185,11 @@ public final class PRQ extends PlayerCommand {
         );*/
     }
 
+    /**
+     * Handles quest overview navigation when the quest permission passes.
+     *
+     * @param player player executing the command
+     */
     private void handleQuestsCommand(final @NotNull Player player) {
         if (this.hasNoPermission(player, ERQPermission.QUESTS)) {
             return;
@@ -154,6 +202,11 @@ public final class PRQ extends PlayerCommand {
         );*/
     }
 
+    /**
+     * Directs players to the ranks UI if the rank permission is available.
+     *
+     * @param player player executing the command
+     */
     private void handleRanksCommand(final @NotNull Player player) {
         if (this.hasNoPermission(player, ERQPermission.RANKS)) {
             return;
@@ -166,6 +219,11 @@ public final class PRQ extends PlayerCommand {
         );*/
     }
 
+    /**
+     * Opens the perks interface for players holding the perks permission.
+     *
+     * @param player player executing the command
+     */
     private void handlePerksCommand(final @NotNull Player player) {
         if (this.hasNoPermission(player, ERQPermission.PERKS)) {
             return;
@@ -178,6 +236,12 @@ public final class PRQ extends PlayerCommand {
         );*/
     }
 
+    /**
+     * Sends the localized help message, providing guidance when no specific
+     * action is selected or available.
+     *
+     * @param player player requesting help
+     */
     private void handleHelpCommand(final @NotNull Player player) {
         TranslationService.create(
                 TranslationKey.of("rq.help"),

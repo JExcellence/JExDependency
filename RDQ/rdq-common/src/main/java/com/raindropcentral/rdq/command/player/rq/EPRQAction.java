@@ -1,14 +1,16 @@
 package com.raindropcentral.rdq.command.player.rq;
 
 /**
- * Represents the subcommands available for the main <code>prq</code> command.
+ * Enumerates the discrete actions exposed by the {@code /prq} command.
  * <p>
- * Each enum constant corresponds to a specific subcommand that can be executed by the player.
+ * Each value corresponds to a branch within {@link PRQ} and maps to
+ * permission-gated views or workflows such as bounty browsing or perk
+ * management.
  * </p>
  *
  * @author JExcellence
- * @version 2.0.0
- * @since 2.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public enum EPRQAction {
 
