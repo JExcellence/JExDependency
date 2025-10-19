@@ -87,6 +87,7 @@ This release represents a complete rewrite and modernization of RPlatform with b
 - **BREAKING:** Removed `isPAPIEnabled()` (use `PlaceholderRegistry.isAvailable()`)
 - Simplified API with clearer method names
 - Better lifecycle management
+- `PlaceholderManager` now reflects the bundled `PAPIHook` bridge on demand, validating PlaceholderAPI availability and caching registration state to avoid duplicate hooks.
 
 #### Custom Head System
 - **BREAKING:** Renamed `RHead` to `CustomHead`
@@ -109,6 +110,12 @@ This release represents a complete rewrite and modernization of RPlatform with b
 - Better error handling
 - Modern Java features (switch expressions)
 
+#### Scheduler Delegation
+- Initialization delegates to the platform-resolved `ISchedulerAdapter`, allowing Folia servers to use `FoliaISchedulerImpl` while Paper and Spigot fall back to the Bukkit adapter automatically.
+
+#### Premium Detection
+- `detectPremiumVersion(Class, String)` now records premium markers during bootstrap so downstream services and metrics can branch on `isPremiumVersion()` consistently.
+
 ### Removed
 
 #### Documentation
@@ -119,7 +126,6 @@ This release represents a complete rewrite and modernization of RPlatform with b
 
 #### Code
 - Removed all inline comments (self-documenting code)
-- Removed `PAPIHook` class (replaced by `PlaceholderRegistry`)
 - Removed Hungarian notation from enum names
 
 ### Fixed
