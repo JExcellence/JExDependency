@@ -29,6 +29,13 @@ import java.util.concurrent.ExecutorService;
  * hydration tasks operate on the same bounded executor configured for the core services, avoiding
  * accidental execution on the common fork-join pool and ensuring predictable threading semantics
  * during batch statistic updates.
+ * <p>
+ * Callers should log cache misses, aggregate initializations, and mutation workflows with
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}. Log at debug level
+ * when a lookup cannot be served from cache (empty result) and at info level before applying
+ * create/update/delete operations so statistic changes can be audited. Any asynchronous failure or
+ * validation rejection must be escalated through error logs that include the statistic identifier
+ * and owning player keys.
  * </p>
  *
  * @author JExcellence

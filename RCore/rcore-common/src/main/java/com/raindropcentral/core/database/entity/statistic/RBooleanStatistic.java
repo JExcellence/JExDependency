@@ -11,6 +11,12 @@ import java.util.Objects;
  * Boolean-backed statistic persisted through the {@code BOOLEAN} discriminator value in
  * the {@code r_statistic} table. Encodes true/false flags such as tutorial completion
  * markers.
+ * <p>
+ * Toggle and assignment operations should emit {@link com.raindropcentral.rplatform.logging.CentralLogger
+ * CentralLogger} entries so downstream services can audit why a flag changed. Log at debug when a
+ * cached value is read due to a cache miss and at info when state transitions occur; escalate
+ * failures (for example, null assignments) to error logs containing the statistic identifier.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

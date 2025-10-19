@@ -13,6 +13,14 @@ import java.util.Objects;
  *
  * <p>Values are persisted as {@link Double} to balance precision and storage. Callers should
  * apply domain-specific rounding when exposing results.</p>
+ * <p>
+ * Increment, decrement, and multiplier interactions are expected to log via
+ * {@link com.raindropcentral.rplatform.logging.CentralLogger CentralLogger}. Emit debug logs when a
+ * cache miss forces a reload before math operations, record info logs describing the delta applied
+ * (including identifier and plugin) prior to committing, and surface arithmetic anomalies (such as
+ * {@link Double#isNaN(double)} inputs) as warnings or errors so operators can detect corrupted
+ * counters.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0

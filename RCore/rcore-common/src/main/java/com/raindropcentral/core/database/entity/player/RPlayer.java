@@ -25,6 +25,14 @@ import java.util.UUID;
  * should be routed through {@link com.raindropcentral.core.database.repository.RPlayerRepository}
  * to guarantee executor-aligned state changes.
  * </p>
+ * <p>
+ * Lifecycle boundaries are expected to be accompanied by {@link
+ * com.raindropcentral.rplatform.logging.CentralLogger CentralLogger} entries: creation and first
+ * load of a profile should be logged at info level, cache misses that trigger hydration should be
+ * logged at debug level, and mutations such as username updates or statistic re-associations should
+ * be logged before the transaction commits. Any repository or aggregate failure should produce an
+ * error log containing the player UUID so downstream services can correlate state mismatches.
+ * </p>
  *
  * @author JExcellence
  * @since 1.0.0
