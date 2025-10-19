@@ -17,6 +17,17 @@ import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Requirement that validates player progress against statistics provided by {@link RCoreBridge}.
+ *
+ * <p>The requirement supports both absolute and relative comparisons depending on the configured
+ * {@link RequirementMode} and can be initialized through a number of convenience factory methods.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public final class RStatisticRequirement extends AbstractRequirement {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RStatisticRequirement.class);
@@ -24,10 +35,18 @@ public final class RStatisticRequirement extends AbstractRequirement {
 
     private static volatile @Nullable Supplier<@Nullable RCoreBridge> BRIDGE_SUPPLIER;
 
+    /**
+     * Registers the supplier that delivers {@link RCoreBridge} instances used to fetch statistics.
+     *
+     * @param supplier supplier returning the shared bridge instance or {@code null}
+     */
     public static void setBridgeSupplier(@NotNull Supplier<@Nullable RCoreBridge> supplier) {
         BRIDGE_SUPPLIER = supplier;
     }
 
+    /**
+     * Clears any previously registered bridge supplier.
+     */
     public static void clearBridgeSupplier() {
         BRIDGE_SUPPLIER = null;
     }
@@ -61,6 +80,18 @@ public final class RStatisticRequirement extends AbstractRequirement {
     @JsonProperty("timeoutMillis")
     private final long timeoutMillis;
 
+    /**
+     * Creates a new statistic requirement instance.
+     *
+     * @param plugin         plugin namespace that owns the statistic
+     * @param identifier     statistic identifier inside the namespace
+     * @param requiredAmount amount to reach or exceed
+     * @param mode           comparison mode to evaluate progress
+     * @param qualifier      optional qualifier (for example entity or block type)
+     * @param statisticType  type of statistic data being tracked
+     * @param startingValue  pre-defined starting value used for relative requirements
+     * @param timeoutMillis  optional timeout in milliseconds for statistic fetches
+     */
     @JsonCreator
     public RStatisticRequirement(
             @JsonProperty("plugin") final @NotNull String plugin,
@@ -83,6 +114,14 @@ public final class RStatisticRequirement extends AbstractRequirement {
         this.timeoutMillis = timeoutMillis != null && timeoutMillis > 0 ? timeoutMillis : DEFAULT_TIMEOUT_MS;
     }
 
+    /**
+     * Creates an absolute statistic requirement.
+     *
+     * @param plugin         plugin namespace that owns the statistic
+     * @param identifier     statistic identifier inside the namespace
+     * @param requiredAmount amount to reach or exceed
+     * @param statisticType  type of statistic data being tracked
+     */
     public RStatisticRequirement(
             final @NotNull String plugin,
             final @NotNull String identifier,
@@ -92,6 +131,15 @@ public final class RStatisticRequirement extends AbstractRequirement {
         this(plugin, identifier, requiredAmount, RequirementMode.ABSOLUTE, null, statisticType, null, DEFAULT_TIMEOUT_MS);
     }
 
+    /**
+     * Creates a relative statistic requirement with a predefined starting value.
+     *
+     * @param plugin         plugin namespace that owns the statistic
+     * @param identifier     statistic identifier inside the namespace
+     * @param requiredAmount amount to gain beyond the starting value
+     * @param statisticType  type of statistic data being tracked
+     * @param startingValue  initial value representing the player's baseline statistic
+     */
     public RStatisticRequirement(
             final @NotNull String plugin,
             final @NotNull String identifier,
@@ -102,6 +150,12 @@ public final class RStatisticRequirement extends AbstractRequirement {
         this(plugin, identifier, requiredAmount, RequirementMode.RELATIVE, null, statisticType, startingValue, DEFAULT_TIMEOUT_MS);
     }
 
+    /**
+     * Determines whether the requirement is currently satisfied by the supplied player.
+     *
+     * @param player player to evaluate
+     * @return {@code true} when the player's statistic meets or exceeds the requirement
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         try {
@@ -119,6 +173,12 @@ public final class RStatisticRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Calculates the normalized progress for the supplied player.
+     *
+     * @param player player to evaluate
+     * @return progress value between {@code 0.0} and {@code 1.0}
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         try {
@@ -142,6 +202,11 @@ public final class RStatisticRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Updates the cached starting value when the requirement is relative.
+     *
+     * @param player player being consumed
+     */
     @Override
     public void consume(final @NotNull Player player) {
         try {
@@ -158,6 +223,11 @@ public final class RStatisticRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Builds the translation key for representing this requirement in messages or GUIs.
+     *
+     * @return translation key based on the requirement configuration
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
@@ -171,50 +241,103 @@ public final class RStatisticRequirement extends AbstractRequirement {
         return keyBuilder.toString();
     }
 
+    /**
+     * Retrieves the plugin namespace owning the statistic.
+     *
+     * @return plugin namespace
+     */
     @NotNull
     public String getPlugin() {
         return this.plugin;
     }
 
+    /**
+     * Retrieves the statistic identifier.
+     *
+     * @return statistic identifier
+     */
     @NotNull
     public String getIdentifier() {
         return this.identifier;
     }
 
+    /**
+     * Amount to reach or exceed for the requirement to succeed.
+     *
+     * @return target amount
+     */
     public double getRequiredAmount() {
         return this.requiredAmount;
     }
 
+    /**
+     * Provides the configured comparison mode.
+     *
+     * @return requirement mode
+     */
     @NotNull
     public RequirementMode getMode() {
         return this.mode;
     }
 
+    /**
+     * Retrieves the optional qualifier (such as an entity or block identifier).
+     *
+     * @return qualifier or {@code null} if not configured
+     */
     @Nullable
     public String getQualifier() {
         return this.qualifier;
     }
 
+    /**
+     * Provides the statistic data type used to interpret values returned by the bridge.
+     *
+     * @return statistic data type
+     */
     @NotNull
     public StatisticType.DataType getStatisticType() {
         return this.statisticType;
     }
 
+    /**
+     * Returns the cached starting value used for relative comparisons.
+     *
+     * @return starting value or {@code null} if not yet initialized
+     */
     @Nullable
     public Double getStartingValue() {
         return this.startingValue;
     }
 
+    /**
+     * Fetch timeout applied when retrieving statistic values.
+     *
+     * @return timeout in milliseconds
+     */
     public long getTimeoutMillis() {
         return this.timeoutMillis;
     }
 
+    /**
+     * Initializes the starting value for the supplied player when the requirement is relative.
+     *
+     * @param player player being prepared for evaluation
+     */
     public void initializeForPlayer(final @NotNull Player player) {
         if (mode == RequirementMode.RELATIVE && startingValue == null) {
             getStartingValue(player);
         }
     }
 
+    /**
+     * Creates a statistic requirement tracking kills for a particular entity type.
+     *
+     * @param entityType    entity identifier to evaluate
+     * @param requiredKills kills required to satisfy the requirement
+     * @param mode          comparison mode to evaluate progress
+     * @return kill requirement instance
+     */
     @NotNull
     public static RStatisticRequirement createKillRequirement(
             final @NotNull String entityType,
@@ -233,6 +356,14 @@ public final class RStatisticRequirement extends AbstractRequirement {
         );
     }
 
+    /**
+     * Creates a statistic requirement tracking block breaks for the provided block type.
+     *
+     * @param blockType      block identifier to evaluate
+     * @param requiredBlocks blocks required to satisfy the requirement
+     * @param mode           comparison mode to evaluate progress
+     * @return block break requirement instance
+     */
     @NotNull
     public static RStatisticRequirement createBlockBreakRequirement(
             final @NotNull String blockType,
@@ -251,6 +382,13 @@ public final class RStatisticRequirement extends AbstractRequirement {
         );
     }
 
+    /**
+     * Creates a statistic requirement tracking playtime in minutes.
+     *
+     * @param requiredMinutes minutes required to satisfy the requirement
+     * @param mode            comparison mode to evaluate progress
+     * @return playtime requirement instance
+     */
     @NotNull
     public static RStatisticRequirement createPlaytimeRequirement(
             final int requiredMinutes,
