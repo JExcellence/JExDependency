@@ -15,19 +15,58 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 
+/**
+ * Thread-safe façade that exposes {@link RCoreService} through the stable
+ * {@code rcore-common} surface and delegates persistence to the active
+ * {@link RCoreBackend}.
+ *
+ * <p>The adapter ensures all asynchronous operations leverage the backend's
+ * {@link java.util.concurrent.Executor Executor} so Bukkit consumers observe
+ * consistent threading semantics described in the package overview.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class RCoreAdapter implements RCoreService {
 
+    /**
+     * Shared logger used to emit lifecycle and error information for backend
+     * delegation calls, supporting RDQ and RPlatform diagnostics.
+     */
     private static final Logger LOGGER = CentralLogger.getLogger(RCoreAdapter.class);
 
+    /**
+     * Concrete backend supplied by the runtime implementation (Free or Premium)
+     * that performs datastore access and executor provisioning.
+     */
     private final RCoreBackend backend;
+    /**
+     * Executor sourced from the backend and reused to schedule adapter composed
+     * stages, guaranteeing thread affinity with persistence operations.
+     */
     private final Executor executor;
 
+    /**
+     * Creates a new adapter that proxies calls to the supplied backend.
+     *
+     * @param backend initialized backend providing persistence and executors
+     * @throws NullPointerException if backend is {@code null}
+     */
     public RCoreAdapter(final @NotNull RCoreBackend backend) {
         this.backend = Objects.requireNonNull(backend, "backend cannot be null");
         this.executor = backend.getExecutor();
         LOGGER.info("RCoreAdapter initialized successfully");
     }
 
+    /**
+     * Asynchronously locates a player by unique identifier using the backend
+     * executor.
+     *
+     * @param uniqueId player UUID to search for
+     * @return future containing the player when present
+     * @throws NullPointerException if {@code uniqueId} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayer>> findPlayerAsync(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
@@ -40,12 +79,28 @@ public class RCoreAdapter implements RCoreService {
                 });
     }
 
+    /**
+     * Delegates to {@link #findPlayerAsync(UUID)} with the offline player's
+     * unique identifier.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @return future containing the player when present
+     * @throws NullPointerException if {@code offlinePlayer} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayer>> findPlayerAsync(final @NotNull OfflinePlayer offlinePlayer) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
         return findPlayerAsync(offlinePlayer.getUniqueId());
     }
 
+    /**
+     * Asynchronously locates a player by last known name while reusing the
+     * backend executor for completion stages.
+     *
+     * @param playerName case-insensitive player name
+     * @return future containing the player when present
+     * @throws NullPointerException if {@code playerName} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayer>> findPlayerByNameAsync(final @NotNull String playerName) {
         Objects.requireNonNull(playerName, "playerName cannot be null");
@@ -58,18 +113,45 @@ public class RCoreAdapter implements RCoreService {
                 });
     }
 
+    /**
+     * Resolves player existence asynchronously by chaining
+     * {@link #findPlayerAsync(UUID)} on the backend executor.
+     *
+     * @param uniqueId player identifier to check
+     * @return future reporting {@code true} when the player exists
+     * @throws NullPointerException if {@code uniqueId} is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> playerExistsAsync(final @NotNull UUID uniqueId) {
+        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
         return findPlayerAsync(uniqueId)
                 .thenApplyAsync(Optional::isPresent, executor);
     }
 
+    /**
+     * Convenience existence check for {@link OfflinePlayer} instances.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @return future reporting {@code true} when the player exists
+     * @throws NullPointerException if {@code offlinePlayer} is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> playerExistsAsync(final @NotNull OfflinePlayer offlinePlayer) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
         return playerExistsAsync(offlinePlayer.getUniqueId());
     }
 
+    /**
+     * Creates a new player asynchronously when the identifier is not already
+     * registered, ensuring statistic scaffolding is initialized prior to
+     * persistence.
+     *
+     * @param uniqueId player identifier to persist
+     * @param playerName display name to associate with the player
+     * @return future containing the newly created player when successful;
+     *     otherwise an empty optional
+     * @throws NullPointerException if {@code uniqueId} or {@code playerName} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayer>> createPlayerAsync(
             final @NotNull UUID uniqueId,
@@ -100,6 +182,13 @@ public class RCoreAdapter implements RCoreService {
                 });
     }
 
+    /**
+     * Persists updates for the provided player via the backend executor.
+     *
+     * @param player player entity with applied changes
+     * @return future containing the updated player when successful
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayer>> updatePlayerAsync(final @NotNull RPlayer player) {
         Objects.requireNonNull(player, "player cannot be null");
@@ -114,6 +203,14 @@ public class RCoreAdapter implements RCoreService {
                 });
     }
 
+    /**
+     * Retrieves player statistics asynchronously, mapping absent players to an
+     * empty optional.
+     *
+     * @param uniqueId player identifier whose statistics should be fetched
+     * @return future containing player statistics when present
+     * @throws NullPointerException if {@code uniqueId} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayerStatistic>> findPlayerStatisticsAsync(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
@@ -123,6 +220,13 @@ public class RCoreAdapter implements RCoreService {
                         .filter(Objects::nonNull), executor);
     }
 
+    /**
+     * Resolves statistics for an offline player using the player's UUID.
+     *
+     * @param offlinePlayer offline reference whose UUID will be used
+     * @return future containing player statistics when present
+     * @throws NullPointerException if {@code offlinePlayer} is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<RPlayerStatistic>> findPlayerStatisticsAsync(
             final @NotNull OfflinePlayer offlinePlayer
@@ -131,12 +235,23 @@ public class RCoreAdapter implements RCoreService {
         return findPlayerStatisticsAsync(offlinePlayer.getUniqueId());
     }
 
+    /**
+     * Asynchronously locates a statistic value for the specified identifier and
+     * plugin, retaining backend executor affinity.
+     *
+     * @param uniqueId player identifier to inspect
+     * @param identifier statistic key
+     * @param plugin plugin namespace owning the statistic
+     * @return future containing the statistic value when present
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<Object>> findStatisticValueAsync(
             final @NotNull UUID uniqueId,
             final @NotNull String identifier,
             final @NotNull String plugin
     ) {
+        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
         Objects.requireNonNull(identifier, "identifier cannot be null");
         Objects.requireNonNull(plugin, "plugin cannot be null");
 
@@ -145,6 +260,16 @@ public class RCoreAdapter implements RCoreService {
                         .flatMap(stats -> stats.getStatisticValue(identifier, plugin)), executor);
     }
 
+    /**
+     * Convenience overload that resolves the UUID from an offline player before
+     * forwarding to {@link #findStatisticValueAsync(UUID, String, String)}.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @param identifier statistic key
+     * @param plugin plugin namespace owning the statistic
+     * @return future containing the statistic value when present
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Optional<Object>> findStatisticValueAsync(
             final @NotNull OfflinePlayer offlinePlayer,
@@ -152,15 +277,28 @@ public class RCoreAdapter implements RCoreService {
             final @NotNull String plugin
     ) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
+        Objects.requireNonNull(identifier, "identifier cannot be null");
+        Objects.requireNonNull(plugin, "plugin cannot be null");
         return findStatisticValueAsync(offlinePlayer.getUniqueId(), identifier, plugin);
     }
 
+    /**
+     * Determines asynchronously whether a statistic exists for the supplied
+     * identifier within the player statistics snapshot.
+     *
+     * @param uniqueId player identifier to inspect
+     * @param identifier statistic key
+     * @param plugin plugin namespace owning the statistic
+     * @return future reporting {@code true} when the statistic exists
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> hasStatisticAsync(
             final @NotNull UUID uniqueId,
             final @NotNull String identifier,
             final @NotNull String plugin
     ) {
+        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
         Objects.requireNonNull(identifier, "identifier cannot be null");
         Objects.requireNonNull(plugin, "plugin cannot be null");
 
@@ -170,6 +308,16 @@ public class RCoreAdapter implements RCoreService {
                         .orElse(false), executor);
     }
 
+    /**
+     * Convenience overload that delegates to
+     * {@link #hasStatisticAsync(UUID, String, String)} using the player's UUID.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @param identifier statistic key
+     * @param plugin plugin namespace owning the statistic
+     * @return future reporting {@code true} when the statistic exists
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> hasStatisticAsync(
             final @NotNull OfflinePlayer offlinePlayer,
@@ -177,9 +325,21 @@ public class RCoreAdapter implements RCoreService {
             final @NotNull String plugin
     ) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
+        Objects.requireNonNull(identifier, "identifier cannot be null");
+        Objects.requireNonNull(plugin, "plugin cannot be null");
         return hasStatisticAsync(offlinePlayer.getUniqueId(), identifier, plugin);
     }
 
+    /**
+     * Removes a statistic from the player snapshot and persists the change via
+     * the backend executor.
+     *
+     * @param uniqueId player identifier whose statistic should be removed
+     * @param identifier statistic key
+     * @param plugin plugin namespace owning the statistic
+     * @return future reporting {@code true} when removal succeeded
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> removeStatisticAsync(
             final @NotNull UUID uniqueId,
@@ -213,6 +373,17 @@ public class RCoreAdapter implements RCoreService {
                 });
     }
 
+    /**
+     * Convenience overload that delegates to
+     * {@link #removeStatisticAsync(UUID, String, String)} using the player's
+     * UUID.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @param identifier statistic key
+     * @param plugin plugin namespace owning the statistic
+     * @return future reporting {@code true} when removal succeeded
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> removeStatisticAsync(
             final @NotNull OfflinePlayer offlinePlayer,
@@ -220,9 +391,20 @@ public class RCoreAdapter implements RCoreService {
             final @NotNull String plugin
     ) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
+        Objects.requireNonNull(identifier, "identifier cannot be null");
+        Objects.requireNonNull(plugin, "plugin cannot be null");
         return removeStatisticAsync(offlinePlayer.getUniqueId(), identifier, plugin);
     }
 
+    /**
+     * Adds or replaces a statistic for the supplied player and persists the
+     * updated aggregate through the backend executor.
+     *
+     * @param uniqueId player identifier to update
+     * @param statistic statistic instance to add or replace
+     * @return future reporting {@code true} when persistence succeeds
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> addOrReplaceStatisticAsync(
             final @NotNull UUID uniqueId,
@@ -259,15 +441,35 @@ public class RCoreAdapter implements RCoreService {
                 });
     }
 
+    /**
+     * Convenience overload that delegates to
+     * {@link #addOrReplaceStatisticAsync(UUID, RAbstractStatistic)} using the
+     * player's UUID.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @param statistic statistic instance to add or replace
+     * @return future reporting {@code true} when persistence succeeds
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Boolean> addOrReplaceStatisticAsync(
             final @NotNull OfflinePlayer offlinePlayer,
             final @NotNull RAbstractStatistic statistic
     ) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
+        Objects.requireNonNull(statistic, "statistic cannot be null");
         return addOrReplaceStatisticAsync(offlinePlayer.getUniqueId(), statistic);
     }
 
+    /**
+     * Determines asynchronously how many statistics the specified plugin owns
+     * for the player.
+     *
+     * @param uniqueId player identifier to inspect
+     * @param plugin plugin namespace owning the statistics
+     * @return future containing the count of statistics for the plugin
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Long> getStatisticCountForPluginAsync(
             final @NotNull UUID uniqueId,
@@ -282,15 +484,31 @@ public class RCoreAdapter implements RCoreService {
                         .orElse(0L), executor);
     }
 
+    /**
+     * Convenience overload that delegates to
+     * {@link #getStatisticCountForPluginAsync(UUID, String)} using the player's
+     * UUID.
+     *
+     * @param offlinePlayer player reference whose UUID will be used
+     * @param plugin plugin namespace owning the statistics
+     * @return future containing the count of statistics for the plugin
+     * @throws NullPointerException if any argument is {@code null}
+     */
     @Override
     public CompletableFuture<Long> getStatisticCountForPluginAsync(
             final @NotNull OfflinePlayer offlinePlayer,
             final @NotNull String plugin
     ) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
+        Objects.requireNonNull(plugin, "plugin cannot be null");
         return getStatisticCountForPluginAsync(offlinePlayer.getUniqueId(), plugin);
     }
 
+    /**
+     * Reports the stable API version exposed by this adapter.
+     *
+     * @return semantic version string advertised to consumers
+     */
     @Override
     public @NotNull String getApiVersion() {
         return "2.0.0";
