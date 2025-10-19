@@ -27,6 +27,18 @@ import java.util.logging.Logger;
  * <li>Advanced features and customization</li>
  * </ul>
  * </p>
+ * <p>
+ * The delegate advances through the three-stage enable pipeline exposed by {@link com.raindropcentral.rdq.RDQ}.
+ * Stage&nbsp;1 builds the premium persistence registry using the shared executor that prefers
+ * virtual threads and falls back to a fixed pool when necessary. Stage&nbsp;2 executes
+ * {@link com.raindropcentral.rdq.RDQ#initializeComponents()} and
+ * {@link com.raindropcentral.rdq.RDQ#initializeViews()} within the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} boundary so Bukkit interactions stay
+ * on the main thread. Stage&nbsp;3 wires repositories such as
+ * {@link com.raindropcentral.rdq.database.repository.RBountyRepository} before registering the
+ * {@link com.raindropcentral.rdq.service.bounty.PremiumBountyService}, keeping documentation in
+ * {@code rdq-common/src/main/resources/} aligned across free and premium modules.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0

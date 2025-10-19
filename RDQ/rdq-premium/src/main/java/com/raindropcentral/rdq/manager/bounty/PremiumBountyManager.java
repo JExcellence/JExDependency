@@ -17,6 +17,15 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Premium version bounty manager with full database integration.
+ * <p>
+ * The manager is created during stage&nbsp;2 of the enable pipeline inside the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} boundary so synchronous Bukkit
+ * registrations can immediately delegate to it. Stage&nbsp;3 repository wiring supplies the
+ * {@link com.raindropcentral.rdq.database.repository.RBountyRepository} and
+ * {@link com.raindropcentral.rdq.database.repository.RDQPlayerRepository} instances that back each
+ * asynchronous operation, leveraging the executor prepared during stage&nbsp;1 (virtual threads with a
+ * fixed-pool fallback) to keep database IO off the main thread.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0

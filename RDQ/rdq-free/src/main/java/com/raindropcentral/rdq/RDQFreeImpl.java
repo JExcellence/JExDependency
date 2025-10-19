@@ -20,6 +20,16 @@ import java.util.logging.Logger;
  * <li>Maximum 3 reward items per bounty</li>
  * </ul>
  * </p>
+ * <p>
+ * The delegate drives the staged enable pipeline supplied by {@link com.raindropcentral.rdq.RDQ}.
+ * Stage&nbsp;1 initialises the shared executor, preferring virtual threads and falling back to the
+ * fixed pool so configuration hydration does not block the main thread. Stage&nbsp;2 executes
+ * {@link com.raindropcentral.rdq.RDQ#initializeComponents()} and
+ * {@link com.raindropcentral.rdq.RDQ#initializeViews()} inside the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} bridge to respect Bukkit threading
+ * requirements. Stage&nbsp;3 binds the in-memory repositories described in the resource READMEs,
+ * making the data accessible to shared services and the free-edition bounty manager.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0

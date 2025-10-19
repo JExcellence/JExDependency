@@ -21,6 +21,18 @@ import java.util.logging.Logger;
  * <li>Advanced features</li>
  * </ul>
  * </p>
+ * <p>
+ * {@link com.raindropcentral.rdq.RDQPremiumImpl} advances this manager through the staged lifecycle
+ * shared with the free edition. Stage&nbsp;1 configures persistence factories using the executor that
+ * prefers virtual threads and falls back to the fixed pool when unavailable. Stage&nbsp;2 executes
+ * within {@link com.raindropcentral.rdq.RDQ#runSync(Runnable)} so Bukkit components register safely,
+ * and stage&nbsp;3 wires repositories such as
+ * {@link com.raindropcentral.rdq.database.repository.RBountyRepository},
+ * {@link com.raindropcentral.rdq.database.repository.RRankRepository}, and
+ * {@link com.raindropcentral.rdq.database.repository.RPerkRepository}. Keeping the resource README
+ * guidance in {@code rdq-common/src/main/resources/} aligned with this lifecycle allows premium and
+ * free contributors to reason about shared contracts together.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0

@@ -13,6 +13,18 @@ import org.jetbrains.annotations.NotNull;
  * associated with a specific RDQ edition. The manager also coordinates lifecycle hooks for
  * initializing and shutting down managed subsystems when the plugin state changes.
  * </p>
+ * <p>
+ * Each edition participates in the staged enable pipeline orchestrated by {@link com.raindropcentral.rdq.RDQ}:
+ * asynchronous platform initialization (stage&nbsp;1) prepares the shared executor by preferring
+ * virtual threads and falling back to the fixed pool when necessary, component and view wiring
+ * (stage&nbsp;2) runs inside the {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync}
+ * boundary, and repository wiring (stage&nbsp;3) hydrates shared stores such as
+ * {@link com.raindropcentral.rdq.database.repository.RBountyRepository},
+ * {@link com.raindropcentral.rdq.database.repository.RRankRepository}, and
+ * {@link com.raindropcentral.rdq.database.repository.RPerkRepository}. Manager implementations
+ * must ensure the concrete edition services they expose remain compatible with those shared
+ * repositories so free and premium modules stay aligned.
+ * </p>
  *
  * @author JExcellence
  * @version 1.0.1

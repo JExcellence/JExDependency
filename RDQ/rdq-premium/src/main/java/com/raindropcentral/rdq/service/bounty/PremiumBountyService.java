@@ -24,6 +24,14 @@ import java.util.concurrent.CompletableFuture;
  * <li>Async operations</li>
  * </ul>
  * </p>
+ * <p>
+ * {@link com.raindropcentral.rdq.RDQPremiumImpl} registers the service after stage&nbsp;3 repository
+ * wiring completes. All asynchronous methods rely on the executor initialised during stage&nbsp;1 of
+ * the enable pipeline (virtual threads with a fixed-pool fallback) and expect callers to respect the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable)} boundary when handing results back to Bukkit.
+ * The service consumes the same repository contracts documented for the free edition so cross-module
+ * contributors can align behaviour while evolving premium features.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0
