@@ -15,8 +15,8 @@ import java.util.Map;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public class LocationRequirementSection extends AConfigSection {
@@ -106,9 +106,14 @@ public class LocationRequirementSection extends AConfigSection {
 	
 	// ~~~ GETTERS ~~~
 	
-	public Boolean getExactLocation() {
-		return this.exactLocation != null ? this.exactLocation : false;
-	}
+        /**
+         * Determines whether the requirement should enforce an exact coordinate match.
+         *
+         * @return {@code true} when the location must match exactly; otherwise {@code false}
+         */
+        public Boolean getExactLocation() {
+                return this.exactLocation != null ? this.exactLocation : false;
+        }
 	
 	/**
 	 * Gets the required world name, trying multiple field names.
@@ -187,15 +192,30 @@ public class LocationRequirementSection extends AConfigSection {
 		return 0.0;
 	}
 	
-	public Double getX() {
-		return this.x;
-	}
-	
-	public Double getY() {
-		return this.y;
-	}
-	
-	public Double getZ() {
-		return this.z;
-	}
+        /**
+         * Retrieves the configured X coordinate when simple coordinates are used.
+         *
+         * @return the configured X coordinate, or {@code null} when not provided
+         */
+        public Double getX() {
+                return this.x;
+        }
+
+        /**
+         * Retrieves the configured Y coordinate when simple coordinates are used.
+         *
+         * @return the configured Y coordinate, or {@code null} when not provided
+         */
+        public Double getY() {
+                return this.y;
+        }
+
+        /**
+         * Retrieves the configured Z coordinate when simple coordinates are used.
+         *
+         * @return the configured Z coordinate, or {@code null} when not provided
+         */
+        public Double getZ() {
+                return this.z;
+        }
 }
