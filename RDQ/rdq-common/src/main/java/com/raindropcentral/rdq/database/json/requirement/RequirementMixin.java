@@ -5,60 +5,45 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.raindropcentral.rdq.requirement.*;
 
 /**
- * Jackson mixin for AbstractRequirement to handle polymorphic deserialization.
- * <p>
- * This class provides type information to Jackson's object mapper, allowing it to
- * correctly instantiate the appropriate requirement subclass based on the "type" property
- * in JSON configuration files. The mixin enables seamless serialization and deserialization
- * of complex requirement hierarchies used throughout the RaindropQuests system.
- * </p>
+ * Jackson mixin for {@link AbstractRequirement} that enables polymorphic
+ * deserialization of requirement definitions stored in JSON.
  *
- * <p><b>Supported Vanilla Requirement Types:</b></p>
+ * <p>This mixin supplies Jackson with the discriminator property used by the
+ * RaindropQuests data model. When the {@code type} attribute is encountered,
+ * Jackson selects the matching concrete requirement listed in the
+ * {@link JsonSubTypes} declaration and instantiates it with the remaining
+ * document payload.</p>
+ *
+ * <h2>Supported requirement keys</h2>
+ * <p>The mapping below mirrors the values accepted in quest configuration
+ * files:</p>
  * <ul>
- *   <li><b>ITEM</b> - Item-based requirements (specific items and quantities)</li>
- *   <li><b>CURRENCY</b> - Currency-based requirements (economy integration)</li>
- *   <li><b>EXPERIENCE_LEVEL</b> - Experience level or points requirements</li>
- *   <li><b>PERMISSION</b> - Permission-based requirements (rank integration)</li>
- *   <li><b>LOCATION</b> - Location-based requirements (world, coordinates, regions)</li>
- *   <li><b>CUSTOM</b> - Custom scripted requirements (JavaScript-based logic)</li>
- *   <li><b>COMPOSITE</b> - Composite requirements (AND/OR/MINIMUM logic)</li>
- *   <li><b>CHOICE</b> - Choice requirements (multiple alternative paths)</li>
- *   <li><b>TIME_BASED</b> - Time-limited requirements (timed challenges)</li>
+ *     <li><b>ITEM</b> – Item stack and quantity checks.</li>
+ *     <li><b>CURRENCY</b> – Economy-based currency balance checks.</li>
+ *     <li><b>EXPERIENCE_LEVEL</b> – Experience level or point validation.</li>
+ *     <li><b>PERMISSION</b> – Permission node assertions.</li>
+ *     <li><b>LOCATION</b> – World coordinate and region constraints.</li>
+ *     <li><b>CUSTOM</b> – Script-driven requirements.</li>
+ *     <li><b>COMPOSITE</b> – Logical composition of child requirements.</li>
+ *     <li><b>CHOICE</b> – Alternative requirement paths.</li>
+ *     <li><b>TIME_BASED</b> – Time limited objectives.</li>
+ *     <li><b>PLAYTIME</b> – Aggregate playtime thresholds.</li>
  * </ul>
  *
- * <p><b>Supported Plugin Integration Types:</b></p>
- * <ul>
- *   <li><b>JOBS</b> - Jobs plugin integration requirements</li>
- *   <li><b>SKILLS</b> - Skills plugin integration requirements</li>
- * </ul>
- *
- * <p><b>Future Requirement Types (Planned):</b></p>
- * <ul>
- *   <li><b>PLAYTIME</b> - Playtime-based requirements</li>
- *   <li><b>ACHIEVEMENT</b> - Achievement-based requirements</li>
- *   <li><b>PREVIOUS_LEVEL</b> - Previous rank/level requirements</li>
- *   <li><b>AURA_SKILLS</b> - AuraSkills plugin integration</li>
- * </ul>
- *
- * <p><b>Usage Example:</b></p>
+ * <h2>Registration</h2>
+ * <p>Register the mixin alongside the abstract base type to activate the
+ * mapping:</p>
  * <pre>{@code
- * // JSON Configuration
- * {
- *   "type": "ITEM",
- *   "requiredItems": [
- *     {
- *       "type": "DIAMOND",
- *       "amount": 10
- *     }
- *   ]
- * }
- *
- * // Will be deserialized as ItemRequirement instance
+ * objectMapper.addMixIn(AbstractRequirement.class, RequirementMixin.class);
  * }</pre>
  *
+ * <p>The mixin is stateless and may be reused across {@link com.fasterxml.jackson.databind.ObjectMapper}
+ * instances. It imposes no threading constraints.</p>
+ *
  * @author JExcellence
- * @version 1.1.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
+ * @see AbstractRequirement
  */
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,
