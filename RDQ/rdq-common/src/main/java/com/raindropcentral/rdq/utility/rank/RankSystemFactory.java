@@ -15,6 +15,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Coordinates loading, validation, and persistence of rank configuration data for RDQ.
+ * <p>
+ *     Instances orchestrate asynchronous tasks that hydrate the in-memory {@link RankSystemState} and
+ *     prepare all rank entities before the gameplay systems access them.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public final class RankSystemFactory {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RankSystemFactory.class.getName());
@@ -28,6 +39,11 @@ public final class RankSystemFactory {
     private volatile boolean initializing;
     private volatile @NotNull RankSystemState state = RankSystemState.empty();
 
+    /**
+     * Creates a new factory bound to the supplied RDQ plugin instance.
+     *
+     * @param rdq the RDQ plugin that provides executors and services required for rank initialization
+     */
     public RankSystemFactory(final @NotNull RDQ rdq) {
         this.rdq = Objects.requireNonNull(rdq, "rdq");
         this.executor = rdq.getExecutor();
@@ -36,6 +52,12 @@ public final class RankSystemFactory {
         this.entityService = new RankEntityService(rdq);
     }
 
+    /**
+     * Initializes the rank system asynchronously by loading configurations, validating them, and
+     * creating the corresponding entities.
+     *
+     * @return a future that completes when the initialization pipeline finishes, successfully or exceptionally
+     */
     public @NotNull CompletableFuture<Void> initializeAsync() {
         if (initializing) {
             return CompletableFuture.completedFuture(null);
@@ -66,23 +88,46 @@ public final class RankSystemFactory {
                 });
     }
 
+    /**
+     * Indicates whether the rank system has completed its initialization workflow.
+     *
+     * @return {@code true} when rank data has been loaded and a default rank is available
+     */
     public boolean isInitialized() {
         return !state.rankTrees().isEmpty() || state.defaultRank() != null;
     }
 
+    /**
+     * Provides a snapshot of the registered rank trees.
+     *
+     * @return an immutable map containing the known rank trees keyed by their identifiers
+     */
     public @NotNull Map<String, RRankTree> getRankTrees() {
         return Map.copyOf(state.rankTrees());
     }
 
+    /**
+     * Provides the configured ranks for each tree as a defensive copy.
+     *
+     * @return a map of rank tree identifiers to immutable maps of rank identifiers and rank definitions
+     */
     public @NotNull Map<String, Map<String, RRank>> getRanks() {
         return state.ranks().entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> Map.copyOf(e.getValue())));
     }
 
+    /**
+     * Retrieves the default rank that should be assigned to new players.
+     *
+     * @return the default {@link RRank} if one has been configured, otherwise {@code null}
+     */
     public @Nullable RRank getDefaultRank() {
         return state.defaultRank();
     }
 
+    /**
+     * Logs a summary of the current rank configuration state for auditing and diagnostics.
+     */
     private void logSummary() {
         final int totalRanks = state.ranks().values().stream().mapToInt(Map::size).sum();
         LOGGER.info("=== Rank System Summary ===");
