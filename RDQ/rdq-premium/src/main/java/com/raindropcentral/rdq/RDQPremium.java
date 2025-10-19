@@ -21,10 +21,23 @@ public final class RDQPremium extends JavaPlugin {
 
     private RDQPremiumImpl rdqImpl;
 
+    /**
+     * Retrieves the active plugin instance from the Bukkit plugin registry.
+     *
+     * @return the loaded {@link RDQPremium} instance
+     */
     public static @NotNull RDQPremium get() {
         return JavaPlugin.getPlugin(RDQPremium.class);
     }
 
+    /**
+     * Boots the premium edition by initializing dependency remapping and creating
+     * the delegate implementation.
+     * <p>
+     * Failures are logged and captured so that the plugin does not enter an
+     * inconsistent enabled state.
+     * </p>
+     */
     @Override
     public void onLoad() {
         try {
@@ -37,6 +50,10 @@ public final class RDQPremium extends JavaPlugin {
         }
     }
 
+    /**
+     * Enables the plugin by delegating to the loaded implementation or disables
+     * itself if initialization previously failed.
+     */
     @Override
     public void onEnable() {
         if (this.rdqImpl != null) {
@@ -47,6 +64,9 @@ public final class RDQPremium extends JavaPlugin {
         }
     }
 
+    /**
+     * Shuts down the premium delegate when the plugin is disabled.
+     */
     @Override
     public void onDisable() {
         if (this.rdqImpl != null) {
@@ -54,6 +74,11 @@ public final class RDQPremium extends JavaPlugin {
         }
     }
 
+    /**
+     * Provides access to the internal premium implementation delegate.
+     *
+     * @return the delegate responsible for premium-specific behaviour
+     */
     public @NotNull RDQPremiumImpl getImpl() {
         return this.rdqImpl;
     }
