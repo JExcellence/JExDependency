@@ -8,7 +8,9 @@
  * once {@link com.raindropcentral.rplatform.RPlatform#initialize()} has
  * completed. Delaying view creation until that asynchronous initialization
  * prevents empty titles or lore that would otherwise occur when translation
- * caches are cold.
+ * caches are cold. Translation keys are referenced explicitly through
+ * {@link de.jexcellence.jextranslate.api.TranslationKey} to keep resource
+ * bundles aligned with their corresponding views.
  * </p>
  * <p>
  * Rendering hooks should delegate background computation to
@@ -23,7 +25,9 @@
  * or {@link com.raindropcentral.rplatform.view.APaginatedView}, override layout
  * and translation keys but keep the inherited back-button logic intact. Always
  * open dependent views through the provided context APIs so lifecycle ordering
- * (close → open parent) remains predictable.
+ * (close → open parent) remains predictable. Layouts should reserve slots for
+ * navigation heads from {@link com.raindropcentral.rplatform.utility.heads.view}
+ * so shared back and pagination affordances remain consistent across screens.
  * </p>
  */
 package com.raindropcentral.rplatform.view;

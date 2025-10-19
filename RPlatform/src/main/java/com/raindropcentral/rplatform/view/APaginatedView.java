@@ -23,19 +23,28 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * An abstract paginated view that provides common pagination functionality.
- * This view always uses layout-based configuration for consistent UI structure.
+ * Template-method extension of {@link BaseView} that implements a paginated grid pattern with
+ * navigation heads sourced from the head utility library.
  *
- * @param <T> The type of items being paginated
+ * <p>The class coordinates asynchronous data loading via {@link Pagination} state, wires
+ * {@link Next} and {@link Previous} heads into layout slots, and exposes hooks for subclasses to
+ * render individual entries. Concrete implementations provide domain specific translation keys for
+ * page labels and entry metadata.</p>
+ *
+ * @param <T> the type of elements rendered in the paginated grid
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public abstract class APaginatedView<T> extends BaseView {
-	
-	/**
-	 * The pagination state that manages the data and rendering.
-	 * Uses buildLazyAsyncPaginationState with elementFactory to get context access.
-	 */
-	private final State<Pagination> pagination =
-		this.buildLazyAsyncPaginationState(
+
+        /**
+         * Lazy pagination state that drives asynchronous data retrieval and exposes the
+         * {@link Pagination} instance to rendering callbacks.
+         */
+        private final State<Pagination> pagination =
+                this.buildLazyAsyncPaginationState(
 			    this::getAsyncPaginationSource
 		    )
 			.layoutTarget(this.getPaginationSlotChar())
@@ -82,12 +91,14 @@ public abstract class APaginatedView<T> extends BaseView {
 		final @NotNull T entry
 	);
 	
-	/**
-	 * Returns the default pagination layout.
-	 * Override this method to customize the layout structure.
-	 */
-	@Override
-	protected String[] getLayout() {
+        /**
+         * Declares the default pagination layout, mapping navigation heads and entry placeholders to
+         * template characters.
+         *
+         * @return the layout rows for the paginated grid
+         */
+        @Override
+        protected String[] getLayout() {
 		
 		return new String[]{
 			"         ",
@@ -99,44 +110,58 @@ public abstract class APaginatedView<T> extends BaseView {
 		};
 	}
 	
-	/**
-	 * Returns the character used for pagination content slots.
-	 * Override to customize the pagination area.
-	 */
-	protected char getPaginationSlotChar() {
-		
-		return 'O';
-	}
-	
-	/**
-	 * Returns the character used for the previous page button.
-	 */
-	protected char getPreviousButtonChar() {
-		
-		return '<';
-	}
-	
-	/**
-	 * Returns the character used for the next page button.
-	 */
-	protected char getNextButtonChar() {
-		
-		return '>';
-	}
-	
-	/**
-	 * Returns the character used for the page indicator.
-	 */
-	protected char getPageIndicatorChar() {
-		
-		return 'p';
-	}
-	
-	@Override
-	public void onFirstRender(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	) {
+        /**
+         * Identifies the template character representing paginated content slots.
+         *
+         * @return the layout character reserved for entries
+         */
+        protected char getPaginationSlotChar() {
+
+                return 'O';
+        }
+
+        /**
+         * Declares the layout character assigned to the {@link Previous} head.
+         *
+         * @return the character used to position the previous page button
+         */
+        protected char getPreviousButtonChar() {
+
+                return '<';
+        }
+
+        /**
+         * Declares the layout character assigned to the {@link Next} head.
+         *
+         * @return the character used to position the next page button
+         */
+        protected char getNextButtonChar() {
+
+                return '>';
+        }
+
+        /**
+         * Supplies the layout character where page indicator metadata is rendered.
+         *
+         * @return the character representing the page indicator slot
+         */
+        protected char getPageIndicatorChar() {
+
+                return 'p';
+        }
+
+        /**
+         * Coordinates pagination navigation and indicator rendering after the base view has drawn
+         * navigation controls.
+         *
+         * @param render the render context used to access layout slots
+         * @param player the player observing the paginated view
+         */
+        @Override
+        public void onFirstRender(
+                final @NotNull RenderContext render,
+                final @NotNull Player player
+        ) {
 		this.renderPaginationNavigationButtons(
 			render,
 			player,
@@ -156,25 +181,31 @@ public abstract class APaginatedView<T> extends BaseView {
 		
 	}
 	
-	/**
-	 * Abstract method for additional rendering logic in paginated views.
-	 * Called after the pagination and navigation elements are rendered.
-	 * Renamed to avoid conflict with BaseView's onFirstRender method.
-	 */
-	protected abstract void onPaginatedRender(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	);
+        /**
+         * Hook for subclasses to render domain specific components after the pagination chrome has
+         * been laid out.
+         *
+         * @param render the render context to bind slot behaviour
+         * @param player the player currently observing the view
+         */
+        protected abstract void onPaginatedRender(
+                final @NotNull RenderContext render,
+                final @NotNull Player player
+        );
 	
-	/**
-	 * Renders the pagination navigation buttons (previous, next).
-	 * Separated from the back button to avoid conflicts.
-	 */
-	private void renderPaginationNavigationButtons(
-		final @NotNull RenderContext render,
-		final @NotNull Player player,
-		final @NotNull Pagination pagination
-	) {
+        /**
+         * Renders {@link Previous} and {@link Next} heads into the layout while binding state aware
+         * click handlers.
+         *
+         * @param render the render context exposing layout slots
+         * @param player the player whose head textures should be applied
+         * @param pagination the pagination state representing current page data
+         */
+        private void renderPaginationNavigationButtons(
+                final @NotNull RenderContext render,
+                final @NotNull Player player,
+                final @NotNull Pagination pagination
+        ) {
 		render
 			.layoutSlot(
 				this.getPreviousButtonChar(),
@@ -194,15 +225,19 @@ public abstract class APaginatedView<T> extends BaseView {
 			.onClick(pagination::advance);
 	}
 	
-	/**
-	 * Renders the page indicator showing current page information.
-	 * Now uses the base key pattern for i18n.
-	 */
-	private void renderPageIndicator(
-		final @NotNull RenderContext render,
-		final @NotNull Player player,
-		final @NotNull Pagination pagination
-	) {
+        /**
+         * Renders the page indicator item, translating lore through the view's base key and showing
+         * the current and maximum page counts.
+         *
+         * @param render the render context for slot registration
+         * @param player the viewer for whom translations are resolved
+         * @param pagination the pagination state providing page metadata
+         */
+        private void renderPageIndicator(
+                final @NotNull RenderContext render,
+                final @NotNull Player player,
+                final @NotNull Pagination pagination
+        ) {
 		
 		boolean hasPageIndicator = render.getLayoutSlots().stream().anyMatch(layoutSlot -> layoutSlot.getCharacter() == this.getPageIndicatorChar());
 		
@@ -251,14 +286,18 @@ public abstract class APaginatedView<T> extends BaseView {
 			.updateOnStateChange(this.pagination);
 	}
 	
-	/**
-	 * Gets the item stack for the page indicator.
-	 * Attempts to use a numbered head if available, falls back to paper.
-	 */
-	private ItemStack getPageIndicatorItem(
-		final @NotNull Player player,
-		final int pageIndex
-	) {
+        /**
+         * Resolves the {@link ItemStack} displayed in the page indicator slot, preferring numbered
+         * heads and falling back to a localized paper item.
+         *
+         * @param player the viewer whose locale informs translation resolution
+         * @param pageIndex the zero-based page index currently rendered
+         * @return the indicator item that reflects the active page
+         */
+        private ItemStack getPageIndicatorItem(
+                final @NotNull Player player,
+                final int pageIndex
+        ) {
 		
 		try {
 			if (pageIndex >= 0 && pageIndex <= 9) {
@@ -281,12 +320,16 @@ public abstract class APaginatedView<T> extends BaseView {
 			       .build();
 	}
 	
-	/**
-	 * Gets the current pagination instance from a context.
-	 */
-	protected final Pagination getPagination(
-		final @NotNull RenderContext context
-	) {
+        /**
+         * Obtains the {@link Pagination} instance for the provided render context so subclasses can
+         * inspect page state.
+         *
+         * @param context the render context associated with the current frame
+         * @return the pagination instance bound to this view
+         */
+        protected final Pagination getPagination(
+                final @NotNull RenderContext context
+        ) {
 		
 		return this.pagination.get(context);
 	}
