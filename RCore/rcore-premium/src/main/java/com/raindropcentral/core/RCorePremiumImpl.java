@@ -171,7 +171,14 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     // =====================================================================================
 
     /**
-     * {@inheritDoc}
+     * Exposes the dedicated premium executor created during construction.
+     *
+     * <p>The premium bootstrap sequence constructs the executor ahead of repository wiring so
+     * asynchronous lookups are always backed by an isolated pool. Returning the same
+     * {@link ExecutorService} ensures downstream adapters use the premium-managed virtual threads
+     * instead of falling back to the common fork-join pool.</p>
+     *
+     * @return the executor orchestrating premium asynchronous work
      */
     @Override
     public @NotNull ExecutorService getExecutor() {
@@ -179,7 +186,15 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     }
 
     /**
-     * {@inheritDoc}
+     * Resolves a player entity by UUID using the premium asynchronous pipeline.
+     *
+     * <p>Premium defers repository creation until {@link #onEnable()} completes; this lookup first
+     * calls {@link #ensureReposReady()} so early invocations surface clear state errors. Once the
+     * premium repositories are online the query executes on the dedicated executor, preserving the
+     * main-thread semantics expected by Bukkit.</p>
+     *
+     * @param uniqueId player identifier to resolve
+     * @return future yielding the resolved player when present
      */
     @Override
     public @NotNull CompletableFuture<java.util.Optional<RPlayer>> findByUuidAsync(final @NotNull UUID uniqueId) {
@@ -189,7 +204,15 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     }
 
     /**
-     * {@inheritDoc}
+     * Resolves a player entity by their last known username using premium repositories.
+     *
+     * <p>The premium lifecycle mirrors the free distribution yet inserts optional integration
+     * detection before repository wiring. This method therefore validates initialization order with
+     * {@link #ensureReposReady()} and schedules the query on the premium executor so username lookups
+     * never block the server thread.</p>
+     *
+     * @param playerName username to resolve
+     * @return future yielding the resolved player when present
      */
     @Override
     public @NotNull CompletableFuture<java.util.Optional<RPlayer>> findByNameAsync(final @NotNull String playerName) {
@@ -199,7 +222,14 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     }
 
     /**
-     * {@inheritDoc}
+     * Persists a newly created player using premium persistence extensions.
+     *
+     * <p>Premium stores additional metrics and integration flags relative to the free edition. The
+     * method enforces repository initialization before dispatching the create task on the dedicated
+     * executor, guaranteeing premium deltas are processed without blocking the Bukkit lifecycle.</p>
+     *
+     * @param player aggregate to persist
+     * @return future completing with the saved player snapshot
      */
     @Override
     public @NotNull CompletableFuture<RPlayer> createAsync(final @NotNull RPlayer player) {
@@ -209,7 +239,14 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     }
 
     /**
-     * {@inheritDoc}
+     * Updates an existing player record while maintaining premium-specific metadata.
+     *
+     * <p>Premium propagates delta computations for integrations such as RDR and Towny. The update
+     * is queued on the premium executor after {@link #ensureReposReady()} verifies initialization,
+     * protecting the main thread and ensuring repository guards remain active.</p>
+     *
+     * @param player aggregate to update
+     * @return future completing with the updated entity
      */
     @Override
     public @NotNull CompletableFuture<RPlayer> updateAsync(final @NotNull RPlayer player) {
@@ -376,6 +413,10 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
 
     /**
      * Detects supported optional plugins so premium features can react accordingly.
+     *
+     * <p>Premium performs this scan before repository-dependent tasks to inform downstream deltas
+     * such as asynchronous sync jobs or statistic enrichments. The resulting map drives premium-only
+     * behaviour toggles exposed via {@link #getEnabledSupportedPlugins()}.</p>
      */
     private void initializePlugins() {
         final List<String> supportedPlugins = List.of(
@@ -398,9 +439,11 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     /**
      * Registers the running server entity asynchronously and logs the result.
      *
-     * <p>Failures are logged and suppressed because premium enablement continues even when the
-     * persistence layer rejects the registration. Future iterations may tighten this behaviour by
-     * disabling the plugin on failure.</p>
+     * <p>Premium records additional server metadata compared to the free release, so the registration
+     * fires after repositories initialize but before metrics activation. Failures are logged and
+     * suppressed because premium enablement continues even when the persistence layer rejects the
+     * registration. Future iterations may tighten this behaviour by disabling the plugin on
+     * failure.</p>
      */
     private void initializeServer() {
         this.rServer = new RServer(UUID.randomUUID(), Bukkit.getServer().getName());
@@ -431,6 +474,11 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
     /**
      * Ensures repositories are wired before servicing backend API calls.
      *
+     * <p>The premium lifecycle invokes multiple initialization stages (components, repositories,
+     * integrations, server registration). This guard protects asynchronous helpers from executing
+     * before the repository stage completes, ensuring premium deltas—such as integration metadata
+     * columns—are available.</p>
+     *
      * @throws IllegalStateException when repositories remain uninitialized
      */
     private void ensureReposReady() {
@@ -441,6 +489,9 @@ public class RCorePremiumImpl extends AbstractPluginDelegate<RCorePremium> imple
 
     /**
      * ASCII-art banner emitted during successful startup.
+     *
+     * <p>The banner highlights premium branding and companion technologies so console operators can
+     * immediately distinguish the premium distribution from the free variant during boot logs.</p>
      */
     private static final String STARTUP_MESSAGE = """
         ===============================================================================================
