@@ -203,10 +203,13 @@ public class RPlayerStatistic extends AbstractEntity {
 
     /**
      * Removes any statistic with the given identifier, ignoring plugin namespace. Useful
-     * when re-seeding values where identifier uniqueness must be preserved.
+     * when re-seeding values where identifier uniqueness must be preserved. Operates on the
+     * Hibernate-managed collection and therefore must execute on the thread that owns the
+     * surrounding transaction to avoid concurrent modification hazards.
      *
      * @param identifier statistic identifier targeted for removal
-     * @return {@code true} when any matching statistic was removed
+     * @return {@code true} when any matching statistic was removed and the association
+     * is orphaned, prompting Hibernate to cascade delete the underlying row
      */
     public boolean removeStatisticByIdentifier(final @NotNull String identifier) {
         Objects.requireNonNull(identifier, "identifier cannot be null");
@@ -214,10 +217,13 @@ public class RPlayerStatistic extends AbstractEntity {
     }
 
     /**
-     * Counts statistics owned by the specified plugin.
+     * Counts statistics owned by the specified plugin. This method performs a snapshot read
+     * over the managed collection and should be invoked only while holding the persistence
+     * context lock (typically within a single-threaded transaction) to guarantee deterministic
+     * results.
      *
      * @param plugin plugin namespace to filter by
-     * @return number of statistics belonging to the plugin
+     * @return number of statistics belonging to the plugin at invocation time
      */
     public long getStatisticCountForPlugin(final @NotNull String plugin) {
         Objects.requireNonNull(plugin, "plugin cannot be null");
@@ -228,12 +234,23 @@ public class RPlayerStatistic extends AbstractEntity {
     }
 
     /**
+     * Provides the current size of the managed statistic set. Callers should avoid invoking
+     * this from parallel threads because the underlying {@link HashSet} is not thread-safe
+     * and Hibernate tracks changes on the owning session thread.
+     *
      * @return total number of statistics tracked by this aggregate
      */
     public int getTotalStatisticCount() {
         return this.statistics.size();
     }
 
+    /**
+     * Presents a concise textual representation for logging and debugging. The method performs
+     * only read access on entity state and therefore should be invoked from threads that already
+     * own the entity to prevent visibility issues on lazily loaded associations.
+     *
+     * @return formatted string describing the aggregate
+     */
     @Override
     public String toString() {
         return "RPlayerStatistic[id=%d, player=%s, statisticsCount=%d]"
