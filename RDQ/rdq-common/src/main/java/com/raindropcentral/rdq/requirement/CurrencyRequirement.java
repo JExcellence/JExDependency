@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  *
  * @author JExcellence
  * @version 1.1.0
- * @since TBD
+ * @since 1.0.0
  */
 public final class CurrencyRequirement extends AbstractRequirement {
 
@@ -52,10 +52,22 @@ public final class CurrencyRequirement extends AbstractRequirement {
     @JsonProperty("timeoutMillis")
     private final long timeoutMillis;
 
+    /**
+     * Creates a requirement with the given currencies and the default timeout.
+     *
+     * @param requiredCurrencies the currencies and required amounts that must be satisfied
+     */
     public CurrencyRequirement(final @NotNull Map<Currency, Double> requiredCurrencies) {
         this(requiredCurrencies, null, DEFAULT_TIMEOUT_MS);
     }
 
+    /**
+     * Creates a requirement that optionally targets a specific currency plugin and custom timeout.
+     *
+     * @param requiredCurrencies the currencies and required amounts that must be satisfied
+     * @param currencyPlugin     the explicit currency plugin identifier to target, or {@code null} for the default
+     * @param timeoutMillis      the maximum duration, in milliseconds, to wait for currency operations before timing out
+     */
     public CurrencyRequirement(
             final @NotNull Map<Currency, Double> requiredCurrencies,
             final @Nullable String currencyPlugin,
@@ -72,6 +84,13 @@ public final class CurrencyRequirement extends AbstractRequirement {
         this.timeoutMillis = timeoutMillis > 0 ? timeoutMillis : DEFAULT_TIMEOUT_MS;
     }
 
+    /**
+     * Jackson-backed constructor that restores serialized currency requirements.
+     *
+     * @param currencyIdentifiers the serialized currency identifiers mapped to their required amounts
+     * @param currencyPlugin      the explicit currency plugin identifier to target, or {@code null} for the default
+     * @param timeoutMillis       the maximum duration, in milliseconds, to wait for currency operations before timing out
+     */
     @JsonCreator
     public CurrencyRequirement(
             @JsonProperty("requiredCurrencies") final @NotNull Map<String, Double> currencyIdentifiers,
@@ -85,20 +104,41 @@ public final class CurrencyRequirement extends AbstractRequirement {
         this.requiredCurrencies = this.resolveCurrencies();
     }
 
+    /**
+     * Retrieves an immutable view of the required currencies.
+     *
+     * @return the currencies and required amounts that must be satisfied
+     */
     @NotNull
     public Map<Currency, Double> getRequiredCurrencies() {
         return Collections.unmodifiableMap(this.requiredCurrencies);
     }
 
+    /**
+     * Obtains the preferred currency plugin identifier.
+     *
+     * @return the identifier of the currency plugin to use, or {@code null} if the default plugin should be used
+     */
     @Nullable
     public String getCurrencyPlugin() {
         return this.currencyPlugin;
     }
 
+    /**
+     * Provides the maximum duration to wait for asynchronous currency operations.
+     *
+     * @return the timeout duration in milliseconds
+     */
     public long getTimeoutMillis() {
         return this.timeoutMillis;
     }
 
+    /**
+     * Checks asynchronously whether the requirement is satisfied for the provided player.
+     *
+     * @param player the player whose balances should be evaluated
+     * @return a future that completes with {@code true} when all currency conditions are met
+     */
     @NotNull
     public CompletableFuture<Boolean> isMetAsync(final @NotNull Player player) {
         final CurrencyAdapter adapter = this.getCurrencyAdapter();
@@ -131,6 +171,12 @@ public final class CurrencyRequirement extends AbstractRequirement {
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).thenApply(ignored -> futures.stream().allMatch(CompletableFuture::join));
     }
 
+    /**
+     * Calculates asynchronously how close the player is to fulfilling the requirement.
+     *
+     * @param player the player whose progress should be evaluated
+     * @return a future that completes with a value between {@code 0.0} and {@code 1.0} representing the completion percentage
+     */
     @NotNull
     public CompletableFuture<Double> calculateProgressAsync(final @NotNull Player player) {
         final CurrencyAdapter adapter = this.getCurrencyAdapter();
@@ -170,6 +216,12 @@ public final class CurrencyRequirement extends AbstractRequirement {
                 });
     }
 
+    /**
+     * Withdraws the required currencies from the player asynchronously.
+     *
+     * @param player the player whose balances should be reduced
+     * @return a future that completes when all withdrawals finish, even if some operations fail
+     */
     @NotNull
     public CompletableFuture<Void> consumeAsync(final @NotNull Player player) {
         final CurrencyAdapter adapter = this.getCurrencyAdapter();
@@ -202,6 +254,9 @@ public final class CurrencyRequirement extends AbstractRequirement {
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         try {
@@ -212,6 +267,9 @@ public final class CurrencyRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         try {
@@ -222,6 +280,9 @@ public final class CurrencyRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void consume(final @NotNull Player player) {
         try {
@@ -231,6 +292,9 @@ public final class CurrencyRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
