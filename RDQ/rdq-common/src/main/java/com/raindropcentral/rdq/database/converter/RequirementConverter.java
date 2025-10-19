@@ -30,8 +30,8 @@ import java.io.IOException;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @Converter(autoApply = true)
 public class RequirementConverter implements AttributeConverter<AbstractRequirement, String> {
