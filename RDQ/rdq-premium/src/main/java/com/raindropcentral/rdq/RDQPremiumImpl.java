@@ -40,15 +40,29 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
     private RDQ rdq;
     private BountyService bountyService;
 
+    /**
+     * Creates a new premium implementation bound to the provided plugin instance.
+     *
+     * @param plugin the active premium plugin bootstrapper
+     */
     public RDQPremiumImpl(final @NotNull RDQPremium plugin) {
         super(plugin);
     }
 
+    /**
+     * Loads premium services, persistence, and quest infrastructure prior to enabling the plugin.
+     *
+     * <p>
+     * This stage builds the premium persistence registry, wires the internal {@link RDQ} instance,
+     * and registers the {@link BountyService} provider so it is available to the rest of the
+     * platform when enable is called.
+     * </p>
+     */
     @Override
     public void onLoad() {
         try {
             LOGGER.info("Loading RDQ " + EDITION + " Edition");
-            
+
             final PersistenceRegistry persistenceRegistry = createPremiumPersistenceRegistry();
             
             this.rdq = new RDQ(this.getPlugin(), EDITION, persistenceRegistry) {
@@ -85,6 +99,14 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Enables the premium edition and surfaces the startup banner to the server console.
+     *
+     * <p>
+     * Should loading fail, the plugin instance is disabled to prevent partially initialized
+     * services from staying registered.
+     * </p>
+     */
     @Override
     public void onEnable() {
         try {
@@ -97,6 +119,14 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Shuts down the premium systems and unregisters exposed services.
+     *
+     * <p>
+     * Any exceptions raised during shutdown are logged but do not prevent the remainder of the
+     * shutdown routine from executing so that resources are cleaned up as best as possible.
+     * </p>
+     */
     @Override
     public void onDisable() {
         try {
@@ -112,10 +142,20 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Gets the premium {@link RDQ} delegate.
+     *
+     * @return the initialized RDQ instance backing the premium edition
+     */
     public @NotNull RDQ getRDQ() {
         return this.rdq;
     }
 
+    /**
+     * Builds the persistence registry wired with premium storage implementations.
+     *
+     * @return a persistence registry that always supplies premium bounty and player persistence
+     */
     private PersistenceRegistry createPremiumPersistenceRegistry() {
         return new PersistenceRegistry() {
             @Override
@@ -130,6 +170,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         };
     }
 
+    /**
+     * Registers the premium bounty service with Bukkit so other plugins can consume it.
+     */
     private void registerServices() {
         if (this.bountyService != null) {
             Bukkit.getServer().getServicesManager().register(
@@ -142,6 +185,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Unregisters the premium bounty service and resets the provider singleton.
+     */
     private void unregisterServices() {
         if (this.bountyService != null) {
             Bukkit.getServer().getServicesManager().unregister(BountyService.class, this.bountyService);
