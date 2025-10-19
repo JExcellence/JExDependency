@@ -56,12 +56,14 @@ public final class PlayerPreLogin implements Listener {
     private static final Logger LOGGER = CentralLogger.getLogger(PlayerPreLogin.class);
 
     /**
-     * Owning plugin instance that provides repositories, executors, and overall player bootstrap configuration.
+     * Owning plugin instance that provides repositories, executors, and overall player bootstrap configuration for the
+     * asynchronous pipeline.
      */
     private final RCoreFree rCore;
 
     /**
-     * Namespace identifier recorded in statistics to attribute server-specific metrics during login handling.
+     * Namespace identifier recorded in statistics to attribute server-specific metrics during login handling and
+     * default statistic population.
      */
     private final String pluginNamespace;
 
@@ -78,8 +80,10 @@ public final class PlayerPreLogin implements Listener {
     /**
      * Handles the asynchronous pre-login event by delegating persistence operations to the plugin executor, creating or
      * updating player records, and applying statistic migrations.
+     *
      * <p>The future pipeline continues on the plugin executor while the final {@link CompletableFuture#join()} keeps the
-     * Bukkit asynchronous login thread blocked until a decision is made.</p>
+     * Bukkit asynchronous login thread blocked until a decision is made. Any repository failure is surfaced through the
+     * completion stages and results in a friendly kick message being applied to the event.</p>
      *
      * @param event asynchronous pre-login event supplied by Bukkit
      */
@@ -119,6 +123,10 @@ public final class PlayerPreLogin implements Listener {
     /**
      * Builds a brand new {@link RPlayer} profile and persists it asynchronously on the plugin executor.
      *
+     * <p>Statistic defaults include gameplay, system, progression, and perk categories to guarantee every downstream
+     * module sees a fully populated statistic aggregate. Exceptions during player instantiation or repository calls are
+     * wrapped into the returned {@link CompletableFuture} to be handled by the caller.</p>
+     *
      * @param uniqueId   unique identifier of the incoming player
      * @param playerName player name at login time
      * @return future completing with the created {@link RPlayer} on the plugin executor
@@ -146,6 +154,10 @@ public final class PlayerPreLogin implements Listener {
     /**
      * Applies name, statistic, and migration updates for an existing {@link RPlayer}, persisting changes on the plugin
      * executor when required.
+     *
+     * <p>Validation failures (for example, invalid name updates) are logged and skipped while still allowing the login
+     * to proceed. The returned future executes on the plugin executor so downstream consumers remain on the asynchronous
+     * thread.</p>
      *
      * @param player       loaded player entity from storage
      * @param incomingName player name currently provided by Bukkit
@@ -192,6 +204,10 @@ public final class PlayerPreLogin implements Listener {
     /**
      * Generates the comprehensive baseline statistic payload for a new player while executing on the asynchronous
      * repository workflow.
+     *
+     * <p>Baseline values include timestamp anchors, login counters, and server namespace metadata that downstream
+     * modules rely on. The method is intentionally synchronous yet invoked from asynchronous stages to keep the
+     * pipeline consistent.</p>
      *
      * @param player player instance to initialize statistics for
      * @return initialized statistic aggregate ready for persistence
@@ -251,6 +267,9 @@ public final class PlayerPreLogin implements Listener {
      * Updates timestamps, login counters, and performs migration checks for returning players inside the asynchronous
      * processing chain.
      *
+     * <p>The caller executes the method on the plugin executor, keeping statistic mutations off the Bukkit main thread
+     * while guaranteeing that core, progression, and perk defaults remain synchronized.</p>
+     *
      * @param playerStatistic statistic aggregate to refresh
      */
     private void updateReturningPlayerStatistics(final @NotNull RPlayerStatistic playerStatistic) {
@@ -276,6 +295,10 @@ public final class PlayerPreLogin implements Listener {
     /**
      * Ensures every core statistic entry is present for the player while executing on the plugin executor.
      *
+     * <p>Missing entries are populated with the default values defined by {@link EStatisticType#getCoreDefaults()},
+     * preventing {@code null} statistics from leaking to downstream services. Each update occurs through the
+     * {@link RPlayerStatisticService} to maintain consistent persistence semantics.</p>
+     *
      * @param playerStatistic statistic aggregate to validate
      */
     private void ensureAllCoreStatisticsExist(final @NotNull RPlayerStatistic playerStatistic) {
@@ -297,6 +320,9 @@ public final class PlayerPreLogin implements Listener {
 
     /**
      * Ensures the RDQ perk statistic namespace is populated to maintain compatibility with dependent modules.
+     *
+     * <p>Perk statistics live under the {@link EStatisticType.StatisticCategory#RDQ} namespace to align with RDQ module
+     * expectations. Missing entries are inserted asynchronously so follow-up processing remains on the executor thread.</p>
      *
      * @param playerStatistic statistic aggregate to validate
      */
