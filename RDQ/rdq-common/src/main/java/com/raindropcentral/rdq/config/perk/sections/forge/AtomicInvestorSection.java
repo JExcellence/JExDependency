@@ -15,38 +15,49 @@ import java.util.Map;
  * </p>
  *
  * @author ItsRainingHP
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public class AtomicInvestorSection extends AConfigSection {
-	
-	/**
-	 * Time interval (in ticks or seconds, depending on system) between each passive currency generation.
-	 */
-	@CSAlways
-	private int timer;
-	
-	/**
-	 * Map of currency types to their configuration sections, representing the currencies
-	 * the machine passively generates with the investor module.
-	 */
-	private Map<String, PluginCurrencySection> currencySections;
-	
-	/**
-	 * Constructs a new {@code AtomicInvestorSection} with the specified evaluation environment.
-	 *
-	 * @param baseEnvironment the base evaluation environment for this configuration section
-	 */
-	public AtomicInvestorSection(final EvaluationEnvironmentBuilder baseEnvironment) {
-		super(baseEnvironment);
-	}
-	
-	public int getTimer() {
-		return timer;
-	}
-	
-	public Map<String, PluginCurrencySection> getCurrencySections() {
-		return currencySections;
-	}
-	
+
+    /**
+     * Time interval (in ticks or seconds, depending on system) between each passive currency
+     * generation.
+     */
+    @CSAlways
+    private int timer;
+
+    /**
+     * Map of currency types to their configuration sections, representing the currencies the
+     * machine passively generates with the investor module.
+     */
+    private Map<String, PluginCurrencySection> currencySections;
+
+    /**
+     * Constructs a new {@code AtomicInvestorSection} with the specified evaluation environment.
+     *
+     * @param baseEnvironment the base evaluation environment for this configuration section
+     */
+    public AtomicInvestorSection(final EvaluationEnvironmentBuilder baseEnvironment) {
+        super(baseEnvironment);
+    }
+
+    /**
+     * Retrieves the configured interval between passive generation cycles.
+     *
+     * @return the configured generation interval
+     */
+    public int getTimer() {
+        return timer;
+    }
+
+    /**
+     * Provides the configured currency sections keyed by the currency identifier.
+     *
+     * @return a map of currency identifiers to their {@link PluginCurrencySection} definitions
+     */
+    public Map<String, PluginCurrencySection> getCurrencySections() {
+        return currencySections;
+    }
+
 }
