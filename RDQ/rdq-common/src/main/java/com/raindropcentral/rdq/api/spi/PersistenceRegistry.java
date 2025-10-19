@@ -5,10 +5,14 @@ import java.util.Optional;
 /**
  * Aggregates optional SPI adapters that RDQ editions can contribute during bootstrap.
  *
- * <p>The registry provides a type-safe way to supply persistence implementations without
- * forcing every edition to ship all adapters. Consumers should query the registry before
- * attempting persistence operations and fall back to default strategies when an adapter is
- * absent.</p>
+ * <p><strong>Threading:</strong> The registry is immutable after construction and therefore thread
+ * safe. Callers may query from any RDQ executor.</p>
+ *
+ * <p><strong>Lifecycle:</strong> Instances are created once per edition during repository wiring and
+ * shared for the module lifetime.</p>
+ *
+ * <p><strong>Integration:</strong> Provides a centralized lookup for edition-specific persistence
+ * adapters used by gameplay services, administrative tooling, and background synchronizers.</p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -18,12 +22,16 @@ public class PersistenceRegistry {
     /**
      * Adapter that persists {@link com.raindropcentral.rdq.database.entity.bounty.RBounty}
      * instances when editions provide a custom implementation.
+     *
+     * <p><strong>Nullability:</strong> May be {@code null} when editions rely on default behaviour.</p>
      */
     private final BountyPersistence bountyPersistence;
 
     /**
      * Adapter responsible for synchronising {@link com.raindropcentral.rdq.database.entity.player.RDQPlayer}
      * state to external storage when available.
+     *
+     * <p><strong>Nullability:</strong> May be {@code null} when no adapter is provided.</p>
      */
     private final PlayerPersistence playerPersistence;
 
@@ -70,11 +78,15 @@ public class PersistenceRegistry {
     public static final class Builder {
         /**
          * Candidate adapter for handling bounty persistence operations.
+         *
+         * <p><strong>Nullability:</strong> Optional; {@code null} indicates no adapter.</p>
          */
         private BountyPersistence bountyPersistence;
 
         /**
          * Candidate adapter for handling player persistence operations.
+         *
+         * <p><strong>Nullability:</strong> Optional; {@code null} indicates no adapter.</p>
          */
         private PlayerPersistence playerPersistence;
 
