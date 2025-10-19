@@ -29,19 +29,28 @@ public class RServer extends AbstractEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Minimum inclusive length for {@code server_name} values after trimming whitespace.
+     */
     private static final int MIN_SERVER_NAME_LENGTH = 1;
+
+    /**
+     * Maximum inclusive length permitted by the {@code server_name} column definition.
+     */
     private static final int MAX_SERVER_NAME_LENGTH = 50;
     
     /**
-     * Column mapping for {@code unique_id}. Serves as the public identifier for
-     * correlating remote server instances and remains stable for the life of the row.
+     * Column mapping for {@code unique_id}. Serves as the public identifier for correlating remote
+     * server instances and remains stable for the life of the row. Declared {@code nullable = false}
+     * and {@code unique = true} to mirror the persistence constraint enforced by the schema.
      */
     @Column(name = "unique_id", unique = true, nullable = false)
     private UUID uniqueId;
 
     /**
-     * Column mapping for {@code server_name}. Updated when administrative
-     * configuration changes the friendly display name while respecting length limits.
+     * Column mapping for {@code server_name}. Updated when administrative configuration changes the
+     * friendly display name while respecting length limits. Persisted as {@code nullable = false}
+     * with a maximum column {@code length} of {@value #MAX_SERVER_NAME_LENGTH} characters.
      */
     @Column(name = "server_name", nullable = false, length = MAX_SERVER_NAME_LENGTH)
     private String serverName;
@@ -89,9 +98,16 @@ public class RServer extends AbstractEntity {
         this.serverName = validateServerName(newName);
     }
 
+    /**
+     * Normalizes and validates candidate server names before persistence or assignment.
+     *
+     * @param name raw server name input
+     * @return trimmed server name compliant with configured bounds
+     * @throws IllegalArgumentException if the normalized value violates length constraints
+     */
     private static String validateServerName(final @NotNull String name) {
         Objects.requireNonNull(name, "serverName cannot be null");
-        
+
         final String trimmed = name.trim();
         if (trimmed.length() < MIN_SERVER_NAME_LENGTH || trimmed.length() > MAX_SERVER_NAME_LENGTH) {
             throw new IllegalArgumentException(
@@ -103,6 +119,11 @@ public class RServer extends AbstractEntity {
         return trimmed;
     }
 
+    /**
+     * Provides a concise descriptor useful for operator logs and debugging output.
+     *
+     * @return formatted identifier containing the primary key, UUID, and display name
+     */
     @Override
     public String toString() {
         return "RServer[id=%d, uuid=%s, name=%s]"
