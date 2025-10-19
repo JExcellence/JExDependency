@@ -202,7 +202,12 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
 
 
     /**
-     * {@inheritDoc}
+     * Exposes the variant-specific executor that backs all asynchronous persistence work.
+     *
+     * <p>The returned executor is created during construction and shut down inside
+     * {@link #onDisable()} so callers can safely reuse it without leaking threads.</p>
+     *
+     * @return executor dedicated to repository and background operations
      */
     @Override
     public @NotNull ExecutorService getExecutor() {
@@ -210,7 +215,14 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * {@inheritDoc}
+     * Finds a player by unique identifier while enforcing null guards and repository readiness.
+     *
+     * <p>The method validates the supplied identifier, ensures repositories finished wiring through
+     * {@link #ensureReposReady()}, and delegates execution to the asynchronous executor provided by
+     * {@link #getExecutor()}.</p>
+     *
+     * @param uniqueId player UUID to lookup
+     * @return future completing with the matching player when present
      */
     @Override
     public @NotNull CompletableFuture<java.util.Optional<RPlayer>> findByUuidAsync(final @NotNull UUID uniqueId) {
@@ -220,7 +232,14 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * {@inheritDoc}
+     * Retrieves a player snapshot by name once repository wiring succeeds.
+     *
+     * <p>Null player names are rejected immediately and a readiness check guards against early
+     * invocation before {@link #initializeRepositories()} completes. The lookup then executes on the
+     * asynchronous executor returned by {@link #getExecutor()}.</p>
+     *
+     * @param playerName profile name to search for
+     * @return future yielding the player when the repository contains a match
      */
     @Override
     public @NotNull CompletableFuture<java.util.Optional<RPlayer>> findByNameAsync(final @NotNull String playerName) {
@@ -230,7 +249,14 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * {@inheritDoc}
+     * Persists a new player aggregate while honoring lifecycle and executor guarantees.
+     *
+     * <p>The supplied aggregate must be non-null. Repository readiness is enforced via
+     * {@link #ensureReposReady()} before delegating to the asynchronous repository which uses the
+     * executor from {@link #getExecutor()}.</p>
+     *
+     * @param player aggregate to store in the persistence layer
+     * @return future resolving to the stored aggregate
      */
     @Override
     public @NotNull CompletableFuture<RPlayer> createAsync(final @NotNull RPlayer player) {
@@ -240,7 +266,13 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * {@inheritDoc}
+     * Updates an existing player aggregate once the repositories finish initialization.
+     *
+     * <p>The method rejects null aggregates, checks repository readiness, and performs the update on
+     * the dedicated executor returned by {@link #getExecutor()}.</p>
+     *
+     * @param player aggregate to update in persistent storage
+     * @return future containing the updated aggregate
      */
     @Override
     public @NotNull CompletableFuture<RPlayer> updateAsync(final @NotNull RPlayer player) {
@@ -323,11 +355,11 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * Registers the {@link RCoreService} provider with Bukkit so downstream plugins can access the
-     * adapter-backed API.
+     * Registers the {@link RCoreService} provider with Bukkit during {@link #onLoad()} so downstream
+     * plugins can access the adapter-backed API throughout the server lifecycle.
      *
-     * <p>Registration occurs synchronously on the main thread and uses a normal priority because
-     * the free variant does not override any other provider. A missing service instance indicates a
+     * <p>Registration occurs synchronously on the main thread and uses a normal priority because the
+     * free variant does not override any other provider. A missing service instance indicates a
      * programming error and results in an {@link IllegalStateException}.</p>
      */
     private void registerService() {
@@ -344,10 +376,10 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * Removes the service provider from Bukkit's registry during shutdown.
+     * Removes the service provider from Bukkit's registry when {@link #onDisable()} executes.
      *
-     * <p>If the adapter never initialized the method falls back to unregistering every service
-     * owned by this plugin to guarantee a clean shutdown state.</p>
+     * <p>If the adapter never initialized the method falls back to unregistering every service owned
+     * by this plugin to guarantee a clean shutdown state.</p>
      */
     private void unregisterService() {
         if (this.rCoreService != null) {
@@ -359,7 +391,8 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
     }
 
     /**
-     * Attempts a graceful executor shutdown before interrupting outstanding tasks.
+     * Attempts a graceful executor shutdown from {@link #onDisable()} before interrupting outstanding
+     * tasks.
      *
      * <p>The method waits up to ten seconds for tasks to finish and logs whenever a forced shutdown
      * or interruption occurs so operators can diagnose long-running jobs.</p>
