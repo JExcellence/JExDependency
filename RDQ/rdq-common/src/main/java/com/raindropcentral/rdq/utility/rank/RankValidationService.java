@@ -11,20 +11,52 @@ import java.util.concurrent.Executor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Service responsible for validating the structural integrity of configured rank trees
+ * and the overall rank system.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 final class RankValidationService {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RankValidationService.class.getName());
 
+    /**
+     * Validates the rank configuration asynchronously to ensure all declared trees and ranks are
+     * internally consistent before the system is used.
+     *
+     * @param state    the current state containing tree and rank configuration snapshots
+     * @param executor the executor responsible for running the validation task
+     * @return a future that completes when configuration validation succeeds
+     * @throws IllegalStateException if the validation detects missing references
+     */
     CompletableFuture<Void> validateConfigurationsAsync(final @NotNull RankSystemState state,
                                                         final @NotNull Executor executor) {
         return CompletableFuture.runAsync(() -> validateConfigurations(state), executor);
     }
 
+    /**
+     * Validates the runtime rank system asynchronously to ensure that prerequisite trees do not
+     * introduce cycles that would prevent progression.
+     *
+     * @param state    the current state containing tree configuration snapshots
+     * @param executor the executor responsible for running the validation task
+     * @return a future that completes when system validation succeeds
+     * @throws IllegalStateException if cyclic dependencies are detected within the rank trees
+     */
     CompletableFuture<Void> validateSystemAsync(final @NotNull RankSystemState state,
                                                 final @NotNull Executor executor) {
         return CompletableFuture.runAsync(() -> validateSystem(state), executor);
     }
 
+    /**
+     * Performs configuration validation for all rank trees on the calling thread.
+     *
+     * @param state the current state containing tree and rank configuration snapshots
+     * @throws IllegalStateException if any referenced tree or rank is missing
+     */
     private void validateConfigurations(final RankSystemState state) {
         final List<String> errors = new ArrayList<>();
 
@@ -43,6 +75,12 @@ final class RankValidationService {
         LOGGER.info("Configuration validation completed");
     }
 
+    /**
+     * Performs rank system validation on the calling thread, ensuring no cyclic prerequisites exist.
+     *
+     * @param state the current state containing tree configuration snapshots
+     * @throws IllegalStateException if a cycle is encountered among prerequisite trees
+     */
     private void validateSystem(final RankSystemState state) {
         final List<String> errors = new ArrayList<>();
         for (String treeId : state.rankTreeSections().keySet()) {
@@ -57,6 +95,14 @@ final class RankValidationService {
         LOGGER.info("System validation completed");
     }
 
+    /**
+     * Validates the references declared by a rank tree against the available tree identifiers.
+     *
+     * @param treeId       the identifier of the tree being validated
+     * @param config       the configuration entry containing tree relationships
+     * @param validTreeIds the set of valid tree identifiers available in the system
+     * @param errors       the collection that receives validation error messages
+     */
     private void validateTreeReferences(final String treeId,
                                         final RankTreeSection config,
                                         final Set<String> validTreeIds,
@@ -73,6 +119,13 @@ final class RankValidationService {
         }
     }
 
+    /**
+     * Validates rank-to-rank relationships within a tree to ensure referenced ranks exist.
+     *
+     * @param treeId the identifier of the tree being validated
+     * @param ranks  the ranks contained within the tree
+     * @param errors the collection that receives validation error messages
+     */
     private void validateRankReferences(final String treeId,
                                         final Map<String, RankSection> ranks,
                                         final List<String> errors) {
@@ -91,6 +144,15 @@ final class RankValidationService {
         }
     }
 
+    /**
+     * Detects cyclic dependencies between prerequisite trees using a depth-first search traversal.
+     *
+     * @param treeId   the identifier of the tree currently being evaluated
+     * @param sections the available rank tree sections
+     * @param visited  the set of trees that have already been visited
+     * @param stack    the recursion stack used to detect back edges representing cycles
+     * @return {@code true} if a cycle is detected, {@code false} otherwise
+     */
     private boolean hasCycle(final String treeId,
                              final Map<String, RankTreeSection> sections,
                              final Set<String> visited,
