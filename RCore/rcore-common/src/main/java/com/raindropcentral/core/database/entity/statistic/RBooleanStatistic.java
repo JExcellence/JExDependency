@@ -21,8 +21,9 @@ import java.util.Objects;
 public class RBooleanStatistic extends RAbstractStatistic {
 
     /**
-     * Column mapping for the boolean {@code statistic_value}. Stored as a non-null column and
-     * toggled in place for lifecycle transitions.
+     * Column mapping for the boolean {@code statistic_value}. Persisted as a non-null column to
+     * guarantee transactional toggles never interact with {@code null} state despite Hibernate's
+     * boxed {@link Boolean} requirement.
      */
     @Column(name = "statistic_value", nullable = false)
     private Boolean value;
@@ -57,22 +58,31 @@ public class RBooleanStatistic extends RAbstractStatistic {
     }
 
     /**
-     * Inverts the stored boolean value. Should be invoked inside a managed transaction so the
-     * update is flushed appropriately.
+     * Inverts the stored boolean value.
+     *
+     * <p>This mutator is expected to run inside an active persistence transaction so that the
+     * change is detected and flushed by the entity manager without exposing a transient
+     * {@code null} intermediary.</p>
      */
     public void toggle() {
         this.value = !this.value;
     }
 
     /**
-     * Updates the persisted boolean payload.
+     * Updates the persisted boolean payload, validating the provided value.
      *
-     * @param value new boolean value
+     * @param value new boolean value that must be non-null
+     * @throws NullPointerException when {@code value} is {@code null}
      */
     public void setValue(final @NotNull Boolean value) {
         this.value = Objects.requireNonNull(value, "value cannot be null");
     }
-    
+
+    /**
+     * Builds a debug-friendly representation of the statistic, including identifier metadata.
+     *
+     * @return formatted string suitable for logging and diagnostics
+     */
     @Override
     public String toString() {
         return "RBooleanStatistic[id=%d, identifier=%s, plugin=%s, value=%b]"
