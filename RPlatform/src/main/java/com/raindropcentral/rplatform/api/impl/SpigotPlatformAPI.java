@@ -29,6 +29,20 @@ import java.util.UUID;
  * serialization and applies skull textures through reflection to avoid hard dependencies on
  * Mojang's authlib.
  *
+ * <p><strong>Threading:</strong> Public entry points assume invocation on the primary server thread
+ * and perform no internal synchronization. Asynchronous callers must reschedule through the
+ * platform scheduler before mutating player state or item metadata.</p>
+ *
+ * <p><strong>Lifecycle:</strong> Instantiated via the reflective platform factory during
+ * {@code RPlatform#initialize()} and considered valid until {@link #close()} is invoked at plugin
+ * shutdown.</p>
+ *
+ * <p><strong>Integration:</strong> Downstream modules in RCore and RDQ delegate Adventure bridging
+ * and skull handling to this adapter when Paper APIs are unavailable. Future enhancements should
+ * continue to route reflective skull logic through
+ * {@link #applyCustomTextureReflective(SkullMeta, UUID, String)} so error handling remains
+ * centralised.</p>
+ *
  * @author JExcellence
  * @since 1.0.0
  * @version 1.0.1
@@ -39,6 +53,9 @@ public final class SpigotPlatformAPI implements PlatformAPI {
      * Legacy serializer used to convert Adventure components to Spigot-compatible strings.
      *
      * <p><strong>Lifecycle:</strong> Cached statically to avoid repeated serializer allocation.</p>
+     *
+     * <p><strong>Nullability:</strong> Never {@code null}; the serializer is internal-only and should
+     * not be repurposed by external modules.</p>
      */
     private static final LegacyComponentSerializer LEGACY = LegacyComponentSerializer.legacySection();
 
@@ -47,6 +64,8 @@ public final class SpigotPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Lifecycle:</strong> Captured during construction and retained for the adapter
      * lifetime.</p>
+     *
+     * <p><strong>Nullability:</strong> Always non-null; constructor guards enforce this contract.</p>
      */
     private final JavaPlugin plugin;
 
@@ -54,6 +73,9 @@ public final class SpigotPlatformAPI implements PlatformAPI {
      * Scheduler adapter wrapping Bukkit's scheduling facilities.
      *
      * <p><strong>Lifecycle:</strong> Created when the adapter is constructed and reused thereafter.</p>
+     *
+     * <p><strong>Visibility:</strong> Private to the adapter but exposed through {@link #scheduler()};
+     * guaranteed to be initialised.</p>
      */
     private final ISchedulerAdapter scheduler;
 
@@ -62,6 +84,9 @@ public final class SpigotPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Usage:</strong> Prefer instantiation through the platform factory to ensure the
      * correct implementation is selected for the running server.</p>
+     *
+     * <p><strong>Error handling:</strong> Throws {@link NullPointerException} when {@code plugin} is
+     * {@code null}; scheduler creation failures propagate so bootstrap issues remain visible.</p>
      *
      * @param plugin the plugin creating the adapter
      */
@@ -404,6 +429,9 @@ public final class SpigotPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Usage:</strong> Internal helper for the public skull methods; silently fails when
      * the reflective calls are unavailable.</p>
+     *
+     * <p><strong>Error handling:</strong> Swallows any reflective exceptions so upstream callers can
+     * decide whether to fall back to default textures; failures leave the provided meta untouched.</p>
      *
      * @param meta        the skull meta to mutate
      * @param uuid        synthetic profile UUID

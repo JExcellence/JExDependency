@@ -20,11 +20,24 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Folia-specific {@link PlatformAPI} implementation that takes advantage of the Adventure-native
  * APIs and regionized scheduler semantics available on Folia servers.
+ *
+ * <p><strong>Threading:</strong> Folia enforces regionized execution; callers should schedule work
+ * through {@link #scheduler()} when operating outside the player or global regions required by the
+ * Folia API. All public methods follow the {@link PlatformAPI} expectation of main-thread or
+ * region-thread invocation.</p>
+ *
+ * <p><strong>Lifecycle:</strong> Instantiated during platform initialization after Folia detection
+ * succeeds. Remains valid until plugin disable, at which point {@link #close()} is called (currently
+ * a no-op).</p>
+ *
+ * <p><strong>Integration:</strong> Provides the Folia-specific messaging and skull handling bridge
+ * consumed by RCore, RDQ, and any Folia-aware modules.</p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -37,6 +50,8 @@ public final class FoliaPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Lifecycle:</strong> Captured during construction and retained for the lifetime of
      * the API instance.</p>
+     *
+     * <p><strong>Nullability:</strong> Guaranteed non-null by constructor validation.</p>
      */
     private final JavaPlugin plugin;
 
@@ -45,6 +60,8 @@ public final class FoliaPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Lifecycle:</strong> Created eagerly during construction and reused for all
      * scheduling operations.</p>
+     *
+     * <p><strong>Visibility:</strong> Accessed through {@link #scheduler()} and always initialised.</p>
      */
     private final ISchedulerAdapter scheduler;
 
@@ -54,10 +71,14 @@ public final class FoliaPlatformAPI implements PlatformAPI {
      * <p><strong>Usage:</strong> Instantiate via {@link com.raindropcentral.rplatform.api.PlatformAPIFactory}
      * to ensure detection logic selects this implementation only when Folia classes exist.</p>
      *
+     * <p><strong>Error handling:</strong> Throws {@link NullPointerException} when {@code plugin} is
+     * {@code null}; scheduler creation issues propagate so operators can identify configuration
+     * problems.</p>
+     *
      * @param plugin the plugin creating the API instance
      */
     public FoliaPlatformAPI(final @NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+        this.plugin = Objects.requireNonNull(plugin, "plugin");
         this.scheduler = ISchedulerAdapter.create(plugin, PlatformType.FOLIA);
     }
 

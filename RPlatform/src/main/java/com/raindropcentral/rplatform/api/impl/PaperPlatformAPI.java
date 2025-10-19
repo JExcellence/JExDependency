@@ -20,11 +20,21 @@ import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
  * Paper {@link PlatformAPI} implementation leveraging the platform's Adventure and profile APIs
  * while delegating scheduling to the shared adapter.
+ *
+ * <p><strong>Threading:</strong> Public callers must follow the {@link PlatformAPI} guidance by
+ * executing on the main thread unless explicitly re-entering via {@link #scheduler()}.</p>
+ *
+ * <p><strong>Lifecycle:</strong> Instantiated during platform initialization and retained until
+ * plugin disable when {@link #close()} is invoked (currently a no-op).</p>
+ *
+ * <p><strong>Integration:</strong> Coordinates Paper-specific Adventure operations and profile
+ * handling so RCore, RDQ, and other modules can target a unified API without bespoke branches.</p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -37,6 +47,8 @@ public final class PaperPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Lifecycle:</strong> Captured during construction and retained for the adapter's
      * lifetime.</p>
+     *
+     * <p><strong>Nullability:</strong> Always non-null; the constructor enforces this contract.</p>
      */
     private final JavaPlugin plugin;
 
@@ -45,6 +57,9 @@ public final class PaperPlatformAPI implements PlatformAPI {
      *
      * <p><strong>Lifecycle:</strong> Created eagerly during construction and reused for all
      * scheduling requests.</p>
+     *
+     * <p><strong>Visibility:</strong> Private field exposed through {@link #scheduler()} and never
+     * {@code null} once the adapter is constructed.</p>
      */
     private final ISchedulerAdapter scheduler;
 
@@ -54,10 +69,13 @@ public final class PaperPlatformAPI implements PlatformAPI {
      * <p><strong>Usage:</strong> Typically instantiated via the platform factory to ensure the
      * correct implementation is selected.</p>
      *
+     * <p><strong>Error handling:</strong> Throws {@link NullPointerException} when {@code plugin} is
+     * {@code null}; scheduler creation issues propagate so deployment problems surface early.</p>
+     *
      * @param plugin the owning plugin
      */
     public PaperPlatformAPI(final @NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+        this.plugin = Objects.requireNonNull(plugin, "plugin");
         this.scheduler = ISchedulerAdapter.create(plugin, PlatformType.PAPER);
     }
 
