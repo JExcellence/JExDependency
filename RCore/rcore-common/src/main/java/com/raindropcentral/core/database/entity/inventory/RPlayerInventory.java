@@ -275,11 +275,27 @@ public class RPlayerInventory extends AbstractEntity {
         return this.inventory.isEmpty() && this.armor.isEmpty() && this.enderchest.isEmpty();
     }
 
+    /**
+     * Logs when a player is in creative mode and inventory persistence is skipped. Invoke from
+     * the primary server thread where inventory snapshots are generated to preserve Bukkit's
+     * threading guarantees; the method itself performs only synchronous logging.
+     *
+     * @param player creative-mode player whose inventory is intentionally ignored
+     */
     private static void handleCreativeMode(final @NotNull Player player) {
         CentralLogger.getLogger(RPlayerInventory.class.getName())
                 .info("Player %s is in creative mode, inventory storage is disabled".formatted(player.getName()));
     }
 
+    /**
+     * Converts an array of Bukkit {@link ItemStack} objects to a sparse slot-index map. Callers must
+     * supply arrays obtained on synchronous threads to avoid violating Bukkit's inventory access
+     * rules. Each {@link ItemStack} is cloned to decouple the persisted state from live objects
+     * that may be mutated on other threads.
+     *
+     * @param items inventory array pulled from a player or container
+     * @return map keyed by slot index containing cloned item stacks
+     */
     private static Map<Integer, ItemStack> extractInventoryMap(final @Nullable ItemStack[] items) {
         final Map<Integer, ItemStack> map = new HashMap<>();
 
@@ -293,6 +309,15 @@ public class RPlayerInventory extends AbstractEntity {
         return map;
     }
 
+    /**
+     * Reconstructs an {@link ItemStack} array from a sparse slot-index map. The provided map should
+     * contain cloned entries if cross-thread usage is expected; this helper does not perform
+     * defensive copying and returns direct references for performance reasons.
+     *
+     * @param map  sparse slot map typically obtained from persistence
+     * @param size expected size of the target inventory array
+     * @return populated array ready for Bukkit inventory setters
+     */
     private static ItemStack[] mapToArray(
             final @NotNull Map<Integer, ItemStack> map,
             final int size
@@ -306,6 +331,13 @@ public class RPlayerInventory extends AbstractEntity {
         return array;
     }
 
+    /**
+     * Produces a concise textual representation of the snapshot for logging or debugging. Safe to
+     * call from any thread as it only accesses immutable identifiers and cached counts, avoiding
+     * interaction with live Bukkit state.
+     *
+     * @return formatted description containing key identifiers and item counts
+     */
     @Override
     public String toString() {
         return "RPlayerInventory[id=%d, player=%s, server=%s, items=%d]"
