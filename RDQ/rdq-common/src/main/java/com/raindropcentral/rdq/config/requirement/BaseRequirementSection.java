@@ -19,8 +19,8 @@ import java.util.List;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class BaseRequirementSection extends AConfigSection {
@@ -265,106 +265,178 @@ public class BaseRequirementSection extends AConfigSection {
 		       this.icon;
 	}
 	
-	public ItemRequirementSection getItemRequirement() {
-		
-		return this.itemRequirement == null ?
-		       new ItemRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.itemRequirement;
-	}
+        /**
+         * Retrieves the item-specific requirement configuration.
+         *
+         * @return an {@link ItemRequirementSection}, returning a default instance when no item requirement is configured
+         */
+        public ItemRequirementSection getItemRequirement() {
+
+                return this.itemRequirement == null ?
+                       new ItemRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.itemRequirement;
+        }
+
+        /**
+         * Retrieves the currency requirement configuration.
+         *
+         * @return a {@link CurrencyRequirementSection}, returning a default instance when not defined in the configuration
+         */
+        public CurrencyRequirementSection getCurrencyRequirement() {
+
+                return this.currencyRequirement == null ?
+                       new CurrencyRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.currencyRequirement;
+        }
+
+        /**
+         * Retrieves the experience level requirement configuration.
+         *
+         * @return an {@link ExperienceLevelRequirementSection}, returning a default instance when the section is absent
+         */
+        public ExperienceLevelRequirementSection getExperienceRequirement() {
+
+                return this.experienceRequirement == null ?
+                       new ExperienceLevelRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.experienceRequirement;
+        }
+
+        /**
+         * Retrieves the playtime requirement configuration.
+         *
+         * @return a {@link PlaytimeRequirementSection}, returning a default instance when not defined
+         */
+        public PlaytimeRequirementSection getPlaytimeRequirement() {
+
+                return this.playtimeRequirement == null ?
+                       new PlaytimeRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.playtimeRequirement;
+        }
+
+        /**
+         * Retrieves the permission requirement configuration.
+         *
+         * @return a {@link PermissionRequirementSection}, returning a default instance when unspecified
+         */
+        public PermissionRequirementSection getPermissionRequirement() {
+
+                return this.permissionRequirement == null ?
+                       new PermissionRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.permissionRequirement;
+        }
+
+        /**
+         * Retrieves the location requirement configuration.
+         *
+         * @return a {@link LocationRequirementSection}, returning a default instance when no location requirement exists
+         */
+        public LocationRequirementSection getLocationRequirement() {
+
+                return this.locationRequirement == null ?
+                       new LocationRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.locationRequirement;
+        }
+
+        /**
+         * Retrieves the composite requirement configuration, which can aggregate multiple requirement types.
+         *
+         * @return a {@link CompositeRequirementSection}, returning a default instance when undefined
+         */
+        public CompositeRequirementSection getCompositeRequirement() {
+
+                return this.compositeRequirement == null ?
+                       new CompositeRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.compositeRequirement;
+        }
+
+        /**
+         * Retrieves the choice requirement configuration.
+         *
+         * @return a {@link ChoiceRequirementSection}, returning a default instance when not configured
+         */
+        public ChoiceRequirementSection getChoiceRequirement() {
+
+                return this.choiceRequirement == null ?
+                       new ChoiceRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.choiceRequirement;
+        }
+
+        /**
+         * Retrieves the achievement requirement configuration.
+         *
+         * @return an {@link AchievementRequirementSection}, returning a default instance when absent
+         */
+        public AchievementRequirementSection getAchievementRequirement() {
+
+                return this.achievementRequirement == null ?
+                       new AchievementRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.achievementRequirement;
+        }
+
+        /**
+         * Retrieves the skill requirement configuration.
+         *
+         * @return a {@link SkillRequirementSection}, returning a default instance when no skill requirement is present
+         */
+        public SkillRequirementSection getSkillRequirement() {
+
+                return this.skillRequirement == null ?
+                       new SkillRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.skillRequirement;
+        }
+
+        /**
+         * Retrieves the job requirement configuration.
+         *
+         * @return a {@link JobRequirementSection}, returning a default instance when the configuration omits job requirements
+         */
+        public JobRequirementSection getJobRequirement() {
+
+                return this.jobRequirement == null ?
+                       new JobRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.jobRequirement;
+        }
+
+        /**
+         * Retrieves the time-based requirement configuration.
+         *
+         * @return a {@link TimeBasedRequirementSection}, returning a default instance when not specified
+         */
+        public TimeBasedRequirementSection getTimeBasedRequirement() {
+
+                return this.timeBasedRequirement == null ?
+                       new TimeBasedRequirementSection(new EvaluationEnvironmentBuilder()) :
+                       this.timeBasedRequirement;
+        }
 	
-	public CurrencyRequirementSection getCurrencyRequirement() {
-		
-		return this.currencyRequirement == null ?
-		       new CurrencyRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.currencyRequirement;
-	}
-	
-	public ExperienceLevelRequirementSection getExperienceRequirement() {
-		
-		return this.experienceRequirement == null ?
-		       new ExperienceLevelRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.experienceRequirement;
-	}
-	
-	public PlaytimeRequirementSection getPlaytimeRequirement() {
-		
-		return this.playtimeRequirement == null ?
-		       new PlaytimeRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.playtimeRequirement;
-	}
-	
-	public PermissionRequirementSection getPermissionRequirement() {
-		
-		return this.permissionRequirement == null ?
-		       new PermissionRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.permissionRequirement;
-	}
-	
-	public LocationRequirementSection getLocationRequirement() {
-		
-		return this.locationRequirement == null ?
-		       new LocationRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.locationRequirement;
-	}
-	
-	public CompositeRequirementSection getCompositeRequirement() {
-		
-		return this.compositeRequirement == null ?
-		       new CompositeRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.compositeRequirement;
-	}
-	
-	public ChoiceRequirementSection getChoiceRequirement() {
-		
-		return this.choiceRequirement == null ?
-		       new ChoiceRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.choiceRequirement;
-	}
-	
-	public AchievementRequirementSection getAchievementRequirement() {
-		
-		return this.achievementRequirement == null ?
-		       new AchievementRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.achievementRequirement;
-	}
-	
-	public SkillRequirementSection getSkillRequirement() {
-		
-		return this.skillRequirement == null ?
-		       new SkillRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.skillRequirement;
-	}
-	
-	public JobRequirementSection getJobRequirement() {
-		
-		return this.jobRequirement == null ?
-		       new JobRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.jobRequirement;
-	}
-	
-	public TimeBasedRequirementSection getTimeBasedRequirement() {
-		
-		return this.timeBasedRequirement == null ?
-		       new TimeBasedRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.timeBasedRequirement;
-	}
-	
-	/**
-	 * Gets the context information.
-	 */
-	public String getRankTreeName() {
-		
-		return this.rankTreeName;
-	}
-	
-	public String getRankName() {
-		
-		return this.rankName;
-	}
-	
-	public String getRequirementKey() {
-		
-		return this.requirementKey;
-	}
-	
+        /**
+         * Gets the name of the rank tree that owns this requirement.
+         *
+         * @return the owning rank tree name
+         */
+        public String getRankTreeName() {
+
+                return this.rankTreeName;
+        }
+
+        /**
+         * Gets the name of the rank that contains this requirement.
+         *
+         * @return the associated rank name
+         */
+        public String getRankName() {
+
+                return this.rankName;
+        }
+
+        /**
+         * Gets the unique key associated with this requirement within the rank.
+         *
+         * @return the requirement key
+         */
+        public String getRequirementKey() {
+
+                return this.requirementKey;
+        }
+
 }
