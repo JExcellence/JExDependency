@@ -10,13 +10,13 @@ import java.util.List;
 /**
  * Configuration section for permission-based requirements.
  * <p>
- * This section handles all configuration options specific to PermissionRequirement,
- * including required permissions and permission checking modes.
+ * This section handles all configuration options specific to {@link com.raindropcentral.rdq.requirement.PermissionRequirement},
+ * including required permissions and permission checking modes used during evaluation.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class PermissionRequirementSection extends AConfigSection {
@@ -59,24 +59,34 @@ public class PermissionRequirementSection extends AConfigSection {
 	 */
 	private Boolean checkNegation;
 	
-	/**
-	 * Constructs a new PermissionRequirementSection.
-	 *
-	 * @param evaluationEnvironmentBuilder the evaluation environment builder
-	 */
-	public PermissionRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
-		super(evaluationEnvironmentBuilder);
-	}
-	
-	// ~~~ GETTERS ~~~
-	
-	public Boolean getRequireAll() {
-		return this.requireAll != null ? this.requireAll : true;
-	}
-	
-	public Boolean getCheckNegation() {
-		return this.checkNegation != null ? this.checkNegation : false;
-	}
+        /**
+         * Constructs a new permission configuration section backed by the provided evaluation builder.
+         *
+         * @param evaluationEnvironmentBuilder the evaluation environment builder used to wire requirement expressions
+         */
+        public PermissionRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
+                super(evaluationEnvironmentBuilder);
+        }
+
+        // ~~~ GETTERS ~~~
+
+        /**
+         * Determines whether all configured permissions must be satisfied.
+         *
+         * @return {@code true} when all permissions are required, {@code false} when any permission suffices
+         */
+        public Boolean getRequireAll() {
+                return this.requireAll != null ? this.requireAll : true;
+        }
+
+        /**
+         * Indicates whether permission negation checks should be performed.
+         *
+         * @return {@code true} if negated permissions should be evaluated, {@code false} otherwise
+         */
+        public Boolean getCheckNegation() {
+                return this.checkNegation != null ? this.checkNegation : false;
+        }
 	
 	/**
 	 * Gets the single required permission, trying multiple field names.
