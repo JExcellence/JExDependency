@@ -24,6 +24,21 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Captures a serialized snapshot of a player's inventory state for a given server
+ * in the {@code r_player_inventory} table. Each row references both the owning
+ * {@link RPlayer} and the {@link RServer} that produced the snapshot, enabling
+ * server-scoped inventory restores and auditing. Item stacks are converted via
+ * {@link ItemStackMapConverter} to support Hibernate persistence.
+ *
+ * <p>Construction should occur on synchronous threads interacting with Bukkit
+ * APIs, while persistence and retrieval are delegated to repository executors to
+ * avoid blocking scheduler threads.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 @Entity
 @Table(name = "r_player_inventory")
 public class RPlayerInventory extends AbstractEntity {
@@ -31,28 +46,62 @@ public class RPlayerInventory extends AbstractEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Foreign-key column {@code player_id} linking this snapshot to the owning player.
+     * The association is required and lazily loaded to minimize memory footprint when
+     * inventories are fetched without immediately needing profile details.
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "player_id", nullable = false)
     private RPlayer rPlayer;
 
+    /**
+     * Foreign-key column {@code server_id} partitioning snapshots by originating server.
+     * Ensures restores only occur for matching environments and prevents cross-server
+     * contamination of inventories.
+     */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "server_id", nullable = false)
     private RServer rServer;
 
+    /**
+     * Serialized hotbar and main inventory contents stored as a slot-indexed map in
+     * {@code inventory}. The {@link ItemStackMapConverter} handles byte-array encoding
+     * for database storage.
+     */
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "inventory", columnDefinition = "LONGTEXT")
     private Map<Integer, ItemStack> inventory = new HashMap<>();
 
+    /**
+     * Serialized armor slots persisted to the {@code armor_contents} column. Empty maps
+     * are stored instead of {@code null} values to simplify merge semantics.
+     */
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "armor_contents", columnDefinition = "LONGTEXT")
     private Map<Integer, ItemStack> armor = new HashMap<>();
 
+    /**
+     * Serialized ender chest contents mapped to the {@code enderchest} column. Values are
+     * lazily copied to prevent shared mutable state when applied back to Bukkit players.
+     */
     @Convert(converter = ItemStackMapConverter.class)
     @Column(name = "enderchest", columnDefinition = "LONGTEXT")
     private Map<Integer, ItemStack> enderchest = new HashMap<>();
 
+    /**
+     * Framework constructor for JPA. Use the snapshot constructor for new instances.
+     */
     protected RPlayerInventory() {}
 
+    /**
+     * Builds a snapshot from a live Bukkit {@link Player}. Item stacks are cloned to avoid
+     * concurrent modification when persisted asynchronously.
+     *
+     * @param rServer owning server context used to scope the snapshot
+     * @param rPlayer player metadata owning the inventory
+     * @param player  live Bukkit player providing inventory contents
+     */
     public RPlayerInventory(
             final @NotNull RServer rServer,
             final @NotNull RPlayer rPlayer,
@@ -76,49 +125,108 @@ public class RPlayerInventory extends AbstractEntity {
         this.enderchest = extractInventoryMap(player.getEnderChest().getContents());
     }
 
+    /**
+     * Provides the player association for repository hydration logic.
+     *
+     * @return linked {@link RPlayer} reference
+     */
     public @NotNull RPlayer getRPlayer() {
         return this.rPlayer;
     }
 
+    /**
+     * Reassigns the owning player, useful when merging detached entities. The foreign key
+     * will be updated on the next flush.
+     *
+     * @param rPlayer new owning player reference
+     */
     public void setRPlayer(final @NotNull RPlayer rPlayer) {
         this.rPlayer = Objects.requireNonNull(rPlayer, "rPlayer cannot be null");
     }
 
+    /**
+     * Returns the server scope associated with this inventory snapshot.
+     *
+     * @return owning {@link RServer}
+     */
     public @NotNull RServer getRServer() {
         return this.rServer;
     }
 
+    /**
+     * Updates the server association when transferring inventories between shards.
+     *
+     * @param rServer new server reference
+     */
     public void setRServer(final @NotNull RServer rServer) {
         this.rServer = Objects.requireNonNull(rServer, "rServer cannot be null");
     }
 
+    /**
+     * Exposes the stored hotbar and inventory contents as an immutable copy to prevent
+     * direct mutation of the persistence-managed map.
+     *
+     * @return copy of slot-indexed inventory contents
+     */
     public @NotNull Map<Integer, ItemStack> getInventory() {
         return Map.copyOf(this.inventory);
     }
 
+    /**
+     * Replaces the stored inventory contents. Callers should ensure items were cloned
+     * prior to invocation when called from asynchronous contexts.
+     *
+     * @param inventory new inventory map to persist
+     */
     public void setInventory(final @NotNull Map<Integer, ItemStack> inventory) {
         Objects.requireNonNull(inventory, "inventory cannot be null");
         this.inventory = new HashMap<>(inventory);
     }
 
+    /**
+     * Retrieves the stored armor contents as an immutable snapshot.
+     *
+     * @return armor slot mapping
+     */
     public @NotNull Map<Integer, ItemStack> getArmor() {
         return Map.copyOf(this.armor);
     }
 
+    /**
+     * Updates the armor slot mapping.
+     *
+     * @param armor replacement armor map
+     */
     public void setArmor(final @NotNull Map<Integer, ItemStack> armor) {
         Objects.requireNonNull(armor, "armor cannot be null");
         this.armor = new HashMap<>(armor);
     }
 
+    /**
+     * Returns the ender chest snapshot as an immutable copy.
+     *
+     * @return ender chest slot mapping
+     */
     public @NotNull Map<Integer, ItemStack> getEnderchest() {
         return Map.copyOf(this.enderchest);
     }
 
+    /**
+     * Replaces the stored ender chest contents with the provided mapping.
+     *
+     * @param enderchest new ender chest map
+     */
     public void setEnderchest(final @NotNull Map<Integer, ItemStack> enderchest) {
         Objects.requireNonNull(enderchest, "enderchest cannot be null");
         this.enderchest = new HashMap<>(enderchest);
     }
 
+    /**
+     * Applies the stored snapshot to a live player. Should be invoked on the main server
+     * thread to comply with Bukkit inventory threading rules.
+     *
+     * @param player target Bukkit player receiving the snapshot
+     */
     public void applyToPlayer(final @NotNull Player player) {
         Objects.requireNonNull(player, "player cannot be null");
 
@@ -133,6 +241,12 @@ public class RPlayerInventory extends AbstractEntity {
         );
     }
 
+    /**
+     * Refreshes the stored snapshot from a live player. Invoke on synchronous threads to
+     * avoid concurrency issues with Bukkit inventory APIs.
+     *
+     * @param player player to read state from
+     */
     public void updateFromPlayer(final @NotNull Player player) {
         Objects.requireNonNull(player, "player cannot be null");
 
@@ -141,10 +255,22 @@ public class RPlayerInventory extends AbstractEntity {
         this.enderchest = extractInventoryMap(player.getEnderChest().getContents());
     }
 
+    /**
+     * Calculates the total number of persisted slot entries across inventory, armor,
+     * and ender chest collections.
+     *
+     * @return combined slot count
+     */
     public int getTotalItemCount() {
         return this.inventory.size() + this.armor.size() + this.enderchest.size();
     }
 
+    /**
+     * Indicates whether all stored collections are empty. Useful to skip unnecessary
+     * persistence for players without items.
+     *
+     * @return {@code true} when no items are stored
+     */
     public boolean isEmpty() {
         return this.inventory.isEmpty() && this.armor.isEmpty() && this.enderchest.isEmpty();
     }

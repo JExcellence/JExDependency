@@ -11,6 +11,20 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Root aggregate for player statistic values persisted in {@code r_player_statistic}.
+ * <p>
+ * Each instance maintains a one-to-one relationship with {@link RPlayer} and owns a
+ * collection of {@link RAbstractStatistic} rows stored in the {@code r_statistic}
+ * table via a join column. Repository operations execute on dedicated executors,
+ * so callers should avoid mutating the entity from asynchronous contexts without
+ * proper synchronization.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 @Entity
 @Table(name = "r_player_statistic")
 public class RPlayerStatistic extends AbstractEntity {
@@ -18,9 +32,17 @@ public class RPlayerStatistic extends AbstractEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Back-reference to the owning {@link RPlayer}. Hibernate manages the mapped-by side
+     * so the foreign key resides on the {@code r_player} table.
+     */
     @OneToOne(mappedBy = "playerStatistic")
     private RPlayer player;
 
+    /**
+     * Aggregated statistic values. Stored in {@code r_statistic} with a non-null
+     * {@code player_statistic_id} foreign key and constrained by (identifier, player_statistic_id).
+     */
     @OneToMany(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
@@ -29,33 +51,65 @@ public class RPlayerStatistic extends AbstractEntity {
     @JoinColumn(name = "player_statistic_id")
     private Set<RAbstractStatistic> statistics = new HashSet<>();
 
+    /**
+     * Protected constructor for JPA. Aggregates should be instantiated via the player-bound constructor.
+     */
     protected RPlayerStatistic() {}
 
+    /**
+     * Creates the aggregate bound to a particular player profile.
+     *
+     * @param player owning player; must be present before persistence
+     */
     public RPlayerStatistic(final @NotNull RPlayer player) {
         this.player = Objects.requireNonNull(player, "player cannot be null");
     }
 
+    /**
+     * Provides the owning player reference.
+     *
+     * @return player that owns this aggregate
+     */
     public @NotNull RPlayer getPlayer() {
         return this.player;
     }
 
+    /**
+     * Updates the owning player reference, typically during cascading assignments.
+     *
+     * @param player player to associate with this aggregate
+     */
     public void setPlayer(final @NotNull RPlayer player) {
         this.player = Objects.requireNonNull(player, "player cannot be null");
     }
 
+    /**
+     * Returns an immutable view of all persisted statistics to prevent accidental
+     * mutation outside managed transactional scopes.
+     *
+     * @return read-only set of statistics
+     */
     public @NotNull Set<RAbstractStatistic> getStatistics() {
         return Set.copyOf(this.statistics);
     }
 
     /**
-     * Internal method to access the mutable statistics collection.
-     * WARNING: This exposes the internal Hibernate-managed collection.
-     * Only use this when you need to modify entities in-place for proper persistence tracking.
+     * Internal accessor exposing the mutable Hibernate-managed statistics set. Use with
+     * caution inside transactional boundaries to allow dirty tracking.
+     *
+     * @return mutable statistic set managed by Hibernate
      */
     public @NotNull Set<RAbstractStatistic> getStatisticsInternal() {
         return this.statistics;
     }
 
+    /**
+     * Locates the first statistic value matching the given identifier and plugin pair.
+     *
+     * @param identifier logical statistic identifier
+     * @param plugin     plugin namespace claiming the statistic
+     * @return optional resolved value, empty when no statistic is present
+     */
     public @NotNull Optional<Object> getStatisticValue(
             final @NotNull String identifier,
             final @NotNull String plugin
@@ -70,12 +124,11 @@ public class RPlayerStatistic extends AbstractEntity {
     }
 
     /**
-     * Add or replace a statistic ensuring uniqueness by identifier.
-     * Important: The DB unique constraint is on (identifier, player_statistic_id),
-     * so we must not allow multiple stats with the same identifier regardless of plugin.
-     * 
-     * This method updates existing statistics in-place when possible to avoid
-     * Hibernate flush ordering issues that can cause unique constraint violations.
+     * Adds a new statistic or replaces an existing one that matches the identifier.
+     * Maintains the database unique constraint on (identifier, player_statistic_id)
+     * and ensures back-references are synchronized for cascading updates.
+     *
+     * @param statistic statistic instance to attach to the aggregate
      */
     public void addOrReplaceStatistic(final @NotNull RAbstractStatistic statistic) {
         Objects.requireNonNull(statistic, "statistic cannot be null");
@@ -100,6 +153,13 @@ public class RPlayerStatistic extends AbstractEntity {
         statistic.setPlayerStatistic(this);
     }
 
+    /**
+     * Determines whether a statistic exists for the provided identifier and plugin pair.
+     *
+     * @param identifier logical statistic identifier
+     * @param plugin     plugin namespace to match
+     * @return {@code true} when a matching statistic is present
+     */
     public boolean hasStatistic(
             final @NotNull String identifier,
             final @NotNull String plugin
@@ -112,8 +172,11 @@ public class RPlayerStatistic extends AbstractEntity {
     }
 
     /**
-     * Check if a statistic with the given identifier exists, regardless of plugin.
-     * This matches the database unique constraint which is on (identifier, player_statistic_id).
+     * Checks for a statistic with the given identifier regardless of plugin namespace,
+     * mirroring the unique constraint enforced by the database schema.
+     *
+     * @param identifier statistic identifier to probe
+     * @return {@code true} when any statistic shares the identifier
      */
     public boolean hasStatisticByIdentifier(final @NotNull String identifier) {
         Objects.requireNonNull(identifier, "identifier cannot be null");
@@ -121,6 +184,13 @@ public class RPlayerStatistic extends AbstractEntity {
                 .anyMatch(stat -> stat.getIdentifier().equals(identifier));
     }
 
+    /**
+     * Removes statistics matching both identifier and plugin namespace.
+     *
+     * @param identifier logical statistic identifier
+     * @param plugin     plugin namespace associated with the statistic
+     * @return {@code true} when any entries were removed
+     */
     public boolean removeStatistic(
             final @NotNull String identifier,
             final @NotNull String plugin
@@ -132,14 +202,23 @@ public class RPlayerStatistic extends AbstractEntity {
     }
 
     /**
-     * Removes any statistic with the given identifier, ignoring plugin.
-     * This matches the DB uniqueness rule and is safe to use when replacing stats.
+     * Removes any statistic with the given identifier, ignoring plugin namespace. Useful
+     * when re-seeding values where identifier uniqueness must be preserved.
+     *
+     * @param identifier statistic identifier targeted for removal
+     * @return {@code true} when any matching statistic was removed
      */
     public boolean removeStatisticByIdentifier(final @NotNull String identifier) {
         Objects.requireNonNull(identifier, "identifier cannot be null");
         return this.statistics.removeIf(stat -> stat.getIdentifier().equals(identifier));
     }
 
+    /**
+     * Counts statistics owned by the specified plugin.
+     *
+     * @param plugin plugin namespace to filter by
+     * @return number of statistics belonging to the plugin
+     */
     public long getStatisticCountForPlugin(final @NotNull String plugin) {
         Objects.requireNonNull(plugin, "plugin cannot be null");
 
@@ -148,6 +227,9 @@ public class RPlayerStatistic extends AbstractEntity {
                 .count();
     }
 
+    /**
+     * @return total number of statistics tracked by this aggregate
+     */
     public int getTotalStatisticCount() {
         return this.statistics.size();
     }
