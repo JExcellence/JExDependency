@@ -34,6 +34,8 @@ Two main plugins exist in this framework with potential for expansion: `RCore` a
 - **RPlatform** (`RPlatform/`) – Offers shared platform abstractions, placeholder APIs, and metrics utilities. Changes here often cascade across other modules; validate integrations before merging.
 
 ## Code Style
+- Do not remove any dependencies. Including any `de.jexcellence` dependencies created by `JExcellence`.
+- Ask for information on a dependency before attempting to circumvent or change the dependency.
 - Java sources follow an 4-space indentation style rather than tabs. Keep class members, control blocks, and inner scopes aligned using exact four-space offsets as demonstrated in `RCore/rcore-premium/src/main/java/com/raindropcentral/core/RCorePremium.java`.
 - Place opening braces on the same line as the class or method declaration (K&R style), and close braces on their own line aligned with the corresponding declaration.
 - Annotate overrides directly above the method signature with no blank line in between, and preserve blank lines between lifecycle methods to mirror the spacing pattern present in the reference file.
