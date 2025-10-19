@@ -24,6 +24,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Builds requirement domain objects from configuration sections and persists them when necessary.
+ * The factory centralizes validation and conversion logic so the rest of the codebase can rely on
+ * strongly typed requirement representations instead of ad-hoc configuration parsing.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public final class RequirementFactory {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RequirementFactory.class);
@@ -31,10 +40,25 @@ public final class RequirementFactory {
 
     private final RDQ rdq;
 
+    /**
+     * Creates a new factory that uses the provided RDQ instance to resolve repositories and
+     * executors required during persistence operations.
+     *
+     * @param rdq the RDQ plugin context used for repository access
+     */
     public RequirementFactory(final @NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Converts the provided configuration entries into rank upgrade requirements while performing
+     * validation and ordering. Invalid or incomplete requirement definitions are skipped with a
+     * warning so that a malformed entry does not break the entire parsing workflow.
+     *
+     * @param rank          the rank that owns the requirements being parsed
+     * @param requirements  the configuration-backed requirement definitions keyed by identifier
+     * @return a list of concrete upgrade requirements ready for persistence or display
+     */
     public @NotNull List<RRankUpgradeRequirement> parseRequirements(final @NotNull RRank rank,
                                                                     final @NotNull Map<String, ? extends BaseRequirementSection> requirements) {
         final List<RRankUpgradeRequirement> result = new ArrayList<>();
@@ -69,11 +93,29 @@ public final class RequirementFactory {
         return result;
     }
 
+    /**
+     * Asynchronously parses the supplied requirement definitions using the common fork join pool.
+     * This helper is intended for callers that do not need control over the target executor.
+     *
+     * @param rank         the rank to associate with the parsed requirements
+     * @param requirements the configuration-backed requirement definitions keyed by identifier
+     * @return a future that resolves to the parsed upgrade requirements
+     */
     public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> parseRequirementsAsync(final @NotNull RRank rank,
                                                                                             final @NotNull Map<String, ? extends BaseRequirementSection> requirements) {
         return parseRequirementsAsync(rank, requirements, ForkJoinPool.commonPool());
     }
 
+    /**
+     * Asynchronously parses the supplied requirement definitions on the provided executor. The
+     * executor parameter allows callers to integrate with their own scheduling strategy while
+     * keeping the parsing logic centralized in the factory.
+     *
+     * @param rank         the rank to associate with the parsed requirements
+     * @param requirements the configuration-backed requirement definitions keyed by identifier
+     * @param executor     the executor used to run the parsing task
+     * @return a future that resolves to the parsed upgrade requirements
+     */
     public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> parseRequirementsAsync(final @NotNull RRank rank,
                                                                                             final @NotNull Map<String, ? extends BaseRequirementSection> requirements,
                                                                                             final @NotNull Executor executor) {
@@ -83,10 +125,25 @@ public final class RequirementFactory {
         return CompletableFuture.supplyAsync(() -> parseRequirements(rank, requirements), executor);
     }
 
+    /**
+     * Persists the provided requirements using the RDQ executor associated with this factory.
+     *
+     * @param upgrades the requirements to persist if they have not been stored yet
+     * @return a future that resolves to the persisted requirement collection
+     */
     public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> persistRequirementEntitiesAsync(final @NotNull List<RRankUpgradeRequirement> upgrades) {
         return persistRequirementEntitiesAsync(upgrades, this.rdq.getExecutor());
     }
 
+    /**
+     * Persists the provided requirements using the supplied executor. Requirements that already
+     * possess identifiers are returned untouched while those lacking identifiers are stored and
+     * updated with repository-managed values.
+     *
+     * @param upgrades the requirements to persist if they have not been stored yet
+     * @param executor the executor used to run repository operations
+     * @return a future that resolves to the persisted requirement collection
+     */
     public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> persistRequirementEntitiesAsync(final @NotNull List<RRankUpgradeRequirement> upgrades,
                                                                                                      final @NotNull Executor executor) {
         Objects.requireNonNull(upgrades, "upgrades");
@@ -121,6 +178,14 @@ public final class RequirementFactory {
         });
     }
 
+    /**
+     * Converts a configuration section into an {@link AbstractRequirement} by translating the
+     * backing data into the serialized form expected by {@link RequirementParser}.
+     *
+     * @param section the configuration section describing the requirement
+     * @return the parsed abstract requirement instance
+     * @throws IOException if the configuration cannot be serialized to JSON for parsing
+     */
     public @NotNull AbstractRequirement createRequirementFromSection(final @NotNull AConfigSection section) throws IOException {
         final String json = convertSectionToJson(section);
         return RequirementParser.parse(json);
@@ -479,6 +544,14 @@ public final class RequirementFactory {
         if (s.getActiveDates() != null && !s.getActiveDates().isEmpty()) json.put("activeDates", s.getActiveDates());
     }
 
+    /**
+     * Determines a representative {@link Material} for displaying a requirement when no explicit
+     * icon is provided or the configured icon is invalid. The fallback is chosen based on the
+     * requirement type to keep the user interface informative.
+     *
+     * @param base the base configuration section containing requirement metadata
+     * @return the material that should be used to showcase the requirement
+     */
     public static @NotNull Material determineShowcaseMaterial(final @NotNull BaseRequirementSection base) {
         try {
             return Material.valueOf(base.getIcon().getMaterial());
