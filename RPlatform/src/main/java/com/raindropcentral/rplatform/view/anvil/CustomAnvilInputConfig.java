@@ -4,12 +4,32 @@ import org.jetbrains.annotations.Contract;
 
 import java.util.function.UnaryOperator;
 
+/**
+ * Configuration record for {@link CustomAnvilInput} describing initial text, lifecycle behaviour,
+ * and transformation hooks for player input.
+ *
+ * <p>The config aligns with translation-driven workflows by allowing callers to inject default
+ * values and on-change handlers prior to handing control back to Inventory Framework.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class CustomAnvilInputConfig {
-    
+
+    /**
+     * Default string shown when the anvil view opens.
+     */
     String initialInput = "";
+    /**
+     * Flag indicating whether the view should close immediately when the result slot is selected.
+     */
     boolean closeOnSelect;
+    /**
+     * Optional unary operator used to normalize or validate input prior to persistence.
+     */
     UnaryOperator<String> inputChangeHandler;
-    
+
     CustomAnvilInputConfig() {}
     
     /**

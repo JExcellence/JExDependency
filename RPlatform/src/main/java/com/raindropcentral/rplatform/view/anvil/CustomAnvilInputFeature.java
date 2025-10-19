@@ -27,11 +27,23 @@ import static com.raindropcentral.rplatform.view.anvil.CustomAnvilInput.defaultC
 import static java.util.Objects.requireNonNull;
 import static me.devnatan.inventoryframework.IFViewFrame.FRAME_REGISTERED;
 
+/**
+ * Inventory Framework feature that injects {@link CustomAnvilInput} support with improved result
+ * synchronization and translation-aware input handling.
+ *
+ * <p>The feature coordinates reflection hooks to patch the upstream NMS integration, mirroring the
+ * UI patterns used across {@code view} classes so title translations and head utilities remain
+ * consistent.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputConfig, Void, ViewFrame> {
-    
+
     private static final int INGREDIENT_SLOT = 0;
-    
+
     /**
      * Instance of the Anvil Input feature.
      *
@@ -39,9 +51,15 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
      */
     public static final Feature<CustomAnvilInputConfig, Void, ViewFrame> AnvilInput = new CustomAnvilInputFeature();
     
+    /**
+     * Configuration applied when the feature is installed, reused for each view intercept.
+     */
     private CustomAnvilInputConfig config;
+    /**
+     * Interceptor registered on the framework pipeline for lifecycle callbacks.
+     */
     private PipelineInterceptor frameInterceptor;
-    
+
     private static final Method GET_REGISTERED_VIEWS_METHOD;
     
     static {
@@ -59,15 +77,29 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
     public @NotNull String name() {
         return "Anvil Input";
     }
-    
+
     @Override
+    /**
+     * Installs the feature with the provided configuration and registers pipeline interceptors for
+     * open, close, and click phases.
+     *
+     * @param framework the view frame being configured
+     * @param configure unary operator used to customize the feature configuration
+     * @return {@code null} as this feature does not expose a runtime handle
+     */
     public @NotNull Void install(ViewFrame framework, UnaryOperator<CustomAnvilInputConfig> configure) {
         config = configure.apply(defaultConfig());
         framework.getPipeline().intercept(FRAME_REGISTERED, (frameInterceptor = createFrameworkInterceptor()));
         return null;
     }
-    
+
     @Override
+    /**
+     * Removes previously registered interceptors to avoid memory leaks when the feature is
+     * uninstalled.
+     *
+     * @param framework the view frame from which interceptors should be removed
+     */
     public void uninstall(ViewFrame framework) {
         framework.getPipeline().removeInterceptor(FRAME_REGISTERED, frameInterceptor);
     }
