@@ -37,7 +37,16 @@ public class RPlayer extends AbstractEntity {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Minimum permissible player name length after trimming whitespace. Mirrors the
+     * lower bound enforced by Mojang and guards against persisting empty values.
+     */
     private static final int MIN_NAME_LENGTH = 3;
+
+    /**
+     * Maximum permissible player name length after trimming whitespace. Aligns with
+     * Mojang username rules to keep the column constraint and validation consistent.
+     */
     private static final int MAX_NAME_LENGTH = 16;
     
     /**
@@ -151,9 +160,17 @@ public class RPlayer extends AbstractEntity {
         return this.playerStatistic != null && !this.playerStatistic.getStatistics().isEmpty();
     }
 
+    /**
+     * Normalizes and validates a player name before persistence. Names are trimmed
+     * and their length verified against the Mojang-aligned bounds.
+     *
+     * @param name user-provided player name to validate; must not be {@code null}
+     * @return trimmed player name suitable for persistence
+     * @throws IllegalArgumentException when the normalized name violates length constraints
+     */
     private static String validatePlayerName(final @NotNull String name) {
         Objects.requireNonNull(name, "playerName cannot be null");
-        
+
         final String trimmed = name.trim();
         if (trimmed.length() < MIN_NAME_LENGTH || trimmed.length() > MAX_NAME_LENGTH) {
             throw new IllegalArgumentException(
@@ -161,10 +178,16 @@ public class RPlayer extends AbstractEntity {
                     .formatted(MIN_NAME_LENGTH, MAX_NAME_LENGTH, trimmed.length())
             );
         }
-        
+
         return trimmed;
     }
 
+    /**
+     * Generates a concise debug description containing persistence identifiers and
+     * current state flags. Used in logs to rapidly assess entity synchronization.
+     *
+     * @return formatted string summarizing the entity state
+     */
     @Override
     public String toString() {
         return "RPlayer[id=%d, uuid=%s, name=%s, hasStats=%b]"
