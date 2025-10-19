@@ -13,33 +13,35 @@ import java.util.Map;
  * </p>
  *
  * @author ItsRainingHP
- * @version 1.0.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class AtomicEconomizerSection extends AConfigSection {
-	
-	/**
-	 * List of currencies to reduce cost of the machine.
-	 * The key is the currency type, and the value is the corresponding currency section.
-	 */
-	private Map<String, PluginCurrencySection> currencySections;
-	
-	/**
-	 * Constructs a new {@code AtomicEconomizerSection} with the specified evaluation environment.
-	 *
-	 * @param baseEnvironment the base evaluation environment for this configuration section
-	 */
-	public AtomicEconomizerSection(final EvaluationEnvironmentBuilder baseEnvironment) {
-		super(baseEnvironment);
-	}
 
-	/**
-	 * Gets the map of currency sections used to reduce the machine cost.
-	 *
-	 * @return a map where the key is the currency type and the value is the corresponding {@link PluginCurrencySection}
-	 */
-	public Map<String, PluginCurrencySection> getCurrencySections() {
-		return currencySections;
-	}
-	
+    /**
+     * Map of currency identifiers to the {@link PluginCurrencySection} configuration entries that
+     * reduce the forge machine cost.
+     */
+    private Map<String, PluginCurrencySection> currencySections;
+
+    /**
+     * Constructs a new {@code AtomicEconomizerSection} with the specified evaluation environment.
+     *
+     * @param baseEnvironment the base {@link EvaluationEnvironmentBuilder} to evaluate perk
+     *                        expressions against
+     */
+    public AtomicEconomizerSection(final EvaluationEnvironmentBuilder baseEnvironment) {
+        super(baseEnvironment);
+    }
+
+    /**
+     * Gets the map of currency sections used to reduce the machine cost.
+     *
+     * @return a map keyed by the currency type with values referencing the corresponding
+     *         {@link PluginCurrencySection}
+     */
+    public Map<String, PluginCurrencySection> getCurrencySections() {
+        return currencySections;
+    }
+
 }
