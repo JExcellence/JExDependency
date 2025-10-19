@@ -9,6 +9,18 @@ import java.util.Objects;
  * <p>The engine performs validation before applying any balance mutation so that higher level
  * services can rely on deterministic arithmetic without duplicating guard clauses.</p>
  *
+ * <p>All arithmetic assumes callers have normalized {@link BigDecimal} arguments to the scale
+ * declared by the active currency descriptor. The engine intentionally avoids calling
+ * {@code setScale} so that rounding modes remain a concern of the currency registry and its
+ * configuration. Consumers should therefore harmonize both input and output values with the
+ * currency metadata supplied by the surrounding service facade before persisting results.</p>
+ *
+ * <p>Balance deltas returned from these helpers are expected to flow immediately into the
+ * transaction logging utilities housed under {@code de.jexcellence.economy.transaction} so that the
+ * immutable audit log reflects the same arithmetic operators that modified the account. Downstream
+ * services should also surface human readable messages through {@code JExTranslate} bundles,
+ * attaching locale-aware formatting to the computed figures when notifying operators or players.</p>
+ *
  * @author JExcellence
  * @since 1.0.0
  * @version 1.0.1

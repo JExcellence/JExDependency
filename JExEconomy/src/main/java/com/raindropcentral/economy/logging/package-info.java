@@ -28,6 +28,12 @@
  *     that legacy listeners remain subscribed.</li>
  * </ul>
  *
+ * <p>Localization alignment is handled by attaching MiniMessage-compatible keys to each
+ * {@code AuditEvent}. Publishers should resolve message templates through {@code JExTranslate}
+ * bundles before surfacing notifications to operators or relaying them to the console package.
+ * Consistent key naming allows console workflows to reuse the same localized strings that reach
+ * in-game players, and fallbacks must be declared in the shared translation registry.</p>
+ *
  * @author JExcellence
  * @since 1.0.0
  * @version 1.0.1

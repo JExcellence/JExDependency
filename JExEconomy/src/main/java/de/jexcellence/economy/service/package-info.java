@@ -7,7 +7,11 @@
  * localization so upstream callers can focus on domain logic.</p>
  *
  * <p>Integrations are expected to rely on these services when issuing balance adjustments,
- * resolving ledger disputes, or broadcasting account updates across clustered servers.</p>
+ * resolving ledger disputes, or broadcasting account updates across clustered servers. Public
+ * entry points expose asynchronous variants that marshal work onto the dedicated economy executor
+ * while returning {@code CompletionStage}-based handles for plugins that need non-blocking
+ * notifications. Implementations surface MiniMessage-compatible localization keys alongside raw
+ * numeric data so upstream callers can format responses through {@code JExTranslate} bundles.</p>
  *
  * @author JExcellence
  * @since 1.0.0

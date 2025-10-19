@@ -20,6 +20,12 @@
  *     consistent transaction trails.</li>
  * </ul>
  *
+ * <p>The {@code de.jexcellence} namespace defines the public APIs and orchestration layers that
+ * downstream plugins consume, while {@code com.raindropcentral.economy} houses the engine and
+ * logging implementations. Integrators should depend on the API-facing packages and allow the
+ * service layer to broker calls into the implementation namespace, preserving the architecture's
+ * clear separation between contracts and execution details.</p>
+ *
  * @author JExcellence
  * @since 1.0.0
  * @version 1.0.1
