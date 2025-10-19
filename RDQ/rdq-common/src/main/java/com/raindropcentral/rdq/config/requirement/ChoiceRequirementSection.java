@@ -12,13 +12,15 @@ import java.util.Map;
 /**
  * Configuration section for choice requirements.
  * <p>
- * This section handles all configuration options specific to ChoiceRequirement,
- * including choice options, selection modes, and choice descriptions.
+ * This section handles configuration options specific to {@code ChoiceRequirement},
+ * including the available choice options, selection boundaries, and human readable
+ * descriptions that can be supplied in multiple field aliases for backwards
+ * compatibility.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class ChoiceRequirementSection extends AConfigSection {
@@ -85,31 +87,54 @@ public class ChoiceRequirementSection extends AConfigSection {
 	 */
 	private Boolean allowChoiceChange;
 	
-	/**
-	 * Constructs a new ChoiceRequirementSection.
-	 *
-	 * @param evaluationEnvironmentBuilder the evaluation environment builder
-	 */
-	public ChoiceRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
-		super(evaluationEnvironmentBuilder);
-	}
-	
-	// ~~~ GETTERS ~~~
-	
-	
-	public Boolean getAllowPartialProgress() {
-		return this.allowPartialProgress != null ? this.allowPartialProgress : true;
-	}
-	
-	public Boolean getMutuallyExclusive() {
-		return this.mutuallyExclusive != null ? this.mutuallyExclusive : false;
-	}
-	
-	public Boolean getAllowChoiceChange() {
-		return this.allowChoiceChange != null ? this.allowChoiceChange : true;
-	}
-	
-	/**
+        /**
+         * Constructs a new ChoiceRequirementSection bound to the provided evaluation
+         * environment builder so expressions inside choice requirements can be
+         * evaluated consistently.
+         *
+         * @param evaluationEnvironmentBuilder the evaluation environment builder used
+         *                                     for requirement evaluation
+         */
+        public ChoiceRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
+                super(evaluationEnvironmentBuilder);
+        }
+
+        // ~~~ GETTERS ~~~
+
+        /**
+         * Determines whether partial progress across multiple choice options is
+         * permitted.
+         *
+         * @return {@code true} when unspecified or explicitly enabled, otherwise
+         * {@code false}
+         */
+        public Boolean getAllowPartialProgress() {
+                return this.allowPartialProgress != null ? this.allowPartialProgress : true;
+        }
+
+        /**
+         * Determines if completing one choice prevents the remaining choices from being
+         * completed.
+         *
+         * @return {@code true} when mutually exclusive choices are configured,
+         * {@code false} otherwise
+         */
+        public Boolean getMutuallyExclusive() {
+                return this.mutuallyExclusive != null ? this.mutuallyExclusive : false;
+        }
+
+        /**
+         * Determines if the player can change their selection after making an initial
+         * choice.
+         *
+         * @return {@code true} when unspecified or explicitly enabled, otherwise
+         * {@code false}
+         */
+        public Boolean getAllowChoiceChange() {
+                return this.allowChoiceChange != null ? this.allowChoiceChange : true;
+        }
+
+        /**
 	 * Gets the description, trying multiple field names.
 	 *
 	 * @return the description
@@ -124,16 +149,17 @@ public class ChoiceRequirementSection extends AConfigSection {
 		return "";
 	}
 	
-	/**
-	 * Gets the complete list of choices from all sources.
-	 *
-	 * @return combined list of all choices
-	 */
-	public List<BaseRequirementSection> getChoices() {
-		List<BaseRequirementSection> choicesList = new ArrayList<>();
-		
-		// Add choices from choices list
-		if (this.choices != null) {
+        /**
+         * Aggregates the complete list of configured choices, merging list-based,
+         * alternate list, and map based representations into a single collection.
+         *
+         * @return combined list of all available choices
+         */
+        public List<BaseRequirementSection> getChoices() {
+                List<BaseRequirementSection> choicesList = new ArrayList<>();
+
+                // Add choices from choices list
+                if (this.choices != null) {
 			choicesList.addAll(this.choices);
 		}
 		
@@ -150,16 +176,17 @@ public class ChoiceRequirementSection extends AConfigSection {
 		return choicesList;
 	}
 	
-	/**
-	 * Gets the choice map.
-	 *
-	 * @return the map of choices
-	 */
-	public Map<String, BaseRequirementSection> getChoiceMap() {
-		return this.choiceMap != null ? this.choiceMap : new HashMap<>();
-	}
-	
-	/**
+        /**
+         * Obtains the map of named choices when provided in configuration.
+         *
+         * @return a mutable map containing named choices, or an empty map when not
+         * configured
+         */
+        public Map<String, BaseRequirementSection> getChoiceMap() {
+                return this.choiceMap != null ? this.choiceMap : new HashMap<>();
+        }
+
+        /**
 	 * Gets the minimum number of choices that must be completed.
 	 *
 	 * @return the minimum required, defaulting to 1
@@ -173,17 +200,17 @@ public class ChoiceRequirementSection extends AConfigSection {
 	 *
 	 * @return the maximum required, defaulting to all choices
 	 */
-	public Integer getMaximumRequired() {
-		if (this.maximumRequired != null) {
-			return this.maximumRequired;
-		}
-		
-		// If mutually exclusive, only one choice can be completed
-		if (getMutuallyExclusive()) {
-			return 1;
-		}
-		
-		// Otherwise, all choices can be completed
-		return getChoices().size();
-	}
+        public Integer getMaximumRequired() {
+                if (this.maximumRequired != null) {
+                        return this.maximumRequired;
+                }
+
+                // If mutually exclusive, only one choice can be completed
+                if (getMutuallyExclusive()) {
+                        return 1;
+                }
+
+                // Otherwise, all choices can be completed
+                return getChoices().size();
+        }
 }
