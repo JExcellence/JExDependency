@@ -19,6 +19,17 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Converter that serializes {@link PerkSection} instances into a JSON payload for persistence and
+ * reconstructs them when loading entities from the database.
+ *
+ * <p>The converter relies on {@link ConverterTool} to access the non-public properties that back
+ * the section implementations.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 @Converter(autoApply = true)
 public class PerkSectionConverter implements AttributeConverter<PerkSection, String> {
 	
@@ -26,23 +37,35 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
 	private static final ObjectMapper  OBJECT_MAPPER  = new ObjectMapper();
 	private static final ConverterTool CONVERTER_TOOL = new ConverterTool();
 	
-	@Override
-	public String convertToDatabaseColumn(final PerkSection perkSection) {
-		
-		return "";
-	}
-	
-	@Override
-	public PerkSection convertToEntityAttribute(
-		final @Nullable String jsonString
-	) {
-		
-		if (
-			jsonString == null || jsonString.trim().isEmpty()
-		)
-			return new PerkSection(new EvaluationEnvironmentBuilder());
-		
-		try {
+        /**
+         * Converts the provided {@link PerkSection} into a database friendly representation.
+         *
+         * @param perkSection the section being persisted
+         * @return JSON content suitable for storage (currently unimplemented)
+         */
+        @Override
+        public String convertToDatabaseColumn(final PerkSection perkSection) {
+
+                return "";
+        }
+
+        /**
+         * Restores a {@link PerkSection} from the JSON payload stored in the database.
+         *
+         * @param jsonString the JSON value retrieved from persistence, may be {@code null}
+         * @return the reconstructed {@link PerkSection}
+         */
+        @Override
+        public PerkSection convertToEntityAttribute(
+                final @Nullable String jsonString
+        ) {
+
+                if (
+                        jsonString == null || jsonString.trim().isEmpty()
+                )
+                        return new PerkSection(new EvaluationEnvironmentBuilder());
+
+                try {
 			final JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
 			final PerkSectionData data = OBJECT_MAPPER.treeToValue(
 				jsonNode,
@@ -127,27 +150,46 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
 				"Failed to deserialize PerkSection",
 				exception
 			);
-		}
-	}
-	
-	private static class PerkSectionData {
-		
-		public IconSection icon;
-		public PerkSettingsSection perkSettingsSection;
-		public PermissionCooldownSection permissionCooldownSection;
-		public PermissionAmplifierSection permissionAmplifierSection;
-		public Integer                    cooldown;
-		public Map<String, PluginCurrencySection> costSection;
-		public Map<String, RequirementSection>    requirementSection;
-		public Map<String, RewardSection>         rewardSection;
-		public Boolean                            requiresOwnedArea;
-		
-		public PerkSectionData() {}
-		
-		public PerkSectionData(
-			final @Nullable IconSection icon,
-			final @Nullable PerkSettingsSection perkSettingsSection,
-			final @Nullable PermissionCooldownSection permissionCooldownSection,
+                }
+        }
+
+        /**
+         * Jackson mapped representation of the {@link PerkSection} internals.
+         */
+        private static class PerkSectionData {
+
+                public IconSection icon;
+                public PerkSettingsSection perkSettingsSection;
+                public PermissionCooldownSection permissionCooldownSection;
+                public PermissionAmplifierSection permissionAmplifierSection;
+                public Integer                    cooldown;
+                public Map<String, PluginCurrencySection> costSection;
+                public Map<String, RequirementSection>    requirementSection;
+                public Map<String, RewardSection>         rewardSection;
+                public Boolean                            requiresOwnedArea;
+
+                /**
+                 * Creates an empty data container for Jackson.
+                 */
+                public PerkSectionData() {}
+
+                /**
+                 * Creates a populated data container for JSON mapping.
+                 *
+                 * @param icon the perk icon information
+                 * @param perkSettingsSection settings applied to the perk
+                 * @param permissionCooldownSection cooldown configuration for permissions
+                 * @param permissionAmplifierSection amplifier configuration for permissions
+                 * @param cooldown the perk cooldown value
+                 * @param costSection currency costs keyed by edition
+                 * @param requirementSection requirement configuration keyed by identifier
+                 * @param rewardSection reward configuration keyed by identifier
+                 * @param requiresOwnedArea whether the perk requires an owned area
+                 */
+                public PerkSectionData(
+                        final @Nullable IconSection icon,
+                        final @Nullable PerkSettingsSection perkSettingsSection,
+                        final @Nullable PermissionCooldownSection permissionCooldownSection,
 			final @Nullable PermissionAmplifierSection permissionAmplifierSection,
 			final @Nullable Integer cooldown,
 			final @Nullable Map<String, PluginCurrencySection> costSection,
