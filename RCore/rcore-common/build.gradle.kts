@@ -40,6 +40,10 @@ tasks.withType<Jar>().configureEach {
     }
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 tasks.processResources {
     exclude("plugin.yml", "paper-plugin.yml")
 }
