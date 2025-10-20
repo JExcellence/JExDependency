@@ -12,14 +12,35 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.UnaryOperator;
 
+/**
+ * Inventory Framework state wrapper that exposes a translation-friendly anvil input modifier while
+ * retaining control over lifecycle behaviour.
+ *
+ * <p>The implementation mirrors the UI conventions established in {@code view} classes, allowing
+ * localized prompts and head utilities to co-exist with custom NMS handling.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public final class CustomAnvilInput extends BaseMutableState<String> implements ViewConfig.Modifier {
-    
+
+    /**
+     * Shared configuration instance used when callers rely on default behaviour.
+     */
     private static final CustomAnvilInputConfig DEFAULT_CONFIG = new CustomAnvilInputConfig();
-    
+
     CustomAnvilInput(long id, StateValueFactory valueFactory) {
         super(id, valueFactory);
     }
     
+    /**
+     * Forces the view type to {@link ViewType#ANVIL} ensuring the modifier pairs with anvil
+     * containers.
+     *
+     * @param config the view configuration builder being modified
+     * @param context the context associated with the configuration phase
+     */
     @Override
     public void apply(@NotNull ViewConfigBuilder config, @NotNull IFContext context) {
         config.type(ViewType.ANVIL);

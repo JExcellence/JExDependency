@@ -42,20 +42,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * RemappingDependencyManager:
- * - Paper loader mode: constructed reflectively via (Path) and used through relocate(String,String) and remap(Path,Path).
- * - Legacy JEDependency mode: constructed via (JavaPlugin, Class) or no-arg, then initialize/addDependencies/loadAll manage
- *   download, remapping and classpath injection.
- *
- * Implementation details:
- * - Uses ASM to remap class internal names, descriptors and package names based on longest-prefix package relocations.
- * - Remaps non-class resources by relocating their entry paths if they sit under relocated packages.
- * - Caches remapped outputs if up-to-date relative to inputs.
- *
- * Requirements:
- * - Add and shade ASM at build time:
- *   org.ow2.asm:asm:9.7.1
- *   org.ow2.asm:asm-commons:9.7.1
+ * Coordinates dependency downloading, package remapping and classpath injection when remapping support is available.
+ * The manager is constructed reflectively by both the Paper plugin loader and the legacy {@link
+ * de.jexcellence.dependency.JEDependency} API. It collects dependency coordinates, applies explicit or automatically
+ * detected relocations using {@link PackageRemapper} and injects the resulting jars into the target class loader.
  */
 @SuppressWarnings("unused")
 public class RemappingDependencyManager {
@@ -98,7 +88,9 @@ public class RemappingDependencyManager {
     // ----------------- Constructors -----------------
 
     /**
-     * Constructor used by PaperPluginLoader via reflection.
+     * Constructor used by {@link de.jexcellence.dependency.loader.PaperPluginLoader} via reflection.
+     *
+     * @param dataDirectory plugin data directory supplied by the Paper loader context
      */
     public RemappingDependencyManager(@NotNull final Path dataDirectory) {
         this.plugin = null;
@@ -112,7 +104,10 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Constructor used by legacy JEDependency via reflection, preferred when available.
+     * Constructor used by the legacy {@link de.jexcellence.dependency.JEDependency} API via reflection.
+     *
+     * @param plugin      owning plugin providing the data directory and logger context
+     * @param anchorClass class used to discover YAML descriptors and determine the injection class loader
      */
     public RemappingDependencyManager(
             @NotNull final JavaPlugin plugin,
@@ -128,7 +123,8 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Fallback no-arg constructor for compatibility. Uses working directory.
+     * Fallback no-arg constructor for compatibility that defaults to the working directory. Mainly intended for
+     * command-line usage or testing scenarios.
      */
     public RemappingDependencyManager() {
         this.plugin = null;
@@ -144,8 +140,11 @@ public class RemappingDependencyManager {
     // ----------------- Public API: relocation and remapping -----------------
 
     /**
-     * Register a package relocation from 'fromPackage' to 'toPackage'.
-     * Both must be dot-notation package names.
+     * Registers a package relocation mapping. Package names are normalised and restricted roots (e.g. {@code java}) are
+     * ignored to avoid interfering with core classes.
+     *
+     * @param fromPackage original package name in dot notation
+     * @param toPackage   destination package name in dot notation
      */
     public void relocate(@NotNull final String fromPackage, @NotNull final String toPackage) {
         final String from = normalizePackage(fromPackage);
@@ -167,7 +166,15 @@ public class RemappingDependencyManager {
         LOGGER.fine(() -> "Registered relocation: " + from + " => " + to);
     }
 
-    // Replace the existing remap method with this implementation
+    /**
+     * Remaps the specified jar into the configured remapped directory using registered relocations. When no relocations
+     * are registered the jar is copied verbatim while stripping invalid signature files.
+     *
+     * @param inputJar  original jar file
+     * @param outputJar destination jar that will be overwritten
+     *
+     * @throws IOException if remapping fails or produces invalid output
+     */
     public void remap(@NotNull final Path inputJar, @NotNull final Path outputJar) throws IOException {
         Objects.requireNonNull(inputJar, "inputJar");
         Objects.requireNonNull(outputJar, "outputJar");
@@ -201,7 +208,10 @@ public class RemappingDependencyManager {
     // ----------------- Legacy JEDependency-compatible lifecycle -----------------
 
     /**
-     * Preferred entrypoint in legacy mode. Loads YAML + additional dependencies, remaps and injects.
+     * Legacy entry point that downloads declared dependencies, applies relocations when configured and injects them
+     * into the plugin's class loader. The method is synchronous and logs failures rather than propagating them.
+     *
+     * @param additionalDependencies optional coordinates ({@code group:artifact:version[:classifier]}) appended to the YAML list
      */
     public void initialize(@Nullable final String[] additionalDependencies) {
         final Class<?> deencapClass = anchorClass != null ? anchorClass : getClass();
@@ -228,7 +238,9 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Alternative path used by legacy fallback; only registers additional dependencies.
+     * Registers additional dependency coordinates provided at runtime. Invalid coordinates are logged and skipped.
+     *
+     * @param additionalDependencies coordinates to add ({@code group:artifact:version[:classifier]})
      */
     public void addDependencies(@Nullable final String[] additionalDependencies) {
         if (additionalDependencies == null || additionalDependencies.length == 0) {
@@ -246,7 +258,10 @@ public class RemappingDependencyManager {
     }
 
     /**
-     * Alternative path used by legacy fallback; performs download/remap/injection with provided classloader.
+     * Performs downloading, remapping and injection using the supplied class loader rather than the anchor class's
+     * loader. Intended for legacy reflective invocation by {@link de.jexcellence.dependency.JEDependency}.
+     *
+     * @param classLoader class loader that should receive injected jars
      */
     public void loadAll(@NotNull final ClassLoader classLoader) {
         try {
@@ -608,6 +623,11 @@ public class RemappingDependencyManager {
 
     // ----------------- Debug helper -----------------
 
+    /**
+     * Provides a diagnostic summary of the manager's state including directories, dependency and relocation counts.
+     *
+     * @return formatted debug string useful for logging
+     */
     @SuppressWarnings("unused")
     public String debugInfo() {
         final String base = "dataDir=" + dataDirectory

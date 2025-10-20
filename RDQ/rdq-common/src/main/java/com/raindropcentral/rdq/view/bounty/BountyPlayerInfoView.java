@@ -41,10 +41,18 @@ public final class BountyPlayerInfoView extends BaseView {
     private final State<RBounty> bounty = initialState("bounty");
     private final State<OfflinePlayer> target = initialState("target");
 
+    /**
+     * Creates a new instance that links back to the {@link BountyMainView} when navigating away.
+     */
     public BountyPlayerInfoView() {
         super(BountyMainView.class);
     }
 
+    /**
+     * Builds the static layout used by the inventory framework to position components in the view.
+     *
+     * @return the array representing the rows of the inventory layout
+     */
     @Override
     protected String[] getLayout() {
         return new String[]{
@@ -55,11 +63,23 @@ public final class BountyPlayerInfoView extends BaseView {
         };
     }
 
+    /**
+     * Defines the amount of rows used for the inventory interface.
+     *
+     * @return the total number of rows rendered for the view
+     */
     @Override
     protected int getSize() {
         return 4;
     }
 
+    /**
+     * Provides placeholder values that will be interpolated into the localized title string when
+     * the view opens.
+     *
+     * @param open the context supplied by the inventory framework during the open lifecycle phase
+     * @return a map containing placeholder keys paired with their resolved values
+     */
     @Override
     protected Map<String, Object> getTitlePlaceholders(final @NotNull OpenContext open) {
         return Map.of(
@@ -67,11 +87,22 @@ public final class BountyPlayerInfoView extends BaseView {
         );
     }
 
+    /**
+     * Supplies the translation key used for routing to the proper title and lore resources.
+     *
+     * @return the namespaced key identifying this view
+     */
     @Override
     protected String getKey() {
         return "bounty.player_info";
     }
 
+    /**
+     * Renders the primary components when the inventory is first created.
+     *
+     * @param render the render context representing the current inventory frame
+     * @param player the player viewing the bounty information
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext render,
@@ -82,6 +113,12 @@ public final class BountyPlayerInfoView extends BaseView {
         this.renderDeleteButton(render, player);
     }
 
+    /**
+     * Places the target player's head into the layout and names it according to localization rules.
+     *
+     * @param render the render context supplying state access
+     * @param player the viewer so locale-aware translations can be resolved
+     */
     private void renderTargetHead(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -101,6 +138,12 @@ public final class BountyPlayerInfoView extends BaseView {
         );
     }
 
+    /**
+     * Adds a button that summarizes the bounty rewards and links to the detailed reward view.
+     *
+     * @param render the render context supplying the current bounty state
+     * @param player the player opening the interface for locale-sensitive messaging
+     */
     private void renderRewardsButton(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -153,6 +196,12 @@ public final class BountyPlayerInfoView extends BaseView {
                 );
     }
 
+    /**
+     * Renders an operator-only delete button that routes to a confirmation dialog before removal.
+     *
+     * @param render the render context rendering the delete action
+     * @param player the player using the interface to determine locale and permissions
+     */
     private void renderDeleteButton(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -187,6 +236,13 @@ public final class BountyPlayerInfoView extends BaseView {
                 );
     }
 
+    /**
+     * Handles the resume lifecycle after returning from the confirmation view, deleting the bounty
+     * when the action is approved and notifying the player of the outcome.
+     *
+     * @param origin the context that triggered the resume, providing player access
+     * @param target the context containing the confirmation result data
+     */
     @Override
     public void onResume(
             final @NotNull Context origin,

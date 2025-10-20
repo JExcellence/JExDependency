@@ -21,13 +21,13 @@ import java.util.logging.Logger;
 /**
  * Represents a reward that grants in-game currency to a player.
  * <p>
- * This reward integrates with economy plugins to deposit currency into a player's account.
- * Supports both synchronous and asynchronous operations.
+ * This reward integrates with economy plugins to deposit currency into a player's account and
+ * supports both synchronous and asynchronous operations depending on the consumer's needs.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class CurrencyReward extends AbstractReward {
 
@@ -47,9 +47,10 @@ public final class CurrencyReward extends AbstractReward {
     private final long timeoutMillis;
 
     /**
-     * Constructs a new {@code CurrencyReward} with the specified amount (default currency).
+     * Constructs a new {@code CurrencyReward} that grants the given amount using the default
+     * currency identifier and timeout configuration.
      *
-     * @param amount The amount of currency to reward.
+     * @param amount the amount of currency to reward; must be positive
      */
     public CurrencyReward(final double amount) {
         this(amount, "VAULT", null, DEFAULT_TIMEOUT_MS);
@@ -58,10 +59,14 @@ public final class CurrencyReward extends AbstractReward {
     /**
      * Constructs a new {@code CurrencyReward} with full configuration.
      *
-     * @param amount              The amount of currency to reward.
-     * @param currencyIdentifier  The identifier of the currency.
-     * @param currencyPlugin      The currency plugin name (null for default).
-     * @param timeoutMillis       Timeout for async operations.
+     * @param amount             the amount of currency to reward; must be positive
+     * @param currencyIdentifier the identifier of the currency to resolve, falling back to
+     *                           {@code VAULT} when {@code null}
+     * @param currencyPlugin     the currency plugin name or {@code null} to use the default
+     *                           adapter resolution
+     * @param timeoutMillis      the timeout in milliseconds to wait for asynchronous operations;
+     *                           {@link #DEFAULT_TIMEOUT_MS} is used when {@code null} or
+     *                           non-positive
      */
     @JsonCreator
     public CurrencyReward(
@@ -82,6 +87,12 @@ public final class CurrencyReward extends AbstractReward {
         this.timeoutMillis = timeoutMillis != null && timeoutMillis > 0 ? timeoutMillis : DEFAULT_TIMEOUT_MS;
     }
 
+    /**
+     * Applies the reward synchronously by delegating to {@link #applyAsync(Player)} and blocking
+     * until completion.
+     *
+     * @param player the player receiving the reward
+     */
     @Override
     public void apply(final @NotNull Player player) {
         try {
@@ -91,6 +102,13 @@ public final class CurrencyReward extends AbstractReward {
         }
     }
 
+    /**
+     * Applies the reward asynchronously by depositing the configured currency amount into the
+     * provided player's account.
+     *
+     * @param player the player receiving the reward
+     * @return a future that completes when the deposit operation finishes or a timeout occurs
+     */
     @NotNull
     public CompletableFuture<Void> applyAsync(final @NotNull Player player) {
         final CurrencyAdapter adapter = this.getCurrencyAdapter();
@@ -120,30 +138,61 @@ public final class CurrencyReward extends AbstractReward {
                 });
     }
 
+    /**
+     * Provides the translation key describing this reward for localization purposes.
+     *
+     * @return the description translation key
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "reward.currency";
     }
 
+    /**
+     * Retrieves the configured amount of currency granted by this reward.
+     *
+     * @return the currency amount
+     */
     public double getAmount() {
         return this.amount;
     }
 
+    /**
+     * Obtains the identifier used to resolve the target currency.
+     *
+     * @return the configured currency identifier
+     */
     @NotNull
     public String getCurrencyIdentifier() {
         return this.currencyIdentifier;
     }
 
+    /**
+     * Provides the explicit currency plugin requested for adapter resolution.
+     *
+     * @return the plugin name or {@code null} when the default resolution should be used
+     */
     @Nullable
     public String getCurrencyPlugin() {
         return this.currencyPlugin;
     }
 
+    /**
+     * Returns the maximum duration to wait for asynchronous operations to finish before a timeout
+     * is triggered.
+     *
+     * @return the timeout in milliseconds
+     */
     public long getTimeoutMillis() {
         return this.timeoutMillis;
     }
 
+    /**
+     * Resolves the {@link CurrencyAdapter} to use for deposit operations.
+     *
+     * @return the currency adapter or {@code null} when unavailable
+     */
     @Nullable
     private CurrencyAdapter getCurrencyAdapter() {
         if (this.currencyPlugin == null || "jecurrency".equalsIgnoreCase(this.currencyPlugin)) {
@@ -155,6 +204,11 @@ public final class CurrencyReward extends AbstractReward {
         return null;
     }
 
+    /**
+     * Resolves the {@link Currency} definition associated with {@link #currencyIdentifier}.
+     *
+     * @return the resolved currency or {@code null} when it cannot be located
+     */
     @Nullable
     private Currency resolveCurrency() {
         try {

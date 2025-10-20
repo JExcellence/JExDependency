@@ -9,15 +9,42 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
+/**
+ * Fluent builder contract for skull metadata providing player and custom texture entry points.
+ *
+ * @param <B> concrete builder type returned from fluent calls
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public interface IHeadBuilder<B extends IHeadBuilder<B>> extends IUnifiedItemBuilder<SkullMeta, B> {
-	
-	B setPlayerHead(@Nullable Player player);
-	
-	B setPlayerHead(@Nullable OfflinePlayer offlinePlayer);
-	
-	B setCustomTexture(
-		@NotNull UUID uuid,
-		@NotNull String textures
-	);
-	
+
+        /**
+         * Applies the head texture from an online player reference.
+         *
+         * @param player player whose profile should supply the texture
+         * @return fluent builder reference for chaining
+         */
+        B setPlayerHead(@Nullable Player player);
+
+        /**
+         * Applies the head texture from an offline player reference.
+         *
+         * @param offlinePlayer offline player whose profile should supply the texture
+         * @return fluent builder reference for chaining
+         */
+        B setPlayerHead(@Nullable OfflinePlayer offlinePlayer);
+
+        /**
+         * Applies a custom base64 encoded texture for the provided synthetic profile UUID.
+         *
+         * @param uuid profile identifier associated with the texture data
+         * @param textures base64 encoded texture payload
+         * @return fluent builder reference for chaining
+         */
+        B setCustomTexture(
+                @NotNull UUID uuid,
+                @NotNull String textures
+        );
+
 }

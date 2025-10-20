@@ -9,7 +9,7 @@ import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
-import com.raindropcentral.rplatform.translation.TranslationManager;
+import com.raindropcentral.rplatform.localization.TranslationManager;
 import de.jexcellence.evaluable.CommandUpdater;
 import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
@@ -21,24 +21,99 @@ import java.io.File;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 
+/**
+ * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle
+ * components, manages async initialization, and exposes integrations such as metrics,
+ * placeholders, and database resources.
+ *
+ * <p>The class coordinates scheduler selection, service registry creation, and platform API
+ * detection during construction. {@link #initialize()} must be invoked to asynchronously prepare the
+ * translation manager, command updater, and database resources before any dependent feature is
+ * consumed.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class RPlatform {
 
+    /**
+     * Hosting {@link JavaPlugin} providing lifecycle hooks, configuration paths, and scheduler
+     * access for the platform.
+     */
     private final JavaPlugin plugin;
+
+    /**
+     * Platform type resolved from the running environment used to tailor integrations such as
+     * scheduler adapters and metrics exporters.
+     */
     private final PlatformType platformType;
+
+    /**
+     * Abstraction over Bukkit/Folia APIs enabling shared command registration, task scheduling, and
+     * shutdown behaviour.
+     */
     private final PlatformAPI platformAPI;
+
+    /**
+     * Scheduler adapter that runs asynchronous tasks using an implementation suitable for the
+     * detected {@link PlatformType}.
+     */
     private final ISchedulerAdapter scheduler;
+
+    /**
+     * Registry tracking singleton services that the platform exposes to downstream modules.
+     */
     private final ServiceRegistry serviceRegistry;
+
+    /**
+     * Platform-aware logger emitting lifecycle and diagnostic messages for both initialization and
+     * shutdown sequences.
+     */
     private final PlatformLogger logger;
-    
+
+    /**
+     * Handles command updates for JEx command framework integrations once initialization completes.
+     */
     private CommandUpdater commandUpdater;
+
+    /**
+     * Provides translation bundles and localization support after asynchronous initialization.
+     */
     private TranslationManager translationManager;
+
+    /**
+     * Lazily created {@link EntityManagerFactory} used for persistence across platform modules.
+     */
     private EntityManagerFactory entityManagerFactory;
+
+    /**
+     * Metrics manager created when a valid bStats service identifier is supplied.
+     */
     private MetricsManager metricsManager;
+
+    /**
+     * Wrapper around PlaceholderAPI for registering and unregistering platform placeholders.
+     */
     private PlaceholderManager placeholderManager;
-    
+
+    /**
+     * Flag indicating whether premium-only resources were detected on the classpath.
+     */
     private boolean premiumVersion;
+
+    /**
+     * Flag indicating whether the asynchronous initialization routine completed successfully.
+     */
     private boolean initialized;
 
+    /**
+     * Creates a new platform orchestrator bound to the provided plugin and resolves the environment
+     * specific adapters required for initialization.
+     *
+     * @param plugin plugin instance that owns the platform runtime and supplies configuration paths
+     *               alongside Bukkit lifecycle callbacks
+     */
     public RPlatform(final @NotNull JavaPlugin plugin) {
         this.plugin = plugin;
         this.platformType = PlatformAPIFactory.detectPlatformType();
@@ -50,6 +125,13 @@ public class RPlatform {
         this.initialized = false;
     }
 
+    /**
+     * Asynchronously initializes translation, command, and database resources required by the
+     * platform. Subsequent invocations no-op once initialization finishes.
+     *
+     * @return a future that completes when asynchronous resource setup finishes or immediately when
+     *         initialization has already been performed
+     */
     public @NotNull CompletableFuture<Void> initialize() {
         if (initialized) {
             return CompletableFuture.completedFuture(null);
@@ -70,6 +152,13 @@ public class RPlatform {
         }, scheduler::runAsync);
     }
 
+    /**
+     * Initializes metrics collection through the {@link MetricsManager} when provided a valid
+     * service identifier.
+     *
+     * @param serviceId bStats service identifier; values less than or equal to zero are ignored to
+     *                  avoid erroneous registrations
+     */
     public void initializeMetrics(final int serviceId) {
         if (serviceId > 0 && metricsManager == null) {
             metricsManager = new MetricsManager(plugin, serviceId, platformType);
@@ -77,6 +166,12 @@ public class RPlatform {
         }
     }
 
+    /**
+     * Sets up PlaceholderAPI integration by registering the platform's placeholders under the given
+     * identifier. Subsequent calls are ignored once registration occurs.
+     *
+     * @param identifier PlaceholderAPI identifier namespace used when registering expansions
+     */
     public void initializePlaceholders(final @NotNull String identifier) {
         if (placeholderManager == null) {
             placeholderManager = new PlaceholderManager(plugin, identifier);
@@ -85,6 +180,13 @@ public class RPlatform {
         }
     }
 
+    /**
+     * Detects whether the premium platform build is available by checking for a marker resource on
+     * the supplied class loader.
+     *
+     * @param resourceClass class whose class loader should contain the premium marker resource
+     * @param resourcePath  path to the premium marker resource to verify
+     */
     public void detectPremiumVersion(final @NotNull Class<?> resourceClass, final @NotNull String resourcePath) {
         if (resourceClass.getClassLoader().getResource(resourcePath) != null) {
             premiumVersion = true;
@@ -92,67 +194,129 @@ public class RPlatform {
         }
     }
 
+    /**
+     * Shuts down platform integrations by unregistering placeholders, closing API adapters, and
+     * releasing logging resources.
+     */
     public void shutdown() {
         logger.info("Shutting down RPlatform");
-        
+
         if (placeholderManager != null) {
             placeholderManager.unregister();
         }
-        
+
         platformAPI.close();
         logger.close();
     }
 
+    /**
+     * Provides the plugin that owns this platform runtime.
+     *
+     * @return the hosting plugin instance
+     */
     public @NotNull JavaPlugin getPlugin() {
         return plugin;
     }
 
+    /**
+     * Retrieves the detected platform type for the running server implementation.
+     *
+     * @return detected platform type
+     */
     public @NotNull PlatformType getPlatformType() {
         return platformType;
     }
 
+    /**
+     * Exposes the platform API wrapper used for command and scheduler interactions.
+     *
+     * @return platform API abstraction instance
+     */
     public @NotNull PlatformAPI getPlatformAPI() {
         return platformAPI;
     }
 
+    /**
+     * Returns the scheduler adapter responsible for executing asynchronous workloads.
+     *
+     * @return scheduler adapter resolved for the detected platform type
+     */
     public @NotNull ISchedulerAdapter getScheduler() {
         return scheduler;
     }
 
+    /**
+     * Supplies the service registry for registering and retrieving shared platform services.
+     *
+     * @return mutable registry that downstream components can use to store services
+     */
     public @NotNull ServiceRegistry getServiceRegistry() {
         return serviceRegistry;
     }
 
+    /**
+     * Provides the platform-aware logger for emitting diagnostic messages.
+     *
+     * @return logger backing initialization and shutdown logging
+     */
     public @NotNull PlatformLogger getLogger() {
         return logger;
     }
 
+    /**
+     * Gives access to the command updater once initialization completes.
+     *
+     * @return command updater used for managing JEx command refreshes
+     */
     public @NotNull CommandUpdater getCommandUpdater() {
         return commandUpdater;
     }
 
+    /**
+     * Retrieves the translation manager created during initialization.
+     *
+     * @return translation manager enabling localized messaging
+     */
     public @NotNull TranslationManager getTranslationManager() {
         return translationManager;
     }
 
+    /**
+     * Indicates whether a premium build marker was found on the classpath.
+     *
+     * @return {@code true} when premium resources are present; {@code false} otherwise
+     */
     public boolean isPremiumVersion() {
         return premiumVersion;
     }
 
+    /**
+     * Reports whether the asynchronous initialization routine has completed.
+     *
+     * @return {@code true} if initialization succeeded previously; {@code false} when initialization
+     *         has not yet run
+     */
     public boolean isInitialized() {
         return initialized;
     }
 
-    public EntityManagerFactory getEntityManagerFactory() {
+    /**
+     * Provides access to the lazily created {@link EntityManagerFactory} instance.
+     *
+     * @return entity manager factory used for persistence interactions, or {@code null} when
+     *         initialization has not provisioned the resource
+     */
+    public @Nullable EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
 
     /**
-     * Initializes database resources for the platform.
-     * <p>
-     * Creates the database folder and copies the Hibernate properties file if necessary.
-     * Initializes the JPA {@link EntityManagerFactory} and logs the result.
-     * </p>
+     * Creates the database directory, copies the bundled Hibernate configuration, and builds the
+     * {@link EntityManagerFactory} used by platform modules.
+     *
+     * <p>The method writes files within the plugin data folder and may throw unchecked exceptions
+     * propagated from filesystem operations or {@link JEHibernate} construction. Failures are logged
+     * via the {@link CentralLogger} for visibility.</p>
      */
     private void initializeDatabaseResources() {
 

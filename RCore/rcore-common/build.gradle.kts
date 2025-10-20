@@ -40,6 +40,10 @@ tasks.withType<Jar>().configureEach {
     }
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 tasks.processResources {
     exclude("plugin.yml", "paper-plugin.yml")
 }
@@ -83,6 +87,16 @@ dependencies {
 
     // Example of plugin-provided API used by listeners
     compileOnly(libs.jecurrency)
+
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 publishing {

@@ -15,6 +15,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+/**
+ * Coordinates the creation and synchronization of rank entities, trees, and their relationships
+ * against configuration-driven definitions.
+ *
+ * <p>This service is invoked during rank system initialization and ensures that default ranks,
+ * rank trees, and individual ranks are present in persistent storage. It also maintains
+ * connections between these entities and resolves any requirement prerequisites before the
+ * entities become available to gameplay systems.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 final class RankEntityService {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RankEntityService.class.getName());
@@ -22,11 +35,24 @@ final class RankEntityService {
     private final @NotNull RDQ rdq;
     private final @NotNull RequirementFactory requirementFactory;
 
+    /**
+     * Creates a new service using the provided RDQ plugin instance.
+     *
+     * @param rdq the RDQ plugin dependency that exposes repositories and configuration
+     */
     RankEntityService(final @NotNull RDQ rdq) {
         this.rdq = rdq;
         this.requirementFactory = new RequirementFactory(rdq);
     }
 
+    /**
+     * Ensures the configured default rank exists within persistence and associates it with the
+     * provided state.
+     *
+     * @param state    the aggregated rank system state awaiting mutation
+     * @param executor the executor used to perform the persistence operations asynchronously
+     * @return a future that completes once the default rank has been validated or created
+     */
     CompletableFuture<Void> createDefaultRankAsync(final @NotNull RankSystemState state,
                                                    final @NotNull Executor executor) {
         return CompletableFuture.runAsync(() -> {
@@ -60,6 +86,13 @@ final class RankEntityService {
         }, executor);
     }
 
+    /**
+     * Synchronizes rank tree definitions from configuration into the backing repository.
+     *
+     * @param state    the aggregated rank system state containing configured trees
+     * @param executor the executor used for asynchronous persistence work
+     * @return a future that resolves after rank trees have been created or updated
+     */
     CompletableFuture<Void> createRankTreesAsync(final @NotNull RankSystemState state,
                                                  final @NotNull Executor executor) {
         return CompletableFuture.runAsync(() -> {
@@ -97,6 +130,14 @@ final class RankEntityService {
         }, executor);
     }
 
+    /**
+     * Creates or updates rank entities for the provided configuration payload and binds them to
+     * the correct rank trees.
+     *
+     * @param state    the aggregated rank system state containing configured ranks
+     * @param executor the executor used for asynchronous persistence work
+     * @return a future that resolves when all rank entities have been synchronized
+     */
     CompletableFuture<Void> createRanksAsync(final @NotNull RankSystemState state,
                                              final @NotNull Executor executor) {
         return CompletableFuture.runAsync(() -> {
@@ -157,6 +198,13 @@ final class RankEntityService {
         }, executor);
     }
 
+    /**
+     * Aligns the connections between ranks and rank trees after all entities have been created.
+     *
+     * @param state    the aggregated rank system state containing the source configuration
+     * @param executor the executor used to update persistence asynchronously
+     * @return a future that completes when rank and tree connections are synchronized
+     */
     CompletableFuture<Void> establishConnectionsAsync(final @NotNull RankSystemState state,
                                                       final @NotNull Executor executor) {
         return CompletableFuture.runAsync(() -> {
@@ -170,6 +218,13 @@ final class RankEntityService {
         }, executor);
     }
 
+    /**
+     * Ensures a rank tree configuration maintains consistency between prerequisites and minimum
+     * completion requirements.
+     *
+     * @param section the configuration section describing the tree
+     * @return the updated configuration section with consistent prerequisite data
+     */
     private RankTreeSection ensureTreePrereqConsistency(final RankTreeSection section) {
         if (section.getMinimumRankTreesToBeDone() > 0 && section.getPrerequisiteRankTrees().isEmpty()) {
             section.setMinimumRankTreesToBeDone(0);
@@ -178,6 +233,13 @@ final class RankEntityService {
         return section;
     }
 
+    /**
+     * Parses requirements from configuration, persists any missing dependencies, and ensures the
+     * rank entity references the refreshed set.
+     *
+     * @param rank the rank entity whose upgrade requirements should be replaced
+     * @param cfg  the configuration describing the requirements
+     */
     private void updateRankRequirements(final RRank rank, final RankSection cfg) {
         try {
             cleanupProgress(rank);
@@ -226,6 +288,12 @@ final class RankEntityService {
         }
     }
 
+    /**
+     * Removes orphaned player upgrade progress that references requirements slated for
+     * replacement.
+     *
+     * @param rank the rank whose associated upgrade progress should be cleaned up
+     */
     private void cleanupProgress(final RRank rank) {
         try {
             final Set<RRankUpgradeRequirement> upgradeRequirements = new HashSet<>(rank.getUpgradeRequirements());
@@ -245,6 +313,12 @@ final class RankEntityService {
         }
     }
 
+    /**
+     * Updates the previous and next rank relationships for all ranks in the specified tree.
+     *
+     * @param treeId the tree identifier to use when looking up ranks
+     * @param ranks  the configured ranks mapped by their identifiers
+     */
     private void updateRankConnections(final String treeId, final Map<String, RankSection> ranks) {
         try {
             final Set<String> valid = ranks.keySet();
@@ -270,6 +344,12 @@ final class RankEntityService {
         }
     }
 
+    /**
+     * Updates prerequisite, unlocked, and connected tree relationships for the referenced tree.
+     *
+     * @param treeId the identifier for the tree being updated
+     * @param cfg    the configuration that defines the tree connections
+     */
     private void updateRankTreeConnections(final String treeId, final RankTreeSection cfg) {
         try {
             if (cfg == null) return;

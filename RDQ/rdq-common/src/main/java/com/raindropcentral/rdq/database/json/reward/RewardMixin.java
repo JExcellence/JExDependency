@@ -5,26 +5,28 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.raindropcentral.rdq.reward.*;
 
 /**
- * Jackson mixin for AbstractRequirement to handle polymorphic deserialization.
- * This class provides type information to Jackson's object mapper, allowing it to
- * correctly instantiate the appropriate requirement subclass based on the "type" property.
+ * Jackson mixin for {@link com.raindropcentral.rdq.reward.AbstractReward} to handle polymorphic deserialization.
+ * This class provides type metadata to Jackson's object mapper so that it can resolve concrete
+ * {@link com.raindropcentral.rdq.reward.AbstractReward} implementations from the {@code type} discriminator.
  *
- * <p>The mixin uses the "type" property to determine which concrete implementation
- * of AbstractRequirement to instantiate during deserialization.</p>
+ * <p>The mixin exposes the {@code type} property as an existing field, ensuring the mapper can look up
+ * the correct reward subtype without requiring explicit annotations on the model classes.</p>
  *
- * <p>Currently supported requirement types:</p>
+ * <p>Currently supported reward types:</p>
  * <ul>
- *   <li>ITEM - For item-based requirements</li>
- *   <li>CURRENCY - For currency-based requirements</li>
- *   <li>COMPOSITE - For requirements composed of multiple sub-requirements</li>
- *   <li>CHOICE - For requirements offering multiple options</li>
+ *   <li>{@code ITEM} – Item rewards</li>
+ *   <li>{@code CURRENCY} – Currency payouts</li>
+ *   <li>{@code COMPOSITE} – Composite rewards that group other rewards</li>
+ *   <li>{@code EXPERIENCE_LEVEL} – Experience level grants</li>
+ *   <li>{@code COMMAND} – Server command executions</li>
  * </ul>
  *
- * <p>Additional requirement types are commented out but may be implemented in the future.</p>
+ * <p>Additional reward types can be registered by introducing further {@link JsonSubTypes.Type} entries when the
+ * corresponding reward implementations become available.</p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,

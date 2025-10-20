@@ -11,6 +11,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Configuration section that encapsulates general settings for an RDQ perk, including
+ * localization keys, visibility, and metadata.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 @CSAlways
 public class PerkSettingsSection extends AConfigSection {
 	
@@ -44,11 +52,16 @@ public class PerkSettingsSection extends AConfigSection {
 	@CSIgnore
 	private String perkId;
 	
-	public PerkSettingsSection(
-		final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
-	) {
-		super(evaluationEnvironmentBuilder);
-	}
+        /**
+         * Creates a new instance using the provided evaluation environment builder.
+         *
+         * @param evaluationEnvironmentBuilder the builder used to resolve dynamic configuration values
+         */
+        public PerkSettingsSection(
+                final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
+        ) {
+                super(evaluationEnvironmentBuilder);
+        }
 	
 	/**
 	 * Called after parsing the configuration fields. Sets default localization keys if not provided.
@@ -112,57 +125,97 @@ public class PerkSettingsSection extends AConfigSection {
 		return this.perkId;
 	}
 	
-	public IconSection getIcon() {
-		return
-			this.icon == null ?
-			new IconSection(new EvaluationEnvironmentBuilder()) :
+        /**
+         * Resolves the icon configuration for the perk.
+         *
+         * @return the configured icon, or a default instance when none is defined
+         */
+        public IconSection getIcon() {
+                return
+                        this.icon == null ?
+                        new IconSection(new EvaluationEnvironmentBuilder()) :
 			this.icon;
 	}
 	
-	public String getDisplayNameKey() {
-		return
-			this.displayNameKey == null ?
-			"not_defined" :
-			this.displayNameKey;
-	}
-	
-	public String getDescriptionKey() {
-		return
-			this.descriptionKey == null ?
-			"not_defined" :
+        /**
+         * Provides the localization key that resolves the perk's display name.
+         *
+         * @return the display name localization key or {@code "not_defined"} when no key is set
+         */
+        public String getDisplayNameKey() {
+                return
+                        this.displayNameKey == null ?
+                        "not_defined" :
+                        this.displayNameKey;
+        }
+
+        /**
+         * Provides the localization key that resolves the perk's lore or description text.
+         *
+         * @return the description localization key or {@code "not_defined"} when no key is set
+         */
+        public String getDescriptionKey() {
+                return
+                        this.descriptionKey == null ?
+                        "not_defined" :
 			this.descriptionKey;
 	}
 	
-	public Integer getPriority() {
-		return
-			this.priority == null ?
-			0 :
+        /**
+         * Returns the configured ordering priority for the perk.
+         *
+         * @return the priority value or {@code 0} when no priority has been defined
+         */
+        public Integer getPriority() {
+                return
+                        this.priority == null ?
+                        0 :
 			this.priority;
 	}
 	
-	public Integer getMaxConcurrentUsers() {
-		return
-			this.maxConcurrentUsers == null ?
-			null :
+        /**
+         * Provides the limit on how many users may enable the perk simultaneously.
+         *
+         * @return the concurrency limit or {@code null} when unlimited
+         */
+        public Integer getMaxConcurrentUsers() {
+                return
+                        this.maxConcurrentUsers == null ?
+                        null :
 			this.maxConcurrentUsers;
 	}
 	
-	public Boolean getRequiresOwnedArea() {
-		return
-			this.requiresOwnedArea != null &&
-			this.requiresOwnedArea;
-	}
-	
-	public Boolean getEnabled() {
-		return
-			this.isEnabled == null ||
-			this.isEnabled;
-	}
-	
-	public Map<String, Object> getMetadata() {
-		return
-			this.metadata == null ?
-			new HashMap<>() :
+        /**
+         * Determines whether the perk requires the user to own an area to activate it.
+         *
+         * @return {@code true} when the perk requires ownership, otherwise {@code false}
+         */
+        public Boolean getRequiresOwnedArea() {
+                return
+                        this.requiresOwnedArea != null &&
+                        this.requiresOwnedArea;
+        }
+
+        /**
+         * Indicates whether the perk is enabled in configuration.
+         *
+         * @return {@code true} when the perk is explicitly enabled or not specified, otherwise {@code false}
+         */
+        public Boolean getEnabled() {
+                return
+                        this.isEnabled == null ||
+                        this.isEnabled;
+        }
+
+        /**
+         * Resolves additional configuration metadata for the perk.
+         *
+         * @return a modifiable map of metadata values, or an empty map when none are configured
+         */
+        public Map<String, Object> getMetadata() {
+                return
+                        this.metadata == null ?
+                        new HashMap<>() :
 			this.metadata;
 	}
 }

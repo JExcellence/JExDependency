@@ -20,6 +20,16 @@ import java.util.logging.Logger;
  * <li>Maximum 3 reward items per bounty</li>
  * </ul>
  * </p>
+ * <p>
+ * The delegate drives the staged enable pipeline supplied by {@link com.raindropcentral.rdq.RDQ}.
+ * Stage&nbsp;1 initialises the shared executor, preferring virtual threads and falling back to the
+ * fixed pool so configuration hydration does not block the main thread. Stage&nbsp;2 executes
+ * {@link com.raindropcentral.rdq.RDQ#initializeComponents()} and
+ * {@link com.raindropcentral.rdq.RDQ#initializeViews()} inside the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} bridge to respect Bukkit threading
+ * requirements. Stage&nbsp;3 binds the in-memory repositories described in the resource READMEs,
+ * making the data accessible to shared services and the free-edition bounty manager.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -32,10 +42,18 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
 
     private RDQ rdq;
 
+    /**
+     * Creates a new plugin delegate for the free RDQ edition.
+     *
+     * @param plugin the plugin bootstrap instance used for lifecycle management
+     */
     public RDQFreeImpl(final @NotNull RDQFree plugin) {
         super(plugin);
     }
 
+    /**
+     * Loads the free RDQ edition, preparing the manager and RDQ instance for later lifecycle phases.
+     */
     @Override
     public void onLoad() {
         try {
@@ -70,6 +88,9 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
         }
     }
 
+    /**
+     * Enables the free RDQ edition after it has been loaded.
+     */
     @Override
     public void onEnable() {
         try {
@@ -81,6 +102,9 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
         }
     }
 
+    /**
+     * Disables the free RDQ edition, ensuring any resources owned by the RDQ instance are released.
+     */
     @Override
     public void onDisable() {
         try {
@@ -94,6 +118,11 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
         }
     }
 
+    /**
+     * Retrieves the RDQ instance backing the free edition.
+     *
+     * @return the managed RDQ instance
+     */
     public @NotNull RDQ getRDQ() {
         return this.rdq;
     }

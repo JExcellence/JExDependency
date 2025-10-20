@@ -9,142 +9,138 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Configuration section for permission-based amplifiers.
+ * Configuration section that maps permission nodes to potion or perk amplifier values.
  * <p>
- * This section handles amplifier configuration based on player permissions,
- * allowing different amplifier levels for different permission groups.
- * It supports a default amplifier for players without specific permissions
- * and permission-specific overrides.
+ * Administrators can declare a default amplifier alongside permission-specific overrides, optional
+ * minimum and maximum bounds, and a strategy for selecting the strongest applicable amplifier. This
+ * ensures perk strength scales predictably with the permission hierarchy while preventing
+ * out-of-range values.
  * </p>
  *
- * @author ItsRainingHP
- * @version 2.0.0
- * @since TBD
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public class PermissionAmplifierSection extends APermissionBasedSection<Integer> {
-    
+
     /**
-     * Default amplifier level for players without specific permissions.
-     * YAML key: "defaultAmplifier"
+     * Default amplifier level applied when no permission override matches ({@code defaultAmplifier}).
      */
     private Integer defaultAmplifier;
-    
+
     /**
-     * Map of permissions to their specific amplifier levels.
-     * YAML key: "permissionAmplifiers"
+     * Mapping of permission nodes to amplifier values sourced from {@code permissionAmplifiers}.
      */
     private Map<String, Integer> permissionAmplifiers;
-    
+
     /**
-     * Maximum allowed amplifier level to prevent overpowered effects.
-     * YAML key: "maxAmplifier"
+     * Optional upper bound defined via {@code maxAmplifier} to clamp runaway amplifier values.
      */
     private Integer maxAmplifier;
-    
+
     /**
-     * Minimum allowed amplifier level.
-     * YAML key: "minAmplifier"
+     * Optional lower bound defined via {@code minAmplifier} so debuffs do not drop below a floor.
      */
     private Integer minAmplifier;
-    
+
     /**
-     * Constructs a new PermissionAmplifierSection.
+     * Creates the permission-aware amplifier section.
      *
-     * @param evaluationEnvironmentBuilder the evaluation environment builder
+     * @param evaluationEnvironmentBuilder mapper environment shared across sections
      */
     public PermissionAmplifierSection(
         final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {
         super(evaluationEnvironmentBuilder);
     }
-    
+
     /**
-     * Gets the default amplifier level.
+     * Returns the amplifier level used when no permission override applies.
      *
-     * @return the default amplifier level, or 0 if not specified
+     * @return configured default amplifier or {@code 0}
      */
     public Integer getDefaultAmplifier() {
         return this.getDefaultValue();
     }
-    
+
     /**
-     * Gets the map of permission-specific amplifiers.
+     * Exposes the configured permission overrides.
      *
-     * @return the map of permission to amplifier level
+     * @return map containing permission nodes and their amplifier values
      */
     public Map<String, Integer> getPermissionAmplifiers() {
         return this.getPermissionValues();
     }
-    
+
     /**
-     * Gets the amplifier for a specific permission.
+     * Looks up the amplifier associated with a specific permission string.
      *
-     * @param permission the permission to check
-     * @return the amplifier level for the permission, or null if not found
+     * @param permission permission node to query
+     * @return amplifier when configured; {@code null} otherwise
      */
     public Integer getAmplifierForPermission(
         final String permission
     ) {
         return this.getValueForPermission(permission);
     }
-    
+
     /**
-     * Checks if any permission-specific amplifiers are configured.
+     * Indicates whether the configuration defines any permission-specific overrides.
      *
-     * @return true if permission amplifiers exist, false otherwise
+     * @return {@code true} when at least one override exists
      */
     public boolean hasPermissionAmplifiers() {
         return this.hasPermissionValues();
     }
-    
+
     /**
-     * Gets the effective amplifier for a player based on their permissions.
+     * Calculates the amplifier to use for the supplied player.
      *
-     * @param player the player to check amplifier for
-     * @return the effective amplifier level
+     * @param player player whose amplifier should be computed
+     * @return resolved amplifier respecting defaults and bounds
      */
     public Integer getEffectiveAmplifier(
         final Player player
     ) {
         return this.getEffectiveValue(player);
     }
-    
+
     /**
-     * Gets the effective amplifier based on a set of permissions.
+     * Calculates the amplifier for an already-collected permission set.
      *
-     * @param playerPermissions the permissions to check
-     * @return the effective amplifier level
+     * @param playerPermissions permissions associated with the player
+     * @return resolved amplifier respecting defaults and bounds
      */
     public Integer getEffectiveAmplifier(
         final Set<String> playerPermissions
     ) {
         return this.getEffectiveValue(playerPermissions);
     }
-    
+
     /**
-     * Gets the maximum allowed amplifier level.
+     * Returns the configured maximum amplifier constraint.
      *
-     * @return the maximum amplifier level, or null if no limit
+     * @return maximum amplifier or {@code null} when the constraint is disabled
      */
     public Integer getMaxAmplifier() {
         return this.maxAmplifier;
     }
-    
+
     /**
-     * Gets the minimum allowed amplifier level.
+     * Returns the configured minimum amplifier constraint.
      *
-     * @return the minimum amplifier level, or null if no limit
+     * @return minimum amplifier or {@code null} when the constraint is disabled
      */
     public Integer getMinAmplifier() {
         return this.minAmplifier;
     }
-    
+
     /**
-     * Checks if the given amplifier is within the configured bounds.
+     * Determines whether the provided amplifier falls within the configured bounds.
      *
-     * @param amplifier the amplifier level to check
-     * @return true if the amplifier is within bounds, false otherwise
+     * @param amplifier amplifier to verify
+     * @return {@code true} when the amplifier satisfies the configured constraints
      */
     public boolean isAmplifierWithinBounds(
         final Integer amplifier
@@ -171,12 +167,12 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
         
         return true;
     }
-    
+
     /**
-     * Clamps an amplifier value to the configured bounds.
+     * Clamps the amplifier to the configured minimum and maximum.
      *
-     * @param amplifier the amplifier level to clamp
-     * @return the clamped amplifier level
+     * @param amplifier amplifier level to clamp; may be {@code null}
+     * @return amplifier after applying bounds or the default when {@code amplifier} is {@code null}
      */
     public Integer clampAmplifier(
         final Integer amplifier
@@ -205,7 +201,12 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
         
         return result;
     }
-    
+
+    /**
+     * Provides the default amplifier when no permission matches.
+     *
+     * @return default amplifier or {@code 0}
+     */
     @Override
     protected Integer getDefaultValue() {
         if (
@@ -213,14 +214,19 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
         ) {
             return this.defaultAmplifier;
         }
-        
+
         return 0;
     }
-    
+
+    /**
+     * Supplies the permission-to-amplifier map, copying the configured entries to avoid side effects.
+     *
+     * @return mutable copy of the configured amplifier overrides
+     */
     @Override
     protected Map<String, Integer> getPermissionValues() {
         final Map<String, Integer> amplifiers = new HashMap<>();
-        
+
         if (
             this.permissionAmplifiers != null
         ) {
@@ -229,12 +235,24 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
         
         return amplifiers;
     }
-    
+
+    /**
+     * Indicates that the section should prefer the highest amplifier when multiple permissions apply.
+     *
+     * @return {@code true} so the resolver selects the strongest amplifier
+     */
     @Override
     protected boolean getDefaultUseBestValue() {
         return true;
     }
-    
+
+    /**
+     * Chooses the larger amplifier when multiple permissions match.
+     *
+     * @param current   current best amplifier
+     * @param candidate candidate amplifier under evaluation
+     * @return greater of {@code current} and {@code candidate}
+     */
     @Override
     protected Integer chooseBestValue(
         final Integer current,
@@ -242,7 +260,14 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
     ) {
         return Math.max(current, candidate);
     }
-    
+
+    /**
+     * Determines if the candidate amplifier is stronger than the current best value.
+     *
+     * @param candidate candidate amplifier
+     * @param current   current best amplifier
+     * @return {@code true} when {@code candidate} exceeds {@code current}
+     */
     @Override
     protected boolean isBetterValue(
         final Integer candidate,
@@ -250,21 +275,38 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
     ) {
         return candidate > current;
     }
-    
+
+    /**
+     * Applies the configured bounds to the resolved amplifier.
+     *
+     * @param value amplifier before clamping
+     * @return amplifier after enforcing bounds
+     */
     @Override
     protected Integer applyBounds(
         final Integer value
     ) {
         return this.clampAmplifier(value);
     }
-    
+
+    /**
+     * Validates that amplifier values are non-null and non-negative.
+     *
+     * @param value amplifier to validate
+     * @return {@code true} when the amplifier is zero or positive
+     */
     @Override
     protected boolean isValidValue(
         final Integer value
     ) {
         return value != null && value >= 0;
     }
-    
+
+    /**
+     * Ensures configured bounds are internally consistent.
+     *
+     * @throws IllegalStateException when a bound is negative or the minimum exceeds the maximum
+     */
     @Override
     protected void performAdditionalValidation() {
         if (

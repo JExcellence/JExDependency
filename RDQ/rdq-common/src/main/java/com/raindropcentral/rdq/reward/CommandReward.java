@@ -16,14 +16,14 @@ import java.util.regex.Pattern;
 /**
  * Represents a reward that executes a server command when granted to a player.
  * <p>
- * The command may include placeholders such as {@code %player%}, {@code %uuid%}, etc.,
- * which will be replaced with the target player's information at execution time.
- * The command is executed by the server console.
+ * The command may include placeholders such as {@code %player%}, {@code %uuid%}, and
+ * coordinate tokens. These placeholders are replaced with the target player's data when the
+ * reward executes.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class CommandReward extends AbstractReward {
 
@@ -42,7 +42,7 @@ public final class CommandReward extends AbstractReward {
     /**
      * Constructs a new {@code CommandReward} with the specified command.
      *
-     * @param command The command to execute when the reward is applied.
+     * @param command the command to execute when the reward is applied
      */
     public CommandReward(final @NotNull String command) {
         this(command, false, 0L);
@@ -51,9 +51,9 @@ public final class CommandReward extends AbstractReward {
     /**
      * Constructs a new {@code CommandReward} with full configuration.
      *
-     * @param command          The command to execute.
-     * @param executeAsPlayer  Whether to execute as the player (true) or console (false).
-     * @param delayTicks       Delay in ticks before executing the command.
+     * @param command         the command to execute
+     * @param executeAsPlayer whether to execute as the player (true) or console (false)
+     * @param delayTicks      delay in ticks before executing the command
      */
     @JsonCreator
     public CommandReward(
@@ -72,6 +72,11 @@ public final class CommandReward extends AbstractReward {
         this.delayTicks = Math.max(0, delayTicks);
     }
 
+    /**
+     * Executes the configured command for the supplied player, optionally after a delay.
+     *
+     * @param player the player receiving the reward
+     */
     @Override
     public void apply(final @NotNull Player player) {
         final String processedCommand = this.replacePlaceholders(this.command, player);
@@ -87,25 +92,49 @@ public final class CommandReward extends AbstractReward {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "reward.command";
     }
 
+    /**
+     * Retrieves the raw command configured for this reward.
+     *
+     * @return the command string
+     */
     @NotNull
     public String getCommand() {
         return this.command;
     }
 
+    /**
+     * Indicates whether the command should be executed with the player's permissions.
+     *
+     * @return {@code true} if the player executes the command, {@code false} for console execution
+     */
     public boolean isExecuteAsPlayer() {
         return this.executeAsPlayer;
     }
 
+    /**
+     * Provides the configured delay before the command is executed.
+     *
+     * @return the delay in ticks
+     */
     public long getDelayTicks() {
         return this.delayTicks;
     }
 
+    /**
+     * Performs the actual command execution, handling both console and player contexts.
+     *
+     * @param player  the player receiving the reward
+     * @param command the fully processed command to execute
+     */
     private void executeCommand(final @NotNull Player player, final @NotNull String command) {
         try {
             if (this.executeAsPlayer) {
@@ -118,6 +147,14 @@ public final class CommandReward extends AbstractReward {
         }
     }
 
+    /**
+     * Replaces supported placeholder tokens within the supplied command string with data from
+     * the provided player.
+     *
+     * @param input  the command string containing placeholders
+     * @param player the player supplying placeholder values
+     * @return the command string with placeholders resolved
+     */
     @NotNull
     private String replacePlaceholders(final @NotNull String input, final @NotNull Player player) {
         final Map<String, String> placeholders = new HashMap<>();

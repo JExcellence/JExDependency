@@ -26,17 +26,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * PackageRemapper:
- * - Applies package-prefix relocations to classes and resources inside a JAR.
- * - Preserves or creates a manifest.
- * - Rewrites META-INF/services provider files according to relocations.
- * - Supports multi-release JAR classes in META-INF/versions/*.
- * - Strips signature files (META-INF/*.SF|*.DSA|*.RSA|*.EC|*.P7S) when remapping occurs.
- *
- * Usage:
- *   var remapper = new PackageRemapper();
- *   remapper.addMapping("org.foo", "my.prefix.org.foo");
- *   remapper.remap(inputJar, outputJar);
+ * Remaps package prefixes for classes and resources contained within a JAR. The implementation preserves manifests,
+ * rewrites {@code META-INF/services} descriptors, supports multi-release layouts and strips signature files that become
+ * invalid once content is modified. It is used by both the Paper loader and legacy remapping manager to relocate
+ * third-party dependencies into plugin-specific namespaces.
  */
 public class PackageRemapper {
 
@@ -44,6 +37,13 @@ public class PackageRemapper {
 
     private final Map<String, String> packageMappings = new LinkedHashMap<>();
 
+    /**
+     * Registers a relocation from the supplied original package to the target package. Package names are normalised and
+     * empty/self-mapping values are ignored.
+     *
+     * @param originalPackage source package to relocate (dot notation)
+     * @param remappedPackage destination package (dot notation)
+     */
     public void addMapping(@NotNull final String originalPackage, @NotNull final String remappedPackage) {
         final String from = normalizePackage(originalPackage);
         final String to = normalizePackage(remappedPackage);
@@ -53,10 +53,24 @@ public class PackageRemapper {
         packageMappings.put(from, to);
     }
 
+    /**
+     * Registers all mappings from the provided map using {@link #addMapping(String, String)} semantics.
+     *
+     * @param mappings map of {@code fromPackage -> toPackage} entries in dot notation
+     */
     public void addMappings(@NotNull final Map<String, String> mappings) {
         mappings.forEach(this::addMapping);
     }
 
+    /**
+     * Applies registered relocations to the input jar and writes the transformed jar to {@code outputJar}. When no
+     * relocations are registered the method performs a verbatim copy while still stripping invalid signature files.
+     *
+     * @param inputJar   path to the jar that should be remapped
+     * @param outputJar  destination path that will be overwritten
+     *
+     * @throws IOException when reading or writing jar contents fails
+     */
     public void remap(@NotNull final Path inputJar, @NotNull final Path outputJar) throws IOException {
         if (packageMappings.isEmpty()) {
             // No relocations -> verbatim copy with manifest preservation

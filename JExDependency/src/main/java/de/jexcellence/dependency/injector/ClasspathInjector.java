@@ -14,6 +14,11 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Utility responsible for attaching downloaded JAR files to a target class loader at runtime. The injector keeps track
+ * of previously injected URLs to prevent duplicates, de-encapsulates modules on first use and exposes guarded methods
+ * for both exception-throwing and best-effort injection.
+ */
 public class ClasspathInjector {
 
     private static final String ADD_URL_METHOD_NAME = "addURL";
@@ -22,11 +27,23 @@ public class ClasspathInjector {
     private final Logger logger;
     private final Set<URL> injectedUrls;
 
+    /**
+     * Creates a new injector with its own logger and URL tracking set.
+     */
     public ClasspathInjector() {
         this.logger = Logger.getLogger(getClass().getName());
         this.injectedUrls = new HashSet<>();
     }
 
+    /**
+     * Injects the provided JAR into the supplied class loader. Module boundaries are opened on the first invocation to
+     * ensure reflective access works on modern JVMs.
+     *
+     * @param classLoader class loader that should gain visibility of the JAR's classes
+     * @param jarFile     resolved file to inject; must exist and be readable
+     *
+     * @throws InjectionException if validation or reflection calls fail
+     */
     public void inject(@NotNull final ClassLoader classLoader, @NotNull final File jarFile) {
         validateJarFile(jarFile);
         ensureModuleDeencapsulation();
@@ -52,6 +69,15 @@ public class ClasspathInjector {
         }
     }
 
+    /**
+     * Attempts to inject the provided JAR into the supplied class loader while capturing any {@link InjectionException}
+     * as logged warnings.
+     *
+     * @param classLoader class loader that should gain visibility of the JAR's classes
+     * @param jarFile     resolved file to inject; must exist and be readable
+     *
+     * @return {@code true} when the injection succeeds; {@code false} otherwise
+     */
     public boolean tryInject(@NotNull final ClassLoader classLoader, @NotNull final File jarFile) {
         try {
             inject(classLoader, jarFile);
@@ -62,10 +88,23 @@ public class ClasspathInjector {
         }
     }
 
+    /**
+     * Returns an immutable view of the URLs that have been successfully injected during the lifetime of this
+     * injector.
+     *
+     * @return immutable set of injected URLs
+     */
     public @NotNull Set<URL> getInjectedUrls() {
         return Collections.unmodifiableSet(injectedUrls);
     }
 
+    /**
+     * Convenience helper used by callers to check whether a class is already visible to the application class path.
+     *
+     * @param className fully qualified class name to probe
+     *
+     * @return {@code true} when the class can be resolved, {@code false} otherwise
+     */
     public boolean isClassAvailable(@NotNull final String className) {
         try {
             Class.forName(className);

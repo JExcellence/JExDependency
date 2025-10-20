@@ -25,8 +25,8 @@ import java.util.logging.Logger;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class PlaytimeRequirement extends AbstractRequirement {
 
@@ -47,10 +47,24 @@ public final class PlaytimeRequirement extends AbstractRequirement {
     @JsonIgnore
     private transient final Map<String, World> worldCache = new ConcurrentHashMap<>();
 
+    /**
+     * Creates a requirement that validates against total playtime using the supplied threshold.
+     *
+     * @param requiredPlaytimeSeconds the total playtime required, in seconds
+     */
     public PlaytimeRequirement(final long requiredPlaytimeSeconds) {
         this(requiredPlaytimeSeconds, null, true, null);
     }
 
+    /**
+     * Creates a requirement that can evaluate either global playtime or world-specific thresholds.
+     *
+     * @param requiredPlaytimeSeconds   the global playtime required in seconds
+     * @param worldPlaytimeRequirements the per-world playtime requirements
+     * @param useTotalPlaytime          whether global playtime should be evaluated
+     * @param description               an optional human-readable description of the requirement
+     * @throws IllegalArgumentException if negative thresholds are supplied or configuration is invalid
+     */
     @JsonCreator
     public PlaytimeRequirement(
             @JsonProperty("requiredPlaytimeSeconds") final long requiredPlaytimeSeconds,
@@ -78,6 +92,20 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Builds a requirement from a configuration that allows expressing the global threshold with
+     * one of multiple time units.
+     *
+     * @param requiredSeconds    the required playtime in seconds, or {@code null}
+     * @param requiredMinutes    the required playtime in minutes, or {@code null}
+     * @param requiredHours      the required playtime in hours, or {@code null}
+     * @param requiredDays       the required playtime in days, or {@code null}
+     * @param worldRequirements  the per-world playtime requirements, or {@code null}
+     * @param useTotalPlaytime   whether global playtime should be evaluated, or {@code null}
+     * @param description        an optional human-readable description, or {@code null}
+     * @return a configured {@link PlaytimeRequirement}
+     * @throws IllegalArgumentException if the configuration is invalid or ambiguous
+     */
     @JsonIgnore
     @NotNull
     public static PlaytimeRequirement fromTimeConfig(
@@ -119,6 +147,13 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return new PlaytimeRequirement(requiredPlaytimeSeconds, worldRequirements, useTotalPlaytime, description);
     }
 
+    /**
+     * Creates a requirement that evaluates playtime against the supplied world-specific thresholds.
+     *
+     * @param worldPlaytimeMap the per-world playtime requirements to enforce
+     * @param description      an optional human-readable description, or {@code null}
+     * @return a configured {@link PlaytimeRequirement}
+     */
     @JsonIgnore
     @NotNull
     public static PlaytimeRequirement forWorlds(
@@ -128,6 +163,12 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return new PlaytimeRequirement(0, worldPlaytimeMap, false, description);
     }
 
+    /**
+     * Determines whether the player has satisfied the required playtime thresholds.
+     *
+     * @param player the player being validated
+     * @return {@code true} when the requirement is met; otherwise {@code false}
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         if (this.useTotalPlaytime) {
@@ -137,6 +178,12 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Calculates the player's progress toward satisfying the requirement.
+     *
+     * @param player the player being evaluated
+     * @return the completion ratio ranging from {@code 0.0} to {@code 1.0}
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         if (this.useTotalPlaytime) {
@@ -150,22 +197,45 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Consuming a playtime requirement has no side effects because playtime is a historical metric.
+     *
+     * @param player the player who satisfied the requirement
+     */
     @Override
     public void consume(final @NotNull Player player) {
     }
 
+    /**
+     * Provides the translation key that describes this requirement.
+     *
+     * @return the translation key used for localized descriptions
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "requirement.playtime";
     }
 
+    /**
+     * Retrieves the player's total playtime in seconds using the Bukkit statistics API.
+     *
+     * @param player the player whose playtime is being queried
+     * @return the total playtime in seconds
+     */
     @JsonIgnore
     public long getTotalPlaytimeSeconds(final @NotNull Player player) {
         final int playtimeTicks = player.getStatistic(Statistic.PLAY_ONE_MINUTE);
         return playtimeTicks / 20;
     }
 
+    /**
+     * Retrieves the player's playtime in the specified world.
+     *
+     * @param player   the player whose playtime is being queried
+     * @param worldName the world identifier to inspect
+     * @return the accumulated playtime in the world, or {@code 0} when unavailable
+     */
     @JsonIgnore
     public long getWorldPlaytimeSeconds(final @NotNull Player player, final @NotNull String worldName) {
         final World world = this.getCachedWorld(worldName);
@@ -181,39 +251,79 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Obtains the required global playtime in seconds.
+     *
+     * @return the required playtime threshold expressed in seconds
+     */
     public long getRequiredPlaytimeSeconds() {
         return this.requiredPlaytimeSeconds;
     }
 
+    /**
+     * Converts the required global playtime into minutes.
+     *
+     * @return the required playtime threshold expressed in minutes
+     */
     @JsonIgnore
     public long getRequiredPlaytimeMinutes() {
         return TimeUnit.SECONDS.toMinutes(this.requiredPlaytimeSeconds);
     }
 
+    /**
+     * Converts the required global playtime into hours.
+     *
+     * @return the required playtime threshold expressed in hours
+     */
     @JsonIgnore
     public long getRequiredPlaytimeHours() {
         return TimeUnit.SECONDS.toHours(this.requiredPlaytimeSeconds);
     }
 
+    /**
+     * Converts the required global playtime into days.
+     *
+     * @return the required playtime threshold expressed in days
+     */
     @JsonIgnore
     public long getRequiredPlaytimeDays() {
         return TimeUnit.SECONDS.toDays(this.requiredPlaytimeSeconds);
     }
 
+    /**
+     * Provides a defensive copy of the configured world playtime requirements.
+     *
+     * @return the per-world playtime thresholds
+     */
     @NotNull
     public Map<String, Long> getWorldPlaytimeRequirements() {
         return new HashMap<>(this.worldPlaytimeRequirements);
     }
 
+    /**
+     * Indicates whether the requirement evaluates total playtime instead of world-specific values.
+     *
+     * @return {@code true} when global playtime is used; otherwise {@code false}
+     */
     public boolean isUseTotalPlaytime() {
         return this.useTotalPlaytime;
     }
 
+    /**
+     * Retrieves the optional description supplied for the requirement.
+     *
+     * @return the description, or {@code null} if none was provided
+     */
     @Nullable
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * Formats the required playtime for display depending on whether global or per-world thresholds are used.
+     *
+     * @return the formatted representation of the required playtime
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedRequiredPlaytime() {
@@ -223,6 +333,12 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return formatDuration(this.requiredPlaytimeSeconds);
     }
 
+    /**
+     * Formats the player's current playtime for display depending on the active evaluation mode.
+     *
+     * @param player the player whose playtime should be formatted
+     * @return the formatted representation of the player's current playtime
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedCurrentPlaytime(final @NotNull Player player) {
@@ -233,6 +349,12 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return formatDuration(currentSeconds);
     }
 
+    /**
+     * Formats a duration expressed in seconds using a compact human-readable representation.
+     *
+     * @param seconds the duration in seconds
+     * @return the formatted duration string
+     */
     @JsonIgnore
     @NotNull
     public static String formatDuration(final long seconds) {
@@ -262,6 +384,11 @@ public final class PlaytimeRequirement extends AbstractRequirement {
         return sb.toString().trim();
     }
 
+    /**
+     * Validates the configuration and throws an exception when invalid thresholds are detected.
+     *
+     * @throws IllegalStateException if any configured values are invalid
+     */
     @JsonIgnore
     public void validate() {
         if (this.requiredPlaytimeSeconds < 0) {

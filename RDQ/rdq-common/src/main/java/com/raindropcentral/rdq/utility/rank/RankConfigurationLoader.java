@@ -17,6 +17,17 @@ import java.util.concurrent.Executor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Loads the rank system configuration files, preparing the in-memory representation used throughout the
+ * RDQ plugin.
+ *
+ * <p>The loader is responsible for wiring system, tree, and rank level sections while applying any
+ * additional parsing steps required by {@link RankRequirementContext}.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 final class RankConfigurationLoader {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RankConfigurationLoader.class.getName());
@@ -31,14 +42,30 @@ final class RankConfigurationLoader {
 
     private final @NotNull RDQ rdq;
 
+    /**
+     * Creates a new loader bound to the provided RDQ plugin instance.
+     *
+     * @param rdq the RDQ plugin that supplies the configuration directory context
+     */
     RankConfigurationLoader(final @NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Asynchronously loads the entire rank system state using the supplied executor.
+     *
+     * @param executor the executor used to perform the configuration loading off the main thread
+     * @return a future that resolves to the fully parsed {@link RankSystemState}
+     */
     CompletableFuture<RankSystemState> loadAllAsync(final @NotNull Executor executor) {
         return CompletableFuture.supplyAsync(this::loadAll, executor);
     }
 
+    /**
+     * Loads all rank related configurations, including system, tree, and rank sections.
+     *
+     * @return the aggregated {@link RankSystemState}
+     */
     private RankSystemState loadAll() {
         final RankSystemSection systemSection = loadSystemSection();
         final Map<String, RankTreeSection> treeSections = loadTreeSections();
@@ -51,6 +78,11 @@ final class RankConfigurationLoader {
                 .build();
     }
 
+    /**
+     * Loads the {@link RankSystemSection} from the primary configuration file, creating the trees directory if necessary.
+     *
+     * @return the loaded system section or a fallback instance when parsing fails
+     */
     private RankSystemSection loadSystemSection() {
         try {
             final ConfigManager cfgManager = new ConfigManager(rdq.getPlugin(), DIR_ROOT);
@@ -64,6 +96,11 @@ final class RankConfigurationLoader {
         }
     }
 
+    /**
+     * Loads all rank tree configuration sections, including the shipped defaults and any additional files supplied by server administrators.
+     *
+     * @return a mapping of tree identifiers to their parsed {@link RankTreeSection}
+     */
     private Map<String, RankTreeSection> loadTreeSections() {
         final Map<String, RankTreeSection> sections = new HashMap<>();
         final File folder = new File(rdq.getPlugin().getDataFolder(), DIR_ROOT + "/" + DIR_TREES);
@@ -112,6 +149,12 @@ final class RankConfigurationLoader {
         return sections;
     }
 
+    /**
+     * Applies post-processing to the parsed tree sections, ensuring each {@link RankSection} is aware of its tree and rank identifiers.
+     *
+     * @param treeSections the already parsed tree sections
+     * @return a mapping keyed by tree identifier containing each tree's rank sections
+     */
     private Map<String, Map<String, RankSection>> loadRankSections(final Map<String, RankTreeSection> treeSections) {
         final Map<String, Map<String, RankSection>> all = new HashMap<>();
         treeSections.forEach((treeId, treeSection) -> {
@@ -135,6 +178,13 @@ final class RankConfigurationLoader {
         return all;
     }
 
+    /**
+     * Loads a single {@link RankTreeSection} from the given file, retrying when polymorphic requirements fail to instantiate.
+     *
+     * @param file the tree configuration file name
+     * @return the parsed tree section
+     * @throws Exception when the configuration cannot be parsed
+     */
     private RankTreeSection loadTree(final String file) throws Exception {
         try {
             final ConfigManager cfgManager = new ConfigManager(rdq.getPlugin(), DIR_ROOT + "/" + DIR_TREES);
@@ -151,6 +201,9 @@ final class RankConfigurationLoader {
         }
     }
 
+    /**
+     * Ensures that the rank tree directory exists alongside the system configuration.
+     */
     private void ensureTreesDirectory() {
         final File dir = new File(rdq.getPlugin().getDataFolder(), DIR_ROOT + "/" + DIR_TREES);
         if (dir.mkdir()) {
@@ -158,6 +211,12 @@ final class RankConfigurationLoader {
         }
     }
 
+    /**
+     * Normalizes a configuration file name into a lowercase identifier suitable for map keys.
+     *
+     * @param identifier the raw file name
+     * @return the normalized identifier without file extension or separators
+     */
     private static String normalize(final String identifier) {
         return identifier.replace(".yml", "").replace(" ", "").replace("-", "_").toLowerCase(Locale.ROOT);
     }

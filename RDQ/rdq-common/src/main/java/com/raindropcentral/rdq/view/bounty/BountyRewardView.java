@@ -46,15 +46,24 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
 
     private boolean isReturning;
 
+    /**
+     * Creates a new bounty reward view and wires the navigation target to the creation view.
+     */
     public BountyRewardView() {
         super(BountyCreationView.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String getKey() {
         return "bounty.reward";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected String[] getLayout() {
         return new String[]{
@@ -67,6 +76,9 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected CompletableFuture<List<RewardItem>> getAsyncPaginationSource(
             final @NotNull Context context
@@ -91,6 +103,9 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void renderEntry(
             final @NotNull Context context,
@@ -129,6 +144,9 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         );
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onPaginatedRender(
             final @NotNull RenderContext render,
@@ -141,6 +159,13 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         this.renderConfirmButton(render, player);
     }
 
+    /**
+     * Renders the interactive slots where players can insert reward items and
+     * restores previously added items for the current session.
+     *
+     * @param render the render context managing the slot state
+     * @param player the player viewing the interface
+     */
     private void renderInputSlots(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -168,6 +193,13 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         }
     }
 
+    /**
+     * Shows the targeted player head in the top row, exposing name and lore translations.
+     *
+     * @param render the render context providing slot access
+     * @param player the viewer opening the bounty reward view
+     * @param target the targeted player for the bounty, may be {@code null}
+     */
     private void renderTargetHead(
             final @NotNull RenderContext render,
             final @NotNull Player player,
@@ -196,6 +228,13 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         );
     }
 
+    /**
+     * Renders the confirmation button that validates inserted items and navigates back
+     * to the bounty creation view with the accumulated rewards.
+     *
+     * @param render the render context managing the confirm slot
+     * @param player the player confirming the inserted rewards
+     */
     private void renderConfirmButton(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -225,6 +264,9 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
                 });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onClick(final @NotNull SlotClickContext click) {
         if (click.isShiftClick() && click.getClickedContainer().isEntityContainer()) {
@@ -237,6 +279,9 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onClose(final @NotNull CloseContext close) {
         if (this.isReturning) {
@@ -252,6 +297,12 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         }
     }
 
+    /**
+     * Handles clicks on designated input slots and manages placing or removing items
+     * from the bounty reward buffer.
+     *
+     * @param clickContext the click context describing the player action
+     */
     private void handleSlotClick(final @NotNull SlotClickContext clickContext) {
         final ItemStack cursorItem = clickContext.getClickOrigin().getCursor();
         final int clickedSlot = clickContext.getClickedSlot();
@@ -300,6 +351,11 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         }
     }
 
+    /**
+     * Converts shift-click actions into automatic placement of items into the green pane slots.
+     *
+     * @param click the slot click context tied to the shift-click interaction
+     */
     private void handleShiftClick(final @NotNull SlotClickContext click) {
         final Player player = click.getPlayer();
         final ItemStack clickedItem = click.getClickOrigin().getCurrentItem();
@@ -328,6 +384,13 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         click.setCancelled(true);
     }
 
+    /**
+     * Finds the first slot in the provided inventory that matches any of the supplied pane types.
+     *
+     * @param inv       the inventory to search
+     * @param paneTypes the material types that count as available pane slots
+     * @return the first matching slot index or {@code -1} if none are available
+     */
     private int findFirstPaneSlot(
             final @NotNull Inventory inv,
             final @NotNull Set<Material> paneTypes
@@ -341,6 +404,15 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         return -1;
     }
 
+    /**
+     * Builds a translated glass pane item used in the GUI layout for interaction hints.
+     *
+     * @param paneType the type of glass pane to create
+     * @param player   the player for whom translations should be resolved
+     * @param nameKey  the translation key for the pane display name
+     * @param loreKey  the translation key for the pane lore lines
+     * @return the constructed item stack ready for rendering
+     */
     private ItemStack buildPane(
             final @NotNull Material paneType,
             final @NotNull Player player,
@@ -363,6 +435,12 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
                 .build();
     }
 
+    /**
+     * Splits a reward item into the maximum possible stack sizes for presentation in the GUI.
+     *
+     * @param rewardItem the reward item to split
+     * @return a list of item stacks representing the split reward
+     */
     private List<ItemStack> splitToMaxStacks(final @NotNull RewardItem rewardItem) {
         final List<ItemStack> result = new ArrayList<>();
         final ItemStack base = rewardItem.getItem();
@@ -380,6 +458,12 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
         return result;
     }
 
+    /**
+     * Refunds inserted items back to the player's inventory, dropping leftovers nearby.
+     *
+     * @param player the player receiving the refunded items
+     * @param items  the items that should be returned to the player
+     */
     private void refundInsertedItems(
             final @NotNull Player player,
             final @NotNull Collection<ItemStack> items

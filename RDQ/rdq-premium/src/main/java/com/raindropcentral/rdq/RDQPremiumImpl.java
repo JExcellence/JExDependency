@@ -27,6 +27,18 @@ import java.util.logging.Logger;
  * <li>Advanced features and customization</li>
  * </ul>
  * </p>
+ * <p>
+ * The delegate advances through the three-stage enable pipeline exposed by {@link com.raindropcentral.rdq.RDQ}.
+ * Stage&nbsp;1 builds the premium persistence registry using the shared executor that prefers
+ * virtual threads and falls back to a fixed pool when necessary. Stage&nbsp;2 executes
+ * {@link com.raindropcentral.rdq.RDQ#initializeComponents()} and
+ * {@link com.raindropcentral.rdq.RDQ#initializeViews()} within the
+ * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} boundary so Bukkit interactions stay
+ * on the main thread. Stage&nbsp;3 wires repositories such as
+ * {@link com.raindropcentral.rdq.database.repository.RBountyRepository} before registering the
+ * {@link com.raindropcentral.rdq.service.bounty.PremiumBountyService}, keeping documentation in
+ * {@code rdq-common/src/main/resources/} aligned across free and premium modules.
+ * </p>
  *
  * @author JExcellence
  * @version 2.0.0
@@ -40,15 +52,29 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
     private RDQ rdq;
     private BountyService bountyService;
 
+    /**
+     * Creates a new premium implementation bound to the provided plugin instance.
+     *
+     * @param plugin the active premium plugin bootstrapper
+     */
     public RDQPremiumImpl(final @NotNull RDQPremium plugin) {
         super(plugin);
     }
 
+    /**
+     * Loads premium services, persistence, and quest infrastructure prior to enabling the plugin.
+     *
+     * <p>
+     * This stage builds the premium persistence registry, wires the internal {@link RDQ} instance,
+     * and registers the {@link BountyService} provider so it is available to the rest of the
+     * platform when enable is called.
+     * </p>
+     */
     @Override
     public void onLoad() {
         try {
             LOGGER.info("Loading RDQ " + EDITION + " Edition");
-            
+
             final PersistenceRegistry persistenceRegistry = createPremiumPersistenceRegistry();
             
             this.rdq = new RDQ(this.getPlugin(), EDITION, persistenceRegistry) {
@@ -85,6 +111,14 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Enables the premium edition and surfaces the startup banner to the server console.
+     *
+     * <p>
+     * Should loading fail, the plugin instance is disabled to prevent partially initialized
+     * services from staying registered.
+     * </p>
+     */
     @Override
     public void onEnable() {
         try {
@@ -97,6 +131,14 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Shuts down the premium systems and unregisters exposed services.
+     *
+     * <p>
+     * Any exceptions raised during shutdown are logged but do not prevent the remainder of the
+     * shutdown routine from executing so that resources are cleaned up as best as possible.
+     * </p>
+     */
     @Override
     public void onDisable() {
         try {
@@ -112,10 +154,20 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Gets the premium {@link RDQ} delegate.
+     *
+     * @return the initialized RDQ instance backing the premium edition
+     */
     public @NotNull RDQ getRDQ() {
         return this.rdq;
     }
 
+    /**
+     * Builds the persistence registry wired with premium storage implementations.
+     *
+     * @return a persistence registry that always supplies premium bounty and player persistence
+     */
     private PersistenceRegistry createPremiumPersistenceRegistry() {
         return new PersistenceRegistry() {
             @Override
@@ -130,6 +182,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         };
     }
 
+    /**
+     * Registers the premium bounty service with Bukkit so other plugins can consume it.
+     */
     private void registerServices() {
         if (this.bountyService != null) {
             Bukkit.getServer().getServicesManager().register(
@@ -142,6 +197,9 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
         }
     }
 
+    /**
+     * Unregisters the premium bounty service and resets the provider singleton.
+     */
     private void unregisterServices() {
         if (this.bountyService != null) {
             Bukkit.getServer().getServicesManager().unregister(BountyService.class, this.bountyService);

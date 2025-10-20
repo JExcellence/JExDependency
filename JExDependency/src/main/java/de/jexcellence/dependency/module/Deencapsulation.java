@@ -15,6 +15,11 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Utility for opening Java module packages at runtime so downloaded dependencies can use reflection-sensitive APIs.
+ * The helper performs a best-effort de-encapsulation of modules referenced by the provided anchor class and keeps
+ * track of opened packages to optionally close them again when no longer needed.
+ */
 public class Deencapsulation {
 
     private static final Logger LOGGER = Logger.getLogger(Deencapsulation.class.getName());
@@ -25,6 +30,12 @@ public class Deencapsulation {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
     }
 
+    /**
+     * Opens packages belonging to modules reachable from the supplied anchor class to the unnamed module hierarchy.
+     * On pre-Java-9 runtimes the method returns immediately because modules are not present.
+     *
+     * @param anchorClass class whose module graph will be used to determine which packages to open
+     */
     public static void deencapsulate(@NotNull final Class<?> anchorClass) {
         if (JAVA_VERSION < 9) {
             LOGGER.fine("Java version < 9, module deencapsulation not required");
@@ -39,6 +50,14 @@ public class Deencapsulation {
         }
     }
 
+    /**
+     * Creates a privileged {@link MethodHandles.Lookup} with full access rights for the supplied class. This lookup is
+     * used to call otherwise inaccessible module APIs when adjusting module openness.
+     *
+     * @param lookupClass class for which the privileged lookup should be created
+     *
+     * @return privileged lookup instance
+     */
     public static @NotNull MethodHandles.Lookup createPrivilegedLookup(@NotNull final Class<?> lookupClass) {
         try {
             final Constructor<?> lookupConstructor = ReflectionFactory.getReflectionFactory()
@@ -55,6 +74,10 @@ public class Deencapsulation {
         }
     }
 
+    /**
+     * Attempts to close any packages previously opened via {@link #deencapsulate(Class)}. This is a best-effort
+     * operation and may silently ignore failures for packages that cannot be closed again.
+     */
     public static void closeOpenedPackages() {
         if (JAVA_VERSION < 9) {
             return;

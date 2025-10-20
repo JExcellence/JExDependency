@@ -12,17 +12,29 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * JPA attribute converter for mapping List&lt;Material&gt; to semicolon-separated strings and back.
+ * Converts {@link List lists} of {@link Material} entries to a semicolon-separated column string and rebuilds
+ * them for entity hydration.
  *
- * Behavior:
- * - null list -> null column; empty list -> empty string
- * - null column -> null list; empty/blank column -> empty list
+ * <p>The converter stores each {@link Material#name()} token in upper-case form, skipping {@code null}
+ * entries. {@code null} lists correspond to {@code null} columns, while blank column values become empty
+ * lists. Invalid tokens trigger an {@link IllegalArgumentException} during entity conversion.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Converter(autoApply = true)
 public class MaterialListConverter implements AttributeConverter<List<Material>, String> {
 
+    /** Delimiter separating material tokens within the stored column string. */
     private static final String DELIM = ";";
 
+    /**
+     * Serialises the provided materials to the joined string representation.
+     *
+     * @param materials the list being persisted; may be {@code null}
+     * @return {@code null} when the list is {@code null}, an empty string for empty lists, or the joined payload otherwise
+     */
     @Override
     public String convertToDatabaseColumn(@Nullable final List<Material> materials) {
         if (materials == null) {
@@ -37,6 +49,13 @@ public class MaterialListConverter implements AttributeConverter<List<Material>,
                 .collect(Collectors.joining(DELIM));
     }
 
+    /**
+     * Rehydrates a list of {@link Material} values from the stored column payload.
+     *
+     * @param columnValue the raw database value; {@code null} yields {@code null} and blank values produce an empty list
+     * @return the reconstructed list, never {@code null} unless {@code columnValue} is {@code null}
+     * @throws IllegalArgumentException when a token cannot be resolved to a {@link Material}
+     */
     @Override
     public List<Material> convertToEntityAttribute(@Nullable final String columnValue) {
         if (columnValue == null) {
