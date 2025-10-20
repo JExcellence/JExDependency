@@ -34,15 +34,12 @@ dependencies {
 
     testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
-    testImplementation("org.mockito:mockito-inline:5.2.0")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
+    testImplementation(libs.mockito.inline)
 }
 
 tasks.named<ShadowJar>("shadowJar") {
@@ -64,6 +61,10 @@ tasks.named("build") {
 // Optionally disable the plain jar to avoid confusion
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
