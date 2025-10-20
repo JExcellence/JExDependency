@@ -1,8 +1,8 @@
 package com.raindropcentral.core;
 
 import com.raindropcentral.commands.CommandFactory;
-import com.raindropcentral.core.api.RCoreAdapter;
 import com.raindropcentral.core.api.RCoreBackend;
+import com.raindropcentral.core.api.bukkit.RCoreBukkitServiceRegistrar;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.server.RServer;
 import com.raindropcentral.core.database.repository.RPlayerRepository;
@@ -55,7 +55,7 @@ import java.util.logging.Logger;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements RCoreBackend {
 
@@ -142,7 +142,6 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
         CentralLogger.initialize(this.getPlugin());
         this.platform = new RPlatform(this.getPlugin());
 
-        this.rCoreService = new RCoreAdapter(this);
         registerService();
 
         LOGGER.info("RCore (Free) loaded successfully");
@@ -363,13 +362,9 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
      * programming error and results in an {@link IllegalStateException}.</p>
      */
     private void registerService() {
-        if (this.rCoreService == null) {
-            throw new IllegalStateException("rCoreService not initialized");
-        }
-        Bukkit.getServer().getServicesManager().register(
-                RCoreService.class,
-                this.rCoreService,
+        this.rCoreService = RCoreBukkitServiceRegistrar.register(
                 this.getPlugin(),
+                this,
                 ServicePriority.Normal
         );
         LOGGER.info("Registered RCoreService provider (Free) with priority NORMAL");
@@ -383,8 +378,9 @@ public class RCoreFreeImpl extends AbstractPluginDelegate<RCoreFree> implements 
      */
     private void unregisterService() {
         if (this.rCoreService != null) {
-            Bukkit.getServer().getServicesManager().unregister(RCoreService.class, this.rCoreService);
+            RCoreBukkitServiceRegistrar.unregister(this.getPlugin());
             LOGGER.info("Unregistered RCoreService provider (Free)");
+            this.rCoreService = null;
         } else {
             Bukkit.getServer().getServicesManager().unregisterAll(this.getPlugin());
         }
