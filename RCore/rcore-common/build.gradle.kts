@@ -40,6 +40,10 @@ tasks.withType<Jar>().configureEach {
     }
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 tasks.processResources {
     exclude("plugin.yml", "paper-plugin.yml")
 }
@@ -86,10 +90,10 @@ dependencies {
 
     testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:5.12.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
