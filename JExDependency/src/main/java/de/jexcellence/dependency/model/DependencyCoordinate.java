@@ -38,7 +38,12 @@ public record DependencyCoordinate(
             @NotNull final String artifactId,
             @NotNull final String version
     ) {
-        this(groupId, artifactId, version, null);
+        this(
+                Objects.requireNonNull(groupId, "groupId cannot be null"),
+                Objects.requireNonNull(artifactId, "artifactId cannot be null"),
+                Objects.requireNonNull(version, "version cannot be null"),
+                null
+        );
     }
 
     /**
