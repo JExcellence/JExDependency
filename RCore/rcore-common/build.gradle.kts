@@ -83,6 +83,15 @@ dependencies {
 
     // Example of plugin-provided API used by listeners
     compileOnly(libs.jecurrency)
+
+    // Testing
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
