@@ -62,6 +62,10 @@ tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 // Optionally disable the plain jar to avoid confusion
 tasks.named<Jar>("jar") {
     enabled = false
