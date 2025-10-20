@@ -51,6 +51,8 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("org.mockito:mockito-core:5.5.0")
+    testImplementation("org.mockito:mockito-inline:5.5.0")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.6.0")
 }
 
 java {
