@@ -36,12 +36,12 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
-    testImplementation("org.mockito:mockito-inline:5.2.0")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
