@@ -222,17 +222,21 @@ public class YamlDependencyLoader {
     }
 
     private boolean isPaperServer() {
+        return isClassPresent("com.destroystokyo.paper.PaperConfig")
+                || isClassPresent("io.papermc.paper.configuration.Configuration");
+    }
+
+    private boolean isClassPresent(@NotNull final String className) {
         try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
+            classForName(className);
             return true;
         } catch (final ClassNotFoundException exception) {
-            try {
-                Class.forName("io.papermc.paper.configuration.Configuration");
-                return true;
-            } catch (final ClassNotFoundException exception2) {
-                return false;
-            }
+            return false;
         }
+    }
+
+    static @NotNull Class<?> classForName(@NotNull final String className) throws ClassNotFoundException {
+        return Class.forName(className);
     }
 
     private enum ServerType {
