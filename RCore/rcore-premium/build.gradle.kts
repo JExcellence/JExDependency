@@ -31,6 +31,13 @@ dependencies {
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory) { isTransitive = false }
+
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation("org.mockito:mockito-inline:5.14.2")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
@@ -49,6 +56,10 @@ tasks.named("assemble") {
 }
 tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 // Optionally disable the plain jar to avoid confusion
