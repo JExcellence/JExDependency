@@ -27,6 +27,9 @@ dependencies {
 
     implementation("org.ow2.asm:asm:9.7.1")
     implementation("org.ow2.asm:asm-commons:9.7.1")
+
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks {
@@ -83,6 +86,10 @@ tasks {
                 .map { zipTree(it) }
         })
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
