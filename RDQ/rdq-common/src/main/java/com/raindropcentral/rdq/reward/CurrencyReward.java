@@ -2,9 +2,9 @@ package com.raindropcentral.rdq.reward;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.jexcellence.currency.JECurrency;
-import de.jexcellence.currency.adapter.CurrencyAdapter;
-import de.jexcellence.currency.database.entity.Currency;
+import de.jexcellence.economy.JExEconomy;
+import de.jexcellence.economy.adapter.CurrencyAdapter;
+import de.jexcellence.economy.database.entity.Currency;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -195,10 +195,10 @@ public final class CurrencyReward extends AbstractReward {
      */
     @Nullable
     private CurrencyAdapter getCurrencyAdapter() {
-        if (this.currencyPlugin == null || "jecurrency".equalsIgnoreCase(this.currencyPlugin)) {
-            final Plugin plugin = Bukkit.getPluginManager().getPlugin("JECurrency");
-            if (plugin instanceof final JECurrency jeCurrency) {
-                return jeCurrency.getImpl().getCurrencyAdapter();
+        if (this.currencyPlugin == null || "jexeconomy".equalsIgnoreCase(this.currencyPlugin)) {
+            final Plugin plugin = Bukkit.getPluginManager().getPlugin("JExEconomy");
+            if (plugin instanceof final JExEconomy jexEconomy) {
+                return jexEconomy.getImpl().getCurrencyAdapter();
             }
         }
         return null;
@@ -212,8 +212,8 @@ public final class CurrencyReward extends AbstractReward {
     @Nullable
     private Currency resolveCurrency() {
         try {
-            final Plugin plugin = Bukkit.getPluginManager().getPlugin("JECurrency");
-            if (!(plugin instanceof final JECurrency jeCurrencyPlugin)) {
+            final Plugin plugin = Bukkit.getPluginManager().getPlugin("JExEconomy");
+            if (!(plugin instanceof final JExEconomy jexEconomyPlugin)) {
                 return null;
             }
 
@@ -221,7 +221,7 @@ public final class CurrencyReward extends AbstractReward {
                 return new Currency("", "", "VAULT", "$", Material.GOLD_NUGGET);
             }
 
-            final Map<Long, Currency> availableCurrencies = jeCurrencyPlugin.getImpl().getCurrencies();
+            final Map<Long, Currency> availableCurrencies = jexEconomyPlugin.getImpl().getCurrencies();
             return availableCurrencies.values().stream()
                     .filter(c -> c.getIdentifier().equalsIgnoreCase(this.currencyIdentifier))
                     .findFirst()

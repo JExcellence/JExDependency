@@ -32,10 +32,6 @@ dependencies {
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory) { isTransitive = false }
 
-    testImplementation(platform("org.junit:junit-bom:5.10.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
     testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)

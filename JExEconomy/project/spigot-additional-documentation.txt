@@ -1,0 +1,426 @@
+[CENTER][SIZE=7][COLOR=#FF6B35][B]📚 JExEconomy Documentation 📚[/B][/COLOR][/SIZE]
+[SIZE=4][COLOR=#4ECDC4][I]Complete Usage Guide & Configuration Manual[/I][/COLOR][/SIZE][/CENTER]
+
+[SIZE=6][COLOR=#FF6B35][B]🚀 Quick Start Guide[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]📦 First Installation[/B][/COLOR][/SIZE]
+
+[LIST=1]
+[*][B]Download & Install:[/B] Place JExEconomy.jar in your [FONT=Courier New]plugins/[/FONT] folder
+[*][B]Start Server:[/B] Boot your server to generate initial configuration files
+[*][B]Check Console:[/B] Verify successful loading (look for JExEconomy startup messages)
+[*][B]Test Commands:[/B] Run [FONT=Courier New]/currencies[/FONT] in-game to open the management GUI
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]🎯 Creating Your First Currency[/B][/COLOR][/SIZE]
+
+[LIST=1]
+[*]Execute [FONT=Courier New]/currencies[/FONT] in-game
+[*]Click the [B]"Create Currency"[/B] button (requires [FONT=Courier New]currencies.command.create[/FONT] permission)
+[*]Follow the anvil-based creation wizard:
+   [LIST]
+   [*][B]Identifier:[/B] Enter a unique name (e.g., "coins", "gems", "tokens")
+   [*][B]Symbol:[/B] Choose a display symbol (e.g., "$", "💎", "🪙")
+   [*][B]Icon:[/B] Select a Material for GUI representation
+   [*][B]Prefix/Suffix:[/B] Optional formatting for balance displays
+   [/LIST]
+[*]Confirm creation - all online players automatically receive accounts
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]🎮 Player Usage Guide[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]💰 Checking Balances[/B][/COLOR][/SIZE]
+
+[CODE]
+/currency                    # View all your balances
+/currency coins             # View specific currency balance
+/currency JExcellence       # View another player's balances (with permission)
+/currency gems JExcellence  # View specific player's specific currency
+[/CODE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🏦 Currency Management GUI[/B][/COLOR][/SIZE]
+
+Access the main interface with [FONT=Courier New]/currencies[/FONT]:
+
+[B]🔹 Overview Tab:[/B]
+[LIST]
+[*]Browse all available currencies with pagination
+[*]View currency details (symbol, balances, player count)
+[*]Access leaderboards for each currency
+[*]Quick balance checks and comparisons
+[/LIST]
+
+[B]🔹 Create Tab:[/B] (Admin Only)
+[LIST]
+[*]Interactive currency creation wizard
+[*]Real-time validation of inputs
+[*]Preview currency appearance before creation
+[*]Automatic player account provisioning
+[/LIST]
+
+[B]🔹 Edit Tab:[/B] (Admin Only)
+[LIST]
+[*]Modify existing currency properties
+[*]Update symbols, icons, prefixes, suffixes
+[*]Changes apply immediately to all players
+[*]Validation prevents conflicts
+[/LIST]
+
+[B]🔹 Delete Tab:[/B] (Admin Only)
+[LIST]
+[*]Safe currency removal with impact assessment
+[*]Preview affected players and total balances
+[*]Multiple confirmation steps prevent accidents
+[*]Complete cleanup of all related data
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]📊 Transaction Logs[/B][/COLOR][/SIZE]
+
+Use [FONT=Courier New]/currencylog[/FONT] to access comprehensive logging:
+
+[CODE]
+/currencylog view           # Browse transaction history
+/currencylog view 2         # Jump to specific page
+/currencylog filter         # Open interactive filter menu
+/currencylog filter player JExcellence  # Filter by specific player
+/currencylog filter currency coins      # Filter by currency type
+/currencylog filter operation deposit   # Show only deposits
+/currencylog clear          # Remove all active filters
+/currencylog stats          # View transaction statistics
+/currencylog export         # Export logs to file (admin only)
+[/CODE]
+
+[SIZE=6][COLOR=#FF6B35][B]⚙️ Configuration Guide[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🗄️ Database Configuration[/B][/COLOR][/SIZE]
+
+JExEconomy supports multiple database backends. Configure in [FONT=Courier New]hibernate.properties[/FONT]:
+
+[B]🔹 H2 Database (Default - File-based):[/B]
+[CODE]
+hibernate.connection.driver_class=org.h2.Driver
+hibernate.connection.url=jdbc:h2:./plugins/JExEconomy/database/currency
+hibernate.connection.username=sa
+hibernate.connection.password=
+hibernate.dialect=org.hibernate.dialect.H2Dialect
+hibernate.hbm2ddl.auto=update
+[/CODE]
+
+[B]🔹 MySQL Configuration:[/B]
+[CODE]
+hibernate.connection.driver_class=com.mysql.cj.jdbc.Driver
+hibernate.connection.url=jdbc:mysql://localhost:3306/jexeconomy
+hibernate.connection.username=your_username
+hibernate.connection.password=your_password
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.hbm2ddl.auto=update
+[/CODE]
+
+[B]🔹 PostgreSQL Configuration:[/B]
+[CODE]
+hibernate.connection.driver_class=org.postgresql.Driver
+hibernate.connection.url=jdbc:postgresql://localhost:5432/jexeconomy
+hibernate.connection.username=your_username
+hibernate.connection.password=your_password
+hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+hibernate.hbm2ddl.auto=update
+[/CODE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🌍 Translation Configuration[/B][/COLOR][/SIZE]
+
+[B]🔹 Basic Translation Setup:[/B]
+[LIST=1]
+[*]Navigate to [FONT=Courier New]plugins/JExEconomy/translations/[/FONT]
+[*]Edit [FONT=Courier New]translation.yml[/FONT]:
+   [CODE]
+   defaultLanguage: en
+   supportedLanguages: [en, de, fr, es]  # Add your languages
+   [/CODE]
+[*]Create language files (e.g., [FONT=Courier New]fr.yml[/FONT], [FONT=Courier New]es.yml[/FONT])
+[*]Use [FONT=Courier New]/r18n reload[/FONT] to apply changes
+[/LIST]
+
+[B]🔹 Custom Language File Example:[/B]
+[CODE]
+# fr.yml - French translations
+currency:
+  balance:
+    own: "<gradient:#FFD700:#FFA500>💰 Vos soldes:</gradient>"
+    other: "<gradient:#FFD700:#FFA500>💰 Soldes de %player%:</gradient>"
+  create:
+    success: "<green>✅ Devise '%currency%' créée avec succès!</green>"
+    error: "<red>❌ Erreur lors de la création de la devise</red>"
+gui:
+  title:
+    overview: "Aperçu des Devises"
+    create: "Créer une Devise"
+    edit: "Modifier la Devise"
+[/CODE]
+
+[B]🔹 Translation Management Commands:[/B]
+[CODE]
+/r18n reload                # Reload all translation files
+/r18n missing               # Check for missing translation keys
+/r18n missing fr            # Check missing keys for French
+/r18n missing fr 2          # Browse missing keys (page 2)
+[/CODE]
+
+[SIZE=6][COLOR=#FF6B35][B]🔐 Permission System[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]👤 Player Permissions[/B][/COLOR][/SIZE]
+
+[CODE]
+# Basic currency access
+currency.command              # View own balances
+currency.command.other        # View other players' balances
+
+# Currency management GUI
+currencies.command            # Access /currencies GUI
+currencies.command.overview   # View currency overview tab
+[/CODE]
+
+[SIZE=5][COLOR=#4ECDC4][B]👑 Administrative Permissions[/B][/COLOR][/SIZE]
+
+[CODE]
+# Currency management
+currencies.command.create     # Create new currencies
+currencies.command.update     # Edit existing currencies
+currencies.command.delete     # Delete currencies
+
+# Advanced administration
+jexeconomy.admin.reset        # Reset player balances
+jexeconomy.admin.delete       # Administrative currency deletion
+jexeconomy.admin.export       # Export transaction logs
+jexeconomy.admin.*            # All administrative permissions
+
+# Logging system
+pcurrencylog.command          # Access transaction logs
+[/CODE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🌐 Translation Permissions[/B][/COLOR][/SIZE]
+
+[CODE]
+r18n.reload                   # Reload translation files
+r18n.missing                  # Check missing translation keys
+[/CODE]
+
+[SIZE=6][COLOR=#FF6B35][B]🖥️ Console Administration[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]💸 Direct Balance Management[/B][/COLOR][/SIZE]
+
+Console-only commands for server administration:
+
+[CODE]
+# Deposit currency to players
+cdeposit JExcellence coins 1000
+cdeposit PlayerName gems 500
+
+# Withdraw currency from players
+cwithdraw JExcellence coins 250
+cwithdraw PlayerName gems 100
+[/CODE]
+
+[B]🔹 Usage Examples:[/B]
+[LIST]
+[*][B]Daily Rewards:[/B] [FONT=Courier New]cdeposit %player% dailycoins 100[/FONT]
+[*][B]Event Prizes:[/B] [FONT=Courier New]cdeposit WinnerName eventTokens 500[/FONT]
+[*][B]Punishment:[/B] [FONT=Courier New]cwithdraw RuleBreaker coins 1000[/FONT]
+[*][B]Shop Purchases:[/B] [FONT=Courier New]cwithdraw %player% gems 50[/FONT]
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]🔧 Advanced Configuration[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]📈 Performance Optimization[/B][/COLOR][/SIZE]
+
+[B]🔹 Database Connection Pooling:[/B]
+[CODE]
+# Add to hibernate.properties for better performance
+hibernate.connection.pool_size=10
+hibernate.c3p0.min_size=5
+hibernate.c3p0.max_size=20
+hibernate.c3p0.timeout=300
+hibernate.c3p0.max_statements=50
+hibernate.c3p0.idle_test_period=3000
+[/CODE]
+
+[B]🔹 Caching Configuration:[/B]
+[CODE]
+# Enable second-level cache for better performance
+hibernate.cache.use_second_level_cache=true
+hibernate.cache.region.factory_class=org.hibernate.cache.caffeine.CaffeineCacheRegionFactory
+hibernate.cache.use_query_cache=true
+[/CODE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🔒 Security Best Practices[/B][/COLOR][/SIZE]
+
+[LIST]
+[*][B]Database Security:[/B] Use strong passwords and limit database user permissions
+[*][B]Permission Groups:[/B] Create role-based permission groups for different staff levels
+[*][B]Regular Backups:[/B] Backup your database regularly, especially before major updates
+[*][B]Log Monitoring:[/B] Regularly review transaction logs for suspicious activity
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]💻 Developer Integration[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🔌 API Usage Examples[/B][/COLOR][/SIZE]
+
+[B]🔹 Basic Integration Setup:[/B]
+[CODE]
+public class MyEconomyPlugin extends JavaPlugin {
+    private CurrencyAdapter currencyAdapter;
+    
+    @Override
+    public void onEnable() {
+        // Get the adapter
+        currencyAdapter = Bukkit.getServicesManager().load(CurrencyAdapter.class);
+        
+        if (currencyAdapter == null) {
+            getLogger().warning("JExEconomy not found!");
+            return;
+        }
+        
+        getLogger().info("Successfully hooked into JExEconomy!");
+    }
+}
+[/CODE]
+
+[B]🔹 Advanced Balance Operations:[/B]
+[CODE]
+// Check if player has enough balance
+public CompletableFuture<Boolean> hasEnoughBalance(OfflinePlayer player, String currencyId, double amount) {
+    return currencyAdapter.getBalance(player, currencyId)
+        .thenApply(balance -> balance >= amount);
+}
+
+// Transfer money between players
+public CompletableFuture<Boolean> transferMoney(OfflinePlayer from, OfflinePlayer to, String currencyId, double amount) {
+    return currencyAdapter.withdraw(from, currencyId, amount)
+        .thenCompose(withdrawResult -> {
+            if (withdrawResult.isSuccess()) {
+                return currencyAdapter.deposit(to, currencyId, amount)
+                    .thenApply(depositResult -> depositResult.isSuccess());
+            }
+            return CompletableFuture.completedFuture(false);
+        });
+}
+[/CODE]
+
+[B]🔹 Event Listening:[/B]
+[CODE]
+@EventHandler
+public void onBalanceChange(BalanceChangeEvent event) {
+    Player player = event.getPlayer();
+    Currency currency = event.getCurrency();
+    double oldBalance = event.getOldBalance();
+    double newBalance = event.getNewBalance();
+    
+    // React to balance changes
+    if (newBalance > oldBalance) {
+        player.sendMessage("You received " + (newBalance - oldBalance) + " " + currency.getSymbol());
+    }
+}
+
+@EventHandler
+public void onCurrencyCreate(CurrencyCreatedEvent event) {
+    Currency currency = event.getCurrency();
+    Player creator = event.getInitiator();
+    
+    // Announce new currency creation
+    Bukkit.broadcastMessage("New currency created: " + currency.getIdentifier());
+}
+[/CODE]
+
+[SIZE=6][COLOR=#FF6B35][B]🛠️ Troubleshooting Guide[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]❗ Common Issues & Solutions[/B][/COLOR][/SIZE]
+
+[B]🔹 Plugin Won't Load:[/B]
+[LIST]
+[*][B]Check Java Version:[/B] Ensure you're running Java 21+
+[*][B]Verify Bukkit/Spigot Version:[/B] Must be 1.19 or higher
+[*][B]Check Dependencies:[/B] InventoryFramework should auto-inject
+[*][B]Review Console Logs:[/B] Look for specific error messages
+[/LIST]
+
+[B]🔹 Database Connection Issues:[/B]
+[LIST]
+[*][B]Verify Credentials:[/B] Check username/password in hibernate.properties
+[*][B]Test Connection:[/B] Ensure database server is accessible
+[*][B]Check Drivers:[/B] Ensure JDBC drivers are available
+[*][B]Firewall Settings:[/B] Verify database port is open
+[/LIST]
+
+[B]🔹 GUI Not Opening:[/B]
+[LIST]
+[*][B]Check Permissions:[/B] Ensure player has [FONT=Courier New]currencies.command[/FONT]
+[*][B]InventoryFramework:[/B] Verify the framework loaded correctly
+[*][B]Resource Pack:[/B] Some custom items may require resource packs
+[*][B]Client Version:[/B] Ensure client supports the server version
+[/LIST]
+
+[B]🔹 Translation Issues:[/B]
+[LIST]
+[*][B]File Encoding:[/B] Ensure translation files are UTF-8 encoded
+[*][B]YAML Syntax:[/B] Validate YAML formatting in translation files
+[*][B]Missing Keys:[/B] Use [FONT=Courier New]/r18n missing[/FONT] to identify gaps
+[*][B]Reload Required:[/B] Use [FONT=Courier New]/r18n reload[/FONT] after changes
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]📋 Debug Information[/B][/COLOR][/SIZE]
+
+When reporting issues, please provide:
+[LIST]
+[*][B]Server Version:[/B] Paper version and build number
+[*][B]Java Version:[/B] Java runtime version
+[*][B]Plugin Version:[/B] JExEconomy version (Free/Premium)
+[*][B]Error Logs:[/B] Complete console error messages
+[*][B]Configuration:[/B] Relevant config file contents
+[*][B]Steps to Reproduce:[/B] Detailed reproduction steps
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]📊 Best Practices[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🏗️ Server Setup Recommendations[/B][/COLOR][/SIZE]
+
+[LIST]
+[*][B]Regular Backups:[/B] Schedule automatic database backups
+[*][B]Monitoring:[/B] Set up log monitoring for unusual activity
+[*][B]Testing Environment:[/B] Test configuration changes on a development server
+[*][B]Permission Hierarchy:[/B] Use inheritance to simplify permission management
+[*][B]Documentation:[/B] Document your custom currencies and their purposes
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]💡 Currency Design Tips[/B][/COLOR][/SIZE]
+
+[LIST]
+[*][B]Meaningful Names:[/B] Use descriptive identifiers (coins, gems, tokens)
+[*][B]Consistent Symbols:[/B] Choose symbols that fit your server theme
+[*][B]Balanced Economy:[/B] Plan currency values and exchange rates carefully
+[*][B]Player Education:[/B] Clearly communicate currency purposes to players
+[*][B]Regular Review:[/B] Monitor currency usage and adjust as needed
+[/LIST]
+
+[CENTER][SIZE=6][COLOR=#FF6B35][B]🎯 Quick Reference[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]Essential Commands Cheat Sheet[/B][/COLOR][/SIZE]
+
+[CODE]
+# Player Commands
+/currency                    # View balances
+/currencies                  # Open management GUI
+/currencylog view           # View transaction logs
+
+# Admin Commands (Console)
+cdeposit <player> <currency> <amount>    # Add money
+cwithdraw <player> <currency> <amount>   # Remove money
+
+# Translation Commands
+/r18n reload                # Reload translations
+/r18n missing              # Check missing keys
+[/CODE]
+
+[SIZE=4][COLOR=#4ECDC4][B]Need more help? Join our Discord community!</B][/COLOR][/SIZE]
+[B]🔗 Discord: [URL=https://discord.gg/m5XpbdQv6V]https://discord.gg/m5XpbdQv6V[/URL][/B]
+[/CENTER]
+
+[SIZE=2][COLOR=#888888]Documentation for JExEconomy v2.0.0 | Last Updated: 2024 | For support visit our Discord[/COLOR][/SIZE]

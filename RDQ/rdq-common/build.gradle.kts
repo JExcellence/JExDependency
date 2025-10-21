@@ -83,7 +83,7 @@ dependencies {
     implementation(libs.bundles.inventory)
 
     // Example of plugin-provided API used by listeners
-    compileOnly(libs.jecurrency)
+    compileOnly(libs.jexeconomy)
     compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
 }
 

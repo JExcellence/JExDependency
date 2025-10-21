@@ -86,7 +86,7 @@ dependencies {
     implementation(libs.bundles.inventory) { isTransitive = false }
 
     // Example of plugin-provided API used by listeners
-    compileOnly(libs.jecurrency)
+    compileOnly(libs.jexeconomy)
 
     testImplementation(platform("org.junit:junit-bom:5.10.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")

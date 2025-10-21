@@ -27,9 +27,6 @@ dependencies {
 
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-
-    // CORRECTED: Changed from 'implementation' to 'compileOnly'.
-    // This tells Gradle to use the library for compiling, but NOT to package it into the final JAR.
     compileOnly(libs.bundles.inventory) { isTransitive = false }
 }
 

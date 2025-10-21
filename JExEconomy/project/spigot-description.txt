@@ -1,0 +1,262 @@
+[CENTER][SIZE=7][COLOR=#FF6B35][B]🏦 JExEconomy v2.0.0 🏦[/B][/COLOR][/SIZE]
+[SIZE=4][COLOR=#4ECDC4][I]Advanced Multi-Currency Economy Plugin[/I][/COLOR][/SIZE]
+
+[IMG]https://img.shields.io/badge/Bukkit-1.19+-brightgreen[/IMG] [IMG]https://img.shields.io/badge/Java-21+-orange[/IMG] [IMG]https://img.shields.io/badge/Version-2.0.0-blue[/IMG]
+[/CENTER]
+
+[CENTER][SIZE=6][COLOR=#FF6B35][B]🎥 Visual Showcase & Tutorials[/B][/COLOR][/SIZE]
+[SIZE=4][COLOR=#4ECDC4][I]See JExEconomy in Action - Complete Feature Demonstrations[/I][/COLOR][/SIZE][/CENTER]
+
+[SPOILER="🚀 Quick Start & Installation Tutorial (2-3 minutes)"]
+[B]What you'll see:[/B] Complete installation process from download to first currency creation
+[LIST]
+[*]Download and drag-drop installation
+[*]Server startup and console messages
+[*]First `/currencies` command execution
+[*]Basic permission setup demonstration
+[*]GUI opening and initial navigation
+[/LIST]
+[CENTER][B]📺 [URL=YOUR_YOUTUBE_LINK_HERE]Watch Installation Tutorial[/URL][/B][/CENTER]
+[/SPOILER]
+
+[SPOILER="💰 Currency Creation Wizard Demo (3-4 minutes)"]
+[B]What you'll see:[/B] Step-by-step currency creation using the interactive wizard
+[LIST]
+[*]Opening the currency management GUI
+[*]Anvil-based creation process walkthrough
+[*]Setting identifiers, symbols, icons, and formatting
+[*]Real-time validation and error handling
+[*]Automatic player account provisioning
+[/LIST]
+[CENTER][B]📺 [URL=YOUR_YOUTUBE_LINK_HERE]Watch Currency Creation Guide[/URL][/B][/CENTER]
+[/SPOILER]
+
+[SPOILER="✏️ Advanced Currency Management (4-5 minutes)"]
+[B]What you'll see:[/B] Complete currency lifecycle management and administrative tools
+[LIST]
+[*]Currency browsing and overview navigation
+[*]Live editing with real-time updates
+[*]Safe deletion with impact assessment
+[*]Balance reset and administrative functions
+[*]Permission-based access control
+[/LIST]
+[CENTER][B]📺 [URL=YOUR_YOUTUBE_LINK_HERE]Watch Management Tutorial[/URL][/B][/CENTER]
+[/SPOILER]
+
+[SPOILER="📊 Leaderboards & Transaction Logs (3-4 minutes)"]
+[B]What you'll see:[/B] Advanced analytics and logging system demonstration
+[LIST]
+[*]Gold/Silver/Bronze ranking visualization
+[*]Interactive transaction log browsing
+[*]Advanced filtering and search capabilities
+[*]Export functionality and statistics
+[*]Real-time updates and monitoring
+[/LIST]
+[CENTER][B]📺 [URL=YOUR_YOUTUBE_LINK_HERE]Watch Analytics Demo[/URL][/B][/CENTER]
+[/SPOILER]
+
+[SPOILER="🌍 Multi-Language & Developer API (3-4 minutes)"]
+[B]What you'll see:[/B] Internationalization features and API integration examples
+[LIST]
+[*]Live language switching and MiniMessage formatting
+[*]Translation management and missing key detection
+[*]Console administration commands
+[*]Basic API integration with code examples
+[*]Event system and plugin integration
+[/LIST]
+[CENTER][B]📺 [URL=YOUR_YOUTUBE_LINK_HERE]Watch Advanced Features Demo[/URL][/B][/CENTER]
+[/SPOILER]
+
+[SPOILER="🖼️ Screenshot Gallery - GUI Showcase"]
+[CENTER][B]📸 Complete Interface Screenshots[/B]
+[IMG]YOUR_MAIN_GUI_SCREENSHOT_URL[/IMG]
+[I]Main Currency Management Interface[/I]
+
+[IMG]YOUR_CREATION_WIZARD_SCREENSHOT_URL[/IMG]
+[I]Interactive Currency Creation Wizard[/I]
+
+[IMG]YOUR_LEADERBOARD_SCREENSHOT_URL[/IMG]
+[I]Advanced Leaderboard System[/I]
+
+[IMG]YOUR_LOGS_SCREENSHOT_URL[/IMG]
+[I]Comprehensive Transaction Logging[/I]
+
+[B]🖼️ [URL=YOUR_IMGUR_ALBUM_LINK]View Complete Screenshot Gallery[/URL][/B][/CENTER]
+[/SPOILER]
+
+[SIZE=6][COLOR=#FF6B35][B]📋 Overview[/B][/COLOR][/SIZE]
+
+JExEconomy is a cutting-edge, feature-rich economy plugin designed for modern Spigot/Bukkit/Paper servers. It revolutionizes server economies with support for multiple currencies, intuitive GUI interfaces, comprehensive logging, and extensive internationalization. Whether you're running a small community server or a large network, JExEconomy provides the tools you need for sophisticated economic management.
+
+[SIZE=6][COLOR=#FF6B35][B]✨ Key Features[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🏛️ Multi-Currency System[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Unlimited Currencies:[/B] Create as many currencies as your server needs
+[*][B]Full Customization:[/B] Each currency supports custom identifiers, symbols, prefixes, suffixes, and icons
+[*][B]Automatic Account Management:[/B] Player accounts are automatically created when new currencies are added
+[*][B]Complete Lifecycle Management:[/B] Create, edit, delete, and manage currencies with ease
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]🖥️ Modern GUI Interface[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Streamlined Commands:[/B] Simply use [FONT=Courier New]/currencies[/FONT] to access all management features
+[*][B]Interactive Creation Wizard:[/B] Anvil-based currency creation with real-time validation
+[*][B]Live Editing System:[/B] Modify currency properties on-the-fly with instant updates
+[*][B]Safe Deletion Process:[/B] Impact assessment and confirmation dialogs prevent accidental data loss
+[*][B]Paginated Overviews:[/B] Browse all currencies with detailed information displays
+[*][B]Advanced Leaderboards:[/B] Visual ranking system with gold/silver/bronze hierarchy
+[*][B]Administrative Tools:[/B] Reset balances, detailed views, and comprehensive management options
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]📊 Comprehensive Logging & Analytics[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Detailed Transaction Logs:[/B] Track every economic activity on your server
+[*][B]Advanced Filtering:[/B] Filter by player, currency, operation type, and more
+[*][B]Export Functionality:[/B] Export logs to files for external analysis
+[*][B]Interactive Navigation:[/B] Paginated views with hover tooltips and clickable elements
+[*][B]Real-time Statistics:[/B] Monitor economic health with built-in analytics
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]🌍 Internationalization Support[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Multi-Language Ready:[/B] Supports any language through R18n framework
+[*][B]MiniMessage Formatting:[/B] Beautiful gradient styling across all messages and UIs
+[*][B]Live Translation Reload:[/B] Update translations without server restarts
+[*][B]Missing Key Detection:[/B] Built-in tools to identify incomplete translations
+[*][B]Pre-built Languages:[/B] Includes English and German translations out of the box
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]🔧 Administrative Tools[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Console Commands:[/B] Direct deposit/withdraw operations from server console
+[*][B]Permission-Based Access:[/B] Granular permission system for different user roles
+[*][B]Balance Reset Functions:[/B] Administrative tools to reset player balances
+[*][B]Impact Assessment:[/B] Preview the effects of major changes before applying them
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]🔌 Developer API[/B][/COLOR][/SIZE]
+
+JExEconomy provides a comprehensive developer API through the [FONT=Courier New]CurrencyAdapter[/FONT] service, making it easy to integrate with other plugins:
+
+[CODE]
+// Access the API
+CurrencyAdapter adapter = Bukkit.getServicesManager().load(CurrencyAdapter.class);
+
+// Query player balance (async)
+adapter.getBalance(player, currency).thenAccept(balance -> {
+    // Handle balance result
+});
+
+// Deposit/Withdraw operations (async)
+adapter.deposit(player, currency, 100.0).thenAccept(response -> {
+    if (response.isSuccess()) {
+        // Transaction successful
+    }
+});
+
+// Currency management
+adapter.hasGivenCurrency("coins").thenAccept(exists -> {
+    // Check if currency exists
+});
+[/CODE]
+
+[SIZE=5][COLOR=#4ECDC4][B]🎯 API Features:[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Asynchronous Operations:[/B] All API calls return CompletableFuture for optimal performance
+[*][B]Event System:[/B] Listen to balance changes, currency creation/deletion events
+[*][B]Service Registration:[/B] Registered with Bukkit's ServicesManager for easy access
+[*][B]Comprehensive Coverage:[/B] Full CRUD operations for currencies and balances
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]🎮 Player Commands[/B][/COLOR][/SIZE]
+
+[LIST]
+[*][FONT=Courier New][B]/currency[/B][/FONT] - View your balances across all currencies
+[*][FONT=Courier New][B]/currencies[/B][/FONT] - Open the comprehensive currency management GUI
+[*][FONT=Courier New][B]/currencylog[/B][/FONT] - Access detailed transaction logs with filtering options
+[*][FONT=Courier New][B]/r18n[/B][/FONT] - Manage translations and language settings
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]⚙️ Requirements & Installation[/B][/COLOR][/SIZE]
+
+[SIZE=5][COLOR=#4ECDC4][B]📋 Requirements:[/B][/COLOR][/SIZE]
+[LIST]
+[*][B]Server:[/B] Spigot/Bukkit 1.20+
+[*][B]Java:[/B] 21 or higher
+[*][B]Dependencies:[/B] InventoryFramework (automatically injected)
+[*][B]Optional:[/B] Vault (soft dependency for compatibility)
+[/LIST]
+
+[SIZE=5][COLOR=#4ECDC4][B]🚀 Installation:[/B][/COLOR][/SIZE]
+[LIST=1]
+[*]Download the appropriate version (Free/Premium) from the resource page
+[*]Place the JAR file in your server's [FONT=Courier New]plugins[/FONT] folder
+[*]Start your server to generate configuration files
+[*]Configure translations and database settings as needed
+[*]Enjoy your new advanced economy system!
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]🔮 Upcoming Features[/B][/COLOR][/SIZE]
+
+[LIST]
+[*][B]Vault Migration Tool:[/B] Seamless migration from existing Vault-based economies
+[*][B]Enhanced Analytics:[/B] Advanced economic reporting and trend analysis
+[*][B]API Expansions:[/B] Additional developer tools and integration options
+[*][B]Performance Optimizations:[/B] Continued improvements for large-scale deployments
+[*][B]Additional GUI Enhancements:[/B] More interactive elements and customization options
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]🛠️ Configuration & Customization[/B][/COLOR][/SIZE]
+
+JExEconomy is highly configurable with support for:
+[LIST]
+[*][B]Database Backends:[/B] H2, MySQL, PostgreSQL, Oracle, SQL Server
+[*][B]Custom Translations:[/B] Add your own language files with full MiniMessage support
+[*][B]Permission Systems:[/B] Granular control over who can access what features
+[*][B]Logging Levels:[/B] Configurable logging detail for performance optimization
+[/LIST]
+
+[SIZE=6][COLOR=#FF6B35][B]📈 Performance & Scalability[/B][/COLOR][/SIZE]
+
+Built with performance in mind:
+[LIST]
+[*][B]Asynchronous Operations:[/B] Non-blocking database operations
+[*][B]Efficient Caching:[/B] Smart caching system for frequently accessed data
+[*][B]Optimized Queries:[/B] Hibernate-powered database layer for optimal performance
+[*][B]Scalable Architecture:[/B] Designed to handle servers of any size
+[/LIST]
+
+[CENTER][SIZE=6][COLOR=#FF6B35][B]💬 Support & Community[/B][/COLOR][/SIZE]
+
+[SIZE=4][COLOR=#4ECDC4][B]Need help? Have suggestions? Join our Discord community![/B][/COLOR][/SIZE]
+
+[URL=https://discord.gg/m5XpbdQv6V][IMG]https://img.shields.io/discord/YOUR_DISCORD_ID?color=7289da&label=Discord&logo=discord&logoColor=white[/IMG][/URL]
+
+[B]🔗 Discord: [URL=https://discord.gg/m5XpbdQv6V]https://discord.gg/m5XpbdQv6V[/URL][/B]
+
+[SIZE=4][COLOR=#4ECDC4][B]What you'll find in our Discord:[/B][/COLOR][/SIZE]
+[LIST]
+[*]📞 [B]Direct Support:[/B] Get help from the developer and community
+[*]📢 [B]Update Announcements:[/B] Be the first to know about new features and releases
+[*]💡 [B]Feature Requests:[/B] Suggest new features and improvements
+[*]🐛 [B]Bug Reports:[/B] Report issues and get them resolved quickly
+[*]🤝 [B]Community Discussion:[/B] Share configurations, tips, and best practices
+[*]📚 [B]Documentation:[/B] Access additional guides and tutorials
+[/LIST]
+
+[SIZE=5][COLOR=#FF6B35][B]🏆 Why Choose JExEconomy?[/B][/COLOR][/SIZE]
+
+[LIST]
+[*][B]Modern Architecture:[/B] Built with the latest technologies and best practices
+[*][B]Active Development:[/B] Regular updates and new features
+[*][B]Community Driven:[/B] Features requested and tested by real server owners
+[*][B]Professional Support:[/B] Direct access to the developer for assistance
+[*][B]Extensive Documentation:[/B] Comprehensive guides and API documentation
+[*][B]Free & Premium Options:[/B] Choose the version that fits your needs
+[/LIST]
+
+[SIZE=4][COLOR=#4ECDC4][I]Transform your server's economy today with JExEconomy - where advanced features meet intuitive design![/I][/COLOR][/SIZE]
+[/CENTER]
+
+[SIZE=2][COLOR=#888888]Plugin developed by JExcellence | Website: https://jexcellence.de | Version 2.0.0[/COLOR][/SIZE]

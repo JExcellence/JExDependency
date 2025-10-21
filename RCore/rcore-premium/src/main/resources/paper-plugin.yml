@@ -8,7 +8,7 @@ authors: [ ItsRainingHP, JExcellence ]
 website: https://www.raindropcentral.com
 has-open-classloader: true
 softdepend:
-  - JECurrency
+  - JExEconomy
   - LuckPerms
   - Aura
   - ChestSort

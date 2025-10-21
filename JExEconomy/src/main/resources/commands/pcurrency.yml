@@ -1,0 +1,24 @@
+commands:
+  pcurrency:
+    name: 'pcurrency'
+    description: ''
+    aliases:
+      - currency
+      - balance
+      - bal
+      - money
+    usage: 'currency'
+    argumentUsages:
+      1$: 'lut["prefix"] & "&7/" & alias & "&7"'
+    errorMessages:
+      internalError$: 'lut["prefix"] & "&4An internal error occurred"'
+      playerNotOnline$: 'lut["prefix"] & "&4The player is not online"'
+      notAPlayer$: 'lut["prefix"] & "&4You\sre not a player"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
+      nodes:
+        command: "currency.command"
+        commandOther: "currency.command.other"
+
+lut:
+  prefix: '&8[&5Currency&8] &7'

@@ -32,7 +32,7 @@ jeconfig-mapper = "1.0.0"
 jetranslate = "3.0.0"
 jehibernate = "1.0.0"
 jedependency = "2.0.0"
-jecurrency = "2.0.0"
+jexeconomy = "2.0.0"
 
 [libraries]
 # Paper & Adventure
@@ -84,7 +84,7 @@ jeconfig-mapper = { module = "de.jexcellence.config:ConfigMapper", version.ref =
 jetranslate = { module = "de.jexcellence.translate:jextranslate", version.ref = "jetranslate" }
 jehibernate = { module = "de.jexcellence.hibernate:JEHibernate", version.ref = "jehibernate" }
 jedependency = { module = "de.jexcellence.dependency:jexdependency", version.ref = "jedependency" }
-jecurrency = { module = "de.jexcellence.currency:jecurrency", version.ref = "jecurrency" }
+jexeconomy = { module = "de.jexcellence.economy:jexeconomy", version.ref = "jexeconomy" }
 
 [bundles]
 adventure = [

@@ -1,0 +1,12 @@
+name: JExEconomy
+version: 2.0.0
+main: de.jexcellence.economy.JExEconomy
+api-version: 1.16
+description: Advanced currency management plugin with self-bootstrapping dependency system
+author: JExcellence
+website: https://jexcellence.de/
+
+# Soft dependencies - plugins that JExEconomyImpl can work with but doesn't require
+softdepend:
+  - Vault
+  - PlaceholderAPI

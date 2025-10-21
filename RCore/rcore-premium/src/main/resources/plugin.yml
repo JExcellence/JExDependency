@@ -6,7 +6,7 @@ description: RCore
 authors: [ ItsRainingHP, JExcellence ]
 website: https://www.raindropcentral.com
 softdepend:
-  - JECurrency
+  - JExEconomy
   - LuckPerms
   - Aura
   - ChestSort
