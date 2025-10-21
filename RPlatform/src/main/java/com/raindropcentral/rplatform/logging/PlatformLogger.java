@@ -3,6 +3,7 @@ package com.raindropcentral.rplatform.logging;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Handler;
 import java.util.logging.Logger;
 
 /**
@@ -13,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class PlatformLogger {
 
@@ -154,9 +155,18 @@ public class PlatformLogger {
     }
 
     /**
-     * No-op placeholder maintained for API symmetry with closable resources.
+     * Detaches and closes any handlers that were attached directly to the underlying logger.
+     * This prevents duplicate console/file outputs when a plugin disables and subsequently
+     * recreates its logger instance.
      */
     public void close() {
-        // no-op
+        for (final Handler handler : logger.getHandlers()) {
+            try {
+                logger.removeHandler(handler);
+                handler.flush();
+                handler.close();
+            } catch (final Exception ignored) {
+            }
+        }
     }
 }
