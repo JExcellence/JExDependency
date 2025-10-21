@@ -12,6 +12,12 @@ import java.util.UUID;
 /**
  * Fluent builder contract for skull metadata providing player and custom texture entry points.
  *
+ * <p>Implementations are expected to honour the fluent contract by returning their concrete builder
+ * instance from every method and never {@code null}. Optional player parameters annotated with
+ * {@link Nullable} must be handled gracefully, leaving any previously configured metadata in place
+ * when {@code null} values are supplied. Implementations should only persist accumulated mutations
+ * when {@link #build()} is invoked, ensuring intermediate calls remain chainable and reversible.</p>
+ *
  * @param <B> concrete builder type returned from fluent calls
  * @author JExcellence
  * @since 1.0.0
