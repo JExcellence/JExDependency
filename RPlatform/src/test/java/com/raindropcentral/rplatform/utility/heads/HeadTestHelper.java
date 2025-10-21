@@ -14,6 +14,8 @@ import org.mockito.Mockito;
 import java.util.List;
 import java.util.UUID;
 
+import static com.raindropcentral.rplatform.utility.heads.HeadAssertions.assertHeadBuilderInteractions;
+
 /**
  * Shared helper utilities for tests that validate {@link RHead} implementations.
  */
@@ -126,10 +128,13 @@ public final class HeadTestHelper {
             final String texture
         ) {
             this.builders.verify(UnifiedBuilderFactory::head);
-            Mockito.verify(this.builder).setCustomTexture(uuid, texture);
-            Mockito.verify(this.builder).setName(this.expectedName);
-            Mockito.verify(this.builder).setLore(this.expectedLore);
-            Mockito.verify(this.builder).build();
+            assertHeadBuilderInteractions(
+                this.builder,
+                uuid,
+                texture,
+                this.expectedName,
+                this.expectedLore
+            );
         }
 
         /**
