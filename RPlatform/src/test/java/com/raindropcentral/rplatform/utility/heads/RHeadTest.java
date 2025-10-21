@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 class RHeadTest {
 
@@ -54,7 +53,7 @@ class RHeadTest {
             expectedStack
         )) {
             final TestHead head = new TestHead(IDENTIFIER, UUID_STRING, TEXTURE, EHeadFilter.PLAYER);
-            final ItemStack result = head.getHead(player);
+            final ItemStack result = fixture.invokeGetHead(head);
 
             assertSame(expectedStack, result);
             context.verifyBuilderInteractions(UUID.fromString(UUID_STRING), TEXTURE);
