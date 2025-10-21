@@ -1,7 +1,13 @@
 package com.raindropcentral.rplatform.utility.heads;
 
+import com.raindropcentral.rplatform.utility.heads.HeadTestHelper.HeadMockContext;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,11 +42,22 @@ class RHeadTest {
 
     @Test
     void getHeadBuildsItemStackWithLocalizedMetadata() {
-        try (HeadTestFixtures.HeadFixture fixture = HeadTestFixtures.create(IDENTIFIER, UUID_STRING, TEXTURE)) {
+        final Player player = Mockito.mock(Player.class);
+        final ItemStack expectedStack = new ItemStack(Material.PLAYER_HEAD);
+
+        try (HeadMockContext context = HeadTestHelper.mockLocalizedBuilder(
+            IDENTIFIER,
+            player,
+            Component.text("Display Name"),
+            Component.text("Line 1\nLine 2"),
+            expectedStack
+        )) {
             final TestHead head = new TestHead(IDENTIFIER, UUID_STRING, TEXTURE, EHeadFilter.PLAYER);
             final ItemStack result = fixture.invokeGetHead(head);
 
-            fixture.verifyBuilderInteractions(result);
+            assertSame(expectedStack, result);
+            context.verifyBuilderInteractions(UUID.fromString(UUID_STRING), TEXTURE);
+            context.verifyTranslationCalls(player);
         }
     }
 
