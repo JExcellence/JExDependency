@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import static com.raindropcentral.rplatform.utility.heads.view.HeadViewAssertions.assertBuildsWithTranslationKey;
 import static com.raindropcentral.rplatform.utility.heads.view.HeadViewAssertions.assertMetadata;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UpTest {
 
@@ -20,6 +21,13 @@ class UpTest {
         final Up head = new Up();
 
         assertMetadata(head, IDENTIFIER, UUID, TEXTURE, EHeadFilter.INVENTORY);
+    }
+
+    @Test
+    void translationKeyPrefixedWithHeadNamespace() {
+        final Up head = new Up();
+
+        assertEquals(TRANSLATION_KEY, head.getTranslationKey());
     }
 
     @Test
