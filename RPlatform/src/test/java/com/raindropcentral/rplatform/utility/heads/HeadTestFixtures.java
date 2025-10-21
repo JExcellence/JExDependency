@@ -10,14 +10,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.mockito.ArgumentCaptor;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.raindropcentral.rplatform.utility.heads.HeadAssertions.assertHeadBuilderInteractions;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 /**
@@ -143,15 +142,13 @@ public final class HeadTestFixtures {
         public void verifyBuilderInteractions(final @NotNull ItemStack result) {
             assertSame(expectedStack, result);
             builders.verify(UnifiedBuilderFactory::head);
-            Mockito.verify(builder).setCustomTexture(UUID.fromString(uuidString), texture);
-            final ArgumentCaptor<Component> nameCaptor = ArgumentCaptor.forClass(Component.class);
-            Mockito.verify(builder).setName(nameCaptor.capture());
-            assertEquals(nameMessage.component(), nameCaptor.getValue());
-            @SuppressWarnings("unchecked")
-            final ArgumentCaptor<List<Component>> loreCaptor = ArgumentCaptor.forClass(List.class);
-            Mockito.verify(builder).setLore(loreCaptor.capture());
-            assertEquals(loreMessage.splitLines(), loreCaptor.getValue());
-            Mockito.verify(builder).build();
+            assertHeadBuilderInteractions(
+                builder,
+                UUID.fromString(uuidString),
+                texture,
+                nameMessage.component(),
+                loreMessage.splitLines()
+            );
             translations.verify(() -> TranslationService.create(nameKey, player));
             translations.verify(() -> TranslationService.create(loreKey, player));
         }

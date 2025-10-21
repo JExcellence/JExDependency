@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.raindropcentral.rplatform.utility.heads.HeadAssertions.assertHeadDefinition;
 
 class CancelTest {
 
@@ -19,10 +19,7 @@ class CancelTest {
     void cancelHeadExposesExpectedMetadata() {
         final Cancel head = new Cancel();
 
-        assertEquals(IDENTIFIER, head.getIdentifier());
-        assertEquals(EXPECTED_UUID, head.getUuid());
-        assertEquals(TEXTURE, head.getTexture());
-        assertEquals(EHeadFilter.INVENTORY, head.getFilter());
+        assertHeadDefinition(head, IDENTIFIER, EXPECTED_UUID, TEXTURE, EHeadFilter.INVENTORY);
     }
 
     @Test
