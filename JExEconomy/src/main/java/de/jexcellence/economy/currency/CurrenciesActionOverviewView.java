@@ -1,8 +1,8 @@
 package de.jexcellence.economy.currency;
 
-import com.raindropcentral.rplatform.misc.heads.view.Proceed;
+import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.BaseView;
+import com.raindropcentral.rplatform.view.BaseView;
 import de.jexcellence.economy.JExEconomyImpl;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.State;
@@ -157,7 +157,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "create_currency.lore",
 					                     contextPlayer
-				                     ).build().children()
+				                     ).build().splitLines()
 			                     )
 			                     .build()
 		).onClick(clickContext -> {
@@ -198,7 +198,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "edit_currency.lore",
 					                     contextPlayer
-				                     ).build().children()
+				                     ).build().splitLines()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()
@@ -240,7 +240,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "view_currencies.lore",
 					                     contextPlayer
-				                     ).build().children()
+				                     ).build().splitLines()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()
@@ -293,7 +293,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "delete_currency.lore",
 					                     contextPlayer
-				                     ).build().children()
+				                     ).build().splitLines()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()

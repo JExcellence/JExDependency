@@ -4,8 +4,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
-import de.jexcellence.economy.command.player.currencies.PCurrenciesSection;
-import de.jexcellence.economy.view.currency.CurrenciesActionOverviewView;
+import de.jexcellence.economy.currency.CurrenciesActionOverviewView;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,10 +1,9 @@
 package de.jexcellence.economy.currency;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.APaginatedView;
+import com.raindropcentral.rplatform.view.APaginatedView;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.Currency;
-import de.jexcellence.economy.view.currency.CurrenciesActionOverviewView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -128,11 +127,11 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 							    "currency.name",
 							    contextPlayer
 						    )
-						    .withPlaceholder(
+						    .with(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier()
 						    )
-						    .withPlaceholder(
+						    .with(
 							    "currency_symbol",
 							    displayedCurrency.getSymbol()
 						    )
@@ -144,7 +143,7 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 							    "currency.lore",
 							    contextPlayer
 						    )
-						    .withPlaceholders(
+						    .withAll(
 							    Map.of(
 								    "currency_identifier",
 								    displayedCurrency.getIdentifier(),
@@ -159,7 +158,7 @@ public class CurrencyEditingView extends APaginatedView<Currency> {
 							    )
 						    )
 						    .build()
-						    .children()
+						    .splitLines()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()

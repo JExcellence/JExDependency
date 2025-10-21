@@ -1,10 +1,10 @@
 package de.jexcellence.economy.currency.anvil;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.AbstractAnvilView;
+import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import de.jexcellence.economy.JExEconomyImpl;
+import de.jexcellence.economy.currency.CurrenciesCreatingView;
 import de.jexcellence.economy.database.entity.Currency;
-import de.jexcellence.economy.view.currency.CurrenciesCreatingView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -248,7 +248,7 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 				                                this.i18n(
 					                                "input.lore",
 					                                contextPlayer
-				                                ).withPlaceholders(
+				                                ).withAll(
 					                                Map.of(
 						                                "min_length",
 						                                MINIMUM_IDENTIFIER_LENGTH,
@@ -257,7 +257,7 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 						                                "pattern",
 						                                "a-z, A-Z, 0-9, _, -"
 					                                )
-				                                ).build().children()
+				                                ).build().splitLines()
 			                                )
 			                                .build();
 		
@@ -318,8 +318,8 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .includePrefix()
-		    .withPlaceholders(
+		    .withPrefix()
+		    .withAll(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "not_defined",
@@ -331,7 +331,7 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 				    "a-z, A-Z, 0-9, _, -"
 			    )
 		    )
-		    .sendMessage();
+		    .send();
 	}
 	
 	/**

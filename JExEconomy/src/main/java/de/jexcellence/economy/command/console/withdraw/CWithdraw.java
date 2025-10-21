@@ -2,7 +2,8 @@ package de.jexcellence.economy.command.console.withdraw;
 
 import com.raindropcentral.commands.ServerCommand;
 import com.raindropcentral.commands.utility.Command;
-import com.raindropcentral.rplatform.logger.CentralLogger;
+
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.adapter.CurrencyResponse;

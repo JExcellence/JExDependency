@@ -1,15 +1,15 @@
 package de.jexcellence.economy.currency;
 
-import com.raindropcentral.rplatform.misc.heads.view.Proceed;
+import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.BaseView;
+
+import com.raindropcentral.rplatform.view.BaseView;
 import de.jexcellence.economy.JExEconomyImpl;
+import de.jexcellence.economy.currency.anvil.CurrencyIconAnvilView;
+import de.jexcellence.economy.currency.anvil.CurrencyPrefixAnvilView;
+import de.jexcellence.economy.currency.anvil.CurrencySuffixAnvilView;
+import de.jexcellence.economy.currency.anvil.CurrencySymbolAnvilView;
 import de.jexcellence.economy.database.entity.Currency;
-import de.jexcellence.economy.view.currency.CurrencyEditingView;
-import de.jexcellence.economy.view.currency.anvil.CurrencyIconAnvilView;
-import de.jexcellence.economy.view.currency.anvil.CurrencyPrefixAnvilView;
-import de.jexcellence.economy.view.currency.anvil.CurrencySuffixAnvilView;
-import de.jexcellence.economy.view.currency.anvil.CurrencySymbolAnvilView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.MutableState;
@@ -206,7 +206,7 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "identifier.name",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "currency_identifier",
 						                     currentCurrency.getIdentifier()
 					                     ).build().component()
@@ -215,10 +215,10 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "identifier.lore",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "currency_identifier",
 						                     currentCurrency.getIdentifier()
-					                     ).build().children()
+					                     ).build().splitLines()
 				                     )
 				                     .build()
 			);
@@ -248,7 +248,7 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "symbol.name",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "currency_symbol",
 						                     currentCurrency.getSymbol()
 					                     ).build().component()
@@ -257,10 +257,10 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "symbol.lore",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "currency_symbol",
 						                     currentCurrency.getSymbol()
-					                     ).build().children()
+					                     ).build().splitLines()
 				                     )
 				                     .build()
 			)
@@ -302,7 +302,7 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "icon.name",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "material_name",
 						                     currentCurrency.getIcon().name()
 					                     ).build().component()
@@ -311,10 +311,10 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "icon.lore",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "material_name",
 						                     currentCurrency.getIcon().name()
-					                     ).build().children()
+					                     ).build().splitLines()
 				                     )
 				                     .build()
 			)
@@ -358,7 +358,7 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "prefix.name",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "currency_prefix",
 						                     hasPrefixConfigured ? currencyPrefix : "None"
 					                     ).build().component()
@@ -367,12 +367,12 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "prefix.lore",
 						                     contextPlayer
-					                     ).withPlaceholders(Map.of(
+					                     ).withAll(Map.of(
 						                     "currency_prefix",
 						                     hasPrefixConfigured ? currencyPrefix : "None",
 						                     "has_prefix",
 						                     hasPrefixConfigured ? "true" : "false"
-					                     )).build().children()
+					                     )).build().splitLines()
 				                     )
 				                     .build()
 			)
@@ -416,7 +416,7 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "suffix.name",
 						                     contextPlayer
-					                     ).withPlaceholder(
+					                     ).with(
 						                     "currency_suffix",
 						                     hasSuffixConfigured ? currencySuffix : "None"
 					                     ).build().component()
@@ -425,12 +425,12 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "suffix.lore",
 						                     contextPlayer
-					                     ).withPlaceholders(Map.of(
+					                     ).withAll(Map.of(
 						                     "currency_suffix",
 						                     hasSuffixConfigured ? currencySuffix : "None",
 						                     "has_suffix",
 						                     hasSuffixConfigured ? "true" : "false"
-					                     )).build().children()
+					                     )).build().splitLines()
 				                     )
 				                     .build()
 			)
@@ -476,7 +476,7 @@ public class CurrencyPropertiesEditingView extends BaseView {
 					                     this.i18n(
 						                     "save_changes.lore",
 						                     contextPlayer
-					                     ).build().children()
+					                     ).build().splitLines()
 				                     )
 				                     .build()
 			)
@@ -509,12 +509,12 @@ public class CurrencyPropertiesEditingView extends BaseView {
 			    "save.processing",
 			    requestingPlayer
 		    )
-		    .includePrefix()
-		    .withPlaceholder(
+		    .withPrefix()
+		    .with(
 			    "currency_identifier",
 			    currencyToSave.getIdentifier()
 		    )
-		    .sendMessage();
+		    .send();
 		
 		jexEconomyImpl.getCurrencyRepository()
 		              .updateAsync(currencyToSave)
@@ -530,23 +530,23 @@ public class CurrencyPropertiesEditingView extends BaseView {
 						                  "save.success",
 						                  requestingPlayer
 					                  )
-					                  .includePrefix()
-					                  .withPlaceholder(
+					                  .withPrefix()
+					                  .with(
 						                  "currency_identifier",
 						                  currencyToSave.getIdentifier()
 					                  )
-					                  .sendMessage();
+					                  .send();
 				              } else {
 					              this.i18n(
 						                  "save.failed",
 						                  requestingPlayer
 					                  )
-					                  .includePrefix()
-					                  .withPlaceholder(
+					                  .withPrefix()
+					                  .with(
 						                  "currency_identifier",
 						                  currencyToSave.getIdentifier()
 					                  )
-					                  .sendMessage();
+					                  .send();
 				              }
 			              },
 			              jexEconomyImpl.getExecutor()
@@ -556,14 +556,14 @@ public class CurrencyPropertiesEditingView extends BaseView {
 				                  "save.error",
 				                  requestingPlayer
 			                  )
-			                  .includePrefix()
-			                  .withPlaceholders(Map.of(
+			                  .withPrefix()
+			                  .withAll(Map.of(
 				                  "currency_identifier",
 				                  currencyToSave.getIdentifier(),
 				                  "error",
 				                  saveException.getMessage()
 			                  ))
-			                  .sendMessage();
+			                  .send();
 			              return null;
 		              });
 		

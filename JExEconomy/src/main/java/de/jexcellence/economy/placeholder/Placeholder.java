@@ -1,6 +1,6 @@
 package de.jexcellence.economy.placeholder;
 
-import com.raindropcentral.rplatform.placeholder.APlaceholder;
+import com.raindropcentral.rplatform.placeholder.AbstractPlaceholderExpansion;
 import de.jexcellence.economy.JExEconomyImpl;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -48,120 +48,117 @@ import java.util.List;
  *
  * @author JExcellence
  * @see CurrencyPlaceholderUtil
- * @see APlaceholder
  */
-public class Placeholder extends APlaceholder {
-	
-	/**
-	 * Utility for resolving and formatting currency placeholders.
-	 */
-	private final CurrencyPlaceholderUtil currencyPlaceholderUtil;
-	
-	/**
-	 * Constructs a new {@code Placeholder} expansion for the given currency plugin.
-	 * <p>
-	 * Initializes the placeholder expansion with the platform abstraction layer and
-	 * creates a {@link CurrencyPlaceholderUtil} instance for handling placeholder resolution.
-	 * The expansion will be automatically registered with the platform's placeholder system.
-	 * </p>
-	 *
-	 * @param jexEconomyImpl the main JExEconomyImpl plugin instance, must not be null
-	 * @throws IllegalArgumentException if the plugin instance is null
-	 */
-	public Placeholder(
-		final @NotNull JExEconomyImpl jexEconomyImpl
-	) {
-		
-		super(jexEconomyImpl.getPlatform());
-		this.currencyPlaceholderUtil = new CurrencyPlaceholderUtil(jexEconomyImpl);
-	}
-	
-	/**
-	 * Defines the list of supported placeholder formats for this expansion.
-	 * <p>
-	 * This method returns a comprehensive list of all placeholder patterns supported
-	 * by the currency system. The placeholders are organized into three main categories:
-	 * currency information, player balances, and formatted balances.
-	 * </p>
-	 *
-	 * <h3>Placeholder Categories:</h3>
-	 * <ul>
-	 *   <li><strong>Currency Info:</strong> Basic currency metadata (name, symbol, prefix, suffix)</li>
-	 *   <li><strong>Player Currency:</strong> Raw balance amounts with formatting options</li>
-	 *   <li><strong>Formatted Currency:</strong> Complete balance strings with all currency elements</li>
-	 * </ul>
-	 *
-	 * @return a list of placeholder format strings, never null or empty
-	 */
-	@Override
-	public @NotNull List<String> setPlaceholder() {
-		return List.of(
-			"currency_<currency>_name",
-			"currency_<currency>_symbol",
-			"currency_<currency>_prefix",
-			"currency_<currency>_suffix",
-			"currency_<currency>_currencies",
-			"player_currency_<currency>_amount",
-			"player_currency_<currency>_amount-rounded",
-			"player_currency_<currency>_amount-rounded-dots",
-			"player_formatted_currency_<currency>_amount",
-			"player_formatted_currency_<currency>_amount-rounded",
-			"player_formatted_currency_<currency>_amount-rounded-dots"
-		);
-	}
-	
-	/**
-	 * Resolves a placeholder for a given player and parameter string.
-	 * <p>
-	 * This method serves as the main entry point for placeholder resolution within the
-	 * platform's placeholder system. It validates the input parameters and delegates
-	 * the actual resolution to {@link CurrencyPlaceholderUtil} for supported placeholder formats.
-	 * </p>
-	 *
-	 * <h3>Supported Placeholder Prefixes:</h3>
-	 * <ul>
-	 *   <li><code>currency_</code> - Currency information placeholders</li>
-	 *   <li><code>player_currency_</code> - Raw player balance placeholders</li>
-	 *   <li><code>player_formatted_currency_</code> - Formatted player balance placeholders</li>
-	 * </ul>
-	 *
-	 * <h3>Error Handling:</h3>
-	 * <p>
-	 * If the player is null or the placeholder parameters don't match any supported
-	 * format, an empty string is returned to indicate that the placeholder is not
-	 * handled by this expansion.
-	 * </p>
-	 *
-	 * @param targetPlayer the player for whom the placeholder is being resolved, can be null
-	 * @param placeholderParams the placeholder parameter string, must not be null
-	 * @return the resolved placeholder value, or an empty string if not applicable
-	 * @throws IllegalArgumentException if placeholderParams is null
-	 */
-	@Override
-	public @Nullable String onPlaceholder(
-		final @Nullable Player targetPlayer,
-		final @NotNull String placeholderParams
-	) {
-		
-		if (
-			targetPlayer == null
-		) {
-			return "";
-		}
-		
-		if (
-			!placeholderParams.startsWith("currency_") &&
-			!placeholderParams.startsWith("player_currency_") &&
-			!placeholderParams.startsWith("player_formatted_currency_")
-		) {
-			return "";
-		}
-		
-		final String resolvedPlaceholder = this.currencyPlaceholderUtil.processPlaceholder(
-			targetPlayer,
-			placeholderParams
-		);
-		
-		return resolvedPlaceholder != null ? resolvedPlaceholder : "";
-	}
+public class Placeholder extends AbstractPlaceholderExpansion {
+
+    /**
+     * Utility for resolving and formatting currency placeholders.
+     */
+    private final CurrencyPlaceholderUtil currencyPlaceholderUtil;
+
+    /**
+     * Constructs a new {@code Placeholder} expansion for the given currency plugin.
+     * <p>
+     * Initializes the placeholder expansion with the platform abstraction layer and
+     * creates a {@link CurrencyPlaceholderUtil} instance for handling placeholder resolution.
+     * The expansion will be automatically registered with the platform's placeholder system.
+     * </p>
+     *
+     * @param jexEconomyImpl the main JExEconomyImpl plugin instance, must not be null
+     * @throws IllegalArgumentException if the plugin instance is null
+     */
+    public Placeholder(
+            final @NotNull JExEconomyImpl jexEconomyImpl
+    ) {
+        super(jexEconomyImpl.getPlugin());
+        this.currencyPlaceholderUtil = new CurrencyPlaceholderUtil(jexEconomyImpl);
+    }
+
+    /**
+     * Defines the list of supported placeholder formats for this expansion.
+     * <p>
+     * This method returns a comprehensive list of all placeholder patterns supported
+     * by the currency system. The placeholders are organized into three main categories:
+     * currency information, player balances, and formatted balances.
+     * </p>
+     *
+     * <h3>Placeholder Categories:</h3>
+     * <ul>
+     *   <li><strong>Currency Info:</strong> Basic currency metadata (name, symbol, prefix, suffix)</li>
+     *   <li><strong>Player Currency:</strong> Raw balance amounts with formatting options</li>
+     *   <li><strong>Formatted Currency:</strong> Complete balance strings with all currency elements</li>
+     * </ul>
+     *
+     * @return a list of placeholder format strings, never null or empty
+     */
+    @Override
+    protected @NotNull List<String> definePlaceholders() {
+        return List.of(
+                "currency_<currency>_name",
+                "currency_<currency>_symbol",
+                "currency_<currency>_prefix",
+                "currency_<currency>_suffix",
+                "currency_<currency>_currencies",
+                "player_currency_<currency>_amount",
+                "player_currency_<currency>_amount-rounded",
+                "player_currency_<currency>_amount-rounded-dots",
+                "player_formatted_currency_<currency>_amount",
+                "player_formatted_currency_<currency>_amount-rounded",
+                "player_formatted_currency_<currency>_amount-rounded-dots"
+        );
+    }
+
+    /**
+     * Resolves a placeholder for a given player and parameter string.
+     * <p>
+     * This method serves as the main entry point for placeholder resolution within the
+     * platform's placeholder system. It validates the input parameters and delegates
+     * the actual resolution to {@link CurrencyPlaceholderUtil} for supported placeholder formats.
+     * </p>
+     *
+     * <h3>Supported Placeholder Prefixes:</h3>
+     * <ul>
+     *   <li><code>currency_</code> - Currency information placeholders</li>
+     *   <li><code>player_currency_</code> - Raw player balance placeholders</li>
+     *   <li><code>player_formatted_currency_</code> - Formatted player balance placeholders</li>
+     * </ul>
+     *
+     * <h3>Error Handling:</h3>
+     * <p>
+     * If the player is null or the placeholder parameters don't match any supported
+     * format, an empty string is returned to indicate that the placeholder is not
+     * handled by this expansion.
+     * </p>
+     *
+     * @param player the player for whom the placeholder is being resolved, can be null
+     * @param params the placeholder parameter string, must not be null
+     * @return the resolved placeholder value, or an empty string if not applicable
+     * @throws IllegalArgumentException if params is null
+     */
+    @Override
+    protected @Nullable String resolvePlaceholder(@Nullable Player player, @NotNull String params) {
+        {
+
+            if (
+                    player == null
+            ) {
+                return "";
+            }
+
+            if (
+                    !params.startsWith("currency_") &&
+                            !params.startsWith("player_currency_") &&
+                            !params.startsWith("player_formatted_currency_")
+            ) {
+                return "";
+            }
+
+            final String resolvedPlaceholder = this.currencyPlaceholderUtil.processPlaceholder(
+                    player,
+                    params
+            );
+
+            return resolvedPlaceholder != null ? resolvedPlaceholder : "";
+        }
+    }
 }

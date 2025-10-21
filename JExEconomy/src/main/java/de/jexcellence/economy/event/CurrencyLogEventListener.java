@@ -1,6 +1,7 @@
 package de.jexcellence.economy.event;
 
-import com.raindropcentral.rplatform.logger.CentralLogger;
+
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.service.CurrencyLogService;
 import org.bukkit.event.EventHandler;

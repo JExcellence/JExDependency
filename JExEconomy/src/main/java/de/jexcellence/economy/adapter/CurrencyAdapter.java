@@ -1,13 +1,15 @@
 package de.jexcellence.economy.adapter;
 
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.economy.JExEconomyImpl;
-import de.jexcellence.economy.adapter.CurrencyResponse;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.CurrencyLog;
 import de.jexcellence.economy.database.entity.User;
 import de.jexcellence.economy.database.entity.UserCurrency;
-import de.jexcellence.economy.type.EChangeType;
 import de.jexcellence.economy.event.*;
+import de.jexcellence.economy.type.EChangeType;
+import de.jexcellence.jextranslate.api.TranslationKey;
+import de.jexcellence.jextranslate.api.TranslationService;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -394,14 +396,14 @@ public class CurrencyAdapter implements ICurrencyAdapter {
     ) {
         final CurrencyCreateEvent createEvent = new CurrencyCreateEvent(newCurrencyEntity, creator);
 
-        Bukkit.getScheduler().runTask(this.jexEconomyImpl.getImpl(), () -> {
+        this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
             Bukkit.getPluginManager().callEvent(createEvent);
         });
 
         if (createEvent.isCancelled()) {
             ADAPTER_LOGGER.log(Level.INFO, "Currency creation cancelled: " + createEvent.getCancelReason());
             if (creator != null) {
-                I18n.create(MessageKey.of("currency_adapter.creation_cancelled"), creator).withPlaceholder("reason", createEvent.getCancelReason()).sendMessage();
+                TranslationService.create(TranslationKey.of("currency_adapter.creation_cancelled"), creator).with("reason", createEvent.getCancelReason()).send();
             }
             return CompletableFuture.completedFuture(false);
         }
@@ -413,7 +415,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
         if (currencyAlreadyExists) {
             ADAPTER_LOGGER.log(Level.WARNING, "Currency already exists: " + newCurrencyEntity.getIdentifier());
             if (creator != null) {
-                I18n.create(MessageKey.of("currency_adapter.already_exists"), creator).withPlaceholder("currency_identifier", newCurrencyEntity.getIdentifier()).sendMessage();
+                TranslationService.create(TranslationKey.of("currency_adapter.already_exists"), creator).with("currency_identifier", newCurrencyEntity.getIdentifier()).send();
             }
             return CompletableFuture.completedFuture(false);
         }
@@ -433,7 +435,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                     }
 
                     final CurrencyCreatedEvent createdEvent = new CurrencyCreatedEvent(currency, creator);
-                    Bukkit.getScheduler().runTask(this.jexEconomyImpl.getImpl(), () -> {
+                    this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
                         Bukkit.getPluginManager().callEvent(createdEvent);
                     });
 
@@ -448,7 +450,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
                     ADAPTER_LOGGER.log(Level.INFO, "Currency created successfully: " + currency.getIdentifier());
                     if (creator != null) {
-                        I18n.create(MessageKey.of("currency_adapter.created_successfully"), creator).withPlaceholder("currency_identifier", currency.getIdentifier()).sendMessage();
+                        TranslationService.create(TranslationKey.of("currency_adapter.created_successfully"), creator).with("currency_identifier", currency.getIdentifier()).send();
                     }
 
                     return true;
@@ -459,9 +461,9 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                             throwable);
 
                     if (creator != null) {
-                        I18n.create(MessageKey.of("currency_adapter.creation_failed"), creator).withPlaceholders(
+                        TranslationService.create(TranslationKey.of("currency_adapter.creation_failed"), creator).withAll(
                                 Map.of("currency_identifier", newCurrencyEntity.getIdentifier(), "error_message", throwable.getMessage())
-                        ).sendMessage();
+                        ).send();
                     }
 
                     this.createManagementLog(
@@ -498,7 +500,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                     if (currency == null) {
                         ADAPTER_LOGGER.log(Level.WARNING, "Currency not found for deletion: " + currencyIdentifier);
                         if (deleter != null) {
-                            I18n.create(MessageKey.of("currency_adapter.not_found"), deleter).withPlaceholder("currency_identifier", currencyIdentifier).sendMessage();
+                            TranslationService.create(TranslationKey.of("currency_adapter.not_found"), deleter).with("currency_identifier", currencyIdentifier).send();
                         }
                         return CompletableFuture.completedFuture(false);
                     }
@@ -507,14 +509,14 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                             .thenCombine(this.getTotalBalance(currency), (playerCount, totalBalance) -> {
 
                                 final CurrencyDeleteEvent deleteEvent = new CurrencyDeleteEvent(currency, deleter, playerCount, totalBalance);
-                                Bukkit.getScheduler().runTask(this.jexEconomyImpl.getImpl(), () -> {
+                                this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
                                     Bukkit.getPluginManager().callEvent(deleteEvent);
                                 });
 
                                 if (deleteEvent.isCancelled()) {
                                     ADAPTER_LOGGER.log(Level.INFO, "Currency deletion cancelled: " + deleteEvent.getCancelReason());
                                     if (deleter != null) {
-                                        I18n.create(MessageKey.of("currency_adapter.deletion_cancelled"), deleter).withPlaceholder("reason", deleteEvent.getCancelReason()).sendMessage();
+                                        TranslationService.create(TranslationKey.of("currency_adapter.deletion_cancelled"), deleter).with("reason", deleteEvent.getCancelReason()).send();
                                     }
                                     return CompletableFuture.completedFuture(false);
                                 }
@@ -533,24 +535,24 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                                                 final CurrencyDeletedEvent deletedEvent = new CurrencyDeletedEvent(
                                                         currency, deleter, playerCount, totalBalance
                                                 );
-                                                Bukkit.getScheduler().runTask(this.jexEconomyImpl.getImpl(), () -> {
+                                                this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
                                                     Bukkit.getPluginManager().callEvent(deletedEvent);
                                                 });
 
                                                 ADAPTER_LOGGER.log(Level.INFO, "Currency deleted successfully: " + currencyIdentifier);
                                                 if (deleter != null) {
-                                                    I18n.create(MessageKey.of("currency_adapter.deleted_successfully"), deleter).withPlaceholders(
+                                                    TranslationService.create(TranslationKey.of("currency_adapter.deleted_successfully"), deleter).withAll(
                                                             Map.of(
                                                                     "currency_identifier", currencyIdentifier,
                                                                     "affected_players", String.valueOf(playerCount),
                                                                     "total_balance", String.format("%.2f", totalBalance)
                                                             )
-                                                    ).sendMessage();
+                                                    ).send();
                                                 }
                                             } else {
                                                 ADAPTER_LOGGER.log(Level.WARNING, "Failed to delete currency: " + currencyIdentifier);
                                                 if (deleter != null) {
-                                                    I18n.create(MessageKey.of("currency_adapter.deletion_failed"), deleter).withPlaceholder("currency_identifier", currencyIdentifier).sendMessage();
+                                                    TranslationService.create(TranslationKey.of("currency_adapter.deletion_failed"), deleter).with("currency_identifier", currencyIdentifier).send();
                                                 }
                                             }
                                             return success;
@@ -858,7 +860,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                 reason,
                 initiator
         );
-        Bukkit.getScheduler().runTask(this.jexEconomyImpl.getImpl(), () -> {
+        this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
             Bukkit.getPluginManager().callEvent(changeEvent);
         });
 
@@ -896,7 +898,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                     reason,
                     initiator
             );
-            Bukkit.getScheduler().runTask(this.jexEconomyImpl.getImpl(), () -> {
+            this.jexEconomyImpl.getPlatform().getScheduler().runSync(() -> {
                 Bukkit.getPluginManager().callEvent(changedEvent);
             });
 

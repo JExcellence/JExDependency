@@ -2,11 +2,10 @@ package de.jexcellence.economy.command.console.deposit;
 
 import com.raindropcentral.commands.ServerCommand;
 import com.raindropcentral.commands.utility.Command;
-import com.raindropcentral.rplatform.logger.CentralLogger;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.adapter.CurrencyResponse;
-import de.jexcellence.economy.command.console.deposit.CDepositSection;
 import de.jexcellence.economy.database.entity.Currency;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.ConsoleCommandSender;

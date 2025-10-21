@@ -1,7 +1,7 @@
 package de.jexcellence.economy.currency;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.APaginatedView;
+import com.raindropcentral.rplatform.view.APaginatedView;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.UserCurrency;
@@ -196,7 +196,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 							    "player_entry.name",
 							    contextPlayer
 						    )
-						    .withPlaceholders(Map.of(
+						    .withAll(Map.of(
 							    "rank",
 							    playerRank,
 							    "rank_color",
@@ -214,7 +214,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 							    "player_entry.lore",
 							    contextPlayer
 						    )
-						    .withPlaceholders(Map.of(
+						    .withAll(Map.of(
 							    "rank",
 							    playerRank,
 							    "rank_color",
@@ -236,7 +236,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 							    )
 						    ))
 						    .build()
-						    .children()
+						    .splitLines()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -307,7 +307,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 					                         "currency_info.name",
 					                         contextPlayer
 				                         )
-				                         .withPlaceholders(Map.of(
+				                         .withAll(Map.of(
 					                         "currency_identifier",
 					                         displayedCurrency.getIdentifier(),
 					                         "currency_symbol",
@@ -321,14 +321,14 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 					                         "currency_info.lore",
 					                         contextPlayer
 				                         )
-				                         .withPlaceholders(Map.of(
+				                         .withAll(Map.of(
 					                         "currency_identifier",
 					                         displayedCurrency.getIdentifier(),
 					                         "currency_symbol",
 					                         displayedCurrency.getSymbol()
 				                         ))
 				                         .build()
-				                         .children()
+				                         .splitLines()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()

@@ -1,6 +1,7 @@
 package de.jexcellence.economy.listener;
 
-import com.raindropcentral.rplatform.logger.CentralLogger;
+
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.Currency;

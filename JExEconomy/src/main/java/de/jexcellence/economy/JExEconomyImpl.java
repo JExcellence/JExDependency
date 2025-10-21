@@ -41,27 +41,21 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
 
     private static final String EDITION = "Standard";
 
-    // Core
     private final ExecutorService asyncExecutorService = Executors.newFixedThreadPool(5);
     private RPlatform platformAbstraction;
 
-    // Caches
     private final Map<Long, Currency> currencyCache = new LinkedHashMap<>();
 
-    // External services/adapters
     private CurrencyAdapter externalCurrencyAdapter;
 
-    // Persistence
     private UserCurrencyRepository playerCurrencyRepository;
     private CurrencyRepository currencyDataRepository;
     private UserRepository playerDataRepository;
     private CurrencyLogRepository currencyLogRepository;
 
-    // Services
     private VaultMigrationManager vaultMigrationManager;
     private CurrencyLogService logService;
 
-    // Commands/UI
     private CommandFactory commandRegistrationFactory;
     private ViewFrame inventoryViewFramework;
 
@@ -75,15 +69,12 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
             CentralLogger.initialize(this.getPlugin());
             CentralLogger.getLogger(JExEconomyImpl.class.getName()).log(Level.INFO, getStartupMessage());
 
-            // Platform
             this.platformAbstraction = new RPlatform(this.getPlugin());
             this.platformAbstraction.initialize();
 
-            // Register adapter service (defer to onEnable finalization)
             this.externalCurrencyAdapter = new CurrencyAdapter(this);
             registerServices();
 
-            // Migration manager (constructed early to allow commands to use it later)
             this.vaultMigrationManager = new VaultMigrationManager(this);
 
             CentralLogger.getLogger(JExEconomyImpl.class.getName()).log(Level.INFO,
@@ -116,7 +107,6 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
         } catch (final Exception ex) {
             CentralLogger.getLogger(JExEconomyImpl.class.getName()).log(Level.SEVERE,
                     "Error during onEnable (" + EDITION + ")", ex);
-            // Fail-safe: disable plugin if startup failed
             this.getPlugin().getServer().getPluginManager().disablePlugin(this.getPlugin());
         }
     }
@@ -141,7 +131,6 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
                 "JExEconomy disabled (" + EDITION + ")");
     }
 
-    // --- getters ---
 
     public @NotNull ExecutorService getExecutor() {
         return this.asyncExecutorService;
@@ -191,7 +180,6 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
         return this.vaultMigrationManager;
     }
 
-    // --- initialization stages ---
 
     private void initializeCommandSystem() {
         CentralLogger.getLogger(JExEconomyImpl.class.getName()).log(Level.INFO, "Initializing command system...");
@@ -290,8 +278,6 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
         return null;
     }
 
-    // --- service registration ---
-
     private void registerServices() {
         if (this.externalCurrencyAdapter != null) {
             Bukkit.getServer().getServicesManager().register(
@@ -308,7 +294,6 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
 
     private void unregisterServices() {
         try {
-            // Unregister only if our instance is the provider to avoid unregistering others
             final var registration = Bukkit.getServer().getServicesManager().getRegistration(CurrencyAdapter.class);
             if (registration != null && registration.getProvider() == this.externalCurrencyAdapter) {
                 Bukkit.getServer().getServicesManager().unregister(CurrencyAdapter.class, this.externalCurrencyAdapter);
@@ -323,7 +308,6 @@ public class JExEconomyImpl extends AbstractPluginDelegate<JExEconomy> {
         }
     }
 
-    // --- startup message (newer, concise language style) ---
 
     protected @NotNull String getStartupMessage() {
         return """

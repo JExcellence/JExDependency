@@ -1,14 +1,13 @@
 package de.jexcellence.economy.currency;
 
-import com.raindropcentral.rplatform.misc.heads.view.Cancel;
+import com.raindropcentral.rplatform.utility.heads.view.Cancel;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.APaginatedView;
 import com.raindropcentral.rplatform.view.ConfirmationView;
-import com.raindropcentral.rplatform.view.common.APaginatedView;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.CurrencyLog;
 import de.jexcellence.economy.database.entity.UserCurrency;
-import de.jexcellence.economy.view.currency.CurrenciesActionOverviewView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -165,7 +164,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 							    "currency.name",
 							    contextPlayer
 						    )
-						    .withPlaceholders(Map.of(
+						    .withAll(Map.of(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier(),
 							    "currency_symbol",
@@ -179,7 +178,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 							    "currency.lore",
 							    contextPlayer
 						    )
-						    .withPlaceholders(Map.of(
+						    .withAll(Map.of(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier(),
 							    "currency_symbol",
@@ -192,7 +191,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 							    entryIndex + 1
 						    ))
 						    .build()
-						    .children()
+						    .splitLines()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -323,12 +322,12 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.cancelled",
 			    requestingPlayer
 		    )
-		    .includePrefix()
-		    .withPlaceholder(
+		    .withPrefix()
+		    .with(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier()
 		    )
-		    .sendMessage();
+		    .send();
 	}
 	
 	/**
@@ -367,14 +366,14 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.processing",
 			    requestingPlayer
 		    )
-		    .includePrefix()
-		    .withPlaceholders(Map.of(
+		    .withPrefix()
+		    .withAll(Map.of(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier(),
 			    "affected_players",
 			    affectedPlayers
 		    ))
-		    .sendMessage();
+		    .send();
 		
 		// Execute the deletion process asynchronously
 		CompletableFuture.supplyAsync(() -> {
@@ -389,7 +388,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 					for (UserCurrency userCurrency : userCurrencies) {
 						jexEconomyImpl.getUserCurrencyRepository().delete(userCurrency.getId());
 					}
-					jexEconomyImpl.getImpl().getLogger().info(
+					jexEconomyImpl.getPlugin().getLogger().info(
 						"Deleted " + userCurrencies.size() + " UserCurrency records for currency: " + currencyToDelete.getIdentifier()
 					);
 				}
@@ -413,7 +412,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 						jexEconomyImpl.getCurrencyLogRepository().update(log);
 						updatedLogCount++;
 					}
-					jexEconomyImpl.getImpl().getLogger().info(
+					jexEconomyImpl.getPlugin().getLogger().info(
 						"Updated " + updatedLogCount + " CurrencyLog records to remove currency reference for currency: " + currencyToDelete.getIdentifier()
 					);
 				}
@@ -430,7 +429,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 				}
 				
 			} catch (Exception e) {
-				jexEconomyImpl.getImpl().getLogger().log(
+				jexEconomyImpl.getPlugin().getLogger().log(
 					Level.SEVERE,
 					"Failed to delete currency: " + currencyToDelete.getIdentifier(),
 					e
@@ -480,8 +479,8 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.success",
 			    requestingPlayer
 		    )
-		    .includePrefix()
-		    .withPlaceholders(Map.of(
+		    .withPrefix()
+		    .withAll(Map.of(
 			    "currency_identifier",
 			    deletedCurrency.getIdentifier(),
 			    "affected_players",
@@ -491,7 +490,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "currency_symbol",
 			    deletedCurrency.getSymbol()
 		    ))
-		    .sendMessage();
+		    .send();
 	}
 	
 	/**
@@ -512,12 +511,12 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.failed",
 			    requestingPlayer
 		    )
-		    .includePrefix()
-		    .withPlaceholder(
+		    .withPrefix()
+		    .with(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier()
 		    )
-		    .sendMessage();
+		    .send();
 	}
 	
 	/**
@@ -540,13 +539,13 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.error",
 			    requestingPlayer
 		    )
-		    .includePrefix()
-		    .withPlaceholders(Map.of(
+		    .withPrefix()
+		    .withAll(Map.of(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier(),
 			    "error",
 			    deletionException.getMessage()
 		    ))
-		    .sendMessage();
+		    .send();
 	}
 }

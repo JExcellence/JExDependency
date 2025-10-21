@@ -1,6 +1,6 @@
 package de.jexcellence.economy.migrate;
 
-import com.raindropcentral.rplatform.logger.CentralLogger;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.adapter.CurrencyAdapter;
 import de.jexcellence.economy.adapter.CurrencyResponse;
@@ -60,7 +60,7 @@ public class JExEconomyVaultProvider implements Economy {
     
     @Override
     public boolean isEnabled() {
-        return this.jexEconomyImpl.getImpl().isEnabled() && this.getDefaultCurrency() != null;
+        return this.jexEconomyImpl.getPlugin().isEnabled() && this.getDefaultCurrency() != null;
     }
     
     @Override

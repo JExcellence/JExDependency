@@ -4,11 +4,10 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
-import de.jexcellence.economy.command.player.currency.ECurrencyAction;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.UserCurrency;
-import de.jexcellence.translate.api.I18n;
-import de.jexcellence.translate.api.MessageKey;
+import de.jexcellence.jextranslate.api.TranslationKey;
+import de.jexcellence.jextranslate.api.TranslationService;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -54,7 +53,7 @@ import java.util.stream.Collectors;
  *
  * <h3>Internationalization Support:</h3>
  * <p>
- * All user feedback is processed through the {@link de.jexcellence.translate.api.I18n} system, providing localized
+ * All user feedback is processed through the {@link TranslationService} system, providing localized
  * content based on player language preferences. Error messages, balance displays, and
  * help information are all culturally and linguistically appropriate.
  * </p>
@@ -175,11 +174,10 @@ public class PCurrency extends PlayerCommand {
 			final OfflinePlayer targetPlayerForAllBalances = this.offlinePlayerParameter(commandArguments, 1, true);
 			
 			if (!targetPlayerForAllBalances.hasPlayedBefore()) {
-				I18n.create(MessageKey.of("general.invalid_player"), commandExecutingPlayer)
-					.includePrefix()
-					.withPlaceholder("player_name", commandArguments[1])
-					.build()
-					.sendMessage(commandExecutingPlayer);
+				TranslationService.create(TranslationKey.of("general.invalid_player"), commandExecutingPlayer)
+					.withPrefix()
+					.with("player_name", commandArguments[1])
+					.send();
 				return;
 			}
 			
@@ -195,15 +193,14 @@ public class PCurrency extends PlayerCommand {
 		                                                     .orElse(null);
 		
 		if (resolvedCurrency == null) {
-			I18n.create(MessageKey.of("general.invalid_currency"), commandExecutingPlayer)
-				.includePrefix()
-				.withPlaceholder("currency", requestedCurrencyIdentifier)
-				.withPlaceholder("available_currencies", 
+			TranslationService.create(TranslationKey.of("general.invalid_currency"), commandExecutingPlayer)
+				.withPrefix()
+				.with("currency", requestedCurrencyIdentifier)
+				.with("available_currencies", 
 					this.jexEconomyImpl.getCurrencies().values().stream()
 					                   .map(Currency::getIdentifier)
 					                   .collect(Collectors.joining(", ")))
-				.build()
-				.sendMessage(commandExecutingPlayer);
+                    .send();
 			return;
 		}
 		
@@ -215,11 +212,10 @@ public class PCurrency extends PlayerCommand {
 			final OfflinePlayer targetPlayerForSpecificCurrency = this.offlinePlayerParameter(commandArguments, 1, true);
 			
 			if (!targetPlayerForSpecificCurrency.hasPlayedBefore()) {
-				I18n.create(MessageKey.of("general.invalid_player"), commandExecutingPlayer)
-					.includePrefix()
-					.withPlaceholder("player_name", commandArguments[1])
-					.build()
-					.sendMessage(commandExecutingPlayer);
+				TranslationService.create(TranslationKey.of("general.invalid_player"), commandExecutingPlayer)
+					.withPrefix()
+					.with("player_name", commandArguments[1])
+                        .send();
 				return;
 			}
 			
@@ -349,28 +345,26 @@ public class PCurrency extends PlayerCommand {
 				                           if (messageRecipientPlayer.equals(balanceTargetPlayer)) {
                                                queriedCurrency.getSuffix();
                                                queriedCurrency.getPrefix();
-                                               I18n.create(MessageKey.of("currency.balance.self"), messageRecipientPlayer)
-						                           .includePrefix()
-						                           .withPlaceholder("currency", queriedCurrency.getIdentifier())
-						                           .withPlaceholder("symbol", queriedCurrency.getSymbol())
-						                           .withPlaceholder("balance", String.format("%.2f", retrievedBalance))
-						                           .withPlaceholder("prefix", queriedCurrency.getPrefix())
-						                           .withPlaceholder("suffix", queriedCurrency.getSuffix())
-						                           .build()
-						                           .sendMessage(messageRecipientPlayer);
+                                               TranslationService.create(TranslationKey.of("currency.balance.self"), messageRecipientPlayer)
+						                           .withPrefix()
+						                           .with("currency", queriedCurrency.getIdentifier())
+						                           .with("symbol", queriedCurrency.getSymbol())
+						                           .with("balance", String.format("%.2f", retrievedBalance))
+						                           .with("prefix", queriedCurrency.getPrefix())
+						                           .with("suffix", queriedCurrency.getSuffix())
+                                                       .send();
 				                           } else {
                                                queriedCurrency.getPrefix();
                                                queriedCurrency.getSuffix();
-                                               I18n.create(MessageKey.of("currency.balance.other"), messageRecipientPlayer)
-						                           .includePrefix()
-						                           .withPlaceholder("player_name", balanceTargetPlayer.getName())
-						                           .withPlaceholder("currency", queriedCurrency.getIdentifier())
-						                           .withPlaceholder("symbol", queriedCurrency.getSymbol())
-						                           .withPlaceholder("balance", String.format("%.2f", retrievedBalance))
-						                           .withPlaceholder("prefix", queriedCurrency.getPrefix())
-						                           .withPlaceholder("suffix", queriedCurrency.getSuffix())
-						                           .build()
-						                           .sendMessage(messageRecipientPlayer);
+                                               TranslationService.create(TranslationKey.of("currency.balance.other"), messageRecipientPlayer)
+						                           .withPrefix()
+						                           .with("player_name", balanceTargetPlayer.getName())
+						                           .with("currency", queriedCurrency.getIdentifier())
+						                           .with("symbol", queriedCurrency.getSymbol())
+						                           .with("balance", String.format("%.2f", retrievedBalance))
+						                           .with("prefix", queriedCurrency.getPrefix())
+						                           .with("suffix", queriedCurrency.getSuffix())
+                                                       .send();
 				                           }
 			                           },
 			                           this.jexEconomyImpl.getExecutor()
@@ -421,10 +415,9 @@ public class PCurrency extends PlayerCommand {
 		final @NotNull OfflinePlayer balanceTargetPlayer
 	) {
 		if (this.jexEconomyImpl.getCurrencies().isEmpty()) {
-			I18n.create(MessageKey.of("currency.error.no_currencies"), messageRecipientPlayer)
-				.includePrefix()
-				.build()
-				.sendMessage(messageRecipientPlayer);
+			TranslationService.create(TranslationKey.of("currency.error.no_currencies"), messageRecipientPlayer)
+				.withPrefix()
+                    .send();
 			return;
 		}
 		
@@ -433,47 +426,41 @@ public class PCurrency extends PlayerCommand {
 			                           retrievedUserCurrencies -> {
 				                           if (retrievedUserCurrencies.isEmpty()) {
 					                           if (messageRecipientPlayer.equals(balanceTargetPlayer)) {
-						                           I18n.create(MessageKey.of("currency.balance.no_currencies_self"), messageRecipientPlayer)
-							                           .includePrefix()
-							                           .build()
-							                           .sendMessage(messageRecipientPlayer);
+						                           TranslationService.create(TranslationKey.of("currency.balance.no_currencies_self"), messageRecipientPlayer)
+							                           .withPrefix()
+                                                           .send();
 					                           } else {
-						                           I18n.create(MessageKey.of("currency.balance.no_currencies_other"), messageRecipientPlayer)
-							                           .includePrefix()
-							                           .withPlaceholder("player_name", balanceTargetPlayer.getName())
-							                           .build()
-							                           .sendMessage(messageRecipientPlayer);
+						                           TranslationService.create(TranslationKey.of("currency.balance.no_currencies_other"), messageRecipientPlayer)
+							                           .withPrefix()
+							                           .with("player_name", balanceTargetPlayer.getName())
+                                                           .send();
 					                           }
 					                           return;
 				                           }
 				                           
 				                           if (messageRecipientPlayer.equals(balanceTargetPlayer)) {
-					                           I18n.create(MessageKey.of("currency.balance.all_header_self"), messageRecipientPlayer)
-						                           .build()
-						                           .sendMessage(messageRecipientPlayer);
+					                           TranslationService.create(TranslationKey.of("currency.balance.all_header_self"), messageRecipientPlayer)
+                                                       .send();
 				                           } else {
-					                           I18n.create(MessageKey.of("currency.balance.all_header_other"), messageRecipientPlayer)
-						                           .withPlaceholder("player_name", balanceTargetPlayer.getName())
-						                           .build()
-						                           .sendMessage(messageRecipientPlayer);
+					                           TranslationService.create(TranslationKey.of("currency.balance.all_header_other"), messageRecipientPlayer)
+						                           .with("player_name", balanceTargetPlayer.getName())
+                                                       .send();
 				                           }
 				                           
 				                           for (final UserCurrency individualUserCurrency : retrievedUserCurrencies) {
 					                           final Currency associatedCurrency = individualUserCurrency.getCurrency();
 					                           
-					                           I18n.create(MessageKey.of("currency.balance.entry"), messageRecipientPlayer)
-						                           .withPlaceholder("currency", associatedCurrency.getIdentifier())
-						                           .withPlaceholder("symbol", associatedCurrency.getSymbol())
-						                           .withPlaceholder("balance", String.format("%.2f", individualUserCurrency.getBalance()))
-						                           .withPlaceholder("prefix", associatedCurrency.getPrefix())
-						                           .withPlaceholder("suffix", associatedCurrency.getSuffix())
-						                           .build()
-						                           .sendMessage(messageRecipientPlayer);
+					                           TranslationService.create(TranslationKey.of("currency.balance.entry"), messageRecipientPlayer)
+						                           .with("currency", associatedCurrency.getIdentifier())
+						                           .with("symbol", associatedCurrency.getSymbol())
+						                           .with("balance", String.format("%.2f", individualUserCurrency.getBalance()))
+						                           .with("prefix", associatedCurrency.getPrefix())
+						                           .with("suffix", associatedCurrency.getSuffix())
+                                                       .send();
 				                           }
 				                           
-				                           I18n.create(MessageKey.of("currency.balance.all_footer"), messageRecipientPlayer)
-					                           .build()
-					                           .sendMessage(messageRecipientPlayer);
+				                           TranslationService.create(TranslationKey.of("currency.balance.all_footer"), messageRecipientPlayer)
+                                                   .send();
 			                           },
 			                           this.jexEconomyImpl.getExecutor()
 		                           );

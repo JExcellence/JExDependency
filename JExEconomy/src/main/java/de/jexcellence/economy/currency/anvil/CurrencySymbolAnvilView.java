@@ -1,10 +1,10 @@
 package de.jexcellence.economy.currency.anvil;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.AbstractAnvilView;
+import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import de.jexcellence.economy.JExEconomyImpl;
+import de.jexcellence.economy.currency.CurrenciesActionOverviewView;
 import de.jexcellence.economy.database.entity.Currency;
-import de.jexcellence.economy.view.currency.CurrenciesActionOverviewView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -260,10 +260,10 @@ public class CurrencySymbolAnvilView extends AbstractAnvilView {
 				                                this.i18n(
 					                                "input.lore",
 					                                contextPlayer
-				                                ).withPlaceholder(
+				                                ).with(
 					                                "max_length",
 					                                MAXIMUM_SYMBOL_LENGTH
-				                                ).build().children()
+				                                ).build().splitLines()
 			                                )
 			                                .build();
 		
@@ -312,8 +312,8 @@ public class CurrencySymbolAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .includePrefix()
-		    .withPlaceholders(
+		    .withPrefix()
+		    .withAll(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "",
@@ -323,7 +323,7 @@ public class CurrencySymbolAnvilView extends AbstractAnvilView {
 				    invalidInput != null ? invalidInput.length() : 0
 			    )
 		    )
-		    .sendMessage();
+		    .send();
 	}
 	
 	/**

@@ -1,10 +1,10 @@
 package de.jexcellence.economy.currency.anvil;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.common.AbstractAnvilView;
+import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import de.jexcellence.economy.JExEconomyImpl;
+import de.jexcellence.economy.currency.CurrenciesCreatingView;
 import de.jexcellence.economy.database.entity.Currency;
-import de.jexcellence.economy.view.currency.CurrenciesCreatingView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -266,7 +266,7 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 					this.i18n(
 						"input.lore",
 						contextPlayer
-					).build().children()
+					).build().splitLines()
 				)
 				.build()
 		);
@@ -330,8 +330,8 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .includePrefix()
-		    .withPlaceholders(
+		    .withPrefix()
+		    .withAll(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "",
@@ -339,7 +339,7 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 				    "GOLD_INGOT, DIAMOND, EMERALD, IRON_INGOT"
 			    )
 		    )
-		    .sendMessage();
+		    .send();
 	}
 	
 	/**

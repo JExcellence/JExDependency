@@ -60,7 +60,7 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
         
         // Check permission
         if (!sender.hasPermission("jexeconomy.admin.migrate")) {
-            sender.sendMessage(PREFIX + ERROR + "You don't have permission to use migration commands.");
+            sender.send(PREFIX + ERROR + "You don't have permission to use migration commands.");
             return true;
         }
         
@@ -92,7 +92,7 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
                 sendMigrationHelp(sender);
                 break;
             default:
-                sender.sendMessage(PREFIX + ERROR + "Unknown migration command: " + subCommand);
+                sender.send(PREFIX + ERROR + "Unknown migration command: " + subCommand);
                 sendMigrationHelp(sender);
                 break;
         }
@@ -108,7 +108,7 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
     private void handleStartMigration(@NotNull CommandSender sender, @NotNull String[] args) {
         // Check if migration is already in progress
         if (migrationManager.isMigrationInProgress()) {
-            sender.sendMessage(PREFIX + WARNING + "Migration is already in progress!");
+            sender.send(PREFIX + WARNING + "Migration is already in progress!");
             return;
         }
         
@@ -134,10 +134,10 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
         }
         
         // Confirm the operation
-        sender.sendMessage(PREFIX + INFO + "Starting Vault to JExEconomyImpl migration...");
-        sender.sendMessage(PREFIX + INFO + "Backup: " + (createBackup ? SUCCESS + "Yes" : ERROR + "No"));
-        sender.sendMessage(PREFIX + INFO + "Replace Vault Provider: " + (replaceVaultProvider ? SUCCESS + "Yes" : ERROR + "No"));
-        sender.sendMessage(PREFIX + WARNING + "This operation may take several minutes depending on the number of players.");
+        sender.send(PREFIX + INFO + "Starting Vault to JExEconomyImpl migration...");
+        sender.send(PREFIX + INFO + "Backup: " + (createBackup ? SUCCESS + "Yes" : ERROR + "No"));
+        sender.send(PREFIX + INFO + "Replace Vault Provider: " + (replaceVaultProvider ? SUCCESS + "Yes" : ERROR + "No"));
+        sender.send(PREFIX + WARNING + "This operation may take several minutes depending on the number of players.");
         
         // Start migration asynchronously
         CompletableFuture<MigrationResult> migrationFuture = 
@@ -146,36 +146,36 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
         migrationFuture.thenAccept(result -> {
             // Send results to the command sender
             if (result.isSuccess()) {
-                sender.sendMessage(PREFIX + SUCCESS + "Migration completed successfully!");
+                sender.send(PREFIX + SUCCESS + "Migration completed successfully!");
                 
                 MigrationStats stats = result.getStats();
                 if (stats != null) {
-                    sender.sendMessage(PREFIX + INFO + "Migration Summary:");
-                    sender.sendMessage(PREFIX + INFO + "- Source Provider: " + HIGHLIGHT + result.getSourceProvider());
-                    sender.sendMessage(PREFIX + INFO + "- Players Processed: " + HIGHLIGHT + stats.getPlayersProcessed());
-                    sender.sendMessage(PREFIX + INFO + "- Successful: " + SUCCESS + stats.getSuccessfulPlayers());
-                    sender.sendMessage(PREFIX + INFO + "- Failed: " + (stats.getFailedPlayers() > 0 ? ERROR : SUCCESS) + stats.getFailedPlayers());
-                    sender.sendMessage(PREFIX + INFO + "- Total Balance Migrated: " + HIGHLIGHT + stats.getTotalBalance());
+                    sender.send(PREFIX + INFO + "Migration Summary:");
+                    sender.send(PREFIX + INFO + "- Source Provider: " + HIGHLIGHT + result.getSourceProvider());
+                    sender.send(PREFIX + INFO + "- Players Processed: " + HIGHLIGHT + stats.getPlayersProcessed());
+                    sender.send(PREFIX + INFO + "- Successful: " + SUCCESS + stats.getSuccessfulPlayers());
+                    sender.send(PREFIX + INFO + "- Failed: " + (stats.getFailedPlayers() > 0 ? ERROR : SUCCESS) + stats.getFailedPlayers());
+                    sender.send(PREFIX + INFO + "- Total Balance Migrated: " + HIGHLIGHT + stats.getTotalBalance());
                 }
             } else {
-                sender.sendMessage(PREFIX + ERROR + "Migration failed: " + result.getErrorMessage());
+                sender.send(PREFIX + ERROR + "Migration failed: " + result.getErrorMessage());
                 
                 MigrationStats stats = result.getStats();
                 if (stats != null && !stats.getErrors().isEmpty()) {
-                    sender.sendMessage(PREFIX + ERROR + "Errors encountered:");
+                    sender.send(PREFIX + ERROR + "Errors encountered:");
                     for (String error : stats.getErrors()) {
-                        sender.sendMessage(PREFIX + ERROR + "- " + error);
+                        sender.send(PREFIX + ERROR + "- " + error);
                     }
                 }
             }
         }).exceptionally(throwable -> {
-            sender.sendMessage(PREFIX + ERROR + "Migration failed with exception: " + throwable.getMessage());
+            sender.send(PREFIX + ERROR + "Migration failed with exception: " + throwable.getMessage());
             plugin.getLogger().severe("Migration failed with exception: " + throwable.getMessage());
             throwable.printStackTrace();
             return null;
         });
         
-        sender.sendMessage(PREFIX + INFO + "Migration started in background. Use '/jexeconomy migrate status' to check progress.");
+        sender.send(PREFIX + INFO + "Migration started in background. Use '/jexeconomy migrate status' to check progress.");
     }
     
     */
@@ -185,27 +185,27 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
 
     private void handleMigrationStatus(@NotNull CommandSender sender) {
         if (migrationManager.isMigrationInProgress()) {
-            sender.sendMessage(PREFIX + WARNING + "Migration is currently in progress...");
-            sender.sendMessage(PREFIX + INFO + "Please wait for completion or check logs for detailed progress.");
+            sender.send(PREFIX + WARNING + "Migration is currently in progress...");
+            sender.send(PREFIX + INFO + "Please wait for completion or check logs for detailed progress.");
         } else {
             MigrationResult lastResult = migrationManager.getLastMigrationResult();
             
             if (lastResult == null) {
-                sender.sendMessage(PREFIX + INFO + "No migration has been performed yet.");
+                sender.send(PREFIX + INFO + "No migration has been performed yet.");
             } else {
-                sender.sendMessage(PREFIX + INFO + "Last Migration Status:");
-                sender.sendMessage(PREFIX + INFO + "- Result: " + (lastResult.isSuccess() ? SUCCESS + "Success" : ERROR + "Failed"));
-                sender.sendMessage(PREFIX + INFO + "- Source Provider: " + HIGHLIGHT + lastResult.getSourceProvider());
+                sender.send(PREFIX + INFO + "Last Migration Status:");
+                sender.send(PREFIX + INFO + "- Result: " + (lastResult.isSuccess() ? SUCCESS + "Success" : ERROR + "Failed"));
+                sender.send(PREFIX + INFO + "- Source Provider: " + HIGHLIGHT + lastResult.getSourceProvider());
                 
                 if (lastResult.getStats() != null) {
                     MigrationStats stats = lastResult.getStats();
-                    sender.sendMessage(PREFIX + INFO + "- Players Processed: " + HIGHLIGHT + stats.getPlayersProcessed());
-                    sender.sendMessage(PREFIX + INFO + "- Successful: " + SUCCESS + stats.getSuccessfulPlayers());
-                    sender.sendMessage(PREFIX + INFO + "- Failed: " + (stats.getFailedPlayers() > 0 ? ERROR : SUCCESS) + stats.getFailedPlayers());
+                    sender.send(PREFIX + INFO + "- Players Processed: " + HIGHLIGHT + stats.getPlayersProcessed());
+                    sender.send(PREFIX + INFO + "- Successful: " + SUCCESS + stats.getSuccessfulPlayers());
+                    sender.send(PREFIX + INFO + "- Failed: " + (stats.getFailedPlayers() > 0 ? ERROR : SUCCESS) + stats.getFailedPlayers());
                 }
                 
                 if (!lastResult.isSuccess() && lastResult.getErrorMessage() != null) {
-                    sender.sendMessage(PREFIX + ERROR + "Error: " + lastResult.getErrorMessage());
+                    sender.send(PREFIX + ERROR + "Error: " + lastResult.getErrorMessage());
                 }
             }
         }
@@ -217,14 +217,14 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
      *//*
 
     private void handleSupportedPlugins(@NotNull CommandSender sender) {
-        sender.sendMessage(PREFIX + INFO + "Supported Economy Plugins for Migration:");
+        sender.send(PREFIX + INFO + "Supported Economy Plugins for Migration:");
         
         for (String plugin : migrationManager.getSupportedEconomyPlugins()) {
-            sender.sendMessage(PREFIX + INFO + "- " + HIGHLIGHT + plugin);
+            sender.send(PREFIX + INFO + "- " + HIGHLIGHT + plugin);
         }
         
-        sender.sendMessage(PREFIX + INFO + "If your economy plugin is not listed, please contact support.");
-        sender.sendMessage(PREFIX + INFO + "JExEconomyImpl can still provide Vault compatibility even without migration.");
+        sender.send(PREFIX + INFO + "If your economy plugin is not listed, please contact support.");
+        sender.send(PREFIX + INFO + "JExEconomyImpl can still provide Vault compatibility even without migration.");
     }
     
     */
@@ -238,31 +238,31 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
 /*  *//*
 
         if (lastResult == null) {
-            sender.sendMessage(PREFIX + INFO + "No migration history available.");
+            sender.send(PREFIX + INFO + "No migration history available.");
             return;
         }
         
-        sender.sendMessage(PREFIX + INFO + "Migration History:");
-        sender.sendMessage(PREFIX + INFO + "Last Migration:");
-        sender.sendMessage(PREFIX + INFO + "- Status: " + (lastResult.isSuccess() ? SUCCESS + "Success" : ERROR + "Failed"));
-        sender.sendMessage(PREFIX + INFO + "- Source: " + HIGHLIGHT + lastResult.getSourceProvider());
+        sender.send(PREFIX + INFO + "Migration History:");
+        sender.send(PREFIX + INFO + "Last Migration:");
+        sender.send(PREFIX + INFO + "- Status: " + (lastResult.isSuccess() ? SUCCESS + "Success" : ERROR + "Failed"));
+        sender.send(PREFIX + INFO + "- Source: " + HIGHLIGHT + lastResult.getSourceProvider());
         
         if (lastResult.getStats() != null) {
             MigrationStats stats = lastResult.getStats();
-            sender.sendMessage(PREFIX + INFO + "- Total Players: " + HIGHLIGHT + stats.getTotalPlayers());
-            sender.sendMessage(PREFIX + INFO + "- Processed: " + HIGHLIGHT + stats.getPlayersProcessed());
-            sender.sendMessage(PREFIX + INFO + "- Successful: " + SUCCESS + stats.getSuccessfulPlayers());
-            sender.sendMessage(PREFIX + INFO + "- Failed: " + (stats.getFailedPlayers() > 0 ? ERROR : SUCCESS) + stats.getFailedPlayers());
-            sender.sendMessage(PREFIX + INFO + "- Total Balance: " + HIGHLIGHT + stats.getTotalBalance());
+            sender.send(PREFIX + INFO + "- Total Players: " + HIGHLIGHT + stats.getTotalPlayers());
+            sender.send(PREFIX + INFO + "- Processed: " + HIGHLIGHT + stats.getPlayersProcessed());
+            sender.send(PREFIX + INFO + "- Successful: " + SUCCESS + stats.getSuccessfulPlayers());
+            sender.send(PREFIX + INFO + "- Failed: " + (stats.getFailedPlayers() > 0 ? ERROR : SUCCESS) + stats.getFailedPlayers());
+            sender.send(PREFIX + INFO + "- Total Balance: " + HIGHLIGHT + stats.getTotalBalance());
             
             if (!stats.getErrors().isEmpty()) {
-                sender.sendMessage(PREFIX + WARNING + "Errors encountered (" + stats.getErrors().size() + "):");
+                sender.send(PREFIX + WARNING + "Errors encountered (" + stats.getErrors().size() + "):");
                 int maxErrors = Math.min(5, stats.getErrors().size());
                 for (int i = 0; i < maxErrors; i++) {
-                    sender.sendMessage(PREFIX + ERROR + "- " + stats.getErrors().get(i));
+                    sender.send(PREFIX + ERROR + "- " + stats.getErrors().get(i));
                 }
                 if (stats.getErrors().size() > maxErrors) {
-                    sender.sendMessage(PREFIX + WARNING + "... and " + (stats.getErrors().size() - maxErrors) + " more errors");
+                    sender.send(PREFIX + WARNING + "... and " + (stats.getErrors().size() - maxErrors) + " more errors");
                 }
             }
         }
@@ -274,20 +274,20 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
      *//*
 
     private void handleMigrationInfo(@NotNull CommandSender sender) {
-        sender.sendMessage(PREFIX + INFO + "JExEconomyImpl Vault Migration System");
-        sender.sendMessage(PREFIX + INFO + "=====================================");
-        sender.sendMessage(PREFIX + INFO + "This system allows you to migrate from existing");
-        sender.sendMessage(PREFIX + INFO + "Vault-based economy plugins to JExEconomyImpl while");
-        sender.sendMessage(PREFIX + INFO + "maintaining full compatibility with existing plugins.");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + INFO + "Features:");
-        sender.sendMessage(PREFIX + INFO + "- Automatic data migration");
-        sender.sendMessage(PREFIX + INFO + "- Backup creation before migration");
-        sender.sendMessage(PREFIX + INFO + "- Vault provider replacement");
-        sender.sendMessage(PREFIX + INFO + "- Progress tracking and reporting");
-        sender.sendMessage(PREFIX + INFO + "- Support for multiple economy plugins");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + INFO + "Use '/jexeconomy migrate help' for command usage.");
+        sender.send(PREFIX + INFO + "JExEconomyImpl Vault Migration System");
+        sender.send(PREFIX + INFO + "=====================================");
+        sender.send(PREFIX + INFO + "This system allows you to migrate from existing");
+        sender.send(PREFIX + INFO + "Vault-based economy plugins to JExEconomyImpl while");
+        sender.send(PREFIX + INFO + "maintaining full compatibility with existing plugins.");
+        sender.send("");
+        sender.send(PREFIX + INFO + "Features:");
+        sender.send(PREFIX + INFO + "- Automatic data migration");
+        sender.send(PREFIX + INFO + "- Backup creation before migration");
+        sender.send(PREFIX + INFO + "- Vault provider replacement");
+        sender.send(PREFIX + INFO + "- Progress tracking and reporting");
+        sender.send(PREFIX + INFO + "- Support for multiple economy plugins");
+        sender.send("");
+        sender.send(PREFIX + INFO + "Use '/jexeconomy migrate help' for command usage.");
     }
     
     */
@@ -296,27 +296,27 @@ public class MigrationCommand implements CommandExecutor, TabCompleter {
      *//*
 
     private void sendMigrationHelp(@NotNull CommandSender sender) {
-        sender.sendMessage(PREFIX + INFO + "JExEconomyImpl Migration Commands:");
-        sender.sendMessage(PREFIX + INFO + "================================");
-        sender.sendMessage(PREFIX + INFO + "/jexeconomy migrate start [options]");
-        sender.sendMessage(PREFIX + INFO + "  Start migration from Vault economy");
-        sender.sendMessage(PREFIX + INFO + "  Options:");
-        sender.sendMessage(PREFIX + INFO + "    --backup (default) / --no-backup");
-        sender.sendMessage(PREFIX + INFO + "    --replace-vault / --no-replace-vault (default)");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + INFO + "/jexeconomy migrate status");
-        sender.sendMessage(PREFIX + INFO + "  Check current migration status");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + INFO + "/jexeconomy migrate supported");
-        sender.sendMessage(PREFIX + INFO + "  List supported economy plugins");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + INFO + "/jexeconomy migrate history");
-        sender.sendMessage(PREFIX + INFO + "  View migration history and results");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + INFO + "/jexeconomy migrate info");
-        sender.sendMessage(PREFIX + INFO + "  General information about migration");
-        sender.sendMessage("");
-        sender.sendMessage(PREFIX + WARNING + "Important: Always backup your data before migration!");
+        sender.send(PREFIX + INFO + "JExEconomyImpl Migration Commands:");
+        sender.send(PREFIX + INFO + "================================");
+        sender.send(PREFIX + INFO + "/jexeconomy migrate start [options]");
+        sender.send(PREFIX + INFO + "  Start migration from Vault economy");
+        sender.send(PREFIX + INFO + "  Options:");
+        sender.send(PREFIX + INFO + "    --backup (default) / --no-backup");
+        sender.send(PREFIX + INFO + "    --replace-vault / --no-replace-vault (default)");
+        sender.send("");
+        sender.send(PREFIX + INFO + "/jexeconomy migrate status");
+        sender.send(PREFIX + INFO + "  Check current migration status");
+        sender.send("");
+        sender.send(PREFIX + INFO + "/jexeconomy migrate supported");
+        sender.send(PREFIX + INFO + "  List supported economy plugins");
+        sender.send("");
+        sender.send(PREFIX + INFO + "/jexeconomy migrate history");
+        sender.send(PREFIX + INFO + "  View migration history and results");
+        sender.send("");
+        sender.send(PREFIX + INFO + "/jexeconomy migrate info");
+        sender.send(PREFIX + INFO + "  General information about migration");
+        sender.send("");
+        sender.send(PREFIX + WARNING + "Important: Always backup your data before migration!");
     }
     
     @Override

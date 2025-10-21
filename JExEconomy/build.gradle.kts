@@ -23,7 +23,6 @@ repositories {
 
 dependencies {
     compileOnly(libs.paper.api)
-    compileOnly("org.jetbrains:annotations:24.1.0")
 
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
@@ -34,7 +33,9 @@ dependencies {
 
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-    compileOnly(libs.bundles.inventory) { isTransitive = false }
+    compileOnly(libs.bundles.inventory)
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7") { isTransitive = false }
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 
 java {

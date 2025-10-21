@@ -316,7 +316,7 @@ public void onBalanceChange(BalanceChangeEvent event) {
     
     // React to balance changes
     if (newBalance > oldBalance) {
-        player.sendMessage("You received " + (newBalance - oldBalance) + " " + currency.getSymbol());
+        player.send("You received " + (newBalance - oldBalance) + " " + currency.getSymbol());
     }
 }
 
