@@ -21,7 +21,7 @@ import java.util.function.UnaryOperator;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 public final class CustomAnvilInput extends BaseMutableState<String> implements ViewConfig.Modifier {
 
@@ -52,7 +52,7 @@ public final class CustomAnvilInput extends BaseMutableState<String> implements 
      * @return Default configuration of the anvil input feature.
      */
     public static CustomAnvilInputConfig defaultConfig() {
-        return DEFAULT_CONFIG;
+        return DEFAULT_CONFIG.copy();
     }
     
     /**
