@@ -17,6 +17,6 @@ public class BountyJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
-        this.rdq.getBountyManager().updateBountyPlayerDisplay(event.getPlayer().getUniqueId());
+        this.rdq.getManager().getBountyManager().updateBountyPlayerDisplay(event.getPlayer().getUniqueId());
     }
 }

@@ -15,15 +15,15 @@ java {
     withJavadocJar()
 }
 
+val adventureVersion = "4.17.0"
+val paperVersion = "1.21.4-R0.1-SNAPSHOT"
+
 repositories {
     mavenCentral()
     mavenLocal()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://oss.sonatype.org/content/groups/public/")
 }
-
-val adventureVersion = "4.17.0"
-val paperVersion = "1.21.4-R0.1-SNAPSHOT"
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")

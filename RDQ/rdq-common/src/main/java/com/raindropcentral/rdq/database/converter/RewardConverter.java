@@ -15,7 +15,7 @@ import java.io.IOException;
  * <p>
  * This converter ensures that complex requirement objects, including those with Bukkit-specific
  * fields or polymorphic types, can be persisted and reconstructed reliably using Jackson-based
- * serialization provided by {@link com.raindropcentral.rdq.json.reward.RewardParser}.
+ * serialization provided by {@link RewardParser}.
  * </p>
  *
  * <ul>
@@ -44,7 +44,7 @@ public class RewardConverter implements AttributeConverter<AbstractReward, Strin
 	 * Converts an {@link AbstractReward} object to its JSON string representation for database storage.
 	 * <p>
 	 * If the input is {@code null}, {@code null} is returned to represent a missing reward.
-	 * Otherwise, the requirement is serialized using {@link com.raindropcentral.rdq.json.reward.RewardParser#serialize(AbstractReward)}.
+	 * Otherwise, the requirement is serialized using {@link RewardParser#serialize(AbstractReward)}.
 	 * </p>
 	 *
 	 * @param attribute the {@code AbstractReward} instance to convert (may be {@code null})
@@ -78,7 +78,7 @@ public class RewardConverter implements AttributeConverter<AbstractReward, Strin
 	 * Converts a JSON string from the database back into an {@link AbstractReward} object.
 	 * <p>
 	 * If the input is {@code null}, {@code null} is returned to represent a missing reward.
-	 * Otherwise, the JSON is deserialized using {@link com.raindropcentral.rdq.json.reward.RewardParser#parse(String)}.
+	 * Otherwise, the JSON is deserialized using {@link RewardParser#parse(String)}.
 	 * </p>
 	 *
 	 * @param dbData the JSON string from the database (may be {@code null})

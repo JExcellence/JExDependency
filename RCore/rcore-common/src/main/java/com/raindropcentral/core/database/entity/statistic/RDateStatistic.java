@@ -14,7 +14,7 @@ import java.util.Objects;
 @DiscriminatorValue("DATE")
 public class RDateStatistic extends RAbstractStatistic {
     
-    @Column(name = "statistic_value", nullable = false)
+    @Column(name = "statistic_date")
     private Long value;
     
     protected RDateStatistic() {}

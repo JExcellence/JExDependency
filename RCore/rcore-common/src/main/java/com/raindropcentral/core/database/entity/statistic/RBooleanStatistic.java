@@ -11,7 +11,7 @@ import java.util.Objects;
 @DiscriminatorValue("BOOLEAN")
 public class RBooleanStatistic extends RAbstractStatistic {
     
-    @Column(name = "statistic_value", nullable = false)
+    @Column(name = "statistic_boolean")
     private Boolean value;
     
     protected RBooleanStatistic() {}

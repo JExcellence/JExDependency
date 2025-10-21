@@ -11,7 +11,7 @@ import java.util.Objects;
 @DiscriminatorValue("STRING")
 public class RStringStatistic extends RAbstractStatistic {
     
-    @Column(name = "statistic_value", columnDefinition = "TEXT")
+    @Column(name = "statistic_string", columnDefinition = "TEXT")
     private String value;
     
     protected RStringStatistic() {}

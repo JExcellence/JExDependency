@@ -3,11 +3,11 @@ package com.raindropcentral.rdq;
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.manager.RDQManager;
-import com.raindropcentral.rdq.utility.BountyManager;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.view.PaginatedPlayerView;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.Bukkit;
@@ -24,18 +24,33 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The core abstract class for RaindropQuests.
+ * <p>
+ * This class manages the entire plugin lifecycle, including a robust asynchronous
+ * startup sequence, dependency management, and access to core components like
+ * repositories, managers, and the platform API.
+ * </p>
+ *
+ * @author JExcellence
+ * @version 3.1.0
+ */
 public abstract class RDQ {
 
     private final JavaPlugin plugin;
-    private final RDQManager manager;
-    private String detectedEdition;
+    private final String detectedEdition;
     private final ExecutorService executor = createExecutor();
+    private final RPlatform platform;
+
     private volatile CompletableFuture<Void> enableFuture;
-    private RPlatform platform;
+    private boolean isDisabling;
+    private boolean postEnableCompleted = false;
+
+    private RDQManager manager;
     private ViewFrame viewFrame;
-    private BountyManager bountyManager;
     private RankSystemFactory rankSystemFactory;
     private CommandFactory commandFactory;
+
     private RDQPlayerRepository playerRepository;
     private RPlayerRankPathRepository playerRankPathRepository;
     private RPlayerRankRepository playerRankRepository;
@@ -46,19 +61,14 @@ public abstract class RDQ {
     private RPlayerRankUpgradeProgressRepository playerRankUpgradeProgressRepository;
     private RRankTreeRepository rankTreeRepository;
     private RRequirementRepository requirementRepository;
-    private boolean isDisabling;
 
-    public RDQ(
-            final @NotNull JavaPlugin plugin,
-            final @NotNull String edition,
-            final @NotNull RDQManager manager
-    ) {
+    public RDQ(final @NotNull JavaPlugin plugin, final @NotNull String edition) {
         this.plugin = plugin;
         this.detectedEdition = edition;
-        this.manager = manager;
         this.platform = new RPlatform(plugin);
         CentralLogger.initialize(plugin);
     }
+
 
     public void onLoad() {
         try {
@@ -68,35 +78,22 @@ public abstract class RDQ {
         }
     }
 
+    /**
+     * Orchestrates the entire asynchronous startup sequence for the plugin.
+     * This method is the single entry point for enabling the plugin.
+     */
     public void onEnable() {
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
             plugin.getLogger().warning("Enable sequence already in progress");
             return;
         }
         final Logger log = CentralLogger.getLogger(getClass().getName());
-        this.enableFuture = initializePlatformAsync()
+
+        this.enableFuture = performCoreEnableAsync()
                 .thenCompose(v -> runSync(() -> {
                     try {
-                        initializeComponents();
-                        initializeViews();
-                        initializeRepositories();
-                    } catch (Throwable t) {
-                        throw new CompletionException(t);
-                    }
-                }))
-                .thenCompose(v -> {
-                    if (this.rankSystemFactory == null) return CompletableFuture.completedFuture(null);
-                    try {
-                        return this.rankSystemFactory.initializeAsync();
-                    } catch (Throwable t) {
-                        return CompletableFuture.failedFuture(t);
-                    }
-                })
-                .thenCompose(v -> runSync(() -> {
-                    try {
-                        this.platform.initializeMetrics(getMetricsId());
-                        registerServices();
-                        plugin.getLogger().info("RDQ " + detectedEdition + " Edition enabled successfully!");
+                        this.manager = initializeManager();
+                        performPostEnableSync();
                     } catch (Throwable t) {
                         throw new CompletionException(t);
                     }
@@ -115,10 +112,14 @@ public abstract class RDQ {
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
             this.enableFuture.cancel(true);
         }
+        if (this.manager != null) {
+            this.manager.shutdown();
+        }
         if (this.executor != null && !this.executor.isShutdown()) {
             this.executor.shutdown();
         }
     }
+
 
     @NotNull
     protected abstract String getStartupMessage();
@@ -128,35 +129,51 @@ public abstract class RDQ {
     @NotNull
     protected abstract ViewFrame registerViews(@NotNull ViewFrame viewFrame);
 
-    private void initializeComponents() {
-        // Initialize BountyManager BEFORE registering listeners so they can access it
-        this.bountyManager = new BountyManager(this);
-        
-        // Now register commands and listeners - they can safely use getBountyManager()
-        this.commandFactory = new CommandFactory(plugin, this);
-        this.commandFactory.registerAllCommandsAndListeners();
+    /**
+     * Implemented by concrete classes (Free/Premium) to create and return
+     * their specific RDQManager instance. This is called after core systems are ready.
+     *
+     * @return The initialized RDQManager.
+     */
+    @NotNull
+    protected abstract RDQManager initializeManager();
+
+
+    /**
+     * Performs core asynchronous setup (Platform, Database, Repositories, Ranks).
+     * This must complete before any managers or services can be initialized.
+     */
+    private CompletableFuture<Void> performCoreEnableAsync() {
+        return this.platform.initialize()
+                .thenCompose(v -> runSync(() -> {
+                    initializeRepositories();
+                    this.rankSystemFactory = new RankSystemFactory(this);
+                }))
+                .thenCompose(v -> {
+                    return this.rankSystemFactory.initializeAsync();
+                });
     }
 
-    @SuppressWarnings("UnstableApiUsage")
-    private void initializeViews() {
-        ViewFrame viewFrame = ViewFrame
-                .create(plugin)
-                .with(
-                        new BountyMainView(),
-                        new BountyCreationView(),
-                        new BountyOverviewView(),
-                        new BountyRewardView(),
-                        new BountyPlayerInfoView()
-                )
-                .defaultConfig(config -> {
-                    config.cancelOnClick();
-                    config.cancelOnDrag();
-                    config.cancelOnDrop();
-                    config.cancelOnPickup();
-                    config.interactionDelay(Duration.ofMillis(100));
-                });
-        viewFrame = registerViews(viewFrame);
-        this.viewFrame = viewFrame.register();
+    /**
+     * Performs the final synchronous setup after all async tasks are complete.
+     * This initializes and registers all user-facing components like commands and views.
+     */
+    private void performPostEnableSync() {
+        if (postEnableCompleted) {
+            plugin.getLogger().warning("Post-enable called more than once.");
+            return;
+        }
+
+        this.commandFactory = new CommandFactory(plugin, this);
+        this.commandFactory.registerAllCommandsAndListeners();
+
+        initializeViews();
+
+        this.platform.initializeMetrics(getMetricsId());
+
+        plugin.getLogger().info(getStartupMessage());
+        plugin.getLogger().info("RDQ " + detectedEdition + " Edition enabled successfully!");
+        postEnableCompleted = true;
     }
 
     private void initializeRepositories() {
@@ -173,29 +190,36 @@ public abstract class RDQ {
         this.playerPerkRepository = new RPlayerPerkRepository(this.executor, emf);
     }
 
-    private void registerServices() {
-        final Logger log = CentralLogger.getLogger(getClass().getName());
-        try {
-            // BountyManager is already initialized in initializeComponents()
-            log.info("Bounty services wired for " + detectedEdition + ".");
-        } catch (Throwable t) {
-            log.log(Level.SEVERE, "Service registration failed", t);
-            throw t;
-        }
+    @SuppressWarnings("UnstableApiUsage")
+    private void initializeViews() {
+        ViewFrame frame = ViewFrame
+                .create(plugin)
+                .with(
+                        new BountyMainView(),
+                        new BountyCreationView(),
+                        new BountyOverviewView(),
+                        new BountyRewardView(),
+                        new BountyPlayerInfoView(),
+                        new PaginatedPlayerView()
+                )
+                .defaultConfig(config -> {
+                    config.cancelOnClick();
+                    config.cancelOnDrag();
+                    config.cancelOnDrop();
+                    config.cancelOnPickup();
+                    config.interactionDelay(Duration.ofMillis(100));
+                });
+        frame = registerViews(frame);
+        this.viewFrame = frame.register();
     }
 
-    private @NotNull CompletableFuture<Void> initializePlatformAsync() {
-        return CompletableFuture.runAsync(() -> {
-            try {
-                this.platform.initialize();
-            } catch (Throwable t) {
-                throw new CompletionException(t);
-            }
-        }, this.executor);
-    }
 
     private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable runnable) {
         final CompletableFuture<Void> future = new CompletableFuture<>();
+        if (isDisabling) {
+            future.cancel(false);
+            return future;
+        }
         Bukkit.getScheduler().runTask(this.plugin, () -> {
             try {
                 runnable.run();
@@ -211,8 +235,17 @@ public abstract class RDQ {
         try {
             return Executors.newVirtualThreadPerTaskExecutor();
         } catch (Throwable ignored) {
-            return Executors.newFixedThreadPool(5);
+            return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         }
+    }
+
+
+    @NotNull
+    public RDQManager getManager() {
+        if (this.manager == null) {
+            throw new IllegalStateException("RDQManager has not been initialized yet. It is only available after the enable sequence is complete.");
+        }
+        return this.manager;
     }
 
     @NotNull
@@ -238,16 +271,6 @@ public abstract class RDQ {
     @NotNull
     public ViewFrame getViewFrame() {
         return this.viewFrame;
-    }
-
-    @NotNull
-    public RDQManager getManager() {
-        return this.manager;
-    }
-
-    @NotNull
-    public BountyManager getBountyManager() {
-        return this.bountyManager;
     }
 
     @NotNull
@@ -315,33 +338,5 @@ public abstract class RDQ {
 
     public boolean isEnabled() {
         return plugin.isEnabled();
-    }
-
-    @NotNull
-    public java.io.File getDataFolder() {
-        return plugin.getDataFolder();
-    }
-
-    @NotNull
-    public Logger getLogger() {
-        return plugin.getLogger();
-    }
-
-    @NotNull
-    public org.bukkit.Server getServer() {
-        return plugin.getServer();
-    }
-
-    @NotNull
-    public org.bukkit.configuration.file.FileConfiguration getConfig() {
-        return plugin.getConfig();
-    }
-
-    public void saveConfig() {
-        plugin.saveConfig();
-    }
-
-    public void reloadConfig() {
-        plugin.reloadConfig();
     }
 }

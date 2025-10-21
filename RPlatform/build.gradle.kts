@@ -10,7 +10,6 @@ description = "Modern platform abstraction layer for Spigot/Paper/Folia plugins"
 repositories {
     mavenCentral()
     mavenLocal()
-    
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://oss.sonatype.org/content/groups/public/")
     maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")

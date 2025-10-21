@@ -77,7 +77,8 @@ dependencies {
     compileOnly(libs.xseries)
 
     // Internal libraries to be shaded by variants
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
+    implementation(libs.bundles.jexcellence)
+    implementation(libs.jehibernate)
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory)
 
@@ -91,6 +92,7 @@ publishing {
         create<MavenPublication>("maven") {
             from(components["java"])
             artifactId = "rdq-common"
+
             pom {
                 name.set("RDQ Common")
                 description.set("Shared code for RDQ Free/Premium")

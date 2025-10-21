@@ -27,6 +27,12 @@ public final class RBountyRepository extends GenericCachedRepository<RBounty, Lo
                 .thenApply(Optional::ofNullable);
     }
 
+    public @NotNull CompletableFuture<Optional<RBounty>> findByPlayerAsync(final @NotNull UUID uniqueId) {
+        return findByAttributesAsync(Map.of("player.uniqueId", uniqueId))
+                .thenApply(Optional::ofNullable);
+    }
+
+
     public @NotNull CompletableFuture<Optional<RBounty>> findByCommissionerAsync(final @NotNull UUID commissioner) {
         return findByAttributesAsync(Map.of("commissioner", commissioner))
                 .thenApply(Optional::ofNullable);

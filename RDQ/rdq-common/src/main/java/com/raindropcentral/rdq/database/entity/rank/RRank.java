@@ -1,6 +1,5 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
-
 import com.raindropcentral.rdq.config.item.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import de.jexcellence.hibernate.entity.AbstractEntity;
@@ -196,6 +195,21 @@ public class RRank extends AbstractEntity {
             upgradeRequirement.setRank(null);
         }
         return removed;
+    }
+
+    /**
+     * Safely replaces the existing set of upgrade requirements with a new collection.
+     * This method handles clearing old requirements and setting the bidirectional
+     * relationship for the new ones.
+     *
+     * @param newRequirements The new collection of requirements.
+     */
+    public void replaceUpgradeRequirements(final @NotNull Collection<RRankUpgradeRequirement> newRequirements) {
+        Objects.requireNonNull(newRequirements, "newRequirements cannot be null");
+        this.upgradeRequirements.clear();
+        for (RRankUpgradeRequirement req : newRequirements) {
+            addUpgradeRequirement(req);
+        }
     }
 
     @Override

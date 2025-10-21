@@ -295,7 +295,7 @@ public abstract class BaseView extends View {
 		 .build();
 		
 		if (ServerEnvironment.getInstance().isPaper()) {
-			open.modifyConfig().title(titleComponent.component());
+			open.modifyConfig().title(titleComponent.asLegacyText());
 		} else {
             open.modifyConfig().title(titleComponent.asLegacyText());
 		}

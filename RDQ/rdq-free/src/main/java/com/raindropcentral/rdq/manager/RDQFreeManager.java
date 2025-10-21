@@ -5,6 +5,8 @@ import com.raindropcentral.rdq.manager.bounty.FreeBountyManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
 import com.raindropcentral.rdq.manager.rank.RankManager;
+import com.raindropcentral.rplatform.RPlatform;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Logger;
@@ -34,9 +36,11 @@ public final class RDQFreeManager extends RDQManager {
     private final RankManager rankManager;
     private final PerkManager perkManager;
 
-    public RDQFreeManager() {
+    public RDQFreeManager(
+            JavaPlugin plugin, RPlatform platform
+    ) {
         super("Free");
-        this.bountyManager = new FreeBountyManager();
+        this.bountyManager = new FreeBountyManager(plugin, platform);
         this.questManager = new FreeQuestManager();
         this.rankManager = new FreeRankManager();
         this.perkManager = new FreePerkManager();

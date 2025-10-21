@@ -1,10 +1,10 @@
 package com.raindropcentral.rdq.service.bounty;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
 import com.raindropcentral.rdq.database.repository.RBountyRepository;
-import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
 import com.raindropcentral.rdq.service.BountyService;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -13,16 +13,12 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Premium version of bounty service with full database integration.
+ * Premium version of bounty service with persistent database storage.
  * <p>
- * This implementation provides complete functionality:
- * <ul>
- * <li>Full CRUD operations on bounties</li>
- * <li>Unlimited bounties per player</li>
- * <li>Unlimited reward items</li>
- * <li>Database persistence</li>
- * <li>Async operations</li>
- * </ul>
+ * This implementation provides full functionality for the premium version by
+ * delegating all operations to the {@link RDQ}. It assumes no
+ * hardcoded limits, as those are typically handled by configuration or
+ * permissions in a premium plugin.
  * </p>
  *
  * @author JExcellence
@@ -31,52 +27,44 @@ import java.util.concurrent.CompletableFuture;
  */
 public final class PremiumBountyService implements BountyService {
 
-    private static final int MAX_BOUNTIES_PREMIUM = -1;
-    private static final int MAX_REWARD_ITEMS_PREMIUM = -1;
-
     private final RBountyRepository bountyRepository;
-    private final RDQPlayerRepository playerRepository;
 
-    public PremiumBountyService(
-            final @NotNull RBountyRepository bountyRepository,
-            final @NotNull RDQPlayerRepository playerRepository
-    ) {
+    /**
+     * Constructs the premium bounty service.
+     *
+     */
+    public PremiumBountyService(@NotNull RBountyRepository bountyRepository) {
         this.bountyRepository = bountyRepository;
-        this.playerRepository = playerRepository;
     }
 
     @Override
-    public @NotNull CompletableFuture<List<RBounty>> getAllBounties(final int page, final int pageSize) {
+    public @NotNull CompletableFuture<List<RBounty>> getAllBounties(int page, int pageSize) {
         return this.bountyRepository.findAllAsync(page, pageSize);
     }
 
     @Override
-    public @NotNull CompletableFuture<Optional<RBounty>> getBountyByPlayer(final @NotNull UUID playerUuid) {
-        return this.bountyRepository
-                .findByAttributesAsync(Map.of("player.uniqueId", playerUuid))
-                .thenApply(Optional::ofNullable);
+    public @NotNull CompletableFuture<Optional<RBounty>> getBountyByPlayer(@NotNull UUID playerUuid) {
+        return this.bountyRepository.findByPlayerAsync(playerUuid);
     }
 
     @Override
     public @NotNull CompletableFuture<RBounty> createBounty(
-            final @NotNull RDQPlayer target,
-            final @NotNull Player commissioner,
-            final @NotNull Set<RewardItem> rewardItems,
-            final @NotNull Map<String, Double> rewardCurrencies
+            @NotNull RDQPlayer target,
+            @NotNull Player commissioner,
+            @NotNull Set<RewardItem> rewardItems,
+            @NotNull Map<String, Double> rewardCurrencies
     ) {
-        final RBounty bounty = new RBounty(target, commissioner);
-        bounty.setRewardItems(rewardItems);
-
+        RBounty bounty = new RBounty(target, commissioner, rewardItems, rewardCurrencies);
         return this.bountyRepository.createAsync(bounty);
     }
 
     @Override
-    public @NotNull CompletableFuture<Boolean> deleteBounty(final @NotNull Long bountyId) {
+    public @NotNull CompletableFuture<Boolean> deleteBounty(@NotNull Long bountyId) {
         return this.bountyRepository.deleteAsync(bountyId);
     }
 
     @Override
-    public @NotNull CompletableFuture<RBounty> updateBounty(final @NotNull RBounty bounty) {
+    public @NotNull CompletableFuture<RBounty> updateBounty(@NotNull RBounty bounty) {
         return this.bountyRepository.updateAsync(bounty);
     }
 
@@ -87,23 +75,27 @@ public final class PremiumBountyService implements BountyService {
 
     @Override
     public int getMaxBountiesPerPlayer() {
-        return MAX_BOUNTIES_PREMIUM;
+        // Premium version has no hardcoded limit. -1 signifies unlimited.
+        return -1;
     }
+
+
 
     @Override
     public int getMaxRewardItems() {
-        return MAX_REWARD_ITEMS_PREMIUM;
+        // Premium version has no hardcoded limit. -1 signifies unlimited.
+        return -1;
     }
 
     @Override
-    public boolean canCreateBounty(final @NotNull Player player) {
+    public boolean canCreateBounty(@NotNull Player player) {
+        // In premium, this is typically controlled by permissions, not a hard limit.
+        // For example: return player.hasPermission("rdq.bounty.create");
         return true;
     }
 
     @Override
     public @NotNull CompletableFuture<Integer> getTotalBountyCount() {
-        return this.bountyRepository
-                .findAllAsync(1, Integer.MAX_VALUE)
-                .thenApply(List::size);
+        return this.bountyRepository.findAllAsync(0, 1000).thenApply(List::size);
     }
 }

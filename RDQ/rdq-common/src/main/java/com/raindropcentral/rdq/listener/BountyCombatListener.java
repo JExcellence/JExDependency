@@ -21,7 +21,7 @@ public class BountyCombatListener implements Listener {
         if (!(event.getEntity() instanceof Player target)) return;
         if (!(event.getDamager() instanceof Player)) return;
 
-        this.rdq.getBountyManager().trackDamage(
+        this.rdq.getManager().getBountyManager().trackDamage(
                 target.getUniqueId(),
                 event.getDamager().getUniqueId(),
                 event.getFinalDamage()
@@ -30,6 +30,6 @@ public class BountyCombatListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(final @NotNull PlayerDeathEvent event) {
-        this.rdq.getBountyManager().handleBountyKill(event.getEntity());
+        this.rdq.getManager().getBountyManager().handleBountyKill(event.getEntity());
     }
 }

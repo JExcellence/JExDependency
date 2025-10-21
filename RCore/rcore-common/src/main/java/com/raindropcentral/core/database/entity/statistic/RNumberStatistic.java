@@ -11,7 +11,7 @@ import java.util.Objects;
 @DiscriminatorValue("NUMBER")
 public class RNumberStatistic extends RAbstractStatistic {
     
-    @Column(name = "statistic_value", nullable = false)
+    @Column(name = "statistic_number")
     private Double value;
     
     protected RNumberStatistic() {}
