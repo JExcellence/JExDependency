@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class BukkitISchedulerImpl implements ISchedulerAdapter {
 
@@ -34,7 +35,7 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
      * @param plugin owning plugin, used as the scheduling context
      */
     public BukkitISchedulerImpl(final @NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+        this.plugin = Objects.requireNonNull(plugin, "plugin");
     }
 
     /**
@@ -148,6 +149,7 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
      * @return defensive runnable that logs failures
      */
     private Runnable safe(Runnable task) {
+        Objects.requireNonNull(task, "task");
         return () -> {
             try {
                 task.run();
