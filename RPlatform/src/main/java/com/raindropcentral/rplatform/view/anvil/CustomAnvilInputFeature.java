@@ -37,7 +37,7 @@ import static me.devnatan.inventoryframework.IFViewFrame.FRAME_REGISTERED;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputConfig, Void, ViewFrame> {
@@ -88,7 +88,10 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
      * @return {@code null} as this feature does not expose a runtime handle
      */
     public @NotNull Void install(ViewFrame framework, UnaryOperator<CustomAnvilInputConfig> configure) {
-        config = configure.apply(defaultConfig());
+        final CustomAnvilInputConfig defaults = defaultConfig();
+        final CustomAnvilInputConfig base = defaults.copy();
+        final CustomAnvilInputConfig overrides = configure.apply(base);
+        config = defaults.merge(overrides == null ? base : overrides);
         framework.getPipeline().intercept(FRAME_REGISTERED, (frameInterceptor = createFrameworkInterceptor()));
         return null;
     }
@@ -167,7 +170,7 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
             context.updateState(anvilInput, text);
             ingredientItem.setItemMeta(ingredientMeta);
             
-            if (config.closeOnSelect) {
+            if (config.isCloseOnSelect()) {
                 context.closeForPlayer();
             }
         });
@@ -207,7 +210,7 @@ public final class CustomAnvilInputFeature implements Feature<CustomAnvilInputCo
                 }
             });
             
-            final String globalInitialInput = config.initialInput;
+            final String globalInitialInput = config.getInitialInput();
             final String scopedInitialInput = anvilInput.get(context);
             
             final Inventory inventory = CustomAnvilInputNMS.open(
