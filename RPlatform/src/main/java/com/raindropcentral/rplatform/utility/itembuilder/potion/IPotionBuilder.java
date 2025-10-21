@@ -13,6 +13,16 @@ import org.jetbrains.annotations.NotNull;
  * <p>Implementations extend the unified item builder contract and expose fluent APIs that work
  * across Paper and legacy Bukkit runtimes.</p>
  *
+ * <p><strong>Implementation requirements.</strong> Builder implementations must mutate the
+ * underlying {@link PotionMeta} so changes propagate to the final {@code ItemStack}. In
+ * particular, {@link #setBasePotionType(PotionType)} must update the metadata using the
+ * platform-appropriate setter (for example {@link PotionMeta#setBasePotionData(org.bukkit.potion.PotionData)} or
+ * {@link PotionMeta#setMainEffect(org.bukkit.potion.PotionEffectType)} on legacy servers) and
+ * {@link #addCustomEffect(PotionEffect, boolean)} must honour the {@code overwrite} flag when
+ * delegating to {@link PotionMeta#addCustomEffect(PotionEffect, boolean)}. All fluent methods must
+ * return the concrete builder type so chaining remains consistent with
+ * {@link IUnifiedItemBuilder}.</p>
+ *
  * @param <B> concrete builder type returned from fluent calls
  * @author JExcellence
  * @since 1.0.0
