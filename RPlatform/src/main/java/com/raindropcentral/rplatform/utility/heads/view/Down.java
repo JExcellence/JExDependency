@@ -8,9 +8,14 @@ import com.raindropcentral.rplatform.utility.heads.RHead;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class Down extends RHead {
+
+  /**
+   * Identifier used to resolve pagination translations.
+   */
+  private static final String IDENTIFIER = "pagination.down";
 
   /**
    * UUID string associated with the downward navigation head.
@@ -23,11 +28,11 @@ public class Down extends RHead {
   private static final String TEXTURE = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2YzOWNjYjVhNWNkOWJhYmIxMzA5N2I0ZjhkYmM5ZjE0ZGMzOGFjMTcwMmEzMGQ5N2UyYWFiZjkwN2JmMTVjIn19fQ==";
 
   /**
-   * Creates the down navigation head definition with translation key {@code head.down}.
+   * Creates the down navigation head definition with translation key {@code head.pagination.down}.
    */
   public Down() {
     super(
-      "down",
+      IDENTIFIER,
       UUID,
       TEXTURE
     );
