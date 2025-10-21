@@ -2,6 +2,12 @@ package com.raindropcentral.rplatform.utility.heads.view.pagination;
 
 
 import com.raindropcentral.rplatform.utility.heads.RHead;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import de.jexcellence.jextranslate.api.TranslationKey;
+import de.jexcellence.jextranslate.api.TranslationService;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Numeric head representing the digit {@code 0} for pagination overlays and counters.
@@ -31,5 +37,36 @@ public class Number0 extends RHead {
       UUID,
       TEXTURE
     );
+  }
+
+  @Override
+  public String getTranslationKey() {
+    return "head.pagination." + this.getIdentifier();
+  }
+
+  @Override
+  public ItemStack getHead(final @NotNull Player player) {
+    final String translationKey = this.getTranslationKey();
+
+    return
+        UnifiedBuilderFactory
+            .head()
+            .setCustomTexture(
+                this.getUuid(),
+                this.getTexture()
+            )
+            .setName(
+                    TranslationService.create(
+                            TranslationKey.of(translationKey, "name"),
+                            player
+                    ).build().component()
+            )
+            .setLore(
+                    TranslationService.create(
+                            TranslationKey.of(translationKey, "lore"),
+                            player
+                    ).build().splitLines()
+            )
+            .build();
   }
 }
