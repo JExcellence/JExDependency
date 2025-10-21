@@ -12,6 +12,13 @@
  * command updates, and database resources are already in place.
  * </p>
  * <p>
+ * Each workload reports a relative {@link com.raindropcentral.rplatform.workload.Workload#computeCost()} value,
+ * defaulting to {@code 1}. Override this method when implementing heavier workloads so executor strategies and
+ * diagnostics can weigh items appropriately. Composite helpers such as
+ * {@link com.raindropcentral.rplatform.workload.Workload#andThen(Workload)} will sum the cost of their inputs,
+ * preserving that intent without additional boilerplate.
+ * </p>
+ * <p>
  * Use {@link com.raindropcentral.rplatform.workload.WorkloadExecutor#submitAsync(Workload)} for callers
  * that need a completion signal. The returned {@link java.util.concurrent.CompletableFuture} resolves
  * after the workload has been drained by the tick loop. Because the future waits by polling the queue,
