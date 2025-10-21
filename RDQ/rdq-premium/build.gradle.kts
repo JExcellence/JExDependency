@@ -13,31 +13,43 @@ java {
 }
 
 dependencies {
-    implementation(project(":rdq-common"))
+    implementation(project(":rdq-common")) { isTransitive = false }
 
-    // Needed because RCorePremium extends JavaPlugin
     compileOnly(libs.paper.api)
+    compileOnly("org.jetbrains:annotations:24.1.0")
 
-    // Logging & utils
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
 
-    // DB & platform (compileOnly)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
 
-    // Needed because RCorePremium references JEDependency directly
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-    implementation(libs.bundles.inventory) { isTransitive = false }
+
+    // CORRECTED: Changed from 'implementation' to 'compileOnly'.
+    // This tells Gradle to use the library for compiling, but NOT to package it into the final JAR.
+    compileOnly(libs.bundles.inventory) { isTransitive = false }
 }
 
 tasks.named<ShadowJar>("shadowJar") {
-    // Name: RCore-premium-<version>.jar
     archiveBaseName.set("RDQ")
-    archiveClassifier.set("premium")
+    archiveClassifier.set("Premium")
     archiveVersion.set(project.version.toString())
+
+    // Relocate all core Jackson packages to maintain type safety
+    relocate("com.fasterxml.jackson.core", "de.jexcellence.remapped.com.fasterxml.jackson.core")
+    relocate("com.fasterxml.jackson.databind", "de.jexcellence.remapped.com.fasterxml.jackson.databind")
+    relocate("com.fasterxml.jackson.annotation", "de.jexcellence.remapped.com.fasterxml.jackson.annotation")
+    relocate("com.fasterxml.jackson.datatype", "de.jexcellence.remapped.com.fasterxml.jackson.datatype")
+
+    // Other relocations
+    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    relocate("org.h2", "de.jexcellence.remapped.org.h2")
+    relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
+    relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
+    relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
@@ -47,7 +59,6 @@ tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
 }
 
-// Optionally disable the plain jar to avoid confusion
 tasks.named<Jar>("jar") {
     enabled = false
 }
@@ -60,7 +71,7 @@ publishing {
             artifactId = "rdq-premium"
             version = project.version.toString()
             pom {
-                name.set("RCore Premium")
+                name.set("RDQ Premium")
                 description.set("${project.description} (Premium)")
             }
         }

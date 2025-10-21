@@ -160,7 +160,7 @@ final class RankEntityService {
                         boolean assocDiffers = (existing.getRankTree() == null && tree != null)
                                 || (existing.getRankTree() != null && tree == null)
                                 || (existing.getRankTree() != null && tree != null
-                                    && !Objects.equals(existing.getRankTree().getId(), tree.getId()));
+                                && !Objects.equals(existing.getRankTree().getId(), tree.getId()));
                         if (assocDiffers) {
                             existing.setRankTree(tree);
                             rdq.getRankRepository().update(existing);
@@ -244,8 +244,10 @@ final class RankEntityService {
         try {
             cleanupProgress(rank);
             final List<RRankUpgradeRequirement> parsed = requirementFactory.parseRequirements(rank, cfg.getRequirements());
+
             if (parsed.isEmpty()) {
-                rank.getUpgradeRequirements().clear();
+                // Use the safe method to clear requirements
+                rank.replaceUpgradeRequirements(Collections.emptyList());
                 rdq.getRankRepository().update(rank);
                 return;
             }
@@ -261,10 +263,8 @@ final class RankEntityService {
                 processed.add(persisted);
             }
 
-            rank.getUpgradeRequirements().clear();
-            for (RRankUpgradeRequirement pr : processed) {
-                rank.addUpgradeRequirement(pr);
-            }
+            // Use the new, safe method to replace the requirements
+            rank.replaceUpgradeRequirements(processed);
 
             try {
                 rdq.getRankRepository().update(rank);
@@ -273,15 +273,13 @@ final class RankEntityService {
                 if (fresh == null) {
                     throw updateEx;
                 }
-                fresh.getUpgradeRequirements().clear();
-                for (RRankUpgradeRequirement pr : processed) {
-                    fresh.addUpgradeRequirement(pr);
-                }
+                // Retry the operation on a fresh entity instance
+                fresh.replaceUpgradeRequirements(processed);
                 rdq.getRankRepository().update(fresh);
             }
 
             LOGGER.log(Level.INFO, "Updated {0} upgrade requirements for rank: {1}",
-                    new Object[]{rank.getUpgradeRequirements().size(), rank.getIdentifier()});
+                    new Object[]{processed.size(), rank.getIdentifier()});
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to update requirements for rank: " + rank.getIdentifier(), e);
             throw new RuntimeException("Failed to update rank requirements", e);
@@ -296,6 +294,7 @@ final class RankEntityService {
      */
     private void cleanupProgress(final RRank rank) {
         try {
+            // Create a copy to avoid ConcurrentModificationException if the underlying collection changes
             final Set<RRankUpgradeRequirement> upgradeRequirements = new HashSet<>(rank.getUpgradeRequirements());
             if (upgradeRequirements.isEmpty()) return;
 

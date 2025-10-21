@@ -10,97 +10,101 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * JPA {@link AttributeConverter} for converting {@link AbstractReward} objects to and from
- * their JSON string representations so rewards can be persisted transparently.
+ * JPA {@link AttributeConverter} implementation for converting {@link AbstractReward}
+ * objects to and from their JSON string representations for database storage.
  * <p>
- * Complex reward hierarchies, including Bukkit-specific subtypes, are serialized and
- * deserialized via the Jackson-backed {@link RewardParser}. Centralizing that logic ensures
- * database rows remain compatible when new reward implementations are introduced.
+ * This converter ensures that complex requirement objects, including those with Bukkit-specific
+ * fields or polymorphic types, can be persisted and reconstructed reliably using Jackson-based
+ * serialization provided by {@link RewardParser}.
  * </p>
+ *
  * <ul>
- *   <li>{@link #convertToDatabaseColumn(AbstractReward)} serializes rewards prior to persistence.</li>
- *   <li>{@link #convertToEntityAttribute(String)} recreates rewards when entities are loaded.</li>
+ *   <li>When saving an entity, {@link #convertToDatabaseColumn(AbstractReward)} serializes the requirement to JSON.</li>
+ *   <li>When loading an entity, {@link #convertToEntityAttribute(String)} deserializes the JSON back to an {@code AbstractReward}.</li>
  * </ul>
+ *
  * <p>
- * Serialization errors are logged and surfaced as unchecked exceptions so that data corruption
- * never fails silently during JPA operations.
+ * Any serialization or deserialization errors are logged and rethrown as unchecked exceptions,
+ * preventing silent data corruption.
  * </p>
  *
  * @author JExcellence
- * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.0
+ * @since TBD
  */
 @Converter(autoApply = true)
 public class RewardConverter implements AttributeConverter<AbstractReward, String> {
-
-    /**
-     * SLF4J logger for error reporting during serialization and deserialization steps.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(RewardConverter.class);
-
-    /**
-     * Converts an {@link AbstractReward} object to its JSON string representation for database storage.
-     * <p>
-     * {@code null} inputs are returned as {@code null} so missing rewards remain absent in the column;
-     * otherwise the reward is serialized via {@link RewardParser#serialize(AbstractReward)}.
-     * </p>
-     *
-     * @param attribute the {@code AbstractReward} instance to convert (may be {@code null})
-     *
-     * @return the JSON string representation of the reward, or {@code null} if the input is {@code null}
-     *
-     * @throws RuntimeException if serialization fails due to an {@link IOException}
-     */
-    @Override
-    public String convertToDatabaseColumn(AbstractReward attribute) {
-        if (attribute == null) {
-            return null;
-        }
-        try {
-            return RewardParser.serialize(attribute);
-        } catch (IOException e) {
-            logger.error(
-                "Failed to serialize reward: {}",
-                attribute,
-                e
-            );
-            throw new RuntimeException(
-                "Failed to serialize reward",
-                e
-            );
-        }
-    }
-
-    /**
-     * Converts a JSON string from the database back into an {@link AbstractReward} object.
-     * <p>
-     * {@code null} inputs are preserved so optional reward columns stay unset; otherwise the JSON is
-     * deserialized via {@link RewardParser#parse(String)}.
-     * </p>
-     *
-     * @param dbData the JSON string from the database (may be {@code null})
-     *
-     * @return the deserialized {@code AbstractReward} instance, or {@code null} if the input is {@code null}
-     *
-     * @throws RuntimeException if deserialization fails due to an {@link IOException}
-     */
-    @Override
-    public AbstractReward convertToEntityAttribute(String dbData) {
-        if (dbData == null) {
-            return null;
-        }
-        try {
-            return RewardParser.parse(dbData);
-        } catch (IOException e) {
-            logger.error(
-                "Failed to deserialize reward from database string: {}",
-                dbData,
-                e
-            );
-            throw new RuntimeException(
-                "Failed to deserialize reward",
-                e
-            );
-        }
-    }
+	
+	/**
+	 * SLF4J logger for error reporting during (de)serialization.
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(RewardConverter.class);
+	
+	/**
+	 * Converts an {@link AbstractReward} object to its JSON string representation for database storage.
+	 * <p>
+	 * If the input is {@code null}, {@code null} is returned to represent a missing reward.
+	 * Otherwise, the requirement is serialized using {@link RewardParser#serialize(AbstractReward)}.
+	 * </p>
+	 *
+	 * @param attribute the {@code AbstractReward} instance to convert (may be {@code null})
+	 *
+	 * @return the JSON string representation of the requirement, or {@code null} if the input is {@code null}
+	 *
+	 * @throws RuntimeException if serialization fails due to an {@link IOException}
+	 */
+	@Override
+	public String convertToDatabaseColumn(AbstractReward attribute) {
+		
+		if (attribute == null) {
+			return null;
+		}
+		try {
+			return RewardParser.serialize(attribute);
+		} catch (IOException e) {
+			logger.error(
+				"Failed to serialize requirement: {}",
+				attribute,
+				e
+			);
+			throw new RuntimeException(
+				"Failed to serialize requirement",
+				e
+			);
+		}
+	}
+	
+	/**
+	 * Converts a JSON string from the database back into an {@link AbstractReward} object.
+	 * <p>
+	 * If the input is {@code null}, {@code null} is returned to represent a missing reward.
+	 * Otherwise, the JSON is deserialized using {@link RewardParser#parse(String)}.
+	 * </p>
+	 *
+	 * @param dbData the JSON string from the database (may be {@code null})
+	 *
+	 * @return the deserialized {@code AbstractReward} instance, or {@code null} if the input is {@code null}
+	 *
+	 * @throws RuntimeException if deserialization fails due to an {@link IOException}
+	 */
+	@Override
+	public AbstractReward convertToEntityAttribute(String dbData) {
+		
+		if (dbData == null) {
+			return null;
+		}
+		try {
+			return RewardParser.parse(dbData);
+		} catch (IOException e) {
+			logger.error(
+				"Failed to deserialize requirement from database string: {}",
+				dbData,
+				e
+			);
+			throw new RuntimeException(
+				"Failed to deserialize requirement",
+				e
+			);
+		}
+	}
 }

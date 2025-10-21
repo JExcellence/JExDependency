@@ -3,11 +3,11 @@ package com.raindropcentral.rdq;
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.manager.RDQManager;
-import com.raindropcentral.rdq.utility.BountyManager;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.view.PaginatedPlayerView;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.Bukkit;
@@ -25,186 +25,51 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Base contract shared by every RDQ edition, orchestrating the staged lifecycle described in
- * {@link com.raindropcentral.rdq package documentation}.
- *
- * <p>Implementations bootstrap platform services, bind GUIs, and register repositories while
- * respecting synchronous Bukkit threading boundaries. The lifecycle flows through asynchronous
- * platform initialization, synchronous component/view wiring, and repository registration,
- * re-entering the main thread through {@link #runSync(Runnable)} whenever Bukkit state is
- * touched.
- *
- * <p>Subclasses may extend the lifecycle by chaining additional futures to {@link #onEnable()}
- * while preserving the sequencing guarantees captured here. Extension points should document any
- * additional futures they introduce so callers can reason about completion ordering.
+ * The core abstract class for RaindropQuests.
+ * <p>
+ * This class manages the entire plugin lifecycle, including a robust asynchronous
+ * startup sequence, dependency management, and access to core components like
+ * repositories, managers, and the platform API.
+ * </p>
  *
  * @author JExcellence
- * @since 1.0.0
- * @version 1.0.1
+ * @version 3.1.0
  */
 public abstract class RDQ {
 
-    /**
-     * Owning plugin instance responsible for delegating lifecycle hooks and exposing shared
-     * Bukkit facilities. This reference is immutable after construction and is safe to access
-     * from any lifecycle stage.
-     */
     private final JavaPlugin plugin;
-
-    /**
-     * Edition-specific coordinator supplying quest, perk, and bounty controllers used during
-     * component registration. The coordinator remains constant for the life of the plugin and
-     * may expose cross-module state to RDQ integrations.
-     */
-    private final RDQManager manager;
-
-    /**
-     * Edition string resolved during plugin bootstrap to assist logging and factory selection.
-     * Defaults to the constructor-provided value and may be reassigned by subclasses if the
-     * edition is re-detected after start-up.
-     */
-    private String detectedEdition;
-
-    /**
-     * Primary asynchronous executor used for off-thread initialization and repository IO. The
-     * executor is created eagerly using {@link #createExecutor()}, preferring virtual threads and
-     * falling back to a fixed pool when unavailable.
-     */
+    private final String detectedEdition;
     private final ExecutorService executor = createExecutor();
+    private final RPlatform platform;
 
-    /**
-     * Future representing the asynchronous enable sequence, allowing cancellation during disable.
-     * Starts as {@code null} and is published as a {@code volatile} field once {@link #onEnable()}
-     * kicks off the lifecycle.
-     */
     private volatile CompletableFuture<Void> enableFuture;
+    private boolean isDisabling;
+    private boolean postEnableCompleted = false;
 
-    /**
-     * Active platform bridge exposing shared services (ORM, metrics, sync helpers) to RDQ modules.
-     * Instantiated during construction, backed by the {@code RPlatform} module, and initialised
-     * asynchronously in {@link #initializePlatformAsync()}.
-     */
-    private RPlatform platform;
-
-    /**
-     * Root inventory-framework view frame responsible for RDQ GUI wiring. Assigned during
-     * {@link #initializeViews()} once component wiring is complete and built against the
-     * InventoryFramework dependency shared across modules.
-     */
+    private RDQManager manager;
     private ViewFrame viewFrame;
-
-    /**
-     * Runtime bounty controller accessed by commands and views for bounty orchestration. Created
-     * anew for each enable cycle and retained until disable, coordinating with RDQ view flows.
-     */
-    private BountyManager bountyManager;
-
-    /**
-     * Factory delegating rank system setup and asynchronous initialisation for the running edition.
-     * Optional for editions that do not expose ranking features; otherwise populated by package
-     * peers before {@link #onEnable()} completes so asynchronous initialisation can run.
-     */
     private RankSystemFactory rankSystemFactory;
-
-    /**
-     * Command factory responsible for registering all RDQ commands and listeners. Created during
-     * {@link #initializeComponents()}, backed by the JExCommand module, and released automatically
-     * when the plugin disables.
-     */
     private CommandFactory commandFactory;
 
-    /**
-     * Repository handling quest player persistence and transactional access. Lazily assigned in
-     * {@link #initializeRepositories()} and executed on the shared {@link #executor}.
-     */
     private RDQPlayerRepository playerRepository;
-
-    /**
-     * Repository providing persistence for player rank progression paths. Created during
-     * {@link #initializeRepositories()} and shares the common executor.
-     */
     private RPlayerRankPathRepository playerRankPathRepository;
-
-    /**
-     * Repository managing stored player rank entries. Initialised alongside other repositories and
-     * scoped to the current enable cycle.
-     */
     private RPlayerRankRepository playerRankRepository;
-
-    /**
-     * Repository coordinating perk unlock state for each player. Populated once the platform ORM is
-     * ready.
-     */
     private RPlayerPerkRepository playerPerkRepository;
-
-    /**
-     * Repository responsible for bounty definitions and completion progress. Built against the
-     * current {@link EntityManagerFactory} each enable cycle.
-     */
     private RBountyRepository bountyRepository;
-
-    /**
-     * Repository exposing configured ranks for quests and perks. Shares the lifecycle of the
-     * surrounding plugin enablement.
-     */
     private RRankRepository rankRepository;
-
-    /**
-     * Repository supplying perk metadata utilised by progression flows. Bound to the shared
-     * executor to avoid blocking the main thread.
-     */
     private RPerkRepository perkRepository;
-
-    /**
-     * Repository tracking rank upgrade progress for each player. Created lazily during enable and
-     * re-used until disable.
-     */
     private RPlayerRankUpgradeProgressRepository playerRankUpgradeProgressRepository;
-
-    /**
-     * Repository exposing rank tree structures underpinning quest gating. Uses the common executor
-     * for persistence operations.
-     */
     private RRankTreeRepository rankTreeRepository;
-
-    /**
-     * Repository providing requirement definitions for quests and perks. Instantiated during
-     * {@link #initializeRepositories()} and cached for downstream services.
-     */
     private RRequirementRepository requirementRepository;
 
-    /**
-     * Flag toggled when the plugin begins shutdown to guard against late lifecycle work. Defaults
-     * to {@code false} and flips to {@code true} during {@link #onDisable()}.
-     */
-    private boolean isDisabling;
-
-    /**
-     * Constructs the base RDQ contract, assigning the running plugin, detected edition, and manager
-     * while bootstrapping the shared platform bridge and central logging. Construction is invoked on
-     * the main thread during {@link JavaPlugin#onLoad()}.
-     *
-     * @param plugin  backing plugin instance
-     * @param edition textual identifier for the edition resolved during bootstrap
-     * @param manager coordinator supplying edition-specific services
-     */
-    public RDQ(
-            final @NotNull JavaPlugin plugin,
-            final @NotNull String edition,
-            final @NotNull RDQManager manager
-    ) {
+    public RDQ(final @NotNull JavaPlugin plugin, final @NotNull String edition) {
         this.plugin = plugin;
         this.detectedEdition = edition;
-        this.manager = manager;
         this.platform = new RPlatform(plugin);
         CentralLogger.initialize(plugin);
     }
 
-    /**
-     * Invoked during the Bukkit {@code onLoad} lifecycle to perform lightweight logging. The call
-     * occurs on the server main thread before any asynchronous work begins and intentionally
-     * suppresses logging failures so bootstrap can continue.
-     */
+
     public void onLoad() {
         try {
             plugin.getLogger().info("Loading RDQ " + detectedEdition + " Edition");
@@ -214,17 +79,8 @@ public abstract class RDQ {
     }
 
     /**
-     * Begins the staged enable pipeline. Platform setup executes asynchronously before re-entering
-     * the main thread to initialise components, views, repositories, and metrics.
-     *
-     * <p>The returned future is stored for cancellation during disable, and failures propagate
-     * through chained {@link CompletionException CompletionExceptions} so the plugin can disable
-     * itself. Repeated invocations while enable is still running short-circuit to avoid double
-     * registration.
-     *
-     * @implSpec Subclasses overriding this method must invoke {@code super.onEnable()} to preserve
-     * the staged lifecycle. Implementations adding new asynchronous steps should chain them to the
-     * returned future before completion so disable-time cancellation remains effective.
+     * Orchestrates the entire asynchronous startup sequence for the plugin.
+     * This method is the single entry point for enabling the plugin.
      */
     public void onEnable() {
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
@@ -232,29 +88,12 @@ public abstract class RDQ {
             return;
         }
         final Logger log = CentralLogger.getLogger(getClass().getName());
-        this.enableFuture = initializePlatformAsync()
+
+        this.enableFuture = performCoreEnableAsync()
                 .thenCompose(v -> runSync(() -> {
                     try {
-                        initializeComponents();
-                        initializeViews();
-                        initializeRepositories();
-                    } catch (Throwable t) {
-                        throw new CompletionException(t);
-                    }
-                }))
-                .thenCompose(v -> {
-                    if (this.rankSystemFactory == null) return CompletableFuture.completedFuture(null);
-                    try {
-                        return this.rankSystemFactory.initializeAsync();
-                    } catch (Throwable t) {
-                        return CompletableFuture.failedFuture(t);
-                    }
-                })
-                .thenCompose(v -> runSync(() -> {
-                    try {
-                        this.platform.initializeMetrics(getMetricsId());
-                        registerServices();
-                        plugin.getLogger().info("RDQ " + detectedEdition + " Edition enabled successfully!");
+                        this.manager = initializeManager();
+                        performPostEnableSync();
                     } catch (Throwable t) {
                         throw new CompletionException(t);
                     }
@@ -268,109 +107,75 @@ public abstract class RDQ {
                 });
     }
 
-    /**
-     * Cancels the enable pipeline, shuts down executors, and marks the plugin as disabling.
-     *
-     * <p>Invoked on the main thread during {@code JavaPlugin#onDisable()} to prevent further
-     * lifecycle work and ensure asynchronous jobs terminate promptly.
-     *
-     * @implNote The shutdown sequence is idempotent so repeated disable hooks—common during forced
-     * shutdowns—remain safe.
-     */
     public void onDisable() {
         this.isDisabling = true;
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
             this.enableFuture.cancel(true);
+        }
+        if (this.manager != null) {
+            this.manager.shutdown();
         }
         if (this.executor != null && !this.executor.isShutdown()) {
             this.executor.shutdown();
         }
     }
 
-    /**
-     * Supplies the edition-specific startup message displayed prior to full enablement. Implementers
-     * should avoid heavy computation as the value is logged synchronously from the main thread.
-     *
-     * @return message sent to the console during bootstrap
-     */
+
     @NotNull
     protected abstract String getStartupMessage();
 
-    /**
-     * Provides the metrics identifier used when registering RDQ with the shared metrics subsystem.
-     * Returning an incorrect identifier will prevent metrics registration during enable.
-     *
-     * @return metrics plugin id
-     */
     protected abstract int getMetricsId();
 
-    /**
-     * Allows editions to register additional views before the base frame is committed. Invoked on
-     * the main thread after default RDQ bounty views are configured, providing a hook for
-     * thread-confined view mutations.
-     *
-     * <p>Implementations should avoid blocking operations to keep the main thread responsive and
-     * should defer asynchronous work until after the returned frame registers.
-     *
-     * @param viewFrame pre-configured frame containing default RDQ views
-     * @return frame with any edition-specific views included
-     */
     @NotNull
     protected abstract ViewFrame registerViews(@NotNull ViewFrame viewFrame);
 
     /**
-     * Initializes command-bound components on the main thread, ensuring the bounty manager is
-     * available prior to listener registration. No synchronization is required because execution
-     * occurs inside the {@link #runSync(Runnable)} boundary, and command registration flows through
-     * the shared JExCommand infrastructure.
+     * Implemented by concrete classes (Free/Premium) to create and return
+     * their specific RDQManager instance. This is called after core systems are ready.
+     *
+     * @return The initialized RDQManager.
      */
-    private void initializeComponents() {
-        // Initialize BountyManager BEFORE registering listeners so they can access it
-        this.bountyManager = new BountyManager(this);
+    @NotNull
+    protected abstract RDQManager initializeManager();
 
-        // Now register commands and listeners - they can safely use getBountyManager()
+
+    /**
+     * Performs core asynchronous setup (Platform, Database, Repositories, Ranks).
+     * This must complete before any managers or services can be initialized.
+     */
+    private CompletableFuture<Void> performCoreEnableAsync() {
+        return this.platform.initialize()
+                .thenCompose(v -> runSync(() -> {
+                    initializeRepositories();
+                    this.rankSystemFactory = new RankSystemFactory(this);
+                }))
+                .thenCompose(v -> {
+                    return this.rankSystemFactory.initializeAsync();
+                });
+    }
+
+    /**
+     * Performs the final synchronous setup after all async tasks are complete.
+     * This initializes and registers all user-facing components like commands and views.
+     */
+    private void performPostEnableSync() {
+        if (postEnableCompleted) {
+            plugin.getLogger().warning("Post-enable called more than once.");
+            return;
+        }
+
         this.commandFactory = new CommandFactory(plugin, this);
         this.commandFactory.registerAllCommandsAndListeners();
+
+        initializeViews();
+
+        this.platform.initializeMetrics(getMetricsId());
+
+        plugin.getLogger().info(getStartupMessage());
+        plugin.getLogger().info("RDQ " + detectedEdition + " Edition enabled successfully!");
+        postEnableCompleted = true;
     }
 
-    /**
-     * Registers the shared RDQ bounty view frame and allows subclasses to extend it before the
-     * frame is committed. Execution occurs on the main thread and must remain lightweight to avoid
-     * stalling the server tick while UI elements are wired.
-     *
-     * @implNote Any new views introduced by subclasses should perform their own asynchronous
-     * preparation before invoking Bukkit APIs to respect {@link #runSync(Runnable)} boundaries.
-     */
-    @SuppressWarnings("UnstableApiUsage")
-    private void initializeViews() {
-        ViewFrame viewFrame = ViewFrame
-                .create(plugin)
-                .with(
-                        new BountyMainView(),
-                        new BountyCreationView(),
-                        new BountyOverviewView(),
-                        new BountyRewardView(),
-                        new BountyPlayerInfoView()
-                )
-                .defaultConfig(config -> {
-                    config.cancelOnClick();
-                    config.cancelOnDrag();
-                    config.cancelOnDrop();
-                    config.cancelOnPickup();
-                    config.interactionDelay(Duration.ofMillis(100));
-                });
-        viewFrame = registerViews(viewFrame);
-        this.viewFrame = viewFrame.register();
-    }
-
-    /**
-     * Wires repository instances against the active {@link EntityManagerFactory}. Repositories run
-     * asynchronous operations on the shared executor to avoid blocking the server thread and honour
-     * Bukkit's threading rules, integrating RDQ persistence with the wider database layer.
-     *
-     * @implNote Repository implementations should treat the executor as shared infrastructure and
-     * must not attempt to shut it down.
-     */
     private void initializeRepositories() {
         final EntityManagerFactory emf = this.platform.getEntityManagerFactory();
         this.playerRepository = new RDQPlayerRepository(this.executor, emf);
@@ -385,56 +190,36 @@ public abstract class RDQ {
         this.playerPerkRepository = new RPlayerPerkRepository(this.executor, emf);
     }
 
-    /**
-     * Completes synchronous service wiring once repositories and components are ready. Logging is
-     * performed under the central logger namespace, and any thrown exception aborts enablement.
-     * This is the final synchronous step before the plugin is announced as enabled.
-     */
-    private void registerServices() {
-        final Logger log = CentralLogger.getLogger(getClass().getName());
-        try {
-            // BountyManager is already initialized in initializeComponents()
-            log.info("Bounty services wired for " + detectedEdition + ".");
-        } catch (Throwable t) {
-            log.log(Level.SEVERE, "Service registration failed", t);
-            throw t;
-        }
+    @SuppressWarnings("UnstableApiUsage")
+    private void initializeViews() {
+        ViewFrame frame = ViewFrame
+                .create(plugin)
+                .with(
+                        new BountyMainView(),
+                        new BountyCreationView(),
+                        new BountyOverviewView(),
+                        new BountyRewardView(),
+                        new BountyPlayerInfoView(),
+                        new PaginatedPlayerView()
+                )
+                .defaultConfig(config -> {
+                    config.cancelOnClick();
+                    config.cancelOnDrag();
+                    config.cancelOnDrop();
+                    config.cancelOnPickup();
+                    config.interactionDelay(Duration.ofMillis(100));
+                });
+        frame = registerViews(frame);
+        this.viewFrame = frame.register();
     }
 
-    /**
-     * Initializes shared platform services asynchronously, deferring expensive work off the main
-     * thread while propagating failures back into the enable pipeline. Delegates to
-     * {@link RPlatform#initialize()} behind the scenes.
-     *
-     * <p>The asynchronous boundary ensures platform initialization honours Bukkit's threading rules
-     * and allows disable-time cancellation.
-     *
-     * @return future completing when the platform is initialised
-     */
-    private @NotNull CompletableFuture<Void> initializePlatformAsync() {
-        return CompletableFuture.runAsync(() -> {
-            try {
-                this.platform.initialize();
-            } catch (Throwable t) {
-                throw new CompletionException(t);
-            }
-        }, this.executor);
-    }
 
-    /**
-     * Schedules the provided runnable on the Bukkit main thread and returns a future completed when
-     * the work finishes. This helper enforces synchronous lifecycle stages and propagates
-     * exceptions back to asynchronous callers.
-     *
-     * <p>All synchronous lifecycle blocks should invoke this helper when entered from asynchronous
-     * execution. Long-running tasks should be re-scheduled back to asynchronous executors to avoid
-     * impacting server ticks.
-     *
-     * @param runnable action to execute on the main thread
-     * @return future that completes once the runnable finishes executing
-     */
     private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable runnable) {
         final CompletableFuture<Void> future = new CompletableFuture<>();
+        if (isDisabling) {
+            future.cancel(false);
+            return future;
+        }
         Bukkit.getScheduler().runTask(this.plugin, () -> {
             try {
                 runnable.run();
@@ -446,312 +231,112 @@ public abstract class RDQ {
         return future;
     }
 
-    /**
-     * Creates the shared executor, preferring a virtual-thread-per-task implementation and falling
-     * back to a fixed thread pool when the runtime does not support virtual threads.
-     *
-     * <p>The fallback pool defaults to five threads, matching historical behaviour.
-     *
-     * @return executor used for asynchronous RDQ work
-     */
     private ExecutorService createExecutor() {
         try {
             return Executors.newVirtualThreadPerTaskExecutor();
         } catch (Throwable ignored) {
-            return Executors.newFixedThreadPool(5);
+            return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         }
     }
 
-    /**
-     * Exposes the running plugin instance for integration points needing direct Bukkit access.
-     * Safe to call at any time because the instance is final.
-     *
-     * @return backing {@link JavaPlugin}
-     */
+
+    @NotNull
+    public RDQManager getManager() {
+        if (this.manager == null) {
+            throw new IllegalStateException("RDQManager has not been initialized yet. It is only available after the enable sequence is complete.");
+        }
+        return this.manager;
+    }
+
     @NotNull
     public JavaPlugin getPlugin() {
         return this.plugin;
     }
 
-    /**
-     * Provides the resolved edition name for logging and conditional logic. The value may change if
-     * subclasses re-detect the edition during runtime.
-     *
-     * @return edition string, or {@code null} if not yet determined
-     */
     @Nullable
     public String getEdition() {
         return this.detectedEdition;
     }
 
-    /**
-     * Supplies the shared executor for background operations. The executor remains available until
-     * {@link #onDisable()} requests shutdown.
-     *
-     * @return asynchronous executor
-     */
     @NotNull
     public ExecutorService getExecutor() {
         return this.executor;
     }
 
-    /**
-     * Retrieves the platform bridge used for metrics, ORM, and lifecycle helpers. Callers should
-     * wait until the enable future completes to ensure the platform has been initialised.
-     *
-     * @return active platform instance
-     */
     @NotNull
     public RPlatform getPlatform() {
         return this.platform;
     }
 
-    /**
-     * Returns the registered view frame encompassing RDQ GUI flows. Available after
-     * {@link #initializeViews()} runs within the enable sequence.
-     *
-     * @return root view frame
-     */
     @NotNull
     public ViewFrame getViewFrame() {
         return this.viewFrame;
     }
 
-    /**
-     * Exposes the edition manager coordinating high-level gameplay components. The manager is
-     * immutable and safe for concurrent reads.
-     *
-     * @return RDQ manager instance
-     */
-    @NotNull
-    public RDQManager getManager() {
-        return this.manager;
-    }
-
-    /**
-     * Provides access to the bounty manager for command and view interactions. Non-null once
-     * {@link #initializeComponents()} runs during enable.
-     *
-     * @return active bounty manager
-     */
-    @NotNull
-    public BountyManager getBountyManager() {
-        return this.bountyManager;
-    }
-
-    /**
-     * Returns the rank system factory responsible for asynchronous rank initialisation.
-     *
-     * <p>Editions without ranking support should avoid calling this method, otherwise a
-     * {@link NullPointerException} may occur when the factory is unset.
-     *
-     * @apiNote Future editions introducing optional ranking should prefer {@link Optional}
-     * exposures or guard the value before invoking rank-specific operations.
-     *
-     * @return rank system factory
-     */
     @NotNull
     public RankSystemFactory getRankSystemFactory() {
         return this.rankSystemFactory;
     }
 
-    /**
-     * Retrieves the repository handling player quest records. Populated during
-     * {@link #initializeRepositories()} and safe to use once the enable future completes.
-     *
-     * @return player repository
-     */
     @NotNull
     public RDQPlayerRepository getPlayerRepository() {
         return this.playerRepository;
     }
 
-    /**
-     * Accesses the repository managing player rank paths. Ready after repository wiring finishes in
-     * the enable sequence.
-     *
-     * @return rank path repository
-     */
     @NotNull
     public RPlayerRankPathRepository getPlayerRankPathRepository() {
         return this.playerRankPathRepository;
     }
 
-    /**
-     * Accesses the repository storing player ranks. Available post-initialization and backed by the
-     * shared executor to ensure non-blocking behaviour.
-     *
-     * @return player rank repository
-     */
     @NotNull
     public RPlayerRankRepository getPlayerRankRepository() {
         return this.playerRankRepository;
     }
 
-    /**
-     * Retrieves the repository recording player perk unlocks. Initialised alongside other
-     * repositories within the enable sequence.
-     *
-     * @return player perk repository
-     */
     @NotNull
     public RPlayerPerkRepository getPlayerPerkRepository() {
         return this.playerPerkRepository;
     }
 
-    /**
-     * Returns the repository backing bounty persistence. Provides asynchronous persistence helpers
-     * via the shared executor.
-     *
-     * @return bounty repository
-     */
     @NotNull
     public RBountyRepository getBountyRepository() {
         return this.bountyRepository;
     }
 
-    /**
-     * Provides rank metadata storage. Consumers should wait for enable completion before invoking.
-     *
-     * @return rank repository
-     */
     @NotNull
     public RRankRepository getRankRepository() {
         return this.rankRepository;
     }
 
-    /**
-     * Retrieves the repository containing perk definitions. Backed by the shared executor to prevent
-     * main-thread blocking.
-     *
-     * @return perk repository
-     */
     @NotNull
     public RPerkRepository getPerkRepository() {
         return this.perkRepository;
     }
 
-    /**
-     * Accesses the repository tracking upgrade progress toward next ranks. Available following the
-     * repository wiring stage.
-     *
-     * @return rank upgrade progress repository
-     */
     @NotNull
     public RPlayerRankUpgradeProgressRepository getPlayerRankUpgradeProgressRepository() {
         return this.playerRankUpgradeProgressRepository;
     }
 
-    /**
-     * Supplies the repository that resolves rank tree structures. The repository operates against
-     * the shared executor for read/write operations.
-     *
-     * @return rank tree repository
-     */
     @NotNull
     public RRankTreeRepository getRankTreeRepository() {
         return this.rankTreeRepository;
     }
 
-    /**
-     * Exposes requirement definitions used by quest and perk evaluation flows. Populated during
-     * repository wiring and safe for use once enable completes.
-     *
-     * @return requirement repository
-     */
     @NotNull
     public RRequirementRepository getRequirementRepository() {
         return this.requirementRepository;
     }
 
-    /**
-     * Indicates whether the plugin is currently shutting down, allowing callers to abort
-     * long-lived operations. Set on the main thread during {@link #onDisable()} and visible to
-     * background threads.
-     *
-     * @return {@code true} when disable has started
-     */
     public boolean isDisabling() {
         return this.isDisabling;
     }
 
-    /**
-     * Exposes the enable future so callers can react to lifecycle completion or cancellation. The
-     * returned future may be cancelled when disable begins.
-     *
-     * @return future representing enable completion, or {@code null} if enable has not started
-     */
     public @Nullable CompletableFuture<Void> getEnableFuture() {
         return this.enableFuture;
     }
 
-    /**
-     * Delegates to {@link JavaPlugin#isEnabled()} for convenience. Useful for call sites operating
-     * from asynchronous threads.
-     *
-     * @return {@code true} when Bukkit reports the plugin enabled
-     */
     public boolean isEnabled() {
         return plugin.isEnabled();
-    }
-
-    /**
-     * Accesses the plugin data folder for persistence operations. Direct file IO should still occur
-     * off the main thread.
-     *
-     * @return plugin data folder
-     */
-    @NotNull
-    public java.io.File getDataFolder() {
-        return plugin.getDataFolder();
-    }
-
-    /**
-     * Convenience getter for the plugin logger. Exposes the same logger returned by the Bukkit
-     * plugin container.
-     *
-     * @return logger associated with the plugin
-     */
-    @NotNull
-    public Logger getLogger() {
-        return plugin.getLogger();
-    }
-
-    /**
-     * Exposes the Bukkit server instance. Callers should respect Bukkit threading rules when
-     * interacting with the returned server object.
-     *
-     * @return running server
-     */
-    @NotNull
-    public org.bukkit.Server getServer() {
-        return plugin.getServer();
-    }
-
-    /**
-     * Provides the plugin configuration for callers that need to access RDQ configuration entries.
-     * Mutations should be followed by {@link #saveConfig()} to persist changes.
-     *
-     * @return plugin configuration
-     */
-    @NotNull
-    public org.bukkit.configuration.file.FileConfiguration getConfig() {
-        return plugin.getConfig();
-    }
-
-    /**
-     * Persists the current configuration to disk through the plugin delegate. Long-running writes
-     * should be executed asynchronously by the caller.
-     */
-    public void saveConfig() {
-        plugin.saveConfig();
-    }
-
-    /**
-     * Reloads the configuration from disk, delegating to the plugin implementation. Safe to call
-     * from asynchronous contexts so long as Bukkit's configuration APIs allow it.
-     */
-    public void reloadConfig() {
-        plugin.reloadConfig();
     }
 }

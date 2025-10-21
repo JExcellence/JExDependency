@@ -15,18 +15,8 @@ java {
     withJavadocJar()
 }
 
-val stubs = sourceSets.create("stubs") {
-    java.srcDir("src/stubs/java")
-}
-
-sourceSets.named("main") {
-    compileClasspath += stubs.output
-}
-
-sourceSets.named("test") {
-    compileClasspath += stubs.output
-    runtimeClasspath += stubs.output
-}
+val adventureVersion = "4.17.0"
+val paperVersion = "1.21.4-R0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -34,9 +24,6 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://oss.sonatype.org/content/groups/public/")
 }
-
-val adventureVersion = "4.17.0"
-val paperVersion = "1.21.4-R0.1-SNAPSHOT"
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
@@ -53,21 +40,6 @@ dependencies {
     compileOnly("de.jexcellence.config:Evaluable:1.0.0")
     compileOnly("de.jexcellence.config:GPEEE:1.0.0")
     compileOnly("de.jexcellence.config:ConfigMapper:1.0.0")
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.2")
-
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
-    testImplementation("org.mockito:mockito-core:5.12.0")
-    testImplementation("org.mockito:mockito-inline:5.2.0")
-
-    testImplementation("com.google.guava:guava:33.3.0-jre")
-    testImplementation("org.yaml:snakeyaml:2.2")
-
-    testImplementation("net.kyori:adventure-api:4.17.0")
-    testImplementation("net.kyori:adventure-text-serializer-legacy:4.17.0")
-
-    add("stubsImplementation", "net.kyori:adventure-api:4.17.0")
 }
 
 tasks {
@@ -120,18 +92,6 @@ tasks {
         description = "Prints compile classpath coordinates"
         doLast { configurations.compileClasspath.get().forEach { println(it) } }
     }
-
-    test {
-        useJUnitPlatform()
-    }
-}
-
-tasks.named<JavaCompile>("compileJava") {
-    dependsOn(tasks.named("compileStubsJava"))
-}
-
-tasks.named<JavaCompile>("compileTestJava") {
-    dependsOn(tasks.named("compileStubsJava"))
 }
 
 publishing {
