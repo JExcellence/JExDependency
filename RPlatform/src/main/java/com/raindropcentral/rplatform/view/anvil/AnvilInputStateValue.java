@@ -13,7 +13,7 @@ import java.util.function.UnaryOperator;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 class AnvilInputStateValue extends MutableValue {
 
@@ -29,7 +29,7 @@ class AnvilInputStateValue extends MutableValue {
      * @param config the configuration guiding default input and transformations
      */
     public AnvilInputStateValue(State<?> state, CustomAnvilInputConfig config) {
-        super(state, config.initialInput);
+        super(state, config.getInitialInput());
         this.config = config;
     }
 
@@ -41,11 +41,11 @@ class AnvilInputStateValue extends MutableValue {
     @Override
     public void set(Object value) {
         final Object newValue;
-	    if (config.inputChangeHandler == null) {
-		    newValue = value;
-	    } else {
-		    newValue = config.inputChangeHandler.apply((String) value);
-	    }
+        if (config.getInputChangeHandler() == null) {
+            newValue = value;
+        } else {
+            newValue = config.getInputChangeHandler().apply((String) value);
+        }
 
         super.set(newValue);
     }
