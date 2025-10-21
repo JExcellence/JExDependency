@@ -6,19 +6,29 @@ import org.bukkit.util.BoundingBox;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * JPA attribute converter for mapping {@link BoundingBox} to a comma-delimited string and back.
+ * Persists {@link BoundingBox} instances as comma-separated coordinate rows and rebuilds them for entities.
  *
- * Format: "minX,minY,minZ,maxX,maxY,maxZ"
+ * <p>The converter writes six comma-delimited numeric tokens representing the minimum and maximum x, y and
+ * z coordinates. {@code null} attributes translate to {@code null} columns while blank or {@code null}
+ * column values return {@code null} attributes. Invalid token counts or unparsable numbers raise an
+ * {@link IllegalArgumentException} to protect database integrity.</p>
  *
- * Behavior:
- * - null bbox -> null column
- * - null/blank column -> null bbox
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Converter(autoApply = true)
 public class BoundingBoxConverter implements AttributeConverter<BoundingBox, String> {
 
+    /** Delimiter used to separate individual coordinate tokens. */
     private static final String DELIM = ",";
 
+    /**
+     * Serialises a bounding box to the comma-delimited column representation.
+     *
+     * @param box the bounding box being persisted; may be {@code null}
+     * @return the comma-separated coordinate string or {@code null} when {@code box} is {@code null}
+     */
     @Override
     public String convertToDatabaseColumn(@Nullable final BoundingBox box) {
         if (box == null) {
@@ -28,6 +38,13 @@ public class BoundingBoxConverter implements AttributeConverter<BoundingBox, Str
         return box.getMinX() + DELIM + box.getMinY() + DELIM + box.getMinZ() + DELIM + box.getMaxX() + DELIM + box.getMaxY() + DELIM + box.getMaxZ();
     }
 
+    /**
+     * Reconstructs a {@link BoundingBox} from a stored comma-separated coordinate set.
+     *
+     * @param columnValue the raw database value; blank and {@code null} values yield {@code null}
+     * @return the reconstructed bounding box, or {@code null} when the column value is blank
+     * @throws IllegalArgumentException if the token count is incorrect or any coordinate fails to parse
+     */
     @Override
     public BoundingBox convertToEntityAttribute(@Nullable final String columnValue) {
         if (columnValue == null || columnValue.isBlank()) {

@@ -23,8 +23,8 @@ import java.util.logging.Logger;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class LocationRequirement extends AbstractRequirement {
 
@@ -51,6 +51,15 @@ public final class LocationRequirement extends AbstractRequirement {
     @JsonIgnore
     private transient volatile World cachedWorld;
 
+    /**
+     * Creates a requirement targeting coordinates within the specified world.
+     *
+     * @param requiredWorld    the world name that must contain the player
+     * @param x                the x-coordinate that defines the center of the allowed area
+     * @param y                the y-coordinate that defines the center of the allowed area
+     * @param z                the z-coordinate that defines the center of the allowed area
+     * @param requiredDistance the maximum distance from the target coordinates a player can be
+     */
     public LocationRequirement(
             final @NotNull String requiredWorld,
             final double x,
@@ -61,6 +70,12 @@ public final class LocationRequirement extends AbstractRequirement {
         this(requiredWorld, null, new Coordinates(x, y, z), requiredDistance, null);
     }
 
+    /**
+     * Creates a requirement targeting a WorldGuard region in the specified world.
+     *
+     * @param requiredWorld  the world name that must contain the player
+     * @param requiredRegion the region identifier that the player must be inside
+     */
     public LocationRequirement(
             final @NotNull String requiredWorld,
             final @NotNull String requiredRegion
@@ -68,6 +83,16 @@ public final class LocationRequirement extends AbstractRequirement {
         this(requiredWorld, requiredRegion, null, 0.0, null);
     }
 
+    /**
+     * Creates a requirement that can validate world, region, or coordinate constraints.
+     *
+     * @param requiredWorld       the world name that must contain the player, or {@code null} if not required
+     * @param requiredRegion      the region identifier that the player must be inside, or {@code null} if not required
+     * @param requiredCoordinates the coordinates that the player should be near, or {@code null} if not required
+     * @param requiredDistance    the maximum distance allowed from the target coordinates, or {@code null} when coordinates are not enforced
+     * @param description         optional description shown in user-facing contexts
+     * @throws IllegalArgumentException if the provided configuration is invalid
+     */
     @JsonCreator
     public LocationRequirement(
             @JsonProperty("requiredWorld") final @Nullable String requiredWorld,
@@ -101,6 +126,12 @@ public final class LocationRequirement extends AbstractRequirement {
         this.description = description;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player the player whose location should be validated
+     * @return {@code true} when all configured constraints are satisfied
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         final Location playerLocation = player.getLocation();
@@ -133,6 +164,12 @@ public final class LocationRequirement extends AbstractRequirement {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player the player whose progress is calculated
+     * @return the progress ratio in the range {@code [0.0, 1.0]}
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         final Location playerLocation = player.getLocation();
@@ -165,40 +202,81 @@ public final class LocationRequirement extends AbstractRequirement {
         return Math.max(0.0, Math.min(1.0, progress));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player the player that would consume the requirement
+     */
     @Override
     public void consume(final @NotNull Player player) {
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return the translation key describing this requirement type
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "requirement.location";
     }
 
+    /**
+     * Retrieves the world name that must contain the player.
+     *
+     * @return the required world name, or {@code null} if no world is enforced
+     */
     @Nullable
     public String getRequiredWorld() {
         return this.requiredWorld;
     }
 
+    /**
+     * Retrieves the region identifier that must contain the player.
+     *
+     * @return the required region identifier, or {@code null} if no region is enforced
+     */
     @Nullable
     public String getRequiredRegion() {
         return this.requiredRegion;
     }
 
+    /**
+     * Retrieves the coordinates that the player should remain near.
+     *
+     * @return the target coordinates, or {@code null} when the player position is not constrained
+     */
     @Nullable
     public Coordinates getRequiredCoordinates() {
         return this.requiredCoordinates;
     }
 
+    /**
+     * Retrieves the allowed distance from the required coordinates.
+     *
+     * @return the maximum allowed distance when coordinates are enforced
+     */
     public double getRequiredDistance() {
         return this.requiredDistance;
     }
 
+    /**
+     * Retrieves a human-readable description of the requirement.
+     *
+     * @return the description, or {@code null} if none was provided
+     */
     @Nullable
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * Calculates the current distance between the player and the required coordinates.
+     *
+     * @param player the player being evaluated
+     * @return the distance to the coordinates, or {@code -1.0} when no coordinates are enforced
+     */
     @JsonIgnore
     public double getCurrentDistance(final @NotNull Player player) {
         if (this.requiredCoordinates == null) {
@@ -215,6 +293,12 @@ public final class LocationRequirement extends AbstractRequirement {
         return playerLocation.distance(targetLocation);
     }
 
+    /**
+     * Determines whether the player is currently in the required world.
+     *
+     * @param player the player being evaluated
+     * @return {@code true} if the requirement does not specify a world or the player matches the world
+     */
     @JsonIgnore
     public boolean isInCorrectWorld(final @NotNull Player player) {
         if (this.requiredWorld == null) {
@@ -223,6 +307,12 @@ public final class LocationRequirement extends AbstractRequirement {
         return this.requiredWorld.equals(player.getWorld().getName());
     }
 
+    /**
+     * Determines whether the player is within the configured distance of the required coordinates.
+     *
+     * @param player the player being evaluated
+     * @return {@code true} if coordinates are not enforced or if the player is within range
+     */
     @JsonIgnore
     public boolean isWithinDistance(final @NotNull Player player) {
         if (this.requiredCoordinates == null) {
@@ -231,6 +321,12 @@ public final class LocationRequirement extends AbstractRequirement {
         return this.getCurrentDistance(player) <= this.requiredDistance;
     }
 
+    /**
+     * Determines whether the player is located inside the required region.
+     *
+     * @param player the player being evaluated
+     * @return {@code true} when no region is required or when the region check succeeds
+     */
     @JsonIgnore
     public boolean isInCorrectRegion(final @NotNull Player player) {
         if (this.requiredRegion == null) {
@@ -239,6 +335,12 @@ public final class LocationRequirement extends AbstractRequirement {
         return this.isInRegion(player.getLocation(), this.requiredRegion);
     }
 
+    /**
+     * Builds a formatted status string summarizing the player's compliance with each constraint.
+     *
+     * @param player the player being evaluated
+     * @return the formatted status string
+     */
     @JsonIgnore
     @NotNull
     public String getFormattedStatus(final @NotNull Player player) {
@@ -267,6 +369,11 @@ public final class LocationRequirement extends AbstractRequirement {
         return status.toString();
     }
 
+    /**
+     * Validates that the requirement configuration is internally consistent and references existing worlds.
+     *
+     * @throws IllegalStateException if the configuration is invalid
+     */
     @JsonIgnore
     public void validate() {
         if (this.requiredWorld == null && this.requiredRegion == null && this.requiredCoordinates == null) {
@@ -293,6 +400,11 @@ public final class LocationRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Retrieves the cached {@link World} reference when a required world is configured.
+     *
+     * @return the cached world instance, or {@code null} if no world is required or it is unavailable
+     */
     @Nullable
     private World getCachedWorld() {
         if (this.requiredWorld == null) {
@@ -307,6 +419,11 @@ public final class LocationRequirement extends AbstractRequirement {
         return this.cachedWorld;
     }
 
+    /**
+     * Determines whether the WorldGuard plugin is available and enabled.
+     *
+     * @return {@code true} when WorldGuard can be queried for region checks
+     */
     private boolean isWorldGuardAvailable() {
         if (this.worldGuardAvailable == null) {
             final Plugin worldGuardPlugin = Bukkit.getPluginManager().getPlugin("WorldGuard");
@@ -315,6 +432,13 @@ public final class LocationRequirement extends AbstractRequirement {
         return this.worldGuardAvailable;
     }
 
+    /**
+     * Determines whether a location resides within the specified WorldGuard region.
+     *
+     * @param location  the location to evaluate
+     * @param regionName the name of the region to check
+     * @return {@code true} if the region check succeeds; {@code false} otherwise
+     */
     private boolean isInRegion(final @NotNull Location location, final @NotNull String regionName) {
         if (!this.isWorldGuardAvailable()) {
             LOGGER.log(Level.WARNING,
@@ -324,6 +448,13 @@ public final class LocationRequirement extends AbstractRequirement {
         return false;
     }
 
+    /**
+     * Immutable coordinate triple used to describe a target position.
+     *
+     * @author JExcellence
+     * @version 1.0.1
+     * @since 1.0.0
+     */
     public static final class Coordinates {
         @JsonProperty("x")
         private final double x;
@@ -334,6 +465,13 @@ public final class LocationRequirement extends AbstractRequirement {
         @JsonProperty("z")
         private final double z;
 
+        /**
+         * Creates a coordinate triple.
+         *
+         * @param x the x-coordinate component
+         * @param y the y-coordinate component
+         * @param z the z-coordinate component
+         */
         @JsonCreator
         public Coordinates(
                 @JsonProperty("x") final double x,
@@ -345,18 +483,38 @@ public final class LocationRequirement extends AbstractRequirement {
             this.z = z;
         }
 
+        /**
+         * Retrieves the x-coordinate.
+         *
+         * @return the x-coordinate component
+         */
         public double getX() {
             return this.x;
         }
 
+        /**
+         * Retrieves the y-coordinate.
+         *
+         * @return the y-coordinate component
+         */
         public double getY() {
             return this.y;
         }
 
+        /**
+         * Retrieves the z-coordinate.
+         *
+         * @return the z-coordinate component
+         */
         public double getZ() {
             return this.z;
         }
 
+        /**
+         * Converts the coordinates into a formatted string.
+         *
+         * @return the formatted coordinate string
+         */
         @Override
         public String toString() {
             return String.format("(%.1f, %.1f, %.1f)", this.x, this.y, this.z);

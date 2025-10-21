@@ -13,11 +13,29 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Utility for assigning contextual metadata to a rank's configured requirements before they are evaluated.
+ * The context links each requirement with its parent tree and rank, ensuring downstream parsing hooks are aware
+ * of the origin of each section.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public final class RankRequirementContext {
 
     private RankRequirementContext() {
     }
 
+    /**
+     * Applies requirement context asynchronously using the common pool.
+     *
+     * @param rankSection the rank configuration containing requirement sections
+     * @param treeId      the identifier of the rank tree to associate with the requirements
+     * @param rankId      the identifier of the rank being processed
+     * @param logger      the logger used to report failures during requirement parsing
+     * @return a future that completes when the contextual setup is finished
+     */
     public static @NotNull CompletableFuture<Void> applyAsync(final @NotNull RankSection rankSection,
                                                               final @NotNull String treeId,
                                                               final @NotNull String rankId,
@@ -25,6 +43,16 @@ public final class RankRequirementContext {
         return applyAsync(rankSection, treeId, rankId, logger, ForkJoinPool.commonPool());
     }
 
+    /**
+     * Applies requirement context asynchronously using the provided executor.
+     *
+     * @param rankSection the rank configuration containing requirement sections
+     * @param treeId      the identifier of the rank tree to associate with the requirements
+     * @param rankId      the identifier of the rank being processed
+     * @param logger      the logger used to report failures during requirement parsing
+     * @param executor    the executor that will perform the asynchronous context application
+     * @return a future that completes when the contextual setup is finished
+     */
     public static @NotNull CompletableFuture<Void> applyAsync(final @NotNull RankSection rankSection,
                                                               final @NotNull String treeId,
                                                               final @NotNull String rankId,
@@ -59,6 +87,14 @@ public final class RankRequirementContext {
         }, executor);
     }
 
+    /**
+     * Applies requirement context on the calling thread.
+     *
+     * @param rankSection the rank configuration containing requirement sections
+     * @param treeId      the identifier of the rank tree to associate with the requirements
+     * @param rankId      the identifier of the rank being processed
+     * @param logger      the logger used to report failures during requirement parsing
+     */
     public static void apply(final @NotNull RankSection rankSection,
                              final @NotNull String treeId,
                              final @NotNull String rankId,

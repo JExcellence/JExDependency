@@ -30,8 +30,8 @@ import java.util.logging.Level;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class RankTreeSection extends AConfigSection {
@@ -72,11 +72,11 @@ public class RankTreeSection extends AConfigSection {
 	 */
 	private Boolean requiresAllRankTreesToBeDone;
 	
-	/**
-	 * The minimum number of rank trees that must be completed before this tree can be accessed.
-	 * If null, defaults to 1.
-	 */
-	private Integer minimumRankTreesToBeDone;
+        /**
+         * The minimum number of rank trees that must be completed before this tree can be accessed.
+         * If null, defaults to 0.
+         */
+        private Integer minimumRankTreesToBeDone;
 	
 	/**
 	 * The icon configuration for this rank tree.
@@ -271,40 +271,50 @@ public class RankTreeSection extends AConfigSection {
 		return this.requiresAllRankTreesToBeDone == null || this.requiresAllRankTreesToBeDone;
 	}
 	
-	/**
-	 * Gets the minimum number of rank trees that must be completed before this tree can be accessed.
-	 *
-	 * @return the minimum number, or 1 if not set
-	 */
-	public Integer getMinimumRankTreesToBeDone() {
-		return this.minimumRankTreesToBeDone == null ? 0 : this.minimumRankTreesToBeDone;
-	}
-	
-	/**
-	 * Gets the icon configuration for this rank tree.
-	 *
-	 * @return the icon section, or a default IconSection if not set
-	 */
-	public IconSection getIcon() {
-		return this.icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : this.icon;
-	}
-	
-	/**
-	 * Gets the list of prerequisite rank tree names.
-	 *
-	 * @return the list of prerequisite rank trees, or an empty list if not set
-	 */
-	public List<String> getPrerequisiteRankTrees() {
-		return this.prerequisiteRankTrees == null ? new ArrayList<>() : this.prerequisiteRankTrees;
-	}
-	
-	public void setMinimumRankTreesToBeDone(final Integer minimumRankTreesToBeDone) {
-		this.minimumRankTreesToBeDone = minimumRankTreesToBeDone;
-	}
-	
-	public List<String> getUnlockedRankTrees() {
-		return this.unlockedRankTrees == null ? new ArrayList<>() : this.unlockedRankTrees;
-	}
+        /**
+         * Gets the minimum number of rank trees that must be completed before this tree can be accessed.
+         *
+         * @return the minimum number, or 0 if not set
+         */
+        public Integer getMinimumRankTreesToBeDone() {
+                return this.minimumRankTreesToBeDone == null ? 0 : this.minimumRankTreesToBeDone;
+        }
+
+        /**
+         * Gets the icon configuration for this rank tree.
+         *
+         * @return the icon section, or a default IconSection if not set
+         */
+        public IconSection getIcon() {
+                return this.icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : this.icon;
+        }
+
+        /**
+         * Gets the list of prerequisite rank tree names.
+         *
+         * @return the list of prerequisite rank trees, or an empty list if not set
+         */
+        public List<String> getPrerequisiteRankTrees() {
+                return this.prerequisiteRankTrees == null ? new ArrayList<>() : this.prerequisiteRankTrees;
+        }
+
+        /**
+         * Sets the minimum number of rank trees required before this tree can be accessed.
+         *
+         * @param minimumRankTreesToBeDone the minimum number of completed trees required
+         */
+        public void setMinimumRankTreesToBeDone(final Integer minimumRankTreesToBeDone) {
+                this.minimumRankTreesToBeDone = minimumRankTreesToBeDone;
+        }
+
+        /**
+         * Gets the rank trees that become accessible after completing this tree.
+         *
+         * @return the list of unlocked rank tree identifiers, or an empty list if not set
+         */
+        public List<String> getUnlockedRankTrees() {
+                return this.unlockedRankTrees == null ? new ArrayList<>() : this.unlockedRankTrees;
+        }
 	
 	/**
 	 * Gets the list of connected rank tree names.

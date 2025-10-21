@@ -24,13 +24,31 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * An abstract base class for views that handles common configuration boilerplate.
- * Child classes can override hooks to customize the view's properties.
+ * Template-method implementation for Inventory Framework views that centralizes
+ * common layout, translation, and navigation behaviour.
+ *
+ * <p>The view bootstraps titles through {@link TranslationService} using the
+ * base translation key supplied by subclasses and wires a {@link Return} head
+ * into the default navigation row. Concrete views extend this class and
+ * override the lifecycle hooks to provide domain specific rendering while
+ * preserving the shared UX contract.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public abstract class BaseView extends View {
-	
-	protected final Class<? extends View> parentClazz;
-	private final   String                baseKey;
+
+        /**
+         * State reference to the parent view used for automatic back navigation
+         * through the {@link Return} utility head.
+         */
+        protected final Class<? extends View> parentClazz;
+        /**
+         * Cached base translation key resolved during construction to avoid
+         * repeated {@link #getKey()} lookups when building child keys.
+         */
+        private final   String                baseKey;
 	
 	public BaseView(
 		final @Nullable Class<? extends View> parentClazz
@@ -45,36 +63,45 @@ public abstract class BaseView extends View {
 		this(null);
 	}
 	
-	/**
-	 * @return The base i18n key for this view (e.g., "rank_main_ui").
-	 */
-	protected abstract String getKey();
-	
-	/**
-	 * @return The full title key by appending ".title" to the base key.
-	 */
-	protected String getTitleKey() {
-		return "title";
-	}
-	
-	/**
-	 * Creates an I18n.Builder with the base key prefix for convenience.
-	 *
-	 * @param suffix The suffix to append to the base key (e.g., "button.confirm")
-	 * @param player The player for localization
-	 * @return A new I18n.Builder with the prefixed key
-	 */
-	protected TranslationService i18n(
-		final @NotNull String suffix,
-		final @NotNull Player player
-	) {
+        /**
+         * Retrieves the translation namespace used for titles, lore, and action prompts.
+         *
+         * @return the base i18n key for this view (for example {@code "rank_main_ui"})
+         */
+        protected abstract String getKey();
+
+        /**
+         * Resolves the translation key used for inventory titles by appending the {@code .title}
+         * suffix to the base key. Subclasses may override for bespoke naming.
+         *
+         * @return the fully qualified title translation key
+         */
+        protected String getTitleKey() {
+                return "title";
+        }
+
+        /**
+         * Creates a {@link TranslationService} builder scoped to the view's translation namespace so
+         * that downstream calls only provide the suffix for a specific message or lore entry.
+         *
+         * @param suffix the suffix to append to the base key (for example {@code "button.confirm"})
+         * @param player the player whose locale should be used when building the component
+         * @return a translation builder with the prefixed key ready for placeholder injection
+         */
+        protected TranslationService i18n(
+                final @NotNull String suffix,
+                final @NotNull Player player
+        ) {
         return TranslationService.create(TranslationKey.of(this.baseKey, suffix), player);
 	}
 	
-	/**
-	 * @return The layout of the inventory as rows (each string represents one row of 9 slots).
-	 */
-	protected String[] getLayout() {
+        /**
+         * Supplies the default inventory layout, mapping template characters to Inventory Framework
+         * layout slots for consistent background and navigation placement.
+         *
+         * @return the layout rows, each string representing one row of nine slots
+         */
+        protected String[] getLayout() {
 		
 		return new String[]{
 			"         ", "         ",
@@ -83,58 +110,69 @@ public abstract class BaseView extends View {
 		};
 	}
 	
-	/**
-	 * @return The size (number of rows) of the inventory.
-	 */
-	protected int getSize() {
+        /**
+         * Provides the fallback inventory height when a concrete layout is not defined.
+         *
+         * @return the number of rows composing the inventory
+         */
+        protected int getSize() {
 		
 		return 6;
 	}
 	
-	/**
-	 * @return The update schedule in ticks, or 0 for none.
-	 */
-	protected int getUpdateSchedule() {
+        /**
+         * Declares how frequently the view should refresh when scheduled updates are required.
+         *
+         * @return the update cadence in ticks, or {@code 0} when no scheduled updates are needed
+         */
+        protected int getUpdateSchedule() {
 		
 		return 0;
 	}
 	
-	/**
-	 * @return The material to use for filling empty slots. Override to change the fill material.
-	 */
-	protected Material getFillMaterial() {
-		return Material.GRAY_STAINED_GLASS_PANE;
-	}
-	
-	/**
-	 * @return Whether to auto-fill empty slots with the fill material.
-	 */
-	protected boolean shouldAutoFill() {
-		return true;
-	}
-	
-	/**
-	 * Creates the fill item for empty slots.
-	 *
-	 * @param player The player viewing the inventory
-	 * @return The ItemStack to use for filling empty slots
-	 */
-	protected ItemStack createFillItem(
-		final @NotNull Player player
-	) {
+        /**
+         * Identifies the {@link Material} used while auto-filling empty slots before rendering
+         * interactive components.
+         *
+         * @return the filler material employed by {@link #createFillItem(Player)}
+         */
+        protected Material getFillMaterial() {
+                return Material.GRAY_STAINED_GLASS_PANE;
+        }
+
+        /**
+         * Signals whether {@link #autoFillEmptySlots(RenderContext, Player)} should seed unused
+         * slots with the filler item ahead of custom rendering.
+         *
+         * @return {@code true} if empty slots are padded automatically; {@code false} otherwise
+         */
+        protected boolean shouldAutoFill() {
+                return true;
+        }
+
+        /**
+         * Builds the {@link ItemStack} inserted in each empty slot when auto-fill is enabled.
+         *
+         * @param player the player viewing the inventory, allowing locale-sensitive metadata
+         * @return the item placed in empty slots during the initial render
+         */
+        protected ItemStack createFillItem(
+                final @NotNull Player player
+        ) {
 		return UnifiedBuilderFactory.item(
 			this.getFillMaterial()
 		).setName(Component.empty()).setLore(new ArrayList<>()).build();
 	}
 	
-	/**
-	 * @param open The open context.
-	 *
-	 * @return A map of placeholders for the title.
-	 */
-	protected Map<String, Object> getTitlePlaceholders(
-		final @NotNull OpenContext open
-	) {
+        /**
+         * Supplies placeholder values that hydrate translated titles via {@link #i18n(String, Player)}.
+         *
+         * @param open the open context supplied by Inventory Framework
+         * @return a map of placeholder keys and values applied to the title translation
+         */
+        protected Map<String, Object> getTitlePlaceholders(
+                final @NotNull OpenContext open
+        ) {
 		
 		return Map.of();
 	}
@@ -150,13 +188,15 @@ public abstract class BaseView extends View {
 		return 'b';
 	}
 	
-	/**
-	 * Handles the back button click event.
-	 * Override this method to customize back button behavior.
-	 */
-	protected void handleBackButtonClick(
-		final @NotNull SlotClickContext clickContext
-	) {
+        /**
+         * Handles activation of the {@link Return} head and either closes the inventory or
+         * navigates back to the configured {@link #parentClazz}.
+         *
+         * @param clickContext the click context provided by Inventory Framework
+         */
+        protected void handleBackButtonClick(
+                final @NotNull SlotClickContext clickContext
+        ) {
 		
 		if (
 			this.parentClazz == null
@@ -255,10 +295,16 @@ public abstract class BaseView extends View {
 		return rows <= 1 ? -1 : (rows - 1) * 9;
 	}
 	
-	@Override
-	public void onInit(
-		final @NotNull ViewConfigBuilder config
-	) {
+        /**
+         * Configures the {@link ViewConfigBuilder} using either the declarative layout or fallback
+         * size and wires any scheduled updates prior to the view being opened.
+         *
+         * @param config the configuration builder provided during the initialization phase
+         */
+        @Override
+        public void onInit(
+                final @NotNull ViewConfigBuilder config
+        ) {
 		if (
 			this.meaningfulLayout()
 		) {
@@ -284,10 +330,16 @@ public abstract class BaseView extends View {
 		config.build();
 	}
 	
-	@Override
-	public void onOpen(
-		final @NotNull OpenContext open
-	) {
+        /**
+         * Applies layout or size configuration, translation-backed titles, and ensures the
+         * Inventory Framework config stays synchronized with the player's locale.
+         *
+         * @param open the open context triggered when the view is presented to the player
+         */
+        @Override
+        public void onOpen(
+                final @NotNull OpenContext open
+        ) {
 		final TranslatedMessage titleComponent = this.i18n(
 			this.getTitleKey(),
 			open.getPlayer()
@@ -307,10 +359,17 @@ public abstract class BaseView extends View {
 		);
 	}
 	
-	@Override
-	public void onFirstRender(
-		final @NotNull RenderContext render
-	) {
+        /**
+         * Performs initial render orchestration by drawing navigation heads, delegating to the
+         * subclass {@link #onFirstRender(RenderContext, Player)} implementation, and optionally
+         * filling unused slots.
+         *
+         * @param render the render context associated with the current frame
+         */
+        @Override
+        public void onFirstRender(
+                final @NotNull RenderContext render
+        ) {
 		
 		final Player player = render.getPlayer();
 		
@@ -358,23 +417,28 @@ public abstract class BaseView extends View {
 		);
 	}
 	
-	/**
-	 * Abstract method for additional rendering logic.
-	 * Called after the auto-fill and navigation elements are rendered.
-	 */
-	public abstract void onFirstRender(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	);
-	
-	/**
-	 * Renders the navigation buttons.
-	 * The back button is automatically placed in the bottom-left corner (last row, first column)
-	 * if the inventory has more than 1 row.
-	 */
-	public void renderNavigationButtons(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
+        /**
+         * Abstract method for additional rendering logic executed after navigation heads and
+         * auto-fill behaviour complete.
+         *
+         * @param render the render context for slot registration
+         * @param player the player currently viewing the inventory
+         */
+        public abstract void onFirstRender(
+                final @NotNull RenderContext render,
+                final @NotNull Player player
+        );
+
+        /**
+         * Places the {@link Return} head in the template-defined back slot when the layout spans
+         * multiple rows, wiring it to {@link #handleBackButtonClick(SlotClickContext)}.
+         *
+         * @param render the render context used to register slot behaviour
+         * @param player the player for whom the head should be generated
+         */
+        public void renderNavigationButtons(
+                final @NotNull RenderContext render,
+                final @NotNull Player player
 	) {
 		
 		final int bottomLeftSlot = this.getBottomLeftSlot();

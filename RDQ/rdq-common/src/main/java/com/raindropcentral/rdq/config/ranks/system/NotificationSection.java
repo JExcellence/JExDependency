@@ -7,11 +7,12 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 /**
  * Configuration section for various notification types related to ranks.
  * Handles configuration for rank unlock, rank tree completion, final rank unlock,
- * and cross-rank tree switch notifications.
+ * and cross-rank tree switch notifications, ensuring that each notification
+ * category is available even when the configuration omits explicit values.
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 @CSAlways
 public class NotificationSection extends AConfigSection {
@@ -36,7 +37,8 @@ public class NotificationSection extends AConfigSection {
     /**
      * Constructs a NotificationSection with the given evaluation environment.
      *
-     * @param baseEnvironment the base evaluation environment builder
+     * @param baseEnvironment the base evaluation environment builder that seeds the
+     *                        configuration mapper
      */
     public NotificationSection(final EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
@@ -44,7 +46,9 @@ public class NotificationSection extends AConfigSection {
 
     /**
      * Gets the notification configuration for unlocking a rank.
-     * If not set, returns a new NotificationTypeSection with a default environment.
+     * If not set, returns a lazily created {@link NotificationTypeSection} backed by
+     * a default {@link EvaluationEnvironmentBuilder} so the caller never receives
+     * {@code null}.
      *
      * @return the NotificationTypeSection for rank unlock
      */
@@ -57,7 +61,9 @@ public class NotificationSection extends AConfigSection {
 
     /**
      * Gets the notification configuration for completing a rank tree.
-     * If not set, returns a new NotificationTypeSection with a default environment.
+     * If not set, returns a lazily created {@link NotificationTypeSection} backed by
+     * a default {@link EvaluationEnvironmentBuilder} so the caller never receives
+     * {@code null}.
      *
      * @return the NotificationTypeSection for rank tree completion
      */
@@ -70,7 +76,9 @@ public class NotificationSection extends AConfigSection {
 
     /**
      * Gets the notification configuration for unlocking the final rank.
-     * If not set, returns a new NotificationTypeSection with a default environment.
+     * If not set, returns a lazily created {@link NotificationTypeSection} backed by
+     * a default {@link EvaluationEnvironmentBuilder} so the caller never receives
+     * {@code null}.
      *
      * @return the NotificationTypeSection for final rank unlock
      */
@@ -83,7 +91,9 @@ public class NotificationSection extends AConfigSection {
 
     /**
      * Gets the notification configuration for switching between rank trees.
-     * If not set, returns a new NotificationTypeSection with a default environment.
+     * If not set, returns a lazily created {@link NotificationTypeSection} backed by
+     * a default {@link EvaluationEnvironmentBuilder} so the caller never receives
+     * {@code null}.
      *
      * @return the NotificationTypeSection for cross-rank tree switch
      */

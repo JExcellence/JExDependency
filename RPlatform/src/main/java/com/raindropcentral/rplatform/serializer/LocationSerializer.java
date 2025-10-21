@@ -6,11 +6,40 @@ import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Converts Bukkit {@link Location} instances to and from a comma separated textual representation
+ * suitable for configuration storage.
+ *
+ * <p>Serialized locations store the world name, coordinates and orientation in a fixed order to
+ * maintain compatibility across modules.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class LocationSerializer {
 
+    /**
+     * Comma delimiter separating world, coordinates and orientation inside serialized locations.
+     */
     private static final String DELIMITER = ",";
+
+    /**
+     * Number of segments expected when parsing a serialized location string.
+     */
     private static final int EXPECTED_PARTS = 6;
 
+    /**
+     * Parses a location from a comma separated string in the form
+     * {@code world,x,y,z,yaw,pitch}.
+     *
+     * <p>World lookup failures, incorrect part counts, or number parsing issues fall back to the
+     * default spawn location returned by {@link #createDefaultLocation()}. When no default world is
+     * available the method returns {@code null}.</p>
+     *
+     * @param serialized serialized location string
+     * @return parsed location or the configured default when parsing fails
+     */
     public @Nullable Location deserialize(final @NotNull String serialized) {
         final String[] parts = serialized.split(DELIMITER);
         
@@ -36,6 +65,17 @@ public class LocationSerializer {
         }
     }
 
+    /**
+     * Converts a {@link Location} to a comma separated string following the
+     * {@code world,x,y,z,yaw,pitch} schema.
+     *
+     * <p>An {@link IllegalArgumentException} is thrown when the source location has a {@code null}
+     * world reference because the format requires a world name.</p>
+     *
+     * @param location location to serialize
+     * @return serialized representation suitable for storage
+     * @throws IllegalArgumentException if the location has no associated world
+     */
     public @NotNull String serialize(final @NotNull Location location) {
         if (location.getWorld() == null) {
             throw new IllegalArgumentException("Location world cannot be null");
@@ -51,6 +91,14 @@ public class LocationSerializer {
         );
     }
 
+    /**
+     * Provides the fallback location used when deserialization fails.
+     *
+     * <p>The method returns the origin in the {@code world} dimension when present, or {@code null}
+     * if that world is not loaded.</p>
+     *
+     * @return default spawn location or {@code null}
+     */
     private @Nullable Location createDefaultLocation() {
         final World world = Bukkit.getWorld("world");
         return world != null ? new Location(world, 0, 0, 0, 0, 0) : null;

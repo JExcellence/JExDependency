@@ -15,6 +15,22 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.*;
 
+/**
+ * CentralLogger wires Raindrop Central plugins into a shared {@link java.util.logging.LogManager}
+ * configuration so that {@link PlatformLogger} instances and the redirected stdout/stderr streams
+ * write through the same handlers. The class installs {@link PlatformConsoleHandler},
+ * {@link PlatformLogFormatter}, and the universal JUL handler that respects {@link LoggerConfig}
+ * overrides before {@link System#out} and {@link System#err} are pointed at
+ * {@link LoggingPrintStream}.
+ *
+ * <p>The utility is designed to be initialized once per JVM via
+ * {@link #initialize(JavaPlugin)} and then consumed by plugin-specific
+ * {@link PlatformLogger#create(JavaPlugin)} instances.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class CentralLogger {
 
     private static final int MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -50,6 +66,15 @@ public class CentralLogger {
 
     private CentralLogger() {}
 
+    /**
+     * Initializes the logging pipeline for the provided plugin, attaching handlers, loading
+     * {@link LoggerConfig}, and redirecting stdout/stderr into the {@link CentralLogger} routing.
+     * This should be called once during {@code onEnable} before creating any
+     * {@link PlatformLogger} instances.
+     *
+     * @param plugin the plugin requesting initialization; used to resolve data folders and
+     *               configuration
+     */
     public static synchronized void initialize(@NotNull final JavaPlugin plugin) {
         if (INITIALIZED) return;
 
@@ -196,10 +221,24 @@ public class CentralLogger {
         }
     }
 
+    /**
+     * Obtains a JUL logger for the provided class that is registered with the centralized handler
+     * registry so that configuration updates can be applied dynamically.
+     *
+     * @param clazz the class whose name should back the logger
+     * @return a logger whose parent handlers are managed by {@link CentralLogger}
+     */
     public static Logger getLogger(final Class<?> clazz) {
         return getLogger(clazz.getName());
     }
 
+    /**
+     * Obtains (and registers) a JUL logger using the supplied name. The logger is configured to use
+     * parent handlers so that the universal handler can apply {@link LoggerConfig} overrides.
+     *
+     * @param name the desired logger name
+     * @return the JUL logger managed by {@link CentralLogger}
+     */
     public static Logger getLogger(final String name) {
         final Logger l = Logger.getLogger(Objects.requireNonNullElse(name, ""));
         l.setUseParentHandlers(true);
@@ -208,6 +247,13 @@ public class CentralLogger {
         return l;
     }
 
+    /**
+     * Enables or disables console mirroring for all managed loggers. When enabled a
+     * {@link PlatformConsoleHandler} is attached so records propagate to the console stream supplied
+     * during initialization.
+     *
+     * @param enabled {@code true} to enable console logging, {@code false} to suppress it
+     */
     public static synchronized void setConsoleLoggingEnabled(final boolean enabled) {
         CONSOLE_LOGGING_ENABLED = enabled;
         if (enabled && CONSOLE_HANDLER == null) {
@@ -222,20 +268,39 @@ public class CentralLogger {
         logger.log(Level.INFO, "Console logging " + (enabled ? "ENABLED" : "DISABLED"));
     }
 
+    /**
+     * Indicates whether console logging is currently enabled for the centralized handler.
+     *
+     * @return {@code true} when console mirroring is active
+     */
     public static boolean isConsoleLoggingEnabled() {
         return CONSOLE_LOGGING_ENABLED;
     }
 
+    /**
+     * Reports whether the logger has finished initialization and is not in emergency mode.
+     *
+     * @return {@code true} if handlers were installed successfully and no recursion guard is active
+     */
     public static boolean isWorking() {
         return INITIALIZED && FILE_HANDLER != null && !EMERGENCY_MODE.get();
     }
 
+    /**
+     * Resolves the current log file path based on the active plugin and rotation settings.
+     *
+     * @return the absolute path to today's rolling log file, or an explanatory message when the
+     *         plugin has not been initialized
+     */
     public static String getLogFilePath() {
         if (LOADED_PLUGIN == null) return "Plugin not loaded";
         final String timestamp = LocalDateTime.now().format(FILE_DATE_FORMAT);
         return new File(LOADED_PLUGIN.getDataFolder(), "logs/" + LOADED_PLUGIN.getName().toLowerCase() + "-" + timestamp + ".log").getAbsolutePath();
     }
 
+    /**
+     * Flushes all active handlers to ensure buffered records reach their destinations.
+     */
     public static void flush() {
         try {
             if (UNIVERSAL_HANDLER != null) UNIVERSAL_HANDLER.flush();
@@ -246,6 +311,10 @@ public class CentralLogger {
         }
     }
 
+    /**
+     * Restores the original system streams and closes all installed handlers. Invoke this during a
+     * plugin shutdown to gracefully release file descriptors and console hooks.
+     */
     public static synchronized void shutdown() {
         if (!INITIALIZED) return;
 
@@ -285,8 +354,20 @@ public class CentralLogger {
     }
 
     // Root universal handler — all JVM loggers pass here once installed
+    /**
+     * UniversalLogHandler is the shared JUL handler installed on the root logger. It enforces
+     * {@link LoggerConfig} policies for every record before delegating to the configured console and
+     * file handlers.
+     *
+     * @author JExcellence
+     * @since 1.0.0
+     * @version 1.0.1
+     */
     private static final class UniversalLogHandler extends Handler {
 
+        /**
+         * Active configuration snapshot controlling package level overrides and debug flags.
+         */
         private final LoggerConfig cfg;
 
         UniversalLogHandler(final LoggerConfig cfg) {

@@ -30,8 +30,13 @@ import java.util.logging.Logger;
  * <p>
  * Responsible for creating, tracking, and resolving bounties on players,
  * including reward distribution, damage tracking, and updating player displays.
- * Ensures thread-safety and schedules Bukkit API calls on the main thread.
+ * Ensures thread-safety and schedules Bukkit API calls on the main thread while coordinating
+ * repository writes on the shared asynchronous executor.
  * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class BountyManager {
 
@@ -78,8 +83,8 @@ public class BountyManager {
     private final EBountyClaimMode claimMode;
 
     /**
-     * Constructs a new BountyManager and loads configuration for claim mode.
-     *
+     * Constructs a new {@code BountyManager}, loading the persisted configuration to determine the
+     * bounty claim mode and defaulting to {@link EBountyClaimMode#LAST_HIT} when loading fails.
      */
     public BountyManager(
             @NotNull RDQ rdq
@@ -100,9 +105,12 @@ public class BountyManager {
     }
 
     /**
-     * Creates a new bounty for the specified target player, with the given commissioner, item rewards, and currency rewards.
+     * Creates a new bounty for the specified target player, with the given commissioner, item rewards,
+     * and currency rewards.
      * <p>
-     * The bounty is persisted asynchronously. On success, the bounty is added to active maps and the server is notified on the main thread.
+     * The bounty is written to the repository asynchronously. Once persisted, the in-memory caches are
+     * updated and any Bukkit API invocations (such as broadcasting messages) are rescheduled on the
+     * primary thread.
      * </p>
      *
      * @param targetPlayer     the player who is the target of the bounty
@@ -143,8 +151,8 @@ public class BountyManager {
     }
 
     /**
-     * Removes an active bounty and its associated damage tracking for the specified player.
-     * Also updates the player's display to remove bounty indicators.
+     * Removes an active bounty and its associated damage tracking for the specified player while
+     * refreshing the player's display to remove bounty indicators.
      *
      * @param targetUniqueId the UUID of the player whose bounty should be removed
      */
@@ -156,8 +164,8 @@ public class BountyManager {
     }
 
     /**
-     * Tracks damage dealt by an attacker to a bounty target.
-     * Accumulates damage for each attacker per target.
+     * Tracks damage dealt by an attacker to a bounty target, accumulating damage per attacker and
+     * maintaining last-hit information when using {@link EBountyClaimMode#LAST_HIT}.
      *
      * @param targetUniqueId   the UUID of the bounty target
      * @param attackerUniqueId the UUID of the attacker
@@ -186,8 +194,11 @@ public class BountyManager {
 
     /**
      * Handles the event when a player with an active bounty is killed.
-     * Determines the winner based on the configured claim mode, distributes rewards,
-     * updates repositories, removes the bounty, and notifies players.
+     * <p>
+     * Determines the winner based on the configured claim mode, distributes rewards, updates the
+     * player and bounty repositories asynchronously, and notifies all connected players from the
+     * main thread once the bounty has been finalized.
+     * </p>
      *
      * @param killedPlayer the player who was killed
      */
@@ -241,7 +252,11 @@ public class BountyManager {
     }
 
     /**
-     * Adds item rewards to an existing bounty. (Stub)
+     * Adds item rewards to an existing bounty.
+     * <p>
+     * This is currently a stub and returns the provided bounty unchanged until persistence and
+     * mutation logic are implemented.
+     * </p>
      *
      * @param bounty the bounty to add rewards to
      * @param items  the list of item stacks to add as rewards
@@ -256,7 +271,11 @@ public class BountyManager {
     }
 
     /**
-     * Adds a currency reward to an existing bounty. (Stub)
+     * Adds a currency reward to an existing bounty.
+     * <p>
+     * This is currently a stub and returns the provided bounty unchanged until persistence and
+     * mutation logic are implemented.
+     * </p>
      *
      * @param bounty       the bounty to add the currency reward to
      * @param currencyName the name of the currency
@@ -273,8 +292,8 @@ public class BountyManager {
     }
 
     /**
-     * Updates the display name of a player to indicate bounty status.
-     * Schedules to main thread if necessary.
+     * Updates the display name of a player to indicate bounty status, scheduling the mutation on the
+     * main thread when necessary.
      *
      * @param playerUniqueId the UUID of the player to update
      */
@@ -327,7 +346,7 @@ public class BountyManager {
      * Checks if a player currently has an active bounty.
      *
      * @param playerUniqueId the UUID of the player to check
-     * @return true if the player has an active bounty, false otherwise
+     * @return {@code true} if the player has an active bounty, {@code false} otherwise
      */
     public boolean hasActiveBounty(final @NotNull UUID playerUniqueId) {
         return this.activeBounties.containsKey(playerUniqueId);
@@ -337,7 +356,7 @@ public class BountyManager {
      * Retrieves the active bounty for a player, if any.
      *
      * @param playerUniqueId the UUID of the player
-     * @return the RBounty instance, or null if none exists
+     * @return the {@link RBounty} instance, or {@code null} if none exists
      */
     public @Nullable RBounty getBounty(final @NotNull UUID playerUniqueId) {
         return activeBounties.get(playerUniqueId);
@@ -347,7 +366,7 @@ public class BountyManager {
      * Determines the winner of a bounty based on the configured claim mode.
      *
      * @param targetUniqueId the UUID of the bounty target
-     * @return the UUID of the winning player, or null if no winner can be determined
+     * @return the UUID of the winning player, or {@code null} if no winner can be determined
      */
     private @Nullable UUID determineBountyWinner(final @NotNull UUID targetUniqueId) {
         if (this.claimMode == EBountyClaimMode.LAST_HIT) {
@@ -365,7 +384,7 @@ public class BountyManager {
      * Gets the UUID of the player who dealt the most damage to a bounty target.
      *
      * @param damages a map of attacker UUIDs to damage dealt
-     * @return the UUID of the top damager, or null if not found
+     * @return the UUID of the top damager, or {@code null} if not found
      */
     private @Nullable UUID getTopDamager(final @NotNull Map<UUID, Double> damages) {
         return damages
@@ -377,13 +396,15 @@ public class BountyManager {
     }
 
     /**
-     * Gives the specified reward items to the player, splitting stacks as needed.
-     * If the player's inventory is full, excess items are dropped at their location.
-     * Notifies the player if any items could not fit in their inventory.
-     * Ensures execution on the main thread.
+     * Gives the specified reward items to the player, splitting stacks as needed and ensuring the
+     * operation completes on the main thread.
+     * <p>
+     * If the player's inventory is full, excess items are dropped at their location and the player
+     * receives a notification about leftover items.
+     * </p>
      *
      * @param player      the player to receive the items
-     * @param rewardItems the set of RewardItem to give
+     * @param rewardItems the set of {@link RewardItem} to give
      */
     public void giveRewardItemsToPlayer(
             final @NotNull Player player,

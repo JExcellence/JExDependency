@@ -10,6 +10,7 @@ import com.raindropcentral.rplatform.view.PaginatedPlayerView;
 import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Material;
@@ -137,20 +138,39 @@ public final class BountyCreationView extends BaseView {
                 .build();
     });
 
+    /**
+     * Creates a new bounty creation view bound to {@link BountyMainView} as the parent.
+     */
     public BountyCreationView() {
         super(BountyMainView.class);
     }
 
+    /**
+     * Retrieves the number of rows displayed by the inventory.
+     *
+     * @return the amount of rows available in the view.
+     */
     @Override
     protected int getSize() {
         return 5;
     }
 
+    /**
+     * Defines how frequently the view should refresh dynamic components.
+     *
+     * @return the refresh interval in ticks.
+     */
     @Override
     protected int getUpdateSchedule() {
         return 20;
     }
 
+    /**
+     * Supplies placeholder values used when rendering the translated title.
+     *
+     * @param open the context describing the view opening sequence.
+     * @return a map containing the selected target name placeholder.
+     */
     @Override
     protected Map<String, Object> getTitlePlaceholders(final @NotNull OpenContext open) {
         return Map.of(
@@ -158,11 +178,23 @@ public final class BountyCreationView extends BaseView {
         );
     }
 
+    /**
+     * Provides the translation key for InventoryFramework's internal caching.
+     *
+     * @return the unique key describing this view.
+     */
     @Override
     protected String getKey() {
         return "bounty.creation";
     }
 
+    /**
+     * Renders the initial state of the creation interface including the target selector,
+     * reward addition buttons, and confirmation control.
+     *
+     * @param render the render context used to populate slots.
+     * @param player the player opening the view.
+     */
     @Override
     public void onFirstRender(
             final @NotNull RenderContext render,
@@ -174,6 +206,12 @@ public final class BountyCreationView extends BaseView {
         this.renderConfirmButton(render, player);
     }
 
+    /**
+     * Places and wires the target selection button allowing players to choose a bounty target.
+     *
+     * @param render the render context for the current view frame.
+     * @param player the interacting player.
+     */
     private void renderTargetSelector(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -195,6 +233,12 @@ public final class BountyCreationView extends BaseView {
                 });
     }
 
+    /**
+     * Configures the slot responsible for adding reward items to the bounty.
+     *
+     * @param render the render context used to interact with slots.
+     * @param player the player viewing the GUI.
+     */
     private void renderItemAdder(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -241,6 +285,12 @@ public final class BountyCreationView extends BaseView {
                 });
     }
 
+    /**
+     * Sets up the currency adder button that becomes available once a target is selected.
+     *
+     * @param render the render context used for updating the slot.
+     * @param player the player interacting with the interface.
+     */
     private void renderCurrencyAdder(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -252,6 +302,12 @@ public final class BountyCreationView extends BaseView {
                 .displayIf(() -> this.target.get(render).isPresent());
     }
 
+    /**
+     * Registers the confirm button responsible for finalizing the bounty submission.
+     *
+     * @param render the render context responsible for slot handling.
+     * @param player the player attempting to create the bounty.
+     */
     private void renderConfirmButton(
             final @NotNull RenderContext render,
             final @NotNull Player player
@@ -265,8 +321,15 @@ public final class BountyCreationView extends BaseView {
                 .closeOnClick();
     }
 
+    /**
+     * Handles the confirmation click by validating selections, notifying the player, and re-opening
+     * context-sensitive views when required.
+     *
+     * @param clickContext the InventoryFramework slot click context.
+     * @param player       the player confirming the bounty creation.
+     */
     private void handleConfirm(
-            final @NotNull me.devnatan.inventoryframework.context.SlotClickContext clickContext,
+            final @NotNull SlotClickContext clickContext,
             final @NotNull Player player
     ) {
         if (this.target.get(clickContext).isEmpty()) {
@@ -321,6 +384,11 @@ public final class BountyCreationView extends BaseView {
                 });
     }
 
+    /**
+     * Returns any inserted items to the player when the view closes without confirmation.
+     *
+     * @param close the close context generated by InventoryFramework.
+     */
     @Override
     public void onClose(final @NotNull CloseContext close) {
         if (this.isReopening) {
@@ -335,6 +403,12 @@ public final class BountyCreationView extends BaseView {
         );
     }
 
+    /**
+     * Refunds the provided items to the player, dropping any excess on the ground if the inventory is full.
+     *
+     * @param player the player receiving the refunded items.
+     * @param items  the collection of items to refund.
+     */
     private void refundInsertedItems(
             final @NotNull Player player,
             final @NotNull Collection<ItemStack> items

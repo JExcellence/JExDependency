@@ -1,0 +1,5 @@
+dependencies:
+  - com.example:spigot-default:4.0.0
+  - "com.example:spigot-quoted:4.1.0"
+  -
+  - # ignored-comment-line

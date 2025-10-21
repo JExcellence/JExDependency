@@ -9,103 +9,105 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Configuration section for the Amplification perk.
+ * Configuration section that encapsulates the amplification perk parameters.
  * <p>
- * This section defines the parameters for amplifying potions, including the chance,
- * amplification rate, a whitelist of applicable potions, and an optional forge section
- * for advanced configuration.
+ * The section describes how potion amplification behaves by capturing the trigger chance,
+ * the amplification multiplier, the optional list of potion identifiers that should be
+ * considered eligible, and any advanced forge overrides supplied by pack developers.
+ * Each accessor guarantees a non-{@code null} value so calling code can rely on safe
+ * defaults when configuration entries are omitted.
  * </p>
  *
- * @author ItsRainingHP
- * @version 1.0.0
- * @since TBD
+ * @author JExcellence
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public class AmplificationSection extends PerkSection {
-	
-	/**
-	 * Chance to amplify potion (trigger perk).
-	 */
-	@CSAlways
-	private double chance;
 
-	/**
-	 * Rate to amplify potion, e.g., 0.5 = 50% increase.
-	 */
-	@CSAlways
-	private double rate;
-	
-	/**
-	 * Whitelist of potions the perk triggers on.
-	 * <p>
-	 * Uses potion type names as strings. If not set, defaults to all available potion types.
-	 * </p>
-	 */
-	//TODO JExcellence to review if this should be improved. Currently uses PotionType.
-	@CSAlways
-	private List<String> potions;
-	
-	/**
-	 * Forge section for advanced amplification configuration.
-	 */
-	@CSAlways
-	private AmplificationForgeSection amplificationForgeSection;
-	
-	/**
-	 * Constructs a new {@code AmplificationSection} with the specified evaluation environment.
-	 *
-	 * @param evaluationEnvironmentBuilder the base evaluation environment for this configuration section
-	 */
-	public AmplificationSection(
-		final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
-	) {
-		super(evaluationEnvironmentBuilder);
-	}
-	
-	/**
-	 * Gets the chance to amplify a potion (trigger the perk).
-	 *
-	 * @return the amplification chance as a double
-	 */
-	public double getChance() {
-		return this.chance;
-	}
-	
-	/**
-	 * Gets the amplification rate for the potion.
-	 *
-	 * @return the amplification rate as a double (e.g., 0.5 for 50% increase)
-	 */
-	public double getRate() {
-		return this.rate;
-	}
-	
-	/**
-	 * Gets the whitelist of potion types the perk triggers on.
-	 * <p>
-	 * If not set, returns a list of all default potion types.
-	 * </p>
-	 *
-	 * @return a list of potion type names as strings
-	 */
-	public List<String> getPotions() {
-		if (this.potions == null) {
-			this.potions = new ArrayList<>(getPotions());
-		}
-		return this.potions;
-	}
-	
-	/**
-	 * Gets the forge section for advanced amplification configuration.
-	 * <p>
-	 * If not set, returns a new default {@link AmplificationForgeSection}.
-	 * </p>
-	 *
-	 * @return the {@link AmplificationForgeSection} instance
-	 */
-	public AmplificationForgeSection getForgeAmplificationSection() {
-		return
-			this.amplificationForgeSection == null ?
-				new AmplificationForgeSection(new EvaluationEnvironmentBuilder()) :
-				this.amplificationForgeSection;
-	}
+    /**
+     * Chance for the amplification perk to trigger when a player brews or consumes a potion.
+     */
+    @CSAlways
+    private double chance;
+
+    /**
+     * Multiplier applied to the base potion amplification (for example, {@code 0.5} equals a 50% boost).
+     */
+    @CSAlways
+    private double rate;
+
+    /**
+     * Whitelist of potion identifiers that are eligible for amplification.
+     * <p>
+     * Entries are stored as MiniMessage-compatible potion names. When left undefined the
+     * whitelist is considered unrestricted and callers receive an empty list to indicate
+     * that all potion types are allowed.
+     * </p>
+     */
+    @CSAlways
+    private List<String> potions;
+
+    /**
+     * Advanced configuration overrides supplied through the perk forge system.
+     */
+    @CSAlways
+    private AmplificationForgeSection amplificationForgeSection;
+
+    /**
+     * Constructs a new {@code AmplificationSection} backed by the provided evaluation environment.
+     *
+     * @param evaluationEnvironmentBuilder the evaluation environment used for expression parsing
+     */
+    public AmplificationSection(final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
+        super(evaluationEnvironmentBuilder);
+    }
+
+    /**
+     * Retrieves the probability that the amplification perk will activate.
+     *
+     * @return the amplification trigger chance
+     */
+    public double getChance() {
+        return this.chance;
+    }
+
+    /**
+     * Provides the multiplier that should be applied to the amplified potion.
+     *
+     * @return the configured amplification rate
+     */
+    public double getRate() {
+        return this.rate;
+    }
+
+    /**
+     * Supplies the whitelist of potion identifiers that can be amplified.
+     * <p>
+     * When the configuration omits this node the method returns an empty list, signalling
+     * to consumers that all potion types may be considered for amplification.
+     * </p>
+     *
+     * @return a mutable list of potion identifiers that should be treated as eligible
+     */
+    public List<String> getPotions() {
+        if (this.potions == null) {
+            this.potions = new ArrayList<>();
+        }
+        return this.potions;
+    }
+
+    /**
+     * Exposes the advanced forge configuration for the amplification perk.
+     * <p>
+     * Returning a new {@link AmplificationForgeSection} when the node is absent ensures callers
+     * can safely read forge-specific overrides without performing null checks.
+     * </p>
+     *
+     * @return a non-{@code null} {@link AmplificationForgeSection}
+     */
+    public AmplificationForgeSection getForgeAmplificationSection() {
+        return this.amplificationForgeSection == null
+                ? new AmplificationForgeSection(new EvaluationEnvironmentBuilder())
+                : this.amplificationForgeSection;
+    }
 }

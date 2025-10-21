@@ -50,8 +50,8 @@ import java.util.Map;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
 
@@ -61,7 +61,8 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      * @param jsonParser             the JSON parser
      * @param deserializationContext the deserialization context
      * @return the deserialized {@code ItemStack}
-     * @throws IOException if an I/O error occurs during parsing
+     * @throws IOException              if an I/O error occurs during parsing
+     * @throws IllegalArgumentException if the material type defined in the JSON payload is invalid
      */
     @Override
     public @NotNull ItemStack deserialize(
@@ -88,6 +89,7 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      *
      * @param node the JSON node containing item data
      * @return the created {@code ItemStack}
+     * @throws IllegalArgumentException if the {@code type} node does not map to a known {@link Material}
      */
     private @NotNull ItemStack createBaseItemStack(
             @NotNull final JsonNode node
@@ -186,6 +188,7 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      *
      * @param meta     the {@link ItemMeta} to modify
      * @param metaNode the JSON node containing metadata
+     * @implNote Invalid or unknown enchantment keys are ignored to ensure deserialization remains resilient.
      */
     private void applyEnchantments(
             @NotNull final ItemMeta meta,

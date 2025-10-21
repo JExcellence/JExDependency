@@ -1,23 +1,33 @@
 package com.raindropcentral.rdq.type;
 
 /**
- * Enumeration of possible modes for awarding a bounty.
+ * Defines the strategies used by the bounty system to select the reward recipient.
  * <p>
- * Determines the criteria used to decide which player receives a bounty reward.
+ * Implementations rely on this enumeration when deciding which player should receive a bounty
+ * after a target has been eliminated.
  * </p>
+ * <p>
+ * Available strategies:
+ * </p>
+ * <ul>
+ *     <li>{@link #MOST_DAMAGE} prioritises the participant who contributed the highest cumulative
+ *     damage across the encounter.</li>
+ *     <li>{@link #LAST_HIT} awards the bounty to the participant responsible for the final blow.</li>
+ * </ul>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public enum EBountyClaimMode {
-	/**
-	 * The bounty is awarded to the player who dealt the most damage.
-	 */
-	MOST_DAMAGE,
-	
-	/**
-	 * The bounty is awarded to the player who lands the last hit.
-	 */
-	LAST_HIT
+
+    /**
+     * Awards the bounty to the participant who contributed the highest total damage to the target.
+     */
+    MOST_DAMAGE,
+
+    /**
+     * Awards the bounty to the participant who defeats the target with the decisive final strike.
+     */
+    LAST_HIT
 }

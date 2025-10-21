@@ -29,8 +29,8 @@ import java.util.logging.Logger;
  * </p>
  *
  * @author JExcellence
- * @version 1.1.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class CustomRequirement extends AbstractRequirement {
 
@@ -69,10 +69,21 @@ public final class CustomRequirement extends AbstractRequirement {
     @JsonIgnore
     private transient final ReadWriteLock scriptEngineLock = new ReentrantReadWriteLock();
 
+    /**
+     * Creates a script-based requirement using the supplied script content.
+     *
+     * @param customScript the JavaScript expression that determines whether the requirement is met
+     */
     public CustomRequirement(final @NotNull String customScript) {
         this(CustomType.SCRIPT, customScript, null, null, new HashMap<>(), null, true);
     }
 
+    /**
+     * Creates a script-based requirement that can reference custom data.
+     *
+     * @param customScript the JavaScript expression that determines whether the requirement is met
+     * @param customData   the key/value configuration exposed to the script engine
+     */
     public CustomRequirement(
             final @NotNull String customScript,
             final @NotNull Map<String, Object> customData
@@ -80,6 +91,17 @@ public final class CustomRequirement extends AbstractRequirement {
         this(CustomType.SCRIPT, customScript, null, null, customData, null, true);
     }
 
+    /**
+     * Creates a requirement with explicit configuration for scripting or plugin-based execution.
+     *
+     * @param customType     the execution strategy for the requirement
+     * @param customScript   the script executed for {@link CustomType#SCRIPT} requirements
+     * @param progressScript optional script that reports progress when using {@link CustomType#SCRIPT}
+     * @param consumeScript  optional script that is executed when the requirement is consumed
+     * @param customData     additional data exposed to scripts or external logic
+     * @param description    human-readable explanation for the requirement used in UI elements
+     * @param cacheScripts   whether script engines should be cached for reuse across evaluations
+     */
     @JsonCreator
     public CustomRequirement(
             @JsonProperty("customType") final @Nullable CustomType customType,
@@ -108,6 +130,12 @@ public final class CustomRequirement extends AbstractRequirement {
         this.cacheScripts = cacheScripts != null ? cacheScripts : true;
     }
 
+    /**
+     * Determines if the requirement has been satisfied for the supplied player.
+     *
+     * @param player the player being evaluated
+     * @return {@code true} when the underlying strategy deems the requirement satisfied
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         return switch (this.customType) {
@@ -117,6 +145,12 @@ public final class CustomRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Calculates progress towards the requirement for the supplied player.
+     *
+     * @param player the player being evaluated
+     * @return a value between {@code 0.0} and {@code 1.0} describing completion progress
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         return switch (this.customType) {
@@ -132,6 +166,11 @@ public final class CustomRequirement extends AbstractRequirement {
         };
     }
 
+    /**
+     * Consumes the requirement for the supplied player, triggering any configured side effects.
+     *
+     * @param player the player for which the requirement is being consumed
+     */
     @Override
     public void consume(final @NotNull Player player) {
         switch (this.customType) {
@@ -145,37 +184,76 @@ public final class CustomRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Provides the translation key used to describe this requirement in resource bundles.
+     *
+     * @return the translation key for display purposes
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "requirement.custom";
     }
 
+    /**
+     * Retrieves the execution strategy backing the requirement.
+     *
+     * @return the selected {@link CustomType}
+     */
     @NotNull
     public CustomType getCustomType() {
         return this.customType;
     }
 
+    /**
+     * Provides the script used when the requirement is configured for {@link CustomType#SCRIPT}.
+     *
+     * @return the script text or {@code null} when scripts are not used
+     */
     @Nullable
     public String getCustomScript() {
         return this.customScript;
     }
 
+    /**
+     * Provides the script that reports progress for {@link CustomType#SCRIPT} requirements.
+     *
+     * @return the progress script or {@code null} when progress is derived implicitly
+     */
     @Nullable
     public String getProgressScript() {
         return this.progressScript;
     }
 
+    /**
+     * Provides the script executed when the requirement is consumed.
+     *
+     * @return the consumption script or {@code null} when consumption logic is not scripted
+     */
     @Nullable
     public String getConsumeScript() {
         return this.consumeScript;
     }
 
+    /**
+     * Supplies the custom data map made available to scripts and integrations.
+     *
+     * @return an unmodifiable view of the custom data
+     */
     @NotNull
     public Map<String, Object> getCustomData() {
         return Collections.unmodifiableMap(this.customData);
     }
 
+    /**
+     * Fetches a typed value from the custom data map, supplying a default when the key is absent
+     * or cannot be cast to the expected type.
+     *
+     * @param key          the data key to retrieve
+     * @param defaultValue the fallback value returned when the key is missing or mismatched
+     * @param <T>          the expected type of the value
+     * @return the resolved value or {@code defaultValue} when unavailable
+     */
     @JsonIgnore
     @SuppressWarnings("unchecked")
     public <T> T getCustomDataValue(
@@ -194,30 +272,58 @@ public final class CustomRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Provides the description that elaborates on this requirement for display purposes.
+     *
+     * @return the optional description text
+     */
     @Nullable
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * Indicates whether script engines should be cached instead of being created on every use.
+     *
+     * @return {@code true} when script engines are cached for reuse
+     */
     public boolean isCacheScripts() {
         return this.cacheScripts;
     }
 
+    /**
+     * Determines whether this requirement relies on script execution.
+     *
+     * @return {@code true} if {@link CustomType#SCRIPT} is active
+     */
     @JsonIgnore
     public boolean isScriptBased() {
         return this.customType == CustomType.SCRIPT;
     }
 
+    /**
+     * Determines whether this requirement delegates to plugin-provided logic.
+     *
+     * @return {@code true} if {@link CustomType#PLUGIN} is active
+     */
     @JsonIgnore
     public boolean isPluginBased() {
         return this.customType == CustomType.PLUGIN;
     }
 
+    /**
+     * Determines whether this requirement is driven by data-centric logic.
+     *
+     * @return {@code true} if {@link CustomType#DATA} is active
+     */
     @JsonIgnore
     public boolean isDataBased() {
         return this.customType == CustomType.DATA;
     }
 
+    /**
+     * Validates the configuration for the requirement, ensuring scripts and data are usable.
+     */
     @JsonIgnore
     public void validate() {
         if (this.customType == CustomType.SCRIPT) {

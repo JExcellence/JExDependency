@@ -12,25 +12,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JPA attribute converter for mapping Map&lt;String, ItemStack&gt; to a delimiter-safe String and back.
+ * Stores {@link Map} entries of string keys to {@link ItemStack} values using a delimiter-safe Base64 format
+ * and restores them for entity hydration.
  *
- * Encoding:
- * - Each entry is Base64(key UTF-8) + ":" + Base64(ItemStack bytes), entries joined with ";"
- * - Null/empty ItemStack is encoded as empty value token to represent AIR
+ * <p>Each key is encoded as UTF-8 before applying Base64 and combined with the value payload using
+ * {@link #KV_DELIM}. Empty or {@code null} stacks are represented by an empty value token that rebuilds to
+ * {@link Material#AIR}. {@code null} maps yield {@code null} columns while blank column values produce empty
+ * maps. Any malformed entry or Base64 payload results in an {@link IllegalArgumentException}.</p>
  *
- * Behavior:
- * - null map -> null column; empty map -> empty string
- * - null column -> null map; blank column -> empty map
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @Converter(autoApply = false)
 public class ItemStackMapConverter implements AttributeConverter<Map<String, ItemStack>, String> {
 
+    /** Delimiter separating individual key/value pairs within the column payload. */
     private static final String ENTRY_DELIM = ";";
+    /** Delimiter separating encoded keys from encoded values within a pair. */
     private static final String KV_DELIM = ":";
 
+    /** Encoder for transforming keys and stack payloads into Base64 text. */
     private static final Base64.Encoder B64_ENCODER = Base64.getEncoder();
+    /** Decoder for reconstructing keys and stack payloads from Base64 text. */
     private static final Base64.Decoder B64_DECODER = Base64.getDecoder();
 
+    /**
+     * Serialises the supplied map into the delimiter-safe Base64 column representation.
+     *
+     * @param map the map being persisted; may be {@code null}
+     * @return {@code null} when the map is {@code null}, an empty string when the map is empty, or the encoded payload otherwise
+     */
     @Override
     public String convertToDatabaseColumn(@Nullable final Map<String, ItemStack> map) {
         if (map == null) {
@@ -65,6 +77,13 @@ public class ItemStackMapConverter implements AttributeConverter<Map<String, Ite
         return sb.toString();
     }
 
+    /**
+     * Reconstructs a map of {@link ItemStack} entries from the delimiter-safe Base64 payload.
+     *
+     * @param columnValue the raw column value; {@code null} produces {@code null} and blank values yield an empty map
+     * @return the decoded map, never {@code null} unless {@code columnValue} is {@code null}
+     * @throws IllegalArgumentException when an entry lacks delimiters or contains invalid Base64 data
+     */
     @Override
     public Map<String, ItemStack> convertToEntityAttribute(@Nullable final String columnValue) {
         if (columnValue == null) {

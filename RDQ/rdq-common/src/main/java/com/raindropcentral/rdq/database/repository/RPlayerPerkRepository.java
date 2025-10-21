@@ -13,6 +13,17 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * Repository responsible for loading and caching {@link RPlayerPerk} entities keyed by their identifier.
+ * <p>
+ * This repository provides asynchronous helpers that leverage the shared executor to retrieve perk
+ * associations for a player without blocking the calling thread.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
+ */
 public class RPlayerPerkRepository extends GenericCachedRepository<RPlayerPerk, Long, Long> {
 
     public RPlayerPerkRepository(
@@ -20,6 +31,13 @@ public class RPlayerPerkRepository extends GenericCachedRepository<RPlayerPerk, 
         super(executor, entityManagerFactory, RPlayerPerk.class, AbstractEntity::getId);
     }
 
+    /**
+     * Retrieves the {@link RPlayerPerk} mapping for the supplied player and perk asynchronously.
+     *
+     * @param player the player whose perk association should be inspected
+     * @param perk the perk that should be resolved for the player
+     * @return a future that resolves to the optional association for the provided player and perk
+     */
     public @NotNull CompletableFuture<Optional<RPlayerPerk>> findByPlayerAndPerkAsync(
             final @NotNull RDQPlayer player,
             final @NotNull RPerk perk

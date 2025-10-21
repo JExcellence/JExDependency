@@ -14,12 +14,14 @@ import java.util.logging.LogRecord;
 import java.util.regex.Pattern;
 
 /**
- * PlatformLogFormatter
- * - No emojis
- * - Optional ANSI colors for console (level only)
- * - Full timestamp for files, time-only for console
- * - Abbreviated logger names for long packages
- * - Sanitizes control chars/ANSI sequences from messages
+ * PlatformLogFormatter renders rich log entries for files managed by {@link CentralLogger} while
+ * remaining compatible with console output when colorization is enabled. The formatter sanitizes
+ * control characters, abbreviates logger names, and prints full timestamps so external analysis
+ * tools can correlate events.
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class PlatformLogFormatter extends Formatter {
 
@@ -38,11 +40,23 @@ public class PlatformLogFormatter extends Formatter {
     private static final String RESET = "\u001B[0m";
     private final boolean useColors;
 
+    /**
+     * Creates a formatter that optionally applies ANSI color codes when writing to console-backed
+     * handlers.
+     *
+     * @param useColors {@code true} to enable colorization when a console is detected
+     */
     public PlatformLogFormatter(final boolean useColors) {
         // enable color only if console exists; for files, pass false
         this.useColors = useColors && System.console() != null;
     }
 
+    /**
+     * Formats the supplied record with timestamps, sanitized messages, and optional colors.
+     *
+     * @param record log record to format
+     * @return formatted record as a string
+     */
     @Override
     public @NotNull String format(final @NotNull LogRecord record) {
         final StringBuilder builder = new StringBuilder();

@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  *
  * @author JExcellence
  * @version 1.1.0
- * @since TBD
+ * @since 1.0.0
  */
 public final class ItemRequirement extends AbstractRequirement {
 
@@ -45,6 +45,10 @@ public final class ItemRequirement extends AbstractRequirement {
     @JsonProperty("exactMatch")
     private final boolean exactMatch;
 
+    /**
+     * Creates an empty requirement that defaults to exact matching and consumption on completion.
+     * This constructor is primarily intended for serialization frameworks.
+     */
     protected ItemRequirement() {
         super(Type.ITEM);
         this.requiredItems = new ArrayList<>();
@@ -54,6 +58,16 @@ public final class ItemRequirement extends AbstractRequirement {
         this.exactMatch = true;
     }
 
+    /**
+     * Creates a requirement that compares the supplied items against a player's inventory.
+     *
+     * @param requiredItems   the concrete items that must be present, or {@code null} when builders should be used
+     * @param itemBuilders    item builders that generate the required items when {@code requiredItems} is empty
+     * @param consumeOnComplete {@code true} to consume items on completion, {@code false} to leave the inventory untouched
+     * @param description     optional localized description key for the requirement
+     * @param exactMatch      {@code true} to require exact matches including metadata, {@code false} to match by material type
+     * @throws IllegalArgumentException if no items are supplied or an invalid item definition is detected
+     */
     @JsonCreator
     public ItemRequirement(
             @JsonProperty("requiredItems") final @Nullable List<ItemStack> requiredItems,
@@ -94,6 +108,12 @@ public final class ItemRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Determines whether the player currently satisfies the requirement.
+     *
+     * @param player the player whose inventory is evaluated
+     * @return {@code true} when all required items are present in sufficient quantities
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         for (final ItemStack requiredItem : this.requiredItems) {
@@ -104,6 +124,12 @@ public final class ItemRequirement extends AbstractRequirement {
         return true;
     }
 
+    /**
+     * Calculates the aggregate completion progress for the player based on owned item quantities.
+     *
+     * @param player the player whose progress is calculated
+     * @return a value between {@code 0.0} and {@code 1.0} representing completion progress
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         if (this.requiredItems.isEmpty()) {
@@ -123,6 +149,11 @@ public final class ItemRequirement extends AbstractRequirement {
         return totalRequired > 0 ? Math.min(1.0, totalCollected / totalRequired) : 1.0;
     }
 
+    /**
+     * Consumes the required items from the player's inventory when the requirement is configured to do so.
+     *
+     * @param player the player whose inventory will be modified
+     */
     @Override
     public void consume(final @NotNull Player player) {
         if (!this.consumeOnComplete) {
@@ -134,12 +165,22 @@ public final class ItemRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Supplies the translation key used to describe this requirement within the UI layer.
+     *
+     * @return the localization key representing the item requirement
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "requirement.item";
     }
 
+    /**
+     * Provides defensive copies of the required items for external inspection.
+     *
+     * @return a new list containing clones of the required item stacks
+     */
     @NotNull
     public List<ItemStack> getRequiredItems() {
         return this.requiredItems.stream()
@@ -147,24 +188,50 @@ public final class ItemRequirement extends AbstractRequirement {
                 .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
+    /**
+     * Exposes the configured item builders backing this requirement.
+     *
+     * @return a mutable copy of the configured builders
+     */
     @NotNull
     public List<ItemBuilder> getItemBuilders() {
         return new ArrayList<>(this.itemBuilders);
     }
 
+    /**
+     * Indicates whether required items are consumed when the requirement is fulfilled.
+     *
+     * @return {@code true} when items are removed on completion
+     */
     public boolean isConsumeOnComplete() {
         return this.consumeOnComplete;
     }
 
+    /**
+     * Retrieves the optional description key for translation lookups.
+     *
+     * @return the description key, or {@code null} when none is defined
+     */
     @Nullable
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * States whether the requirement demands exact metadata matches for inventory comparison.
+     *
+     * @return {@code true} when exact matching is enforced
+     */
     public boolean isExactMatch() {
         return this.exactMatch;
     }
 
+    /**
+     * Creates detailed progress entries describing the fulfillment state of each required item.
+     *
+     * @param player the player whose progress is requested
+     * @return immutable progress snapshots for every tracked item definition
+     */
     @JsonIgnore
     @NotNull
     public List<ItemProgress> getDetailedProgress(final @NotNull Player player) {
@@ -182,6 +249,12 @@ public final class ItemRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Computes the missing items a player still needs to collect to satisfy the requirement.
+     *
+     * @param player the player whose inventory is inspected
+     * @return a list of item stacks representing outstanding requirements
+     */
     @JsonIgnore
     @NotNull
     public List<ItemStack> getMissingItems(final @NotNull Player player) {
@@ -198,6 +271,11 @@ public final class ItemRequirement extends AbstractRequirement {
         return missing;
     }
 
+    /**
+     * Ensures the requirement is internally consistent and ready for evaluation.
+     *
+     * @throws IllegalStateException if invalid or empty item definitions are discovered
+     */
     @JsonIgnore
     public void validate() {
         if (this.requiredItems.isEmpty()) {
@@ -218,6 +296,13 @@ public final class ItemRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Checks whether the player has the required quantity of the supplied item.
+     *
+     * @param player        the player whose inventory is queried
+     * @param requiredItem  the item definition to match
+     * @return {@code true} if the player has sufficient matching items
+     */
     private boolean hasEnoughItems(final @NotNull Player player, final @NotNull ItemStack requiredItem) {
         if (this.exactMatch) {
             return player.getInventory().containsAtLeast(requiredItem, requiredItem.getAmount());
@@ -229,6 +314,13 @@ public final class ItemRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Counts the number of matching items in a player's inventory, respecting the matching mode.
+     *
+     * @param player        the player whose inventory is inspected
+     * @param requiredItem  the item definition to match
+     * @return the number of items that meet the criteria
+     */
     private int countItems(final @NotNull Player player, final @NotNull ItemStack requiredItem) {
         if (this.exactMatch) {
             return player.getInventory().all(requiredItem).values().stream()
@@ -242,6 +334,12 @@ public final class ItemRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Removes the supplied item from the player's inventory up to the required amount.
+     *
+     * @param player        the player whose inventory will be mutated
+     * @param requiredItem  the item definition to deduct
+     */
     private void removeItems(final @NotNull Player player, final @NotNull ItemStack requiredItem) {
         int remaining = requiredItem.getAmount();
         final ItemStack[] contents = player.getInventory().getContents();
@@ -268,6 +366,9 @@ public final class ItemRequirement extends AbstractRequirement {
         player.getInventory().setContents(contents);
     }
 
+    /**
+     * Detailed snapshot describing the status of a required item for a given player.
+     */
     public record ItemProgress(
             int index,
             @NotNull ItemStack requiredItem,
@@ -276,6 +377,16 @@ public final class ItemRequirement extends AbstractRequirement {
             double progress,
             boolean completed
     ) {
+        /**
+         * Creates a new immutable progress snapshot.
+         *
+         * @param index          positional index within the requirement list
+         * @param requiredItem   the item definition being tracked
+         * @param requiredAmount the amount needed to fulfill the requirement
+         * @param currentAmount  the amount currently owned by the player
+         * @param progress       normalized completion from {@code 0.0} to {@code 1.0}
+         * @param completed      {@code true} when the requirement for this item is satisfied
+         */
         public ItemProgress(
                 final int index,
                 final @NotNull ItemStack requiredItem,
@@ -292,16 +403,31 @@ public final class ItemRequirement extends AbstractRequirement {
             this.completed = completed;
         }
 
+        /**
+         * Provides a defensive copy of the tracked item stack.
+         *
+         * @return a clone of the required item definition
+         */
         @Override
         @NotNull
         public ItemStack requiredItem() {
             return this.requiredItem.clone();
         }
 
+        /**
+         * Converts the normalized progress into an integer percentage.
+         *
+         * @return the completion percentage rounded down to the nearest integer
+         */
         public int getProgressPercentage() {
             return (int) (this.progress * 100);
         }
 
+        /**
+         * Computes how many additional items are still needed to meet the requirement.
+         *
+         * @return the remaining quantity required to satisfy this entry
+         */
         public int getShortage() {
             return Math.max(0, this.requiredAmount - this.currentAmount);
         }

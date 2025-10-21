@@ -20,8 +20,8 @@ import java.util.logging.Logger;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.0.1
+ * @since 1.0.0
  */
 public final class CompositeReward extends AbstractReward {
 
@@ -45,8 +45,8 @@ public final class CompositeReward extends AbstractReward {
     /**
      * Constructs a new {@code CompositeReward} with full configuration.
      *
-     * @param rewards          The list of sub-rewards.
-     * @param continueOnError  Whether to continue applying rewards if one fails.
+     * @param rewards         The list of sub-rewards.
+     * @param continueOnError Whether to continue applying rewards if one fails.
      */
     @JsonCreator
     public CompositeReward(
@@ -63,6 +63,12 @@ public final class CompositeReward extends AbstractReward {
         this.continueOnError = continueOnError;
     }
 
+    /**
+     * Applies each contained sub-reward to the specified player in order of declaration.
+     *
+     * @param player The player receiving the composite reward.
+     * @throws RuntimeException If a sub-reward fails and {@link #isContinueOnError()} is {@code false}.
+     */
     @Override
     public void apply(final @NotNull Player player) {
         for (final AbstractReward reward : this.rewards) {
@@ -77,26 +83,51 @@ public final class CompositeReward extends AbstractReward {
         }
     }
 
+    /**
+     * Retrieves the translation key describing this reward for user interfaces.
+     *
+     * @return The translation key representing a composite reward description.
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "reward.composite";
     }
 
+    /**
+     * Provides a defensive copy of the configured sub-rewards.
+     *
+     * @return A new list containing each configured sub-reward.
+     */
     @NotNull
     public List<AbstractReward> getRewards() {
         return new ArrayList<>(this.rewards);
     }
 
+    /**
+     * Indicates whether the composite should continue when a sub-reward throws an exception.
+     *
+     * @return {@code true} if subsequent rewards should still be applied when failures occur; otherwise {@code false}.
+     */
     public boolean isContinueOnError() {
         return this.continueOnError;
     }
 
+    /**
+     * Calculates the number of configured sub-rewards.
+     *
+     * @return The size of the composite reward collection.
+     */
     @JsonIgnore
     public int getRewardCount() {
         return this.rewards.size();
     }
 
+    /**
+     * Validates the composite reward definition to ensure all sub-rewards are present.
+     *
+     * @throws IllegalStateException If the composite contains no rewards or any entry is {@code null}.
+     */
     @JsonIgnore
     public void validate() {
         if (this.rewards.isEmpty()) {

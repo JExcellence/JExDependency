@@ -26,22 +26,44 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * Clean and flexible abstract base class for anvil-based views.
+ * Template-method foundation for anvil-based workflows that render confirmation-style inputs using
+ * Inventory Framework's {@link AnvilInput} support.
  *
- * <p>Provides streamlined anvil functionality with customizable slots,
- * automatic back navigation, and simplified i18n integration.</p>
- * 
- * <p>Includes fallback input reading for Spigot servers when NMS is not available.</p>
+ * <p>The view coordinates translation keys scoped to the supplied base key, interacts with
+ * scheduler-aware head utilities for navigation, and transparently bridges Paper and Spigot title
+ * rendering through {@link ServerEnvironment}.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public abstract class AbstractAnvilView extends View {
-  
+
+  /**
+   * Shared anvil input modifier used to capture the text entry lifecycle.
+   */
   private final AnvilInput anvilInput = AnvilInput.createAnvilInput();
+  /**
+   * Optional parent view reference that enables back navigation through Inventory Framework.
+   */
   private final Class<? extends View> parentClass;
+  /**
+   * Base translation key cached from {@link #getKey()} for efficient message lookups.
+   */
   private final String baseKey;
-  
+
+  /**
+   * State container used to transport contextual data back to the parent view when the anvil closes.
+   */
   protected final State<Object> data = initialState("data");
+  /**
+   * State backing the initial input text shown to the player when the view opens.
+   */
   protected final State<String> initialInput = initialState("initialInput");
-  
+
+  /**
+   * Cached title text used to avoid rebuilding translation output on sequential opens.
+   */
   private String cachedTitle;
   
   /**
@@ -65,10 +87,12 @@ public abstract class AbstractAnvilView extends View {
   
   
   /**
-   * @return The unique key for this view (e.g., "item_rename", "player_search")
+   * Obtains the translation namespace used for titles, prompts, and validation messages.
+   *
+   * @return the unique key for this view (for example {@code "item_rename"})
    */
   protected abstract String getKey();
-  
+
   /**
    * Processes the user input when they click the result slot.
    *
@@ -83,34 +107,44 @@ public abstract class AbstractAnvilView extends View {
   
   
   /**
-   * @return The title key (defaults to "{viewKey}.title")
+   * Resolves the translation key used for the anvil title by appending {@code .title} to the base
+   * key. Subclasses may override to point at bespoke translation buckets.
+   *
+   * @return the fully qualified translation key for the title component
    */
   protected String getTitleKey() {
     return this.baseKey + ".title";
   }
-  
+
   /**
-   * @return Title placeholders for i18n (override for dynamic titles)
+   * Supplies placeholder data used while building the translated title component.
+   *
+   * @param context the open context containing player and initial data
+   * @return a map of placeholder keys and values for the title translation
    */
   protected Map<String, Object> getTitlePlaceholders(
       final @NotNull OpenContext context
   ) {
     return Map.of();
   }
-  
+
   /**
-   * @return The initial input text (override for dynamic input)
+   * Provides the initial input text shown in the anvil's result slot when the view opens.
+   *
+   * @param context the open context for the player
+   * @return the initial text to display in the anvil input
    */
   protected String getInitialInputText(
       final @NotNull OpenContext context
   ) {
     return "";
   }
-  
+
   /**
    * Validates user input before processing.
    *
    * @param input the user input
+   * @param context the interaction context
    * @return true if valid, false otherwise
    */
   protected boolean isValidInput(
@@ -256,6 +290,11 @@ public abstract class AbstractAnvilView extends View {
   }
   
   
+  /**
+   * Configures the view type and wires the custom anvil input modifier ahead of rendering.
+   *
+   * @param config the view configuration builder supplied during initialization
+   */
   @Override
   public void onInit(
       final @NotNull ViewConfigBuilder config
@@ -263,6 +302,12 @@ public abstract class AbstractAnvilView extends View {
     config.type(ViewType.ANVIL).use(this.anvilInput).title("");
   }
 
+  /**
+   * Applies localized titles using Adventure components on Paper and serialized strings on legacy
+   * servers.
+   *
+   * @param open the open context describing the player and container configuration
+   */
   @Override
   public void onOpen(
       final @NotNull OpenContext open
@@ -279,6 +324,12 @@ public abstract class AbstractAnvilView extends View {
   
   
   
+  /**
+   * Draws the base slot arrangement including initial, middle, and result slots before delegating
+   * to user input handling.
+   *
+   * @param render the render context provided on first paint
+   */
   @Override
   public void onFirstRender(
       final @NotNull RenderContext render

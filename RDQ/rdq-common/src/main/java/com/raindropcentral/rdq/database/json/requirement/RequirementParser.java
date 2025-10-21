@@ -13,22 +13,23 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 /**
- * Utility class for serializing and deserializing {@link AbstractRequirement} objects to and from JSON.
+ * Centralized helper for converting {@link AbstractRequirement} instances to and from their JSON representation.
  * <p>
- * This class provides static methods to convert between JSON strings and {@link AbstractRequirement} instances,
- * supporting polymorphic deserialization based on the "type" field and handling Bukkit-specific types such as {@link ItemStack}.
- * It uses a pre-configured Jackson {@link ObjectMapper} with custom serializers and deserializers for Bukkit classes.
+ * The parser exposes static serialization utilities backed by a shared Jackson {@link ObjectMapper} that is prepared with
+ * Bukkit-aware serializers, deserializers, and mixins. This guarantees that {@link ItemStack} payloads and the
+ * polymorphic requirement hierarchy described through {@link RequirementMixin} are consistently processed whether the
+ * JSON originates from configuration files, a database column, or network transport.
  * </p>
  *
  * <ul>
- *   <li>Supports custom serialization/deserialization for {@link ItemStack}.</li>
- *   <li>Handles polymorphic requirement types via {@link RequirementMixin}.</li>
- *   <li>Intended for use in persistence, configuration, and network transfer of requirements.</li>
+ *   <li>Registers bespoke handlers for {@link ItemStack} values.</li>
+ *   <li>Supports polymorphic requirement types via {@link RequirementMixin}.</li>
+ *   <li>Disables {@link SerializationFeature#FAIL_ON_EMPTY_BEANS} so empty beans can still round-trip.</li>
  * </ul>
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class RequirementParser {
 
@@ -44,18 +45,19 @@ public class RequirementParser {
     }
 
     /**
-     * Creates and configures the {@link ObjectMapper} with custom serializers and deserializers.
+     * Creates and configures the {@link ObjectMapper} with custom serializers and deserializers tailored for RDQ requirements.
      * <p>
-     * Registers support for:
+     * The mapper is enriched with:
      * <ul>
-     *   <li>{@link ItemStack} serialization and deserialization</li>
-     *   <li>Java time types via {@link JavaTimeModule}</li>
-     *   <li>Polymorphic requirement types via {@link RequirementMixin}</li>
+     *   <li>{@link ItemStack} serializers and deserializers for Bukkit stacks.</li>
+     *   <li>{@link JavaTimeModule} support so temporal requirement metadata is preserved.</li>
+     *   <li>{@link RequirementMixin} for polymorphic requirement discovery based on the configured {@code type} field.</li>
      * </ul>
-     * Disables {@link SerializationFeature#FAIL_ON_EMPTY_BEANS} to allow serialization of empty objects.
+     * Additionally, {@link SerializationFeature#FAIL_ON_EMPTY_BEANS} is disabled to permit serialization of sentinel
+     * objects that intentionally expose no properties.
      * </p>
      *
-     * @return Configured {@link ObjectMapper} instance
+     * @return configured {@link ObjectMapper} instance capable of handling requirement payloads
      */
     private static @NotNull ObjectMapper createObjectMapper() {
         final SimpleModule bukkitModule = new SimpleModule("BukkitModule");
@@ -70,15 +72,15 @@ public class RequirementParser {
     }
 
     /**
-     * Parses a JSON string into an {@link AbstractRequirement} object.
+     * Parses a JSON document into an {@link AbstractRequirement} object graph.
      * <p>
-     * The concrete implementation type is determined by the "type" field in the JSON,
-     * as configured in {@link RequirementMixin}.
+     * The configured {@link RequirementMixin} inspects the {@code type} discriminator embedded in the payload to
+     * construct the corresponding requirement subtype before delegating to the subtype-specific deserializer.
      * </p>
      *
-     * @param json The JSON string to parse
-     * @return The parsed {@link AbstractRequirement} instance
-     * @throws IOException If parsing fails due to invalid JSON or mapping errors
+     * @param json the JSON string to parse
+     * @return the parsed {@link AbstractRequirement} instance representing the provided JSON
+     * @throws IOException if parsing fails because of malformed JSON or when an unknown requirement type is encountered
      */
     public static @NotNull AbstractRequirement parse(
             @NotNull final String json
@@ -87,14 +89,15 @@ public class RequirementParser {
     }
 
     /**
-     * Serializes an {@link AbstractRequirement} object to a JSON string.
+     * Serializes an {@link AbstractRequirement} hierarchy into a JSON string.
      * <p>
-     * The resulting JSON will include type information to allow proper polymorphic deserialization.
+     * The output payload contains the {@code type} field required to reconstruct the concrete requirement during
+     * {@link #parse(String)} so the round-trip process remains lossless across storage mediums.
      * </p>
      *
-     * @param requirement The requirement to serialize
-     * @return The JSON string representation of the requirement
-     * @throws IOException If serialization fails
+     * @param requirement the requirement to serialize
+     * @return the JSON string representation of the provided requirement
+     * @throws IOException if serialization fails, for example when encountering a Jackson-mapped field that cannot be rendered
      */
     public static @NotNull String serialize(
             @NotNull final AbstractRequirement requirement

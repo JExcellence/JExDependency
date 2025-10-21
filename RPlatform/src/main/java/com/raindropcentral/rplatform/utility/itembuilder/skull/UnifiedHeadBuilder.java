@@ -14,27 +14,26 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Unified head builder that works across all platforms (Paper, Spigot, Bukkit).
- * <p>
- * This builder automatically selects the appropriate head building method based on
- * the detected server platform, providing a consistent interface regardless of the
- * underlying server implementation.
- * </p>
+ * Unified head builder that works across Paper, Spigot, and Bukkit server variants.
  *
- * <ul>
- *     <li>Player heads from online/offline players</li>
- *     <li>Custom textured heads with base64 data</li>
- *     <li>Display name and lore support</li>
- *     <li>Cross-platform compatibility</li>
- * </ul>
+ * <p>The builder inspects whether {@link PlatformAPI} is available to drive head creation through
+ * platform abstractions, otherwise falling back to the {@link SafeHeadBuilder} reflection bridge.
+ * Callers can set textures, translations, and lore without worrying about runtime capabilities.</p>
  *
  * @author JExcellence
- * @version 1.0.0
  * @since 1.0.0
+ * @version 1.0.1
  */
 public class UnifiedHeadBuilder {
-    
+
+    /**
+     * Optional platform API used to delegate head mutations when available.
+     */
     private final PlatformAPI platformAPI;
+
+    /**
+     * Mutable head instance that accumulates metadata updates prior to {@link #build()}.
+     */
     private ItemStack head;
     
     /**
@@ -123,9 +122,15 @@ public class UnifiedHeadBuilder {
     
     /**
      * Creates a head using the safe builder system when PlatformAPI is not available.
+     *
+     * @param player optional player supplying the texture
+     * @param offlinePlayer optional offline player supplying the texture
+     * @param uuid optional profile identifier for custom textures
+     * @param textureData optional base64 texture payload
+     * @return built item stack using the safe builder fallbacks
      */
     @NotNull
-    private ItemStack createHeadUsingLegacyBuilders(@Nullable Player player, @Nullable OfflinePlayer offlinePlayer, 
+    private ItemStack createHeadUsingLegacyBuilders(@Nullable Player player, @Nullable OfflinePlayer offlinePlayer,
                                                    @Nullable UUID uuid, @Nullable String textureData) {
         // Use SafeHeadBuilder which automatically detects platform and uses appropriate methods
 
@@ -217,12 +222,14 @@ public class UnifiedHeadBuilder {
      */
     @NotNull
     public UnifiedHeadBuilder setDisplayName(@Nullable String displayName) {
-	    Component component = displayName != null ? Component.text(displayName) : null;
+        Component component = displayName != null ? Component.text(displayName) : null;
         return setDisplayName(component);
     }
-    
+
     /**
      * Sets the display name using legacy methods when PlatformAPI is not available.
+     *
+     * @param displayName translated display name component or {@code null} to clear it
      */
     private void setDisplayNameLegacy(@Nullable Component displayName) {
         var meta = this.head.getItemMeta();
@@ -238,6 +245,8 @@ public class UnifiedHeadBuilder {
     
     /**
      * Sets the lore using legacy methods when PlatformAPI is not available.
+     *
+     * @param lore ordered lore components to serialize
      */
     private void setLoreLegacy(@NotNull List<Component> lore) {
         var meta = this.head.getItemMeta();
@@ -252,14 +261,19 @@ public class UnifiedHeadBuilder {
     }
     
     /**
-     * Converts a Component to legacy string format for compatibility.
+     * Converts a {@link Component} to legacy string format for compatibility.
+     *
+     * @param component Adventure component to serialize
+     * @return serialized legacy text
      */
     private String convertComponentToLegacy(@NotNull Component component) {
-	    return PlainTextComponentSerializer.plainText().serialize(component);
+        return PlainTextComponentSerializer.plainText().serialize(component);
     }
-    
+
     /**
      * Gets the current lore using legacy methods when PlatformAPI is not available.
+     *
+     * @return current lore components converted from legacy strings
      */
     @NotNull
     private List<Component> getLoreLegacy() {

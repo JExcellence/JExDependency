@@ -26,25 +26,28 @@ import java.util.logging.Logger;
 /**
  * Bridge to the external RCoreAdapter without requiring the upstream interface at compile time.
  *
- * RCore registers its adapter instance (com.raindropcentral.core.api.RCoreAdapter) under the
- * service interface FQCN: com.raindropcentral.core.service.RCoreService.
+ * <p>RCore registers its adapter instance ({@code com.raindropcentral.core.api.RCoreAdapter}) under the
+ * service interface FQCN: {@code com.raindropcentral.core.service.RCoreService}. This class resolves the
+ * service lazily, proxies asynchronous calls by reflection, and introduces optional timeouts paired with
+ * structured logging so RDQ can interact with the upstream API safely.</p>
  *
- * This class:
- * - Resolves the service via Bukkit ServicesManager using the upstream interface name (by reflection)
- * - Invokes all async methods reflectively while keeping RDQ's entity types in signatures
- * - Adds optional default timeouts and consistent logging
+ * <p><strong>Usage:</strong></p>
+ * <pre>
+ * // Immediate resolve (pass the provider plugin name, typically "RCore")
+ * RCoreBridge bridge = RCoreBridge.fromBukkit(this, "RCore");
+ * if (bridge != null) {
+ *     bridge.findPlayerAsync(uuid).thenAccept(opt -> ...);
+ * }
  *
- * Usage:
- *   // Immediate resolve (pass the provider plugin name, typically "RCore")
- *   RCoreBridge bridge = RCoreBridge.fromBukkit(this, "RCore");
- *   if (bridge != null) {
- *       bridge.findPlayerAsync(uuid).thenAccept(opt -> ...);
- *   }
+ * // Or with retries via ServiceRegistry
+ * ServiceRegistry reg = new ServiceRegistry();
+ * RCoreBridge.awaitService(reg, "RCore", true, 20, 500)
+ *     .thenAccept(opt -> opt.ifPresent(b -> this.rcore = b.withDefaultTimeout(Duration.ofSeconds(5))));
+ * </pre>
  *
- *   // Or with retries via ServiceRegistry
- *   ServiceRegistry reg = new ServiceRegistry();
- *   RCoreBridge.awaitService(reg, "RCore", true, 20, 500)
- *       .thenAccept(opt -> opt.ifPresent(b -> this.rcore = b.withDefaultTimeout(Duration.ofSeconds(5))));
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @SuppressWarnings({"unused", "unchecked"})
 public final class RCoreBridge {
@@ -94,11 +97,12 @@ public final class RCoreBridge {
     /**
      * Await upstream service via ServiceRegistry with retries.
      *
-     * @param registry             ServiceRegistry
-     * @param providerPluginName   Optional plugin name to load the class from (e.g., "RCore")
-     * @param required             true: log warning on failure after retries, false: optional
-     * @param maxAttempts          number of attempts
-     * @param retryDelayMs         delay between attempts (ms)
+     * @param registry           service registry used for discovery
+     * @param providerPluginName optional plugin name to load the class from (e.g., "RCore")
+     * @param required           {@code true} to log a warning if the service is not discovered, otherwise optional
+     * @param maxAttempts        number of attempts before giving up
+     * @param retryDelayMs       delay between attempts in milliseconds
+     * @return future resolving to the discovered bridge if the service becomes available
      */
     public static @NotNull CompletableFuture<Optional<RCoreBridge>> awaitService(
             @NotNull ServiceRegistry registry,
@@ -119,7 +123,10 @@ public final class RCoreBridge {
     }
 
     /**
-     * Check availability in ServicesManager (best-effort). Returns false if the upstream interface cannot be loaded.
+     * Check availability in ServicesManager (best-effort).
+     *
+     * @param providerPluginName optional plugin name to load the class from (e.g., "RCore")
+     * @return {@code true} if the upstream service is registered and the interface could be resolved
      */
     public static boolean isAvailable(@Nullable String providerPluginName) {
         final Class<?> svcClass = loadClass(SERVICE_FQCN, providerPluginName);
@@ -131,11 +138,22 @@ public final class RCoreBridge {
     // Configuration
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Configure a default timeout that wraps every asynchronous invocation proxied by this bridge.
+     *
+     * @param timeout duration applied to future completions; non-positive values disable the timeout
+     * @return this bridge instance for chaining
+     */
     public @NotNull RCoreBridge withDefaultTimeout(@NotNull Duration timeout) {
         this.defaultTimeout = Objects.requireNonNull(timeout, "timeout");
         return this;
     }
 
+    /**
+     * Retrieve the currently configured default timeout.
+     *
+     * @return configured timeout duration
+     */
     public @NotNull Duration getDefaultTimeout() {
         return defaultTimeout;
     }
@@ -144,6 +162,12 @@ public final class RCoreBridge {
     // Player lookups
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Resolve a player using the supplied unique identifier.
+     *
+     * @param uniqueId player UUID being searched for
+     * @return future yielding an optional containing the {@link RPlayer} if present
+     */
     public @NotNull CompletableFuture<Optional<RPlayer>> findPlayerAsync(@NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId");
         return this.<Optional<RPlayer>>invokeCf("findPlayerAsync", new Class[]{UUID.class}, uniqueId)
@@ -153,6 +177,12 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Resolve a player using a Bukkit {@link OfflinePlayer} reference.
+     *
+     * @param offlinePlayer offline player handle used for lookup
+     * @return future yielding an optional containing the {@link RPlayer} if present
+     */
     public @NotNull CompletableFuture<Optional<RPlayer>> findPlayerAsync(@NotNull OfflinePlayer offlinePlayer) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
         return this.<Optional<RPlayer>>invokeCf("findPlayerAsync", new Class[]{OfflinePlayer.class}, offlinePlayer)
@@ -162,6 +192,12 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Resolve a player by their last known username.
+     *
+     * @param playerName case-insensitive player name used for lookup
+     * @return future yielding an optional containing the {@link RPlayer} if found
+     */
     public @NotNull CompletableFuture<Optional<RPlayer>> findPlayerByNameAsync(@NotNull String playerName) {
         Objects.requireNonNull(playerName, "playerName");
         return this.<Optional<RPlayer>>invokeCf("findPlayerByNameAsync", new Class[]{String.class}, playerName)
@@ -171,6 +207,12 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Determine if an upstream {@link RPlayer} entry exists for the supplied UUID.
+     *
+     * @param uniqueId player UUID to verify
+     * @return future resolving to {@code true} if the player exists
+     */
     public @NotNull CompletableFuture<Boolean> playerExistsAsync(@NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId");
         return this.<Boolean>invokeCf("playerExistsAsync", new Class[]{UUID.class}, uniqueId)
@@ -180,6 +222,12 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Determine if an upstream {@link RPlayer} entry exists for the supplied offline player.
+     *
+     * @param offlinePlayer offline player handle to verify
+     * @return future resolving to {@code true} if the player exists
+     */
     public @NotNull CompletableFuture<Boolean> playerExistsAsync(@NotNull OfflinePlayer offlinePlayer) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
         return this.<Boolean>invokeCf("playerExistsAsync", new Class[]{OfflinePlayer.class}, offlinePlayer)
@@ -193,6 +241,13 @@ public final class RCoreBridge {
     // Create / Update
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Create a new upstream {@link RPlayer} record.
+     *
+     * @param uniqueId   player UUID to create
+     * @param playerName player name stored alongside the record
+     * @return future yielding the created {@link RPlayer} if successful
+     */
     public @NotNull CompletableFuture<Optional<RPlayer>> createPlayerAsync(@NotNull UUID uniqueId, @NotNull String playerName) {
         Objects.requireNonNull(uniqueId, "uniqueId");
         Objects.requireNonNull(playerName, "playerName");
@@ -203,6 +258,12 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Persist changes to an existing upstream {@link RPlayer} record.
+     *
+     * @param player player entity containing updated state
+     * @return future yielding the updated {@link RPlayer} if the operation succeeds
+     */
     public @NotNull CompletableFuture<Optional<RPlayer>> updatePlayerAsync(@NotNull RPlayer player) {
         Objects.requireNonNull(player, "player");
         return this.<Optional<RPlayer>>invokeCf("updatePlayerAsync", new Class[]{RPlayer.class}, player)
@@ -216,6 +277,12 @@ public final class RCoreBridge {
     // Statistics containers
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Fetch statistics for the player identified by the supplied UUID.
+     *
+     * @param uniqueId player UUID whose statistics will be retrieved
+     * @return future yielding an optional containing the {@link RPlayerStatistic} when present
+     */
     public @NotNull CompletableFuture<Optional<RPlayerStatistic>> findPlayerStatisticsAsync(@NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId");
         return this.<Optional<RPlayerStatistic>>invokeCf("findPlayerStatisticsAsync", new Class[]{UUID.class}, uniqueId)
@@ -225,6 +292,12 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Fetch statistics for the supplied offline player.
+     *
+     * @param offlinePlayer offline player handle whose statistics will be retrieved
+     * @return future yielding an optional containing the {@link RPlayerStatistic} when present
+     */
     public @NotNull CompletableFuture<Optional<RPlayerStatistic>> findPlayerStatisticsAsync(@NotNull OfflinePlayer offlinePlayer) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
         return this.<Optional<RPlayerStatistic>>invokeCf("findPlayerStatisticsAsync", new Class[]{OfflinePlayer.class}, offlinePlayer)
@@ -238,6 +311,14 @@ public final class RCoreBridge {
     // Statistic values / presence
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Retrieve the stored value for a specific statistic belonging to the supplied player UUID.
+     *
+     * @param uniqueId   player UUID that owns the statistic
+     * @param identifier statistic identifier defined by the provider
+     * @param plugin     plugin namespace that manages the statistic
+     * @return future yielding an optional containing the statistic value when available
+     */
     public @NotNull CompletableFuture<Optional<Object>> findStatisticValueAsync(
             @NotNull UUID uniqueId, @NotNull String identifier, @NotNull String plugin) {
         Objects.requireNonNull(uniqueId, "uniqueId");
@@ -251,6 +332,14 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Retrieve the stored value for a specific statistic belonging to the supplied offline player.
+     *
+     * @param offlinePlayer offline player handle that owns the statistic
+     * @param identifier    statistic identifier defined by the provider
+     * @param plugin        plugin namespace that manages the statistic
+     * @return future yielding an optional containing the statistic value when available
+     */
     public @NotNull CompletableFuture<Optional<Object>> findStatisticValueAsync(
             @NotNull OfflinePlayer offlinePlayer, @NotNull String identifier, @NotNull String plugin) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
@@ -265,6 +354,14 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Determine whether a player UUID has a statistic with the supplied identifier and plugin namespace.
+     *
+     * @param uniqueId   player UUID to inspect
+     * @param identifier statistic identifier defined by the provider
+     * @param plugin     plugin namespace that manages the statistic
+     * @return future resolving to {@code true} when the statistic exists
+     */
     public @NotNull CompletableFuture<Boolean> hasStatisticAsync(
             @NotNull UUID uniqueId, @NotNull String identifier, @NotNull String plugin) {
         Objects.requireNonNull(uniqueId, "uniqueId");
@@ -278,6 +375,14 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Determine whether an offline player has a statistic with the supplied identifier and plugin namespace.
+     *
+     * @param offlinePlayer offline player handle to inspect
+     * @param identifier    statistic identifier defined by the provider
+     * @param plugin        plugin namespace that manages the statistic
+     * @return future resolving to {@code true} when the statistic exists
+     */
     public @NotNull CompletableFuture<Boolean> hasStatisticAsync(
             @NotNull OfflinePlayer offlinePlayer, @NotNull String identifier, @NotNull String plugin) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
@@ -296,6 +401,14 @@ public final class RCoreBridge {
     // Mutations
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Remove the targeted statistic from the player identified by the supplied UUID.
+     *
+     * @param uniqueId   player UUID whose statistic should be removed
+     * @param identifier statistic identifier defined by the provider
+     * @param plugin     plugin namespace that manages the statistic
+     * @return future resolving to {@code true} when the statistic is removed
+     */
     public @NotNull CompletableFuture<Boolean> removeStatisticAsync(
             @NotNull UUID uniqueId, @NotNull String identifier, @NotNull String plugin) {
         Objects.requireNonNull(uniqueId, "uniqueId");
@@ -310,6 +423,14 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Remove the targeted statistic from the supplied offline player.
+     *
+     * @param offlinePlayer offline player handle whose statistic should be removed
+     * @param identifier    statistic identifier defined by the provider
+     * @param plugin        plugin namespace that manages the statistic
+     * @return future resolving to {@code true} when the statistic is removed
+     */
     public @NotNull CompletableFuture<Boolean> removeStatisticAsync(
             @NotNull OfflinePlayer offlinePlayer, @NotNull String identifier, @NotNull String plugin) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
@@ -324,6 +445,13 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Insert or update a statistic for the supplied player UUID.
+     *
+     * @param uniqueId  player UUID that owns the statistic
+     * @param statistic statistic payload to persist
+     * @return future resolving to {@code true} when the statistic is stored
+     */
     public @NotNull CompletableFuture<Boolean> addOrReplaceStatisticAsync(
             @NotNull UUID uniqueId, @NotNull RAbstractStatistic statistic) {
         Objects.requireNonNull(uniqueId, "uniqueId");
@@ -337,6 +465,13 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Insert or update a statistic for the supplied offline player.
+     *
+     * @param offlinePlayer offline player handle that owns the statistic
+     * @param statistic     statistic payload to persist
+     * @return future resolving to {@code true} when the statistic is stored
+     */
     public @NotNull CompletableFuture<Boolean> addOrReplaceStatisticAsync(
             @NotNull OfflinePlayer offlinePlayer, @NotNull RAbstractStatistic statistic) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
@@ -354,6 +489,13 @@ public final class RCoreBridge {
     // Counts
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Count how many statistics exist for the supplied player UUID scoped to the provided plugin namespace.
+     *
+     * @param uniqueId player UUID whose statistics should be counted
+     * @param plugin   plugin namespace that owns the statistics
+     * @return future resolving to the number of stored statistics
+     */
     public @NotNull CompletableFuture<Long> getStatisticCountForPluginAsync(@NotNull UUID uniqueId, @NotNull String plugin) {
         Objects.requireNonNull(uniqueId, "uniqueId");
         Objects.requireNonNull(plugin, "plugin");
@@ -364,6 +506,13 @@ public final class RCoreBridge {
                 });
     }
 
+    /**
+     * Count how many statistics exist for the supplied offline player scoped to the provided plugin namespace.
+     *
+     * @param offlinePlayer offline player handle whose statistics should be counted
+     * @param plugin        plugin namespace that owns the statistics
+     * @return future resolving to the number of stored statistics
+     */
     public @NotNull CompletableFuture<Long> getStatisticCountForPluginAsync(@NotNull OfflinePlayer offlinePlayer, @NotNull String plugin) {
         Objects.requireNonNull(offlinePlayer, "offlinePlayer");
         Objects.requireNonNull(plugin, "plugin");
@@ -380,6 +529,11 @@ public final class RCoreBridge {
     // Meta
     // --------------------------------------------------------------------------------------------
 
+    /**
+     * Retrieve the upstream API version if available.
+     *
+     * @return API version string or {@code "unknown"} when unavailable
+     */
     public @NotNull String getApiVersion() {
         try {
             final Object res = invoke("getApiVersion", new Class[0]);
@@ -392,6 +546,8 @@ public final class RCoreBridge {
 
     /**
      * Expose underlying provider object for advanced use (avoid holding long-term references).
+     *
+     * @return raw upstream delegate instance
      */
     public @NotNull Object getDelegateObject() {
         return delegate;

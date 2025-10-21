@@ -27,6 +27,10 @@ import static me.devnatan.inventoryframework.runtime.thirdparty.ReflectionUtils.
  *
  * <p>This implementation provides a more robust and error-resistant approach to
  * opening anvil inventories with proper Component handling and better error reporting.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public final class CustomAnvilInputNMS {
     

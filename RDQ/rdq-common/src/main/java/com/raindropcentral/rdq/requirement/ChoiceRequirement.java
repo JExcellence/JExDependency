@@ -28,8 +28,8 @@ import java.util.stream.IntStream;
  * </p>
  *
  * @author JExcellence
- * @version 1.1.0
- * @since TBD
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public final class ChoiceRequirement extends AbstractRequirement {
 
@@ -49,8 +49,8 @@ public final class ChoiceRequirement extends AbstractRequirement {
      * Constructs a new {@code ChoiceRequirement} with the given list of alternative requirements.
      * Uses default values for minimum choices (1) and allows partial progress.
      *
-     * @param choices A non-empty list of requirements, any one of which fulfilling will satisfy this ChoiceRequirement.
-     * @throws IllegalArgumentException If the choices list is empty.
+     * @param choices a non-empty list of alternative requirements that may satisfy this requirement
+     * @throws IllegalArgumentException if the choices list is empty
      */
     public ChoiceRequirement(final @NotNull List<AbstractRequirement> choices) {
         this(choices, 1, null, true);
@@ -59,9 +59,9 @@ public final class ChoiceRequirement extends AbstractRequirement {
     /**
      * Constructs a new {@code ChoiceRequirement} with the given list of alternative requirements and minimum choices.
      *
-     * @param choices                 A non-empty list of requirements.
-     * @param minimumChoicesRequired The minimum number of choices that must be completed.
-     * @throws IllegalArgumentException If the choices list is empty or minimumChoicesRequired is invalid.
+     * @param choices                  a non-empty list of alternative requirements
+     * @param minimumChoicesRequired   the minimum number of choices that must be completed
+     * @throws IllegalArgumentException if the choices list is empty or {@code minimumChoicesRequired} is invalid
      */
     public ChoiceRequirement(
             final @NotNull List<AbstractRequirement> choices,
@@ -73,11 +73,11 @@ public final class ChoiceRequirement extends AbstractRequirement {
     /**
      * Constructs a new {@code ChoiceRequirement} with full configuration options.
      *
-     * @param choices                 A non-empty list of requirements.
-     * @param minimumChoicesRequired The minimum number of choices that must be completed.
-     * @param description            Optional description for this choice requirement.
-     * @param allowPartialProgress   Whether to allow partial progress calculation.
-     * @throws IllegalArgumentException If the choices list is empty or minimumChoicesRequired is invalid.
+     * @param choices                  a non-empty list of alternative requirements
+     * @param minimumChoicesRequired   the minimum number of choices that must be completed
+     * @param description              optional description for this choice requirement
+     * @param allowPartialProgress     whether to allow partial progress calculation
+     * @throws IllegalArgumentException if the choices list is empty or {@code minimumChoicesRequired} is invalid
      */
     @JsonCreator
     public ChoiceRequirement(
@@ -107,6 +107,12 @@ public final class ChoiceRequirement extends AbstractRequirement {
         this.allowPartialProgress = allowPartialProgress != null ? allowPartialProgress : true;
     }
 
+    /**
+     * Determines whether the player satisfies enough alternative requirements to meet this requirement.
+     *
+     * @param player the player whose progress should be evaluated
+     * @return {@code true} if the player has met at least {@link #getMinimumChoicesRequired()} choices; otherwise {@code false}
+     */
     @Override
     public boolean isMet(final @NotNull Player player) {
         final long completedChoices = this.choices.stream()
@@ -116,6 +122,12 @@ public final class ChoiceRequirement extends AbstractRequirement {
         return completedChoices >= this.minimumChoicesRequired;
     }
 
+    /**
+     * Calculates the progress toward meeting this requirement based on the configured alternatives.
+     *
+     * @param player the player whose progress should be inspected
+     * @return a value between {@code 0.0} and {@code 1.0} inclusive representing the highest progress across eligible choices
+     */
     @Override
     public double calculateProgress(final @NotNull Player player) {
         if (this.choices.isEmpty()) {
@@ -151,6 +163,11 @@ public final class ChoiceRequirement extends AbstractRequirement {
         return Math.min(1.0, totalProgress / this.minimumChoicesRequired);
     }
 
+    /**
+     * Consumes the underlying resources or state from the most progressed alternative requirements.
+     *
+     * @param player the player for whom the resources should be consumed
+     */
     @Override
     public void consume(final @NotNull Player player) {
         if (this.choices.isEmpty()) {
@@ -165,30 +182,61 @@ public final class ChoiceRequirement extends AbstractRequirement {
                 .forEach(requirement -> requirement.consume(player));
     }
 
+    /**
+     * Provides the translation key used to describe this requirement within localized resources.
+     *
+     * @return the translation key for this requirement
+     */
     @Override
     @NotNull
     public String getDescriptionKey() {
         return "requirement.choice";
     }
 
+    /**
+     * Returns a defensive copy of the alternative requirements tracked by this instance.
+     *
+     * @return a new list containing the configured alternative requirements
+     */
     @NotNull
     public List<AbstractRequirement> getChoices() {
         return new ArrayList<>(this.choices);
     }
 
+    /**
+     * Retrieves the minimum number of choices that must be completed to meet this requirement.
+     *
+     * @return the required number of completed choices
+     */
     public int getMinimumChoicesRequired() {
         return this.minimumChoicesRequired;
     }
 
+    /**
+     * Retrieves the optional description configured for this requirement.
+     *
+     * @return an optional description for this requirement, or {@code null} if none was supplied
+     */
     @Nullable
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * Indicates whether partial progress should be considered when calculating completion percentage.
+     *
+     * @return {@code true} when partial progress is allowed; otherwise {@code false}
+     */
     public boolean isAllowPartialProgress() {
         return this.allowPartialProgress;
     }
 
+    /**
+     * Generates detailed progress information for each alternative requirement tracked by this instance.
+     *
+     * @param player the player whose progress should be inspected
+     * @return a list containing per-choice progress summaries in their configured order
+     */
     @JsonIgnore
     @NotNull
     public List<ChoiceProgress> getDetailedProgress(final @NotNull Player player) {
@@ -202,6 +250,12 @@ public final class ChoiceRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Determines the alternative requirement that currently provides the highest completion progress.
+     *
+     * @param player the player whose progress should be inspected
+     * @return an {@link Optional} containing the most progressed choice, or empty if no choices exist
+     */
     @JsonIgnore
     @NotNull
     public Optional<AbstractRequirement> getBestChoice(final @NotNull Player player) {
@@ -209,6 +263,12 @@ public final class ChoiceRequirement extends AbstractRequirement {
                 .max(Comparator.comparingDouble(requirement -> requirement.calculateProgress(player)));
     }
 
+    /**
+     * Obtains the list of alternative requirements that the player has fully satisfied.
+     *
+     * @param player the player whose progress should be inspected
+     * @return a list of choices already completed by the player
+     */
     @JsonIgnore
     @NotNull
     public List<AbstractRequirement> getCompletedChoices(final @NotNull Player player) {
@@ -217,11 +277,21 @@ public final class ChoiceRequirement extends AbstractRequirement {
                 .toList();
     }
 
+    /**
+     * Determines if exactly one choice needs to be completed for this requirement to be met.
+     *
+     * @return {@code true} when only a single choice is required; otherwise {@code false}
+     */
     @JsonIgnore
     public boolean isSingleChoice() {
         return this.minimumChoicesRequired == 1;
     }
 
+    /**
+     * Validates that the configuration of this requirement is internally consistent.
+     *
+     * @throws IllegalStateException if any validation rule fails, such as missing choices or invalid minimum requirements
+     */
     @JsonIgnore
     public void validate() {
         if (this.choices.isEmpty()) {
@@ -242,12 +312,20 @@ public final class ChoiceRequirement extends AbstractRequirement {
         }
     }
 
+    /**
+     * Represents an immutable snapshot of the progress for a single choice within a {@link ChoiceRequirement}.
+     */
     public record ChoiceProgress(
             int index,
             @NotNull AbstractRequirement choice,
             double progress,
             boolean completed
     ) {
+        /**
+         * Converts the stored progress value to an integer percentage for display purposes.
+         *
+         * @return the progress represented as a whole-number percentage between 0 and 100
+         */
         public int getProgressPercentage() {
             return (int) (this.progress * 100);
         }

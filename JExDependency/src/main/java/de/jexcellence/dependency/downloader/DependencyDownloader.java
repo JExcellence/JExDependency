@@ -26,6 +26,11 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Handles downloading dependency artifacts from a curated list of repositories. Downloads are streamed directly to the
+ * plugin's libraries directory, validated as JAR files and optionally executed asynchronously using virtual threads.
+ * The downloader keeps track of custom repositories supplied at runtime and logs HTTP outcomes for troubleshooting.
+ */
 public class DependencyDownloader {
 
     private static final String USER_AGENT = "JEDependency-Downloader/2.0.0";
@@ -40,18 +45,36 @@ public class DependencyDownloader {
     private final List<String> customRepositories;
     private final ExecutorService executorService;
 
+    /**
+     * Creates a new downloader backed by a virtual-thread executor that can be used for asynchronous operations.
+     */
     public DependencyDownloader() {
         this.logger = Logger.getLogger(getClass().getName());
         this.customRepositories = new ArrayList<>();
         this.executorService = Executors.newVirtualThreadPerTaskExecutor();
     }
 
+    /**
+     * Registers an additional base repository URL. The URL is normalised to include a trailing slash and will be tried
+     * before the built-in repository list when resolving artifacts.
+     *
+     * @param repositoryUrl base URL pointing to a Maven-style repository root
+     */
     public void addRepository(@NotNull final String repositoryUrl) {
         final String normalizedUrl = repositoryUrl.endsWith("/") ? repositoryUrl : repositoryUrl + "/";
         customRepositories.add(normalizedUrl);
         logger.fine("Added custom repository: " + normalizedUrl);
     }
 
+    /**
+     * Downloads a dependency asynchronously using the downloader's virtual-thread executor. Callers should inspect the
+     * returned {@link DownloadResult} to verify success and retrieve the downloaded file.
+     *
+     * @param coordinate      artifact coordinates to resolve
+     * @param targetDirectory directory where the resulting file should be placed
+     *
+     * @return future containing the outcome of the download attempt
+     */
     public @NotNull CompletableFuture<DownloadResult> downloadAsync(
             @NotNull final DependencyCoordinate coordinate,
             @NotNull final File targetDirectory
@@ -62,6 +85,15 @@ public class DependencyDownloader {
         );
     }
 
+    /**
+     * Downloads a dependency synchronously. The method validates any cached file before reaching out to remote
+     * repositories, tries custom repositories first and returns a {@link DownloadResult} describing the outcome.
+     *
+     * @param coordinate      artifact coordinates to resolve
+     * @param targetDirectory directory where the resulting file should be placed
+     *
+     * @return outcome containing the file on success or an error description on failure
+     */
     public @NotNull DownloadResult download(
             @NotNull final DependencyCoordinate coordinate,
             @NotNull final File targetDirectory
@@ -280,6 +312,10 @@ public class DependencyDownloader {
         return value == null ? null : value.toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Shuts down the virtual-thread executor backing asynchronous downloads. Should be invoked when the downloader is
+     * no longer needed to allow the JVM to exit cleanly.
+     */
     public void shutdown() {
         executorService.shutdown();
     }

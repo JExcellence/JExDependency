@@ -11,70 +11,70 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Abstract base class for permission-based configuration sections.
+ * Abstract base for configuration sections that expose values gated by permissions.
  * <p>
- * This class provides common functionality for sections that need to resolve
- * values based on player permissions, such as cooldowns, durations, amplifiers, etc.
- * It handles permission extraction, wildcard matching, and effective value calculation.
+ * Implementations declare a default value alongside a map of permission-specific overrides. When a
+ * player is evaluated, the section inspects their effective permissions, resolves the most
+ * appropriate override, and optionally applies bounds or additional validation. This shared logic is
+ * used by duration, cooldown, and amplifier sections to provide consistent semantics across
+ * configuration files.
  * </p>
  *
- * @param <T> the type of value this section resolves (Long, Integer, etc.)
- * @author ItsRainingHP
- * @version 1.0.0
- * @since TBD
+ * @param <T> numeric or comparable type returned by the configuration section
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.1
  */
 @CSAlways
 public abstract class APermissionBasedSection<T> extends AConfigSection {
-    
+
     /**
-     * Whether this permission-based system is enabled at all.
-     * YAML key: "enabled"
+     * Toggle represented by the YAML key {@code enabled} that activates permission-aware overrides.
      */
     private Boolean enabled;
-    
+
     /**
-     * Whether to use the "best" value when a player has multiple applicable permissions.
-     * The definition of "best" depends on the implementation (longest duration, shortest cooldown, etc.).
-     * YAML key: "useBestValue"
+     * Flag from {@code useBestValue} indicating whether the resolver should search for the best match
+     * or simply stop at the first applicable permission.
      */
     private Boolean useBestValue;
-    
+
     /**
-     * Constructs a new APermissionBasedSection.
+     * Creates a new permission driven section.
      *
-     * @param evaluationEnvironmentBuilder the evaluation environment builder
+     * @param evaluationEnvironmentBuilder evaluation environment shared with the config mapper
      */
     protected APermissionBasedSection(
         final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {
         super(evaluationEnvironmentBuilder);
     }
-    
+
     /**
-     * Gets whether this permission-based system is enabled.
+     * Determines whether permission-aware overrides are evaluated.
      *
-     * @return true if enabled, false otherwise. Defaults to true.
+     * @return {@code true} when overrides are enabled; defaults to {@code true} when unset
      */
     public Boolean getEnabled() {
         return this.enabled != null ? this.enabled : true;
     }
-    
+
     /**
-     * Gets whether to use the "best" value when multiple permissions apply.
+     * Indicates if the resolver should keep searching for the best override or use the first match.
      *
-     * @return true to use best value, false to use first match. Defaults to implementation-specific.
+     * @return {@code true} when the section prefers the best value; falls back to
+     * implementation-specific defaults when unset
      */
     public Boolean getUseBestValue() {
         return this.useBestValue != null ? this.useBestValue : getDefaultUseBestValue();
     }
-    
+
     /**
-     * Gets the effective value for a player based on their permissions.
-     * This method automatically extracts the player's permissions and determines
-     * the appropriate value.
+     * Calculates the effective value for the supplied player by extracting their permissions and
+     * delegating to {@link #getEffectiveValue(Set)}.
      *
-     * @param player the player to check value for
-     * @return the effective value
+     * @param player player whose permissions should be evaluated (may be {@code null})
+     * @return resolved value or the default when the player is {@code null} or no overrides apply
      */
     public T getEffectiveValue(final Player player) {
         if (
@@ -87,12 +87,12 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
             this.extractPlayerPermissions(player)
         );
     }
-    
+
     /**
-     * Gets the effective value based on a set of permissions.
+     * Computes the effective value for a pre-resolved set of permissions.
      *
-     * @param playerPermissions the permissions to check
-     * @return the effective value
+     * @param playerPermissions permissions already associated with the player
+     * @return override value or the default when no override is applicable
      */
     public T getEffectiveValue(
         final Set<String> playerPermissions
@@ -142,12 +142,12 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
         
         return this.applyBounds(result);
     }
-    
+
     /**
-     * Gets the specific permission that determines the player's value.
+     * Resolves the permission node that was responsible for the chosen value.
      *
-     * @param player the player to check
-     * @return the permission that determines the value, or null if using default
+     * @param player player whose matching permission should be returned
+     * @return permission string that produced the effective value, or {@code null} when no override was used
      */
     public String getEffectivePermission(
         final Player player
@@ -197,12 +197,12 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
         
         return effectivePermission;
     }
-    
+
     /**
-     * Checks if a player has any permissions that would affect their value.
+     * Checks if the supplied player has at least one permission that maps to a configured override.
      *
-     * @param player the player to check
-     * @return true if the player has any relevant permissions, false otherwise
+     * @param player player whose permissions should be inspected
+     * @return {@code true} when a configured permission applies
      */
     public boolean hasRelevantPermissions(
         final Player player
@@ -228,12 +228,12 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
         
         return false;
     }
-    
+
     /**
-     * Gets the value for a specific permission.
+     * Resolves the value attached to the provided permission string.
      *
-     * @param permission the permission to check
-     * @return the value for the permission, or null if not found
+     * @param permission permission node to lookup
+     * @return configured value or {@code null} when the permission is blank or missing
      */
     public T getValueForPermission(
         final String permission
@@ -248,22 +248,21 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
         final Map<String, T> values = this.getPermissionValues();
         return values.get(permission);
     }
-    
+
     /**
-     * Checks if any permission-specific values are configured.
+     * Indicates whether at least one permission override is configured.
      *
-     * @return true if permission values exist, false otherwise
+     * @return {@code true} when overrides are present
      */
     public boolean hasPermissionValues() {
         return ! this.getPermissionValues().isEmpty();
     }
-    
+
     /**
-     * Extracts all permissions from a player that are relevant to this configuration.
-     * This includes both explicit permissions and wildcard permissions.
+     * Extracts all permissions that match configured nodes, including wildcard matches.
      *
-     * @param player the player to extract permissions from
-     * @return a set of relevant permissions
+     * @param player player whose permission attachments should be inspected
+     * @return set of permission nodes that influence this section
      */
     protected Set<String> extractPlayerPermissions(
         final Player player
@@ -310,14 +309,13 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
         
         return relevantPermissions;
     }
-    
+
     /**
-     * Checks if a player permission matches a configured permission pattern.
-     * Supports basic wildcard matching with '*' at the end of permissions.
+     * Checks whether the player's permission string satisfies the configured permission pattern.
      *
-     * @param playerPermission     the permission the player has
-     * @param configuredPermission the permission pattern from configuration
-     * @return true if the permissions match, false otherwise
+     * @param playerPermission     permission granted to the player
+     * @param configuredPermission permission entry from configuration which may end with {@code *}
+     * @return {@code true} when the permission values match or satisfy a wildcard relationship
      */
     protected boolean matchesWildcard(
         final String playerPermission,
@@ -352,11 +350,11 @@ public abstract class APermissionBasedSection<T> extends AConfigSection {
         
         return false;
     }
-    
+
     /**
-     * Validates the configuration of this section.
+     * Validates that the default value and all permission overrides conform to the expected format.
      *
-     * @throws IllegalStateException if the configuration is invalid
+     * @throws IllegalStateException when a value is {@code null}, out of bounds, or the permission key is blank
      */
     public void validate() {
         final T defaultValue = this.getDefaultValue();
