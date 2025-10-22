@@ -20,7 +20,7 @@ import java.util.Objects;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Entity
 @Table(name = "r_player_perk", uniqueConstraints = {@UniqueConstraint(columnNames = {"player_id", "perk_id"})})
@@ -88,6 +88,7 @@ public final class RPlayerPerk extends AbstractEntity {
         this.player = Objects.requireNonNull(player, "player cannot be null");
         this.perk = Objects.requireNonNull(perk, "perk cannot be null");
         this.acquiredAt = LocalDateTime.now();
+        perk.addPlayerPerk(this);
     }
 
     /**
@@ -135,9 +136,9 @@ public final class RPlayerPerk extends AbstractEntity {
     /**
      * Retrieves the perk definition associated with the player.
      *
-     * @return the perk definition
+     * @return the perk definition or {@code null} when the association has been removed
      */
-    public @NotNull RPerk getPerk() {
+    public @Nullable RPerk getPerk() {
         return this.perk;
     }
 
@@ -147,7 +148,20 @@ public final class RPlayerPerk extends AbstractEntity {
      * @param perk the new perk definition
      */
     public void setPerk(final @NotNull RPerk perk) {
-        this.perk = Objects.requireNonNull(perk, "perk cannot be null");
+        Objects.requireNonNull(perk, "perk cannot be null");
+        if (this.perk == perk) {
+            return;
+        }
+        final RPerk previous = this.perk;
+        this.perk = perk;
+        perk.attachPlayerPerk(this);
+        if (previous != null) {
+            previous.detachPlayerPerk(this);
+        }
+    }
+
+    void clearPerkAssociation() {
+        this.perk = null;
     }
 
     /**
