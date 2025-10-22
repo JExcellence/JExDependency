@@ -1,0 +1,17 @@
+{
+  "type": "DIAMOND_SWORD",
+  "amount": 2,
+  "durability": 12,
+  "meta": {
+    "displayName": "<green>Epic Blade",
+    "lore": [
+      "<gray>Forged in tests",
+      "<yellow>Unit coverage rising"
+    ],
+    "customModelData": 456,
+    "enchantments": {
+      "sharpness": 4,
+      "unbreaking": 2
+    }
+  }
+}
