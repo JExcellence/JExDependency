@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -198,6 +199,15 @@ class PlatformAPITest {
 
         api.scheduler().runAtLocation(player.getLocation(), scheduler::markLocationExecuted);
         assertEquals(1, scheduler.getLocationExecutions());
+
+        api.scheduler().runGlobal(scheduler::markGlobalExecuted);
+        assertEquals(1, scheduler.getGlobalExecutions());
+
+        CompletableFuture<Void> future = api.scheduler().runAsyncFuture(scheduler::markAsyncFutureExecuted);
+        assertEquals(1, scheduler.getAsyncFutureExecutions());
+        assertTrue(future.isDone());
+        assertFalse(future.isCompletedExceptionally());
+        assertDoesNotThrow(future::join);
     }
 
     private static final class RecordingPlatformAPI implements PlatformAPI {
@@ -429,6 +439,8 @@ class PlatformAPITest {
             private int repeatingExecutions;
             private int entityExecutions;
             private int locationExecutions;
+            private int globalExecutions;
+            private int asyncFutureExecutions;
 
             @Override
             public void runSync(@NotNull Runnable task) {
@@ -462,6 +474,23 @@ class PlatformAPITest {
                 Objects.requireNonNull(task, "task").run();
             }
 
+            @Override
+            public void runGlobal(@NotNull Runnable task) {
+                Objects.requireNonNull(task, "task").run();
+            }
+
+            @Override
+            public @NotNull CompletableFuture<Void> runAsyncFuture(@NotNull Runnable task) {
+                CompletableFuture<Void> future = new CompletableFuture<>();
+                try {
+                    Objects.requireNonNull(task, "task").run();
+                    future.complete(null);
+                } catch (Throwable throwable) {
+                    future.completeExceptionally(throwable);
+                }
+                return future;
+            }
+
             void markSyncExecuted() {
                 syncExecutions++;
             }
@@ -486,6 +515,14 @@ class PlatformAPITest {
                 locationExecutions++;
             }
 
+            void markGlobalExecuted() {
+                globalExecutions++;
+            }
+
+            void markAsyncFutureExecuted() {
+                asyncFutureExecutions++;
+            }
+
             int getSyncExecutions() {
                 return syncExecutions;
             }
@@ -508,6 +545,14 @@ class PlatformAPITest {
 
             int getLocationExecutions() {
                 return locationExecutions;
+            }
+
+            int getGlobalExecutions() {
+                return globalExecutions;
+            }
+
+            int getAsyncFutureExecutions() {
+                return asyncFutureExecutions;
             }
         }
     }
