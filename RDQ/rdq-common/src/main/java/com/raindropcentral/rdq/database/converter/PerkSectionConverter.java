@@ -1,8 +1,6 @@
 package com.raindropcentral.rdq.database.converter;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.raindropcentral.rdq.config.item.IconSection;
 import com.raindropcentral.rdq.config.perk.PerkSection;
 import com.raindropcentral.rdq.config.perk.PerkSettingsSection;
 import com.raindropcentral.rdq.config.perk.PluginCurrencySection;
@@ -10,6 +8,7 @@ import com.raindropcentral.rdq.config.requirement.RequirementSection;
 import com.raindropcentral.rdq.config.reward.RewardSection;
 import com.raindropcentral.rplatform.config.permission.PermissionAmplifierSection;
 import com.raindropcentral.rplatform.config.permission.PermissionCooldownSection;
+import com.raindropcentral.rplatform.config.permission.PermissionDurationSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
@@ -28,12 +27,12 @@ import java.util.logging.Logger;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Converter(autoApply = true)
 public class PerkSectionConverter implements AttributeConverter<PerkSection, String> {
-	
-	private static final Logger        LOGGER         = Logger.getLogger(PerkSectionConverter.class.getName());
+
+        private static final Logger        LOGGER         = Logger.getLogger(PerkSectionConverter.class.getName());
 	private static final ObjectMapper  OBJECT_MAPPER  = new ObjectMapper();
 	private static final ConverterTool CONVERTER_TOOL = new ConverterTool();
 	
@@ -46,7 +45,32 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
         @Override
         public String convertToDatabaseColumn(final PerkSection perkSection) {
 
-                return "";
+                if (perkSection == null)
+                        return null;
+
+                try {
+                        final PerkSectionData data = new PerkSectionData(
+                                CONVERTER_TOOL.getPrivateField(perkSection, "perkSettings", LOGGER),
+                                CONVERTER_TOOL.getPrivateField(perkSection, "permissionCooldowns", LOGGER),
+                                CONVERTER_TOOL.getPrivateField(perkSection, "permissionAmplifiers", LOGGER),
+                                CONVERTER_TOOL.getPrivateField(perkSection, "permissionDurations", LOGGER),
+                                CONVERTER_TOOL.getPrivateField(perkSection, "costs", LOGGER),
+                                CONVERTER_TOOL.getPrivateField(perkSection, "requirements", LOGGER),
+                                CONVERTER_TOOL.getPrivateField(perkSection, "rewards", LOGGER)
+                        );
+
+                        return OBJECT_MAPPER.writeValueAsString(data);
+                } catch (final Exception exception) {
+                        LOGGER.log(
+                                Level.SEVERE,
+                                "Failed to convert PerkSection to JSON",
+                                exception
+                        );
+                        throw new RuntimeException(
+                                "Failed to serialize PerkSection",
+                                exception
+                        );
+                }
         }
 
         /**
@@ -66,80 +90,65 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
                         return new PerkSection(new EvaluationEnvironmentBuilder());
 
                 try {
-			final JsonNode jsonNode = OBJECT_MAPPER.readTree(jsonString);
-			final PerkSectionData data = OBJECT_MAPPER.treeToValue(
-				jsonNode,
-				PerkSectionData.class
-			);
-			
-			final PerkSection perkSection = new PerkSection(new EvaluationEnvironmentBuilder());
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"icon",
-				data.icon,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"perkSettingsSection",
-				data.perkSettingsSection,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"permissionCooldownSection",
-				data.permissionCooldownSection,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"permissionAmplifierSection",
-				data.permissionAmplifierSection,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"cooldown",
-				data.cooldown,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"costSection",
-				data.costSection,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"requirementSection",
-				data.requirementSection,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"rewardSection",
-				data.rewardSection,
-				LOGGER
-			);
-			
-			CONVERTER_TOOL.setPrivateField(
-				perkSection,
-				"requiresOwnedArea",
-				data.requiresOwnedArea,
-				LOGGER
-			);
-			
-			return perkSection;
-		} catch (
-			  final Exception exception
+                        final PerkSectionData data = OBJECT_MAPPER.readValue(
+                                jsonString,
+                                PerkSectionData.class
+                        );
+
+                        final PerkSection perkSection = new PerkSection(new EvaluationEnvironmentBuilder());
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "perkSettings",
+                                data.perkSettings,
+                                LOGGER
+                        );
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "permissionCooldowns",
+                                data.permissionCooldowns,
+                                LOGGER
+                        );
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "permissionAmplifiers",
+                                data.permissionAmplifiers,
+                                LOGGER
+                        );
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "permissionDurations",
+                                data.permissionDurations,
+                                LOGGER
+                        );
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "costs",
+                                data.costs,
+                                LOGGER
+                        );
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "requirements",
+                                data.requirements,
+                                LOGGER
+                        );
+
+                        CONVERTER_TOOL.setPrivateField(
+                                perkSection,
+                                "rewards",
+                                data.rewards,
+                                LOGGER
+                        );
+
+                        return perkSection;
+                } catch (
+                          final Exception exception
 		) {
 			LOGGER.log(
 				Level.SEVERE,
@@ -158,15 +167,13 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
          */
         private static class PerkSectionData {
 
-                public IconSection icon;
-                public PerkSettingsSection perkSettingsSection;
-                public PermissionCooldownSection permissionCooldownSection;
-                public PermissionAmplifierSection permissionAmplifierSection;
-                public Integer                    cooldown;
-                public Map<String, PluginCurrencySection> costSection;
-                public Map<String, RequirementSection>    requirementSection;
-                public Map<String, RewardSection>         rewardSection;
-                public Boolean                            requiresOwnedArea;
+                public PerkSettingsSection perkSettings;
+                public PermissionCooldownSection permissionCooldowns;
+                public PermissionAmplifierSection permissionAmplifiers;
+                public PermissionDurationSection permissionDurations;
+                public Map<String, PluginCurrencySection> costs;
+                public Map<String, RequirementSection>    requirements;
+                public Map<String, RewardSection>         rewards;
 
                 /**
                  * Creates an empty data container for Jackson.
@@ -176,39 +183,33 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
                 /**
                  * Creates a populated data container for JSON mapping.
                  *
-                 * @param icon the perk icon information
-                 * @param perkSettingsSection settings applied to the perk
-                 * @param permissionCooldownSection cooldown configuration for permissions
-                 * @param permissionAmplifierSection amplifier configuration for permissions
-                 * @param cooldown the perk cooldown value
-                 * @param costSection currency costs keyed by edition
-                 * @param requirementSection requirement configuration keyed by identifier
-                 * @param rewardSection reward configuration keyed by identifier
-                 * @param requiresOwnedArea whether the perk requires an owned area
+                 * @param perkSettings settings applied to the perk
+                 * @param permissionCooldowns cooldown configuration for permissions
+                 * @param permissionAmplifiers amplifier configuration for permissions
+                 * @param permissionDurations duration configuration for permissions
+                 * @param costs currency costs keyed by edition
+                 * @param requirements requirement configuration keyed by identifier
+                 * @param rewards reward configuration keyed by identifier
                  */
                 public PerkSectionData(
-                        final @Nullable IconSection icon,
-                        final @Nullable PerkSettingsSection perkSettingsSection,
-                        final @Nullable PermissionCooldownSection permissionCooldownSection,
-			final @Nullable PermissionAmplifierSection permissionAmplifierSection,
-			final @Nullable Integer cooldown,
-			final @Nullable Map<String, PluginCurrencySection> costSection,
-			final @Nullable Map<String, RequirementSection> requirementSection,
-			final @Nullable Map<String, RewardSection> rewardSection,
-			final @Nullable Boolean requiresOwnedArea
-		) {
-			
-			this.icon = icon;
-			this.perkSettingsSection = perkSettingsSection;
-			this.permissionCooldownSection = permissionCooldownSection;
-			this.permissionAmplifierSection = permissionAmplifierSection;
-			this.cooldown = cooldown;
-			this.costSection = costSection;
-			this.requirementSection = requirementSection;
-			this.rewardSection = rewardSection;
-			this.requiresOwnedArea = requiresOwnedArea;
-		}
-		
-	}
-	
+                        final @Nullable PerkSettingsSection perkSettings,
+                        final @Nullable PermissionCooldownSection permissionCooldowns,
+                        final @Nullable PermissionAmplifierSection permissionAmplifiers,
+                        final @Nullable PermissionDurationSection permissionDurations,
+                        final @Nullable Map<String, PluginCurrencySection> costs,
+                        final @Nullable Map<String, RequirementSection> requirements,
+                        final @Nullable Map<String, RewardSection> rewards
+                ) {
+
+                        this.perkSettings = perkSettings;
+                        this.permissionCooldowns = permissionCooldowns;
+                        this.permissionAmplifiers = permissionAmplifiers;
+                        this.permissionDurations = permissionDurations;
+                        this.costs = costs;
+                        this.requirements = requirements;
+                        this.rewards = rewards;
+                }
+
+        }
+
 }

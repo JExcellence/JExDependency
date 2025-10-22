@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class ConverterTool {
 
@@ -38,6 +38,31 @@ public class ConverterTool {
         } catch (final NoSuchFieldException | IllegalAccessException e) {
             logger.log(Level.SEVERE, "Failed to set field: " + fieldName, e);
             throw new RuntimeException("Failed to set field: " + fieldName, e);
+        }
+    }
+
+    /**
+     * Retrieves the value of a private field using reflection.
+     *
+     * @param target    the object whose field should be read
+     * @param fieldName the name of the field to access
+     * @param logger    the logger used to report failures when reading the field
+     * @return the field value
+     * @throws RuntimeException if the field cannot be accessed
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T getPrivateField(
+            @NotNull final Object target,
+            @NotNull final String fieldName,
+            @NotNull final Logger logger
+    ) {
+        try {
+            final Field field = target.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return (T) field.get(target);
+        } catch (final NoSuchFieldException | IllegalAccessException e) {
+            logger.log(Level.SEVERE, "Failed to access field: " + fieldName, e);
+            throw new RuntimeException("Failed to access field: " + fieldName, e);
         }
     }
 }
