@@ -26,7 +26,7 @@ import java.util.Set;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Entity
 @Table(name = "r_perk")
@@ -237,6 +237,62 @@ public abstract class RPerk extends AbstractEntity {
      */
     public @NotNull Set<RPlayerPerk> getPlayerPerks() {
         return Collections.unmodifiableSet(this.playerPerks);
+    }
+
+    /**
+     * Registers the provided player perk with this perk definition while ensuring the
+     * bidirectional association stays in sync.
+     *
+     * @param playerPerk the player perk to link with this definition
+     * @return {@code true} when the player perk was newly associated, {@code false} when it was already linked
+     */
+    public boolean addPlayerPerk(final @NotNull RPlayerPerk playerPerk) {
+        Objects.requireNonNull(playerPerk, "playerPerk cannot be null");
+        final boolean added = attachPlayerPerk(playerPerk);
+        if (playerPerk.getPerk() != this) {
+            playerPerk.setPerk(this);
+        }
+        return added;
+    }
+
+    /**
+     * Detaches the provided player perk from this definition while clearing the reverse
+     * association when it still points at this perk.
+     *
+     * @param playerPerk the player perk to unlink from this definition
+     * @return {@code true} when the link was removed, {@code false} when it was not present
+     */
+    public boolean removePlayerPerk(final @NotNull RPlayerPerk playerPerk) {
+        Objects.requireNonNull(playerPerk, "playerPerk cannot be null");
+        final boolean removed = detachPlayerPerk(playerPerk);
+        if (removed && playerPerk.getPerk() == this) {
+            playerPerk.clearPerkAssociation();
+        }
+        return removed;
+    }
+
+    /**
+     * Internal helper used by {@link RPlayerPerk} to ensure that bidirectional synchronization can
+     * occur without triggering recursive calls when the owning side changes.
+     *
+     * @param playerPerk the player perk being attached
+     * @return {@code true} when the player perk was added to the backing collection
+     */
+    final boolean attachPlayerPerk(final @NotNull RPlayerPerk playerPerk) {
+        Objects.requireNonNull(playerPerk, "playerPerk cannot be null");
+        return this.playerPerks.add(playerPerk);
+    }
+
+    /**
+     * Internal helper used by {@link RPlayerPerk} to remove the association without clearing the
+     * reverse reference when a reassignment occurs.
+     *
+     * @param playerPerk the player perk being detached
+     * @return {@code true} when the player perk was removed from the backing collection
+     */
+    final boolean detachPlayerPerk(final @NotNull RPlayerPerk playerPerk) {
+        Objects.requireNonNull(playerPerk, "playerPerk cannot be null");
+        return this.playerPerks.remove(playerPerk);
     }
 
     /**
