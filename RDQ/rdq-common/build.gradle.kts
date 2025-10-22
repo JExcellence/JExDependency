@@ -85,6 +85,15 @@ dependencies {
     // Example of plugin-provided API used by listeners
     compileOnly(libs.jecurrency)
     compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.mockito.core)
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
