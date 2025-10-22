@@ -1,5 +1,7 @@
 [versions]
 java = "21"
+junit = "5.10.2"
+mockito = "5.14.2"
 
 paper = "1.21.8-R0.1-SNAPSHOT"
 adventure = "4.17.0"
@@ -64,6 +66,9 @@ java-uuid = { module = "com.fasterxml.uuid:java-uuid-generator", version.ref = "
 jboss-logging = { module = "org.jboss.logging:jboss-logging", version.ref = "jboss-logging" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-jdk14 = { module = "org.slf4j:slf4j-jdk14", version.ref = "slf4j" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 
 # DB
 hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version.ref = "hibernate-platform" }

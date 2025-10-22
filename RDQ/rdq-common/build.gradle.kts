@@ -1,6 +1,7 @@
-import org.gradle.jvm.tasks.Jar
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
+import org.gradle.jvm.tasks.Jar
+import org.gradle.api.tasks.testing.Test
 
 plugins {
     id("java-library")
@@ -85,6 +86,16 @@ dependencies {
     // Example of plugin-provided API used by listeners
     compileOnly(libs.jecurrency)
     compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
+
+    testImplementation(platform("org.junit:junit-bom:${libs.versions.junit.get()}"))
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 publishing {
