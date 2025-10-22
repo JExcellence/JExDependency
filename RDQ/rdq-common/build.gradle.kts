@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
-import org.gradle.jvm.tasks.Jar
 import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("java-library")
@@ -28,6 +28,10 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<Javadoc>().configureEach {
     options.encoding = "UTF-8"
     (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.withType<Jar>().configureEach {
@@ -87,8 +91,8 @@ dependencies {
     compileOnly(libs.jecurrency)
     compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
 
-    testImplementation(platform("org.junit:junit-bom:${libs.versions.junit.get()}"))
-    testImplementation(libs.junit.jupiter)
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
