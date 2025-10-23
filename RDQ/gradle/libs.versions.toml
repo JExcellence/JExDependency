@@ -13,6 +13,7 @@ placeholderapi = "2.11.6"
 vault = "1.7"
 luckperms = "5.5"
 caffeine = "3.2.2"
+inventory-framework = "3.5.2"
 
 # Keep all Jackson components aligned to the same minor release
 jackson = "2.17.2"
@@ -25,6 +26,9 @@ mysql = "9.2.0"
 h2 = "2.4.240"
 
 xseries = "13.3.3"
+mockbukkit = "3.133.2"
+junit-platform = "1.10.2"
+jetbrains-annotations = "24.1.0"
 
 # Internal libraries
 rcommands = "1.0.0"
@@ -36,6 +40,7 @@ jetranslate = "3.0.0"
 jehibernate = "1.0.0"
 jedependency = "2.0.0"
 jecurrency = "2.0.0"
+rcore = "2.0.0"
 
 [libraries]
 # Paper & Adventure
@@ -52,10 +57,10 @@ folialib = { module = "com.tcoded:FoliaLib", version.ref = "folialib" }
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 vault-api = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 luckperms-api = { module = "net.luckperms:api", version.ref = "luckperms" }
-inventory-framework-core = { module = "me.devnatan:inventory-framework-core", version = "3.5.2" }
-inventory-framework-bukkit = { module = "me.devnatan:inventory-framework-platform-bukkit", version = "3.5.2" }
-inventory-framework-paper = { module = "me.devnatan:inventory-framework-platform-paper", version = "3.5.2" }
-inventory-framework-anvil = { module = "me.devnatan:inventory-framework-anvil-input", version = "3.5.2" }
+inventory-framework-core = { module = "me.devnatan:inventory-framework-core", version.ref = "inventory-framework" }
+inventory-framework-bukkit = { module = "me.devnatan:inventory-framework-platform-bukkit", version.ref = "inventory-framework" }
+inventory-framework-paper = { module = "me.devnatan:inventory-framework-platform-paper", version.ref = "inventory-framework" }
+inventory-framework-anvil = { module = "me.devnatan:inventory-framework-anvil-input", version.ref = "inventory-framework" }
 
 # Data, logging, util
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
@@ -72,6 +77,9 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
+mockbukkit = { module = "com.github.seeseemelk:MockBukkit-v1.21", version.ref = "mockbukkit" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains-annotations" }
 
 # DB
 hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version.ref = "hibernate-platform" }
@@ -93,9 +101,13 @@ jetranslate = { module = "de.jexcellence.translate:jextranslate", version.ref = 
 jehibernate = { module = "de.jexcellence.hibernate:JEHibernate", version.ref = "jehibernate" }
 jedependency = { module = "de.jexcellence.dependency:jexdependency", version.ref = "jedependency" }
 jecurrency = { module = "de.jexcellence.currency:jecurrency", version.ref = "jecurrency" }
+rcore = { module = "com.raindropcentral.rcore:rcore", version.ref = "rcore" }
 
 # Testing
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+
+[plugins]
+shadow = { id = "com.gradleup.shadow", version = "8.3.6" }
 
 [bundles]
 adventure = [

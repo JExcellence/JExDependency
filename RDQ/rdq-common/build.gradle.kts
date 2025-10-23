@@ -6,7 +6,7 @@ import org.gradle.jvm.tasks.Jar
 plugins {
     id("java-library")
     `maven-publish`
-    id("com.gradleup.shadow") version "8.3.6" apply false
+    alias(libs.plugins.shadow) apply false
 }
 
 java {
@@ -89,19 +89,20 @@ dependencies {
 
     // Example of plugin-provided API used by listeners
     compileOnly(libs.jecurrency)
-    compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
+    compileOnly(libs.rcore)
 
-    testImplementation(platform("org.junit:junit-bom:5.10.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
-    testImplementation("com.raindropcentral.rcore:rcore:2.0.0")
+    testImplementation(libs.mockbukkit)
+    testImplementation(libs.rcore)
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test>().configureEach {
