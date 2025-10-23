@@ -1,12 +1,20 @@
 package com.raindropcentral.rdq;
 
 import com.raindropcentral.commands.CommandFactory;
+import com.raindropcentral.rcore.api.RCoreAdapter;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.manager.RDQManager;
+import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
+import com.raindropcentral.rdq.view.rank.view.RankMainView;
+import com.raindropcentral.rdq.view.rank.view.RankPathOverview;
+import com.raindropcentral.rdq.view.rank.view.RankRequirementDetailView;
+import com.raindropcentral.rdq.view.rank.view.RankTreeOverviewView;
 import com.raindropcentral.rplatform.RPlatform;
+import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.ViewFrame;
@@ -33,9 +41,11 @@ import java.util.logging.Logger;
  * </p>
  *
  * @author JExcellence
- * @version 3.1.0
+ * @version 3.2.0
  */
 public abstract class RDQ {
+
+    private final Logger LOGGER = CentralLogger.getLogger(RDQ.class);
 
     private final JavaPlugin plugin;
     private final String detectedEdition;
@@ -49,8 +59,9 @@ public abstract class RDQ {
     private RDQManager manager;
     private ViewFrame viewFrame;
     private RankSystemFactory rankSystemFactory;
-    private CommandFactory commandFactory;
+    private RankPathService rankPathService;
 
+    // RDQ repositories
     private RDQPlayerRepository playerRepository;
     private RPlayerRankPathRepository playerRankPathRepository;
     private RPlayerRankRepository playerRankRepository;
@@ -62,6 +73,9 @@ public abstract class RDQ {
     private RRankTreeRepository rankTreeRepository;
     private RRequirementRepository requirementRepository;
 
+    private @Nullable LuckPermsService luckPermsService;
+    private @Nullable RCoreAdapter rCoreAdapter;
+
     public RDQ(final @NotNull JavaPlugin plugin, final @NotNull String edition) {
         this.plugin = plugin;
         this.detectedEdition = edition;
@@ -69,12 +83,11 @@ public abstract class RDQ {
         CentralLogger.initialize(plugin);
     }
 
-
     public void onLoad() {
         try {
-            plugin.getLogger().info("Loading RDQ " + detectedEdition + " Edition");
+            LOGGER.info("Loading RDQ " + detectedEdition + " Edition");
         } catch (final Exception exception) {
-            plugin.getLogger().log(Level.SEVERE, "[RDQ] Failed to load RDQ", exception);
+            LOGGER.log(Level.SEVERE, "Failed to load RDQ", exception);
         }
     }
 
@@ -84,15 +97,15 @@ public abstract class RDQ {
      */
     public void onEnable() {
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
-            plugin.getLogger().warning("Enable sequence already in progress");
+            LOGGER.warning("Enable sequence already in progress");
             return;
         }
-        final Logger log = CentralLogger.getLogger(getClass().getName());
 
         this.enableFuture = performCoreEnableAsync()
                 .thenCompose(v -> runSync(() -> {
                     try {
                         this.manager = initializeManager();
+                        this.registerServices();
                         performPostEnableSync();
                     } catch (Throwable t) {
                         throw new CompletionException(t);
@@ -100,7 +113,7 @@ public abstract class RDQ {
                 }))
                 .exceptionally(ex -> {
                     runSync(() -> {
-                        log.log(Level.SEVERE, "Failed to enable RDQ (" + Optional.ofNullable(detectedEdition).orElse("?") + ")", ex);
+                        LOGGER.log(Level.SEVERE, "Failed to enable RDQ (" + Optional.ofNullable(detectedEdition).orElse("?") + ")", ex);
                         plugin.getServer().getPluginManager().disablePlugin(plugin);
                     });
                     return null;
@@ -120,7 +133,6 @@ public abstract class RDQ {
         }
     }
 
-
     @NotNull
     protected abstract String getStartupMessage();
 
@@ -138,7 +150,6 @@ public abstract class RDQ {
     @NotNull
     protected abstract RDQManager initializeManager();
 
-
     /**
      * Performs core asynchronous setup (Platform, Database, Repositories, Ranks).
      * This must complete before any managers or services can be initialized.
@@ -149,9 +160,35 @@ public abstract class RDQ {
                     initializeRepositories();
                     this.rankSystemFactory = new RankSystemFactory(this);
                 }))
-                .thenCompose(v -> {
-                    return this.rankSystemFactory.initializeAsync();
-                });
+                .thenCompose(v -> this.rankSystemFactory.initializeAsync());
+    }
+
+    private void registerServices() {
+        new ServiceRegistry().register("net.luckperms.api.LuckPerms", "LuckPerms")
+                .optional()
+                .maxAttempts(20)
+                .retryDelay(500)
+                .onSuccess(lp -> {
+                    this.luckPermsService = new LuckPermsService(platform);
+                    LOGGER.info("LuckPerms detected; LP wrapper registered and bound");
+                })
+                .onFailure(() -> LOGGER.info("LuckPerms not present; LP wrapper not registered"))
+                .load();
+
+        new ServiceRegistry().register("com.raindropcentral.core.adapter.RCoreAdapter", "RCore")
+                .optional()
+                .maxAttempts(20)
+                .retryDelay(500)
+                .onSuccess(rc -> {
+                    try {
+                        this.rCoreAdapter = (RCoreAdapter) rc;
+                        LOGGER.info("RCoreAdapter detected; statistics repository bound");
+                    } catch (Throwable t) {
+                        LOGGER.log(Level.WARNING, "RCoreAdapter detected but failed to bind repositories: " + t.getMessage(), t);
+                    }
+                })
+                .onFailure(() -> LOGGER.info("RCoreAdapter not present; core statistics integration disabled"))
+                .load();
     }
 
     /**
@@ -164,8 +201,10 @@ public abstract class RDQ {
             return;
         }
 
-        this.commandFactory = new CommandFactory(plugin, this);
-        this.commandFactory.registerAllCommandsAndListeners();
+        CommandFactory commandFactory = new CommandFactory(plugin, this);
+        commandFactory.registerAllCommandsAndListeners();
+
+        this.rankPathService = new RankPathService(this);
 
         initializeViews();
 
@@ -178,6 +217,13 @@ public abstract class RDQ {
 
     private void initializeRepositories() {
         final EntityManagerFactory emf = this.platform.getEntityManagerFactory();
+
+        if (emf == null) {
+            plugin.getLogger().warning("EntityManagerFactory not initialized");
+            this.onDisable();
+            return;
+        }
+
         this.playerRepository = new RDQPlayerRepository(this.executor, emf);
         this.bountyRepository = new RBountyRepository(this.executor, emf);
         this.rankRepository = new RRankRepository(this.executor, emf);
@@ -200,7 +246,12 @@ public abstract class RDQ {
                         new BountyOverviewView(),
                         new BountyRewardView(),
                         new BountyPlayerInfoView(),
-                        new PaginatedPlayerView()
+                        new PaginatedPlayerView(),
+                        new RankMainView(),
+                        new RankPathOverview(),
+                        new RankRequirementDetailView(),
+                        new RankTreeOverviewView(),
+                        new RankTreeOverviewView()
                 )
                 .defaultConfig(config -> {
                     config.cancelOnClick();
@@ -212,7 +263,6 @@ public abstract class RDQ {
         frame = registerViews(frame);
         this.viewFrame = frame.register();
     }
-
 
     private @NotNull CompletableFuture<Void> runSync(final @NotNull Runnable runnable) {
         final CompletableFuture<Void> future = new CompletableFuture<>();
@@ -239,7 +289,6 @@ public abstract class RDQ {
         }
     }
 
-
     @NotNull
     public RDQManager getManager() {
         if (this.manager == null) {
@@ -261,6 +310,11 @@ public abstract class RDQ {
     @NotNull
     public ExecutorService getExecutor() {
         return this.executor;
+    }
+
+    @NotNull
+    public RankPathService getRankPathService() {
+        return rankPathService;
     }
 
     @NotNull
@@ -336,7 +390,23 @@ public abstract class RDQ {
         return this.enableFuture;
     }
 
+    public @Nullable LuckPermsService getLuckPermsService() {
+        return luckPermsService;
+    }
+
     public boolean isEnabled() {
         return plugin.isEnabled();
+    }
+
+    // RCoreAdapter integration getters
+
+    /**
+     * Returns the bound RCoreAdapter if present. This adapter provides access to core repositories
+     * such as player statistics that live outside RDQ.
+     *
+     * @return the adapter instance or null if not available
+     */
+    public @Nullable RCoreAdapter getRCoreAdapter() {
+        return this.rCoreAdapter;
     }
 }

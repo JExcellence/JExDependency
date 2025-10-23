@@ -1,11 +1,15 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import de.jexcellence.hibernate.entity.AbstractEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serial;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -15,7 +19,7 @@ import java.util.Objects;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.3
  */
 @Entity
 @Table(name = "r_player_rank_path")
@@ -31,6 +35,9 @@ public final class RPlayerRankPath extends AbstractEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rank_tree_id", nullable = false)
     private RRankTree rankTree;
+
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive = false;
 
     @Column(name = "is_completed", nullable = false)
     private boolean isCompleted = false;
@@ -52,6 +59,18 @@ public final class RPlayerRankPath extends AbstractEntity {
     public RPlayerRankPath(final @NotNull RDQPlayer player, final @NotNull RRankTree rankTree) {
         this.player = Objects.requireNonNull(player, "player cannot be null");
         this.rankTree = Objects.requireNonNull(rankTree, "rankTree cannot be null");
+    }
+
+    /**
+     * Creates a new rank path for the provided player and rank tree with active status.
+     *
+     * @param player    the owning player
+     * @param rankTree  the rank tree the player is progressing through
+     * @param isActive  whether this path is active
+     */
+    public RPlayerRankPath(final @NotNull RDQPlayer player, final @NotNull RRankTree rankTree, final boolean isActive) {
+        this(player, rankTree);
+        this.isActive = isActive;
     }
 
     /**
@@ -91,6 +110,34 @@ public final class RPlayerRankPath extends AbstractEntity {
     }
 
     /**
+     * Checks whether this rank path is currently active for the player.
+     *
+     * @return {@code true} if the path is active, {@code false} otherwise
+     */
+    public boolean isActive() {
+        return this.isActive;
+    }
+
+    /**
+     * Sets the active status of this rank path.
+     *
+     * @param isActive the new active status
+     */
+    public void setActive(final boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    /**
+     * Checks if this rank path has been selected (is active) by the player.
+     * This is a convenience method alias for {@link #isActive()}.
+     *
+     * @return {@code true} if the path is selected/active, {@code false} otherwise
+     */
+    public boolean hasSelectedRankPath() {
+        return this.isActive;
+    }
+
+    /**
      * Determines whether the rank path is marked as completed.
      *
      * @return {@code true} if the path is complete, otherwise {@code false}
@@ -119,6 +166,26 @@ public final class RPlayerRankPath extends AbstractEntity {
      */
     public double getCompletionPercentage() {
         return this.completionPercentage;
+    }
+
+    /** Gets the currently active rank path for a player. */
+    public @Nullable RPlayerRankPath getCurrentRankPath(final @NotNull RDQ rdq, final @NotNull RDQPlayer player) {
+        try {
+            final List<RPlayerRankPath> rankPaths = rdq.getPlayerRankPathRepository()
+                    .findListByAttributes(Map.of("player", player));
+            return rankPaths.stream()
+                    .filter(RPlayerRankPath::isActive)
+                    .findFirst()
+                    .orElse(null);
+        } catch (final Exception exception) {
+            return null;
+        }
+    }
+
+    /** Gets the currently selected (active) rank tree for a player. */
+    public @Nullable RRankTree getSelectedRankPath(final @NotNull RDQ rdq, final @NotNull RDQPlayer player) {
+        final RPlayerRankPath currentPath = getCurrentRankPath(rdq, player);
+        return currentPath != null ? currentPath.getRankTree() : null;
     }
 
     /**
@@ -159,9 +226,9 @@ public final class RPlayerRankPath extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "RPlayerRankPath[player=%s, tree=%s, completed=%b, progress=%.2f%%]"
+        return "RPlayerRankPath[player=%s, tree=%s, active=%b, completed=%b, progress=%.2f%%]"
                 .formatted(player != null ? player.getPlayerName() : "null",
                         rankTree != null ? rankTree.getIdentifier() : "null",
-                        isCompleted, completionPercentage);
+                        isActive, isCompleted, completionPercentage);
     }
 }

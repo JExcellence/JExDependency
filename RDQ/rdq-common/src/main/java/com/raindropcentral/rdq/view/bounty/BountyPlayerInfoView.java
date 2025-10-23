@@ -127,7 +127,8 @@ public final class BountyPlayerInfoView extends BaseView {
                 'p',
                 UnifiedBuilderFactory
                         .head()
-                        .setPlayerHead(this.target.get(render))
+                        .
+                        setPlayerHead(this.target.get(render))
                         .setName(
                                 this.i18n("target.name", player)
                                         .with("player_name", this.target.get(render).getName())

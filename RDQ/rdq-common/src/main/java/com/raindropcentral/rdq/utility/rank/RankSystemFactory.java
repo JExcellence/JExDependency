@@ -1,6 +1,7 @@
 package com.raindropcentral.rdq.utility.rank;
 
 import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -124,6 +125,8 @@ public final class RankSystemFactory {
     public @Nullable RRank getDefaultRank() {
         return state.defaultRank();
     }
+
+    public RankSystemSection getRankSystemSection() { return state.rankSystemSection(); }
 
     /**
      * Logs a summary of the current rank configuration state for auditing and diagnostics.

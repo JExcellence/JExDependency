@@ -62,6 +62,15 @@ public class ServiceRegistry {
         return new ServiceRegistrationBuilder<>(this, serviceClass);
     }
 
+    public <T> @NotNull ServiceRegistrationBuilder<T> register(final @NotNull String serviceClass) {
+        try {
+            Class<T> clazz = (Class<T>) Class.forName(serviceClass);
+            return new ServiceRegistrationBuilder<>(this, clazz);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * Begin constructing a registration for a service using its fully qualified class name.
      * This variant supports loading implementations from a specific plugin's class loader.
@@ -87,7 +96,7 @@ public class ServiceRegistry {
      */
     public <T> @NotNull Optional<T> get(final @NotNull Class<T> serviceClass) {
         final Object service = services.get(serviceClass.getName());
-        if (service != null && serviceClass.isInstance(service)) {
+        if (serviceClass.isInstance(service)) {
             return Optional.of(serviceClass.cast(service));
         }
         return Optional.empty();

@@ -52,13 +52,10 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
                  */
                 @Override
                 protected @NotNull RDQManager initializeManager() {
-                    // 1. Initialize services. Repositories are now safely available.
                     bountyService = new PremiumBountyService(getBountyRepository());
                     BountyServiceProvider.setInstance(bountyService);
                     registerServices();
-
-                    // 2. Initialize the PremiumRDQManager, passing all required dependencies.
-                    //    Notice we are now passing getPlatform() and getExecutor() as required.
+					
                     RDQManager manager = new PremiumRDQManager(
                             getPlugin(),
                             getPlatform(),
@@ -102,8 +99,7 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
             LOGGER.log(Level.SEVERE, "Error during RDQ " + EDITION + " shutdown", exception);
         }
     }
-
-    // ... other methods and startup message ...
+	
 
     private void registerServices() {
         if (this.bountyService != null) {

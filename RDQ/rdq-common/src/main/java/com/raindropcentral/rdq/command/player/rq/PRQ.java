@@ -4,6 +4,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
+import com.raindropcentral.rdq.view.rank.view.RankMainView;
 import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Primary player-facing entry point for the {@code /prq} command tree.
@@ -237,12 +239,12 @@ public final class PRQ extends PlayerCommand {
         if (this.hasNoPermission(player, ERQPermission.RANKS)) {
             return;
         }
-/*
+
         this.rdq.getViewFrame().open(
                 RankMainView.class,
                 player,
                 Map.of("plugin", this.rdq)
-        );*/
+        );
     }
 
     /**

@@ -5,6 +5,4 @@ api-version: "1.16"
 description: RDQ
 authors: [ ItsRainingHP, JExcellence ]
 website: https://www.raindropcentral.com
-depend: [ RCore ]
-softdepend:
-  - LuckPerms
+depend: [ RCore, LuckPerms ]

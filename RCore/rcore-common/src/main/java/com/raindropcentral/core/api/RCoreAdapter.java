@@ -232,10 +232,7 @@ public class RCoreAdapter implements RCoreService {
     @Override
     public CompletableFuture<Optional<RPlayerStatistic>> findPlayerStatisticsAsync(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
-        return findPlayerAsync(uniqueId)
-                .thenApplyAsync(playerOpt -> playerOpt
-                        .map(RPlayer::getPlayerStatistic)
-                        .filter(Objects::nonNull), executor);
+        return findPlayerAsync(uniqueId).thenApplyAsync(playerOpt -> playerOpt.map(RPlayer::getPlayerStatistic), executor);
     }
 
     /**

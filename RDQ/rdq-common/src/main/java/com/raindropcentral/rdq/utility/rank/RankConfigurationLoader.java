@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * @since 1.0.0
  * @version 1.0.1
  */
-final class RankConfigurationLoader {
+public final class RankConfigurationLoader {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RankConfigurationLoader.class.getName());
 
@@ -41,6 +41,7 @@ final class RankConfigurationLoader {
     );
 
     private final @NotNull RDQ rdq;
+    private RankSystemSection rankSystemSection;
 
     /**
      * Creates a new loader bound to the provided RDQ plugin instance.
@@ -57,9 +58,11 @@ final class RankConfigurationLoader {
      * @param executor the executor used to perform the configuration loading off the main thread
      * @return a future that resolves to the fully parsed {@link RankSystemState}
      */
-    CompletableFuture<RankSystemState> loadAllAsync(final @NotNull Executor executor) {
+    public CompletableFuture<RankSystemState> loadAllAsync(final @NotNull Executor executor) {
         return CompletableFuture.supplyAsync(this::loadAll, executor);
     }
+
+
 
     /**
      * Loads all rank related configurations, including system, tree, and rank sections.

@@ -28,6 +28,9 @@ dependencies {
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory) { isTransitive = false }
+
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("net.luckperms:api:5.5")
 }
 
 tasks.named<ShadowJar>("shadowJar") {

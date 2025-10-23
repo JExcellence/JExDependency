@@ -82,9 +82,10 @@ dependencies {
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory)
 
-    // Example of plugin-provided API used by listeners
     compileOnly(libs.jexeconomy)
     compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
+    compileOnly("me.clip:placeholderapi:2.11.6")
+    compileOnly("net.luckperms:api:5.5")
 }
 
 publishing {

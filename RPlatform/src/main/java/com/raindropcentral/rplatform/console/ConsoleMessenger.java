@@ -39,7 +39,7 @@ public final class ConsoleMessenger {
 
     private final Logger logger;
     private final Locale locale;
-    private final boolean includePrefix;
+    private final boolean withPrefix;
     private final TranslationKey prefixKey;
 
     /**
@@ -56,18 +56,18 @@ public final class ConsoleMessenger {
      *
      * @param logger        the logger used to emit console messages
      * @param locale        the locale applied to translations; {@code null} uses the configured default
-     * @param includePrefix whether the default prefix should be prepended to each message
-     * @param prefixKey     optional replacement prefix key when {@code includePrefix} is {@code true}
+     * @param withPrefix whether the default prefix should be prepended to each message
+     * @param prefixKey     optional replacement prefix key when {@code withPrefix} is {@code true}
      */
     public ConsoleMessenger(
             @NotNull final Logger logger,
             @Nullable final Locale locale,
-            final boolean includePrefix,
+            final boolean withPrefix,
             @Nullable final TranslationKey prefixKey
     ) {
         this.logger = Objects.requireNonNull(logger, "Logger cannot be null");
         this.locale = locale;
-        this.includePrefix = includePrefix;
+        this.withPrefix = withPrefix;
         this.prefixKey = prefixKey;
     }
 
@@ -139,7 +139,7 @@ public final class ConsoleMessenger {
 
         try {
             final Component baseComponent = resolveComponent(configuration, key, effectiveLocale, placeholderList);
-            final Component finalComponent = this.includePrefix
+            final Component finalComponent = this.withPrefix
                     ? prependPrefix(configuration, effectiveLocale, placeholderList, baseComponent)
                     : baseComponent;
             return new TranslatedMessage(finalComponent, key);
