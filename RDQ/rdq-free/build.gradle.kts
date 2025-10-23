@@ -35,7 +35,12 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.named<ShadowJar>("shadowJar") {
@@ -62,6 +67,10 @@ tasks.named<Test>("test") {
 
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {

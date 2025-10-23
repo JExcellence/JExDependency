@@ -3,8 +3,6 @@ java = "21"
 junit = "5.10.2"
 mockito = "5.14.2"
 
-junit = "5.11.3"
-mockito = "5.14.2"
 
 paper = "1.21.8-R0.1-SNAPSHOT"
 adventure = "4.17.0"
@@ -98,9 +96,6 @@ jecurrency = { module = "de.jexcellence.currency:jecurrency", version.ref = "jec
 
 # Testing
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
-mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 
 [bundles]
 adventure = [
