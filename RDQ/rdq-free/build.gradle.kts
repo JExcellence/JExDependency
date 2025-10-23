@@ -28,6 +28,17 @@ dependencies {
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockito.inline)
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+    testImplementation(libs.adventure.api)
+    testImplementation(libs.adventure.minimessage)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
