@@ -97,6 +97,7 @@ dependencies {
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
     testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+    testImplementation("com.raindropcentral.rcore:rcore:2.0.0")
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
