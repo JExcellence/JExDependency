@@ -4,7 +4,7 @@ import org.gradle.api.tasks.testing.Test
 plugins {
     java
     `maven-publish`
-    id("com.gradleup.shadow") version "8.3.6"
+    alias(libs.plugins.shadow)
 }
 
 java {
@@ -17,7 +17,7 @@ dependencies {
     implementation(project(":rdq-common")) { isTransitive = false }
 
     compileOnly(libs.paper.api)
-    compileOnly("org.jetbrains:annotations:24.1.0")
+    compileOnly(libs.jetbrains.annotations)
 
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
@@ -38,11 +38,11 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+    testImplementation(libs.mockbukkit)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
     testRuntimeOnly(libs.junit.jupiter.engine)
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.named<ShadowJar>("shadowJar") {
