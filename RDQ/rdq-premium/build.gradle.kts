@@ -39,6 +39,8 @@ dependencies {
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
     testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+    testImplementation(libs.adventure.api)
+    testImplementation(libs.adventure.minimessage)
     testRuntimeOnly(libs.junit.jupiter.engine)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
