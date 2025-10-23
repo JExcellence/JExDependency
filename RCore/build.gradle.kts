@@ -1,5 +1,5 @@
 plugins {
-    id("com.gradleup.shadow") version "8.3.6" apply false
+    alias(libs.plugins.shadow) apply false
     `maven-publish`
     base
 }
