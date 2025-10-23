@@ -64,6 +64,10 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 publishing {
     publications {
         create<MavenPublication>("mavenShadow") {
