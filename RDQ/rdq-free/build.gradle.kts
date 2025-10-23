@@ -28,6 +28,13 @@ dependencies {
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory)
+
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.11.3")
+    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.14.2")
+    testImplementation("org.mockito:mockito-inline:5.14.2")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
@@ -50,6 +57,10 @@ tasks.named("build") {
 
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
