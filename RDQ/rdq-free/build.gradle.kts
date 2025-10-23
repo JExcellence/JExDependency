@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.api.tasks.testing.Test
 
 plugins {
     java
@@ -58,6 +59,10 @@ tasks.named<ShadowJar>("shadowJar") {
 
 tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
 
 tasks.named<Jar>("jar") {
