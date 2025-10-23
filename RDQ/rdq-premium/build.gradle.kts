@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.gradle.api.tasks.testing.Test
 
 plugins {
     java
@@ -31,6 +32,17 @@ dependencies {
     // CORRECTED: Changed from 'implementation' to 'compileOnly'.
     // This tells Gradle to use the library for compiling, but NOT to package it into the final JAR.
     compileOnly(libs.bundles.inventory) { isTransitive = false }
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockito.inline)
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.21:3.133.2")
+    testImplementation(libs.adventure.api)
+    testImplementation(libs.adventure.minimessage)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.named<ShadowJar>("shadowJar") {
@@ -59,8 +71,16 @@ tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
 }
 
+tasks.named<Test>("test") {
+    useJUnitPlatform()
+}
+
 tasks.named<Jar>("jar") {
     enabled = false
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
