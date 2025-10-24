@@ -487,7 +487,7 @@ public final class RankPathRankRequirementOverview extends APaginatedView<RRankU
 		try {
 			if (plugin.getLuckPermsService() != null) {
 				final String luckPermsGroup = rank.getAssignedLuckPermsGroup();
-				if (luckPermsGroup != null && !luckPermsGroup.isEmpty()) {
+				if (!luckPermsGroup.isEmpty()) {
 					LOGGER.log(Level.INFO, "Updated LuckPerms group for " + player.getName() + " to " + luckPermsGroup);
 				}
 			}

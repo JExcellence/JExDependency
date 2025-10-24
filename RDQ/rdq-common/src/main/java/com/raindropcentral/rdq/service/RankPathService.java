@@ -213,7 +213,7 @@ public final class RankPathService {
                     .findByAttributes(Map.of(
                             "player", player,
                             "rankTree", rankTree,
-                            "active", true
+                            "isActive", true
                     ));
         } catch (final Exception exception) {
             LOGGER.log(Level.WARNING, "Failed to get rank path for tree", exception);
@@ -321,7 +321,7 @@ public final class RankPathService {
      */
     private @Nullable RPlayerRankPath getCurrentRankPath(final @NotNull RDQPlayer player) {
         try {
-            return rdq.getPlayerRankPathRepository().findByAttributes(Map.of("player", player, "active", true));
+            return rdq.getPlayerRankPathRepository().findByAttributes(Map.of("player", player, "isActive", true));
         } catch (final Exception exception) {
             LOGGER.log(Level.WARNING, "Failed to get current rank path", exception);
             return null;

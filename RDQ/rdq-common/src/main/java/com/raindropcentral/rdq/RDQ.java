@@ -7,10 +7,7 @@ import com.raindropcentral.rdq.manager.RDQManager;
 import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
-import com.raindropcentral.rdq.view.rank.view.RankMainView;
-import com.raindropcentral.rdq.view.rank.view.RankPathOverview;
-import com.raindropcentral.rdq.view.rank.view.RankRequirementDetailView;
-import com.raindropcentral.rdq.view.rank.view.RankTreeOverviewView;
+import com.raindropcentral.rdq.view.rank.view.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -251,7 +248,8 @@ public abstract class RDQ {
                         new RankPathOverview(),
                         new RankRequirementDetailView(),
                         new RankTreeOverviewView(),
-                        new RankTreeOverviewView()
+                        new RankTreeOverviewView(),
+                        new RankPathRankRequirementOverview()
                 )
                 .defaultConfig(config -> {
                     config.cancelOnClick();

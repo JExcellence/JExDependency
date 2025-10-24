@@ -114,12 +114,12 @@ public final class RankRequirementDetailView extends APaginatedView<RankRequirem
 	@Override
 	protected String[] getLayout() {
 		return new String[] {
-			" ",
-			" i ",
-			" t s a ",
+			"         ",
+			"    i    ",
+			"  t s a  ",
 			" O O O O ",
 			" O O O O ",
-			"b <p> "
+			"b  <p>   "
 		};
 	}
 
