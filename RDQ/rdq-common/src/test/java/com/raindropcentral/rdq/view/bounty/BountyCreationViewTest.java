@@ -1,9 +1,9 @@
 package com.raindropcentral.rdq.view.bounty;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.WorldMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.WorldMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
 import com.raindropcentral.rdq.service.BountyService;
 import com.raindropcentral.rdq.service.BountyServiceProvider;

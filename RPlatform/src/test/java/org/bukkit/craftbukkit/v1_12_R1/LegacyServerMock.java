@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.v1_12_R1;
 
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.ServerMock;
 
 /**
  * Legacy server mock packaged to emulate older CraftBukkit implementations so

@@ -1,7 +1,7 @@
 package com.raindropcentral.core;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.core.api.bukkit.RCoreBukkitServiceRegistrar;
 import com.raindropcentral.core.database.entity.player.RPlayer;

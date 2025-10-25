@@ -1,6 +1,6 @@
 package de.jexcellence.dependency.manager;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import de.jexcellence.dependency.downloader.DependencyDownloader;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.loader.YamlDependencyLoader;

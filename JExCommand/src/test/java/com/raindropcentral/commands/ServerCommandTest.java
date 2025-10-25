@@ -1,9 +1,9 @@
 package com.raindropcentral.commands;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.command.ConsoleCommandSenderMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.command.ConsoleCommandSenderMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import com.raindropcentral.commands.testplugin.command.TestCommandSection;
 import de.jexcellence.evaluable.error.CommandError;
 import de.jexcellence.evaluable.error.EErrorType;

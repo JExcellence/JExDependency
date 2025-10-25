@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.view.anvil;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import me.devnatan.inventoryframework.runtime.thirdparty.InventoryUpdate;
 import me.devnatan.inventoryframework.runtime.thirdparty.McVersion;
 import me.devnatan.inventoryframework.runtime.thirdparty.ReflectionUtils;
