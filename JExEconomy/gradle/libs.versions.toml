@@ -2,6 +2,7 @@
 java = "21"
 junit = "5.10.2"
 mockito = "5.14.2"
+mockbukkit = "3.133.2"
 
 paper = "1.21.8-R0.1-SNAPSHOT"
 adventure = "4.17.0"
@@ -70,6 +71,7 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
+mockbukkit = { module = "com.github.seeseemelk:MockBukkit-v1.21", version.ref = "mockbukkit" }
 
 # DB
 hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version.ref = "hibernate-platform" }
