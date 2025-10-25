@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -45,6 +46,8 @@ import java.util.concurrent.ExecutorService;
  * @see UserCurrency
  * @see Currency
  * @see GenericCachedRepository
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class UserCurrencyRepository extends GenericCachedRepository<UserCurrency, Long, UUID> {
 	
@@ -69,11 +72,61 @@ public class UserCurrencyRepository extends GenericCachedRepository<UserCurrency
 			UserCurrency.class,
 			userCurrencyEntity -> userCurrencyEntity.getPlayer().getUniqueId()
 		);
-	}
-	
-	/**
-	 * Finds the top user-currency associations for a given currency, limited by the specified count.
-	 * <p>
+        }
+
+        /**
+         * Retrieves all {@link UserCurrency} associations belonging to the supplied player identifier.
+         * <p>
+         * The lookup leverages the repository cache keyed by the player's {@link UUID} before falling
+         * back to the persistence layer, mirroring the behaviour used by higher-level services when
+         * materialising balances for a player session.
+         * </p>
+         *
+         * @param playerUniqueId the unique identifier of the player, must not be {@code null}
+         * @return a future resolving to the cached or freshly loaded associations for the player
+         */
+        public @NotNull CompletableFuture<List<UserCurrency>> findByUserAsync(
+                final @NotNull UUID playerUniqueId
+        ) {
+
+                Objects.requireNonNull(playerUniqueId, "playerUniqueId cannot be null");
+
+                return this.findListByAttributesAsync(
+                        Map.of(
+                                "player.uniqueId",
+                                playerUniqueId
+                        )
+                );
+        }
+
+        /**
+         * Resolves all {@link UserCurrency} records linked to the provided {@link Currency}.
+         * <p>
+         * The request first probes the cache with the currency identifier to reuse prior query
+         * results and then delegates to the persistence layer if required. Consumers typically use
+         * this method when presenting currency leaderboards or performing reconciliation jobs.
+         * </p>
+         *
+         * @param targetCurrency the currency to resolve associations for, must not be {@code null}
+         * @return a future yielding the cached or loaded associations tied to the currency
+         */
+        public @NotNull CompletableFuture<List<UserCurrency>> findByCurrencyAsync(
+                final @NotNull Currency targetCurrency
+        ) {
+
+                Objects.requireNonNull(targetCurrency, "currency cannot be null");
+
+                return this.findListByAttributesAsync(
+                        Map.of(
+                                "currency.id",
+                                targetCurrency.getId()
+                        )
+                );
+        }
+
+        /**
+         * Finds the top user-currency associations for a given currency, limited by the specified count.
+         * <p>
 	 * This method retrieves all {@link UserCurrency} entities associated with the given currency,
 	 * ordered by balance (highest first), and returns a sublist containing up to the specified limit.
 	 * If no associations are found, an empty list is returned.
