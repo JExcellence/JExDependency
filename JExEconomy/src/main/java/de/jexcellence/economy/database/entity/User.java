@@ -62,13 +62,24 @@ public class User extends AbstractEntity {
 	 * @param currentPlayerName the current name of the player, must not be null
 	 * @throws IllegalArgumentException if any parameter is null
 	 */
-	public User(
-		final @NotNull UUID playerUniqueId,
-		final @NotNull String currentPlayerName
-	) {
-		
-		this.uniqueId = playerUniqueId;
-		this.playerName = currentPlayerName;
+        public User(
+                final @NotNull UUID playerUniqueId,
+                final @NotNull String currentPlayerName
+        ) {
+
+                if (
+                        playerUniqueId == null
+                ) {
+                        throw new IllegalArgumentException("Player unique id cannot be null");
+                }
+                if (
+                        currentPlayerName == null || currentPlayerName.isBlank()
+                ) {
+                        throw new IllegalArgumentException("Player name cannot be null or blank");
+                }
+
+                this.uniqueId = playerUniqueId;
+                this.playerName = currentPlayerName;
 	}
 	
 	/**
@@ -77,12 +88,32 @@ public class User extends AbstractEntity {
 	 * @param bukkitPlayer the Bukkit player instance, must not be null
 	 * @throws IllegalArgumentException if the player is null
 	 */
-	public User(
-		final @NotNull Player bukkitPlayer
-	) {
-		
-		this.uniqueId = bukkitPlayer.getUniqueId();
-		this.playerName = bukkitPlayer.getName();
+        public User(
+                final @NotNull Player bukkitPlayer
+        ) {
+
+                if (
+                        bukkitPlayer == null
+                ) {
+                        throw new IllegalArgumentException("Player cannot be null");
+                }
+
+                final UUID playerUniqueId = bukkitPlayer.getUniqueId();
+                final String currentPlayerName = bukkitPlayer.getName();
+
+                if (
+                        playerUniqueId == null
+                ) {
+                        throw new IllegalArgumentException("Player unique id cannot be null");
+                }
+                if (
+                        currentPlayerName == null || currentPlayerName.isBlank()
+                ) {
+                        throw new IllegalArgumentException("Player name cannot be null or blank");
+                }
+
+                this.uniqueId = playerUniqueId;
+                this.playerName = currentPlayerName;
 	}
 	
 	/**
@@ -109,9 +140,15 @@ public class User extends AbstractEntity {
 	 * @param newPlayerName the new player name to set, must not be null
 	 * @throws IllegalArgumentException if the new player name is null
 	 */
-	public void setPlayerName(final @NotNull String newPlayerName) {
-		
-		this.playerName = newPlayerName;
+        public void setPlayerName(final @NotNull String newPlayerName) {
+
+                if (
+                        newPlayerName == null || newPlayerName.isBlank()
+                ) {
+                        throw new IllegalArgumentException("Player name cannot be null or blank");
+                }
+
+                this.playerName = newPlayerName;
 	}
 	
 	/**
