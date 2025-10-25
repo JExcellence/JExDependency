@@ -22,6 +22,7 @@ commands:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
         command: "pcurrencylog.command"
+        adminExport: "jexeconomy.admin.export"
 
 lut:
   prefix: '&8[&5CurrencyLog&8] &7'
