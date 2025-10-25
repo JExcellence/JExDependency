@@ -42,6 +42,8 @@ dependencies {
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockbukkit)
+    testImplementation(libs.bundles.inventory)
 }
 
 java {
