@@ -36,6 +36,12 @@ dependencies {
     compileOnly(libs.bundles.inventory)
     compileOnly("com.github.MilkBowl:VaultAPI:1.7") { isTransitive = false }
     compileOnly("me.clip:placeholderapi:2.11.6")
+
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockito.inline)
 }
 
 java {
@@ -78,6 +84,10 @@ tasks {
             }
         }
         options.memberLevel = JavadocMemberLevel.PUBLIC
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
