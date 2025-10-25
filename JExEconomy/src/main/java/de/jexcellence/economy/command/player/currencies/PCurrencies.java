@@ -5,12 +5,18 @@ import com.raindropcentral.commands.utility.Command;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.currency.CurrenciesActionOverviewView;
+import de.jexcellence.economy.database.entity.Currency;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Primary command handler for player-initiated currency management operations.
@@ -62,7 +68,10 @@ public class PCurrencies extends PlayerCommand {
 	 * user interface frameworks required for currency operations.
 	 * </p>
 	 */
-	private final JExEconomyImpl jexEconomyImpl;
+        private static final int DEFAULT_PAGE_SIZE = 10;
+
+        private final JExEconomyImpl jexEconomyImpl;
+        private final CurrencyCommandHandler currencyCommandHandler;
 	
 	/**
 	 * Constructs a new player currency command handler with the specified configuration and plugin instance.
@@ -88,8 +97,9 @@ public class PCurrencies extends PlayerCommand {
 		final @NotNull JExEconomy jexEconomy
 	) {
 		super(commandSectionConfiguration);
-		this.jexEconomyImpl = jexEconomy.getImpl();
-	}
+                this.jexEconomyImpl = jexEconomy.getImpl();
+                this.currencyCommandHandler = new CurrencyCommandHandler(this.jexEconomyImpl);
+        }
 	
 	/**
 	 * Handles the execution of currency commands initiated by players.
@@ -123,25 +133,48 @@ public class PCurrencies extends PlayerCommand {
 		final @NotNull String commandLabel,
 		final @NotNull String[] commandArguments
 	) {
-		if (
-			this.hasNoPermission(
-				commandExecutingPlayer,
-				ECurrenciesPermission.CURRENCIES
-			)
-		) {
-			return;
-		}
-		
-		this.jexEconomyImpl.getViewFrame().open(
-			CurrenciesActionOverviewView.class,
-			commandExecutingPlayer,
-			Map.of(
-				"plugin",
-				this.jexEconomyImpl
-			)
-		);
-	}
-	
+                if (
+                        this.hasNoPermission(
+                                commandExecutingPlayer,
+                                ECurrenciesPermission.CURRENCIES
+                        )
+                ) {
+                        return;
+                }
+
+                if (commandArguments.length == 0) {
+                        this.openOverviewInterface(commandExecutingPlayer);
+                        return;
+                }
+
+                final ActionContext actionContext = this.resolveActionContext(commandArguments);
+
+                switch (actionContext.action()) {
+                        case CREATE -> {
+                                if (this.hasNoPermission(commandExecutingPlayer, ECurrenciesPermission.CREATE)) {
+                                        return;
+                                }
+                                this.currencyCommandHandler.createCurrency(commandExecutingPlayer, commandArguments);
+                        }
+                        case DELETE -> {
+                                if (this.hasNoPermission(commandExecutingPlayer, ECurrenciesPermission.DELETE)) {
+                                        return;
+                                }
+                                this.currencyCommandHandler.deleteCurrency(commandExecutingPlayer, commandArguments);
+                        }
+                        case EDIT -> {
+                                if (this.hasNoPermission(commandExecutingPlayer, ECurrenciesPermission.EDIT)) {
+                                        return;
+                                }
+                                this.currencyCommandHandler.editCurrency(commandExecutingPlayer, commandArguments);
+                        }
+                        case INFO -> this.currencyCommandHandler.showCurrencyInfo(commandExecutingPlayer, commandArguments);
+                        case HELP -> this.openOverviewInterface(commandExecutingPlayer);
+                        case OVERVIEW -> this.handleOverviewAction(commandExecutingPlayer, actionContext.parameters());
+                        default -> this.handleOverviewAction(commandExecutingPlayer, actionContext.parameters());
+                }
+        }
+
 	/**
 	 * Provides tab completion for the currency command.
 	 * <p>
@@ -161,6 +194,183 @@ public class PCurrencies extends PlayerCommand {
 		final @NotNull String commandLabel,
 		final @NotNull String[] currentCommandArguments
 	) {
-		return new ArrayList<>();
-	}
+                if (commandArguments.length == 0) {
+                        return this.firstArgumentSuggestions("");
+                }
+
+                if (commandArguments.length == 1) {
+                        return this.firstArgumentSuggestions(commandArguments[0]);
+                }
+
+                if (!this.isOverviewAlias(commandArguments[0])) {
+                        return new ArrayList<>();
+                }
+
+                return switch (commandArguments.length) {
+                        case 2 -> List.of("1", "2", "3", "4", "5");
+                        case 3 -> List.of("10", "25", "50", "100");
+                        case 4 -> List.of("identifier", "symbol", "prefix", "suffix");
+                        case 5 -> List.of("asc", "desc");
+                        case 6 -> List.of("identifier=", "symbol=", "prefix=", "suffix=");
+                        default -> new ArrayList<>();
+                };
+        }
+
+        private void handleOverviewAction(
+                final @NotNull Player player,
+                final @NotNull String[] overviewArguments
+        ) {
+                if (this.hasNoPermission(player, ECurrenciesPermission.OVERVIEW)) {
+                        return;
+                }
+
+                final int page = this.parsePositiveIntegerOrDefault(overviewArguments, 0, 1);
+                final int pageSize = this.parsePositiveIntegerOrDefault(overviewArguments, 1, DEFAULT_PAGE_SIZE);
+                final Comparator<Currency> sortComparator = this.resolveSortComparator(overviewArguments, 2, 3);
+
+                Predicate<Currency> filterPredicate = currency -> true;
+                if (overviewArguments.length > 4) {
+                        final String filterExpression = overviewArguments[4];
+                        final Optional<Predicate<Currency>> resolvedFilter = this.resolveFilterPredicate(filterExpression);
+                        if (resolvedFilter.isEmpty()) {
+                                this.currencyCommandHandler.notifyInvalidListFilter(player, filterExpression);
+                                return;
+                        }
+                        filterPredicate = resolvedFilter.get();
+                }
+
+                this.currencyCommandHandler.listCurrencies(
+                        player,
+                        new CurrencyCommandHandler.CurrencyListQuery(
+                                page,
+                                pageSize,
+                                sortComparator,
+                                filterPredicate
+                        )
+                );
+        }
+
+        private void openOverviewInterface(final @NotNull Player commandExecutingPlayer) {
+                this.jexEconomyImpl.getViewFrame().open(
+                        CurrenciesActionOverviewView.class,
+                        commandExecutingPlayer,
+                        Map.of(
+                                "plugin",
+                                this.jexEconomyImpl
+                        )
+                );
+        }
+
+        private @NotNull ActionContext resolveActionContext(final @NotNull String[] commandArguments) {
+                if (commandArguments.length == 0) {
+                        return new ActionContext(ECurrenciesAction.OVERVIEW, new String[0]);
+                }
+
+                final Optional<ECurrenciesAction> explicitAction = ECurrenciesAction.fromString(commandArguments[0]);
+                if (explicitAction.isPresent()) {
+                        return new ActionContext(
+                                explicitAction.get(),
+                                Arrays.copyOfRange(commandArguments, 1, commandArguments.length)
+                        );
+                }
+
+                if (this.isOverviewAlias(commandArguments[0])) {
+                        return new ActionContext(
+                                ECurrenciesAction.OVERVIEW,
+                                Arrays.copyOfRange(commandArguments, 1, commandArguments.length)
+                        );
+                }
+
+                return new ActionContext(ECurrenciesAction.OVERVIEW, commandArguments.clone());
+        }
+
+        private @NotNull List<String> firstArgumentSuggestions(final @NotNull String currentToken) {
+                final String normalizedToken = currentToken.toLowerCase(Locale.ROOT);
+                final List<String> suggestions = new ArrayList<>();
+                suggestions.add("overview");
+                suggestions.add("help");
+                suggestions.add("create");
+                suggestions.add("delete");
+                suggestions.add("edit");
+                suggestions.add("info");
+                suggestions.add("list");
+                return suggestions.stream()
+                                  .filter(suggestion -> suggestion.startsWith(normalizedToken))
+                                  .toList();
+        }
+
+        private boolean isOverviewAlias(final @NotNull String argument) {
+                return "overview".equalsIgnoreCase(argument) || "list".equalsIgnoreCase(argument);
+        }
+
+        private int parsePositiveIntegerOrDefault(
+                final @NotNull String[] arguments,
+                final int index,
+                final int defaultValue
+        ) {
+                if (index >= arguments.length) {
+                        return defaultValue;
+                }
+
+                try {
+                        final int parsedValue = Integer.parseInt(arguments[index]);
+                        return parsedValue > 0 ? parsedValue : defaultValue;
+                } catch (final NumberFormatException ignored) {
+                        return defaultValue;
+                }
+        }
+
+        private @NotNull Comparator<Currency> resolveSortComparator(
+                final @NotNull String[] arguments,
+                final int fieldIndex,
+                final int directionIndex
+        ) {
+                final String field = fieldIndex < arguments.length ? arguments[fieldIndex] : "identifier";
+                final String direction = directionIndex < arguments.length ? arguments[directionIndex] : "asc";
+
+                Comparator<Currency> comparator = switch (field.toLowerCase(Locale.ROOT)) {
+                        case "symbol" -> Comparator.comparing(currency -> this.lowerCase(currency.getSymbol()));
+                        case "prefix" -> Comparator.comparing(currency -> this.lowerCase(currency.getPrefix()));
+                        case "suffix" -> Comparator.comparing(currency -> this.lowerCase(currency.getSuffix()));
+                        default -> Comparator.comparing(currency -> this.lowerCase(currency.getIdentifier()));
+                };
+
+                if ("desc".equalsIgnoreCase(direction)) {
+                        comparator = comparator.reversed();
+                }
+
+                return comparator;
+        }
+
+        private @NotNull Optional<Predicate<Currency>> resolveFilterPredicate(final @NotNull String filterExpression) {
+                final int separatorIndex = filterExpression.indexOf('=');
+                if (separatorIndex <= 0 || separatorIndex == filterExpression.length() - 1) {
+                        return Optional.empty();
+                }
+
+                final String field = filterExpression.substring(0, separatorIndex).toLowerCase(Locale.ROOT);
+                final String value = filterExpression.substring(separatorIndex + 1).trim();
+                if (value.isEmpty()) {
+                        return Optional.empty();
+                }
+
+                final String normalizedValue = value.toLowerCase(Locale.ROOT);
+                return switch (field) {
+                        case "identifier" -> Optional.of(currency -> this.lowerCase(currency.getIdentifier()).contains(normalizedValue));
+                        case "symbol" -> Optional.of(currency -> this.lowerCase(currency.getSymbol()).contains(normalizedValue));
+                        case "prefix" -> Optional.of(currency -> this.lowerCase(currency.getPrefix()).contains(normalizedValue));
+                        case "suffix" -> Optional.of(currency -> this.lowerCase(currency.getSuffix()).contains(normalizedValue));
+                        default -> Optional.empty();
+                };
+        }
+
+        private @NotNull String lowerCase(final String value) {
+                return value == null ? "" : value.toLowerCase(Locale.ROOT);
+        }
+
+        private record ActionContext(
+                @NotNull ECurrenciesAction action,
+                @NotNull String[] parameters
+        ) {
+        }
 }
