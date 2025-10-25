@@ -53,7 +53,7 @@ import java.util.Objects;
  * </ul>
  *
  * @author JExcellence
- * @version 1.0.0
+ * @version 1.0.1
  * @since 1.0.0
  * @see AbstractEntity
  * @see BasicMaterialConverter
@@ -78,8 +78,8 @@ public class Currency extends AbstractEntity {
 	 *   <li><strong>Empty:</strong> "" for currencies without prefixes</li>
 	 * </ul>
 	 */
-	@Column(name = "prefix", nullable = false)
-	private String prefix;
+        @Column(name = "prefix", nullable = false)
+        private String prefix;
 	
 	/**
 	 * The suffix text displayed after currency amounts in user interfaces.
@@ -181,9 +181,13 @@ public class Currency extends AbstractEntity {
 	 * populated by the persistence framework.
 	 * </p>
 	 */
-	protected Currency() {
-		// JPA/Hibernate requires a no-argument constructor for entity instantiation
-	}
+        protected Currency() {
+                // JPA/Hibernate requires a no-argument constructor for entity instantiation
+        }
+
+        private static @NotNull String sanitizeText(final @Nullable String value) {
+                return value != null ? value : "";
+        }
 	
 	/**
 	 * Constructs a new Currency entity with complete property specification.
@@ -219,20 +223,20 @@ public class Currency extends AbstractEntity {
 	 * @param icon the Material icon for graphical interfaces, must not be null
 	 * @throws IllegalArgumentException if any parameter is null
 	 */
-	public Currency(
-		final @NotNull String prefix,
-		final @NotNull String suffix,
-		final @NotNull String identifier,
-		final @NotNull String symbol,
-		final @NotNull Material icon
-	) {
-		
-		this.prefix = prefix;
-		this.suffix = suffix;
-		this.identifier = identifier;
-		this.symbol = symbol;
-		this.icon = icon;
-	}
+        public Currency(
+                final @NotNull String prefix,
+                final @NotNull String suffix,
+                final @NotNull String identifier,
+                final @NotNull String symbol,
+                final @NotNull Material icon
+        ) {
+
+                this.prefix = sanitizeText(prefix);
+                this.suffix = sanitizeText(suffix);
+                this.setIdentifier(identifier);
+                this.setSymbol(symbol);
+                this.setIcon(icon);
+        }
 	
 	/**
 	 * Constructs a new Currency entity with minimal configuration using default values.
@@ -307,12 +311,9 @@ public class Currency extends AbstractEntity {
 	 *
 	 * @param newCurrencyPrefix the new prefix string to set, null values are converted to empty string
 	 */
-	public void setPrefix(final @Nullable String newCurrencyPrefix) {
-		this.prefix =
-			newCurrencyPrefix != null ?
-			newCurrencyPrefix :
-			"";
-	}
+        public void setPrefix(final @Nullable String newCurrencyPrefix) {
+                this.prefix = sanitizeText(newCurrencyPrefix);
+        }
 	
 	/**
 	 * Retrieves the suffix text displayed after currency amounts.
@@ -350,14 +351,11 @@ public class Currency extends AbstractEntity {
 	 *
 	 * @param newCurrencySuffix the new suffix string to set, null values are converted to empty string
 	 */
-	public void setSuffix(
-		final @Nullable String newCurrencySuffix
-	) {
-		this.suffix =
-			newCurrencySuffix != null ?
-			newCurrencySuffix :
-			"";
-	}
+        public void setSuffix(
+                final @Nullable String newCurrencySuffix
+        ) {
+                this.suffix = sanitizeText(newCurrencySuffix);
+        }
 	
 	/**
 	 * Retrieves the unique identifier for this currency.
@@ -394,10 +392,13 @@ public class Currency extends AbstractEntity {
 	 * @param newCurrencyIdentifier the new unique identifier to set, must not be null
 	 * @throws IllegalArgumentException if the identifier is null
 	 */
-	public void setIdentifier(final @NotNull String newCurrencyIdentifier) {
-		
-		this.identifier = newCurrencyIdentifier;
-	}
+        public void setIdentifier(final @NotNull String newCurrencyIdentifier) {
+                if (newCurrencyIdentifier == null) {
+                        throw new IllegalArgumentException("Currency identifier must not be null");
+                }
+
+                this.identifier = newCurrencyIdentifier;
+        }
 	
 	/**
 	 * Retrieves the visual symbol representing this currency.
@@ -435,11 +436,9 @@ public class Currency extends AbstractEntity {
 	 *
 	 * @param newCurrencySymbol the new visual symbol to set, null values are converted to empty string
 	 */
-	public void setSymbol(final @Nullable String newCurrencySymbol) {
-		this.symbol = newCurrencySymbol != null ?
-		                            newCurrencySymbol :
-		                            "";
-	}
+        public void setSymbol(final @Nullable String newCurrencySymbol) {
+                this.symbol = sanitizeText(newCurrencySymbol);
+        }
 	
 	/**
 	 * Retrieves the Material icon used for graphical representation of this currency.
@@ -476,10 +475,84 @@ public class Currency extends AbstractEntity {
 	 * @param newCurrencyIcon the new Material icon to set, must not be null
 	 * @throws IllegalArgumentException if the icon Material is null
 	 */
-	public void setIcon(final @NotNull Material newCurrencyIcon) {
-		
-		this.icon = newCurrencyIcon;
-	}
+        public void setIcon(final @NotNull Material newCurrencyIcon) {
+                if (newCurrencyIcon == null) {
+                        throw new IllegalArgumentException("Currency icon must not be null");
+                }
+
+                this.icon = newCurrencyIcon;
+        }
+
+        /**
+         * Creates a new builder instance for constructing {@link Currency} objects.
+         *
+         * @return a new {@link Builder} instance for fluent currency construction
+         */
+        public static @NotNull Builder builder() {
+                return new Builder();
+        }
+
+        /**
+         * Builder for creating {@link Currency} instances using a fluent API.
+         */
+        public static final class Builder {
+
+                private String prefix = "";
+                private String suffix = "";
+                private String identifier;
+                private String symbol = "";
+                private Material icon = Material.GOLD_INGOT;
+
+                private Builder() {
+                }
+
+                public @NotNull Builder prefix(final @Nullable String newPrefix) {
+                        this.prefix = sanitizeText(newPrefix);
+                        return this;
+                }
+
+                public @NotNull Builder suffix(final @Nullable String newSuffix) {
+                        this.suffix = sanitizeText(newSuffix);
+                        return this;
+                }
+
+                public @NotNull Builder identifier(final @NotNull String newIdentifier) {
+                        if (newIdentifier == null) {
+                                throw new IllegalArgumentException("Currency identifier must not be null");
+                        }
+
+                        this.identifier = newIdentifier;
+                        return this;
+                }
+
+                public @NotNull Builder symbol(final @Nullable String newSymbol) {
+                        this.symbol = sanitizeText(newSymbol);
+                        return this;
+                }
+
+                public @NotNull Builder icon(final @NotNull Material newIcon) {
+                        if (newIcon == null) {
+                                throw new IllegalArgumentException("Currency icon must not be null");
+                        }
+
+                        this.icon = newIcon;
+                        return this;
+                }
+
+                public @NotNull Currency build() {
+                        if (this.identifier == null) {
+                                throw new IllegalStateException("Currency identifier must be provided before building");
+                        }
+
+                        return new Currency(
+                                this.prefix,
+                                this.suffix,
+                                this.identifier,
+                                this.symbol,
+                                this.icon
+                        );
+                }
+        }
 	
 	/**
 	 * Determines whether this currency is equal to another object.
