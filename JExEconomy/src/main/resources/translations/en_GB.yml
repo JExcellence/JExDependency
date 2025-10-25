@@ -1073,11 +1073,13 @@ currency_log:
   filter_operation_description: "Filter by operation type"
 
   # Command Usage
-  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/currencylog view [page]</gradient> <dark_gray>»</dark_gray> <gray>View paginated transaction logs</gray>"
-  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/currencylog filter</gradient> <dark_gray>»</dark_gray> <gray>Apply filters to log display</gray>"
-  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/currencylog clear</gradient> <dark_gray>»</dark_gray> <gray>Clear all active filters</gray>"
-  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/currencylog stats</gradient> <dark_gray>»</dark_gray> <gray>View log statistics and analytics</gray>"
-  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/currencylog export</gradient> <dark_gray>»</dark_gray> <gray>Export logs to file (admin only)</gray>"
+  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/pcurrencylog view [page]</gradient> <dark_gray>»</dark_gray> <gray>View paginated transaction logs</gray>"
+  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog filter <filter> <value></gradient> <dark_gray>»</dark_gray> <gray>Apply filters to log display</gray>"
+  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/pcurrencylog clear</gradient> <dark_gray>»</dark_gray> <gray>Clear all active filters</gray>"
+  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog stats</gradient> <dark_gray>»</dark_gray> <gray>View log statistics and analytics</gray>"
+  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/pcurrencylog export</gradient> <dark_gray>»</dark_gray> <gray>Export logs to file (admin only)</gray>"
+  command_help: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog help</gradient> <dark_gray>»</dark_gray> <gray>Show command usage information</gray>"
+  command_details: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog details <log_id></gradient> <dark_gray>»</dark_gray> <gray>Inspect a specific transaction log entry</gray>"
 
   # Statistics
   stats_overall_title: "<gradient:#3498db:#2980b9>📈 Overall Statistics</gradient>"
