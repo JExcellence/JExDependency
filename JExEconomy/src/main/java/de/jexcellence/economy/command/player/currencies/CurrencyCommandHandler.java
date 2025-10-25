@@ -10,9 +10,13 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * Comprehensive command handler for currency management operations within the JExEconomyImpl system.
@@ -227,23 +231,68 @@ public class CurrencyCommandHandler {
 	 *
 	 * @param commandExecutingPlayer the player requesting the currency list, must not be null
 	 */
-	public void listCurrencies(final @NotNull Player commandExecutingPlayer) {
-		CompletableFuture.supplyAsync(
-			() -> this.jexEconomyImpl.getCurrencyRepository().findAll(0, 128),
-			this.jexEconomyImpl.getExecutor()
-		).thenAcceptAsync(
-			availableCurrencies -> {
-				if (availableCurrencies.isEmpty()) {
-					this.sendEmptyCurrencyListMessage(commandExecutingPlayer);
-					return;
-				}
+        public void listCurrencies(final @NotNull Player commandExecutingPlayer) {
+                this.listCurrencies(
+                        commandExecutingPlayer,
+                        CurrencyListQuery.defaultQuery()
+                );
+        }
 
-				this.sendCurrencyListHeader(commandExecutingPlayer, availableCurrencies.size());
-				this.sendCurrencyListEntries(commandExecutingPlayer, availableCurrencies);
-			},
-			this.jexEconomyImpl.getExecutor()
-		);
-	}
+        /**
+         * Lists currencies for the given player using the provided query options.
+         * <p>
+         * This overload allows callers to customize pagination, sorting, and filtering behaviour while
+         * still delegating the asynchronous retrieval and message formatting to the handler.
+         * </p>
+         *
+         * @param commandExecutingPlayer the player requesting the currency list, must not be null
+         * @param listQuery the configuration describing pagination, sorting, and filtering options, must not be null
+         */
+        public void listCurrencies(
+                final @NotNull Player commandExecutingPlayer,
+                final @NotNull CurrencyListQuery listQuery
+        ) {
+                Objects.requireNonNull(commandExecutingPlayer, "commandExecutingPlayer");
+                Objects.requireNonNull(listQuery, "listQuery");
+
+                final int sanitizedPage = Math.max(1, listQuery.page());
+                final int sanitizedPageSize = Math.max(1, Math.min(listQuery.pageSize(), CurrencyListQuery.MAXIMUM_PAGE_SIZE));
+
+                CompletableFuture.supplyAsync(
+                        () -> this.jexEconomyImpl.getCurrencyRepository().findAll(0, CurrencyListQuery.MAXIMUM_PAGE_SIZE),
+                        this.jexEconomyImpl.getExecutor()
+                ).thenAcceptAsync(
+                        availableCurrencies -> {
+                                if (availableCurrencies == null || availableCurrencies.isEmpty()) {
+                                        this.sendEmptyCurrencyListMessage(commandExecutingPlayer);
+                                        return;
+                                }
+
+                                final List<Currency> filteredCurrencies = availableCurrencies.stream()
+                                                                                               .filter(listQuery.filter())
+                                                                                               .sorted(listQuery.sortComparator())
+                                                                                               .collect(Collectors.toList());
+
+                                if (filteredCurrencies.isEmpty()) {
+                                        this.sendEmptyCurrencyListMessage(commandExecutingPlayer);
+                                        return;
+                                }
+
+                                final int fromIndex = Math.min(filteredCurrencies.size(), (sanitizedPage - 1) * sanitizedPageSize);
+                                if (fromIndex >= filteredCurrencies.size()) {
+                                        this.sendEmptyCurrencyListMessage(commandExecutingPlayer);
+                                        return;
+                                }
+
+                                final int toIndex = Math.min(filteredCurrencies.size(), fromIndex + sanitizedPageSize);
+                                final List<Currency> pageCurrencies = filteredCurrencies.subList(fromIndex, toIndex);
+
+                                this.sendCurrencyListHeader(commandExecutingPlayer, filteredCurrencies.size());
+                                this.sendCurrencyListEntries(commandExecutingPlayer, pageCurrencies);
+                        },
+                        this.jexEconomyImpl.getExecutor()
+                );
+        }
 
 	/**
 	 * Edits a specific field of an existing currency with validation and persistence.
@@ -787,11 +836,54 @@ public class CurrencyCommandHandler {
 	 *
 	 * @param targetPlayer the player to send the message to, must not be null
 	 */
-	private void sendEmptyCurrencyListMessage(final @NotNull Player targetPlayer) {
-		TranslationService.create(TranslationKey.of("currency.list.empty"), targetPlayer)
-			.withPrefix()
-			.send();
-	}
+        private void sendEmptyCurrencyListMessage(final @NotNull Player targetPlayer) {
+                TranslationService.create(TranslationKey.of("currency.list.empty"), targetPlayer)
+                        .withPrefix()
+                        .send();
+        }
+
+        /**
+         * Notifies the player that the provided list filter was invalid and therefore rejected.
+         *
+         * @param targetPlayer the player who should receive the notification, must not be null
+         * @param filterExpression the filter expression that failed validation, must not be null
+         */
+        void notifyInvalidListFilter(
+                final @NotNull Player targetPlayer,
+                final @NotNull String filterExpression
+        ) {
+                TranslationService.create(TranslationKey.of("currency.list.invalid_filter"), targetPlayer)
+                        .withPrefix()
+                        .with("filter", filterExpression)
+                        .send();
+        }
+
+        /**
+         * Immutable configuration describing pagination, sorting, and filtering behaviour for currency listings.
+         */
+        public record CurrencyListQuery(
+                int page,
+                int pageSize,
+                @NotNull Comparator<Currency> sortComparator,
+                @NotNull Predicate<Currency> filter
+        ) {
+
+                private static final int MAXIMUM_PAGE_SIZE = 128;
+
+                public CurrencyListQuery {
+                        Objects.requireNonNull(sortComparator, "sortComparator");
+                        Objects.requireNonNull(filter, "filter");
+                }
+
+                public static CurrencyListQuery defaultQuery() {
+                        return new CurrencyListQuery(
+                                1,
+                                MAXIMUM_PAGE_SIZE,
+                                Comparator.comparing(currency -> currency.getIdentifier().toLowerCase(java.util.Locale.ROOT)),
+                                currency -> true
+                        );
+                }
+        }
 
 	/**
 	 * Sends currency creation success message to the player.
