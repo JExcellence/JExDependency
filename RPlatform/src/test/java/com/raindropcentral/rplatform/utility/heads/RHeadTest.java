@@ -10,7 +10,7 @@ import org.mockito.Mockito;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static com.raindropcentral.rplatform.utility.heads.HeadAssertions.assertHeadDefinition;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 class RHeadTest {
@@ -18,27 +18,20 @@ class RHeadTest {
     private static final String IDENTIFIER = "test-head";
     private static final String UUID_STRING = "00000000-0000-0000-0000-000000000001";
     private static final String TEXTURE = "base64-texture";
+    private static final UUID UUID_VALUE = UUID.fromString(UUID_STRING);
 
     @Test
     void constructorWithExplicitFilterAssignsMetadata() {
         final TestHead head = new TestHead(IDENTIFIER, UUID_STRING, TEXTURE, EHeadFilter.DECORATION);
 
-        assertEquals(IDENTIFIER, head.getIdentifier());
-        assertEquals(UUID.fromString(UUID_STRING), head.getUuid());
-        assertEquals(TEXTURE, head.getTexture());
-        assertEquals(EHeadFilter.DECORATION, head.getFilter());
-        assertEquals("head." + IDENTIFIER, head.getTranslationKey());
+        assertHeadDefinition(head, IDENTIFIER, UUID_VALUE, TEXTURE, EHeadFilter.DECORATION);
     }
 
     @Test
     void constructorDefaultsInventoryFilterWhenNotProvided() {
         final TestHead head = new TestHead(IDENTIFIER, UUID_STRING, TEXTURE);
 
-        assertEquals(IDENTIFIER, head.getIdentifier());
-        assertEquals(UUID.fromString(UUID_STRING), head.getUuid());
-        assertEquals(TEXTURE, head.getTexture());
-        assertEquals(EHeadFilter.INVENTORY, head.getFilter());
-        assertEquals("head." + IDENTIFIER, head.getTranslationKey());
+        assertHeadDefinition(head, IDENTIFIER, UUID_VALUE, TEXTURE, EHeadFilter.INVENTORY);
     }
 
     @Test
@@ -57,7 +50,7 @@ class RHeadTest {
             final ItemStack result = head.getHead(player);
 
             assertSame(expectedStack, result);
-            context.verifyBuilderInteractions(UUID.fromString(UUID_STRING), TEXTURE);
+            context.verifyBuilderInteractions(UUID_VALUE, TEXTURE);
             context.verifyTranslationCalls(player);
         }
     }

@@ -1,11 +1,12 @@
-import org.gradle.jvm.tasks.Jar
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.external.javadoc.StandardJavadocDocletOptions
+import org.gradle.api.tasks.testing.Test
+import org.gradle.jvm.tasks.Jar
 
 plugins {
     id("java-library")
     `maven-publish`
-    id("com.gradleup.shadow") version "8.3.6" apply false
+    alias(libs.plugins.shadow) apply false
 }
 
 java {
@@ -27,6 +28,10 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<Javadoc>().configureEach {
     options.encoding = "UTF-8"
     (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 tasks.withType<Jar>().configureEach {
@@ -82,10 +87,26 @@ dependencies {
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory)
 
-    compileOnly(libs.jexeconomy)
-    compileOnly("com.raindropcentral.rcore:rcore:2.0.0")
-    compileOnly("me.clip:placeholderapi:2.11.6")
-    compileOnly("net.luckperms:api:5.5")
+    // Example of plugin-provided API used by listeners
+    compileOnly(libs.jecurrency)
+    compileOnly(libs.rcore)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockbukkit)
+    testImplementation(libs.rcore)
+    testImplementation(libs.jackson.databind)
+    testImplementation(libs.adventure.api)
+    testImplementation(libs.adventure.minimessage)
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 publishing {
