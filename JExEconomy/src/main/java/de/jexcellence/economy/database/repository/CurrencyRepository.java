@@ -5,6 +5,8 @@ import de.jexcellence.hibernate.repository.GenericCachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -37,6 +39,8 @@ import java.util.concurrent.ExecutorService;
  * @author JExcellence
  * @see Currency
  * @see GenericCachedRepository
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class CurrencyRepository extends GenericCachedRepository<Currency, Long, String> {
 	
@@ -51,15 +55,37 @@ public class CurrencyRepository extends GenericCachedRepository<Currency, Long, 
 	 * @param jpaEntityManagerFactory the entity manager factory for JPA database operations, must not be null
 	 * @throws IllegalArgumentException if any parameter is null
 	 */
-	public CurrencyRepository(
-		final @NotNull ExecutorService asyncExecutorService,
-		final @NotNull EntityManagerFactory jpaEntityManagerFactory
-	) {
-		super(
-			asyncExecutorService,
-			jpaEntityManagerFactory,
-			Currency.class,
-			Currency::getIdentifier
-		);
-	}
+        public CurrencyRepository(
+                final @NotNull ExecutorService asyncExecutorService,
+                final @NotNull EntityManagerFactory jpaEntityManagerFactory
+        ) {
+                super(
+                        asyncExecutorService,
+                        jpaEntityManagerFactory,
+                        Currency.class,
+                        Currency::getIdentifier
+                );
+        }
+
+        /**
+         * Resolves the currency matching the supplied identifier from the cache or persistence layer.
+         *
+         * @param identifier the identifier associated with the desired currency, must not be null
+         * @return an optional containing the located currency when present, otherwise an empty optional
+         * @since 1.0.1
+         */
+        public @NotNull Optional<Currency> findByIdentifier(final @NotNull String identifier) {
+                return Optional.ofNullable(findByCacheKey("identifier", identifier));
+        }
+
+        /**
+         * Asynchronously resolves the currency matching the supplied identifier.
+         *
+         * @param identifier the identifier associated with the desired currency, must not be null
+         * @return a future yielding an optional currency result once the lookup completes
+         * @since 1.0.1
+         */
+        public @NotNull CompletableFuture<Optional<Currency>> findByIdentifierAsync(final @NotNull String identifier) {
+                return findByCacheKeyAsync("identifier", identifier).thenApply(Optional::ofNullable);
+        }
 }
