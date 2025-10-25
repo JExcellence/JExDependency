@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.json.reward;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import com.raindropcentral.rdq.reward.AbstractReward;
 import com.raindropcentral.rdq.reward.CommandReward;
 import com.raindropcentral.rdq.reward.CurrencyReward;

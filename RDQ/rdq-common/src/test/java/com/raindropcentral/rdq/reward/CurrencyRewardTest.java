@@ -1,8 +1,8 @@
 package com.raindropcentral.rdq.reward;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import de.jexcellence.currency.JECurrency;
 import de.jexcellence.currency.adapter.CurrencyAdapter;
 import de.jexcellence.currency.database.entity.Currency;

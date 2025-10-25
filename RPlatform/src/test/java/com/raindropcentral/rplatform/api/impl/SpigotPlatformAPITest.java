@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.api.impl;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import net.kyori.adventure.text.Component;

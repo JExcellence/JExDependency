@@ -1,6 +1,6 @@
 package com.raindropcentral.rplatform.utility.unified;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import com.raindropcentral.rplatform.utility.itembuilder.LegacyItemBuilder;
 import com.raindropcentral.rplatform.utility.itembuilder.ModernItemBuilder;
 import com.raindropcentral.rplatform.utility.itembuilder.potion.LegacyPotionBuilder;

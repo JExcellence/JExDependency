@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.utility;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.bounty.BountySection;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;

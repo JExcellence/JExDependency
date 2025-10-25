@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.localization;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import de.jexcellence.jextranslate.api.LocaleResolver;
 import de.jexcellence.jextranslate.api.MessageFormatter;
 import de.jexcellence.jextranslate.api.TranslationRepository;

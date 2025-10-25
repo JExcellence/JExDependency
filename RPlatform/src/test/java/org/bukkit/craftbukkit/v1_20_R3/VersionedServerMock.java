@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.v1_20_R3;
 
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.ServerMock;
 
 /**
  * Simple {@link ServerMock} subclass that lives in a CraftBukkit-style
