@@ -1,8 +1,8 @@
 package de.jexcellence.economy.migrate;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.command.ConsoleCommandSenderMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.command.ConsoleCommandSenderMock;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.migrate.VaultMigrationManager.MigrationResult;
 import de.jexcellence.economy.migrate.VaultMigrationManager.MigrationStats;

@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import de.jexcellence.dependency.JEDependency;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

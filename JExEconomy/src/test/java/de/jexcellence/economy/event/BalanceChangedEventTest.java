@@ -1,9 +1,9 @@
 package de.jexcellence.economy.event;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
-import be.seeseemelk.mockbukkit.plugin.MockPlugin;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.plugin.MockPlugin;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.User;
 import de.jexcellence.economy.type.EChangeType;

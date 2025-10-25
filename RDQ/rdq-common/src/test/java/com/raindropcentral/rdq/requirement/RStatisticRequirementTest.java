@@ -1,8 +1,8 @@
 package com.raindropcentral.rdq.requirement;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import com.raindropcentral.rdq.requirement.RStatisticRequirement.RequirementMode;
 import com.raindropcentral.rdq.service.RCoreBridge;
 import com.raindropcentral.rplatform.statistic.StatisticType;

@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.utility.itembuilder.potion;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.raindropcentral.rplatform.utility.itembuilder.AItemBuilder;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;

@@ -1,6 +1,6 @@
 package com.raindropcentral.rplatform.console;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import de.jexcellence.jextranslate.api.LocaleResolver;
 import de.jexcellence.jextranslate.api.MessageFormatter;
 import de.jexcellence.jextranslate.api.Placeholder;

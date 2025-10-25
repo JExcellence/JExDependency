@@ -1,6 +1,6 @@
 package com.raindropcentral.rplatform;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import com.raindropcentral.rplatform.placeholder.PAPIHook;
 import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;

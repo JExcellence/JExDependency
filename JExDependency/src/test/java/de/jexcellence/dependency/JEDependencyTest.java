@@ -1,7 +1,7 @@
 package de.jexcellence.dependency;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.manager.DependencyManager;
 import org.bukkit.plugin.java.JavaPlugin;

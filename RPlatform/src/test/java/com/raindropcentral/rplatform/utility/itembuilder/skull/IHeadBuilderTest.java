@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.utility.itembuilder.skull;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.raindropcentral.rplatform.utility.itembuilder.AItemBuilder;
 import com.raindropcentral.rplatform.version.ServerEnvironment;
 import net.kyori.adventure.text.Component;

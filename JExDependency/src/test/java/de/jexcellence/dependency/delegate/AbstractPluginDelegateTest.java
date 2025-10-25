@@ -1,6 +1,6 @@
 package de.jexcellence.dependency.delegate;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.MockBukkit;
 import org.bukkit.Server;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
