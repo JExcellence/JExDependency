@@ -42,9 +42,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;

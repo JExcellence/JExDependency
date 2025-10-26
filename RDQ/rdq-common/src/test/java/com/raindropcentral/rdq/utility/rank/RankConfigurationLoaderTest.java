@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.utility.rank;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.ranks.rank.RankSection;
 import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;

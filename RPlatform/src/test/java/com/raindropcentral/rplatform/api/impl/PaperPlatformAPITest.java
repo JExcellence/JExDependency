@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.api.impl;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
 import com.raindropcentral.rplatform.api.PlatformType;

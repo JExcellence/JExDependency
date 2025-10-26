@@ -1,7 +1,7 @@
 package com.raindropcentral.rplatform.serializer;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.junit.jupiter.api.AfterEach;

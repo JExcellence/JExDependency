@@ -1,8 +1,8 @@
 package com.raindropcentral.core;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.plugin.PluginManagerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.plugin.PluginManagerMock;
 import de.jexcellence.dependency.JEDependency;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

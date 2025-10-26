@@ -1,9 +1,9 @@
 package com.raindropcentral.rdq.requirement;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.WorldMock;
-import be.seeseemelk.mockbukkit.entity.PlayerMock;
+import org.mockbukkit.mockbukkit.MockBukkit;
+import org.mockbukkit.mockbukkit.ServerMock;
+import org.mockbukkit.mockbukkit.WorldMock;
+import org.mockbukkit.mockbukkit.entity.PlayerMock;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.junit.jupiter.api.AfterEach;
