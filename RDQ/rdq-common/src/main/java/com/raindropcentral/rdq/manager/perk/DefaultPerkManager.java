@@ -5,6 +5,7 @@ import com.raindropcentral.rdq.perk.runtime.CooldownService;
 import com.raindropcentral.rdq.perk.runtime.DefaultPerkRegistry;
 import com.raindropcentral.rdq.perk.runtime.DefaultPerkStateService;
 import com.raindropcentral.rdq.perk.runtime.DefaultPerkTriggerService;
+import com.raindropcentral.rdq.perk.runtime.PerkAuditService;
 import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
 import com.raindropcentral.rdq.perk.runtime.PerkRuntimeStateService;
 import com.raindropcentral.rdq.perk.runtime.PerkStateService;
@@ -20,7 +21,7 @@ import java.util.logging.Logger;
  * Default implementation of PerkManager.
  *
  * @author JExcellence
- * @version 1.0.2
+ * @version 1.0.3
  * @since TBD
  */
 public class DefaultPerkManager implements PerkManager {
@@ -30,6 +31,7 @@ public class DefaultPerkManager implements PerkManager {
     private final RDQ rdq;
     private final CooldownService cooldownService;
     private final PerkRuntimeStateService runtimeStateService;
+    private final PerkAuditService auditService;
     private final DefaultPerkRegistry perkRegistry;
     private final PerkStateService perkStateService;
     private final PerkTriggerService perkTriggerService;
@@ -38,9 +40,10 @@ public class DefaultPerkManager implements PerkManager {
         this.rdq = rdq;
         this.cooldownService = new CooldownService();
         this.runtimeStateService = new PerkRuntimeStateService();
-        this.perkRegistry = new DefaultPerkRegistry(rdq, rdq.getPerkTypeRegistry(), cooldownService, runtimeStateService);
+        this.auditService = new PerkAuditService();
+        this.perkRegistry = new DefaultPerkRegistry(rdq, rdq.getPerkTypeRegistry(), cooldownService, runtimeStateService, auditService);
         this.perkStateService = new DefaultPerkStateService(rdq);
-        this.perkTriggerService = new DefaultPerkTriggerService(rdq, perkRegistry);
+        this.perkTriggerService = new DefaultPerkTriggerService(rdq, perkRegistry, auditService);
     }
 
     @Override

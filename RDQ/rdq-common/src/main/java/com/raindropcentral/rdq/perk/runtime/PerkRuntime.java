@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * </p>
  *
  * @author JExcellence
- * @version 1.0.1
+ * @version 1.0.2
  * @since TBD
  */
 public interface PerkRuntime {
@@ -63,6 +63,16 @@ public interface PerkRuntime {
      * @param player the player
      */
     void trigger(@NotNull Player player);
+
+    /**
+     * Triggers the perk effect while providing contextual information about the source.
+     *
+     * @param player the player
+     * @param source description of the trigger source, typically an event name
+     */
+    default void trigger(@NotNull Player player, @NotNull String source) {
+        trigger(player);
+    }
 
     /**
      * Checks if the player is currently on cooldown for this perk.

@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -33,7 +34,7 @@ import java.util.stream.Collectors;
  * Registry for managing {@link PerkRuntime} instances.
  *
  * @author JExcellence
- * @version 1.0.2
+ * @version 1.0.3
  * @since TBD
  */
 public class DefaultPerkRegistry extends PerkRegistry {
@@ -44,18 +45,21 @@ public class DefaultPerkRegistry extends PerkRegistry {
     private final RDQ rdq;
     private final CooldownService cooldownService;
     private final PerkRuntimeStateService runtimeStateService;
+    private final PerkAuditService auditService;
     private final Map<String, PerkRuntime> perkRuntimes = new ConcurrentHashMap<>();
 
     public DefaultPerkRegistry(
             @NotNull RDQ rdq,
             @NotNull PerkTypeRegistry typeRegistry,
             @NotNull CooldownService cooldownService,
-            @NotNull PerkRuntimeStateService runtimeStateService
+            @NotNull PerkRuntimeStateService runtimeStateService,
+            @NotNull PerkAuditService auditService
     ) {
         super(typeRegistry);
         this.rdq = rdq;
         this.cooldownService = cooldownService;
         this.runtimeStateService = runtimeStateService;
+        this.auditService = auditService;
     }
 
     @Nullable
@@ -94,7 +98,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
         final PerkConfig perkConfig = adaptPerkConfig(perk, config);
         register(perkConfig);
         final var loadedPerk = Objects.requireNonNull(get(identifier), "Perk registration failed for " + identifier);
-        final PerkRuntime runtime = new SectionBackedPerkRuntime(perk, loadedPerk, config, cooldownService, runtimeStateService);
+        final PerkRuntime runtime = new SectionBackedPerkRuntime(perk, loadedPerk, config, cooldownService, runtimeStateService, auditService);
         registerPerkRuntime(runtime);
         return runtime;
     }
@@ -201,6 +205,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
         private final LoadedPerk loadedPerk;
         private final CooldownService cooldownService;
         private final PerkRuntimeStateService.PerkRuntimeState runtimeState;
+        private final PerkAuditService auditService;
         private final boolean globallyEnabled;
         private final Integer maxConcurrentUsers;
         private final String requiredPermission;
@@ -217,12 +222,14 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 @NotNull LoadedPerk loadedPerk,
                 @NotNull PerkSection section,
                 @NotNull CooldownService cooldownService,
-                @NotNull PerkRuntimeStateService runtimeStateService
+                @NotNull PerkRuntimeStateService runtimeStateService,
+                @NotNull PerkAuditService auditService
         ) {
             this.perk = perk;
             this.loadedPerk = loadedPerk;
             this.cooldownService = cooldownService;
             this.runtimeState = runtimeStateService.stateFor(loadedPerk.getId());
+            this.auditService = auditService;
             this.globallyEnabled = perk.isEnabled();
             this.maxConcurrentUsers = Optional.ofNullable(perk.getMaxConcurrentUsers())
                     .filter(value -> value != null && value > 0)
@@ -284,23 +291,40 @@ public class DefaultPerkRegistry extends PerkRegistry {
 
         @Override
         public boolean activate(@NotNull Player player) {
+            final UUID playerId = player.getUniqueId();
             final long durationSeconds = resolveDurationSeconds(player);
-            final long expiryMillis = durationSeconds > 0 ? System.currentTimeMillis() + (durationSeconds * 1000) : 0L;
-            if (!runtimeState.markActive(player.getUniqueId(), expiryMillis, maxConcurrentUsers)) {
+            final long expiryMillis = durationSeconds > 0 ? System.currentTimeMillis() + (durationSeconds * 1000L) : 0L;
+            if (!runtimeState.markActive(playerId, expiryMillis, maxConcurrentUsers)) {
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("durationSeconds", durationSeconds);
+                if (maxConcurrentUsers != null) {
+                    context.put("maxConcurrentUsers", maxConcurrentUsers);
+                }
+                auditService.recordActivation(getId(), playerId, false, "concurrency-limit", context, null);
                 return false;
             }
             boolean activated = false;
             try {
                 activated = loadedPerk.type().activate(player, loadedPerk);
                 if (!activated) {
-                    runtimeState.markInactive(player.getUniqueId());
+                    runtimeState.markInactive(playerId);
+                    final Map<String, Object> context = new LinkedHashMap<>();
+                    context.put("durationSeconds", durationSeconds);
+                    auditService.recordActivation(getId(), playerId, false, "runtime-rejected", context, null);
                     return false;
                 }
-                applyCooldownIfNecessary(player);
+                final long cooldownSeconds = applyCooldownIfNecessary(player);
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("durationSeconds", durationSeconds);
+                context.put("cooldownSeconds", cooldownSeconds);
+                auditService.recordActivation(getId(), playerId, true, "activated", context, null);
                 return true;
             } catch (Exception exception) {
-                runtimeState.markInactive(player.getUniqueId());
-                LOGGER.log(Level.WARNING, "Failed to activate perk {0} for player {1}", new Object[]{getId(), player.getUniqueId()});
+                runtimeState.markInactive(playerId);
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("durationSeconds", durationSeconds);
+                auditService.recordActivation(getId(), playerId, false, "exception", context, exception);
+                LOGGER.log(Level.WARNING, "Failed to activate perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
                 LOGGER.log(Level.FINER, "Activation failure", exception);
                 return false;
             }
@@ -308,14 +332,19 @@ public class DefaultPerkRegistry extends PerkRegistry {
 
         @Override
         public boolean deactivate(@NotNull Player player) {
+            final UUID playerId = player.getUniqueId();
             try {
                 final boolean success = loadedPerk.type().deactivate(player, loadedPerk);
                 if (success) {
-                    runtimeState.markInactive(player.getUniqueId());
+                    runtimeState.markInactive(playerId);
+                    auditService.recordDeactivation(getId(), playerId, true, "deactivated", null);
+                } else {
+                    auditService.recordDeactivation(getId(), playerId, false, "runtime-rejected", null);
                 }
                 return success;
             } catch (Exception exception) {
-                LOGGER.log(Level.WARNING, "Failed to deactivate perk {0} for player {1}", new Object[]{getId(), player.getUniqueId()});
+                auditService.recordDeactivation(getId(), playerId, false, "exception", exception);
+                LOGGER.log(Level.WARNING, "Failed to deactivate perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
                 LOGGER.log(Level.FINER, "Deactivation failure", exception);
                 return false;
             }
@@ -323,23 +352,45 @@ public class DefaultPerkRegistry extends PerkRegistry {
 
         @Override
         public void trigger(@NotNull Player player) {
+            trigger(player, "runtime");
+        }
+
+        @Override
+        public void trigger(@NotNull Player player, @NotNull String source) {
+            final UUID playerId = player.getUniqueId();
             if (isOnCooldown(player)) {
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("remainingCooldownSeconds", getRemainingCooldown(player));
+                auditService.recordTrigger(getId(), playerId, source, false, "cooldown-active", context, null);
                 return;
             }
             final long durationSeconds = resolveDurationSeconds(player);
             final boolean trackDuration = durationSeconds > 0;
-            final long expiryMillis = trackDuration ? System.currentTimeMillis() + (durationSeconds * 1000) : 0L;
-            if (trackDuration && !runtimeState.markActive(player.getUniqueId(), expiryMillis, maxConcurrentUsers)) {
+            final long expiryMillis = trackDuration ? System.currentTimeMillis() + (durationSeconds * 1000L) : 0L;
+            if (trackDuration && !runtimeState.markActive(playerId, expiryMillis, maxConcurrentUsers)) {
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("durationSeconds", durationSeconds);
+                if (maxConcurrentUsers != null) {
+                    context.put("maxConcurrentUsers", maxConcurrentUsers);
+                }
+                auditService.recordTrigger(getId(), playerId, source, false, "concurrency-limit", context, null);
                 return;
             }
             try {
                 loadedPerk.type().trigger(player, loadedPerk);
-                applyCooldownIfNecessary(player);
+                final long cooldownSeconds = applyCooldownIfNecessary(player);
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("durationSeconds", durationSeconds);
+                context.put("cooldownSeconds", cooldownSeconds);
+                auditService.recordTrigger(getId(), playerId, source, true, "triggered", context, null);
             } catch (Exception exception) {
-                LOGGER.log(Level.WARNING, "Failed to trigger perk {0} for player {1}", new Object[]{getId(), player.getUniqueId()});
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("durationSeconds", durationSeconds);
+                auditService.recordTrigger(getId(), playerId, source, false, "exception", context, exception);
+                LOGGER.log(Level.WARNING, "Failed to trigger perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
                 LOGGER.log(Level.FINER, "Trigger failure", exception);
                 if (trackDuration) {
-                    runtimeState.markInactive(player.getUniqueId());
+                    runtimeState.markInactive(playerId);
                 }
             }
         }
@@ -373,14 +424,15 @@ public class DefaultPerkRegistry extends PerkRegistry {
             return supportedEvents.contains(normalised);
         }
 
-        private void applyCooldownIfNecessary(@NotNull Player player) {
+        private long applyCooldownIfNecessary(@NotNull Player player) {
             if (!getType().hasCooldown()) {
-                return;
+                return 0L;
             }
             final long cooldown = resolveCooldownSeconds(player);
             if (cooldown > 0) {
                 setCooldown(player, cooldown);
             }
+            return cooldown;
         }
 
         private long resolveCooldownSeconds(@NotNull Player player) {
@@ -422,13 +474,16 @@ public class DefaultPerkRegistry extends PerkRegistry {
         }
 
         private void handleExpiry(@NotNull Player player) {
+            final UUID playerId = player.getUniqueId();
             try {
                 loadedPerk.type().deactivate(player, loadedPerk);
+                auditService.recordExpiry(getId(), playerId, "expired");
             } catch (Exception exception) {
-                LOGGER.log(Level.FINE, "Failed to deactivate expired perk {0} for player {1}", new Object[]{getId(), player.getUniqueId()});
+                auditService.recordDeactivation(getId(), playerId, false, "expiry-exception", exception);
+                LOGGER.log(Level.FINE, "Failed to deactivate expired perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
                 LOGGER.log(Level.FINER, "Expiry deactivation failure", exception);
             } finally {
-                runtimeState.markInactive(player.getUniqueId());
+                runtimeState.markInactive(playerId);
             }
         }
 
@@ -477,6 +532,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 } else {
                     runtimeState.markInactive(playerId);
                     cooldownService.clearCooldown(playerId, getId());
+                    auditService.recordCleanup(getId(), playerId, "offline-cleanup");
                 }
             }
             runtimeState.clearAll();

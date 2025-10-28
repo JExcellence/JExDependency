@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * Cooldowns are ephemeral and reset on server restart.
  * </p>
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */

@@ -100,43 +100,28 @@ public final class PerkRuntimeStateService {
          */
         public boolean markActive(@NotNull UUID playerId, long expiryMillis, @Nullable Integer maxConcurrentUsers) {
             Objects.requireNonNull(playerId, "playerId");
-
-            // If the player is already active, just update the expiry.
-            RuntimeEntry existingEntry = activePlayers.get(playerId);
-            if (existingEntry != null) {
-                activePlayers.put(playerId, existingEntry.withExpiry(expiryMillis));
-                return true;
-            }
-
-            // For new activations, check the concurrency limit first.
-            if (maxConcurrentUsers != null) {
-                if (activeCount.get() >= maxConcurrentUsers) {
-                    return false;
+            final AtomicReference<Boolean> allowed = new AtomicReference<>(Boolean.TRUE);
+            activePlayers.compute(playerId, (id, existing) -> {
+                if (existing != null) {
+                    return existing.withExpiry(expiryMillis);
                 }
-            }
-
-            final AtomicReference<Boolean> success = new AtomicReference<>(false);
-            activePlayers.computeIfAbsent(playerId, id -> {
                 if (maxConcurrentUsers != null) {
-                    // Double-check limit inside compute to handle concurrent activations
                     while (true) {
-                        int current = activeCount.get();
+                        final int current = activeCount.get();
                         if (current >= maxConcurrentUsers) {
-                            return null; // Another thread took the last spot
+                            allowed.set(Boolean.FALSE);
+                            return null;
                         }
                         if (activeCount.compareAndSet(current, current + 1)) {
-                            success.set(true);
-                            return new RuntimeEntry(expiryMillis);
+                            break;
                         }
                     }
                 } else {
                     activeCount.incrementAndGet();
-                    success.set(true);
-                    return new RuntimeEntry(expiryMillis);
                 }
+                return new RuntimeEntry(expiryMillis);
             });
-
-            return success.get();
+            return Boolean.TRUE.equals(allowed.get()) && activePlayers.containsKey(playerId);
         }
 
         /**

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 /**
  * Default implementation of PerkStateService.
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.1
  * @since TBD
  */

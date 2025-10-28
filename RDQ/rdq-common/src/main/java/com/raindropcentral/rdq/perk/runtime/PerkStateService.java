@@ -15,7 +15,7 @@ import java.util.UUID;
  * Handles activation/deactivation state, ownership, and persistence.
  * </p>
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */
