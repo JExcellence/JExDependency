@@ -533,9 +533,8 @@ public class DefaultPerkRegistry extends PerkRegistry {
                         new Object[]{getId(), auditService.fingerprint(playerId)},
                         exception
                 );
-            } finally {
-                runtimeState.markInactive(playerId);
-                cooldownService.clearCooldown(player, getId());
+        runtimeState.markInactive(playerId);
+    }
             }
         }
 
