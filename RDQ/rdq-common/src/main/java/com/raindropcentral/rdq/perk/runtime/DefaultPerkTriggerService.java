@@ -11,23 +11,33 @@ import org.jetbrains.annotations.NotNull;
  * Default implementation of PerkTriggerService.
  *
  * @author qodo
- * @version 1.0.0
+ * @version 1.0.1
  * @since TBD
  */
 public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
 
     private final RDQ rdq;
-    private final PerkRegistry perkRegistry;
+    private final DefaultPerkRegistry perkRegistry;
 
-    public DefaultPerkTriggerService(@NotNull RDQ rdq, @NotNull PerkRegistry perkRegistry) {
+    public DefaultPerkTriggerService(@NotNull RDQ rdq, @NotNull DefaultPerkRegistry perkRegistry) {
         this.rdq = rdq;
         this.perkRegistry = perkRegistry;
     }
 
     @Override
     public void handleEvent(@NotNull Event event, @NotNull Player player) {
-        // TODO: Implement event handling logic
-        // Check which perks are active for the player and trigger them if applicable
+        for (PerkRuntime runtime : perkRegistry.getAllPerkRuntimes()) {
+            if (!runtime.getType().isEventBased()) {
+                continue;
+            }
+            if (!runtime.canActivate(player) && !runtime.isActive(player)) {
+                continue;
+            }
+            if (runtime.isOnCooldown(player)) {
+                continue;
+            }
+            runtime.trigger(player);
+        }
     }
 
     @Override

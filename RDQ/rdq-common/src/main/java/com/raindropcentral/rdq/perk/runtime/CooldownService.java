@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class CooldownService {
@@ -52,7 +53,11 @@ public class CooldownService {
     }
 
     public void clearAllCooldowns(@NotNull Player player) {
-        String prefix = player.getUniqueId().toString() + ":";
+        clearAllCooldowns(player.getUniqueId());
+    }
+
+    public void clearAllCooldowns(@NotNull UUID playerId) {
+        String prefix = playerId.toString() + ":";
         cooldowns.keySet().removeIf(key -> key.startsWith(prefix));
     }
 
