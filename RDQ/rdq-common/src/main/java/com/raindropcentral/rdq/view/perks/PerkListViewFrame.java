@@ -37,7 +37,7 @@ import java.util.stream.Collectors;
  * toggle/enable/disable actions.
  * </p>
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */

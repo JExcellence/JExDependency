@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * Implementations may use in-memory storage or persistent storage.
  * </p>
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */

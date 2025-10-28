@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.perk.runtime;
 
 import com.raindropcentral.rdq.type.EPerkType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
  * Concrete implementations are built from PerkSection configurations.
  * </p>
  *
- * @author qodo
- * @version 1.0.0
+ * @author JExcellence
+ * @version 1.0.2
  * @since TBD
  */
 public interface PerkRuntime {
@@ -64,6 +65,16 @@ public interface PerkRuntime {
     void trigger(@NotNull Player player);
 
     /**
+     * Triggers the perk effect while providing contextual information about the source.
+     *
+     * @param player the player
+     * @param source description of the trigger source, typically an event name
+     */
+    default void trigger(@NotNull Player player, @NotNull String source) {
+        trigger(player);
+    }
+
+    /**
      * Checks if the player is currently on cooldown for this perk.
      *
      * @param player the player
@@ -94,4 +105,14 @@ public interface PerkRuntime {
      * @return true if active
      */
     boolean isActive(@NotNull Player player);
+
+    /**
+     * Indicates whether this runtime responds to the supplied event type.
+     *
+     * @param event the event being processed
+     * @return {@code true} when the event should be propagated to {@link #trigger(Player)}
+     */
+    default boolean supports(@NotNull Event event) {
+        return true;
+    }
 }
