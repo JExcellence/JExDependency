@@ -1,6 +1,7 @@
 package com.raindropcentral.rdq.database.entity.perk;
 
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rdq.database.entity.rank.RRequirement;
 import de.jexcellence.hibernate.entity.AbstractEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +34,7 @@ public final class RPlayerPerkRequirementProgress extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "requirement_id", nullable = false)
-    private RPerkRequirement requirement;
+    private RRequirement requirement;
 
     @Column(name = "progress_value", nullable = false)
     private double progressValue = 0.0;
@@ -63,7 +64,7 @@ public final class RPlayerPerkRequirementProgress extends AbstractEntity {
      */
     public RPlayerPerkRequirementProgress(
         final @NotNull RDQPlayer player,
-        final @NotNull RPerkRequirement requirement
+        final @NotNull RRequirement requirement
     ) {
         this.player = Objects.requireNonNull(player, "player cannot be null");
         this.requirement = Objects.requireNonNull(requirement, "requirement cannot be null");
@@ -78,11 +79,11 @@ public final class RPlayerPerkRequirementProgress extends AbstractEntity {
         this.player = Objects.requireNonNull(player, "player cannot be null");
     }
 
-    public @NotNull RPerkRequirement getRequirement() {
+    public @NotNull RRequirement getRequirement() {
         return this.requirement;
     }
 
-    public void setRequirement(final @NotNull RPerkRequirement requirement) {
+    public void setRequirement(final @NotNull RRequirement requirement) {
         this.requirement = Objects.requireNonNull(requirement, "requirement cannot be null");
     }
 
@@ -170,7 +171,7 @@ public final class RPlayerPerkRequirementProgress extends AbstractEntity {
         return "RPlayerPerkRequirementProgress[player=%s, requirement=%s, progress=%d%%, completed=%b]"
             .formatted(
                 player != null ? player.getPlayerName() : "null",
-                requirement != null ? requirement.getRequirementType() : "null",
+                requirement != null ? requirement.getRequirement().getClass().getSimpleName() : "null",
                 this.getCompletionPercentage(),
                 completed
             );

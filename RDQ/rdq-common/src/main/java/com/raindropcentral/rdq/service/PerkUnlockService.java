@@ -1,11 +1,7 @@
 package com.raindropcentral.rdq.service;
 
 import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.database.entity.perk.RPerk;
-import com.raindropcentral.rdq.database.entity.perk.RPerkRequirement;
-import com.raindropcentral.rdq.database.entity.perk.RPerkReward;
-import com.raindropcentral.rdq.database.entity.perk.RPlayerPerk;
-import com.raindropcentral.rdq.database.entity.perk.RPlayerPerkRequirementProgress;
+import com.raindropcentral.rdq.database.entity.perk.*;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.entity.Player;
@@ -57,19 +53,16 @@ public final class PerkUnlockService {
                 return false;
             }
 
-            final List<RPerkRequirement> requirements = rdq.getRequirementRepository()
-                .findListByAttributes(Map.of("perk.id", perk.getId()));
-            
-            if (requirements.isEmpty()) {
+            final Set<RPerkUnlockRequirement> unlockRequirements = perk.getUnlockRequirements();
+
+            if (unlockRequirements.isEmpty()) {
                 return true;
             }
 
-            for (final RPerkRequirement requirement : requirements) {
-                if (!this.isRequirementMet(player, rdqPlayer, requirement)) {
-                    if (!requirement.isOptional()) {
-                        LOGGER.log(Level.FINE, "Player " + player.getName() + " does not meet requirement: " + requirement.getRequirementType());
-                        return false;
-                    }
+            for (final RPerkUnlockRequirement unlockRequirement : unlockRequirements) {
+                if (!unlockRequirement.isMet(player)) {
+                    LOGGER.log(Level.FINE, "Player " + player.getName() + " does not meet requirement for perk " + perk.getIdentifier());
+                    return false;
                 }
             }
 
@@ -80,41 +73,7 @@ public final class PerkUnlockService {
         }
     }
 
-    /**
-     * Checks if a specific requirement is met by a player.
-     * This method can be overridden or extended for custom requirement types.
-     *
-     * @param player the Bukkit player
-     * @param rdqPlayer the RDQ player entity
-     * @param requirement the requirement to check
-     * @return true if the requirement is met, false otherwise
-     */
-    public boolean isRequirementMet(
-        final @NotNull Player player,
-        final @NotNull RDQPlayer rdqPlayer,
-        final @NotNull RPerkRequirement requirement
-    ) {
-        Objects.requireNonNull(player, "player cannot be null");
-        Objects.requireNonNull(rdqPlayer, "rdqPlayer cannot be null");
-        Objects.requireNonNull(requirement, "requirement cannot be null");
 
-        try {
-            return switch (requirement.getRequirementType().toUpperCase()) {
-                case "LEVEL" -> this.checkLevelRequirement(player, requirement);
-                case "PERMISSION" -> this.checkPermissionRequirement(player, requirement);
-                case "CURRENCY" -> this.checkCurrencyRequirement(rdqPlayer, requirement);
-                case "QUEST" -> this.checkQuestRequirement(rdqPlayer, requirement);
-                case "RANK" -> this.checkRankRequirement(rdqPlayer, requirement);
-                default -> {
-                    LOGGER.log(Level.WARNING, "Unknown requirement type: " + requirement.getRequirementType());
-                    yield false;
-                }
-            };
-        } catch (final Exception exception) {
-            LOGGER.log(Level.WARNING, "Error checking requirement: " + requirement.getRequirementType(), exception);
-            return false;
-        }
-    }
 
     /**
      * Unlocks a perk for a player and distributes rewards.
@@ -178,56 +137,27 @@ public final class PerkUnlockService {
         Objects.requireNonNull(perk, "perk cannot be null");
 
         try {
-            final List<RPerkReward> rewards = rdq.getPerkRewardRepository()
-                .findListByAttributes(Map.of("perk.id", perk.getId()));
-            
-            if (rewards.isEmpty()) {
+            final Set<RPerkUnlockReward> unlockRewards = perk.getUnlockRewards();
+
+            if (unlockRewards.isEmpty()) {
                 return;
             }
 
-            for (final RPerkReward reward : rewards) {
+            for (final RPerkUnlockReward unlockReward : unlockRewards) {
                 try {
-                    this.distributeReward(player, rdqPlayer, reward);
+                    unlockReward.apply(player);
                 } catch (final Exception exception) {
-                    LOGGER.log(Level.WARNING, "Error distributing reward: " + reward.getRewardType(), exception);
+                    LOGGER.log(Level.WARNING, "Error distributing reward: " + unlockReward.getReward().getType(), exception);
                 }
             }
 
-            LOGGER.log(Level.FINE, "Distributed " + rewards.size() + " rewards for perk " + perk.getIdentifier());
+            LOGGER.log(Level.FINE, "Distributed " + unlockRewards.size() + " rewards for perk " + perk.getIdentifier());
         } catch (final Exception exception) {
             LOGGER.log(Level.WARNING, "Error distributing rewards for perk " + perk.getIdentifier(), exception);
         }
     }
 
-    /**
-     * Distributes a single reward to a player.
-     * This method can be extended for custom reward types.
-     *
-     * @param player the Bukkit player
-     * @param rdqPlayer the RDQ player entity
-     * @param reward the reward to distribute
-     */
-    public void distributeReward(
-        final @NotNull Player player,
-        final @NotNull RDQPlayer rdqPlayer,
-        final @NotNull RPerkReward reward
-    ) {
-        Objects.requireNonNull(player, "player cannot be null");
-        Objects.requireNonNull(rdqPlayer, "rdqPlayer cannot be null");
-        Objects.requireNonNull(reward, "reward cannot be null");
 
-        try {
-            switch (reward.getRewardType().toUpperCase()) {
-                case "CURRENCY" -> this.distributeCurrencyReward(player, reward);
-                case "ITEM" -> this.distributeItemReward(player, reward);
-                case "EXPERIENCE" -> this.distributeExperienceReward(player, reward);
-                case "PERMISSION" -> this.distributePermissionReward(player, reward);
-                default -> LOGGER.log(Level.WARNING, "Unknown reward type: " + reward.getRewardType());
-            }
-        } catch (final Exception exception) {
-            LOGGER.log(Level.WARNING, "Error distributing reward: " + reward.getRewardType(), exception);
-        }
-    }
 
     /**
      * Tracks progress toward a perk requirement for a player.
@@ -238,7 +168,7 @@ public final class PerkUnlockService {
      */
     public @NotNull RPlayerPerkRequirementProgress trackRequirementProgress(
         final @NotNull RDQPlayer rdqPlayer,
-        final @NotNull RPerkRequirement requirement
+        final @NotNull com.raindropcentral.rdq.database.entity.rank.RRequirement requirement
     ) {
         Objects.requireNonNull(rdqPlayer, "rdqPlayer cannot be null");
         Objects.requireNonNull(requirement, "requirement cannot be null");
@@ -283,63 +213,9 @@ public final class PerkUnlockService {
         }
     }
 
-    // ========== Private Helper Methods ==========
 
-    private boolean checkLevelRequirement(final @NotNull Player player, final @NotNull RPerkRequirement requirement) {
-        try {
-            final int requiredLevel = Integer.parseInt(requirement.getRequirementValue());
-            return player.getLevel() >= requiredLevel;
-        } catch (final NumberFormatException exception) {
-            LOGGER.log(Level.WARNING, "Invalid level requirement value: " + requirement.getRequirementValue());
-            return false;
-        }
-    }
 
-    private boolean checkPermissionRequirement(final @NotNull Player player, final @NotNull RPerkRequirement requirement) {
-        return player.hasPermission(requirement.getRequirementValue());
-    }
 
-    private boolean checkCurrencyRequirement(final @NotNull RDQPlayer rdqPlayer, final @NotNull RPerkRequirement requirement) {
-        // TODO: Integrate with currency system
-        LOGGER.log(Level.FINE, "Currency requirement check not yet implemented");
-        return true;
-    }
-
-    private boolean checkQuestRequirement(final @NotNull RDQPlayer rdqPlayer, final @NotNull RPerkRequirement requirement) {
-        // TODO: Integrate with quest system
-        LOGGER.log(Level.FINE, "Quest requirement check not yet implemented");
-        return true;
-    }
-
-    private boolean checkRankRequirement(final @NotNull RDQPlayer rdqPlayer, final @NotNull RPerkRequirement requirement) {
-        // TODO: Integrate with rank system
-        LOGGER.log(Level.FINE, "Rank requirement check not yet implemented");
-        return true;
-    }
-
-    private void distributeCurrencyReward(final @NotNull Player player, final @NotNull RPerkReward reward) {
-        // TODO: Integrate with currency system
-        LOGGER.log(Level.FINE, "Currency reward distribution not yet implemented");
-    }
-
-    private void distributeItemReward(final @NotNull Player player, final @NotNull RPerkReward reward) {
-        // TODO: Parse item data and give to player
-        LOGGER.log(Level.FINE, "Item reward distribution not yet implemented");
-    }
-
-    private void distributeExperienceReward(final @NotNull Player player, final @NotNull RPerkReward reward) {
-        try {
-            final int expAmount = Integer.parseInt(reward.getRewardValue());
-            player.giveExp(expAmount);
-        } catch (final NumberFormatException exception) {
-            LOGGER.log(Level.WARNING, "Invalid experience reward value: " + reward.getRewardValue());
-        }
-    }
-
-    private void distributePermissionReward(final @NotNull Player player, final @NotNull RPerkReward reward) {
-        // TODO: Integrate with permission system (LuckPerms)
-        LOGGER.log(Level.FINE, "Permission reward distribution not yet implemented");
-    }
 
     private @Nullable RPlayerPerk getPlayerPerk(final @NotNull RDQPlayer rdqPlayer, final @NotNull RPerk perk) {
         try {

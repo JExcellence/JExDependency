@@ -1,6 +1,5 @@
 package com.raindropcentral.rdq.perk.runtime;
 
-import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.perk.PerkSection;
 import com.raindropcentral.rdq.database.entity.perk.RPerk;
 import com.raindropcentral.rdq.type.EPerkType;
@@ -13,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * Default implementation of PerkRegistry.
+ * Registry for managing PerkRuntime instances.
  *
  * @author qodo
  * @version 1.0.0
@@ -21,27 +20,22 @@ import java.util.stream.Collectors;
  */
 public class DefaultPerkRegistry extends PerkRegistry {
 
-    private final RDQ rdq;
     private final Map<String, PerkRuntime> perkRuntimes = new ConcurrentHashMap<>();
 
-    public DefaultPerkRegistry(@NotNull RDQ rdq) {
-        super(rdq);
-        this.rdq = rdq;
+    public DefaultPerkRegistry(@NotNull PerkTypeRegistry typeRegistry) {
+        super(typeRegistry);
     }
 
-    @Override
     @Nullable
     public PerkRuntime getPerkRuntime(@NotNull String id) {
         return perkRuntimes.get(id);
     }
 
-    @Override
     @NotNull
     public List<PerkRuntime> getAllPerkRuntimes() {
         return List.copyOf(perkRuntimes.values());
     }
 
-    @Override
     @NotNull
     public List<PerkRuntime> getPerkRuntimesByType(@NotNull EPerkType type) {
         return perkRuntimes.values().stream()
@@ -49,17 +43,14 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 .collect(Collectors.toList());
     }
 
-    @Override
     public void registerPerkRuntime(@NotNull PerkRuntime runtime) {
         perkRuntimes.put(runtime.getId(), runtime);
     }
 
-    @Override
     public void unregisterPerkRuntime(@NotNull String id) {
         perkRuntimes.remove(id);
     }
 
-    @Override
     @NotNull
     public PerkRuntime buildPerkRuntime(@NotNull RPerk perk, @NotNull PerkSection config) {
         // TODO: Implement builder logic based on config
@@ -67,7 +58,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
         return new PlaceholderPerkRuntime(perk.getIdentifier(), perk.getPerkType());
     }
 
-    @Override
     public void reloadAllPerkRuntimes() {
         perkRuntimes.clear();
         // TODO: Load from database and build runtimes

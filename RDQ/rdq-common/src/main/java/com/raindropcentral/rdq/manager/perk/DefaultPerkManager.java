@@ -14,13 +14,13 @@ import org.jetbrains.annotations.NotNull;
 public class DefaultPerkManager implements PerkManager {
 
     private final RDQ rdq;
-    private final PerkRegistry perkRegistry;
+    private final DefaultPerkRegistry perkRegistry;
     private final PerkStateService perkStateService;
     private final PerkTriggerService perkTriggerService;
 
     public DefaultPerkManager(@NotNull RDQ rdq) {
         this.rdq = rdq;
-        this.perkRegistry = new DefaultPerkRegistry(rdq);
+        this.perkRegistry = new DefaultPerkRegistry(rdq.getPerkTypeRegistry());
         this.perkStateService = new DefaultPerkStateService(rdq);
         this.perkTriggerService = new DefaultPerkTriggerService(rdq, perkRegistry);
     }

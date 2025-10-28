@@ -1,8 +1,8 @@
 package com.raindropcentral.rdq.database.repository;
 
-import com.raindropcentral.rdq.database.entity.perk.RPerkRequirement;
 import com.raindropcentral.rdq.database.entity.perk.RPlayerPerkRequirementProgress;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rdq.database.entity.rank.RRequirement;
 import de.jexcellence.hibernate.entity.AbstractEntity;
 import de.jexcellence.hibernate.repository.GenericCachedRepository;
 import jakarta.persistence.EntityManagerFactory;
@@ -35,7 +35,7 @@ public class PlayerPerkRequirementProgressRepository extends GenericCachedReposi
      */
     public @NotNull CompletableFuture<Optional<RPlayerPerkRequirementProgress>> findByPlayerAndRequirementAsync(
             final @NotNull RDQPlayer player,
-            final @NotNull RPerkRequirement requirement
+            final @NotNull RRequirement requirement
     ) {
         return findByAttributesAsync(Map.of("player", player, "requirement", requirement))
                 .thenApply(Optional::ofNullable);

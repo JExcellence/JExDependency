@@ -52,7 +52,7 @@ public class PerkManager {
             state.setActivationTime(perkId, System.currentTimeMillis());
         }
 
-        return success ? ActivationResult.success() : ActivationResult.failure("Activation failed");
+        return success ? ActivationResult.succeed() : ActivationResult.failure("Activation failed");
     }
 
     public @NotNull CompletableFuture<DeactivationResult> deactivateAsync(
@@ -65,7 +65,7 @@ public class PerkManager {
     public @NotNull DeactivationResult deactivate(@NotNull Player player, @NotNull String perkId) {
         LoadedPerk perk = perkRegistry.get(perkId);
         if (perk == null) {
-            return DeactivationResult.failure("Perk not found: " + perkId);
+            return DeactivationResult.failed("Perk not found: " + perkId);
         }
 
         boolean success = perk.type().deactivate(player, perk);
@@ -74,7 +74,7 @@ public class PerkManager {
             state.setActivationTime(perkId, 0);
         }
 
-        return success ? DeactivationResult.success() : DeactivationResult.failure("Deactivation failed");
+        return success ? DeactivationResult.succeed() : DeactivationResult.failed("Deactivation failed");
     }
 
     public boolean isActive(@NotNull Player player, @NotNull String perkId) {

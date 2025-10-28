@@ -9,10 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serial;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents the base persistent definition of a perk in the RDQ database. Each perk encapsulates
@@ -71,6 +69,12 @@ public abstract class RPerk extends AbstractEntity {
 
     @OneToMany(mappedBy = "perk", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<RPlayerPerk> playerPerks = new HashSet<>();
+
+    @OneToMany(mappedBy = "perk", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<RPerkUnlockRequirement> unlockRequirements = new HashSet<>();
+
+    @OneToMany(mappedBy = "perk", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private Set<RPerkUnlockReward> unlockRewards = new HashSet<>();
 
     /**
      * Default constructor for JPA and Hibernate. Avoid using this constructor directly; prefer the
@@ -240,6 +244,46 @@ public abstract class RPerk extends AbstractEntity {
     }
 
     /**
+     * Provides the collection of unlock requirements linked to this perk.
+     *
+     * @return an unmodifiable view of related unlock requirements
+     */
+    public @NotNull Set<RPerkUnlockRequirement> getUnlockRequirements() {
+        return Collections.unmodifiableSet(this.unlockRequirements);
+    }
+
+    /**
+     * Provides the collection of unlock requirements linked to this perk, ordered by display order.
+     *
+     * @return an ordered list of unlock requirements
+     */
+    public @NotNull List<RPerkUnlockRequirement> getUnlockRequirementsOrdered() {
+        return this.unlockRequirements.stream()
+                .sorted(Comparator.comparingInt(RPerkUnlockRequirement::getDisplayOrder))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Provides the collection of unlock rewards linked to this perk.
+     *
+     * @return an unmodifiable view of related unlock rewards
+     */
+    public @NotNull Set<RPerkUnlockReward> getUnlockRewards() {
+        return Collections.unmodifiableSet(this.unlockRewards);
+    }
+
+    /**
+     * Provides the collection of unlock rewards linked to this perk, ordered by display order.
+     *
+     * @return an ordered list of unlock rewards
+     */
+    public @NotNull List<RPerkUnlockReward> getUnlockRewardsOrdered() {
+        return this.unlockRewards.stream()
+                .sorted(Comparator.comparingInt(RPerkUnlockReward::getDisplayOrder))
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Registers the provided player perk with this perk definition while ensuring the
      * bidirectional association stays in sync.
      *
@@ -272,6 +316,70 @@ public abstract class RPerk extends AbstractEntity {
     }
 
     /**
+     * Registers the provided unlock requirement with this perk while ensuring the
+     * bidirectional association stays in sync.
+     *
+     * @param unlockRequirement the unlock requirement to link with this perk
+     * @return {@code true} when the unlock requirement was newly associated, {@code false} when it was already linked
+     */
+    public boolean addUnlockRequirement(final @NotNull RPerkUnlockRequirement unlockRequirement) {
+        Objects.requireNonNull(unlockRequirement, "unlockRequirement cannot be null");
+        final boolean added = attachUnlockRequirement(unlockRequirement);
+        if (unlockRequirement.getPerk() != this) {
+            unlockRequirement.setPerk(this);
+        }
+        return added;
+    }
+
+    /**
+     * Detaches the provided unlock requirement from this perk while clearing the reverse
+     * association when it still points at this perk.
+     *
+     * @param unlockRequirement the unlock requirement to unlink from this perk
+     * @return {@code true} when the link was removed, {@code false} when it was not present
+     */
+    public boolean removeUnlockRequirement(final @NotNull RPerkUnlockRequirement unlockRequirement) {
+        Objects.requireNonNull(unlockRequirement, "unlockRequirement cannot be null");
+        final boolean removed = detachUnlockRequirement(unlockRequirement);
+        if (removed && unlockRequirement.getPerk() == this) {
+            unlockRequirement.setPerk(null);
+        }
+        return removed;
+    }
+
+    /**
+     * Registers the provided unlock reward with this perk while ensuring the
+     * bidirectional association stays in sync.
+     *
+     * @param unlockReward the unlock reward to link with this perk
+     * @return {@code true} when the unlock reward was newly associated, {@code false} when it was already linked
+     */
+    public boolean addUnlockReward(final @NotNull RPerkUnlockReward unlockReward) {
+        Objects.requireNonNull(unlockReward, "unlockReward cannot be null");
+        final boolean added = attachUnlockReward(unlockReward);
+        if (unlockReward.getPerk() != this) {
+            unlockReward.setPerk(this);
+        }
+        return added;
+    }
+
+    /**
+     * Detaches the provided unlock reward from this perk while clearing the reverse
+     * association when it still points at this perk.
+     *
+     * @param unlockReward the unlock reward to unlink from this perk
+     * @return {@code true} when the link was removed, {@code false} when it was not present
+     */
+    public boolean removeUnlockReward(final @NotNull RPerkUnlockReward unlockReward) {
+        Objects.requireNonNull(unlockReward, "unlockReward cannot be null");
+        final boolean removed = detachUnlockReward(unlockReward);
+        if (removed && unlockReward.getPerk() == this) {
+            unlockReward.setPerk(null);
+        }
+        return removed;
+    }
+
+    /**
      * Internal helper used by {@link RPlayerPerk} to ensure that bidirectional synchronization can
      * occur without triggering recursive calls when the owning side changes.
      *
@@ -293,6 +401,54 @@ public abstract class RPerk extends AbstractEntity {
     final boolean detachPlayerPerk(final @NotNull RPlayerPerk playerPerk) {
         Objects.requireNonNull(playerPerk, "playerPerk cannot be null");
         return this.playerPerks.remove(playerPerk);
+    }
+
+    /**
+     * Internal helper used by {@link RPerkUnlockRequirement} to ensure that bidirectional synchronization can
+     * occur without triggering recursive calls when the owning side changes.
+     *
+     * @param unlockRequirement the unlock requirement being attached
+     * @return {@code true} when the unlock requirement was added to the backing collection
+     */
+    final boolean attachUnlockRequirement(final @NotNull RPerkUnlockRequirement unlockRequirement) {
+        Objects.requireNonNull(unlockRequirement, "unlockRequirement cannot be null");
+        return this.unlockRequirements.add(unlockRequirement);
+    }
+
+    /**
+     * Internal helper used by {@link RPerkUnlockRequirement} to remove the association without clearing the
+     * reverse reference when a reassignment occurs.
+     *
+     * @param unlockRequirement the unlock requirement being detached
+     * @return {@code true} when the unlock requirement was removed from the backing collection
+     */
+    final boolean detachUnlockRequirement(final @NotNull RPerkUnlockRequirement unlockRequirement) {
+        Objects.requireNonNull(unlockRequirement, "unlockRequirement cannot be null");
+        return this.unlockRequirements.remove(unlockRequirement);
+    }
+
+    /**
+     * Internal helper used by {@link RPerkUnlockReward} to ensure that bidirectional synchronization can
+     * occur without triggering recursive calls when the owning side changes.
+     *
+     * @param unlockReward the unlock reward being attached
+     * @return {@code true} when the unlock reward was added to the backing collection
+     */
+    final boolean attachUnlockReward(final @NotNull RPerkUnlockReward unlockReward) {
+        Objects.requireNonNull(unlockReward, "unlockReward cannot be null");
+        return this.unlockRewards.add(unlockReward);
+    }
+
+    /**
+     * Internal helper used by {@link RPerkUnlockReward} to remove the association without clearing the
+     * reverse reference when a reassignment occurs.
+     *
+     * @param unlockReward the unlock reward being detached
+     * @return {@code true} when the unlock reward was removed from the backing collection
+     */
+    final boolean detachUnlockReward(final @NotNull RPerkUnlockReward unlockReward) {
+        Objects.requireNonNull(unlockReward, "unlockReward cannot be null");
+        return this.unlockRewards.remove(unlockReward);
     }
 
     /**
