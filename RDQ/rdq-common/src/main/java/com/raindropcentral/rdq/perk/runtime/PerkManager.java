@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 public class PerkManager {
@@ -107,7 +108,11 @@ public class PerkManager {
     }
 
     public void clearPlayerState(@NotNull Player player) {
-        perkCache.invalidate(player);
-        cooldownService.clearAllCooldowns(player);
+        clearPlayerState(player.getUniqueId());
+    }
+
+    public void clearPlayerState(@NotNull UUID playerId) {
+        perkCache.invalidate(playerId);
+        cooldownService.clearAllCooldowns(playerId);
     }
 }

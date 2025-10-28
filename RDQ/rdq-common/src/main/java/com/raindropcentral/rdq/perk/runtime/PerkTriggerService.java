@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * Listens to game events and triggers appropriate perks for players.
  * </p>
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */

@@ -26,6 +26,12 @@ RPlatform is a comprehensive utility framework designed for modern Minecraft plu
 - 🛡️ **Type Safety** - Extensive @NotNull/@Nullable annotations
 - ☕ **Modern Java** - Java 21+ features and best practices
 
+### Security & logging
+
+- `CentralLogger` centralizes all plugin output, writing to rotating log files while optionally mirroring to console. Call `CentralLogger.initialize(plugin)` during `onLoad` to enable the managed handlers.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java†L34-L347】
+- `PlatformLogFormatter` renders structured JSON lines that include timestamp, plugin name, thread, and sanitized context, enabling ingestion into modern observability pipelines.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/PlatformLogFormatter.java†L17-L166】
+- Logging APIs expose console toggles, flush hooks, and shutdown routines; always invoke `CentralLogger.shutdown()` during plugin disable to avoid truncated records.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java†L351-L458】
+
 ---
 
 ## Quick Start
@@ -48,13 +54,13 @@ dependencies {
 
 ```java
 public class MyPlugin extends JavaPlugin {
-    
+
     private RPlatform platform;
-    
+
     @Override
     public void onEnable() {
         platform = new RPlatform(this);
-        
+
         platform.initialize()
             .thenRun(() -> {
                 platform.initializeMetrics(12345);
@@ -62,7 +68,7 @@ public class MyPlugin extends JavaPlugin {
                 getLogger().info("Plugin initialized!");
             });
     }
-    
+
     @Override
     public void onDisable() {
         platform.shutdown();
@@ -94,12 +100,12 @@ Create PlaceholderAPI expansions with ease:
 
 ```java
 public class MyExpansion extends AbstractPlaceholderExpansion {
-    
+
     @Override
     protected List<String> definePlaceholders() {
         return List.of("balance", "level", "rank");
     }
-    
+
     @Override
     protected String resolvePlaceholder(Player player, String params) {
         return switch (params) {
@@ -139,7 +145,7 @@ Manage custom player heads with type safety:
 
 ```java
 public class MyHead extends CustomHead {
-    
+
     public MyHead() {
         super(
             "diamond_sword",
@@ -148,7 +154,7 @@ public class MyHead extends CustomHead {
             HeadCategory.INVENTORY
         );
     }
-    
+
     @Override
     public ItemStack createItem() {
         return UnifiedBuilderFactory.head()
@@ -346,8 +352,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Credits
 
-**Author:** JExcellence  
-**Organization:** RaindropCentral  
+**Author:** JExcellence
+**Organization:** RaindropCentral
 **Version:** 2.0.0
 
 ---

@@ -53,6 +53,12 @@ Both variants wrap a shared `RDQ` engine. The abstract base initializes the `RPl
 - **JExEconomy** – Provides an extendable economy service; consult module-specific docs when integrating with RDQ rewards or RCore stats.
 - **JExTranslate** – Ships translation managers and MiniMessage utilities, used by `RPlatform` and example plugins.
 
+## Security, Logging, and Observability
+
+- **CentralLogger-first diagnostics** – All modules route logs through `RPlatform`'s `CentralLogger`, writing to structured log files while allowing console mirroring to be toggled for development. Sensitive identifiers (player UUIDs) must be hashed or aliased before reaching INFO/WARN logs.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java†L34-L347】
+- **Perk audit trails** – RDQ exposes `PerkAuditService`, emitting JSON records that capture action, outcome, sanitized context, and hashed player fingerprints. Context keys are sanitized and truncated to prevent log injection while maintaining security analytics value.【F:RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/PerkAuditService.java†L32-L212】
+- **Log throttling** – High-volume error paths (e.g., repeated perk activation failures) apply sliding-window throttling to guard against log flooding or attacker-induced disk churn.【F:RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/DefaultPerkRegistry.java†L231-L365】【F:RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/DefaultPerkTriggerService.java†L24-L110】
+
 ## Building & Testing
 
 The project uses Gradle with the Wrapper committed. Typical commands:

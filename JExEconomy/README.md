@@ -51,6 +51,10 @@ JExEconomy is a modular, extensible currency system for Paper servers. It suppor
 - Dependency: InventoryFramework (already injected at runtime)
 - Soft dependency: Vault (optional)
 
+## Security & logging
+- All balance mutations are recorded through `CurrencyLogService`, which hashes player UUIDs before writing to disk so exported logs stay GDPR-friendly.【F:JExEconomy/src/main/java/de/jexcellence/currency/logging/CurrencyLogService.java†L24-L118】
+- Administrative GUIs and commands emit `CentralLogger` events with structured context blocks (`currency`, `amount`, `actor`) for audit tooling.
+- `/pcurrencylog export` writes sanitized CSV output that strips raw UUIDs and replaces them with stable fingerprints, making it safe to forward to external investigators.
 
 ## Features
 - **Multi-currency support**

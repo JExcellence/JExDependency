@@ -1,8 +1,13 @@
 package com.raindropcentral.rdq.manager.perk;
 
+import com.raindropcentral.rdq.perk.runtime.CooldownService;
 import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
 import com.raindropcentral.rdq.perk.runtime.PerkStateService;
 import com.raindropcentral.rdq.perk.runtime.PerkTriggerService;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 /**
  * Coordinates the lifecycle of player perks across the RDQ platform, providing a
@@ -27,7 +32,7 @@ import com.raindropcentral.rdq.perk.runtime.PerkTriggerService;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  * @see com.raindropcentral.rdq.manager.RDQManager
  */
 public interface PerkManager {
@@ -62,4 +67,31 @@ public interface PerkManager {
      * Shuts down the perk system, cleaning up resources and unregistering listeners.
      */
     void shutdown();
+
+    /**
+     * Provides access to the cooldown service backing the perk runtime.
+     *
+     * @return the cooldown service instance
+     */
+    default CooldownService getCooldownService() {
+        throw new UnsupportedOperationException("Cooldown service is not available in this implementation");
+    }
+
+    /**
+     * Clears runtime state for the supplied player identifier.
+     *
+     * @param playerId the unique identifier of the player whose state should be purged
+     */
+    default void clearPlayerState(@NotNull UUID playerId) {
+        // Optional
+    }
+
+    /**
+     * Clears runtime state for the supplied player.
+     *
+     * @param player the player whose state should be purged
+     */
+    default void clearPlayerState(@NotNull Player player) {
+        clearPlayerState(player.getUniqueId());
+    }
 }

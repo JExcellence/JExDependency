@@ -14,6 +14,11 @@
 - When the runtime cannot supply virtual threads, fall back to the fixed-thread executor exposed by the module. Ensure tasks remain responsive under both modes.
 - Implement `onDisable` hooks to shut down executors, cancel scheduled tasks, flush buffered state, and close repositories. Leaving background jobs running after disable is considered a bug.
 
+## Logging & Telemetry
+- Leverage `PerkAuditService` for lifecycle tracking and ensure custom context keys are sanitized to `[A-Za-z0-9._-]`.
+- When recording diagnostics, hash or alias player identifiers and throttle exception-heavy code paths to prevent log spam.
+- Store rich context inside nested maps (for example `{ "context": { ... } }`) instead of interpolating attacker-controlled strings directly into message templates.
+
 ## Integration Touchpoints
 - Commands must be registered through `CommandFactory`. Extend or add commands by supplying new factories instead of manual registrations so that edition-specific command trees remain intact.
 - UI flows should compose `ViewFrame` instances or derivatives, ensuring navigation and edition gating logic stay consistent. When introducing new views, follow the existing frame registration order established during component setup.

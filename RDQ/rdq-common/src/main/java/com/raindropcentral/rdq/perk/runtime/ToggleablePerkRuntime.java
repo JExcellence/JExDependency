@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * maintaining their state until manually changed.
  * </p>
  *
- * @author qodo
+ * @author JExcellence
  * @version 1.0.0
  * @since TBD
  */
