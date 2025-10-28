@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.perk.runtime;
 
 import com.raindropcentral.rdq.type.EPerkType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
  * Concrete implementations are built from PerkSection configurations.
  * </p>
  *
- * @author qodo
- * @version 1.0.0
+ * @author JExcellence
+ * @version 1.0.1
  * @since TBD
  */
 public interface PerkRuntime {
@@ -94,4 +95,14 @@ public interface PerkRuntime {
      * @return true if active
      */
     boolean isActive(@NotNull Player player);
+
+    /**
+     * Indicates whether this runtime responds to the supplied event type.
+     *
+     * @param event the event being processed
+     * @return {@code true} when the event should be propagated to {@link #trigger(Player)}
+     */
+    default boolean supports(@NotNull Event event) {
+        return true;
+    }
 }
