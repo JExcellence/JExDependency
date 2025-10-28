@@ -484,7 +484,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 LOGGER.log(Level.FINER, "Expiry deactivation failure", exception);
             } finally {
                 runtimeState.markInactive(playerId);
-                cooldownService.clearCooldown(player, getId());
             }
         }
 
