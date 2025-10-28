@@ -33,7 +33,8 @@ public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
     @Override
     public void handleEvent(@NotNull Event event, @NotNull Player player) {
         final String eventName = event.getClass().getSimpleName();
-        for (PerkRuntime runtime : perkRegistry.getAllPerkRuntimes()) {
+        final var runtimes = perkRegistry.getAllPerkRuntimes();
+        for (PerkRuntime runtime : runtimes) {
             if (!runtime.getType().isEventBased()) {
                 continue;
             }
