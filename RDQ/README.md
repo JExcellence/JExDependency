@@ -20,9 +20,9 @@ RaindropQuests – the gameplay layer that powers perks, quests, bounties, and r
 
 ## Observability & safety
 
-- Perk audit entries are nested JSON payloads with sanitized keys and truncated values to prevent log injection while preserving forensic utility.【F:RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/PerkAuditService.java†L32-L212】
-- `DefaultPerkRegistry` applies sliding-window log throttling so repeated failures cannot flood log files, and metadata drawn from configuration is sanitized before being persisted or logged.【F:RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/DefaultPerkRegistry.java†L45-L370】
-- Trigger exceptions are reported once per throttle window with hashed player fingerprints, striking a balance between incident visibility and noise reduction.【F:RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/DefaultPerkTriggerService.java†L17-L120】
+- Perk audit entries are nested JSON payloads with sanitized keys and truncated values to prevent log injection while preserving forensic utility. ([PerkAuditService.java](RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/PerkAuditService.java#L32-L212))
+- `DefaultPerkRegistry` applies sliding-window log throttling so repeated failures cannot flood log files, and metadata drawn from configuration is sanitized before being persisted or logged. ([DefaultPerkRegistry.java](RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/DefaultPerkRegistry.java#L45-L370))
+- Trigger exceptions are reported once per throttle window with hashed player fingerprints, striking a balance between incident visibility and noise reduction. ([DefaultPerkTriggerService.java](RDQ/rdq-common/src/main/java/com/raindropcentral/rdq/perk/runtime/DefaultPerkTriggerService.java#L17-L120))
 
 ## Lifecycle
 
