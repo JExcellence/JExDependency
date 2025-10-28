@@ -43,10 +43,6 @@ public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
                 continue;
             }
             if (!runtime.supports(event)) {
-                final Map<String, Object> context = new LinkedHashMap<>();
-                context.put("reason", "unsupported");
-                auditService.recordTrigger(runtime.getId(), player.getUniqueId(), eventName, false, "unsupported-event", context, null);
-                LOGGER.log(Level.FINEST, "Skipping perk {0} for event {1} due to unsupported trigger", new Object[]{runtime.getId(), eventName});
                 continue;
             }
             final UUID playerId = player.getUniqueId();
