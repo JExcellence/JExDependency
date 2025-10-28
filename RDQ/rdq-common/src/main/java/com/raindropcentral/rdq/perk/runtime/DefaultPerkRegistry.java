@@ -263,7 +263,8 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 return false;
             }
             if (expiry <= System.currentTimeMillis()) {
-                cooldowns.remove(player.getUniqueId());
+                // Atomically remove the expired cooldown to prevent race conditions.
+                cooldowns.remove(player.getUniqueId(), expiry);
                 return false;
             }
             return true;
