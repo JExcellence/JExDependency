@@ -106,7 +106,9 @@ public class DefaultPerkRegistry extends PerkRegistry {
         final EPerkCategory category = Optional.ofNullable(EPerkCategory.fromIdentifier(categoryId))
                 .orElse(EPerkCategory.UTILITY);
 
-        final boolean enabled = perk.isEnabled() && Boolean.TRUE.equals(settings.getEnabled());
+        // Treat null as true (enabled by default in config)
+        final boolean configEnabled = Optional.ofNullable(settings.getEnabled()).orElse(Boolean.TRUE);
+        final boolean enabled = perk.isEnabled() && configEnabled;
         final long defaultCooldown = Optional.ofNullable(section.getPermissionCooldowns().getDefaultCooldownSeconds())
                 .orElse(0L);
         final Long durationSeconds = Optional.ofNullable(section.getPermissionDurations().getDefaultDurationSeconds())
