@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class PerkCache {
@@ -30,6 +31,10 @@ public class PerkCache {
 
     public void invalidate(@NotNull Player player) {
         playerStates.invalidate(player.getUniqueId().toString());
+    }
+
+    public void invalidate(@NotNull UUID playerId) {
+        playerStates.invalidate(playerId.toString());
     }
 
     public void invalidateAll() {
