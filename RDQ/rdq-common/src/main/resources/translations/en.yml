@@ -1,3 +1,34 @@
+# === Perk Command & UI ===
+perk:
+  command:
+    list_header: "<gradient:#9b59b6:#ffffff>Available Perks:</gradient>"
+    list_entry: "<gray>{perk}: {status}</gray>"
+    info_header: "<gradient:#9b59b6:#ffffff>Perk Info: {perk}</gradient>"
+    info_display_name: "<gray>Name: {name}</gray>"
+    info_description: "<gray>Description: {description}</gray>"
+    info_status: "<gray>Status: {status}</gray>"
+    info_category: "<gray>Category: {category}</gray>"
+    activated: "<green>Perk {perk} activated!</green>"
+    deactivated: "<green>Perk {perk} deactivated!</green>"
+  
+  error:
+    not_found: "<red>Perk {perk} not found</red>"
+    no_permission: "<red>You don't have permission: {permission}</red>"
+    no_perks: "<red>No perks available</red>"
+  
+  entry:
+    name: "<yellow>{perk}</yellow> {status}"
+  
+  list_ui:
+    title: "<gradient:#9b59b6:#ffffff>Available Perks</gradient>"
+    activate_button: "<green>Activate Perk</green>"
+  
+  detail_ui:
+    title: "<gradient:#9b59b6:#ffffff>Perk: {perk}</gradient>"
+    activate_button: "<green>Activate</green>"
+    deactivate_button: "<red>Deactivate</red>"
+    permission_scaling: "<gray>Permission Scaling: {scaling}</gray>"
+
 rq:
   no_luckperms_installed: "<gradient:#9b59b6:#ffffff>LuckPerms not found. Install plugin to use feature.</gradient>"
 

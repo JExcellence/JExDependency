@@ -1,0 +1,71 @@
+perkSettings:
+  icon:
+    material: "PRISMARINE_SHARD"
+  priority: 82
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "water_breathing"
+  displayName: "Water Breathing"
+  description: "Allows you to breathe underwater indefinitely"
+  category: "utility"
+  rarity: "rare"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "WATER_BREATHING"
+  showParticles: true
+  particleType: "BUBBLE"
+  particleAmount: 4
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.water_breathing.vip: 0
+    rdq.perk.water_breathing.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.water_breathing.level1: 0
+    rdq.perk.water_breathing.vip: 1
+    rdq.perk.water_breathing.premium: 1
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.water_breathing.vip: 0
+    rdq.perk.water_breathing.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 1400.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 70.0
+
+requirements:
+  water_breathing:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 22
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 3
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Water Breathing perk activated! You can now breathe underwater!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated water breathing perk"

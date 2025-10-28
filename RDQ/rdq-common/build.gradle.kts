@@ -6,7 +6,6 @@ import org.gradle.jvm.tasks.Jar
 plugins {
     id("java-library")
     `maven-publish`
-    alias(libs.plugins.shadow) apply false
 }
 
 java {
@@ -57,6 +56,10 @@ dependencies {
     // Adventure APIs
     compileOnly(libs.bundles.adventure)
 
+    compileOnly("com.raindropcentral.core:rcore-common:2.0.0")
+    compileOnly("com.raindropcentral.core:rcore-free:2.0.0")
+    compileOnly("de.jexcellence.economy:jexeconomy:2.0.0")
+
     // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
@@ -87,10 +90,6 @@ dependencies {
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory)
 
-    // Example of plugin-provided API used by listeners
-    compileOnly(libs.jecurrency)
-    compileOnly(libs.rcore)
-
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
@@ -99,7 +98,6 @@ dependencies {
     testImplementation(libs.mockito.junit.jupiter)
     testImplementation(libs.mockito.inline)
     testImplementation(libs.mockbukkit)
-    testImplementation(libs.rcore)
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)

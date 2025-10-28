@@ -1,0 +1,73 @@
+perkSettings:
+  icon:
+    material: "DIAMOND_SWORD"
+  priority: 95
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "strength"
+  displayName: "Strength"
+  description: "Increases your melee damage output in combat"
+  category: "combat"
+  rarity: "uncommon"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "STRENGTH"
+  showParticles: true
+  particleType: "CRIT"
+  particleAmount: 5
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.strength.vip: 0
+    rdq.perk.strength.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.strength.level1: 0
+    rdq.perk.strength.level2: 1
+    rdq.perk.strength.level3: 2
+    rdq.perk.strength.vip: 1
+    rdq.perk.strength.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.strength.vip: 0
+    rdq.perk.strength.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 1200.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 60.0
+
+requirements:
+  strength:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 25
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 3
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Strength perk activated! Your attacks are now more powerful!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated strength perk"

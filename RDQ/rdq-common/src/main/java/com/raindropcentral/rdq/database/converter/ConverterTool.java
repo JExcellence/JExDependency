@@ -8,7 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Utility for interacting with private fields using reflection.
+ * Small reflective helper used by JPA converters to access non-public fields
+ * of section/config objects during JSON serialization/deserialization.
  *
  * @author JExcellence
  * @since 1.0.0
@@ -17,28 +18,38 @@ import java.util.logging.Logger;
 public class ConverterTool {
 
     /**
-     * Sets a private field value using reflection.
+     * Writes a value into a private or protected field on the given instance.
      *
-     * @param target    the object whose field should be modified
-     * @param fieldName the name of the field to update
-     * @param value     the value that should be assigned to the field
-     * @param logger    the logger used to report failures when setting the field
-     * @throws RuntimeException if the field cannot be accessed or modified
+     * @param instance the target object
+     * @param fieldName the field name to set
+     * @param value the value to assign
+     * @param logger the logger for error reporting
      */
     public void setPrivateField(
-            @NotNull final Object target,
-            @NotNull final String fieldName,
-            @Nullable final Object value,
-            @NotNull final Logger logger
+            final @NotNull Object instance,
+            final @NotNull String fieldName,
+            final @Nullable Object value,
+            final @NotNull Logger logger
     ) {
         try {
-            final Field field = target.getClass().getDeclaredField(fieldName);
+            final Field field = locateField(instance.getClass(), fieldName);
             field.setAccessible(true);
-            field.set(target, value);
-        } catch (final NoSuchFieldException | IllegalAccessException e) {
-            logger.log(Level.SEVERE, "Failed to set field: " + fieldName, e);
-            throw new RuntimeException("Failed to set field: " + fieldName, e);
+            field.set(instance, value);
+        } catch (final Exception ex) {
+            logger.log(Level.FINE, "Failed to write private field '" + fieldName + "' on " + instance.getClass().getName(), ex);
         }
+    }
+
+    private static Field locateField(final Class<?> type, final String name) throws NoSuchFieldException {
+        Class<?> current = type;
+        while (current != null && current != Object.class) {
+            try {
+                return current.getDeclaredField(name);
+            } catch (NoSuchFieldException ignored) {
+                current = current.getSuperclass();
+            }
+        }
+        throw new NoSuchFieldException(name);
     }
 
     /**

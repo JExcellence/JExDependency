@@ -1,0 +1,73 @@
+perkSettings:
+  icon:
+    material: "ELYTRA"
+  priority: 100
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "fly"
+  displayName: "Flight"
+  description: "Grants the ability to fly freely"
+  category: "MOVEMENT"
+  rarity: "RARE"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "FLIGHT"
+  showParticles: true
+  particleType: "CLOUD"
+  particleAmount: 6
+  playToggleSound: true
+  toggleOnSound: "ENTITY_ENDER_DRAGON_FLAP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.fly.vip: 0
+    rdq.perk.fly.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.fly.level1: 0
+    rdq.perk.fly.level2: 1
+    rdq.perk.fly.level3: 2
+    rdq.perk.fly.vip: 1
+    rdq.perk.fly.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.fly.vip: 0
+    rdq.perk.fly.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 3000.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 150.0
+
+requirements:
+  fly:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 45
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 15
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "You have unlocked the power of flight!"
+  command:
+    type: "COMMAND"
+    command: "say {player} can now soar through the skies!"

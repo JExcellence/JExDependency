@@ -6,6 +6,10 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+group = "com.raindropcentral.core"
+version = "2.0.0"
+description = "Core plugin providing shared functionality for Raindrop plugins (free)"
+
 java {
     toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
     sourceCompatibility = JavaVersion.VERSION_21

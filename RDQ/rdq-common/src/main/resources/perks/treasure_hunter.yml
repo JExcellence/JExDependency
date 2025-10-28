@@ -1,0 +1,73 @@
+perkSettings:
+  icon:
+    material: "DIAMOND_PICKAXE"
+  priority: 85
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "treasure_hunter"
+  displayName: "Treasure Hunter"
+  description: "Chance to receive bonus ore when mining"
+  category: "UTILITY"
+  rarity: "UNCOMMON"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "TREASURE_HUNTER"
+  showParticles: true
+  particleType: "VILLAGER_HAPPY"
+  particleAmount: 5
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.treasure_hunter.vip: 0
+    rdq.perk.treasure_hunter.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.treasure_hunter.level1: 0
+    rdq.perk.treasure_hunter.level2: 1
+    rdq.perk.treasure_hunter.level3: 2
+    rdq.perk.treasure_hunter.vip: 1
+    rdq.perk.treasure_hunter.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.treasure_hunter.vip: 0
+    rdq.perk.treasure_hunter.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 1800.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 90.0
+
+requirements:
+  treasure_hunter:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 30
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 8
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "You have become a Treasure Hunter!"
+  command:
+    type: "COMMAND"
+    command: "say {player} is now hunting for treasure!"

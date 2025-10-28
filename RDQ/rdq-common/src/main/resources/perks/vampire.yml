@@ -1,0 +1,73 @@
+perkSettings:
+  icon:
+    material: "REDSTONE"
+  priority: 92
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "vampire"
+  displayName: "Vampire"
+  description: "Heal when dealing damage to mobs"
+  category: "COMBAT"
+  rarity: "RARE"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "VAMPIRE"
+  showParticles: true
+  particleType: "HEART"
+  particleAmount: 6
+  playToggleSound: true
+  toggleOnSound: "ENTITY_WITHER_SPAWN"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.vampire.vip: 0
+    rdq.perk.vampire.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.vampire.level1: 0
+    rdq.perk.vampire.level2: 1
+    rdq.perk.vampire.level3: 2
+    rdq.perk.vampire.vip: 1
+    rdq.perk.vampire.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.vampire.vip: 0
+    rdq.perk.vampire.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 2200.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 110.0
+
+requirements:
+  vampire:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 35
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 12
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "You have embraced the Vampire curse!"
+  command:
+    type: "COMMAND"
+    command: "say {player} has become a Vampire!"

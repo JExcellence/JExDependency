@@ -1,0 +1,71 @@
+perkSettings:
+  icon:
+    material: "ENDER_PEARL"
+  priority: 75
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "night_vision"
+  displayName: "Night Vision"
+  description: "Allows you to see clearly in complete darkness"
+  category: "utility"
+  rarity: "common"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "NIGHT_VISION"
+  showParticles: true
+  particleType: "GLOW"
+  particleAmount: 3
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.night_vision.vip: 0
+    rdq.perk.night_vision.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.night_vision.level1: 0
+    rdq.perk.night_vision.vip: 1
+    rdq.perk.night_vision.premium: 1
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.night_vision.vip: 0
+    rdq.perk.night_vision.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 600.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 30.0
+
+requirements:
+  night_vision:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 10
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 1
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Night Vision perk activated! You can now see in the dark!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated night vision perk"

@@ -7,6 +7,10 @@ plugins {
     `maven-publish`
 }
 
+group = "com.raindropcentral.core"
+version = "2.0.0"
+description = "Core plugin providing shared functionality for Raindrop plugins (common)"
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))

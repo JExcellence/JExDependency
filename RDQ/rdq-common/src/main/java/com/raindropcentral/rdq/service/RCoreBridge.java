@@ -1,8 +1,8 @@
 package com.raindropcentral.rdq.service;
 
-import com.raindropcentral.rcore.database.entity.RPlayer;
-import com.raindropcentral.rcore.database.entity.statistic.RAbstractStatistic;
-import com.raindropcentral.rcore.database.entity.statistic.RPlayerStatistic;
+import com.raindropcentral.core.database.entity.player.RPlayer;
+import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
+import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import org.bukkit.Bukkit;

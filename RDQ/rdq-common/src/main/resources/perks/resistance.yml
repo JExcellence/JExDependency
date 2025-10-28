@@ -1,0 +1,73 @@
+perkSettings:
+  icon:
+    material: "SHIELD"
+  priority: 100
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "resistance"
+  displayName: "Resistance"
+  description: "Reduces the damage you take from all sources"
+  category: "defense"
+  rarity: "uncommon"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "RESISTANCE"
+  showParticles: true
+  particleType: "ENCHANT"
+  particleAmount: 4
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.resistance.vip: 0
+    rdq.perk.resistance.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.resistance.level1: 0
+    rdq.perk.resistance.level2: 1
+    rdq.perk.resistance.level3: 2
+    rdq.perk.resistance.vip: 1
+    rdq.perk.resistance.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.resistance.vip: 0
+    rdq.perk.resistance.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 1500.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 75.0
+
+requirements:
+  resistance:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 30
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 5
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Resistance perk activated! You are now more resilient to damage!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated resistance perk"

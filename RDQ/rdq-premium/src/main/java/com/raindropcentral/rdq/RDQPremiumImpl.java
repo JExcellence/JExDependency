@@ -51,12 +51,13 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
                  * at the correct point in the startup sequence.
                  */
                 @Override
-                protected @NotNull RDQManager initializeManager() {
+                protected @NotNull RDQManager initializeManager(@NotNull RDQ rdq) {
                     bountyService = new PremiumBountyService(getBountyRepository());
                     BountyServiceProvider.setInstance(bountyService);
                     registerServices();
-					
+
                     RDQManager manager = new PremiumRDQManager(
+                            rdq,
                             getPlugin(),
                             getPlatform(),
                             getExecutor(),

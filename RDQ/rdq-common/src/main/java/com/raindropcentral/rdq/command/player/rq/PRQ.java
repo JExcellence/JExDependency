@@ -4,6 +4,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
+import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
 import com.raindropcentral.rdq.view.rank.view.RankMainView;
 import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;
@@ -106,7 +107,7 @@ public final class PRQ extends PlayerCommand {
             case MAIN -> this.handleMainCommand(player);
             case QUESTS -> this.handleQuestsCommand(player);
             case RANKS -> this.handleRanksCommand(player);
-            case PERKS -> this.handlePerksCommand(player);
+            case PERKS -> this.handlePerksCommand(player, args);
             default -> this.handleHelpCommand(player);
         }
     }
@@ -248,20 +249,217 @@ public final class PRQ extends PlayerCommand {
     }
 
     /**
-     * Opens the perks interface for players holding the perks permission.
+     * Handles perk-related commands with sub-commands for listing, info, activation, and deactivation.
+     * Falls back to opening the perks GUI if no valid sub-command is provided.
      *
      * @param player player executing the command
+     * @param args command arguments including the 'perks' action
      */
-    private void handlePerksCommand(final @NotNull Player player) {
+    private void handlePerksCommand(final @NotNull Player player, final @NotNull String[] args) {
         if (this.hasNoPermission(player, ERQPermission.PERKS)) {
             return;
         }
-/*
+
+        // Check if there are additional arguments for sub-commands
+        if (args.length >= 2) {
+            final String subCommand = args[1].toLowerCase();
+
+            switch (subCommand) {
+                case "list" -> this.handlePerkListCommand(player);
+                case "info" -> this.handlePerkInfoCommand(player, args);
+                case "activate" -> this.handlePerkActivateCommand(player, args);
+                case "deactivate" -> this.handlePerkDeactivateCommand(player, args);
+                default -> this.openPerksView(player); // Invalid sub-command, open GUI
+            }
+        } else {
+            // No sub-command provided, open the perks GUI
+            this.openPerksView(player);
+        }
+    }
+
+    /**
+     * Lists all available perks with their current status.
+     *
+     * @param player the player executing the command
+     */
+    private void handlePerkListCommand(final @NotNull Player player) {
+        final var perkInitManager = this.rdq.getPerkInitializationManager();
+        final var perkManager = perkInitManager.getPerkManager();
+        final var registry = perkInitManager.getPerkRegistry();
+        final var perks = registry.getAll();
+
+        if (perks.isEmpty()) {
+            TranslationService.create(TranslationKey.of("perk.error.no_perks"), player)
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        TranslationService.create(TranslationKey.of("perk.command.list_header"), player)
+                .withPrefix()
+                .send();
+
+        for (final var perk : perks) {
+            final boolean active = perkManager.isActive(player, perk.getId());
+            final String status = active ? "✓" : "✗";
+            TranslationService.create(TranslationKey.of("perk.command.list_entry"), player)
+                    .with("perk", perk.getDisplayName())
+                    .with("status", status)
+                    .send();
+        }
+    }
+
+    /**
+     * Displays detailed information about a specific perk.
+     *
+     * @param player the player executing the command
+     * @param args command arguments, expecting perk ID at index 2
+     */
+    private void handlePerkInfoCommand(final @NotNull Player player, final @NotNull String[] args) {
+
+        final var perkInitManager = this.rdq.getPerkInitializationManager();
+        final var perkManager = perkInitManager.getPerkManager();
+
+        if (args.length < 3) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", "missing_id")
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        final String perkId = args[2];
+        final var perk = perkInitManager.getPerkRegistry().get(perkId);
+
+        if (perk == null) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", perkId)
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        final boolean active = perkManager.isActive(player, perk.getId());
+
+        TranslationService.create(TranslationKey.of("perk.command.info_header"), player)
+                .withPrefix()
+                .with("perk", perk.getDisplayName())
+                .send();
+
+        TranslationService.create(TranslationKey.of("perk.command.info_display_name"), player)
+                .with("name", perk.getDisplayName())
+                .send();
+
+        TranslationService.create(TranslationKey.of("perk.command.info_description"), player)
+                .with("description", perk.getDisplayName())
+                .send();
+
+        TranslationService.create(TranslationKey.of("perk.command.info_status"), player)
+                .with("status", active ? "Active" : "Inactive")
+                .send();
+
+        TranslationService.create(TranslationKey.of("perk.command.info_category"), player)
+                .with("category", perk.getTypeId())
+                .send();
+    }
+
+    /**
+     * Activates a perk for the player.
+     *
+     * @param player the player executing the command
+     * @param args command arguments, expecting perk ID at index 2
+     */
+    private void handlePerkActivateCommand(final @NotNull Player player, final @NotNull String[] args) {
+        if (args.length < 3) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", "missing_id")
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        if (!player.hasPermission("rdq.perk.activate")) {
+            TranslationService.create(TranslationKey.of("perk.error.no_permission"), player)
+                    .with("permission", "rdq.perk.activate")
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        final String perkId = args[2];
+        final var perkManager = this.rdq.getPerkInitializationManager();
+        final var perk = perkManager.getPerkRegistry().get(perkId);
+
+        if (perk == null) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", perkId)
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        perkManager.getPerkEventBus().fireActivated(player, perkId);
+
+        TranslationService.create(TranslationKey.of("perk.command.activated"), player)
+                .withPrefix()
+                .with("perk", perk.getDisplayName())
+                .send();
+    }
+
+    /**
+     * Deactivates a perk for the player.
+     *
+     * @param player the player executing the command
+     * @param args command arguments, expecting perk ID at index 2
+     */
+    private void handlePerkDeactivateCommand(final @NotNull Player player, final @NotNull String[] args) {
+        if (args.length < 3) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", "missing_id")
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        if (!player.hasPermission("rdq.perk.deactivate")) {
+            TranslationService.create(TranslationKey.of("perk.error.no_permission"), player)
+                    .with("permission", "rdq.perk.deactivate")
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        final String perkId = args[2];
+        final var perkManager = this.rdq.getPerkInitializationManager();
+        final var perk = perkManager.getPerkRegistry().get(perkId);
+
+        if (perk == null) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", perkId)
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        perkManager.getPerkEventBus().fireDeactivated(player, perkId);
+
+        TranslationService.create(TranslationKey.of("perk.command.deactivated"), player)
+                .withPrefix()
+                .with("perk", perk.getDisplayName())
+                .send();
+    }
+
+    /**
+     * Opens the perks GUI view for the player.
+     *
+     * @param player the player to open the view for
+     */
+    private void openPerksView(final @NotNull Player player) {
         this.rdq.getViewFrame().open(
-                PerksOverviewView.class,
+                PerkListViewFrame.class,
                 player,
-                Map.of("plugin", this.rdq)
-        );*/
+                Map.of("plugin", this.rdq, "player", this.rdq.getPlayerRepository().findByUuidAsync(player.getUniqueId()))
+        );
     }
 
     /**

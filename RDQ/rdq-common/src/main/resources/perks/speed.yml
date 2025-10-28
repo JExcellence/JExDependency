@@ -1,24 +1,25 @@
 perkSettings:
   icon:
     material: "SUGAR"
-    # auto generated name key, lore
   priority: 100
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
 
-  #not being used at all, just testing...
-  metadata:
-    category: "movement"
-    rarity: "common"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "SPEED"
-    showParticles: true
-    particleType: "CLOUD"
-    particleAmount: 5
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+metadata:
+  id: "speed"
+  displayName: "Speed Boost"
+  description: "Increases your movement speed"
+  category: "movement"
+  rarity: "common"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "SPEED"
+  showParticles: true
+  particleType: "CLOUD"
+  particleAmount: 5
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0
@@ -70,3 +71,11 @@ requirements:
         playtimeRequirement:
           useTotalPlayTime: true
           requiredPlaytimeHours: 2
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Speed boost activated!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated speed boost"

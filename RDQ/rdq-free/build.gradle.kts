@@ -17,11 +17,13 @@ dependencies {
     implementation(project(":rdq-common"))
 
     compileOnly(libs.paper.api)
-    compileOnly(libs.jetbrains.annotations)
 
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
+
+    compileOnly("com.raindropcentral.core:rcore-common:2.0.0")
+    compileOnly("com.raindropcentral.core:rcore-free:2.0.0")
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)

@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.manager;
 
 import com.raindropcentral.rdq.manager.bounty.BountyManager;
 import com.raindropcentral.rdq.manager.bounty.FreeBountyManager;
+import com.raindropcentral.rdq.manager.perk.DefaultPerkManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
 import com.raindropcentral.rdq.manager.rank.RankManager;
@@ -92,5 +93,30 @@ public final class RDQFreeManager extends RDQManager {
     }
 
     private static class FreePerkManager implements PerkManager {
+
+        @Override
+        public com.raindropcentral.rdq.perk.runtime.PerkRegistry getPerkRegistry() {
+            return null; // Not implemented in free edition
+        }
+
+        @Override
+        public com.raindropcentral.rdq.perk.runtime.PerkStateService getPerkStateService() {
+            return null; // Not implemented in free edition
+        }
+
+        @Override
+        public com.raindropcentral.rdq.perk.runtime.PerkTriggerService getPerkTriggerService() {
+            return null; // Not implemented in free edition
+        }
+
+        @Override
+        public void initialize() {
+            // No-op for free edition
+        }
+
+        @Override
+        public void shutdown() {
+            // No-op for free edition
+        }
     }
 }

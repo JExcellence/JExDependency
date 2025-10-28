@@ -63,7 +63,7 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
                  * startup sequence, after core components are ready.
                  */
                 @Override
-                protected @NotNull RDQManager initializeManager() {
+                protected @NotNull RDQManager initializeManager(@NotNull RDQ rdq) {
                     // 1. Initialize services.
                     bountyService = new FreeBountyService();
                     BountyServiceProvider.setInstance(bountyService);

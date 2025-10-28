@@ -1,0 +1,73 @@
+perkSettings:
+  icon:
+    material: "FEATHER"
+  priority: 90
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "jump_boost"
+  displayName: "Jump Boost"
+  description: "Increases your jump height and allows you to reach higher places"
+  category: "movement"
+  rarity: "common"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "JUMP_BOOST"
+  showParticles: true
+  particleType: "CLOUD"
+  particleAmount: 3
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.jump_boost.vip: 0
+    rdq.perk.jump_boost.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.jump_boost.level1: 0
+    rdq.perk.jump_boost.level2: 1
+    rdq.perk.jump_boost.level3: 2
+    rdq.perk.jump_boost.vip: 1
+    rdq.perk.jump_boost.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.jump_boost.vip: 0
+    rdq.perk.jump_boost.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 800.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 40.0
+
+requirements:
+  jump_boost:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 15
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 1
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Jump boost activated! You can now jump higher!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated jump boost"

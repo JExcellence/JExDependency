@@ -1,0 +1,72 @@
+perkSettings:
+  icon:
+    material: "MAGMA_BLOCK"
+  priority: 88
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+
+metadata:
+  id: "fire_resistance"
+  displayName: "Fire Resistance"
+  description: "Grants immunity to fire and lava damage"
+  category: "defense"
+  rarity: "rare"
+  perkType: "TOGGLEABLE_PASSIVE"
+  effectType: "FIRE_RESISTANCE"
+  showParticles: true
+  particleType: "FLAME"
+  particleAmount: 5
+  playToggleSound: true
+  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    rdq.perk.fire_resistance.vip: 0
+    rdq.perk.fire_resistance.premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    rdq.perk.fire_resistance.level1: 0
+    rdq.perk.fire_resistance.level2: 1
+    rdq.perk.fire_resistance.vip: 1
+    rdq.perk.fire_resistance.premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    rdq.perk.fire_resistance.vip: 0
+    rdq.perk.fire_resistance.premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 1800.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 90.0
+
+requirements:
+  fire_resistance:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 28
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 4
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "Fire Resistance perk activated! You are now immune to fire!"
+  command:
+    type: "COMMAND"
+    command: "say {player} activated fire resistance perk"

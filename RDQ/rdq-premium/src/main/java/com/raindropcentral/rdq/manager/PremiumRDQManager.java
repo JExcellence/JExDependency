@@ -1,9 +1,11 @@
 package com.raindropcentral.rdq.manager;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.repository.RBountyRepository;
 import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
 import com.raindropcentral.rdq.manager.bounty.BountyManager;
 import com.raindropcentral.rdq.manager.bounty.DefaultBountyManager;
+import com.raindropcentral.rdq.manager.perk.DefaultPerkManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
 import com.raindropcentral.rdq.manager.rank.RankManager;
@@ -37,6 +39,7 @@ public final class PremiumRDQManager extends RDQManager {
      *
      */
     public PremiumRDQManager(
+            @NotNull RDQ rdq,
             @NotNull JavaPlugin plugin,
             @NotNull RPlatform platform,
             @NotNull Executor executor,
@@ -49,7 +52,7 @@ public final class PremiumRDQManager extends RDQManager {
         this.bountyManager = new DefaultBountyManager(plugin, platform, executor, bountyRepository, playerRepository);
         this.questManager = null;
         this.rankManager = null;
-        this.perkManager = null;
+        this.perkManager = new DefaultPerkManager(rdq);
     }
 
     @Override

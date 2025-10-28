@@ -1,5 +1,9 @@
 package com.raindropcentral.rdq.manager.perk;
 
+import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
+import com.raindropcentral.rdq.perk.runtime.PerkStateService;
+import com.raindropcentral.rdq.perk.runtime.PerkTriggerService;
+
 /**
  * Coordinates the lifecycle of player perks across the RDQ platform, providing a
  * single integration point for loading perk definitions, wiring runtime
@@ -27,4 +31,35 @@ package com.raindropcentral.rdq.manager.perk;
  * @see com.raindropcentral.rdq.manager.RDQManager
  */
 public interface PerkManager {
+
+    /**
+     * Gets the perk registry for accessing runtime perk implementations.
+     *
+     * @return the perk registry
+     */
+    PerkRegistry getPerkRegistry();
+
+    /**
+     * Gets the perk state service for managing player perk ownership and activation.
+     *
+     * @return the perk state service
+     */
+    PerkStateService getPerkStateService();
+
+    /**
+     * Gets the perk trigger service for handling event-based perk activation.
+     *
+     * @return the perk trigger service
+     */
+    PerkTriggerService getPerkTriggerService();
+
+    /**
+     * Initializes the perk system, loading configurations and registering runtimes.
+     */
+    void initialize();
+
+    /**
+     * Shuts down the perk system, cleaning up resources and unregistering listeners.
+     */
+    void shutdown();
 }

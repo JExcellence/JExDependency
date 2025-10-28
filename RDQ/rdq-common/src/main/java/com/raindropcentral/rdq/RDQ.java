@@ -1,12 +1,18 @@
 package com.raindropcentral.rdq;
 
 import com.raindropcentral.commands.CommandFactory;
-import com.raindropcentral.rcore.api.RCoreAdapter;
+import com.raindropcentral.core.api.RCoreAdapter;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.manager.RDQManager;
+import com.raindropcentral.rdq.manager.perk.PerkInitializationManager;
+import com.raindropcentral.rdq.perk.event.PerkEventBus;
+import com.raindropcentral.rdq.perk.runtime.CooldownService;
+import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
+import com.raindropcentral.rdq.perk.runtime.PerkTypeRegistry;
 import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
+import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
 import com.raindropcentral.rdq.view.rank.view.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
@@ -66,9 +72,13 @@ public abstract class RDQ {
     private RBountyRepository bountyRepository;
     private RRankRepository rankRepository;
     private RPerkRepository perkRepository;
+    private PlayerPerkRequirementProgressRepository playerPerkRequirementProgressRepository;
     private RPlayerRankUpgradeProgressRepository playerRankUpgradeProgressRepository;
     private RRankTreeRepository rankTreeRepository;
     private RRequirementRepository requirementRepository;
+
+    // Perk initialization manager
+    private PerkInitializationManager perkInitializationManager;
 
     private @Nullable LuckPermsService luckPermsService;
     private @Nullable RCoreAdapter rCoreAdapter;
@@ -101,7 +111,7 @@ public abstract class RDQ {
         this.enableFuture = performCoreEnableAsync()
                 .thenCompose(v -> runSync(() -> {
                     try {
-                        this.manager = initializeManager();
+                        this.manager = initializeManager(this);
                         this.registerServices();
                         performPostEnableSync();
                     } catch (Throwable t) {
@@ -121,6 +131,9 @@ public abstract class RDQ {
         this.isDisabling = true;
         if (this.enableFuture != null && !this.enableFuture.isDone()) {
             this.enableFuture.cancel(true);
+        }
+        if (this.perkInitializationManager != null) {
+            this.perkInitializationManager.shutdown();
         }
         if (this.manager != null) {
             this.manager.shutdown();
@@ -142,10 +155,11 @@ public abstract class RDQ {
      * Implemented by concrete classes (Free/Premium) to create and return
      * their specific RDQManager instance. This is called after core systems are ready.
      *
+     * @param rdq the RDQ instance
      * @return The initialized RDQManager.
      */
     @NotNull
-    protected abstract RDQManager initializeManager();
+    protected abstract RDQManager initializeManager(@NotNull RDQ rdq);
 
     /**
      * Performs core asynchronous setup (Platform, Database, Repositories, Ranks).
@@ -227,10 +241,20 @@ public abstract class RDQ {
         this.perkRepository = new RPerkRepository(this.executor, emf);
         this.rankTreeRepository = new RRankTreeRepository(this.executor, emf);
         this.requirementRepository = new RRequirementRepository(this.executor, emf);
+        this.playerPerkRequirementProgressRepository = new PlayerPerkRequirementProgressRepository(this.executor, emf);
         this.playerRankUpgradeProgressRepository = new RPlayerRankUpgradeProgressRepository(this.executor, emf);
         this.playerRankPathRepository = new RPlayerRankPathRepository(this.executor, emf);
         this.playerRankRepository = new RPlayerRankRepository(this.executor, emf);
         this.playerPerkRepository = new RPlayerPerkRepository(this.executor, emf);
+
+        // Initialize perk services
+        initializePerkServices();
+    }
+
+    private void initializePerkServices() {
+        this.perkInitializationManager = new PerkInitializationManager(this);
+        this.perkInitializationManager.initializePerkServices();
+        this.perkInitializationManager.registerPerkServices();
     }
 
     @SuppressWarnings("UnstableApiUsage")
@@ -249,7 +273,8 @@ public abstract class RDQ {
                         new RankRequirementDetailView(),
                         new RankTreeOverviewView(),
                         new RankTreeOverviewView(),
-                        new RankPathRankRequirementOverview()
+                        new RankPathRankRequirementOverview(),
+                        new PerkListViewFrame()
                 )
                 .defaultConfig(config -> {
                     config.cancelOnClick();
@@ -371,6 +396,11 @@ public abstract class RDQ {
     }
 
     @NotNull
+    public PlayerPerkRequirementProgressRepository getPlayerPerkRequirementProgressRepository() {
+        return this.playerPerkRequirementProgressRepository;
+    }
+
+    @NotNull
     public RRankTreeRepository getRankTreeRepository() {
         return this.rankTreeRepository;
     }
@@ -378,6 +408,31 @@ public abstract class RDQ {
     @NotNull
     public RRequirementRepository getRequirementRepository() {
         return this.requirementRepository;
+    }
+
+    @NotNull
+    public PerkTypeRegistry getPerkTypeRegistry() {
+        return this.perkInitializationManager.getPerkTypeRegistry();
+    }
+
+    @NotNull
+    public PerkRegistry getPerkRegistry() {
+        return this.perkInitializationManager.getPerkRegistry();
+    }
+
+    @NotNull
+    public CooldownService getCooldownService() {
+        return this.perkInitializationManager.getCooldownService();
+    }
+
+    @NotNull
+    public PerkEventBus getPerkEventBus() {
+        return this.perkInitializationManager.getPerkEventBus();
+    }
+
+    @NotNull
+    public PerkInitializationManager getPerkInitializationManager() {
+        return this.perkInitializationManager;
     }
 
     public boolean isDisabling() {
