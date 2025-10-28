@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * Default implementation of PerkManager.
  *
  * @author qodo
- * @version 1.0.0
+ * @version 1.0.1
  * @since TBD
  */
 public class DefaultPerkManager implements PerkManager {
@@ -20,7 +20,7 @@ public class DefaultPerkManager implements PerkManager {
 
     public DefaultPerkManager(@NotNull RDQ rdq) {
         this.rdq = rdq;
-        this.perkRegistry = new DefaultPerkRegistry(rdq.getPerkTypeRegistry());
+        this.perkRegistry = new DefaultPerkRegistry(rdq, rdq.getPerkTypeRegistry());
         this.perkStateService = new DefaultPerkStateService(rdq);
         this.perkTriggerService = new DefaultPerkTriggerService(rdq, perkRegistry);
     }

@@ -4,6 +4,7 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.perk.RPerk;
 import com.raindropcentral.rdq.database.entity.perk.RPlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
  * Default implementation of PerkStateService.
  *
  * @author qodo
- * @version 1.0.0
+ * @version 1.0.1
  * @since TBD
  */
 public class DefaultPerkStateService implements PerkStateService {
@@ -126,6 +127,16 @@ public class DefaultPerkStateService implements PerkStateService {
 
     @Override
     public void cleanupPlayerState(@NotNull UUID playerId) {
-        // TODO: Implement cleanup if needed
+        final var initializationManager = rdq.getPerkInitializationManager();
+        if (initializationManager == null || !initializationManager.isInitialized()) {
+            return;
+        }
+        final var perkManager = initializationManager.getPerkManager();
+        final Player player = Bukkit.getPlayer(playerId);
+        if (player != null) {
+            perkManager.clearPlayerState(player);
+        } else {
+            perkManager.clearPlayerState(playerId);
+        }
     }
 }
