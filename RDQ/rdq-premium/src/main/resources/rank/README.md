@@ -1,6 +1,6 @@
 # MMORPG Rank System Example (42 Ranks, 6 Paths)
 
-This example demonstrates a flexible rank system for RaindropQuests, suitable for MMORPG-style progression.  
+This example demonstrates a flexible rank system for RaindropQuests, suitable for MMORPG-style progression.
 It features **6 distinct rank paths** (Cleric, Mage, Merchant, Ranger, Rogue, and Warrior); each with 7 ranks.
 
 ---
@@ -21,7 +21,7 @@ It features **6 distinct rank paths** (Cleric, Mage, Merchant, Ranger, Rogue, an
 ## Overview
 
 Requirements in RaindropQuests are conditions that must be met by a player to unlock ranks, complete quests, or access
-special features.  
+special features.
 All requirements are based on the `AbstractRequirement` contract, which ensures a consistent structure for checking
 fulfillment, calculating progress, and consuming resources.
 
@@ -41,7 +41,7 @@ The following types are supported out-of-the-box (see `AbstractRequirement.Type`
 
 ## Requirement Structure in YAML
 
-Requirements are defined in rank, quest, or perk YAML files under a `Requirements` section.  
+Requirements are defined in rank, quest, or perk YAML files under a `Requirements` section.
 Each requirement has a unique key (e.g., `itemRequirement`) and varying fields available.
 
 **Examples:**
@@ -229,7 +229,7 @@ specialization_training:
       level: 15
     - type: "PLAYTIME"
       playtimeHours: 5
-    
+
 # choice example
 weapon_choice:
   type: "CHOICE"
@@ -266,7 +266,7 @@ specialization_choice:
 
 ## Reward Structure in YAML
 
-Rewards are defined in your rank or quest YAML files under a `Rewards` section.  
+Rewards are defined in your rank or quest YAML files under a `Rewards` section.
 Each reward has a unique key (e.g., `reward1`) and the following fields:
 
 | Field    | Description                                                     | Example Value                             |

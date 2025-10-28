@@ -10,6 +10,7 @@
 ## Aggregate Construction and Persistence
 - Compose full entity aggregates (such as `RPlayer` with its statistics, inventory snapshots, and metadata) prior to invoking persistence repositories. Ensure aggregates are internally consistent before storage to minimize partial writes.
 - Leverage `CentralLogger` to log aggregate lifecycle milestones (`create`, `load`, `save`, `delete`). Include contextual identifiers (UUIDs, profile names) so RDQ and other consumers can correlate events.
+- When logging identifiers, favor hashed fingerprints or redacted aliases when messages could bubble up to customer-facing consoles.
 
 ## Cross-Module Compatibility
 - Treat public APIs exposed from `rcore-common` as stable contracts for RDQ, RPlatform, and external plugins. Changes must maintain backward compatibility or provide adapters marked with clear deprecation timelines.

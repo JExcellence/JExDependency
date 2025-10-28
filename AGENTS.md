@@ -47,6 +47,13 @@ Two main plugins exist in this framework with potential for expansion: `RCore` a
 - Javadocs added to methods include any necessary `return` and `param` tags
 - When code is altered or added to any class file increase the `@version` tag by 0.0.1. Changing or adding javadocs does not justify increase in `@version` tag.
 
+## Logging & Auditing
+- Route all diagnostics through `CentralLogger`; avoid direct use of `Logger.getLogger` unless CentralLogger is unavailable.
+- Treat player UUIDs and other PII as sensitive. Surface hashed fingerprints or anonymised identifiers in INFO/WARN logs.
+- Prefer structured payloads: emit JSON or key-value strings with sanitized keys (`[A-Za-z0-9._-]`) and truncate values over 256 characters.
+- Apply throttling around repetitive exception logging (e.g., failed triggers) to mitigate log flooding and disk churn.
+- Audit flows must include action, outcome, perk identifier, and a sanitized context block. Nest arbitrary metadata under a `context` object rather than flattening into root-level keys.
+
 ## Development Flow
 1. Identify scope and read any relevant documentation within the class files.
 2. Locate the target module inside `RDQ/src/main/java/com/raindropcentral/rdq/` or `RCore/src/main/java/com/raindropcentral/rcore/`.

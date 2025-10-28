@@ -11,6 +11,7 @@ import com.raindropcentral.rdq.perk.runtime.PerkRuntimeStateService;
 import com.raindropcentral.rdq.perk.runtime.PerkStateService;
 import com.raindropcentral.rdq.perk.runtime.PerkTriggerService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -21,8 +22,8 @@ import java.util.logging.Logger;
  * Default implementation of PerkManager.
  *
  * @author JExcellence
- * @version 1.0.3
- * @since TBD
+ * @version 1.0.4
+ * @since 3.2.0
  */
 public class DefaultPerkManager implements PerkManager {
 
@@ -62,6 +63,11 @@ public class DefaultPerkManager implements PerkManager {
     }
 
     @Override
+    public CooldownService getCooldownService() {
+        return cooldownService;
+    }
+
+    @Override
     public void initialize() {
         try {
             perkRegistry.reloadAllPerkRuntimes();
@@ -88,8 +94,14 @@ public class DefaultPerkManager implements PerkManager {
      *
      * @param playerId the player identifier to purge
      */
-    public void clearRuntimeState(@NotNull UUID playerId) {
+    @Override
+    public void clearPlayerState(@NotNull UUID playerId) {
         runtimeStateService.clearPlayer(playerId);
         cooldownService.clearAllCooldowns(playerId);
+    }
+
+    @Override
+    public void clearPlayerState(@NotNull Player player) {
+        clearPlayerState(player.getUniqueId());
     }
 }

@@ -11,23 +11,27 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 /**
  * Default implementation of PerkTriggerService.
  *
  * @author JExcellence
- * @version 1.0.3
- * @since TBD
+ * @version 1.0.4
+ * @since 3.2.0
  */
 public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
 
     private static final Logger LOGGER = CentralLogger.getLogger(DefaultPerkTriggerService.class.getName());
+    private static final long EXCEPTION_THROTTLE_MILLIS = 5_000L;
 
     private final RDQ rdq;
     private final DefaultPerkRegistry perkRegistry;
     private final PerkAuditService auditService;
+    private final AtomicLong triggerFailureWindow = new AtomicLong();
 
     public DefaultPerkTriggerService(@NotNull RDQ rdq, @NotNull DefaultPerkRegistry perkRegistry, @NotNull PerkAuditService auditService) {
         this.rdq = rdq;
@@ -43,6 +47,10 @@ public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
                 continue;
             }
             if (!runtime.supports(event)) {
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("reason", "unsupported");
+                auditService.recordTrigger(runtime.getId(), player.getUniqueId(), eventName, false, "unsupported-event", context, null);
+                LOGGER.log(Level.FINEST, "Skipping perk {0} for event {1} due to unsupported trigger", new Object[]{runtime.getId(), eventName});
                 continue;
             }
             final UUID playerId = player.getUniqueId();
@@ -59,8 +67,7 @@ public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
                 LOGGER.log(Level.FINE, "Triggered perk {0} for player fingerprint {1} via event {2}", new Object[]{runtime.getId(), fingerprint, eventName});
             } catch (Exception exception) {
                 auditService.recordTrigger(runtime.getId(), playerId, eventName, false, "exception", null, exception);
-                LOGGER.log(Level.WARNING, "Failed to trigger perk {0} for player fingerprint {1} via event {2}", new Object[]{runtime.getId(), fingerprint, eventName});
-                LOGGER.log(Level.FINER, "Trigger failure", exception);
+                logThrottledFailure(runtime.getId(), fingerprint, eventName, exception);
             }
         }
     }
@@ -74,5 +81,21 @@ public class DefaultPerkTriggerService implements PerkTriggerService, Listener {
     @Override
     public void unregisterListeners() {
         LOGGER.log(Level.FINE, "Perk trigger listeners will be unregistered automatically on plugin shutdown");
+    }
+
+    private void logThrottledFailure(String perkId, String fingerprint, String eventName, Throwable cause) {
+        final long now = System.currentTimeMillis();
+        long previous;
+        do {
+            previous = triggerFailureWindow.get();
+            if (previous != 0L && (now - previous) < EXCEPTION_THROTTLE_MILLIS) {
+                return;
+            }
+        } while (!triggerFailureWindow.compareAndSet(previous, now));
+        final LogRecord record = new LogRecord(Level.WARNING, "Failed to trigger perk {0} for player fingerprint {1} via event {2}");
+        record.setLoggerName(LOGGER.getName());
+        record.setParameters(new Object[]{perkId, fingerprint, eventName});
+        record.setThrown(cause);
+        LOGGER.log(record);
     }
 }

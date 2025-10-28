@@ -14,7 +14,6 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -26,16 +25,27 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.determineSupportedEvents;
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.normaliseEventKey;
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.sanitizeAmplifierMap;
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.sanitizeCooldownMap;
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.sanitizeDurationMap;
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.sanitizeMaterial;
+import static com.raindropcentral.rdq.perk.runtime.PerkMetadataSanitizer.sanitizeMetadata;
 
 /**
  * Registry for managing {@link PerkRuntime} instances.
  *
  * @author JExcellence
- * @version 1.0.3
- * @since TBD
+ * @version 1.0.6
+ * @since 3.2.0
  */
 public class DefaultPerkRegistry extends PerkRegistry {
 
@@ -143,8 +153,9 @@ public class DefaultPerkRegistry extends PerkRegistry {
         metadata.putIfAbsent("displayName", perk.getDisplayNameKey());
         metadata.putIfAbsent("description", perk.getDescriptionKey());
         metadata.put("perkType", perk.getPerkType().name());
+        final Map<String, Object> sanitizedMetadata = new LinkedHashMap<>(sanitizeMetadata(metadata));
 
-        final String categoryId = Optional.ofNullable(metadata.get("category"))
+        final String categoryId = Optional.ofNullable(sanitizedMetadata.get("category"))
                 .map(Object::toString)
                 .map(String::trim)
                 .filter(value -> !value.isEmpty())
@@ -162,11 +173,11 @@ public class DefaultPerkRegistry extends PerkRegistry {
         final Map<String, Long> permissionCooldowns = sanitizeCooldownMap(section.getPermissionCooldowns().getPermissionCooldowns());
         final Map<String, Integer> permissionAmplifiers = sanitizeAmplifierMap(section.getPermissionAmplifiers().getPermissionAmplifiers());
 
-        final String iconMaterial = settings.getIcon().getMaterial();
+        final String iconMaterial = sanitizeMaterial(settings.getIcon().getMaterial());
         final int priority = perk.getPriority() == 0 ? settings.getPriority() : perk.getPriority();
 
-        metadata.putIfAbsent("category", category.getIdentifier());
-        metadata.putIfAbsent("defaultCooldownSeconds", defaultCooldown);
+        sanitizedMetadata.putIfAbsent("category", category.getIdentifier());
+        sanitizedMetadata.putIfAbsent("defaultCooldownSeconds", defaultCooldown);
 
         return new PerkConfig(
                 perk.getIdentifier(),
@@ -179,7 +190,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 enabled,
                 defaultCooldown,
                 durationSeconds,
-                Map.copyOf(metadata),
+                Map.copyOf(sanitizedMetadata),
                 List.of(),
                 List.of(),
                 permissionCooldowns,
@@ -187,19 +198,13 @@ public class DefaultPerkRegistry extends PerkRegistry {
         );
     }
 
-    private Map<String, Long> sanitizeCooldownMap(Map<String, Long> source) {
-        return source.entrySet().stream()
-                .filter(entry -> entry.getKey() != null && entry.getValue() != null && entry.getValue() >= 0)
-                .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, entry -> entry.getValue(), Math::min));
-    }
-
-    private Map<String, Integer> sanitizeAmplifierMap(Map<String, Integer> source) {
-        return source.entrySet().stream()
-                .filter(entry -> entry.getKey() != null && entry.getValue() != null)
-                .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, entry -> Math.max(0, entry.getValue()), Math::max));
-    }
-
     private static final class SectionBackedPerkRuntime implements PerkRuntime {
+
+        private static final long ERROR_THROTTLE_MILLIS = 5_000L;
+        private static final long FAILURE_WINDOW_MILLIS = 5_000L;
+        private static final int FAILURE_THRESHOLD = 3;
+        private static final long SUSPEND_DURATION_MILLIS = 15_000L;
+
 
         private final RPerk perk;
         private final LoadedPerk loadedPerk;
@@ -216,6 +221,12 @@ public class DefaultPerkRegistry extends PerkRegistry {
         private final Map<String, Integer> permissionAmplifiers;
         private final int defaultAmplifier;
         private final Set<String> supportedEvents;
+        private final ConcurrentMap<String, AtomicLong> logWindows = new ConcurrentHashMap<>();
+        private final PerkCircuitBreaker circuitBreaker = new PerkCircuitBreaker(
+                FAILURE_WINDOW_MILLIS,
+                FAILURE_THRESHOLD,
+                SUSPEND_DURATION_MILLIS
+        );
 
         private SectionBackedPerkRuntime(
                 @NotNull RPerk perk,
@@ -246,17 +257,11 @@ public class DefaultPerkRegistry extends PerkRegistry {
                             .orElse(null));
             this.defaultCooldownSeconds = Math.max(0L, Optional.ofNullable(section.getPermissionCooldowns().getDefaultCooldownSeconds()).orElse(0L));
             this.defaultDurationSeconds = Math.max(0L, Optional.ofNullable(section.getPermissionDurations().getDefaultDurationSeconds()).orElse(0L));
-            this.permissionCooldowns = Map.copyOf(section.getPermissionCooldowns().getPermissionCooldowns().entrySet().stream()
-                    .filter(entry -> entry.getKey() != null && entry.getValue() != null && entry.getValue() >= 0)
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::min)));
-            this.permissionDurations = Map.copyOf(section.getPermissionDurations().getPermissionDurationsSeconds().entrySet().stream()
-                    .filter(entry -> entry.getKey() != null && entry.getValue() != null && entry.getValue() >= 0)
-                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, Math::max)));
-            this.permissionAmplifiers = Map.copyOf(section.getPermissionAmplifiers().getPermissionAmplifiers().entrySet().stream()
-                    .filter(entry -> entry.getKey() != null && entry.getValue() != null)
-                    .collect(Collectors.toMap(Map.Entry::getKey, entry -> Math.max(0, entry.getValue()), Math::max)));
-            this.defaultAmplifier = Optional.ofNullable(section.getPermissionAmplifiers().getDefaultAmplifier()).orElse(0);
-            this.supportedEvents = determineSupportedEvents(section.getPerkSettings().getMetadata());
+            this.permissionCooldowns = sanitizeCooldownMap(section.getPermissionCooldowns().getPermissionCooldowns());
+            this.permissionDurations = sanitizeDurationMap(section.getPermissionDurations().getPermissionDurationsSeconds());
+            this.permissionAmplifiers = sanitizeAmplifierMap(section.getPermissionAmplifiers().getPermissionAmplifiers());
+            this.defaultAmplifier = Math.max(0, Optional.ofNullable(section.getPermissionAmplifiers().getDefaultAmplifier()).orElse(0));
+            this.supportedEvents = determineSupportedEvents(sanitizeMetadata(section.getPerkSettings().getMetadata()));
         }
 
         @Override
@@ -271,6 +276,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
 
         @Override
         public boolean canActivate(@NotNull Player player) {
+            final UUID playerId = player.getUniqueId();
             if (!globallyEnabled) {
                 return false;
             }
@@ -280,10 +286,13 @@ public class DefaultPerkRegistry extends PerkRegistry {
             if (isOnCooldown(player)) {
                 return false;
             }
-            if (maxConcurrentUsers == null) {
+            if (runtimeState.isActive(playerId, () -> handleExpiry(player))) {
                 return true;
             }
-            if (runtimeState.isActive(player.getUniqueId(), () -> handleExpiry(player))) {
+            if (isSuspended(playerId)) {
+                return false;
+            }
+            if (maxConcurrentUsers == null) {
                 return true;
             }
             return runtimeState.activeCount() < maxConcurrentUsers;
@@ -292,6 +301,13 @@ public class DefaultPerkRegistry extends PerkRegistry {
         @Override
         public boolean activate(@NotNull Player player) {
             final UUID playerId = player.getUniqueId();
+            if (isSuspended(playerId)) {
+                final long remaining = emitSuspensionNotice("activation-suspended", playerId);
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("remainingSeconds", remaining);
+                auditService.recordActivation(getId(), playerId, false, "suspended", context, null);
+                return false;
+            }
             final long durationSeconds = resolveDurationSeconds(player);
             final long expiryMillis = durationSeconds > 0 ? System.currentTimeMillis() + (durationSeconds * 1000L) : 0L;
             if (!runtimeState.markActive(playerId, expiryMillis, maxConcurrentUsers)) {
@@ -318,14 +334,21 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 context.put("durationSeconds", durationSeconds);
                 context.put("cooldownSeconds", cooldownSeconds);
                 auditService.recordActivation(getId(), playerId, true, "activated", context, null);
+                clearFailureState(playerId);
                 return true;
             } catch (Exception exception) {
                 runtimeState.markInactive(playerId);
                 final Map<String, Object> context = new LinkedHashMap<>();
                 context.put("durationSeconds", durationSeconds);
                 auditService.recordActivation(getId(), playerId, false, "exception", context, exception);
-                LOGGER.log(Level.WARNING, "Failed to activate perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
-                LOGGER.log(Level.FINER, "Activation failure", exception);
+                registerFailure(playerId, "activation");
+                logThrottled(
+                        "activation-exception",
+                        Level.WARNING,
+                        "Failed to activate perk {0} for player fingerprint {1}",
+                        new Object[]{getId(), auditService.fingerprint(playerId)},
+                        exception
+                );
                 return false;
             }
         }
@@ -338,14 +361,21 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 if (success) {
                     runtimeState.markInactive(playerId);
                     auditService.recordDeactivation(getId(), playerId, true, "deactivated", null);
+                    clearFailureState(playerId);
                 } else {
                     auditService.recordDeactivation(getId(), playerId, false, "runtime-rejected", null);
                 }
                 return success;
             } catch (Exception exception) {
                 auditService.recordDeactivation(getId(), playerId, false, "exception", exception);
-                LOGGER.log(Level.WARNING, "Failed to deactivate perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
-                LOGGER.log(Level.FINER, "Deactivation failure", exception);
+                registerFailure(playerId, "deactivation");
+                logThrottled(
+                        "deactivation-exception",
+                        Level.WARNING,
+                        "Failed to deactivate perk {0} for player fingerprint {1}",
+                        new Object[]{getId(), auditService.fingerprint(playerId)},
+                        exception
+                );
                 return false;
             }
         }
@@ -362,6 +392,13 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 final Map<String, Object> context = new LinkedHashMap<>();
                 context.put("remainingCooldownSeconds", getRemainingCooldown(player));
                 auditService.recordTrigger(getId(), playerId, source, false, "cooldown-active", context, null);
+                return;
+            }
+            if (isSuspended(playerId)) {
+                final long remaining = emitSuspensionNotice("trigger-suspended", playerId);
+                final Map<String, Object> context = new LinkedHashMap<>();
+                context.put("remainingSeconds", remaining);
+                auditService.recordTrigger(getId(), playerId, source, false, "suspended", context, null);
                 return;
             }
             final long durationSeconds = resolveDurationSeconds(player);
@@ -383,12 +420,19 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 context.put("durationSeconds", durationSeconds);
                 context.put("cooldownSeconds", cooldownSeconds);
                 auditService.recordTrigger(getId(), playerId, source, true, "triggered", context, null);
+                clearFailureState(playerId);
             } catch (Exception exception) {
                 final Map<String, Object> context = new LinkedHashMap<>();
                 context.put("durationSeconds", durationSeconds);
                 auditService.recordTrigger(getId(), playerId, source, false, "exception", context, exception);
-                LOGGER.log(Level.WARNING, "Failed to trigger perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
-                LOGGER.log(Level.FINER, "Trigger failure", exception);
+                registerFailure(playerId, "trigger");
+                logThrottled(
+                        "trigger-exception",
+                        Level.WARNING,
+                        "Failed to trigger perk {0} for player fingerprint {1}",
+                        new Object[]{getId(), auditService.fingerprint(playerId)},
+                        exception
+                );
                 if (trackDuration) {
                     runtimeState.markInactive(playerId);
                 }
@@ -478,48 +522,20 @@ public class DefaultPerkRegistry extends PerkRegistry {
             try {
                 loadedPerk.type().deactivate(player, loadedPerk);
                 auditService.recordExpiry(getId(), playerId, "expired");
+                clearFailureState(playerId);
             } catch (Exception exception) {
                 auditService.recordDeactivation(getId(), playerId, false, "expiry-exception", exception);
-                LOGGER.log(Level.FINE, "Failed to deactivate expired perk {0} for player fingerprint {1}", new Object[]{getId(), auditService.fingerprint(playerId)});
-                LOGGER.log(Level.FINER, "Expiry deactivation failure", exception);
-            } finally {
-                runtimeState.markInactive(playerId);
+                registerFailure(playerId, "expiry");
+                logThrottled(
+                        "expiry-exception",
+                        Level.FINE,
+                        "Failed to deactivate expired perk {0} for player fingerprint {1}",
+                        new Object[]{getId(), auditService.fingerprint(playerId)},
+                        exception
+                );
+        runtimeState.markInactive(playerId);
+    }
             }
-        }
-
-        private Set<String> determineSupportedEvents(Map<String, Object> metadata) {
-            final Set<String> events = new HashSet<>();
-            Optional.ofNullable(metadata.get("triggerEvent"))
-                    .map(Object::toString)
-                    .map(String::trim)
-                    .filter(value -> !value.isEmpty())
-                    .map(SectionBackedPerkRuntime::normaliseEventKey)
-                    .filter(value -> !value.isEmpty())
-                    .ifPresent(events::add);
-            Optional.ofNullable(metadata.get("triggerEvents"))
-                    .filter(Collection.class::isInstance)
-                    .map(Collection.class::cast)
-                    .ifPresent(collection -> collection.forEach(item -> {
-                        final String normalised = normaliseEventKey(String.valueOf(item));
-                        if (!normalised.isEmpty()) {
-                            events.add(normalised);
-                        }
-                    }));
-            return Set.copyOf(events);
-        }
-
-        private static String normaliseEventKey(String raw) {
-            final String trimmed = Optional.ofNullable(raw)
-                    .map(String::trim)
-                    .orElse("");
-            if (trimmed.isEmpty()) {
-                return "";
-            }
-            String upper = trimmed.toUpperCase(Locale.ROOT).replaceAll("[^A-Z0-9]", "");
-            if (upper.endsWith("EVENT")) {
-                upper = upper.substring(0, upper.length() - 5);
-            }
-            return upper;
         }
 
         private void cleanup() {
@@ -533,9 +549,72 @@ public class DefaultPerkRegistry extends PerkRegistry {
                     runtimeState.markInactive(playerId);
                     cooldownService.clearCooldown(playerId, getId());
                     auditService.recordCleanup(getId(), playerId, "offline-cleanup");
+                    circuitBreaker.clear(playerId);
                 }
             }
             runtimeState.clearAll();
+            circuitBreaker.clearAll();
         }
+
+        private boolean isSuspended(@NotNull UUID playerId) {
+            return circuitBreaker.isSuspended(playerId);
+        }
+
+        private long emitSuspensionNotice(@NotNull String channel, @NotNull UUID playerId) {
+            final long remainingSeconds = getRemainingSuspensionSeconds(playerId);
+            final String fingerprint = auditService.fingerprint(playerId);
+            logThrottled(
+                    channel + '-' + fingerprint,
+                    Level.FINE,
+                    "Perk {0} suspended for player fingerprint {1} ({2}s remaining)",
+                    new Object[]{getId(), fingerprint, remainingSeconds},
+                    null
+            );
+            return remainingSeconds;
+        }
+
+        private long getRemainingSuspensionSeconds(@NotNull UUID playerId) {
+            return circuitBreaker.getRemainingSuspensionSeconds(playerId);
+        }
+
+        private void registerFailure(@NotNull UUID playerId, @NotNull String channel) {
+            final long suspendSeconds = circuitBreaker.registerFailure(playerId);
+            if (suspendSeconds <= 0L) {
+                return;
+            }
+            final Map<String, Object> context = new LinkedHashMap<>();
+            context.put("channel", channel);
+            context.put("suspendSeconds", suspendSeconds);
+            auditService.recordSuppression(getId(), playerId, "auto-suspend", context);
+            emitSuspensionNotice(channel + "-suspend", playerId);
+        }
+
+        private void clearFailureState(@NotNull UUID playerId) {
+            circuitBreaker.clear(playerId);
+        }
+
+        private void logThrottled(
+                @NotNull String key,
+                @NotNull Level level,
+                @NotNull String message,
+                @NotNull Object[] parameters,
+                @Nullable Throwable cause
+        ) {
+            final long now = System.currentTimeMillis();
+            final AtomicLong marker = logWindows.computeIfAbsent(key, ignored -> new AtomicLong(0L));
+            long previous;
+            do {
+                previous = marker.get();
+                if (previous != 0L && (now - previous) < ERROR_THROTTLE_MILLIS) {
+                    return;
+                }
+            } while (!marker.compareAndSet(previous, now));
+            final LogRecord record = new LogRecord(level, message);
+            record.setLoggerName(LOGGER.getName());
+            record.setParameters(parameters);
+            record.setThrown(cause);
+            LOGGER.log(record);
+        }
+
     }
 }
