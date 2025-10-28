@@ -28,9 +28,9 @@ RPlatform is a comprehensive utility framework designed for modern Minecraft plu
 
 ### Security & logging
 
-- `CentralLogger` centralizes all plugin output, writing to rotating log files while optionally mirroring to console. Call `CentralLogger.initialize(plugin)` during `onLoad` to enable the managed handlers.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java†L34-L347】
-- `PlatformLogFormatter` renders structured JSON lines that include timestamp, plugin name, thread, and sanitized context, enabling ingestion into modern observability pipelines.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/PlatformLogFormatter.java†L17-L166】
-- Logging APIs expose console toggles, flush hooks, and shutdown routines; always invoke `CentralLogger.shutdown()` during plugin disable to avoid truncated records.【F:RPlatform/src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java†L351-L458】
+- `CentralLogger` centralizes all plugin output, writing to rotating log files while optionally mirroring to console. Call `CentralLogger.initialize(plugin)` during `onLoad` to enable the managed handlers. ([CentralLogger.java#L34-L347](src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java#L34-L347))
+- `PlatformLogFormatter` renders structured JSON lines that include timestamp, plugin name, thread, and sanitized context, enabling ingestion into modern observability pipelines. ([PlatformLogFormatter.java#L17-L166](src/main/java/com/raindropcentral/rplatform/logging/PlatformLogFormatter.java#L17-L166))
+- Logging APIs expose console toggles, flush hooks, and shutdown routines; always invoke `CentralLogger.shutdown()` during plugin disable to avoid truncated records. ([CentralLogger.java#L351-L458](src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java#L351-L458))
 
 ---
 
