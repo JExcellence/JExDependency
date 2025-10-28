@@ -178,9 +178,9 @@ public final class PerkAuditService {
             final MessageDigest digest = MessageDigest.getInstance("SHA-256");
             final byte[] hashed = digest.digest(playerId.toString().getBytes(StandardCharsets.UTF_8));
             return toHex(hashed, FINGERPRINT_LENGTH);
-        } catch (NoSuchAlgorithmException ignored) {
-            final String raw = playerId.toString().replace("-", "");
-            return raw.length() <= FINGERPRINT_LENGTH ? raw : raw.substring(0, FINGERPRINT_LENGTH);
+        } catch (NoSuchAlgorithmException e) {
+            // Should not happen, as SHA-256 is a standard algorithm.
+            throw new InternalError("SHA-256 not available", e);
         }
     }
 
