@@ -3,7 +3,6 @@ package com.raindropcentral.rdq.manager.perk;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.perk.runtime.*;
-import com.raindropcentral.rdq.perk.runtime.PerkManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -34,11 +33,8 @@ public class PerkInitializationManager {
 
     private final RDQ rdq;
     private volatile PerkTypeRegistry perkTypeRegistry;
-    private volatile PerkRegistry perkRegistry;
-    private volatile PerkStateService perkStateService;
-    private volatile CooldownService cooldownService;
     private volatile PerkEventBus perkEventBus;
-    private volatile PerkManager perkManager;
+    private volatile DefaultPerkManager defaultPerkManager;
     private volatile boolean initialized = false;
 
     public PerkInitializationManager(@NotNull RDQ rdq) {
@@ -56,24 +52,18 @@ public class PerkInitializationManager {
      *     <li>PerkStateService for tracking player perk state</li>
      *     <li>CooldownService for managing perk cooldowns</li>
      *     <li>PerkEventBus for event-driven perk activation</li>
-     *     <li>PerkManager and all perk service implementations</li>
+     *     <li>DefaultPerkManager and all perk service implementations</li>
      * </ul>
      */
     public void initializePerkServices() {
-        // Create core registries and services
         this.perkTypeRegistry = new PerkTypeRegistry();
         this.perkTypeRegistry.register(new ToggleablePerkType());
         this.perkTypeRegistry.register(new EventPerkType());
 
-        this.perkRegistry = new PerkRegistry(this.perkTypeRegistry);
-        this.perkStateService = new DefaultPerkStateService(rdq);
-        this.cooldownService = new CooldownService();
         this.perkEventBus = new PerkEventBus();
 
-        // Initialize perk managers and services
         initializePerkManagers();
-        
-        // Mark as initialized
+
         this.initialized = true;
     }
 
@@ -89,42 +79,35 @@ public class PerkInitializationManager {
         if (perkEventBus == null) {
             throw new IllegalStateException("PerkEventBus not initialized. Call initializePerkServices() first.");
         }
-        // Perk services are registered during initializePerkManagers() when they
-        // instantiate and call perkEventBus.register(this) in their constructors.
-        // No additional registration needed here.
     }
 
     /**
      * Initializes all perk managers and service implementations.
      *
-     * <p>Creates a PerkManager instance and instantiates all 15 perk services,
+     * <p>Creates a DefaultPerkManager instance and instantiates all 15 perk services,
      * registering them with the event bus for event-driven activation.
      */
     private void initializePerkManagers() {
-        this.perkManager = new PerkManager(
-            perkRegistry,
-            new PerkCache(),
-            cooldownService
-        );
+        this.defaultPerkManager = new DefaultPerkManager(rdq);
 
-        // Instantiate passive potion effect perk services
-        new SpeedPerkService(perkManager, perkEventBus);
-        new JumpBoostPerkService(perkManager, perkEventBus);
-        new StrengthPerkService(perkManager, perkEventBus);
-        new ResistancePerkService(perkManager, perkEventBus);
-        new RegenerationPerkService(perkManager, perkEventBus);
-        new HasteePerkService(perkManager, perkEventBus);
-        new FireResistancePerkService(perkManager, perkEventBus);
-        new NightVisionPerkService(perkManager, perkEventBus);
-        new WaterBreathingPerkService(perkManager, perkEventBus);
-        new LuckPerkService(perkManager, perkEventBus);
+        new SpeedPerkService(defaultPerkManager, perkEventBus);
+        new JumpBoostPerkService(defaultPerkManager, perkEventBus);
+        new StrengthPerkService(defaultPerkManager, perkEventBus);
+        new ResistancePerkService(defaultPerkManager, perkEventBus);
+        new RegenerationPerkService(defaultPerkManager, perkEventBus);
+        new HasteePerkService(defaultPerkManager, perkEventBus);
+        new FireResistancePerkService(defaultPerkManager, perkEventBus);
+        new NightVisionPerkService(defaultPerkManager, perkEventBus);
+        new WaterBreathingPerkService(defaultPerkManager, perkEventBus);
+        new LuckPerkService(defaultPerkManager, perkEventBus);
 
-        // Instantiate event-triggered perk services
-        new PreventDeathPerkService(perkManager, perkEventBus);
-        new FlyPerkService(perkManager, perkEventBus);
-        new DoubleExperiencePerkService(perkManager, perkEventBus);
-        new TreasureHunterPerkService(perkManager, perkEventBus);
-        new VampirePerkService(perkManager, perkEventBus);
+        new PreventDeathPerkService(defaultPerkManager, perkEventBus);
+        new FlyPerkService(defaultPerkManager, perkEventBus);
+        new DoubleExperiencePerkService(defaultPerkManager, perkEventBus);
+        new TreasureHunterPerkService(defaultPerkManager, perkEventBus);
+        new VampirePerkService(defaultPerkManager, perkEventBus);
+
+        defaultPerkManager.initialize();
     }
 
     /**
@@ -137,8 +120,8 @@ public class PerkInitializationManager {
         if (perkEventBus != null) {
             perkEventBus.clearListeners();
         }
-        if (perkManager != null) {
-            // Additional cleanup if needed
+        if (defaultPerkManager != null) {
+            defaultPerkManager.shutdown();
         }
     }
 
@@ -148,12 +131,8 @@ public class PerkInitializationManager {
      * @return true if initialization is complete, false otherwise
      */
     public boolean isInitialized() {
-        return initialized && perkTypeRegistry != null && perkRegistry != null 
-            && perkStateService != null && cooldownService != null 
-            && perkEventBus != null && perkManager != null;
+        return initialized && perkTypeRegistry != null && perkEventBus != null && defaultPerkManager != null;
     }
-
-    // Getters for accessing initialized services
 
     @NotNull
     public PerkTypeRegistry getPerkTypeRegistry() {
@@ -165,26 +144,26 @@ public class PerkInitializationManager {
 
     @NotNull
     public PerkRegistry getPerkRegistry() {
-        if (perkRegistry == null) {
-            throw new IllegalStateException("PerkRegistry not initialized. Call initializePerkServices() first.");
+        if (defaultPerkManager == null) {
+            throw new IllegalStateException("PerkManager not initialized. Call initializePerkServices() first.");
         }
-        return perkRegistry;
+        return defaultPerkManager.getPerkRegistry();
     }
 
     @NotNull
     public PerkStateService getPerkStateService() {
-        if (perkStateService == null) {
-            throw new IllegalStateException("PerkStateService not initialized. Call initializePerkServices() first.");
+        if (defaultPerkManager == null) {
+            throw new IllegalStateException("PerkManager not initialized. Call initializePerkServices() first.");
         }
-        return perkStateService;
+        return defaultPerkManager.getPerkStateService();
     }
 
     @NotNull
     public CooldownService getCooldownService() {
-        if (cooldownService == null) {
-            throw new IllegalStateException("CooldownService not initialized. Call initializePerkServices() first.");
+        if (defaultPerkManager == null) {
+            throw new IllegalStateException("PerkManager not initialized. Call initializePerkServices() first.");
         }
-        return cooldownService;
+        return defaultPerkManager.getCooldownService();
     }
 
     @NotNull
@@ -197,9 +176,9 @@ public class PerkInitializationManager {
 
     @NotNull
     public PerkManager getPerkManager() {
-        if (perkManager == null) {
+        if (defaultPerkManager == null) {
             throw new IllegalStateException("PerkManager not initialized. Call initializePerkServices() first.");
         }
-        return perkManager;
+        return defaultPerkManager;
     }
 }

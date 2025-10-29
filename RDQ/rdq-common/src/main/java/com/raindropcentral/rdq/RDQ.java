@@ -275,6 +275,8 @@ public abstract class RDQ {
                         new RankTreeOverviewView(),
                         new RankPathRankRequirementOverview(),
                         new PerkListViewFrame()
+
+
                 )
                 .defaultConfig(config -> {
                     config.cancelOnClick();
