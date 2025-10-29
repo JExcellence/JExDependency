@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "ENDER_PEARL"
+  displayNameKey: "perk.night_vision.name"
+  descriptionKey: "perk.night_vision.lore"
   priority: 75
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "night_vision"
-  displayName: "Night Vision"
-  description: "Allows you to see clearly in complete darkness"
-  category: "utility"
-  rarity: "common"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "NIGHT_VISION"
-  showParticles: true
-  particleType: "GLOW"
-  particleAmount: 3
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "UTILITY"
+    rarity: "COMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "NIGHT_VISION"
+    showParticles: true
+    particleType: "GLOW"
+    particleAmount: 3
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0

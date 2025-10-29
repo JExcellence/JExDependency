@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "EXPERIENCE_BOTTLE"
+  displayNameKey: "perk.double_experience.name"
+  descriptionKey: "perk.double_experience.lore"
   priority: 90
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "double_experience"
-  displayName: "Double Experience"
-  description: "Doubles all experience gained from any source"
-  category: "UTILITY"
-  rarity: "UNCOMMON"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "DOUBLE_EXPERIENCE"
-  showParticles: true
-  particleType: "ENCHANT"
-  particleAmount: 4
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "UTILITY"
+    rarity: "UNCOMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "DOUBLE_EXPERIENCE"
+    showParticles: true
+    particleType: "ENCHANT"
+    particleAmount: 4
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0

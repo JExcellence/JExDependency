@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "PRISMARINE_SHARD"
+  displayNameKey: "perk.water_breathing.name"
+  descriptionKey: "perk.water_breathing.lore"
   priority: 82
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "water_breathing"
-  displayName: "Water Breathing"
-  description: "Allows you to breathe underwater indefinitely"
-  category: "utility"
-  rarity: "rare"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "WATER_BREATHING"
-  showParticles: true
-  particleType: "BUBBLE"
-  particleAmount: 4
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "UTILITY"
+    rarity: "RARE"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "WATER_BREATHING"
+    showParticles: true
+    particleType: "BUBBLE"
+    particleAmount: 4
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0

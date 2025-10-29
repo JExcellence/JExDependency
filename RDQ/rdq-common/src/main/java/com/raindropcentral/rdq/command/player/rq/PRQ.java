@@ -416,6 +416,14 @@ public final class PRQ extends PlayerCommand {
             return;
         }
 
+        if (!runtime.get().canActivate(player)) {
+            TranslationService.create(TranslationKey.of("perk.error.activation_denied"), player)
+                    .with("perk", perk.getDisplayName())
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
         if (!perkManager.activate(player, perkId)) {
             TranslationService.create(TranslationKey.of("perk.error.activation_failed"), player)
                     .with("perk", perk.getDisplayName())

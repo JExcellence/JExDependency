@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "REDSTONE"
+  displayNameKey: "perk.regeneration.name"
+  descriptionKey: "perk.regeneration.lore"
   priority: 85
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "regeneration"
-  displayName: "Regeneration"
-  description: "Slowly regenerates your health over time"
-  category: "healing"
-  rarity: "rare"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "REGENERATION"
-  showParticles: true
-  particleType: "HEART"
-  particleAmount: 6
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "HEALING"
+    rarity: "RARE"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "REGENERATION"
+    showParticles: true
+    particleType: "HEART"
+    particleAmount: 6
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0

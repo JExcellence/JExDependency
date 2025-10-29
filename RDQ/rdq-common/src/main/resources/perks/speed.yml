@@ -15,10 +15,23 @@ perkSettings:
     toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
   icon:
     material: "SUGAR"
+  displayNameKey: "perk.speed.name"
+  descriptionKey: "perk.speed.lore"
   priority: 100
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
+  metadata:
+    category: "MOVEMENT"
+    rarity: "COMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "SPEED"
+    showParticles: true
+    particleType: "CLOUD"
+    particleAmount: 5
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldownSeconds: 0

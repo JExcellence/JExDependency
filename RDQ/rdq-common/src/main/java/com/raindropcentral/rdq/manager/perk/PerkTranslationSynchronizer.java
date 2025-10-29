@@ -25,7 +25,7 @@ import java.util.Set;
  *
  * <p>This class intentionally performs no blocking I/O on asynchronous threads;
  * the underlying repository handles the necessary file operations. The
- * synchronizer simply delegates to {@link TranslationRepository}
+ * synchronizer simply delegates to {@link TranslationRepository#ensureTranslation}
  * and aggregates statistics for logging purposes.</p>
  *
  * @author JExcellence
@@ -48,7 +48,7 @@ public final class PerkTranslationSynchronizer {
 
         final TranslationRepository repository = configuration.repository();
         final Set<Locale> locales = resolveTargetLocales(repository);
-        int missingEntries = 0;
+        int addedEntries = 0;
 
         for (PerkRuntime runtime : registry.getAllPerkRuntimes()) {
             final LoadedPerk loadedPerk = registry.get(runtime.getId());
@@ -60,18 +60,18 @@ public final class PerkTranslationSynchronizer {
             final String descriptionKey = loadedPerk.config().description();
 
             for (Locale locale : locales) {
-                if (!repository.hasTranslation(TranslationKey.of(nameKey), locale)) {
-                    missingEntries++;
+                if (repository.ensureTranslation(locale, TranslationKey.of(nameKey), defaultNameValue(friendlyName))) {
+                    addedEntries++;
                 }
                 if (descriptionKey != null && !descriptionKey.isBlank()
-                        && !repository.hasTranslation(TranslationKey.of(descriptionKey), locale)) {
-                    missingEntries++;
+                        && repository.ensureTranslation(locale, TranslationKey.of(descriptionKey), defaultDescriptionValue(friendlyName))) {
+                    addedEntries++;
                 }
             }
         }
 
-        if (missingEntries > 0) {
-            rdq.getPlugin().getLogger().warning("Found " + missingEntries + " missing perk translation entries. Please ensure all perk translation keys are defined in your translation files.");
+        if (addedEntries > 0) {
+            rdq.getPlugin().getLogger().info("Generated " + addedEntries + " perk translation placeholders");
         }
     }
 

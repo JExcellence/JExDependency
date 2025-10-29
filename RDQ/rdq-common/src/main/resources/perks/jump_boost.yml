@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "FEATHER"
+  displayNameKey: "perk.jump_boost.name"
+  descriptionKey: "perk.jump_boost.lore"
   priority: 90
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "jump_boost"
-  displayName: "Jump Boost"
-  description: "Increases your jump height and allows you to reach higher places"
-  category: "movement"
-  rarity: "common"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "JUMP_BOOST"
-  showParticles: true
-  particleType: "CLOUD"
-  particleAmount: 3
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "MOVEMENT"
+    rarity: "COMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "JUMP_BOOST"
+    showParticles: true
+    particleType: "CLOUD"
+    particleAmount: 3
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0

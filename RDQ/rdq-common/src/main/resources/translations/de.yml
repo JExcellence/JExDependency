@@ -12,6 +12,52 @@ perk:
     not_active: "<red>Perk {perk} ist nicht aktiv.</red>"
     deactivation_failed: "<red>{perk} konnte nicht deaktiviert werden. Versuche es später erneut.</red>"
 
+  double_experience:
+    name: "<yellow>Doppelte Erfahrung</yellow>"
+    lore: "<gray>Verdoppelt jede erhaltene Erfahrung.</gray>"
+  fire_resistance:
+    name: "<yellow>Feuerresistenz</yellow>"
+    lore: "<gray>Schützt vor Feuer- und Lavaschaden.</gray>"
+  fly:
+    name: "<yellow>Flug</yellow>"
+    lore: "<gray>Gewährt dir freie Flugfähigkeit.</gray>"
+  haste:
+    name: "<yellow>Eile</yellow>"
+    lore: "<gray>Erhöht Abbau- und Angriffsgeschwindigkeit deutlich.</gray>"
+  jump_boost:
+    name: "<yellow>Sprungkraft</yellow>"
+    lore: "<gray>Lässt dich höher springen und neue Höhen erreichen.</gray>"
+  luck:
+    name: "<yellow>Glück</yellow>"
+    lore: "<gray>Verbessert Qualität und Menge deiner Beute.</gray>"
+  night_vision:
+    name: "<yellow>Nachtsicht</yellow>"
+    lore: "<gray>Schenkt klare Sicht in völliger Dunkelheit.</gray>"
+  prevent_death:
+    name: "<yellow>Tod verhindern</yellow>"
+    lore: "<gray>Rettet dich einmal pro Abklingzeit und stellt Leben wieder her.</gray>"
+  regeneration:
+    name: "<yellow>Regeneration</yellow>"
+    lore: "<gray>Regeneriert deine Gesundheit langsam über Zeit.</gray>"
+  resistance:
+    name: "<yellow>Resistenz</yellow>"
+    lore: "<gray>Reduziert eintreffenden Schaden aus allen Quellen.</gray>"
+  speed:
+    name: "<yellow>Geschwindigkeit</yellow>"
+    lore: "<gray>Erhöht deine Bewegungsgeschwindigkeit spürbar.</gray>"
+  strength:
+    name: "<yellow>Stärke</yellow>"
+    lore: "<gray>Steigert Nahkampfschaden im Kampf.</gray>"
+  treasure_hunter:
+    name: "<yellow>Schatzjäger</yellow>"
+    lore: "<gray>Bietet Chance auf zusätzliche Erze beim Graben.</gray>"
+  vampire:
+    name: "<yellow>Vampir</yellow>"
+    lore: "<gray>Heilt dich, wenn du Gegner verletzt.</gray>"
+  water_breathing:
+    name: "<yellow>Wasseratmung</yellow>"
+    lore: "<gray>Ermöglicht unbegrenztes Atmen unter Wasser.</gray>"
+
 # Pagination buttons
 paginated_player_ui:
   title: "<gradient:#9b59b6:#ffffff>Available Players</gradient>"
