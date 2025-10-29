@@ -1,6 +1,17 @@
 rq:
   no_luckperms_installed: "<gradient:#9b59b6:#ffffff>LuckPerms not found. Install plugin to use feature.</gradient>"
 
+perk:
+  error:
+    not_found: "<red>Perk {perk} nicht gefunden</red>"
+    no_permission: "<red>Du hast keine Berechtigung: {permission}</red>"
+    no_perks: "<red>Keine Perks verfügbar</red>"
+    already_active: "<yellow>Perk {perk} ist bereits aktiv.</yellow>"
+    activation_denied: "<red>Du kannst {perk} derzeit nicht aktivieren.</red>"
+    activation_failed: "<red>{perk} konnte nicht aktiviert werden. Versuche es später erneut.</red>"
+    not_active: "<red>Perk {perk} ist nicht aktiv.</red>"
+    deactivation_failed: "<red>{perk} konnte nicht deaktiviert werden. Versuche es später erneut.</red>"
+
 # Pagination buttons
 paginated_player_ui:
   title: "<gradient:#9b59b6:#ffffff>Available Players</gradient>"
