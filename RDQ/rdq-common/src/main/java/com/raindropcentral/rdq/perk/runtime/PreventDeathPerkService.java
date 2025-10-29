@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.perk.runtime;
 
+import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.perk.event.PerkEventListener;
 import org.bukkit.entity.Player;
@@ -19,30 +20,29 @@ import java.util.UUID;
  * and the perk enters cooldown. This is a one-use-per-cooldown mechanic.
  *
  * @author JExcellence
- * @version 1.0.0
+ * @version 1.0.2
  * @since 3.2.0
  */
 public class PreventDeathPerkService implements PerkEventListener, Listener {
 
     private final PerkManager perkManager;
-    private final PerkEventBus perkEventBus;
     private final Map<UUID, Long> lastPreventionTime = new HashMap<>();
     private static final String PERK_ID = "prevent_death";
 
     public PreventDeathPerkService(@NotNull PerkManager perkManager, @NotNull PerkEventBus perkEventBus) {
         this.perkManager = perkManager;
-        this.perkEventBus = perkEventBus;
-        this.perkEventBus.register(this);
+        perkEventBus.register(this);
     }
 
     @EventHandler
     public void onPlayerDeath(@NotNull PlayerDeathEvent event) {
         Player player = event.getEntity();
-        if (!perkManager.isActive(player, PERK_ID)) {
+        final var runtime = perkManager.findRuntime(PERK_ID);
+        if (runtime.isEmpty() || !runtime.get().isActive(player)) {
             return;
         }
 
-        LoadedPerk perk = perkManager.getPerk(PERK_ID);
+        LoadedPerk perk = perkManager.getPerkRegistry().get(PERK_ID);
         if (perk == null) {
             return;
         }
@@ -62,7 +62,7 @@ public class PreventDeathPerkService implements PerkEventListener, Listener {
         player.setSaturation(10.0f);
 
         lastPreventionTime.put(playerId, currentTime);
-        perkEventBus.fireCooldownStart(player, PERK_ID, getCooldownSeconds(player, perk));
+        runtime.get().setCooldown(player, getCooldownSeconds(player, perk));
     }
 
     @Override

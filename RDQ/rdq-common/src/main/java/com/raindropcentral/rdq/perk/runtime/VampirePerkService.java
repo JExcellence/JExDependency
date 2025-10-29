@@ -1,12 +1,16 @@
 package com.raindropcentral.rdq.perk.runtime;
 
+import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.perk.event.PerkEventListener;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 /**
  * Perk service that heals the player when dealing damage to entities.
@@ -15,19 +19,17 @@ import org.jetbrains.annotations.NotNull;
  * for the player. This encourages aggressive combat playstyle.
  *
  * @author JExcellence
- * @version 1.0.0
+ * @version 1.0.2
  * @since 3.2.0
  */
 public class VampirePerkService implements PerkEventListener, Listener {
 
     private final PerkManager perkManager;
-    private final PerkEventBus perkEventBus;
     private static final String PERK_ID = "vampire";
 
     public VampirePerkService(@NotNull PerkManager perkManager, @NotNull PerkEventBus perkEventBus) {
         this.perkManager = perkManager;
-        this.perkEventBus = perkEventBus;
-        this.perkEventBus.register(this);
+        perkEventBus.register(this);
     }
 
     @EventHandler
@@ -37,15 +39,16 @@ public class VampirePerkService implements PerkEventListener, Listener {
         }
 
         Player player = (Player) event.getDamager();
-        if (!perkManager.isActive(player, PERK_ID)) {
+        final var runtime = perkManager.findRuntime(PERK_ID);
+        if (runtime.isEmpty() || !runtime.get().isActive(player)) {
             return;
         }
 
-        if (!(event.getEntity() instanceof org.bukkit.entity.LivingEntity)) {
+        if (!(event.getEntity() instanceof LivingEntity)) {
             return;
         }
 
-        LoadedPerk perk = perkManager.getPerk(PERK_ID);
+        LoadedPerk perk = perkManager.getPerkRegistry().get(PERK_ID);
         if (perk == null) {
             return;
         }
@@ -85,7 +88,7 @@ public class VampirePerkService implements PerkEventListener, Listener {
     }
 
     private int getPermissionAmplifier(@NotNull Player player, @NotNull LoadedPerk perk) {
-        for (java.util.Map.Entry<String, Integer> entry : perk.config().permissionAmplifiers().entrySet()) {
+        for (Map.Entry<String, Integer> entry : perk.config().permissionAmplifiers().entrySet()) {
             if (player.hasPermission(entry.getKey())) {
                 return entry.getValue();
             }

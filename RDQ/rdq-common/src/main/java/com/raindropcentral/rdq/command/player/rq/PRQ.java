@@ -36,7 +36,7 @@ import java.util.Map;
  * @see ERQPermission
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Command
 @SuppressWarnings("unused")
@@ -387,9 +387,19 @@ public final class PRQ extends PlayerCommand {
         }
 
         final String perkId = args[2];
-        final var perkManager = this.rdq.getPerkInitializationManager();
-        final var perk = perkManager.getPerkRegistry().get(perkId);
+        final var initializationManager = this.rdq.getPerkInitializationManager();
+        final var perkManager = initializationManager.getPerkManager();
+        final var runtime = perkManager.findRuntime(perkId);
 
+        if (runtime.isEmpty()) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", perkId)
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        final var perk = initializationManager.getPerkRegistry().get(perkId);
         if (perk == null) {
             TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
                     .with("perk", perkId)
@@ -398,7 +408,29 @@ public final class PRQ extends PlayerCommand {
             return;
         }
 
-        perkManager.getPerkEventBus().fireActivated(player, perkId);
+        if (runtime.get().isActive(player)) {
+            TranslationService.create(TranslationKey.of("perk.error.already_active"), player)
+                    .with("perk", perk.getDisplayName())
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        if (!runtime.get().canActivate(player)) {
+            TranslationService.create(TranslationKey.of("perk.error.activation_denied"), player)
+                    .with("perk", perk.getDisplayName())
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        if (!perkManager.activate(player, perkId)) {
+            TranslationService.create(TranslationKey.of("perk.error.activation_failed"), player)
+                    .with("perk", perk.getDisplayName())
+                    .withPrefix()
+                    .send();
+            return;
+        }
 
         TranslationService.create(TranslationKey.of("perk.command.activated"), player)
                 .withPrefix()
@@ -430,9 +462,19 @@ public final class PRQ extends PlayerCommand {
         }
 
         final String perkId = args[2];
-        final var perkManager = this.rdq.getPerkInitializationManager();
-        final var perk = perkManager.getPerkRegistry().get(perkId);
+        final var initializationManager = this.rdq.getPerkInitializationManager();
+        final var perkManager = initializationManager.getPerkManager();
+        final var runtime = perkManager.findRuntime(perkId);
 
+        if (runtime.isEmpty()) {
+            TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
+                    .with("perk", perkId)
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        final var perk = initializationManager.getPerkRegistry().get(perkId);
         if (perk == null) {
             TranslationService.create(TranslationKey.of("perk.error.not_found"), player)
                     .with("perk", perkId)
@@ -441,7 +483,21 @@ public final class PRQ extends PlayerCommand {
             return;
         }
 
-        perkManager.getPerkEventBus().fireDeactivated(player, perkId);
+        if (!runtime.get().isActive(player)) {
+            TranslationService.create(TranslationKey.of("perk.error.not_active"), player)
+                    .with("perk", perk.getDisplayName())
+                    .withPrefix()
+                    .send();
+            return;
+        }
+
+        if (!perkManager.deactivate(player, perkId)) {
+            TranslationService.create(TranslationKey.of("perk.error.deactivation_failed"), player)
+                    .with("perk", perk.getDisplayName())
+                    .withPrefix()
+                    .send();
+            return;
+        }
 
         TranslationService.create(TranslationKey.of("perk.command.deactivated"), player)
                 .withPrefix()

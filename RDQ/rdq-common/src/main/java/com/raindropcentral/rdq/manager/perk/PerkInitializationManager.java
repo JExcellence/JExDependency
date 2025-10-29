@@ -2,8 +2,25 @@ package com.raindropcentral.rdq.manager.perk;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
-import com.raindropcentral.rdq.perk.runtime.*;
+import com.raindropcentral.rdq.perk.runtime.CooldownService;
+import com.raindropcentral.rdq.perk.runtime.DefaultPerkRegistry;
+import com.raindropcentral.rdq.perk.runtime.DoubleExperiencePerkService;
+import com.raindropcentral.rdq.perk.runtime.EventPerkType;
+import com.raindropcentral.rdq.perk.runtime.FlyPerkService;
+import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
+import com.raindropcentral.rdq.perk.runtime.PerkStateService;
+import com.raindropcentral.rdq.perk.runtime.PerkTypeRegistry;
+import com.raindropcentral.rdq.perk.runtime.PreventDeathPerkService;
+import com.raindropcentral.rdq.perk.runtime.ToggleablePerkType;
+import com.raindropcentral.rdq.perk.runtime.TreasureHunterPerkService;
+import com.raindropcentral.rdq.perk.runtime.VampirePerkService;
+import org.bukkit.Bukkit;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Manages the initialization and lifecycle of the perk system within RDQ.
@@ -26,7 +43,7 @@ import org.jetbrains.annotations.NotNull;
  * synchronous post-enable phase and should not be accessed concurrently.
  *
  * @author JExcellence
- * @version 1.0.0
+ * @version 1.0.2
  * @since 3.2.0
  */
 public class PerkInitializationManager {
@@ -36,6 +53,7 @@ public class PerkInitializationManager {
     private volatile PerkEventBus perkEventBus;
     private volatile DefaultPerkManager defaultPerkManager;
     private volatile boolean initialized = false;
+    private final List<Listener> registeredListeners = new ArrayList<>();
 
     public PerkInitializationManager(@NotNull RDQ rdq) {
         this.rdq = rdq;
@@ -88,26 +106,16 @@ public class PerkInitializationManager {
      * registering them with the event bus for event-driven activation.
      */
     private void initializePerkManagers() {
-        this.defaultPerkManager = new DefaultPerkManager(rdq);
+        this.defaultPerkManager = new DefaultPerkManager(rdq, perkEventBus);
 
-        new SpeedPerkService(defaultPerkManager, perkEventBus);
-        new JumpBoostPerkService(defaultPerkManager, perkEventBus);
-        new StrengthPerkService(defaultPerkManager, perkEventBus);
-        new ResistancePerkService(defaultPerkManager, perkEventBus);
-        new RegenerationPerkService(defaultPerkManager, perkEventBus);
-        new HasteePerkService(defaultPerkManager, perkEventBus);
-        new FireResistancePerkService(defaultPerkManager, perkEventBus);
-        new NightVisionPerkService(defaultPerkManager, perkEventBus);
-        new WaterBreathingPerkService(defaultPerkManager, perkEventBus);
-        new LuckPerkService(defaultPerkManager, perkEventBus);
-
-        new PreventDeathPerkService(defaultPerkManager, perkEventBus);
-        new FlyPerkService(defaultPerkManager, perkEventBus);
-        new DoubleExperiencePerkService(defaultPerkManager, perkEventBus);
-        new TreasureHunterPerkService(defaultPerkManager, perkEventBus);
-        new VampirePerkService(defaultPerkManager, perkEventBus);
+        registerService(new PreventDeathPerkService(defaultPerkManager, perkEventBus));
+        registerService(new FlyPerkService(defaultPerkManager, perkEventBus));
+        registerService(new DoubleExperiencePerkService(defaultPerkManager, perkEventBus));
+        registerService(new TreasureHunterPerkService(defaultPerkManager, perkEventBus));
+        registerService(new VampirePerkService(defaultPerkManager, perkEventBus));
 
         defaultPerkManager.initialize();
+        synchronizePerkTranslations();
     }
 
     /**
@@ -123,6 +131,27 @@ public class PerkInitializationManager {
         if (defaultPerkManager != null) {
             defaultPerkManager.shutdown();
         }
+        for (Listener listener : registeredListeners) {
+            HandlerList.unregisterAll(listener);
+        }
+        registeredListeners.clear();
+    }
+
+    private void registerService(@NotNull Object service) {
+        if (service instanceof Listener listener) {
+            Bukkit.getPluginManager().registerEvents(listener, rdq.getPlugin());
+            registeredListeners.add(listener);
+        }
+    }
+
+    private void synchronizePerkTranslations() {
+        if (defaultPerkManager == null) {
+            return;
+        }
+        if (!(defaultPerkManager.getPerkRegistry() instanceof DefaultPerkRegistry defaultRegistry)) {
+            return;
+        }
+        new PerkTranslationSynchronizer(rdq).synchronize(defaultRegistry);
     }
 
     /**
