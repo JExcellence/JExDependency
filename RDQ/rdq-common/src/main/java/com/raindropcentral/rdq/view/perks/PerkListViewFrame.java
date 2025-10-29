@@ -2,8 +2,8 @@ package com.raindropcentral.rdq.view.perks;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.perk.runtime.LoadedPerk;
-import com.raindropcentral.rdq.perk.runtime.PerkManager;
 import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
 import com.raindropcentral.rdq.perk.runtime.PerkStateService;
 import com.raindropcentral.rdq.type.EPerkCategory;

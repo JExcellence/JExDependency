@@ -102,7 +102,7 @@ public class PerkInitializationManager {
     /**
      * Initializes all perk managers and service implementations.
      *
-     * <p>Creates a DefaultPerkManager instance and instantiates all 15 perk services,
+     * <p>Creates a DefaultPerkManager instance and instantiates all available perk services,
      * registering them with the event bus for event-driven activation.
      */
     private void initializePerkManagers() {
