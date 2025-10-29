@@ -25,7 +25,7 @@ import java.util.Set;
  *
  * <p>This class intentionally performs no blocking I/O on asynchronous threads;
  * the underlying repository handles the necessary file operations. The
- * synchronizer simply delegates to {@link TranslationRepository#ensureTranslation}
+ * synchronizer simply delegates to {@link TranslationRepository}
  * and aggregates statistics for logging purposes.</p>
  *
  * @author JExcellence
@@ -48,7 +48,7 @@ public final class PerkTranslationSynchronizer {
 
         final TranslationRepository repository = configuration.repository();
         final Set<Locale> locales = resolveTargetLocales(repository);
-        int addedEntries = 0;
+        int missingEntries = 0;
 
         for (PerkRuntime runtime : registry.getAllPerkRuntimes()) {
             final LoadedPerk loadedPerk = registry.get(runtime.getId());
@@ -60,18 +60,18 @@ public final class PerkTranslationSynchronizer {
             final String descriptionKey = loadedPerk.config().description();
 
             for (Locale locale : locales) {
-                if (repository.ensureTranslation(locale, TranslationKey.of(nameKey), defaultNameValue(friendlyName))) {
-                    addedEntries++;
+                if (!repository.hasTranslation(TranslationKey.of(nameKey), locale)) {
+                    missingEntries++;
                 }
                 if (descriptionKey != null && !descriptionKey.isBlank()
-                        && repository.ensureTranslation(locale, TranslationKey.of(descriptionKey), defaultDescriptionValue(friendlyName))) {
-                    addedEntries++;
+                        && !repository.hasTranslation(TranslationKey.of(descriptionKey), locale)) {
+                    missingEntries++;
                 }
             }
         }
 
-        if (addedEntries > 0) {
-            rdq.getPlugin().getLogger().info("Generated " + addedEntries + " perk translation placeholders");
+        if (missingEntries > 0) {
+            rdq.getPlugin().getLogger().warning("Found " + missingEntries + " missing perk translation entries. Please ensure all perk translation keys are defined in your translation files.");
         }
     }
 

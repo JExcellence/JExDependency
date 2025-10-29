@@ -4,11 +4,13 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.ranks.rank.RankSection;
 import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;
 import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
+import com.raindropcentral.rdq.utility.ConfigurationDirectoryLoader;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.evaluable.ConfigKeeper;
 import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.jetbrains.annotations.NotNull;
+
 
 import java.io.File;
 import java.util.*;
@@ -105,48 +107,43 @@ public final class RankConfigurationLoader {
      * @return a mapping of tree identifiers to their parsed {@link RankTreeSection}
      */
     private Map<String, RankTreeSection> loadTreeSections() {
+        final ConfigurationDirectoryLoader<RankTreeSection> loader = new ConfigurationDirectoryLoader<>(
+                rdq,
+                DIR_ROOT + "/" + DIR_TREES,
+                RankTreeSection.class,
+                this::normalize,
+                (fileName, e) -> LOGGER.log(Level.WARNING, "Failed to load rank tree configuration: " + fileName, e)
+        );
+
         final Map<String, RankTreeSection> sections = new HashMap<>();
-        final File folder = new File(rdq.getPlugin().getDataFolder(), DIR_ROOT + "/" + DIR_TREES);
 
-        if (!folder.exists() || !folder.isDirectory()) {
-            LOGGER.log(Level.INFO, "Rank tree directory not found: {0}", folder.getAbsolutePath());
-            return sections;
-        }
-
+        // Load initial files with special handling
         for (String fileName : INITIAL_TREE_FILES) {
             try {
                 final String id = normalize(fileName);
                 final RankTreeSection section = loadTree(fileName);
-                section.setTreeId(id);
-                section.afterParsing(new ArrayList<>());
-                sections.put(id, section);
-                LOGGER.log(Level.INFO, "Loaded rank tree configuration: {0}", id);
+                if (section != null) {
+                    section.setTreeId(id);
+                    section.afterParsing(new ArrayList<>());
+                    sections.put(id, section);
+                    LOGGER.log(Level.INFO, "Loaded rank tree configuration: {0}", id);
+                }
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Failed to load initial rank tree configuration: " + fileName, e);
             }
         }
 
-        final File[] files = folder.listFiles((dir, name) -> name.toLowerCase(Locale.ROOT).endsWith(".yml"));
-        if (files == null || files.length == 0) {
-            LOGGER.info("No additional rank tree configuration files found");
-            return sections;
-        }
-
-        for (File file : files) {
-            final String name = file.getName();
-            if (INITIAL_TREE_FILES.contains(name.toLowerCase(Locale.ROOT))) continue;
-
+        // Load additional files
+        final Map<String, RankTreeSection> additionalSections = (Map<String, RankTreeSection>) loader.loadAll(INITIAL_TREE_FILES);
+        additionalSections.forEach((id, section) -> {
+            section.setTreeId(id);
             try {
-                final String id = normalize(name);
-                final RankTreeSection section = loadTree(name);
-                section.setTreeId(id);
                 section.afterParsing(new ArrayList<>());
-                sections.put(id, section);
-                LOGGER.log(Level.INFO, "Loaded rank tree configuration: {0}", id);
             } catch (Exception e) {
-                LOGGER.log(Level.WARNING, "Failed to load rank tree configuration: " + name, e);
+                LOGGER.log(Level.WARNING, "Failed to parse rank tree {0}: {1}", new Object[]{id, e.getMessage()});
             }
-        }
+            sections.put(id, section);
+        });
 
         LOGGER.log(Level.INFO, "Loaded {0} rank tree configurations", sections.size());
         return sections;
@@ -176,7 +173,7 @@ public final class RankConfigurationLoader {
             });
 
             all.put(treeId, ranks);
-            LOGGER.log(Level.INFO, "Loaded {0} rank configurations for tree: {0}", ranks.size());
+            LOGGER.log(Level.INFO, "Loaded {0} rank configurations for tree: {1}", new Object[]{ranks.size(), treeId});
         });
         return all;
     }
@@ -220,7 +217,7 @@ public final class RankConfigurationLoader {
      * @param identifier the raw file name
      * @return the normalized identifier without file extension or separators
      */
-    private static String normalize(final String identifier) {
+    private String normalize(final String identifier) {
         return identifier.replace(".yml", "").replace(" ", "").replace("-", "_").toLowerCase(Locale.ROOT);
     }
 }

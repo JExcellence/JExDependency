@@ -1,4 +1,18 @@
 perkSettings:
+  metadata:
+    id: "fly"
+    displayName: "Flight"
+    description: "Grants the ability to fly freely"
+    category: "MOVEMENT"
+    rarity: "RARE"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "FLIGHT"
+    showParticles: true
+    particleType: "CLOUD"
+    particleAmount: 6
+    playToggleSound: true
+    toggleOnSound: "ENTITY_ENDER_DRAGON_FLAP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
   icon:
     material: "ELYTRA"
   priority: 100
@@ -6,23 +20,8 @@ perkSettings:
   requiresOwnedArea: false
   isEnabled: true
 
-metadata:
-  id: "fly"
-  displayName: "Flight"
-  description: "Grants the ability to fly freely"
-  category: "MOVEMENT"
-  rarity: "RARE"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "FLIGHT"
-  showParticles: true
-  particleType: "CLOUD"
-  particleAmount: 6
-  playToggleSound: true
-  toggleOnSound: "ENTITY_ENDER_DRAGON_FLAP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
-
 permissionCooldowns:
-  defaultCooldown: 0
+  defaultCooldownSeconds: 0
   permissionCooldowns:
     rdq.perk.fly.vip: 0
     rdq.perk.fly.premium: 0
@@ -37,8 +36,8 @@ permissionAmplifiers:
     rdq.perk.fly.premium: 2
 
 permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
+  defaultDurationSeconds: 0
+  permissionDurationsSeconds:
     rdq.perk.fly.vip: 0
     rdq.perk.fly.premium: 0
 

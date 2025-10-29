@@ -52,7 +52,7 @@ public final class PremiumRDQManager extends RDQManager {
         this.bountyManager = new DefaultBountyManager(plugin, platform, executor, bountyRepository, playerRepository);
         this.questManager = null;
         this.rankManager = null;
-        this.perkManager = new DefaultPerkManager(rdq);
+        this.perkManager = new DefaultPerkManager(rdq, rdq.getPerkInitializationManager().getPerkEventBus());
     }
 
     @Override

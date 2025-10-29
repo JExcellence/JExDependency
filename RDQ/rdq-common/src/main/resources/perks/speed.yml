@@ -1,4 +1,18 @@
 perkSettings:
+  metadata:
+    id: "speed"
+    displayName: "Speed Boost"
+    description: "Increases your movement speed"
+    category: "movement"
+    rarity: "common"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "SPEED"
+    showParticles: true
+    particleType: "CLOUD"
+    particleAmount: 5
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
   icon:
     material: "SUGAR"
   priority: 100
@@ -6,23 +20,8 @@ perkSettings:
   requiresOwnedArea: false
   isEnabled: true
 
-metadata:
-  id: "speed"
-  displayName: "Speed Boost"
-  description: "Increases your movement speed"
-  category: "movement"
-  rarity: "common"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "SPEED"
-  showParticles: true
-  particleType: "CLOUD"
-  particleAmount: 5
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
-
 permissionCooldowns:
-  defaultCooldown: 0
+  defaultCooldownSeconds: 0
   permissionCooldowns:
     rdq.perk.speed.vip: 0
     rdq.perk.speed.premium: 0
@@ -37,8 +36,8 @@ permissionAmplifiers:
     rdq.perk.speed.premium: 2
 
 permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
+  defaultDurationSeconds: 0
+  permissionDurationsSeconds:
     rdq.perk.speed.vip: 0
     rdq.perk.speed.premium: 0
 
