@@ -1,7 +1,9 @@
 package com.raindropcentral.rdq.perk.runtime;
 
+import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.perk.event.PerkEventListener;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -18,26 +21,25 @@ import java.util.Random;
  * ore blocks. The chance and bonus amount scale with permission levels.
  *
  * @author JExcellence
- * @version 1.0.0
+ * @version 1.0.2
  * @since 3.2.0
  */
 public class TreasureHunterPerkService implements PerkEventListener, Listener {
 
     private final PerkManager perkManager;
-    private final PerkEventBus perkEventBus;
     private final Random random = new Random();
     private static final String PERK_ID = "treasure_hunter";
 
     public TreasureHunterPerkService(@NotNull PerkManager perkManager, @NotNull PerkEventBus perkEventBus) {
         this.perkManager = perkManager;
-        this.perkEventBus = perkEventBus;
-        this.perkEventBus.register(this);
+        perkEventBus.register(this);
     }
 
     @EventHandler
     public void onBlockBreak(@NotNull BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (!perkManager.isActive(player, PERK_ID)) {
+        final var runtime = perkManager.findRuntime(PERK_ID);
+        if (runtime.isEmpty() || !runtime.get().isActive(player)) {
             return;
         }
 
@@ -45,7 +47,7 @@ public class TreasureHunterPerkService implements PerkEventListener, Listener {
             return;
         }
 
-        LoadedPerk perk = perkManager.getPerk(PERK_ID);
+        LoadedPerk perk = perkManager.getPerkRegistry().get(PERK_ID);
         if (perk == null) {
             return;
         }
@@ -98,7 +100,7 @@ public class TreasureHunterPerkService implements PerkEventListener, Listener {
     }
 
     private int getPermissionAmplifier(@NotNull Player player, @NotNull LoadedPerk perk) {
-        for (java.util.Map.Entry<String, Integer> entry : perk.config().permissionAmplifiers().entrySet()) {
+        for (Map.Entry<String, Integer> entry : perk.config().permissionAmplifiers().entrySet()) {
             if (player.hasPermission(entry.getKey())) {
                 return entry.getValue();
             }
@@ -106,7 +108,7 @@ public class TreasureHunterPerkService implements PerkEventListener, Listener {
         return 0;
     }
 
-    private boolean isOreBlock(@NotNull org.bukkit.Material material) {
+    private boolean isOreBlock(@NotNull Material material) {
         return material.name().contains("ORE") || material.name().contains("DEEPSLATE");
     }
 }

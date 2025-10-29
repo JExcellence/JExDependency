@@ -5,6 +5,7 @@ import com.raindropcentral.rdq.config.perk.PerkSection;
 import com.raindropcentral.rdq.config.perk.PerkSettingsSection;
 import com.raindropcentral.rdq.database.entity.perk.RPerk;
 import com.raindropcentral.rdq.perk.config.PerkConfig;
+import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.type.EPerkCategory;
 import com.raindropcentral.rdq.type.EPerkType;
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -27,7 +28,7 @@ import java.util.stream.Collectors;
  * Registry for managing {@link PerkRuntime} instances.
  *
  * @author JExcellence
- * @version 1.0.6
+ * @version 1.0.7
  * @since 3.2.0
  */
 public class DefaultPerkRegistry extends PerkRegistry {
@@ -40,6 +41,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
     private final CooldownService cooldownService;
     private final PerkRuntimeStateService runtimeStateService;
     private final PerkAuditService auditService;
+    private final PerkEventBus eventBus;
     private final Map<String, PerkRuntime> perkRuntimes = new ConcurrentHashMap<>();
     private final ConcurrentMap<String, AtomicLong> logWindows = new ConcurrentHashMap<>();
 
@@ -48,13 +50,15 @@ public class DefaultPerkRegistry extends PerkRegistry {
             @NotNull PerkTypeRegistry typeRegistry,
             @NotNull CooldownService cooldownService,
             @NotNull PerkRuntimeStateService runtimeStateService,
-            @NotNull PerkAuditService auditService
+            @NotNull PerkAuditService auditService,
+            @NotNull PerkEventBus eventBus
     ) {
         super(typeRegistry);
         this.rdq = rdq;
         this.cooldownService = cooldownService;
         this.runtimeStateService = runtimeStateService;
         this.auditService = auditService;
+        this.eventBus = eventBus;
     }
 
     @Nullable
@@ -93,7 +97,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
         final PerkConfig perkConfig = adaptPerkConfig(perk, config);
         register(perkConfig);
         final var loadedPerk = Objects.requireNonNull(get(identifier), "Perk registration failed for " + identifier);
-        final PerkRuntime runtime = new SectionBackedPerkRuntime(perk, loadedPerk, config, cooldownService, runtimeStateService, auditService, this);
+        final PerkRuntime runtime = new SectionBackedPerkRuntime(perk, loadedPerk, config, cooldownService, runtimeStateService, auditService, this, eventBus);
         registerPerkRuntime(runtime);
         return runtime;
     }
@@ -288,6 +292,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
         private final int defaultAmplifier;
         private final Set<String> supportedEvents;
         private final PerkCircuitBreaker circuitBreaker;
+        private final PerkEventBus eventBus;
 
         private SectionBackedPerkRuntime(
                 @NotNull RPerk perk,
@@ -296,7 +301,8 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 @NotNull CooldownService cooldownService,
                 @NotNull PerkRuntimeStateService runtimeStateService,
                 @NotNull PerkAuditService auditService,
-                @NotNull DefaultPerkRegistry registry
+                @NotNull DefaultPerkRegistry registry,
+                @NotNull PerkEventBus eventBus
         ) {
             this.perk = perk;
             this.loadedPerk = loadedPerk;
@@ -304,6 +310,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
             this.runtimeState = runtimeStateService.stateFor(loadedPerk.getId());
             this.auditService = auditService;
             this.registry = registry;
+            this.eventBus = eventBus;
             this.globallyEnabled = perk.isEnabled();
             this.maxConcurrentUsers = Optional.ofNullable(perk.getMaxConcurrentUsers())
                     .filter(value -> value != null && value > 0)
@@ -403,6 +410,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 context.put("cooldownSeconds", cooldownSeconds);
                 auditService.recordActivation(getId(), playerId, true, "activated", context, null);
                 clearFailureState(playerId);
+                eventBus.fireActivated(player, getId());
                 return true;
             } catch (Exception exception) {
                 runtimeState.markInactive(playerId);
@@ -430,6 +438,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                     runtimeState.markInactive(playerId);
                     auditService.recordDeactivation(getId(), playerId, true, "deactivated", null);
                     clearFailureState(playerId);
+                    eventBus.fireDeactivated(player, getId());
                 } else {
                     auditService.recordDeactivation(getId(), playerId, false, "runtime-rejected", null);
                 }
@@ -489,6 +498,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 context.put("cooldownSeconds", cooldownSeconds);
                 auditService.recordTrigger(getId(), playerId, source, true, "triggered", context, null);
                 clearFailureState(playerId);
+                eventBus.fireTriggered(player, getId());
             } catch (Exception exception) {
                 final Map<String, Object> context = new LinkedHashMap<>();
                 context.put("durationSeconds", durationSeconds);
@@ -519,7 +529,14 @@ public class DefaultPerkRegistry extends PerkRegistry {
 
         @Override
         public void setCooldown(@NotNull Player player, long seconds) {
-            cooldownService.setCooldown(player, getId(), Math.max(0L, seconds));
+            final long duration = Math.max(0L, seconds);
+            if (duration <= 0L) {
+                cooldownService.clearCooldown(player, getId());
+                eventBus.fireCooldownEnd(player, getId());
+                return;
+            }
+            cooldownService.setCooldown(player, getId(), duration);
+            eventBus.fireCooldownStart(player, getId(), duration);
         }
 
         @Override
@@ -591,6 +608,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 loadedPerk.type().deactivate(player, loadedPerk);
                 auditService.recordExpiry(getId(), playerId, "expired");
                 clearFailureState(playerId);
+                eventBus.fireDeactivated(player, getId());
             } catch (Exception exception) {
                 auditService.recordDeactivation(getId(), playerId, false, "expiry-exception", exception);
                 registerFailure(playerId, "expiry");

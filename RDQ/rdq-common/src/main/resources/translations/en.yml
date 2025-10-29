@@ -15,6 +15,11 @@ perk:
     not_found: "<red>Perk {perk} not found</red>"
     no_permission: "<red>You don't have permission: {permission}</red>"
     no_perks: "<red>No perks available</red>"
+    already_active: "<yellow>Perk {perk} is already active.</yellow>"
+    activation_denied: "<red>You cannot activate {perk} right now.</red>"
+    activation_failed: "<red>Failed to activate {perk}. Try again later.</red>"
+    not_active: "<red>Perk {perk} is not active.</red>"
+    deactivation_failed: "<red>Failed to deactivate {perk}. Try again later.</red>"
   
   entry:
     name: "<yellow>{perk}</yellow> {status}"
