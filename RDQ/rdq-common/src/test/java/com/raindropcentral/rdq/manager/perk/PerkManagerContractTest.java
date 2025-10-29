@@ -24,7 +24,11 @@ class PerkManagerContractTest {
                 "initialize",
                 "shutdown",
                 "getCooldownService",
-                "clearPlayerState"
+                "clearPlayerState",
+                "findRuntime",
+                "activate",
+                "deactivate",
+                "isActive"
         );
         final Set<String> actualMethods = Arrays.stream(PerkManager.class.getDeclaredMethods())
                 .map(method -> method.getName())

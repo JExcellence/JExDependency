@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "DIAMOND_SWORD"
+  displayNameKey: "perk.strength.name"
+  descriptionKey: "perk.strength.lore"
   priority: 95
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "strength"
-  displayName: "Strength"
-  description: "Increases your melee damage output in combat"
-  category: "combat"
-  rarity: "uncommon"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "STRENGTH"
-  showParticles: true
-  particleType: "CRIT"
-  particleAmount: 5
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "COMBAT"
+    rarity: "UNCOMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "STRENGTH"
+    showParticles: true
+    particleType: "CRIT"
+    particleAmount: 5
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0

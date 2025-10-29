@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "TOTEM_OF_UNDYING"
+  displayNameKey: "perk.prevent_death.name"
+  descriptionKey: "perk.prevent_death.lore"
   priority: 95
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "prevent_death"
-  displayName: "Prevent Death"
-  description: "Prevents death once per cooldown, restoring full health"
-  category: "DEFENSE"
-  rarity: "RARE"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "PREVENT_DEATH"
-  showParticles: true
-  particleType: "SOUL"
-  particleAmount: 8
-  playToggleSound: true
-  toggleOnSound: "ENTITY_WITHER_SPAWN"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "DEFENSE"
+    rarity: "RARE"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "PREVENT_DEATH"
+    showParticles: true
+    particleType: "SOUL"
+    particleAmount: 8
+    playToggleSound: true
+    toggleOnSound: "ENTITY_WITHER_SPAWN"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 600

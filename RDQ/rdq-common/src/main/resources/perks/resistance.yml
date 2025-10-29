@@ -1,25 +1,23 @@
 perkSettings:
   icon:
     material: "SHIELD"
+  displayNameKey: "perk.resistance.name"
+  descriptionKey: "perk.resistance.lore"
   priority: 100
   maxConcurrentUsers: null
   requiresOwnedArea: false
   isEnabled: true
-
-metadata:
-  id: "resistance"
-  displayName: "Resistance"
-  description: "Reduces the damage you take from all sources"
-  category: "defense"
-  rarity: "uncommon"
-  perkType: "TOGGLEABLE_PASSIVE"
-  effectType: "RESISTANCE"
-  showParticles: true
-  particleType: "ENCHANT"
-  particleAmount: 4
-  playToggleSound: true
-  toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-  toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+  metadata:
+    category: "DEFENSE"
+    rarity: "UNCOMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "RESISTANCE"
+    showParticles: true
+    particleType: "ENCHANT"
+    particleAmount: 4
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
   defaultCooldown: 0
