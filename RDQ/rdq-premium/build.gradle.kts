@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+version = "6.0.1"
+
 java {
     toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
     sourceCompatibility = JavaVersion.VERSION_21
@@ -14,7 +16,7 @@ java {
 }
 
 dependencies {
-    implementation(project(":rdq-common")) { isTransitive = false }
+    implementation(project(":rdq-common"))
 
     compileOnly(libs.paper.api)
 

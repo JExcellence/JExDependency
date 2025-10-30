@@ -10,6 +10,7 @@ import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.type.EPerkCategory;
 import com.raindropcentral.rdq.type.EPerkType;
 import com.raindropcentral.rdq.utility.ConfigurationDirectoryLoader;
+import com.raindropcentral.rplatform.config.DurationSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -171,7 +172,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
         System.out.println("DEBUG: Attempting to load perks from YAML configuration files...");
         LOGGER.info("Attempting to load perks from YAML configuration files...");
 
-        // Copy default perk files if directory is empty
         copyDefaultPerkFilesIfNeeded();
 
         final ConfigurationDirectoryLoader<PerkSection> loader = new ConfigurationDirectoryLoader<>(
@@ -389,7 +389,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
         private final long defaultCooldownSeconds;
         private final long defaultDurationSeconds;
         private final Map<String, Long> permissionCooldowns;
-        private final Map<String, Long> permissionDurations;
+        private final Map<String, DurationSection> permissionDurations;
         private final Map<String, Integer> permissionAmplifiers;
         private final int defaultAmplifier;
         private final Set<String> supportedEvents;
@@ -430,7 +430,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
             this.defaultCooldownSeconds = Math.max(0L, Optional.ofNullable(section.getPermissionCooldowns().getDefaultCooldownSeconds()).orElse(0L));
             this.defaultDurationSeconds = Math.max(0L, Optional.ofNullable(section.getPermissionDurations().getDefaultDurationSeconds()).orElse(0L));
             this.permissionCooldowns = registry.sanitizeCooldownMap(section.getPermissionCooldowns().getPermissionCooldowns());
-            this.permissionDurations = registry.sanitizeDurationMap(section.getPermissionDurations().getPermissionDurationsSeconds());
+            this.permissionDurations = section.getPermissionDurations().getPermissionDurations();
             this.permissionAmplifiers = registry.sanitizeAmplifierMap(section.getPermissionAmplifiers().getPermissionAmplifiers());
             this.defaultAmplifier = Math.max(0, Optional.ofNullable(section.getPermissionAmplifiers().getDefaultAmplifier()).orElse(0));
             this.supportedEvents = registry.determineSupportedEvents(registry.sanitizeMetadata(section.getPerkSettings().getMetadata()));
@@ -685,9 +685,9 @@ public class DefaultPerkRegistry extends PerkRegistry {
 
         private long resolveDurationSeconds(@NotNull Player player) {
             long result = defaultDurationSeconds;
-            for (Map.Entry<String, Long> entry : permissionDurations.entrySet()) {
+            for (Map.Entry<String, DurationSection> entry : permissionDurations.entrySet()) {
                 if (player.hasPermission(entry.getKey())) {
-                    result = Math.max(result, entry.getValue());
+                    result = Math.max(result, entry.getValue().getSeconds());
                 }
             }
             return Math.max(0L, result);

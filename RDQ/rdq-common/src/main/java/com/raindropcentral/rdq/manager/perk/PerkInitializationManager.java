@@ -2,18 +2,7 @@ package com.raindropcentral.rdq.manager.perk;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
-import com.raindropcentral.rdq.perk.runtime.CooldownService;
-import com.raindropcentral.rdq.perk.runtime.DefaultPerkRegistry;
-import com.raindropcentral.rdq.perk.runtime.DoubleExperiencePerkService;
-import com.raindropcentral.rdq.perk.runtime.EventPerkType;
-import com.raindropcentral.rdq.perk.runtime.FlyPerkService;
-import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
-import com.raindropcentral.rdq.perk.runtime.PerkStateService;
-import com.raindropcentral.rdq.perk.runtime.PerkTypeRegistry;
-import com.raindropcentral.rdq.perk.runtime.PreventDeathPerkService;
-import com.raindropcentral.rdq.perk.runtime.ToggleablePerkType;
-import com.raindropcentral.rdq.perk.runtime.TreasureHunterPerkService;
-import com.raindropcentral.rdq.perk.runtime.VampirePerkService;
+import com.raindropcentral.rdq.perk.runtime.*;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -115,7 +104,6 @@ public class PerkInitializationManager {
         registerService(new VampirePerkService(defaultPerkManager, perkEventBus));
 
         defaultPerkManager.initialize();
-        synchronizePerkTranslations();
     }
 
     /**
@@ -142,16 +130,6 @@ public class PerkInitializationManager {
             Bukkit.getPluginManager().registerEvents(listener, rdq.getPlugin());
             registeredListeners.add(listener);
         }
-    }
-
-    private void synchronizePerkTranslations() {
-        if (defaultPerkManager == null) {
-            return;
-        }
-        if (!(defaultPerkManager.getPerkRegistry() instanceof DefaultPerkRegistry defaultRegistry)) {
-            return;
-        }
-        new PerkTranslationSynchronizer(rdq).synchronize(defaultRegistry);
     }
 
     /**

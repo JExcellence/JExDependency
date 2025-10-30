@@ -1,4 +1,12 @@
 perkSettings:
+  icon:
+    material: "ELYTRA"
+  displayNameKey: "perk.fly.name"
+  descriptionKey: "perk.fly.lore"
+  priority: 100
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
   metadata:
     id: "fly"
     displayName: "Flight"
@@ -13,46 +21,27 @@ perkSettings:
     playToggleSound: true
     toggleOnSound: "ENTITY_ENDER_DRAGON_FLAP"
     toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
-  icon:
-    material: "ELYTRA"
-  displayNameKey: "perk.fly.name"
-  descriptionKey: "perk.fly.lore"
-  priority: 100
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    category: "MOVEMENT"
-    rarity: "RARE"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "FLIGHT"
-    showParticles: true
-    particleType: "CLOUD"
-    particleAmount: 6
-    playToggleSound: true
-    toggleOnSound: "ENTITY_ENDER_DRAGON_FLAP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
 
 permissionCooldowns:
-  defaultCooldownSeconds: 0
+  defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.fly.vip: 0
-    rdq.perk.fly.premium: 0
+    fly_vip: 0
+    fly_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.fly.level1: 0
-    rdq.perk.fly.level2: 1
-    rdq.perk.fly.level3: 2
-    rdq.perk.fly.vip: 1
-    rdq.perk.fly.premium: 2
+    fly_level1: 0
+    fly_level2: 1
+    fly_level3: 2
+    fly_vip: 1
+    fly_premium: 2
 
 permissionDurations:
-  defaultDurationSeconds: 0
-  permissionDurationsSeconds:
-    rdq.perk.fly.vip: 0
-    rdq.perk.fly.premium: 0
+  defaultDuration: 0
+  permissionDurations:
+    fly_vip: 0
+    fly_premium: 0
 
 costs:
   economy:

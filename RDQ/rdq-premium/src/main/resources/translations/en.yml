@@ -1,3 +1,85 @@
+# === Perk Command & UI ===
+perk:
+  command:
+    list_header: "<gradient:#9b59b6:#ffffff>Available Perks:</gradient>"
+    list_entry: "<gray>{perk}: {status}</gray>"
+    info_header: "<gradient:#9b59b6:#ffffff>Perk Info: {perk}</gradient>"
+    info_display_name: "<gray>Name: {name}</gray>"
+    info_description: "<gray>Description: {description}</gray>"
+    info_status: "<gray>Status: {status}</gray>"
+    info_category: "<gray>Category: {category}</gray>"
+    activated: "<green>Perk {perk} activated!</green>"
+    deactivated: "<green>Perk {perk} deactivated!</green>"
+  
+  error:
+    not_found: "<red>Perk {perk} not found</red>"
+    no_permission: "<red>You don't have permission: {permission}</red>"
+    no_perks: "<red>No perks available</red>"
+    already_active: "<yellow>Perk {perk} is already active.</yellow>"
+    activation_denied: "<red>You cannot activate {perk} right now.</red>"
+    activation_failed: "<red>Failed to activate {perk}. Try again later.</red>"
+    not_active: "<red>Perk {perk} is not active.</red>"
+    deactivation_failed: "<red>Failed to deactivate {perk}. Try again later.</red>"
+
+  double_experience:
+    name: "<yellow>Double Experience</yellow>"
+    lore: "<gray>Doubles all experience gained from any source.</gray>"
+  fire_resistance:
+    name: "<yellow>Fire Resistance</yellow>"
+    lore: "<gray>Grants immunity to fire and lava damage.</gray>"
+  fly:
+    name: "<yellow>Flight</yellow>"
+    lore: "<gray>Grants the ability to fly freely.</gray>"
+  haste:
+    name: "<yellow>Haste</yellow>"
+    lore: "<gray>Increases mining and attack speed significantly.</gray>"
+  jump_boost:
+    name: "<yellow>Jump Boost</yellow>"
+    lore: "<gray>Increases jump height to reach higher places.</gray>"
+  luck:
+    name: "<yellow>Luck</yellow>"
+    lore: "<gray>Improves the quality and quantity of loot you receive.</gray>"
+  night_vision:
+    name: "<yellow>Night Vision</yellow>"
+    lore: "<gray>Allows you to see clearly in complete darkness.</gray>"
+  prevent_death:
+    name: "<yellow>Prevent Death</yellow>"
+    lore: "<gray>Prevents death once per cooldown and restores health.</gray>"
+  regeneration:
+    name: "<yellow>Regeneration</yellow>"
+    lore: "<gray>Gradually restores your health over time.</gray>"
+  resistance:
+    name: "<yellow>Resistance</yellow>"
+    lore: "<gray>Reduces incoming damage from all sources.</gray>"
+  speed:
+    name: "<yellow>Speed Boost</yellow>"
+    lore: "<gray>Greatly increases your movement speed.</gray>"
+  strength:
+    name: "<yellow>Strength</yellow>"
+    lore: "<gray>Boosts melee damage output in combat.</gray>"
+  treasure_hunter:
+    name: "<yellow>Treasure Hunter</yellow>"
+    lore: "<gray>Grants a chance to discover bonus ore while mining.</gray>"
+  vampire:
+    name: "<yellow>Vampire</yellow>"
+    lore: "<gray>Heals you whenever you damage your foes.</gray>"
+  water_breathing:
+    name: "<yellow>Water Breathing</yellow>"
+    lore: "<gray>Lets you breathe underwater indefinitely.</gray>"
+  
+  entry:
+    name: "<yellow>{perk}</yellow> {status}"
+  
+  list_ui:
+    title: "<gradient:#9b59b6:#ffffff>Available Perks</gradient>"
+    activate_button: "<green>Activate Perk</green>"
+  
+  detail_ui:
+    title: "<gradient:#9b59b6:#ffffff>Perk: {perk}</gradient>"
+    activate_button: "<green>Activate</green>"
+    deactivate_button: "<red>Deactivate</red>"
+    permission_scaling: "<gray>Permission Scaling: {scaling}</gray>"
+
 rq:
   no_luckperms_installed: "<gradient:#9b59b6:#ffffff>LuckPerms not found. Install plugin to use feature.</gradient>"
 

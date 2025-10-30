@@ -8,6 +8,8 @@ plugins {
     `maven-publish`
 }
 
+version = "6.0.1"
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))

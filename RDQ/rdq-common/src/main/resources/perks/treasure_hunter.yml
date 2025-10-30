@@ -22,23 +22,23 @@ perkSettings:
 permissionCooldowns:
   defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.treasure_hunter.vip: 0
-    rdq.perk.treasure_hunter.premium: 0
+    treasure_hunter_vip: 0
+    treasure_hunter_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.treasure_hunter.level1: 0
-    rdq.perk.treasure_hunter.level2: 1
-    rdq.perk.treasure_hunter.level3: 2
-    rdq.perk.treasure_hunter.vip: 1
-    rdq.perk.treasure_hunter.premium: 2
+    treasure_hunter_level1: 0
+    treasure_hunter_level2: 1
+    treasure_hunter_level3: 2
+    treasure_hunter_vip: 1
+    treasure_hunter_premium: 2
 
 permissionDurations:
   defaultDuration: 0
   permissionDurations:
-    rdq.perk.treasure_hunter.vip: 0
-    rdq.perk.treasure_hunter.premium: 0
+    treasure_hunter_vip: 0
+    treasure_hunter_premium: 0
 
 costs:
   economy:

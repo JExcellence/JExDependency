@@ -111,6 +111,11 @@ public final class ConfigurationDirectoryLoader<T extends AConfigSection> {
             final ConfigManager cfgManager = new ConfigManager(rdq.getPlugin(), directory);
             final ConfigKeeper<?> keeper = new ConfigKeeper<>(cfgManager, fileName, sectionClass);
             return keeper.rootSection;
+        } catch (NullPointerException e) {
+            final String message = "YAML parsing error in " + fileName + ": " + e.getMessage();
+            LOGGER.log(Level.WARNING, message + " - This may be due to null values or incomplete YAML structure. Attempting recovery...", e);
+            errorHandler.accept(fileName, new Exception(message, e));
+            return null;
         } catch (Exception e) {
             errorHandler.accept(fileName, e);
             return null;

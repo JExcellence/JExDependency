@@ -22,21 +22,21 @@ perkSettings:
 permissionCooldowns:
   defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.night_vision.vip: 0
-    rdq.perk.night_vision.premium: 0
+    night_vision_vip: 0
+    night_vision_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.night_vision.level1: 0
-    rdq.perk.night_vision.vip: 1
-    rdq.perk.night_vision.premium: 1
+    night_vision_level1: 0
+    night_vision_vip: 1
+    night_vision_premium: 1
 
 permissionDurations:
   defaultDuration: 0
   permissionDurations:
-    rdq.perk.night_vision.vip: 0
-    rdq.perk.night_vision.premium: 0
+    night_vision_vip: 0
+    night_vision_premium: 0
 
 costs:
   economy:

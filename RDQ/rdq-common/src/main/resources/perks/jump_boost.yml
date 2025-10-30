@@ -22,23 +22,23 @@ perkSettings:
 permissionCooldowns:
   defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.jump_boost.vip: 0
-    rdq.perk.jump_boost.premium: 0
+    jump_boost_vip: 0
+    jump_boost_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.jump_boost.level1: 0
-    rdq.perk.jump_boost.level2: 1
-    rdq.perk.jump_boost.level3: 2
-    rdq.perk.jump_boost.vip: 1
-    rdq.perk.jump_boost.premium: 2
+    jump_boost_level1: 0
+    jump_boost_level2: 1
+    jump_boost_level3: 2
+    jump_boost_vip: 1
+    jump_boost_premium: 2
 
 permissionDurations:
   defaultDuration: 0
   permissionDurations:
-    rdq.perk.jump_boost.vip: 0
-    rdq.perk.jump_boost.premium: 0
+    jump_boost_vip: 0
+    jump_boost_premium: 0
 
 costs:
   economy:

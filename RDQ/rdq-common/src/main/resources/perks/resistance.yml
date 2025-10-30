@@ -22,23 +22,23 @@ perkSettings:
 permissionCooldowns:
   defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.resistance.vip: 0
-    rdq.perk.resistance.premium: 0
+    resistance_vip: 0
+    resistance_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.resistance.level1: 0
-    rdq.perk.resistance.level2: 1
-    rdq.perk.resistance.level3: 2
-    rdq.perk.resistance.vip: 1
-    rdq.perk.resistance.premium: 2
+    resistance_level1: 0
+    resistance_level2: 1
+    resistance_level3: 2
+    resistance_vip: 1
+    resistance_premium: 2
 
 permissionDurations:
   defaultDuration: 0
   permissionDurations:
-    rdq.perk.resistance.vip: 0
-    rdq.perk.resistance.premium: 0
+    resistance_vip: 0
+    resistance_premium: 0
 
 costs:
   economy:

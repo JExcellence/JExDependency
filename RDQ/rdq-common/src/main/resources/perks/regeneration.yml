@@ -22,23 +22,23 @@ perkSettings:
 permissionCooldowns:
   defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.regeneration.vip: 0
-    rdq.perk.regeneration.premium: 0
+    regeneration_vip: 0
+    regeneration_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.regeneration.level1: 0
-    rdq.perk.regeneration.level2: 1
-    rdq.perk.regeneration.level3: 2
-    rdq.perk.regeneration.vip: 1
-    rdq.perk.regeneration.premium: 2
+    regeneration_level1: 0
+    regeneration_level2: 1
+    regeneration_level3: 2
+    regeneration_vip: 1
+    regeneration_premium: 2
 
 permissionDurations:
   defaultDuration: 0
   permissionDurations:
-    rdq.perk.regeneration.vip: 0
-    rdq.perk.regeneration.premium: 0
+    regeneration_vip: 0
+    regeneration_premium: 0
 
 costs:
   economy:

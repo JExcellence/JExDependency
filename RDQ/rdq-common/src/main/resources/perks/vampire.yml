@@ -22,23 +22,23 @@ perkSettings:
 permissionCooldowns:
   defaultCooldown: 0
   permissionCooldowns:
-    rdq.perk.vampire.vip: 0
-    rdq.perk.vampire.premium: 0
+    vampire_vip: 0
+    vampire_premium: 0
 
 permissionAmplifiers:
   defaultAmplifier: 0
   permissionAmplifiers:
-    rdq.perk.vampire.level1: 0
-    rdq.perk.vampire.level2: 1
-    rdq.perk.vampire.level3: 2
-    rdq.perk.vampire.vip: 1
-    rdq.perk.vampire.premium: 2
+    vampire_level1: 0
+    vampire_level2: 1
+    vampire_level3: 2
+    vampire_vip: 1
+    vampire_premium: 2
 
 permissionDurations:
   defaultDuration: 0
   permissionDurations:
-    rdq.perk.vampire.vip: 0
-    rdq.perk.vampire.premium: 0
+    vampire_vip: 0
+    vampire_premium: 0
 
 costs:
   economy:
