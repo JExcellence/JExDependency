@@ -589,9 +589,9 @@ public class DefaultPerkRegistry extends PerkRegistry {
             this.eventBus = eventBus;
             this.globallyEnabled = perk.isEnabled();
             this.maxConcurrentUsers = Optional.ofNullable(perk.getMaxConcurrentUsers())
-                    .filter(value -> value != null && value > 0)
+                    .filter(value -> value > 0)
                     .orElseGet(() -> Optional.ofNullable(section.getPerkSettings().getMaxConcurrentUsers())
-                            .filter(value -> value != null && value > 0)
+                            .filter(value -> value > 0)
                             .orElse(null));
             this.requiredPermission = Optional.ofNullable(perk.getRequiredPermission())
                     .map(String::trim)
