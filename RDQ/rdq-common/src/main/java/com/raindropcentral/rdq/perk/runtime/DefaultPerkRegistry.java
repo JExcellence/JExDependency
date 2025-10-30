@@ -3,8 +3,24 @@ package com.raindropcentral.rdq.perk.runtime;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.perk.PerkSection;
 import com.raindropcentral.rdq.config.perk.PerkSettingsSection;
+import com.raindropcentral.rdq.database.entity.perk.EventTriggeredPerk;
+import com.raindropcentral.rdq.database.entity.perk.PotionEffectPerk;
 import com.raindropcentral.rdq.database.entity.perk.RPerk;
 import com.raindropcentral.rdq.database.entity.perk.YamlLoadedPerk;
+import com.raindropcentral.rdq.database.entity.perk.event.DamageReductionPerk;
+import com.raindropcentral.rdq.database.entity.perk.event.DeathProtectionPerk;
+import com.raindropcentral.rdq.database.entity.perk.event.DoubleExperiencePerk;
+import com.raindropcentral.rdq.database.entity.perk.event.KeepExperiencePerk;
+import com.raindropcentral.rdq.database.entity.perk.event.KeepInventoryPerk;
+import com.raindropcentral.rdq.database.entity.perk.potion.FireResistance;
+import com.raindropcentral.rdq.database.entity.perk.potion.Glow;
+import com.raindropcentral.rdq.database.entity.perk.potion.Haste;
+import com.raindropcentral.rdq.database.entity.perk.potion.JumpBoost;
+import com.raindropcentral.rdq.database.entity.perk.potion.NightVision;
+import com.raindropcentral.rdq.database.entity.perk.potion.Resistance;
+import com.raindropcentral.rdq.database.entity.perk.potion.Saturation;
+import com.raindropcentral.rdq.database.entity.perk.potion.Speed;
+import com.raindropcentral.rdq.database.entity.perk.potion.Strength;
 import com.raindropcentral.rdq.perk.config.PerkConfig;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.type.EPerkCategory;
@@ -23,6 +39,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -36,7 +53,7 @@ import java.util.stream.Collectors;
  * Registry for managing {@link PerkRuntime} instances.
  *
  * @author JExcellence
- * @version 1.0.7
+ * @version 1.0.8
  * @since 3.2.0
  */
 public class DefaultPerkRegistry extends PerkRegistry {
@@ -44,6 +61,24 @@ public class DefaultPerkRegistry extends PerkRegistry {
     private static final Logger LOGGER = CentralLogger.getLogger(DefaultPerkRegistry.class.getName());
     private static final int DEFAULT_PAGE_SIZE = 256;
     private static final long ERROR_THROTTLE_MILLIS = 5_000L;
+
+    private static final Map<String, Class<? extends RPerk>> KNOWN_PERK_CLASSES = Map.ofEntries(
+            Map.entry("speed", Speed.class),
+            Map.entry("resistance", Resistance.class),
+            Map.entry("glow", Glow.class),
+            Map.entry("haste", Haste.class),
+            Map.entry("fire_resistance", FireResistance.class),
+            Map.entry("night_vision", NightVision.class),
+            Map.entry("jump_boost", JumpBoost.class),
+            Map.entry("saturation", Saturation.class),
+            Map.entry("strength", Strength.class),
+            Map.entry("double_experience", DoubleExperiencePerk.class),
+            Map.entry("damage_reduction", DamageReductionPerk.class),
+            Map.entry("death_protection", DeathProtectionPerk.class),
+            Map.entry("prevent_death", DeathProtectionPerk.class),
+            Map.entry("keep_experience", KeepExperiencePerk.class),
+            Map.entry("keep_inventory", KeepInventoryPerk.class)
+    );
 
     private final RDQ rdq;
     private final CooldownService cooldownService;
@@ -178,10 +213,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 "perks",
                 PerkSection.class,
                 fileName -> fileName.replace(".yml", "").replace(" ", "").replace("-", "_").toLowerCase(Locale.ROOT),
-                (fileName, e) -> {
-                    System.out.println("DEBUG: Failed to load perk from file: " + fileName + " - " + e.getMessage());
-                    LOGGER.log(Level.SEVERE, "Failed to load perk from file: " + fileName, e);
-                }
+                (fileName, e) -> LOGGER.log(Level.SEVERE, "Failed to load perk from file: " + fileName, e)
         );
 
         final Map<String, PerkSection> perkSections = (Map<String, PerkSection>) loader.loadAll(Collections.emptyList());
@@ -203,39 +235,11 @@ public class DefaultPerkRegistry extends PerkRegistry {
                         .map(Object::toString)
                         .filter(value -> !value.isBlank())
                         .orElse("TOGGLEABLE_PASSIVE");
-                metadata.put("perkType", perkTypeStr);
+                final EPerkType perkType = parsePerkType(perkTypeStr);
 
-                final EPerkType perkType = EPerkType.valueOf(perkTypeStr);
+                final RPerk perk = instantiateConfiguredPerk(perkId, perkSection, perkType, metadata);
 
-                final RPerk perk = new YamlLoadedPerk(perkId, perkSection, perkType);
-
-                perk.setEnabled(Boolean.TRUE.equals(settings.getEnabled()));
-                perk.setPriority(settings.getPriority());
-                perk.setMaxConcurrentUsers(settings.getMaxConcurrentUsers());
-
-                final String displayNameKey = settings.getDisplayNameKey();
-                if (displayNameKey != null && !"not_defined".equalsIgnoreCase(displayNameKey)) {
-                    perk.setDisplayNameKey(displayNameKey);
-                    metadata.putIfAbsent("displayNameKey", displayNameKey);
-                }
-
-                final String descriptionKey = settings.getDescriptionKey();
-                if (descriptionKey != null && !"not_defined".equalsIgnoreCase(descriptionKey)) {
-                    perk.setDescriptionKey(descriptionKey);
-                    metadata.putIfAbsent("descriptionKey", descriptionKey);
-                }
-
-                final String categoryValue = Optional.ofNullable(metadata.get("category"))
-                        .map(Object::toString)
-                        .map(String::trim)
-                        .filter(value -> !value.isEmpty())
-                        .orElse(EPerkCategory.UTILITY.getIdentifier());
-                metadata.put("category", categoryValue);
-
-                final Object requiredPermission = metadata.get("requiredPermission");
-                if (requiredPermission instanceof String permission && !permission.isBlank()) {
-                    perk.setRequiredPermission(permission);
-                }
+                configurePerkFromSettings(perk, perkSection, settings, metadata);
 
                 buildPerkRuntime(perk, perkSection);
                 totalLoaded++;
@@ -247,6 +251,152 @@ public class DefaultPerkRegistry extends PerkRegistry {
         }
 
         return totalLoaded;
+    }
+
+    private @NotNull EPerkType parsePerkType(@NotNull String perkTypeStr) {
+        final String normalized = perkTypeStr.trim().toUpperCase(Locale.ROOT);
+        try {
+            return EPerkType.valueOf(normalized);
+        } catch (IllegalArgumentException ex) {
+            LOGGER.log(Level.WARNING, "Unknown perk type {0}, defaulting to TOGGLEABLE_PASSIVE", normalized);
+            LOGGER.log(Level.FINER, "Perk type parsing failure", ex);
+            return EPerkType.TOGGLEABLE_PASSIVE;
+        }
+    }
+
+    private @NotNull RPerk instantiateConfiguredPerk(
+            @NotNull String perkId,
+            @NotNull PerkSection perkSection,
+            @NotNull EPerkType fallbackType,
+            @NotNull Map<String, Object> metadata
+    ) {
+        final Class<? extends RPerk> perkClass = resolvePerkClass(perkId, metadata);
+        if (perkClass == null) {
+            return new YamlLoadedPerk(perkId, perkSection, fallbackType);
+        }
+
+        try {
+            final RPerk perk;
+            if (EventTriggeredPerk.class.isAssignableFrom(perkClass)) {
+                final Constructor<? extends RPerk> constructor = perkClass.getDeclaredConstructor(String.class, PerkSection.class, RDQ.class);
+                constructor.setAccessible(true);
+                perk = constructor.newInstance(perkId, perkSection, rdq);
+            } else if (PotionEffectPerk.class.isAssignableFrom(perkClass)) {
+                final Constructor<? extends RPerk> constructor = perkClass.getDeclaredConstructor(PerkSection.class);
+                constructor.setAccessible(true);
+                perk = constructor.newInstance(perkSection);
+            } else {
+                final Constructor<? extends RPerk> constructor = perkClass.getDeclaredConstructor();
+                constructor.setAccessible(true);
+                perk = constructor.newInstance();
+                perk.setIdentifier(perkId);
+                perk.setPerkSection(perkSection);
+                perk.setPerkType(fallbackType);
+            }
+            return perk;
+        } catch (ReflectiveOperationException reflectiveException) {
+            LOGGER.log(Level.WARNING, "Failed to instantiate perk class {0} for id {1}. Falling back to YAML-backed perk.", new Object[]{perkClass.getName(), perkId});
+            LOGGER.log(Level.FINER, "Perk instantiation failure", reflectiveException);
+            return new YamlLoadedPerk(perkId, perkSection, fallbackType);
+        }
+    }
+
+    private @Nullable Class<? extends RPerk> resolvePerkClass(
+            @NotNull String perkId,
+            @NotNull Map<String, Object> metadata
+    ) {
+        final Set<String> candidates = new LinkedHashSet<>();
+        addCandidate(candidates, perkId);
+        addCandidate(candidates, metadata.get("id"));
+        addCandidate(candidates, metadata.get("identifier"));
+        addCandidate(candidates, metadata.get("effectType"));
+
+        for (String candidate : candidates) {
+            final Class<? extends RPerk> resolved = KNOWN_PERK_CLASSES.get(candidate);
+            if (resolved != null) {
+                return resolved;
+            }
+        }
+        return null;
+    }
+
+    private void addCandidate(@NotNull Set<String> target, @Nullable Object rawCandidate) {
+        final String normalised = normaliseIdentifier(rawCandidate);
+        if (normalised != null) {
+            target.add(normalised);
+        }
+    }
+
+    private @Nullable String normaliseIdentifier(@Nullable Object rawCandidate) {
+        if (rawCandidate == null) {
+            return null;
+        }
+        final String value = rawCandidate.toString().trim();
+        if (value.isEmpty()) {
+            return null;
+        }
+        return value.toLowerCase(Locale.ROOT)
+                .replace('-', '_')
+                .replace(' ', '_');
+    }
+
+    private void configurePerkFromSettings(
+            @NotNull RPerk perk,
+            @NotNull PerkSection perkSection,
+            @NotNull PerkSettingsSection settings,
+            @NotNull Map<String, Object> metadata
+    ) {
+        perk.setPerkSection(perkSection);
+        perk.setEnabled(Boolean.TRUE.equals(settings.getEnabled()));
+        perk.setPriority(settings.getPriority());
+        perk.setMaxConcurrentUsers(settings.getMaxConcurrentUsers());
+
+        final String displayNameKey = settings.getDisplayNameKey();
+        if (displayNameKey != null && !"not_defined".equalsIgnoreCase(displayNameKey)) {
+            perk.setDisplayNameKey(displayNameKey);
+            metadata.putIfAbsent("displayNameKey", displayNameKey);
+        }
+
+        final String descriptionKey = settings.getDescriptionKey();
+        if (descriptionKey != null && !"not_defined".equalsIgnoreCase(descriptionKey)) {
+            perk.setDescriptionKey(descriptionKey);
+            metadata.putIfAbsent("descriptionKey", descriptionKey);
+        }
+
+        final String categoryInput = Optional.ofNullable(metadata.get("category"))
+                .map(Object::toString)
+                .map(String::trim)
+                .filter(value -> !value.isEmpty())
+                .orElse(null);
+
+        EPerkCategory category = EPerkCategory.UTILITY;
+        if (categoryInput != null) {
+            try {
+                category = EPerkCategory.valueOf(categoryInput.toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                LOGGER.log(Level.WARNING, "Invalid perk category ''{0}'' for perk ''{1}'', defaulting to UTILITY.", new Object[]{categoryInput, perk.getIdentifier()});
+            }
+        }
+        metadata.put("category", category.getIdentifier());
+
+        final Object requiredPermission = metadata.get("requiredPermission");
+        if (requiredPermission instanceof String permission && !permission.isBlank()) {
+            perk.setRequiredPermission(permission);
+        }
+
+        metadata.put("perkType", perk.getPerkType().name());
+
+        if (perk instanceof PotionEffectPerk potionEffectPerk) {
+            final String effectType = Optional.ofNullable(metadata.get("effectType"))
+                    .map(Object::toString)
+                    .map(String::trim)
+                    .filter(value -> !value.isEmpty())
+                    .orElse(null);
+            if (effectType != null) {
+                potionEffectPerk.setPotionEffectTypeName(effectType.toUpperCase(Locale.ROOT));
+            }
+            metadata.put("effectType", potionEffectPerk.getPotionEffectTypeName());
+        }
     }
 
     private @NotNull PerkConfig adaptPerkConfig(@NotNull RPerk perk, @NotNull PerkSection section) {
@@ -385,7 +535,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
                 try (InputStream is = getClass().getClassLoader().getResourceAsStream("perks/" + fileName)) {
                     if (is != null) {
                         Files.copy(is, perksDir.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-                        System.out.println("DEBUG: Copied default perk file: " + fileName);
                     }
                 }
             }

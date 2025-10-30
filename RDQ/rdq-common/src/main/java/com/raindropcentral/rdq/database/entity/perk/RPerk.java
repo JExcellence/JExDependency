@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.2
+ * @version 1.0.3
  */
 @Entity
 @Table(name = "r_perk")
@@ -108,6 +108,15 @@ public abstract class RPerk extends AbstractEntity {
     }
 
     /**
+     * Updates the persistent identifier of this perk.
+     *
+     * @param identifier the new identifier value to assign
+     */
+    public void setIdentifier(final @NotNull String identifier) {
+        this.identifier = Objects.requireNonNull(identifier, "identifier");
+    }
+
+    /**
      * Retrieves the localization key used to display the perk name.
      *
      * @return the MiniMessage translation key for the perk name
@@ -153,12 +162,30 @@ public abstract class RPerk extends AbstractEntity {
     }
 
     /**
+     * Updates the configuration section backing this perk definition.
+     *
+     * @param perkSection the configuration section to associate with the perk
+     */
+    public void setPerkSection(final @NotNull PerkSection perkSection) {
+        this.perkSection = Objects.requireNonNull(perkSection, "perkSection");
+    }
+
+    /**
      * Gets the type of perk represented by this entity.
      *
      * @return the perk type used for discriminator resolution
      */
     public @NotNull EPerkType getPerkType() {
         return this.perkType;
+    }
+
+    /**
+     * Updates the behaviour classification of this perk.
+     *
+     * @param perkType the new perk type to record
+     */
+    public void setPerkType(final @NotNull EPerkType perkType) {
+        this.perkType = Objects.requireNonNull(perkType, "perkType");
     }
 
     /**
