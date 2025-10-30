@@ -169,7 +169,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
     }
 
     private int loadPerksFromYaml() {
-        System.out.println("DEBUG: Attempting to load perks from YAML configuration files...");
         LOGGER.info("Attempting to load perks from YAML configuration files...");
 
         copyDefaultPerkFilesIfNeeded();
@@ -186,7 +185,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
         );
 
         final Map<String, PerkSection> perkSections = (Map<String, PerkSection>) loader.loadAll(Collections.emptyList());
-        System.out.println("DEBUG: Found " + perkSections.size() + " perk configuration files");
         LOGGER.log(Level.INFO, "Found {0} perk configuration files", perkSections.size());
         int totalLoaded = 0;
 
@@ -195,21 +193,48 @@ public class DefaultPerkRegistry extends PerkRegistry {
             final PerkSection perkSection = entry.getValue();
 
             try {
-                final Map<String, Object> metadata = perkSection.getPerkSettings().getMetadata();
-                final String perkTypeStr = (String) metadata.getOrDefault("perkType", "TOGGLEABLE_PASSIVE");
+                final PerkSettingsSection settings = perkSection.getPerkSettings();
+                settings.setPerkId(perkId);
+
+                final Map<String, Object> metadata = settings.getMetadata();
+                metadata.putIfAbsent("id", perkId);
+
+                final String perkTypeStr = Optional.ofNullable(metadata.get("perkType"))
+                        .map(Object::toString)
+                        .filter(value -> !value.isBlank())
+                        .orElse("TOGGLEABLE_PASSIVE");
+                metadata.put("perkType", perkTypeStr);
+
                 final EPerkType perkType = EPerkType.valueOf(perkTypeStr);
 
                 final RPerk perk = new YamlLoadedPerk(perkId, perkSection, perkType);
 
-                // Set fields from PerkSection
-                perk.setEnabled(perkSection.getPerkSettings().getEnabled());
-                perk.setPriority(perkSection.getPerkSettings().getPriority());
-                perk.setMaxConcurrentUsers(perkSection.getPerkSettings().getMaxConcurrentUsers());
+                perk.setEnabled(Boolean.TRUE.equals(settings.getEnabled()));
+                perk.setPriority(settings.getPriority());
+                perk.setMaxConcurrentUsers(settings.getMaxConcurrentUsers());
 
-                // Set required permission from metadata if present
+                final String displayNameKey = settings.getDisplayNameKey();
+                if (displayNameKey != null && !"not_defined".equalsIgnoreCase(displayNameKey)) {
+                    perk.setDisplayNameKey(displayNameKey);
+                    metadata.putIfAbsent("displayNameKey", displayNameKey);
+                }
+
+                final String descriptionKey = settings.getDescriptionKey();
+                if (descriptionKey != null && !"not_defined".equalsIgnoreCase(descriptionKey)) {
+                    perk.setDescriptionKey(descriptionKey);
+                    metadata.putIfAbsent("descriptionKey", descriptionKey);
+                }
+
+                final String categoryValue = Optional.ofNullable(metadata.get("category"))
+                        .map(Object::toString)
+                        .map(String::trim)
+                        .filter(value -> !value.isEmpty())
+                        .orElse(EPerkCategory.UTILITY.getIdentifier());
+                metadata.put("category", categoryValue);
+
                 final Object requiredPermission = metadata.get("requiredPermission");
-                if (requiredPermission instanceof String) {
-                    perk.setRequiredPermission((String) requiredPermission);
+                if (requiredPermission instanceof String permission && !permission.isBlank()) {
+                    perk.setRequiredPermission(permission);
                 }
 
                 buildPerkRuntime(perk, perkSection);

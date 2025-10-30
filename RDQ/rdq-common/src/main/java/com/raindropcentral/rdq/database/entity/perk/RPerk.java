@@ -117,12 +117,30 @@ public abstract class RPerk extends AbstractEntity {
     }
 
     /**
+     * Updates the localization key used to resolve the perk's display name.
+     *
+     * @param displayNameKey the translation key to store
+     */
+    public void setDisplayNameKey(final @NotNull String displayNameKey) {
+        this.displayNameKey = Objects.requireNonNull(displayNameKey, "displayNameKey");
+    }
+
+    /**
      * Retrieves the localization key used to display the perk description.
      *
      * @return the MiniMessage translation key for the perk description
      */
     public @NotNull String getDescriptionKey() {
         return this.descriptionKey;
+    }
+
+    /**
+     * Updates the localization key used to resolve the perk's description.
+     *
+     * @param descriptionKey the translation key to store
+     */
+    public void setDescriptionKey(final @NotNull String descriptionKey) {
+        this.descriptionKey = Objects.requireNonNull(descriptionKey, "descriptionKey");
     }
 
     /**

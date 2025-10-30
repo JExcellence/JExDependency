@@ -30,6 +30,11 @@ public class PermissionCooldownSection extends APermissionBasedSection<Long> {
     private Long defaultCooldownSeconds;
 
     /**
+     * Backwards compatible alias sourced from {@code defaultCooldown} to support legacy perk files.
+     */
+    private Long defaultCooldown;
+
+    /**
      * Mapping of permission nodes to cooldown overrides from {@code permissionCooldowns}.
      */
     private Map<String, Long> permissionCooldowns;
@@ -116,10 +121,12 @@ public class PermissionCooldownSection extends APermissionBasedSection<Long> {
      */
     @Override
     protected Long getDefaultValue() {
-        if (
-            this.defaultCooldownSeconds != null
-        ) {
+        if (this.defaultCooldownSeconds != null) {
             return this.defaultCooldownSeconds;
+        }
+
+        if (this.defaultCooldown != null) {
+            return this.defaultCooldown;
         }
 
         return 0L;
