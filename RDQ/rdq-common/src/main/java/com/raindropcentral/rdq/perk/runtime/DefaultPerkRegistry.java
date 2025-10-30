@@ -363,12 +363,21 @@ public class DefaultPerkRegistry extends PerkRegistry {
             metadata.putIfAbsent("descriptionKey", descriptionKey);
         }
 
-        final String categoryValue = Optional.ofNullable(metadata.get("category"))
+        final String categoryInput = Optional.ofNullable(metadata.get("category"))
                 .map(Object::toString)
                 .map(String::trim)
                 .filter(value -> !value.isEmpty())
-                .orElse(EPerkCategory.UTILITY.getIdentifier());
-        metadata.put("category", categoryValue);
+                .orElse(null);
+
+        EPerkCategory category = EPerkCategory.UTILITY;
+        if (categoryInput != null) {
+            try {
+                category = EPerkCategory.valueOf(categoryInput.toUpperCase(Locale.ROOT));
+            } catch (IllegalArgumentException e) {
+                LOGGER.log(Level.WARNING, "Invalid perk category ''{0}'' for perk ''{1}'', defaulting to UTILITY.", new Object[]{categoryInput, perk.getIdentifier()});
+            }
+        }
+        metadata.put("category", category.getIdentifier());
 
         final Object requiredPermission = metadata.get("requiredPermission");
         if (requiredPermission instanceof String permission && !permission.isBlank()) {
