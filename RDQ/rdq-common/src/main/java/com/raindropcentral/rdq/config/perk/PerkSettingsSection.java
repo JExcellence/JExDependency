@@ -70,51 +70,20 @@ public class PerkSettingsSection extends AConfigSection {
 	 * @throws Exception if an error occurs during post-processing
 	 */
 	@Override
-	public void afterParsing(final List<Field> fields) throws Exception {
-		super.afterParsing(fields);
-		
-		if (
-			this.perkId != null
-		) {
-			if (
-				this.displayNameKey == null
-			) {
-				this.displayNameKey = "perk." + this.perkId + ".name";
-			}
-			
-			if (
-				this.descriptionKey == null
-			) {
-				this.descriptionKey = "perk." + this.perkId + ".lore";
-			}
-			
-			if (
-				this.icon != null
-			) {
-				if (
-					this.icon.getDisplayNameKey() == null ||
-					this.icon.getDisplayNameKey().equals("not_defined")
-				) {
-					this.icon.setDisplayNameKey("perk." + this.perkId + ".name");
-				}
-				if (
-					this.icon.getDescriptionKey() == null ||
-					this.icon.getDescriptionKey().equals("not_defined")
-				) {
-					this.icon.setDescriptionKey("perk." + this.perkId + ".lore");
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Sets the perk ID for this perk settings section.
-	 *
-	 * @param perkId the perk identifier
-	 */
-	public void setPerkId(final String perkId) {
-		this.perkId = perkId;
-	}
+        public void afterParsing(final List<Field> fields) throws Exception {
+                super.afterParsing(fields);
+                this.applyDefaultLocalizationKeys();
+        }
+
+        /**
+         * Sets the perk ID for this perk settings section.
+         *
+         * @param perkId the perk identifier
+         */
+        public void setPerkId(final String perkId) {
+                this.perkId = perkId;
+                this.applyDefaultLocalizationKeys();
+        }
 	
 	/**
 	 * Gets the perk ID for this perk settings section.
@@ -213,9 +182,57 @@ public class PerkSettingsSection extends AConfigSection {
          * @return a modifiable map of metadata values, or an empty map when none are configured
          */
         public Map<String, Object> getMetadata() {
-                return
-                        this.metadata == null ?
-                        new HashMap<>() :
-			this.metadata;
-	}
+                if (this.metadata == null) {
+                        this.metadata = new HashMap<>();
+                }
+                return this.metadata;
+        }
+
+        private void applyDefaultLocalizationKeys() {
+                final String effectiveId = this.resolvePerkId();
+                if (effectiveId == null || effectiveId.isBlank()) {
+                        return;
+                }
+
+                if (this.perkId == null || this.perkId.isBlank()) {
+                        this.perkId = effectiveId;
+                }
+
+                if (this.displayNameKey == null || "not_defined".equalsIgnoreCase(this.displayNameKey)) {
+                        this.displayNameKey = "perk." + effectiveId + ".name";
+                }
+
+                if (this.descriptionKey == null || "not_defined".equalsIgnoreCase(this.descriptionKey)) {
+                        this.descriptionKey = "perk." + effectiveId + ".lore";
+                }
+
+                if (this.icon != null) {
+                        if (this.icon.getDisplayNameKey() == null || this.icon.getDisplayNameKey().equals("not_defined")) {
+                                this.icon.setDisplayNameKey("perk." + effectiveId + ".name");
+                        }
+                        if (this.icon.getDescriptionKey() == null || this.icon.getDescriptionKey().equals("not_defined")) {
+                                this.icon.setDescriptionKey("perk." + effectiveId + ".lore");
+                        }
+                }
+        }
+
+        private String resolvePerkId() {
+                if (this.perkId != null && !this.perkId.isBlank()) {
+                        return this.perkId;
+                }
+
+                if (this.metadata != null) {
+                        final Object metadataId = this.metadata.get("id");
+                        if (metadataId instanceof String id && !id.isBlank()) {
+                                return id;
+                        }
+
+                        final Object identifier = this.metadata.get("identifier");
+                        if (identifier instanceof String id && !id.isBlank()) {
+                                return id;
+                        }
+                }
+
+                return null;
+        }
 }
