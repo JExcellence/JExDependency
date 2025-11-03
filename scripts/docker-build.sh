@@ -9,7 +9,11 @@ echo "[docker-build] Artifact destination: $ARTIFACT_DEST"
 
 declare -A GRADLE_WRAPPERS=()
 GRADLE_COMMON_ARGS=(--no-daemon)
-GRADLE_SKIP_JAVADOC_ARGS=(-x javadoc -x javadocJar)
+
+if [[ "${SKIP_JAVADOC:-true}" == "true" ]]; then
+    echo "[docker-build] Skipping Javadoc tasks for all Gradle builds"
+    GRADLE_COMMON_ARGS+=("-x" "javadoc" "-x" "javadocJar")
+fi
 
 resolve_gradle_wrapper() {
     local module=$1
@@ -41,19 +45,11 @@ resolve_gradle_wrapper() {
 run_gradle() {
     local module=$1
     shift
-    local include_javadoc=false
-    if [[ "${1:-}" == "--include-javadoc" ]]; then
-        include_javadoc=true
-        shift
-    fi
 
     local wrapper
     wrapper=$(resolve_gradle_wrapper "$module")
 
     local args=("${GRADLE_COMMON_ARGS[@]}")
-    if [[ "$include_javadoc" == false ]]; then
-        args+=("${GRADLE_SKIP_JAVADOC_ARGS[@]}")
-    fi
 
     (cd "$ROOT_DIR/$module" && "$wrapper" "${args[@]}" "$@")
 }
@@ -117,13 +113,7 @@ publish_jeconfig_to_maven_local() {
         chmod +x "$wrapper"
     fi
 
-    local jeconfig_args=("${GRADLE_COMMON_ARGS[@]}" -x javadoc)
-    local build_file="$checkout_dir/build.gradle.kts"
-    if [[ -f "$build_file" ]] && grep -Eq 'withJavadocJar|javadocJar' "$build_file"; then
-        jeconfig_args+=(-x javadocJar)
-    else
-        echo "[docker-build] javadocJar task not detected in JEConfig checkout; not adding skip flag" >&2
-    fi
+    local jeconfig_args=("${GRADLE_COMMON_ARGS[@]}")
 
     echo "[docker-build] Publishing JEConfig artifacts to mavenLocal"
     (cd "$checkout_dir" && "$wrapper" "${jeconfig_args[@]}" publishToMavenLocal)
@@ -167,7 +157,7 @@ if [[ "$all_present" == true ]]; then
 fi
 
 echo "[docker-build] Preparing local Maven dependencies..."
-run_gradle "JExDependency" "--include-javadoc" "-Pjexdependency.disableExternalJavadocLinks=true" "publishToMavenLocal"
+run_gradle "JExDependency" "-Pjexdependency.disableExternalJavadocLinks=true" "publishToMavenLocal"
 run_gradle "JExCommand" "publishToMavenLocal"
 run_gradle "JExTranslate" "publishToMavenLocal"
 run_gradle "RPlatform" "publishToMavenLocal"
