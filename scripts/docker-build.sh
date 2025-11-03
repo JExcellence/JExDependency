@@ -117,8 +117,16 @@ publish_jeconfig_to_maven_local() {
         chmod +x "$wrapper"
     fi
 
+    local jeconfig_args=("${GRADLE_COMMON_ARGS[@]}" -x javadoc)
+    local build_file="$checkout_dir/build.gradle.kts"
+    if [[ -f "$build_file" ]] && grep -Eq 'withJavadocJar|javadocJar' "$build_file"; then
+        jeconfig_args+=(-x javadocJar)
+    else
+        echo "[docker-build] javadocJar task not detected in JEConfig checkout; not adding skip flag" >&2
+    fi
+
     echo "[docker-build] Publishing JEConfig artifacts to mavenLocal"
-    (cd "$checkout_dir" && "$wrapper" "${GRADLE_COMMON_ARGS[@]}" "${GRADLE_SKIP_JAVADOC_ARGS[@]}" publishToMavenLocal)
+    (cd "$checkout_dir" && "$wrapper" "${jeconfig_args[@]}" publishToMavenLocal)
 }
 
 publish_jeconfig_to_maven_local
