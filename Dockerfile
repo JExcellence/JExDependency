@@ -13,7 +13,8 @@ RUN apt-get update \
 
 WORKDIR /app
 COPY . /app
-RUN chmod +x gradlew scripts/docker-build.sh
+RUN find . -maxdepth 2 -type f -name gradlew -exec chmod +x {} + \
+    && chmod +x scripts/docker-build.sh
 
 FROM base AS builder
 

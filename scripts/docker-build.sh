@@ -2,11 +2,48 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-GRADLEW="$ROOT_DIR/gradlew"
 ARTIFACT_DEST="${ARTIFACT_DEST:-/artifacts}"
 mkdir -p "$ARTIFACT_DEST"
 
 echo "[docker-build] Artifact destination: $ARTIFACT_DEST"
+
+declare -A GRADLE_WRAPPERS=()
+GRADLE_ARGS=(--no-daemon -x javadoc -x javadocJar)
+
+resolve_gradle_wrapper() {
+    local module=$1
+    local module_dir="$ROOT_DIR/$module"
+    local candidate="$module_dir/gradlew"
+
+    if [[ -n "${GRADLE_WRAPPERS[$module]:-}" ]]; then
+        printf '%s' "${GRADLE_WRAPPERS[$module]}"
+        return 0
+    fi
+
+    if [[ ! -d "$module_dir" ]]; then
+        echo "[docker-build] Module directory not found: $module_dir" >&2
+        exit 1
+    fi
+
+    if [[ -f "$candidate" ]]; then
+        chmod +x "$candidate"
+        GRADLE_WRAPPERS[$module]="$candidate"
+        echo "[docker-build] Using Gradle wrapper for $module: $candidate" >&2
+        printf '%s' "$candidate"
+        return 0
+    fi
+
+    echo "[docker-build] Gradle wrapper not found for module '$module'. Expected at $candidate" >&2
+    exit 1
+}
+
+run_gradle() {
+    local module=$1
+    shift
+    local wrapper
+    wrapper=$(resolve_gradle_wrapper "$module")
+    (cd "$ROOT_DIR/$module" && "$wrapper" "${GRADLE_ARGS[@]}" "$@")
+}
 
 require_cmd() {
     if ! command -v "$1" >/dev/null 2>&1; then
@@ -69,20 +106,22 @@ if [[ "$all_present" == true ]]; then
 fi
 
 echo "[docker-build] Preparing local Maven dependencies..."
-"$GRADLEW" --no-daemon :JExDependency:publishToMavenLocal
-"$GRADLEW" --no-daemon :JExCommand:publishToMavenLocal
-"$GRADLEW" --no-daemon :JExTranslate:publishToMavenLocal
-"$GRADLEW" --no-daemon :RPlatform:publishToMavenLocal
-"$GRADLEW" --no-daemon :JExEconomy:publishToMavenLocal
-"$GRADLEW" --no-daemon :RCore:publishLocal
-"$GRADLEW" --no-daemon :RDQ:publishLocal
+run_gradle "JExDependency" "publishToMavenLocal"
+run_gradle "JExCommand" "publishToMavenLocal"
+run_gradle "JExTranslate" "publishToMavenLocal"
+run_gradle "RPlatform" "publishToMavenLocal"
+run_gradle "JExEconomy" "publishToMavenLocal"
+run_gradle "RCore" "publishLocal"
+run_gradle "RDQ" "publishLocal"
 
 echo "[docker-build] Building shaded artifacts..."
-"$GRADLEW" --no-daemon \
-    :RCore:rcore-premium:shadowJar \
-    :RDQ:rdq-free:shadowJar \
-    :RDQ:rdq-premium:shadowJar \
-    :JExEconomy:shadowJar
+run_gradle "RCore" \
+    ":rcore-premium:shadowJar" \
+    ":rcore-free:shadowJar"
+run_gradle "RDQ" \
+    ":rdq-free:shadowJar" \
+    ":rdq-premium:shadowJar"
+run_gradle "JExEconomy" "shadowJar"
 
 copy_artifact() {
     local source=$1
