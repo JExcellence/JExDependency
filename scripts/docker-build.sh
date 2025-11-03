@@ -8,7 +8,8 @@ mkdir -p "$ARTIFACT_DEST"
 echo "[docker-build] Artifact destination: $ARTIFACT_DEST"
 
 declare -A GRADLE_WRAPPERS=()
-GRADLE_ARGS=(--no-daemon -x javadoc -x javadocJar)
+GRADLE_COMMON_ARGS=(--no-daemon)
+GRADLE_SKIP_JAVADOC_ARGS=(-x javadoc -x javadocJar)
 
 resolve_gradle_wrapper() {
     local module=$1
@@ -40,9 +41,21 @@ resolve_gradle_wrapper() {
 run_gradle() {
     local module=$1
     shift
+    local include_javadoc=false
+    if [[ "${1:-}" == "--include-javadoc" ]]; then
+        include_javadoc=true
+        shift
+    fi
+
     local wrapper
     wrapper=$(resolve_gradle_wrapper "$module")
-    (cd "$ROOT_DIR/$module" && "$wrapper" "${GRADLE_ARGS[@]}" "$@")
+
+    local args=("${GRADLE_COMMON_ARGS[@]}")
+    if [[ "$include_javadoc" == false ]]; then
+        args+=("${GRADLE_SKIP_JAVADOC_ARGS[@]}")
+    fi
+
+    (cd "$ROOT_DIR/$module" && "$wrapper" "${args[@]}" "$@")
 }
 
 require_cmd() {
@@ -106,7 +119,7 @@ if [[ "$all_present" == true ]]; then
 fi
 
 echo "[docker-build] Preparing local Maven dependencies..."
-run_gradle "JExDependency" "publishToMavenLocal"
+run_gradle "JExDependency" "--include-javadoc" "-Pjexdependency.disableExternalJavadocLinks=true" "publishToMavenLocal"
 run_gradle "JExCommand" "publishToMavenLocal"
 run_gradle "JExTranslate" "publishToMavenLocal"
 run_gradle "RPlatform" "publishToMavenLocal"
