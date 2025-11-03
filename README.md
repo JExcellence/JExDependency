@@ -71,6 +71,46 @@ The project uses Gradle with the Wrapper committed. Typical commands:
 
 Run these commands from the repository root after making changes. For full verification, follow up with integration tests or Windows-specific packaging via `build-all.bat` if required by your workflow.
 
+### Containerized build pipeline
+
+The repository also ships a Docker-based builder that mirrors the Windows batch process. The image layers the Gradle sources onto an Eclipse Temurin JDK 21 base, installs `curl` and `git`, and then invokes `scripts/docker-build.sh` to prepare Maven-local dependencies, build the shaded jars, and copy them into an artifact directory. The script exits early when `RCore-Premium-<version>.jar`, `RDQ-Free-<version>.jar`, `RDQ-Premium-<version>.jar`, and `JExEconomy-<version>.jar` already exist in the target location, avoiding unnecessary rebuilds.【F:Dockerfile†L1-L30】【F:scripts/docker-build.sh†L1-L142】
+
+Set the following environment variables when authenticated GitHub access is required (they are optional for public dependencies):
+
+| Variable | Purpose |
+| --- | --- |
+| `GITHUB_FINE_GRAIN_TOKEN` | Fine-grained personal access token used for cloning private dependencies. |
+| `ARTIFACT_DEST` | Destination folder for the generated jars (defaults to `/artifacts`). |
+
+#### Building artifacts with `docker build`
+
+Use BuildKit's `--output` flag against the `builder` stage to emit jars into a local directory:
+
+```bash
+DOCKER_BUILDKIT=1 docker build \
+  --target builder \
+  --output type=local,dest=./dist \
+  --build-arg GITHUB_FINE_GRAIN_TOKEN="ghp_exampletoken" \
+  .
+```
+
+The build stage writes artifacts to `/artifacts` inside the container; `--output` maps that directory to the host `./dist` folder. Omit or adjust the GitHub arguments when public dependencies are sufficient.
+
+#### Rebuilding with `docker run`
+
+To perform incremental builds without rebuilding the image, first create the runtime image and then run it with a mounted volume:
+
+```bash
+docker build -t raindropcentral-builder .
+docker run --rm \
+  -e GITHUB_FINE_GRAIN_TOKEN="ghp_exampletoken" \
+  -e ARTIFACT_DEST=/artifacts \
+  -v "$(pwd)/dist:/artifacts" \
+  raindropcentral-builder
+```
+
+The container reuses `scripts/docker-build.sh`, so reruns skip compilation when all expected jar names already exist in the mounted directory. Supply `ARTIFACT_DEST` if you prefer a different mount point inside the container.
+
 ## Next Steps
 
 - Review module-specific READMEs (where present) for configuration details.
