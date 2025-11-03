@@ -83,6 +83,46 @@ configure_fine_grained_token() {
 
 configure_fine_grained_token
 
+prepare_jeconfig_repo() {
+    local repo_url="${JE_CONFIG_REPO_URL:-https://github.com/Antimatter-Zone/JEConfig.git}"
+    local repo_ref="${JE_CONFIG_REPO_REF:-main}"
+    local checkout_dir="${JE_CONFIG_CHECKOUT_DIR:-$ROOT_DIR/.external/JEConfig}"
+
+    if [[ ! -d "$checkout_dir" ]]; then
+        echo "[docker-build] Cloning JEConfig repository from $repo_url"
+        mkdir -p "$(dirname "$checkout_dir")"
+        git clone "$repo_url" "$checkout_dir"
+    else
+        echo "[docker-build] Updating existing JEConfig repository at $checkout_dir"
+        (cd "$checkout_dir" && git fetch --tags && git fetch origin)
+    fi
+
+    echo "[docker-build] Checking out JEConfig reference $repo_ref"
+    (cd "$checkout_dir" && git checkout -f "$repo_ref")
+    if (cd "$checkout_dir" && git rev-parse --verify "origin/$repo_ref" >/dev/null 2>&1); then
+        (cd "$checkout_dir" && git reset --hard "origin/$repo_ref")
+    else
+        (cd "$checkout_dir" && git reset --hard "$repo_ref")
+    fi
+
+    printf '%s' "$checkout_dir"
+}
+
+publish_jeconfig_to_maven_local() {
+    local checkout_dir
+    checkout_dir=$(prepare_jeconfig_repo)
+
+    local wrapper="$checkout_dir/gradlew"
+    if [[ ! -x "$wrapper" ]]; then
+        chmod +x "$wrapper"
+    fi
+
+    echo "[docker-build] Publishing JEConfig artifacts to mavenLocal"
+    (cd "$checkout_dir" && "$wrapper" "${GRADLE_COMMON_ARGS[@]}" "${GRADLE_SKIP_JAVADOC_ARGS[@]}" publishToMavenLocal)
+}
+
+publish_jeconfig_to_maven_local
+
 extract_version() {
     local file=$1
     local version
