@@ -29,7 +29,7 @@ dependencies {
     implementation("de.jexcellence.config:Evaluable:1.0.0")
     implementation("de.jexcellence.config:GPEEE:1.0.0")
     implementation("de.jexcellence.config:ConfigMapper:1.0.0")
-    implementation("de.jexcellence.hibernate:JEHibernate:1.0.0")
+    implementation("de.jexcellence.hibernate:JEHibernate:1.0.1")
     
     compileOnly(platform("org.hibernate.orm:hibernate-platform:6.6.4.Final"))
     compileOnly("org.hibernate.orm:hibernate-core")
