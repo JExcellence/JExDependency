@@ -8,12 +8,43 @@ mkdir -p "$ARTIFACT_DEST"
 echo "[docker-build] Artifact destination: $ARTIFACT_DEST"
 
 declare -A GRADLE_WRAPPERS=()
-GRADLE_COMMON_ARGS=(--no-daemon)
+declare -A GRADLE_TASK_CACHE=()
 
-if [[ "${SKIP_JAVADOC:-true}" == "true" ]]; then
+GRADLE_COMMON_ARGS=(--no-daemon)
+SKIP_JAVADOC="${SKIP_JAVADOC:-true}"
+SKIP_JAVADOC_JAR="${SKIP_JAVADOC_JAR:-false}"
+SKIP_JAVADOC_JAR_ARGS=()
+
+if [[ "$SKIP_JAVADOC" == "true" ]]; then
     echo "[docker-build] Skipping Javadoc tasks for all Gradle builds"
-    GRADLE_COMMON_ARGS+=("-x" "javadoc" "-x" "javadocJar")
+    GRADLE_COMMON_ARGS+=("-x" "javadoc")
 fi
+
+if [[ "$SKIP_JAVADOC_JAR" == "true" ]]; then
+    SKIP_JAVADOC_JAR_ARGS=("-x" "javadocJar")
+fi
+
+has_gradle_task() {
+    local project_dir=$1
+    local wrapper=$2
+    local task=$3
+    local cache_key="${project_dir}::${task}"
+
+    if [[ -n "${GRADLE_TASK_CACHE[$cache_key]:-}" ]]; then
+        if [[ "${GRADLE_TASK_CACHE[$cache_key]}" == "1" ]]; then
+            return 0
+        fi
+        return 1
+    fi
+
+    if (cd "$project_dir" && "$wrapper" help --task "$task" >/dev/null 2>&1); then
+        GRADLE_TASK_CACHE[$cache_key]=1
+        return 0
+    fi
+
+    GRADLE_TASK_CACHE[$cache_key]=0
+    return 1
+}
 
 resolve_gradle_wrapper() {
     local module=$1
@@ -49,7 +80,14 @@ run_gradle() {
     local wrapper
     wrapper=$(resolve_gradle_wrapper "$module")
 
+    local module_dir="$ROOT_DIR/$module"
     local args=("${GRADLE_COMMON_ARGS[@]}")
+
+    if [[ "$SKIP_JAVADOC" == "true" && ${#SKIP_JAVADOC_JAR_ARGS[@]} -gt 0 ]]; then
+        if has_gradle_task "$module_dir" "$wrapper" "javadocJar"; then
+            args+=("${SKIP_JAVADOC_JAR_ARGS[@]}")
+        fi
+    fi
 
     (cd "$ROOT_DIR/$module" && "$wrapper" "${args[@]}" "$@")
 }
@@ -114,6 +152,13 @@ publish_jeconfig_to_maven_local() {
     fi
 
     local jeconfig_args=("${GRADLE_COMMON_ARGS[@]}")
+    if [[ "$SKIP_JAVADOC" == "true" && ${#SKIP_JAVADOC_JAR_ARGS[@]} -gt 0 ]]; then
+        if has_gradle_task "$checkout_dir" "$wrapper" "javadocJar"; then
+            jeconfig_args+=("${SKIP_JAVADOC_JAR_ARGS[@]}")
+        else
+            echo "[docker-build] javadocJar task not found for JEConfig; skipping exclusion flag"
+        fi
+    fi
 
     echo "[docker-build] Publishing JEConfig artifacts to mavenLocal"
     (cd "$checkout_dir" && "$wrapper" "${jeconfig_args[@]}" publishToMavenLocal)
