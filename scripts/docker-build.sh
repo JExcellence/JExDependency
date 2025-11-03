@@ -89,20 +89,20 @@ prepare_jeconfig_repo() {
     local checkout_dir="${JE_CONFIG_CHECKOUT_DIR:-$ROOT_DIR/.external/JEConfig}"
 
     if [[ ! -d "$checkout_dir" ]]; then
-        echo "[docker-build] Cloning JEConfig repository from $repo_url"
+        echo "[docker-build] Cloning JEConfig repository from $repo_url" >&2
         mkdir -p "$(dirname "$checkout_dir")"
-        git clone "$repo_url" "$checkout_dir"
+        git clone "$repo_url" "$checkout_dir" >&2
     else
-        echo "[docker-build] Updating existing JEConfig repository at $checkout_dir"
-        (cd "$checkout_dir" && git fetch --tags && git fetch origin)
+        echo "[docker-build] Updating existing JEConfig repository at $checkout_dir" >&2
+        (cd "$checkout_dir" && git fetch --tags >&2 && git fetch origin >&2)
     fi
 
-    echo "[docker-build] Checking out JEConfig reference $repo_ref"
-    (cd "$checkout_dir" && git checkout -f "$repo_ref")
+    echo "[docker-build] Checking out JEConfig reference $repo_ref" >&2
+    (cd "$checkout_dir" && git checkout -f "$repo_ref" >&2)
     if (cd "$checkout_dir" && git rev-parse --verify "origin/$repo_ref" >/dev/null 2>&1); then
-        (cd "$checkout_dir" && git reset --hard "origin/$repo_ref")
+        (cd "$checkout_dir" && git reset --hard "origin/$repo_ref" >&2)
     else
-        (cd "$checkout_dir" && git reset --hard "$repo_ref")
+        (cd "$checkout_dir" && git reset --hard "$repo_ref" >&2)
     fi
 
     printf '%s' "$checkout_dir"
