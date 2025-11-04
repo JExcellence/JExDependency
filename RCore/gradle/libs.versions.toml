@@ -29,13 +29,13 @@ mockbukkit = "3.133.2"
 junit-platform = "1.10.2"
 
 # Internal libraries
-rcommands = "1.0.0"
+jexcommand = "1.0.0"
 rplatform = "2.0.0"
 jeconfig-evaluable = "1.0.0"
 jeconfig-gpeee = "1.0.0"
 jeconfig-mapper = "1.0.0"
 jetranslate = "3.0.0"
-jehibernate = "1.0.0"
+jehibernate = "1.0.1"
 jedependency = "2.0.0"
 jexeconomy = "2.0.0"
 
@@ -90,7 +90,7 @@ h2 = { module = "com.h2database:h2", version.ref = "h2" }
 xseries = { module = "com.github.cryptomorin:XSeries", version.ref = "xseries" }
 
 # Internal libraries to shade
-rcommands = { module = "com.raindropcentral.commands:rcommands", version.ref = "rcommands" }
+jexcommand = { module = "com.raindropcentral.commands:jexcommand", version.ref = "jexcommand" }
 rplatform = { module = "com.raindropcentral.platform:rplatform", version.ref = "rplatform" }
 jeconfig-evaluable = { module = "de.jexcellence.config:Evaluable", version.ref = "jeconfig-evaluable" }
 jeconfig-gpeee = { module = "de.jexcellence.config:GPEEE", version.ref = "jeconfig-gpeee" }
@@ -126,7 +126,7 @@ jexcellence = [
     "jehibernate",
     "jetranslate",
     "rplatform",
-    "rcommands",
+    "jexcommand",
 ]
 hibernate = [
     "hibernate-core",

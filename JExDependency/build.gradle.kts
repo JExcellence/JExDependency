@@ -6,6 +6,10 @@ plugins {
 group = "de.jexcellence.dependency"
 version = "2.0.0"
 
+val disableExternalJavadocLinks = providers.gradleProperty("jexdependency.disableExternalJavadocLinks")
+    .map { it.toBoolean() }
+    .getOrElse(false)
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
@@ -47,10 +51,12 @@ tasks {
             this as StandardJavadocDocletOptions
             encoding = "UTF-8"
             charSet = "UTF-8"
-            links(
-                "https://docs.oracle.com/en/java/javase/21/docs/api/",
-                "https://jd.papermc.io/paper/1.21/"
-            )
+            if (!disableExternalJavadocLinks) {
+                links(
+                    "https://docs.oracle.com/en/java/javase/21/docs/api/",
+                    "https://jd.papermc.io/paper/1.21/"
+                )
+            }
             addStringOption("Xdoclint:none", "-quiet")
         }
     }

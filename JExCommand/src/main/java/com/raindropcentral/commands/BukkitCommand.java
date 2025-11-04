@@ -821,7 +821,7 @@ public abstract class BukkitCommand extends Command {
 				null
 			);
 			this.sendComponentMessage(sender, this.commandSection.getInternalErrorMessage(context));
-			Logger.getLogger("RCommands").log(
+			Logger.getLogger("JExCommand").log(
 				Level.WARNING,
 				"Error occurred while executing the command",
 				exception
