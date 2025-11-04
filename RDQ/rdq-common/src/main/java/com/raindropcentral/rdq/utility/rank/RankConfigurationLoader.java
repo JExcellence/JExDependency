@@ -117,7 +117,6 @@ public final class RankConfigurationLoader {
 
         final Map<String, RankTreeSection> sections = new HashMap<>();
 
-        // Load initial files with special handling
         for (String fileName : INITIAL_TREE_FILES) {
             try {
                 final String id = normalize(fileName);
@@ -133,7 +132,6 @@ public final class RankConfigurationLoader {
             }
         }
 
-        // Load additional files
         final Map<String, RankTreeSection> additionalSections = (Map<String, RankTreeSection>) loader.loadAll(INITIAL_TREE_FILES);
         additionalSections.forEach((id, section) -> {
             section.setTreeId(id);

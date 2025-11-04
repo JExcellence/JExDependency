@@ -1,38 +1,9 @@
 package com.raindropcentral.rdq.utility.requirement;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.config.requirement.*;
-import com.raindropcentral.rdq.database.entity.rank.RRank;
-import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
-import com.raindropcentral.rdq.database.entity.rank.RRequirement;
-import com.raindropcentral.rdq.database.json.requirement.RequirementParser;
-import com.raindropcentral.rdq.requirement.AbstractRequirement;
-import com.raindropcentral.rplatform.logging.CentralLogger;
-import de.jexcellence.configmapper.sections.AConfigSection;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.fasterxml.jackson.databind.ObjectMapper; import com.raindropcentral.rdq.RDQ; import com.raindropcentral.rdq.config.item.IconSection; import com.raindropcentral.rdq.config.requirement.*; import com.raindropcentral.rdq.database.entity.rank.RRequirement; import com.raindropcentral.rdq.database.entity.requirement.RequirementAssociation; import com.raindropcentral.rdq.database.json.requirement.RequirementParser; import com.raindropcentral.rdq.requirement.AbstractRequirement; import com.raindropcentral.rplatform.logging.CentralLogger; import de.jexcellence.configmapper.sections.AConfigSection; import org.bukkit.Material; import org.bukkit.inventory.ItemStack; import org.jetbrains.annotations.NotNull; import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ForkJoinPool;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.IOException; import java.util.*; import java.util.concurrent.CompletableFuture; import java.util.concurrent.Executor; import java.util.concurrent.ForkJoinPool; import java.util.concurrent.atomic.AtomicInteger; import java.util.function.Function; import java.util.logging.Level; import java.util.logging.Logger;
 
-/**
- * Builds requirement domain objects from configuration sections and persists them when necessary.
- * The factory centralizes validation and conversion logic so the rest of the codebase can rely on
- * strongly typed requirement representations instead of ad-hoc configuration parsing.
- *
- * @author JExcellence
- * @since 1.0.0
- * @version 1.0.1
- */
 public final class RequirementFactory {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RequirementFactory.class);
@@ -40,28 +11,16 @@ public final class RequirementFactory {
 
     private final RDQ rdq;
 
-    /**
-     * Creates a new factory that uses the provided RDQ instance to resolve repositories and
-     * executors required during persistence operations.
-     *
-     * @param rdq the RDQ plugin context used for repository access
-     */
     public RequirementFactory(final @NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
-    /**
-     * Converts the provided configuration entries into rank upgrade requirements while performing
-     * validation and ordering. Invalid or incomplete requirement definitions are skipped with a
-     * warning so that a malformed entry does not break the entire parsing workflow.
-     *
-     * @param rank          the rank that owns the requirements being parsed
-     * @param requirements  the configuration-backed requirement definitions keyed by identifier
-     * @return a list of concrete upgrade requirements ready for persistence or display
-     */
-    public @NotNull List<RRankUpgradeRequirement> parseRequirements(final @NotNull RRank rank,
-                                                                    final @NotNull Map<String, ? extends BaseRequirementSection> requirements) {
-        final List<RRankUpgradeRequirement> result = new ArrayList<>();
+    public <L extends RequirementAssociation> @NotNull List<L> parse(
+            final @NotNull Map<String, ? extends BaseRequirementSection> requirements,
+            final @NotNull Function<BaseRequirementSection, String> ownerDescriptor,
+            final @NotNull LinkFactory<L> linkFactory
+    ) {
+        final List<L> result = new ArrayList<>();
         if (requirements.isEmpty()) {
             return result;
         }
@@ -73,7 +32,7 @@ public final class RequirementFactory {
             }
             final AConfigSection specific = getSpecificRequirementSection(base);
             if (specific == null) {
-                LOGGER.log(Level.WARNING, "No valid requirement section for key: {0} in rank: {1}", new Object[]{key, rank.getIdentifier()});
+                LOGGER.log(Level.WARNING, "No valid requirement section for key: {0} in {1}", new Object[]{key, ownerDescriptor.apply(base)});
                 return;
             }
             try {
@@ -81,111 +40,72 @@ public final class RequirementFactory {
                     return;
                 }
                 final AbstractRequirement abstractRequirement = createRequirementFromSection(specific);
-                RRequirement rRequirement = new RRequirement(abstractRequirement, base.getIcon());
-                final RRankUpgradeRequirement upgradeRequirement = new RRankUpgradeRequirement(rank, rRequirement, rRequirement.getShowcase());
+                final RRequirement rRequirement = new RRequirement(abstractRequirement, base.getIcon());
+                final L link = linkFactory.create(rRequirement, rRequirement.getShowcase());
                 final Integer configuredOrder = base.getDisplayOrder();
-                upgradeRequirement.setDisplayOrder(configuredOrder != null && configuredOrder > 0 ? configuredOrder : order.getAndIncrement());
-                result.add(upgradeRequirement);
+                link.setDisplayOrder(configuredOrder != null && configuredOrder > 0 ? configuredOrder : order.getAndIncrement());
+                result.add(link);
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Failed to parse requirement '" + key + "' for rank '" + rank.getIdentifier() + "'", e);
+                LOGGER.log(Level.SEVERE, "Failed to parse requirement '" + key + "' for " + ownerDescriptor.apply(base), e);
             }
         });
         return result;
     }
 
-    /**
-     * Asynchronously parses the supplied requirement definitions using the common fork join pool.
-     * This helper is intended for callers that do not need control over the target executor.
-     *
-     * @param rank         the rank to associate with the parsed requirements
-     * @param requirements the configuration-backed requirement definitions keyed by identifier
-     * @return a future that resolves to the parsed upgrade requirements
-     */
-    public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> parseRequirementsAsync(final @NotNull RRank rank,
-                                                                                            final @NotNull Map<String, ? extends BaseRequirementSection> requirements) {
-        return parseRequirementsAsync(rank, requirements, ForkJoinPool.commonPool());
+    public <L extends RequirementAssociation> @NotNull CompletableFuture<List<L>> parseAsync(
+            final @NotNull Map<String, ? extends BaseRequirementSection> requirements,
+            final @NotNull Function<BaseRequirementSection, String> ownerDescriptor,
+            final @NotNull LinkFactory<L> linkFactory
+    ) {
+        return parseAsync(requirements, ownerDescriptor, linkFactory, ForkJoinPool.commonPool());
     }
 
-    /**
-     * Asynchronously parses the supplied requirement definitions on the provided executor. The
-     * executor parameter allows callers to integrate with their own scheduling strategy while
-     * keeping the parsing logic centralized in the factory.
-     *
-     * @param rank         the rank to associate with the parsed requirements
-     * @param requirements the configuration-backed requirement definitions keyed by identifier
-     * @param executor     the executor used to run the parsing task
-     * @return a future that resolves to the parsed upgrade requirements
-     */
-    public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> parseRequirementsAsync(final @NotNull RRank rank,
-                                                                                            final @NotNull Map<String, ? extends BaseRequirementSection> requirements,
-                                                                                            final @NotNull Executor executor) {
-        Objects.requireNonNull(rank, "rank");
+    public <L extends RequirementAssociation> @NotNull CompletableFuture<List<L>> parseAsync(
+            final @NotNull Map<String, ? extends BaseRequirementSection> requirements,
+            final @NotNull Function<BaseRequirementSection, String> ownerDescriptor,
+            final @NotNull LinkFactory<L> linkFactory,
+            final @NotNull Executor executor
+    ) {
         Objects.requireNonNull(requirements, "requirements");
+        Objects.requireNonNull(ownerDescriptor, "ownerDescriptor");
+        Objects.requireNonNull(linkFactory, "linkFactory");
         Objects.requireNonNull(executor, "executor");
-        return CompletableFuture.supplyAsync(() -> parseRequirements(rank, requirements), executor);
+        return CompletableFuture.supplyAsync(() -> parse(requirements, ownerDescriptor, linkFactory), executor);
     }
 
-    /**
-     * Persists the provided requirements using the RDQ executor associated with this factory.
-     *
-     * @param upgrades the requirements to persist if they have not been stored yet
-     * @return a future that resolves to the persisted requirement collection
-     */
-    public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> persistRequirementEntitiesAsync(final @NotNull List<RRankUpgradeRequirement> upgrades) {
-        return persistRequirementEntitiesAsync(upgrades, this.rdq.getExecutor());
+    public <L extends RequirementAssociation> @NotNull CompletableFuture<List<L>> persistAsync(final @NotNull List<L> links) {
+        return persistAsync(links, this.rdq.getExecutor());
     }
 
-    /**
-     * Persists the provided requirements using the supplied executor. Requirements that already
-     * possess identifiers are returned untouched while those lacking identifiers are stored and
-     * updated with repository-managed values.
-     *
-     * @param upgrades the requirements to persist if they have not been stored yet
-     * @param executor the executor used to run repository operations
-     * @return a future that resolves to the persisted requirement collection
-     */
-    public @NotNull CompletableFuture<List<RRankUpgradeRequirement>> persistRequirementEntitiesAsync(final @NotNull List<RRankUpgradeRequirement> upgrades,
-                                                                                                     final @NotNull Executor executor) {
-        Objects.requireNonNull(upgrades, "upgrades");
+    public <L extends RequirementAssociation> @NotNull CompletableFuture<List<L>> persistAsync(final @NotNull List<L> links,
+                                                                                               final @NotNull Executor executor) {
+        Objects.requireNonNull(links, "links");
         Objects.requireNonNull(executor, "executor");
-        if (upgrades.isEmpty()) {
-            return CompletableFuture.completedFuture(upgrades);
+        if (links.isEmpty()) {
+            return CompletableFuture.completedFuture(links);
         }
-        final List<CompletableFuture<RRankUpgradeRequirement>> futures = new ArrayList<>(upgrades.size());
-        for (RRankUpgradeRequirement upgrade : upgrades) {
-            futures.add(persistSingleRequirementAsync(upgrade, executor));
+        final List<CompletableFuture<L>> futures = new ArrayList<>(links.size());
+        for (L link : links) {
+            final RRequirement req = link.getRequirement();
+            if (req.getId() != null) {
+                futures.add(CompletableFuture.completedFuture(link));
+            } else {
+                futures.add(rdq.getRequirementRepository().createAsync(req).thenApply(saved -> {
+                    link.setRequirement(saved);
+                    return link;
+                }));
+            }
         }
         return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .thenApply(v -> {
-                    final List<RRankUpgradeRequirement> out = new ArrayList<>(futures.size());
-                    for (CompletableFuture<RRankUpgradeRequirement> f : futures) {
+                    final List<L> out = new ArrayList<>(futures.size());
+                    for (CompletableFuture<L> f : futures) {
                         out.add(f.join());
                     }
                     return out;
                 });
     }
 
-    private CompletableFuture<RRankUpgradeRequirement> persistSingleRequirementAsync(final @NotNull RRankUpgradeRequirement upgrade,
-                                                                                     final @NotNull Executor executor) {
-        final RRequirement req = upgrade.getRequirement();
-        if (req.getId() != null) {
-            return CompletableFuture.completedFuture(upgrade);
-        }
-
-        return rdq.getRequirementRepository().createAsync(req).thenApply(saved -> {
-            upgrade.setRequirement(saved);
-            return upgrade;
-        });
-    }
-
-    /**
-     * Converts a configuration section into an {@link AbstractRequirement} by translating the
-     * backing data into the serialized form expected by {@link RequirementParser}.
-     *
-     * @param section the configuration section describing the requirement
-     * @return the parsed abstract requirement instance
-     * @throws IOException if the configuration cannot be serialized to JSON for parsing
-     */
     public @NotNull AbstractRequirement createRequirementFromSection(final @NotNull AConfigSection section) throws IOException {
         final String json = convertSectionToJson(section);
         return RequirementParser.parse(json);
@@ -208,7 +128,8 @@ public final class RequirementFactory {
             case SkillRequirementSection s -> addSkillProperties(jsonMap, s);
             case JobRequirementSection s -> addJobProperties(jsonMap, s);
             case TimeBasedRequirementSection s -> addTimeBasedProperties(jsonMap, s);
-            default -> LOGGER.log(Level.WARNING, "Unknown requirement section type: {0}", section.getClass().getSimpleName());
+            default ->
+                    LOGGER.log(Level.WARNING, "Unknown requirement section type: {0}", section.getClass().getSimpleName());
         }
         return OBJECT_MAPPER.writeValueAsString(jsonMap);
     }
@@ -278,17 +199,23 @@ public final class RequirementFactory {
     private boolean isInvalidRequirement(final @NotNull AConfigSection section) {
         return !switch (section) {
             case ItemRequirementSection s -> s.getRequiredItemsList() != null && !s.getRequiredItemsList().isEmpty();
-            case CurrencyRequirementSection s -> s.getRequiredCurrencies() != null && !s.getRequiredCurrencies().isEmpty();
+            case CurrencyRequirementSection s ->
+                    s.getRequiredCurrencies() != null && !s.getRequiredCurrencies().isEmpty();
             case ExperienceLevelRequirementSection s -> s.getRequiredLevel() > 0;
-            case PlaytimeRequirementSection s -> s.getRequiredPlaytimeSeconds() > 0 || (s.getTime() != null && s.getTime() > 0);
-            case PermissionRequirementSection s -> s.getRequiredPermissions() != null && !s.getRequiredPermissions().isEmpty();
-            case LocationRequirementSection s -> (s.getRequiredWorld() != null && !s.getRequiredWorld().trim().isEmpty())
-                    || (s.getRequiredRegion() != null && !s.getRequiredRegion().trim().isEmpty())
-                    || (s.getRequiredCoordinates() != null && !s.getRequiredCoordinates().isEmpty())
-                    || s.getRequiredDistance() > 0;
-            case CompositeRequirementSection s -> s.getCompositeRequirements() != null && !s.getCompositeRequirements().isEmpty();
+            case PlaytimeRequirementSection s ->
+                    s.getRequiredPlaytimeSeconds() > 0 || (s.getTime() != null && s.getTime() > 0);
+            case PermissionRequirementSection s ->
+                    s.getRequiredPermissions() != null && !s.getRequiredPermissions().isEmpty();
+            case LocationRequirementSection s ->
+                    (s.getRequiredWorld() != null && !s.getRequiredWorld().trim().isEmpty())
+                            || (s.getRequiredRegion() != null && !s.getRequiredRegion().trim().isEmpty())
+                            || (s.getRequiredCoordinates() != null && !s.getRequiredCoordinates().isEmpty())
+                            || s.getRequiredDistance() > 0;
+            case CompositeRequirementSection s ->
+                    s.getCompositeRequirements() != null && !s.getCompositeRequirements().isEmpty();
             case ChoiceRequirementSection s -> s.getChoices() != null && !s.getChoices().isEmpty();
-            case AchievementRequirementSection s -> s.getRequiredAchievements() != null && !s.getRequiredAchievements().isEmpty();
+            case AchievementRequirementSection s ->
+                    s.getRequiredAchievements() != null && !s.getRequiredAchievements().isEmpty();
             case SkillRequirementSection s -> s.getRequiredSkills() != null && !s.getRequiredSkills().isEmpty();
             case JobRequirementSection s -> s.getRequiredJobs() != null && !s.getRequiredJobs().isEmpty();
             case TimeBasedRequirementSection s -> s.getTimeConstraintSeconds() > 0
@@ -414,9 +341,12 @@ public final class RequirementFactory {
 
     private void addLocationProperties(final @NotNull Map<String, Object> json, final @NotNull LocationRequirementSection s) {
         json.put("exactLocation", s.getExactLocation());
-        if (s.getRequiredWorld() != null && !s.getRequiredWorld().trim().isEmpty()) json.put("requiredWorld", s.getRequiredWorld());
-        if (s.getRequiredRegion() != null && !s.getRequiredRegion().trim().isEmpty()) json.put("requiredRegion", s.getRequiredRegion());
-        if (s.getRequiredCoordinates() != null && !s.getRequiredCoordinates().isEmpty()) json.put("requiredCoordinates", s.getRequiredCoordinates());
+        if (s.getRequiredWorld() != null && !s.getRequiredWorld().trim().isEmpty())
+            json.put("requiredWorld", s.getRequiredWorld());
+        if (s.getRequiredRegion() != null && !s.getRequiredRegion().trim().isEmpty())
+            json.put("requiredRegion", s.getRequiredRegion());
+        if (s.getRequiredCoordinates() != null && !s.getRequiredCoordinates().isEmpty())
+            json.put("requiredCoordinates", s.getRequiredCoordinates());
         if (s.getRequiredDistance() > 0) json.put("requiredDistance", s.getRequiredDistance());
         if ((!json.containsKey("requiredWorld")) && (!json.containsKey("requiredRegion")) && (!json.containsKey("requiredCoordinates")) && (!json.containsKey("requiredDistance"))) {
             json.put("requiredWorld", "world");
@@ -436,8 +366,7 @@ public final class RequirementFactory {
             final List<Map<String, Object>> reqs = new ArrayList<>();
             for (BaseRequirementSection r : sub) {
                 final String js = convertSectionToJson(r);
-                @SuppressWarnings("unchecked")
-                final Map<String, Object> map = OBJECT_MAPPER.readValue(js, Map.class);
+                @SuppressWarnings("unchecked") final Map<String, Object> map = OBJECT_MAPPER.readValue(js, Map.class);
                 reqs.add(map);
             }
             json.put("requirements", reqs);
@@ -460,8 +389,7 @@ public final class RequirementFactory {
             final List<Map<String, Object>> list = new ArrayList<>();
             for (BaseRequirementSection c : choices) {
                 final String js = convertSectionToJson(c);
-                @SuppressWarnings("unchecked")
-                final Map<String, Object> map = OBJECT_MAPPER.readValue(js, Map.class);
+                @SuppressWarnings("unchecked") final Map<String, Object> map = OBJECT_MAPPER.readValue(js, Map.class);
                 list.add(map);
             }
             json.put("choices", list);
@@ -544,14 +472,6 @@ public final class RequirementFactory {
         if (s.getActiveDates() != null && !s.getActiveDates().isEmpty()) json.put("activeDates", s.getActiveDates());
     }
 
-    /**
-     * Determines a representative {@link Material} for displaying a requirement when no explicit
-     * icon is provided or the configured icon is invalid. The fallback is chosen based on the
-     * requirement type to keep the user interface informative.
-     *
-     * @param base the base configuration section containing requirement metadata
-     * @return the material that should be used to showcase the requirement
-     */
     public static @NotNull Material determineShowcaseMaterial(final @NotNull BaseRequirementSection base) {
         try {
             return Material.valueOf(base.getIcon().getMaterial());
@@ -578,5 +498,10 @@ public final class RequirementFactory {
             }
             return Material.PAPER;
         }
+    }
+
+    @FunctionalInterface
+    public interface LinkFactory<L extends RequirementAssociation> {
+        L create(RRequirement requirement, IconSection icon);
     }
 }

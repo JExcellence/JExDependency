@@ -84,7 +84,6 @@ public final class RankSystemFactory {
                         this.state = RankSystemState.empty();
                     } else {
                         LOGGER.info("Rank system initialization completed");
-                        logSummary();
                     }
                 });
     }
@@ -99,6 +98,7 @@ public final class RankSystemFactory {
     }
 
     /**
+     *
      * Provides a snapshot of the registered rank trees.
      *
      * @return an immutable map containing the known rank trees keyed by their identifiers
@@ -127,16 +127,4 @@ public final class RankSystemFactory {
     }
 
     public RankSystemSection getRankSystemSection() { return state.rankSystemSection(); }
-
-    /**
-     * Logs a summary of the current rank configuration state for auditing and diagnostics.
-     */
-    private void logSummary() {
-        final int totalRanks = state.ranks().values().stream().mapToInt(Map::size).sum();
-        LOGGER.info("=== Rank System Summary ===");
-        LOGGER.log(Level.INFO, "Rank Trees: {0}", state.rankTrees().size());
-        LOGGER.log(Level.INFO, "Total Ranks: {0}", totalRanks);
-        LOGGER.log(Level.INFO, "Default Rank: {0}", state.defaultRank() != null ? state.defaultRank().getIdentifier() : "None");
-        LOGGER.info("===========================");
-    }
 }

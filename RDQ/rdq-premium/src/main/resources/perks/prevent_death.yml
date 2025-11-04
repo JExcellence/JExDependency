@@ -1,0 +1,71 @@
+perkSettings:
+  icon:
+    material: "TOTEM_OF_UNDYING"
+  displayNameKey: "perk.prevent_death.name"
+  descriptionKey: "perk.prevent_death.lore"
+  priority: 95
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+  metadata:
+    category: "DEFENSE"
+    rarity: "RARE"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "PREVENT_DEATH"
+    showParticles: true
+    particleType: "SOUL"
+    particleAmount: 8
+    playToggleSound: true
+    toggleOnSound: "ENTITY_WITHER_SPAWN"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 600
+  permissionCooldowns:
+    prevent_death_vip: 300
+    prevent_death_premium: 180
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    prevent_death_level1: 0
+    prevent_death_level2: 0
+    prevent_death_level3: 0
+    prevent_death_vip: 0
+    prevent_death_premium: 0
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    prevent_death_vip: 0
+    prevent_death_premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 2500.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 125.0
+
+requirements:
+  prevent_death:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 40
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 10
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "You have gained the power to cheat death!"
+  command:
+    type: "COMMAND"
+    command: "say {player} has unlocked the Prevent Death perk!"

@@ -6,6 +6,7 @@ import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.database.repository.RPlayerRankUpgradeProgressRepository;
+import com.raindropcentral.rdq.service.rank.RankUpgradeProgressService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

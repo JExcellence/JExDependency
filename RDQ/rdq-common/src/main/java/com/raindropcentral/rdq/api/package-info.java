@@ -8,7 +8,7 @@
  *     <li><strong>Component &amp; view wiring</strong> – GUI frames, commands, and listeners are
  *     prepared on the Paper main thread.</li>
  *     <li><strong>Repository wiring</strong> – database-backed repositories and service singletons
- *     are bound and, finally, {@link com.raindropcentral.rdq.service.BountyService}
+ *     are bound and, finally, {@link com.raindropcentral.rdq.service.bounty.BountyService}
  *     implementations are registered with Bukkit's {@code ServicesManager}.</li>
  * </ol>
  * </p>
@@ -17,7 +17,7 @@
  * <ul>
  *     <li>Wait until RDQ finishes enabling. Either declare a dependency in {@code plugin.yml},
  *     listen for {@code ServiceRegisterEvent} targeting {@code BountyService.class}, or poll
- *     {@link com.raindropcentral.rdq.service.BountyServiceProvider#isInitialized()} from a
+ *     {@link com.raindropcentral.rdq.service.bounty.BountyServiceProvider#isInitialized()} from a
  *     synchronous task scheduled <em>after</em> RDQ is enabled.</li>
  *     <li>Retrieve the service via Bukkit:
  *     <pre>{@code

@@ -3,9 +3,9 @@
  *
  * <h2>Lifecycle</h2>
  * <p>Services are assembled once the staged enable pipeline reaches the repository wiring phase.
- * {@link com.raindropcentral.rdq.service.BountyService} implementations are then published through
+ * {@link com.raindropcentral.rdq.service.bounty.BountyService} implementations are then published through
  * both Bukkit's {@code ServicesManager} and
- * {@link com.raindropcentral.rdq.service.BountyServiceProvider}. When RDQ shuts down the provider is
+ * {@link com.raindropcentral.rdq.service.bounty.BountyServiceProvider}. When RDQ shuts down the provider is
  * reset and services are unregistered, guaranteeing that stale handles are not reused by dependants.</p>
  *
  * <h2>Threading model</h2>
@@ -22,11 +22,11 @@
  *
  * <h2>External consumption</h2>
  * <ul>
- *     <li>Dependants should resolve {@link com.raindropcentral.rdq.service.BountyService} after RDQ
+ *     <li>Dependants should resolve {@link com.raindropcentral.rdq.service.bounty.BountyService} after RDQ
  *     reports as enabled—ideally by subscribing to {@code ServiceRegisterEvent}.</li>
  *     <li>Edition differences are abstracted behind the service contract. Premium deployments expose
  *     extended limits, whereas free editions return constrained values for queries like
- *     {@link com.raindropcentral.rdq.service.BountyService#getMaxBountiesPerPlayer()}.</li>
+ *     {@link com.raindropcentral.rdq.service.bounty.BountyService#getMaxBountiesPerPlayer()}.</li>
  *     <li>Retry-friendly semantics: failures propagate as exceptionally-completed futures, allowing
  *     consumers to offer UI retries or queue compensation work.</li>
  * </ul>

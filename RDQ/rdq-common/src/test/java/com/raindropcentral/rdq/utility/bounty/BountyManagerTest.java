@@ -5,7 +5,7 @@ import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
 import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
-import com.raindropcentral.rdq.service.BountyService;
+import com.raindropcentral.rdq.service.bounty.BountyService;
 import com.raindropcentral.rdq.type.EBountyClaimMode;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPI;
@@ -56,7 +56,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockConstruction;
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

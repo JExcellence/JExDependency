@@ -2,10 +2,8 @@ package com.raindropcentral.rdq.manager;
 
 import com.raindropcentral.rdq.manager.bounty.BountyManager;
 import com.raindropcentral.rdq.manager.bounty.FreeBountyManager;
-import com.raindropcentral.rdq.manager.perk.DefaultPerkManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
-import com.raindropcentral.rdq.manager.rank.RankManager;
 import com.raindropcentral.rplatform.RPlatform;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -34,7 +32,6 @@ public final class RDQFreeManager extends RDQManager {
 
     private final BountyManager bountyManager;
     private final QuestManager questManager;
-    private final RankManager rankManager;
     private final PerkManager perkManager;
 
     public RDQFreeManager(
@@ -43,7 +40,6 @@ public final class RDQFreeManager extends RDQManager {
         super("Free");
         this.bountyManager = new FreeBountyManager(plugin, platform);
         this.questManager = new FreeQuestManager();
-        this.rankManager = new FreeRankManager();
         this.perkManager = new FreePerkManager();
     }
 
@@ -55,11 +51,6 @@ public final class RDQFreeManager extends RDQManager {
     @Override
     public @NotNull QuestManager getQuestManager() {
         return this.questManager;
-    }
-
-    @Override
-    public @NotNull RankManager getRankManager() {
-        return this.rankManager;
     }
 
     @Override
@@ -89,7 +80,7 @@ public final class RDQFreeManager extends RDQManager {
     private static class FreeQuestManager implements QuestManager {
     }
 
-    private static class FreeRankManager implements RankManager {
+    private static class FreeRankManager {
     }
 
     private static class FreePerkManager implements PerkManager {

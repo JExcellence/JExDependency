@@ -3,7 +3,6 @@ package com.raindropcentral.rdq.manager;
 import com.raindropcentral.rdq.manager.bounty.BountyManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
-import com.raindropcentral.rdq.manager.rank.RankManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;

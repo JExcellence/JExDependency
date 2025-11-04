@@ -44,14 +44,10 @@ dependencies {
     compileOnly("me.devnatan:inventory-framework-platform-bukkit:3.5.1")
     compileOnly("me.devnatan:inventory-framework-platform-paper:3.5.1")
     compileOnly("me.devnatan:inventory-framework-anvil-input:3.5.1")
+    compileOnly("me.devnatan:inventory-framework-api:3.5.1")
+    compileOnly("me.devnatan:inventory-framework-core:3.5.1")
     
     compileOnly("org.jetbrains:annotations:24.0.1")
-    
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("org.mockito:mockito-core:5.5.0")
-    testImplementation("org.mockito:mockito-inline:5.5.0")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.20:3.6.0")
 }
 
 java {
@@ -97,13 +93,6 @@ tasks {
                 "https://docs.oracle.com/en/java/javase/21/docs/api/",
                 "https://jd.papermc.io/paper/1.21/"
             )
-        }
-    }
-
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events("passed", "skipped", "failed")
         }
     }
 

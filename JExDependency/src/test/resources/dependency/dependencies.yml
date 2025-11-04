@@ -1,7 +1,0 @@
-dependencies:
-  # Generic fallback dependencies
-  - com.example:generic-one:1.0.0
-  - "com.example:quoted-generic:1.0.1"
-  -
-  - # skipped-comment-entry
-  invalid: line

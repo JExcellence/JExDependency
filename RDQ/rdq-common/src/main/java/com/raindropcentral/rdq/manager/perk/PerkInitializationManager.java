@@ -97,13 +97,9 @@ public class PerkInitializationManager {
     private void initializePerkManagers() {
         this.defaultPerkManager = new DefaultPerkManager(rdq, perkEventBus);
 
-        registerService(new PreventDeathPerkService(defaultPerkManager, perkEventBus));
-        registerService(new FlyPerkService(defaultPerkManager, perkEventBus));
-        registerService(new DoubleExperiencePerkService(defaultPerkManager, perkEventBus));
-        registerService(new TreasureHunterPerkService(defaultPerkManager, perkEventBus));
-        registerService(new VampirePerkService(defaultPerkManager, perkEventBus));
-
-        defaultPerkManager.initialize();
+        defaultPerkManager.initializeServices();
+        defaultPerkManager.initializeRegistry();
+        defaultPerkManager.registerListeners();
     }
 
     /**

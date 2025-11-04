@@ -1,5 +1,8 @@
 package com.raindropcentral.rdq.type;
 
+import com.raindropcentral.rdq.database.entity.perk.RPerk;
+import com.raindropcentral.rdq.database.entity.perk.event.*;
+import com.raindropcentral.rdq.database.entity.perk.potion.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,33 +18,36 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum EPerkIdentifier {
 
-    // Event-triggered perks
-    DAMAGE_REDUCTION("damage_reduction"),
-    DEATH_PROTECTION("death_protection"),
-    DOUBLE_EXPERIENCE("double_experience"),
-    KEEP_EXPERIENCE("keep_experience"),
-    KEEP_INVENTORY("keep_inventory"),
+    DAMAGE_REDUCTION("damage_reduction", DamageReductionPerk.class),
+    DEATH_PROTECTION("death_protection", DeathProtectionPerk.class),
+    DOUBLE_EXPERIENCE("double_experience", DoubleExperiencePerk.class),
+    KEEP_EXPERIENCE("keep_experience", KeepExperiencePerk.class),
+    KEEP_INVENTORY("keep_inventory", KeepInventoryPerk.class),
 
-    // Potion effect perks (toggleable passives)
-    FIRE_RESISTANCE("fire_resistance"),
-    GLOW("glow"),
-    HASTE("haste"),
-    JUMP_BOOST("jump_boost"),
-    NIGHT_VISION("night_vision"),
-    RESISTANCE("resistance"),
-    SATURATION("saturation"),
-    STRENGTH("strength"),
-    SPEED("speed");
+    FIRE_RESISTANCE("fire_resistance", FireResistance.class),
+    GLOW("glow", Glow.class),
+    HASTE("haste", Haste.class),
+    JUMP_BOOST("jump_boost", JumpBoost.class),
+    NIGHT_VISION("night_vision", NightVision.class),
+    RESISTANCE("resistance", Resistance.class),
+    SATURATION("saturation", Saturation.class),
+    STRENGTH("strength", Strength.class),
+    SPEED("speed", Speed.class);
 
     private final String identifier;
+    private final Class<? extends RPerk> clazz;
 
     /**
      * Constructs a perk identifier with the given string value.
      *
      * @param identifier the unique string identifier for this perk
      */
-    EPerkIdentifier(final @NotNull String identifier) {
+    EPerkIdentifier(
+            final @NotNull String identifier,
+            final @NotNull Class<? extends RPerk> clazz
+    ) {
         this.identifier = identifier;
+        this.clazz = clazz;
     }
 
     /**
@@ -52,6 +58,8 @@ public enum EPerkIdentifier {
     public String getIdentifier() {
         return this.identifier;
     }
+
+    public Class<? extends RPerk> getClazz() { return this.clazz; }
 
     /**
      * Attempts to find a perk identifier by its string value.

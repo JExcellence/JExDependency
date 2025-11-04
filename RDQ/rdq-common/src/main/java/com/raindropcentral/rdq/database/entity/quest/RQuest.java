@@ -36,15 +36,9 @@ public abstract class RQuest extends AbstractEntity {
     @Column(name = "maximum_upgrade_level", nullable = false)
     private int maximumUpgradeLevel;
 
-    @Column(name = "showcase_item", nullable = false, columnDefinition = "BLOB")
+    @Column(name = "showcase_item", nullable = false, columnDefinition = "LONGTEXT")
     @Convert(converter = BasicMaterialConverter.class)
     private Material showcase;
-
-    @Column(name = "showcase_i18n_name_key", nullable = false)
-    private String showcaseI18nNameKey;
-
-    @Column(name = "showcase_i18n_lore_key", nullable = false)
-    private String showcaseI18nLoreKey;
 
     @OneToMany(mappedBy = "quest", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RQuestUpgrade> upgrades = new ArrayList<>();
@@ -62,8 +56,6 @@ public abstract class RQuest extends AbstractEntity {
         this.identifier = Objects.requireNonNull(identifier, "identifier cannot be null");
         this.initialUpgradeLevel = initialUpgradeLevel;
         this.maximumUpgradeLevel = maximumUpgradeLevel;
-        this.showcaseI18nNameKey = "quest.name";
-        this.showcaseI18nLoreKey = "quest.lore";
         this.showcase = this.initializeShowcase();
     }
 
@@ -101,24 +93,6 @@ public abstract class RQuest extends AbstractEntity {
      */
     public @NotNull Material getShowcase() {
         return this.showcase;
-    }
-
-    /**
-     * Provides the translation key for the showcase display name.
-     *
-     * @return the i18n key for the quest name.
-     */
-    public @NotNull String getShowcaseI18nNameKey() {
-        return this.showcaseI18nNameKey;
-    }
-
-    /**
-     * Provides the translation key for the showcase lore.
-     *
-     * @return the i18n key for the quest lore.
-     */
-    public @NotNull String getShowcaseI18nLoreKey() {
-        return this.showcaseI18nLoreKey;
     }
 
     /**

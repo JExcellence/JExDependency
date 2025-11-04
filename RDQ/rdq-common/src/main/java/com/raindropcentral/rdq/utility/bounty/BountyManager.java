@@ -5,7 +5,7 @@ import com.raindropcentral.rdq.config.bounty.BountySection;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
-import com.raindropcentral.rdq.service.BountyService;
+import com.raindropcentral.rdq.service.bounty.BountyService;
 import com.raindropcentral.rdq.type.EBountyClaimMode;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.evaluable.ConfigKeeper;

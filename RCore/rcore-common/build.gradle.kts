@@ -44,38 +44,28 @@ tasks.withType<Jar>().configureEach {
     }
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 tasks.processResources {
     exclude("plugin.yml", "paper-plugin.yml")
 }
 
 dependencies {
-    // Server API
     compileOnly(libs.paper.api)
 
-    // Adventure APIs
     compileOnly(libs.bundles.adventure)
 
-    // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false}
     compileOnly(libs.luckperms.api)
     compileOnly(libs.bundles.inventory)
 
-    // Logging & utils
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
 
-    // DB & platform (compileOnly)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
 
-    // Misc (compileOnly)
     compileOnly(libs.caffeine)
     compileOnly(libs.jackson.core)
     compileOnly(libs.jackson.databind)
@@ -84,24 +74,11 @@ dependencies {
     compileOnly(libs.java.uuid)
     compileOnly(libs.xseries)
 
-    // Internal libraries to be shaded by variants
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory) { isTransitive = false }
 
-    // Example of plugin-provided API used by listeners
     compileOnly(libs.jexeconomy)
-
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.jupiter.api)
-    testRuntimeOnly(libs.junit.jupiter.engine)
-    testRuntimeOnly(libs.junit.platform.launcher)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.junit.jupiter)
-}
-
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
 }
 
 publishing {

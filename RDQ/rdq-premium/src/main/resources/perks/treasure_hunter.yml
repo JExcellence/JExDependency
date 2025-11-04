@@ -1,0 +1,71 @@
+perkSettings:
+  icon:
+    material: "DIAMOND_PICKAXE"
+  displayNameKey: "perk.treasure_hunter.name"
+  descriptionKey: "perk.treasure_hunter.lore"
+  priority: 85
+  maxConcurrentUsers: null
+  requiresOwnedArea: false
+  isEnabled: true
+  metadata:
+    category: "UTILITY"
+    rarity: "UNCOMMON"
+    perkType: "TOGGLEABLE_PASSIVE"
+    effectType: "TREASURE_HUNTER"
+    showParticles: true
+    particleType: "VILLAGER_HAPPY"
+    particleAmount: 5
+    playToggleSound: true
+    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
+    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+
+permissionCooldowns:
+  defaultCooldown: 0
+  permissionCooldowns:
+    treasure_hunter_vip: 0
+    treasure_hunter_premium: 0
+
+permissionAmplifiers:
+  defaultAmplifier: 0
+  permissionAmplifiers:
+    treasure_hunter_level1: 0
+    treasure_hunter_level2: 1
+    treasure_hunter_level3: 2
+    treasure_hunter_vip: 1
+    treasure_hunter_premium: 2
+
+permissionDurations:
+  defaultDuration: 0
+  permissionDurations:
+    treasure_hunter_vip: 0
+    treasure_hunter_premium: 0
+
+costs:
+  economy:
+    targetPluginId: "Vault"
+    currencyTypeId: "money"
+    amount: 1800.0
+  tokens:
+    targetPluginId: "TokenManager"
+    currencyTypeId: "tokens"
+    amount: 90.0
+
+requirements:
+  treasure_hunter:
+    type: "COMPOSITE"
+    operator: "AND"
+    requirements:
+      - type: "EXPERIENCE_LEVEL"
+        level: 30
+      - type: "PLAYTIME"
+        playtimeRequirement:
+          useTotalPlayTime: true
+          requiredPlaytimeHours: 8
+
+rewards:
+  message:
+    type: "MESSAGE"
+    message: "You have become a Treasure Hunter!"
+  command:
+    type: "COMMAND"
+    command: "say {player} is now hunting for treasure!"

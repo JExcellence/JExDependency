@@ -1,5 +1,0 @@
-name: contextaware
-description: Context aware test command
-usage: /contextaware
-aliases:
-  - ctxaware

@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BountyServiceContractTest {
 
-    private static final String BOUNTY_SERVICE_CLASS_NAME = "com.raindropcentral.rdq.service.BountyService";
+    private static final String BOUNTY_SERVICE_CLASS_NAME = "com.raindropcentral.rdq.service.bounty.BountyService";
 
     @Test
     void itRemainsAnInterfaceWithExpectedMethods() throws Exception {

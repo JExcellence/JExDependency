@@ -448,6 +448,14 @@ public abstract class RPerk extends AbstractEntity {
         return this.playerPerks.remove(playerPerk);
     }
 
+    public void replaceUnlockRequirements(final @NotNull Collection<RPerkUnlockRequirement> newRequirements) {
+        Objects.requireNonNull(newRequirements, "newRequirements cannot be null");
+        this.unlockRequirements.clear();
+        for (RPerkUnlockRequirement req : newRequirements) {
+            addUnlockRequirement(req);
+        }
+    }
+
     /**
      * Internal helper used by {@link RPerkUnlockRequirement} to ensure that bidirectional synchronization can
      * occur without triggering recursive calls when the owning side changes.

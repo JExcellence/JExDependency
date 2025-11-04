@@ -2,30 +2,27 @@ package com.raindropcentral.rdq.manager.perk;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
-import com.raindropcentral.rdq.perk.runtime.CooldownService;
-import com.raindropcentral.rdq.perk.runtime.DefaultPerkRegistry;
-import com.raindropcentral.rdq.perk.runtime.DefaultPerkStateService;
-import com.raindropcentral.rdq.perk.runtime.DefaultPerkTriggerService;
-import com.raindropcentral.rdq.perk.runtime.PerkAuditService;
-import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
-import com.raindropcentral.rdq.perk.runtime.PerkRuntimeStateService;
-import com.raindropcentral.rdq.perk.runtime.PerkRuntime;
-import com.raindropcentral.rdq.perk.runtime.PerkStateService;
-import com.raindropcentral.rdq.perk.runtime.PerkTriggerService;
+import com.raindropcentral.rdq.perk.runtime.*;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Default implementation of PerkManager.
  *
+ * Lifecycle:
+ * 1. Constructor: lightweight, stores references only
+ * 2. initializeServices(): creates core services (cooldown, state, audit)
+ * 3. initializeRegistry(): creates registry with initialized services
+ * 4. registerListeners(): wires event listeners after runtime is populated
+ *
  * @author JExcellence
- * @version 1.0.5
+ * @version 1.0.6
  * @since 3.2.0
  */
 public class DefaultPerkManager implements PerkManager {
@@ -33,23 +30,18 @@ public class DefaultPerkManager implements PerkManager {
     private static final Logger LOGGER = CentralLogger.getLogger(DefaultPerkManager.class.getName());
 
     private final RDQ rdq;
-    private final CooldownService cooldownService;
-    private final PerkRuntimeStateService runtimeStateService;
-    private final PerkAuditService auditService;
-    private final DefaultPerkRegistry perkRegistry;
-    private final PerkStateService perkStateService;
-    private final PerkTriggerService perkTriggerService;
     private final PerkEventBus perkEventBus;
+
+    private CooldownService cooldownService;
+    private PerkRuntimeStateService runtimeStateService;
+    private PerkAuditService auditService;
+    private DefaultPerkRegistry perkRegistry;
+    private PerkStateService perkStateService;
+    private PerkTriggerService perkTriggerService;
 
     public DefaultPerkManager(@NotNull RDQ rdq, @NotNull PerkEventBus perkEventBus) {
         this.rdq = rdq;
-        this.cooldownService = new CooldownService();
-        this.runtimeStateService = new PerkRuntimeStateService();
-        this.auditService = new PerkAuditService();
         this.perkEventBus = perkEventBus;
-        this.perkRegistry = new DefaultPerkRegistry(rdq, rdq.getPerkTypeRegistry(), cooldownService, runtimeStateService, auditService, perkEventBus);
-        this.perkStateService = new DefaultPerkStateService(rdq);
-        this.perkTriggerService = new DefaultPerkTriggerService(rdq, perkRegistry, auditService);
     }
 
     @Override
@@ -92,25 +84,56 @@ public class DefaultPerkManager implements PerkManager {
                 .orElse(false);
     }
 
+    public void initializeServices() {
+        this.cooldownService = new CooldownService();
+        this.runtimeStateService = new PerkRuntimeStateService();
+        this.auditService = new PerkAuditService();
+        LOGGER.log(Level.FINE, "Perk services initialized");
+    }
+
+    public void initializeRegistry() {
+        if (cooldownService == null || runtimeStateService == null || auditService == null) {
+            throw new IllegalStateException("Services must be initialized before registry");
+        }
+        this.perkRegistry = new DefaultPerkRegistry(
+                rdq,
+                rdq.getPerkTypeRegistry(),
+                cooldownService,
+                runtimeStateService,
+                auditService,
+                perkEventBus
+        );
+        this.perkStateService = new PlayerPerkStateService(rdq);
+        this.perkTriggerService = new EventBasedPerkTrigger(rdq, perkRegistry, auditService);
+        LOGGER.log(Level.FINE, "Perk registry and services initialized");
+    }
+
+    public void registerListeners() {
+        if (perkTriggerService == null) {
+            throw new IllegalStateException("Registry must be initialized before registering listeners");
+        }
+        perkTriggerService.registerListeners();
+        LOGGER.log(Level.FINE, "Perk event listeners registered");
+    }
+
     @Override
     public void initialize() {
-        try {
-            perkRegistry.reloadAllPerkRuntimes();
-            perkTriggerService.registerListeners();
-            LOGGER.log(Level.INFO, "Perk manager initialised with {0} runtimes", perkRegistry.getAllPerkRuntimes().size());
-        } catch (Exception exception) {
-            LOGGER.log(Level.SEVERE, "Failed to initialise perk manager", exception);
-            runtimeStateService.clearAll();
-        }
+        LOGGER.log(Level.WARNING, "initialize() is deprecated; use staged lifecycle: initializeServices() → initializeRegistry() → registerListeners()");
     }
 
     @Override
     public void shutdown() {
         try {
-            perkTriggerService.unregisterListeners();
+            if (perkTriggerService != null) {
+                perkTriggerService.unregisterListeners();
+            }
         } finally {
-            runtimeStateService.clearAll();
-            cooldownService.clearExpired();
+            if (runtimeStateService != null) {
+                runtimeStateService.clearAll();
+            }
+            if (cooldownService != null) {
+                cooldownService.clearExpired();
+            }
         }
     }
 

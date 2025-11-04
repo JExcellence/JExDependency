@@ -7,25 +7,12 @@ import com.raindropcentral.rdq.database.entity.perk.EventTriggeredPerk;
 import com.raindropcentral.rdq.database.entity.perk.PotionEffectPerk;
 import com.raindropcentral.rdq.database.entity.perk.RPerk;
 import com.raindropcentral.rdq.database.entity.perk.YamlLoadedPerk;
-import com.raindropcentral.rdq.database.entity.perk.event.DamageReductionPerk;
-import com.raindropcentral.rdq.database.entity.perk.event.DeathProtectionPerk;
-import com.raindropcentral.rdq.database.entity.perk.event.DoubleExperiencePerk;
-import com.raindropcentral.rdq.database.entity.perk.event.KeepExperiencePerk;
-import com.raindropcentral.rdq.database.entity.perk.event.KeepInventoryPerk;
-import com.raindropcentral.rdq.database.entity.perk.potion.FireResistance;
-import com.raindropcentral.rdq.database.entity.perk.potion.Glow;
-import com.raindropcentral.rdq.database.entity.perk.potion.Haste;
-import com.raindropcentral.rdq.database.entity.perk.potion.JumpBoost;
-import com.raindropcentral.rdq.database.entity.perk.potion.NightVision;
-import com.raindropcentral.rdq.database.entity.perk.potion.Resistance;
-import com.raindropcentral.rdq.database.entity.perk.potion.Saturation;
-import com.raindropcentral.rdq.database.entity.perk.potion.Speed;
-import com.raindropcentral.rdq.database.entity.perk.potion.Strength;
+import com.raindropcentral.rdq.database.entity.perk.event.*;
+import com.raindropcentral.rdq.database.entity.perk.potion.*;
 import com.raindropcentral.rdq.perk.config.PerkConfig;
 import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.type.EPerkCategory;
 import com.raindropcentral.rdq.type.EPerkType;
-import com.raindropcentral.rdq.utility.ConfigurationDirectoryLoader;
 import com.raindropcentral.rplatform.config.DurationSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
@@ -34,11 +21,6 @@ import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.lang.reflect.Constructor;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -145,7 +127,7 @@ public class DefaultPerkRegistry extends PerkRegistry {
         return runtime;
     }
 
-    public void reloadAllPerkRuntimes() {
+    public void reloadFrom(@NotNull Map<String, RPerk> perks) {
         perkRuntimes.values().forEach(runtime -> {
             if (runtime instanceof SectionBackedPerkRuntime section) {
                 section.cleanup();
@@ -154,103 +136,22 @@ public class DefaultPerkRegistry extends PerkRegistry {
         perkRuntimes.clear();
         runtimeStateService.clearAll();
         onReload();
-        try {
-            final var repository = rdq.getPerkRepository();
 
-            int page = 0;
-            int totalLoaded = 0;
-            List<RPerk> fetched;
-            do {
-                try {
-                    fetched = repository.findAll(page, DEFAULT_PAGE_SIZE);
-                    if (fetched == null) {
-                        LOGGER.log(Level.WARNING, "Repository returned null for page {0}", page);
-                        break;
-                    }
-                } catch (Exception fetchException) {
-                    LOGGER.log(Level.SEVERE, "Failed to fetch perks from repository at page {0}", new Object[]{page});
-                    LOGGER.log(Level.FINER, "Repository fetch failure", fetchException);
-                    break;
-                }
-                
-                for (RPerk perk : fetched) {
-                    if (perk == null) {
-                        continue;
-                    }
-                    if (!perk.isEnabled()) {
-                        continue;
-                    }
-                    try {
-                        buildPerkRuntime(perk, perk.getPerkSection());
-                        totalLoaded++;
-                    } catch (Exception runtimeException) {
-                        LOGGER.log(Level.SEVERE, "Failed to build runtime for perk {0}", new Object[]{perk.getIdentifier()});
-                        LOGGER.log(Level.FINER, "Runtime build failure", runtimeException);
-                    }
-                }
-                page++;
-            } while (!fetched.isEmpty() && fetched.size() == DEFAULT_PAGE_SIZE);
-            
-            if (totalLoaded == 0) {
-                LOGGER.log(Level.INFO, "No perks found in database. Loading from YAML configuration files...");
-                totalLoaded = loadPerksFromYaml();
-            }
-            
-            LOGGER.log(Level.INFO, "Loaded {0} perk runtimes", totalLoaded);
-        } catch (Exception exception) {
-            LOGGER.log(Level.SEVERE, "Failed to reload perk runtimes", exception);
-            LOGGER.log(Level.FINER, "Reload failure details", exception);
-        }
-    }
-
-    private int loadPerksFromYaml() {
-        LOGGER.info("Attempting to load perks from YAML configuration files...");
-
-        copyDefaultPerkFilesIfNeeded();
-
-        final ConfigurationDirectoryLoader<PerkSection> loader = new ConfigurationDirectoryLoader<>(
-                rdq,
-                "perks",
-                PerkSection.class,
-                fileName -> fileName.replace(".yml", "").replace(" ", "").replace("-", "_").toLowerCase(Locale.ROOT),
-                (fileName, e) -> LOGGER.log(Level.SEVERE, "Failed to load perk from file: " + fileName, e)
-        );
-
-        final Map<String, PerkSection> perkSections = (Map<String, PerkSection>) loader.loadAll(Collections.emptyList());
-        LOGGER.log(Level.INFO, "Found {0} perk configuration files", perkSections.size());
         int totalLoaded = 0;
-
-        for (Map.Entry<String, PerkSection> entry : perkSections.entrySet()) {
-            final String perkId = entry.getKey();
-            final PerkSection perkSection = entry.getValue();
-
+        for (RPerk perk : perks.values()) {
+            if (perk == null || !perk.isEnabled()) {
+                continue;
+            }
             try {
-                final PerkSettingsSection settings = perkSection.getPerkSettings();
-                settings.setPerkId(perkId);
-
-                final Map<String, Object> metadata = settings.getMetadata();
-                metadata.putIfAbsent("id", perkId);
-
-                final String perkTypeStr = Optional.ofNullable(metadata.get("perkType"))
-                        .map(Object::toString)
-                        .filter(value -> !value.isBlank())
-                        .orElse("TOGGLEABLE_PASSIVE");
-                final EPerkType perkType = parsePerkType(perkTypeStr);
-
-                final RPerk perk = instantiateConfiguredPerk(perkId, perkSection, perkType, metadata);
-
-                configurePerkFromSettings(perk, perkSection, settings, metadata);
-
-                buildPerkRuntime(perk, perkSection);
+                final PerkSection section = perk.getPerkSection();
+                buildPerkRuntime(perk, section);
                 totalLoaded++;
-                LOGGER.log(Level.INFO, "Loaded perk from YAML: {0}", perkId);
-            } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Failed to build runtime for perk {0}", new Object[]{perkId});
-                LOGGER.log(Level.FINER, "Runtime build failure", e);
+            } catch (Exception runtimeException) {
+                LOGGER.log(Level.SEVERE, "Failed to build runtime for perk {0}", new Object[]{perk.getIdentifier()});
+                LOGGER.log(Level.FINER, "Runtime build failure", runtimeException);
             }
         }
-
-        return totalLoaded;
+        LOGGER.log(Level.INFO, "Loaded {0} perk runtimes", totalLoaded);
     }
 
     private @NotNull EPerkType parsePerkType(@NotNull String perkTypeStr) {
@@ -387,14 +288,10 @@ public class DefaultPerkRegistry extends PerkRegistry {
         metadata.put("perkType", perk.getPerkType().name());
 
         if (perk instanceof PotionEffectPerk potionEffectPerk) {
-            final String effectType = Optional.ofNullable(metadata.get("effectType"))
+            Optional.ofNullable(metadata.get("effectType"))
                     .map(Object::toString)
                     .map(String::trim)
-                    .filter(value -> !value.isEmpty())
-                    .orElse(null);
-            if (effectType != null) {
-                potionEffectPerk.setPotionEffectTypeName(effectType.toUpperCase(Locale.ROOT));
-            }
+                    .filter(value -> !value.isEmpty()).ifPresent(effectType -> potionEffectPerk.setPotionEffectTypeName(effectType.toUpperCase(Locale.ROOT)));
             metadata.put("effectType", potionEffectPerk.getPotionEffectTypeName());
         }
     }
@@ -460,13 +357,13 @@ public class DefaultPerkRegistry extends PerkRegistry {
     ) {
         final long now = System.currentTimeMillis();
         final AtomicLong marker = logWindows.computeIfAbsent(key, ignored -> new AtomicLong(0L));
-        long previous;
-        do {
-            previous = marker.get();
-            if (previous != 0L && (now - previous) < ERROR_THROTTLE_MILLIS) {
-                return;
-            }
-        } while (!marker.compareAndSet(previous, now));
+        long previous = marker.get();
+        if (previous != 0L && (now - previous) < ERROR_THROTTLE_MILLIS) {
+            return;
+        }
+        if (!marker.compareAndSet(previous, now)) {
+            return;
+        }
         final LogRecord record = new LogRecord(level, message);
         record.setLoggerName(LOGGER.getName());
         record.setParameters(parameters);
@@ -507,42 +404,6 @@ public class DefaultPerkRegistry extends PerkRegistry {
     @NotNull
     String normaliseEventKey(@Nullable String raw) {
         return PerkMetadataSanitizer.normaliseEventKey(raw);
-    }
-
-    private void copyDefaultPerkFilesIfNeeded() {
-        final Path perksDir = rdq.getPlugin().getDataFolder().toPath().resolve("perks");
-        try {
-            if (!Files.exists(perksDir)) {
-                Files.createDirectories(perksDir);
-            }
-
-            // Check if directory is empty
-            try (var stream = Files.list(perksDir)) {
-                if (stream.findAny().isPresent()) {
-                    return; // Not empty, don't copy
-                }
-            }
-
-            // Copy default files from resources
-            final String[] defaultFiles = {
-                "double_experience.yml", "fire_resistance.yml", "fly.yml", "glow.yml",
-                "haste.yml", "jump_boost.yml", "night_vision.yml", "prevent_death.yml",
-                "resistance.yml", "saturation.yml", "speed.yml", "strength.yml",
-                "treasure_hunter.yml", "vampire.yml", "water_breathing.yml"
-            };
-
-            for (String fileName : defaultFiles) {
-                try (InputStream is = getClass().getClassLoader().getResourceAsStream("perks/" + fileName)) {
-                    if (is != null) {
-                        Files.copy(is, perksDir.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
-                    }
-                }
-            }
-
-            LOGGER.info("Copied default perk configuration files to data directory");
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Failed to copy default perk files", e);
-        }
     }
 
     private static final class SectionBackedPerkRuntime implements PerkRuntime {

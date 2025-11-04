@@ -2,8 +2,8 @@ package com.raindropcentral.rdq;
 
 import org.mockbukkit.mockbukkit.MockBukkit;
 import org.mockbukkit.mockbukkit.ServerMock;
-import com.raindropcentral.rdq.service.BountyService;
-import com.raindropcentral.rdq.service.BountyServiceProvider;
+import com.raindropcentral.rdq.service.bounty.BountyService;
+import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;

@@ -2,9 +2,6 @@ package com.raindropcentral.rdq.manager.bounty;
 
 import com.raindropcentral.rdq.database.repository.RBountyRepository;
 import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
-import com.raindropcentral.rdq.manager.quest.QuestManager;
-import com.raindropcentral.rdq.manager.rank.RankManager;
-import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rplatform.RPlatform;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.Test;

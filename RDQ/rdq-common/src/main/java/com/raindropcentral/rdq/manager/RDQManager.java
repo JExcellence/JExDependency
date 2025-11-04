@@ -2,7 +2,6 @@ package com.raindropcentral.rdq.manager;
 
 import com.raindropcentral.rdq.manager.bounty.BountyManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
-import com.raindropcentral.rdq.manager.rank.RankManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
  * Each edition participates in the staged enable pipeline orchestrated by {@link com.raindropcentral.rdq.RDQ}:
  * asynchronous platform initialization (stage&nbsp;1) prepares the shared executor by preferring
  * virtual threads and falling back to the fixed pool when necessary, component and view wiring
- * (stage&nbsp;2) runs inside the {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync}
+ * (stage&nbsp;2) runs inside the {@link com.raindropcentral.rplatform.scheduler.ISchedulerAdapter#runSync}
  * boundary, and repository wiring (stage&nbsp;3) hydrates shared stores such as
  * {@link com.raindropcentral.rdq.database.repository.RBountyRepository},
  * {@link com.raindropcentral.rdq.database.repository.RRankRepository}, and
@@ -51,13 +50,6 @@ public abstract class RDQManager {
      * @return the manager coordinating quest definitions and progress
      */
     public abstract @NotNull QuestManager getQuestManager();
-
-    /**
-     * Supplies the rank manager that maintains player rank definitions and transitions.
-     *
-     * @return the manager orchestrating rank data and promotion logic
-     */
-    public abstract @NotNull RankManager getRankManager();
 
     /**
      * Exposes the perk manager responsible for unlocking and applying perk effects.

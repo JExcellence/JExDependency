@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.view.bounty;
 
-import com.raindropcentral.rdq.service.BountyService;
-import com.raindropcentral.rdq.service.BountyServiceProvider;
+import com.raindropcentral.rdq.service.bounty.BountyService;
+import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.RenderContext;

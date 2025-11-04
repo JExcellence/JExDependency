@@ -10,6 +10,7 @@ import com.raindropcentral.rdq.database.entity.rank.RRankTree;
 import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
 import com.raindropcentral.rdq.database.repository.RPlayerRankPathRepository;
 import com.raindropcentral.rdq.database.repository.RPlayerRankRepository;
+import com.raindropcentral.rdq.service.rank.RankPathService;
 import com.raindropcentral.rdq.view.rank.RankProgressionManager;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.junit.jupiter.api.BeforeEach;

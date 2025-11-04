@@ -3,6 +3,7 @@ package com.raindropcentral.rdq.service;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
+import com.raindropcentral.rdq.service.bounty.BountyService;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 

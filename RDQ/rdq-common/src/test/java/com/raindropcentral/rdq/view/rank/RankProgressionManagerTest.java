@@ -12,7 +12,7 @@ import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
 import com.raindropcentral.rdq.database.repository.RPlayerRankRepository;
 import com.raindropcentral.rdq.database.repository.RPlayerRankUpgradeProgressRepository;
 import com.raindropcentral.rdq.requirement.AbstractRequirement;
-import com.raindropcentral.rdq.service.RankUpgradeProgressService;
+import com.raindropcentral.rdq.service.rank.RankUpgradeProgressService;
 import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;
 import me.devnatan.inventoryframework.context.SlotClickContext;

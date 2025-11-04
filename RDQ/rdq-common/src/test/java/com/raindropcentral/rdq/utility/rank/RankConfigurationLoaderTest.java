@@ -13,7 +13,6 @@ import com.raindropcentral.rdq.manager.RDQManager;
 import com.raindropcentral.rdq.manager.bounty.BountyManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
-import com.raindropcentral.rdq.manager.rank.RankManager;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

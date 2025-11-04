@@ -109,14 +109,9 @@ public final class ConfigurationDirectoryLoader<T extends AConfigSection> {
     public AConfigSection loadSingle(@NotNull String fileName) {
         try {
             final ConfigManager cfgManager = new ConfigManager(rdq.getPlugin(), directory);
-            final ConfigKeeper<?> keeper = new ConfigKeeper<>(cfgManager, fileName, sectionClass);
+            final ConfigKeeper<? extends AConfigSection> keeper = new ConfigKeeper<>(cfgManager, fileName, sectionClass);
             return keeper.rootSection;
-        } catch (NullPointerException e) {
-            final String message = "YAML parsing error in " + fileName + ": " + e.getMessage();
-            LOGGER.log(Level.WARNING, message + " - This may be due to null values or incomplete YAML structure. Attempting recovery...", e);
-            errorHandler.accept(fileName, new Exception(message, e));
-            return null;
-        } catch (Exception e) {
+        } catch (final Exception e) {
             errorHandler.accept(fileName, e);
             return null;
         }
@@ -124,14 +119,14 @@ public final class ConfigurationDirectoryLoader<T extends AConfigSection> {
 
     private void loadFile(@NotNull Map<String, AConfigSection> sections, @NotNull String fileName) {
         try {
-            final String id = normalizer.apply(fileName);
             final AConfigSection section = loadSingle(fileName);
             if (section != null) {
-                sections.put(id, section);
-                LOGGER.log(Level.INFO, "Loaded configuration: {0}", id);
+                sections.put(normalizer.apply(fileName), section);
             }
-        } catch (Exception e) {
-            errorHandler.accept(fileName, e);
+        } catch (
+                final Exception exception
+        ) {
+            errorHandler.accept(fileName, exception);
         }
     }
 }

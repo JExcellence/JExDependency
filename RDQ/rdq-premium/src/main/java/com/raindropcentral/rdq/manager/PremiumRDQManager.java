@@ -8,7 +8,6 @@ import com.raindropcentral.rdq.manager.bounty.DefaultBountyManager;
 import com.raindropcentral.rdq.manager.perk.DefaultPerkManager;
 import com.raindropcentral.rdq.manager.perk.PerkManager;
 import com.raindropcentral.rdq.manager.quest.QuestManager;
-import com.raindropcentral.rdq.manager.rank.RankManager;
 import com.raindropcentral.rplatform.RPlatform;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +29,6 @@ public final class PremiumRDQManager extends RDQManager {
 
     private final BountyManager bountyManager;
     private final QuestManager questManager;
-    private final RankManager rankManager;
     private final PerkManager perkManager;
 
     /**
@@ -48,10 +46,8 @@ public final class PremiumRDQManager extends RDQManager {
     ) {
         super("Premium");
 
-        // Initialize all premium managers with their required dependencies.
         this.bountyManager = new DefaultBountyManager(plugin, platform, executor, bountyRepository, playerRepository);
         this.questManager = null;
-        this.rankManager = null;
         this.perkManager = new DefaultPerkManager(rdq, rdq.getPerkInitializationManager().getPerkEventBus());
     }
 
@@ -63,11 +59,6 @@ public final class PremiumRDQManager extends RDQManager {
     @Override
     public @NotNull QuestManager getQuestManager() {
         return this.questManager;
-    }
-
-    @Override
-    public @NotNull RankManager getRankManager() {
-        return this.rankManager;
     }
 
     @Override

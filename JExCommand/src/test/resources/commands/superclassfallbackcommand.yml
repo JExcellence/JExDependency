@@ -1,5 +1,0 @@
-name: superclassfallback
-description: Superclass fallback test command
-usage: /superclassfallback
-aliases:
-  - superfallback

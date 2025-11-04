@@ -12,6 +12,7 @@ perkSettings:
   isEnabled: true
   metadata:
     id: "double_experience"
+    requiredPermission: "raindropcentral.perks.double_experience"
     displayName: "Experience Boost"
     description: "Increases your experience"
     category: "UTILITY"

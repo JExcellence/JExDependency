@@ -3,13 +3,17 @@ package com.raindropcentral.rdq.perk.runtime;
 import com.raindropcentral.rdq.perk.config.PerkConfig;
 import com.raindropcentral.rdq.type.EPerkType;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
 
 public class EventPerkType implements PerkType {
 
     @Override
     public @NotNull String getTypeId() {
-        return "EVENT";
+        return EPerkType.EVENT_TRIGGERED.name();
     }
 
     @Override
@@ -49,7 +53,7 @@ public class EventPerkType implements PerkType {
             return;
         }
 
-        org.bukkit.potion.PotionEffectType potionType = org.bukkit.potion.PotionEffectType.getByName(effectType);
+        PotionEffectType potionType = PotionEffectType.getByName(effectType);
         if (potionType == null) {
             return;
         }
@@ -57,12 +61,12 @@ public class EventPerkType implements PerkType {
         Long durationSeconds = perk.config().durationSeconds();
         int duration = durationSeconds != null ? (int) (durationSeconds * 20) : 100;
 
-        org.bukkit.potion.PotionEffect effect = new org.bukkit.potion.PotionEffect(potionType, duration, amplifier, false, false);
+        PotionEffect effect = new PotionEffect(potionType, duration, amplifier, false, false);
         player.addPotionEffect(effect);
     }
 
     private int getPermissionAmplifier(@NotNull Player player, @NotNull LoadedPerk perk) {
-        for (java.util.Map.Entry<String, Integer> entry : perk.config().permissionAmplifiers().entrySet()) {
+        for (Map.Entry<String, Integer> entry : perk.config().permissionAmplifiers().entrySet()) {
             if (player.hasPermission(entry.getKey())) {
                 return entry.getValue();
             }

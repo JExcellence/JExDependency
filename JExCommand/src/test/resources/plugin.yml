@@ -1,4 +1,0 @@
-name: TestPlugin
-main: com.raindropcentral.commands.testplugin.TestPlugin
-version: 1.0.0
-api-version: 1.21

@@ -2,8 +2,8 @@ package com.raindropcentral.rdq;
 
 import com.raindropcentral.rdq.manager.PremiumRDQManager;
 import com.raindropcentral.rdq.manager.RDQManager;
-import com.raindropcentral.rdq.service.BountyService;
-import com.raindropcentral.rdq.service.BountyServiceProvider;
+import com.raindropcentral.rdq.service.bounty.BountyService;
+import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
 import com.raindropcentral.rdq.service.bounty.PremiumBountyService;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;

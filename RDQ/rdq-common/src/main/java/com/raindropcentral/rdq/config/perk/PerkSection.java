@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.config.perk;
 
+import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
 import com.raindropcentral.rdq.config.requirement.RequirementSection;
 import com.raindropcentral.rdq.config.reward.RewardSection;
 import com.raindropcentral.rplatform.config.permission.PermissionAmplifierSection;
@@ -38,7 +39,7 @@ public class PerkSection extends AConfigSection {
 
     private Map<String, PluginCurrencySection> costs;
 
-    private Map<String, RequirementSection> requirements;
+    private Map<String, BaseRequirementSection> requirements;
 
     private Map<String, RewardSection> rewards;
 
@@ -109,7 +110,7 @@ public class PerkSection extends AConfigSection {
      *
      * @return a mutable map of requirement identifiers to {@link RequirementSection} entries
      */
-    public Map<String, RequirementSection> getRequirements() {
+    public Map<String, BaseRequirementSection> getRequirements() {
         return this.requirements == null ? new HashMap<>() : this.requirements;
     }
 

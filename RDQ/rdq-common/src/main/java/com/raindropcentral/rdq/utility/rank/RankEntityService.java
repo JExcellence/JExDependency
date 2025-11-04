@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @since 1.0.0
  * @version 1.0.1
  */
-final class RankEntityService {
+public final class RankEntityService {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RankEntityService.class.getName());
 
@@ -78,7 +78,7 @@ final class RankEntityService {
                     true,
                     state.rankSystemSection().getDefaultRank().getTier(),
                     state.rankSystemSection().getDefaultRank().getWeight(),
-                    null // default rank has no rank tree
+                    null
             );
             rdq.getRankRepository().create(created);
             state.setDefaultRank(created);
@@ -157,10 +157,7 @@ final class RankEntityService {
 
                     final RRank existing = rdq.getRankRepository().findByAttributes(Map.of("identifier", rankId));
                     if (existing != null) {
-                        boolean assocDiffers = (existing.getRankTree() == null && tree != null)
-                                || (existing.getRankTree() != null && tree == null)
-                                || (existing.getRankTree() != null && tree != null
-                                && !Objects.equals(existing.getRankTree().getId(), tree.getId()));
+                        boolean assocDiffers = existing.getRankTree() == null || existing.getRankTree() != null && !Objects.equals(existing.getRankTree().getId(), tree.getId());
                         if (assocDiffers) {
                             existing.setRankTree(tree);
                             rdq.getRankRepository().update(existing);
@@ -243,10 +240,13 @@ final class RankEntityService {
     private void updateRankRequirements(final RRank rank, final RankSection cfg) {
         try {
             cleanupProgress(rank);
-            final List<RRankUpgradeRequirement> parsed = requirementFactory.parseRequirements(rank, cfg.getRequirements());
+            final List<RRankUpgradeRequirement> parsed = requirementFactory.parse(
+                    cfg.getRequirements(),
+                    base -> "rank '" + rank.getIdentifier() + "'",
+                    (req, icon) -> new RRankUpgradeRequirement(rank, req, icon)
+            );
 
             if (parsed.isEmpty()) {
-                // Use the safe method to clear requirements
                 rank.replaceUpgradeRequirements(Collections.emptyList());
                 rdq.getRankRepository().update(rank);
                 return;
@@ -263,7 +263,6 @@ final class RankEntityService {
                 processed.add(persisted);
             }
 
-            // Use the new, safe method to replace the requirements
             rank.replaceUpgradeRequirements(processed);
 
             try {
@@ -273,7 +272,6 @@ final class RankEntityService {
                 if (fresh == null) {
                     throw updateEx;
                 }
-                // Retry the operation on a fresh entity instance
                 fresh.replaceUpgradeRequirements(processed);
                 rdq.getRankRepository().update(fresh);
             }
@@ -294,13 +292,11 @@ final class RankEntityService {
      */
     private void cleanupProgress(final RRank rank) {
         try {
-            // Create a copy to avoid ConcurrentModificationException if the underlying collection changes
             final Set<RRankUpgradeRequirement> upgradeRequirements = new HashSet<>(rank.getUpgradeRequirements());
             if (upgradeRequirements.isEmpty()) return;
 
             for (RRankUpgradeRequirement req : upgradeRequirements) {
-                final List<RPlayerRankUpgradeProgress> progresses =
-                        rdq.getPlayerRankUpgradeProgressRepository().findListByAttributes(Map.of("upgradeRequirement", req));
+                final List<RPlayerRankUpgradeProgress> progresses = rdq.getPlayerRankUpgradeProgressRepository().findListByAttributes(Map.of("upgradeRequirement", req));
                 if (!progresses.isEmpty()) {
                     for (RPlayerRankUpgradeProgress progress : progresses) {
                         rdq.getPlayerRankUpgradeProgressRepository().delete(progress.getId());

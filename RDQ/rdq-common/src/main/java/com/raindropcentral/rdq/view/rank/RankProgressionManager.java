@@ -3,7 +3,7 @@ package com.raindropcentral.rdq.view.rank;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
-import com.raindropcentral.rdq.service.RankUpgradeProgressService;
+import com.raindropcentral.rdq.service.rank.RankUpgradeProgressService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;

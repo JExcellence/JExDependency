@@ -11,7 +11,7 @@ public class ToggleablePerkType implements PerkType {
 
     @Override
     public @NotNull String getTypeId() {
-        return "TOGGLEABLE";
+        return EPerkType.TOGGLEABLE_PASSIVE.name();
     }
 
     @Override

@@ -1,5 +1,0 @@
-name: pluginfallback
-description: Plugin fallback test command
-usage: /pluginfallback
-aliases:
-  - plugfallback

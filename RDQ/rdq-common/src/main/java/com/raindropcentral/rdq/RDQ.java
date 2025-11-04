@@ -9,7 +9,8 @@ import com.raindropcentral.rdq.perk.event.PerkEventBus;
 import com.raindropcentral.rdq.perk.runtime.CooldownService;
 import com.raindropcentral.rdq.perk.runtime.PerkRegistry;
 import com.raindropcentral.rdq.perk.runtime.PerkTypeRegistry;
-import com.raindropcentral.rdq.service.RankPathService;
+import com.raindropcentral.rdq.service.rank.RankPathService;
+import com.raindropcentral.rdq.utility.perk.PerkSystemFactory;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
@@ -62,9 +63,9 @@ public abstract class RDQ {
     private RDQManager manager;
     private ViewFrame viewFrame;
     private RankSystemFactory rankSystemFactory;
+    private PerkSystemFactory perkSystemFactory;
     private RankPathService rankPathService;
 
-    // RDQ repositories
     private RDQPlayerRepository playerRepository;
     private RPlayerRankPathRepository playerRankPathRepository;
     private RPlayerRankRepository playerRankRepository;
@@ -162,16 +163,29 @@ public abstract class RDQ {
     protected abstract RDQManager initializeManager(@NotNull RDQ rdq);
 
     /**
-     * Performs core asynchronous setup (Platform, Database, Repositories, Ranks).
+     * Performs core asynchronous setup (Platform, Database, Repositories, Ranks, Perks).
+     *
+     * Lifecycle stages:
+     * 1. Platform initialization
+     * 2. Factory construction (rank, perk)
+     * 3. Factory async initialization (rank, perk)
+     * 4. Repository wiring (creates PerkInitializationManager and registry)
+     * 5. Perk runtime loading from database
+     *
      * This must complete before any managers or services can be initialized.
      */
     private CompletableFuture<Void> performCoreEnableAsync() {
         return this.platform.initialize()
                 .thenCompose(v -> runSync(() -> {
-                    initializeRepositories();
+                    this.initializeRepositories();
                     this.rankSystemFactory = new RankSystemFactory(this);
-                }))
-                .thenCompose(v -> this.rankSystemFactory.initializeAsync());
+                    this.rankSystemFactory.initializeAsync();
+
+                    this.perkSystemFactory = new PerkSystemFactory(this);
+                    this.perkSystemFactory.initializeAsync();
+
+                    loadPerksIntoRegistryAsync();
+                }));
     }
 
     private void registerServices() {
@@ -255,6 +269,44 @@ public abstract class RDQ {
         this.perkInitializationManager = new PerkInitializationManager(this);
         this.perkInitializationManager.initializePerkServices();
         this.perkInitializationManager.registerPerkServices();
+    }
+
+    private void loadPerksIntoRegistryAsync() {
+        getExecutor().submit(() -> {
+            try {
+                var all = getPerkRepository().findListByAttributes(java.util.Map.of());
+                java.util.Map<String, com.raindropcentral.rdq.database.entity.perk.RPerk> byId = new java.util.LinkedHashMap<>();
+                for (var perk : all) {
+                    if (perk == null) continue;
+                    var id = perk.getIdentifier();
+                    if (id == null || id.isBlank()) continue;
+                    byId.put(id.trim().toLowerCase(java.util.Locale.ROOT), perk);
+                }
+                var registry = getPerkInitializationManager().getPerkRegistry();
+                if (registry instanceof com.raindropcentral.rdq.perk.runtime.DefaultPerkRegistry factory) {
+                    for (var runtime : factory.getAllPerkRuntimes()) {
+                        factory.unregisterPerkRuntime(runtime.getId());
+                    }
+                    int loaded = 0;
+                    for (var perk : byId.values()) {
+                        if (perk == null || !perk.isEnabled()) continue;
+                        var section = perk.getPerkSection();
+                        if (section == null) continue;
+                        try {
+                            factory.buildPerkRuntime(perk, section);
+                            loaded++;
+                        } catch (Exception ex) {
+                            LOGGER.log(Level.WARNING, "Failed to build runtime for perk " + perk.getIdentifier(), ex);
+                        }
+                    }
+                    LOGGER.log(Level.INFO, "Loaded " + loaded + " perks from database into runtime registry");
+                } else {
+                    LOGGER.log(Level.WARNING, "Perk registry is not a DefaultPerkRegistry; skipping runtime reload");
+                }
+            } catch (Exception ex) {
+                LOGGER.log(Level.WARNING, "Failed to reload perks into registry", ex);
+            }
+        });
     }
 
     @SuppressWarnings("UnstableApiUsage")

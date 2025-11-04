@@ -2,8 +2,8 @@ package com.raindropcentral.rdq.view.bounty;
 
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
-import com.raindropcentral.rdq.service.BountyService;
-import com.raindropcentral.rdq.service.BountyServiceProvider;
+import com.raindropcentral.rdq.service.bounty.BountyService;
+import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
