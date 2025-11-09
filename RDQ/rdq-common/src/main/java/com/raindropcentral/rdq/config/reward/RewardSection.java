@@ -61,4 +61,15 @@ public class RewardSection extends AConfigSection {
         super(evaluationEnvironmentBuilder);
     }
 
+    public String getType() {
+        return this.type == null ? "" : this.type;
+    }
+
+    public String getTarget() {
+        return this.target == null ? "" : this.target;
+    }
+
+    public Long getAmount() {
+        return this.amount == null ? -1 : this.amount;
+    }
 }

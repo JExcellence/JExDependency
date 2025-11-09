@@ -1,7 +1,9 @@
 package com.raindropcentral.rdq.database.converter;
 
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.raindropcentral.rdq.config.perk.PerkSection;
 import com.raindropcentral.rdq.config.perk.PerkSettingsSection;
 import com.raindropcentral.rdq.config.perk.PluginCurrencySection;
@@ -34,7 +36,7 @@ import java.util.logging.Logger;
 public class PerkSectionConverter implements AttributeConverter<PerkSection, String> {
 
     private static final Logger LOGGER = Logger.getLogger(PerkSectionConverter.class.getName());
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE).setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY).disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     private static final ConverterTool CONVERTER_TOOL = new ConverterTool();
 
     /**
@@ -160,13 +162,22 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
     /**
      * Jackson mapped representation of the {@link PerkSection} internals.
      */
-    private static class PerkSectionData {
+    @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NONE,
+            isGetterVisibility = JsonAutoDetect.Visibility.NONE, setterVisibility = JsonAutoDetect.Visibility.NONE)
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class PerkSectionData {
         private PerkSettingsSection perkSettingsSection;
         private PermissionCooldownSection permissionCooldowns;
         private PermissionAmplifierSection permissionAmplifiers;
         private PermissionDurationSection permissionDurations;
+        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@type")
         private Map<String, PluginCurrencySection> costs;
+
+        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@type")
         private Map<String, BaseRequirementSection> requirements;
+
+        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@type")
         private Map<String, RewardSection> rewards;
         //public Boolean requiresOwnedArea;
 

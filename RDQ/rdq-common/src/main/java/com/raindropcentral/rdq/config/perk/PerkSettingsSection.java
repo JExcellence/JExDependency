@@ -150,7 +150,7 @@ public class PerkSettingsSection extends AConfigSection {
         public Integer getMaxConcurrentUsers() {
                 return
                         this.maxConcurrentUsers == null ?
-                        null :
+                        -1 :
 			this.maxConcurrentUsers;
 	}
 	

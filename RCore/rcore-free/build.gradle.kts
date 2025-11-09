@@ -1,26 +1,18 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
-    java
-    `maven-publish`
-    alias(libs.plugins.shadow)
+    id("raindrop.shadow-conventions")
 }
 
 group = "com.raindropcentral.core"
 version = "2.0.0"
 description = "Core plugin providing shared functionality for Raindrop plugins (free)"
 
-java {
-    toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
 
 dependencies {
-    implementation(project(":rcore-common"))
+    implementation(project(":RCore:rcore-common"))
 
     compileOnly(libs.paper.api)
-
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)

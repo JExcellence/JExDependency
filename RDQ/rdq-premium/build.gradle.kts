@@ -2,24 +2,15 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.tasks.testing.Test
 
 plugins {
-    java
-    `maven-publish`
-    alias(libs.plugins.shadow)
+    id("raindrop.shadow-conventions")
 }
 
 version = "6.0.1"
 
-java {
-    toolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-}
-
 dependencies {
-    implementation(project(":rdq-common"))
+    implementation(project(":RDQ:rdq-common"))
 
     compileOnly(libs.paper.api)
-
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
@@ -40,7 +31,6 @@ dependencies {
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.mockito.inline)
     testImplementation(libs.mockbukkit)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)

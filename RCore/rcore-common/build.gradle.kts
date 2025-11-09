@@ -1,48 +1,10 @@
-import org.gradle.jvm.tasks.Jar
-import org.gradle.api.tasks.javadoc.Javadoc
-import org.gradle.external.javadoc.StandardJavadocDocletOptions
-
 plugins {
-    `java-library`
-    `maven-publish`
+    id("raindrop.library-conventions")
 }
 
 group = "com.raindropcentral.core"
 version = "2.0.0"
 description = "Core plugin providing shared functionality for Raindrop plugins (common)"
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    withSourcesJar()
-    withJavadocJar()
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.release.set(21)
-    options.compilerArgs.addAll(listOf("-parameters", "-Xlint:all", "-Xlint:-processing"))
-}
-
-tasks.withType<Javadoc>().configureEach {
-    options.encoding = "UTF-8"
-    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
-}
-
-tasks.withType<Jar>().configureEach {
-    isPreserveFileTimestamps = false
-    isReproducibleFileOrder = true
-    manifest {
-        attributes(
-            "Implementation-Title" to project.name,
-            "Implementation-Version" to project.version,
-            "Implementation-Vendor" to "Raindrop Central",
-        )
-    }
-}
 
 tasks.processResources {
     exclude("plugin.yml", "paper-plugin.yml")
@@ -79,24 +41,4 @@ dependencies {
     implementation(libs.bundles.inventory) { isTransitive = false }
 
     compileOnly(libs.jexeconomy)
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            artifactId = "rcore-common"
-            pom {
-                name.set("RCore Common")
-                description.set("Shared code for RCore Free/Premium")
-                url.set("https://github.com/raindropcentral/raindrop-plugins")
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-            }
-        }
-    }
 }

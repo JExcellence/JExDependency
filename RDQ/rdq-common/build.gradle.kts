@@ -1,50 +1,11 @@
-import org.gradle.api.tasks.javadoc.Javadoc
-import org.gradle.external.javadoc.StandardJavadocDocletOptions
-import org.gradle.api.tasks.testing.Test
-import org.gradle.jvm.tasks.Jar
-
 plugins {
-    id("java-library")
-    `maven-publish`
+    id("raindrop.library-conventions")
 }
 
 version = "6.0.1"
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
-    withSourcesJar()
-    withJavadocJar()
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.release.set(21)
-    options.compilerArgs.addAll(listOf("-parameters", "-Xlint:all", "-Xlint:-processing"))
-}
-
-tasks.withType<Javadoc>().configureEach {
-    options.encoding = "UTF-8"
-    (options as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
-}
-
 tasks.test {
     useJUnitPlatform()
-}
-
-tasks.withType<Jar>().configureEach {
-    isPreserveFileTimestamps = false
-    isReproducibleFileOrder = true
-    manifest {
-        attributes(
-            "Implementation-Title" to project.name,
-            "Implementation-Version" to project.version,
-            "Implementation-Vendor" to "Raindrop Central",
-        )
-    }
 }
 
 tasks.processResources {
@@ -98,7 +59,6 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
     testImplementation(libs.mockito.core)
     testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.mockito.inline)
     testImplementation(libs.mockbukkit)
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
@@ -107,25 +67,4 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            artifactId = "rdq-common"
-
-            pom {
-                name.set("RDQ Common")
-                description.set("Shared code for RDQ Free/Premium")
-                url.set("https://github.com/raindropcentral/raindrop-plugins")
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-            }
-        }
-    }
 }

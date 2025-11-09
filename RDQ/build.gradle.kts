@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.shadow) apply false
     `maven-publish`
     base
 }
@@ -7,7 +6,6 @@ plugins {
 group = "com.raindropcentral.rdq"
 version = "6.0.1"
 description = "RDQFree plugin for Raindrop Central"
-
 tasks.register("publishLocal") {
     group = "publishing"
     description = "Publishes all modules to local Maven repository"

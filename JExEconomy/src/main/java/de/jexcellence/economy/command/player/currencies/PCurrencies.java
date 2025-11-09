@@ -185,14 +185,14 @@ public class PCurrencies extends PlayerCommand {
 	 *
 	 * @param tabCompletionRequestingPlayer the player requesting tab completion, must not be null
 	 * @param commandLabel the command label being completed, must not be null
-	 * @param currentCommandArguments the current command arguments for context, must not be null
+	 * @param commandArguments the current command arguments for context, must not be null
 	 * @return an empty list since no tab completion is needed for GUI-only command, never null
 	 */
 	@Override
 	protected @NotNull List<String> onPlayerTabCompletion(
 		final @NotNull Player tabCompletionRequestingPlayer,
 		final @NotNull String commandLabel,
-		final @NotNull String[] currentCommandArguments
+		final @NotNull String[] commandArguments
 	) {
                 if (commandArguments.length == 0) {
                         return this.firstArgumentSuggestions("");
@@ -250,10 +250,10 @@ public class PCurrencies extends PlayerCommand {
                 );
         }
 
-        private void openOverviewInterface(final @NotNull Player commandExecutingPlayer) {
+        private void openOverviewInterface(final @NotNull Player player) {
                 this.jexEconomyImpl.getViewFrame().open(
                         CurrenciesActionOverviewView.class,
-                        commandExecutingPlayer,
+                        player,
                         Map.of(
                                 "plugin",
                                 this.jexEconomyImpl
