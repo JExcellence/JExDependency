@@ -59,3 +59,10 @@ publishing {
         }
     }
 }
+
+// Disable the default 'maven' publication tasks since we only want mavenShadow
+tasks.withType<PublishToMavenRepository>().configureEach {
+    if (name.contains("MavenPublication")) {
+        enabled = false
+    }
+}
