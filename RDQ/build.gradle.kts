@@ -10,9 +10,9 @@ tasks.register("publishLocal") {
     group = "publishing"
     description = "Publishes all modules to local Maven repository"
     dependsOn(
-        ":rdq-common:publishToMavenLocal",
-        ":rdq-free:publishToMavenLocal",
-        ":rdq-premium:publishToMavenLocal",
+        ":RDQ:rdq-common:publishToMavenLocal",
+        ":RDQ:rdq-free:publishToMavenLocal",
+        ":RDQ:rdq-premium:publishToMavenLocal",
     )
     doLast {
         println("✓ Published ${project.group}:rdq-*:${project.version} to local Maven")
@@ -22,10 +22,10 @@ tasks.register("publishLocal") {
 tasks.register("buildAll") {
     group = "build"
     description = "Builds Free and Premium shaded jars"
-    dependsOn(":rdq-free:shadowJar", ":rdq-premium:shadowJar")
+    dependsOn(":RDQ:rdq-free:shadowJar", ":RDQ:rdq-premium:shadowJar")
     doLast {
-        val free = project(":rdq-free").tasks.named<Jar>("shadowJar").get().archiveFile.get().asFile
-        val premium = project(":rdq-premium").tasks.named<Jar>("shadowJar").get().archiveFile.get().asFile
+        val free = project(":RDQ:rdq-free").tasks.named<Jar>("shadowJar").get().archiveFile.get().asFile
+        val premium = project(":RDQ:rdq-premium").tasks.named<Jar>("shadowJar").get().archiveFile.get().asFile
         println("✓ Built Free: $free")
         println("✓ Built Premium: $premium")
     }

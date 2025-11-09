@@ -83,6 +83,39 @@ try {
     
     Write-Info "Working directory: $PWD"
     
+    # Configure JAVA_HOME
+    $javaHome = $env:JAVA_HOME
+    if ($javaHome) {
+        # Remove trailing \bin if present
+        if ($javaHome -match '\\bin\\?$') {
+            $javaHome = $javaHome -replace '\\bin\\?$', ''
+            Write-Info "Corrected JAVA_HOME from: $env:JAVA_HOME"
+        }
+        $env:JAVA_HOME = $javaHome
+        Write-Info "Using JAVA_HOME: $env:JAVA_HOME"
+    } else {
+        # Try to find Java automatically
+        $possibleJdks = @(
+            "C:\Users\Privat\.jdks\openjdk-24.0.2+12-54",
+            "C:\Program Files\Java\jdk-21",
+            "C:\Program Files\Java\jdk-17"
+        )
+        
+        foreach ($jdk in $possibleJdks) {
+            if (Test-Path "$jdk\bin\java.exe") {
+                $env:JAVA_HOME = $jdk
+                Write-Info "Auto-detected JAVA_HOME: $env:JAVA_HOME"
+                break
+            }
+        }
+        
+        if (-not $env:JAVA_HOME) {
+            Write-Error-Custom "JAVA_HOME not set and could not auto-detect Java installation"
+            Write-Info "Please set JAVA_HOME environment variable to your JDK installation directory"
+            exit 1
+        }
+    }
+    
     # Determine Gradle command
     $gradleCmd = if (Test-Path "gradlew.bat") {
         ".\gradlew.bat"
@@ -98,10 +131,10 @@ try {
     # Build command
     if ($Clean) {
         Write-Step "Performing clean build"
-        $buildTask = "cleanAll", "buildAll"
+        $buildTask = "clean", "build", "-x", "test"
     } else {
         Write-Step "Building all modules"
-        $buildTask = "buildAll"
+        $buildTask = "build", "-x", "test"
     }
     
     # Execute build
