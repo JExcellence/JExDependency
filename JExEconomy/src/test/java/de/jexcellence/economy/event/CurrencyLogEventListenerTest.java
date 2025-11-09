@@ -1,7 +1,7 @@
 package de.jexcellence.economy.event;
 
-import org.mockbukkit.mockbukkit.MockBukkit;
-import org.mockbukkit.mockbukkit.ServerMock;
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.CurrencyLog;
 import de.jexcellence.economy.database.entity.User;

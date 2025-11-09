@@ -2,6 +2,40 @@
 
 RaindropCentral is a multi-module Minecraft server platform produced by Antimatter Zone LLC. The repository ships a family of Bukkit/Paper plugins that share infrastructure for dependency loading, asynchronous services, and command discovery. This document introduces each module, how it boots, and which components are responsible for their runtime lifecycle.
 
+## Project Structure
+
+```
+RaindropCentral/
+├── .build/              # Build scripts and automation tools
+├── .config/             # Configuration files (code style, Docker, etc.)
+├── docs/                # Project documentation
+├── RCore/               # Core services module
+├── RDQ/                 # RaindropQuests gameplay module
+├── RPlatform/           # Platform abstraction layer
+├── JExCommand/          # Command framework
+├── JExDependency/       # Dependency loader
+├── JExEconomy/          # Economy system
+├── JExTranslate/        # Translation system
+├── buildSrc/            # Gradle convention plugins
+└── gradle/              # Gradle wrapper
+```
+
+### Quick Start
+
+```bash
+# Build all modules
+./build.ps1              # PowerShell
+./build.bat              # Batch
+
+# Clean build
+./build.ps1 -Clean
+
+# Build and deploy
+./build.ps1 -Deploy -PluginDir "C:\Server\plugins"
+```
+
+See [`.build/README.md`](.build/README.md) for detailed build documentation.
+
 ## Repository Layout
 
 | Module | Purpose |
@@ -14,7 +48,7 @@ RaindropCentral is a multi-module Minecraft server platform produced by Antimatt
 | [`JExEconomy`](JExEconomy/) | Multi-currency economy services and developer APIs (utility module consumed by other products). |
 | [`JExTranslate`](JExTranslate/) | Internationalization tooling and MiniMessage-friendly translation manager. |
 
-All Gradle modules are wired so the root build generates three distributable jars: `RCore.jar`, `RDQ-Free.jar`, and `RDQ-Premium.jar`.
+All Gradle modules are wired so the root build generates distributable jars: `RCore-*.jar`, `RDQ-*.jar`, and `JExEconomy-*.jar`.
 
 ## Common Bootstrap Pieces
 

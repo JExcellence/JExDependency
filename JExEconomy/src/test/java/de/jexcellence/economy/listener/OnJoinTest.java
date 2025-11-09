@@ -1,7 +1,7 @@
 package de.jexcellence.economy.listener;
 
-import org.mockbukkit.mockbukkit.MockBukkit;
-import org.mockbukkit.mockbukkit.ServerMock;
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
 import de.jexcellence.economy.JExEconomy;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.Currency;

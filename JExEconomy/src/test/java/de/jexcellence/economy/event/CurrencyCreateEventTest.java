@@ -1,7 +1,7 @@
 package de.jexcellence.economy.event;
 
-import org.mockbukkit.mockbukkit.MockBukkit;
-import org.mockbukkit.mockbukkit.ServerMock;
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import de.jexcellence.economy.JExEconomyImpl;
