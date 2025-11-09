@@ -47,7 +47,7 @@ tasks.named<Jar>("jar") {
 publishing {
     publications {
         create<MavenPublication>("mavenShadow") {
-            from(components["shadow"])
+            artifact(tasks.named("shadowJar"))
             groupId = project.group.toString()
             artifactId = "rcore-premium"
             version = project.version.toString()

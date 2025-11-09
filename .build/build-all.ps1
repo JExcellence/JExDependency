@@ -131,10 +131,10 @@ try {
     # Build command
     if ($Clean) {
         Write-Step "Performing clean build"
-        $buildTask = "clean", "build", "-x", "test"
+        $buildTask = "clean", "buildAll"
     } else {
         Write-Step "Building all modules"
-        $buildTask = "build", "-x", "test"
+        $buildTask = "buildAll"
     }
     
     # Execute build

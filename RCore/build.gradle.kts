@@ -12,8 +12,8 @@ tasks.register("publishLocal") {
     description = "Publishes all modules to local Maven repository"
     dependsOn(
         ":RCore:rcore-common:publishToMavenLocal",
-        ":RCore:rcore-free:publishToMavenLocal",
-        ":RCore:rcore-premium:publishToMavenLocal",
+        ":RCore:rcore-free:publishMavenShadowPublicationToMavenLocal",
+        ":RCore:rcore-premium:publishMavenShadowPublicationToMavenLocal",
     )
     doLast {
         println("✓ Published ${project.group}:rcore-*:${project.version} to local Maven")

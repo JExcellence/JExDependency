@@ -12,6 +12,7 @@ import com.raindropcentral.rdq.config.reward.RewardSection;
 import com.raindropcentral.rplatform.config.permission.PermissionAmplifierSection;
 import com.raindropcentral.rplatform.config.permission.PermissionCooldownSection;
 import com.raindropcentral.rplatform.config.permission.PermissionDurationSection;
+import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
@@ -36,8 +37,27 @@ import java.util.logging.Logger;
 public class PerkSectionConverter implements AttributeConverter<PerkSection, String> {
 
     private static final Logger LOGGER = Logger.getLogger(PerkSectionConverter.class.getName());
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper().setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE).setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY).disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+    private static final ObjectMapper OBJECT_MAPPER = createObjectMapper();
     private static final ConverterTool CONVERTER_TOOL = new ConverterTool();
+
+    /**
+     * Mixin to ignore AConfigSection fields during serialization/deserialization.
+     */
+    @JsonIgnoreProperties({"baseEnvironment", "builtBaseEnvironment", "fieldDefaultSuppliers"})
+    private abstract static class AConfigSectionMixin {
+    }
+
+    private static ObjectMapper createObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper()
+                .setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE)
+                .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
+                .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        
+        // Add mixin to ignore AConfigSection internal fields
+        mapper.addMixIn(AConfigSection.class, AConfigSectionMixin.class);
+        
+        return mapper;
+    }
 
     /**
      * Converts the provided {@link PerkSection} into a database friendly representation.

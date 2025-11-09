@@ -17,6 +17,37 @@ allprojects {
 // ========================================================================
 
 /**
+ * Publishes all dependencies to Maven Local (required for fresh builds)
+ */
+tasks.register("publishDependencies") {
+    group = "build"
+    description = "Publishes all library dependencies to Maven Local"
+    
+    dependsOn(
+        ":JExDependency:publishToMavenLocal",
+        ":JExCommand:publishToMavenLocal",
+        ":JExTranslate:publishToMavenLocal",
+        ":RPlatform:publishToMavenLocal",
+        ":JExEconomy:publishToMavenLocal",
+        ":RCore:publishLocal"
+    )
+    
+    // Enforce dependency order
+    tasks.findByPath(":JExCommand:publishToMavenLocal")?.mustRunAfter(":JExDependency:publishToMavenLocal")
+    tasks.findByPath(":JExTranslate:publishToMavenLocal")?.mustRunAfter(":JExCommand:publishToMavenLocal")
+    tasks.findByPath(":RPlatform:publishToMavenLocal")?.mustRunAfter(":JExTranslate:publishToMavenLocal")
+    tasks.findByPath(":JExEconomy:publishToMavenLocal")?.mustRunAfter(":RPlatform:publishToMavenLocal")
+    tasks.findByPath(":RCore:publishLocal")?.mustRunAfter(":JExEconomy:publishToMavenLocal")
+    
+    doLast {
+        println("========================================================================")
+        println("✓ All dependencies published to Maven Local")
+        println("  Build order: JExDependency → JExCommand → JExTranslate → RPlatform → JExEconomy → RCore")
+        println("========================================================================")
+    }
+}
+
+/**
  * Builds all modules in correct dependency order
  */
 tasks.register("buildAll") {
@@ -24,29 +55,12 @@ tasks.register("buildAll") {
     description = "Builds all modules in correct dependency order"
     
     dependsOn(
-        ":JExCommand:clean",
-        ":JExCommand:publishToMavenLocal",
-        ":JExTranslate:clean",
-        ":JExTranslate:publishToMavenLocal",
-        ":RPlatform:clean",
-        ":RPlatform:publishToMavenLocal",
-        ":RCore:clean",
-        ":RCore:buildAll",
-        ":RCore:publishLocal",
-        ":RDQ:clean",
+        ":publishDependencies",
         ":RDQ:buildAll"
     )
     
     // Enforce build order
-    tasks.findByPath(":JExTranslate:clean")?.mustRunAfter(":JExCommand:publishToMavenLocal")
-    tasks.findByPath(":JExTranslate:publishToMavenLocal")?.mustRunAfter(":JExTranslate:clean")
-    tasks.findByPath(":RPlatform:clean")?.mustRunAfter(":JExTranslate:publishToMavenLocal")
-    tasks.findByPath(":RPlatform:publishToMavenLocal")?.mustRunAfter(":RPlatform:clean")
-    tasks.findByPath(":RCore:clean")?.mustRunAfter(":RPlatform:publishToMavenLocal")
-    tasks.findByPath(":RCore:buildAll")?.mustRunAfter(":RCore:clean")
-    tasks.findByPath(":RCore:publishLocal")?.mustRunAfter(":RCore:buildAll")
-    tasks.findByPath(":RDQ:clean")?.mustRunAfter(":RCore:publishLocal")
-    tasks.findByPath(":RDQ:buildAll")?.mustRunAfter(":RDQ:clean")
+    tasks.findByPath(":RDQ:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
         println("========================================================================")
@@ -87,24 +101,13 @@ tasks.register("cleanAll") {
 }
 
 /**
- * Publishes all library modules to Maven Local
+ * Publishes all library modules to Maven Local (alias for publishDependencies)
  */
 tasks.register("publishAllToMavenLocal") {
     group = "publishing"
     description = "Publishes all library modules to Maven Local"
     
-    dependsOn(
-        ":JExCommand:publishToMavenLocal",
-        ":JExDependency:publishToMavenLocal",
-        ":JExEconomy:publishToMavenLocal",
-        ":JExTranslate:publishToMavenLocal",
-        ":RPlatform:publishToMavenLocal",
-        ":RCore:publishLocal"
-    )
-    
-    doLast {
-        println("✓ All modules published to Maven Local")
-    }
+    dependsOn(":publishDependencies")
 }
 
 /**

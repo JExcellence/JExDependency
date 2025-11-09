@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.config.perk;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.raindropcentral.rdq.config.item.IconSection;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
@@ -52,6 +53,14 @@ public class PerkSettingsSection extends AConfigSection {
 	@CSIgnore
 	private String perkId;
 	
+        /**
+         * Default constructor for Jackson deserialization.
+         */
+        @JsonCreator
+        public PerkSettingsSection() {
+                super(new EvaluationEnvironmentBuilder());
+        }
+
         /**
          * Creates a new instance using the provided evaluation environment builder.
          *

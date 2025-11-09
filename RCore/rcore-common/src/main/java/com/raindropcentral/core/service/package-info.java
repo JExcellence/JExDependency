@@ -6,7 +6,7 @@
  *     <li>{@link com.raindropcentral.core.api.RCoreBackend} exposes the shared
  *     {@link java.util.concurrent.ExecutorService} via {@link com.raindropcentral.core.api.RCoreBackend#getExecutor()}.
  *     Runtime variants such as {@link com.raindropcentral.core.RCoreFreeImpl} provision
- *     virtual-thread executors (see {@link com.raindropcentral.core.RCoreFreeImpl#createExecutorService()}) to keep
+ *     virtual-thread executors (see {@link com.raindropcentral.core.RCoreFreeImpl}) to keep
  *     database and statistics workflows off the Bukkit main thread.</li>
  *     <li>{@link com.raindropcentral.core.api.RCoreAdapter} captures the backend executor during construction and
  *     chains every {@link java.util.concurrent.CompletableFuture} continuation on that executor so callers inherit the

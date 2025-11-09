@@ -22,10 +22,24 @@ RaindropCentral/
 
 ### Quick Start
 
+**First-time setup (fresh clone):**
 ```bash
-# Build all modules
+# Windows
+.\gradlew publishDependencies
+
+# Linux/Mac
+./gradlew publishDependencies
+```
+
+This publishes all internal dependencies to your local Maven repository in the correct order:
+`JExDependency → JExCommand → JExTranslate → RPlatform → JExEconomy → RCore`
+
+**Building the project:**
+```bash
+# Build all modules (automatically publishes dependencies first)
 ./build.ps1              # PowerShell
 ./build.bat              # Batch
+.\gradlew buildAll       # Gradle directly
 
 # Clean build
 ./build.ps1 -Clean
