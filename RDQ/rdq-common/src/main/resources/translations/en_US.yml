@@ -1,62 +1,87 @@
 rq:
   no_luckperms_installed: "<gradient:#9b59b6:#ffffff>LuckPerms not found. Install plugin to use feature.</gradient>"
 
+# === Perk Command & UI ===
 perk:
+  command:
+    list_header: "<gradient:#9b59b6:#ffffff>Available Perks:</gradient>"
+    list_entry: "<gray>{perk}: {status}</gray>"
+    info_header: "<gradient:#9b59b6:#ffffff>Perk Info: {perk}</gradient>"
+    info_display_name: "<gray>Name: {name}</gray>"
+    info_description: "<gray>Description: {description}</gray>"
+    info_status: "<gray>Status: {status}</gray>"
+    info_category: "<gray>Category: {category}</gray>"
+    activated: "<green>Perk {perk} activated!</green>"
+    deactivated: "<green>Perk {perk} deactivated!</green>"
+  
   error:
-    not_found: "<red>Perk {perk} nicht gefunden</red>"
-    no_permission: "<red>Du hast keine Berechtigung: {permission}</red>"
-    no_perks: "<red>Keine Perks verfügbar</red>"
-    already_active: "<yellow>Perk {perk} ist bereits aktiv.</yellow>"
-    activation_denied: "<red>Du kannst {perk} derzeit nicht aktivieren.</red>"
-    activation_failed: "<red>{perk} konnte nicht aktiviert werden. Versuche es später erneut.</red>"
-    not_active: "<red>Perk {perk} ist nicht aktiv.</red>"
-    deactivation_failed: "<red>{perk} konnte nicht deaktiviert werden. Versuche es später erneut.</red>"
+    not_found: "<red>Perk {perk} not found</red>"
+    no_permission: "<red>You don't have permission: {permission}</red>"
+    no_perks: "<red>No perks available</red>"
+    already_active: "<yellow>Perk {perk} is already active.</yellow>"
+    activation_denied: "<red>You cannot activate {perk} right now.</red>"
+    activation_failed: "<red>Failed to activate {perk}. Try again later.</red>"
+    not_active: "<red>Perk {perk} is not active.</red>"
+    deactivation_failed: "<red>Failed to deactivate {perk}. Try again later.</red>"
 
   double_experience:
-    name: "<yellow>Doppelte Erfahrung</yellow>"
-    lore: "<gray>Verdoppelt jede erhaltene Erfahrung.</gray>"
+    name: "<yellow>Double Experience</yellow>"
+    lore: "<gray>Doubles all experience gained from any source.</gray>"
   fire_resistance:
-    name: "<yellow>Feuerresistenz</yellow>"
-    lore: "<gray>Schützt vor Feuer- und Lavaschaden.</gray>"
+    name: "<yellow>Fire Resistance</yellow>"
+    lore: "<gray>Grants immunity to fire and lava damage.</gray>"
   fly:
-    name: "<yellow>Flug</yellow>"
-    lore: "<gray>Gewährt dir freie Flugfähigkeit.</gray>"
+    name: "<yellow>Flight</yellow>"
+    lore: "<gray>Grants the ability to fly freely.</gray>"
   haste:
-    name: "<yellow>Eile</yellow>"
-    lore: "<gray>Erhöht Abbau- und Angriffsgeschwindigkeit deutlich.</gray>"
+    name: "<yellow>Haste</yellow>"
+    lore: "<gray>Increases mining and attack speed significantly.</gray>"
   jump_boost:
-    name: "<yellow>Sprungkraft</yellow>"
-    lore: "<gray>Lässt dich höher springen und neue Höhen erreichen.</gray>"
+    name: "<yellow>Jump Boost</yellow>"
+    lore: "<gray>Increases jump height to reach higher places.</gray>"
   luck:
-    name: "<yellow>Glück</yellow>"
-    lore: "<gray>Verbessert Qualität und Menge deiner Beute.</gray>"
+    name: "<yellow>Luck</yellow>"
+    lore: "<gray>Improves the quality and quantity of loot you receive.</gray>"
   night_vision:
-    name: "<yellow>Nachtsicht</yellow>"
-    lore: "<gray>Schenkt klare Sicht in völliger Dunkelheit.</gray>"
+    name: "<yellow>Night Vision</yellow>"
+    lore: "<gray>Allows you to see clearly in complete darkness.</gray>"
   prevent_death:
-    name: "<yellow>Tod verhindern</yellow>"
-    lore: "<gray>Rettet dich einmal pro Abklingzeit und stellt Leben wieder her.</gray>"
+    name: "<yellow>Prevent Death</yellow>"
+    lore: "<gray>Prevents death once per cooldown and restores health.</gray>"
   regeneration:
     name: "<yellow>Regeneration</yellow>"
-    lore: "<gray>Regeneriert deine Gesundheit langsam über Zeit.</gray>"
+    lore: "<gray>Gradually restores your health over time.</gray>"
   resistance:
-    name: "<yellow>Resistenz</yellow>"
-    lore: "<gray>Reduziert eintreffenden Schaden aus allen Quellen.</gray>"
+    name: "<yellow>Resistance</yellow>"
+    lore: "<gray>Reduces incoming damage from all sources.</gray>"
   speed:
-    name: "<yellow>Geschwindigkeit</yellow>"
-    lore: "<gray>Erhöht deine Bewegungsgeschwindigkeit spürbar.</gray>"
+    name: "<yellow>Speed Boost</yellow>"
+    lore: "<gray>Greatly increases your movement speed.</gray>"
   strength:
-    name: "<yellow>Stärke</yellow>"
-    lore: "<gray>Steigert Nahkampfschaden im Kampf.</gray>"
+    name: "<yellow>Strength</yellow>"
+    lore: "<gray>Boosts melee damage output in combat.</gray>"
   treasure_hunter:
-    name: "<yellow>Schatzjäger</yellow>"
-    lore: "<gray>Bietet Chance auf zusätzliche Erze beim Graben.</gray>"
+    name: "<yellow>Treasure Hunter</yellow>"
+    lore: "<gray>Grants a chance to discover bonus ore while mining.</gray>"
   vampire:
-    name: "<yellow>Vampir</yellow>"
-    lore: "<gray>Heilt dich, wenn du Gegner verletzt.</gray>"
+    name: "<yellow>Vampire</yellow>"
+    lore: "<gray>Heals you whenever you damage your foes.</gray>"
   water_breathing:
-    name: "<yellow>Wasseratmung</yellow>"
-    lore: "<gray>Ermöglicht unbegrenztes Atmen unter Wasser.</gray>"
+    name: "<yellow>Water Breathing</yellow>"
+    lore: "<gray>Lets you breathe underwater indefinitely.</gray>"
+  
+  entry:
+    name: "<yellow>{perk}</yellow> {status}"
+  
+  list_ui:
+    title: "<gradient:#9b59b6:#ffffff>Available Perks</gradient>"
+    activate_button: "<green>Activate Perk</green>"
+  
+  detail_ui:
+    title: "<gradient:#9b59b6:#ffffff>Perk: {perk}</gradient>"
+    activate_button: "<green>Activate</green>"
+    deactivate_button: "<red>Deactivate</red>"
+    permission_scaling: "<gray>Permission Scaling: {scaling}</gray>"
 
 # Pagination buttons
 paginated_player_ui:
@@ -1704,3 +1729,97 @@ progress_bars:
   p80: "<gradient:#9b59b6:#ffffff>■■■■■■■■</gradient><color:#d3d3d3>■■</color>"
   p90: "<gradient:#9b59b6:#ffffff>■■■■■■■■■</gradient><color:#d3d3d3>■</color>"
   p100: "<gradient:#9b59b6:#ffffff>■■■■■■■■■■</gradient>"
+
+perk.main_ui.title: "<gradient:#9b59b6:#ffffff>Perks Menu</gradient>"
+perk.main_ui.view_all_perks.name: "<gradient:#9b59b6:#ffffff>View All Perks</gradient>"
+perk.main_ui.view_all_perks.lore: "<gray>Browse and manage your perks</gray>
+
+<green>? Click to view perks</green>"
+perk.main_ui.my_active_perks.name: "<gradient:#9b59b6:#ffffff>Active Perks</gradient>"
+perk.main_ui.my_active_perks.lore: "<gray>View currently active perks</gray>
+<gray>Active: <white>%active_count%</white>/%max_count%</gray>
+
+<green>? Click to manage</green>"
+perk.main_ui.perk_statistics.name: "<gradient:#9b59b6:#ffffff>Perk Statistics</gradient>"
+perk.main_ui.perk_statistics.lore: "<gray>Total Perks: <white>%total_perks%</white></gray>
+<gray>Owned: <white>%owned_perks%</white></gray>
+<gray>Locked: <white>%locked_perks%</white></gray>
+<gray>Active: <white>%active_perks%</white></gray>"
+perk.list_ui.category_all: "All Categories"
+perk.list_ui.perk_item.lore.category: "<gray>Category: <white>%category%</white></gray>"
+perk.list_ui.perk_item.lore.state: "<gray>State: %state%</gray>"
+perk.list_ui.perk_item.lore.priority: "<gray>Priority: <white>%priority%</white></gray>"
+perk.list_ui.perk_item.lore.cooldown: "<gray>Cooldown: <white>%cooldown%</white></gray>"
+perk.list_ui.perk_item.lore.duration: "<gray>Duration: <white>%duration%</white></gray>"
+perk.list_ui.perk_item.lore.requirements: "<gray>Requirements: <white>%req_completed%</white>/<white>%req_total%</white></gray>"
+perk.list_ui.perk_item.lore.action_activate: "<green>? Click to activate</green>"
+perk.list_ui.perk_item.lore.action_deactivate: "<red>? Click to deactivate</red>"
+perk.list_ui.perk_item.lore.action_locked: "<red>? Locked - View requirements</red>"
+perk.list_ui.perk_item.lore.action_view: "<yellow>? Click for details</yellow>"
+perk.list_ui.navigation.previous: "<green>? Previous Page</green>"
+perk.list_ui.navigation.next: "<green>Next Page ?</green>"
+perk.list_ui.navigation.page_info: "<white>Page %page%/%max_page%</white>"
+perk.list_ui.navigation.no_previous: "<gray>No previous page</gray>"
+perk.list_ui.navigation.no_next: "<gray>No next page</gray>"
+perk.list_ui.filter.all: "<white>All Categories</white>"
+perk.list_ui.filter.category: "<white>%category%</white>"
+perk.requirement_ui.title: "<gradient:#9b59b6:#ffffff>Requirements - %perk_name%</gradient>"
+perk.requirement_ui.requirement_item.name: "%requirement_name%"
+perk.requirement_ui.requirement_item.lore.type: "<gray>Type: <white>%type%</white></gray>"
+perk.requirement_ui.requirement_item.lore.progress: "<gray>Progress: <white>%progress%</white>%</gray>"
+perk.requirement_ui.requirement_item.lore.completed: "<green>? Completed</green>"
+perk.requirement_ui.requirement_item.lore.incomplete: "<yellow>? In Progress</yellow>"
+perk.requirement_ui.requirement_item.lore.locked: "<red>? Not Started</red>"
+perk.requirement_ui.buttons.complete.name: "<green>? Complete Requirement</green>"
+perk.requirement_ui.buttons.complete.lore: "<gray>Mark this requirement as complete</gray>"
+perk.requirement_ui.buttons.back.name: "<white>? Back to Perk</white>"
+perk.unlock_ui.title: "<gradient:#9b59b6:#ffffff>Unlock - %perk_name%</gradient>"
+perk.unlock_ui.confirm.name: "<green>? Confirm Unlock</green>"
+perk.unlock_ui.confirm.lore: "<gray>Unlock this perk</gray>
+
+<gray>Requirements:</gray>
+<green>? All completed</green>"
+perk.unlock_ui.cancel.name: "<red>? Cancel</red>"
+perk.unlock_ui.cancel.lore: "<gray>Return without unlocking</gray>"
+perk.unlock_ui.cost_info.name: "<yellow>?? Unlock Cost</yellow>"
+perk.unlock_ui.cost_info.lore: "<gray>This perk has no cost</gray>"
+perk.admin_ui.title: "<gradient:#9b59b6:#ff0000>Admin - %perk_name%</gradient>"
+perk.admin_ui.buttons.toggle_enabled.name: "<yellow>? Toggle Enabled</yellow>"
+perk.admin_ui.buttons.toggle_enabled.lore: "<gray>Current: %enabled%</gray>
+<gray>Click to toggle</gray>"
+perk.admin_ui.buttons.edit_settings.name: "<yellow>? Edit Settings</yellow>"
+perk.admin_ui.buttons.edit_settings.lore: "<gray>Modify perk configuration</gray>"
+perk.admin_ui.buttons.grant_player.name: "<green>+ Grant to Player</green>"
+perk.admin_ui.buttons.grant_player.lore: "<gray>Give this perk to a player</gray>"
+perk.admin_ui.buttons.revoke_player.name: "<red>- Revoke from Player</red>"
+perk.admin_ui.buttons.revoke_player.lore: "<gray>Remove this perk from a player</gray>"
+perk.admin_ui.buttons.reload.name: "<yellow>? Reload Perk</yellow>"
+perk.admin_ui.buttons.reload.lore: "<gray>Reload perk from configuration</gray>"
+perk.messages.activated: "<green>? Activated perk: <white>%perk_name%</white></green>"
+perk.messages.deactivated: "<yellow>? Deactivated perk: <white>%perk_name%</white></yellow>"
+perk.messages.unlocked: "<green>?? Unlocked perk: <white>%perk_name%</white>!</green>"
+perk.messages.already_active: "<yellow>? Perk <white>%perk_name%</white> is already active</yellow>"
+perk.messages.already_owned: "<yellow>? You already own <white>%perk_name%</white></yellow>"
+perk.messages.on_cooldown: "<red>? Perk <white>%perk_name%</white> is on cooldown for %time_remaining%</red>"
+perk.messages.requirements_not_met: "<red>? Requirements not met for <white>%perk_name%</white></red>"
+perk.messages.max_active_reached: "<red>? Maximum active perks reached (%count%/%max%)</red>"
+perk.messages.activation_failed: "<red>? Failed to activate <white>%perk_name%</white></red>"
+perk.messages.deactivation_failed: "<red>? Failed to deactivate <white>%perk_name%</white></red>"
+perk.messages.unlock_failed: "<red>? Failed to unlock <white>%perk_name%</white></red>"
+perk.messages.coming_soon: "<yellow>? This feature is coming soon!</yellow>"
+perk.admin.granted: "<green>? Granted perk <white>%perk_name%</white> to <white>%player%</white></green>"
+perk.admin.revoked: "<yellow>? Revoked perk <white>%perk_name%</white> from <white>%player%</white></yellow>"
+perk.admin.enabled: "<green>? Enabled perk <white>%perk_name%</white> for <white>%player%</white></green>"
+perk.admin.disabled: "<yellow>? Disabled perk <white>%perk_name%</white> for <white>%player%</white></yellow>"
+perk.error.player_not_found: "<red>? Player <white>%player%</white> not found</red>"
+perk.state.active: "<green>?</green> <white>Active</white>"
+perk.state.available: "<green>?</green> <white>Available</white>"
+perk.state.locked: "<red>?</red> <gray>Locked</gray>"
+perk.state.cooldown: "<yellow>?</yellow> <white>Cooldown</white>"
+perk.state.disabled: "<dark_gray>?</dark_gray> <gray>Disabled</gray>"
+perk.category.combat: "<red>?</red> Combat"
+perk.category.utility: "<yellow>??</yellow> Utility"
+perk.category.movement: "<aqua>?</aqua> Movement"
+perk.category.mining: "<gray>?</gray> Mining"
+perk.category.passive: "<green>?</green> Passive"
+perk.category.economic: "<gold>??</gold> Economic"
