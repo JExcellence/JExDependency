@@ -9,7 +9,7 @@ fallback) to prepare message catalogs off the main thread before views render th
 Both editions consume the same bundles through the shared view frame. Coordinate updates with the
 RDQ manager and bounty service Javadocs to avoid divergences between free and premium UX.
 
-RDQ offers the following languages. Other lagnuages supported by adding custom yml file.
+RDQ offers the following languages. Other languages supported by adding custom yml file.
 
 | Code      | Language              | Country/Region       | Description                          |
 | --------- | --------------------- | -------------------- | ------------------------------------ |
