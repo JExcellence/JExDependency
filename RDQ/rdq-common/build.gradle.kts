@@ -21,7 +21,7 @@ dependencies {
 
     compileOnly("com.raindropcentral.core:rcore-common:2.0.0")
     compileOnly("com.raindropcentral.core:rcore-free:2.0.0")
-    compileOnly("de.jexcellence.economy:jexeconomy:2.0.0")
+    compileOnly("de.jexcellence.economy:jexeconomy:2.0.0") { isTransitive }
 
     // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
@@ -48,10 +48,9 @@ dependencies {
     compileOnly(libs.xseries)
 
     // Internal libraries to be shaded by variants
-    implementation(libs.bundles.jexcellence)
-    implementation(libs.jehibernate)
+    implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-    implementation(libs.bundles.inventory)
+    compileOnly(libs.bundles.inventory)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)

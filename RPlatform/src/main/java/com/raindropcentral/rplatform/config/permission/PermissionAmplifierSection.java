@@ -38,14 +38,13 @@ public class PermissionAmplifierSection extends APermissionBasedSection<Integer>
      * Optional upper bound defined via {@code maxAmplifier} to clamp runaway amplifier values.
      */
     private Integer maxAmplifier;
-
     /**
      * Optional lower bound defined via {@code minAmplifier} so debuffs do not drop below a floor.
      */
     private Integer minAmplifier;
 
     /**
-     * Creates the permission-aware amplifier section.
+     * Creates the amplifier section backed by permission-aware overrides.
      *
      * @param evaluationEnvironmentBuilder mapper environment shared across sections
      */

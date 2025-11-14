@@ -80,7 +80,13 @@ public class SkillRequirementSection extends AConfigSection {
          *                                      the parent {@link AConfigSection} to
          *                                      resolve expressions embedded within the
          *                                      configuration
-         */
+         */    /**
+     * Default no-arg constructor for Jackson deserialization.
+     */
+    protected SkillRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
 	public SkillRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
 		super(evaluationEnvironmentBuilder);
 	}

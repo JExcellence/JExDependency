@@ -19,6 +19,17 @@ import java.util.concurrent.Executor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Loads the perk system configuration files, preparing the in-memory representation used throughout the
+ * RDQ plugin.
+ *
+ * <p>The loader is responsible for wiring system and perk level sections while applying any
+ * additional parsing steps required.</p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.2
+ */
 public final class PerkConfigurationLoader {
 
     private static final Logger LOGGER = CentralLogger.getLogger(PerkConfigurationLoader.class.getName());
@@ -46,14 +57,30 @@ public final class PerkConfigurationLoader {
 
     private final @NotNull RDQ rdq;
 
+    /**
+     * Creates a new loader bound to the provided RDQ plugin instance.
+     *
+     * @param rdq the RDQ plugin that supplies the configuration directory context
+     */
     PerkConfigurationLoader(final @NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
+    /**
+     * Asynchronously loads the entire perk system state using the supplied executor.
+     *
+     * @param executor the executor used to perform the configuration loading off the main thread
+     * @return a future that resolves to the fully parsed {@link PerkSystemState}
+     */
     public CompletableFuture<PerkSystemState> loadAllAsync(final @NotNull Executor executor) {
         return CompletableFuture.supplyAsync(this::loadAll, executor);
     }
 
+    /**
+     * Loads all perk related configurations, including system and perk sections.
+     *
+     * @return the aggregated {@link PerkSystemState}
+     */
     private PerkSystemState loadAll() {
         final PerkSystemSection systemSection = loadSystemSection();
         final Map<String, PerkSection> perkSections = loadPerkSections();
@@ -63,6 +90,11 @@ public final class PerkConfigurationLoader {
                 .build();
     }
 
+    /**
+     * Loads the {@link PerkSystemSection} from the primary configuration file.
+     *
+     * @return the loaded system section or a fallback instance when parsing fails
+     */
     private PerkSystemSection loadSystemSection() {
         try {
             final ConfigManager cfgManager = new ConfigManager(rdq.getPlugin(), DIR_ROOT);
@@ -75,6 +107,11 @@ public final class PerkConfigurationLoader {
         }
     }
 
+    /**
+     * Loads all perk configuration sections, including the shipped defaults and any additional files supplied by server administrators.
+     *
+     * @return a mapping of perk identifiers to their parsed {@link PerkSection}
+     */
     private Map<String, PerkSection> loadPerkSections() {
         final ConfigurationDirectoryLoader<PerkSection> loader = new ConfigurationDirectoryLoader<>(
                 rdq,
@@ -107,10 +144,23 @@ public final class PerkConfigurationLoader {
         return sections;
     }
 
+    /**
+     * Normalizes a configuration file name into a lowercase identifier suitable for map keys.
+     *
+     * @param identifier the raw file name
+     * @return the normalized identifier without file extension or separators
+     */
     private String normalize(final String identifier) {
         return identifier.replace(".yml", "").replace(" ", "").replace("-", "_").toLowerCase(Locale.ROOT);
     }
 
+    /**
+     * Loads a single {@link PerkSection} from the given file.
+     *
+     * @param file the perk configuration file name
+     * @return the parsed perk section
+     * @throws Exception when the configuration cannot be parsed
+     */
     private PerkSection loadPerk(final String file) throws Exception {
         final ConfigManager cfgManager = new ConfigManager(rdq.getPlugin(), DIR_ROOT);
         final ConfigKeeper<PerkSection> keeper = new ConfigKeeper<>(cfgManager, file, PerkSection.class);

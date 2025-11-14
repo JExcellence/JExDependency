@@ -184,16 +184,44 @@ public class DefaultBountyManager implements BountyManager {
 
     @Override
     public @NotNull RBounty addItemRewards(@NotNull RBounty bounty, @NotNull List<ItemStack> items) {
-        // TODO: implement mutation and persistence
+        Objects.requireNonNull(bounty, "bounty cannot be null");
+        Objects.requireNonNull(items, "items cannot be null");
+
+        try {
+            for (ItemStack item : items) {
+                if (item != null && !item.getType().isAir()) {
+                    final RewardItem rewardItem = new RewardItem(item);
+                    bounty.addRewardItem(rewardItem);
+                }
+            }
+
+            this.bountyRepository.create(bounty);
+            LOGGER.log(Level.FINE, () -> "Added " + items.size() + " item rewards to bounty for player " + bounty.getPlayer().getPlayerName());
+        } catch (final Exception exception) {
+            LOGGER.log(Level.WARNING, "Failed to add item rewards to bounty", exception);
+        }
+
         return bounty;
     }
-
     @Override
     public @NotNull RBounty addCurrencyReward(@NotNull RBounty bounty, @NotNull String currencyName, double amount) {
-        // TODO: implement mutation and persistence
+        Objects.requireNonNull(bounty, "bounty cannot be null");
+        Objects.requireNonNull(currencyName, "currencyName cannot be null");
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Currency amount must be positive");
+        }
+
+        try {
+            bounty.addRewardCurrency(currencyName, amount);
+            this.bountyRepository.create(bounty);
+            LOGGER.log(Level.FINE, () -> "Added " + amount + " of currency '" + currencyName + "' to bounty for player " + bounty.getPlayer().getPlayerName());
+        } catch (final Exception exception) {
+            LOGGER.log(Level.WARNING, "Failed to add currency reward to bounty", exception);
+        }
+
         return bounty;
     }
-
     @Override
     public void updateBountyPlayerDisplay(final @NotNull UUID playerUniqueId) {
         final Runnable task = () -> {

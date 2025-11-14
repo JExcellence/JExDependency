@@ -56,7 +56,30 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
         // Add mixin to ignore AConfigSection internal fields
         mapper.addMixIn(AConfigSection.class, AConfigSectionMixin.class);
         
+        // Add mixin to ignore @type for costs, requirements, and rewards - we know the concrete types
+        mapper.addMixIn(PluginCurrencySection.class, IgnoreTypeInfoMixin.class);
+        mapper.addMixIn(BaseRequirementSection.class, IgnoreTypeInfoMixin.class);
+        mapper.addMixIn(RewardSection.class, IgnoreTypeInfoMixin.class);
+        
+        // Register custom deserializers for all AConfigSection subclasses
+        com.fasterxml.jackson.databind.module.SimpleModule module = new com.fasterxml.jackson.databind.module.SimpleModule();
+        module.addDeserializer(PermissionCooldownSection.class, new PermissionSectionDeserializer<>(PermissionCooldownSection.class));
+        module.addDeserializer(PermissionAmplifierSection.class, new PermissionSectionDeserializer<>(PermissionAmplifierSection.class));
+        module.addDeserializer(PermissionDurationSection.class, new PermissionSectionDeserializer<>(PermissionDurationSection.class));
+        module.addDeserializer(PluginCurrencySection.class, new PermissionSectionDeserializer<>(PluginCurrencySection.class));
+        module.addDeserializer(BaseRequirementSection.class, new PermissionSectionDeserializer<>(BaseRequirementSection.class));
+        module.addDeserializer(RewardSection.class, new PermissionSectionDeserializer<>(RewardSection.class));
+        module.addDeserializer(PerkSettingsSection.class, new PermissionSectionDeserializer<>(PerkSettingsSection.class));
+        mapper.registerModule(module);
+        
         return mapper;
+    }
+
+    /**
+     * Mixin to ignore @type property during deserialization.
+     */
+    @JsonIgnoreProperties({"@type"})
+    private abstract static class IgnoreTypeInfoMixin {
     }
 
     /**
@@ -191,13 +214,8 @@ public class PerkSectionConverter implements AttributeConverter<PerkSection, Str
         private PermissionCooldownSection permissionCooldowns;
         private PermissionAmplifierSection permissionAmplifiers;
         private PermissionDurationSection permissionDurations;
-        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@type")
         private Map<String, PluginCurrencySection> costs;
-
-        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@type")
         private Map<String, BaseRequirementSection> requirements;
-
-        @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@type")
         private Map<String, RewardSection> rewards;
         //public Boolean requiresOwnedArea;
 

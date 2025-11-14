@@ -64,7 +64,13 @@ public class AchievementRequirementSection extends AConfigSection {
      * Constructs a new AchievementRequirementSection.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected AchievementRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public AchievementRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
     }

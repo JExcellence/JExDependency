@@ -13,6 +13,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+/**
+ * Main rank menu view providing navigation to rank management features.
+ *
+ * @author JExcellence
+ * @version 2.0.0
+ * @since 1.0.0
+ */
 public final class RankMainView extends BaseView {
 
 	private final State<RDQ> rdq = initialState("plugin");
@@ -25,12 +32,13 @@ public final class RankMainView extends BaseView {
 
 	@Override
 	protected String[] getLayout() {
-		return new String[] { "         " };
-	}
-
-	@Override
-	protected int getSize() {
-		return 1;
+		return new String[]{
+				"GGGGGGGGG",
+				"G       G",
+				"G   r   G",
+				"G       G",
+				"GGGGGGGGG"
+		};
 	}
 
 	@Override
@@ -45,12 +53,17 @@ public final class RankMainView extends BaseView {
 			this.rdq.get(render).getExecutor()
 		);
 
-		render.slot(
-			1, 5,
+		// Render decorations
+		this.renderDecorations(render, player);
+
+		// Render rank tree button
+		render.layoutSlot(
+			'r',
 			UnifiedBuilderFactory.item(Material.CHAINMAIL_CHESTPLATE)
 				.setName(this.i18n("rank_tree.name", player).build().component())
 				.setLore(this.i18n("rank_tree.lore", player).build().splitLines())
 				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+				.setGlowing(true)
 				.build()
 		).onClick(clickContext -> {
 			clickContext.openForPlayer(
@@ -61,5 +74,25 @@ public final class RankMainView extends BaseView {
 				)
 			);
 		});
+	}
+
+	/**
+	 * Renders decorative glass pane borders for visual enhancement.
+	 *
+	 * @param render the render context used to populate slots
+	 * @param player the player viewing the menu
+	 */
+	private void renderDecorations(
+		final @NotNull RenderContext render,
+		final @NotNull Player player
+	) {
+		render.layoutSlot(
+			'G',
+			UnifiedBuilderFactory
+				.item(Material.PURPLE_STAINED_GLASS_PANE)
+				.setName(this.i18n("decoration.name", player).build().component())
+				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+				.build()
+		);
 	}
 }

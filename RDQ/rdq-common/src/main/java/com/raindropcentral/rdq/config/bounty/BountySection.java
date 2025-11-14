@@ -6,16 +6,16 @@ import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
- * Configuration section describing how bounties determine the claimant.
+ * Configuration section for bounty system settings.
  * <p>
- * The section is backed by {@link AConfigSection} and exposes a single property,
- * {@code claimMode}, which resolves to an {@link EBountyClaimMode}. If the value
- * is absent the section defaults to {@link EBountyClaimMode#LAST_HIT} to match
- * the legacy behaviour where the final attacker always receives the bounty.
+ * This section manages bounty-related configuration including claim modes,
+ * creation costs, and bounty limits. The {@code claimMode} determines how
+ * bounty rewards are distributed (e.g., last hit vs. most damage). Creation
+ * costs can be configured to require payment when placing bounties.
  * </p>
  *
  * @author JExcellence
- * @version 1.0.1
+ * @version 2.0.0
  * @since 1.0.0
  */
 @CSAlways
@@ -30,6 +30,33 @@ public class BountySection extends AConfigSection {
      * </p>
      */
     private String claimMode;
+
+    /**
+     * Cost in the primary currency required to create a bounty.
+     * <p>
+     * When set to zero or negative, bounty creation is free. Otherwise,
+     * players must have at least this amount to place a bounty.
+     * </p>
+     */
+    private Double creationCost;
+
+    /**
+     * Maximum number of active bounties a single player can create.
+     * <p>
+     * Defaults to 1 if not specified. Set to -1 for unlimited bounties.
+     * </p>
+     */
+    private Integer maxBountiesPerPlayer;
+
+    /**
+     * Whether to broadcast bounty creation to all online players.
+     */
+    private Boolean broadcastCreation;
+
+    /**
+     * Whether to broadcast bounty completion to all online players.
+     */
+    private Boolean broadcastCompletion;
 
     /**
      * Creates a new bounty configuration section using the provided evaluation environment.
@@ -57,4 +84,39 @@ public class BountySection extends AConfigSection {
                 : EBountyClaimMode.valueOf(this.claimMode);
     }
 
+    /**
+     * Gets the cost required to create a bounty.
+     *
+     * @return the creation cost, or 0.0 if not configured
+     */
+    public double getCreationCost() {
+        return this.creationCost != null ? this.creationCost : 0.0;
+    }
+
+    /**
+     * Gets the maximum number of active bounties per player.
+     *
+     * @return the bounty limit, or 1 if not configured
+     */
+    public int getMaxBountiesPerPlayer() {
+        return this.maxBountiesPerPlayer != null ? this.maxBountiesPerPlayer : 1;
+    }
+
+    /**
+     * Checks if bounty creation should be broadcast.
+     *
+     * @return true if broadcasts are enabled, false otherwise
+     */
+    public boolean shouldBroadcastCreation() {
+        return this.broadcastCreation != null && this.broadcastCreation;
+    }
+
+    /**
+     * Checks if bounty completion should be broadcast.
+     *
+     * @return true if broadcasts are enabled, false otherwise
+     */
+    public boolean shouldBroadcastCompletion() {
+        return this.broadcastCompletion != null && this.broadcastCompletion;
+    }
 }

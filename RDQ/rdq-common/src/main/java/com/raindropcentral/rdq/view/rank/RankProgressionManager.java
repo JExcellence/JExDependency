@@ -138,11 +138,16 @@ public final class RankProgressionManager {
                 return;
             }
 
-            // TODO: Open requirements detail view
-            TranslationService.create(TranslationKey.of("rank_progression.requirements_view_opened"), player)
-                    .withPrefix()
-                .with("rank_name", rankNode.getRank().getIdentifier())
-                .send();
+            // Open requirements detail view
+            this.rdq.getViewFrame().open(
+                    com.raindropcentral.rdq.view.rank.view.RankRequirementDetailView.class,
+                    player,
+                    Map.of(
+                            "plugin", this.rdq,
+                            "rank", rankNode.getRank(),
+                            "player", rdqPlayer
+                    )
+            );
 
             LOGGER.log(Level.FINE, () -> "Opened requirements view for rank " + rankNode.getRank().getIdentifier() + " for player " + player.getName());
         } catch (final Exception exception) {

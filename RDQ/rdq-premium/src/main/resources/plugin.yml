@@ -1,7 +1,7 @@
 name: RDQ
-main: com.raindropcentral.rdq.RDQ
+main: com.raindropcentral.rdq.RDQPremium
 version: 6.0.0
-api-version: "1.16"
+api-version: "1.21"
 description: RDQ
 authors: [ ItsRainingHP, JExcellence ]
 website: https://www.raindropcentral.com

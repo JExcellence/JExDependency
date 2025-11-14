@@ -115,7 +115,13 @@ public class PlaytimeRequirementSection extends AConfigSection {
          * Constructs a new {@code PlaytimeRequirementSection} bound to the supplied evaluation environment.
          *
          * @param evaluationEnvironmentBuilder the evaluation environment builder used to resolve dynamic expressions
-         */
+         */    /**
+     * Default no-arg constructor for Jackson deserialization.
+     */
+    protected PlaytimeRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
         public PlaytimeRequirementSection(
                 final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
         ) {

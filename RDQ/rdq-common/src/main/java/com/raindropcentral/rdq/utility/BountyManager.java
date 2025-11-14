@@ -266,7 +266,16 @@ public class BountyManager {
             final @NotNull RBounty bounty,
             final @NotNull List<ItemStack> items
     ) {
-        // TODO: implement mutation and persistence
+        Objects.requireNonNull(bounty, "bounty cannot be null");
+        Objects.requireNonNull(items, "items cannot be null");
+
+        for (ItemStack item : items) {
+            if (item != null && !item.getType().isAir()) {
+                final RewardItem rewardItem = new RewardItem(item);
+                bounty.addRewardItem(rewardItem);
+            }
+        }
+
         return bounty;
     }
 
@@ -287,7 +296,14 @@ public class BountyManager {
             final @NotNull String currencyName,
             final double amount
     ) {
-        // TODO: implement mutation and persistence
+        Objects.requireNonNull(bounty, "bounty cannot be null");
+        Objects.requireNonNull(currencyName, "currencyName cannot be null");
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Currency amount must be positive");
+        }
+
+        bounty.addRewardCurrency(currencyName, amount);
         return bounty;
     }
 

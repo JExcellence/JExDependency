@@ -160,7 +160,7 @@ public final class CommandReward extends AbstractReward {
         final Map<String, String> placeholders = new HashMap<>();
         placeholders.put("player", player.getName());
         placeholders.put("player_name", player.getName());
-        placeholders.put("uuid", player.getUniqueId().toString());
+        placeholders.put("uniqueId", player.getUniqueId().toString());
         placeholders.put("world", player.getWorld().getName());
         placeholders.put("x", String.valueOf(player.getLocation().getBlockX()));
         placeholders.put("y", String.valueOf(player.getLocation().getBlockY()));

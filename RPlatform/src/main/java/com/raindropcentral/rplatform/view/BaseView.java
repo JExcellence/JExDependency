@@ -9,6 +9,7 @@ import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
+import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
@@ -382,8 +383,13 @@ public abstract class BaseView extends View {
 			this.autoFillEmptySlots(render, player);
 		}
 	}
-	
-	/**
+
+    @Override
+    public void onResume(@NotNull Context origin, @NotNull Context target) {
+        super.onResume(origin, target);
+    }
+
+    /**
 	 * Auto-fills empty slots with the fill material.
 	 * This is called before any other rendering to provide a base layer.
 	 */

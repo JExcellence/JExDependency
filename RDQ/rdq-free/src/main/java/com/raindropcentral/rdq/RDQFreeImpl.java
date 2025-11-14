@@ -5,6 +5,12 @@ import com.raindropcentral.rdq.manager.RDQManager;
 import com.raindropcentral.rdq.service.bounty.BountyService;
 import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
 import com.raindropcentral.rdq.service.FreeBountyService;
+import com.raindropcentral.rdq.view.perks.PerkAdminView;
+import com.raindropcentral.rdq.view.perks.PerkDetailView;
+import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
+import com.raindropcentral.rdq.view.perks.PerkMainView;
+import com.raindropcentral.rdq.view.perks.PerkRequirementView;
+import com.raindropcentral.rdq.view.perks.PerkUnlockView;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.Bukkit;
@@ -55,7 +61,13 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
 
                 @Override
                 protected @NotNull ViewFrame registerViews(@NotNull ViewFrame viewFrame) {
-                    return viewFrame;
+                    return viewFrame
+                            .with(new PerkMainView())
+                            .with(new PerkListViewFrame())
+                            .with(new PerkDetailView())
+                            .with(new PerkRequirementView())
+                            .with(new PerkUnlockView())
+                            .with(new PerkAdminView());
                 }
 
                 /**

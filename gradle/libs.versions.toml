@@ -3,7 +3,7 @@ java = "21"
 junit = "5.10.2"
 mockito = "5.14.2"
 
-paper = "1.21.8-R0.1-SNAPSHOT"
+paper = "1.21.10-R0.1-SNAPSHOT"
 adventure = "4.17.0"
 adventure-platform-bukkit = "4.3.4"
 

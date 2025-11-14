@@ -38,7 +38,13 @@ public class ItemRequirementSection extends AConfigSection {
      * Constructs a new ItemRequirementSection.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder that resolves dynamic values
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected ItemRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public ItemRequirementSection(
             final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {

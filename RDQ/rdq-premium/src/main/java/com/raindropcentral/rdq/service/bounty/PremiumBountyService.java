@@ -1,9 +1,11 @@
 package com.raindropcentral.rdq.service.bounty;
 
 import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.database.entity.bounty.BountyHunterStats;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
+import com.raindropcentral.rdq.database.repository.BountyHunterStatsRepository;
 import com.raindropcentral.rdq.database.repository.RBountyRepository;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -27,13 +29,20 @@ import java.util.concurrent.CompletableFuture;
 public final class PremiumBountyService implements BountyService {
 
     private final RBountyRepository bountyRepository;
+    private final BountyHunterStatsRepository hunterStatsRepository;
 
     /**
      * Constructs the premium bounty service.
      *
+     * @param bountyRepository the repository for bounty persistence
+     * @param hunterStatsRepository the repository for hunter statistics
      */
-    public PremiumBountyService(@NotNull RBountyRepository bountyRepository) {
+    public PremiumBountyService(
+            @NotNull RBountyRepository bountyRepository,
+            @NotNull BountyHunterStatsRepository hunterStatsRepository
+    ) {
         this.bountyRepository = bountyRepository;
+        this.hunterStatsRepository = hunterStatsRepository;
     }
 
     @Override
@@ -96,5 +105,37 @@ public final class PremiumBountyService implements BountyService {
     @Override
     public @NotNull CompletableFuture<Integer> getTotalBountyCount() {
         return this.bountyRepository.findAllAsync(0, 1000).thenApply(List::size);
+    }
+
+    @Override
+    public @NotNull CompletableFuture<Optional<BountyHunterStats>> getHunterStats(@NotNull UUID playerUuid) {
+        return this.hunterStatsRepository.findByPlayerUuidAsync(playerUuid);
+    }
+
+    @Override
+    public @NotNull CompletableFuture<List<BountyHunterStats>> getTopHunters(int limit, @NotNull String orderBy) {
+        return this.hunterStatsRepository.findTopHuntersAsync(limit, orderBy);
+    }
+
+    @Override
+    public @NotNull CompletableFuture<BountyHunterStats> recordBountyClaim(@NotNull UUID hunterUuid, double rewardValue) {
+        return getHunterStats(hunterUuid)
+                .thenCompose(statsOpt -> {
+                    if (statsOpt.isPresent()) {
+                        BountyHunterStats stats = statsOpt.get();
+                        stats.recordClaim(rewardValue);
+                        return this.hunterStatsRepository.updateAsync(stats);
+                    } else {
+                        // Create new stats for first-time hunter
+                        return CompletableFuture.failedFuture(
+                            new IllegalStateException("Player must have an RDQPlayer record before recording claims")
+                        );
+                    }
+                });
+    }
+
+    @Override
+    public @NotNull CompletableFuture<Integer> getHunterRank(@NotNull UUID playerUuid) {
+        return this.hunterStatsRepository.getPlayerRankAsync(playerUuid);
     }
 }

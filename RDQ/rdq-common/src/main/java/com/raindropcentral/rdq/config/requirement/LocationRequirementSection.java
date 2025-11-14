@@ -99,7 +99,13 @@ public class LocationRequirementSection extends AConfigSection {
 	 * Constructs a new LocationRequirementSection.
 	 *
 	 * @param evaluationEnvironmentBuilder the evaluation environment builder
-	 */
+	 */    /**
+     * Default no-arg constructor for Jackson deserialization.
+     */
+    protected LocationRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
 	public LocationRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
 		super(evaluationEnvironmentBuilder);
 	}

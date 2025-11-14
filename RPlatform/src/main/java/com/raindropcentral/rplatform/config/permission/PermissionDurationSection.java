@@ -46,7 +46,7 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     private DurationSection minDuration;
 
     /**
-     * Creates the permission-aware duration section.
+     * Creates the duration section backed by permission-aware overrides.
      *
      * @param evaluationEnvironmentBuilder mapper environment shared across sections
      */
@@ -57,12 +57,12 @@ public class PermissionDurationSection extends APermissionBasedSection<Long> {
     }
 
     /**
-     * Returns the default duration in seconds applied when no permission override matches.
+     * Returns the default duration in seconds when no permission override applies.
      *
      * @return default duration in seconds or {@code 0L}
      */
     public Long getDefaultDurationSeconds() {
-        return this.getDefaultValue();
+        return this.getDefaultValue() == null ? 0L : this.getDefaultValue();
     }
 
     /**

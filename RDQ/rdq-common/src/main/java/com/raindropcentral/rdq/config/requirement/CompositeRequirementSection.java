@@ -76,7 +76,13 @@ public class CompositeRequirementSection extends AConfigSection {
      * Constructs a new CompositeRequirementSection.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected CompositeRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public CompositeRequirementSection(
             final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {

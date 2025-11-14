@@ -1,18 +1,18 @@
 package com.raindropcentral.rdq.view.bounty;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
 import com.raindropcentral.rdq.service.bounty.BountyService;
 import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
-import me.devnatan.inventoryframework.context.CloseContext;
-import me.devnatan.inventoryframework.context.OpenContext;
-import me.devnatan.inventoryframework.context.RenderContext;
-import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.context.*;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.logging.Level;
 
 /**
  * InventoryFramework view for creating a new bounty in the RaindropQuests system.
@@ -44,22 +45,23 @@ public final class BountyCreationView extends BaseView {
     private static final int SLOT_CURRENCY_ADDER = 15;
     private static final int SLOT_CONFIRM = 31;
 
-    private final MutableState<Optional<OfflinePlayer>> target = initialState("target");
-    private final MutableState<Set<RewardItem>> rewardItems = initialState("rewardItems");
-    private final MutableState<Map<String, Double>> rewardCurrencies = initialState("rewardCurrencies");
-    private final State<Optional<RBounty>> bounty = initialState("bounty");
-    private final State<Map<UUID, Map<Integer, ItemStack>>> insertedItems = initialState("insertedItems");
+    private final State<RDQ> rdq = initialState("plugin");
+    private final MutableState<Optional<OfflinePlayer>> target = mutableState(Optional.empty());
+    private final MutableState<Set<RewardItem>> rewardItems = mutableState(new HashSet<>());
+    private final MutableState<Map<String, Double>> rewardCurrencies = mutableState(new HashMap<>());
+    private final MutableState<Optional<RBounty>> bounty = mutableState(Optional.empty());
+    private final MutableState<Map<UUID, Map<Integer, ItemStack>>> insertedItems = mutableState(new HashMap<>());
 
     private boolean isReopening;
 
     private final State<ItemStack> targetSelectorButton = computedState(context -> {
         final Player player = context.getPlayer();
         final Optional<OfflinePlayer> targetPlayer = this.target.get(context);
-        final String targetName = targetPlayer.map(OfflinePlayer::getName).orElse("");
+        final String targetName = targetPlayer.isPresent() ? targetPlayer.map(OfflinePlayer::getName).orElse("not_defined") : "not_defined";
 
         return UnifiedBuilderFactory
                 .safeHead()
-                .setPlayerHead(targetPlayer.orElse(null))
+                .setPlayerHead(targetPlayer.isPresent() ? targetPlayer.orElse(null) : null)
                 .setName(
                         this.i18n("select_target.name", player)
                                 .with("target_name", targetName)
@@ -78,7 +80,9 @@ public final class BountyCreationView extends BaseView {
 
     private final State<ItemStack> itemAdderButton = computedState(context -> {
         final Player player = context.getPlayer();
-        final boolean enabled = this.target.get(context).isPresent();
+        final Optional<OfflinePlayer> targetPlayer = this.target.get(context);
+        final boolean enabled = targetPlayer != null && targetPlayer.isPresent();
+        final Set<RewardItem> items = this.rewardItems.get(context);
 
         return UnifiedBuilderFactory
                 .item(enabled ? Material.CHEST : Material.BARRIER)
@@ -89,7 +93,7 @@ public final class BountyCreationView extends BaseView {
                 )
                 .setLore(
                         this.i18n("add_items." + (enabled ? "lore" : "lore_disabled"), player)
-                                .with("count", this.rewardItems.get(context).size())
+                                .with("count", items != null ? items.size() : 0)
                                 .build()
                                 .splitLines()
                 )
@@ -99,7 +103,9 @@ public final class BountyCreationView extends BaseView {
 
     private final State<ItemStack> currencyAdderButton = computedState(context -> {
         final Player player = context.getPlayer();
-        final boolean enabled = this.target.get(context).isPresent();
+        final Optional<OfflinePlayer> targetPlayer = this.target.get(context);
+        final boolean enabled = targetPlayer != null && targetPlayer.isPresent();
+        final Map<String, Double> currencies = this.rewardCurrencies.get(context);
 
         return UnifiedBuilderFactory
                 .item(enabled ? Material.GOLD_INGOT : Material.BARRIER)
@@ -110,7 +116,7 @@ public final class BountyCreationView extends BaseView {
                 )
                 .setLore(
                         this.i18n("add_currency." + (enabled ? "lore" : "lore_disabled"), player)
-                                .with("count", this.rewardCurrencies.get(context).size())
+                                .with("count", currencies != null ? currencies.size() : 0)
                                 .build()
                                 .splitLines()
                 )
@@ -120,7 +126,10 @@ public final class BountyCreationView extends BaseView {
 
     private final State<ItemStack> confirmButton = computedState(context -> {
         final Player player = context.getPlayer();
-        final boolean canConfirm = this.target.get(context).isPresent() && !this.rewardItems.get(context).isEmpty();
+        final Optional<OfflinePlayer> targetPlayer = this.target.get(context);
+        final Set<RewardItem> items = this.rewardItems.get(context);
+        final boolean canConfirm = targetPlayer != null && targetPlayer.isPresent() 
+                && items != null && !items.isEmpty();
 
         return UnifiedBuilderFactory
                 .item(canConfirm ? Material.EMERALD_BLOCK : Material.REDSTONE_BLOCK)
@@ -143,6 +152,59 @@ public final class BountyCreationView extends BaseView {
      */
     public BountyCreationView() {
         super(BountyMainView.class);
+    }
+
+    @Override
+    public void onOpen(final @NotNull OpenContext open) {
+        super.onOpen(open);
+        
+        // Initialize all states from initialData if present
+        if (open.getInitialData() instanceof Map<?, ?> data) {
+            // Initialize target
+            if (data.containsKey("target")) {
+                final Object rawTarget = data.get("target");
+                if (rawTarget instanceof Optional<?>) {
+                    @SuppressWarnings("unchecked")
+                    final Optional<OfflinePlayer> cast = (Optional<OfflinePlayer>) rawTarget;
+                    this.target.set(cast, open);
+                } else if (rawTarget instanceof OfflinePlayer offlinePlayer) {
+                    this.target.set(Optional.of(offlinePlayer), open);
+                }
+            }
+            
+            // Initialize rewardItems
+            if (data.containsKey("rewardItems") && data.get("rewardItems") instanceof Set<?>) {
+                @SuppressWarnings("unchecked")
+                final Set<RewardItem> items = (Set<RewardItem>) data.get("rewardItems");
+                this.rewardItems.set(items, open);
+            }
+            
+            // Initialize rewardCurrencies
+            if (data.containsKey("rewardCurrencies") && data.get("rewardCurrencies") instanceof Map<?, ?>) {
+                @SuppressWarnings("unchecked")
+                final Map<String, Double> currencies = (Map<String, Double>) data.get("rewardCurrencies");
+                this.rewardCurrencies.set(currencies, open);
+            }
+            
+            // Initialize bounty
+            if (data.containsKey("bounty")) {
+                final Object rawBounty = data.get("bounty");
+                if (rawBounty instanceof Optional<?>) {
+                    @SuppressWarnings("unchecked")
+                    final Optional<RBounty> cast = (Optional<RBounty>) rawBounty;
+                    this.bounty.set(cast, open);
+                } else if (rawBounty instanceof RBounty rBounty) {
+                    this.bounty.set(Optional.of(rBounty), open);
+                }
+            }
+            
+            // Initialize insertedItems
+            if (data.containsKey("insertedItems") && data.get("insertedItems") instanceof Map<?, ?>) {
+                @SuppressWarnings("unchecked")
+                final Map<UUID, Map<Integer, ItemStack>> items = (Map<UUID, Map<Integer, ItemStack>>) data.get("insertedItems");
+                this.insertedItems.set(items, open);
+            }
+        }
     }
 
     /**
@@ -173,8 +235,9 @@ public final class BountyCreationView extends BaseView {
      */
     @Override
     protected Map<String, Object> getTitlePlaceholders(final @NotNull OpenContext open) {
+        final Optional<OfflinePlayer> targetPlayer = this.target.get(open);
         return Map.of(
-                "target_name", this.target.get(open).map(OfflinePlayer::getName).orElse("not_defined")
+                "target_name", targetPlayer.isPresent() ? targetPlayer.map(OfflinePlayer::getName).orElse("not_defined") : "not_defined"
         );
     }
 
@@ -247,9 +310,13 @@ public final class BountyCreationView extends BaseView {
                 .slot(SLOT_ITEM_ADDER)
                 .watch(this.itemAdderButton)
                 .renderWith(() -> this.itemAdderButton.get(render))
-                .displayIf(() -> this.target.get(render).isPresent())
+                .displayIf(() -> {
+                    final Optional<OfflinePlayer> targetPlayer = this.target.get(render);
+                    return targetPlayer != null && targetPlayer.isPresent();
+                })
                 .onClick(context -> {
-                    if (this.target.get(context).isEmpty()) {
+                    final Optional<OfflinePlayer> targetPlayer = this.target.get(context);
+                    if (targetPlayer.isEmpty()) {
                         this.i18n("add_items.disabled", player)
                                 .withPrefix()
                                 .send();
@@ -259,28 +326,26 @@ public final class BountyCreationView extends BaseView {
                     this.isReopening = true;
 
                     final BountyService service = BountyServiceProvider.getInstance();
-                    final Optional<OfflinePlayer> targetPlayer = this.target.get(context);
-
-                    if (targetPlayer.isEmpty()) {
-                        return;
-                    }
 
                     service.getBountyByPlayer(targetPlayer.get().getUniqueId())
                             .thenAccept(bountyOpt -> {
-                                if (bountyOpt.isPresent()) {
-                                    context.openForPlayer(
-                                            BountyPlayerInfoView.class,
-                                            Map.of(
-                                                    "bounty", bountyOpt.get(),
-                                                    "target", targetPlayer.get()
-                                            )
-                                    );
-                                } else {
-                                    context.openForPlayer(
-                                            BountyRewardView.class,
-                                            context.getInitialData()
-                                    );
-                                }
+                                Bukkit.getScheduler().runTask(rdq.get(context).getPlugin(), () -> {
+                                    try {
+                                        var initialData = new HashMap<>((Map<String, Object>) context.getInitialData());
+                                        initialData.put("bounty", bountyOpt);
+
+                                        context.openForPlayer(
+                                                BountyRewardView.class,
+                                                initialData
+                                        );
+                                    } catch (final Exception ex) {
+                                        CentralLogger.getLogger(BountyCreationView.class).log(Level.SEVERE, "Failed to open bounty reward view", ex);
+                                    }
+                                });
+                            }).exceptionally(throwable -> {
+                                CentralLogger.getLogger(BountyCreationView.class).log(Level.WARNING, "Failed to load bounty", throwable);
+                                Bukkit.getScheduler().runTask(rdq.get(context).getPlugin(), context::closeForPlayer);
+                                return null;
                             });
                 });
     }
@@ -299,7 +364,10 @@ public final class BountyCreationView extends BaseView {
                 .slot(SLOT_CURRENCY_ADDER)
                 .watch(this.currencyAdderButton)
                 .renderWith(() -> this.currencyAdderButton.get(render))
-                .displayIf(() -> this.target.get(render).isPresent());
+                .displayIf(() -> {
+                    final Optional<OfflinePlayer> targetPlayer = this.target.get(render);
+                    return targetPlayer != null && targetPlayer.isPresent();
+                });
     }
 
     /**
@@ -316,7 +384,12 @@ public final class BountyCreationView extends BaseView {
                 .slot(SLOT_CONFIRM)
                 .watch(this.confirmButton)
                 .renderWith(() -> this.confirmButton.get(render))
-                .displayIf(() -> this.target.get(render).isPresent() && !this.rewardItems.get(render).isEmpty())
+                .displayIf(() -> {
+                    final Optional<OfflinePlayer> targetPlayer = this.target.get(render);
+                    final Set<RewardItem> items = this.rewardItems.get(render);
+                    return targetPlayer != null && targetPlayer.isPresent() 
+                            && items != null && !items.isEmpty();
+                })
                 .onClick(clickContext -> this.handleConfirm(clickContext, player))
                 .closeOnClick();
     }
@@ -332,14 +405,18 @@ public final class BountyCreationView extends BaseView {
             final @NotNull SlotClickContext clickContext,
             final @NotNull Player player
     ) {
-        if (this.target.get(clickContext).isEmpty()) {
+        final Optional<OfflinePlayer> targetPlayer = this.target.get(clickContext);
+        final Set<RewardItem> items = this.rewardItems.get(clickContext);
+        final Map<UUID, Map<Integer, ItemStack>> insertedItemsMap = this.insertedItems.get(clickContext);
+
+        if (targetPlayer == null || targetPlayer.isEmpty()) {
             this.i18n("confirm.no_player_selected", player)
                     .withPrefix()
                     .send();
             return;
         }
 
-        if (this.rewardItems.get(clickContext).isEmpty()) {
+        if (items == null || items.isEmpty()) {
             this.i18n("confirm.no_rewards_selected", player)
                     .withPrefix()
                     .send();
@@ -347,40 +424,43 @@ public final class BountyCreationView extends BaseView {
         }
 
         final BountyService service = BountyServiceProvider.getInstance();
-        final Optional<OfflinePlayer> target = this.target.get(clickContext);
-
-        if (target.isEmpty()) {
-            this.i18n("confirm.error", player)
-                    .withPrefix()
-                    .with("target_name", "not_defined")
-                    .send();
-            return;
-        }
+        final OfflinePlayer target = targetPlayer.get();
 
         this.i18n("confirm.confirmation", player)
                 .withPrefix()
-                .with("target_name", target.get().getName())
+                .with("target_name", target.getName())
                 .send();
 
-        service.getBountyByPlayer(target.get().getUniqueId())
+        service.getBountyByPlayer(target.getUniqueId())
                 .thenAccept(existingBounty -> {
-                    if (existingBounty.isPresent()) {
-                        clickContext.openForPlayer(
-                                BountyPlayerInfoView.class,
-                                Map.of(
-                                        "bounty", existingBounty.get(),
-                                        "target", target.get()
-                                )
-                        );
-                    } else {
-                        this.i18n("confirm.success", player)
-                                .withPrefix()
-                                .with("target_name", target.get().getName())
-                                .send();
+                    Bukkit.getScheduler().runTask(rdq.get(clickContext).getPlugin(), () -> {
+                        try {
+                            if (existingBounty.isPresent()) {
+                                clickContext.openForPlayer(
+                                        BountyPlayerInfoView.class,
+                                        Map.of(
+                                                "bounty", existingBounty.get(),
+                                                "target", target
+                                        )
+                                );
+                            } else {
+                                this.i18n("confirm.success", player)
+                                        .withPrefix()
+                                        .with("target_name", target.getName())
+                                        .send();
 
-                        this.insertedItems.get(clickContext).remove(player.getUniqueId());
-                        this.isReopening = false;
-                    }
+                                if (insertedItemsMap != null) {
+                                    insertedItemsMap.remove(player.getUniqueId());
+                                }
+                                this.isReopening = false;
+                            }
+                        } catch (final Exception ex) {
+                            CentralLogger.getLogger(BountyCreationView.class).log(Level.SEVERE, "Failed to handle bounty confirmation", ex);
+                        }
+                    });
+                }).exceptionally(throwable -> {
+                    CentralLogger.getLogger(BountyCreationView.class).log(Level.SEVERE, "Failed to check existing bounty", throwable);
+                    return null;
                 });
     }
 
@@ -395,12 +475,13 @@ public final class BountyCreationView extends BaseView {
             return;
         }
 
-        this.refundInsertedItems(
-                close.getPlayer(),
-                this.insertedItems.get(close).containsKey(close.getPlayer().getUniqueId())
-                        ? this.insertedItems.get(close).get(close.getPlayer().getUniqueId()).values()
-                        : new ArrayList<>()
-        );
+        final Map<UUID, Map<Integer, ItemStack>> insertedItemsMap = this.insertedItems.get(close);
+        if (insertedItemsMap != null && insertedItemsMap.containsKey(close.getPlayer().getUniqueId())) {
+            this.refundInsertedItems(
+                    close.getPlayer(),
+                    insertedItemsMap.get(close.getPlayer().getUniqueId()).values()
+            );
+        }
     }
 
     /**
@@ -429,5 +510,30 @@ public final class BountyCreationView extends BaseView {
         this.i18n("left_overs", player)
                 .withPrefix()
                 .send();
+    }
+
+    @Override
+    public void onResume(final @NotNull Context origin, final @NotNull Context target) {
+        final Player player = target.getPlayer();
+        final Object initialData = target.getInitialData();
+
+        if (initialData instanceof Map<?, ?> data) {
+            if (data.containsKey("target")) {
+                final Object rawTarget = data.get("target");
+                Optional<OfflinePlayer> newTarget = Optional.empty();
+
+                if (rawTarget instanceof Optional<?>) {
+                    @SuppressWarnings("unchecked")
+                    final Optional<OfflinePlayer> cast = (Optional<OfflinePlayer>) rawTarget;
+                    newTarget = cast;
+                } else if (rawTarget instanceof OfflinePlayer offlinePlayer) {
+                    newTarget = Optional.of(offlinePlayer);
+                }
+
+                if (newTarget.isPresent()) {
+                    this.target.set(newTarget, target);
+                }
+            }
+        }
     }
 }

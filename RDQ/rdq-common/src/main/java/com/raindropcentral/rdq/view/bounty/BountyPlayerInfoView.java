@@ -56,10 +56,10 @@ public final class BountyPlayerInfoView extends BaseView {
     @Override
     protected String[] getLayout() {
         return new String[]{
-                "         ",
-                "    p    ",
-                "  i   r  ",
-                "b       d"
+                "GGGGGGGGG",
+                "G   p   G",
+                "G i   r G",
+                "bGGGGGGGd"
         };
     }
 
@@ -108,7 +108,9 @@ public final class BountyPlayerInfoView extends BaseView {
             final @NotNull RenderContext render,
             final @NotNull Player player
     ) {
+        this.renderDecorations(render, player);
         this.renderTargetHead(render, player);
+        this.renderInfoButton(render, player);
         this.renderRewardsButton(render, player);
         this.renderDeleteButton(render, player);
     }
@@ -281,4 +283,60 @@ public final class BountyPlayerInfoView extends BaseView {
             }
         });
     }
+
+    /**
+     * Renders decorative glass pane borders for visual enhancement.
+     *
+     * @param render the render context used to populate slots
+     * @param player the player viewing the menu
+     */
+    private void renderDecorations(
+            final @NotNull RenderContext render,
+            final @NotNull Player player
+    ) {
+        render.layoutSlot(
+                'G',
+                UnifiedBuilderFactory
+                        .item(Material.ORANGE_STAINED_GLASS_PANE)
+                        .setName(this.i18n("decoration.name", player).build().component())
+                        .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .build()
+        );
+    }
+
+    /**
+     * Renders an info button showing bounty details.
+     *
+     * @param render the render context used to populate slots
+     * @param player the player viewing the menu
+     */
+    private void renderInfoButton(
+            final @NotNull RenderContext render,
+            final @NotNull Player player
+    ) {
+        final RBounty bounty = this.bounty.get(render);
+        render.layoutSlot(
+                'i',
+                UnifiedBuilderFactory
+                        .item(Material.BOOK)
+                        .setName(this.i18n("info.name", player).build().component())
+                        .setLore(
+                                this.i18n("info.lore", player)
+                                        .withAll(
+                                                Map.of(
+                                                        "bounty_id", bounty.getId(),
+                                                        "target_name", bounty.getPlayer().getPlayerName(),
+                                                        "creator_name", bounty.getCommissioner()
+                                                )
+                                        )
+                                        .build()
+                                        .splitLines()
+                        )
+                        .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .build()
+        );
+    }
+
+
+
 }

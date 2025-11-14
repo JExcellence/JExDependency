@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.service;
 
+import com.raindropcentral.rdq.database.entity.bounty.BountyHunterStats;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
@@ -130,5 +131,31 @@ public final class FreeBountyService implements BountyService {
     @Override
     public @NotNull CompletableFuture<Integer> getTotalBountyCount() {
         return CompletableFuture.completedFuture(bounties.size());
+    }
+
+    @Override
+    public @NotNull CompletableFuture<Optional<BountyHunterStats>> getHunterStats(@NotNull UUID playerUuid) {
+        // Free version does not track hunter stats
+        return CompletableFuture.completedFuture(Optional.empty());
+    }
+
+    @Override
+    public @NotNull CompletableFuture<List<BountyHunterStats>> getTopHunters(int limit, @NotNull String orderBy) {
+        // Free version does not track hunter stats
+        return CompletableFuture.completedFuture(Collections.emptyList());
+    }
+
+    @Override
+    public @NotNull CompletableFuture<BountyHunterStats> recordBountyClaim(@NotNull UUID hunterUuid, double rewardValue) {
+        // Free version does not track hunter stats
+        return CompletableFuture.failedFuture(
+            new UnsupportedOperationException("Bounty hunter statistics are not available in the free version")
+        );
+    }
+
+    @Override
+    public @NotNull CompletableFuture<Integer> getHunterRank(@NotNull UUID playerUuid) {
+        // Free version does not track hunter stats, return 0 (unranked)
+        return CompletableFuture.completedFuture(0);
     }
 }

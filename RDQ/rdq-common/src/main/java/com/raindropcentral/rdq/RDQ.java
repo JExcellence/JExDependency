@@ -13,7 +13,7 @@ import com.raindropcentral.rdq.service.rank.RankPathService;
 import com.raindropcentral.rdq.utility.perk.PerkSystemFactory;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.bounty.*;
-import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
+import com.raindropcentral.rdq.view.perks.*;
 import com.raindropcentral.rdq.view.rank.view.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
@@ -71,6 +71,7 @@ public abstract class RDQ {
     private RPlayerRankRepository playerRankRepository;
     private RPlayerPerkRepository playerPerkRepository;
     private RBountyRepository bountyRepository;
+    private BountyHunterStatsRepository bountyHunterStatsRepository;
     private RRankRepository rankRepository;
     private RPerkRepository perkRepository;
     private PlayerPerkRequirementProgressRepository playerPerkRequirementProgressRepository;
@@ -179,13 +180,24 @@ public abstract class RDQ {
                 .thenCompose(v -> runSync(() -> {
                     this.initializeRepositories();
                     this.rankSystemFactory = new RankSystemFactory(this);
-                    this.rankSystemFactory.initializeAsync();
-
                     this.perkSystemFactory = new PerkSystemFactory(this);
-                    this.perkSystemFactory.initializeAsync();
-
-                    loadPerksIntoRegistryAsync();
-                }));
+                }))
+                .thenCompose(v -> {
+                    // Initialize rank and perk systems in parallel
+                    return CompletableFuture.allOf(
+                            rankSystemFactory.initializeAsync()
+                                    .exceptionally(ex -> {
+                                        LOGGER.log(Level.SEVERE, "Rank system initialization failed", ex);
+                                        return null;
+                                    }),
+                            perkSystemFactory.initializeAsync()
+                                    .exceptionally(ex -> {
+                                        LOGGER.log(Level.SEVERE, "Perk system initialization failed", ex);
+                                        return null;
+                                    })
+                    );
+                })
+                .thenRun(() -> loadPerksIntoRegistryAsync());
     }
 
     private void registerServices() {
@@ -251,6 +263,7 @@ public abstract class RDQ {
 
         this.playerRepository = new RDQPlayerRepository(this.executor, emf);
         this.bountyRepository = new RBountyRepository(this.executor, emf);
+        this.bountyHunterStatsRepository = new BountyHunterStatsRepository(this.executor, emf);
         this.rankRepository = new RRankRepository(this.executor, emf);
         this.perkRepository = new RPerkRepository(this.executor, emf);
         this.rankTreeRepository = new RRankTreeRepository(this.executor, emf);
@@ -289,9 +302,8 @@ public abstract class RDQ {
                     }
                     int loaded = 0;
                     for (var perk : byId.values()) {
-                        if (perk == null || !perk.isEnabled()) continue;
+                        if (perk == null) continue;
                         var section = perk.getPerkSection();
-                        if (section == null) continue;
                         try {
                             factory.buildPerkRuntime(perk, section);
                             loaded++;
@@ -326,9 +338,12 @@ public abstract class RDQ {
                         new RankTreeOverviewView(),
                         new RankTreeOverviewView(),
                         new RankPathRankRequirementOverview(),
-                        new PerkListViewFrame()
-
-
+                        new PerkListViewFrame(),
+                        new PerkDetailView(),
+                        new PerkMainView(),
+                        new PerkRequirementView(),
+                        new PerkAdminView(),
+                        new PerkUnlockView()
                 )
                 .defaultConfig(config -> {
                     config.cancelOnClick();
@@ -432,6 +447,11 @@ public abstract class RDQ {
     @NotNull
     public RBountyRepository getBountyRepository() {
         return this.bountyRepository;
+    }
+
+    @NotNull
+    public BountyHunterStatsRepository getBountyHunterStatsRepository() {
+        return this.bountyHunterStatsRepository;
     }
 
     @NotNull

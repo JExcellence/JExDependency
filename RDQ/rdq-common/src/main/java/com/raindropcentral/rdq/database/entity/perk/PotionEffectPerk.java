@@ -30,7 +30,7 @@ public abstract class PotionEffectPerk extends RPerk {
     private static final Logger LOGGER = Logger.getLogger(PotionEffectPerk.class.getName());
 
     /** Stored as string for flexible mapping across versions. */
-    @Column(name = "potion_effect_type", nullable = false)
+    @Column(name = "potion_effect_type")
     private String potionEffectTypeName;
 
     /** Tracks whether the effect is currently applied to a player. */

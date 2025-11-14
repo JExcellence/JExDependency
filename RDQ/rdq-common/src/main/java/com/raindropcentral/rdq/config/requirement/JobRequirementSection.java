@@ -104,7 +104,13 @@ public class JobRequirementSection extends AConfigSection {
          *
          * @param evaluationEnvironmentBuilder the evaluation environment builder
          *                                      used to resolve dynamic values
-         */
+         */    /**
+     * Default no-arg constructor for Jackson deserialization.
+     */
+    protected JobRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
 	public JobRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
 		super(evaluationEnvironmentBuilder);
 	}

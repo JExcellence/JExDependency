@@ -63,7 +63,13 @@ public class PermissionRequirementSection extends AConfigSection {
          * Constructs a new permission configuration section backed by the provided evaluation builder.
          *
          * @param evaluationEnvironmentBuilder the evaluation environment builder used to wire requirement expressions
-         */
+         */    /**
+     * Default no-arg constructor for Jackson deserialization.
+     */
+    protected PermissionRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
         public PermissionRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
                 super(evaluationEnvironmentBuilder);
         }

@@ -1,10 +1,12 @@
 package com.raindropcentral.rdq.view.bounty;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.service.bounty.BountyService;
 import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -19,18 +21,18 @@ import java.util.Optional;
  * Main entry point for the Bounty UI in RaindropQuests.
  * <p>
  * This view serves as the primary navigation menu for bounty-related actions,
- * allowing players to view all active bounties and create new bounties (if premium).
+ * allowing players to view active bounties, create new bounties, and check
+ * the bounty hunter leaderboard. Features modern 2025 design patterns with
+ * clean messaging using MiniMessage and KyoriAdventure components.
  * </p>
  *
  * @author JExcellence
- * @version 2.0.0
+ * @version 3.0.0
  * @since 2.0.0
  */
 public final class BountyMainView extends BaseView {
 
-    private static final int SLOT_VIEW_BOUNTIES = 11;
-    private static final int SLOT_CREATE_BOUNTY = 13;
-    private static final int SLOT_UPGRADE_PREMIUM = 15;
+    private final State<RDQ> rdq = initialState("plugin");
 
     /**
      * Gets the localization key used to resolve translations for the bounty menu title.
@@ -39,27 +41,31 @@ public final class BountyMainView extends BaseView {
      */
     @Override
     protected String getKey() {
-        return "bounty.main";
+        return "bounty.main_ui";
     }
 
     /**
-     * Defines the number of rows displayed by the inventory-based bounty menu.
+     * Defines the layout pattern for the bounty main menu with decorative borders.
      *
-     * @return the fixed size of {@code 3} rows for the view
+     * @return the layout pattern with glass pane borders and action slots
      */
     @Override
-    protected int getSize() {
-        return 3;
+    protected String[] getLayout() {
+        return new String[]{
+                "GGGGGGGGG",
+                "G       G",
+                "G v c l G",
+                "G       G",
+                "GGGGGGGGG"
+        };
     }
 
     /**
      * Renders all primary bounty interactions the first time the view is opened.
      * <p>
-     * The render pipeline immediately paints static content and schedules any
-     * asynchronous service lookups (such as the bounty count) before wiring click
-     * handlers for the session. Premium-only actions are hidden behind their
-     * upgrade prompt when the active {@link BountyService} instance indicates the
-     * player lacks access.
+     * This modernized implementation provides a clean three-button layout with
+     * view bounties, create bounty, and leaderboard access. Asynchronous data
+     * loading ensures smooth UX while service calls complete in the background.
      * </p>
      *
      * @param render the inventory framework context used to populate slots
@@ -72,12 +78,33 @@ public final class BountyMainView extends BaseView {
     ) {
         final BountyService service = BountyServiceProvider.getInstance();
 
+        // Render decorative glass panes
+        this.renderDecorations(render, player);
+
+        // Render primary action buttons
         this.renderViewBountiesButton(render, player, service);
         this.renderCreateBountyButton(render, player, service);
+        this.renderLeaderboardButton(render, player, service);
+    }
 
-        if (!service.isPremium()) {
-            this.renderUpgradePremiumButton(render, player);
-        }
+    /**
+     * Renders decorative glass pane borders for visual enhancement.
+     *
+     * @param render the render context used to populate slots
+     * @param player the player viewing the menu
+     */
+    private void renderDecorations(
+            final @NotNull RenderContext render,
+            final @NotNull Player player
+    ) {
+        render.layoutSlot(
+                'G',
+                UnifiedBuilderFactory
+                        .item(Material.GRAY_STAINED_GLASS_PANE)
+                        .setName(this.i18n("decoration.name", player).build().component())
+                        .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                        .build()
+        );
     }
 
     /**
@@ -93,28 +120,53 @@ public final class BountyMainView extends BaseView {
             final @NotNull Player player,
             final @NotNull BountyService service
     ) {
-        service.getTotalBountyCount().thenAccept(count -> {
-            render.slot(
-                    SLOT_VIEW_BOUNTIES,
-                    UnifiedBuilderFactory
-                            .item(Material.DIAMOND_SWORD)
-                            .setName(
-                                    this.i18n("view_bounties.name", player)
-                                            .build()
-                                            .component()
-                            )
-                            .setLore(
-                                    this.i18n("view_bounties.lore", player)
-                                            .with("count", count)
-                                            .build()
-                                            .splitLines()
-                            )
-                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                            .build()
-            ).onClick(context ->
-                    context.openForPlayer(BountyOverviewView.class)
-            );
-        });
+        service.getTotalBountyCount()
+                .thenAccept(count -> {
+                    render.layoutSlot(
+                            'v',
+                            UnifiedBuilderFactory
+                                    .item(Material.DIAMOND_SWORD)
+                                    .setName(
+                                            this.i18n("view_bounties.name", player)
+                                                    .build()
+                                                    .component()
+                                    )
+                                    .setLore(
+                                            this.i18n("view_bounties.lore", player)
+                                                    .with("count", count)
+                                                    .build()
+                                                    .splitLines()
+                                    )
+                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                    .build()
+                    ).onClick(context ->
+                            context.openForPlayer(BountyOverviewView.class)
+                    );
+                })
+                .exceptionally(ex -> {
+                    // Render button even if count fails
+                    render.layoutSlot(
+                            'v',
+                            UnifiedBuilderFactory
+                                    .item(Material.DIAMOND_SWORD)
+                                    .setName(
+                                            this.i18n("view_bounties.name", player)
+                                                    .build()
+                                                    .component()
+                                    )
+                                    .setLore(
+                                            this.i18n("view_bounties.lore", player)
+                                                    .with("count", 0)
+                                                    .build()
+                                                    .splitLines()
+                                    )
+                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                    .build()
+                    ).onClick(context ->
+                            context.openForPlayer(BountyOverviewView.class)
+                    );
+                    return null;
+                });
     }
 
     /**
@@ -139,8 +191,8 @@ public final class BountyMainView extends BaseView {
         final Material material = canCreate ? Material.EMERALD : Material.BARRIER;
         final String keyPrefix = canCreate ? "create_bounty" : "create_bounty_locked";
 
-        render.slot(
-                SLOT_CREATE_BOUNTY,
+        render.layoutSlot(
+                'c',
                 UnifiedBuilderFactory
                         .item(material)
                         .setName(
@@ -166,6 +218,7 @@ public final class BountyMainView extends BaseView {
             context.openForPlayer(
                     BountyCreationView.class,
                     Map.of(
+                            "plugin", rdq.get(context),
                             "target", Optional.empty(),
                             "rewardItems", new HashSet<>(),
                             "rewardCurrencies", new HashMap<>(),
@@ -177,37 +230,68 @@ public final class BountyMainView extends BaseView {
     }
 
     /**
-     * Adds the premium upsell control used by free-edition players to learn how to
-     * unlock bounty creation.
+     * Renders the leaderboard access button for viewing top bounty hunters.
      *
      * @param render the inventory context used to register the slot
      * @param player the player opening the bounty menu
+     * @param service the bounty service for fetching leaderboard data
      */
-    private void renderUpgradePremiumButton(
+    private void renderLeaderboardButton(
             final @NotNull RenderContext render,
-            final @NotNull Player player
+            final @NotNull Player player,
+            final @NotNull BountyService service
     ) {
-        render.slot(
-                SLOT_UPGRADE_PREMIUM,
-                UnifiedBuilderFactory
-                        .item(Material.NETHER_STAR)
-                        .setName(
-                                this.i18n("upgrade_premium.name", player)
-                                        .build()
-                                        .component()
-                        )
-                        .setLore(
-                                this.i18n("upgrade_premium.lore", player)
-                                        .build()
-                                        .splitLines()
-                        )
-                        .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                        .build()
-        ).onClick(context -> {
-            this.i18n("upgrade_premium.message", player)
-                    .withPrefix()
-                    .send();
-            context.closeForPlayer();
-        });
+        service.getTopHunters(3, "bounties_claimed")
+                .thenAccept(topHunters -> {
+                    final String topHunterName = !topHunters.isEmpty()
+                            ? topHunters.get(0).getPlayer().getPlayerName()
+                            : this.i18n("leaderboard.none", player).build().asLegacyText();
+
+                    render.layoutSlot(
+                            'l',
+                            UnifiedBuilderFactory
+                                    .item(Material.GOLDEN_HELMET)
+                                    .setName(
+                                            this.i18n("leaderboard.name", player)
+                                                    .build()
+                                                    .component()
+                                    )
+                                    .setLore(
+                                            this.i18n("leaderboard.lore", player)
+                                                    .with("top_hunter", topHunterName)
+                                                    .build()
+                                                    .splitLines()
+                                    )
+                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                    .setGlowing(true)
+                                    .build()
+                    ).onClick(context ->
+                            context.openForPlayer(BountyLeaderboardView.class)
+                    );
+                })
+                .exceptionally(ex -> {
+                    // Render button even if top hunters query fails
+                    render.layoutSlot(
+                            'l',
+                            UnifiedBuilderFactory
+                                    .item(Material.GOLDEN_HELMET)
+                                    .setName(
+                                            this.i18n("leaderboard.name", player)
+                                                    .build()
+                                                    .component()
+                                    )
+                                    .setLore(
+                                            this.i18n("leaderboard.lore", player)
+                                                    .with("top_hunter", this.i18n("leaderboard.none", player).build().asLegacyText())
+                                                    .build()
+                                                    .splitLines()
+                                    )
+                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                    .build()
+                    ).onClick(context ->
+                            context.openForPlayer(BountyLeaderboardView.class)
+                    );
+                    return null;
+                });
     }
 }

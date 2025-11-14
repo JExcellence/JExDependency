@@ -43,7 +43,7 @@ head:
 
 # === Bounty Creation UI ===
 bounty_creation_ui:
-  title: "<gradient:#9b59b6:#ffffff>Bounty Creation View <white>%current_page%</white> / <white>%max_page%</white></gradient>"
+  title: "<gradient:#9b59b6:#ffffff>Bounty Creation View</gradient>"
   title_selected: "<gradient:#9b59b6:#ffffff>Bounty - <white>%player_name%</white></gradient>"
   confirm:
     confirm: "<gradient:#9b59b6:#ffffff>Create Bounty</gradient>"

@@ -94,7 +94,13 @@ public class ChoiceRequirementSection extends AConfigSection {
          *
          * @param evaluationEnvironmentBuilder the evaluation environment builder used
          *                                     for requirement evaluation
-         */
+         */    /**
+     * Default no-arg constructor for Jackson deserialization.
+     */
+    protected ChoiceRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
         public ChoiceRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
                 super(evaluationEnvironmentBuilder);
         }

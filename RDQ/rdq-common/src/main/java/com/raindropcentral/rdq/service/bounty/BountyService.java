@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.service.bounty;
 
+import com.raindropcentral.rdq.database.entity.bounty.BountyHunterStats;
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
@@ -107,4 +108,41 @@ public interface BountyService {
      * @return a future completing with the total bounty count
      */
     @NotNull CompletableFuture<Integer> getTotalBountyCount();
+
+    /**
+     * Retrieves bounty hunter statistics for a specific player.
+     *
+     * @param playerUuid the UUID of the player whose stats should be fetched
+     * @return a future completing with the hunter stats, or empty if none exist
+     */
+    @NotNull CompletableFuture<Optional<BountyHunterStats>> getHunterStats(@NotNull UUID playerUuid);
+
+    /**
+     * Retrieves the top bounty hunters ordered by specified criteria.
+     *
+     * @param limit the maximum number of entries to return
+     * @param orderBy the ordering criteria ("bounties_claimed" or "total_reward_value")
+     * @return a future completing with the ordered list of hunter statistics
+     */
+    @NotNull CompletableFuture<List<BountyHunterStats>> getTopHunters(int limit, @NotNull String orderBy);
+
+    /**
+     * Updates or creates hunter statistics for a bounty claim.
+     *
+     * @param hunterUuid the UUID of the hunter claiming the bounty
+     * @param rewardValue the total value of rewards claimed
+     * @return a future completing with the updated statistics
+     */
+    @NotNull CompletableFuture<BountyHunterStats> recordBountyClaim(
+            @NotNull UUID hunterUuid,
+            double rewardValue
+    );
+
+    /**
+     * Gets the rank of a specific hunter based on bounties claimed.
+     *
+     * @param playerUuid the UUID of the player to check
+     * @return a future completing with the rank (1-indexed), or 0 if not ranked
+     */
+    @NotNull CompletableFuture<Integer> getHunterRank(@NotNull UUID playerUuid);
 }

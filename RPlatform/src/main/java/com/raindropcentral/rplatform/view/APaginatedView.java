@@ -333,5 +333,9 @@ public abstract class APaginatedView<T> extends BaseView {
 		
 		return this.pagination.get(context);
 	}
-	
+
+    @Override
+    public void onResume(@NotNull Context origin, @NotNull Context target) {
+        super.onResume(origin, target);
+    }
 }

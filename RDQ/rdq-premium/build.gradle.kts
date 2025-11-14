@@ -24,8 +24,7 @@ dependencies {
 
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-
-    compileOnly(libs.bundles.inventory) { isTransitive = false }
+    compileOnly(libs.bundles.inventory)
 
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)

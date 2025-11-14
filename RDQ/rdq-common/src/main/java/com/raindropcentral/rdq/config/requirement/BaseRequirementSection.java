@@ -69,6 +69,13 @@ public class BaseRequirementSection extends AConfigSection {
 	private String requirementKey;
 	
 	/**
+	 * Default no-arg constructor for Jackson deserialization.
+	 */
+	protected BaseRequirementSection() {
+		super(new EvaluationEnvironmentBuilder());
+	}
+	
+	/**
 	 * Constructs a new BaseRequirementSection with the given evaluation environment.
 	 *
 	 * @param evaluationEnvironmentBuilder the evaluation environment builder

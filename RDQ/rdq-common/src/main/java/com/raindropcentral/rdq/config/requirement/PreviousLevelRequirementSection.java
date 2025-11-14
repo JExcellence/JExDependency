@@ -96,7 +96,13 @@ public class PreviousLevelRequirementSection extends AConfigSection {
      * evaluation environment builder.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder used for expression resolution
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected PreviousLevelRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public PreviousLevelRequirementSection(
             final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {

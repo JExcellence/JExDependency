@@ -46,7 +46,13 @@ public class ExperienceLevelRequirementSection extends AConfigSection {
      * Constructs a new ExperienceLevelRequirementSection.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected ExperienceLevelRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public ExperienceLevelRequirementSection(
             final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {

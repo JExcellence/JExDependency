@@ -2,6 +2,8 @@ package com.raindropcentral.rdq.database.entity.perk;
 
 import com.raindropcentral.rdq.config.perk.PerkSection;
 import com.raindropcentral.rdq.type.EPerkType;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -12,7 +14,14 @@ import org.jetbrains.annotations.NotNull;
  * @author JExcellence
  * @since 1.0.0
  */
+@Entity
+@DiscriminatorValue("YAML_LOADED")
 public class YamlLoadedPerk extends RPerk {
+
+    /** Default no-arg constructor for JPA. */
+    protected YamlLoadedPerk() {
+        super();
+    }
 
     /**
      * Creates a new YAML-loaded perk.

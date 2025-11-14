@@ -97,7 +97,13 @@ public class TimeBasedRequirementSection extends AConfigSection {
      * Constructs a new time-based requirement section.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected TimeBasedRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public TimeBasedRequirementSection(
             final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {

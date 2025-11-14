@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.view.bounty;
 
 import com.raindropcentral.rdq.database.entity.bounty.RBounty;
 import com.raindropcentral.rdq.database.entity.reward.RewardItem;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
@@ -25,6 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * View for managing bounty rewards with interactive item insertion.
@@ -37,6 +40,8 @@ import java.util.concurrent.CompletableFuture;
  * @since 2.0.0
  */
 public final class BountyRewardView extends APaginatedView<RewardItem> {
+
+    private static final Logger LOGGER = CentralLogger.getLogger(BountyRewardView.class);
 
     private final MutableState<Optional<OfflinePlayer>> target = initialState("target");
     private final MutableState<Set<RewardItem>> rewardItems = initialState("rewardItems");
@@ -83,24 +88,29 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
     protected CompletableFuture<List<RewardItem>> getAsyncPaginationSource(
             final @NotNull Context context
     ) {
-        if (this.bounty.get(context).isEmpty() || this.bounty.get(context).get().getRewardItems().isEmpty()) {
-            final RewardItem pseudoItem = new RewardItem(
-                    this.buildPane(
-                            Material.GRAY_STAINED_GLASS_PANE,
-                            context.getPlayer(),
-                            "pseudo.name",
-                            "pseudo.lore"
-                    )
-            );
+        try {
+            if (this.bounty.get(context).isEmpty() || this.bounty.get(context).get().getRewardItems().isEmpty()) {
+                final RewardItem pseudoItem = new RewardItem(
+                        this.buildPane(
+                                Material.GRAY_STAINED_GLASS_PANE,
+                                context.getPlayer(),
+                                "pseudo.name",
+                                "pseudo.lore"
+                        )
+                );
+
+                return CompletableFuture.completedFuture(
+                        List.of(pseudoItem, pseudoItem, pseudoItem, pseudoItem, pseudoItem)
+                );
+            }
 
             return CompletableFuture.completedFuture(
-                    List.of(pseudoItem, pseudoItem, pseudoItem, pseudoItem, pseudoItem)
+                    this.bounty.get(context).get().getRewardItems().stream().toList()
             );
+        } catch (final Exception ex) {
+            LOGGER.log(Level.SEVERE, "Failed to load bounty rewards for pagination", ex);
+            return CompletableFuture.completedFuture(Collections.emptyList());
         }
-
-        return CompletableFuture.completedFuture(
-                this.bounty.get(context).get().getRewardItems().stream().toList()
-        );
     }
 
     /**
@@ -182,14 +192,17 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
                 )
                 .onClick(this::handleSlotClick);
 
-        if (this.insertedItems.get(render).containsKey(player.getUniqueId())
-                && !this.insertedItems.get(render).get(player.getUniqueId()).isEmpty()) {
-            this.insertedItems
-                    .get(render)
-                    .get(player.getUniqueId())
-                    .forEach((slot, item) ->
-                            render.slot(slot, item).onClick(this::handleSlotClick)
-                    );
+        try {
+            final Map<UUID, Map<Integer, ItemStack>> itemsMap = this.insertedItems.get(render);
+            if (itemsMap != null && itemsMap.containsKey(player.getUniqueId())
+                    && !itemsMap.get(player.getUniqueId()).isEmpty()) {
+                itemsMap.get(player.getUniqueId())
+                        .forEach((slot, item) ->
+                                render.slot(slot, item).onClick(this::handleSlotClick)
+                        );
+            }
+        } catch (final Exception ex) {
+            LOGGER.log(Level.WARNING, "Failed to render inserted items for player " + player.getName(), ex);
         }
     }
 
@@ -243,22 +256,28 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
                 .layoutSlot('c', new Proceed().getHead(player))
                 .updateOnStateChange(this.insertedItems)
                 .onClick(clickContext -> {
-                    final Map<Integer, ItemStack> playerSlots = this.insertedItems.get(render).get(player.getUniqueId());
+                    try {
+                        final Map<UUID, Map<Integer, ItemStack>> itemsMap = this.insertedItems.get(render);
+                        final Map<Integer, ItemStack> playerSlots = itemsMap != null ? itemsMap.get(player.getUniqueId()) : null;
 
-                    if (playerSlots != null && !playerSlots.isEmpty()) {
-                        final Set<RewardItem> rewards = new HashSet<>();
-                        for (final ItemStack stack : playerSlots.values()) {
-                            rewards.add(new RewardItem(stack, player));
+                        if (playerSlots != null && !playerSlots.isEmpty()) {
+                            final Set<RewardItem> rewards = new HashSet<>();
+                            for (final ItemStack stack : playerSlots.values()) {
+                                rewards.add(new RewardItem(stack, player));
+                            }
+
+                            this.rewardItems.get(clickContext).addAll(rewards);
+                            this.isReturning = true;
+
+                            clickContext.openForPlayer(
+                                    BountyCreationView.class,
+                                    clickContext.getInitialData()
+                            );
+                        } else {
+                            this.i18n("no_new_items_inserted", player).withPrefix().send();
                         }
-
-                        this.rewardItems.get(clickContext).addAll(rewards);
-                        this.isReturning = true;
-
-                        clickContext.openForPlayer(
-                                BountyCreationView.class,
-                                clickContext.getInitialData()
-                        );
-                    } else {
+                    } catch (final Exception ex) {
+                        LOGGER.log(Level.SEVERE, "Failed to confirm bounty rewards for player " + player.getName(), ex);
                         this.i18n("no_new_items_inserted", player).withPrefix().send();
                     }
                 });
@@ -288,12 +307,17 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
             return;
         }
 
-        if (this.insertedItems.get(close).containsKey(close.getPlayer().getUniqueId())) {
-            refundInsertedItems(
-                    close.getPlayer(),
-                    this.insertedItems.get(close).get(close.getPlayer().getUniqueId()).values()
-            );
-            this.insertedItems.get(close).remove(close.getPlayer().getUniqueId());
+        try {
+            final Map<UUID, Map<Integer, ItemStack>> itemsMap = this.insertedItems.get(close);
+            if (itemsMap != null && itemsMap.containsKey(close.getPlayer().getUniqueId())) {
+                refundInsertedItems(
+                        close.getPlayer(),
+                        itemsMap.get(close.getPlayer().getUniqueId()).values()
+                );
+                itemsMap.remove(close.getPlayer().getUniqueId());
+            }
+        } catch (final Exception ex) {
+            LOGGER.log(Level.WARNING, "Failed to refund items on close for player " + close.getPlayer().getName(), ex);
         }
     }
 
@@ -304,50 +328,60 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
      * @param clickContext the click context describing the player action
      */
     private void handleSlotClick(final @NotNull SlotClickContext clickContext) {
-        final ItemStack cursorItem = clickContext.getClickOrigin().getCursor();
-        final int clickedSlot = clickContext.getClickedSlot();
-        final ItemStack currentSlotItem = clickContext.getClickOrigin().getCurrentItem();
+        try {
+            final ItemStack cursorItem = clickContext.getClickOrigin().getCursor();
+            final int clickedSlot = clickContext.getClickedSlot();
+            final ItemStack currentSlotItem = clickContext.getClickOrigin().getCurrentItem();
 
-        final boolean isSlotEmptyOrGreenPane = currentSlotItem == null
-                || currentSlotItem.getType() == Material.AIR
-                || currentSlotItem.getType() == Material.GREEN_STAINED_GLASS_PANE;
+            final boolean isSlotEmptyOrGreenPane = currentSlotItem == null
+                    || currentSlotItem.getType() == Material.AIR
+                    || currentSlotItem.getType() == Material.GREEN_STAINED_GLASS_PANE;
 
-        final Map<Integer, ItemStack> playerSlots = this.insertedItems.get(clickContext).computeIfAbsent(
-                clickContext.getPlayer().getUniqueId(),
-                k -> new HashMap<>()
-        );
-
-        if (clickContext.getClickedContainer().isEntityContainer() && clickContext.isShiftClick()) {
-            clickContext.setCancelled(true);
-            return;
-        }
-
-        if (clickContext.isLeftClick()) {
-            if (isSlotEmptyOrGreenPane && cursorItem.getType() != Material.AIR) {
-                clickContext.getClickOrigin().setCursor(null);
-                playerSlots.put(clickedSlot, cursorItem.clone());
-                clickContext.getClickedContainer().renderItem(clickedSlot, cursorItem);
+            final Map<UUID, Map<Integer, ItemStack>> itemsMap = this.insertedItems.get(clickContext);
+            if (itemsMap == null) {
+                LOGGER.log(Level.WARNING, "Inserted items map is null for player " + clickContext.getPlayer().getName());
+                return;
             }
-            return;
-        }
 
-        if (clickContext.isRightClick()) {
-            if (!isSlotEmptyOrGreenPane && currentSlotItem.getType() != Material.AIR) {
-                final ItemStack removed = playerSlots.remove(clickedSlot);
-                if (removed != null) {
-                    refundInsertedItems(clickContext.getPlayer(), List.of(removed));
+            final Map<Integer, ItemStack> playerSlots = itemsMap.computeIfAbsent(
+                    clickContext.getPlayer().getUniqueId(),
+                    k -> new HashMap<>()
+            );
+
+            if (clickContext.getClickedContainer().isEntityContainer() && clickContext.isShiftClick()) {
+                clickContext.setCancelled(true);
+                return;
+            }
+
+            if (clickContext.isLeftClick()) {
+                if (isSlotEmptyOrGreenPane && cursorItem.getType() != Material.AIR) {
+                    clickContext.getClickOrigin().setCursor(null);
+                    playerSlots.put(clickedSlot, cursorItem.clone());
+                    clickContext.getClickedContainer().renderItem(clickedSlot, cursorItem);
                 }
-
-                clickContext.getClickedContainer().renderItem(
-                        clickedSlot,
-                        buildPane(
-                                Material.GREEN_STAINED_GLASS_PANE,
-                                clickContext.getPlayer(),
-                                "input_slot.name",
-                                "input_slot.lore"
-                        )
-                );
+                return;
             }
+
+            if (clickContext.isRightClick()) {
+                if (!isSlotEmptyOrGreenPane && currentSlotItem.getType() != Material.AIR) {
+                    final ItemStack removed = playerSlots.remove(clickedSlot);
+                    if (removed != null) {
+                        refundInsertedItems(clickContext.getPlayer(), List.of(removed));
+                    }
+
+                    clickContext.getClickedContainer().renderItem(
+                            clickedSlot,
+                            buildPane(
+                                    Material.GREEN_STAINED_GLASS_PANE,
+                                    clickContext.getPlayer(),
+                                    "input_slot.name",
+                                    "input_slot.lore"
+                            )
+                    );
+                }
+            }
+        } catch (final Exception ex) {
+            LOGGER.log(Level.SEVERE, "Error handling slot click for player " + clickContext.getPlayer().getName(), ex);
         }
     }
 
@@ -357,31 +391,37 @@ public final class BountyRewardView extends APaginatedView<RewardItem> {
      * @param click the slot click context tied to the shift-click interaction
      */
     private void handleShiftClick(final @NotNull SlotClickContext click) {
-        final Player player = click.getPlayer();
-        final ItemStack clickedItem = click.getClickOrigin().getCurrentItem();
+        try {
+            final Player player = click.getPlayer();
+            final ItemStack clickedItem = click.getClickOrigin().getCurrentItem();
 
-        if (clickedItem != null && clickedItem.getType() != Material.AIR) {
-            final Inventory guiInv = player.getOpenInventory().getTopInventory();
-            final int targetSlot = findFirstPaneSlot(
-                    guiInv,
-                    Set.of(Material.LIME_STAINED_GLASS_PANE, Material.GREEN_STAINED_GLASS_PANE)
-            );
+            if (clickedItem != null && clickedItem.getType() != Material.AIR) {
+                final Inventory guiInv = player.getOpenInventory().getTopInventory();
+                final int targetSlot = findFirstPaneSlot(
+                        guiInv,
+                        Set.of(Material.LIME_STAINED_GLASS_PANE, Material.GREEN_STAINED_GLASS_PANE)
+                );
 
-            if (targetSlot != -1) {
-                player.getInventory().removeItem(clickedItem);
-                guiInv.setItem(targetSlot, clickedItem.clone());
+                if (targetSlot != -1) {
+                    player.getInventory().removeItem(clickedItem);
+                    guiInv.setItem(targetSlot, clickedItem.clone());
 
-                this.insertedItems
-                        .get(click)
-                        .computeIfAbsent(player.getUniqueId(), k -> new HashMap<>())
-                        .put(targetSlot, clickedItem.clone());
+                    final Map<UUID, Map<Integer, ItemStack>> itemsMap = this.insertedItems.get(click);
+                    if (itemsMap != null) {
+                        itemsMap.computeIfAbsent(player.getUniqueId(), k -> new HashMap<>())
+                                .put(targetSlot, clickedItem.clone());
+                    }
 
-                click.setCancelled(true);
-                return;
+                    click.setCancelled(true);
+                    return;
+                }
             }
-        }
 
-        click.setCancelled(true);
+            click.setCancelled(true);
+        } catch (final Exception ex) {
+            LOGGER.log(Level.SEVERE, "Error handling shift-click for player " + click.getPlayer().getName(), ex);
+            click.setCancelled(true);
+        }
     }
 
     /**

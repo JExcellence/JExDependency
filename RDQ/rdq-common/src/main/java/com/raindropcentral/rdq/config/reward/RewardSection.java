@@ -49,12 +49,12 @@ public class RewardSection extends AConfigSection {
     private Long amount;
 
     /**
-     * Creates a new reward section backed by the provided evaluation context.
-     *
-     * @param evaluationEnvironmentBuilder the builder supplying the evaluation
-     *                                      environment used for expression
-     *                                      resolution
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected RewardSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public RewardSection(
         final EvaluationEnvironmentBuilder evaluationEnvironmentBuilder
     ) {

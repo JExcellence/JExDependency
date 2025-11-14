@@ -4,7 +4,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
-import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
+import com.raindropcentral.rdq.view.perks.PerkMainView;
 import com.raindropcentral.rdq.view.rank.view.RankMainView;
 import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;
@@ -193,7 +193,8 @@ public final class PRQ extends PlayerCommand {
 
         this.rdq.getViewFrame().open(
                 BountyMainView.class,
-                player
+                player,
+                Map.of("plugin", this.rdq)
         );
     }
 
@@ -512,9 +513,9 @@ public final class PRQ extends PlayerCommand {
      */
     private void openPerksView(final @NotNull Player player) {
         this.rdq.getViewFrame().open(
-                PerkListViewFrame.class,
+                PerkMainView.class,
                 player,
-                Map.of("plugin", this.rdq, "player", this.rdq.getPlayerRepository().findByUuidAsync(player.getUniqueId()))
+                Map.of("plugin", this.rdq)
         );
     }
 

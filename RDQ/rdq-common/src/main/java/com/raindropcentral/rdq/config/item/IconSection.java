@@ -60,8 +60,14 @@ public class IconSection extends AConfigSection {
     /**
      * List of item flags to hide certain properties.
      * If null, defaults to an empty list.
+     */    private List<String> hideFlags;
+
+    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
-    private List<String> hideFlags;
+    protected IconSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
 
     /**
      * Constructs a new IconSection with the given evaluation environment.

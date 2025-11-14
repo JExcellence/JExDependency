@@ -13,6 +13,17 @@ import java.util.concurrent.Executor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Coordinates loading, validation, and persistence of perk configuration data for RDQ.
+ * <p>
+ *     Instances orchestrate asynchronous tasks that hydrate the in-memory {@link PerkSystemState} and
+ *     prepare all perk entities before the gameplay systems access them.
+ * </p>
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ * @version 1.0.2
+ */
 public final class PerkSystemFactory {
 
     private static final Logger LOGGER = CentralLogger.getLogger(PerkSystemFactory.class.getName());
@@ -26,6 +37,11 @@ public final class PerkSystemFactory {
     private volatile boolean initializing;
     private volatile @NotNull PerkSystemState state = PerkSystemState.empty();
 
+    /**
+     * Creates a new factory bound to the supplied RDQ plugin instance.
+     *
+     * @param rdq the RDQ plugin that provides executors and services required for perk initialization
+     */
     public PerkSystemFactory(final @NotNull RDQ rdq) {
         this.rdq = Objects.requireNonNull(rdq, "rdq");
         this.executor = rdq.getExecutor();
@@ -34,8 +50,15 @@ public final class PerkSystemFactory {
         this.entityService = new PerkEntityService(rdq);
     }
 
+    /**
+     * Initializes the perk system asynchronously by loading configurations, validating them, and
+     * creating the corresponding entities.
+     *
+     * @return a future that completes when the initialization pipeline finishes, successfully or exceptionally
+     */
     public @NotNull CompletableFuture<Void> initializeAsync() {
         if (initializing) {
+            LOGGER.warning("Perk system initialization already in progress");
             return CompletableFuture.completedFuture(null);
         }
         initializing = true;
@@ -45,6 +68,7 @@ public final class PerkSystemFactory {
         return loader.loadAllAsync(executor)
                 .thenComposeAsync(loaded -> {
                     this.state = loaded;
+                    LOGGER.log(Level.INFO, "Loaded {0} perk configurations", loaded.perkSections().size());
                     return validator.validateConfigurationsAsync(loaded, executor);
                 }, executor)
                 .thenComposeAsync(v -> entityService.createPerksAsync(state, executor), executor)
@@ -55,19 +79,34 @@ public final class PerkSystemFactory {
                         LOGGER.log(Level.SEVERE, "Perk system initialization failed", t);
                         this.state = PerkSystemState.empty();
                     } else {
-                        LOGGER.info("Perk system initialization completed");
+                        LOGGER.log(Level.INFO, "Perk system initialization completed successfully ({0} perks)", state.perks().size());
                     }
                 });
     }
 
+    /**
+     * Indicates whether the perk system has completed its initialization workflow.
+     *
+     * @return {@code true} when perk data has been loaded
+     */
     public boolean isInitialized() {
         return !state.perks().isEmpty();
     }
 
+    /**
+     * Provides a snapshot of the registered perks.
+     *
+     * @return an immutable map containing the known perks keyed by their identifiers
+     */
     public @NotNull Map<String, RPerk> getPerks() {
         return Map.copyOf(state.perks());
     }
 
+    /**
+     * Retrieves the perk system configuration section.
+     *
+     * @return the perk system section if one has been configured, otherwise {@code null}
+     */
     public PerkSystemSection getPerkSystemSection() {
         return state.perkSystemSection();
     }

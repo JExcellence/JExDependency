@@ -72,7 +72,13 @@ public class CurrencyRequirementSection extends AConfigSection {
      * Constructs a new CurrencyRequirementSection.
      *
      * @param evaluationEnvironmentBuilder the evaluation environment builder
+     */    /**
+     * Default no-arg constructor for Jackson deserialization.
      */
+    protected CurrencyRequirementSection() {
+        super(new EvaluationEnvironmentBuilder());
+    }
+
     public CurrencyRequirementSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
     }

@@ -2,24 +2,14 @@
 perk:
   command:
     list_header: "<gradient:#9b59b6:#ffffff>Available Perks:</gradient>"
-    list_entry: "<gray>{perk}: {status}</gray>"
-    info_header: "<gradient:#9b59b6:#ffffff>Perk Info: {perk}</gradient>"
-    info_display_name: "<gray>Name: {name}</gray>"
-    info_description: "<gray>Description: {description}</gray>"
-    info_status: "<gray>Status: {status}</gray>"
-    info_category: "<gray>Category: {category}</gray>"
-    activated: "<green>Perk {perk} activated!</green>"
-    deactivated: "<green>Perk {perk} deactivated!</green>"
-  
-  error:
-    not_found: "<red>Perk {perk} not found</red>"
-    no_permission: "<red>You don't have permission: {permission}</red>"
-    no_perks: "<red>No perks available</red>"
-    already_active: "<yellow>Perk {perk} is already active.</yellow>"
-    activation_denied: "<red>You cannot activate {perk} right now.</red>"
-    activation_failed: "<red>Failed to activate {perk}. Try again later.</red>"
-    not_active: "<red>Perk {perk} is not active.</red>"
-    deactivation_failed: "<red>Failed to deactivate {perk}. Try again later.</red>"
+    list_entry: "<gray>%perk%: %status%</gray>"
+    info_header: "<gradient:#9b59b6:#ffffff>Perk Info: %perk%</gradient>"
+    info_display_name: "<gray>Name: %name%</gray>"
+    info_description: "<gray>Description: %description%</gray>"
+    info_status: "<gray>Status: %status%</gray>"
+    info_category: "<gray>Category: %category%</gray>"
+    activated: "<green>Perk %perk% activated!</green>"
+    deactivated: "<green>Perk %perk% deactivated!</green>"
 
   double_experience:
     name: "<yellow>Double Experience</yellow>"
@@ -68,17 +58,201 @@ perk:
     lore: "<gray>Lets you breathe underwater indefinitely.</gray>"
   
   entry:
-    name: "<yellow>{perk}</yellow> {status}"
-  
+    name: "<yellow>%perk%</yellow> %status%"
+
+
+  # === Perk Main UI ===
+  main_ui:
+    title: "<gradient:#9b59b6:#ffffff>Perks Menu</gradient>"
+    view_all_perks:
+      name: "<gradient:#9b59b6:#ffffff>View All Perks</gradient>"
+      lore:
+        - "<gray>Browse and manage your perks</gray>"
+        - ""
+        - "<green>? Click to view perks</green>"
+    my_active_perks:
+      name: "<gradient:#9b59b6:#ffffff>Active Perks</gradient>"
+      lore:
+        - "<gray>View currently active perks</gray>"
+        - "<gray>Active: <white>%active_count%</white>/%max_count%</gray>"
+        - ""
+        - "<green>? Click to manage</green>"
+    perk_statistics:
+      name: "<gradient:#9b59b6:#ffffff>Perk Statistics</gradient>"
+      lore:
+        - "<gray>Total Perks: <white>%total_perks%</white></gray>"
+        - "<gray>Owned: <white>%owned_perks%</white></gray>"
+        - "<gray>Locked: <white>%locked_perks%</white></gray>"
+        - "<gray>Active: <white>%active_perks%</white></gray>"
+
+  # === Perk List UI ===
   list_ui:
-    title: "<gradient:#9b59b6:#ffffff>Available Perks</gradient>"
-    activate_button: "<green>Activate Perk</green>"
-  
+    title: "<gradient:#9b59b6:#ffffff>Perks - %category%</gradient>"
+    category_all: "All Categories"
+    perk_item:
+      lore:
+        category: "<gray>Category: <white>%category%</white></gray>"
+        state: "<gray>State: %state%</gray>"
+        priority: "<gray>Priority: <white>%priority%</white></gray>"
+        cooldown: "<gray>Cooldown: <white>%cooldown%</white></gray>"
+        duration: "<gray>Duration: <white>%duration%</white></gray>"
+        requirements: "<gray>Requirements: <white>%req_completed%</white>/<white>%req_total%</white></gray>"
+        action_activate: "<green>? Click to activate</green>"
+        action_deactivate: "<red>? Click to deactivate</red>"
+        action_locked: "<red>? Locked - View requirements</red>"
+        action_view: "<yellow>? Click for details</yellow>"
+    navigation:
+      previous: "<green>? Previous Page</green>"
+      next: "<green>Next Page ?</green>"
+      page_info: "<white>Page %page%/%max_page%</white>"
+      no_previous: "<gray>No previous page</gray>"
+      no_next: "<gray>No next page</gray>"
+    filter:
+      all: "<white>All Categories</white>"
+      category: "<white>%category%</white>"
+      
+  # === Perk Detail UI ===
   detail_ui:
-    title: "<gradient:#9b59b6:#ffffff>Perk: {perk}</gradient>"
-    activate_button: "<green>Activate</green>"
-    deactivate_button: "<red>Deactivate</red>"
-    permission_scaling: "<gray>Permission Scaling: {scaling}</gray>"
+    title: "<gradient:#9b59b6:#ffffff>%perk_name%</gradient>"
+    info:
+      description: "<gray>%description%</gray>"
+      category: "<gray>Category: <white>%category%</white></gray>"
+      priority: "<gray>Priority: <white>%priority%</white></gray>"
+      state: "<gray>State: %state%</gray>"
+      cooldown_remaining: "<gray>Cooldown: <white>%time_remaining%</white></gray>"
+      duration_active: "<gray>Active for: <white>%time_active%</white></gray>"
+    buttons:
+      activate:
+        name: "<green>? Activate Perk</green>"
+        lore:
+          - "<gray>Click to activate this perk</gray>"
+      deactivate:
+        name: "<red>? Deactivate Perk</red>"
+        lore:
+          - "<gray>Click to deactivate this perk</gray>"
+      view_requirements:
+        name: "<yellow>?? View Requirements</yellow>"
+        lore:
+          - "<gray>See what's needed to unlock</gray>"
+          - "<gray>Progress: <white>%progress%</white>%</gray>"
+      unlock:
+        name: "<green>?? Unlock Perk</green>"
+        lore:
+          - "<gray>Unlock this perk</gray>"
+          - "<gray>Requirements: %completed%/%total%</gray>"
+      back:
+        name: "<white>? Back</white>"
+        lore:
+          - "<gray>Return to perk list</gray>"
+          
+  # === Perk Requirement UI ===
+  requirement_ui:
+    title: "<gradient:#9b59b6:#ffffff>Requirements - %perk_name%</gradient>"
+    requirement_item:
+      name: "%requirement_name%"
+      lore:
+        type: "<gray>Type: <white>%type%</white></gray>"
+        progress: "<gray>Progress: <white>%progress%</white>%</gray>"
+        completed: "<green>? Completed</green>"
+        incomplete: "<yellow>? In Progress</yellow>"
+        locked: "<red>? Not Started</red>"
+    buttons:
+      complete:
+        name: "<green>? Complete Requirement</green>"
+        lore:
+          - "<gray>Mark this requirement as complete</gray>"
+      back:
+        name: "<white>? Back to Perk</white>"
+        
+  # === Perk Unlock UI ===
+  unlock_ui:
+    title: "<gradient:#9b59b6:#ffffff>Unlock - %perk_name%</gradient>"
+    confirm:
+      name: "<green>? Confirm Unlock</green>"
+      lore:
+        - "<gray>Unlock this perk</gray>"
+        - ""
+        - "<gray>Requirements:</gray>"
+        - "<green>? All completed</green>"
+    cancel:
+      name: "<red>? Cancel</red>"
+      lore:
+        - "<gray>Return without unlocking</gray>"
+    cost_info:
+      name: "<yellow>?? Unlock Cost</yellow>"
+      lore:
+        - "<gray>This perk has no cost</gray>"
+        
+  # === Perk Admin UI ===
+  admin_ui:
+    title: "<gradient:#9b59b6:#ff0000>Admin - %perk_name%</gradient>"
+    buttons:
+      toggle_enabled:
+        name: "<yellow>? Toggle Enabled</yellow>"
+        lore:
+          - "<gray>Current: %enabled%</gray>"
+          - "<gray>Click to toggle</gray>"
+      edit_settings:
+        name: "<yellow>? Edit Settings</yellow>"
+        lore:
+          - "<gray>Modify perk configuration</gray>"
+      grant_player:
+        name: "<green>+ Grant to Player</green>"
+        lore:
+          - "<gray>Give this perk to a player</gray>"
+      revoke_player:
+        name: "<red>- Revoke from Player</red>"
+        lore:
+          - "<gray>Remove this perk from a player</gray>"
+      reload:
+        name: "<yellow>? Reload Perk</yellow>"
+        lore:
+          - "<gray>Reload perk from configuration</gray>"
+          
+  # === Perk Messages ===
+  messages:
+    activated: "<green>? Activated perk: <white>%perk_name%</white></green>"
+    deactivated: "<yellow>? Deactivated perk: <white>%perk_name%</white></yellow>"
+    unlocked: "<green>?? Unlocked perk: <white>%perk_name%</white>!</green>"
+    already_active: "<yellow>? Perk <white>%perk_name%</white> is already active</yellow>"
+    already_owned: "<yellow>? You already own <white>%perk_name%</white></yellow>"
+    on_cooldown: "<red>? Perk <white>%perk_name%</white> is on cooldown for %time_remaining%</red>"
+    requirements_not_met: "<red>? Requirements not met for <white>%perk_name%</white></red>"
+    max_active_reached: "<red>? Maximum active perks reached (%count%/%max%)</red>"
+    activation_failed: "<red>? Failed to activate <white>%perk_name%</white></red>"
+    deactivation_failed: "<red>? Failed to deactivate <white>%perk_name%</white></red>"
+    unlock_failed: "<red>? Failed to unlock <white>%perk_name%</white></red>"
+    coming_soon: "<yellow>? This feature is coming soon!</yellow>"
+    
+  # === Perk Admin Messages ===
+  admin:
+    granted: "<green>? Granted perk <white>%perk_name%</white> to <white>%player%</white></green>"
+    revoked: "<yellow>? Revoked perk <white>%perk_name%</white> from <white>%player%</white></yellow>"
+    enabled: "<green>? Enabled perk <white>%perk_name%</white> for <white>%player%</white></green>"
+    disabled: "<yellow>? Disabled perk <white>%perk_name%</white> for <white>%player%</white></yellow>"
+    
+  # === Perk Errors ===
+  error:
+    not_found: "<red>? Perk <white>%perk%</white> not found</red>"
+    player_not_found: "<red>? Player <white>%player%</white> not found</red>"
+    no_permission: "<red>? You don't have permission to do that</red>"
+    
+  # === Perk States ===
+  state:
+    active: "<green>?</green> <white>Active</white>"
+    available: "<green>?</green> <white>Available</white>"
+    locked: "<red>?</red> <gray>Locked</gray>"
+    cooldown: "<yellow>?</yellow> <white>Cooldown</white>"
+    disabled: "<dark_gray>?</dark_gray> <gray>Disabled</gray>"
+    
+  # === Perk Categories ===
+  category:
+    combat: "<red>?</red> Combat"
+    utility: "<yellow>??</yellow> Utility"
+    movement: "<aqua>?</aqua> Movement"
+    mining: "<gray>?</gray> Mining"
+    passive: "<green>?</green> Passive"
+    economic: "<gold>??</gold> Economic"
 
 rq:
   no_luckperms_installed: "<gradient:#9b59b6:#ffffff>LuckPerms not found. Install plugin to use feature.</gradient>"
