@@ -1,6 +1,5 @@
 package de.jexcellence.economy.adapter;
 
-import de.jexcellence.economy.adapter.CurrencyResponse;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.User;
 import de.jexcellence.economy.database.entity.UserCurrency;
@@ -138,6 +137,12 @@ public interface ICurrencyAdapter {
 		final @NotNull OfflinePlayer targetOfflinePlayer,
 		final @NotNull Currency targetCurrency,
 		final double depositAmount
+	);
+
+	@NotNull CompletableFuture<CurrencyResponse> deposit(
+			final @NotNull OfflinePlayer targetOfflinePlayer,
+			final @NotNull String targetCurrencyIdentifier,
+			final double depositAmount
 	);
 	
 	/**

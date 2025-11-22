@@ -205,6 +205,33 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                 );
     }
 
+    @Override
+    public @NotNull CompletableFuture<CurrencyResponse> deposit(@NotNull OfflinePlayer targetOfflinePlayer, @NotNull String targetCurrencyIdentifier, double depositAmount) {
+        return this.findUserCurrencyEntity(targetOfflinePlayer, targetCurrencyIdentifier)
+                .thenApplyAsync(
+                        userCurrencyEntity -> {
+                            if (userCurrencyEntity == null) {
+                                return this.createFailureResponse(
+                                        depositAmount,
+                                        0.0,
+                                        "Player account not found for UUID: " + targetOfflinePlayer.getUniqueId()
+                                );
+                            }
+                            return this.executeTransactionOperation(
+                                    userCurrencyEntity,
+                                    depositAmount,
+                                    UserCurrency::deposit,
+                                    "deposited",
+                                    "to",
+                                    EChangeType.DEPOSIT,
+                                    "Deposit via adapter",
+                                    targetOfflinePlayer.getPlayer()
+                            );
+                        },
+                        this.jexEconomyImpl.getExecutor()
+                );
+    }
+
     /**
      * Deposits a specified amount into an existing UserCurrency entity.
      * <p>
@@ -732,6 +759,20 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                         .findByAttributes(Map.of(
                                 "player.uniqueId", targetOfflinePlayer.getUniqueId(),
                                 "currency.id", targetCurrency.getId()
+                        )),
+                this.jexEconomyImpl.getExecutor()
+        );
+    }
+
+    private @NotNull CompletableFuture<@Nullable UserCurrency> findUserCurrencyEntity(
+            final @NotNull OfflinePlayer targetOfflinePlayer,
+            final @NotNull String targetCurrencyIdentifier
+    ) {
+        return CompletableFuture.supplyAsync(
+                () -> this.jexEconomyImpl.getUserCurrencyRepository()
+                        .findByAttributes(Map.of(
+                                "player.uniqueId", targetOfflinePlayer.getUniqueId(),
+                                "currency.identifier", targetCurrencyIdentifier
                         )),
                 this.jexEconomyImpl.getExecutor()
         );
