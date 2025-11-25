@@ -1,33 +1,97 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
+    id("raindrop.shadow-conventions")
     `maven-publish`
-    base
 }
 
 group = "com.raindropcentral.core"
 version = "2.0.0"
 description = "Core plugin providing shared functionality for Raindrop plugins"
 
-tasks.register("publishLocal") {
-    group = "publishing"
-    description = "Publishes all modules to local Maven repository"
-    dependsOn(
-        ":RCore:rcore-common:publishToMavenLocal",
-        ":RCore:rcore-free:publishMavenShadowPublicationToMavenLocal",
-        ":RCore:rcore-premium:publishMavenShadowPublicationToMavenLocal",
-    )
-    doLast {
-        println("✓ Published ${project.group}:rcore-*:${project.version} to local Maven")
+dependencies {
+    compileOnly(libs.paper.api)
+
+    compileOnly(libs.bundles.adventure)
+
+    compileOnly(libs.folialib)
+    compileOnly(libs.placeholderapi)
+    compileOnly(libs.vault.api) { isTransitive = false}
+    compileOnly(libs.luckperms.api)
+    compileOnly(libs.bundles.inventory)
+
+    compileOnly(libs.slf4j.api)
+    compileOnly(libs.slf4j.jdk14)
+    compileOnly(libs.jboss.logging)
+
+    compileOnly(platform(libs.hibernate.platform))
+    compileOnly(libs.bundles.hibernate)
+
+    compileOnly(libs.caffeine)
+    compileOnly(libs.jackson.core)
+    compileOnly(libs.jackson.databind)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jackson.jsr310)
+    compileOnly(libs.java.uuid)
+    compileOnly(libs.xseries)
+
+    implementation(libs.bundles.jexcellence) { isTransitive = false }
+    implementation(libs.bundles.jeconfig) { isTransitive = false }
+    implementation(libs.bundles.inventory) { isTransitive = false }
+
+    compileOnly(libs.jexeconomy)
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveBaseName.set("RCore")
+    archiveClassifier.set("")
+    archiveVersion.set(project.version.toString())
+
+    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    relocate("org.h2", "de.jexcellence.remapped.org.h2")
+
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+    mergeServiceFiles()
+}
+
+tasks.named("build") {
+    dependsOn(tasks.named("shadowJar"))
+}
+
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenShadow") {
+            artifact(tasks.named("shadowJar"))
+            groupId = project.group.toString()
+            artifactId = "rcore"
+            version = project.version.toString()
+            pom {
+                name.set("RCore")
+                description.set(project.description)
+            }
+        }
     }
 }
 
-tasks.register("buildAll") {
-    group = "build"
-    description = "Builds Free and Premium shaded jars"
-    dependsOn(":RCore:rcore-free:shadowJar", ":RCore:rcore-premium:shadowJar")
+tasks.register("publishLocal") {
+    group = "publishing"
+    description = "Publishes RCore to local Maven repository"
+    dependsOn(
+        ":RCore:rcore-common:publishToMavenLocal",
+        "publishMavenShadowPublicationToMavenLocal"
+    )
     doLast {
-        val free = project(":RCore:rcore-free").tasks.named<Jar>("shadowJar").get().archiveFile.get().asFile
-        val premium = project(":RCore:rcore-premium").tasks.named<Jar>("shadowJar").get().archiveFile.get().asFile
-        println("✓ Built Free: $free")
-        println("✓ Built Premium: $premium")
+        println("✓ Published ${project.group}:rcore:${project.version} to local Maven")
+    }
+}
+
+// Disable the default 'maven' publication tasks since we only want mavenShadow
+tasks.withType<PublishToMavenRepository>().configureEach {
+    if (name.contains("MavenPublication")) {
+        enabled = false
     }
 }
