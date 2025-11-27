@@ -1,0 +1,43 @@
+commands:
+  pperk:
+    name: 'pperk'
+    description: 'View and manage player perks'
+    aliases:
+      - perk
+      - perks
+      - abilities
+    usage: '/pperk [list|activate|deactivate|info|admin] [args...]'
+    errorMessages:
+      unknownSubcommand$: 'lut["prefix"] & "&cUnknown subcommand. Use /perk help for available commands."'
+      noPermission$: 'lut["prefix"] & "&cYou do not have permission to use this command."'
+      playerOnly$: 'lut["prefix"] & "&cThis command can only be used by players."'
+      playerNotFound$: 'lut["prefix"] & "&cPlayer not found: " & playerName'
+      perkNotFound$: 'lut["prefix"] & "&cPerk not found: " & perkId'
+      perkNotUnlocked$: 'lut["prefix"] & "&cYou have not unlocked this perk."'
+      perkAlreadyActive$: 'lut["prefix"] & "&cThis perk is already active."'
+      perkNotActive$: 'lut["prefix"] & "&cThis perk is not currently active."'
+      perkOnCooldown$: 'lut["prefix"] & "&cThis perk is on cooldown. Time remaining: &e" & remaining'
+      requirementsNotMet$: 'lut["prefix"] & "&cYou do not meet the requirements for this perk."'
+      insufficientFunds$: 'lut["prefix"] & "&cInsufficient funds to unlock this perk. Required: &e" & required'
+    successMessages:
+      perkActivated$: 'lut["prefix"] & "&aActivated perk: &e" & perkName'
+      perkDeactivated$: 'lut["prefix"] & "&aDeactivated perk: &e" & perkName'
+      perkUnlocked$: 'lut["prefix"] & "&aUnlocked perk: &e" & perkName'
+      perkGranted$: 'lut["prefix"] & "&aGranted perk &e" & perkName & " &ato &f" & playerName'
+      perkRevoked$: 'lut["prefix"] & "&aRevoked perk &e" & perkName & " &afrom &f" & playerName'
+      reloaded$: 'lut["prefix"] & "&aPerk configuration reloaded!"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "&cYou lack the permission: " & permission'
+      nodes:
+        use: 'rdq.perk.use'
+        list: 'rdq.perk.list'
+        activate: 'rdq.perk.activate'
+        deactivate: 'rdq.perk.deactivate'
+        info: 'rdq.perk.info'
+        admin: 'rdq.perk.admin'
+        grant: 'rdq.perk.admin.grant'
+        revoke: 'rdq.perk.admin.revoke'
+        reload: 'rdq.perk.admin.reload'
+
+lut:
+  prefix: '&8[&6RDQ&8] &7'

@@ -1,83 +1,23 @@
-perkSettings:
-  icon:
-    material: "SUGAR"
-  displayNameKey: "perk.speed.name"
-  descriptionKey: "perk.speed.lore"
-  priority: 100
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    class: Speed
-    id: "speed"
-    displayName: "Speed Boost"
-    description: "Increases your movement speed"
-    category: "MOVEMENT"
-    rarity: "COMMON"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "SPEED"
-    showParticles: true
-    particleType: "CLOUD"
-    particleAmount: 5
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Speed Perk Configuration
+id: speed
+displayNameKey: perk_names.speed
+descriptionKey: perk_descriptions.speed
+category: movement
+iconMaterial: SUGAR
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    speed_vip: 0
-    speed_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 300
+durationSeconds: 60
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    speed_level1: 0
-    speed_level2: 1
-    speed_level3: 2
-    speed_vip: 1
-    speed_premium: 2
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    speed_vip: 0
-    speed_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 1000.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 50.0
+effect:
+  type: POTION_EFFECT
+  potionType: SPEED
+  amplifier: 1
 
 requirements:
-  speed:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "ITEM"
-        requiredItem:
-          type: "SUGAR"
-          amount: 128
-      - type: "ITEM"
-        requiredItem:
-          type: "SUGAR_CANE"
-          amount: 64
-      - type: "EXPERIENCE_LEVEL"
-        level: 30
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 2
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Speed boost activated!"
-  command:
-    type: "COMMAND"
-    command: "say {player} activated speed boost"
+  - type: RANK
+    rankId: warrior_2
+  - type: CURRENCY
+    currency: default
+    amount: 500

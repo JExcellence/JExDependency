@@ -1,282 +1,97 @@
-# Only specify displayNameKey and descriptionKey if you want to override the auto-generated ones
+# Cleric Rank Tree
+# The path of healing and support
 
-# Auto-generated:
-  # tree.<path>.name
-  # tree.<path>.description
-  # rank.<path>.<rank_id>.name
-  # rank.<path>.<rank_id>.description
+id: cleric
+displayNameKey: rank_trees.cleric.name
+descriptionKey: rank_trees.cleric.description
+iconMaterial: GOLDEN_APPLE
+displayOrder: 2
+enabled: true
 
-displayOrder: 1
-isEnabled: true
-isFinalRankTree: false
-requiresAllRankTreesToBeDone: false
-minimumRankTreesToBeDone: 1
-icon:
-  type: "GOLDEN_APPLE"
-  # Auto-generated: displayNameKey: "tree.cleric.name"
-  # Auto-generated: descriptionKey: "tree.cleric.lore"
-prerequisiteRankTrees: [ ]
-connectedRankTrees: [ ]
-switchableRankTiers: [ ]
-crossTreeProgression:
-  allowSwitching: true
-  switchRankTiers: [ ]
-  requireSameRankTier: false
-  allowDowngrade: false
-  switchingCosts: ""
-  switchingCooldown: 86400
 ranks:
-  acolyte:
-    # Auto-generated: displayNameKey: "rank.cleric.acolyte.name"
-    # Auto-generated: descriptionKey: "rank.cleric.acolyte.lore"
+  - id: cleric_1
+    displayNameKey: rank.cleric.acolyte
     tier: 1
-    weight: 10
-    luckPermsGroup: "cleric_acolyte"
-    prefixKey: "&8[&7Acolyte&8]"
-    suffixKey: ""
-    isInitialRank: true
+    weight: 100
+    luckPermsGroup: cleric_acolyte
+    prefixKey: rank.cleric.acolyte.prefix
+    iconMaterial: APPLE
     enabled: true
-    icon:
-      type: "BREAD"
-      # Auto-generated: displayNameKey: "rank.cleric.acolyte.name"
-      # Auto-generated: descriptionKey: "rank.cleric.acolyte.lore"
-    nextRanks: [ "devotee" ]
+    requirements: []
 
-  devotee:
-    # Auto-generated: displayNameKey: "rank.cleric.devotee.name"
-    # Auto-generated: descriptionKey: "rank.cleric.devotee.lore"
+  - id: cleric_2
+    displayNameKey: rank.cleric.healer
     tier: 2
-    weight: 20
-    luckPermsGroup: "cleric_devotee"
-    prefixKey: "&8[&fDevotee&8]"
-    suffixKey: ""
+    weight: 200
+    luckPermsGroup: cleric_healer
+    prefixKey: rank.cleric.healer.prefix
+    iconMaterial: GOLDEN_APPLE
     enabled: true
-    icon:
-      type: "TORCH"
-      # Auto-generated: displayNameKey: "rank.cleric.devotee.name"
-      # Auto-generated: descriptionKey: "rank.cleric.devotee.lore"
-    previousRanks: [ "acolyte" ]
-    nextRanks: [ "priest", "healer" ]
     requirements:
-      devotion_training:
-        type: "COMPOSITE"
-        operator: "AND"
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "TORCH"
-              amount: 16
-          - type: "ITEM"
-            requiredItem:
-              type: "WHEAT"
-              amount: 32
-          - type: "EXPERIENCE_LEVEL"
-            level: 8
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 5
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 10000
+      - type: ITEM
+        material: GOLDEN_APPLE
+        amount: 10
 
-  priest:
-    # Auto-generated: displayNameKey: "rank.cleric.priest.name"
-    # Auto-generated: descriptionKey: "rank.cleric.priest.lore"
+  - id: cleric_3
+    displayNameKey: rank.cleric.priest
     tier: 3
-    weight: 30
-    luckPermsGroup: "cleric_priest"
-    prefixKey: "&8[&ePriest&8]"
-    suffixKey: ""
+    weight: 300
+    luckPermsGroup: cleric_priest
+    prefixKey: rank.cleric.priest.prefix
+    iconMaterial: ENCHANTED_GOLDEN_APPLE
     enabled: true
-    icon:
-      type: "GOLDEN_APPLE"
-      # Auto-generated: displayNameKey: "rank.cleric.priest.name"
-      # Auto-generated: descriptionKey: "rank.cleric.priest.lore"
-    previousRanks: [ "devotee" ]
-    nextRanks: [ "bishop" ]
-    cross_tree_connections: [ "warrior:guardian" ]
     requirements:
-      priestly_duties:
-        type: "COMPOSITE"
-        operator: "AND"
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "GOLDEN_APPLE"
-              amount: 3
-          - type: "ITEM"
-            requiredItem:
-              type: "BOOK"
-              amount: 8
-          - type: "EXPERIENCE_LEVEL"
-            level: 15
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 12
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 50000
+      - type: ITEM
+        material: GOLDEN_APPLE
+        amount: 50
+      - type: CURRENCY
+        currency: default
+        amount: 5000
 
-  healer:
-    # Auto-generated: displayNameKey: "rank.cleric.healer.name"
-    # Auto-generated: descriptionKey: "rank.cleric.healer.lore"
-    tier: 3
-    weight: 30
-    luckPermsGroup: "cleric_healer"
-    prefixKey: "&8[&aHealer&8]"
-    suffixKey: ""
-    enabled: true
-    icon:
-      type: "POTION"
-      # Auto-generated: displayNameKey: "rank.cleric.healer.name"
-      # Auto-generated: descriptionKey: "rank.cleric.healer.lore"
-    previousRanks: [ "devotee" ]
-    nextRanks: [ "oracle" ]
-    cross_tree_connections: [ "merchant:alchemist" ]
-    requirements:
-      healing_arts:
-        type: "COMPOSITE"
-        operator: "MINIMUM"
-        minimumRequired: 3
-        allowPartialProgress: true
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "POTION"
-              amount: 8
-          - type: "ITEM"
-            requiredItem:
-              type: "SPIDER_EYE"
-              amount: 16
-          - type: "ITEM"
-            requiredItem:
-              type: "GHAST_TEAR"
-              amount: 2
-          - type: "ITEM"
-            requiredItem:
-              type: "BLAZE_POWDER"
-              amount: 8
-          - type: "EXPERIENCE_LEVEL"
-            level: 15
-
-  bishop:
-    # Auto-generated: displayNameKey: "rank.cleric.bishop.name"
-    # Auto-generated: descriptionKey: "rank.cleric.bishop.lore"
+  - id: cleric_4
+    displayNameKey: rank.cleric.bishop
     tier: 4
-    weight: 40
-    luckPermsGroup: "cleric_bishop"
-    prefixKey: "&8[&6Bishop&8]"
-    suffixKey: ""
+    weight: 400
+    luckPermsGroup: cleric_bishop
+    prefixKey: rank.cleric.bishop.prefix
+    iconMaterial: TOTEM_OF_UNDYING
     enabled: true
-    icon:
-      type: "BEACON"
-      # Auto-generated: displayNameKey: "rank.cleric.bishop.name"
-      # Auto-generated: descriptionKey: "rank.cleric.bishop.description"
-    previousRanks: [ "priest" ]
-    nextRanks: [ "high_priest" ]
-    cross_tree_connections: [ "warrior:paladin" ]
     requirements:
-      episcopal_authority:
-        type: "COMPOSITE"
-        operator: "AND"
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "BEACON"
-              amount: 1
-          - type: "ITEM"
-            requiredItem:
-              type: "DIAMOND"
-              amount: 8
-          - type: "ITEM"
-            requiredItem:
-              type: "EMERALD"
-              amount: 12
-          - type: "EXPERIENCE_LEVEL"
-            level: 25
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 25
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 150000
+      - type: ITEM
+        material: ENCHANTED_GOLDEN_APPLE
+        amount: 10
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: cleric_3
 
-  oracle:
-    # Auto-generated: displayNameKey: "rank.cleric.oracle.name"
-    # Auto-generated: descriptionKey: "rank.cleric.oracle.description"
-    tier: 4
-    weight: 40
-    luckPermsGroup: "cleric_oracle"
-    prefixKey: "&8[&bOracle&8]"
-    suffixKey: ""
-    enabled: true
-    icon:
-      type: "ENDER_PEARL"
-      # Auto-generated: displayNameKey: "rank.cleric.oracle.name"
-      # Auto-generated: descriptionKey: "rank.cleric.oracle.description"
-    previousRanks: [ "healer" ]
-    nextRanks: [ "high_priest" ]
-    requirements:
-      mystical_wisdom:
-        type: "COMPOSITE"
-        operator: "OR"
-        requirements:
-          - type: "COMPOSITE"
-            operator: "AND"
-            requirements:
-              - type: "ITEM"
-                requiredItem:
-                  type: "ENDER_PEARL"
-                  amount: 16
-              - type: "ITEM"
-                requiredItem:
-                  type: "ENDER_EYE"
-                  amount: 4
-          - type: "COMPOSITE"
-            operator: "AND"
-            requirements:
-              - type: "ITEM"
-                requiredItem:
-                  type: "ENCHANTED_BOOK"
-                  amount: 8
-              - type: "EXPERIENCE_LEVEL"
-                level: 30
-
-  high_priest:
-    # Auto-generated: displayNameKey: "rank.cleric.high_priest.name"
-    # Auto-generated: descriptionKey: "rank.cleric.high_priest.description"
+  - id: cleric_5
+    displayNameKey: rank.cleric.high_priest
     tier: 5
-    weight: 50
-    luckPermsGroup: "cleric_high_priest"
-    prefixKey: "&8[&d&lHigh Priest&8]"
-    suffixKey: ""
+    weight: 500
+    luckPermsGroup: cleric_high_priest
+    prefixKey: rank.cleric.high_priest.prefix
+    iconMaterial: BEACON
     enabled: true
-    icon:
-      type: "TOTEM_OF_UNDYING"
-      # Auto-generated: displayNameKey: "rank.cleric.high_priest.name"
-      # Auto-generated: descriptionKey: "rank.cleric.high_priest.description"
-    previousRanks: [ "bishop", "oracle" ]
-    nextRanks: [ ]
     requirements:
-      divine_mastery:
-        type: "COMPOSITE"
-        operator: "MINIMUM"
-        minimumRequired: 4
-        allowPartialProgress: true
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "TOTEM_OF_UNDYING"
-              amount: 2
-          - type: "ITEM"
-            requiredItem:
-              type: "NETHER_STAR"
-              amount: 1
-          - type: "ITEM"
-            requiredItem:
-              type: "DRAGON_BREATH"
-              amount: 8
-          - type: "ITEM"
-            requiredItem:
-              type: "ELYTRA"
-              amount: 1
-          - type: "EXPERIENCE_LEVEL"
-            level: 50
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 50
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 500000
+      - type: ITEM
+        material: TOTEM_OF_UNDYING
+        amount: 5
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: cleric_4

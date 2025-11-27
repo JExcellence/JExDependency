@@ -1,70 +1,23 @@
-perkSettings:
-  icon:
-    material: "ENDER_PEARL"
-  displayNameKey: "perk.night_vision.name"
-  descriptionKey: "perk.night_vision.lore"
-  priority: 75
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    class: NightVision
-    category: "UTILITY"
-    rarity: "COMMON"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "NIGHT_VISION"
-    showParticles: true
-    particleType: "GLOW"
-    particleAmount: 3
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Night Vision Perk Configuration
+id: night_vision
+displayNameKey: perk_names.night_vision
+descriptionKey: perk_descriptions.night_vision
+category: utility
+iconMaterial: GOLDEN_CARROT
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    night_vision_vip: 0
-    night_vision_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 60
+durationSeconds: 300
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    night_vision_level1: 0
-    night_vision_vip: 1
-    night_vision_premium: 1
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    night_vision_vip: 0
-    night_vision_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 600.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 30.0
+effect:
+  type: POTION_EFFECT
+  potionType: NIGHT_VISION
+  amplifier: 0
 
 requirements:
-  night_vision:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 10
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 1
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Night Vision perk activated! You can now see in the dark!"
-  command:
-    type: "COMMAND"
-    command: "say {player} activated night vision perk"
+  - type: RANK
+    rankId: rogue_2
+  - type: CURRENCY
+    currency: default
+    amount: 250

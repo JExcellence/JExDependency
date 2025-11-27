@@ -1,78 +1,23 @@
-#
-# Some header test
-#
+# Double Experience Perk Configuration
+id: double_experience
+displayNameKey: perk_names.double_experience
+descriptionKey: perk_descriptions.double_experience
+category: utility
+iconMaterial: EXPERIENCE_BOTTLE
+enabled: true
 
-perkSettings:
-  icon:
-    material: "EXPERIENCE_BOTTLE"
-  displayNameKey: "perk.double_experience.name"
-  descriptionKey: "perk.double_experience.lore"
-  priority: 90
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    id: "double_experience"
-    requiredPermission: "raindropcentral.perks.double_experience"
-    displayName: "Experience Boost"
-    description: "Increases your experience"
-    category: "UTILITY"
-    rarity: "UNCOMMON"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "DOUBLE_EXPERIENCE"
-    showParticles: true
-    particleType: "ENCHANT"
-    particleAmount: 4
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+type: EVENT_BASED
+eventType: EXPERIENCE_GAIN
+cooldownSeconds: 1800
+durationSeconds: 600
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    double_experience_vip: 0
-    double_experience_premium: 0
-
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    double_experience_level1: 0
-    double_experience_level2: 0
-    double_experience_level3: 0
-    double_experience_vip: 0
-    double_experience_premium: 0
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    double_experience_vip: 0
-    double_experience_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 1500.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 75.0
+effect:
+  type: EXPERIENCE_MULTIPLIER
+  multiplier: 2.0
 
 requirements:
-  double_experience:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 25
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 5
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Your experience gains have been doubled!"
-  command:
-    type: "COMMAND"
-    command: "say {player} is now gaining double experience!"
+  - type: RANK
+    rankId: mage_3
+  - type: CURRENCY
+    currency: default
+    amount: 5000

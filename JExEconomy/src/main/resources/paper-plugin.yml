@@ -1,12 +1,8 @@
-# Paper plugin configuration for JExEconomyImpl
-# This file is used by Paper servers to load dependencies before the plugin starts
-
 name: JExEconomy
 version: '2.0.0'
 main: de.jexcellence.economy.JExEconomy
 description: Modern currency plugin with automatic dependency management
 author: JExcellence
 website: https://github.com/JExcellence/JExEconomy
-# Paper plugin loader - loads dependencies before plugin initialization
 loader: de.jexcellence.dependency.loader.PaperPluginLoader
 api-version: '1.19'

@@ -1,174 +1,170 @@
 package com.raindropcentral.rdq;
 
-import com.raindropcentral.rdq.manager.RDQFreeManager;
-import com.raindropcentral.rdq.manager.RDQManager;
-import com.raindropcentral.rdq.service.bounty.BountyService;
-import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
-import com.raindropcentral.rdq.service.FreeBountyService;
-import com.raindropcentral.rdq.view.perks.PerkAdminView;
-import com.raindropcentral.rdq.view.perks.PerkDetailView;
-import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
-import com.raindropcentral.rdq.view.perks.PerkMainView;
-import com.raindropcentral.rdq.view.perks.PerkRequirementView;
-import com.raindropcentral.rdq.view.perks.PerkUnlockView;
+import com.raindropcentral.rdq.api.FreeBountyService;
+import com.raindropcentral.rdq.api.FreePerkService;
+import com.raindropcentral.rdq.api.FreeRankService;
+import com.raindropcentral.rdq.shared.edition.EditionFeatures;
+import com.raindropcentral.rdq.shared.edition.FreeEditionFeatures;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
-import me.devnatan.inventoryframework.ViewFrame;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Free variant implementation of RaindropQuests.
+ * Implementation delegate for RDQ Free Edition.
  * <p>
- * This implementation provides limited functionality by wiring up services
- * and managers suitable for the free tier. It correctly hooks into the
- * asynchronous startup sequence of the abstract RDQ class.
+ * This class handles all the actual plugin logic, separated from the main plugin class
+ * to allow for proper dependency loading via JEDependency before any external classes
+ * are referenced.
  * </p>
  *
  * @author JExcellence
- * @version 3.0.0
- * @since 2.0.0
+ * @version 6.0.0
+ * @since 6.0.0
  */
 public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
 
-    private static final Logger LOGGER = Logger.getLogger(RDQFreeImpl.class.getName());
     private static final String EDITION = "Free";
+    private static final Logger LOGGER = CentralLogger.getLogger(RDQFreeImpl.class);
 
-    private RDQ rdq;
-    private BountyService bountyService;
+    private @Nullable RDQCore core;
+    private @Nullable EditionFeatures editionFeatures;
+    private @Nullable FreeRankService rankService;
+    private @Nullable FreePerkService perkService;
+    private @Nullable FreeBountyService bountyService;
 
-    public RDQFreeImpl(final @NotNull RDQFree plugin) {
+    public RDQFreeImpl(@NotNull RDQFree plugin) {
         super(plugin);
     }
 
     @Override
     public void onLoad() {
-        try {
-            this.rdq = new RDQ(this.getPlugin(), EDITION) {
-                @Override
-                protected @NotNull String getStartupMessage() {
-                    return STARTUP_MESSAGE;
-                }
-
-                @Override
-                protected int getMetricsId() {
-                    return 25810; // Free Edition Metrics ID
-                }
-
-                @Override
-                protected @NotNull ViewFrame registerViews(@NotNull ViewFrame viewFrame) {
-                    return viewFrame
-                            .with(new PerkMainView())
-                            .with(new PerkListViewFrame())
-                            .with(new PerkDetailView())
-                            .with(new PerkRequirementView())
-                            .with(new PerkUnlockView())
-                            .with(new PerkAdminView());
-                }
-
-                /**
-                 * This method is called by the RDQ base class at the correct point in the
-                 * startup sequence, after core components are ready.
-                 */
-                @Override
-                protected @NotNull RDQManager initializeManager(@NotNull RDQ rdq) {
-                    // 1. Initialize services.
-                    bountyService = new FreeBountyService();
-                    BountyServiceProvider.setInstance(bountyService);
-                    registerServices();
-
-                    // 2. Initialize the main manager, passing it all necessary dependencies.
-                    RDQManager manager = new RDQFreeManager(getPlugin(), getPlatform());
-                    manager.initialize();
-
-                    return manager;
-                }
-            };
-
-            this.rdq.onLoad();
-
-        } catch (final Exception exception) {
-            LOGGER.log(Level.SEVERE, "Failed to load RDQ " + EDITION, exception);
-            throw new RuntimeException(exception);
-        }
+        CentralLogger.initialize(getPlugin());
+        LOGGER.info("Loading RDQ " + EDITION + " Edition v" + getVersion());
     }
 
     @Override
     public void onEnable() {
-        if (this.rdq == null) {
-            LOGGER.severe("Cannot enable - RDQ Free failed during onLoad.");
-            this.getPlugin().getServer().getPluginManager().disablePlugin(this.getPlugin());
-            return;
+        LOGGER.info("Starting RDQ " + EDITION + " Edition v" + getVersion());
+
+        try {
+            editionFeatures = new FreeEditionFeatures();
+            core = new RDQCore(getPlugin(), EDITION, editionFeatures);
+
+            core.initialize()
+                .thenRun(this::initializeServices)
+                .exceptionally(ex -> {
+                    LOGGER.log(Level.SEVERE, "Failed to initialize RDQ " + EDITION, ex);
+                    getServer().getPluginManager().disablePlugin(getPlugin());
+                    return null;
+                });
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to enable RDQ " + EDITION, e);
+            getServer().getPluginManager().disablePlugin(getPlugin());
         }
-        // Delegate to the base class, which handles the full async startup chain.
-        this.rdq.onEnable();
     }
 
     @Override
     public void onDisable() {
-        try {
-            unregisterServices();
-            if (this.rdq != null) {
-                this.rdq.onDisable();
-            }
-            LOGGER.info("RDQ " + EDITION + " Edition disabled successfully");
-        } catch (final Exception exception) {
-            LOGGER.log(Level.SEVERE, "Error during RDQ " + EDITION + " shutdown", exception);
+        LOGGER.info("Disabling RDQ " + EDITION + " Edition...");
+        
+        if (core != null) {
+            core.shutdown();
         }
+        
+        LOGGER.info("RDQ " + EDITION + " Edition disabled");
     }
 
-
-
-    public @NotNull RDQ getRDQ() {
-        return this.rdq;
-    }
-
-    private void registerServices() {
-        if (this.bountyService != null) {
-            Bukkit.getServer().getServicesManager().register(
-                    BountyService.class,
-                    this.bountyService,
-                    this.getPlugin(),
-                    ServicePriority.Normal // Free version uses Normal priority
-            );
-            LOGGER.info("Registered BountyService provider (Free) with priority NORMAL.");
+    private void initializeServices() {
+        if (core == null) {
+            LOGGER.severe("Cannot initialize services - core is null");
+            return;
         }
+
+        LOGGER.info("Initializing " + EDITION + " edition services...");
+
+        rankService = core.createFreeRankService();
+        if (rankService != null) {
+            core.registerRankService(rankService);
+            LOGGER.info("Registered FreeRankService (single active tree)");
+        }
+
+        perkService = core.createFreePerkService();
+        if (perkService != null) {
+            core.registerPerkService(perkService);
+            LOGGER.info("Registered FreePerkService (single active perk)");
+        }
+
+        bountyService = core.createFreeBountyService();
+        if (bountyService != null) {
+            core.registerBountyService(bountyService);
+            LOGGER.info("Registered FreeBountyService");
+        }
+
+        core.registerServiceDependentViews();
+
+        LOGGER.info("RDQ " + EDITION + " Edition services initialized successfully!");
+        printStartupBanner();
     }
 
-    private void unregisterServices() {
-        Optional.ofNullable(Bukkit.getServer().getServicesManager().getRegistration(BountyService.class))
-                .ifPresent(registration -> {
-                    if (registration.getProvider() == this.bountyService) {
-                        Bukkit.getServer().getServicesManager().unregister(BountyService.class, this.bountyService);
-                        LOGGER.info("Unregistered BountyService provider (Free).");
-                    }
-                });
-        BountyServiceProvider.reset();
+    private void printStartupBanner() {
+        LOGGER.info(STARTUP_MESSAGE);
+    }
+
+    @NotNull
+    public RDQCore getCore() {
+        if (core == null) {
+            throw new IllegalStateException("RDQCore not initialized");
+        }
+        return core;
+    }
+
+    @NotNull
+    public EditionFeatures getEditionFeatures() {
+        if (editionFeatures == null) {
+            throw new IllegalStateException("EditionFeatures not initialized");
+        }
+        return editionFeatures;
+    }
+
+    @Nullable
+    public FreeRankService getRankService() {
+        return rankService;
+    }
+
+    @Nullable
+    public FreePerkService getPerkService() {
+        return perkService;
+    }
+
+    @Nullable
+    public FreeBountyService getBountyService() {
+        return bountyService;
     }
 
     private static final String STARTUP_MESSAGE = """
-        ===============================================================================================
-                    ____     ____      ___
-                   |  _ \\   |  _ \\    / _ \\
-                   | |_) |  | | | |  | | | |
-                   |  _ <   | |_| |  | |_| |
-                   |_| \\_\\  |____/    \\__\\_\\
-        
-                   RaindropQuests - Free Edition
-                   Product of Antimatter Zone LLC
-                   Powered by JExcellence
-        ===============================================================================================
-        Quest System: Enabled
-        Rank System: Enabled
-        Bounty System: Limited (View Only)
-        Perk System: Enabled
-        ===============================================================================================
-        Language System: JExTranslate v3.0
-        Adventure Components: Enabled
-        ===============================================================================================
-        """;
+    ===============================================================================================
+                ____     ____      ___
+               |  _ \\   |  _ \\    / _ \\
+               | |_) |  | | | |  | | | |
+               |  _ <   | |_| |  | |_| |
+               |_| \\_\\  |____/    \\__\\_\\
+                    RaindropQuests - Free Edition
+               Product of Antimatter Zone LLC
+               Powered by JExcellence
+    ===============================================================================================
+    Rank System: Enabled (Limited - Single Tree)
+    Bounty System: Enabled (Limited)
+    Perk System: Enabled (Limited - Single Active Perk)
+    ===============================================================================================
+    Language System: JExTranslate v3.0
+    Adventure Components: Enabled
+    Database: Connected
+    ===============================================================================================
+    Upgrade to Premium for full features!
+    ===============================================================================================
+    """;
 }

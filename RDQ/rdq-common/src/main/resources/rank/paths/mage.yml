@@ -1,301 +1,97 @@
-# Only specify displayNameKey and descriptionKey if you want to override the auto-generated ones
+# Mage Rank Tree
+# The path of magic and wisdom
 
-# Auto-generated:
-  # tree.<path>.name
-  # tree.<path>.description
-  # rank.<path>.<rank_id>.name
-  # rank.<path>.<rank_id>.description
+id: mage
+displayNameKey: rank_trees.mage.name
+descriptionKey: rank_trees.mage.description
+iconMaterial: BLAZE_ROD
+displayOrder: 3
+enabled: true
 
-displayOrder: 2
-isEnabled: true
-isFinalRankTree: false
-requiresAllRankTreesToBeDone: false
-minimumRankTreesToBeDone: 1
-icon:
-  type: "ENCHANTED_BOOK"
-  displayNameKey: "tree.mage.name"
-  descriptionKey: "tree.mage.lore"
-prerequisiteRankTrees: [ ]
-connectedRankTrees: [ ]
-switchableRankTiers: [ ]
-crossTreeProgression:
-  allowSwitching: true
-  switchRankTiers: [ ]
-  requireSameRankTier: false
-  allowDowngrade: false
-  switchingCosts: ""
-  switchingCooldown: 86400
 ranks:
-  apprentice:
-    # Auto-generated: displayNameKey: "rank.mage.apprentice.name"
-    # Auto-generated: descriptionKey: "rank.mage.apprentice.lore"
+  - id: mage_1
+    displayNameKey: rank.mage.apprentice
     tier: 1
-    weight: 10
-    luckPermsGroup: "mage_apprentice"
-    prefixKey: "&8[&7Apprentice&8]"
-    suffixKey: ""
-    isInitialRank: true
+    weight: 100
+    luckPermsGroup: mage_apprentice
+    prefixKey: rank.mage.apprentice.prefix
+    iconMaterial: STICK
     enabled: true
-    icon:
-      type: "BOOK"
-      # Auto-generated: displayNameKey: "rank.mage.apprentice.name"
-      # Auto-generated: descriptionKey: "rank.mage.apprentice.lore"
-    nextRanks: [ "scholar" ]
+    requirements: []
 
-  scholar:
-    # Auto-generated: displayNameKey: "rank.mage.scholar.name"
-    # Auto-generated: descriptionKey: "rank.mage.scholar.lore"
+  - id: mage_2
+    displayNameKey: rank.mage.adept
     tier: 2
-    weight: 20
-    luckPermsGroup: "mage_scholar"
-    prefixKey: "&8[&9Scholar&8]"
-    suffixKey: ""
+    weight: 200
+    luckPermsGroup: mage_adept
+    prefixKey: rank.mage.adept.prefix
+    iconMaterial: BLAZE_ROD
     enabled: true
-    icon:
-      type: "WRITABLE_BOOK"
-      # Auto-generated: displayNameKey: "rank.mage.scholar.name"
-      # Auto-generated: descriptionKey: "rank.mage.scholar.lore"
-    previousRanks: [ "apprentice" ]
-    nextRanks: [ "elementalist", "enchanter" ]
     requirements:
-      scholarly_research:
-        type: "COMPOSITE"
-        operator: "AND"
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "WRITABLE_BOOK"
-              amount: 2
-          - type: "ITEM"
-            requiredItem:
-              type: "INK_SAC"
-              amount: 16
-          - type: "ITEM"
-            requiredItem:
-              type: "BOOKSHELF"
-              amount: 4
-          - type: "EXPERIENCE_LEVEL"
-            level: 10
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 8
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 1000
+      - type: ITEM
+        material: ENCHANTED_BOOK
+        amount: 5
 
-  elementalist:
-    # Auto-generated: displayNameKey: "rank.mage.elementalist.name"
-    # Auto-generated: descriptionKey: "rank.mage.elementalist.lore"
+  - id: mage_3
+    displayNameKey: rank.mage.wizard
     tier: 3
-    weight: 30
-    luckPermsGroup: "mage_elementalist"
-    prefixKey: "&8[&cElementalist&8]"
-    suffixKey: ""
+    weight: 300
+    luckPermsGroup: mage_wizard
+    prefixKey: rank.mage.wizard.prefix
+    iconMaterial: END_ROD
     enabled: true
-    icon:
-      type: "FIRE_CHARGE"
-      # Auto-generated: displayNameKey: "rank.mage.elementalist.name"
-      # Auto-generated: descriptionKey: "rank.mage.elementalist.lore"
-    previousRanks: [ "scholar" ]
-    nextRanks: [ "sorcerer" ]
-    cross_tree_connections: [ "warrior:berserker" ]
     requirements:
-      elemental_mastery:
-        type: "COMPOSITE"
-        operator: "MINIMUM"
-        minimumRequired: 3
-        allowPartialProgress: true
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "FIRE_CHARGE"
-              amount: 16
-          - type: "ITEM"
-            requiredItem:
-              type: "ICE"
-              amount: 32
-          - type: "ITEM"
-            requiredItem:
-              type: "REDSTONE"
-              amount: 64
-          - type: "ITEM"
-            requiredItem:
-              type: "FEATHER"
-              amount: 24
-          - type: "EXPERIENCE_LEVEL"
-            level: 18
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 5000
+      - type: ITEM
+        material: ENCHANTED_BOOK
+        amount: 25
+      - type: CURRENCY
+        currency: default
+        amount: 5000
 
-  enchanter:
-    # Auto-generated: displayNameKey: "rank.mage.enchanter.name"
-    # Auto-generated: descriptionKey: "rank.mage.enchanter.lore"
-    tier: 3
-    weight: 30
-    luckPermsGroup: "mage_enchanter"
-    prefixKey: "&8[&dEnchanter&8]"
-    suffixKey: ""
-    enabled: true
-    icon:
-      type: "ENCHANTING_TABLE"
-      # Auto-generated: displayNameKey: "rank.mage.enchanter.name"
-      # Auto-generated: descriptionKey: "rank.mage.enchanter.lore"
-    previousRanks: [ "scholar" ]
-    nextRanks: [ "wizard" ]
-    cross_tree_connections: [ "merchant:artificer" ]
-    requirements:
-      enchanting_arts:
-        type: "COMPOSITE"
-        operator: "AND"
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "ENCHANTING_TABLE"
-              amount: 1
-          - type: "ITEM"
-            requiredItem:
-              type: "LAPIS_LAZULI"
-              amount: 32
-          - type: "ITEM"
-            requiredItem:
-              type: "ENCHANTED_BOOK"
-              amount: 5
-          - type: "EXPERIENCE_LEVEL"
-            level: 20
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 15
-
-  sorcerer:
-    # Auto-generated: displayNameKey: "rank.mage.sorcerer.name"
-    # Auto-generated: descriptionKey: "rank.mage.sorcerer.lore"
+  - id: mage_4
+    displayNameKey: rank.mage.sorcerer
     tier: 4
-    weight: 40
-    luckPermsGroup: "mage_sorcerer"
-    prefixKey: "&8[&4Sorcerer&8]"
-    suffixKey: ""
+    weight: 400
+    luckPermsGroup: mage_sorcerer
+    prefixKey: rank.mage.sorcerer.prefix
+    iconMaterial: ENDER_EYE
     enabled: true
-    icon:
-      type: "BLAZE_ROD"
-      # Auto-generated: displayNameKey: "rank.mage.sorcerer.name"
-      # Auto-generated: descriptionKey: "rank.mage.sorcerer.description"
-    previousRanks: [ "elementalist" ]
-    nextRanks: [ "archmage" ]
     requirements:
-      destructive_magic:
-        type: "COMPOSITE"
-        operator: "OR"
-        requirements:
-          - type: "COMPOSITE"
-            operator: "AND"
-            requirements:
-              - type: "ITEM"
-                requiredItem:
-                  type: "BLAZE_ROD"
-                  amount: 8
-              - type: "ITEM"
-                requiredItem:
-                  type: "MAGMA_CREAM"
-                  amount: 16
-          - type: "COMPOSITE"
-            operator: "AND"
-            requirements:
-              - type: "ITEM"
-                requiredItem:
-                  type: "WITHER_SKELETON_SKULL"
-                  amount: 2
-              - type: "EXPERIENCE_LEVEL"
-                level: 30
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 25000
+      - type: ITEM
+        material: ENDER_PEARL
+        amount: 64
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: mage_3
 
-  wizard:
-    # Auto-generated: displayNameKey: "rank.mage.wizard.name"
-    # Auto-generated: descriptionKey: "rank.mage.wizard.description"
-    tier: 4
-    weight: 40
-    luckPermsGroup: "mage_wizard"
-    prefixKey: "&8[&5Wizard&8]"
-    suffixKey: ""
-    enabled: true
-    icon:
-      type: "END_ROD"
-      # Auto-generated: displayNameKey: "rank.mage.wizard.name"
-      # Auto-generated: descriptionKey: "rank.mage.wizard.description"
-    previousRanks: [ "enchanter" ]
-    nextRanks: [ "archmage" ]
-    requirements:
-      arcane_knowledge:
-        type: "COMPOSITE"
-        operator: "AND"
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "END_ROD"
-              amount: 4
-          - type: "ITEM"
-            requiredItem:
-              type: "ENDER_PEARL"
-              amount: 8
-          - type: "ITEM"
-            requiredItem:
-              type: "CHORUS_FRUIT"
-              amount: 16
-          - type: "ITEM"
-            requiredItem:
-              type: "SHULKER_SHELL"
-              amount: 2
-          - type: "EXPERIENCE_LEVEL"
-            level: 35
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 30
-
-  archmage:
-    # Auto-generated: displayNameKey: "rank.mage.archmage.name"
-    # Auto-generated: descriptionKey: "rank.mage.archmage.description"
+  - id: mage_5
+    displayNameKey: rank.mage.archmage
     tier: 5
-    weight: 50
-    luckPermsGroup: "mage_archmage"
-    prefixKey: "&8[&6Archmage&8]"
-    suffixKey: ""
+    weight: 500
+    luckPermsGroup: mage_archmage
+    prefixKey: rank.mage.archmage.prefix
+    iconMaterial: NETHER_STAR
     enabled: true
-    icon:
-      type: "NETHER_STAR"
-      # Auto-generated: displayNameKey: "rank.mage.archmage.name"
-      # Auto-generated: descriptionKey: "rank.mage.archmage.description"
-    previousRanks: [ "sorcerer", "wizard" ]
-    nextRanks: [ ]
     requirements:
-      ultimate_mastery:
-        type: "COMPOSITE"
-        operator: "MINIMUM"
-        minimumRequired: 5
-        allowPartialProgress: true
-        requirements:
-          - type: "ITEM"
-            requiredItem:
-              type: "NETHER_STAR"
-              amount: 2
-          - type: "ITEM"
-            requiredItem:
-              type: "DRAGON_EGG"
-              amount: 1
-          - type: "ITEM"
-            requiredItem:
-              type: "BEACON"
-              amount: 1
-          - type: "ITEM"
-            requiredItem:
-              type: "ELYTRA"
-              amount: 1
-          - type: "ITEM"
-            requiredItem:
-              type: "ENCHANTED_GOLDEN_APPLE"
-              amount: 4
-          - type: "ITEM"
-            requiredItem:
-              type: "TOTEM_OF_UNDYING"
-              amount: 1
-          - type: "EXPERIENCE_LEVEL"
-            level: 50
-          - type: "PLAYTIME"
-            playtimeRequirement:
-              useTotalPlayTime: true
-              requiredPlaytimeHours: 60
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 100000
+      - type: ITEM
+        material: NETHER_STAR
+        amount: 1
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: mage_4

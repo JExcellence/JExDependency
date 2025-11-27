@@ -1,69 +1,23 @@
-perkSettings:
-  icon:
-    material: "PRISMARINE_SHARD"
-  displayNameKey: "perk.water_breathing.name"
-  descriptionKey: "perk.water_breathing.lore"
-  priority: 82
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    category: "UTILITY"
-    rarity: "RARE"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "WATER_BREATHING"
-    showParticles: true
-    particleType: "BUBBLE"
-    particleAmount: 4
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Water Breathing Perk Configuration
+id: water_breathing
+displayNameKey: perk_names.water_breathing
+descriptionKey: perk_descriptions.water_breathing
+category: utility
+iconMaterial: PUFFERFISH
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    water_breathing_vip: 0
-    water_breathing_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 120
+durationSeconds: 300
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    water_breathing_level1: 0
-    water_breathing_vip: 1
-    water_breathing_premium: 1
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    water_breathing_vip: 0
-    water_breathing_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 1400.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 70.0
+effect:
+  type: POTION_EFFECT
+  potionType: WATER_BREATHING
+  amplifier: 0
 
 requirements:
-  water_breathing:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 22
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 3
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Water Breathing perk activated! You can now breathe underwater!"
-  command:
-    type: "COMMAND"
-    command: "say {player} activated water breathing perk"
+  - type: RANK
+    rankId: ranger_2
+  - type: CURRENCY
+    currency: default
+    amount: 300

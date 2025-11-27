@@ -1,167 +1,379 @@
-defaultGroup: "default"
-defaultGroupPermissions:
-  RDQImpl:
-    - raindropquests.player
+# RDQ Permission Configuration
+# This file documents all permission nodes used by the RDQ plugin
+# These permissions are registered with the server and can be managed via LuckPerms or other permission plugins
 
-  RDR:
-    - raindropreserve.player
+# ============================================
+# Permission Hierarchy
+# ============================================
+# rdq.*                          - All RDQ permissions (admin)
+#   rdq.rank.*                   - All rank permissions
+#   rdq.bounty.*                 - All bounty permissions
+#   rdq.perk.*                   - All perk permissions
+#   rdq.admin.*                  - All admin permissions
 
-  Aura:
-    - auraskills.command.skills
-    - auraskills.command.stats
-    - auraskills.command.sources
-    - auraskills.command.help
-    - auraskills.command.mana
-    - auraskills.command.top
-    - auraskills.command.rank
-    - auraskills.command.lang
-    - auraskills.command.abtoggle
-    - auraskills.command.claimitems
+permissions:
+  # ============================================
+  # Root Permissions
+  # ============================================
+  rdq.*:
+    description: "Grants all RDQ permissions"
+    default: op
+    children:
+      rdq.rank.*: true
+      rdq.bounty.*: true
+      rdq.perk.*: true
+      rdq.admin.*: true
 
-  ChestSort:
-    - chestsort.use
-    - chestsort.use.inventory
+  rdq.use:
+    description: "Allows basic RDQ command usage"
+    default: true
 
-  CMI:
-    - cmi.bedhome
-    - cmi.command.back
-    - cmi.command.balance
-    - cmi.command.baltop
-    - cmi.command.chat
-    - cmi.command.checkxp
-    - cmi.command.dback
-    - cmi.command.info
-    - cmi.command.money.give
-    - cmi.command.msg
-    - cmi.command.mute
-    - cmi.command.pay
-    - cmi.command.suicide
-    - cmi.command.tphere
-    - cmi.command.tpdeny
-    - cmi.command.tpahere
-    - cmi.command.tpaccept
-    - cmi.command.tpa
-    - cmi.command.tp
-    - cmi.command.playtime
-    - cmi.command.ptime
-    - cmi.command.recipe
-    - cmi.command.sethome
-    - cmi.command.rt
-    - cmi.command.home
-    - cmi.command.hat
+  rdq.help:
+    description: "Allows viewing RDQ help"
+    default: true
 
-  DiscordSRV:
-    - discordsrv.chat
-    - discordsrv.player
-    - discordsrv.link
-    - discordsrv.unlink
+  # ============================================
+  # Rank System Permissions
+  # ============================================
+  rdq.rank.*:
+    description: "Grants all rank permissions"
+    default: op
+    children:
+      rdq.rank.use: true
+      rdq.rank.view: true
+      rdq.rank.progress: true
+      rdq.rank.trees: true
+      rdq.rank.unlock: true
+      rdq.rank.admin.*: true
 
-  EcoJobs:
-    - ecojobs.command.jobs
-    - ecojobs.command.join
-    - ecojobs.command.leave
+  rdq.rank.use:
+    description: "Allows using rank commands"
+    default: true
 
-  Essentials:
-    - essentials.afk
-    - essentials.back
-    - essentials.balance
-    - essentials.balancetop
-    - essentials.compass
-    - essentials.condense
-    - essentials.eco
-    - essentials.enderchest
-    - essentials.exp
-    - essentials.exp.give
-    - essentials.hat
-    - essentials.help
-    - essentials.home.bed
-    - essentials.ignore
-    - essentials.msg
-    - essentials.msg.magic
-    - essentials.msg.format
-    - essentials.mute
-    - essentials.pay
-    - essentials.rules
-    - essentials.sethome
-    - essentials.sethome.bed
-    - essentials.delhome
-    - essentials.setwarp
-    - essentials.suicide
-    - essentials.top
-    - essentials.tp
-    - essentials.tp.others
-    - essentials.tpa
-    - essentials.tpacancel
-    - essentials.tpahere
-    - essentials.tpdeny
-    - essentials.tphere
-    - essentials.warp
-    - essentials.warp.list
-    - essentials.warpinfo
-    - essentials.warps.*
-    - essentials.link
-    - essentials.unlink
+  rdq.rank.view:
+    description: "Allows viewing rank trees and details"
+    default: true
 
-  EssentialsChat:
-    - essentials.chat.color
-    - essentials.chat.format
-    - essentials.chat.local
+  rdq.rank.progress:
+    description: "Allows viewing personal rank progress"
+    default: true
 
-  EssentialsDiscord:
-    - essentials.discord
+  rdq.rank.trees:
+    description: "Allows listing available rank trees"
+    default: true
 
-  EssentialsSpawn:
-    - essentials.spawn
-    - essentials.setspawn
+  rdq.rank.unlock:
+    description: "Allows unlocking ranks when requirements are met"
+    default: true
 
-  HuskTowns:
-    - husktowns.command.town.*
+  rdq.rank.switch:
+    description: "Allows switching between rank trees (premium)"
+    default: false
 
-  Jobs:
-    - jobs.use
-    - jobs.command.browse
-    - jobs.command.top
-    - jobs.command.join
-    - jobs.command.leave
-    - jobs.command.leaveall
-    - jobs.command.info
+  rdq.rank.bypass.cooldown:
+    description: "Bypasses rank switching cooldown"
+    default: op
 
-  mcMMO:
-    - mcmmo.defaults
+  rdq.rank.bypass.requirements:
+    description: "Bypasses rank requirements"
+    default: op
 
-  Towny:
-    - towny.claimed.owntown.build.*
-    - towny.claimed.owntown.destroy.*
-    - towny.command.plot.claim
-    - towny.command.plot.unclaim
-    - towny.command.plot.perm
-    - towny.command.plot.toggle.*
-    - towny.command.plot.set.*
-    - towny.command.plot.clear
-    - towny.command.resident.*
-    - towny.command.town.here
-    - towny.command.town.list
-    - towny.command.town.new
-    - towny.command.town.leave
-    - towny.command.town.withdraw
-    - towny.command.town.deposit
-    - towny.command.town.rank.*
-    - towny.command.town.reslist
-    - towny.command.town.claim.*
-    - towny.command.town.unclaim
-    - towny.command.town.online
-    - towny.command.nation.list
-    - towny.command.nation.new
-    - towny.command.nation.leave
-    - towny.command.nation.withdraw
-    - towny.command.nation.deposit
-    - towny.command.nation.rank.*
-    - towny.wild.build.*
-    - towny.wild.destroy.*
-    - towny.wild.switch.*
-    - towny.wild.item_use.*
+  # Rank Admin Permissions
+  rdq.rank.admin.*:
+    description: "Grants all rank admin permissions"
+    default: op
+    children:
+      rdq.rank.admin.grant: true
+      rdq.rank.admin.revoke: true
+      rdq.rank.admin.reload: true
+      rdq.rank.admin.reset: true
 
-  TownyChat:
-    - towny.chat.general
-    - towny.chat.town
-    - towny.chat.nation
+  rdq.rank.admin.grant:
+    description: "Allows granting ranks to players"
+    default: op
+
+  rdq.rank.admin.revoke:
+    description: "Allows revoking ranks from players"
+    default: op
+
+  rdq.rank.admin.reload:
+    description: "Allows reloading rank configuration"
+    default: op
+
+  rdq.rank.admin.reset:
+    description: "Allows resetting player rank progress"
+    default: op
+
+  # ============================================
+  # Bounty System Permissions
+  # ============================================
+  rdq.bounty.*:
+    description: "Grants all bounty permissions"
+    default: op
+    children:
+      rdq.bounty.use: true
+      rdq.bounty.create: true
+      rdq.bounty.list: true
+      rdq.bounty.cancel: true
+      rdq.bounty.leaderboard: true
+      rdq.bounty.my: true
+      rdq.bounty.admin.*: true
+
+  rdq.bounty.use:
+    description: "Allows using bounty commands"
+    default: true
+
+  rdq.bounty.create:
+    description: "Allows creating bounties on players"
+    default: true
+
+  rdq.bounty.list:
+    description: "Allows viewing active bounties"
+    default: true
+
+  rdq.bounty.cancel:
+    description: "Allows cancelling own bounties"
+    default: true
+
+  rdq.bounty.leaderboard:
+    description: "Allows viewing bounty leaderboard"
+    default: true
+
+  rdq.bounty.my:
+    description: "Allows viewing personal bounty information"
+    default: true
+
+  rdq.bounty.bypass.cooldown:
+    description: "Bypasses bounty placement cooldown"
+    default: op
+
+  rdq.bounty.bypass.limit:
+    description: "Bypasses bounty amount limits"
+    default: op
+
+  rdq.bounty.bypass.selftarget:
+    description: "Allows placing bounties on self (testing)"
+    default: op
+
+  # Bounty Admin Permissions
+  rdq.bounty.admin.*:
+    description: "Grants all bounty admin permissions"
+    default: op
+    children:
+      rdq.bounty.admin.remove: true
+      rdq.bounty.admin.reload: true
+      rdq.bounty.admin.clear: true
+
+  rdq.bounty.admin.remove:
+    description: "Allows removing any bounty"
+    default: op
+
+  rdq.bounty.admin.reload:
+    description: "Allows reloading bounty configuration"
+    default: op
+
+  rdq.bounty.admin.clear:
+    description: "Allows clearing all bounties"
+    default: op
+
+  # ============================================
+  # Perk System Permissions
+  # ============================================
+  rdq.perk.*:
+    description: "Grants all perk permissions"
+    default: op
+    children:
+      rdq.perk.use: true
+      rdq.perk.list: true
+      rdq.perk.info: true
+      rdq.perk.activate: true
+      rdq.perk.deactivate: true
+      rdq.perk.admin.*: true
+
+  rdq.perk.use:
+    description: "Allows using perk commands"
+    default: true
+
+  rdq.perk.list:
+    description: "Allows listing available perks"
+    default: true
+
+  rdq.perk.info:
+    description: "Allows viewing perk details"
+    default: true
+
+  rdq.perk.activate:
+    description: "Allows activating unlocked perks"
+    default: true
+
+  rdq.perk.deactivate:
+    description: "Allows deactivating active perks"
+    default: true
+
+  rdq.perk.bypass.cooldown:
+    description: "Bypasses perk cooldowns"
+    default: op
+
+  rdq.perk.bypass.requirements:
+    description: "Bypasses perk requirements"
+    default: op
+
+  # Individual Perk Permissions (for premium/special perks)
+  rdq.perk.fly:
+    description: "Allows using the flight perk"
+    default: false
+
+  rdq.perk.prevent_death:
+    description: "Allows using the death prevention perk"
+    default: false
+
+  rdq.perk.double_experience:
+    description: "Allows using the double experience perk"
+    default: true
+
+  rdq.perk.vampire:
+    description: "Allows using the vampire perk"
+    default: true
+
+  rdq.perk.treasure_hunter:
+    description: "Allows using the treasure hunter perk"
+    default: true
+
+  # Perk Admin Permissions
+  rdq.perk.admin.*:
+    description: "Grants all perk admin permissions"
+    default: op
+    children:
+      rdq.perk.admin.grant: true
+      rdq.perk.admin.revoke: true
+      rdq.perk.admin.reload: true
+      rdq.perk.admin.reset: true
+
+  rdq.perk.admin.grant:
+    description: "Allows granting perks to players"
+    default: op
+
+  rdq.perk.admin.revoke:
+    description: "Allows revoking perks from players"
+    default: op
+
+  rdq.perk.admin.reload:
+    description: "Allows reloading perk configuration"
+    default: op
+
+  rdq.perk.admin.reset:
+    description: "Allows resetting player perk data"
+    default: op
+
+  # ============================================
+  # Global Admin Permissions
+  # ============================================
+  rdq.admin.*:
+    description: "Grants all admin permissions"
+    default: op
+    children:
+      rdq.admin.reload: true
+      rdq.admin.debug: true
+      rdq.admin.database: true
+
+  rdq.admin.reload:
+    description: "Allows reloading all RDQ configuration"
+    default: op
+
+  rdq.admin.debug:
+    description: "Allows using debug commands"
+    default: op
+
+  rdq.admin.database:
+    description: "Allows database management commands"
+    default: op
+
+  # ============================================
+  # GUI Permissions
+  # ============================================
+  rdq.gui.rank:
+    description: "Allows opening rank GUI"
+    default: true
+
+  rdq.gui.bounty:
+    description: "Allows opening bounty GUI"
+    default: true
+
+  rdq.gui.perk:
+    description: "Allows opening perk GUI"
+    default: true
+
+  # ============================================
+  # Notification Permissions
+  # ============================================
+  rdq.notify.rank:
+    description: "Receives rank unlock notifications"
+    default: true
+
+  rdq.notify.bounty:
+    description: "Receives bounty announcements"
+    default: true
+
+  rdq.notify.broadcast:
+    description: "Receives server-wide RDQ broadcasts"
+    default: true
+
+# ============================================
+# Default Permission Groups
+# ============================================
+# These are suggested permission groups for LuckPerms integration
+# Copy these to your LuckPerms configuration as needed
+
+groups:
+  rdq_default:
+    description: "Default player permissions"
+    permissions:
+      - rdq.use
+      - rdq.help
+      - rdq.rank.use
+      - rdq.rank.view
+      - rdq.rank.progress
+      - rdq.rank.trees
+      - rdq.rank.unlock
+      - rdq.bounty.use
+      - rdq.bounty.create
+      - rdq.bounty.list
+      - rdq.bounty.cancel
+      - rdq.bounty.leaderboard
+      - rdq.bounty.my
+      - rdq.perk.use
+      - rdq.perk.list
+      - rdq.perk.info
+      - rdq.perk.activate
+      - rdq.perk.deactivate
+      - rdq.gui.rank
+      - rdq.gui.bounty
+      - rdq.gui.perk
+      - rdq.notify.rank
+      - rdq.notify.bounty
+      - rdq.notify.broadcast
+
+  rdq_vip:
+    description: "VIP player permissions"
+    inherits:
+      - rdq_default
+    permissions:
+      - rdq.perk.fly
+      - rdq.perk.prevent_death
+      - rdq.rank.switch
+
+  rdq_moderator:
+    description: "Moderator permissions"
+    inherits:
+      - rdq_vip
+    permissions:
+      - rdq.bounty.admin.remove
+      - rdq.rank.bypass.cooldown
+      - rdq.perk.bypass.cooldown
+
+  rdq_admin:
+    description: "Administrator permissions"
+    inherits:
+      - rdq_moderator
+    permissions:
+      - rdq.*

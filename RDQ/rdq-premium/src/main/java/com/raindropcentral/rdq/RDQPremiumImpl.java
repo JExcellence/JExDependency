@@ -1,143 +1,149 @@
 package com.raindropcentral.rdq;
 
-import com.raindropcentral.rdq.manager.PremiumRDQManager;
-import com.raindropcentral.rdq.manager.RDQManager;
-import com.raindropcentral.rdq.service.bounty.BountyService;
-import com.raindropcentral.rdq.service.bounty.BountyServiceProvider;
-import com.raindropcentral.rdq.service.bounty.PremiumBountyService;
-import com.raindropcentral.rdq.view.perks.PerkAdminView;
-import com.raindropcentral.rdq.view.perks.PerkDetailView;
-import com.raindropcentral.rdq.view.perks.PerkListViewFrame;
-import com.raindropcentral.rdq.view.perks.PerkMainView;
-import com.raindropcentral.rdq.view.perks.PerkRequirementView;
-import com.raindropcentral.rdq.view.perks.PerkUnlockView;
+import com.raindropcentral.rdq.api.PremiumBountyService;
+import com.raindropcentral.rdq.api.PremiumPerkService;
+import com.raindropcentral.rdq.api.PremiumRankService;
+import com.raindropcentral.rdq.shared.edition.EditionFeatures;
+import com.raindropcentral.rdq.shared.edition.PremiumEditionFeatures;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
-import me.devnatan.inventoryframework.ViewFrame;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Implementation delegate for RDQ Premium Edition.
+ * <p>
+ * This class handles all the actual plugin logic, separated from the main plugin class
+ * to allow for proper dependency loading via JEDependency before any external classes
+ * are referenced.
+ * </p>
+ *
+ * @author JExcellence
+ * @version 6.0.0
+ * @since 6.0.0
+ */
 public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
 
-    private static final Logger LOGGER = Logger.getLogger(RDQPremiumImpl.class.getName());
     private static final String EDITION = "Premium";
+    private static final Logger LOGGER = CentralLogger.getLogger(RDQPremiumImpl.class);
 
-    private RDQ rdq;
-    private BountyService bountyService;
+    private @Nullable RDQCore core;
+    private @Nullable EditionFeatures editionFeatures;
+    private @Nullable PremiumRankService rankService;
+    private @Nullable PremiumPerkService perkService;
+    private @Nullable PremiumBountyService bountyService;
 
-    public RDQPremiumImpl(final @NotNull RDQPremium plugin) {
+    public RDQPremiumImpl(@NotNull RDQPremium plugin) {
         super(plugin);
     }
 
     @Override
     public void onLoad() {
-        try {
-            this.rdq = new RDQ(this.getPlugin(), EDITION) {
-                @Override
-                protected @NotNull String getStartupMessage() {
-                    return STARTUP_MESSAGE;
-                }
-
-                @Override
-                protected int getMetricsId() {
-                    return 25811;
-                }
-
-                @Override
-                protected @NotNull ViewFrame registerViews(final @NotNull ViewFrame viewFrame) {
-                    return viewFrame
-                            .with(new PerkMainView())
-                            .with(new PerkListViewFrame())
-                            .with(new PerkDetailView())
-                            .with(new PerkRequirementView())
-                            .with(new PerkUnlockView())
-                            .with(new PerkAdminView());
-                }
-
-                /**
-                 * This is where the magic happens. This method is called by the RDQ base class
-                 * at the correct point in the startup sequence.
-                 */
-                @Override
-                protected @NotNull RDQManager initializeManager(@NotNull RDQ rdq) {
-                    bountyService = new PremiumBountyService(
-                            getBountyRepository(),
-                            getBountyHunterStatsRepository()
-                    );
-                    BountyServiceProvider.setInstance(bountyService);
-                    registerServices();
-
-                    RDQManager manager = new PremiumRDQManager(
-                            rdq,
-                            getPlugin(),
-                            getPlatform(),
-                            getExecutor(),
-                            getBountyRepository(),
-                            getPlayerRepository()
-                    );
-                    manager.initialize();
-
-                    return manager;
-                }
-            };
-
-            this.rdq.onLoad();
-
-        } catch (final Exception exception) {
-            LOGGER.log(Level.SEVERE, "Failed to load RDQ " + EDITION, exception);
-            throw new RuntimeException(exception);
-        }
+        CentralLogger.initialize(getPlugin());
+        LOGGER.info("Loading RDQ " + EDITION + " Edition v" + getVersion());
     }
 
     @Override
     public void onEnable() {
-        if (this.rdq == null) {
-            LOGGER.severe("Cannot enable - RDQ Premium failed during onLoad.");
-            this.getPlugin().getServer().getPluginManager().disablePlugin(this.getPlugin());
-            return;
+        LOGGER.info("Starting RDQ " + EDITION + " Edition v" + getVersion());
+
+        try {
+            editionFeatures = new PremiumEditionFeatures();
+            core = new RDQCore(getPlugin(), EDITION, editionFeatures);
+
+            core.initialize()
+                .thenRun(this::initializeServices)
+                .exceptionally(ex -> {
+                    LOGGER.log(Level.SEVERE, "Failed to initialize RDQ " + EDITION, ex);
+                    getServer().getPluginManager().disablePlugin(getPlugin());
+                    return null;
+                });
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to enable RDQ " + EDITION, e);
+            getServer().getPluginManager().disablePlugin(getPlugin());
         }
-        this.rdq.onEnable();
     }
 
     @Override
     public void onDisable() {
-        try {
-            unregisterServices();
-            if (this.rdq != null) {
-                this.rdq.onDisable();
-            }
-            LOGGER.info("RDQ " + EDITION + " Edition disabled successfully");
-        } catch (final Exception exception) {
-            LOGGER.log(Level.SEVERE, "Error during RDQ " + EDITION + " shutdown", exception);
+        LOGGER.info("Disabling RDQ " + EDITION + " Edition...");
+        
+        if (core != null) {
+            core.shutdown();
         }
-    }
-	
-
-    private void registerServices() {
-        if (this.bountyService != null) {
-            Bukkit.getServer().getServicesManager().register(
-                    BountyService.class,
-                    this.bountyService,
-                    this.getPlugin(),
-                    ServicePriority.High
-            );
-            LOGGER.info("Registered BountyService provider (Premium) with priority HIGH.");
-        }
+        
+        LOGGER.info("RDQ " + EDITION + " Edition disabled");
     }
 
-    private void unregisterServices() {
-        Optional.ofNullable(Bukkit.getServer().getServicesManager().getRegistration(BountyService.class))
-                .ifPresent(registration -> {
-                    if (registration.getProvider() == this.bountyService) {
-                        Bukkit.getServer().getServicesManager().unregister(BountyService.class, this.bountyService);
-                        LOGGER.info("Unregistered BountyService provider (Premium).");
-                    }
-                });
-        BountyServiceProvider.reset();
+    private void initializeServices() {
+        if (core == null) {
+            LOGGER.severe("Cannot initialize services - core is null");
+            return;
+        }
+
+        LOGGER.info("Initializing " + EDITION + " edition services...");
+
+        rankService = core.createPremiumRankService();
+        if (rankService != null) {
+            core.registerRankService(rankService);
+            LOGGER.info("Registered PremiumRankService (multiple active trees, cross-tree switching)");
+        }
+
+        perkService = core.createPremiumPerkService();
+        if (perkService != null) {
+            core.registerPerkService(perkService);
+            LOGGER.info("Registered PremiumPerkService (multiple active perks, premium perk types)");
+        }
+
+        bountyService = core.createPremiumBountyService();
+        if (bountyService != null) {
+            core.registerBountyService(bountyService);
+            LOGGER.info("Registered PremiumBountyService (advanced distribution modes)");
+        }
+
+        // Register views that depend on services
+        core.registerServiceDependentViews();
+
+        LOGGER.info("RDQ " + EDITION + " Edition services initialized successfully!");
+        printStartupBanner();
+    }
+
+    private void printStartupBanner() {
+        LOGGER.info(STARTUP_MESSAGE);
+    }
+
+    @NotNull
+    public RDQCore getCore() {
+        if (core == null) {
+            throw new IllegalStateException("RDQCore not initialized");
+        }
+        return core;
+    }
+
+    @NotNull
+    public EditionFeatures getEditionFeatures() {
+        if (editionFeatures == null) {
+            throw new IllegalStateException("EditionFeatures not initialized");
+        }
+        return editionFeatures;
+    }
+
+    @Nullable
+    public PremiumRankService getRankService() {
+        return rankService;
+    }
+
+    @Nullable
+    public PremiumPerkService getPerkService() {
+        return perkService;
+    }
+
+    @Nullable
+    public PremiumBountyService getBountyService() {
+        return bountyService;
     }
 
     private static final String STARTUP_MESSAGE = """
@@ -147,15 +153,13 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
                | |_) |  | | | |  | | | |
                |  _ <   | |_| |  | |_| |
                |_| \\_\\  |____/    \\__\\_\\
-    
-               RaindropQuests - Premium Edition
+                    RaindropQuests - Premium Edition
                Product of Antimatter Zone LLC
                Powered by JExcellence
     ===============================================================================================
-    Quest System: Enabled (Full)
-    Rank System: Enabled (Full)
-    Bounty System: Enabled (Full)
-    Perk System: Enabled (Full)
+    Rank System: Enabled (Full - Multiple Trees)
+    Bounty System: Enabled (Full - Advanced Distribution)
+    Perk System: Enabled (Full - Multiple Active Perks)
     ===============================================================================================
     Language System: JExTranslate v3.0
     Adventure Components: Enabled

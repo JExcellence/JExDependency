@@ -2,7 +2,9 @@ plugins {
     id("raindrop.library-conventions")
 }
 
-version = "6.0.1"
+group = "com.raindropcentral.rdq"
+version = "6.0.0"
+description = "RDQ Common - Shared library for RaindropQuests"
 
 tasks.test {
     useJUnitPlatform()
@@ -19,14 +21,10 @@ dependencies {
     // Adventure APIs
     compileOnly(libs.bundles.adventure)
 
-    compileOnly("com.raindropcentral.core:rcore-common:2.0.0")
-    compileOnly("com.raindropcentral.core:rcore-free:2.0.0")
-    compileOnly("de.jexcellence.economy:jexeconomy:2.0.0") { isTransitive }
-
     // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
-    compileOnly(libs.vault.api) { isTransitive = false}
+    compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.luckperms.api)
 
     // Logging & utils
@@ -34,24 +32,31 @@ dependencies {
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
 
-    // DB & platform (compileOnly)
+    // DB & platform (compileOnly - provided by JExHibernate)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
 
-    // Misc (compileOnly)
+    // Caching
     compileOnly(libs.caffeine)
+
+    // JSON processing
     compileOnly(libs.jackson.core)
     compileOnly(libs.jackson.databind)
     compileOnly(libs.jackson.annotations)
     compileOnly(libs.jackson.jsr310)
     compileOnly(libs.java.uuid)
+
+    // Version compatibility
     compileOnly(libs.xseries)
 
-    // Internal libraries to be shaded by variants
+    // Internal libraries (to be shaded by variants)
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
+
+    // Inventory framework
     compileOnly(libs.bundles.inventory)
 
+    // Test dependencies
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
@@ -62,8 +67,30 @@ dependencies {
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
+    testImplementation(libs.jqwik)
+    testImplementation(libs.caffeine)
+
+    // Hibernate for test runtime (needed for entity annotations)
+    testImplementation(platform(libs.hibernate.platform))
+    testImplementation(libs.bundles.hibernate)
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.addAll(listOf(
+        "--enable-preview"
+    ))
+}
+
+tasks.withType<Test>().configureEach {
+    jvmArgs("--enable-preview")
 }

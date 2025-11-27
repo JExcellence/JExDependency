@@ -28,7 +28,7 @@ tasks.register("publishDependencies") {
         ":JExCommand:publishToMavenLocal",
         ":JExTranslate:publishToMavenLocal",
         ":RPlatform:publishToMavenLocal",
-        ":JExEconomy:publishToMavenLocal",
+        ":JExEconomy:jexeconomy-common:publishToMavenLocal",
         ":RCore:publishLocal"
     )
     
@@ -36,8 +36,8 @@ tasks.register("publishDependencies") {
     tasks.findByPath(":JExCommand:publishToMavenLocal")?.mustRunAfter(":JExDependency:publishToMavenLocal")
     tasks.findByPath(":JExTranslate:publishToMavenLocal")?.mustRunAfter(":JExCommand:publishToMavenLocal")
     tasks.findByPath(":RPlatform:publishToMavenLocal")?.mustRunAfter(":JExTranslate:publishToMavenLocal")
-    tasks.findByPath(":JExEconomy:publishToMavenLocal")?.mustRunAfter(":RPlatform:publishToMavenLocal")
-    tasks.findByPath(":RCore:publishLocal")?.mustRunAfter(":JExEconomy:publishToMavenLocal")
+    tasks.findByPath(":JExEconomy:jexeconomy-common:publishToMavenLocal")?.mustRunAfter(":RPlatform:publishToMavenLocal")
+    tasks.findByPath(":RCore:publishLocal")?.mustRunAfter(":JExEconomy:jexeconomy-common:publishToMavenLocal")
     
     doLast {
         println("========================================================================")

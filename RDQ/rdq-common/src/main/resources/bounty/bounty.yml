@@ -1,2 +1,98 @@
-# LAST_HIT || MOST_DAMAGE
-claimMode: "LAST_HIT"
+# RDQ Bounty System Configuration
+# This file controls all bounty-related settings
+
+# Enable or disable the bounty system
+enabled: true
+
+# Bounty amount limits
+amounts:
+  minimum: 100
+  maximum: 1000000
+  default: 500
+
+# Bounty expiration settings
+expiration:
+  # Enable bounty expiration
+  enabled: true
+  # Hours until a bounty expires (168 = 7 days)
+  hours: 168
+  # Check interval in minutes for expired bounties
+  checkIntervalMinutes: 30
+  # Refund percentage when bounty expires (0.0 to 1.0)
+  refundPercentage: 0.75
+
+# Self-targeting prevention
+selfTargetAllowed: false
+
+# Reward distribution mode
+# Options: INSTANT, CHEST, DROP, VIRTUAL
+distribution: INSTANT
+
+# Distribution mode settings
+distributionSettings:
+  # For CHEST mode - chest despawn time in seconds
+  chestDespawnSeconds: 300
+  # For DROP mode - item despawn time in seconds
+  dropDespawnSeconds: 120
+  # For VIRTUAL mode - currency type
+  virtualCurrency: "coins"
+
+# Stacking behavior - when multiple bounties exist on same target
+stacking:
+  # Allow multiple bounties on same target
+  allowMultiple: true
+  # Maximum bounties per target
+  maxPerTarget: 10
+  # Combine all bounties on claim
+  combineOnClaim: true
+
+# Cooldowns (in seconds)
+cooldowns:
+  # Cooldown between placing bounties
+  placeCooldown: 60
+  # Cooldown after claiming a bounty
+  claimCooldown: 30
+
+# Announcement settings
+announcements:
+  # Announce when bounty is created
+  onCreate:
+    enabled: true
+    # Scope: SERVER, NEARBY, TARGET_ONLY
+    scope: SERVER
+    # Radius for NEARBY scope
+    nearbyRadius: 100
+  # Announce when bounty is claimed
+  onClaim:
+    enabled: true
+    scope: SERVER
+    nearbyRadius: 100
+  # Announce when bounty expires
+  onExpire:
+    enabled: false
+    scope: TARGET_ONLY
+
+# Kill attribution settings
+killAttribution:
+  # Time window to track damage for kill attribution (seconds)
+  damageTrackingWindow: 30
+  # Minimum damage percentage to qualify for bounty
+  minimumDamagePercentage: 0.1
+  # Allow indirect kills (fall damage after hit, etc.)
+  allowIndirectKills: true
+
+# Leaderboard settings
+leaderboard:
+  # Number of entries to show
+  displayCount: 10
+  # Cache duration in minutes
+  cacheDurationMinutes: 5
+
+# Economy integration
+economy:
+  # Currency to use (requires Vault)
+  currency: "default"
+  # Tax percentage on bounty creation (0.0 to 1.0)
+  creationTax: 0.0
+  # Tax percentage on bounty claim (0.0 to 1.0)
+  claimTax: 0.0

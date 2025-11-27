@@ -1,0 +1,24 @@
+name: RCore
+main: com.raindropcentral.core.RCore
+version: 2.0.0
+api-version: "1.16"
+description: RCore
+authors: [ ItsRainingHP, JExcellence ]
+website: https://www.raindropcentral.com
+softdepend:
+  - JExEconomy
+  - LuckPerms
+  - Aura
+  - ChestSort
+  - CMI
+  - DiscordSRV
+  - EcoJobs
+  - Essentials
+  - EssentialsChat
+  - EssentialsDiscord
+  - EssentialsSpawn
+  - HuskTowns
+  - Jobs
+  - mcMMO
+  - Towny
+  - TownyChat

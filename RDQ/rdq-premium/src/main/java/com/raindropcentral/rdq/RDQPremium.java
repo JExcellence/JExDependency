@@ -7,21 +7,18 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 
 /**
- * Main plugin class for RaindropQuests Premium Edition.
+ * Main plugin class for RDQ Premium Edition.
  * <p>
  * This class serves as the entry point for the Bukkit plugin system and delegates all
- * functionality to {@link RDQPremiumImpl}. The delegate mirrors the staged enable pipeline defined
- * by {@link com.raindropcentral.rdq.RDQ}: asynchronous platform and executor preparation
- * (stage&nbsp;1), {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync}-scoped component and
- * view wiring (stage&nbsp;2), and repository hydration (stage&nbsp;3) that provides database-backed
- * services for commands, views, and cross-plugin integrations. Premium contributors should keep the
- * resource READMEs under {@code rdq-common/src/main/resources/} in sync with these lifecycle
- * expectations when evolving edition-specific features.
+ * functionality to {@link RDQPremiumImpl}. The delegate handles the staged enable pipeline:
+ * asynchronous platform and executor preparation (stage 1), component and view wiring (stage 2),
+ * and repository hydration (stage 3) that provides database-backed services for commands,
+ * views, and cross-plugin integrations.
  * </p>
  *
  * @author JExcellence
- * @version 2.0.0
- * @since 2.0.0
+ * @version 6.0.0
+ * @since 6.0.0
  */
 public final class RDQPremium extends JavaPlugin {
 
@@ -86,6 +83,27 @@ public final class RDQPremium extends JavaPlugin {
      * @return the delegate responsible for premium-specific behaviour
      */
     public @NotNull RDQPremiumImpl getImpl() {
+        if (this.rdqImpl == null) {
+            throw new IllegalStateException("RDQ Premium implementation not initialized");
+        }
         return this.rdqImpl;
+    }
+
+    /**
+     * Returns the RDQCore instance from the delegate.
+     *
+     * @return the core instance
+     */
+    public @NotNull RDQCore getCore() {
+        return getImpl().getCore();
+    }
+
+    /**
+     * Indicates this is the premium edition.
+     *
+     * @return always true
+     */
+    public boolean isPremium() {
+        return true;
     }
 }

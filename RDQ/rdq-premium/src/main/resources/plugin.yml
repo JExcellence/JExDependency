@@ -1,8 +1,11 @@
-name: RDQ
+name: ${name}
+version: ${version}
 main: com.raindropcentral.rdq.RDQPremium
-version: 6.0.0
-api-version: "1.21"
-description: RDQ
-authors: [ ItsRainingHP, JExcellence ]
-website: https://www.raindropcentral.com
-depend: [ RCore, LuckPerms ]
+api-version: ${apiVersion}
+description: ${description}
+author: RaindropCentral
+website: https://raindropcentral.com
+softdepend:
+  - Vault
+  - LuckPerms
+  - PlaceholderAPI

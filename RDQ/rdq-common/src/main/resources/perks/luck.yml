@@ -1,72 +1,23 @@
-perkSettings:
-  icon:
-    material: "GOLD_INGOT"
-  displayNameKey: "perk.luck.name"
-  descriptionKey: "perk.luck.lore"
-  priority: 70
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    class: Luck
-    category: "UTILITY"
-    rarity: "RARE"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "LUCK"
-    showParticles: true
-    particleType: "VILLAGER_HAPPY"
-    particleAmount: 5
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Luck Perk Configuration
+id: luck
+displayNameKey: perk_names.luck
+descriptionKey: perk_descriptions.luck
+category: utility
+iconMaterial: RABBIT_FOOT
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    luck_vip: 0
-    luck_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 600
+durationSeconds: 300
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    luck_level1: 0
-    luck_level2: 1
-    luck_level3: 2
-    luck_vip: 1
-    luck_premium: 2
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    luck_vip: 0
-    luck_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 1600.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 80.0
+effect:
+  type: POTION_EFFECT
+  potionType: LUCK
+  amplifier: 1
 
 requirements:
-  luck:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 32
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 6
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Luck perk activated! Your fortune has increased!"
-  command:
-    type: "COMMAND"
-    command: "say {player} activated luck perk"
+  - type: RANK
+    rankId: merchant_3
+  - type: CURRENCY
+    currency: default
+    amount: 2000

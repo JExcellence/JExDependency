@@ -1,0 +1,51 @@
+# Bounty System Configuration
+# This file configures the behavior of the bounty system
+
+# How bounties are claimed when a target is killed
+# Options: LAST_HIT, MOST_DAMAGE
+claimMode: "LAST_HIT"
+
+# Cost to create a bounty (in server currency)
+creationCost: 0.0
+
+# Maximum number of bounties per player (premium edition only)
+# Free edition is limited to 3 total bounties globally
+maxBountiesPerPlayer: 5
+
+# Whether to broadcast bounty creation to all players
+broadcastCreation: true
+
+# Whether to broadcast bounty completion to all players
+broadcastCompletion: true
+
+# Whether the bounty system is enabled
+enabled: true
+
+# Minimum value required for a bounty
+minimumValue: 100.0
+
+# Number of days before a bounty expires (0 = never expires)
+expiryDays: 7
+
+# How kills are attributed for bounty claiming
+# Options: LAST_HIT, MOST_DAMAGE
+killAttributionMode: "LAST_HIT"
+
+# How rewards are distributed
+# Options: INSTANT, DELAYED
+rewardDistributionMode: "INSTANT"
+
+# Whether to announce bounty creation
+announceCreation: true
+
+# Whether to announce bounty claims
+announceClaim: true
+
+# Prefix shown in tab list for bounty targets
+tabPrefix: "bounty.config.tab_prefix"
+
+# Prefix shown in chat for bounty targets
+chatPrefix: "bounty.config.chat_prefix"
+
+# Color used for bounty target names
+nameColor: "bounty.config.name_color"

@@ -1,75 +1,24 @@
-perkSettings:
-  icon:
-    material: "ELYTRA"
-  displayNameKey: "perk.fly.name"
-  descriptionKey: "perk.fly.lore"
-  priority: 100
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    class: Fly
-    id: "fly"
-    displayName: "Flight"
-    description: "Grants the ability to fly freely"
-    category: "MOVEMENT"
-    rarity: "RARE"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "FLIGHT"
-    showParticles: true
-    particleType: "CLOUD"
-    particleAmount: 6
-    playToggleSound: true
-    toggleOnSound: "ENTITY_ENDER_DRAGON_FLAP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Flight Perk Configuration
+id: fly
+displayNameKey: perk_names.fly
+descriptionKey: perk_descriptions.fly
+category: movement
+iconMaterial: ELYTRA
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    fly_vip: 0
-    fly_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 900
+durationSeconds: 120
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    fly_level1: 0
-    fly_level2: 1
-    fly_level3: 2
-    fly_vip: 1
-    fly_premium: 2
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    fly_vip: 0
-    fly_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 3000.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 150.0
+effect:
+  type: FLIGHT
+  allowInCombat: false
 
 requirements:
-  fly:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 45
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 15
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "You have unlocked the power of flight!"
-  command:
-    type: "COMMAND"
-    command: "say {player} can now soar through the skies!"
+  - type: RANK
+    rankId: mage_4
+  - type: CURRENCY
+    currency: default
+    amount: 10000
+  - type: PERMISSION
+    permission: rdq.perk.fly

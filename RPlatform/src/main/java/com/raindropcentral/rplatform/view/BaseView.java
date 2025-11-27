@@ -436,8 +436,11 @@ public abstract class BaseView extends View {
         );
 
         /**
-         * Places the {@link Return} head in the template-defined back slot when the layout spans
+         * Places the {@link Return} head in the bottom-left slot when the layout spans
          * multiple rows, wiring it to {@link #handleBackButtonClick(SlotClickContext)}.
+         * 
+         * <p>The back button is placed at the first slot of the last row (bottom-left corner).
+         * If the slot is already occupied by a layout character, the back button will not be placed.
          *
          * @param render the render context used to register slot behaviour
          * @param player the player for whom the head should be generated
@@ -446,12 +449,9 @@ public abstract class BaseView extends View {
                 final @NotNull RenderContext render,
                 final @NotNull Player player
 	) {
-		
 		final int bottomLeftSlot = this.getBottomLeftSlot();
 		
-		if (
-			bottomLeftSlot < 0
-		) {
+		if (bottomLeftSlot < 0) {
 			CentralLogger.getLogger(BaseView.class.getName()).log(
 				Level.FINE,
 				"Skipped back button placement (single row inventory) for view: " + this.getClass().getSimpleName()
@@ -459,11 +459,25 @@ public abstract class BaseView extends View {
 			return;
 		}
 		
+		// Check if the slot is already occupied by a layout character
+		final String[] layout = this.getLayout();
+		if (layout != null && layout.length > 0) {
+			final int lastRowIndex = layout.length - 1;
+			if (lastRowIndex >= 0 && layout[lastRowIndex] != null && layout[lastRowIndex].length() > 0) {
+				final char slotChar = layout[lastRowIndex].charAt(0);
+				// Only place back button if the slot is empty (space character)
+				if (slotChar != ' ') {
+					CentralLogger.getLogger(BaseView.class.getName()).log(
+						Level.FINE,
+						"Skipped back button placement (slot occupied by '" + slotChar + "') for view: " + this.getClass().getSimpleName()
+					);
+					return;
+				}
+			}
+		}
+		
 		render
-			.slot(
-				bottomLeftSlot,
-				new Return().getHead(player)
-			)
+			.slot(bottomLeftSlot, new Return().getHead(player))
 			.onClick(this::handleBackButtonClick);
 		
 		CentralLogger.getLogger(BaseView.class.getName()).log(

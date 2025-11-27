@@ -1,72 +1,23 @@
-perkSettings:
-  icon:
-    material: "SHIELD"
-  displayNameKey: "perk.resistance.name"
-  descriptionKey: "perk.resistance.lore"
-  priority: 100
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    class: Resistance
-    category: "DEFENSE"
-    rarity: "UNCOMMON"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "RESISTANCE"
-    showParticles: true
-    particleType: "ENCHANT"
-    particleAmount: 4
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Resistance Perk Configuration
+id: resistance
+displayNameKey: perk_names.resistance
+descriptionKey: perk_descriptions.resistance
+category: defense
+iconMaterial: IRON_CHESTPLATE
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    resistance_vip: 0
-    resistance_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 600
+durationSeconds: 30
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    resistance_level1: 0
-    resistance_level2: 1
-    resistance_level3: 2
-    resistance_vip: 1
-    resistance_premium: 2
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    resistance_vip: 0
-    resistance_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 1500.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 75.0
+effect:
+  type: POTION_EFFECT
+  potionType: DAMAGE_RESISTANCE
+  amplifier: 1
 
 requirements:
-  resistance:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 30
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 5
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Resistance perk activated! You are now more resilient to damage!"
-  command:
-    type: "COMMAND"
-    command: "say {player} activated resistance perk"
+  - type: RANK
+    rankId: cleric_2
+  - type: CURRENCY
+    currency: default
+    amount: 750

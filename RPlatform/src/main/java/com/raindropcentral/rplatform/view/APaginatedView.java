@@ -42,24 +42,23 @@ public abstract class APaginatedView<T> extends BaseView {
         /**
          * Lazy pagination state that drives asynchronous data retrieval and exposes the
          * {@link Pagination} instance to rendering callbacks.
+         * 
+         * <p>The pagination state is built during field initialization using the default
+         * pagination slot character 'O'. Subclasses that need a different character should
+         * override {@link #getPaginationSlotChar()}.</p>
          */
-        private final State<Pagination> pagination =
-                this.buildLazyAsyncPaginationState(
-			    this::getAsyncPaginationSource
-		    )
-			.layoutTarget(this.getPaginationSlotChar())
-		    .elementFactory(this::renderEntry)
+        private final State<Pagination> pagination = this.buildLazyAsyncPaginationState(this::getAsyncPaginationSource)
+			.layoutTarget('O')
+			.elementFactory(this::renderEntry)
 			.build();
 	
 	public APaginatedView(
 		final @Nullable Class<? extends View> parentClazz
 	) {
-		
 		super(parentClazz);
 	}
 	
 	public APaginatedView() {
-		
 		this(null);
 	}
 	
@@ -94,19 +93,28 @@ public abstract class APaginatedView<T> extends BaseView {
         /**
          * Declares the default pagination layout, mapping navigation heads and entry placeholders to
          * template characters.
+         * 
+         * <p>Layout characters:
+         * <ul>
+         *   <li>{@code O} - Pagination content slots</li>
+         *   <li>{@code <} - Previous page button</li>
+         *   <li>{@code >} - Next page button</li>
+         *   <li>{@code p} - Page indicator</li>
+         *   <li>{@code X} - Decoration/filler slots</li>
+         *   <li>{@code ' '} (space) - Empty slot (back button auto-placed at bottom-left)</li>
+         * </ul>
          *
          * @return the layout rows for the paginated grid
          */
         @Override
         protected String[] getLayout() {
-		
 		return new String[]{
-			"         ",
-			"OOOOOOOOO",
-			"OOOOOOOOO",
-			"OOOOOOOOO",
-			"         ",
-			"b  <p>   "
+			"XXXXXXXXX",
+			"XOOOOOOOX",
+			"XOOOOOOOX",
+			"XOOOOOOOX",
+			"XXXXXXXXX",
+			"   <p>   "
 		};
 	}
 	
@@ -162,6 +170,10 @@ public abstract class APaginatedView<T> extends BaseView {
                 final @NotNull RenderContext render,
                 final @NotNull Player player
         ) {
+		// Render decoration slots first
+		this.renderDecorations(render, player);
+		
+		// Render pagination navigation
 		this.renderPaginationNavigationButtons(
 			render,
 			player,
@@ -178,7 +190,22 @@ public abstract class APaginatedView<T> extends BaseView {
 			render,
 			player
 		);
-		
+	}
+	
+	/**
+	 * Renders decoration slots (X character) with filler items.
+	 *
+	 * @param render the render context
+	 * @param player the player viewing the inventory
+	 */
+	protected void renderDecorations(
+		final @NotNull RenderContext render,
+		final @NotNull Player player
+	) {
+		render.layoutSlot('X', UnifiedBuilderFactory
+			.item(this.getFillMaterial())
+			.setName(net.kyori.adventure.text.Component.empty())
+			.build());
 	}
 	
         /**

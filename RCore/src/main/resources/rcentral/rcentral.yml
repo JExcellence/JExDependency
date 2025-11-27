@@ -1,0 +1,17 @@
+# RaindropCentral Backend Configuration
+# This file controls how the plugin connects to the RaindropCentral backend
+
+# Backend URL
+# Leave empty for automatic detection
+# Set to a specific URL to override (e.g., "http://localhost:3000" or "https://raindropcentral.com")
+backendUrl: "https://raindropcentral.com"
+
+# Development Mode
+# When true, forces the use of localhost:3000
+# When false, uses auto-detection or the configured backendUrl
+developmentMode: false
+
+# Auto-Detection
+# When true, automatically detects if localhost:3000 is reachable
+# When false, uses backendUrl or defaults to production (raindropcentral.com)
+autoDetect: false

@@ -43,7 +43,8 @@ public class RCentralApiClient {
             final @NotNull String serverVersion,
             final @NotNull String pluginVersion,
             final @NotNull String playerUuid,
-            final @NotNull String playerName
+            final @NotNull String playerName,
+            final int maxPlayers
     ) {
         var payload = new JsonObject();
         payload.addProperty("serverUuid", serverUuid);
@@ -51,6 +52,7 @@ public class RCentralApiClient {
         payload.addProperty("pluginVersion", pluginVersion);
         payload.addProperty("minecraftUuid", playerUuid);
         payload.addProperty("minecraftUsername", playerName);
+        payload.addProperty("maxPlayers", maxPlayers);
 
         return sendRequest("/api/server-data/connect", "POST", apiKey, payload);
     }
@@ -112,7 +114,7 @@ public class RCentralApiClient {
             try {
                 var requestBuilder = HttpRequest.newBuilder()
                         .uri(URI.create(baseUrl + endpoint))
-                        .header("Authorization", "Bearer " + apiKey)
+                        .header("X-API-Key", apiKey)
                         .header("Content-Type", "application/json")
                         .timeout(Duration.ofSeconds(30));
 

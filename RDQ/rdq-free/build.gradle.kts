@@ -1,80 +1,123 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.gradle.api.tasks.testing.Test
-
 plugins {
     id("raindrop.shadow-conventions")
 }
 
+group = "com.raindropcentral.rdq"
+version = "6.0.0"
+description = "RDQ Free - Free edition of RaindropQuests"
 
 dependencies {
+    // Include common module
     implementation(project(":RDQ:rdq-common"))
 
+    // Server API
     compileOnly(libs.paper.api)
+
+    // Adventure APIs
+    compileOnly(libs.bundles.adventure)
+
+    // Ecosystem (provided by other plugins)
+    compileOnly(libs.folialib)
+    compileOnly(libs.placeholderapi)
+    compileOnly(libs.vault.api) { isTransitive = false }
+    compileOnly(libs.luckperms.api)
+
+    // Logging
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
 
-    compileOnly("com.raindropcentral.core:rcore-common:2.0.0")
-    compileOnly("com.raindropcentral.core:rcore-free:2.0.0")
-
+    // DB (compileOnly - provided by JExHibernate)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
 
+    // Caching & JSON
+    compileOnly(libs.caffeine)
+    compileOnly(libs.jackson.core)
+    compileOnly(libs.jackson.databind)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jackson.jsr310)
+
+    // Version compatibility
+    compileOnly(libs.xseries)
+
+    // Internal libraries to shade
     implementation(libs.bundles.jexcellence) { isTransitive = false }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-    compileOnly(libs.bundles.inventory)
 
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.mockbukkit)
-    testImplementation(libs.adventure.api)
-    testImplementation(libs.adventure.minimessage)
-    testRuntimeOnly(libs.junit.jupiter.engine)
-    testRuntimeOnly(libs.junit.platform.launcher)
+    // Inventory framework
+    implementation(libs.bundles.inventory)
 }
 
-tasks.named<ShadowJar>("shadowJar") {
-    archiveBaseName.set("RDQ")
-    archiveClassifier.set("free")
-    archiveVersion.set(project.version.toString())
+tasks.processResources {
+    val props = mapOf(
+        "version" to project.version,
+        "name" to "RDQFree",
+        "description" to project.description,
+        "apiVersion" to "1.21"
+    )
+    inputs.properties(props)
+    filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
+        expand(props)
+    }
+}
 
+tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
+    archiveBaseName.set("RDQFree")
+    archiveClassifier.set("")
+
+    dependencies {
+        include(project(":RDQ:rdq-common"))
+        // JExcellence libraries
+        include(dependency("de.jexcellence.translate:.*"))
+        include(dependency("de.jexcellence.hibernate:.*"))
+        include(dependency("de.jexcellence.dependency:.*"))
+        include(dependency("de.jexcellence.config:.*"))
+        // Raindrop libraries
+        include(dependency("com.raindropcentral.platform:.*"))
+        include(dependency("com.raindropcentral.commands:.*"))
+        // Inventory framework
+        include(dependency("me.devnatan:.*"))
+    }
+
+    // Relocations must be outside dependencies block
+    relocate("com.fasterxml.jackson.core", "de.jexcellence.remapped.com.fasterxml.jackson.core")
+    relocate("com.fasterxml.jackson.databind", "de.jexcellence.remapped.com.fasterxml.jackson.databind")
+    relocate("com.fasterxml.jackson.annotation", "de.jexcellence.remapped.com.fasterxml.jackson.annotation")
+    relocate("com.fasterxml.jackson.datatype", "de.jexcellence.remapped.com.fasterxml.jackson.datatype")
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("org.h2", "de.jexcellence.remapped.org.h2")
-    relocate("me.devnatan", "de.jexcellence.remapped.me.devnatan")
+    relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
+    relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
 
-    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
-    mergeServiceFiles()
+    minimize {
+        exclude(project(":RDQ:rdq-common"))
+    }
 }
 
-tasks.named("build") {
-    dependsOn(tasks.named("shadowJar"))
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-}
-
+// Disable the regular jar task since we use shadowJar
 tasks.named<Jar>("jar") {
     enabled = false
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
+// Create a shadow publication instead of using the default maven one
 publishing {
     publications {
-        create<MavenPublication>("mavenShadow") {
-            from(components["shadow"])
+        create<MavenPublication>("shadow") {
+            artifact(tasks.named("shadowJar"))
+            artifact(tasks.named("sourcesJar"))
+            artifact(tasks.named("javadocJar"))
             groupId = project.group.toString()
             artifactId = "rdq-free"
             version = project.version.toString()
             pom {
                 name.set("RDQ Free")
-                description.set("${project.description} (Free)")
+                description.set(project.description)
             }
         }
     }

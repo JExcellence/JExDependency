@@ -7,31 +7,38 @@ import org.jetbrains.annotations.NotNull;
 import java.util.logging.Level;
 
 /**
- * Main plugin class for RaindropQuests Free Edition.
+ * Main plugin class for RDQ Free Edition.
  * <p>
  * This class serves as the entry point for the Bukkit plugin system and delegates all
- * functionality to {@link RDQFreeImpl}. The delegate walks through the staged enable pipeline
- * implemented by {@link com.raindropcentral.rdq.RDQ}, loading platform services on the asynchronous
- * executor (stage&nbsp;1), running component and view wiring inside the
- * {@link com.raindropcentral.rdq.RDQ#runSync(Runnable) runSync} boundary (stage&nbsp;2), and
- * hydrating the shared repositories (stage&nbsp;3) that expose free-edition data to commands and
- * GUIs. Review the resource README files under {@code rdq-common/src/main/resources/} for details on
- * when configuration documents are ingested during those stages.
+ * functionality to {@link RDQFreeImpl}. The delegate handles the staged enable pipeline:
+ * asynchronous platform and executor preparation (stage 1), component and view wiring (stage 2),
+ * and repository hydration (stage 3) that provides database-backed services for commands,
+ * views, and cross-plugin integrations.
  * </p>
  *
  * @author JExcellence
- * @version 2.0.0
- * @since 2.0.0
+ * @version 6.0.0
+ * @since 6.0.0
  */
 public final class RDQFree extends JavaPlugin {
 
     private RDQFreeImpl rdqImpl;
 
     /**
-     * Loads the free edition implementation and configures dependency remapping prior to enabling the plugin.
+     * Retrieves the active plugin instance from the Bukkit plugin registry.
+     *
+     * @return the loaded {@link RDQFree} instance
+     */
+    public static @NotNull RDQFree get() {
+        return JavaPlugin.getPlugin(RDQFree.class);
+    }
+
+    /**
+     * Boots the free edition by initializing dependency remapping and creating
+     * the delegate implementation.
      * <p>
-     * Any failure during initialization is logged and the implementation reference is cleared so the plugin does not
-     * attempt to enable with a partial state.
+     * Failures are logged and captured so that the plugin does not enter an
+     * inconsistent enabled state.
      * </p>
      */
     @Override
@@ -47,17 +54,21 @@ public final class RDQFree extends JavaPlugin {
     }
 
     /**
-     * Enables the free edition implementation if it was successfully loaded during {@link #onLoad()}.
+     * Enables the plugin by delegating to the loaded implementation or disables
+     * itself if initialization previously failed.
      */
     @Override
     public void onEnable() {
         if (this.rdqImpl != null) {
             this.rdqImpl.onEnable();
+        } else {
+            this.getLogger().severe("[RDQ] Cannot enable - RDQ Free failed to load");
+            this.getServer().getPluginManager().disablePlugin(this);
         }
     }
 
     /**
-     * Delegates to the free edition implementation to perform shutdown routines when the plugin is disabled.
+     * Shuts down the free delegate when the plugin is disabled.
      */
     @Override
     public void onDisable() {
@@ -67,15 +78,32 @@ public final class RDQFree extends JavaPlugin {
     }
 
     /**
-     * Retrieves the active free edition implementation that backs the plugin lifecycle events.
-     * <p>
-     * Callers should ensure {@link #onLoad()} completed without errors before invoking this method so that the returned
-     * reference is available.
-     * </p>
+     * Provides access to the internal free implementation delegate.
      *
-     * @return the active free edition implementation instance
+     * @return the delegate responsible for free-specific behaviour
      */
     public @NotNull RDQFreeImpl getImpl() {
+        if (this.rdqImpl == null) {
+            throw new IllegalStateException("RDQ Free implementation not initialized");
+        }
         return this.rdqImpl;
+    }
+
+    /**
+     * Returns the RDQCore instance from the delegate.
+     *
+     * @return the core instance
+     */
+    public @NotNull RDQCore getCore() {
+        return getImpl().getCore();
+    }
+
+    /**
+     * Indicates this is the free edition.
+     *
+     * @return always false
+     */
+    public boolean isPremium() {
+        return false;
     }
 }

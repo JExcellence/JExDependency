@@ -1,0 +1,22 @@
+commands:
+  r18n:
+    name: 'r18n'
+    description: 'Reload the translation files'
+    aliases:
+      - i18n
+      - language
+    usage: 'r18n'
+    argumentUsages:
+      1$: 'lut["prefix"] & "&7/" & alias & "&7"'
+    errorMessages:
+      internalError$: 'lut["prefix"] & "&4An internal error occurred"'
+      playerNotOnline$: 'lut["prefix"] & "&4The player is not online"'
+      notAPlayer$: 'lut["prefix"] & "&4You\sre not a player"'
+
+permissions:
+  missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
+  nodes:
+    r18nReload: r18n.reload
+
+lut:
+  prefix: '&8[&5R18n&8] &7'

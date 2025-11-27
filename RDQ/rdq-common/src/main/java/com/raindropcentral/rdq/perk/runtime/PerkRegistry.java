@@ -1,77 +1,91 @@
 package com.raindropcentral.rdq.perk.runtime;
 
-import com.raindropcentral.rdq.perk.config.PerkConfig;
-import com.raindropcentral.rdq.type.EPerkCategory;
+import com.raindropcentral.rdq.perk.Perk;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
-public class PerkRegistry {
+public final class PerkRegistry {
 
-    private final Map<String, LoadedPerk> perksById;
-    private final Map<EPerkCategory, List<LoadedPerk>> perksByCategory;
-    private final PerkTypeRegistry typeRegistry;
-    private final List<Runnable> reloadListeners;
+    private static final Logger LOGGER = Logger.getLogger(PerkRegistry.class.getName());
 
-    public PerkRegistry(@NotNull PerkTypeRegistry typeRegistry) {
-        this.perksById = new ConcurrentHashMap<>();
-        this.perksByCategory = new ConcurrentHashMap<>();
-        this.typeRegistry = typeRegistry;
-        this.reloadListeners = new ArrayList<>();
+    private final Plugin plugin;
+    private final Map<String, PerkRuntime> runtimes = new ConcurrentHashMap<>();
+
+    public PerkRegistry(@NotNull Plugin plugin) {
+        this.plugin = plugin;
     }
 
-    public void register(@NotNull PerkConfig config) {
-        PerkType type = typeRegistry.get(config.perkType().name());
-        if (type == null) {
-            throw new IllegalArgumentException("No PerkType registered for: " + config.perkType());
-        }
+    public void register(@NotNull Perk perk) {
+        var runtime = new PerkRuntime(perk, plugin);
+        runtimes.put(perk.id(), runtime);
+        LOGGER.fine(() -> "Registered perk runtime: " + perk.id());
+    }
 
-        LoadedPerk loaded = type.createLoadedPerk(config);
-        perksById.put(config.id(), loaded);
-
-        perksByCategory.computeIfAbsent(config.category(), k -> new ArrayList<>()).add(loaded);
+    public void registerAll(@NotNull List<Perk> perks) {
+        perks.forEach(this::register);
     }
 
     public void unregister(@NotNull String perkId) {
-        LoadedPerk loaded = perksById.remove(perkId);
-        if (loaded != null) {
-            perksByCategory.values().forEach(list -> list.remove(loaded));
+        var runtime = runtimes.remove(perkId);
+        if (runtime != null) {
+            runtime.getActiveUsers().forEach(runtime::cleanup);
+            LOGGER.fine(() -> "Unregistered perk runtime: " + perkId);
         }
     }
 
-    public @Nullable LoadedPerk get(@NotNull String perkId) {
-        return perksById.get(perkId);
+    @NotNull
+    public Optional<PerkRuntime> get(@NotNull String perkId) {
+        return Optional.ofNullable(runtimes.get(perkId));
     }
 
-    public @NotNull List<LoadedPerk> getByCategory(@NotNull EPerkCategory category) {
-        return new ArrayList<>(perksByCategory.getOrDefault(category, new ArrayList<>()));
+    @NotNull
+    public List<PerkRuntime> getAll() {
+        return List.copyOf(runtimes.values());
     }
 
-    public @NotNull List<LoadedPerk> getAll() {
-        return new ArrayList<>(perksById.values());
+    @NotNull
+    public List<PerkRuntime> getActiveForPlayer(@NotNull UUID playerId) {
+        return runtimes.values().stream()
+            .filter(r -> r.isActive(playerId))
+            .toList();
     }
 
-    public boolean isRegistered(@NotNull String perkId) {
-        return perksById.containsKey(perkId);
+    public boolean isActive(@NotNull UUID playerId, @NotNull String perkId) {
+        var runtime = runtimes.get(perkId);
+        return runtime != null && runtime.isActive(playerId);
     }
 
-    public void registerReloadListener(@NotNull Runnable listener) {
-        reloadListeners.add(listener);
+    public void deactivateAllForPlayer(@NotNull Player player) {
+        var playerId = player.getUniqueId();
+        runtimes.values().stream()
+            .filter(r -> r.isActive(playerId))
+            .forEach(r -> r.deactivate(player));
     }
 
-    public void onReload() {
-        perksById.clear();
-        perksByCategory.clear();
-        for (Runnable listener : reloadListeners) {
-            try {
-                listener.run();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+    public void cleanupPlayer(@NotNull UUID playerId) {
+        runtimes.values().forEach(r -> r.cleanup(playerId));
+    }
+
+    public void clear() {
+        runtimes.values().forEach(r -> r.getActiveUsers().forEach(r::cleanup));
+        runtimes.clear();
+    }
+
+    public void reload(@NotNull List<Perk> perks) {
+        clear();
+        registerAll(perks);
+    }
+
+    public int count() {
+        return runtimes.size();
+    }
+
+    public boolean exists(@NotNull String perkId) {
+        return runtimes.containsKey(perkId);
     }
 }

@@ -7,9 +7,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.util.HexFormat;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -24,6 +29,7 @@ public class RCentralService {
 
     private final Plugin plugin;
     private final FileConfiguration config;
+    private final com.raindropcentral.core.config.RCentralConfig rcentralConfig;
     private final RCentralApiClient apiClient;
     private RCentralServer serverEntity;
     private UUID serverUuid;
@@ -32,6 +38,7 @@ public class RCentralService {
     public RCentralService(final @NotNull Plugin plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
+        this.rcentralConfig = new com.raindropcentral.core.config.RCentralConfig(plugin);
 
         var backendUrl = detectBackendUrl();
         this.apiClient = new RCentralApiClient(plugin, backendUrl);
@@ -53,16 +60,56 @@ public class RCentralService {
     }
 
     private String detectBackendUrl() {
-        var configUrl = config.getString("backend.url");
-        var isDevelopmentMode = config.getBoolean("backend.development-mode", false);
-        var serverPort = Bukkit.getServer().getPort();
+        // 1. Check if explicitly set in config
+        var configUrl = rcentralConfig.getBackendUrl();
+        if (configUrl != null && !configUrl.isEmpty()) {
+            LOGGER.info("Using configured backend URL: " + configUrl);
+            return configUrl;
+        }
 
-        if (isDevelopmentMode || serverPort != 25565) {
-            LOGGER.info("Development mode detected - using localhost:3000");
+        // 2. Check if development mode is explicitly enabled
+        if (rcentralConfig.isDevelopmentMode()) {
+            LOGGER.info("Development mode enabled - using localhost:3000");
             return "http://localhost:3000";
         }
 
-        return configUrl != null ? configUrl : "https://raindropcentral.com";
+        // 3. Auto-detect if enabled
+        if (rcentralConfig.isAutoDetect() && isLocalhostReachable()) {
+            LOGGER.info("Localhost backend detected - using http://localhost:3000");
+            return "http://localhost:3000";
+        }
+
+        // 4. Default to production
+        LOGGER.info("Using production backend: https://raindropcentral.com");
+        return "https://raindropcentral.com";
+    }
+
+    private boolean isLocalhostReachable() {
+        try {
+            // Try to connect to localhost:3000 - any response means it's running
+            var testRequest = HttpRequest.newBuilder()
+                    .uri(URI.create("http://localhost:3000/"))
+                    .timeout(Duration.ofSeconds(2))
+                    .GET()
+                    .build();
+
+            var testClient = HttpClient.newBuilder()
+                    .connectTimeout(Duration.ofSeconds(2))
+                    .build();
+
+            var response = testClient.send(testRequest, HttpResponse.BodyHandlers.ofString());
+            // Any response (even 404) means the server is running
+            LOGGER.fine("Localhost:3000 responded with status: " + response.statusCode());
+            return true;
+        } catch (java.net.ConnectException e) {
+            // Connection refused - server not running
+            LOGGER.fine("Localhost:3000 not reachable: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            // Other errors (timeout, etc.) - assume not reachable
+            LOGGER.fine("Localhost:3000 check failed: " + e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -75,8 +122,9 @@ public class RCentralService {
     ) {
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getDescription().getVersion();
+        var maxPlayers = Bukkit.getMaxPlayers();
 
-        return apiClient.connectServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, playerUuid, playerName)
+        return apiClient.connectServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, playerUuid, playerName, maxPlayers)
                 .thenApply(response -> {
                     if (response.isSuccess()) {
                         config.set("connection.api-key", apiKey);

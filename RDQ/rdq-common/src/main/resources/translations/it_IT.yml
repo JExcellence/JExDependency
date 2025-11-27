@@ -1,848 +1,214 @@
-# RaindropQuests (RDQ) Translation File - English
-# Locale: en
-# Format: MiniMessage with %placeholder% format
+# RDQ Italian Translations
+prefix: "<gold>[RDQ]</gold> "
 
-# === General ===
-rq:
-  no_luckperms_installed: "<gradient:#9b59b6:#ffffff>LuckPerms not found. Install plugin to use feature.</gradient>"
-
-# General prefix used throughout the plugin
-prefix:
-  - "<gradient:#9b59b6:#ffffff>✦ RDQImpl ✦</gradient> <color:#9b59b6>|</color> <color:#ffffff>"
-
-# === Head UI (Common navigation elements) ===
-head:
-  return:
-    name: "<gradient:#9b59b6:#ffffff>Return</gradient>"
-    lore:
-      - "<gradient:#9b59b6:#ffffff>Click here to return</gradient>"
-  proceed:
-    name: "<gradient:#9b59b6:#ffffff>Proceed</gradient>"
-    lore:
-      - "<gradient:#9b59b6:#ffffff>Click here to proceed</gradient>"
-  next:
-    name: "<gradient:#9b59b6:#ffffff>Next</gradient>"
-    lore:
-      - "<gradient:#9b59b6:#ffffff>Go to the next page</gradient>"
-  previous:
-    name: "<gradient:#9b59b6:#ffffff>Previous</gradient>"
-    lore:
-      - "<gradient:#9b59b6:#ffffff>Go to the previous page</gradient>"
-  page:
-    name: "<gradient:#9b59b6:#ffffff>Page: %page%</gradient>"
-    lore:
-      - "<gradient:#9b59b6:#ffffff>%first_page% - %page% - %max_page%</gradient>"
-
-# === Bounty System ===
-bounty:
-  # BountyMainView - getKey() = "bounty.main_ui"
-  main_ui:
-    title: "<gradient:#9b59b6:#ffffff>Bounty Menu</gradient>"
-    decoration:
-      name: " "
-    view_bounties:
-      name: "<gradient:#9b59b6:#ffffff>View Bounties</gradient>"
-      lore:
-        - "<gray>Click to view all active bounties</gray>"
-        - "<gray>Active bounties: <white>%count%</white></gray>"
-    create_bounty:
-      name: "<green>Create Bounty</green>"
-      lore:
-        - "<gray>Click to create a new bounty</gray>"
-    create_bounty_locked:
-      name: "<red>Create Bounty (Locked)</red>"
-      lore:
-        - "<gray>This feature is premium only</gray>"
-      message: "<red>You need premium to create bounties!</red>"
-    upgrade_premium:
-      name: "<gold>Upgrade to Premium</gold>"
-      lore:
-        - "<gray>Unlock bounty creation and more!</gray>"
-      message: "<gold>Visit our store to upgrade!</gold>"
-  
-  # BountyCreationView - getKey() = "bounty.creation"
-  creation:
-    title: "<gradient:#9b59b6:#ffffff>Bounty Creation View <white>%current_page%</white> / <white>%max_page%</white></gradient>"
-    title_selected: "<gradient:#9b59b6:#ffffff>Bounty - <white>%player_name%</white></gradient>"
-    confirm:
-      confirm: "<gradient:#9b59b6:#ffffff>Create Bounty</gradient>"
-      error: "<gradient:#9b59b6:#ffffff>Error creating bounty for <red>%target_name%</red></gradient>"
-      success: "<gradient:#9b59b6:#ffffff>Bounty successfully created for <green>%target_name%</green></gradient>"
-      name: "<gradient:#9b59b6:#ffffff>Confirm Bounty</gradient>"
-      lore: "<gradient:#9b59b6:#ffffff>Alerts everyone a bounty as been set!</gradient>"
-      no_player: "<gradient:#9b59b6:#ffffff><red>You must select a target player before confirming.</red></gradient>"
-      no_reward: "<gradient:#9b59b6:#ffffff><red>You must add at least one reward item before confirming.</red></gradient>"
-    add_items:
-      name: "<gradient:#9b59b6:#ffffff>Add Reward Items</gradient>"
-      disabled: "<gradient:#9b59b6:#ffffff><red>Add Reward Items <gray>(Select a target first)</gray></red></gradient>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff>Add item rewards to incentivize the kill!</gradient>"
-    add_currency:
-      name: "<gradient:#9b59b6:#ffffff>Add Currency Reward</gradient>"
-      disabled: "<gradient:#9b59b6:#ffffff><red>Add Currency Reward <gray>(Select a target first)</gray></red></gradient>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff>Add economic value to the kill!</gradient>"
-    select_target:
-      title: "<gradient:#9b59b6:#ffffff>Bounty Creation Menu</gradient>"
-      name: "<gradient:#9b59b6:#ffffff>Create a Bounty</gradient>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff>Choose a player to place a bounty on.</gradient>"
-        - "<gradient:#9b59b6:#ffffff>Current: <white>%target_name%</white></gradient>"
-  
-  # BountyRewardView - getKey() = "bounty.reward"
-  reward:
-    title: "<gradient:#9b59b6:#ffffff>Bounty Rewards</gradient>"
-    pseudo:
-      name: "<gray>No Rewards</gray>"
-      lore: "<gray>No rewards have been added yet.</gray>"
-    input_slot:
-      name: "<gradient:#9b59b6:#ffffff>Insert Reward</gradient>"
-      lore: "<gradient:#9b59b6:#ffffff>Place an item here to add it as a reward.</gradient>"
-    left_overs: "<gradient:#9b59b6:#ffffff>Some items could not be returned to your inventory and were dropped at your feet.</gradient>"
-    reward_item:
-      lore: "<gray>Reward contributed by <white>%contributor%</white></gray>"
-    target:
-      name: "<gradient:#9b59b6:#ffffff>Bounty Target: <white>%target_name%</white></gradient>"
-      lore: "<gray>The player who will receive the bounty.</gray>"
-    no_new_items_inserted: "<gradient:#9b59b6:#ffffff>You have to insert at least 1 new reward to move on further.</gradient>"
-  
-  # BountyOverviewView - getKey() = "bounty.overview"
-  overview:
-    title: "<gradient:#9b59b6:#ffffff>Bounties Menu</gradient>"
-    lore: "<gradient:#9b59b6:#ffffff>View and manage all bounties.</gradient>"
-    entry:
-      name: "<gradient:#9b59b6:#ffffff>%target_name%</gradient>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff>Information</gradient>"
-        - "<gradient:#9b59b6:#ffffff>- %target_name%</gradient>"
-        - "<gradient:#9b59b6:#ffffff>- Created by %commissioner_name% at %created_at%</gradient>"
-    create_bounty:
-      name: "<gradient:#9b59b6:#ffffff>Create Bounty</gradient>"
-      lore: "<gradient:#9b59b6:#ffffff>Initiate a bounty on another player</gradient>"
-    delete_bounty:
-      name: "<gradient:#9b59b6:#ffffff>Delete Bounty</gradient>"
-      lore: "<gradient:#9b59b6:#ffffff>Delete an open bounty</gradient>"
-    deleted_bounty_successfully: "<gradient:#9b59b6:#ffffff>Bounty (#%bounty_id%) of target %target_name% with uuid %target_uniqueId% has been forcefully deleted.</gradient>"
-  
-  # BountyPlayerInfoView - getKey() = "bounty.player_info"
-  player_info:
-    title: "Viewing Bounty - %target_name%"
-    target:
-      name: "%player_name%"
-    delete:
-      name: "<gradient:#9b59b6:#ffffff>Delete Bounty</gradient>"
-      lore: "<gradient:#9b59b6:#ffffff>Delete an open bounty</gradient>"
-    rewards:
-      name: "<gradient:#9b59b6:#ffffff>Bounty Rewards</gradient>"
-      lore: "<gradient:#9b59b6:#ffffff>View or add rewards to bounty</gradient>"
-    info:
-      name: "<gradient:#9b59b6:#ffffff>Bounty Information</gradient>"
-      lore:
-        - "<gray>Target: <white>%target_name%</white></gray>"
-        - "<gray>Commissioner: <white>%commissioner_name%</white></gray>"
-        - "<gray>Created: <white>%created_at%</white></gray>"
-        - "<gray>Rewards: <white>%reward_count%</white></gray>"
-  
-  # Bounty messages (not a view, but bounty-related)
-  claimed:
-    player: "<gradient:#9b59b6:#ffffff>You claimed the bounty on <green>%target_name%</green></gradient>"
-    broadcast: "<gradient:#9b59b6:#ffffff><gold>%receiver_name%</gold> has claimed the bounty on <green>%target_name%</green>!</gradient>"
-  created:
-    broadcast: "<gradient:#9b59b6:#ffffff><gold>%commissioner_name%</gold> has opened a bounty on <green>%target_name%</green>!</gradient>"
-  display:
-    player_list_name: "<gradient:#9b59b6:#ffffff>%bounty_symbol% %player_name%</gradient>"
-    player_display_name: "<gradient:#9b59b6:#ffffff>%bounty_symbol% %player_name%</gradient> <reset>"
-
-# === Paginated Player View ===
-paginated_player_view:
-  title: "<gradient:#9b59b6:#ffffff>Select Player <white>%current_page%</white> / <white>%max_page%</white></gradient>"
-  player_entry:
-    name: "<white>%player_name%</white>"
-    lore:
-      - "<gray>Click to select this player as the bounty target.</gray>"
-  no_players: "<gray>No players available to select.</gray>"
-
-# === Forge Section ===
-forge:
-  cooldown_active: "<gradient:#9b59b6:#ffffff>Cooldown: <white>%rdq_seconds%</white></gradient>"
-  incorrect_block_info: "<gradient:#9b59b6:#ffffff>Incorrect block information.</gradient>"
-  structure_incomplete: "<gradient:#9b59b6:#ffffff>The structure is <red>incomplete</red>.</gradient>"
-  structure_complete: "<gradient:#9b59b6:#ffffff>The structure is <green>complete</green>!</gradient>"
-
-# === Main Overview UI ===
-main_overview_ui:
-  title: "<gradient:#9b59b6:#ffffff>Main Menu</gradient>"
-  lore: "<gradient:#9b59b6:#ffffff>RDQImpl Main Menu</gradient>"
-
-# === Quest Overview UI ===
-quest_overview_ui:
-  title: "<gradient:#9b59b6:#ffffff>Quests Menu</gradient>"
-  lore: "<gradient:#9b59b6:#ffffff>Complete quests and earn raindrops</gradient>"
-
-# === Perk System ===
-perk:
-  # Perk commands
-  command:
-    list_header: "<gradient:#9b59b6:#ffffff>Available Perks:</gradient>"
-    list_entry: "<gray>%perk%: %status%</gray>"
-    info_header: "<gradient:#9b59b6:#ffffff>Perk Info: %perk%</gradient>"
-    info_display_name: "<gray>Name: %name%</gray>"
-    info_description: "<gray>Description: %description%</gray>"
-    info_status: "<gray>Status: %status%</gray>"
-    info_category: "<gray>Category: %category%</gray>"
-    activated: "<green>Perk %perk% activated!</green>"
-    deactivated: "<green>Perk %perk% deactivated!</green>"
-
-  # Perk errors
+rdq:
   error:
-    not_found: "<red>Perk %perk% not found</red>"
-    no_permission: "<red>You don't have permission: %permission%</red>"
-    no_perks: "<red>No perks available</red>"
-    already_active: "<yellow>Perk %perk% is already active.</yellow>"
-    activation_denied: "<red>You cannot activate %perk% right now.</red>"
-    activation_failed: "<red>Failed to activate %perk%. Try again later.</red>"
-    not_active: "<red>Perk %perk% is not active.</red>"
-    deactivation_failed: "<red>Failed to deactivate %perk%. Try again later.</red>"
-    player_not_found: "<red>? Player <white>%player%</white> not found</red>"
+    not_initialized: "<red>RDQ si sta inizializzando. Attendere...</red>"
+    unknown_subcommand: "<red>Sottocomando sconosciuto. Usa /rdq help.</red>"
+    reload_failed: "<red>Ricaricamento fallito: {error}</red>"
+  success:
+    reloaded: "<green>Configurazione RDQ ricaricata!</green>"
 
-  # PerkMainView - getKey() = "perk_main_ui"
-  main_ui:
-    title: "<gradient:#9b59b6:#ffffff>Perks Menu</gradient>"
-    lore: "<gradient:#9b59b6:#ffffff>Obtain perks to enhance gameplay</gradient>"
-    decoration:
-      name: " "
-    view_all_perks:
-      name: "<gradient:#9b59b6:#ffffff>View All Perks</gradient>"
-      lore:
-        - "<gray>Browse and manage your perks</gray>"
-        - ""
-        - "<green>? Click to view perks</green>"
-    my_active_perks:
-      name: "<gradient:#9b59b6:#ffffff>Active Perks</gradient>"
-      lore:
-        - "<gray>View currently active perks</gray>"
-        - "<gray>Active: <white>%active_count%</white>/%max_count%</gray>"
-        - ""
-        - "<green>? Click to manage</green>"
-    perk_statistics:
-      name: "<gradient:#9b59b6:#ffffff>Perk Statistics</gradient>"
-      lore:
-        - "<gray>Total Perks: <white>%total_perks%</white></gray>"
-        - "<gray>Owned: <white>%owned_perks%</white></gray>"
-        - "<gray>Locked: <white>%locked_perks%</white></gray>"
-        - "<gray>Active: <white>%active_perks%</white></gray>"
+error:
+  not_found: "<red>{type} non trovato: {id}</red>"
+  insufficient_funds: "<red>Fondi insufficienti! Richiesto: {required}, Disponibile: {available}</red>"
+  on_cooldown: "<red>In ricarica! {remaining} rimanente.</red>"
+  requirements_not_met: "<red>Requisiti non soddisfatti: {missing}</red>"
+  self_targeting: "<red>Non puoi selezionare te stesso!</red>"
+  already_exists: "<red>{type} esiste già: {id}</red>"
+  expired: "<red>{type} è scaduto: {id}</red>"
+  not_unlocked: "<red>{type} non sbloccato: {id}</red>"
+  permission_denied: "<red>Permesso negato: {permission}</red>"
+  invalid_state: "<red>Stato non valido: {message}</red>"
+  invalid_amount: "<red>Importo non valido! Deve essere tra {min} e {max}.</red>"
+  no_permission: "<red>Non hai il permesso.</red>"
+  player_only: "<red>Questo comando è solo per i giocatori.</red>"
 
-  # PerkListViewFrame - getKey() = "perk_list_ui"
-  list_ui:
-    title: "<gradient:#9b59b6:#ffffff>Available Perks</gradient>"
-    category_all: "All Categories"
-    perk_item:
-      name: "<yellow>%perk_name%</yellow>"
-      lore:
-        category: "<gray>Category: <white>%category%</white></gray>"
-        state: "<gray>State: %state%</gray>"
-        priority: "<gray>Priority: <white>%priority%</white></gray>"
-        cooldown: "<gray>Cooldown: <white>%cooldown%</white></gray>"
-        duration: "<gray>Duration: <white>%duration%</white></gray>"
-        requirements: "<gray>Requirements: <white>%req_completed%</white>/<white>%req_total%</white></gray>"
-        action_activate: "<green>? Click to activate</green>"
-        action_deactivate: "<red>? Click to deactivate</red>"
-        action_locked: "<red>? Locked - View requirements</red>"
-        action_view: "<yellow>? Click for details</yellow>"
-    navigation:
-      previous: "<green>? Previous Page</green>"
-      next: "<green>Next Page ?</green>"
-      page_info: "<white>Page %page%/%max_page%</white>"
-      no_previous: "<gray>No previous page</gray>"
-      no_next: "<gray>No next page</gray>"
-    filter:
-      all: "<white>All Categories</white>"
-      category: "<white>%category%</white>"
-
-  # PerkDetailView - getKey() = "perk.detail_ui"
-  detail_ui:
-    title: "<gradient:#9b59b6:#ffffff>Perk: %perk%</gradient>"
-    activate_button: "<green>Activate</green>"
-    deactivate_button: "<red>Deactivate</red>"
-    permission_scaling: "<gray>Permission Scaling: %scaling%</gray>"
-
-  # PerkRequirementView - getKey() = "perk.requirement_ui"
-  requirement_ui:
-    title: "<gradient:#9b59b6:#ffffff>Requirements - %perk_name%</gradient>"
-    requirement_item:
-      name: "%requirement_name%"
-      lore:
-        type: "<gray>Type: <white>%type%</white></gray>"
-        progress: "<gray>Progress: <white>%progress%</white>%</gray>"
-        completed: "<green>? Completed</green>"
-        incomplete: "<yellow>? In Progress</yellow>"
-        locked: "<red>? Not Started</red>"
-    buttons:
-      complete:
-        name: "<green>? Complete Requirement</green>"
-        lore: "<gray>Mark this requirement as complete</gray>"
-      back:
-        name: "<white>? Back to Perk</white>"
-
-  # PerkUnlockView - getKey() = "perk.unlock_ui"
-  unlock_ui:
-    title: "<gradient:#9b59b6:#ffffff>Unlock - %perk_name%</gradient>"
-    confirm:
-      name: "<green>? Confirm Unlock</green>"
-      lore:
-        - "<gray>Unlock this perk</gray>"
-        - ""
-        - "<gray>Requirements:</gray>"
-        - "<green>? All completed</green>"
-    cancel:
-      name: "<red>? Cancel</red>"
-      lore: "<gray>Return without unlocking</gray>"
-    cost_info:
-      name: "<yellow>?? Unlock Cost</yellow>"
-      lore: "<gray>This perk has no cost</gray>"
-
-  # PerkAdminView - getKey() = "perk.admin_ui"
-  admin_ui:
-    title: "<gradient:#9b59b6:#ff0000>Admin - %perk_name%</gradient>"
-    buttons:
-      toggle_enabled:
-        name: "<yellow>? Toggle Enabled</yellow>"
-        lore:
-          - "<gray>Current: %enabled%</gray>"
-          - "<gray>Click to toggle</gray>"
-      edit_settings:
-        name: "<yellow>? Edit Settings</yellow>"
-        lore: "<gray>Modify perk configuration</gray>"
-      grant_player:
-        name: "<green>+ Grant to Player</green>"
-        lore: "<gray>Give this perk to a player</gray>"
-      revoke_player:
-        name: "<red>- Revoke from Player</red>"
-        lore: "<gray>Remove this perk from a player</gray>"
-      reload:
-        name: "<yellow>? Reload Perk</yellow>"
-        lore: "<gray>Reload perk from configuration</gray>"
-
-  # Perk messages
-  messages:
-    activated: "<green>? Activated perk: <white>%perk_name%</white></green>"
-    deactivated: "<yellow>? Deactivated perk: <white>%perk_name%</white></yellow>"
-    unlocked: "<green>?? Unlocked perk: <white>%perk_name%</white>!</green>"
-    already_active: "<yellow>? Perk <white>%perk_name%</white> is already active</yellow>"
-    already_owned: "<yellow>? You already own <white>%perk_name%</white></yellow>"
-    on_cooldown: "<red>? Perk <white>%perk_name%</white> is on cooldown for %time_remaining%</red>"
-    requirements_not_met: "<red>? Requirements not met for <white>%perk_name%</white></red>"
-    max_active_reached: "<red>? Maximum active perks reached (%count%/%max%)</red>"
-    activation_failed: "<red>? Failed to activate <white>%perk_name%</white></red>"
-    deactivation_failed: "<red>? Failed to deactivate <white>%perk_name%</white></red>"
-    unlock_failed: "<red>? Failed to unlock <white>%perk_name%</white></red>"
-    coming_soon: "<yellow>? This feature is coming soon!</yellow>"
-
-  # Perk admin messages
-  admin:
-    granted: "<green>? Granted perk <white>%perk_name%</white> to <white>%player%</white></green>"
-    revoked: "<yellow>? Revoked perk <white>%perk_name%</white> from <white>%player%</white></yellow>"
-    enabled: "<green>? Enabled perk <white>%perk_name%</white> for <white>%player%</white></green>"
-    disabled: "<yellow>? Disabled perk <white>%perk_name%</white> for <white>%player%</white></yellow>"
-
-  # Perk states
-  state:
-    active: "<green>?</green> <white>Active</white>"
-    available: "<green>?</green> <white>Available</white>"
-    locked: "<red>?</red> <gray>Locked</gray>"
-    cooldown: "<yellow>?</yellow> <white>Cooldown</white>"
-    disabled: "<dark_gray>?</dark_gray> <gray>Disabled</gray>"
-
-  # Perk categories
-  category:
-    combat: "<red>?</red> Combat"
-    utility: "<yellow>??</yellow> Utility"
-    movement: "<aqua>?</aqua> Movement"
-    mining: "<gray>?</gray> Mining"
-    passive: "<green>?</green> Passive"
-    economic: "<gold>??</gold> Economic"
-
-  # Individual perk definitions
-  double_experience:
-    name: "<yellow>Double Experience</yellow>"
-    lore: "<gray>Doubles all experience gained from any source.</gray>"
-  fire_resistance:
-    name: "<yellow>Fire Resistance</yellow>"
-    lore: "<gray>Grants immunity to fire and lava damage.</gray>"
-  fly:
-    name: "<yellow>Flight</yellow>"
-    lore: "<gray>Grants the ability to fly freely.</gray>"
-  haste:
-    name: "<yellow>Haste</yellow>"
-    lore: "<gray>Increases mining and attack speed significantly.</gray>"
-  jump_boost:
-    name: "<yellow>Jump Boost</yellow>"
-    lore: "<gray>Increases jump height to reach higher places.</gray>"
-  luck:
-    name: "<yellow>Luck</yellow>"
-    lore: "<gray>Improves the quality and quantity of loot you receive.</gray>"
-  night_vision:
-    name: "<yellow>Night Vision</yellow>"
-    lore: "<gray>Allows you to see clearly in complete darkness.</gray>"
-  prevent_death:
-    name: "<yellow>Prevent Death</yellow>"
-    lore: "<gray>Prevents death once per cooldown and restores health.</gray>"
-  regeneration:
-    name: "<yellow>Regeneration</yellow>"
-    lore: "<gray>Gradually restores your health over time.</gray>"
-  resistance:
-    name: "<yellow>Resistance</yellow>"
-    lore: "<gray>Reduces incoming damage from all sources.</gray>"
-  speed:
-    name: "<yellow>Speed Boost</yellow>"
-    lore: "<gray>Greatly increases your movement speed.</gray>"
-  strength:
-    name: "<yellow>Strength</yellow>"
-    lore: "<gray>Boosts melee damage output in combat.</gray>"
-  treasure_hunter:
-    name: "<yellow>Treasure Hunter</yellow>"
-    lore: "<gray>Grants a chance to discover bonus ore while mining.</gray>"
-  vampire:
-    name: "<yellow>Vampire</yellow>"
-    lore: "<gray>Heals you whenever you damage your foes.</gray>"
-  water_breathing:
-    name: "<yellow>Water Breathing</yellow>"
-    lore: "<gray>Lets you breathe underwater indefinitely.</gray>"
-
-  entry:
-    name: "<yellow>%perk%</yellow> %status%"
-
-# === Rank System ===
 rank:
-  # Rank notifications
+  error:
+    unknown_subcommand: "<red>Sottocomando grado sconosciuto.</red>"
+    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
+    grant_failed: "<red>Assegnazione grado fallita.</red>"
+    reload_failed: "<red>Ricaricamento gradi fallito: {error}</red>"
+  success:
+    rank_granted: "<green>Grado {rankName} assegnato a {playerName}!</green>"
+    rank_revoked: "<yellow>Grado {rankName} revocato da {playerName}.</yellow>"
+    reloaded: "<green>Configurazione gradi ricaricata!</green>"
+    rank_unlocked: "<green>Congratulazioni! Hai sbloccato il grado {rankName}!</green>"
+  opening_view: "<gray>Apertura vista gradi...</gray>"
+  no_progress: "<yellow>Non hai ancora iniziato alcun percorso di grado.</yellow>"
+  progress_header: "<yellow>Il Tuo Progresso Grado:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>Alberi di Grado Disponibili:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks} gradi)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Uso: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Comando admin sconosciuto.</red>"
+    grant:
+      usage: "<yellow>Uso: /rank admin grant <giocatore> <grado></yellow>"
+    revoke:
+      usage: "<yellow>Uso: /rank admin revoke <giocatore> <grado></yellow>"
+  help: |
+    <yellow>Comandi Grado:</yellow>
+    <gray>/rank</gray> - Apri menu gradi
+    <gray>/rank view</gray> - Visualizza alberi gradi
+    <gray>/rank progress</gray> - Visualizza progresso
+    <gray>/rank admin</gray> - Comandi admin
   notification:
-    fallback:
-      title: "Failed to retrieve translation title key. Check language file."
-      subtitle: "Failed to retrieve translation subtitle key. Check language file."
-      action_bar: "Failed to retrieve translation action bar key. Check language"
+    title: "<gold>Grado Sbloccato!</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>Hai sbloccato {rankName}!</green>"
 
-  # RankMainView - getKey() = "rank_main_ui"
-  main_ui:
-    title: "<gradient:#9b59b6:#ffffff>Ranks Menu</gradient>"
-    lore: "<gradient:#9b59b6:#ffffff>Gain ranks and unlock features</gradient>"
-    decoration:
-      name: " "
-    rank_tree:
-      name: "<gradient:#9b59b6:#ffffff>Rank Tree</gradient>"
-      lore:
-        - "<gray>View and progress through ranks</gray>"
-        - ""
-        - "<green>? Click to explore</green>"
+bounty:
+  error:
+    unknown_subcommand: "<red>Sottocomando taglia sconosciuto.</red>"
+    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
+    self_target: "<red>Non puoi mettere una taglia su te stesso!</red>"
+    invalid_amount: "<red>Importo non valido.</red>"
+    invalid_id: "<red>ID taglia non valido.</red>"
+    create_failed: "<red>Creazione taglia fallita: {error}</red>"
+    cancel_failed: "<red>Annullamento taglia fallito.</red>"
+  success:
+    bounty_created: "<green>Taglia di {amount} piazzata su {targetName}!</green>"
+    bounty_cancelled: "<yellow>Taglia annullata. Fondi rimborsati.</yellow>"
+    bounty_removed: "<green>Taglia rimossa dall'admin.</green>"
+    bounty_claimed: "<green>Hai riscosso una taglia di {amount}!</green>"
+    reloaded: "<green>Configurazione taglie ricaricata!</green>"
+  create:
+    usage: "<yellow>Uso: /bounty create <giocatore> <importo></yellow>"
+  cancel:
+    usage: "<yellow>Uso: /bounty cancel <tagliaId></yellow>"
+  list:
+    empty: "<yellow>Nessuna taglia attiva.</yellow>"
+    header: "<yellow>Taglie Attive ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(da {placer})</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>Classifica Cacciatori di Taglie:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills} uccisioni, {earned} guadagnati</gray>"
+  my:
+    header: "<yellow>Le Tue Taglie:</yellow>"
+    placed_header: "<gray>Taglie che hai piazzato:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>Taglie su di te:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>(da {placer})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Uso: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>Comando admin sconosciuto.</red>"
+    remove:
+      usage: "<yellow>Uso: /bounty admin remove <tagliaId></yellow>"
+  help: |
+    <yellow>Comandi Taglia:</yellow>
+    <gray>/bounty</gray> - Lista taglie attive
+    <gray>/bounty create <giocatore> <importo></gray> - Crea taglia
+    <gray>/bounty cancel <id></gray> - Annulla taglia
+    <gray>/bounty leaderboard</gray> - Classifica
+    <gray>/bounty my</gray> - Le tue taglie
+  announcement:
+    created: "<yellow>{placer} ha piazzato una taglia di {amount} su {target}!</yellow>"
+    claimed: "<green>{hunter} ha riscosso la taglia su {target} del valore di {amount}!</green>"
+    expired: "<gray>La taglia su {target} è scaduta.</gray>"
 
-  # RankPathOverview - getKey() = "rank_path_overview_ui"
-  path_overview_ui:
-    title: "&6Rank Path: %rank_tree_name%"
-    preview_prefix: "&7[PREVIEW]"
-    unknown_tree: "Unknown Rank Tree"
-    nav:
-      left: "&7← Navigate Left"
-      right: "&7Navigate Right →"
-      up: "&7↑ Navigate Up"
-      down: "&7↓ Navigate Down"
-      fallback: "&7Navigate %direction%"
-    back:
-      lore:
-        - "<red>Click to go back"
-    preview_mode:
-      name: "&ePreview Mode"
-      lore:
-        - "<gray>You are viewing this rank tree"
-        - "<gray>in preview mode. No progress"
-        - "<gray>will be saved or consumed."
-      fallback: "&ePreview Mode"
-    center_view:
-      name: "&aCenter View"
-      lore:
-        - "<gray>Click to reset the view"
-        - "<gray>to the center position"
-      fallback: "&aReset View"
-    background:
-      name: " "
-    connection:
-      from: "<gray>From: &f%rank_name%"
-      to: "<gray>To: &f%rank_name%"
-      fallback: "<gray>Connection Line"
-      owned: "&aCompleted Path"
-      available: "&eAvailable Path"
-      in_progress: "&6In Progress Path"
-      locked: "&cLocked Path"
-    messages:
-      preview_rank_click: "<gray>You clicked on rank &f%rank_name% <gray>in preview mode."
-      preview_rank_click_fallback: "<gray>Preview: %rank_name%"
-      rank_owned: "&aYou already own the rank &f%rank_name%&a!"
-      rank_owned_fallback: "&aOwned: %rank_name%"
-      rank_locked: "&cThe rank &f%rank_name% &cis currently locked!"
-      rank_locked_fallback: "&cLocked: %rank_name%"
-      no_requirements: "&aThe rank &f%rank_name% &ahas no requirements and has been automatically unlocked!"
-      no_requirements_fallback: "&aAuto-unlocked: %rank_name%"
-      rank_started: "&aStarted progression for rank &f%rank_name%&a! Complete &e%requirement_count% &arequirements to unlock it."
-      rank_started_fallback: "&aStarted: %rank_name% (%requirement_count% requirements)"
-      rank_start_error: "&cFailed to start progression for rank &f%rank_name%&c. Please try again."
-      rank_start_error_fallback: "&cError starting: %rank_name%"
-      requirements_not_completed: "&cYou haven't completed all requirements for rank &f%rank_name% &cyet!"
-      requirements_not_completed_fallback: "&cIncomplete: %rank_name%"
-      rank_redemption_error: "&cFailed to redeem rank &f%rank_name%&c. Please contact an administrator."
-      rank_redemption_error_fallback: "&cRedemption failed: %rank_name%"
-      rank_redeemed: "&aCongratulations! You have successfully unlocked the rank &f%rank_name%&a!"
-      rank_redeemed_fallback: "&aUnlocked: %rank_name%"
-    click:
-      left_start: "&eLeft-click <gray>to start progression"
-      right_requirements: "&eRight-click <gray>to view requirements"
-      left_redeem: "&eLeft-click <gray>to redeem rank"
-      right_progress: "&eRight-click <gray>to view progress"
-    error:
-      no_rank_tree: "&cNo Rank Tree Available"
-      no_rank_tree_lore:
-        - "<gray>The rank tree could not be loaded."
-        - "<gray>Please contact an administrator."
-      critical:
-        title: "&cCritical Error"
-        lore:
-          - "<gray>A critical error occurred while"
-          - "<gray>loading the rank path overview."
-          - "<gray>Please contact an administrator."
-      render_rank: "&cError Loading Rank"
-      requirements_view_failed: "&cFailed to open requirements view for rank &f%rank_name%&c."
-      general: "&cAn error occurred. Please try again."
-    rank:
-      fallback_name: "&f%rank_id%"
-      fallback_lore: "<gray>Rank: %rank_id%"
-      tier: "<gray>Tier: &f%tier%"
-      weight: "<gray>Weight: &f%weight%"
-    fallback:
-      rank: "&f%rank_id%"
+perk:
+  error:
+    unknown_subcommand: "<red>Sottocomando perk sconosciuto.</red>"
+    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
+    perk_not_found: "<red>Perk non trovato: {perkId}</red>"
+    perk_on_cooldown: "<red>Questo perk è in ricarica! {remaining} rimanente.</red>"
+    perk_not_active: "<red>Questo perk non è attivo.</red>"
+    activate_failed: "<red>Attivazione perk fallita: {error}</red>"
+    grant_failed: "<red>Assegnazione perk fallita.</red>"
+    reload_failed: "<red>Ricaricamento perk fallito: {error}</red>"
+  success:
+    perk_activated: "<green>Perk {perkName} attivato!</green>"
+    perk_deactivated: "<yellow>Perk {perkName} disattivato.</yellow>"
+    perk_granted: "<green>Perk {perkName} assegnato a {playerName}!</green>"
+    perk_revoked: "<yellow>Perk {perkName} revocato da {playerName}.</yellow>"
+    perk_unlocked: "<green>Hai sbloccato il perk {perkName}!</green>"
+    reloaded: "<green>Configurazione perk ricaricata!</green>"
+  activate:
+    usage: "<yellow>Uso: /perk activate <perkId></yellow>"
+  deactivate:
+    usage: "<yellow>Uso: /perk deactivate <perkId></yellow>"
+  info:
+    usage: "<yellow>Uso: /perk info <perkId></yellow>"
+    header: "<yellow>Info Perk: {id}</yellow>"
+    details: "<gray>Categoria: {category} | Ricarica: {cooldown}s | Durata: {duration}s</gray>"
+  list:
+    empty: "<yellow>Nessun perk disponibile.</yellow>"
+    header: "<yellow>Perk Disponibili ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Uso: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Comando admin sconosciuto.</red>"
+    grant:
+      usage: "<yellow>Uso: /perk admin grant <giocatore> <perk></yellow>"
+    revoke:
+      usage: "<yellow>Uso: /perk admin revoke <giocatore> <perk></yellow>"
+  help: |
+    <yellow>Comandi Perk:</yellow>
+    <gray>/perk</gray> - Lista perk disponibili
+    <gray>/perk activate <perk></gray> - Attiva perk
+    <gray>/perk deactivate <perk></gray> - Disattiva perk
+    <gray>/perk info <perk></gray> - Dettagli perk
 
-  # RankRequirementDetailView - getKey() = "rank_requirement_detail_ui"
-  requirement_detail_ui:
-    title: "<gradient:#4CAF50:#2196F3>Requirement Details</gradient> <gray>-</gray> <white>%requirement_type%</white>"
-    progress_text: "<gray>Progress:</gray>"
+gui:
+  common:
+    back: "<yellow>← Indietro</yellow>"
+    close: "<red>Chiudi</red>"
+    next_page: "<yellow>Pagina Successiva →</yellow>"
+    previous_page: "<yellow>← Pagina Precedente</yellow>"
+    page_info: "<gray>Pagina {current}/{total}</gray>"
+    loading: "<gray>Caricamento...</gray>"
+    confirm: "<green>Conferma</green>"
+    cancel: "<red>Annulla</red>"
 
-  # RankTreeOverviewView - getKey() = "rank_tree_overview_ui"
-  tree_overview_ui:
-    title: "<gradient:#9b59b6:#ffffff>Rank Trees Overview</gradient>"
-    loading: "<gradient:#9b59b6:#ffffff><red>Loading...</red></gradient>"
-    click_to_select: "<gradient:#9b59b6:#ffffff><gray>Right-click to select this path</gray></gradient>"
-    currently_active: "<gradient:#9b59b6:#ffffff><green>✓ Currently Active Path</green></gradient>"
-    click_to_preview: "<gradient:#9b59b6:#ffffff><gray>Left-click to preview</gray></gradient>"
+perk_names:
+  speed: "Velocità"
+  strength: "Forza"
+  resistance: "Resistenza"
+  regeneration: "Rigenerazione"
+  night_vision: "Visione Notturna"
+  fire_resistance: "Resistenza al Fuoco"
+  water_breathing: "Respirazione Subacquea"
+  jump_boost: "Salto Potenziato"
+  haste: "Fretta"
+  luck: "Fortuna"
+  fly: "Volo"
+  double_experience: "Doppia XP"
+  prevent_death: "Prevenzione Morte"
+  treasure_hunter: "Cacciatore di Tesori"
+  vampire: "Vampiro"
 
-  # RankPathRankRequirementOverview - getKey() = "rank_requirements_overview_ui"
-  requirements_overview_ui:
-    title: "<gradient:#9b59b6:#ffffff>Requirements for %rank_name%</gradient> <color:#9b59b6>(%requirement_count% total)</color>"
-    page:
-      name: "<gradient:#2196F3:#03DAC6>📄 Page %page%</gradient>"
-      lore:
-        - "<white>Current Page:</white> <yellow>%page%</yellow><gray>/</gray><green>%max_page%</green>"
-        - "<white>Total Pages:</white> <green>%max_page%</green>"
-        - "<white>Requirements:</white> <yellow>%requirement_count%</yellow>"
-        - ""
-        - "<gray>Use the navigation buttons to browse</gray>"
-
-  # Rank path service messages
-  path_service:
-    default_rank_assigned: "<gradient:#9b59b6:#ffffff><green>Default rank %rank_name% assigned successfully</green></gradient>"
-    rank_path_selected: "<gradient:#9b59b6:#ffffff><green>Rank path %rank_tree_name% selected successfully</green></gradient>"
-    rank_path_selection_failed: "<gradient:#9b59b6:#ffffff><red>Failed to select rank path %rank_tree_name%</red></gradient>"
-    prerequisites_not_met: "<gradient:#9b59b6:#ffffff><red>You do not meet the prerequisites for rank tree: %rank_tree_name%</red></gradient>"
-    rank_tree_disabled: "<gradient:#9b59b6:#ffffff><red>Rank tree %rank_tree_name% is currently disabled</red></gradient>"
-
-  # Rank status
-  status:
-    owned: "<gradient:#9b59b6:#ffffff><green>✓ Owned</green></gradient>"
-    available: "<gradient:#9b59b6:#ffffff><yellow>⚡ Available</yellow></gradient>"
-    in_progress: "<gradient:#9b59b6:#ffffff><gold>⏳ In Progress</gold></gradient>"
-    locked: "<gradient:#9b59b6:#ffffff><red>🔒 Locked</red></gradient>"
-
-  # Rank tree display
-  tree_display:
-    available:
-      name: "<gradient:#9b59b6:#ffffff>%rank_tree_name%</gradient>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff><gray>Left-click to preview</gray></gradient>"
-        - "<gradient:#9b59b6:#ffffff><gray>Right-click to select</gray></gradient>"
-    selected:
-      name: "<gradient:#9b59b6:#ffffff>%rank_tree_name%</gradient> <green>✓</green>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff><green>Currently selected path</green></gradient>"
-    locked:
-      name: "<gradient:#9b59b6:#ffffff>%rank_tree_name%</gradient> <red>🔒</red>"
-      lore:
-        - "<gradient:#9b59b6:#ffffff><red>Prerequisites not met</red></gradient>"
-
-  # Rank progression
-  progression:
-    start_progression: "<gradient:#9b59b6:#ffffff><gray>Left-click to start progression</gray></gradient>"
-    view_requirements: "<gradient:#9b59b6:#ffffff><gray>Right-click to view requirements</gray></gradient>"
-    redeem_rank: "<gradient:#9b59b6:#ffffff><gray>Left-click to redeem rank</gray></gradient>"
-    view_progress: "<gradient:#9b59b6:#ffffff><gray>Right-click to view progress</gray></gradient>"
-    rank_info: "<gradient:#9b59b6:#ffffff><gray>Click for rank information</gray></gradient>"
-
-  # Rank class definitions
-  cleric:
-    acolyte:
-      name: "<bold><gradient:#9b59b6:#bd7cd8>Acolyte</gradient></bold>"
-      lore:
-        - "<italic><gradient:#b98ad6:#ffffff>A humble initiate beginning their spiritual journey.</gradient></italic>"
-        - "<italic><gradient:#b98ad6:#ffffff>Acolytes assist higher clerics and</gradient></italic>"
-        - "<italic><gradient:#b98ad6:#ffffff>learn the basic rites of their order.</gradient></italic>"
-    devotee:
-      name: "<bold><gradient:#a066cc:#c999e2>Devotee</gradient></bold>"
-      lore:
-        - "<italic><gradient:#c099dc:#ffffff>With unwavering faith, Devotees commit themselves</gradient></italic>"
-        - "<italic><gradient:#c099dc:#ffffff>to a divine path. They perform minor blessings</gradient></italic>"
-        - "<italic><gradient:#c099dc:#ffffff>and uphold sacred duties within their community.</gradient></italic>"
-    priest:
-      name: "<bold><gradient:#b175d9:#d5b4eb>Priest</gradient></bold>"
-      lore:
-        - "<italic><gradient:#ccaee5:#ffffff>Ordained into service, Priests wield the</gradient></italic>"
-        - "<italic><gradient:#ccaee5:#ffffff>authority of their order. They lead prayers, offer</gradient></italic>"
-        - "<italic><gradient:#ccaee5:#ffffff>guidance, and channel healing energies to aid others.</gradient></italic>"
-    healer:
-      name: "<bold><gradient:#c285e5:#e1cdf3>Healer</gradient></bold>"
-      lore:
-        - "<italic><gradient:#d7c3ee:#ffffff>Compassion flows through the Healer's touch.</gradient></italic>"
-        - "<italic><gradient:#d7c3ee:#ffffff>Masters of restorative arts, they mend wounds</gradient></italic>"
-        - "<italic><gradient:#d7c3ee:#ffffff>both physical and spiritual, often sought</gradient></italic>"
-        - "<italic><gradient:#d7c3ee:#ffffff>in times of crisis.</gradient></italic>"
-    bishop:
-      name: "<bold><gradient:#d395f2:#ebdff9>Bishop</gradient></bold>"
-      lore:
-        - "<italic><gradient:#e3d7f5:#ffffff>A leader of faith and wisdom,</gradient></italic>"
-        - "<italic><gradient:#e3d7f5:#ffffff>Bishops oversee others in the order, spread</gradient></italic>"
-        - "<italic><gradient:#e3d7f5:#ffffff>divine teachings, and invoke</gradient></italic>"
-        - "<italic><gradient:#e3d7f5:#ffffff>stronger blessings in the name of their deity.</gradient></italic>"
-    oracle:
-      name: "<bold><gradient:#e4a4ff:#f6effd>Oracle</gradient></bold>"
-      lore:
-        - "<italic><gradient:#eddaf9:#ffffff>Touched by visions and prophecy,</gradient></italic>"
-        - "<italic><gradient:#eddaf9:#ffffff>Oracles glimpse truths beyond the mortal veil.</gradient></italic>"
-        - "<italic><gradient:#eddaf9:#ffffff>Their words carry weight,</gradient></italic>"
-        - "<italic><gradient:#eddaf9:#ffffff>and their power shapes the fate of many.</gradient></italic>"
-    high_priest:
-      name: "<bold><gradient:#f0bfff:#ffffff>High Priest</gradient></bold>"
-      lore:
-        - "<italic><gradient:#f6ecfc:#ffffff>The pinnacle of divine connection,</gradient></italic>"
-        - "<italic><gradient:#f6ecfc:#ffffff>High Priests are the chosen voices of their god.</gradient></italic>"
-        - "<italic><gradient:#f6ecfc:#ffffff>They radiate sacred energy, command miracles,</gradient></italic>"
-        - "<italic><gradient:#f6ecfc:#ffffff>and lead the faithful with unparalleled grace.</gradient></italic>"
-
-  mage:
-    apprentice:
-      name: "<bold><gradient:#341f97:#5f27cd>Apprentice</gradient></bold>"
-      lore:
-        - "<italic><gradient:#6e4cc9:#ffffff>New to the arcane world, Apprentices study</gradient></italic>"
-        - "<italic><gradient:#6e4cc9:#ffffff>basic spellcraft and magical theory under</gradient></italic>"
-        - "<italic><gradient:#6e4cc9:#ffffff>the guidance of seasoned mentors. The spark</gradient></italic>"
-        - "<italic><gradient:#6e4cc9:#ffffff>of potential is just beginning to flicker.</gradient></italic>"
-    scholar:
-      name: "<bold><gradient:#5f27cd:#706fd3>Scholar</gradient></bold>"
-      lore:
-        - "<italic><gradient:#8573d6:#ffffff>Having mastered fundamentals, Scholars delve</gradient></italic>"
-        - "<italic><gradient:#8573d6:#ffffff>deep into magical texts, absorbing lore and</gradient></italic>"
-        - "<italic><gradient:#8573d6:#ffffff>practicing controlled spellcasting.</gradient></italic>"
-        - "<italic><gradient:#8573d6:#ffffff>Their minds expand with ancient truths.</gradient></italic>"
-    elementalist:
-      name: "<bold><gradient:#706fd3:#3ae374>Elementalist</gradient></bold>"
-      lore:
-        - "<italic><gradient:#5ed09f:#ffffff>Now attuned to the natural forces,</gradient></italic>"
-        - "<italic><gradient:#5ed09f:#ffffff>Elementalists wield fire, frost, wind, and earth.</gradient></italic>"
-        - "<italic><gradient:#5ed09f:#ffffff>Their magic surges with primal energy,</gradient></italic>"
-        - "<italic><gradient:#5ed09f:#ffffff>dangerous but thrilling.</gradient></italic>"
-    enchanter:
-      name: "<bold><gradient:#3ae374:#12cbc4>Enchanter</gradient></bold>"
-      lore:
-        - "<italic><gradient:#32b6b0:#ffffff>With a delicate touch, Enchanters imbue</gradient></italic>"
-        - "<italic><gradient:#32b6b0:#ffffff>objects with magic and alter the properties of</gradient></italic>"
-        - "<italic><gradient:#32b6b0:#ffffff>the world around them. Their spellwork</gradient></italic>"
-        - "<italic><gradient:#32b6b0:#ffffff>weaves enchantment into the mundane.</gradient></italic>"
-    sorcerer:
-      name: "<bold><gradient:#12cbc4:#9980fa>Sorcerer</gradient></bold>"
-      lore:
-        - "<italic><gradient:#8f88e8:#ffffff>No longer bound by books alone, Sorcerers</gradient></italic>"
-        - "<italic><gradient:#8f88e8:#ffffff>channel raw magical force through will alone.</gradient></italic>"
-        - "<italic><gradient:#8f88e8:#ffffff>Their power is instinctive,</gradient></italic>"
-        - "<italic><gradient:#8f88e8:#ffffff>flowing from deep within.</gradient></italic>"
-    wizard:
-      name: "<bold><gradient:#9980fa:#f368e0>Wizard</gradient></bold>"
-      lore:
-        - "<italic><gradient:#d493f2:#ffffff>Wizards are disciplined spellcasters,</gradient></italic>"
-        - "<italic><gradient:#d493f2:#ffffff>masters of magical theory and practice.</gradient></italic>"
-        - "<italic><gradient:#d493f2:#ffffff>Their incantations are precise,</gradient></italic>"
-        - "<italic><gradient:#d493f2:#ffffff>their power vast, their minds razor-sharp.</gradient></italic>"
-    archmage:
-      name: "<bold><gradient:#f368e0:#feca57>Archmage</gradient></bold>"
-      lore:
-        - "<italic><gradient:#f9b872:#ffffff>The pinnacle of arcane mastery. Archmages</gradient></italic>"
-        - "<italic><gradient:#f9b872:#ffffff>bend reality, unravel mysteries of the cosmos,</gradient></italic>"
-        - "<italic><gradient:#f9b872:#ffffff>and stand as paragons of magical</gradient></italic>"
-        - "<italic><gradient:#f9b872:#ffffff>power. They are legend incarnate.</gradient></italic>"
-
-  merchant:
-    trader:
-      name: "<bold><gradient:#a67c00:#d4af37>Trader</gradient></bold>"
-      lore:
-        - "<italic><gradient:#c4a44c:#ffffff>Just starting out, Traders barter goods and</gradient></italic>"
-        - "<italic><gradient:#c4a44c:#ffffff>learn the basics of negotiation and value.</gradient></italic>"
-    vendor:
-      name: "<bold><gradient:#d4af37:#e1c16e>Vendor</gradient></bold>"
-      lore:
-        - "<italic><gradient:#ddbb5f:#ffffff>Vendors set up shop and begin to attract a</gradient></italic>"
-        - "<italic><gradient:#ddbb5f:#ffffff>steady stream of customers, refining their market skills.</gradient></italic>"
-    artificer:
-      name: "<bold><gradient:#e1c16e:#b08d57>Artificer</gradient></bold>"
-      lore:
-        - "<italic><gradient:#c49d63:#ffffff>Artificers craft unique items of high value,</gradient></italic>"
-        - "<italic><gradient:#c49d63:#ffffff>combining skill and creativity to supply rare goods.</gradient></italic>"
-    alchemist:
-      name: "<bold><gradient:#b08d57:#7d6608>Alchemist</gradient></bold>"
-      lore:
-        - "<italic><gradient:#9a7f3b:#ffffff>Blending science with commerce,</gradient></italic>"
-        - "<italic><gradient:#9a7f3b:#ffffff>Alchemists turn base materials into</gradient></italic>"
-        - "<italic><gradient:#9a7f3b:#ffffff>gold—literally and figuratively.</gradient></italic>"
-    master_crafter:
-      name: "<bold><gradient:#7d6608:#d68910>Master Crafter</gradient></bold>"
-      lore:
-        - "<italic><gradient:#c98f3c:#ffffff>Masters of their trade, these artisans produce</gradient></italic>"
-        - "<italic><gradient:#c98f3c:#ffffff>legendary goods sought by nobles and adventurers alike.</gradient></italic>"
-    merchant_prince:
-      name: "<bold><gradient:#d68910:#f9ca24>Merchant Prince</gradient></bold>"
-      lore:
-        - "<italic><gradient:#f1bc3a:#ffffff>With caravans and contracts spanning nations,</gradient></italic>"
-        - "<italic><gradient:#f1bc3a:#ffffff>Merchant Princes command wealth rivaling kings.</gradient></italic>"
-    guild_master:
-      name: "<bold><gradient:#f9ca24:#fff200>Guild Master</gradient></bold>"
-      lore:
-        - "<italic><gradient:#fce94a:#ffffff>At the summit of commerce, the Guild Master</gradient></italic>"
-        - "<italic><gradient:#fce94a:#ffffff>oversees vast trade empires,</gradient></italic>"
-        - "<italic><gradient:#fce94a:#ffffff>broker alliances, and shape economies.</gradient></italic>"
-
-  ranger:
-    hunter:
-      name: "<bold><gradient:#145a32:#196f3d>Hunter</gradient></bold>"
-      lore:
-        - "<italic><gradient:#2d7a43:#ffffff>A primal stalker of the forest,</gradient></italic>"
-        - "<italic><gradient:#2d7a43:#ffffff>skilled in tracking and surviving the wilderness.</gradient></italic>"
-    archer:
-      name: "<bold><gradient:#196f3d:#1e8449>Archer</gradient></bold>"
-      lore:
-        - "<italic><gradient:#3b8f50:#ffffff>An expert with the bow,</gradient></italic>"
-        - "<italic><gradient:#3b8f50:#ffffff>precise and patient in battle and in the hunt.</gradient></italic>"
-    tracker:
-      name: "<bold><gradient:#1e8449:#229954>Tracker</gradient></bold>"
-      lore:
-        - "<italic><gradient:#4ea863:#ffffff>A master of footprints, broken twigs,</gradient></italic>"
-        - "<italic><gradient:#4ea863:#ffffff>and silent movement through any terrain.</gradient></italic>"
-    marksman:
-      name: "<bold><gradient:#229954:#28b463>Marksman</gradient></bold>"
-      lore:
-        - "<italic><gradient:#5ac675:#ffffff>With deadly accuracy,</gradient></italic>"
-        - "<italic><gradient:#5ac675:#ffffff>the Marksman can drop prey from great distances.</gradient></italic>"
-    pathfinder:
-      name: "<bold><gradient:#28b463:#52be80>Path Finder</gradient></bold>"
-      lore:
-        - "<italic><gradient:#6ecf91:#ffffff>Skilled in navigation, they uncover</gradient></italic>"
-        - "<italic><gradient:#6ecf91:#ffffff>hidden trails and lead others through peril.</gradient></italic>"
-    sniper:
-      name: "<bold><gradient:#52be80:#82e0aa>Sniper</gradient></bold>"
-      lore:
-        - "<italic><gradient:#88dcaa:#ffffff>From the treetops or cliffs,</gradient></italic>"
-        - "<italic><gradient:#88dcaa:#ffffff>the Sniper strikes unseen with lethal focus.</gradient></italic>"
-    forest_lord:
-      name: "<bold><gradient:#82e0aa:#abebc6>Forest Lord</gradient></bold>"
-      lore:
-        - "<italic><gradient:#a1e3b2:#ffffff>One with the wild, the Forest Lord</gradient></italic>"
-        - "<italic><gradient:#a1e3b2:#ffffff>commands nature and moves as its</gradient></italic>"
-        - "<italic><gradient:#a1e3b2:#ffffff>guardian and champion.</gradient></italic>"
-
-  rogue:
-    thief:
-      name: "<bold><gradient:#6c5ce7:#81ecec>Thief</gradient></bold>"
-      lore:
-        - "<italic><gradient:#74b9ff:#ffffff>An opportunist of the shadows,</gradient></italic>"
-        - "<italic><gradient:#74b9ff:#ffffff>picking pockets and escaping unseen.</gradient></italic>"
-    scout:
-      name: "<bold><gradient:#81ecec:#00cec9>Scout</gradient></bold>"
-      lore:
-        - "<italic><gradient:#55efc4:#ffffff>Light on their feet and sharp-eyed, Scouts</gradient></italic>"
-        - "<italic><gradient:#55efc4:#ffffff>slip through danger to gather intelligence.</gradient></italic>"
-    assassin:
-      name: "<bold><gradient:#6c5ce7:#a29bfe>Assassin</gradient></bold>"
-      lore:
-        - "<italic><gradient:#a29bfe:#ffffff>Silent and lethal, Assassins strike from</gradient></italic>"
-        - "<italic><gradient:#a29bfe:#ffffff>darkness with fatal precision.</gradient></italic>"
-    infiltrator:
-      name: "<bold><gradient:#a29bfe:#e84393>Infiltrator</gradient></bold>"
-      lore:
-        - "<italic><gradient:#fab1a0:#ffffff>Blending in, breaking through,</gradient></italic>"
-        - "<italic><gradient:#fab1a0:#ffffff>and slipping out undetected.</gradient></italic>"
-        - "<italic><gradient:#fab1a0:#ffffff>They're ghosts in the system.</gradient></italic>"
-    shadowblade:
-      name: "<bold><gradient:#e84393:#fd79a8>Shadow Blade</gradient></bold>"
-      lore:
-        - "<italic><gradient:#f78fb3:#ffffff>Wielding enchanted blades and cloaked in magic,</gradient></italic>"
-        - "<italic><gradient:#f78fb3:#ffffff>they are death made graceful.</gradient></italic>"
-    spymaster:
-      name: "<bold><gradient:#00b894:#00cec9>Spy Master</gradient></bold>"
-      lore:
-        - "<italic><gradient:#81ecec:#ffffff>Master manipulators and tacticians, Spy Masters</gradient></italic>"
-        - "<italic><gradient:#81ecec:#ffffff>control networks of secrets and agents.</gradient></italic>"
-    shadowmaster:
-      name: "<bold><gradient:#0984e3:#6c5ce7>Shadow Master</gradient></bold>"
-      lore:
-        - "<italic><gradient:#74b9ff:#ffffff>The embodiment of darkness. Shadow Masters are</gradient></italic>"
-        - "<italic><gradient:#74b9ff:#ffffff>myth—neither seen nor remembered.</gradient></italic>"
-
+rank_trees:
   warrior:
-    recruit:
-      name: "<bold><gradient:#922b21:#a93226>Recruit</gradient></bold>"
-      lore:
-        - "<italic><gradient:#b84333:#ffffff>A novice stepping onto the battlefield,</gradient></italic>"
-        - "<italic><gradient:#b84333:#ffffff>eager to prove their worth.</gradient></italic>"
-    fighter:
-      name: "<bold><gradient:#a93226:#c0392b>Fighter</gradient></bold>"
-      lore:
-        - "<italic><gradient:#c25644:#ffffff>Skilled in combat basics,</gradient></italic>"
-        - "<italic><gradient:#c25644:#ffffff>Fighters hold their ground and sharpen their skills.</gradient></italic>"
-    guardian:
-      name: "<bold><gradient:#c0392b:#d35400>Guardian</gradient></bold>"
-      lore:
-        - "<italic><gradient:#d67240:#ffffff>Protectors of allies, Guardians are</gradient></italic>"
-        - "<italic><gradient:#d67240:#ffffff>stalwart defenders and bastions of strength.</gradient></italic>"
-    berserker:
-      name: "<bold><gradient:#d35400:#e67e22>Berserker</gradient></bold>"
-      lore:
-        - "<italic><gradient:#df7e33:#ffffff>Fierce and unstoppable, Berserkers</gradient></italic>"
-        - "<italic><gradient:#df7e33:#ffffff>channel fury into devastating blows.</gradient></italic>"
-    paladin:
-      name: "<bold><gradient:#e67e22:#f39c12>Paladin</gradient></bold>"
-      lore:
-        - "<italic><gradient:#e7a737:#ffffff>Champions of justice, Paladins</gradient></italic>"
-        - "<italic><gradient:#e7a737:#ffffff>combine martial prowess with unyielding honor.</gradient></italic>"
-    warlord:
-      name: "<bold><gradient:#f39c12:#f5b041>Warlord</gradient></bold>"
-      lore:
-        - "<italic><gradient:#f1b85b:#ffffff>Commanders of armies, Warlords</gradient></italic>"
-        - "<italic><gradient:#f1b85b:#ffffff>lead with strategy and overwhelming force.</gradient></italic>"
-    champion:
-      name: "<bold><gradient:#f5b041:#f7dc6f>Champion</gradient></bold>"
-      lore:
-        - "<italic><gradient:#f6d67d:#ffffff>The ultimate warrior, Champions</gradient></italic>"
-        - "<italic><gradient:#f6d67d:#ffffff>are legends whose names inspire generations.</gradient></italic>"
+    name: "Guerriero"
+    description: "Il percorso della forza e del combattimento."
+  cleric:
+    name: "Chierico"
+    description: "Il percorso della guarigione e del supporto."
+  mage:
+    name: "Mago"
+    description: "Il percorso della magia e della saggezza."
+  rogue:
+    name: "Ladro"
+    description: "Il percorso della furtività e dell'agilità."
+  merchant:
+    name: "Mercante"
+    description: "Il percorso del commercio e della ricchezza."
+  ranger:
+    name: "Ranger"
+    description: "Il percorso della natura e del tiro con l'arco."
 
-# === Progress Bar Symbols ===
-progress_bars:
-  empty: "<color:#d3d3d3>■■■■■■■■■■</color>"
-  p10: "<gradient:#9b59b6:#ffffff>■</gradient><color:#d3d3d3>■■■■■■■■■</color>"
-  p20: "<gradient:#9b59b6:#ffffff>■■</gradient><color:#d3d3d3>■■■■■■■■</color>"
-  p30: "<gradient:#9b59b6:#ffffff>■■■</gradient><color:#d3d3d3>■■■■■■■</color>"
-  p40: "<gradient:#9b59b6:#ffffff>■■■■</gradient><color:#d3d3d3>■■■■■■</color>"
-  p50: "<gradient:#9b59b6:#ffffff>■■■■■</gradient><color:#d3d3d3>■■■■■</color>"
-  p60: "<gradient:#9b59b6:#ffffff>■■■■■■</gradient><color:#d3d3d3>■■■■</color>"
-  p70: "<gradient:#9b59b6:#ffffff>■■■■■■■</gradient><color:#d3d3d3>■■■</color>"
-  p80: "<gradient:#9b59b6:#ffffff>■■■■■■■■</gradient><color:#d3d3d3>■■</color>"
-  p90: "<gradient:#9b59b6:#ffffff>■■■■■■■■■</gradient><color:#d3d3d3>■</color>"
-  p100: "<gradient:#9b59b6:#ffffff>■■■■■■■■■■</gradient>"
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "Permesso: {permission}"
+  rank: "Grado: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "Livello {level}"
+
+time:
+  seconds: "{value}s"
+  minutes: "{value}m"
+  hours: "{value}h"
+  days: "{value}g"

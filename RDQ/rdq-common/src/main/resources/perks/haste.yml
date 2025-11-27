@@ -1,72 +1,23 @@
-perkSettings:
-  icon:
-    material: "DIAMOND_PICKAXE"
-  displayNameKey: "perk.haste.name"
-  descriptionKey: "perk.haste.lore"
-  priority: 80
-  maxConcurrentUsers: null
-  requiresOwnedArea: false
-  isEnabled: true
-  metadata:
-    class: Haste
-    category: "UTILITY"
-    rarity: "UNCOMMON"
-    perkType: "TOGGLEABLE_PASSIVE"
-    effectType: "HASTE"
-    showParticles: true
-    particleType: "SWEEP_ATTACK"
-    particleAmount: 4
-    playToggleSound: true
-    toggleOnSound: "ENTITY_PLAYER_LEVELUP"
-    toggleOffSound: "BLOCK_NOTE_BLOCK_BASS"
+# Haste Perk Configuration
+id: haste
+displayNameKey: perk_names.haste
+descriptionKey: perk_descriptions.haste
+category: utility
+iconMaterial: GOLDEN_PICKAXE
+enabled: true
 
-permissionCooldowns:
-  defaultCooldown: 0
-  permissionCooldowns:
-    haste_vip: 0
-    haste_premium: 0
+type: TOGGLEABLE
+cooldownSeconds: 300
+durationSeconds: 120
 
-permissionAmplifiers:
-  defaultAmplifier: 0
-  permissionAmplifiers:
-    haste_level1: 0
-    haste_level2: 1
-    haste_level3: 2
-    haste_vip: 1
-    haste_premium: 2
-
-permissionDurations:
-  defaultDuration: 0
-  permissionDurations:
-    haste_vip: 0
-    haste_premium: 0
-
-costs:
-  economy:
-    targetPluginId: "Vault"
-    currencyTypeId: "money"
-    amount: 1100.0
-  tokens:
-    targetPluginId: "TokenManager"
-    currencyTypeId: "tokens"
-    amount: 55.0
+effect:
+  type: POTION_EFFECT
+  potionType: FAST_DIGGING
+  amplifier: 1
 
 requirements:
-  haste:
-    type: "COMPOSITE"
-    operator: "AND"
-    requirements:
-      - type: "EXPERIENCE_LEVEL"
-        level: 20
-      - type: "PLAYTIME"
-        playtimeRequirement:
-          useTotalPlayTime: true
-          requiredPlaytimeHours: 2
-
-rewards:
-  message:
-    type: "MESSAGE"
-    message: "Haste perk activated! You can now mine and attack faster!"
-  command:
-    type: "COMMAND"
-    command: "say {player} activated haste perk"
+  - type: RANK
+    rankId: merchant_2
+  - type: CURRENCY
+    currency: default
+    amount: 400

@@ -1,0 +1,24 @@
+commands:
+  cdeposit:
+    name: 'cdeposit'
+    aliases:
+      - cdeposit
+    description: 'Deposit a certain amount of currencies to a player.'
+    usage: 'cdeposit <player_name> <currency_name> <amount>'
+    argumentUsages:
+      1$: 'lut["prefix"] & "&7/" & alias & " &c<player> &7<currency> &7<amount>"'
+      2$: 'lut["prefix"] & "&7/" & alias & " &7<player> &c<currency> &7<amount>"'
+      3$: 'lut["prefix"] & "&7/" & alias & " &7<player> &7<currency> &c<amount>"'
+    errorMessages:
+      playerNotOnline$: 'lut["prefix"] & "&7The player &c" & value & " &7is &cnot online"'
+      playerUnknown$: 'lut["prefix"] & "&7The player &c" & value & " &7has &cnot played &7on this server before"'
+      internalError$: 'lut["prefix"] & "&4An internal error occurred"'
+      notAConsole$: 'lut["prefix"] & "&cYou can only execute this command in the console"'
+      notAPlayer$: 'lut["prefix"] & "&7This command can only be executed as a &cconsole"'
+      malformedDouble$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cdouble"'
+      malformedFloat$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cfloat"'
+      malformedLong$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &clong"'
+      malformedInteger$: 'lut["prefix"] & "&7The value &c" & value & " &7is not a valid &cinteger"'
+
+lut:
+  prefix: '&7[&eConsole-Deposit&7] '

@@ -1,5 +1,6 @@
 package com.raindropcentral.rplatform.view;
 
+import com.raindropcentral.rplatform.utility.map.Maps;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
@@ -93,17 +94,12 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
                        .build()
                )
                .onClick(clickContext -> {
-                            Map<String, Object> initialData = new HashMap<>((Map<String, Object>) clickContext.getInitialData());
-                            initialData.put(
-                                "target",
-                                Optional.of(offlinePlayer)
-                            );
-                            
-                            clickContext.back(
-                                initialData
-                            );
-                        }
-               );
+                   clickContext.back(
+                           Maps.merge(clickContext.getInitialData()).remove("target").with(
+                                   "target", Optional.of(offlinePlayer)
+                           ).mutable()
+                   );
+               });
     }
 
     /**

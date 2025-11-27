@@ -1,28 +1,51 @@
 package com.raindropcentral.rdq.perk.config;
 
-import com.raindropcentral.rdq.type.EPerkCategory;
-import com.raindropcentral.rdq.type.EPerkType;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
-import java.util.Map;
 
 public record PerkConfig(
-    @NotNull String id,
-    @NotNull String displayName,
-    @Nullable String description,
-    @NotNull EPerkType perkType,
-    @NotNull EPerkCategory category,
-    @NotNull String iconMaterial,
-    int priority,
     boolean enabled,
-    @Nullable Long cooldownSeconds,
-    @Nullable Long durationSeconds,
-    @NotNull Map<String, Object> metadata,
-    @NotNull List<PerkRequirementConfig> requirements,
-    @NotNull List<PerkRewardConfig> rewards,
-    @NotNull Map<String, Long> permissionCooldowns,
-    @NotNull Map<String, Integer> permissionAmplifiers
+    int maxActivePerks,
+    boolean allowMultipleSameCategory,
+    int defaultCooldownSeconds,
+    int defaultDurationSeconds,
+    boolean requireUnlockBeforeActivation,
+    @NotNull NotificationConfig notifications
 ) {
+    @NotNull
+    public static PerkConfig defaults() {
+        return new PerkConfig(
+            true,
+            1,
+            false,
+            300,
+            60,
+            true,
+            NotificationConfig.defaults()
+        );
+    }
+
+    public record NotificationConfig(
+        boolean activationEnabled,
+        boolean deactivationEnabled,
+        boolean unlockEnabled,
+        boolean cooldownWarningEnabled,
+        boolean soundEnabled,
+        @NotNull String activationSound,
+        @NotNull String deactivationSound,
+        @NotNull String unlockSound
+    ) {
+        @NotNull
+        public static NotificationConfig defaults() {
+            return new NotificationConfig(
+                true,
+                true,
+                true,
+                true,
+                true,
+                "BLOCK_BEACON_ACTIVATE",
+                "BLOCK_BEACON_DEACTIVATE",
+                "ENTITY_PLAYER_LEVELUP"
+            );
+        }
+    }
 }

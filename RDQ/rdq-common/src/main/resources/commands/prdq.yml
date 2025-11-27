@@ -1,0 +1,26 @@
+commands:
+  prdq:
+    name: 'prdq'
+    description: 'Main RDQ command for rank, bounty, and perk systems'
+    aliases:
+      - rdq
+      - raindropquests
+      - rquests
+    usage: '/prdq <rank|bounty|perk|reload|help>'
+    errorMessages:
+      unknownSubcommand$: 'lut["prefix"] & "&cUnknown subcommand. Use /rdq help for available commands."'
+      noPermission$: 'lut["prefix"] & "&cYou do not have permission to use this command."'
+      playerOnly$: 'lut["prefix"] & "&cThis command can only be used by players."'
+      notInitialized$: 'lut["prefix"] & "&cRDQ is still initializing. Please wait..."'
+    successMessages:
+      reloaded$: 'lut["prefix"] & "&aConfiguration reloaded successfully!"'
+      help$: 'lut["prefix"] & "&7Available commands: &f/rdq rank, /rdq bounty, /rdq perk, /rdq reload"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "&cYou lack the permission: " & permission'
+      nodes:
+        use: 'rdq.use'
+        reload: 'rdq.admin.reload'
+        admin: 'rdq.admin'
+
+lut:
+  prefix: '&8[&6RDQ&8] &7'

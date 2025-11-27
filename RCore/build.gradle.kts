@@ -62,10 +62,17 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
+// Create shadow publication for the shaded jar
 publishing {
     publications {
-        create<MavenPublication>("mavenShadow") {
+        // Remove the default maven publication created by library-conventions
+        afterEvaluate {
+            publications.removeIf { it.name == "maven" }
+        }
+        create<MavenPublication>("shadow") {
             artifact(tasks.named("shadowJar"))
+            artifact(tasks.named("sourcesJar"))
+            artifact(tasks.named("javadocJar"))
             groupId = project.group.toString()
             artifactId = "rcore"
             version = project.version.toString()
@@ -80,18 +87,8 @@ publishing {
 tasks.register("publishLocal") {
     group = "publishing"
     description = "Publishes RCore to local Maven repository"
-    dependsOn(
-        ":RCore:rcore-common:publishToMavenLocal",
-        "publishMavenShadowPublicationToMavenLocal"
-    )
+    dependsOn("publishShadowPublicationToMavenLocal")
     doLast {
         println("✓ Published ${project.group}:rcore:${project.version} to local Maven")
-    }
-}
-
-// Disable the default 'maven' publication tasks since we only want mavenShadow
-tasks.withType<PublishToMavenRepository>().configureEach {
-    if (name.contains("MavenPublication")) {
-        enabled = false
     }
 }
