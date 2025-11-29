@@ -53,6 +53,7 @@ public class BountyCreationView extends BaseView {
                 .setLore(this.i18n("select_target.lore", player)
                         .with(Placeholder.of("target_name", targetName))
                         .build().splitLines())
+                .addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     });
 
@@ -67,6 +68,7 @@ public class BountyCreationView extends BaseView {
                 .setLore(this.i18n(enabled ? "select_items.lore" : "select_items_disabled.lore", player)
                         .with(Placeholder.of("item_count", itemCount))
                         .build().splitLines())
+                .addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     });
 
@@ -81,6 +83,7 @@ public class BountyCreationView extends BaseView {
                 .setLore(this.i18n(enabled ? "select_currency.lore" : "select_currency_disabled.lore", player)
                         .with(Placeholder.of("currency_count", currencyCount))
                         .build().splitLines())
+                .addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     });
 
@@ -94,6 +97,7 @@ public class BountyCreationView extends BaseView {
                 .item(canConfirm ? Material.GREEN_DYE : Material.BARRIER)
                 .setName(this.i18n(canConfirm ? "confirm.name" : "confirm_disabled.name", player).build().component())
                 .setLore(this.i18n(canConfirm ? "confirm.lore" : "confirm_disabled.lore", player).build().splitLines())
+                .addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     });
 
@@ -136,10 +140,22 @@ public class BountyCreationView extends BaseView {
 
     @Override
     public void onFirstRender(@NotNull RenderContext render, @NotNull Player player) {
+        renderDecorations(render);
         renderTargetButton(render, player);
         renderItemButton(render, player);
         renderCurrencyButton(render, player);
         renderConfirmButton(render, player);
+    }
+
+    /**
+     * Renders decorative glass panes.
+     */
+    private void renderDecorations(@NotNull RenderContext render) {
+        render.layoutSlot('X', UnifiedBuilderFactory
+                .item(Material.GRAY_STAINED_GLASS_PANE)
+                .setName(net.kyori.adventure.text.Component.empty())
+                .addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES)
+                .build());
     }
 
     /**

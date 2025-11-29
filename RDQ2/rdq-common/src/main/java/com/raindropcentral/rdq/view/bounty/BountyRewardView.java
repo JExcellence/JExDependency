@@ -35,6 +35,9 @@ public class BountyRewardView extends BaseView {
     // Slot range for item insertion (rows 2-4, slots 9-44)
     private static final int REWARD_SLOT_START = 9;
     private static final int REWARD_SLOT_END = 44;
+    
+    // Flag to track if we're returning to parent view
+    private boolean isReturning;
 
     public BountyRewardView() {
         super(BountyCreationView.class);
@@ -113,23 +116,19 @@ public class BountyRewardView extends BaseView {
                         var cursor = clickPlayer.getItemOnCursor();
                         var currentItem = ctx.getItem();
                         
-                        // Handle item insertion
-                        if (cursor != null && !cursor.getType().isAir()) {
-                            // Player is placing an item
+                        // Handle left-click item insertion
+                        if (ctx.isLeftClick() && cursor != null && !cursor.getType().isAir()) {
                             items.put(currentSlot, cursor.clone());
                             clickPlayer.setItemOnCursor(null);
-                            
-                            // Merge similar items and update reward items state
                             updateRewardItems(ctx);
                             ctx.update();
                         } 
-                        // Handle item removal
-                        else if (currentItem != null && !currentItem.getType().isAir()) {
-                            // Player is removing an item
-                            items.remove(currentSlot);
-                            clickPlayer.setItemOnCursor(currentItem.clone());
-                            
-                            // Update reward items state
+                        // Handle right-click item removal
+                        else if (ctx.isRightClick() && currentItem != null && !currentItem.getType().isAir()) {
+                            ItemStack removed = items.remove(currentSlot);
+                            if (removed != null) {
+                                clickPlayer.getInventory().addItem(removed);
+                            }
                             updateRewardItems(ctx);
                             ctx.update();
                         }
@@ -166,11 +165,67 @@ public class BountyRewardView extends BaseView {
                 .item(Material.ARROW)
                 .setName(this.i18n("back_button.name", player).build().component())
                 .setLore(this.i18n("back_button.lore", player).build().splitLines())
+                .addItemFlags(org.bukkit.inventory.ItemFlag.HIDE_ATTRIBUTES)
                 .build())
                 .onClick(ctx -> {
+                    // Set flag to prevent refund on navigation
+                    this.isReturning = true;
                     // Return to bounty creation view
                     ctx.openForPlayer(BountyCreationView.class, ctx.getInitialData());
                 });
+    }
+
+    /**
+     * Handles view close by refunding inserted items if not returning to parent.
+     * Requirements: 3.6
+     */
+    @Override
+    public void onClose(@NotNull me.devnatan.inventoryframework.context.CloseContext closeCtx) {
+        // Don't refund if we're returning to parent view
+        if (this.isReturning) {
+            return;
+        }
+
+        // Refund all inserted items
+        var items = this.insertedItems.get(closeCtx);
+        if (items != null && !items.isEmpty()) {
+            refundItems(closeCtx.getPlayer(), new ArrayList<>(items.values()));
+            items.clear();
+        }
+    }
+
+    /**
+     * Refunds items to player inventory, dropping excess if inventory is full.
+     * Requirements: 3.6
+     */
+    private void refundItems(@NotNull Player player, @NotNull java.util.List<ItemStack> itemsToRefund) {
+        if (itemsToRefund.isEmpty()) {
+            return;
+        }
+
+        // Try to add items to inventory
+        var leftOvers = player.getInventory().addItem(itemsToRefund.toArray(new ItemStack[0]));
+
+        // Drop excess items at player location
+        if (!leftOvers.isEmpty()) {
+            leftOvers.forEach((index, item) -> {
+                player.getWorld().dropItem(
+                        player.getLocation().clone().add(0, 0.5, 0),
+                        item
+                );
+            });
+
+            // Display refund message
+            this.i18n("refund.with_drops", player)
+                    .withPrefix()
+                    .with(Placeholder.of("dropped_count", leftOvers.size()))
+                    .send();
+        } else {
+            // Display refund message
+            this.i18n("refund.success", player)
+                    .withPrefix()
+                    .send();
+        }
     }
 
     /**

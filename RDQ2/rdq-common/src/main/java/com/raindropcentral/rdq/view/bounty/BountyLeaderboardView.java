@@ -122,7 +122,9 @@ public class BountyLeaderboardView extends BaseView {
             
             // Render on main thread
             rdq.getPlatform().getScheduler().runSync(() -> {
+                renderDecorations(render);
                 renderLeaderboard(render, player, hunterStatsList);
+                render.update();
             });
         }).exceptionally(throwable -> {
             rdq.getPlatform().getScheduler().runSync(() -> {

@@ -3,46 +3,64 @@ package com.raindropcentral.rdq.rank.view;
 import com.raindropcentral.rdq.api.RankService;
 import com.raindropcentral.rdq.rank.Rank;
 import com.raindropcentral.rdq.rank.RankRequirement;
-import me.devnatan.inventoryframework.View;
-import me.devnatan.inventoryframework.ViewConfigBuilder;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.BaseView;
+import de.jexcellence.jextranslate.api.Placeholder;
+import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-public final class RankDetailView extends View {
+public final class RankDetailView extends BaseView {
 
     private final RankService rankService;
     private final String rankId;
     private State<Optional<Rank>> rankState;
 
     public RankDetailView(@NotNull RankService rankService, @NotNull String rankId) {
+        super(RankTreeView.class);
         this.rankService = rankService;
         this.rankId = rankId;
+        this.rankState = lazyState(() -> rankService.getRank(rankId).join());
     }
 
     @Override
-    public void onInit(@NotNull ViewConfigBuilder config) {
-        config.cancelOnClick();
-        config.size(4);
-        config.title("Rank Details");
-        config.layout(
-            "XXXXXXXXX",
-            "X   R   X",
-            "XOOOOOOOX",
-            "B   U   X"
+    protected String getKey() {
+        return "rank_detail_ui";
+    }
+
+    @Override
+    protected int getSize() {
+        return 4;
+    }
+
+    @Override
+    protected String[] getLayout() {
+        return new String[]{
+                "XXXXXXXXX",
+                "X   R   X",
+                "XOOOOOOOX",
+                "    U   X"
+        };
+    }
+
+    @Override
+    protected Map<String, Object> getTitlePlaceholders(@NotNull OpenContext open) {
+        var rank = rankState.get(open);
+        return Map.of(
+                "rank_name", rank.map(Rank::displayNameKey).orElse("Unknown")
         );
-
-        rankState = lazyState(() -> rankService.getRank(rankId).join());
     }
 
     @Override
-    public void onFirstRender(@NotNull RenderContext render) {
+    public void onFirstRender(@NotNull RenderContext render, @NotNull Player player) {
         var rankOpt = rankState.get(render);
         if (rankOpt.isEmpty()) {
             render.closeForPlayer();
@@ -50,122 +68,165 @@ public final class RankDetailView extends View {
         }
 
         var rank = rankOpt.get();
-        var playerId = render.getPlayer().getUniqueId();
+        renderDecorations(render);
+        renderRankInfo(render, player, rank);
+        renderRequirements(render, player, rank);
+        renderUnlockButton(render, player, rank);
+    }
 
-        render.updateTitleForPlayer("<gold>" + rank.displayNameKey());
+    /**
+     * Renders decorative glass panes.
+     */
+    private void renderDecorations(@NotNull RenderContext render) {
+        render.layoutSlot('X', UnifiedBuilderFactory
+                .item(Material.GRAY_STAINED_GLASS_PANE)
+                .setName(net.kyori.adventure.text.Component.empty())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build());
+    }
 
-        render.layoutSlot('R', createRankInfoItem(rank));
+    /**
+     * Renders rank information display.
+     */
+    private void renderRankInfo(@NotNull RenderContext render, @NotNull Player player, @NotNull Rank rank) {
+        render.layoutSlot('R', createRankInfoItem(player, rank));
+    }
 
+    /**
+     * Renders requirement items.
+     */
+    private void renderRequirements(@NotNull RenderContext render, @NotNull Player player, @NotNull Rank rank) {
         var requirementSlots = new int[]{19, 20, 21, 22, 23, 24, 25};
         var requirements = rank.requirements();
         for (int i = 0; i < Math.min(requirements.size(), requirementSlots.length); i++) {
             var req = requirements.get(i);
-            render.slot(requirementSlots[i], createRequirementItem(req));
+            render.slot(requirementSlots[i], createRequirementItem(player, req));
         }
-
-        render.layoutSlot('B', createBackItem())
-            .onClick(ctx -> ctx.closeForPlayer());
-
-        render.layoutSlot('U', createUnlockItem(rank))
-            .onClick(ctx -> {
-                rankService.unlockRank(playerId, rank.id())
-                    .thenAccept(success -> {
-                        if (success) {
-                            ctx.getPlayer().sendMessage("<green>Rank unlocked!");
-                        } else {
-                            ctx.getPlayer().sendMessage("<red>Cannot unlock rank. Check requirements.");
-                        }
-                        ctx.update();
-                    });
-            });
     }
 
+    /**
+     * Renders unlock button with async unlock handler.
+     */
+    private void renderUnlockButton(@NotNull RenderContext render, @NotNull Player player, @NotNull Rank rank) {
+        var playerId = player.getUniqueId();
+        render.layoutSlot('U', createUnlockItem(player, rank))
+                .onClick(ctx -> {
+                    rankService.unlockRank(playerId, rank.id())
+                            .thenAccept(success -> {
+                                if (success) {
+                                    this.i18n("unlock_success", player).withPrefix().send();
+                                } else {
+                                    this.i18n("unlock_failed", player).withPrefix().send();
+                                }
+                                ctx.update();
+                            })
+                            .exceptionally(throwable -> {
+                                this.i18n("unlock_error", player)
+                                        .withPrefix()
+                                        .with(Placeholder.of("error", throwable.getMessage()))
+                                        .send();
+                                return null;
+                            });
+                });
+    }
 
-    private ItemStack createRankInfoItem(@NotNull Rank rank) {
+    private ItemStack createRankInfoItem(@NotNull Player player, @NotNull Rank rank) {
         var material = parseMaterial(rank.iconMaterial());
-        var item = new ItemStack(material);
-        var meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName("<gold>" + rank.displayNameKey());
-            meta.setLore(List.of(
-                "<gray>" + rank.descriptionKey(),
-                "",
-                "<yellow>Tier: <white>" + rank.tier(),
-                "<yellow>Weight: <white>" + rank.weight(),
-                rank.hasLuckPermsGroup() ? "<yellow>Group: <white>" + rank.luckPermsGroup() : ""
-            ));
-            item.setItemMeta(meta);
-        }
-        return item;
+        var group = rank.hasLuckPermsGroup() ? rank.luckPermsGroup() : "";
+
+        return UnifiedBuilderFactory
+                .item(material)
+                .setName(this.i18n("rank_info.name", player)
+                        .with(Placeholder.of("rank_name", rank.displayNameKey()))
+                        .build().component())
+                .setLore(this.i18n("rank_info.lore", player)
+                        .with(Placeholder.of("description", rank.descriptionKey()))
+                        .with(Placeholder.of("tier", rank.tier()))
+                        .with(Placeholder.of("weight", rank.weight()))
+                        .with(Placeholder.of("group", group))
+                        .build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
     }
 
-    private ItemStack createRequirementItem(@NotNull RankRequirement requirement) {
-        var item = new ItemStack(Material.PAPER);
-        var meta = item.getItemMeta();
-        if (meta != null) {
-            var lore = new ArrayList<String>();
-            var name = switch (requirement) {
-                case RankRequirement.StatisticRequirement(var stat, var amount) -> {
-                    lore.add("<gray>Statistic: <white>" + stat);
-                    lore.add("<gray>Amount: <white>" + amount);
-                    yield "<yellow>Statistic Requirement";
-                }
-                case RankRequirement.PermissionRequirement(var perm) -> {
-                    lore.add("<gray>Permission: <white>" + perm);
-                    yield "<yellow>Permission Requirement";
-                }
-                case RankRequirement.PreviousRankRequirement(var rankId) -> {
-                    lore.add("<gray>Required Rank: <white>" + rankId);
-                    yield "<yellow>Previous Rank Requirement";
-                }
-                case RankRequirement.CurrencyRequirement(var currency, var amount) -> {
-                    lore.add("<gray>Currency: <white>" + currency);
-                    lore.add("<gray>Amount: <white>" + amount);
-                    yield "<yellow>Currency Requirement";
-                }
-                case RankRequirement.ItemRequirement(var mat, var amount) -> {
-                    lore.add("<gray>Item: <white>" + mat);
-                    lore.add("<gray>Amount: <white>" + amount);
-                    yield "<yellow>Item Requirement";
-                }
-                case RankRequirement.LevelRequirement(var level) -> {
-                    lore.add("<gray>Level: <white>" + level);
-                    yield "<yellow>Level Requirement";
-                }
-                case RankRequirement.PlaytimeRequirement(var seconds) -> {
-                    lore.add("<gray>Playtime: <white>" + formatSeconds(seconds));
-                    yield "<yellow>Playtime Requirement";
-                }
-            };
-            meta.setDisplayName(name);
-            meta.setLore(lore);
-            item.setItemMeta(meta);
-        }
-        return item;
+    private ItemStack createRequirementItem(@NotNull Player player, @NotNull RankRequirement requirement) {
+        return switch (requirement) {
+            case RankRequirement.StatisticRequirement(var stat, var amount) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.statistic.name", player).build().component())
+                            .setLore(this.i18n("requirement.statistic.lore", player)
+                                    .with(Placeholder.of("stat", stat))
+                                    .with(Placeholder.of("amount", amount))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+            case RankRequirement.PermissionRequirement(var perm) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.permission.name", player).build().component())
+                            .setLore(this.i18n("requirement.permission.lore", player)
+                                    .with(Placeholder.of("permission", perm))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+            case RankRequirement.PreviousRankRequirement(var rankId) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.previous_rank.name", player).build().component())
+                            .setLore(this.i18n("requirement.previous_rank.lore", player)
+                                    .with(Placeholder.of("rank_id", rankId))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+            case RankRequirement.CurrencyRequirement(var currency, var amount) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.currency.name", player).build().component())
+                            .setLore(this.i18n("requirement.currency.lore", player)
+                                    .with(Placeholder.of("currency", currency))
+                                    .with(Placeholder.of("amount", amount))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+            case RankRequirement.ItemRequirement(var mat, var amount) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.item.name", player).build().component())
+                            .setLore(this.i18n("requirement.item.lore", player)
+                                    .with(Placeholder.of("material", mat))
+                                    .with(Placeholder.of("amount", amount))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+            case RankRequirement.LevelRequirement(var level) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.level.name", player).build().component())
+                            .setLore(this.i18n("requirement.level.lore", player)
+                                    .with(Placeholder.of("level", level))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+            case RankRequirement.PlaytimeRequirement(var seconds) ->
+                    UnifiedBuilderFactory
+                            .item(Material.PAPER)
+                            .setName(this.i18n("requirement.playtime.name", player).build().component())
+                            .setLore(this.i18n("requirement.playtime.lore", player)
+                                    .with(Placeholder.of("playtime", formatSeconds(seconds)))
+                                    .build().splitLines())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build();
+        };
     }
 
-    private ItemStack createBackItem() {
-        var item = new ItemStack(Material.ARROW);
-        var meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName("<red>Back");
-            item.setItemMeta(meta);
-        }
-        return item;
-    }
-
-    private ItemStack createUnlockItem(@NotNull Rank rank) {
-        var item = new ItemStack(Material.EMERALD);
-        var meta = item.getItemMeta();
-        if (meta != null) {
-            meta.setDisplayName("<green>Unlock Rank");
-            meta.setLore(List.of(
-                "<gray>Click to unlock this rank",
-                "<gray>if you meet all requirements."
-            ));
-            item.setItemMeta(meta);
-        }
-        return item;
+    private ItemStack createUnlockItem(@NotNull Player player, @NotNull Rank rank) {
+        return UnifiedBuilderFactory
+                .item(Material.EMERALD)
+                .setName(this.i18n("unlock_button.name", player).build().component())
+                .setLore(this.i18n("unlock_button.lore", player).build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
     }
 
     private String formatSeconds(long seconds) {

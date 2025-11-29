@@ -104,7 +104,9 @@ public class MyBountiesView extends BaseView {
             
             // Render on main thread
             rdq.getPlatform().getScheduler().runSync(() -> {
+                renderDecorations(render);
                 renderMyBounties(render, player, bountyDTOs);
+                render.update();
             });
         }).exceptionally(throwable -> {
             rdq.getPlatform().getScheduler().runSync(() -> {

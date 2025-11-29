@@ -170,6 +170,7 @@ public class BountyDetailView extends BaseView {
                     .setLore(this.i18n("reward_item.lore", player)
                             .with(Placeholder.of("amount", rewardItem.amount()))
                             .build().splitLines())
+                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build());
             
             slotIndex++;
@@ -191,6 +192,7 @@ public class BountyDetailView extends BaseView {
                     .setLore(this.i18n("reward_currency.lore", player)
                             .with(Placeholder.of("amount", String.format("%.2f", entry.getValue())))
                             .build().splitLines())
+                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build());
             
             slotIndex++;

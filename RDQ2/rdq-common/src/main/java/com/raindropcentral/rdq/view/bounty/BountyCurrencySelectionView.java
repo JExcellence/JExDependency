@@ -216,6 +216,7 @@ public class BountyCurrencySelectionView extends BaseView {
                 .item(Material.ARROW)
                 .setName(this.i18n("back_button.name", player).build().component())
                 .setLore(this.i18n("back_button.lore", player).build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build())
                 .onClick(ctx -> ctx.openForPlayer(BountyCreationView.class, ctx.getInitialData()));
     }

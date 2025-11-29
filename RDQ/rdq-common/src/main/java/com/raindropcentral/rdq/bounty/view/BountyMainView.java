@@ -65,6 +65,7 @@ public final class BountyMainView extends BaseView {
             .item(Material.EMERALD)
             .setName(this.i18n("create_button.name", player).build().component())
             .setLore(this.i18n("create_button.lore", player).build().splitLines())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build())
             .onClick(ctx -> {
                 var rdq = this.rdqCore.get(ctx);
@@ -89,6 +90,7 @@ public final class BountyMainView extends BaseView {
             .item(Material.BOOK)
             .setName(this.i18n("list_button.name", player).build().component())
             .setLore(this.i18n("list_button.lore", player).build().splitLines())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build())
             .onClick(ctx -> ctx.openForPlayer(BountyListView.class, render.getInitialData()));
     }
@@ -98,6 +100,7 @@ public final class BountyMainView extends BaseView {
             .item(Material.DIAMOND)
             .setName(this.i18n("leaderboard_button.name", player).build().component())
             .setLore(this.i18n("leaderboard_button.lore", player).build().splitLines())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build())
             .onClick(ctx -> ctx.openForPlayer(BountyLeaderboardView.class, render.getInitialData()));
     }
@@ -107,6 +110,7 @@ public final class BountyMainView extends BaseView {
             .item(Material.PAPER)
             .setName(this.i18n("my_bounties_button.name", player).build().component())
             .setLore(this.i18n("my_bounties_button.lore", player).build().splitLines())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build())
             .onClick(ctx -> ctx.openForPlayer(MyBountiesView.class, render.getInitialData()));
     }

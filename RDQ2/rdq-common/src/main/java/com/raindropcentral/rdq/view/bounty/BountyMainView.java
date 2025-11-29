@@ -62,8 +62,10 @@ public class BountyMainView extends BaseView {
                 .item(Material.EMERALD)
                 .setName(this.i18n("create_button.name", player).build().component())
                 .setLore(this.i18n("create_button.lore", player).build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build())
-                .onClick(ctx -> ctx.openForPlayer(BountyCreationView.class, Maps.merge(render.getInitialData()).with(Map.of(
+                .onClick(ctx -> ctx.openForPlayer(BountyCreationView.class, Maps.merge(ctx.getInitialData()).with(Map.of(
+                        "plugin", this.rdq.get(ctx),
                         "target", Optional.empty(),
                         "reward_items", new HashSet<>(),
                         "reward_currencies", new HashMap<>(),
@@ -72,39 +74,39 @@ public class BountyMainView extends BaseView {
                 )).immutable()));
     }
 
-    private void renderBountyListButton(
-            @NotNull RenderContext render,
-            @NotNull Player player
-    ) {
+    private void renderBountyListButton(@NotNull RenderContext render, @NotNull Player player) {
         render.layoutSlot('l', UnifiedBuilderFactory
                 .item(Material.BOOK)
                 .setName(this.i18n("list_button.name", player).build().component())
                 .setLore(this.i18n("list_button.lore", player).build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build())
-                .onClick(ctx -> ctx.openForPlayer(BountyListView.class, render.getInitialData()));
+                .onClick(ctx -> ctx.openForPlayer(BountyListView.class, Maps.merge(ctx.getInitialData()).with(Map.of(
+                        "plugin", this.rdq.get(ctx)
+                )).immutable()));
     }
 
-    private void renderLeaderboardButton(
-            @NotNull RenderContext render,
-            @NotNull Player player
-    ) {
+    private void renderLeaderboardButton(@NotNull RenderContext render, @NotNull Player player) {
         render.layoutSlot('s', UnifiedBuilderFactory
                 .item(Material.DIAMOND)
                 .setName(this.i18n("leaderboard_button.name", player).build().component())
                 .setLore(this.i18n("leaderboard_button.lore", player).build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build())
-                .onClick(ctx -> ctx.openForPlayer(BountyLeaderboardView.class, render.getInitialData()));
+                .onClick(ctx -> ctx.openForPlayer(BountyLeaderboardView.class, Maps.merge(ctx.getInitialData()).with(Map.of(
+                        "plugin", this.rdq.get(ctx)
+                )).immutable()));
     }
 
-    private void renderMyBountiesButton(
-            @NotNull RenderContext render,
-            @NotNull Player player
-    ) {
+    private void renderMyBountiesButton(@NotNull RenderContext render, @NotNull Player player) {
         render.layoutSlot('m', UnifiedBuilderFactory
                 .item(Material.PAPER)
                 .setName(this.i18n("my_bounties_button.name", player).build().component())
                 .setLore(this.i18n("my_bounties_button.lore", player).build().splitLines())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build())
-                .onClick(ctx -> ctx.openForPlayer(MyBountiesView.class, render.getInitialData()));
+                .onClick(ctx -> ctx.openForPlayer(MyBountiesView.class, Maps.merge(ctx.getInitialData()).with(Map.of(
+                        "plugin", this.rdq.get(ctx)
+                )).immutable()));
     }
 }
