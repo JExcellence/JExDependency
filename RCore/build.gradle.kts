@@ -19,6 +19,7 @@ dependencies {
     compileOnly(libs.vault.api) { isTransitive = false}
     compileOnly(libs.luckperms.api)
     compileOnly(libs.bundles.inventory)
+    compileOnly(libs.jehibernate)
 
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
@@ -35,7 +36,10 @@ dependencies {
     compileOnly(libs.java.uuid)
     compileOnly(libs.xseries)
 
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
+    implementation(libs.bundles.jexcellence) {
+        exclude(group = "de.jexcellence.hibernate")
+        isTransitive = false
+    }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     implementation(libs.bundles.inventory) { isTransitive = false }
 
@@ -62,10 +66,8 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
-// Create shadow publication for the shaded jar
 publishing {
     publications {
-        // Remove the default maven publication created by library-conventions
         afterEvaluate {
             publications.removeIf { it.name == "maven" }
         }

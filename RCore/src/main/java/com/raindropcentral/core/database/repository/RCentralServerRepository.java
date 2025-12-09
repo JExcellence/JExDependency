@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository for managing RCentralServer entities.
@@ -18,9 +19,11 @@ public class RCentralServerRepository extends GenericCachedRepository<RCentralSe
 
     public RCentralServerRepository(
             final @NotNull ExecutorService executor,
-            final @NotNull EntityManagerFactory entityManagerFactory
+            final @NotNull EntityManagerFactory entityManagerFactory,
+            @NotNull Class<RCentralServer> entityClass,
+            @NotNull Function<RCentralServer, Long> keyExtractor
     ) {
-        super(executor, entityManagerFactory, RCentralServer.class, RCentralServer::getId);
+        super(executor, entityManagerFactory, entityClass, keyExtractor);
     }
 
     /**

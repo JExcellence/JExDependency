@@ -55,38 +55,32 @@ public class RCentralService {
         LOGGER.info("RCentralService initialized with server UUID: " + serverUuid);
         LOGGER.info("Backend URL: " + backendUrl);
 
-        // Send wakeup ping if server was previously connected
         sendWakeupPingIfNeeded();
     }
 
     private String detectBackendUrl() {
-        // 1. Check if explicitly set in config
         var configUrl = rcentralConfig.getBackendUrl();
         if (configUrl != null && !configUrl.isEmpty()) {
             LOGGER.info("Using configured backend URL: " + configUrl);
             return configUrl;
         }
 
-        // 2. Check if development mode is explicitly enabled
         if (rcentralConfig.isDevelopmentMode()) {
             LOGGER.info("Development mode enabled - using localhost:3000");
             return "http://localhost:3000";
         }
 
-        // 3. Auto-detect if enabled
         if (rcentralConfig.isAutoDetect() && isLocalhostReachable()) {
             LOGGER.info("Localhost backend detected - using http://localhost:3000");
             return "http://localhost:3000";
         }
 
-        // 4. Default to production
         LOGGER.info("Using production backend: https://raindropcentral.com");
         return "https://raindropcentral.com";
     }
 
     private boolean isLocalhostReachable() {
         try {
-            // Try to connect to localhost:3000 - any response means it's running
             var testRequest = HttpRequest.newBuilder()
                     .uri(URI.create("http://localhost:3000/"))
                     .timeout(Duration.ofSeconds(2))
@@ -98,15 +92,12 @@ public class RCentralService {
                     .build();
 
             var response = testClient.send(testRequest, HttpResponse.BodyHandlers.ofString());
-            // Any response (even 404) means the server is running
             LOGGER.fine("Localhost:3000 responded with status: " + response.statusCode());
             return true;
         } catch (java.net.ConnectException e) {
-            // Connection refused - server not running
             LOGGER.fine("Localhost:3000 not reachable: " + e.getMessage());
             return false;
         } catch (Exception e) {
-            // Other errors (timeout, etc.) - assume not reachable
             LOGGER.fine("Localhost:3000 check failed: " + e.getMessage());
             return false;
         }
@@ -239,8 +230,7 @@ public class RCentralService {
                 .thenAccept(response -> {
                     if (response.isSuccess()) {
                         LOGGER.info("Wakeup ping sent successfully - server marked as online");
-                        
-                        // Initialize server entity and start heartbeat
+
                         if (serverEntity == null) {
                             serverEntity = new RCentralServer(serverUuid);
                         }
@@ -252,7 +242,6 @@ public class RCentralService {
                     } else {
                         LOGGER.warning("Wakeup ping failed: " + response.statusCode() + 
                                 " - Server will need manual reconnection via /rcconnect");
-                        // Clear saved API key if it's invalid
                         if (response.statusCode() == 401 || response.statusCode() == 403) {
                             config.set("connection.api-key", null);
                             plugin.saveConfig();

@@ -1,0 +1,365 @@
+package com.raindropcentral.rdq.service;
+
+import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
+import com.raindropcentral.rdq.database.entity.rank.RRank;
+import com.raindropcentral.rdq.database.entity.rank.RRankTree;
+import com.raindropcentral.rdq.view.ranks.interaction.RankProgressionManager;
+import com.raindropcentral.rplatform.logging.CentralLogger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class RankPathService {
+	
+	private static final Logger LOGGER = CentralLogger.getLogger(RankPathService.class.getName());
+	private final RDQ rdq;
+	private final RankProgressionManager progressionManager;
+	
+	public RankPathService(final @NotNull RDQ rdq) {
+		this.rdq = rdq;
+		this.progressionManager = new RankProgressionManager(rdq);
+	}
+	
+	/**
+	 * Assigns a default rank to a player (typically used for new players).
+	 */
+	public void assignDefaultRank(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRank defaultRank
+	) {
+		try {
+			
+			final RPlayerRank defaultPlayerRank = new RPlayerRank(player, defaultRank);
+			player.addPlayerRank(defaultPlayerRank);
+			
+			this.rdq.getPlayerRepository().update(player);
+			this.rdq.getPlayerRankRepository().create(defaultPlayerRank);
+			
+			LOGGER.log(Level.INFO, "Assigned default rank " + defaultRank.getIdentifier() + " to player " + player.getPlayerName());
+		} catch (final Exception exception) {
+			LOGGER.log(Level.SEVERE, "Failed to assign default rank to player " + player.getPlayerName(), exception);
+			throw new RuntimeException("Failed to assign default rank", exception);
+		}
+	}
+	
+	/**
+	 * Selects a rank path for a player and automatically assigns the initial rank.
+	 */
+	public boolean selectRankPath(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree selectedRankTree,
+		final @NotNull RRank startingRank
+	) {
+		try {
+			if (!selectedRankTree.isEnabled()) {
+				LOGGER.log(Level.WARNING, "Attempted to select disabled rank tree: {}", selectedRankTree.getIdentifier());
+				return false;
+			}
+			
+			if (!this.checkRankTreePrerequisites(player, selectedRankTree)) {
+				LOGGER.log(Level.INFO, "Player " + player.getPlayerName() + " does not meet prerequisites for rank tree: " + selectedRankTree.getIdentifier());
+				return false;
+			}
+			
+			this.deactivateAllRankPaths(player);
+			
+			RPlayerRankPath existingRankPath = this.getRankPathForTree(player, selectedRankTree);
+			
+			if (existingRankPath != null) {
+				RPlayerRankPath freshRankPath = this.rdq.getPlayerRankPathRepository().findById(existingRankPath.getId());
+				if (freshRankPath != null) {
+					freshRankPath.setActive(true);
+					this.rdq.getPlayerRankPathRepository().update(freshRankPath);
+				}
+			} else {
+				final RPlayerRankPath newRankPath = new RPlayerRankPath(player, selectedRankTree);
+				newRankPath.setActive(true);
+				this.rdq.getPlayerRankPathRepository().create(newRankPath);
+			}
+			
+			this.handleRankAssignmentForTree(player, selectedRankTree, startingRank);
+			
+			this.progressionManager.assignInitialRankForPath(player, selectedRankTree);
+			
+			this.progressionManager.processAutoCompletableRanks(player, selectedRankTree);
+			
+			LOGGER.log(Level.INFO, "Successfully selected rank path " + selectedRankTree.getIdentifier() + " for player " + player.getPlayerName());
+			
+			return true;
+			
+		} catch (final Exception exception) {
+			LOGGER.log(Level.SEVERE, "Failed to select rank path for player " + player.getPlayerName(), exception);
+			return false;
+		}
+	}
+	
+	/**
+	 * Switches a player's active rank path to a different tree.
+	 */
+	public boolean switchRankPath(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree newRankTree,
+		final @NotNull RRank startingRank
+	) {
+		try {
+			if (!this.checkRankTreePrerequisites(player, newRankTree)) {
+				LOGGER.log(Level.INFO, "Player " + player.getPlayerName() + " cannot switch to rank tree " + newRankTree.getIdentifier() + " - prerequisites not met");
+				return false;
+			}
+			
+			return this.selectRankPath(player, newRankTree, startingRank);
+			
+		} catch (final Exception exception) {
+			LOGGER.log(Level.SEVERE, "Failed to switch rank path for player " + player.getPlayerName(), exception);
+			return false;
+		}
+	}
+	
+	/**
+	 * Deactivates all rank paths for a player.
+	 */
+	private void deactivateAllRankPaths(final @NotNull RDQPlayer player) {
+		try {
+			final List<RPlayerRankPath> allRankPaths = this.rdq.getPlayerRankPathRepository()
+			                                                   .findListByAttributes(Map.of("player", player));
+			
+			for (final RPlayerRankPath rankPath : allRankPaths) {
+				if (rankPath.isActive()) {
+					RPlayerRankPath freshRankPath = this.rdq.getPlayerRankPathRepository().findById(rankPath.getId());
+					if (freshRankPath != null && freshRankPath.isActive()) {
+						freshRankPath.setActive(false);
+						this.rdq.getPlayerRankPathRepository().update(freshRankPath);
+					}
+				}
+			}
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to deactivate all rank paths for player " + player.getPlayerName(), exception);
+		}
+	}
+	
+	/**
+	 * Gets the rank path for a specific tree.
+	 */
+	@Nullable
+	private RPlayerRankPath getRankPathForTree(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree rankTree
+	) {
+		return this.rdq.getPlayerRankPathRepository()
+		               .findByAttributes(Map.of(
+			               "player", player,
+			               "selectedRankPath", rankTree
+		               ));
+	}
+	
+	/**
+	 * Handles rank assignment for a tree when selecting a path.
+	 */
+	private void handleRankAssignmentForTree(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree rankTree,
+		final @NotNull RRank startingRank
+	) {
+		try {
+			this.deactivateAllPlayerRanks(player);
+			
+			RPlayerRank existingRankInTree = this.getPlayerRankForTree(player, rankTree);
+			
+			if (existingRankInTree != null) {
+				RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(existingRankInTree.getId());
+				if (freshRank != null) {
+					freshRank.setActive(true);
+					this.rdq.getPlayerRankRepository().update(freshRank);
+					LOGGER.log(Level.INFO, "Reactivated existing rank for player " + player.getPlayerName() + " in tree " + rankTree.getIdentifier());
+				}
+			} else {
+				final RPlayerRank newPlayerRank = new RPlayerRank(player, startingRank, rankTree);
+				player.addPlayerRank(newPlayerRank);
+				this.rdq.getPlayerRankRepository().create(newPlayerRank);
+				LOGGER.log(Level.INFO, "Created new rank assignment for player " + player.getPlayerName() + " in tree " + rankTree.getIdentifier());
+			}
+			
+			RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(player.getId());
+			if (freshPlayer != null) {
+				this.rdq.getPlayerRepository().update(freshPlayer);
+			}
+		} catch (final Exception exception) {
+			LOGGER.log(Level.SEVERE, "Failed to handle rank assignment for tree", exception);
+			throw new RuntimeException("Rank assignment failed", exception);
+		}
+	}
+	
+	/**
+	 * Deactivates all player ranks.
+	 */
+	private void deactivateAllPlayerRanks(final @NotNull RDQPlayer player) {
+		try {
+			final List<RPlayerRank> allPlayerRanks = this.rdq.getPlayerRankRepository()
+			                                                 .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+			
+			for (final RPlayerRank playerRank : allPlayerRanks) {
+				if (playerRank.isActive()) {
+					RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(playerRank.getId());
+					if (freshRank != null && freshRank.isActive()) {
+						freshRank.setActive(false);
+						this.rdq.getPlayerRankRepository().update(freshRank);
+					}
+				}
+			}
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to deactivate all player ranks for player " + player.getPlayerName(), exception);
+		}
+	}
+	
+	/**
+	 * Gets the player's rank for a specific tree.
+	 */
+	@Nullable
+	private RPlayerRank getPlayerRankForTree(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree rankTree
+	) {
+		try {
+			final List<RPlayerRank> playerRanks = this.rdq.getPlayerRankRepository()
+			                                              .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+			
+			return playerRanks.stream()
+			                  .filter(rank -> {
+				                  final RRankTree playerRankTree = rank.getRankTree();
+				                  return playerRankTree != null && Objects.equals(playerRankTree, rankTree);
+			                  })
+			                  .findFirst()
+			                  .orElse(null);
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to get player rank for tree", exception);
+			return null;
+		}
+	}
+	
+	/**
+	 * Checks if a player meets the prerequisites for a rank tree.
+	 */
+	private boolean checkRankTreePrerequisites(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree rankTree
+	) {
+		try {
+			// TODO: Implement prerequisite checking logic
+			// This could include:
+			// - Minimum level requirements
+			// - Completed rank trees
+			// - Special permissions
+			// - Quest completions
+			
+			return true; // Placeholder - always allow for now
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to check rank tree prerequisites", exception);
+			return false;
+		}
+	}
+	
+	/**
+	 * Gets the current active rank path for a player.
+	 */
+	@Nullable
+	private RPlayerRankPath getCurrentRankPath(final @NotNull RDQPlayer player) {
+		try {
+			final List<RPlayerRankPath> rankPaths = this.rdq.getPlayerRankPathRepository()
+			                                                .findListByAttributes(Map.of("player", player));
+			
+			return rankPaths.stream()
+			                .filter(RPlayerRankPath::isActive)
+			                .findFirst()
+			                .orElse(null);
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to get current rank path", exception);
+			return null;
+		}
+	}
+	
+	/**
+	 * Gets the count of completed rank trees for a player.
+	 */
+	private int getCompletedRankTreesCount(final @NotNull RDQPlayer player) {
+		try {
+			// TODO: Implement logic to count completed rank trees
+			return 0; // Placeholder
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to get completed rank trees count", exception);
+			return 0;
+		}
+	}
+	
+	/**
+	 * Checks if a rank tree is completed by a player.
+	 */
+	private boolean isRankTreeCompleted(
+		final @NotNull RDQPlayer player,
+		final @NotNull RRankTree rankTree
+	) {
+		try {
+			// TODO: Implement logic to check if rank tree is completed
+			return false; // Placeholder
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to check if rank tree is completed", exception);
+			return false;
+		}
+	}
+	
+	/**
+	 * Checks if a player has selected a specific rank path.
+	 */
+	public boolean hasSelectedRankPath(final @NotNull RDQPlayer player, final @NotNull RRankTree rankTree) {
+		try {
+			final RPlayerRankPath rankPath = this.getRankPathForTree(player, rankTree);
+			return rankPath != null && rankPath.isActive();
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to check if player has selected rank path", exception);
+			return false;
+		}
+	}
+	
+	/**
+	 * Cleans up legacy rank assignments that are no longer valid.
+	 */
+	public void cleanupLegacyRanks(final @NotNull RDQPlayer player) {
+		try {
+			// TODO: Implement cleanup logic for legacy ranks
+			LOGGER.log(Level.FINE, "Cleaned up legacy ranks for player {}", player.getPlayerName());
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to cleanup legacy ranks", exception);
+		}
+	}
+	
+	/**
+	 * Gets all player ranks for a specific tree.
+	 */
+	public List<RPlayerRank> getPlayerRanksForTree(
+		final @NotNull RDQPlayer player,
+		final @Nullable RRankTree rankTree
+	) {
+		try {
+			final List<RPlayerRank> allPlayerRanks = this.rdq.getPlayerRankRepository()
+			                                                 .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+			
+			if (rankTree == null) {
+				return allPlayerRanks;
+			}
+			
+			return allPlayerRanks.stream()
+			                     .filter(rank -> Objects.equals(rank.getRankTree(), rankTree))
+			                     .toList();
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to get player ranks for tree", exception);
+			return List.of();
+		}
+	}
+}

@@ -1,7 +1,8 @@
-name: ${name}
+name: "RDQ"
 version: ${version}
 main: com.raindropcentral.rdq.RDQFree
-api-version: "${apiVersion}"
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+api-version: ${apiVersion}
 description: ${description}
 author: RaindropCentral
 website: https://raindropcentral.com

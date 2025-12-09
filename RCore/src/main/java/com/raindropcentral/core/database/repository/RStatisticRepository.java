@@ -1,12 +1,12 @@
 package com.raindropcentral.core.database.repository;
 
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
-import de.jexcellence.hibernate.entity.AbstractEntity;
 import de.jexcellence.hibernate.repository.GenericCachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository providing low-level access to {@link RAbstractStatistic} records. Enables shared
@@ -39,9 +39,11 @@ public class RStatisticRepository extends GenericCachedRepository<RAbstractStati
      * @param entityManagerFactory factory creating entity managers for statistic operations
      */
     public RStatisticRepository(
-        final @NotNull ExecutorService executor,
-        final @NotNull EntityManagerFactory entityManagerFactory
+        @NotNull ExecutorService executor,
+        @NotNull EntityManagerFactory entityManagerFactory,
+        @NotNull Class<RAbstractStatistic> entityClass,
+        @NotNull Function<RAbstractStatistic, Long> keyExtractor
     ) {
-        super(executor, entityManagerFactory, RAbstractStatistic.class, AbstractEntity::getId);
+        super(executor, entityManagerFactory, entityClass, keyExtractor);
     }
 }

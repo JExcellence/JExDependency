@@ -139,7 +139,7 @@ public class BountyPropertyTests {
 **Example Property Test**:
 ```java
 @Property
-void similarItemsAlwaysMerge(@ForAll("rewardItems") Set<RewardItem> items) {
+void similarItemsAlwaysMerge(@ForAll("rewards") Set<RewardItem> items) {
     // Given: A set of reward items with some duplicates
     var merged = bountyService.mergeRewardItems(items);
     
@@ -156,7 +156,7 @@ void similarItemsAlwaysMerge(@ForAll("rewardItems") Set<RewardItem> items) {
 }
 
 @Provide
-Arbitrary<Set<RewardItem>> rewardItems() {
+Arbitrary<Set<RewardItem>> rewards() {
     return Arbitraries.of(Material.values())
         .filter(Material::isItem)
         .map(material -> new ItemStack(material))

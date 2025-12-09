@@ -1,0 +1,216 @@
+# RDQ Korean Translations
+# RaindropQuests 플러그인 한국어 번역
+
+prefix: "<gold>[RDQ]</gold> "
+
+rdq:
+  error:
+    not_initialized: "<red>RDQ가 초기화 중입니다. 잠시 기다려주세요...</red>"
+    unknown_subcommand: "<red>알 수 없는 하위 명령어입니다. /rdq help로 사용 가능한 명령어를 확인하세요.</red>"
+    reload_failed: "<red>리로드 실패: {error}</red>"
+  success:
+    reloaded: "<green>RDQ 설정이 성공적으로 리로드되었습니다!</green>"
+
+error:
+  not_found: "<red>{type}을(를) 찾을 수 없습니다: {id}</red>"
+  insufficient_funds: "<red>자금 부족! 필요: {required}, 보유: {available}</red>"
+  on_cooldown: "<red>쿨다운 중! {remaining} 남음.</red>"
+  requirements_not_met: "<red>요구 사항 미충족: {missing}</red>"
+  self_targeting: "<red>자신을 대상으로 할 수 없습니다!</red>"
+  already_exists: "<red>{type}이(가) 이미 존재합니다: {id}</red>"
+  expired: "<red>{type}이(가) 만료되었습니다: {id}</red>"
+  not_unlocked: "<red>{type}이(가) 잠금 해제되지 않았습니다: {id}</red>"
+  permission_denied: "<red>권한 거부: {permission}</red>"
+  invalid_state: "<red>잘못된 상태: {message}</red>"
+  invalid_amount: "<red>잘못된 금액! {min}에서 {max} 사이여야 합니다.</red>"
+  no_permission: "<red>권한이 없습니다.</red>"
+  player_only: "<red>이 명령어는 플레이어만 사용할 수 있습니다.</red>"
+
+rank:
+  error:
+    unknown_subcommand: "<red>알 수 없는 랭크 하위 명령어입니다.</red>"
+    player_not_found: "<red>플레이어를 찾을 수 없습니다: {playerName}</red>"
+    grant_failed: "<red>랭크 부여에 실패했습니다.</red>"
+    reload_failed: "<red>랭크 리로드 실패: {error}</red>"
+  success:
+    rank_granted: "<green>{playerName}에게 랭크 {rankName}을(를) 부여했습니다!</green>"
+    rank_revoked: "<yellow>{playerName}에게서 랭크 {rankName}을(를) 회수했습니다.</yellow>"
+    reloaded: "<green>랭크 설정이 리로드되었습니다!</green>"
+    rank_unlocked: "<green>축하합니다! 랭크 {rankName}을(를) 잠금 해제했습니다!</green>"
+  opening_view: "<gray>랭크 보기를 여는 중...</gray>"
+  no_progress: "<yellow>아직 랭크 경로를 시작하지 않았습니다.</yellow>"
+  progress_header: "<yellow>랭크 진행 상황:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>사용 가능한 랭크 트리:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks}개 랭크)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>사용법: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>알 수 없는 관리자 명령어입니다.</red>"
+    grant:
+      usage: "<yellow>사용법: /rank admin grant <플레이어> <랭크></yellow>"
+    revoke:
+      usage: "<yellow>사용법: /rank admin revoke <플레이어> <랭크></yellow>"
+  help: |
+    <yellow>랭크 명령어:</yellow>
+    <gray>/rank</gray> - 랭크 메뉴 열기
+    <gray>/rank view</gray> - 랭크 트리 보기
+    <gray>/rank progress</gray> - 진행 상황 보기
+    <gray>/rank admin</gray> - 관리자 명령어
+  notification:
+    title: "<gold>랭크 잠금 해제!</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>{rankName}을(를) 잠금 해제했습니다!</green>"
+
+bounty:
+  error:
+    unknown_subcommand: "<red>알 수 없는 현상금 하위 명령어입니다.</red>"
+    player_not_found: "<red>플레이어를 찾을 수 없습니다: {playerName}</red>"
+    self_target: "<red>자신에게 현상금을 걸 수 없습니다!</red>"
+    invalid_amount: "<red>잘못된 금액입니다. 유효한 숫자를 입력하세요.</red>"
+    invalid_id: "<red>잘못된 현상금 ID입니다.</red>"
+    create_failed: "<red>현상금 생성 실패: {error}</red>"
+    cancel_failed: "<red>현상금 취소 실패.</red>"
+  success:
+    bounty_created: "<green>{targetName}에게 {amount}의 현상금을 걸었습니다!</green>"
+    bounty_cancelled: "<yellow>현상금이 취소되었습니다. 자금이 환불되었습니다.</yellow>"
+    bounty_removed: "<green>관리자가 현상금을 제거했습니다.</green>"
+    bounty_claimed: "<green>{amount}의 현상금을 획득했습니다!</green>"
+    reloaded: "<green>현상금 설정이 리로드되었습니다!</green>"
+  create:
+    usage: "<yellow>사용법: /bounty create <플레이어> <금액></yellow>"
+  cancel:
+    usage: "<yellow>사용법: /bounty cancel <현상금ID></yellow>"
+  list:
+    empty: "<yellow>활성 현상금이 없습니다.</yellow>"
+    header: "<yellow>활성 현상금 ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>({placer}가 등록)</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>현상금 사냥꾼 순위:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills}킬, {earned} 획득</gray>"
+  my:
+    header: "<yellow>내 현상금:</yellow>"
+    placed_header: "<gray>내가 건 현상금:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>나에게 걸린 현상금:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>({placer}가 등록)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>사용법: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>알 수 없는 관리자 명령어입니다.</red>"
+    remove:
+      usage: "<yellow>사용법: /bounty admin remove <현상금ID></yellow>"
+  help: |
+    <yellow>현상금 명령어:</yellow>
+    <gray>/bounty</gray> - 활성 현상금 보기
+    <gray>/bounty create <플레이어> <금액></gray> - 현상금 생성
+    <gray>/bounty cancel <ID></gray> - 현상금 취소
+    <gray>/bounty leaderboard</gray> - 순위 보기
+    <gray>/bounty my</gray> - 내 현상금 보기
+  announcement:
+    created: "<yellow>{placer}가 {target}에게 {amount}의 현상금을 걸었습니다!</yellow>"
+    claimed: "<green>{hunter}가 {target}의 현상금 {amount}을(를) 획득했습니다!</green>"
+    expired: "<gray>{target}의 현상금이 만료되었습니다.</gray>"
+
+perk:
+  error:
+    unknown_subcommand: "<red>알 수 없는 퍽 하위 명령어입니다.</red>"
+    player_not_found: "<red>플레이어를 찾을 수 없습니다: {playerName}</red>"
+    perk_not_found: "<red>퍽을 찾을 수 없습니다: {perkId}</red>"
+    perk_on_cooldown: "<red>이 퍽은 쿨다운 중입니다! {remaining} 남음.</red>"
+    perk_not_active: "<red>이 퍽은 현재 활성화되어 있지 않습니다.</red>"
+    activate_failed: "<red>퍽 활성화 실패: {error}</red>"
+    grant_failed: "<red>퍽 부여 실패.</red>"
+    reload_failed: "<red>퍽 리로드 실패: {error}</red>"
+  success:
+    perk_activated: "<green>퍽 {perkName}이(가) 활성화되었습니다!</green>"
+    perk_deactivated: "<yellow>퍽 {perkName}이(가) 비활성화되었습니다.</yellow>"
+    perk_granted: "<green>{playerName}에게 퍽 {perkName}을(를) 부여했습니다!</green>"
+    perk_revoked: "<yellow>{playerName}에게서 퍽 {perkName}을(를) 회수했습니다.</yellow>"
+    perk_unlocked: "<green>퍽 {perkName}을(를) 잠금 해제했습니다!</green>"
+    reloaded: "<green>퍽 설정이 리로드되었습니다!</green>"
+  activate:
+    usage: "<yellow>사용법: /perk activate <퍽ID></yellow>"
+  deactivate:
+    usage: "<yellow>사용법: /perk deactivate <퍽ID></yellow>"
+  info:
+    usage: "<yellow>사용법: /perk info <퍽ID></yellow>"
+    header: "<yellow>퍽 정보: {id}</yellow>"
+    details: "<gray>카테고리: {category} | 쿨다운: {cooldown}초 | 지속시간: {duration}초</gray>"
+  list:
+    empty: "<yellow>사용 가능한 퍽이 없습니다.</yellow>"
+    header: "<yellow>사용 가능한 퍽 ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>사용법: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>알 수 없는 관리자 명령어입니다.</red>"
+    grant:
+      usage: "<yellow>사용법: /perk admin grant <플레이어> <퍽></yellow>"
+    revoke:
+      usage: "<yellow>사용법: /perk admin revoke <플레이어> <퍽></yellow>"
+  help: |
+    <yellow>퍽 명령어:</yellow>
+    <gray>/perk</gray> - 사용 가능한 퍽 보기
+    <gray>/perk activate <퍽></gray> - 퍽 활성화
+    <gray>/perk deactivate <퍽></gray> - 퍽 비활성화
+    <gray>/perk info <퍽></gray> - 상세 정보 보기
+
+gui:
+  common:
+    back: "<yellow>← 뒤로</yellow>"
+    close: "<red>닫기</red>"
+    next_page: "<yellow>다음 페이지 →</yellow>"
+    previous_page: "<yellow>← 이전 페이지</yellow>"
+    page_info: "<gray>페이지 {current}/{total}</gray>"
+    loading: "<gray>로딩 중...</gray>"
+    confirm: "<green>확인</green>"
+    cancel: "<red>취소</red>"
+
+perk_names:
+  speed: "신속"
+  strength: "힘"
+  resistance: "저항"
+  regeneration: "재생"
+  night_vision: "야간 투시"
+  fire_resistance: "화염 저항"
+  water_breathing: "수중 호흡"
+  jump_boost: "점프 강화"
+  haste: "성급함"
+  luck: "행운"
+  fly: "비행"
+  double_experience: "경험치 2배"
+  prevent_death: "죽음 방지"
+  treasure_hunter: "보물 사냥꾼"
+  vampire: "뱀파이어"
+
+rank_trees:
+  warrior:
+    name: "전사"
+    description: "힘과 전투의 길."
+  cleric:
+    name: "성직자"
+    description: "치유와 지원의 길."
+  mage:
+    name: "마법사"
+    description: "마법과 지혜의 길."
+  rogue:
+    name: "도적"
+    description: "은신과 민첩의 길."
+  merchant:
+    name: "상인"
+    description: "거래와 부의 길."
+  ranger:
+    name: "레인저"
+    description: "자연과 궁술의 길."
+
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "권한: {permission}"
+  rank: "랭크: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "레벨 {level}"
+
+time:
+  seconds: "{value}초"
+  minutes: "{value}분"
+  hours: "{value}시간"
+  days: "{value}일"

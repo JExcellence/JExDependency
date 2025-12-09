@@ -1,156 +1,130 @@
 package com.raindropcentral.rdq.bounty.config;
 
-import com.raindropcentral.rdq.bounty.DistributionMode;
+import com.raindropcentral.rdq.bounty.type.EAnnouncementScope;
+import com.raindropcentral.rdq.bounty.type.EClaimMode;
+import com.raindropcentral.rdq.bounty.type.EDistributionMode;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import org.jetbrains.annotations.NotNull;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Configuration section for bounty system settings.
- * 
- * <p>This section is loaded from bounty/bounty.yml and provides
- * all configurable options for the bounty hunting system.
- *
- * @author JExcellence
- * @since 1.0.0
- */
 @CSAlways
 public class BountySection extends AConfigSection {
 
     private Boolean enabled;
-    private Double minAmount;
-    private Double maxAmount;
-    private Integer expirationHours;
     private Boolean selfTargetAllowed;
-    private String defaultDistributionMode;
     private Boolean instantDistributionEnabled;
     private Boolean chestDistributionEnabled;
     private Boolean dropDistributionEnabled;
     private Boolean virtualDistributionEnabled;
     private Boolean announceOnCreate;
     private Boolean announceOnClaim;
-    private String announcementScope;
-    private String defaultCurrency;
-    private Double taxRate;
-    private Integer maxActiveBountiesPerPlayer;
+    private Boolean visualIndicatorsEnabled;
 
-    public BountySection(@NotNull EvaluationEnvironmentBuilder baseEnvironment) {
+    private String defaultDistributionMode;
+    private String announcementScope;
+    private String claimMode;
+    
+    private List<String> supportedCurrencies;
+
+    private Double taxRate;
+
+    private Long trackingWindowInMs;
+
+    private Integer maxActiveBountiesPerPlayer;
+    private Integer expirationHours;
+
+    public BountySection(EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
     }
 
-    public boolean isEnabled() {
-        return enabled == null || enabled;
+    public Boolean getEnabled() {
+        return enabled != null && enabled;
     }
 
-    @NotNull
-    public BigDecimal getMinAmount() {
-        return BigDecimal.valueOf(minAmount != null ? minAmount : 100.0);
+    public Boolean getSelfTargetAllowed() {
+        return selfTargetAllowed == null || selfTargetAllowed;
     }
 
-    @NotNull
-    public BigDecimal getMaxAmount() {
-        return BigDecimal.valueOf(maxAmount != null ? maxAmount : 1000000.0);
-    }
-
-    public int getExpirationHours() {
-        return expirationHours != null ? expirationHours : 168;
-    }
-
-    public boolean isSelfTargetAllowed() {
-        return selfTargetAllowed != null && selfTargetAllowed;
-    }
-
-    @NotNull
-    public DistributionMode getDefaultDistributionMode() {
-        if (defaultDistributionMode == null) {
-            return DistributionMode.INSTANT;
-        }
-        try {
-            return DistributionMode.valueOf(defaultDistributionMode.toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return DistributionMode.INSTANT;
-        }
-    }
-
-    public boolean isInstantDistributionEnabled() {
+    public Boolean getInstantDistributionEnabled() {
         return instantDistributionEnabled == null || instantDistributionEnabled;
     }
 
-    public boolean isChestDistributionEnabled() {
-        return chestDistributionEnabled != null && chestDistributionEnabled;
+    public Boolean getChestDistributionEnabled() {
+        return chestDistributionEnabled == null || chestDistributionEnabled;
     }
 
-    public boolean isDropDistributionEnabled() {
-        return dropDistributionEnabled != null && dropDistributionEnabled;
+    public Boolean getDropDistributionEnabled() {
+        return dropDistributionEnabled == null || dropDistributionEnabled;
     }
 
-    public boolean isVirtualDistributionEnabled() {
-        return virtualDistributionEnabled != null && virtualDistributionEnabled;
+    public Boolean getVirtualDistributionEnabled() {
+        return virtualDistributionEnabled == null || virtualDistributionEnabled;
     }
 
-    public boolean isAnnounceOnCreate() {
+    public Boolean getAnnounceOnCreate() {
         return announceOnCreate == null || announceOnCreate;
     }
 
-    public boolean isAnnounceOnClaim() {
+    public Boolean getAnnounceOnClaim() {
         return announceOnClaim == null || announceOnClaim;
     }
 
-    @NotNull
-    public String getAnnouncementScope() {
-        return announcementScope != null ? announcementScope : "server";
+    public Boolean isVisualIndicatorsEnabled() {
+        return visualIndicatorsEnabled != null && visualIndicatorsEnabled;
     }
 
-    @NotNull
-    public String getDefaultCurrency() {
-        return defaultCurrency != null ? defaultCurrency : "coins";
+    public EDistributionMode getDefaultDistributionMode() {
+        return defaultDistributionMode == null ? EDistributionMode.DROP : EDistributionMode.of(defaultDistributionMode);
     }
 
-    public double getTaxRate() {
-        return taxRate != null ? taxRate : 0.05;
+    public EAnnouncementScope getAnnouncementScope() {
+        return announcementScope == null ? EAnnouncementScope.SERVER : EAnnouncementScope.of(announcementScope);
     }
 
-    public int getMaxActiveBountiesPerPlayer() {
-        return maxActiveBountiesPerPlayer != null ? maxActiveBountiesPerPlayer : 5;
+    public EClaimMode getClaimMode() {
+        return claimMode == null ? EClaimMode.LAST_HIT : EClaimMode.of(claimMode);
     }
 
-    public boolean isAnnouncementScopeServer() {
-        return "server".equalsIgnoreCase(getAnnouncementScope());
+    public List<String> getSupportedCurrencies() {
+        return supportedCurrencies == null ?  new ArrayList<>() : supportedCurrencies;
     }
 
-    public boolean isAnnouncementScopeNearby() {
-        return "nearby".equalsIgnoreCase(getAnnouncementScope());
+    public Double getTaxRate() {
+        return taxRate == null ? 0.00 : taxRate;
     }
 
-    public boolean isAnnouncementScopeTarget() {
-        return "target".equalsIgnoreCase(getAnnouncementScope());
+    public Integer getMaxActiveBountiesPerPlayer() {
+        return maxActiveBountiesPerPlayer == null ? 1 : maxActiveBountiesPerPlayer;
+    }
+
+    public Integer getExpirationHours() {
+        return expirationHours == null ? -1 : expirationHours;
+    }
+
+    public Long getTrackingWindowInMs() {
+        return trackingWindowInMs == null ? 0L : trackingWindowInMs;
     }
 
     /**
-     * Converts this section to a BountyConfig record for use in services.
+     * Gets the maximum number of bounties a commissioner can have active.
+     * Alias for getMaxActiveBountiesPerPlayer().
      *
-     * @return a BountyConfig with values from this section
+     * @return the maximum bounties per commissioner
      */
-    @NotNull
-    public BountyConfig toConfig() {
-        return new BountyConfig(
-            isEnabled(),
-            getMinAmount(),
-            getMaxAmount(),
-            getExpirationHours(),
-            isSelfTargetAllowed(),
-            getDefaultDistributionMode(),
-            isInstantDistributionEnabled(),
-            isChestDistributionEnabled(),
-            isDropDistributionEnabled(),
-            isVirtualDistributionEnabled(),
-            isAnnounceOnCreate(),
-            isAnnounceOnClaim(),
-            getAnnouncementScope(),
-            getDefaultCurrency()
-        );
+    public Integer getMaxBountiesPerCommissioner() {
+        return getMaxActiveBountiesPerPlayer();
+    }
+
+    /**
+     * Gets the maximum number of rewards per bounty.
+     * Default is 10 if not configured.
+     *
+     * @return the maximum rewards per bounty
+     */
+    public Integer getMaxRewardsPerBounty() {
+        return 10; // Default value, can be made configurable later
     }
 }

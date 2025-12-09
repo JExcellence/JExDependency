@@ -22,88 +22,38 @@ import java.util.logging.Level;
  */
 public final class RDQPremium extends JavaPlugin {
 
-    private RDQPremiumImpl rdqImpl;
+    private RDQPremiumImpl impl;
 
-    /**
-     * Retrieves the active plugin instance from the Bukkit plugin registry.
-     *
-     * @return the loaded {@link RDQPremium} instance
-     */
-    public static @NotNull RDQPremium get() {
-        return JavaPlugin.getPlugin(RDQPremium.class);
-    }
-
-    /**
-     * Boots the premium edition by initializing dependency remapping and creating
-     * the delegate implementation.
-     * <p>
-     * Failures are logged and captured so that the plugin does not enter an
-     * inconsistent enabled state.
-     * </p>
-     */
     @Override
     public void onLoad() {
         try {
             JEDependency.initializeWithRemapping(this, RDQPremium.class);
-            this.rdqImpl = new RDQPremiumImpl(this);
-            this.rdqImpl.onLoad();
+            impl = new RDQPremiumImpl(this);
+            impl.onLoad();
         } catch (final Exception exception) {
-            this.getLogger().log(Level.SEVERE, "[RDQ] Failed to load RDQ Premium", exception);
-            this.rdqImpl = null;
+            getLogger().log(Level.SEVERE, "Failed to load RDQ Premium", exception);
+            impl = null;
         }
     }
 
-    /**
-     * Enables the plugin by delegating to the loaded implementation or disables
-     * itself if initialization previously failed.
-     */
     @Override
     public void onEnable() {
-        if (this.rdqImpl != null) {
-            this.rdqImpl.onEnable();
+        if (impl != null) {
+            impl.onEnable();
         } else {
-            this.getLogger().severe("[RDQ] Cannot enable - RDQ Premium failed to load");
-            this.getServer().getPluginManager().disablePlugin(this);
+            getLogger().severe("Cannot enable - RDQ failed to load");
+            getServer().getPluginManager().disablePlugin(this);
         }
     }
 
-    /**
-     * Shuts down the premium delegate when the plugin is disabled.
-     */
     @Override
     public void onDisable() {
-        if (this.rdqImpl != null) {
-            this.rdqImpl.onDisable();
+        if (impl != null) {
+            impl.onDisable();
         }
     }
 
-    /**
-     * Provides access to the internal premium implementation delegate.
-     *
-     * @return the delegate responsible for premium-specific behaviour
-     */
     public @NotNull RDQPremiumImpl getImpl() {
-        if (this.rdqImpl == null) {
-            throw new IllegalStateException("RDQ Premium implementation not initialized");
-        }
-        return this.rdqImpl;
-    }
-
-    /**
-     * Returns the RDQCore instance from the delegate.
-     *
-     * @return the core instance
-     */
-    public @NotNull RDQCore getCore() {
-        return getImpl().getCore();
-    }
-
-    /**
-     * Indicates this is the premium edition.
-     *
-     * @return always true
-     */
-    public boolean isPremium() {
-        return true;
+        return impl;
     }
 }

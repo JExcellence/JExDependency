@@ -36,7 +36,7 @@ jeconfig-evaluable = "1.0.0"
 jeconfig-gpeee = "1.0.0"
 jeconfig-mapper = "1.0.0"
 jetranslate = "3.0.0"
-jehibernate = "1.0.1"
+jehibernate = "1.0.3"
 jedependency = "2.0.0"
 jexeconomy = "2.0.0"
 

@@ -65,12 +65,9 @@ tasks.processResources {
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    archiveBaseName.set("RDQPremium")
-    archiveClassifier.set("")
-
-    // Include all runtime dependencies (not just specific patterns)
-    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
-    mergeServiceFiles()
+    archiveBaseName.set("RDQ")
+    archiveClassifier.set("Premium")
+    archiveVersion.set(project.version.toString())
 
     // Relocations must be outside dependencies block
     relocate("com.fasterxml.jackson.core", "de.jexcellence.remapped.com.fasterxml.jackson.core")
@@ -83,9 +80,9 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
 
-    minimize {
-        exclude(project(":RDQ:rdq-common"))
-    }
+    // Include all runtime dependencies (not just specific patterns)
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+    mergeServiceFiles()
 }
 
 tasks.build {

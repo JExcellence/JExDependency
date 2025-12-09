@@ -1,0 +1,214 @@
+# RDQ Swedish Translations
+prefix: "<gold>[RDQ]</gold> "
+
+rdq:
+  error:
+    not_initialized: "<red>RDQ initialiseras. Vänta...</red>"
+    unknown_subcommand: "<red>Okänt underkommando. Använd /rdq help.</red>"
+    reload_failed: "<red>Omladdning misslyckades: {error}</red>"
+  success:
+    reloaded: "<green>RDQ-konfiguration omladdad!</green>"
+
+error:
+  not_found: "<red>{type} hittades inte: {id}</red>"
+  insufficient_funds: "<red>Otillräckliga medel! Krävs: {required}, Tillgängligt: {available}</red>"
+  on_cooldown: "<red>Nedkylning! {remaining} kvar.</red>"
+  requirements_not_met: "<red>Krav ej uppfyllda: {missing}</red>"
+  self_targeting: "<red>Du kan inte välja dig själv!</red>"
+  already_exists: "<red>{type} finns redan: {id}</red>"
+  expired: "<red>{type} har gått ut: {id}</red>"
+  not_unlocked: "<red>{type} inte upplåst: {id}</red>"
+  permission_denied: "<red>Behörighet nekad: {permission}</red>"
+  invalid_state: "<red>Ogiltigt tillstånd: {message}</red>"
+  invalid_amount: "<red>Ogiltigt belopp! Måste vara mellan {min} och {max}.</red>"
+  no_permission: "<red>Du har inte behörighet.</red>"
+  player_only: "<red>Detta kommando är endast för spelare.</red>"
+
+rank:
+  error:
+    unknown_subcommand: "<red>Okänt rang-underkommando.</red>"
+    player_not_found: "<red>Spelare hittades inte: {playerName}</red>"
+    grant_failed: "<red>Misslyckades att ge rang.</red>"
+    reload_failed: "<red>Misslyckades att ladda om ranger: {error}</red>"
+  success:
+    rank_granted: "<green>Rang {rankName} given till {playerName}!</green>"
+    rank_revoked: "<yellow>Rang {rankName} återkallad från {playerName}.</yellow>"
+    reloaded: "<green>Rang-konfiguration omladdad!</green>"
+    rank_unlocked: "<green>Grattis! Du låste upp rang {rankName}!</green>"
+  opening_view: "<gray>Öppnar rangvy...</gray>"
+  no_progress: "<yellow>Du har inte börjat någon rangväg ännu.</yellow>"
+  progress_header: "<yellow>Din Rangprogress:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>Tillgängliga Rangträd:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks} ranger)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Användning: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Okänt adminkommando.</red>"
+    grant:
+      usage: "<yellow>Användning: /rank admin grant <spelare> <rang></yellow>"
+    revoke:
+      usage: "<yellow>Användning: /rank admin revoke <spelare> <rang></yellow>"
+  help: |
+    <yellow>Rangkommandon:</yellow>
+    <gray>/rank</gray> - Öppna rangmeny
+    <gray>/rank view</gray> - Visa rangträd
+    <gray>/rank progress</gray> - Visa progress
+    <gray>/rank admin</gray> - Adminkommandon
+  notification:
+    title: "<gold>Rang Upplåst!</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>Du låste upp {rankName}!</green>"
+
+bounty:
+  error:
+    unknown_subcommand: "<red>Okänt prispengar-underkommando.</red>"
+    player_not_found: "<red>Spelare hittades inte: {playerName}</red>"
+    self_target: "<red>Du kan inte sätta prispengar på dig själv!</red>"
+    invalid_amount: "<red>Ogiltigt belopp.</red>"
+    invalid_id: "<red>Ogiltigt prispengar-ID.</red>"
+    create_failed: "<red>Misslyckades att skapa prispengar: {error}</red>"
+    cancel_failed: "<red>Misslyckades att avbryta prispengar.</red>"
+  success:
+    bounty_created: "<green>Prispengar på {amount} placerade på {targetName}!</green>"
+    bounty_cancelled: "<yellow>Prispengar avbrutna. Medel återbetalade.</yellow>"
+    bounty_removed: "<green>Prispengar borttagna av admin.</green>"
+    bounty_claimed: "<green>Du fick prispengar på {amount}!</green>"
+    reloaded: "<green>Prispengar-konfiguration omladdad!</green>"
+  create:
+    usage: "<yellow>Användning: /bounty create <spelare> <belopp></yellow>"
+  cancel:
+    usage: "<yellow>Användning: /bounty cancel <prispengaId></yellow>"
+  list:
+    empty: "<yellow>Inga aktiva prispengar.</yellow>"
+    header: "<yellow>Aktiva Prispengar ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(av {placer})</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>Prispengajägare Topplista:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills} dödanden, {earned} tjänat</gray>"
+  my:
+    header: "<yellow>Dina Prispengar:</yellow>"
+    placed_header: "<gray>Prispengar du placerat:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>Prispengar på dig:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>(av {placer})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Användning: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>Okänt adminkommando.</red>"
+    remove:
+      usage: "<yellow>Användning: /bounty admin remove <prispengaId></yellow>"
+  help: |
+    <yellow>Prispengakommandon:</yellow>
+    <gray>/bounty</gray> - Lista aktiva prispengar
+    <gray>/bounty create <spelare> <belopp></gray> - Skapa prispengar
+    <gray>/bounty cancel <id></gray> - Avbryt prispengar
+    <gray>/bounty leaderboard</gray> - Topplista
+    <gray>/bounty my</gray> - Dina prispengar
+  announcement:
+    created: "<yellow>{placer} placerade prispengar på {amount} på {target}!</yellow>"
+    claimed: "<green>{hunter} fick prispengarna på {target} värda {amount}!</green>"
+    expired: "<gray>Prispengar på {target} har gått ut.</gray>"
+
+perk:
+  error:
+    unknown_subcommand: "<red>Okänt perk-underkommando.</red>"
+    player_not_found: "<red>Spelare hittades inte: {playerName}</red>"
+    perk_not_found: "<red>Perk hittades inte: {perkId}</red>"
+    perk_on_cooldown: "<red>Denna perk är på nedkylning! {remaining} kvar.</red>"
+    perk_not_active: "<red>Denna perk är inte aktiv.</red>"
+    activate_failed: "<red>Misslyckades att aktivera perk: {error}</red>"
+    grant_failed: "<red>Misslyckades att ge perk.</red>"
+    reload_failed: "<red>Misslyckades att ladda om perks: {error}</red>"
+  success:
+    perk_activated: "<green>Perk {perkName} aktiverad!</green>"
+    perk_deactivated: "<yellow>Perk {perkName} avaktiverad.</yellow>"
+    perk_granted: "<green>Perk {perkName} given till {playerName}!</green>"
+    perk_revoked: "<yellow>Perk {perkName} återkallad från {playerName}.</yellow>"
+    perk_unlocked: "<green>Du låste upp perk {perkName}!</green>"
+    reloaded: "<green>Perk-konfiguration omladdad!</green>"
+  activate:
+    usage: "<yellow>Användning: /perk activate <perkId></yellow>"
+  deactivate:
+    usage: "<yellow>Användning: /perk deactivate <perkId></yellow>"
+  info:
+    usage: "<yellow>Användning: /perk info <perkId></yellow>"
+    header: "<yellow>Perk Info: {id}</yellow>"
+    details: "<gray>Kategori: {category} | Nedkylning: {cooldown}s | Varaktighet: {duration}s</gray>"
+  list:
+    empty: "<yellow>Inga perks tillgängliga.</yellow>"
+    header: "<yellow>Tillgängliga Perks ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Användning: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Okänt adminkommando.</red>"
+    grant:
+      usage: "<yellow>Användning: /perk admin grant <spelare> <perk></yellow>"
+    revoke:
+      usage: "<yellow>Användning: /perk admin revoke <spelare> <perk></yellow>"
+  help: |
+    <yellow>Perkkommandon:</yellow>
+    <gray>/perk</gray> - Lista tillgängliga perks
+    <gray>/perk activate <perk></gray> - Aktivera perk
+    <gray>/perk deactivate <perk></gray> - Avaktivera perk
+    <gray>/perk info <perk></gray> - Perkdetaljer
+
+gui:
+  common:
+    back: "<yellow>← Tillbaka</yellow>"
+    close: "<red>Stäng</red>"
+    next_page: "<yellow>Nästa Sida →</yellow>"
+    previous_page: "<yellow>← Föregående Sida</yellow>"
+    page_info: "<gray>Sida {current}/{total}</gray>"
+    loading: "<gray>Laddar...</gray>"
+    confirm: "<green>Bekräfta</green>"
+    cancel: "<red>Avbryt</red>"
+
+perk_names:
+  speed: "Hastighet"
+  strength: "Styrka"
+  resistance: "Motstånd"
+  regeneration: "Regenerering"
+  night_vision: "Mörkerseende"
+  fire_resistance: "Eldmotstånd"
+  water_breathing: "Vattenandning"
+  jump_boost: "Hoppförstärkning"
+  haste: "Brådska"
+  luck: "Tur"
+  fly: "Flyg"
+  double_experience: "Dubbel XP"
+  prevent_death: "Dödsförebyggande"
+  treasure_hunter: "Skattjägare"
+  vampire: "Vampyr"
+
+rank_trees:
+  warrior:
+    name: "Krigare"
+    description: "Styrka och strid."
+  cleric:
+    name: "Präst"
+    description: "Helande och stöd."
+  mage:
+    name: "Magiker"
+    description: "Magi och visdom."
+  rogue:
+    name: "Skurk"
+    description: "Smygande och smidighet."
+  merchant:
+    name: "Handlare"
+    description: "Handel och rikedom."
+  ranger:
+    name: "Ranger"
+    description: "Natur och bågskytte."
+
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "Behörighet: {permission}"
+  rank: "Rang: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "Nivå {level}"
+
+time:
+  seconds: "{value}s"
+  minutes: "{value}m"
+  hours: "{value}t"
+  days: "{value}d"

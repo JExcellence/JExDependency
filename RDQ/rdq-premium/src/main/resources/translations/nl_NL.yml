@@ -1,0 +1,214 @@
+# RDQ Dutch Translations
+prefix: "<gold>[RDQ]</gold> "
+
+rdq:
+  error:
+    not_initialized: "<red>RDQ wordt geïnitialiseerd. Even geduld...</red>"
+    unknown_subcommand: "<red>Onbekend subcommando. Gebruik /rdq help.</red>"
+    reload_failed: "<red>Herladen mislukt: {error}</red>"
+  success:
+    reloaded: "<green>RDQ configuratie succesvol herladen!</green>"
+
+error:
+  not_found: "<red>{type} niet gevonden: {id}</red>"
+  insufficient_funds: "<red>Onvoldoende saldo! Vereist: {required}, Beschikbaar: {available}</red>"
+  on_cooldown: "<red>Afkoeling! Nog {remaining}.</red>"
+  requirements_not_met: "<red>Vereisten niet voldaan: {missing}</red>"
+  self_targeting: "<red>Je kunt jezelf niet selecteren!</red>"
+  already_exists: "<red>{type} bestaat al: {id}</red>"
+  expired: "<red>{type} is verlopen: {id}</red>"
+  not_unlocked: "<red>{type} niet ontgrendeld: {id}</red>"
+  permission_denied: "<red>Geen toestemming: {permission}</red>"
+  invalid_state: "<red>Ongeldige status: {message}</red>"
+  invalid_amount: "<red>Ongeldig bedrag! Moet tussen {min} en {max} zijn.</red>"
+  no_permission: "<red>Je hebt geen toestemming.</red>"
+  player_only: "<red>Dit commando is alleen voor spelers.</red>"
+
+rank:
+  error:
+    unknown_subcommand: "<red>Onbekend rang subcommando.</red>"
+    player_not_found: "<red>Speler niet gevonden: {playerName}</red>"
+    grant_failed: "<red>Rang toekennen mislukt.</red>"
+    reload_failed: "<red>Rangen herladen mislukt: {error}</red>"
+  success:
+    rank_granted: "<green>Rang {rankName} toegekend aan {playerName}!</green>"
+    rank_revoked: "<yellow>Rang {rankName} ingetrokken van {playerName}.</yellow>"
+    reloaded: "<green>Rang configuratie herladen!</green>"
+    rank_unlocked: "<green>Gefeliciteerd! Je hebt rang {rankName} ontgrendeld!</green>"
+  opening_view: "<gray>Rang weergave openen...</gray>"
+  no_progress: "<yellow>Je bent nog niet begonnen met een rang pad.</yellow>"
+  progress_header: "<yellow>Je Rang Voortgang:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>Beschikbare Rang Bomen:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks} rangen)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Gebruik: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Onbekend admin commando.</red>"
+    grant:
+      usage: "<yellow>Gebruik: /rank admin grant <speler> <rang></yellow>"
+    revoke:
+      usage: "<yellow>Gebruik: /rank admin revoke <speler> <rang></yellow>"
+  help: |
+    <yellow>Rang Commando's:</yellow>
+    <gray>/rank</gray> - Open rang menu
+    <gray>/rank view</gray> - Bekijk rang bomen
+    <gray>/rank progress</gray> - Bekijk voortgang
+    <gray>/rank admin</gray> - Admin commando's
+  notification:
+    title: "<gold>Rang Ontgrendeld!</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>Je hebt {rankName} ontgrendeld!</green>"
+
+bounty:
+  error:
+    unknown_subcommand: "<red>Onbekend premie subcommando.</red>"
+    player_not_found: "<red>Speler niet gevonden: {playerName}</red>"
+    self_target: "<red>Je kunt geen premie op jezelf zetten!</red>"
+    invalid_amount: "<red>Ongeldig bedrag.</red>"
+    invalid_id: "<red>Ongeldig premie ID.</red>"
+    create_failed: "<red>Premie aanmaken mislukt: {error}</red>"
+    cancel_failed: "<red>Premie annuleren mislukt.</red>"
+  success:
+    bounty_created: "<green>Premie van {amount} geplaatst op {targetName}!</green>"
+    bounty_cancelled: "<yellow>Premie geannuleerd. Geld teruggestort.</yellow>"
+    bounty_removed: "<green>Premie verwijderd door admin.</green>"
+    bounty_claimed: "<green>Je hebt een premie van {amount} geclaimd!</green>"
+    reloaded: "<green>Premie configuratie herladen!</green>"
+  create:
+    usage: "<yellow>Gebruik: /bounty create <speler> <bedrag></yellow>"
+  cancel:
+    usage: "<yellow>Gebruik: /bounty cancel <premieId></yellow>"
+  list:
+    empty: "<yellow>Geen actieve premies.</yellow>"
+    header: "<yellow>Actieve Premies ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(door {placer})</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>Premiejager Ranglijst:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills} kills, {earned} verdiend</gray>"
+  my:
+    header: "<yellow>Jouw Premies:</yellow>"
+    placed_header: "<gray>Premies die je hebt geplaatst:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>Premies op jou:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>(door {placer})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Gebruik: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>Onbekend admin commando.</red>"
+    remove:
+      usage: "<yellow>Gebruik: /bounty admin remove <premieId></yellow>"
+  help: |
+    <yellow>Premie Commando's:</yellow>
+    <gray>/bounty</gray> - Lijst actieve premies
+    <gray>/bounty create <speler> <bedrag></gray> - Maak premie
+    <gray>/bounty cancel <id></gray> - Annuleer premie
+    <gray>/bounty leaderboard</gray> - Ranglijst
+    <gray>/bounty my</gray> - Jouw premies
+  announcement:
+    created: "<yellow>{placer} heeft een premie van {amount} op {target} gezet!</yellow>"
+    claimed: "<green>{hunter} heeft de premie op {target} ter waarde van {amount} geclaimd!</green>"
+    expired: "<gray>Premie op {target} is verlopen.</gray>"
+
+perk:
+  error:
+    unknown_subcommand: "<red>Onbekend perk subcommando.</red>"
+    player_not_found: "<red>Speler niet gevonden: {playerName}</red>"
+    perk_not_found: "<red>Perk niet gevonden: {perkId}</red>"
+    perk_on_cooldown: "<red>Deze perk is in afkoeling! Nog {remaining}.</red>"
+    perk_not_active: "<red>Deze perk is niet actief.</red>"
+    activate_failed: "<red>Perk activeren mislukt: {error}</red>"
+    grant_failed: "<red>Perk toekennen mislukt.</red>"
+    reload_failed: "<red>Perks herladen mislukt: {error}</red>"
+  success:
+    perk_activated: "<green>Perk {perkName} geactiveerd!</green>"
+    perk_deactivated: "<yellow>Perk {perkName} gedeactiveerd.</yellow>"
+    perk_granted: "<green>Perk {perkName} toegekend aan {playerName}!</green>"
+    perk_revoked: "<yellow>Perk {perkName} ingetrokken van {playerName}.</yellow>"
+    perk_unlocked: "<green>Je hebt perk {perkName} ontgrendeld!</green>"
+    reloaded: "<green>Perk configuratie herladen!</green>"
+  activate:
+    usage: "<yellow>Gebruik: /perk activate <perkId></yellow>"
+  deactivate:
+    usage: "<yellow>Gebruik: /perk deactivate <perkId></yellow>"
+  info:
+    usage: "<yellow>Gebruik: /perk info <perkId></yellow>"
+    header: "<yellow>Perk Info: {id}</yellow>"
+    details: "<gray>Categorie: {category} | Afkoeling: {cooldown}s | Duur: {duration}s</gray>"
+  list:
+    empty: "<yellow>Geen perks beschikbaar.</yellow>"
+    header: "<yellow>Beschikbare Perks ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Gebruik: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Onbekend admin commando.</red>"
+    grant:
+      usage: "<yellow>Gebruik: /perk admin grant <speler> <perk></yellow>"
+    revoke:
+      usage: "<yellow>Gebruik: /perk admin revoke <speler> <perk></yellow>"
+  help: |
+    <yellow>Perk Commando's:</yellow>
+    <gray>/perk</gray> - Lijst beschikbare perks
+    <gray>/perk activate <perk></gray> - Activeer perk
+    <gray>/perk deactivate <perk></gray> - Deactiveer perk
+    <gray>/perk info <perk></gray> - Perk details
+
+gui:
+  common:
+    back: "<yellow>← Terug</yellow>"
+    close: "<red>Sluiten</red>"
+    next_page: "<yellow>Volgende Pagina →</yellow>"
+    previous_page: "<yellow>← Vorige Pagina</yellow>"
+    page_info: "<gray>Pagina {current}/{total}</gray>"
+    loading: "<gray>Laden...</gray>"
+    confirm: "<green>Bevestigen</green>"
+    cancel: "<red>Annuleren</red>"
+
+perk_names:
+  speed: "Snelheid"
+  strength: "Kracht"
+  resistance: "Weerstand"
+  regeneration: "Regeneratie"
+  night_vision: "Nachtzicht"
+  fire_resistance: "Vuurbestendigheid"
+  water_breathing: "Waterademen"
+  jump_boost: "Springkracht"
+  haste: "Haast"
+  luck: "Geluk"
+  fly: "Vliegen"
+  double_experience: "Dubbele XP"
+  prevent_death: "Doodspreventie"
+  treasure_hunter: "Schatjager"
+  vampire: "Vampier"
+
+rank_trees:
+  warrior:
+    name: "Krijger"
+    description: "Het pad van kracht en strijd."
+  cleric:
+    name: "Geestelijke"
+    description: "Het pad van genezing en ondersteuning."
+  mage:
+    name: "Magiër"
+    description: "Het pad van magie en wijsheid."
+  rogue:
+    name: "Schurk"
+    description: "Het pad van stealth en behendigheid."
+  merchant:
+    name: "Handelaar"
+    description: "Het pad van handel en rijkdom."
+  ranger:
+    name: "Ranger"
+    description: "Het pad van natuur en boogschieten."
+
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "Toestemming: {permission}"
+  rank: "Rang: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "Level {level}"
+
+time:
+  seconds: "{value}s"
+  minutes: "{value}m"
+  hours: "{value}u"
+  days: "{value}d"

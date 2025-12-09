@@ -14,7 +14,7 @@ dependencies {
     
     implementation(libs.jetranslate)
     implementation(libs.bundles.jeconfig)
-    implementation(libs.jehibernate)
+    compileOnly(libs.jehibernate)
     
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)

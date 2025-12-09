@@ -1,0 +1,222 @@
+# RDQ Japanese Translations
+# RaindropQuestsプラグインの日本語翻訳
+
+prefix: "<gold>[RDQ]</gold> "
+
+rdq:
+  error:
+    not_initialized: "<red>RDQは初期化中です。お待ちください...</red>"
+    unknown_subcommand: "<red>不明なサブコマンドです。/rdq helpで利用可能なコマンドを確認してください。</red>"
+    reload_failed: "<red>リロード失敗: {error}</red>"
+  success:
+    reloaded: "<green>RDQ設定を正常にリロードしました！</green>"
+  help: |
+    <yellow>RDQコマンド:</yellow>
+    <gray>/rdq rank</gray> - ランクメニューを開く
+    <gray>/rdq bounty</gray> - 賞金メニューを開く
+    <gray>/rdq perk</gray> - パークメニューを開く
+    <gray>/rdq reload</gray> - 設定をリロード
+
+error:
+  not_found: "<red>{type}が見つかりません: {id}</red>"
+  insufficient_funds: "<red>資金不足！必要: {required}, 利用可能: {available}</red>"
+  on_cooldown: "<red>クールダウン中！残り{remaining}。</red>"
+  requirements_not_met: "<red>要件を満たしていません: {missing}</red>"
+  self_targeting: "<red>自分自身を対象にすることはできません！</red>"
+  already_exists: "<red>{type}は既に存在します: {id}</red>"
+  expired: "<red>{type}は期限切れです: {id}</red>"
+  not_unlocked: "<red>{type}はアンロックされていません: {id}</red>"
+  permission_denied: "<red>権限がありません: {permission}</red>"
+  invalid_state: "<red>無効な状態: {message}</red>"
+  invalid_amount: "<red>無効な金額！{min}から{max}の間である必要があります。</red>"
+  no_permission: "<red>その操作を行う権限がありません。</red>"
+  player_only: "<red>このコマンドはプレイヤーのみ使用できます。</red>"
+
+rank:
+  error:
+    unknown_subcommand: "<red>不明なランクサブコマンドです。</red>"
+    player_not_found: "<red>プレイヤーが見つかりません: {playerName}</red>"
+    grant_failed: "<red>ランクの付与に失敗しました。</red>"
+    reload_failed: "<red>ランクのリロードに失敗しました: {error}</red>"
+  success:
+    rank_granted: "<green>ランク{rankName}を{playerName}に付与しました！</green>"
+    rank_revoked: "<yellow>ランク{rankName}を{playerName}から取り消しました。</yellow>"
+    reloaded: "<green>ランク設定をリロードしました！</green>"
+    rank_unlocked: "<green>おめでとうございます！ランク{rankName}をアンロックしました！</green>"
+  opening_view: "<gray>ランクビューを開いています...</gray>"
+  no_progress: "<yellow>まだランクパスを開始していません。</yellow>"
+  progress_header: "<yellow>ランク進捗:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>利用可能なランクツリー:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks}ランク)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>使用法: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>不明な管理コマンドです。</red>"
+    grant:
+      usage: "<yellow>使用法: /rank admin grant <プレイヤー> <ランク></yellow>"
+    revoke:
+      usage: "<yellow>使用法: /rank admin revoke <プレイヤー> <ランク></yellow>"
+  help: |
+    <yellow>ランクコマンド:</yellow>
+    <gray>/rank</gray> - ランクメニューを開く
+    <gray>/rank view</gray> - ランクツリーを表示
+    <gray>/rank progress</gray> - 進捗を表示
+    <gray>/rank admin</gray> - 管理コマンド
+  notification:
+    title: "<gold>ランクアンロック！</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>{rankName}をアンロックしました！</green>"
+
+bounty:
+  error:
+    unknown_subcommand: "<red>不明な賞金サブコマンドです。</red>"
+    player_not_found: "<red>プレイヤーが見つかりません: {playerName}</red>"
+    self_target: "<red>自分自身に賞金をかけることはできません！</red>"
+    invalid_amount: "<red>無効な金額です。有効な数値を入力してください。</red>"
+    invalid_id: "<red>無効な賞金IDです。</red>"
+    create_failed: "<red>賞金の作成に失敗しました: {error}</red>"
+    cancel_failed: "<red>賞金のキャンセルに失敗しました。</red>"
+  success:
+    bounty_created: "<green>{targetName}に{amount}の賞金をかけました！</green>"
+    bounty_cancelled: "<yellow>賞金をキャンセルしました。資金を返金しました。</yellow>"
+    bounty_removed: "<green>管理者が賞金を削除しました。</green>"
+    bounty_claimed: "<green>{amount}の賞金を獲得しました！</green>"
+    reloaded: "<green>賞金設定をリロードしました！</green>"
+  create:
+    usage: "<yellow>使用法: /bounty create <プレイヤー> <金額></yellow>"
+  cancel:
+    usage: "<yellow>使用法: /bounty cancel <賞金ID></yellow>"
+  list:
+    empty: "<yellow>アクティブな賞金はありません。</yellow>"
+    header: "<yellow>アクティブな賞金 ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>({placer}より)</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>賞金ハンターランキング:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills}キル, {earned}獲得</gray>"
+  my:
+    header: "<yellow>あなたの賞金:</yellow>"
+    placed_header: "<gray>あなたがかけた賞金:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>あなたにかけられた賞金:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>({placer}より)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>使用法: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>不明な管理コマンドです。</red>"
+    remove:
+      usage: "<yellow>使用法: /bounty admin remove <賞金ID></yellow>"
+  help: |
+    <yellow>賞金コマンド:</yellow>
+    <gray>/bounty</gray> - アクティブな賞金を表示
+    <gray>/bounty create <プレイヤー> <金額></gray> - 賞金を作成
+    <gray>/bounty cancel <ID></gray> - 賞金をキャンセル
+    <gray>/bounty leaderboard</gray> - ランキングを表示
+    <gray>/bounty my</gray> - あなたの賞金を表示
+  announcement:
+    created: "<yellow>{placer}が{target}に{amount}の賞金をかけました！</yellow>"
+    claimed: "<green>{hunter}が{target}の賞金{amount}を獲得しました！</green>"
+    expired: "<gray>{target}の賞金が期限切れになりました。</gray>"
+
+perk:
+  error:
+    unknown_subcommand: "<red>不明なパークサブコマンドです。</red>"
+    player_not_found: "<red>プレイヤーが見つかりません: {playerName}</red>"
+    perk_not_found: "<red>パークが見つかりません: {perkId}</red>"
+    perk_on_cooldown: "<red>このパークはクールダウン中です！残り{remaining}。</red>"
+    perk_not_active: "<red>このパークは現在アクティブではありません。</red>"
+    activate_failed: "<red>パークの有効化に失敗しました: {error}</red>"
+    grant_failed: "<red>パークの付与に失敗しました。</red>"
+    reload_failed: "<red>パークのリロードに失敗しました: {error}</red>"
+  success:
+    perk_activated: "<green>パーク{perkName}を有効化しました！</green>"
+    perk_deactivated: "<yellow>パーク{perkName}を無効化しました。</yellow>"
+    perk_granted: "<green>パーク{perkName}を{playerName}に付与しました！</green>"
+    perk_revoked: "<yellow>パーク{perkName}を{playerName}から取り消しました。</yellow>"
+    perk_unlocked: "<green>パーク{perkName}をアンロックしました！</green>"
+    reloaded: "<green>パーク設定をリロードしました！</green>"
+  activate:
+    usage: "<yellow>使用法: /perk activate <パークID></yellow>"
+  deactivate:
+    usage: "<yellow>使用法: /perk deactivate <パークID></yellow>"
+  info:
+    usage: "<yellow>使用法: /perk info <パークID></yellow>"
+    header: "<yellow>パーク情報: {id}</yellow>"
+    details: "<gray>カテゴリ: {category} | クールダウン: {cooldown}秒 | 持続時間: {duration}秒</gray>"
+  list:
+    empty: "<yellow>利用可能なパークはありません。</yellow>"
+    header: "<yellow>利用可能なパーク ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>使用法: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>不明な管理コマンドです。</red>"
+    grant:
+      usage: "<yellow>使用法: /perk admin grant <プレイヤー> <パーク></yellow>"
+    revoke:
+      usage: "<yellow>使用法: /perk admin revoke <プレイヤー> <パーク></yellow>"
+  help: |
+    <yellow>パークコマンド:</yellow>
+    <gray>/perk</gray> - 利用可能なパークを表示
+    <gray>/perk activate <パーク></gray> - パークを有効化
+    <gray>/perk deactivate <パーク></gray> - パークを無効化
+    <gray>/perk info <パーク></gray> - 詳細を表示
+
+gui:
+  common:
+    back: "<yellow>← 戻る</yellow>"
+    close: "<red>閉じる</red>"
+    next_page: "<yellow>次のページ →</yellow>"
+    previous_page: "<yellow>← 前のページ</yellow>"
+    page_info: "<gray>ページ {current}/{total}</gray>"
+    loading: "<gray>読み込み中...</gray>"
+    confirm: "<green>確認</green>"
+    cancel: "<red>キャンセル</red>"
+
+perk_names:
+  speed: "スピード"
+  strength: "ストレングス"
+  resistance: "レジスタンス"
+  regeneration: "リジェネレーション"
+  night_vision: "ナイトビジョン"
+  fire_resistance: "火炎耐性"
+  water_breathing: "水中呼吸"
+  jump_boost: "ジャンプブースト"
+  haste: "採掘速度上昇"
+  luck: "幸運"
+  fly: "飛行"
+  double_experience: "経験値2倍"
+  prevent_death: "死亡防止"
+  treasure_hunter: "トレジャーハンター"
+  vampire: "ヴァンパイア"
+
+rank_trees:
+  warrior:
+    name: "戦士"
+    description: "力と戦闘の道。"
+  cleric:
+    name: "聖職者"
+    description: "癒しとサポートの道。"
+  mage:
+    name: "魔法使い"
+    description: "魔法と知恵の道。"
+  rogue:
+    name: "盗賊"
+    description: "隠密と敏捷の道。"
+  merchant:
+    name: "商人"
+    description: "商売と富の道。"
+  ranger:
+    name: "レンジャー"
+    description: "自然と弓術の道。"
+
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "権限: {permission}"
+  rank: "ランク: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "レベル {level}"
+
+time:
+  seconds: "{value}秒"
+  minutes: "{value}分"
+  hours: "{value}時間"
+  days: "{value}日"

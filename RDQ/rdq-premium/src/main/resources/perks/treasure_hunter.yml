@@ -1,0 +1,29 @@
+# Treasure Hunter Perk Configuration
+id: treasure_hunter
+displayNameKey: perk_names.treasure_hunter
+descriptionKey: perk_descriptions.treasure_hunter
+category: utility
+iconMaterial: CHEST
+enabled: true
+
+type: PASSIVE
+cooldownSeconds: 0
+durationSeconds: 0
+
+effect:
+  type: CUSTOM
+  handler: treasure_hunter
+  config:
+    bonusLootChance: 0.15
+    bonusLootMultiplier: 1.5
+    affectedContainers:
+      - CHEST
+      - BARREL
+      - SHULKER_BOX
+
+requirements:
+  - type: RANK
+    rankId: ranger_4
+  - type: CURRENCY
+    currency: default
+    amount: 8000

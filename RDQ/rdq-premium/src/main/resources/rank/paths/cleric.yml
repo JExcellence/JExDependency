@@ -1,0 +1,97 @@
+# Cleric Rank Tree
+# The path of healing and support
+
+id: cleric
+displayNameKey: rank_trees.cleric.name
+descriptionKey: rank_trees.cleric.description
+iconMaterial: GOLDEN_APPLE
+displayOrder: 2
+enabled: true
+
+ranks:
+  - id: cleric_1
+    displayNameKey: rank.cleric.acolyte
+    tier: 1
+    weight: 100
+    luckPermsGroup: cleric_acolyte
+    prefixKey: rank.cleric.acolyte.prefix
+    iconMaterial: APPLE
+    enabled: true
+    requirements: []
+
+  - id: cleric_2
+    displayNameKey: rank.cleric.healer
+    tier: 2
+    weight: 200
+    luckPermsGroup: cleric_healer
+    prefixKey: rank.cleric.healer.prefix
+    iconMaterial: GOLDEN_APPLE
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 10000
+      - type: ITEM
+        material: GOLDEN_APPLE
+        amount: 10
+
+  - id: cleric_3
+    displayNameKey: rank.cleric.priest
+    tier: 3
+    weight: 300
+    luckPermsGroup: cleric_priest
+    prefixKey: rank.cleric.priest.prefix
+    iconMaterial: ENCHANTED_GOLDEN_APPLE
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 50000
+      - type: ITEM
+        material: GOLDEN_APPLE
+        amount: 50
+      - type: CURRENCY
+        currency: default
+        amount: 5000
+
+  - id: cleric_4
+    displayNameKey: rank.cleric.bishop
+    tier: 4
+    weight: 400
+    luckPermsGroup: cleric_bishop
+    prefixKey: rank.cleric.bishop.prefix
+    iconMaterial: TOTEM_OF_UNDYING
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 150000
+      - type: ITEM
+        material: ENCHANTED_GOLDEN_APPLE
+        amount: 10
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: cleric_3
+
+  - id: cleric_5
+    displayNameKey: rank.cleric.high_priest
+    tier: 5
+    weight: 500
+    luckPermsGroup: cleric_high_priest
+    prefixKey: rank.cleric.high_priest.prefix
+    iconMaterial: BEACON
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: DAMAGE_DEALT
+        amount: 500000
+      - type: ITEM
+        material: TOTEM_OF_UNDYING
+        amount: 5
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: cleric_4

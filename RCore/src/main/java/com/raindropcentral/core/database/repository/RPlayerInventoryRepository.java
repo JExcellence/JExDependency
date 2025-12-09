@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository for managing RPlayerInventory entities.
@@ -36,9 +37,11 @@ public class RPlayerInventoryRepository extends GenericCachedRepository<RPlayerI
      */
     public RPlayerInventoryRepository(
             final @NotNull ExecutorService executor,
-            final @NotNull EntityManagerFactory entityManagerFactory
+            final @NotNull EntityManagerFactory entityManagerFactory,
+            @NotNull Class<RPlayerInventory> entityClass,
+            @NotNull Function<RPlayerInventory, Long> keyExtractor
     ) {
-        super(executor, entityManagerFactory, RPlayerInventory.class, RPlayerInventory::getId);
+        super(executor, entityManagerFactory, entityClass, keyExtractor);
     }
 
     /**

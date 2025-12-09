@@ -1,0 +1,93 @@
+# RDQ Rank System Configuration
+# This file controls all rank progression settings
+
+# Enable or disable the rank system
+enabled: true
+
+# Progression settings
+progression:
+  # Enforce linear progression within a rank tree
+  linearProgression: true
+  # Allow skipping ranks if all requirements are met
+  allowSkipping: false
+  # Automatically unlock next rank when requirements are met
+  autoUnlock: true
+
+# Active rank tree limits
+trees:
+  # Maximum number of active rank trees per player
+  # Free edition: 1, Premium edition: unlimited (-1)
+  maxActiveTrees: 1
+  # Allow switching between rank trees
+  crossTreeSwitching: false
+  # Cooldown for switching trees (seconds) - 1728000 = 20 days
+  switchingCooldownSeconds: 1728000
+  # Tier threshold required before cross-tree switching is allowed
+  switchingTierThreshold: 3
+
+# Final rank requirements
+finalRank:
+  # Require completion of multiple trees for final rank
+  requireMultipleTrees: false
+  # Number of trees required for final rank
+  requiredTreeCount: 3
+  # Minimum tier in each tree
+  minimumTierPerTree: 5
+
+# LuckPerms integration
+luckperms:
+  # Enable LuckPerms integration
+  enabled: true
+  # Assign permission groups on rank unlock
+  assignGroups: true
+  # Apply prefix/suffix on rank change
+  applyPrefixSuffix: true
+  # Remove previous rank group when new rank is unlocked
+  removePreviousGroup: true
+
+# Notifications
+notifications:
+  # Notification on rank unlock
+  onUnlock:
+    enabled: true
+    # Show title message
+    title: true
+    # Show subtitle message
+    subtitle: true
+    # Show actionbar message
+    actionbar: true
+    # Play sound
+    sound:
+      enabled: true
+      type: "ENTITY_PLAYER_LEVELUP"
+      volume: 1.0
+      pitch: 1.0
+    # Show firework effect
+    firework:
+      enabled: true
+      colors:
+        - "GOLD"
+        - "YELLOW"
+  # Broadcast rank unlock to server
+  broadcast:
+    enabled: true
+    # Minimum tier to broadcast
+    minimumTier: 3
+
+# Requirement checking
+requirements:
+  # Check requirements in real-time
+  realTimeCheck: true
+  # Cache requirement check results (seconds)
+  cacheDurationSeconds: 30
+  # Show progress toward requirements in GUI
+  showProgress: true
+
+# GUI settings
+gui:
+  # Items per page in rank list
+  itemsPerPage: 28
+  # Show locked ranks
+  showLockedRanks: true
+  # Show requirement progress
+  showRequirementProgress: true

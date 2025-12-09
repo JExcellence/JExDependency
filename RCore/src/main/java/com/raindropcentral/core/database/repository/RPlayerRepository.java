@@ -3,15 +3,16 @@ package com.raindropcentral.core.database.repository;
 
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.InjectRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository providing cached CRUD access to {@link RPlayer} entities. Operations run on the
@@ -31,6 +32,7 @@ import java.util.concurrent.ExecutorService;
  * @since 1.0.0
  * @version 1.0.1
  */
+@InjectRepository
 public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UUID> {
 
     /**
@@ -40,10 +42,12 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
      * @param entityManagerFactory JPA factory providing entity managers
      */
     public RPlayerRepository(
-        final @NotNull ExecutorService executor,
-        final @NotNull EntityManagerFactory entityManagerFactory
+            @NotNull ExecutorService executor,
+            @NotNull EntityManagerFactory entityManagerFactory,
+            @NotNull Class<RPlayer> entityClass,
+            @NotNull Function<RPlayer, UUID> keyExtractor
     ) {
-        super(executor, entityManagerFactory, RPlayer.class, RPlayer::getUniqueId);
+        super(executor, entityManagerFactory, entityClass, keyExtractor);
     }
 
     /**
@@ -56,8 +60,6 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
      * @return future resolving to an optional containing the cached or freshly loaded entity
      */
     public CompletableFuture<Optional<RPlayer>> findByUuidAsync(final @NotNull UUID uniqueId) {
-        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
-
         return findByAttributesAsync(Map.of("uniqueId", uniqueId))
             .thenApply(Optional::ofNullable);
     }
@@ -72,7 +74,6 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
      * @return future containing an optional with the resolved player when found
      */
     public CompletableFuture<Optional<RPlayer>> findByNameAsync(final @NotNull String playerName) {
-        Objects.requireNonNull(playerName, "playerName cannot be null");
 
         return findByAttributesAsync(Map.of("playerName", playerName))
             .thenApply(Optional::ofNullable);
@@ -102,7 +103,6 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
      * @return future resolving to the managed entity after persistence
      */
     public CompletableFuture<RPlayer> createOrUpdateAsync(final @NotNull RPlayer player) {
-        Objects.requireNonNull(player, "player cannot be null");
 
         return existsByUuidAsync(player.getUniqueId())
             .thenCompose(exists -> exists

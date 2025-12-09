@@ -119,7 +119,7 @@ public record Bounty(
     String targetName,
     UUID commissionerUuid,
     String commissionerName,
-    Set<RewardItem> rewardItems,
+    Set<RewardItem> rewards,
     Map<String, Double> rewardCurrencies,
     double totalEstimatedValue,
     LocalDateTime createdAt,
@@ -141,14 +141,14 @@ public record Bounty(
 public record BountyCreationRequest(
     UUID targetUuid,
     UUID commissionerUuid,
-    Set<RewardItem> rewardItems,
+    Set<RewardItem> rewards,
     Map<String, Double> rewardCurrencies,
     Optional<LocalDateTime> customExpiration
 ) {
     public BountyCreationRequest {
         Objects.requireNonNull(targetUuid, "target cannot be null");
         Objects.requireNonNull(commissionerUuid, "commissioner cannot be null");
-        rewardItems = Set.copyOf(rewardItems); // Defensive copy
+        rewards = Set.copyOf(rewards); // Defensive copy
         rewardCurrencies = Map.copyOf(rewardCurrencies); // Defensive copy
     }
 }
@@ -304,7 +304,7 @@ public interface BountyHunterStatsRepository extends JpaRepository<BountyHunterS
 │ - claimedAt: LocalDateTime                                  │
 │ - totalEstimatedValue: double                               │
 │ - rewards: List<BountyReward>                               │
-│ - rewardItems: Set<RewardItem>                              │
+│ - rewards: Set<RewardItem>                              │
 │ - rewardCurrencies: Map<String, Double>                     │
 └─────────────────────────────────────────────────────────────┘
                              │
@@ -359,7 +359,7 @@ private final State<Optional<Bounty>> bounty = initialState("bounty");
 
 // Mutable state (can be updated)
 private final MutableState<Optional<OfflinePlayer>> target = initialState("target");
-private final MutableState<Set<RewardItem>> rewardItems = initialState("reward_items");
+private final MutableState<Set<RewardItem>> rewards = initialState("reward_items");
 private final MutableState<Map<String, Double>> rewardCurrencies = initialState("reward_currencies");
 
 // Computed state (derived from other states)

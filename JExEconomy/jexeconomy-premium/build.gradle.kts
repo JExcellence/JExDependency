@@ -17,10 +17,14 @@ dependencies {
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
+    compileOnly(libs.jehibernate)
 
     compileOnly(libs.rplatform)
     
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
+    implementation(libs.bundles.jexcellence) {
+        isTransitive = false
+        exclude(group = "de.jexcellence.hibernate")
+    }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)
     compileOnly(libs.vault.api) { isTransitive = false }

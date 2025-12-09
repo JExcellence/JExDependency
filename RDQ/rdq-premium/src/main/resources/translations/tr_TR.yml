@@ -1,0 +1,214 @@
+# RDQ Turkish Translations
+prefix: "<gold>[RDQ]</gold> "
+
+rdq:
+  error:
+    not_initialized: "<red>RDQ başlatılıyor. Lütfen bekleyin...</red>"
+    unknown_subcommand: "<red>Bilinmeyen alt komut. /rdq help kullanın.</red>"
+    reload_failed: "<red>Yeniden yükleme başarısız: {error}</red>"
+  success:
+    reloaded: "<green>RDQ yapılandırması yeniden yüklendi!</green>"
+
+error:
+  not_found: "<red>{type} bulunamadı: {id}</red>"
+  insufficient_funds: "<red>Yetersiz bakiye! Gerekli: {required}, Mevcut: {available}</red>"
+  on_cooldown: "<red>Bekleme süresi! {remaining} kaldı.</red>"
+  requirements_not_met: "<red>Gereksinimler karşılanmadı: {missing}</red>"
+  self_targeting: "<red>Kendinizi seçemezsiniz!</red>"
+  already_exists: "<red>{type} zaten mevcut: {id}</red>"
+  expired: "<red>{type} süresi doldu: {id}</red>"
+  not_unlocked: "<red>{type} açılmadı: {id}</red>"
+  permission_denied: "<red>İzin reddedildi: {permission}</red>"
+  invalid_state: "<red>Geçersiz durum: {message}</red>"
+  invalid_amount: "<red>Geçersiz miktar! {min} ile {max} arasında olmalı.</red>"
+  no_permission: "<red>Bunu yapmaya izniniz yok.</red>"
+  player_only: "<red>Bu komut sadece oyuncular için.</red>"
+
+rank:
+  error:
+    unknown_subcommand: "<red>Bilinmeyen rütbe alt komutu.</red>"
+    player_not_found: "<red>Oyuncu bulunamadı: {playerName}</red>"
+    grant_failed: "<red>Rütbe verme başarısız.</red>"
+    reload_failed: "<red>Rütbeler yeniden yüklenemedi: {error}</red>"
+  success:
+    rank_granted: "<green>{playerName} oyuncusuna {rankName} rütbesi verildi!</green>"
+    rank_revoked: "<yellow>{playerName} oyuncusundan {rankName} rütbesi alındı.</yellow>"
+    reloaded: "<green>Rütbe yapılandırması yeniden yüklendi!</green>"
+    rank_unlocked: "<green>Tebrikler! {rankName} rütbesini açtınız!</green>"
+  opening_view: "<gray>Rütbe görünümü açılıyor...</gray>"
+  no_progress: "<yellow>Henüz bir rütbe yolu başlatmadınız.</yellow>"
+  progress_header: "<yellow>Rütbe İlerlemeniz:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>Mevcut Rütbe Ağaçları:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks} rütbe)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Kullanım: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Bilinmeyen yönetici komutu.</red>"
+    grant:
+      usage: "<yellow>Kullanım: /rank admin grant <oyuncu> <rütbe></yellow>"
+    revoke:
+      usage: "<yellow>Kullanım: /rank admin revoke <oyuncu> <rütbe></yellow>"
+  help: |
+    <yellow>Rütbe Komutları:</yellow>
+    <gray>/rank</gray> - Rütbe menüsünü aç
+    <gray>/rank view</gray> - Rütbe ağaçlarını görüntüle
+    <gray>/rank progress</gray> - İlerlemeyi görüntüle
+    <gray>/rank admin</gray> - Yönetici komutları
+  notification:
+    title: "<gold>Rütbe Açıldı!</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>{rankName} rütbesini açtınız!</green>"
+
+bounty:
+  error:
+    unknown_subcommand: "<red>Bilinmeyen ödül alt komutu.</red>"
+    player_not_found: "<red>Oyuncu bulunamadı: {playerName}</red>"
+    self_target: "<red>Kendinize ödül koyamazsınız!</red>"
+    invalid_amount: "<red>Geçersiz miktar.</red>"
+    invalid_id: "<red>Geçersiz ödül ID.</red>"
+    create_failed: "<red>Ödül oluşturma başarısız: {error}</red>"
+    cancel_failed: "<red>Ödül iptal başarısız.</red>"
+  success:
+    bounty_created: "<green>{targetName} üzerine {amount} ödül konuldu!</green>"
+    bounty_cancelled: "<yellow>Ödül iptal edildi. Para iade edildi.</yellow>"
+    bounty_removed: "<green>Ödül yönetici tarafından kaldırıldı.</green>"
+    bounty_claimed: "<green>{amount} değerinde ödül aldınız!</green>"
+    reloaded: "<green>Ödül yapılandırması yeniden yüklendi!</green>"
+  create:
+    usage: "<yellow>Kullanım: /bounty create <oyuncu> <miktar></yellow>"
+  cancel:
+    usage: "<yellow>Kullanım: /bounty cancel <ödülId></yellow>"
+  list:
+    empty: "<yellow>Aktif ödül yok.</yellow>"
+    header: "<yellow>Aktif Ödüller ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>({placer} tarafından)</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>Ödül Avcısı Sıralaması:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills} öldürme, {earned} kazanıldı</gray>"
+  my:
+    header: "<yellow>Ödülleriniz:</yellow>"
+    placed_header: "<gray>Koyduğunuz ödüller:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>Üzerinizdeki ödüller:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>({placer} tarafından)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Kullanım: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>Bilinmeyen yönetici komutu.</red>"
+    remove:
+      usage: "<yellow>Kullanım: /bounty admin remove <ödülId></yellow>"
+  help: |
+    <yellow>Ödül Komutları:</yellow>
+    <gray>/bounty</gray> - Aktif ödülleri listele
+    <gray>/bounty create <oyuncu> <miktar></gray> - Ödül oluştur
+    <gray>/bounty cancel <id></gray> - Ödülü iptal et
+    <gray>/bounty leaderboard</gray> - Sıralama
+    <gray>/bounty my</gray> - Ödülleriniz
+  announcement:
+    created: "<yellow>{placer}, {target} üzerine {amount} ödül koydu!</yellow>"
+    claimed: "<green>{hunter}, {target} üzerindeki {amount} değerindeki ödülü aldı!</green>"
+    expired: "<gray>{target} üzerindeki ödülün süresi doldu.</gray>"
+
+perk:
+  error:
+    unknown_subcommand: "<red>Bilinmeyen yetenek alt komutu.</red>"
+    player_not_found: "<red>Oyuncu bulunamadı: {playerName}</red>"
+    perk_not_found: "<red>Yetenek bulunamadı: {perkId}</red>"
+    perk_on_cooldown: "<red>Bu yetenek bekleme süresinde! {remaining} kaldı.</red>"
+    perk_not_active: "<red>Bu yetenek şu anda aktif değil.</red>"
+    activate_failed: "<red>Yetenek etkinleştirme başarısız: {error}</red>"
+    grant_failed: "<red>Yetenek verme başarısız.</red>"
+    reload_failed: "<red>Yetenekler yeniden yüklenemedi: {error}</red>"
+  success:
+    perk_activated: "<green>Yetenek {perkName} etkinleştirildi!</green>"
+    perk_deactivated: "<yellow>Yetenek {perkName} devre dışı bırakıldı.</yellow>"
+    perk_granted: "<green>{playerName} oyuncusuna {perkName} yeteneği verildi!</green>"
+    perk_revoked: "<yellow>{playerName} oyuncusundan {perkName} yeteneği alındı.</yellow>"
+    perk_unlocked: "<green>{perkName} yeteneğini açtınız!</green>"
+    reloaded: "<green>Yetenek yapılandırması yeniden yüklendi!</green>"
+  activate:
+    usage: "<yellow>Kullanım: /perk activate <yetenekId></yellow>"
+  deactivate:
+    usage: "<yellow>Kullanım: /perk deactivate <yetenekId></yellow>"
+  info:
+    usage: "<yellow>Kullanım: /perk info <yetenekId></yellow>"
+    header: "<yellow>Yetenek Bilgisi: {id}</yellow>"
+    details: "<gray>Kategori: {category} | Bekleme: {cooldown}s | Süre: {duration}s</gray>"
+  list:
+    empty: "<yellow>Mevcut yetenek yok.</yellow>"
+    header: "<yellow>Mevcut Yetenekler ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Kullanım: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Bilinmeyen yönetici komutu.</red>"
+    grant:
+      usage: "<yellow>Kullanım: /perk admin grant <oyuncu> <yetenek></yellow>"
+    revoke:
+      usage: "<yellow>Kullanım: /perk admin revoke <oyuncu> <yetenek></yellow>"
+  help: |
+    <yellow>Yetenek Komutları:</yellow>
+    <gray>/perk</gray> - Mevcut yetenekleri listele
+    <gray>/perk activate <yetenek></gray> - Yeteneği etkinleştir
+    <gray>/perk deactivate <yetenek></gray> - Yeteneği devre dışı bırak
+    <gray>/perk info <yetenek></gray> - Yetenek detayları
+
+gui:
+  common:
+    back: "<yellow>← Geri</yellow>"
+    close: "<red>Kapat</red>"
+    next_page: "<yellow>Sonraki Sayfa →</yellow>"
+    previous_page: "<yellow>← Önceki Sayfa</yellow>"
+    page_info: "<gray>Sayfa {current}/{total}</gray>"
+    loading: "<gray>Yükleniyor...</gray>"
+    confirm: "<green>Onayla</green>"
+    cancel: "<red>İptal</red>"
+
+perk_names:
+  speed: "Hız"
+  strength: "Güç"
+  resistance: "Direnç"
+  regeneration: "Yenilenme"
+  night_vision: "Gece Görüşü"
+  fire_resistance: "Ateş Direnci"
+  water_breathing: "Su Altı Solunumu"
+  jump_boost: "Zıplama Artışı"
+  haste: "Acele"
+  luck: "Şans"
+  fly: "Uçuş"
+  double_experience: "Çift XP"
+  prevent_death: "Ölüm Önleme"
+  treasure_hunter: "Hazine Avcısı"
+  vampire: "Vampir"
+
+rank_trees:
+  warrior:
+    name: "Savaşçı"
+    description: "Güç ve savaş yolu."
+  cleric:
+    name: "Rahip"
+    description: "İyileştirme ve destek yolu."
+  mage:
+    name: "Büyücü"
+    description: "Büyü ve bilgelik yolu."
+  rogue:
+    name: "Hırsız"
+    description: "Gizlilik ve çeviklik yolu."
+  merchant:
+    name: "Tüccar"
+    description: "Ticaret ve zenginlik yolu."
+  ranger:
+    name: "Korucu"
+    description: "Doğa ve okçuluk yolu."
+
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "İzin: {permission}"
+  rank: "Rütbe: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "Seviye {level}"
+
+time:
+  seconds: "{value}s"
+  minutes: "{value}d"
+  hours: "{value}sa"
+  days: "{value}g"

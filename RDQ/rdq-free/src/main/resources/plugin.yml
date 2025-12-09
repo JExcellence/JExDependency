@@ -1,4 +1,4 @@
-name: ${name}
+name: "RDQ"
 version: ${version}
 main: com.raindropcentral.rdq.RDQFree
 api-version: ${apiVersion}
@@ -9,36 +9,3 @@ softdepend:
   - Vault
   - LuckPerms
   - PlaceholderAPI
-commands:
-  rdq:
-    description: Main RDQ command
-    usage: /<command> [subcommand]
-    aliases: [raindropquests, quests]
-  rank:
-    description: Rank system commands
-    usage: /<command> [subcommand]
-    aliases: [ranks]
-  bounty:
-    description: Bounty system commands
-    usage: /<command> [subcommand]
-    aliases: [bounties]
-  perk:
-    description: Perk system commands
-    usage: /<command> [subcommand]
-    aliases: [perks]
-permissions:
-  rdq.admin:
-    description: Full admin access to RDQ
-    default: op
-  rdq.rank.view:
-    description: View rank information
-    default: true
-  rdq.bounty.create:
-    description: Create bounties
-    default: true
-  rdq.bounty.view:
-    description: View bounties
-    default: true
-  rdq.perk.use:
-    description: Use perks
-    default: true

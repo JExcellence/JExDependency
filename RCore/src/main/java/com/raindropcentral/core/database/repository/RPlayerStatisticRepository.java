@@ -3,7 +3,6 @@ package com.raindropcentral.core.database.repository;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
-import de.jexcellence.hibernate.entity.AbstractEntity;
 import de.jexcellence.hibernate.repository.GenericCachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository handling {@link RPlayerStatistic} aggregates. Provides cached access keyed by the
@@ -56,10 +56,12 @@ public class RPlayerStatisticRepository extends GenericCachedRepository<RPlayerS
      * @param entityManagerFactory JPA factory responsible for creating entity managers
      */
     public RPlayerStatisticRepository(
-        final @NotNull ExecutorService executor,
-        final @NotNull EntityManagerFactory entityManagerFactory
+        @NotNull ExecutorService executor,
+        @NotNull EntityManagerFactory entityManagerFactory,
+        @NotNull Class<RPlayerStatistic> entityClass,
+        @NotNull Function<RPlayerStatistic, Long> keyExtractor
     ) {
-        super(executor, entityManagerFactory, RPlayerStatistic.class, AbstractEntity::getId);
+        super(executor, entityManagerFactory, entityClass, keyExtractor);
     }
 
     /**
@@ -136,6 +138,73 @@ public class RPlayerStatisticRepository extends GenericCachedRepository<RPlayerS
                         return newStatistic;
                     }
                     return statistics.get(0);
+                });
+    }
+
+    /**
+     * Finds a specific statistic value for a player.
+     *
+     * @param player the player whose statistic to retrieve
+     * @param identifier the statistic identifier
+     * @param plugin the plugin namespace
+     * @return CompletableFuture containing optional statistic value
+     * @throws NullPointerException if any parameter is null
+     */
+    public CompletableFuture<java.util.Optional<Object>> findStatisticValueAsync(
+            final @NotNull RPlayer player,
+            final @NotNull String identifier,
+            final @NotNull String plugin
+    ) {
+        return findByPlayer(player)
+                .thenApply(statistics -> {
+                    if (statistics.isEmpty()) {
+                        return java.util.Optional.empty();
+                    }
+                    return statistics.get(0).getStatisticValue(identifier, plugin);
+                });
+    }
+
+    /**
+     * Checks if a player has a specific statistic.
+     *
+     * @param player the player to check
+     * @param identifier the statistic identifier
+     * @param plugin the plugin namespace
+     * @return CompletableFuture resolving to true if statistic exists
+     * @throws NullPointerException if any parameter is null
+     */
+    public CompletableFuture<Boolean> hasStatisticAsync(
+            final @NotNull RPlayer player,
+            final @NotNull String identifier,
+            final @NotNull String plugin
+    ) {
+        return findByPlayer(player)
+                .thenApply(statistics -> {
+                    if (statistics.isEmpty()) {
+                        return false;
+                    }
+                    return statistics.get(0).hasStatistic(identifier, plugin);
+                });
+    }
+
+    /**
+     * Gets the count of statistics for a specific plugin.
+     *
+     * @param player the player whose statistics to count
+     * @param plugin the plugin namespace
+     * @return CompletableFuture containing the count
+     * @throws NullPointerException if any parameter is null
+     */
+    public CompletableFuture<Long> getStatisticCountForPluginAsync(
+            final @NotNull RPlayer player,
+            final @NotNull String plugin
+    ) {
+        return findByPlayer(player)
+                .thenApply(statistics -> {
+                    if (statistics.isEmpty()) {
+                        return 0L;
+                    }
+                    return statistics.get(0).getStatisticCountForPlugin(plugin);
                 });
     }
 }

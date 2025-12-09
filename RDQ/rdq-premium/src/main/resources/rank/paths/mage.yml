@@ -1,0 +1,97 @@
+# Mage Rank Tree
+# The path of magic and wisdom
+
+id: mage
+displayNameKey: rank_trees.mage.name
+descriptionKey: rank_trees.mage.description
+iconMaterial: BLAZE_ROD
+displayOrder: 3
+enabled: true
+
+ranks:
+  - id: mage_1
+    displayNameKey: rank.mage.apprentice
+    tier: 1
+    weight: 100
+    luckPermsGroup: mage_apprentice
+    prefixKey: rank.mage.apprentice.prefix
+    iconMaterial: STICK
+    enabled: true
+    requirements: []
+
+  - id: mage_2
+    displayNameKey: rank.mage.adept
+    tier: 2
+    weight: 200
+    luckPermsGroup: mage_adept
+    prefixKey: rank.mage.adept.prefix
+    iconMaterial: BLAZE_ROD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 1000
+      - type: ITEM
+        material: ENCHANTED_BOOK
+        amount: 5
+
+  - id: mage_3
+    displayNameKey: rank.mage.wizard
+    tier: 3
+    weight: 300
+    luckPermsGroup: mage_wizard
+    prefixKey: rank.mage.wizard.prefix
+    iconMaterial: END_ROD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 5000
+      - type: ITEM
+        material: ENCHANTED_BOOK
+        amount: 25
+      - type: CURRENCY
+        currency: default
+        amount: 5000
+
+  - id: mage_4
+    displayNameKey: rank.mage.sorcerer
+    tier: 4
+    weight: 400
+    luckPermsGroup: mage_sorcerer
+    prefixKey: rank.mage.sorcerer.prefix
+    iconMaterial: ENDER_EYE
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 25000
+      - type: ITEM
+        material: ENDER_PEARL
+        amount: 64
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: mage_3
+
+  - id: mage_5
+    displayNameKey: rank.mage.archmage
+    tier: 5
+    weight: 500
+    luckPermsGroup: mage_archmage
+    prefixKey: rank.mage.archmage.prefix
+    iconMaterial: NETHER_STAR
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: EXPERIENCE_GAINED
+        amount: 100000
+      - type: ITEM
+        material: NETHER_STAR
+        amount: 1
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: mage_4

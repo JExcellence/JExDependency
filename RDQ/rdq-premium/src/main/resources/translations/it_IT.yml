@@ -1,0 +1,214 @@
+# RDQ Italian Translations
+prefix: "<gold>[RDQ]</gold> "
+
+rdq:
+  error:
+    not_initialized: "<red>RDQ si sta inizializzando. Attendere...</red>"
+    unknown_subcommand: "<red>Sottocomando sconosciuto. Usa /rdq help.</red>"
+    reload_failed: "<red>Ricaricamento fallito: {error}</red>"
+  success:
+    reloaded: "<green>Configurazione RDQ ricaricata!</green>"
+
+error:
+  not_found: "<red>{type} non trovato: {id}</red>"
+  insufficient_funds: "<red>Fondi insufficienti! Richiesto: {required}, Disponibile: {available}</red>"
+  on_cooldown: "<red>In ricarica! {remaining} rimanente.</red>"
+  requirements_not_met: "<red>Requisiti non soddisfatti: {missing}</red>"
+  self_targeting: "<red>Non puoi selezionare te stesso!</red>"
+  already_exists: "<red>{type} esiste già: {id}</red>"
+  expired: "<red>{type} è scaduto: {id}</red>"
+  not_unlocked: "<red>{type} non sbloccato: {id}</red>"
+  permission_denied: "<red>Permesso negato: {permission}</red>"
+  invalid_state: "<red>Stato non valido: {message}</red>"
+  invalid_amount: "<red>Importo non valido! Deve essere tra {min} e {max}.</red>"
+  no_permission: "<red>Non hai il permesso.</red>"
+  player_only: "<red>Questo comando è solo per i giocatori.</red>"
+
+rank:
+  error:
+    unknown_subcommand: "<red>Sottocomando grado sconosciuto.</red>"
+    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
+    grant_failed: "<red>Assegnazione grado fallita.</red>"
+    reload_failed: "<red>Ricaricamento gradi fallito: {error}</red>"
+  success:
+    rank_granted: "<green>Grado {rankName} assegnato a {playerName}!</green>"
+    rank_revoked: "<yellow>Grado {rankName} revocato da {playerName}.</yellow>"
+    reloaded: "<green>Configurazione gradi ricaricata!</green>"
+    rank_unlocked: "<green>Congratulazioni! Hai sbloccato il grado {rankName}!</green>"
+  opening_view: "<gray>Apertura vista gradi...</gray>"
+  no_progress: "<yellow>Non hai ancora iniziato alcun percorso di grado.</yellow>"
+  progress_header: "<yellow>Il Tuo Progresso Grado:</yellow>"
+  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
+  trees_header: "<yellow>Alberi di Grado Disponibili:</yellow>"
+  tree_entry: "<gray>• {id} <dark_gray>({ranks} gradi)</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Uso: /rank admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Comando admin sconosciuto.</red>"
+    grant:
+      usage: "<yellow>Uso: /rank admin grant <giocatore> <grado></yellow>"
+    revoke:
+      usage: "<yellow>Uso: /rank admin revoke <giocatore> <grado></yellow>"
+  help: |
+    <yellow>Comandi Grado:</yellow>
+    <gray>/rank</gray> - Apri menu gradi
+    <gray>/rank view</gray> - Visualizza alberi gradi
+    <gray>/rank progress</gray> - Visualizza progresso
+    <gray>/rank admin</gray> - Comandi admin
+  notification:
+    title: "<gold>Grado Sbloccato!</gold>"
+    subtitle: "<yellow>{rankName}</yellow>"
+    actionbar: "<green>Hai sbloccato {rankName}!</green>"
+
+bounty:
+  error:
+    unknown_subcommand: "<red>Sottocomando taglia sconosciuto.</red>"
+    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
+    self_target: "<red>Non puoi mettere una taglia su te stesso!</red>"
+    invalid_amount: "<red>Importo non valido.</red>"
+    invalid_id: "<red>ID taglia non valido.</red>"
+    create_failed: "<red>Creazione taglia fallita: {error}</red>"
+    cancel_failed: "<red>Annullamento taglia fallito.</red>"
+  success:
+    bounty_created: "<green>Taglia di {amount} piazzata su {targetName}!</green>"
+    bounty_cancelled: "<yellow>Taglia annullata. Fondi rimborsati.</yellow>"
+    bounty_removed: "<green>Taglia rimossa dall'admin.</green>"
+    bounty_claimed: "<green>Hai riscosso una taglia di {amount}!</green>"
+    reloaded: "<green>Configurazione taglie ricaricata!</green>"
+  create:
+    usage: "<yellow>Uso: /bounty create <giocatore> <importo></yellow>"
+  cancel:
+    usage: "<yellow>Uso: /bounty cancel <tagliaId></yellow>"
+  list:
+    empty: "<yellow>Nessuna taglia attiva.</yellow>"
+    header: "<yellow>Taglie Attive ({count}):</yellow>"
+    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(da {placer})</dark_gray></gray>"
+  leaderboard:
+    header: "<yellow>Classifica Cacciatori di Taglie:</yellow>"
+    entry: "<gray>{rank}. <white>{player}</white> - {kills} uccisioni, {earned} guadagnati</gray>"
+  my:
+    header: "<yellow>Le Tue Taglie:</yellow>"
+    placed_header: "<gray>Taglie che hai piazzato:</gray>"
+    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
+    targeted_header: "<gray>Taglie su di te:</gray>"
+    targeted_entry: "<gray>• {amount} <dark_gray>(da {placer})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Uso: /bounty admin <remove|reload></yellow>"
+    unknown: "<red>Comando admin sconosciuto.</red>"
+    remove:
+      usage: "<yellow>Uso: /bounty admin remove <tagliaId></yellow>"
+  help: |
+    <yellow>Comandi Taglia:</yellow>
+    <gray>/bounty</gray> - Lista taglie attive
+    <gray>/bounty create <giocatore> <importo></gray> - Crea taglia
+    <gray>/bounty cancel <id></gray> - Annulla taglia
+    <gray>/bounty leaderboard</gray> - Classifica
+    <gray>/bounty my</gray> - Le tue taglie
+  announcement:
+    created: "<yellow>{placer} ha piazzato una taglia di {amount} su {target}!</yellow>"
+    claimed: "<green>{hunter} ha riscosso la taglia su {target} del valore di {amount}!</green>"
+    expired: "<gray>La taglia su {target} è scaduta.</gray>"
+
+perk:
+  error:
+    unknown_subcommand: "<red>Sottocomando perk sconosciuto.</red>"
+    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
+    perk_not_found: "<red>Perk non trovato: {perkId}</red>"
+    perk_on_cooldown: "<red>Questo perk è in ricarica! {remaining} rimanente.</red>"
+    perk_not_active: "<red>Questo perk non è attivo.</red>"
+    activate_failed: "<red>Attivazione perk fallita: {error}</red>"
+    grant_failed: "<red>Assegnazione perk fallita.</red>"
+    reload_failed: "<red>Ricaricamento perk fallito: {error}</red>"
+  success:
+    perk_activated: "<green>Perk {perkName} attivato!</green>"
+    perk_deactivated: "<yellow>Perk {perkName} disattivato.</yellow>"
+    perk_granted: "<green>Perk {perkName} assegnato a {playerName}!</green>"
+    perk_revoked: "<yellow>Perk {perkName} revocato da {playerName}.</yellow>"
+    perk_unlocked: "<green>Hai sbloccato il perk {perkName}!</green>"
+    reloaded: "<green>Configurazione perk ricaricata!</green>"
+  activate:
+    usage: "<yellow>Uso: /perk activate <perkId></yellow>"
+  deactivate:
+    usage: "<yellow>Uso: /perk deactivate <perkId></yellow>"
+  info:
+    usage: "<yellow>Uso: /perk info <perkId></yellow>"
+    header: "<yellow>Info Perk: {id}</yellow>"
+    details: "<gray>Categoria: {category} | Ricarica: {cooldown}s | Durata: {duration}s</gray>"
+  list:
+    empty: "<yellow>Nessun perk disponibile.</yellow>"
+    header: "<yellow>Perk Disponibili ({count}):</yellow>"
+    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
+  admin:
+    usage: "<yellow>Uso: /perk admin <grant|revoke|reload></yellow>"
+    unknown: "<red>Comando admin sconosciuto.</red>"
+    grant:
+      usage: "<yellow>Uso: /perk admin grant <giocatore> <perk></yellow>"
+    revoke:
+      usage: "<yellow>Uso: /perk admin revoke <giocatore> <perk></yellow>"
+  help: |
+    <yellow>Comandi Perk:</yellow>
+    <gray>/perk</gray> - Lista perk disponibili
+    <gray>/perk activate <perk></gray> - Attiva perk
+    <gray>/perk deactivate <perk></gray> - Disattiva perk
+    <gray>/perk info <perk></gray> - Dettagli perk
+
+gui:
+  common:
+    back: "<yellow>← Indietro</yellow>"
+    close: "<red>Chiudi</red>"
+    next_page: "<yellow>Pagina Successiva →</yellow>"
+    previous_page: "<yellow>← Pagina Precedente</yellow>"
+    page_info: "<gray>Pagina {current}/{total}</gray>"
+    loading: "<gray>Caricamento...</gray>"
+    confirm: "<green>Conferma</green>"
+    cancel: "<red>Annulla</red>"
+
+perk_names:
+  speed: "Velocità"
+  strength: "Forza"
+  resistance: "Resistenza"
+  regeneration: "Rigenerazione"
+  night_vision: "Visione Notturna"
+  fire_resistance: "Resistenza al Fuoco"
+  water_breathing: "Respirazione Subacquea"
+  jump_boost: "Salto Potenziato"
+  haste: "Fretta"
+  luck: "Fortuna"
+  fly: "Volo"
+  double_experience: "Doppia XP"
+  prevent_death: "Prevenzione Morte"
+  treasure_hunter: "Cacciatore di Tesori"
+  vampire: "Vampiro"
+
+rank_trees:
+  warrior:
+    name: "Guerriero"
+    description: "Il percorso della forza e del combattimento."
+  cleric:
+    name: "Chierico"
+    description: "Il percorso della guarigione e del supporto."
+  mage:
+    name: "Mago"
+    description: "Il percorso della magia e della saggezza."
+  rogue:
+    name: "Ladro"
+    description: "Il percorso della furtività e dell'agilità."
+  merchant:
+    name: "Mercante"
+    description: "Il percorso del commercio e della ricchezza."
+  ranger:
+    name: "Ranger"
+    description: "Il percorso della natura e del tiro con l'arco."
+
+requirements:
+  statistic: "{amount}x {statistic}"
+  permission: "Permesso: {permission}"
+  rank: "Grado: {rank}"
+  currency: "{amount} {currency}"
+  item: "{amount}x {item}"
+  level: "Livello {level}"
+
+time:
+  seconds: "{value}s"
+  minutes: "{value}m"
+  hours: "{value}h"
+  days: "{value}g"

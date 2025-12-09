@@ -1,0 +1,97 @@
+# Rogue Rank Tree
+# The path of stealth and agility
+
+id: rogue
+displayNameKey: rank_trees.rogue.name
+descriptionKey: rank_trees.rogue.description
+iconMaterial: LEATHER_BOOTS
+displayOrder: 4
+enabled: true
+
+ranks:
+  - id: rogue_1
+    displayNameKey: rank.rogue.pickpocket
+    tier: 1
+    weight: 100
+    luckPermsGroup: rogue_pickpocket
+    prefixKey: rank.rogue.pickpocket.prefix
+    iconMaterial: LEATHER_BOOTS
+    enabled: true
+    requirements: []
+
+  - id: rogue_2
+    displayNameKey: rank.rogue.thief
+    tier: 2
+    weight: 200
+    luckPermsGroup: rogue_thief
+    prefixKey: rank.rogue.thief.prefix
+    iconMaterial: CHAINMAIL_BOOTS
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: SPRINT_ONE_CM
+        amount: 100000
+      - type: STATISTIC
+        statisticType: SNEAK_TIME
+        amount: 6000
+
+  - id: rogue_3
+    displayNameKey: rank.rogue.assassin
+    tier: 3
+    weight: 300
+    luckPermsGroup: rogue_assassin
+    prefixKey: rank.rogue.assassin.prefix
+    iconMaterial: IRON_BOOTS
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: SPRINT_ONE_CM
+        amount: 500000
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 25
+      - type: CURRENCY
+        currency: default
+        amount: 5000
+
+  - id: rogue_4
+    displayNameKey: rank.rogue.shadow
+    tier: 4
+    weight: 400
+    luckPermsGroup: rogue_shadow
+    prefixKey: rank.rogue.shadow.prefix
+    iconMaterial: DIAMOND_BOOTS
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: SPRINT_ONE_CM
+        amount: 2000000
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 100
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: rogue_3
+
+  - id: rogue_5
+    displayNameKey: rank.rogue.phantom
+    tier: 5
+    weight: 500
+    luckPermsGroup: rogue_phantom
+    prefixKey: rank.rogue.phantom.prefix
+    iconMaterial: NETHERITE_BOOTS
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: SPRINT_ONE_CM
+        amount: 10000000
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 300
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: rogue_4

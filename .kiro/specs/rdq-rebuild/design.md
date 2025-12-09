@@ -671,6 +671,6 @@ public class AsyncExecutor {
 5. **CompletableFuture** - All service methods return futures for async operations
 6. **Caffeine caching** - High-performance caching with automatic eviction
 7. **Virtual threads** - Java 21 virtual threads with fallback to thread pools
-8. **No migration** - Fresh start, old RDQ renamed to RDQ2 for reference only
+8. **No migration** - Fresh start, old RDQ renamed to rdq for reference only
 9. **JExHibernate** - Leveraging existing database abstraction
 10. **Minimal abstractions** - No unnecessary factories, builders, or managers

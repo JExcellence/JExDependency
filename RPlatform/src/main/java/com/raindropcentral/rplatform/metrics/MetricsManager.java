@@ -4,6 +4,8 @@ import com.raindropcentral.rplatform.api.PlatformType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Level;
+
 /**
  * Discovers and initializes the relocated bStats metrics entry point via reflection so that the
  * runtime can opt-in to metrics collection without directly depending on the shaded implementation.
@@ -57,11 +59,9 @@ public class MetricsManager {
      */
     private void initialize() {
         try {
-            final Class<?> metricsClass = Class.forName("com.raindropcentral.rplatform.metrics.Metrics");
-            metricsClass.getConstructor(JavaPlugin.class, int.class, boolean.class)
-                    .newInstance(plugin, serviceId, platformType == PlatformType.FOLIA);
+            new BStatsMetrics(plugin, serviceId, platformType == PlatformType.FOLIA);
         } catch (final Exception e) {
-            plugin.getLogger().warning("Failed to initialize metrics: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, "Failed to initialize metrics", e);
         }
     }
 }

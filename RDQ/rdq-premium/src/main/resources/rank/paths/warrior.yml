@@ -1,0 +1,97 @@
+# Warrior Rank Tree
+# The path of strength and combat
+
+id: warrior
+displayNameKey: rank_trees.warrior.name
+descriptionKey: rank_trees.warrior.description
+iconMaterial: IRON_SWORD
+displayOrder: 1
+enabled: true
+
+ranks:
+  - id: warrior_1
+    displayNameKey: rank.warrior.recruit
+    tier: 1
+    weight: 100
+    luckPermsGroup: warrior_recruit
+    prefixKey: rank.warrior.recruit.prefix
+    iconMaterial: WOODEN_SWORD
+    enabled: true
+    requirements: []
+
+  - id: warrior_2
+    displayNameKey: rank.warrior.soldier
+    tier: 2
+    weight: 200
+    luckPermsGroup: warrior_soldier
+    prefixKey: rank.warrior.soldier.prefix
+    iconMaterial: STONE_SWORD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 10
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 100
+
+  - id: warrior_3
+    displayNameKey: rank.warrior.veteran
+    tier: 3
+    weight: 300
+    luckPermsGroup: warrior_veteran
+    prefixKey: rank.warrior.veteran.prefix
+    iconMaterial: IRON_SWORD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 50
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 500
+      - type: CURRENCY
+        currency: default
+        amount: 5000
+
+  - id: warrior_4
+    displayNameKey: rank.warrior.champion
+    tier: 4
+    weight: 400
+    luckPermsGroup: warrior_champion
+    prefixKey: rank.warrior.champion.prefix
+    iconMaterial: DIAMOND_SWORD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 150
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 1500
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: warrior_3
+
+  - id: warrior_5
+    displayNameKey: rank.warrior.warlord
+    tier: 5
+    weight: 500
+    luckPermsGroup: warrior_warlord
+    prefixKey: rank.warrior.warlord.prefix
+    iconMaterial: NETHERITE_SWORD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: PLAYER_KILLS
+        amount: 500
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 5000
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: warrior_4

@@ -1,0 +1,97 @@
+# Ranger Rank Tree
+# The path of nature and archery
+
+id: ranger
+displayNameKey: rank_trees.ranger.name
+descriptionKey: rank_trees.ranger.description
+iconMaterial: BOW
+displayOrder: 6
+enabled: true
+
+ranks:
+  - id: ranger_1
+    displayNameKey: rank.ranger.scout
+    tier: 1
+    weight: 100
+    luckPermsGroup: ranger_scout
+    prefixKey: rank.ranger.scout.prefix
+    iconMaterial: BOW
+    enabled: true
+    requirements: []
+
+  - id: ranger_2
+    displayNameKey: rank.ranger.hunter
+    tier: 2
+    weight: 200
+    luckPermsGroup: ranger_hunter
+    prefixKey: rank.ranger.hunter.prefix
+    iconMaterial: CROSSBOW
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: ANIMALS_BRED
+        amount: 50
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 100
+
+  - id: ranger_3
+    displayNameKey: rank.ranger.tracker
+    tier: 3
+    weight: 300
+    luckPermsGroup: ranger_tracker
+    prefixKey: rank.ranger.tracker.prefix
+    iconMaterial: SPECTRAL_ARROW
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: ANIMALS_BRED
+        amount: 200
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 500
+      - type: CURRENCY
+        currency: default
+        amount: 5000
+
+  - id: ranger_4
+    displayNameKey: rank.ranger.warden
+    tier: 4
+    weight: 400
+    luckPermsGroup: ranger_warden
+    prefixKey: rank.ranger.warden.prefix
+    iconMaterial: TRIDENT
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: ANIMALS_BRED
+        amount: 500
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 2000
+      - type: CURRENCY
+        currency: default
+        amount: 25000
+      - type: RANK
+        requiredRankId: ranger_3
+
+  - id: ranger_5
+    displayNameKey: rank.ranger.beastmaster
+    tier: 5
+    weight: 500
+    luckPermsGroup: ranger_beastmaster
+    prefixKey: rank.ranger.beastmaster.prefix
+    iconMaterial: DRAGON_HEAD
+    enabled: true
+    requirements:
+      - type: STATISTIC
+        statisticType: ANIMALS_BRED
+        amount: 1000
+      - type: STATISTIC
+        statisticType: MOB_KILLS
+        amount: 10000
+      - type: CURRENCY
+        currency: default
+        amount: 100000
+      - type: RANK
+        requiredRankId: ranger_4

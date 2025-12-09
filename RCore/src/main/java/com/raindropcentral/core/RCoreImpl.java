@@ -1,23 +1,28 @@
 package com.raindropcentral.core;
 
 import com.raindropcentral.commands.CommandFactory;
-import com.raindropcentral.core.api.RCoreBackend;
-import com.raindropcentral.core.api.bukkit.RCoreBukkitServiceRegistrar;
+import com.raindropcentral.core.api.RCoreAdapter;
+import com.raindropcentral.core.database.entity.central.RCentralServer;
+import com.raindropcentral.core.database.entity.inventory.RPlayerInventory;
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import com.raindropcentral.core.database.repository.RPlayerRepository;
-import com.raindropcentral.core.database.repository.RPlayerStatisticRepository;
-import com.raindropcentral.core.database.repository.RStatisticRepository;
+import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
+import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
+import com.raindropcentral.core.database.repository.*;
 import com.raindropcentral.core.service.RCoreService;
 import com.raindropcentral.core.service.central.RCentralService;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
+import de.jexcellence.hibernate.repository.InjectRepository;
+import de.jexcellence.hibernate.repository.RepositoryManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,14 +48,11 @@ import java.util.logging.Logger;
  *     to ensure repository operations complete before the JVM stops.</li>
  * </ul>
  *
- * <p>All public operations guard against null dependencies and rely on the dedicated executor
- * returned by {@link #getExecutor()} to keep persistence calls off the main server thread.</p>
- *
  * @author JExcellence
  * @since 1.0.0
  * @version 2.0.0
  */
-public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBackend {
+public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
     /**
      * Logger emitting lifecycle and repository wiring information through the shared
@@ -78,21 +80,6 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
     private volatile CompletableFuture<Void> enableFuture;
 
     /**
-     * Repository responsible for player statistic persistence once the platform initializes JPA.
-     */
-    private RPlayerStatisticRepository rPlayerStatisticRepository;
-
-    /**
-     * Repository exposing stat template operations for asynchronous callers.
-     */
-    private RStatisticRepository rStatisticRepository;
-
-    /**
-     * Repository used by adapter-backed service calls for player CRUD operations.
-     */
-    private RPlayerRepository rPlayerRepository;
-
-    /**
      * Adapter-backed handle published to Bukkit's service registry to expose RCore APIs.
      */
     private RCoreService rCoreService;
@@ -105,7 +92,12 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
     /**
      * RaindropCentral connection service for managing platform integration.
      */
-    private com.raindropcentral.core.service.central.RCentralService rCentralService;
+    private RCentralService rCentralService;
+
+    private RCoreAdapter rCoreAdapter;
+
+    @InjectRepository
+    private RPlayerRepository playerRepository;
 
     /**
      * Creates the delegate and provisions the executor used across asynchronous operations.
@@ -130,8 +122,6 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
         CentralLogger.initialize(this.getPlugin());
         this.platform = new RPlatform(this.getPlugin());
 
-        registerService();
-
         LOGGER.info("RCore loaded successfully");
     }
 
@@ -153,8 +143,11 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
 
         this.enableFuture = this.platform.initialize()
                 .thenCompose(v -> runSync(() -> {
-                    initializeComponents();
+                    rCoreAdapter = new RCoreAdapter(this);
+                    registerServices();
+
                     initializeRepositories();
+                    initializeComponents();
                     initializePlugins();
                 }))
                 .thenCompose(v -> runSync(() -> {
@@ -181,124 +174,8 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
      */
     @Override
     public void onDisable() {
-        unregisterService();
         shutdownExecutor();
         LOGGER.info("RCore disabled successfully");
-    }
-
-
-    /**
-     * Exposes the executor that backs all asynchronous persistence work.
-     *
-     * <p>The returned executor is created during construction and shut down inside
-     * {@link #onDisable()} so callers can safely reuse it without leaking threads.</p>
-     *
-     * @return executor dedicated to repository and background operations
-     */
-    @Override
-    public @NotNull ExecutorService getExecutor() {
-        return this.executor;
-    }
-
-    /**
-     * Finds a player by unique identifier while enforcing null guards and repository readiness.
-     *
-     * <p>The method validates the supplied identifier, ensures repositories finished wiring through
-     * {@link #ensureReposReady()}, and delegates execution to the asynchronous executor provided by
-     * {@link #getExecutor()}.</p>
-     *
-     * @param uniqueId player UUID to lookup
-     * @return future completing with the matching player when present
-     */
-    @Override
-    public @NotNull CompletableFuture<java.util.Optional<RPlayer>> findByUuidAsync(final @NotNull UUID uniqueId) {
-        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
-        ensureReposReady();
-        return this.rPlayerRepository.findByUuidAsync(uniqueId);
-    }
-
-    /**
-     * Retrieves a player snapshot by name once repository wiring succeeds.
-     *
-     * <p>Null player names are rejected immediately and a readiness check guards against early
-     * invocation before {@link #initializeRepositories()} completes. The lookup then executes on the
-     * asynchronous executor returned by {@link #getExecutor()}.</p>
-     *
-     * @param playerName profile name to search for
-     * @return future yielding the player when the repository contains a match
-     */
-    @Override
-    public @NotNull CompletableFuture<java.util.Optional<RPlayer>> findByNameAsync(final @NotNull String playerName) {
-        Objects.requireNonNull(playerName, "playerName cannot be null");
-        ensureReposReady();
-        return this.rPlayerRepository.findByNameAsync(playerName);
-    }
-
-    /**
-     * Persists a new player aggregate while honoring lifecycle and executor guarantees.
-     *
-     * <p>The supplied aggregate must be non-null. Repository readiness is enforced via
-     * {@link #ensureReposReady()} before delegating to the asynchronous repository which uses the
-     * executor from {@link #getExecutor()}.</p>
-     *
-     * @param player aggregate to store in the persistence layer
-     * @return future resolving to the stored aggregate
-     */
-    @Override
-    public @NotNull CompletableFuture<RPlayer> createAsync(final @NotNull RPlayer player) {
-        Objects.requireNonNull(player, "player cannot be null");
-        ensureReposReady();
-        return this.rPlayerRepository.createAsync(player);
-    }
-
-    /**
-     * Updates an existing player aggregate once the repositories finish initialization.
-     *
-     * <p>The method rejects null aggregates, checks repository readiness, and performs the update on
-     * the dedicated executor returned by {@link #getExecutor()}.</p>
-     *
-     * @param player aggregate to update in persistent storage
-     * @return future containing the updated aggregate
-     */
-    @Override
-    public @NotNull CompletableFuture<RPlayer> updateAsync(final @NotNull RPlayer player) {
-        Objects.requireNonNull(player, "player cannot be null");
-        ensureReposReady();
-        return this.rPlayerRepository.updateAsync(player);
-    }
-
-
-    /**
-     * Provides access to the player statistic repository once initialization completes.
-     *
-     * @return the initialized repository
-     * @throws IllegalStateException when repositories are not yet wired
-     */
-    public @NotNull RPlayerStatisticRepository getRPlayerStatisticRepository() {
-        ensureReposReady();
-        return this.rPlayerStatisticRepository;
-    }
-
-    /**
-     * Provides access to the statistic template repository after repository wiring succeeds.
-     *
-     * @return the initialized repository
-     * @throws IllegalStateException when repositories are not yet wired
-     */
-    public @NotNull RStatisticRepository getRStatisticRepository() {
-        ensureReposReady();
-        return this.rStatisticRepository;
-    }
-
-    /**
-     * Provides access to the player repository after repository wiring succeeds.
-     *
-     * @return the initialized repository
-     * @throws IllegalStateException when repositories are not yet wired
-     */
-    public @NotNull RPlayerRepository getRPlayerRepository() {
-        ensureReposReady();
-        return this.rPlayerRepository;
     }
 
     /**
@@ -330,38 +207,6 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
     }
 
     /**
-     * Registers the {@link RCoreService} provider with Bukkit during {@link #onLoad()} so downstream
-     * plugins can access the adapter-backed API throughout the server lifecycle.
-     *
-     * <p>Registration occurs synchronously on the main thread and uses a normal priority. A missing
-     * service instance indicates a programming error and results in an {@link IllegalStateException}.</p>
-     */
-    private void registerService() {
-        this.rCoreService = RCoreBukkitServiceRegistrar.register(
-                this.getPlugin(),
-                this,
-                ServicePriority.Normal
-        );
-        LOGGER.info("Registered RCoreService provider with priority NORMAL");
-    }
-
-    /**
-     * Removes the service provider from Bukkit's registry when {@link #onDisable()} executes.
-     *
-     * <p>If the adapter never initialized the method falls back to unregistering every service owned
-     * by this plugin to guarantee a clean shutdown state.</p>
-     */
-    private void unregisterService() {
-        if (this.rCoreService != null) {
-            RCoreBukkitServiceRegistrar.unregister(this.getPlugin());
-            LOGGER.info("Unregistered RCoreService provider");
-            this.rCoreService = null;
-        } else {
-            Bukkit.getServer().getServicesManager().unregisterAll(this.getPlugin());
-        }
-    }
-
-    /**
      * Attempts a graceful executor shutdown from {@link #onDisable()} before interrupting outstanding
      * tasks.
      *
@@ -381,6 +226,18 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
                 Thread.currentThread().interrupt();
                 LOGGER.severe("Executor shutdown interrupted");
             }
+        }
+    }
+
+    private void registerServices() {
+        if (rCoreAdapter != null) {
+            Bukkit.getServer().getServicesManager().register(
+                    RCoreAdapter.class,
+                    rCoreAdapter,
+                    getPlugin(),
+                    ServicePriority.Normal
+            );
+            LOGGER.info("Registered CurrencyAdapter service");
         }
     }
 
@@ -411,21 +268,30 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
     /**
      * Lazily wires repositories once the platform exposes an {@link EntityManagerFactory}.
      *
-     * <p>If JPA failed to initialize the method logs a warning and leaves repositories unset so
-     * subsequent calls trigger {@link IllegalStateException} through {@link #ensureReposReady()}.</p>
+     * <p>Uses RepositoryManager to register and inject repositories.</p>
      */
     private void initializeRepositories() {
-        final EntityManagerFactory emf = this.platform.getEntityManagerFactory();
+        final var emf = this.platform.getEntityManagerFactory();
 
         if (emf == null) {
             CentralLogger.getLogger(RCoreImpl.class).warning("EntityManagerFactory not initialized");
             return;
         }
 
-        this.rPlayerRepository = new RPlayerRepository(this.executor, emf);
-        this.rPlayerStatisticRepository = new RPlayerStatisticRepository(this.executor, emf);
-        this.rStatisticRepository = new RStatisticRepository(this.executor, emf);
+        RepositoryManager.initialize(this.executor, emf);
+        var repositoryManager = RepositoryManager.getInstance();
+
+        // Register all repositories
+        repositoryManager.register(RPlayerRepository.class, RPlayer.class, RPlayer::getUniqueId);
+        repositoryManager.register(RPlayerStatisticRepository.class, RPlayerStatistic.class, RPlayerStatistic::getId);
+        repositoryManager.register(RStatisticRepository.class, RAbstractStatistic.class, RAbstractStatistic::getId);
+        repositoryManager.register(RPlayerInventoryRepository.class, RPlayerInventory.class, RPlayerInventory::getId);
+        repositoryManager.register(RCentralServerRepository.class, RCentralServer.class, RCentralServer::getId);
+
+        repositoryManager.injectInto(this);
     }
+    
+
 
     /**
      * Records the presence of optional companion plugins for diagnostics.
@@ -459,17 +325,6 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
      */
     private boolean isPluginEnabled(final @NotNull String pluginName) {
         return Bukkit.getServer().getPluginManager().isPluginEnabled(pluginName);
-    }
-
-    /**
-     * Ensures repositories are initialized before servicing asynchronous requests.
-     *
-     * @throws IllegalStateException when repository wiring has not completed
-     */
-    private void ensureReposReady() {
-        if (this.rPlayerRepository == null) {
-            throw new IllegalStateException("Repositories are not initialized yet");
-        }
     }
 
     /**
@@ -519,4 +374,28 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> implements RCoreBac
         Adventure Components: Enabled
         ===============================================================================================
         """;
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public CompletableFuture<Void> getEnableFuture() {
+        return enableFuture;
+    }
+
+    public RCoreService getrCoreService() {
+        return rCoreService;
+    }
+
+    public RCentralService getrCentralService() {
+        return rCentralService;
+    }
+
+    public RCoreAdapter getrCoreAdapter() {
+        return rCoreAdapter;
+    }
+
+    public RPlayerRepository getPlayerRepository() {
+        return playerRepository;
+    }
 }

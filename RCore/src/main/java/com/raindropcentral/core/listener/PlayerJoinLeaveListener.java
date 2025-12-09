@@ -2,6 +2,7 @@ package com.raindropcentral.core.listener;
 
 import com.raindropcentral.core.RCore;
 import com.raindropcentral.core.database.entity.player.RPlayer;
+import com.raindropcentral.core.database.repository.RPlayerRepository;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,15 +29,18 @@ public class PlayerJoinLeaveListener implements Listener {
 
     private static final Logger LOGGER = CentralLogger.getLogger(PlayerJoinLeaveListener.class.getName());
 
-    private final RCore rCore;
+    private final RCore core;
+
+    private RPlayerRepository playerRepository;
 
     /**
      * Constructs a new PlayerJoinLeaveListener.
      *
      * @throws NullPointerException if context is null
      */
-    public PlayerJoinLeaveListener(final @NotNull RCore rCore) {
-        this.rCore = rCore;
+    public PlayerJoinLeaveListener(final @NotNull RCore core) {
+        this.core = core;
+        this.playerRepository = this.core.getImpl().getPlayerRepository();
     }
 
     /**
@@ -52,7 +56,7 @@ public class PlayerJoinLeaveListener implements Listener {
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         var player = event.getPlayer();
 
-        rCore.getImpl().getRPlayerRepository().findByUuidAsync(player.getUniqueId())
+        playerRepository.findByUuidAsync(player.getUniqueId())
                 .thenCompose(existingPlayer -> {
                     var rPlayer = existingPlayer.orElseGet(() -> {
                         LOGGER.fine("Creating new RPlayer for %s (%s)"
@@ -61,7 +65,7 @@ public class PlayerJoinLeaveListener implements Listener {
                     });
 
                     rPlayer.updatePlayerName(player.getName());
-                    return rCore.getImpl().getRPlayerRepository().createOrUpdateAsync(rPlayer);
+                    return playerRepository.createOrUpdateAsync(rPlayer);
                 })
                 .thenAccept(savedPlayer ->
                         LOGGER.fine("Saved player %s to local database".formatted(player.getName()))
@@ -84,11 +88,11 @@ public class PlayerJoinLeaveListener implements Listener {
     public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
         var player = event.getPlayer();
 
-        rCore.getImpl().getRPlayerRepository().findByUuidAsync(player.getUniqueId())
+        playerRepository.findByUuidAsync(player.getUniqueId())
                 .thenCompose(rPlayer -> rPlayer
                         .map(p -> {
                             p.updateLastSeen();
-                            return rCore.getImpl().getRPlayerRepository().createOrUpdateAsync(p);
+                            return playerRepository.createOrUpdateAsync(p);
                         })
                         .orElseGet(() -> {
                             LOGGER.fine("Player %s not found in local database, skipping last seen update"

@@ -1,8 +1,10 @@
 package com.raindropcentral.core.api;
 
+import com.raindropcentral.core.RCoreImpl;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
+import com.raindropcentral.core.database.repository.RPlayerRepository;
 import com.raindropcentral.core.service.RCoreService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.OfflinePlayer;
@@ -16,9 +18,6 @@ import java.util.concurrent.Executor;
 import java.util.logging.Logger;
 
 /**
- * Thread-safe façade that exposes {@link RCoreService} through the stable
- * {@code rcore-common} surface and delegates persistence to the active
- * {@link RCoreBackend}.
  *
  * <p>The adapter ensures all asynchronous operations leverage the backend's
  * {@link Executor Executor} so Bukkit consumers observe
@@ -36,29 +35,22 @@ public class RCoreAdapter implements RCoreService {
      */
     private static final Logger LOGGER = CentralLogger.getLogger(RCoreAdapter.class);
 
-    /**
-     * Concrete backend supplied by the runtime implementation (Free or Premium)
-     * that performs datastore access and executor provisioning.
-     */
-    private final RCoreBackend backend;
-    /**
-     * Executor sourced from the backend and reused to schedule adapter composed
-     * stages, guaranteeing thread affinity with persistence operations.
-     */
-    private final Executor executor;
+    private RPlayerRepository playerRepository;
+    private RCoreImpl impl;
 
     /**
      * Creates a new adapter that proxies calls to the supplied backend while
      * caching the backend executor for all asynchronous chains initiated by the
      * adapter.
      *
-     * @param backend initialized backend providing persistence and executors
+     * @param impl initialized backend providing persistence and executors
      * @throws NullPointerException if backend is {@code null}
      */
-    public RCoreAdapter(final @NotNull RCoreBackend backend) {
-        this.backend = Objects.requireNonNull(backend, "backend cannot be null");
-        this.executor = backend.getExecutor();
-        LOGGER.info("RCoreAdapter initialized successfully");
+    public RCoreAdapter(
+            final @NotNull RCoreImpl impl
+    ) {
+        this.impl = impl;
+        this.playerRepository = impl.getPlayerRepository();
     }
 
     /**
@@ -73,14 +65,7 @@ public class RCoreAdapter implements RCoreService {
      */
     @Override
     public CompletableFuture<Optional<RPlayer>> findPlayerAsync(final @NotNull UUID uniqueId) {
-        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
-        return backend.findByUuidAsync(uniqueId)
-                .whenComplete((res, ex) -> {
-                    if (ex != null) {
-                        LOGGER.warning("Failed to retrieve player with UUID: %s - %s"
-                                .formatted(uniqueId, ex.getMessage()));
-                    }
-                });
+        return playerRepository.findByUuidAsync(uniqueId);
     }
 
     /**
@@ -94,7 +79,6 @@ public class RCoreAdapter implements RCoreService {
      */
     @Override
     public CompletableFuture<Optional<RPlayer>> findPlayerAsync(final @NotNull OfflinePlayer offlinePlayer) {
-        Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
         return findPlayerAsync(offlinePlayer.getUniqueId());
     }
 
@@ -110,47 +94,17 @@ public class RCoreAdapter implements RCoreService {
      */
     @Override
     public CompletableFuture<Optional<RPlayer>> findPlayerByNameAsync(final @NotNull String playerName) {
-        Objects.requireNonNull(playerName, "playerName cannot be null");
-        return backend.findByNameAsync(playerName)
-                .whenComplete((res, ex) -> {
-                    if (ex != null) {
-                        LOGGER.warning("Failed to retrieve player with name: %s - %s"
-                                .formatted(playerName, ex.getMessage()));
-                    }
-                });
+        return playerRepository.findByNameAsync(playerName);
     }
 
-    /**
-     * Resolves player existence asynchronously by chaining
-     * {@link #findPlayerAsync(UUID)} on the backend executor. Any failures from
-     * the lookup stage will propagate to the returned future unchanged, and no
-     * additional logging occurs beyond the lookup warning emitted by
-     * {@link #findPlayerAsync(UUID)}.
-     *
-     * @param uniqueId player identifier to check
-     * @return future reporting {@code true} when the player exists
-     * @throws NullPointerException if {@code uniqueId} is {@code null}
-     */
     @Override
-    public CompletableFuture<Boolean> playerExistsAsync(final @NotNull UUID uniqueId) {
-        Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
-        return findPlayerAsync(uniqueId)
-                .thenApplyAsync(Optional::isPresent, executor);
+    public CompletableFuture<Boolean> playerExistsAsync(@NotNull UUID uniqueId) {
+        return null;
     }
 
-    /**
-     * Convenience existence check for {@link OfflinePlayer} instances. The
-     * returned future inherits the logging and exception propagation semantics
-     * of {@link #playerExistsAsync(UUID)}.
-     *
-     * @param offlinePlayer player reference whose UUID will be used
-     * @return future reporting {@code true} when the player exists
-     * @throws NullPointerException if {@code offlinePlayer} is {@code null}
-     */
     @Override
-    public CompletableFuture<Boolean> playerExistsAsync(final @NotNull OfflinePlayer offlinePlayer) {
-        Objects.requireNonNull(offlinePlayer, "offlinePlayer cannot be null");
-        return playerExistsAsync(offlinePlayer.getUniqueId());
+    public CompletableFuture<Boolean> playerExistsAsync(@NotNull OfflinePlayer offlinePlayer) {
+        return null;
     }
 
     /**
@@ -186,9 +140,9 @@ public class RCoreAdapter implements RCoreService {
                     final RPlayerStatistic statistics = new RPlayerStatistic(newPlayer);
                     newPlayer.setPlayerStatistic(statistics);
 
-                    return backend.createAsync(newPlayer)
+                    return playerRepository.createAsync(newPlayer)
                             .thenApply(Optional::of);
-                }, executor)
+                })
                 .whenComplete((res, ex) -> {
                     if (ex != null) {
                         LOGGER.severe("Failed to create player: %s - %s"
@@ -210,7 +164,7 @@ public class RCoreAdapter implements RCoreService {
     public CompletableFuture<Optional<RPlayer>> updatePlayerAsync(final @NotNull RPlayer player) {
         Objects.requireNonNull(player, "player cannot be null");
 
-        return backend.updateAsync(player)
+        return playerRepository.updateAsync(player)
                 .thenApply(Optional::of)
                 .whenComplete((res, ex) -> {
                     if (ex != null) {
@@ -232,7 +186,7 @@ public class RCoreAdapter implements RCoreService {
     @Override
     public CompletableFuture<Optional<RPlayerStatistic>> findPlayerStatisticsAsync(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
-        return findPlayerAsync(uniqueId).thenApplyAsync(playerOpt -> playerOpt.map(RPlayer::getPlayerStatistic), executor);
+        return findPlayerAsync(uniqueId).thenApplyAsync(playerOpt -> playerOpt.map(RPlayer::getPlayerStatistic));
     }
 
     /**
@@ -276,7 +230,7 @@ public class RCoreAdapter implements RCoreService {
 
         return findPlayerStatisticsAsync(uniqueId)
                 .thenApplyAsync(statsOpt -> statsOpt
-                        .flatMap(stats -> stats.getStatisticValue(identifier, plugin)), executor);
+                        .flatMap(stats -> stats.getStatisticValue(identifier, plugin)));
     }
 
     /**
@@ -327,7 +281,7 @@ public class RCoreAdapter implements RCoreService {
         return findPlayerStatisticsAsync(uniqueId)
                 .thenApplyAsync(statsOpt -> statsOpt
                         .map(stats -> stats.hasStatistic(identifier, plugin))
-                        .orElse(false), executor);
+                        .orElse(false));
     }
 
     /**
@@ -389,8 +343,8 @@ public class RCoreAdapter implements RCoreService {
                         return CompletableFuture.completedFuture(false);
                     }
 
-                    return backend.updateAsync(player).thenApply(p -> true);
-                }, executor)
+                    return playerRepository.updateAsync(player).thenApply(p -> true);
+                })
                 .whenComplete((res, ex) -> {
                     if (ex != null) {
                         LOGGER.severe("Failed to persist statistic removal for player: %s - %s"
@@ -462,8 +416,8 @@ public class RCoreAdapter implements RCoreService {
 
                     stats.addOrReplaceStatistic(statistic);
 
-                    return backend.updateAsync(player).thenApply(p -> true);
-                }, executor)
+                    return playerRepository.updateAsync(player).thenApply(p -> true);
+                })
                 .whenComplete((res, ex) -> {
                     if (ex != null) {
                         LOGGER.severe("Failed to persist addOrReplaceStatistic for player: %s - %s"
@@ -515,7 +469,7 @@ public class RCoreAdapter implements RCoreService {
         return findPlayerStatisticsAsync(uniqueId)
                 .thenApplyAsync(statsOpt -> statsOpt
                         .map(stats -> stats.getStatisticCountForPlugin(plugin))
-                        .orElse(0L), executor);
+                        .orElse(0L));
     }
 
     /**

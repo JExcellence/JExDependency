@@ -15,6 +15,10 @@ tasks.processResources {
 }
 
 dependencies {
+    // Lombok
+    compileOnly("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    
     // Server API
     compileOnly(libs.paper.api)
 
@@ -35,6 +39,9 @@ dependencies {
     // DB & platform (compileOnly - provided by JExHibernate)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
+    compileOnly(libs.jehibernate)
+
+    compileOnly("com.raindropcentral.core:rcore:2.0.0")
 
     // Caching
     compileOnly(libs.caffeine)
@@ -50,8 +57,11 @@ dependencies {
     compileOnly(libs.xseries)
 
     // Internal libraries (to be shaded by variants)
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
-    implementation(libs.bundles.jeconfig) { isTransitive = false }
+    compileOnly(libs.bundles.jexcellence) {
+        exclude(group = "de.jexcellence.hibernate")
+        isTransitive = false
+    }
+    compileOnly(libs.bundles.jeconfig) { isTransitive = false }
 
     // Inventory framework
     compileOnly(libs.bundles.inventory)

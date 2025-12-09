@@ -443,7 +443,7 @@ This implementation plan breaks down the bounty system rebuild into discrete, ma
 
 
     - Define view key, size, and layout
-    - Initialize mutable states (target, rewardItems, rewardCurrencies, insertedItems)
+    - Initialize mutable states (target, rewards, rewardCurrencies, insertedItems)
     - Initialize computed states (targetButton, itemButton, currencyButton, confirmButton)
     - _Requirements: 2.1, 15.1, 15.2, 15.6_
   

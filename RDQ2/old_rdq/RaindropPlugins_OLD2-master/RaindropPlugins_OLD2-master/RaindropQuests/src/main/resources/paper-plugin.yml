@@ -1,9 +1,0 @@
-name: RDQ
-main: com.raindropcentral.rdq.RDQ
-loader: de.jexcellence.dependency.loader.RPluginLoader
-version: 6.0.0
-api-version: "1.19"
-description: RDQ
-authors: [ ItsRainingHP, JExcellence ]
-website: https://www.raindropcentral.com
-depend: [ RCore, LuckPerms ]

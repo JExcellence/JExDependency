@@ -1,0 +1,23 @@
+# Speed Perk Configuration
+id: speed
+displayNameKey: perk_names.speed
+descriptionKey: perk_descriptions.speed
+category: movement
+iconMaterial: SUGAR
+enabled: true
+
+type: TOGGLEABLE
+cooldownSeconds: 300
+durationSeconds: 60
+
+effect:
+  type: POTION_EFFECT
+  potionType: SPEED
+  amplifier: 1
+
+requirements:
+  - type: RANK
+    rankId: warrior_2
+  - type: CURRENCY
+    currency: default
+    amount: 500
