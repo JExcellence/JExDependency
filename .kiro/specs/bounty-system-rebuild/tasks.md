@@ -333,11 +333,14 @@ This implementation plan breaks down the bounty system rebuild into discrete, ma
   - [x] 8.1 Create VisualIndicatorManager
 
 
+
     - Apply tab prefix to players with active bounties
     - Apply name color to players with active bounties
     - Remove indicators when bounty claimed/expired
     - _Requirements: 14.1, 14.2, 14.4_
   
+
+
   - [x] 8.2 Implement particle effects
 
 

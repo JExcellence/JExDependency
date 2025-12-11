@@ -28,8 +28,8 @@ dependencies:
   - org.jboss.logging:jboss-logging:3.5.0.Final
   - org.reflections:reflections:0.9.12
   - com.github.ben-manes.caffeine:caffeine:3.2.2
-  - me.devnatan:inventory-framework-api:3.5.2
-  - me.devnatan:inventory-framework-platform-bukkit:3.5.2
+  - me.devnatan:inventory-framework-api:3.7.1
+  - me.devnatan:inventory-framework-platform-bukkit:3.7.1
   - me.devnatan:inventory-framework-anvil-input:3.5.2
   - me.devnatan:inventory-framework-platform:3.5.2
   - me.devnatan:inventory-framework-core:3.5.2

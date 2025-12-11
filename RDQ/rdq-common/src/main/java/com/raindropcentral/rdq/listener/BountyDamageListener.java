@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.bounty.DamageTracker;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Wolf;
@@ -21,12 +20,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BountyDamageListener implements Listener {
 
-    private final DamageTracker damageTracker;
     private final RDQ rdq;
 
     public BountyDamageListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
-        this.damageTracker = rdq.getBountyFactory().getDamageTracker();
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -41,13 +38,12 @@ public class BountyDamageListener implements Listener {
         }
 
         double damage = event.getFinalDamage();
-        damageTracker.recordDamage(victim.getUniqueId(), attacker.getUniqueId(), damage);
+        rdq.getBountyFactory().getDamageTracker().recordDamage(victim.getUniqueId(), attacker.getUniqueId(), damage);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(@NotNull PlayerQuitEvent event) {
-        // Clean up damage tracking when player quits
-        damageTracker.clearDamage(event.getPlayer().getUniqueId());
+        rdq.getBountyFactory().getDamageTracker().clearDamage(event.getPlayer().getUniqueId());
     }
 
     /**
@@ -57,12 +53,10 @@ public class BountyDamageListener implements Listener {
     private Player getAttacker(@NotNull EntityDamageByEntityEvent event) {
         var damager = event.getDamager();
 
-        // Direct player attack
         if (damager instanceof Player player) {
             return player;
         }
 
-        // Projectile (arrow, snowball, etc.)
         if (damager instanceof Projectile projectile) {
             var shooter = projectile.getShooter();
             if (shooter instanceof Player player) {
@@ -70,7 +64,6 @@ public class BountyDamageListener implements Listener {
             }
         }
 
-        // Tamed wolf or other tamed entity
         if (damager instanceof Wolf wolf && wolf.isTamed()) {
             var owner = wolf.getOwner();
             if (owner instanceof Player player) {

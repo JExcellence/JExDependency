@@ -74,10 +74,6 @@ public class RewardParser {
 		return new ObjectMapper()
 			       .registerModule(new JavaTimeModule())
 			       .registerModule(bukkitModule)
-			       .addMixIn(
-				       AbstractReward.class,
-				       RequirementMixin.class
-			       )
 			       .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
 	}
 	

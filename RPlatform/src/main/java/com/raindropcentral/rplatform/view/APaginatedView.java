@@ -170,9 +170,6 @@ public abstract class APaginatedView<T> extends BaseView {
                 final @NotNull RenderContext render,
                 final @NotNull Player player
         ) {
-		// Render decoration slots first
-		this.renderDecorations(render, player);
-		
 		// Render pagination navigation
 		this.renderPaginationNavigationButtons(
 			render,
@@ -190,22 +187,6 @@ public abstract class APaginatedView<T> extends BaseView {
 			render,
 			player
 		);
-	}
-	
-	/**
-	 * Renders decoration slots (X character) with filler items.
-	 *
-	 * @param render the render context
-	 * @param player the player viewing the inventory
-	 */
-	protected void renderDecorations(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	) {
-		render.layoutSlot('X', UnifiedBuilderFactory
-			.item(this.getFillMaterial())
-			.setName(net.kyori.adventure.text.Component.empty())
-			.build());
 	}
 	
         /**

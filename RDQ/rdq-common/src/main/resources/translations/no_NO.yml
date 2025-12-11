@@ -1,214 +1,46 @@
-# RDQ Norwegian Translations
-prefix: "<gold>[RDQ]</gold> "
+# RDQ Common Oversettelsefil - Norsk
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du har en aktiv dusør på hodet!</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 DUSØR SAMLET! 🎉</gradient>"
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Dusør System</gradient>"
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "b
+ounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Dusør System</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Opprett Dusør</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Se Dusører</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Dusør på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ initialiseres. Vennligst vent...</red>"
-    unknown_subcommand: "<red>Ukjent underkommando. Bruk /rdq help.</red>"
-    reload_failed: "<red>Omlasting mislyktes: {error}</red>"
-  success:
-    reloaded: "<green>RDQ-konfigurasjon lastet på nytt!</green>"
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Opprett Dusør</gradient>"
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Velg Mål</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Legg til Belønninger</gradient>"
+  add_currencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Legg til Valuta</gradient>"
 
-error:
-  not_found: "<red>{type} ikke funnet: {id}</red>"
-  insufficient_funds: "<red>Utilstrekkelige midler! Kreves: {required}, Tilgjengelig: {available}</red>"
-  on_cooldown: "<red>Nedkjøling! {remaining} gjenstår.</red>"
-  requirements_not_met: "<red>Krav ikke oppfylt: {missing}</red>"
-  self_targeting: "<red>Du kan ikke velge deg selv!</red>"
-  already_exists: "<red>{type} eksisterer allerede: {id}</red>"
-  expired: "<red>{type} har utløpt: {id}</red>"
-  not_unlocked: "<red>{type} ikke låst opp: {id}</red>"
-  permission_denied: "<red>Tillatelse nektet: {permission}</red>"
-  invalid_state: "<red>Ugyldig tilstand: {message}</red>"
-  invalid_amount: "<red>Ugyldig beløp! Må være mellom {min} og {max}.</red>"
-  no_permission: "<red>Du har ikke tillatelse.</red>"
-  player_only: "<red>Denne kommandoen er kun for spillere.</red>"
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-rank:
-  error:
-    unknown_subcommand: "<red>Ukjent rang-underkommando.</red>"
-    player_not_found: "<red>Spiller ikke funnet: {playerName}</red>"
-    grant_failed: "<red>Kunne ikke gi rang.</red>"
-    reload_failed: "<red>Kunne ikke laste ranger på nytt: {error}</red>"
-  success:
-    rank_granted: "<green>Rang {rankName} gitt til {playerName}!</green>"
-    rank_revoked: "<yellow>Rang {rankName} tilbakekalt fra {playerName}.</yellow>"
-    reloaded: "<green>Rang-konfigurasjon lastet på nytt!</green>"
-    rank_unlocked: "<green>Gratulerer! Du låste opp rang {rankName}!</green>"
-  opening_view: "<gray>Åpner rangvisning...</gray>"
-  no_progress: "<yellow>Du har ikke startet noen rangsti ennå.</yellow>"
-  progress_header: "<yellow>Din Rangprogresjon:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Tilgjengelige Rangtrær:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} ranger)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Bruk: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Ukjent admin-kommando.</red>"
-    grant:
-      usage: "<yellow>Bruk: /rank admin grant <spiller> <rang></yellow>"
-    revoke:
-      usage: "<yellow>Bruk: /rank admin revoke <spiller> <rang></yellow>"
-  help: |
-    <yellow>Rangkommandoer:</yellow>
-    <gray>/rank</gray> - Åpne rangmeny
-    <gray>/rank view</gray> - Vis rangtrær
-    <gray>/rank progress</gray> - Vis progresjon
-    <gray>/rank admin</gray> - Admin-kommandoer
-  notification:
-    title: "<gold>Rang Låst Opp!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Du låste opp {rankName}!</green>"
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Side %current_page%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Side %direction%</gradient>"
 
-bounty:
-  error:
-    unknown_subcommand: "<red>Ukjent dusør-underkommando.</red>"
-    player_not_found: "<red>Spiller ikke funnet: {playerName}</red>"
-    self_target: "<red>Du kan ikke sette dusør på deg selv!</red>"
-    invalid_amount: "<red>Ugyldig beløp.</red>"
-    invalid_id: "<red>Ugyldig dusør-ID.</red>"
-    create_failed: "<red>Kunne ikke opprette dusør: {error}</red>"
-    cancel_failed: "<red>Kunne ikke avbryte dusør.</red>"
-  success:
-    bounty_created: "<green>Dusør på {amount} plassert på {targetName}!</green>"
-    bounty_cancelled: "<yellow>Dusør avbrutt. Midler refundert.</yellow>"
-    bounty_removed: "<green>Dusør fjernet av admin.</green>"
-    bounty_claimed: "<green>Du fikk en dusør på {amount}!</green>"
-    reloaded: "<green>Dusør-konfigurasjon lastet på nytt!</green>"
-  create:
-    usage: "<yellow>Bruk: /bounty create <spiller> <beløp></yellow>"
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Tilbake</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Fortsett</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Forrige</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Neste</gradient>"
   cancel:
-    usage: "<yellow>Bruk: /bounty cancel <dusørId></yellow>"
-  list:
-    empty: "<yellow>Ingen aktive dusører.</yellow>"
-    header: "<yellow>Aktive Dusører ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(av {placer})</dark_gray></gray>"
-  leaderboard:
-    header: "<yellow>Dusørjeger Toppliste:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} drap, {earned} tjent</gray>"
-  my:
-    header: "<yellow>Dine Dusører:</yellow>"
-    placed_header: "<gray>Dusører du har plassert:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Dusører på deg:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(av {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Bruk: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Ukjent admin-kommando.</red>"
-    remove:
-      usage: "<yellow>Bruk: /bounty admin remove <dusørId></yellow>"
-  help: |
-    <yellow>Dusørkommandoer:</yellow>
-    <gray>/bounty</gray> - List aktive dusører
-    <gray>/bounty create <spiller> <beløp></gray> - Opprett dusør
-    <gray>/bounty cancel <id></gray> - Avbryt dusør
-    <gray>/bounty leaderboard</gray> - Toppliste
-    <gray>/bounty my</gray> - Dine dusører
-  announcement:
-    created: "<yellow>{placer} plasserte en dusør på {amount} på {target}!</yellow>"
-    claimed: "<green>{hunter} fikk dusøren på {target} verdt {amount}!</green>"
-    expired: "<gray>Dusør på {target} har utløpt.</gray>"
-
-perk:
-  error:
-    unknown_subcommand: "<red>Ukjent perk-underkommando.</red>"
-    player_not_found: "<red>Spiller ikke funnet: {playerName}</red>"
-    perk_not_found: "<red>Perk ikke funnet: {perkId}</red>"
-    perk_on_cooldown: "<red>Denne perken er på nedkjøling! {remaining} gjenstår.</red>"
-    perk_not_active: "<red>Denne perken er ikke aktiv.</red>"
-    activate_failed: "<red>Kunne ikke aktivere perk: {error}</red>"
-    grant_failed: "<red>Kunne ikke gi perk.</red>"
-    reload_failed: "<red>Kunne ikke laste perks på nytt: {error}</red>"
-  success:
-    perk_activated: "<green>Perk {perkName} aktivert!</green>"
-    perk_deactivated: "<yellow>Perk {perkName} deaktivert.</yellow>"
-    perk_granted: "<green>Perk {perkName} gitt til {playerName}!</green>"
-    perk_revoked: "<yellow>Perk {perkName} tilbakekalt fra {playerName}.</yellow>"
-    perk_unlocked: "<green>Du låste opp perk {perkName}!</green>"
-    reloaded: "<green>Perk-konfigurasjon lastet på nytt!</green>"
-  activate:
-    usage: "<yellow>Bruk: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Bruk: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Bruk: /perk info <perkId></yellow>"
-    header: "<yellow>Perk Info: {id}</yellow>"
-    details: "<gray>Kategori: {category} | Nedkjøling: {cooldown}s | Varighet: {duration}s</gray>"
-  list:
-    empty: "<yellow>Ingen perks tilgjengelig.</yellow>"
-    header: "<yellow>Tilgjengelige Perks ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Bruk: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Ukjent admin-kommando.</red>"
-    grant:
-      usage: "<yellow>Bruk: /perk admin grant <spiller> <perk></yellow>"
-    revoke:
-      usage: "<yellow>Bruk: /perk admin revoke <spiller> <perk></yellow>"
-  help: |
-    <yellow>Perkkommandoer:</yellow>
-    <gray>/perk</gray> - List tilgjengelige perks
-    <gray>/perk activate <perk></gray> - Aktiver perk
-    <gray>/perk deactivate <perk></gray> - Deaktiver perk
-    <gray>/perk info <perk></gray> - Perkdetaljer
-
-gui:
-  common:
-    back: "<yellow>← Tilbake</yellow>"
-    close: "<red>Lukk</red>"
-    next_page: "<yellow>Neste Side →</yellow>"
-    previous_page: "<yellow>← Forrige Side</yellow>"
-    page_info: "<gray>Side {current}/{total}</gray>"
-    loading: "<gray>Laster...</gray>"
-    confirm: "<green>Bekreft</green>"
-    cancel: "<red>Avbryt</red>"
-
-perk_names:
-  speed: "Hastighet"
-  strength: "Styrke"
-  resistance: "Motstand"
-  regeneration: "Regenerering"
-  night_vision: "Nattsyn"
-  fire_resistance: "Brannmotstand"
-  water_breathing: "Vannpusting"
-  jump_boost: "Hoppforsterkning"
-  haste: "Hast"
-  luck: "Flaks"
-  fly: "Fly"
-  double_experience: "Dobbel XP"
-  prevent_death: "Dødsforebygging"
-  treasure_hunter: "Skattejeger"
-  vampire: "Vampyr"
-
-rank_trees:
-  warrior:
-    name: "Kriger"
-    description: "Styrke og kamp."
-  cleric:
-    name: "Prest"
-    description: "Helbredelse og støtte."
-  mage:
-    name: "Magiker"
-    description: "Magi og visdom."
-  rogue:
-    name: "Skurk"
-    description: "Sniking og smidighet."
-  merchant:
-    name: "Handelsmann"
-    description: "Handel og rikdom."
-  ranger:
-    name: "Ranger"
-    description: "Natur og bueskyting."
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Tillatelse: {permission}"
-  rank: "Rang: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Nivå {level}"
-
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}t"
-  days: "{value}d"
+    name: "<gradient:#ef4444:#f87171>❌ Avbryt</gradient>"

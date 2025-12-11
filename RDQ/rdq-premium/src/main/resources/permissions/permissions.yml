@@ -1,20 +1,4 @@
-# RDQ Permission Configuration
-# This file documents all permission nodes used by the RDQ plugin
-# These permissions are registered with the server and can be managed via LuckPerms or other permission plugins
-
-# ============================================
-# Permission Hierarchy
-# ============================================
-# rdq.*                          - All RDQ permissions (admin)
-#   rdq.rank.*                   - All rank permissions
-#   rdq.bounty.*                 - All bounty permissions
-#   rdq.perk.*                   - All perk permissions
-#   rdq.admin.*                  - All admin permissions
-
 permissions:
-  # ============================================
-  # Root Permissions
-  # ============================================
   rdq.*:
     description: "Grants all RDQ permissions"
     default: op
@@ -32,9 +16,6 @@ permissions:
     description: "Allows viewing RDQ help"
     default: true
 
-  # ============================================
-  # Rank System Permissions
-  # ============================================
   rdq.rank.*:
     description: "Grants all rank permissions"
     default: op
@@ -78,7 +59,6 @@ permissions:
     description: "Bypasses rank requirements"
     default: op
 
-  # Rank Admin Permissions
   rdq.rank.admin.*:
     description: "Grants all rank admin permissions"
     default: op
@@ -104,9 +84,6 @@ permissions:
     description: "Allows resetting player rank progress"
     default: op
 
-  # ============================================
-  # Bounty System Permissions
-  # ============================================
   rdq.bounty.*:
     description: "Grants all bounty permissions"
     default: op
@@ -155,7 +132,6 @@ permissions:
     description: "Allows placing bounties on self (testing)"
     default: op
 
-  # Bounty Admin Permissions
   rdq.bounty.admin.*:
     description: "Grants all bounty admin permissions"
     default: op
@@ -176,9 +152,6 @@ permissions:
     description: "Allows clearing all bounties"
     default: op
 
-  # ============================================
-  # Perk System Permissions
-  # ============================================
   rdq.perk.*:
     description: "Grants all perk permissions"
     default: op
@@ -218,7 +191,7 @@ permissions:
     description: "Bypasses perk requirements"
     default: op
 
-  # Individual Perk Permissions (for premium/special perks)
+
   rdq.perk.fly:
     description: "Allows using the flight perk"
     default: false
@@ -239,7 +212,7 @@ permissions:
     description: "Allows using the treasure hunter perk"
     default: true
 
-  # Perk Admin Permissions
+
   rdq.perk.admin.*:
     description: "Grants all perk admin permissions"
     default: op
@@ -265,9 +238,9 @@ permissions:
     description: "Allows resetting player perk data"
     default: op
 
-  # ============================================
-  # Global Admin Permissions
-  # ============================================
+
+
+
   rdq.admin.*:
     description: "Grants all admin permissions"
     default: op
@@ -288,9 +261,9 @@ permissions:
     description: "Allows database management commands"
     default: op
 
-  # ============================================
-  # GUI Permissions
-  # ============================================
+
+
+
   rdq.gui.rank:
     description: "Allows opening rank GUI"
     default: true
@@ -303,9 +276,6 @@ permissions:
     description: "Allows opening perk GUI"
     default: true
 
-  # ============================================
-  # Notification Permissions
-  # ============================================
   rdq.notify.rank:
     description: "Receives rank unlock notifications"
     default: true
@@ -317,12 +287,6 @@ permissions:
   rdq.notify.broadcast:
     description: "Receives server-wide RDQ broadcasts"
     default: true
-
-# ============================================
-# Default Permission Groups
-# ============================================
-# These are suggested permission groups for LuckPerms integration
-# Copy these to your LuckPerms configuration as needed
 
 groups:
   rdq_default:

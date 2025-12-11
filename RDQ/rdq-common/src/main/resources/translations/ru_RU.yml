@@ -1,216 +1,280 @@
-# RDQ Russian Translations
-# Русский перевод для плагина RaindropQuests
+# RDQ Common Файл Перевода - Русский
+# Формат MiniMessage с градиентами и стилем
+# Заполнители используют формат %placeholder%
 
-prefix: "<gold>[RDQ]</gold> "
+# Сообщения Слушателя Наград
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>На вас объявлена награда!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Размер Награды:</gradient> <gradient:#10b981:#34d399>%bounty_value%₽</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Истекает в:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Заказчик:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 НАГРАДА ПОЛУЧЕНА! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Вы успешно получили награду за</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Ваша доля:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Кто-то</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>получил награду за</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% игроков</gradient> <gradient:#a855f7:#c084fc>получили награду за</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ инициализируется. Пожалуйста, подождите...</red>"
-    unknown_subcommand: "<red>Неизвестная подкоманда. Используйте /rdq help для списка команд.</red>"
-    reload_failed: "<red>Ошибка перезагрузки: {error}</red>"
-  success:
-    reloaded: "<green>Конфигурация RDQ успешно перезагружена!</green>"
+# Сообщения Подтверждения Создания Награды
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Награда успешно создана для</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Ошибка создания награды:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
-error:
-  not_found: "<red>{type} не найден: {id}</red>"
-  insufficient_funds: "<red>Недостаточно средств! Требуется: {required}, Доступно: {available}</red>"
-  on_cooldown: "<red>Перезарядка! Осталось {remaining}.</red>"
-  requirements_not_met: "<red>Требования не выполнены: {missing}</red>"
-  self_targeting: "<red>Вы не можете выбрать себя!</red>"
-  already_exists: "<red>{type} уже существует: {id}</red>"
-  expired: "<red>{type} истёк: {id}</red>"
-  not_unlocked: "<red>{type} не разблокирован: {id}</red>"
-  permission_denied: "<red>Доступ запрещён: {permission}</red>"
-  invalid_state: "<red>Недопустимое состояние: {message}</red>"
-  invalid_amount: "<red>Недопустимая сумма! Должна быть между {min} и {max}.</red>"
-  no_permission: "<red>У вас нет разрешения на это.</red>"
-  player_only: "<red>Эта команда доступна только игрокам.</red>"
-
-rank:
-  error:
-    unknown_subcommand: "<red>Неизвестная подкоманда ранга.</red>"
-    player_not_found: "<red>Игрок не найден: {playerName}</red>"
-    grant_failed: "<red>Не удалось выдать ранг.</red>"
-    reload_failed: "<red>Ошибка перезагрузки рангов: {error}</red>"
-  success:
-    rank_granted: "<green>Ранг {rankName} выдан игроку {playerName}!</green>"
-    rank_revoked: "<yellow>Ранг {rankName} отозван у {playerName}.</yellow>"
-    reloaded: "<green>Конфигурация рангов перезагружена!</green>"
-    rank_unlocked: "<green>Поздравляем! Вы разблокировали ранг {rankName}!</green>"
-  opening_view: "<gray>Открытие просмотра рангов...</gray>"
-  no_progress: "<yellow>Вы ещё не начали ни одного пути ранга.</yellow>"
-  progress_header: "<yellow>Ваш прогресс ранга:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Доступные деревья рангов:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} рангов)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Использование: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Неизвестная команда администратора.</red>"
-    grant:
-      usage: "<yellow>Использование: /rank admin grant <игрок> <ранг></yellow>"
-    revoke:
-      usage: "<yellow>Использование: /rank admin revoke <игрок> <ранг></yellow>"
-  help: |
-    <yellow>Команды рангов:</yellow>
-    <gray>/rank</gray> - Открыть меню рангов
-    <gray>/rank view</gray> - Просмотр деревьев рангов
-    <gray>/rank progress</gray> - Просмотр прогресса
-    <gray>/rank admin</gray> - Команды администратора
-  notification:
-    title: "<gold>Ранг разблокирован!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Вы разблокировали {rankName}!</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>Неизвестная подкоманда награды.</red>"
-    player_not_found: "<red>Игрок не найден: {playerName}</red>"
-    self_target: "<red>Вы не можете назначить награду на себя!</red>"
-    invalid_amount: "<red>Недопустимая сумма. Введите корректное число.</red>"
-    invalid_id: "<red>Недопустимый ID награды.</red>"
-    create_failed: "<red>Ошибка создания награды: {error}</red>"
-    cancel_failed: "<red>Ошибка отмены награды.</red>"
-  success:
-    bounty_created: "<green>Награда {amount} назначена на {targetName}!</green>"
-    bounty_cancelled: "<yellow>Награда отменена. Средства возвращены.</yellow>"
-    bounty_removed: "<green>Награда удалена администратором.</green>"
-    bounty_claimed: "<green>Вы получили награду {amount}!</green>"
-    reloaded: "<green>Конфигурация наград перезагружена!</green>"
-  create:
-    usage: "<yellow>Использование: /bounty create <игрок> <сумма></yellow>"
-  cancel:
-    usage: "<yellow>Использование: /bounty cancel <ID награды></yellow>"
-  list:
-    empty: "<yellow>Нет активных наград.</yellow>"
-    header: "<yellow>Активные награды ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(от {placer})</dark_gray></gray>"
+# Интерфейс Обзора Наград (Главное Меню и Обзор)
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Система Наград</gradient>"
+  
+  # Кнопки главного меню
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Создать Награду</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы создать новую награду</gradient>"
+      - "<gradient:#6b7280:#9ca3af>на другого игрока</gradient>"
+  
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Просмотр Наград</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотреть все активные награды</gradient>"
+  
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Мои Награды</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотреть награды, которые вы создали</gradient>"
+  
   leaderboard:
-    header: "<yellow>Таблица лидеров охотников:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} убийств, заработано {earned}</gray>"
-  my:
-    header: "<yellow>Ваши награды:</yellow>"
-    placed_header: "<gray>Награды, которые вы назначили:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Награды на вас:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(от {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Использование: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Неизвестная команда администратора.</red>"
-    remove:
-      usage: "<yellow>Использование: /bounty admin remove <ID награды></yellow>"
-  help: |
-    <yellow>Команды наград:</yellow>
-    <gray>/bounty</gray> - Список активных наград
-    <gray>/bounty create <игрок> <сумма></gray> - Создать награду
-    <gray>/bounty cancel <ID></gray> - Отменить награду
-    <gray>/bounty leaderboard</gray> - Таблица лидеров
-    <gray>/bounty my</gray> - Ваши награды
-  announcement:
-    created: "<yellow>{placer} назначил награду {amount} на {target}!</yellow>"
-    claimed: "<green>{hunter} получил награду за {target} в размере {amount}!</green>"
-    expired: "<gray>Награда на {target} истекла.</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 Таблица Лидеров</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Лучшие охотники за наградами</gradient>"
+  
+  # Записи списка наград
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Награда за</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Цель:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Заказчик:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Создано:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Нажмите для просмотра деталей</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>Неизвестная подкоманда перка.</red>"
-    player_not_found: "<red>Игрок не найден: {playerName}</red>"
-    perk_not_found: "<red>Перк не найден: {perkId}</red>"
-    perk_on_cooldown: "<red>Этот перк на перезарядке! Осталось {remaining}.</red>"
-    perk_not_active: "<red>Этот перк сейчас не активен.</red>"
-    activate_failed: "<red>Ошибка активации перка: {error}</red>"
-    grant_failed: "<red>Не удалось выдать перк.</red>"
-    reload_failed: "<red>Ошибка перезагрузки перков: {error}</red>"
-  success:
-    perk_activated: "<green>Перк {perkName} активирован!</green>"
-    perk_deactivated: "<yellow>Перк {perkName} деактивирован.</yellow>"
-    perk_granted: "<green>Перк {perkName} выдан игроку {playerName}!</green>"
-    perk_revoked: "<yellow>Перк {perkName} отозван у {playerName}.</yellow>"
-    perk_unlocked: "<green>Вы разблокировали перк {perkName}!</green>"
-    reloaded: "<green>Конфигурация перков перезагружена!</green>"
-  activate:
-    usage: "<yellow>Использование: /perk activate <ID перка></yellow>"
-  deactivate:
-    usage: "<yellow>Использование: /perk deactivate <ID перка></yellow>"
-  info:
-    usage: "<yellow>Использование: /perk info <ID перка></yellow>"
-    header: "<yellow>Информация о перке: {id}</yellow>"
-    details: "<gray>Категория: {category} | Перезарядка: {cooldown}с | Длительность: {duration}с</gray>"
-  list:
-    empty: "<yellow>Нет доступных перков.</yellow>"
-    header: "<yellow>Доступные перки ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Использование: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Неизвестная команда администратора.</red>"
-    grant:
-      usage: "<yellow>Использование: /perk admin grant <игрок> <перк></yellow>"
-    revoke:
-      usage: "<yellow>Использование: /perk admin revoke <игрок> <перк></yellow>"
-  help: |
-    <yellow>Команды перков:</yellow>
-    <gray>/perk</gray> - Список доступных перков
-    <gray>/perk activate <перк></gray> - Активировать перк
-    <gray>/perk deactivate <перк></gray> - Деактивировать перк
-    <gray>/perk info <перк></gray> - Информация о перке
+# Интерфейс Создания Награды
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Создать Награду</gradient>"
+  
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Выбрать Цель</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы выбрать игрока</gradient>"
+      - "<gradient:#6b7280:#9ca3af>для размещения награды</gradient>"
+  
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Добавить Награды</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы добавить предметы</gradient>"
+      - "<gradient:#6b7280:#9ca3af>в качестве наград</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
+  
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Создать Награду</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы создать награду</gradient>"
+      - "<gradient:#6b7280:#9ca3af>с выбранными наградами</gradient>"
+  
+  confirm:
+    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Награда успешно создана за</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
 
-gui:
-  common:
-    back: "<yellow>← Назад</yellow>"
-    close: "<red>Закрыть</red>"
-    next_page: "<yellow>Следующая страница →</yellow>"
-    previous_page: "<yellow>← Предыдущая страница</yellow>"
-    page_info: "<gray>Страница {current}/{total}</gray>"
-    loading: "<gray>Загрузка...</gray>"
-    confirm: "<green>Подтвердить</green>"
-    cancel: "<red>Отмена</red>"
+# Интерфейс Информации об Игроке Награды
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Награда за</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Цель этой награды</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Нажмите для просмотра информации об игроке</gradient>"
+  
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Просмотр Наград</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы увидеть все награды</gradient>"
+      - "<gradient:#6b7280:#9ca3af>за получение этой награды</gradient>"
+  
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Удалить Награду</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Предупреждение: Это действие</gradient>"
+      - "<gradient:#ef4444:#f87171>нельзя отменить!</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы удалить эту награду</gradient>"
+  
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Награда за</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>была удалена!</gradient>"
 
-perk_names:
-  speed: "Скорость"
-  strength: "Сила"
-  resistance: "Сопротивление"
-  regeneration: "Регенерация"
-  night_vision: "Ночное зрение"
-  fire_resistance: "Огнестойкость"
-  water_breathing: "Подводное дыхание"
-  jump_boost: "Прыгучесть"
-  haste: "Спешка"
-  luck: "Удача"
-  fly: "Полёт"
-  double_experience: "Двойной опыт"
-  prevent_death: "Защита от смерти"
-  treasure_hunter: "Охотник за сокровищами"
-  vampire: "Вампир"
+# Интерфейс Награды Награды
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Награды Награды</gradient>"
+  
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Нет Наград</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Добавьте предметы, чтобы создать</gradient>"
+      - "<gradient:#6b7280:#9ca3af>награды для этой награды</gradient>"
+  
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Добавить Предмет</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Поместите предметы сюда, чтобы добавить их как награды</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Правый клик для удаления предметов</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Цель: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Эта награда размещена на</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Награда Награды</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Этот предмет будет дан тому</gradient>"
+      - "<gradient:#6b7280:#9ca3af>кто получит награду</gradient>"
+  
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Новые предметы не были добавлены!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Некоторые предметы были выброшены, так как ваш инвентарь был полон!</gradient>"
 
-rank_trees:
-  warrior:
-    name: "Воин"
-    description: "Путь силы и боя."
-  cleric:
-    name: "Жрец"
-    description: "Путь исцеления и поддержки."
-  mage:
-    name: "Маг"
-    description: "Путь магии и мудрости."
-  rogue:
-    name: "Разбойник"
-    description: "Путь скрытности и ловкости."
-  merchant:
-    name: "Торговец"
-    description: "Путь торговли и богатства."
-  ranger:
-    name: "Следопыт"
-    description: "Путь природы и стрельбы из лука."
+# Префикс
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "  
+add_currencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Добавить Валюту</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы добавить валютные</gradient>"
+      - "<gradient:#6b7280:#9ca3af>награды для награды</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Сначала выберите цель!</gradient>"
 
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Разрешение: {permission}"
-  rank: "Ранг: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Уровень {level}"
+# Компоненты UI Платформы
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-time:
-  seconds: "{value}с"
-  minutes: "{value}м"
-  hours: "{value}ч"
-  days: "{value}д"
+# Пагинация
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Страница %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Текущая страница:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Всего страниц:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Страница %direction%</gradient>"
+
+# Предметы Головы
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Назад</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы вернуться</gradient>"
+      - "<gradient:#6b7280:#9ca3af>к предыдущему меню</gradient>"
+  
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Продолжить</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы продолжить</gradient>"
+      - "<gradient:#6b7280:#9ca3af>к следующему шагу</gradient>"
+  
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Предыдущая</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы перейти к</gradient>"
+      - "<gradient:#6b7280:#9ca3af>предыдущей странице</gradient>"
+  
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Следующая</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы перейти к</gradient>"
+      - "<gradient:#6b7280:#9ca3af>следующей странице</gradient>"
+  
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Вверх</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы подняться</gradient>"
+      - "<gradient:#6b7280:#9ca3af>на один уровень</gradient>"
+  
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Отмена</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы отменить</gradient>"
+      - "<gradient:#6b7280:#9ca3af>это действие</gradient>"
+  
+  pagination:
+    0:
+      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
+      lore: []
+    1:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
+      lore: []
+    2:
+      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
+      lore: []
+    3:
+      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
+      lore: []
+    4:
+      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
+      lore: []
+    5:
+      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
+      lore: []
+    6:
+      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
+      lore: []
+    7:
+      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
+      lore: []
+    8:
+      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
+      lore: []
+    9:
+      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
+      lore: []
+    10:
+      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
+      lore: []
+    11:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
+      lore: []
+    12:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
+      lore: []
+    13:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
+      lore: []
+    14:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
+      lore: []
+    15:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
+      lore: []# Кнопка Выб
+ора Цели
+select_target:
+  name: "<gradient:#f59e0b:#fbbf24>🎯 Выбрать Цель: %target_name%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы выбрать игрока</gradient>"
+    - "<gradient:#6b7280:#9ca3af>для размещения награды</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>Текущая цель: %target_name%</gradient>"
+
+# Кнопка Подтверждения Награды
+confirm_bounty:
+  name: "<gradient:#10b981:#34d399>✅ Создать Награду</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы создать награду</gradient>"
+    - "<gradient:#6b7280:#9ca3af>с выбранными наградами</gradient>"
+
+# Сообщения Подтверждения
+confirm:
+  no_player_selected: "<gradient:#ef4444:#f87171>❌ Игрок не выбран!</gradient> <gradient:#6b7280:#9ca3af>Пожалуйста, сначала выберите цель.</gradient>"
+  no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Награды не добавлены!</gradient> <gradient:#6b7280:#9ca3af>Пожалуйста, сначала добавьте награды.</gradient>"
+  confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Создание награды для</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+  error: "<gradient:#ef4444:#f87171>❌ Ошибка:</gradient> <gradient:#6b7280:#9ca3af>Не удалось найти целевого игрока %target_name%</gradient>"
+
+# Сообщение о Возврате Предметов
+left_overs: "<gradient:#f59e0b:#fbbf24>📦 Предметы возвращены!</gradient> <gradient:#6b7280:#9ca3af>Некоторые предметы были сброшены на землю.</gradient>"

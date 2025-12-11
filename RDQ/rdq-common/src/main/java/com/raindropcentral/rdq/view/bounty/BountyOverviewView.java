@@ -9,13 +9,12 @@ import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -44,10 +43,8 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 	protected CompletableFuture<List<Bounty>> getAsyncPaginationSource(
 		final @NotNull Context context
 	) {
-		
-		return rdq.get(context).getBountyRepository().findAllAsync(
-			1,
-			Integer.MAX_VALUE
+		return rdq.get(context).getBountyRepository().findListByAttributesAsync(
+			Map.of("active", true)
 		);
 	}
 	
@@ -65,9 +62,8 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 		builder
 			.withItem(
 				UnifiedBuilderFactory
-					.head()
-					.setPlayerHead(target)
-					.setName(
+					.unifiedHead(target)
+					.setDisplayName(
 						this.i18n(
 							    "bounty.name",
 							    player
@@ -99,7 +95,6 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 						    .build()
 						    .splitLines()
 					)
-					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
 			)
 			.onClick(clickContext -> {
@@ -109,9 +104,9 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 						"plugin",
 						this.rdq.get(clickContext),
 						"bounty",
-						bounty,
+						Optional.of(bounty),
 						"target",
-						target,
+						Optional.of(target),
 						"parentClazz",
 						BountyOverviewView.class,
 						"initialData",
@@ -120,13 +115,24 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 				);
 			});
 	}
+
+	@Override
+	protected @NotNull String[] getLayout() {
+		return new String[]{
+				"         ",
+				" OOOOOOO ",
+				"   <p>   ",
+				"         "
+		};
+	}
 	
 	@Override
 	protected void onPaginatedRender(
 		final @NotNull RenderContext render,
 		final @NotNull Player player
 	) {
-	
+		// No additional rendering required for the bounty overview
+		// All necessary elements are handled by the pagination system
 	}
 	
 }

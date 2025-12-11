@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.bounty.utility;
 
 import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.bounty.BountyServiceProvider;
 import com.raindropcentral.rdq.bounty.DamageTracker;
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.claim.ClaimHandler;
@@ -57,15 +56,13 @@ public class BountyFactory {
 
     /**
      * Creates a new Bounty Factory.
-     * Automatically loads the correct service implementation (Free or Premium).
      *
      * @param rdq the RDQ plugin instance
+     * @param bountyService the bounty service implementation (Free or Premium)
      */
-    public BountyFactory(@NotNull RDQ rdq) {
+    public BountyFactory(@NotNull RDQ rdq, @NotNull IBountyService bountyService) {
         this.rdq = rdq;
-        
-        // Automatically get the correct service (Free or Premium)
-        this.bountyService = BountyServiceProvider.getInstance();
+        this.bountyService = bountyService;
         
         String serviceType = bountyService.isPremium() ? "Premium" : "Free";
         LOGGER.log(Level.INFO, "BountyFactory initialized with " + serviceType + " service");

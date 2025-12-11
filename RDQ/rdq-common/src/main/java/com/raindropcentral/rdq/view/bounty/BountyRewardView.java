@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.view.bounty;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
+import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
 import com.raindropcentral.rdq.reward.ItemReward;
 import com.raindropcentral.rdq.reward.Reward;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
@@ -27,11 +28,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
-public class BountyRewardView extends APaginatedView<ItemReward> {
+public class BountyRewardView extends APaginatedView<BountyReward> {
 	
 	private final State<RDQ>                                rdq              = initialState("plugin");
 	private final MutableState<Optional<OfflinePlayer>>     target           = initialState("target");
-	private final MutableState<List<ItemReward>>             rewards      = initialState("rewards");
+	private final MutableState<List<BountyReward>>             rewards      = initialState("rewards");
 	private final State<Optional<Bounty>>                  bounty           = initialState("bounty");
 	private final State<Map<UUID, Map<Integer, ItemStack>>> insertedItems    = initialState("insertedItems");
 	
@@ -61,7 +62,7 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 	}
 	
 	@Override
-	protected CompletableFuture<List<ItemReward>> getAsyncPaginationSource(
+	protected CompletableFuture<List<BountyReward>> getAsyncPaginationSource(
 		final @NotNull Context context
 	) {
 		
@@ -69,14 +70,16 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 			this.bounty.get(context).isEmpty() ||
 			this.bounty.get(context).get().getRewards().isEmpty()
 		) {
-			ItemReward pseudoItem = new ItemReward(
-					this.buildPane(
+			BountyReward pseudoItem = new BountyReward(
+					new ItemReward(this.buildPane(
 							Material.GRAY_STAINED_GLASS_PANE,
 							context.getPlayer(),
-							"bounty_reward_ui.pseudo.name",
-							"bounty_reward_ui.pseudo.lore"
+							"pseudo.name",
+							"pseudo.lore"
 					),
 					0
+					),
+					UUID.randomUUID()
 			);
 
 			return CompletableFuture.completedFuture(List.of(
@@ -88,7 +91,7 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 			));
 		}
 		return CompletableFuture.completedFuture(
-			this.bounty.get(context).get().getRewards().stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).map(bountyReward -> (ItemReward) bountyReward.getReward()).toList()
+			this.bounty.get(context).get().getRewards().stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).toList()
 		);
 	}
 	
@@ -97,21 +100,22 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 		final @NotNull Context context,
 		final @NotNull BukkitItemComponentBuilder builder,
 		final int index,
-		final @NotNull ItemReward rewardItem
+		final @NotNull BountyReward bountyReward
 	) {
+		ItemReward itemReward = ((ItemReward) bountyReward.getReward());
 		
 		if (
 			this.bounty.get(context).isEmpty()
 		) {
 			builder
 				.renderWith(() -> UnifiedBuilderFactory.item(
-						rewardItem.getItem()
+						itemReward.getItem()
 				).build())
 				.updateOnStateChange(this.bounty);
 			return;
 		}
 		this
-			.splitToMaxStacks(rewardItem)
+			.splitToMaxStacks(itemReward)
 			.forEach(
 				item -> builder
 					        .renderWith(
@@ -141,17 +145,17 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 		final @NotNull RenderContext render,
 		final @NotNull Player player
 	) {
-		
+
 		final OfflinePlayer target = this.target.get(render).orElse(null);
-		
+
 		render
 			.layoutSlot(
 				'x',
 				buildPane(
 					Material.GREEN_STAINED_GLASS_PANE,
 					player,
-					"bounty_reward_ui.input_slot.name",
-					"bounty_reward_ui.input_slot.lore"
+					"input_slot.name",
+					"input_slot.lore"
 				)
 			)
 			.onClick(this::handleSlotClick);
@@ -175,9 +179,8 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 		render.layoutSlot(
 			't',
 			UnifiedBuilderFactory
-				.head()
-				.setPlayerHead(target.getPlayer())
-				.setName(
+				.unifiedHead(target.getPlayer())
+				.setDisplayName(
 					this.i18n(
 						    "target.name",
 						    player
@@ -219,13 +222,16 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 					playerSlots != null &&
 					! playerSlots.isEmpty()
 				) {
-					Set<ItemReward> rewards = new HashSet<>();
+					List<BountyReward> rewards = new ArrayList<>();
 					for (
 						ItemStack stack : playerSlots.values()
 					) {
-						rewards.add(new ItemReward(
-								stack,
-								stack.getAmount()
+						rewards.add(new BountyReward(
+								new ItemReward(
+									stack,
+									stack.getAmount()
+								),
+								player.getUniqueId()
 						));
 					}
 					
@@ -234,7 +240,18 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 					
 					clickContext.openForPlayer(
 						BountyCreationView.class,
-						clickContext.getInitialData()
+						Map.of(
+								"plugin",
+								rdq.get(clickContext),
+								"target",
+								this.target.get(render),
+								"rewards",
+								this.rewards.get(clickContext),
+								"bounty",
+								bounty.get(clickContext),
+								"insertedItems",
+								insertedItems.get(clickContext)
+						)
 					);
 				} else {
 					this.i18n(
@@ -293,7 +310,18 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 			.open(
 				BountyCreationView.class,
 				close.getPlayer(),
-				close.getInitialData()
+					Map.of(
+							"plugin",
+							rdq.get(close),
+							"target",
+							this.target.get(close),
+							"rewards",
+							this.rewards.get(close),
+							"bounty",
+							bounty.get(close),
+							"insertedItems",
+							insertedItems.get(close)
+					)
 			)
 		;
 	}
@@ -371,8 +399,8 @@ public class BountyRewardView extends APaginatedView<ItemReward> {
 						buildPane(
 							Material.GREEN_STAINED_GLASS_PANE,
 							clickContext.getPlayer(),
-							"bounty_reward_ui.input_slot.name",
-							"bounty_reward_ui.input_slot.lore"
+							"input_slot.name",
+							"input_slot.lore"
 						)
 					);
 			}

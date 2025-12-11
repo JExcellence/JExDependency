@@ -1,231 +1,43 @@
-# RDQ British English Translations
-# British English variant - mostly same as en_US with spelling differences
+# RDQ Premium Translation File - English (UK)
+# MiniMessage format with gradients and styling
+# Placeholders use %placeholder% format
 
-prefix: "<gold>[RDQ]</gold> "
+# Bounty Listener Messages
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Bounty Value:</gradient> <gradient:#10b981:#34d399>£%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Expires at:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Commissioned by:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 BOUNTY CLAIMED! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>You successfully claimed the bounty on</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Your share:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Someone</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>has claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% players</gradient> <gradient:#a855f7:#c084fc>have claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ is still initialising. Please wait...</red>"
-    unknown_subcommand: "<red>Unknown subcommand. Use /rdq help for available commands.</red>"
-    reload_failed: "<red>Failed to reload: {error}</red>"
-  success:
-    reloaded: "<green>RDQ configuration reloaded successfully!</green>"
-  help: |
-    <yellow>RDQ Commands:</yellow>
-    <gray>/rdq rank</gray> - Open rank menu
-    <gray>/rdq bounty</gray> - Open bounty menu
-    <gray>/rdq perk</gray> - Open perk menu
-    <gray>/rdq reload</gray> - Reload configuration
-  rank:
-    opening_gui: "<gray>Opening rank menu...</gray>"
-  bounty:
-    opening_gui: "<gray>Opening bounty menu...</gray>"
-  perk:
-    opening_gui: "<gray>Opening perk menu...</gray>"
-
-error:
-  not_found: "<red>{type} not found: {id}</red>"
-  insufficient_funds: "<red>Insufficient funds! Required: {required}, Available: {available}</red>"
-  on_cooldown: "<red>On cooldown! {remaining} remaining.</red>"
-  requirements_not_met: "<red>Requirements not met: {missing}</red>"
-  self_targeting: "<red>You cannot target yourself!</red>"
-  already_exists: "<red>{type} already exists: {id}</red>"
-  expired: "<red>{type} has expired: {id}</red>"
-  not_unlocked: "<red>{type} not unlocked: {id}</red>"
-  permission_denied: "<red>Permission denied: {permission}</red>"
-  invalid_state: "<red>Invalid state: {message}</red>"
-  invalid_amount: "<red>Invalid amount! Must be between {min} and {max}.</red>"
-  no_permission: "<red>You don't have permission to do that.</red>"
-  player_only: "<red>This command can only be used by players.</red>"
-
-rank:
-  error:
-    unknown_subcommand: "<red>Unknown rank subcommand. Use /rank help for available commands.</red>"
-    player_not_found: "<red>Player not found: {playerName}</red>"
-    grant_failed: "<red>Failed to grant rank.</red>"
-    reload_failed: "<red>Failed to reload ranks: {error}</red>"
-  success:
-    rank_granted: "<green>Granted rank {rankName} to {playerName}!</green>"
-    rank_revoked: "<yellow>Revoked rank {rankName} from {playerName}.</yellow>"
-    reloaded: "<green>Rank configuration reloaded!</green>"
-    rank_unlocked: "<green>Congratulations! You unlocked the {rankName} rank!</green>"
-  opening_view: "<gray>Opening rank view...</gray>"
-  no_progress: "<yellow>You haven't started any rank paths yet.</yellow>"
-  progress_header: "<yellow>Your Rank Progress:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Available Rank Trees:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} ranks)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Usage: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Unknown admin command.</red>"
-    grant:
-      usage: "<yellow>Usage: /rank admin grant <player> <rank></yellow>"
-    revoke:
-      usage: "<yellow>Usage: /rank admin revoke <player> <rank></yellow>"
-  help: |
-    <yellow>Rank Commands:</yellow>
-    <gray>/rank</gray> - Open rank menu
-    <gray>/rank view</gray> - View rank trees
-    <gray>/rank progress</gray> - View your progress
-    <gray>/rank trees</gray> - List available trees
-    <gray>/rank admin</gray> - Admin commands
-  notification:
-    title: "<gold>Rank Unlocked!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>You unlocked {rankName}!</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>Unknown bounty subcommand. Use /bounty help for available commands.</red>"
-    player_not_found: "<red>Player not found: {playerName}</red>"
-    self_target: "<red>You cannot place a bounty on yourself!</red>"
-    invalid_amount: "<red>Invalid amount. Please enter a valid number.</red>"
-    invalid_id: "<red>Invalid bounty ID.</red>"
-    create_failed: "<red>Failed to create bounty: {error}</red>"
-    cancel_failed: "<red>Failed to cancel bounty. You may not own this bounty.</red>"
-  success:
-    bounty_created: "<green>Bounty of {amount} placed on {targetName}!</green>"
-    bounty_cancelled: "<yellow>Bounty cancelled. Funds refunded.</yellow>"
-    bounty_removed: "<green>Bounty removed by admin.</green>"
-    bounty_claimed: "<green>You claimed a bounty worth {amount}!</green>"
-    reloaded: "<green>Bounty configuration reloaded!</green>"
-  create:
-    usage: "<yellow>Usage: /bounty create <player> <amount></yellow>"
-  cancel:
-    usage: "<yellow>Usage: /bounty cancel <bountyId></yellow>"
-  list:
-    empty: "<yellow>No active bounties.</yellow>"
-    header: "<yellow>Active Bounties ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(by {placer})</dark_gray></gray>"
+# Bounty Main View
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Bounty System</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Create Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to create a new bounty</gradient>"
+      - "<gradient:#6b7280:#9ca3af>on another player</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 View Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View all active bounties</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 My Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View bounties you've created</gradient>"
   leaderboard:
-    header: "<yellow>Bounty Hunter Leaderboard:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} kills, {earned} earned</gray>"
-  my:
-    header: "<yellow>Your Bounties:</yellow>"
-    placed_header: "<gray>Bounties you placed:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Bounties on you:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(by {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Usage: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Unknown admin command.</red>"
-    remove:
-      usage: "<yellow>Usage: /bounty admin remove <bountyId></yellow>"
-  help: |
-    <yellow>Bounty Commands:</yellow>
-    <gray>/bounty</gray> - List active bounties
-    <gray>/bounty create <player> <amount></gray> - Create a bounty
-    <gray>/bounty cancel <id></gray> - Cancel your bounty
-    <gray>/bounty leaderboard</gray> - View top hunters
-    <gray>/bounty my</gray> - View your bounties
-    <gray>/bounty admin</gray> - Admin commands
-  announcement:
-    created: "<yellow>{placer} placed a bounty of {amount} on {target}!</yellow>"
-    claimed: "<green>{hunter} claimed the bounty on {target} worth {amount}!</green>"
-    expired: "<gray>Bounty on {target} has expired.</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 Leaderboard</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Top bounty hunters</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>Unknown perk subcommand. Use /perk help for available commands.</red>"
-    player_not_found: "<red>Player not found: {playerName}</red>"
-    perk_not_found: "<red>Perk not found: {perkId}</red>"
-    perk_on_cooldown: "<red>This perk is on cooldown! {remaining} remaining.</red>"
-    perk_not_active: "<red>This perk is not currently active.</red>"
-    activate_failed: "<red>Failed to activate perk: {error}</red>"
-    grant_failed: "<red>Failed to grant perk.</red>"
-    reload_failed: "<red>Failed to reload perks: {error}</red>"
-  success:
-    perk_activated: "<green>Perk {perkName} activated!</green>"
-    perk_deactivated: "<yellow>Perk {perkName} deactivated.</yellow>"
-    perk_granted: "<green>Granted perk {perkName} to {playerName}!</green>"
-    perk_revoked: "<yellow>Revoked perk {perkName} from {playerName}.</yellow>"
-    perk_unlocked: "<green>You unlocked the {perkName} perk!</green>"
-    reloaded: "<green>Perk configuration reloaded!</green>"
-  activate:
-    usage: "<yellow>Usage: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Usage: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Usage: /perk info <perkId></yellow>"
-    header: "<yellow>Perk Info: {id}</yellow>"
-    details: "<gray>Category: {category} | Cooldown: {cooldown}s | Duration: {duration}s</gray>"
-  list:
-    empty: "<yellow>No perks available.</yellow>"
-    header: "<yellow>Available Perks ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Usage: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Unknown admin command.</red>"
-    grant:
-      usage: "<yellow>Usage: /perk admin grant <player> <perk></yellow>"
-    revoke:
-      usage: "<yellow>Usage: /perk admin revoke <player> <perk></yellow>"
-  help: |
-    <yellow>Perk Commands:</yellow>
-    <gray>/perk</gray> - List available perks
-    <gray>/perk activate <perk></gray> - Activate a perk
-    <gray>/perk deactivate <perk></gray> - Deactivate a perk
-    <gray>/perk info <perk></gray> - View perk details
-    <gray>/perk admin</gray> - Admin commands
-
-gui:
-  common:
-    back: "<yellow>← Back</yellow>"
-    close: "<red>Close</red>"
-    next_page: "<yellow>Next Page →</yellow>"
-    previous_page: "<yellow>← Previous Page</yellow>"
-    page_info: "<gray>Page {current}/{total}</gray>"
-    loading: "<gray>Loading...</gray>"
-    confirm: "<green>Confirm</green>"
-    cancel: "<red>Cancel</red>"
-
-perk_names:
-  speed: "Speed Boost"
-  strength: "Strength"
-  resistance: "Resistance"
-  regeneration: "Regeneration"
-  night_vision: "Night Vision"
-  fire_resistance: "Fire Resistance"
-  water_breathing: "Water Breathing"
-  jump_boost: "Jump Boost"
-  haste: "Haste"
-  luck: "Luck"
-  fly: "Flight"
-  double_experience: "Double XP"
-  prevent_death: "Death Prevention"
-  treasure_hunter: "Treasure Hunter"
-  vampire: "Vampire"
-
-rank_trees:
-  warrior:
-    name: "Warrior"
-    description: "The path of strength and combat."
-  cleric:
-    name: "Cleric"
-    description: "The path of healing and support."
-  mage:
-    name: "Mage"
-    description: "The path of magic and wisdom."
-  rogue:
-    name: "Rogue"
-    description: "The path of stealth and agility."
-  merchant:
-    name: "Merchant"
-    description: "The path of trade and wealth."
-  ranger:
-    name: "Ranger"
-    description: "The path of nature and archery."
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Permission: {permission}"
-  rank: "Rank: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Level {level}"
-
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}d"
+# Prefix
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "

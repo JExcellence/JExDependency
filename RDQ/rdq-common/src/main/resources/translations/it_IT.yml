@@ -1,214 +1,281 @@
-# RDQ Italian Translations
-prefix: "<gold>[RDQ]</gold> "
+# RDQ Common File di Traduzione - Italiano
+# Formato MiniMessage con gradienti e stile
+# I segnaposto usano il formato %placeholder%
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ si sta inizializzando. Attendere...</red>"
-    unknown_subcommand: "<red>Sottocomando sconosciuto. Usa /rdq help.</red>"
-    reload_failed: "<red>Ricaricamento fallito: {error}</red>"
-  success:
-    reloaded: "<green>Configurazione RDQ ricaricata!</green>"
+# Messaggi del Listener delle Taglie
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Hai una taglia attiva sulla tua testa!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Valore della Taglia:</gradient> <gradient:#10b981:#34d399>€%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Scade alle:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Commissionata da:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 TAGLIA RISCOSSA! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Hai riscosso con successo la taglia su</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>La tua parte:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Qualcuno</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>ha riscosso la taglia su</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% giocatori</gradient> <gradient:#a855f7:#c084fc>hanno riscosso la taglia su</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-error:
-  not_found: "<red>{type} non trovato: {id}</red>"
-  insufficient_funds: "<red>Fondi insufficienti! Richiesto: {required}, Disponibile: {available}</red>"
-  on_cooldown: "<red>In ricarica! {remaining} rimanente.</red>"
-  requirements_not_met: "<red>Requisiti non soddisfatti: {missing}</red>"
-  self_targeting: "<red>Non puoi selezionare te stesso!</red>"
-  already_exists: "<red>{type} esiste già: {id}</red>"
-  expired: "<red>{type} è scaduto: {id}</red>"
-  not_unlocked: "<red>{type} non sbloccato: {id}</red>"
-  permission_denied: "<red>Permesso negato: {permission}</red>"
-  invalid_state: "<red>Stato non valido: {message}</red>"
-  invalid_amount: "<red>Importo non valido! Deve essere tra {min} e {max}.</red>"
-  no_permission: "<red>Non hai il permesso.</red>"
-  player_only: "<red>Questo comando è solo per i giocatori.</red>"
+# Messaggi di Conferma Creazione Taglia
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Taglia creata con successo su</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Errore nella creazione della taglia:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
-rank:
-  error:
-    unknown_subcommand: "<red>Sottocomando grado sconosciuto.</red>"
-    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
-    grant_failed: "<red>Assegnazione grado fallita.</red>"
-    reload_failed: "<red>Ricaricamento gradi fallito: {error}</red>"
-  success:
-    rank_granted: "<green>Grado {rankName} assegnato a {playerName}!</green>"
-    rank_revoked: "<yellow>Grado {rankName} revocato da {playerName}.</yellow>"
-    reloaded: "<green>Configurazione gradi ricaricata!</green>"
-    rank_unlocked: "<green>Congratulazioni! Hai sbloccato il grado {rankName}!</green>"
-  opening_view: "<gray>Apertura vista gradi...</gray>"
-  no_progress: "<yellow>Non hai ancora iniziato alcun percorso di grado.</yellow>"
-  progress_header: "<yellow>Il Tuo Progresso Grado:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Alberi di Grado Disponibili:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} gradi)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Uso: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Comando admin sconosciuto.</red>"
-    grant:
-      usage: "<yellow>Uso: /rank admin grant <giocatore> <grado></yellow>"
-    revoke:
-      usage: "<yellow>Uso: /rank admin revoke <giocatore> <grado></yellow>"
-  help: |
-    <yellow>Comandi Grado:</yellow>
-    <gray>/rank</gray> - Apri menu gradi
-    <gray>/rank view</gray> - Visualizza alberi gradi
-    <gray>/rank progress</gray> - Visualizza progresso
-    <gray>/rank admin</gray> - Comandi admin
-  notification:
-    title: "<gold>Grado Sbloccato!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Hai sbloccato {rankName}!</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>Sottocomando taglia sconosciuto.</red>"
-    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
-    self_target: "<red>Non puoi mettere una taglia su te stesso!</red>"
-    invalid_amount: "<red>Importo non valido.</red>"
-    invalid_id: "<red>ID taglia non valido.</red>"
-    create_failed: "<red>Creazione taglia fallita: {error}</red>"
-    cancel_failed: "<red>Annullamento taglia fallito.</red>"
-  success:
-    bounty_created: "<green>Taglia di {amount} piazzata su {targetName}!</green>"
-    bounty_cancelled: "<yellow>Taglia annullata. Fondi rimborsati.</yellow>"
-    bounty_removed: "<green>Taglia rimossa dall'admin.</green>"
-    bounty_claimed: "<green>Hai riscosso una taglia di {amount}!</green>"
-    reloaded: "<green>Configurazione taglie ricaricata!</green>"
-  create:
-    usage: "<yellow>Uso: /bounty create <giocatore> <importo></yellow>"
-  cancel:
-    usage: "<yellow>Uso: /bounty cancel <tagliaId></yellow>"
-  list:
-    empty: "<yellow>Nessuna taglia attiva.</yellow>"
-    header: "<yellow>Taglie Attive ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(da {placer})</dark_gray></gray>"
+# Interfaccia Panoramica Taglie (Menu Principale e Panoramica)
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Sistema Taglie</gradient>"
+  
+  # Pulsanti del menu principale
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Crea Taglia</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per creare una nuova taglia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>su un altro giocatore</gradient>"
+  
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Visualizza Taglie</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Visualizza tutte le taglie attive</gradient>"
+  
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Le Mie Taglie</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Visualizza le taglie che hai creato</gradient>"
+  
   leaderboard:
-    header: "<yellow>Classifica Cacciatori di Taglie:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} uccisioni, {earned} guadagnati</gray>"
-  my:
-    header: "<yellow>Le Tue Taglie:</yellow>"
-    placed_header: "<gray>Taglie che hai piazzato:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Taglie su di te:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(da {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Uso: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Comando admin sconosciuto.</red>"
-    remove:
-      usage: "<yellow>Uso: /bounty admin remove <tagliaId></yellow>"
-  help: |
-    <yellow>Comandi Taglia:</yellow>
-    <gray>/bounty</gray> - Lista taglie attive
-    <gray>/bounty create <giocatore> <importo></gray> - Crea taglia
-    <gray>/bounty cancel <id></gray> - Annulla taglia
-    <gray>/bounty leaderboard</gray> - Classifica
-    <gray>/bounty my</gray> - Le tue taglie
-  announcement:
-    created: "<yellow>{placer} ha piazzato una taglia di {amount} su {target}!</yellow>"
-    claimed: "<green>{hunter} ha riscosso la taglia su {target} del valore di {amount}!</green>"
-    expired: "<gray>La taglia su {target} è scaduta.</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 Classifica</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Migliori cacciatori di taglie</gradient>"
+  
+  # Voci dell'elenco taglie
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Taglia su</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Obiettivo:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Commissionario:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Creata:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Clicca per vedere i dettagli</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>Sottocomando perk sconosciuto.</red>"
-    player_not_found: "<red>Giocatore non trovato: {playerName}</red>"
-    perk_not_found: "<red>Perk non trovato: {perkId}</red>"
-    perk_on_cooldown: "<red>Questo perk è in ricarica! {remaining} rimanente.</red>"
-    perk_not_active: "<red>Questo perk non è attivo.</red>"
-    activate_failed: "<red>Attivazione perk fallita: {error}</red>"
-    grant_failed: "<red>Assegnazione perk fallita.</red>"
-    reload_failed: "<red>Ricaricamento perk fallito: {error}</red>"
-  success:
-    perk_activated: "<green>Perk {perkName} attivato!</green>"
-    perk_deactivated: "<yellow>Perk {perkName} disattivato.</yellow>"
-    perk_granted: "<green>Perk {perkName} assegnato a {playerName}!</green>"
-    perk_revoked: "<yellow>Perk {perkName} revocato da {playerName}.</yellow>"
-    perk_unlocked: "<green>Hai sbloccato il perk {perkName}!</green>"
-    reloaded: "<green>Configurazione perk ricaricata!</green>"
-  activate:
-    usage: "<yellow>Uso: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Uso: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Uso: /perk info <perkId></yellow>"
-    header: "<yellow>Info Perk: {id}</yellow>"
-    details: "<gray>Categoria: {category} | Ricarica: {cooldown}s | Durata: {duration}s</gray>"
-  list:
-    empty: "<yellow>Nessun perk disponibile.</yellow>"
-    header: "<yellow>Perk Disponibili ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Uso: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Comando admin sconosciuto.</red>"
-    grant:
-      usage: "<yellow>Uso: /perk admin grant <giocatore> <perk></yellow>"
-    revoke:
-      usage: "<yellow>Uso: /perk admin revoke <giocatore> <perk></yellow>"
-  help: |
-    <yellow>Comandi Perk:</yellow>
-    <gray>/perk</gray> - Lista perk disponibili
-    <gray>/perk activate <perk></gray> - Attiva perk
-    <gray>/perk deactivate <perk></gray> - Disattiva perk
-    <gray>/perk info <perk></gray> - Dettagli perk
+# Interfaccia Creazione Taglia
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Crea Taglia</gradient>"
+  
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Seleziona Obiettivo</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per scegliere un giocatore</gradient>"
+      - "<gradient:#6b7280:#9ca3af>su cui mettere una taglia</gradient>"
+  
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Aggiungi Ricompense</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Clicca per aggiungere oggetti</gradient>"
+      - "<gradient:#6b7280:#9ca3af>come ricompense</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Seleziona prima un obiettivo!</gradient>"
+  
+  add_currencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Aggiungi Valuta</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per aggiungere ricompense</gradient>"
+      - "<gradient:#6b7280:#9ca3af>in valuta per la taglia</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Seleziona prima un obiettivo!</gradient>"
+  
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Crea Taglia</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per creare la taglia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>con le ricompense selezionate</gradient>"
+  
+  confirm:
+    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Taglia creata con successo su</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
 
-gui:
-  common:
-    back: "<yellow>← Indietro</yellow>"
-    close: "<red>Chiudi</red>"
-    next_page: "<yellow>Pagina Successiva →</yellow>"
-    previous_page: "<yellow>← Pagina Precedente</yellow>"
-    page_info: "<gray>Pagina {current}/{total}</gray>"
-    loading: "<gray>Caricamento...</gray>"
-    confirm: "<green>Conferma</green>"
-    cancel: "<red>Annulla</red>"
+# Interfaccia Informazioni Giocatore Taglia
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Taglia su</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Obiettivo di questa taglia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clicca per vedere le info del giocatore</gradient>"
+  
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Visualizza Ricompense</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per vedere tutte le ricompense</gradient>"
+      - "<gradient:#6b7280:#9ca3af>per riscuotere questa taglia</gradient>"
+  
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Elimina Taglia</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Attenzione: Questa azione</gradient>"
+      - "<gradient:#ef4444:#f87171>non può essere annullata!</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Clicca per eliminare questa taglia</gradient>"
+  
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Taglia su</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>è stata eliminata!</gradient>"
 
-perk_names:
-  speed: "Velocità"
-  strength: "Forza"
-  resistance: "Resistenza"
-  regeneration: "Rigenerazione"
-  night_vision: "Visione Notturna"
-  fire_resistance: "Resistenza al Fuoco"
-  water_breathing: "Respirazione Subacquea"
-  jump_boost: "Salto Potenziato"
-  haste: "Fretta"
-  luck: "Fortuna"
-  fly: "Volo"
-  double_experience: "Doppia XP"
-  prevent_death: "Prevenzione Morte"
-  treasure_hunter: "Cacciatore di Tesori"
-  vampire: "Vampiro"
+# Interfaccia Ricompensa Taglia
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Ricompense Taglia</gradient>"
+  
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Nessuna Ricompensa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Aggiungi oggetti per creare</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ricompense per questa taglia</gradient>"
+  
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Aggiungi Oggetto</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Posiziona oggetti qui per aggiungerli come ricompense</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clic destro per rimuovere oggetti</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Obiettivo: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Questa taglia è posta su</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Ricompensa Taglia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Questo oggetto sarà dato a</gradient>"
+      - "<gradient:#6b7280:#9ca3af>chi riscuote la taglia</gradient>"
+  
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Nessun nuovo oggetto è stato aggiunto!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Alcuni oggetti sono stati lasciati cadere perché il tuo inventario era pieno!</gradient>"
 
-rank_trees:
-  warrior:
-    name: "Guerriero"
-    description: "Il percorso della forza e del combattimento."
-  cleric:
-    name: "Chierico"
-    description: "Il percorso della guarigione e del supporto."
-  mage:
-    name: "Mago"
-    description: "Il percorso della magia e della saggezza."
-  rogue:
-    name: "Ladro"
-    description: "Il percorso della furtività e dell'agilità."
-  merchant:
-    name: "Mercante"
-    description: "Il percorso del commercio e della ricchezza."
-  ranger:
-    name: "Ranger"
-    description: "Il percorso della natura e del tiro con l'arco."
+# Prefisso
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "#
+ Componenti UI della Piattaforma
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Permesso: {permission}"
-  rank: "Grado: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Livello {level}"
+# Paginazione
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Pagina corrente:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Pagine totali:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
 
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}g"
+# Oggetti Testa
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Indietro</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per tornare</gradient>"
+      - "<gradient:#6b7280:#9ca3af>al menu precedente</gradient>"
+  
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Procedi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per continuare</gradient>"
+      - "<gradient:#6b7280:#9ca3af>al passo successivo</gradient>"
+  
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Precedente</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per andare alla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>pagina precedente</gradient>"
+  
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Successivo</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per andare alla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>pagina successiva</gradient>"
+  
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Su</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per salire</gradient>"
+      - "<gradient:#6b7280:#9ca3af>di un livello</gradient>"
+  
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Annulla</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per annullare</gradient>"
+      - "<gradient:#6b7280:#9ca3af>questa azione</gradient>"
+  
+  pagination:
+    0:
+      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
+      lore: []
+    1:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
+      lore: []
+    2:
+      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
+      lore: []
+    3:
+      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
+      lore: []
+    4:
+      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
+      lore: []
+    5:
+      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
+      lore: []
+    6:
+      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
+      lore: []
+    7:
+      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
+      lore: []
+    8:
+      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
+      lore: []
+    9:
+      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
+      lore: []
+    10:
+      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
+      lore: []
+    11:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
+      lore: []
+    12:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
+      lore: []
+    13:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
+      lore: []
+    14:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
+      lore: []
+    15:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
+      lore: []
+# Puls
+ante Seleziona Obiettivo
+select_target:
+  name: "<gradient:#f59e0b:#fbbf24>🎯 Seleziona Obiettivo: %target_name%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Clicca per scegliere un giocatore</gradient>"
+    - "<gradient:#6b7280:#9ca3af>su cui mettere una taglia</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>Obiettivo attuale: %target_name%</gradient>"
+
+# Pulsante Conferma Taglia
+confirm_bounty:
+  name: "<gradient:#10b981:#34d399>✅ Crea Taglia</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Clicca per creare la taglia</gradient>"
+    - "<gradient:#6b7280:#9ca3af>con le ricompense selezionate</gradient>"
+
+# Messaggi di Conferma
+confirm:
+  no_player_selected: "<gradient:#ef4444:#f87171>❌ Nessun giocatore selezionato!</gradient> <gradient:#6b7280:#9ca3af>Per favore seleziona prima un obiettivo.</gradient>"
+  no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Nessuna ricompensa aggiunta!</gradient> <gradient:#6b7280:#9ca3af>Per favore aggiungi prima alcune ricompense.</gradient>"
+  confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Creando taglia su</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+  error: "<gradient:#ef4444:#f87171>❌ Errore:</gradient> <gradient:#6b7280:#9ca3af>Impossibile trovare il giocatore obiettivo %target_name%</gradient>"
+
+# Messaggio Rimborso Oggetti
+left_overs: "<gradient:#f59e0b:#fbbf24>📦 Oggetti restituiti!</gradient> <gradient:#6b7280:#9ca3af>Alcuni oggetti sono stati lasciati cadere a terra.</gradient>"

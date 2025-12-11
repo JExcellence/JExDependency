@@ -1,286 +1,43 @@
-# RDQ French (France) Translations
-# Traduction française pour le plugin RaindropQuests
+# RDQ Premium Fichier de Traduction - Français
+# Format MiniMessage avec dégradés et style
+# Les espaces réservés utilisent le format %placeholder%
 
-prefix: "<gold>[RDQ]</gold> "
+# Messages du Listener de Prime
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Vous avez une prime active sur votre tête!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Valeur de la Prime:</gradient> <gradient:#10b981:#34d399>%bounty_value%€</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Expire le:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Commandé par:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 PRIME RÉCLAMÉE! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Vous avez réclamé avec succès la prime sur</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Votre part:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Quelqu'un</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>a réclamé la prime sur</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% joueurs</gradient> <gradient:#a855f7:#c084fc>ont réclamé la prime sur</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ est en cours d'initialisation. Veuillez patienter...</red>"
-    unknown_subcommand: "<red>Sous-commande inconnue. Utilisez /rdq help pour les commandes disponibles.</red>"
-    reload_failed: "<red>Échec du rechargement: {error}</red>"
-  success:
-    reloaded: "<green>Configuration RDQ rechargée avec succès!</green>"
-  help: |
-    <yellow>Commandes RDQ:</yellow>
-    <gray>/rdq rank</gray> - Ouvrir le menu des rangs
-    <gray>/rdq bounty</gray> - Ouvrir le menu des primes
-    <gray>/rdq perk</gray> - Ouvrir le menu des avantages
-    <gray>/rdq reload</gray> - Recharger la configuration
-  rank:
-    opening_gui: "<gray>Ouverture du menu des rangs...</gray>"
-  bounty:
-    opening_gui: "<gray>Ouverture du menu des primes...</gray>"
-  perk:
-    opening_gui: "<gray>Ouverture du menu des avantages...</gray>"
-
-error:
-  not_found: "<red>{type} non trouvé: {id}</red>"
-  insufficient_funds: "<red>Fonds insuffisants! Requis: {required}, Disponible: {available}</red>"
-  on_cooldown: "<red>En recharge! {remaining} restant.</red>"
-  requirements_not_met: "<red>Conditions non remplies: {missing}</red>"
-  self_targeting: "<red>Vous ne pouvez pas vous cibler vous-même!</red>"
-  already_exists: "<red>{type} existe déjà: {id}</red>"
-  expired: "<red>{type} a expiré: {id}</red>"
-  not_unlocked: "<red>{type} non débloqué: {id}</red>"
-  permission_denied: "<red>Permission refusée: {permission}</red>"
-  invalid_state: "<red>État invalide: {message}</red>"
-  invalid_amount: "<red>Montant invalide! Doit être entre {min} et {max}.</red>"
-  no_permission: "<red>Vous n'avez pas la permission de faire cela.</red>"
-  player_only: "<red>Cette commande ne peut être utilisée que par les joueurs.</red>"
-
-rank:
-  error:
-    unknown_subcommand: "<red>Sous-commande de rang inconnue. Utilisez /rank help pour les commandes disponibles.</red>"
-    player_not_found: "<red>Joueur non trouvé: {playerName}</red>"
-    grant_failed: "<red>Échec de l'attribution du rang.</red>"
-    reload_failed: "<red>Échec du rechargement des rangs: {error}</red>"
-  success:
-    rank_granted: "<green>Rang {rankName} attribué à {playerName}!</green>"
-    rank_revoked: "<yellow>Rang {rankName} retiré de {playerName}.</yellow>"
-    reloaded: "<green>Configuration des rangs rechargée!</green>"
-    rank_unlocked: "<green>Félicitations! Vous avez débloqué le rang {rankName}!</green>"
-  opening_view: "<gray>Ouverture de la vue des rangs...</gray>"
-  no_progress: "<yellow>Vous n'avez pas encore commencé de chemin de rang.</yellow>"
-  progress_header: "<yellow>Votre Progression de Rang:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Arbres de Rang Disponibles:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} rangs)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Utilisation: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Commande admin inconnue.</red>"
-    grant:
-      usage: "<yellow>Utilisation: /rank admin grant <joueur> <rang></yellow>"
-    revoke:
-      usage: "<yellow>Utilisation: /rank admin revoke <joueur> <rang></yellow>"
-  help: |
-    <yellow>Commandes de Rang:</yellow>
-    <gray>/rank</gray> - Ouvrir le menu des rangs
-    <gray>/rank view</gray> - Voir les arbres de rang
-    <gray>/rank progress</gray> - Voir votre progression
-    <gray>/rank trees</gray> - Lister les arbres disponibles
-    <gray>/rank admin</gray> - Commandes admin
-  notification:
-    title: "<gold>Rang Débloqué!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Vous avez débloqué {rankName}!</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>Sous-commande de prime inconnue. Utilisez /bounty help pour les commandes disponibles.</red>"
-    player_not_found: "<red>Joueur non trouvé: {playerName}</red>"
-    self_target: "<red>Vous ne pouvez pas mettre une prime sur vous-même!</red>"
-    invalid_amount: "<red>Montant invalide. Veuillez entrer un nombre valide.</red>"
-    invalid_id: "<red>ID de prime invalide.</red>"
-    create_failed: "<red>Échec de la création de la prime: {error}</red>"
-    cancel_failed: "<red>Échec de l'annulation de la prime. Vous n'êtes peut-être pas le propriétaire.</red>"
-  success:
-    bounty_created: "<green>Prime de {amount} placée sur {targetName}!</green>"
-    bounty_cancelled: "<yellow>Prime annulée. Fonds remboursés.</yellow>"
-    bounty_removed: "<green>Prime supprimée par l'admin.</green>"
-    bounty_claimed: "<green>Vous avez réclamé une prime de {amount}!</green>"
-    reloaded: "<green>Configuration des primes rechargée!</green>"
-  create:
-    usage: "<yellow>Utilisation: /bounty create <joueur> <montant></yellow>"
-  cancel:
-    usage: "<yellow>Utilisation: /bounty cancel <primeId></yellow>"
-  list:
-    empty: "<yellow>Aucune prime active.</yellow>"
-    header: "<yellow>Primes Actives ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(par {placer})</dark_gray></gray>"
+# Vue Principale des Primes
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Système de Primes</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Créer une Prime</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Cliquez pour créer une nouvelle prime</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sur un autre joueur</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Voir les Primes</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Voir toutes les primes actives</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Mes Primes</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Voir les primes que vous avez créées</gradient>"
   leaderboard:
-    header: "<yellow>Classement des Chasseurs de Primes:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} éliminations, {earned} gagnés</gray>"
-  my:
-    header: "<yellow>Vos Primes:</yellow>"
-    placed_header: "<gray>Primes que vous avez placées:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Primes sur vous:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(par {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Utilisation: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Commande admin inconnue.</red>"
-    remove:
-      usage: "<yellow>Utilisation: /bounty admin remove <primeId></yellow>"
-  help: |
-    <yellow>Commandes de Prime:</yellow>
-    <gray>/bounty</gray> - Lister les primes actives
-    <gray>/bounty create <joueur> <montant></gray> - Créer une prime
-    <gray>/bounty cancel <id></gray> - Annuler votre prime
-    <gray>/bounty leaderboard</gray> - Voir les meilleurs chasseurs
-    <gray>/bounty my</gray> - Voir vos primes
-    <gray>/bounty admin</gray> - Commandes admin
-  announcement:
-    created: "<yellow>{placer} a placé une prime de {amount} sur {target}!</yellow>"
-    claimed: "<green>{hunter} a réclamé la prime sur {target} d'une valeur de {amount}!</green>"
-    expired: "<gray>La prime sur {target} a expiré.</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 Classement</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Meilleurs chasseurs de primes</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>Sous-commande d'avantage inconnue. Utilisez /perk help pour les commandes disponibles.</red>"
-    player_not_found: "<red>Joueur non trouvé: {playerName}</red>"
-    perk_not_found: "<red>Avantage non trouvé: {perkId}</red>"
-    perk_on_cooldown: "<red>Cet avantage est en recharge! {remaining} restant.</red>"
-    perk_not_active: "<red>Cet avantage n'est pas actuellement actif.</red>"
-    activate_failed: "<red>Échec de l'activation de l'avantage: {error}</red>"
-    grant_failed: "<red>Échec de l'attribution de l'avantage.</red>"
-    reload_failed: "<red>Échec du rechargement des avantages: {error}</red>"
-  success:
-    perk_activated: "<green>Avantage {perkName} activé!</green>"
-    perk_deactivated: "<yellow>Avantage {perkName} désactivé.</yellow>"
-    perk_granted: "<green>Avantage {perkName} attribué à {playerName}!</green>"
-    perk_revoked: "<yellow>Avantage {perkName} retiré de {playerName}.</yellow>"
-    perk_unlocked: "<green>Vous avez débloqué l'avantage {perkName}!</green>"
-    reloaded: "<green>Configuration des avantages rechargée!</green>"
-  activate:
-    usage: "<yellow>Utilisation: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Utilisation: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Utilisation: /perk info <perkId></yellow>"
-    header: "<yellow>Info Avantage: {id}</yellow>"
-    details: "<gray>Catégorie: {category} | Recharge: {cooldown}s | Durée: {duration}s</gray>"
-  list:
-    empty: "<yellow>Aucun avantage disponible.</yellow>"
-    header: "<yellow>Avantages Disponibles ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Utilisation: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Commande admin inconnue.</red>"
-    grant:
-      usage: "<yellow>Utilisation: /perk admin grant <joueur> <avantage></yellow>"
-    revoke:
-      usage: "<yellow>Utilisation: /perk admin revoke <joueur> <avantage></yellow>"
-  help: |
-    <yellow>Commandes d'Avantage:</yellow>
-    <gray>/perk</gray> - Lister les avantages disponibles
-    <gray>/perk activate <avantage></gray> - Activer un avantage
-    <gray>/perk deactivate <avantage></gray> - Désactiver un avantage
-    <gray>/perk info <avantage></gray> - Voir les détails
-    <gray>/perk admin</gray> - Commandes admin
-
-gui:
-  common:
-    back: "<yellow>← Retour</yellow>"
-    close: "<red>Fermer</red>"
-    next_page: "<yellow>Page Suivante →</yellow>"
-    previous_page: "<yellow>← Page Précédente</yellow>"
-    page_info: "<gray>Page {current}/{total}</gray>"
-    loading: "<gray>Chargement...</gray>"
-    confirm: "<green>Confirmer</green>"
-    cancel: "<red>Annuler</red>"
-  rank:
-    main_title: "<dark_purple>Arbres de Rang</dark_purple>"
-    tree_title: "<dark_purple>{treeName}</dark_purple>"
-    detail_title: "<dark_purple>Rang: {rankName}</dark_purple>"
-    progress_title: "<dark_purple>Votre Progression</dark_purple>"
-    unlocked: "<green>✓ Débloqué</green>"
-    locked: "<red>✗ Verrouillé</red>"
-    current: "<yellow>★ Actuel</yellow>"
-    unlock_button: "<green>Cliquez pour Débloquer</green>"
-    requirements_header: "<yellow>Conditions:</yellow>"
-    requirement_met: "<green>✓ {requirement}</green>"
-    requirement_unmet: "<red>✗ {requirement}</red>"
-  bounty:
-    main_title: "<gold>Tableau des Primes</gold>"
-    create_title: "<gold>Créer une Prime</gold>"
-    list_title: "<gold>Primes Actives</gold>"
-    detail_title: "<gold>Détails de la Prime</gold>"
-    leaderboard_title: "<gold>Meilleurs Chasseurs</gold>"
-    my_bounties_title: "<gold>Mes Primes</gold>"
-    target_select: "<yellow>Sélectionner la Cible</yellow>"
-    amount_input: "<yellow>Entrer le Montant</yellow>"
-    create_button: "<green>Créer la Prime</green>"
-  perk:
-    main_title: "<aqua>Avantages</aqua>"
-    list_title: "<aqua>Avantages Disponibles</aqua>"
-    detail_title: "<aqua>Avantage: {perkName}</aqua>"
-    unlock_title: "<aqua>Débloquer l'Avantage</aqua>"
-    admin_title: "<aqua>Admin Avantages</aqua>"
-    active: "<green>● Actif</green>"
-    inactive: "<gray>○ Inactif</gray>"
-    on_cooldown: "<red>⏱ En Recharge ({remaining})</red>"
-    activate_button: "<green>Activer</green>"
-    deactivate_button: "<red>Désactiver</red>"
-    unlock_button: "<green>Débloquer</green>"
-    requirements_header: "<yellow>Conditions:</yellow>"
-
-perk_names:
-  speed: "Vitesse"
-  strength: "Force"
-  resistance: "Résistance"
-  regeneration: "Régénération"
-  night_vision: "Vision Nocturne"
-  fire_resistance: "Résistance au Feu"
-  water_breathing: "Respiration Aquatique"
-  jump_boost: "Saut Amélioré"
-  haste: "Célérité"
-  luck: "Chance"
-  fly: "Vol"
-  double_experience: "Double XP"
-  prevent_death: "Prévention de Mort"
-  treasure_hunter: "Chasseur de Trésors"
-  vampire: "Vampire"
-
-perk_descriptions:
-  speed: "Déplacez-vous plus vite pendant un temps limité."
-  strength: "Infligez plus de dégâts aux ennemis."
-  resistance: "Subissez moins de dégâts des attaques."
-  regeneration: "Régénérez lentement votre santé."
-  night_vision: "Voyez clairement dans l'obscurité."
-  fire_resistance: "Devenez immunisé aux dégâts de feu."
-  water_breathing: "Respirez sous l'eau."
-  jump_boost: "Sautez plus haut que la normale."
-  haste: "Minez et attaquez plus vite."
-  luck: "Chance accrue d'obtenir des objets rares."
-  fly: "Obtenez la capacité de voler."
-  double_experience: "Gagnez le double de points d'expérience."
-  prevent_death: "Survivez à un coup fatal une fois."
-  treasure_hunter: "Trouvez de meilleurs objets dans les coffres."
-  vampire: "Soignez-vous en infligeant des dégâts."
-
-rank_trees:
-  warrior:
-    name: "Guerrier"
-    description: "Le chemin de la force et du combat."
-  cleric:
-    name: "Clerc"
-    description: "Le chemin de la guérison et du soutien."
-  mage:
-    name: "Mage"
-    description: "Le chemin de la magie et de la sagesse."
-  rogue:
-    name: "Voleur"
-    description: "Le chemin de la furtivité et de l'agilité."
-  merchant:
-    name: "Marchand"
-    description: "Le chemin du commerce et de la richesse."
-  ranger:
-    name: "Rôdeur"
-    description: "Le chemin de la nature et du tir à l'arc."
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Permission: {permission}"
-  rank: "Rang: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Niveau {level}"
-
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}j"
-  format:
-    short: "{hours}h {minutes}m {seconds}s"
-    long: "{days} jours, {hours} heures, {minutes} minutes"
+# Prefix
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "

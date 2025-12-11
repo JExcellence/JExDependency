@@ -4,6 +4,7 @@ import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.converter.RewardConverter;
 import com.raindropcentral.rdq.reward.AbstractReward;
+import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import de.jexcellence.hibernate.entity.AbstractEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -48,11 +49,13 @@ public class BountyReward extends AbstractEntity {
     public BountyReward(@NotNull AbstractReward reward) {
         this.reward = reward;
         this.contributorUniqueId = null;
+        this.icon = new IconSection(new EvaluationEnvironmentBuilder());
     }
 
     public BountyReward(@NotNull AbstractReward reward, @NotNull UUID contributorUniqueId) {
         this.reward = reward;
         this.contributorUniqueId = contributorUniqueId;
+        this.icon = new IconSection(new EvaluationEnvironmentBuilder());
     }
 
     public BountyReward(@NotNull AbstractReward reward, @NotNull IconSection icon, @Nullable UUID contributorUniqueId) {

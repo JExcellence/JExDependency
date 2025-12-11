@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.view.bounty;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
+import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
 import com.raindropcentral.rdq.reward.ItemReward;
 import com.raindropcentral.rdq.reward.Reward;
 import com.raindropcentral.rplatform.utility.heads.view.Cancel;
@@ -20,9 +21,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * View for displaying detailed information about a specific bounty and its target player.
@@ -52,12 +51,12 @@ public class BountyPlayerInfoView extends BaseView {
 	/**
 	 * The bounty being displayed in this view.
 	 */
-	private final State<Bounty> bounty = initialState("bounty");
+	private final State<Optional<Bounty>> bounty = initialState("bounty");
 	
 	/**
 	 * The target player of the bounty.
 	 */
-	private final State<OfflinePlayer> target = initialState("target");
+	private final State<Optional<OfflinePlayer>> target = initialState("target");
 	
 	@Override
 	protected String[] getLayout() {
@@ -84,7 +83,7 @@ public class BountyPlayerInfoView extends BaseView {
 		
 		return Map.of(
 			"target_name",
-				Bukkit.getOfflinePlayer(this.bounty.get(open).getTargetUniqueId()).getName()
+				Bukkit.getOfflinePlayer(this.bounty.get(open).get().getTargetUniqueId()).getName()
 		);
 	}
 	
@@ -103,9 +102,8 @@ public class BountyPlayerInfoView extends BaseView {
 		render.layoutSlot(
 			'p',
 			UnifiedBuilderFactory
-				.head()
-				.setPlayerHead(this.target.get(render))
-				.setName(
+				.unifiedHead(this.target.get(render).get())
+				.setDisplayName(
 					this.i18n(
 						    "target.name",
 						    player
@@ -123,11 +121,13 @@ public class BountyPlayerInfoView extends BaseView {
 		render.layoutSlot(
 			'i',
 			UnifiedBuilderFactory
-				.head()
-				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+				.unifiedHead()
 				.build()
 			//TODO
 		);
+
+		List<BountyReward> bountyRewards = new ArrayList<>(this.bounty.get(render).get().getRewards());
+		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).toList();
 		
 		render
 			.layoutSlot(
@@ -148,9 +148,9 @@ public class BountyPlayerInfoView extends BaseView {
 						    .withAll(
 							    Map.of(
 								    "item_amount",
-								    this.bounty.get(render).getRewards().stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).mapToInt(bountyReward -> ((ItemReward) bountyReward.getReward()).getItem().getAmount()),
+										bountyRewards.stream().mapToInt(bountyReward -> ((ItemReward) bountyReward.getReward()).getItem().getAmount()),
 								    "item_list",
-								    String.join(", ", this.bounty.get(render).getRewards().stream().map(bountyReward -> bountyReward.getIcon().getDescriptionKey()).toList())
+								    String.join(", ", bountyRewards.stream().map(bountyReward -> bountyReward.getIcon().getDescriptionKey()).toList())
 							    )
 						    )
 						    .build()
@@ -164,13 +164,13 @@ public class BountyPlayerInfoView extends BaseView {
 					BountyRewardView.class,
 					Map.of(
 						"plugin",
-						this.rdq.get(clickContext),
+						rdq.get(clickContext),
 						"target",
-						Optional.of(this.target.get(clickContext)),
+						target.get(clickContext),
 						"rewards",
-						this.bounty.get(clickContext).getRewards(),
+						bounty.get(clickContext).get().getRewards(),
 						"bounty",
-						Optional.of(this.bounty.get(clickContext)),
+							bounty.get(clickContext),
 						"insertedItems",
 						new HashMap<>()
 					)
@@ -186,13 +186,13 @@ public class BountyPlayerInfoView extends BaseView {
 				BountyMainView.class,
 				Map.of(
 					"plugin",
-					this.rdq.get(clickContext),
+					rdq.get(clickContext),
 					"target",
-					Optional.of(this.target.get(clickContext)),
+					target.get(clickContext),
 					"rewards",
-					this.bounty.get(clickContext).getRewards(),
+					this.bounty.get(clickContext).get().getRewards(),
 					"bounty",
-					Optional.of(this.bounty.get(clickContext)),
+					this.bounty.get(clickContext),
 					"insertedItems",
 					new HashMap<>()
 				)
@@ -215,17 +215,34 @@ public class BountyPlayerInfoView extends BaseView {
 			).displayIf(
 				context -> context.getPlayer().isOp()
 			).onClick(clickContext ->
-				          clickContext.openForPlayer(
-					          ConfirmationView.class,
-					          Map.of(
-						          "titleKey",
-						          "confirm.delete.title",
-						          "messageKey",
-						          "confirm.delete.message",
-						          "initialData",
-						          clickContext.getInitialData()
-					          )
-				          )
+				new ConfirmationView.Builder()
+						.withKey("bounty_player_info_ui")
+								.withMessageKey("bounty_player_info_ui.confirm.message")
+										.withInitialData(
+												Map.of(
+												"plugin",
+												rdq.get(clickContext),
+												"target",
+												this.target.get(render),
+												"rewards",
+												new ArrayList<>(),
+												"bounty",
+												bounty.get(clickContext),
+												"insertedItems",
+												new HashMap<>()
+												)
+										).withCallback(
+												confirmationResult -> {
+													if (confirmationResult) {
+														rdq.get(clickContext).getBountyFactory().deleteBounty(this.bounty.get(clickContext).get());
+														player.closeInventory();
+													}
+
+													else {
+														//todo nothing
+													}
+												}
+						).withParentView(BountyPlayerInfoView.class).openFor(clickContext, player)
 			);
 	}
 	
@@ -253,18 +270,18 @@ public class BountyPlayerInfoView extends BaseView {
 			return;
 		}
 		
-		var bounty = (Bounty) initialData.get("bounty");
+		var bounty = (Optional<Bounty>) initialData.get("bounty");
 		if (
-			bounty == null
+			bounty.isEmpty()
 		) {
 			return;
 		}
 		
-		var targetPlayer = (OfflinePlayer) initialData.get("target");
+		var targetPlayer = (Optional<OfflinePlayer>) initialData.get("target");
 		
 		final RDQ rdq = (RDQ) initialData.get("plugin");
 		
-		var commissionerUniqueId = bounty.getCommissionerUniqueId();
+		var commissionerUniqueId = bounty.get().getCommissionerUniqueId();
 
 		rdq.getPlayerRepository().findByAttributesAsync(
 				Map.of("uniqueId", commissionerUniqueId)
@@ -277,25 +294,22 @@ public class BountyPlayerInfoView extends BaseView {
 					rdqPlayer
 			).thenAcceptAsync(
 					player -> {
-						rdq.getBountyRepository().deleteAsync(bounty.getId()).thenAccept(
+						rdq.getBountyRepository().deleteAsync(bounty.get().getId()).thenAccept(
 								(v) -> {
-									/*rdq.getBountyFactory().removeBounty(
-											targetPlayer.getUniqueId()
-									);*/
+									// Remove visual indicators when bounty is deleted (Requirement 14.4)
+									rdq.getVisualIndicatorManager().removeIndicators(targetPlayer.get().getUniqueId());
 
 									i18n("deleted_bounty_successfully", origin.getPlayer()
 									).withPrefix().withAll(
 											Map.of(
 													"bounty_id",
-													bounty.getId(),
+													bounty.get().getId(),
 													"target_name",
-													targetPlayer.getName(),
+													targetPlayer.get().getName(),
 													"target_uniqueId",
-													targetPlayer.getUniqueId()
+													targetPlayer.get().getUniqueId()
 											)
 									).send();
-
-									rdq.getBountyRepository().delete(bounty.getId());
 								}
 						);
 					},

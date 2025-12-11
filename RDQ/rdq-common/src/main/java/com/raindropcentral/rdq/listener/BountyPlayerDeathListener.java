@@ -2,7 +2,6 @@ package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.bounty.claim.ClaimResult;
-import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import de.jexcellence.jextranslate.api.TranslationKey;
 import de.jexcellence.jextranslate.api.TranslationService;
 import org.bukkit.Bukkit;
@@ -29,11 +28,9 @@ public class BountyPlayerDeathListener implements Listener {
     private static final Logger LOGGER = Logger.getLogger(BountyPlayerDeathListener.class.getName());
 
     private final RDQ rdq;
-    private final BountyFactory bountyFactory;
 
     public BountyPlayerDeathListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
-        this.bountyFactory = rdq.getBountyFactory();
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -45,11 +42,14 @@ public class BountyPlayerDeathListener implements Listener {
         var deathLocation = victim.getLocation();
 
         // Use BountyFactory's claim method which handles everything
-        bountyFactory.claimBounty(victimUuid, lastHitterUuid, deathLocation).thenAccept(claimResult -> {
+        rdq.getBountyFactory().claimBounty(victimUuid, lastHitterUuid, deathLocation).thenAccept(claimResult -> {
             if (!claimResult.hasWinners()) {
                 return;
             }
 
+            // Remove visual indicators from the victim (Requirement 14.4)
+            rdq.getVisualIndicatorManager().removeIndicators(victimUuid);
+            
             // Announce the claim
             Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
                 announceClaimToWinners(claimResult, victim);
@@ -96,14 +96,14 @@ public class BountyPlayerDeathListener implements Listener {
             var broadcastMsg = TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.broadcast"), victim)
                     .with("claimer_name", winnerName)
                     .with("victim_name", victim.getName())
-                    .build().component().toString();
-            Bukkit.broadcastMessage(broadcastMsg);
+                    .build().component();
+            Bukkit.broadcast(broadcastMsg);
         } else {
             var broadcastMsg = TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.broadcast_multiple"), victim)
                     .with("winner_count", String.valueOf(claimResult.getWinnerCount()))
                     .with("victim_name", victim.getName())
-                    .build().component().toString();
-            Bukkit.broadcastMessage(broadcastMsg);
+                    .build().component();
+            Bukkit.broadcast(broadcastMsg);
         }
     }
 }

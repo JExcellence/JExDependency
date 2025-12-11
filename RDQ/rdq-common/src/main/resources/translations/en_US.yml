@@ -1,558 +1,286 @@
-# RDQ English (US) Translations
-# Base translation file for RaindropQuests plugin
+# RDQ Common Translation File - English (US)
+# MiniMessage format with gradients and styling
+# Placeholders use %placeholder% format
 
-prefix: "<gold>[RDQ]</gold> "
+# Bounty Listener Messages
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Bounty Value:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Expires at:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Commissioned by:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 BOUNTY CLAIMED! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>You successfully claimed the bounty on</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Your share:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Someone</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>has claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% players</gradient> <gradient:#a855f7:#c084fc>have claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-# ============================================
-# General Messages
-# ============================================
-rdq:
-  error:
-    not_initialized: "<red>RDQ is still initializing. Please wait...</red>"
-    unknown_subcommand: "<red>Unknown subcommand. Use /rdq help for available commands.</red>"
-    reload_failed: "<red>Failed to reload: {error}</red>"
-  success:
-    reloaded: "<green>RDQ configuration reloaded successfully!</green>"
-  help: |
-    <yellow>RDQ Commands:</yellow>
-    <gray>/rdq rank</gray> - Open rank menu
-    <gray>/rdq bounty</gray> - Open bounty menu
-    <gray>/rdq perk</gray> - Open perk menu
-    <gray>/rdq reload</gray> - Reload configuration
-  rank:
-    opening_gui: "<gray>Opening rank menu...</gray>"
-  bounty:
-    opening_gui: "<gray>Opening bounty menu...</gray>"
-  perk:
-    opening_gui: "<gray>Opening perk menu...</gray>"
-
-# ============================================
-# Error Messages
-# ============================================
-error:
-  not_found: "<red>{type} not found: {id}</red>"
-  insufficient_funds: "<red>Insufficient funds! Required: {required}, Available: {available}</red>"
-  on_cooldown: "<red>On cooldown! {remaining} remaining.</red>"
-  requirements_not_met: "<red>Requirements not met: {missing}</red>"
-  self_targeting: "<red>You cannot target yourself!</red>"
-  already_exists: "<red>{type} already exists: {id}</red>"
-  expired: "<red>{type} has expired: {id}</red>"
-  not_unlocked: "<red>{type} not unlocked: {id}</red>"
-  permission_denied: "<red>Permission denied: {permission}</red>"
-  invalid_state: "<red>Invalid state: {message}</red>"
-  invalid_amount: "<red>Invalid amount! Must be between {min} and {max}.</red>"
-  no_permission: "<red>You don't have permission to do that.</red>"
-  player_only: "<red>This command can only be used by players.</red>"
-  premium_required: "<red>This feature requires RDQ Premium: {feature}</red>"
-
-# ============================================
-# Rank System Messages
-# ============================================
-rank:
-  error:
-    unknown_subcommand: "<red>Unknown rank subcommand. Use /rank help for available commands.</red>"
-    player_not_found: "<red>Player not found: {playerName}</red>"
-    grant_failed: "<red>Failed to grant rank.</red>"
-    reload_failed: "<red>Failed to reload ranks: {error}</red>"
-  success:
-    rank_granted: "<green>Granted rank {rankName} to {playerName}!</green>"
-    rank_revoked: "<yellow>Revoked rank {rankName} from {playerName}.</yellow>"
-    reloaded: "<green>Rank configuration reloaded!</green>"
-    rank_unlocked: "<green>Congratulations! You unlocked the {rankName} rank!</green>"
-  opening_view: "<gray>Opening rank view...</gray>"
-  no_progress: "<yellow>You haven't started any rank paths yet.</yellow>"
-  progress_header: "<yellow>Your Rank Progress:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Available Rank Trees:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} ranks)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Usage: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Unknown admin command.</red>"
-    grant:
-      usage: "<yellow>Usage: /rank admin grant <player> <rank></yellow>"
-    revoke:
-      usage: "<yellow>Usage: /rank admin revoke <player> <rank></yellow>"
-  help: |
-    <yellow>Rank Commands:</yellow>
-    <gray>/rank</gray> - Open rank menu
-    <gray>/rank view</gray> - View rank trees
-    <gray>/rank progress</gray> - View your progress
-    <gray>/rank trees</gray> - List available trees
-    <gray>/rank admin</gray> - Admin commands
-  notification:
-    title: "<gold>Rank Unlocked!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>You unlocked {rankName}!</green>"
-
-# ============================================
-# Bounty System Messages
-# ============================================
-bounty:
-  error:
-    unknown_subcommand: "<red>Unknown bounty subcommand. Use /bounty help for available commands.</red>"
-    player_not_found: "<red>Player not found: {playerName}</red>"
-    self_target: "<red>You cannot place a bounty on yourself!</red>"
-    invalid_amount: "<red>Invalid amount. Please enter a valid number.</red>"
-    invalid_id: "<red>Invalid bounty ID.</red>"
-    create_failed: "<red>Failed to create bounty: {error}</red>"
-    cancel_failed: "<red>Failed to cancel bounty. You may not own this bounty.</red>"
-    reload_failed: "<red>Failed to reload bounty config: {error}</red>"
-  success:
-    bounty_created: "<green>Bounty of {amount} placed on {targetName}!</green>"
-    bounty_cancelled: "<yellow>Bounty cancelled. Funds refunded.</yellow>"
-    bounty_removed: "<green>Bounty removed by admin.</green>"
-    bounty_claimed: "<green>You claimed a bounty worth {amount}!</green>"
-    reloaded: "<green>Bounty configuration reloaded! Self-targeting: {selfTargetAllowed}</green>"
-  create:
-    usage: "<yellow>Usage: /bounty create <player> <amount></yellow>"
-  cancel:
-    usage: "<yellow>Usage: /bounty cancel <bountyId></yellow>"
-  list:
-    empty: "<yellow>No active bounties.</yellow>"
-    header: "<yellow>Active Bounties ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(by {placer})</dark_gray></gray>"
-  leaderboard:
-    header: "<yellow>Bounty Hunter Leaderboard:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} kills, {earned} earned</gray>"
-  my:
-    header: "<yellow>Your Bounties:</yellow>"
-    placed_header: "<gray>Bounties you placed:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Bounties on you:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(by {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Usage: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Unknown admin command.</red>"
-    remove:
-      usage: "<yellow>Usage: /bounty admin remove <bountyId></yellow>"
-  help: |
-    <yellow>Bounty Commands:</yellow>
-    <gray>/bounty</gray> - List active bounties
-    <gray>/bounty create <player> <amount></gray> - Create a bounty
-    <gray>/bounty cancel <id></gray> - Cancel your bounty
-    <gray>/bounty leaderboard</gray> - View top hunters
-    <gray>/bounty my</gray> - View your bounties
-    <gray>/bounty admin</gray> - Admin commands
-  announcement:
-    created: "<yellow>{placer} placed a bounty of {amount} on {target}!</yellow>"
-    claimed: "<green>{hunter} claimed the bounty on {target} worth {amount}!</green>"
-    expired: "<gray>Bounty on {target} has expired.</gray>"
-
-# ============================================
-# Perk System Messages
-# ============================================
-perk:
-  error:
-    unknown_subcommand: "<red>Unknown perk subcommand. Use /perk help for available commands.</red>"
-    player_not_found: "<red>Player not found: {playerName}</red>"
-    perk_not_found: "<red>Perk not found: {perkId}</red>"
-    perk_on_cooldown: "<red>This perk is on cooldown! {remaining} remaining.</red>"
-    perk_not_active: "<red>This perk is not currently active.</red>"
-    activate_failed: "<red>Failed to activate perk: {error}</red>"
-    grant_failed: "<red>Failed to grant perk.</red>"
-    reload_failed: "<red>Failed to reload perks: {error}</red>"
-  success:
-    perk_activated: "<green>Perk {perkName} activated!</green>"
-    perk_deactivated: "<yellow>Perk {perkName} deactivated.</yellow>"
-    perk_granted: "<green>Granted perk {perkName} to {playerName}!</green>"
-    perk_revoked: "<yellow>Revoked perk {perkName} from {playerName}.</yellow>"
-    perk_unlocked: "<green>You unlocked the {perkName} perk!</green>"
-    reloaded: "<green>Perk configuration reloaded!</green>"
-  activate:
-    usage: "<yellow>Usage: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Usage: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Usage: /perk info <perkId></yellow>"
-    header: "<yellow>Perk Info: {id}</yellow>"
-    details: "<gray>Category: {category} | Cooldown: {cooldown}s | Duration: {duration}s</gray>"
-  list:
-    empty: "<yellow>No perks available.</yellow>"
-    header: "<yellow>Available Perks ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Usage: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Unknown admin command.</red>"
-    grant:
-      usage: "<yellow>Usage: /perk admin grant <player> <perk></yellow>"
-    revoke:
-      usage: "<yellow>Usage: /perk admin revoke <player> <perk></yellow>"
-  help: |
-    <yellow>Perk Commands:</yellow>
-    <gray>/perk</gray> - List available perks
-    <gray>/perk activate <perk></gray> - Activate a perk
-    <gray>/perk deactivate <perk></gray> - Deactivate a perk
-    <gray>/perk info <perk></gray> - View perk details
-    <gray>/perk admin</gray> - Admin commands
-
-# ============================================
-# GUI Messages
-# ============================================
-gui:
-  common:
-    back: "<yellow>← Back</yellow>"
-    close: "<red>Close</red>"
-    next_page: "<yellow>Next Page →</yellow>"
-    previous_page: "<yellow>← Previous Page</yellow>"
-    page_info: "<gray>Page {current}/{total}</gray>"
-    loading: "<gray>Loading...</gray>"
-    confirm: "<green>Confirm</green>"
-    cancel: "<red>Cancel</red>"
-  rank:
-    main_title: "<dark_purple>Rank Trees</dark_purple>"
-    tree_title: "<dark_purple>{treeName}</dark_purple>"
-    detail_title: "<dark_purple>Rank: {rankName}</dark_purple>"
-    progress_title: "<dark_purple>Your Progress</dark_purple>"
-    unlocked: "<green>✓ Unlocked</green>"
-    locked: "<red>✗ Locked</red>"
-    current: "<yellow>★ Current</yellow>"
-    unlock_button: "<green>Click to Unlock</green>"
-    requirements_header: "<yellow>Requirements:</yellow>"
-    requirement_met: "<green>✓ {requirement}</green>"
-    requirement_unmet: "<red>✗ {requirement}</red>"
-  bounty:
-    main_title: "<gold>Bounty Board</gold>"
-    create_title: "<gold>Create Bounty</gold>"
-    list_title: "<gold>Active Bounties</gold>"
-    detail_title: "<gold>Bounty Details</gold>"
-    leaderboard_title: "<gold>Top Hunters</gold>"
-    my_bounties_title: "<gold>My Bounties</gold>"
-    target_select: "<yellow>Select Target</yellow>"
-    amount_input: "<yellow>Enter Amount</yellow>"
-    create_button: "<green>Create Bounty</green>"
-  perk:
-    main_title: "<aqua>Perks</aqua>"
-    list_title: "<aqua>Available Perks</aqua>"
-    detail_title: "<aqua>Perk: {perkName}</aqua>"
-    unlock_title: "<aqua>Unlock Perk</aqua>"
-    admin_title: "<aqua>Perk Admin</aqua>"
-    active: "<green>● Active</green>"
-    inactive: "<gray>○ Inactive</gray>"
-    on_cooldown: "<red>⏱ On Cooldown ({remaining})</red>"
-    activate_button: "<green>Activate</green>"
-    deactivate_button: "<red>Deactivate</red>"
-    unlock_button: "<green>Unlock</green>"
-    requirements_header: "<yellow>Requirements:</yellow>"
-
-# ============================================
-# Perk Names and Descriptions
-# ============================================
-perk_names:
-  speed: "Speed Boost"
-  strength: "Strength"
-  resistance: "Resistance"
-  regeneration: "Regeneration"
-  night_vision: "Night Vision"
-  fire_resistance: "Fire Resistance"
-  water_breathing: "Water Breathing"
-  jump_boost: "Jump Boost"
-  haste: "Haste"
-  luck: "Luck"
-  fly: "Flight"
-  double_experience: "Double XP"
-  prevent_death: "Death Prevention"
-  treasure_hunter: "Treasure Hunter"
-  vampire: "Vampire"
-
-perk_descriptions:
-  speed: "Move faster for a limited time."
-  strength: "Deal more damage to enemies."
-  resistance: "Take less damage from attacks."
-  regeneration: "Slowly regenerate health."
-  night_vision: "See clearly in the dark."
-  fire_resistance: "Become immune to fire damage."
-  water_breathing: "Breathe underwater."
-  jump_boost: "Jump higher than normal."
-  haste: "Mine and attack faster."
-  luck: "Increased chance for rare drops."
-  fly: "Gain the ability to fly."
-  double_experience: "Earn double experience points."
-  prevent_death: "Survive a fatal blow once."
-  treasure_hunter: "Find better loot in chests."
-  vampire: "Heal when dealing damage."
-
-# ============================================
-# Rank Tree Names
-# ============================================
-rank_trees:
-  warrior:
-    name: "Warrior"
-    description: "The path of strength and combat."
-  cleric:
-    name: "Cleric"
-    description: "The path of healing and support."
-  mage:
-    name: "Mage"
-    description: "The path of magic and wisdom."
-  rogue:
-    name: "Rogue"
-    description: "The path of stealth and agility."
-  merchant:
-    name: "Merchant"
-    description: "The path of trade and wealth."
-  ranger:
-    name: "Ranger"
-    description: "The path of nature and archery."
-
-# ============================================
-# Requirement Types
-# ============================================
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Permission: {permission}"
-  rank: "Rank: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Level {level}"
-
-# ============================================
-# Time Formatting
-# ============================================
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}d"
-  format:
-    short: "{hours}h {minutes}m {seconds}s"
-    long: "{days} days, {hours} hours, {minutes} minutes"
-
-# ============================================
-# Bounty View UI Translations
-# ============================================
-bounty_main_ui:
-  title: "<gold>Bounty Board</gold>"
-  create_button:
-    name: "<green>Create Bounty</green>"
-    lore:
-      - "<gray>Place a bounty on another player"
-      - ""
-      - "<yellow>Click to create</yellow>"
-  list_button:
-    name: "<gold>Active Bounties</gold>"
-    lore:
-      - "<gray>View all active bounties"
-      - ""
-      - "<yellow>Click to view</yellow>"
-  leaderboard_button:
-    name: "<aqua>Leaderboard</aqua>"
-    lore:
-      - "<gray>View top bounty hunters"
-      - ""
-      - "<yellow>Click to view</yellow>"
-  my_bounties_button:
-    name: "<light_purple>My Bounties</light_purple>"
-    lore:
-      - "<gray>View bounties you placed"
-      - "<gray>and bounties on you"
-      - ""
-      - "<yellow>Click to view</yellow>"
-
-bounty_list_ui:
-  title: "<gold>Active Bounties</gold>"
-  loading:
-    name: "<gray>Loading...</gray>"
-    lore:
-      - "<dark_gray>Fetching bounties...</dark_gray>"
-  empty:
-    name: "<red>No Active Bounties</red>"
-    lore:
-      - "<gray>There are no bounties available</gray>"
-  bounty_entry:
-    name: "<red>{target_name}</red>"
-    lore:
-      - "<gray>Amount: <yellow>{amount} {currency}</yellow></gray>"
-      - "<gray>Placed by: <white>{placer_name}</white></gray>"
-      - "<gray>Expires: <white>{time_remaining}</white></gray>"
-      - ""
-      - "<yellow>Click for details</yellow>"
-  previous_page:
-    name: "<yellow>← Previous Page</yellow>"
-    lore:
-      - "<gray>Go to page {page}</gray>"
-  previous_page_disabled:
-    name: "<dark_gray>← Previous Page</dark_gray>"
-  next_page:
-    name: "<yellow>Next Page →</yellow>"
-    lore:
-      - "<gray>Go to page {page}</gray>"
-  next_page_disabled:
-    name: "<dark_gray>Next Page →</dark_gray>"
-  error:
-    name: "<red>Error Loading Bounties</red>"
-    lore:
-      - "<gray>Failed to load bounty data</gray>"
-  load_error: "<red>Failed to load bounties: {error}</red>"
-
-bounty_detail_ui:
-  title: "<gold>Bounty Details</gold>"
-  target:
-    name: "<red>Target: {target_name}</red>"
-    lore:
-      - "<gray>Status: {status}</gray>"
-  info:
-    name: "<gold>Bounty Information</gold>"
-    lore:
-      - "<gray>Amount: <yellow>{amount} {currency}</yellow></gray>"
-      - "<gray>Created: <white>{created_at}</white></gray>"
-      - "<gray>Expires: <white>{expires_at}</white></gray>"
-  commissioner:
-    name: "<yellow>Placed by: {commissioner_name}</yellow>"
-    lore:
-      - "<gray>Click to view profile</gray>"
-  action_inactive:
-    name: "<gray>Bounty Inactive</gray>"
-    lore:
-      - "<gray>Status: {status}</gray>"
-  cancel_button:
-    name: "<red>Cancel Bounty</red>"
-    lore:
-      - "<gray>Get your money back</gray>"
-      - ""
-      - "<red>Click to cancel</red>"
-  active_indicator:
-    name: "<green>Active Bounty</green>"
-    lore:
-      - "<gray>This bounty is active</gray>"
-  error:
-    name: "<red>Bounty Not Found</red>"
-    lore:
-      - "<gray>This bounty no longer exists</gray>"
-  cancel_success: "<green>Bounty cancelled and refunded!</green>"
-  cancel_failed: "<red>Failed to cancel bounty.</red>"
-
-bounty_my_bounties_ui:
-  title: "<gold>My Bounties</gold>"
-  loading:
-    name: "<gray>Loading...</gray>"
-    lore:
-      - "<dark_gray>Fetching your bounties...</dark_gray>"
-  placed_header:
-    name: "<green>Bounties I Placed</green>"
-    lore:
-      - "<gray>Total: {count} bounties</gray>"
-  no_placed:
-    name: "<gray>No Bounties Placed</gray>"
-    lore:
-      - "<gray>You haven't placed any bounties</gray>"
-  placed_entry:
-    name: "<yellow>Target: {target_name}</yellow>"
-    lore:
-      - "<gray>Amount: <yellow>{amount} {currency}</yellow></gray>"
-      - "<gray>Status: {status}</gray>"
-      - "<gray>Expires: <white>{time_remaining}</white></gray>"
-      - ""
-      - "<yellow>Click for details</yellow>"
-  targeted_header:
-    name: "<red>Bounties On Me</red>"
-    lore:
-      - "<gray>Total: {count} bounties</gray>"
-      - "<gray>Total value: <yellow>{total}</yellow></gray>"
-  no_targeted:
-    name: "<gray>No Bounties On You</gray>"
-    lore:
-      - "<gray>No one has placed a bounty on you</gray>"
-  targeted_entry:
-    name: "<red>From: {placer_name}</red>"
-    lore:
-      - "<gray>Amount: <yellow>{amount} {currency}</yellow></gray>"
-      - "<gray>Expires: <white>{time_remaining}</white></gray>"
-  status_active: "<green>Active</green>"
-  status_claimed: "<red>Claimed</red>"
-  status_expired: "<gray>Expired</gray>"
-  status_cancelled: "<yellow>Cancelled</yellow>"
-  error:
-    name: "<red>Error Loading Bounties</red>"
-    lore:
-      - "<gray>Failed to load your bounties</gray>"
-  load_error: "<red>Failed to load bounties: {error}</red>"
-
-bounty_leaderboard_ui:
-  title: "<gold>Top Bounty Hunters</gold>"
-  loading:
-    name: "<gray>Loading...</gray>"
-    lore:
-      - "<dark_gray>Fetching leaderboard...</dark_gray>"
-  header:
-    name: "<diamond>Leaderboard</diamond>"
-    lore:
-      - "<gray>Top {count} hunters</gray>"
-  empty:
-    name: "<gray>No Hunters Yet</gray>"
-    lore:
-      - "<gray>Be the first to claim a bounty!</gray>"
-  entry:
-    name: "<yellow>#{rank} {player_name}</yellow>"
-    lore:
-      - "<gray>Bounties Claimed: <white>{bounties_claimed}</white></gray>"
-      - "<gray>Bounties Placed: <white>{bounties_placed}</white></gray>"
-      - "<gray>Total Earned: <yellow>{total_earned}</yellow></gray>"
-      - "<gray>Total Spent: <red>{total_spent}</red></gray>"
-      - "<gray>K/D Ratio: <white>{kd_ratio}</white></gray>"
-  entry_self:
-    name: "<green>#{rank} {player_name} (You)</green>"
-  error:
-    name: "<red>Error Loading Leaderboard</red>"
-    lore:
-      - "<gray>Failed to load leaderboard data</gray>"
-  load_error: "<red>Failed to load leaderboard: {error}</red>"
-
-bounty_creation_ui:
-  title: "<gold>Create Bounty</gold>"
-  # Target selection button (computed state)
-  select_target:
-    name: "<yellow>Select Target</yellow>"
-    lore:
-      - "<gray>Current: <white>{target_name}</white></gray>"
-      - ""
-      - "<yellow>Click to select a player</yellow>"
-  # Amount display button (computed state)
-  amount_display:
-    name: "<gold>{amount} {currency}</gold>"
-    lore:
-      - "<gray>Click to cycle amounts</gray>"
-  # Item rewards button (computed state)
-  item_rewards:
-    name: "<aqua>Item Rewards</aqua>"
-    lore:
-      - "<gray>Items: <yellow>{reward_count}</yellow></gray>"
-      - ""
-      - "<yellow>Click to add items</yellow>"
-  item_rewards_disabled:
-    name: "<gray>Item Rewards</gray>"
-    lore:
-      - "<gray>Select a target first</gray>"
-  # Confirm button (computed state)
+# Bounty Creation Confirmation Messages
+bounty_creation:
   confirm:
-    name: "<green>Confirm Bounty</green>"
-    lore:
-      - "<green>Click to create bounty</green>"
-  confirm_disabled:
-    name: "<gray>Cannot Confirm</gray>"
-    lore:
-      - "<gray>Select target and amount first</gray>"
-  # Messages
-  no_targets_available: "<red>No players available to target.</red>"
-  amount_changed: "<green>Amount set to <yellow>{amount} {currency}</yellow>.</green>"
-  select_target_first: "<red>Please select a target first.</red>"
-  confirm_no_target: "<red>Please select a target.</red>"
-  confirm_no_amount: "<red>Please select an amount.</red>"
-  self_target_not_allowed: "<red>You cannot place a bounty on yourself.</red>"
-  creation_success: "<green>Bounty of <yellow>{amount} {currency}</yellow> placed on <yellow>{target_name}</yellow>!</green>"
-  creation_failed: "<red>Failed to create bounty: {error}</red>"
-  refund_success: "<yellow>Your items have been refunded.</yellow>"
-  refund_with_drops: "<yellow>Your items have been refunded. <red>{dropped_count}</red> items were dropped.</yellow>"
+    success: "<gradient:#10b981:#34d399>✅ Bounty successfully updated for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Failed to process bounty:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Processing bounty update...</gradient>"
 
-bounty_reward_ui:
-  title: "<gold>Add Item Rewards</gold>"
-  reward_info:
-    name: "<yellow>Reward Items</yellow>"
+# Bounty Overview UI (Main Menu & Overview)
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Bounty System</gradient>"
+  
+  # Main menu buttons
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Create Bounty</gradient>"
     lore:
-      - "<gray>Items added: <yellow>{reward_count}</yellow></gray>"
+      - "<gradient:#6b7280:#9ca3af>Click to create a new bounty</gradient>"
+      - "<gradient:#6b7280:#9ca3af>on another player</gradient>"
+  
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 View Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View all active bounties</gradient>"
+  
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 My Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View bounties you've created</gradient>"
+  
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Leaderboard</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Top bounty hunters</gradient>"
+  
+  # Bounty list entries
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Target:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Commissioner:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Created:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
       - ""
-      - "<gray>Click empty slots to add items</gray>"
-      - "<gray>Click items to remove them</gray>"
-  back_button:
-    name: "<yellow>← Back</yellow>"
+      - "<gradient:#a855f7:#c084fc>Click to view details</gradient>"
+
+# Bounty Creation UI
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Create Bounty</gradient>"
+  
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Select Target</gradient>"
     lore:
-      - "<gray>Return to bounty creation</gray>"
+      - "<gradient:#6b7280:#9ca3af>Click to choose a player</gradient>"
+      - "<gradient:#6b7280:#9ca3af>to place a bounty on</gradient>"
+
+# Add Items Button
+add_items:
+  name: "<gradient:#10b981:#34d399>💰 Add Item Rewards</gradient>"
+  name_disabled: "<gradient:#6b7280:#9ca3af>💰 Add Item Rewards</gradient>"
+  description:
+    - "<gradient:#6b7280:#9ca3af>Click to add item rewards</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Current items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+  description_disabled:
+    - "<gradient:#ef4444:#f87171>❌ Select a target first!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>You need to choose a player</gradient>"
+
+# Add Currency Button  
+add_currency:
+  name: "<gradient:#f59e0b:#fbbf24>💎 Add Currency Rewards</gradient>"
+  name_disabled: "<gradient:#6b7280:#9ca3af>💎 Add Currency Rewards</gradient>"
+  description:
+    - "<gradient:#6b7280:#9ca3af>Click to add currency rewards</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Current currencies:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+  description_disabled:
+    - "<gradient:#ef4444:#f87171>❌ Select a target first!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>You need to choose a player</gradient>"
+
+# Confirm Bounty Button
+confirm_bounty:
+  name: "<gradient:#10b981:#34d399>✅ Create Bounty</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Click to create the bounty</gradient>"
+    - "<gradient:#6b7280:#9ca3af>with the selected rewards</gradient>"
+
+# Select Target Button
+select_target:
+  name: "<gradient:#f59e0b:#fbbf24>🎯 Select Target: %target_name%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Click to choose a player</gradient>"
+    - "<gradient:#6b7280:#9ca3af>to place a bounty on</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>Current target: %target_name%</gradient>"
+
+# Confirmation Messages
+confirm:
+  no_player_selected: "<gradient:#ef4444:#f87171>❌ No player selected!</gradient> <gradient:#6b7280:#9ca3af>Please select a target first.</gradient>"
+  no_rewards_selected: "<gradient:#ef4444:#f87171>❌ No rewards added!</gradient> <gradient:#6b7280:#9ca3af>Please add some rewards first.</gradient>"
+  confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Creating bounty on</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+  error: "<gradient:#ef4444:#f87171>❌ Error:</gradient> <gradient:#6b7280:#9ca3af>Could not find target player %target_name%</gradient>"
+
+# Item Refund Message
+left_overs: "<gradient:#f59e0b:#fbbf24>📦 Items returned!</gradient> <gradient:#6b7280:#9ca3af>Some items were dropped on the ground.</gradient>"
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ Please select a target player first!</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Please add at least one reward!</gradient>"
+    confirmation: "<gradient:#a855f7:#c084fc>Creating bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#a855f7:#c084fc>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Bounty created successfully on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+
+# Bounty Player Info UI
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Target of this bounty</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Click to view player info</gradient>"
+  
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 View Rewards</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to see all rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for claiming this bounty</gradient>"
+  
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Delete Bounty</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Warning: This action</gradient>"
+      - "<gradient:#ef4444:#f87171>cannot be undone!</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Click to delete this bounty</gradient>"
+  
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>has been deleted!</gradient>"
+
+# Bounty Reward UI
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Bounty Rewards</gradient>"
+  
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 No Rewards</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Add items to create rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for this bounty</gradient>"
+  
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Add Item</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Place items here to add as rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Right-click to remove items</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Target: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>This bounty is placed on</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Bounty Reward</gradient>"
+      - "<gradient:#6b7280:#9ca3af>This item will be given to</gradient>"
+      - "<gradient:#6b7280:#9ca3af>whoever claims the bounty</gradient>"
+  
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ No new items were added!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Some items were dropped as your inventory was full!</gradient>"
+
+# Platform UI Components
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# Pagination
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"
+
+# Head Items
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+      - "<gradient:#6b7280:#9ca3af>to the previous menu</gradient>"
+  
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Proceed</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to continue</gradient>"
+      - "<gradient:#6b7280:#9ca3af>to the next step</gradient>"
+  
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Previous</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go to</gradient>"
+      - "<gradient:#6b7280:#9ca3af>the previous page</gradient>"
+  
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Next</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go to</gradient>"
+      - "<gradient:#6b7280:#9ca3af>the next page</gradient>"
+  
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Up</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go up</gradient>"
+      - "<gradient:#6b7280:#9ca3af>one level</gradient>"
+  
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to cancel</gradient>"
+      - "<gradient:#6b7280:#9ca3af>this action</gradient>"
+  
+  pagination:
+    0:
+      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
+      lore: []
+    1:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
+      lore: []
+    2:
+      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
+      lore: []
+    3:
+      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
+      lore: []
+    4:
+      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
+      lore: []
+    5:
+      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
+      lore: []
+    6:
+      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
+      lore: []
+    7:
+      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
+      lore: []
+    8:
+      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
+      lore: []
+    9:
+      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
+      lore: []
+    10:
+      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
+      lore: []
+    11:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
+      lore: []
+    12:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
+      lore: []
+    13:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
+      lore: []
+    14:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
+      lore: []
+    15:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
+      lore: []
+
+# Prefix
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "

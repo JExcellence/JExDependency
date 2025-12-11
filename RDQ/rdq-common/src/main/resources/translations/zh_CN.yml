@@ -1,216 +1,280 @@
-# RDQ Simplified Chinese Translations
-# RaindropQuests 插件简体中文翻译
+# RDQ Common 翻译文件 - 简体中文
+# MiniMessage格式，带有渐变和样式
+# 占位符使用 %placeholder% 格式
 
-prefix: "<gold>[RDQ]</gold> "
+# 悬赏监听器消息
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>你的头上有一个活跃的悬赏！</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 悬赏金额:</gradient> <gradient:#10b981:#34d399>¥%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ 到期时间:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 委托人:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 悬赏已领取！🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>你成功领取了</gradient><gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>的悬赏！</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>你的份额:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>某人</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>领取了</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的悬赏！</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count%名玩家</gradient> <gradient:#a855f7:#c084fc>领取了</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的悬赏！</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ 正在初始化中，请稍候...</red>"
-    unknown_subcommand: "<red>未知子命令。使用 /rdq help 查看可用命令。</red>"
-    reload_failed: "<red>重载失败: {error}</red>"
-  success:
-    reloaded: "<green>RDQ 配置重载成功！</green>"
+# 悬赏创建确认消息
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ 成功创建悬赏</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>！</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 创建悬赏失败:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
-error:
-  not_found: "<red>未找到 {type}: {id}</red>"
-  insufficient_funds: "<red>资金不足！需要: {required}，可用: {available}</red>"
-  on_cooldown: "<red>冷却中！剩余 {remaining}。</red>"
-  requirements_not_met: "<red>未满足要求: {missing}</red>"
-  self_targeting: "<red>不能选择自己！</red>"
-  already_exists: "<red>{type} 已存在: {id}</red>"
-  expired: "<red>{type} 已过期: {id}</red>"
-  not_unlocked: "<red>{type} 未解锁: {id}</red>"
-  permission_denied: "<red>权限不足: {permission}</red>"
-  invalid_state: "<red>无效状态: {message}</red>"
-  invalid_amount: "<red>无效金额！必须在 {min} 和 {max} 之间。</red>"
-  no_permission: "<red>你没有权限执行此操作。</red>"
-  player_only: "<red>此命令只能由玩家使用。</red>"
-
-rank:
-  error:
-    unknown_subcommand: "<red>未知等级子命令。</red>"
-    player_not_found: "<red>未找到玩家: {playerName}</red>"
-    grant_failed: "<red>授予等级失败。</red>"
-    reload_failed: "<red>重载等级失败: {error}</red>"
-  success:
-    rank_granted: "<green>已将等级 {rankName} 授予 {playerName}！</green>"
-    rank_revoked: "<yellow>已从 {playerName} 撤销等级 {rankName}。</yellow>"
-    reloaded: "<green>等级配置已重载！</green>"
-    rank_unlocked: "<green>恭喜！你已解锁等级 {rankName}！</green>"
-  opening_view: "<gray>正在打开等级视图...</gray>"
-  no_progress: "<yellow>你还没有开始任何等级路径。</yellow>"
-  progress_header: "<yellow>你的等级进度:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>可用等级树:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} 个等级)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>用法: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>未知管理员命令。</red>"
-    grant:
-      usage: "<yellow>用法: /rank admin grant <玩家> <等级></yellow>"
-    revoke:
-      usage: "<yellow>用法: /rank admin revoke <玩家> <等级></yellow>"
-  help: |
-    <yellow>等级命令:</yellow>
-    <gray>/rank</gray> - 打开等级菜单
-    <gray>/rank view</gray> - 查看等级树
-    <gray>/rank progress</gray> - 查看进度
-    <gray>/rank admin</gray> - 管理员命令
-  notification:
-    title: "<gold>等级解锁！</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>你已解锁 {rankName}！</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>未知悬赏子命令。</red>"
-    player_not_found: "<red>未找到玩家: {playerName}</red>"
-    self_target: "<red>不能对自己悬赏！</red>"
-    invalid_amount: "<red>无效金额。请输入有效数字。</red>"
-    invalid_id: "<red>无效悬赏 ID。</red>"
-    create_failed: "<red>创建悬赏失败: {error}</red>"
-    cancel_failed: "<red>取消悬赏失败。</red>"
-  success:
-    bounty_created: "<green>已对 {targetName} 悬赏 {amount}！</green>"
-    bounty_cancelled: "<yellow>悬赏已取消。资金已退还。</yellow>"
-    bounty_removed: "<green>管理员已移除悬赏。</green>"
-    bounty_claimed: "<green>你获得了 {amount} 的悬赏！</green>"
-    reloaded: "<green>悬赏配置已重载！</green>"
-  create:
-    usage: "<yellow>用法: /bounty create <玩家> <金额></yellow>"
-  cancel:
-    usage: "<yellow>用法: /bounty cancel <悬赏ID></yellow>"
-  list:
-    empty: "<yellow>没有活跃的悬赏。</yellow>"
-    header: "<yellow>活跃悬赏 ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(由 {placer} 发布)</dark_gray></gray>"
+# 悬赏概览界面（主菜单和概览）
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 悬赏系统</gradient>"
+  
+  # 主菜单按钮
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 创建悬赏</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击创建新的悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>针对其他玩家</gradient>"
+  
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 查看悬赏</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>查看所有活跃的悬赏</gradient>"
+  
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 我的悬赏</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>查看你创建的悬赏</gradient>"
+  
   leaderboard:
-    header: "<yellow>赏金猎人排行榜:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} 击杀, 获得 {earned}</gray>"
-  my:
-    header: "<yellow>你的悬赏:</yellow>"
-    placed_header: "<gray>你发布的悬赏:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>针对你的悬赏:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(由 {placer} 发布)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>用法: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>未知管理员命令。</red>"
-    remove:
-      usage: "<yellow>用法: /bounty admin remove <悬赏ID></yellow>"
-  help: |
-    <yellow>悬赏命令:</yellow>
-    <gray>/bounty</gray> - 查看活跃悬赏
-    <gray>/bounty create <玩家> <金额></gray> - 创建悬赏
-    <gray>/bounty cancel <ID></gray> - 取消悬赏
-    <gray>/bounty leaderboard</gray> - 查看排行榜
-    <gray>/bounty my</gray> - 查看你的悬赏
-  announcement:
-    created: "<yellow>{placer} 对 {target} 悬赏了 {amount}！</yellow>"
-    claimed: "<green>{hunter} 获得了 {target} 的悬赏 {amount}！</green>"
-    expired: "<gray>{target} 的悬赏已过期。</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 排行榜</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>顶级悬赏猎人</gradient>"
+  
+  # 悬赏列表条目
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 对</gradient><gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#a855f7:#c084fc>的悬赏</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>目标:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>委托人:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>创建时间:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>点击查看详情</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>未知特权子命令。</red>"
-    player_not_found: "<red>未找到玩家: {playerName}</red>"
-    perk_not_found: "<red>未找到特权: {perkId}</red>"
-    perk_on_cooldown: "<red>此特权正在冷却中！剩余 {remaining}。</red>"
-    perk_not_active: "<red>此特权当前未激活。</red>"
-    activate_failed: "<red>激活特权失败: {error}</red>"
-    grant_failed: "<red>授予特权失败。</red>"
-    reload_failed: "<red>重载特权失败: {error}</red>"
-  success:
-    perk_activated: "<green>特权 {perkName} 已激活！</green>"
-    perk_deactivated: "<yellow>特权 {perkName} 已停用。</yellow>"
-    perk_granted: "<green>已将特权 {perkName} 授予 {playerName}！</green>"
-    perk_revoked: "<yellow>已从 {playerName} 撤销特权 {perkName}。</yellow>"
-    perk_unlocked: "<green>你已解锁特权 {perkName}！</green>"
-    reloaded: "<green>特权配置已重载！</green>"
-  activate:
-    usage: "<yellow>用法: /perk activate <特权ID></yellow>"
-  deactivate:
-    usage: "<yellow>用法: /perk deactivate <特权ID></yellow>"
-  info:
-    usage: "<yellow>用法: /perk info <特权ID></yellow>"
-    header: "<yellow>特权信息: {id}</yellow>"
-    details: "<gray>类别: {category} | 冷却: {cooldown}秒 | 持续: {duration}秒</gray>"
-  list:
-    empty: "<yellow>没有可用的特权。</yellow>"
-    header: "<yellow>可用特权 ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>用法: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>未知管理员命令。</red>"
-    grant:
-      usage: "<yellow>用法: /perk admin grant <玩家> <特权></yellow>"
-    revoke:
-      usage: "<yellow>用法: /perk admin revoke <玩家> <特权></yellow>"
-  help: |
-    <yellow>特权命令:</yellow>
-    <gray>/perk</gray> - 查看可用特权
-    <gray>/perk activate <特权></gray> - 激活特权
-    <gray>/perk deactivate <特权></gray> - 停用特权
-    <gray>/perk info <特权></gray> - 查看详情
+# 悬赏创建界面
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 创建悬赏</gradient>"
+  
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 选择目标</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击选择一个玩家</gradient>"
+      - "<gradient:#6b7280:#9ca3af>来设置悬赏</gradient>"
+  
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 添加奖励</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>点击添加物品</gradient>"
+      - "<gradient:#6b7280:#9ca3af>作为奖励</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ 请先选择目标！</gradient>"
+  
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ 创建悬赏</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击创建悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>使用选定的奖励</gradient>"
+  
+  confirm:
+    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 成功对</gradient><gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>创建悬赏！</gradient>"
 
-gui:
-  common:
-    back: "<yellow>← 返回</yellow>"
-    close: "<red>关闭</red>"
-    next_page: "<yellow>下一页 →</yellow>"
-    previous_page: "<yellow>← 上一页</yellow>"
-    page_info: "<gray>第 {current}/{total} 页</gray>"
-    loading: "<gray>加载中...</gray>"
-    confirm: "<green>确认</green>"
-    cancel: "<red>取消</red>"
+# 悬赏玩家信息界面
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 对</gradient><gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#a855f7:#c084fc>的悬赏</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>此悬赏的目标</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击查看玩家信息</gradient>"
+  
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 查看奖励</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击查看领取此悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>的所有奖励</gradient>"
+  
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 删除悬赏</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ 警告：此操作</gradient>"
+      - "<gradient:#ef4444:#f87171>无法撤销！</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>点击删除此悬赏</gradient>"
+  
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ 对</gradient><gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>的悬赏已被删除！</gradient>"
 
-perk_names:
-  speed: "速度"
-  strength: "力量"
-  resistance: "抗性"
-  regeneration: "再生"
-  night_vision: "夜视"
-  fire_resistance: "火焰抗性"
-  water_breathing: "水下呼吸"
-  jump_boost: "跳跃提升"
-  haste: "急迫"
-  luck: "幸运"
-  fly: "飞行"
-  double_experience: "双倍经验"
-  prevent_death: "死亡保护"
-  treasure_hunter: "寻宝猎人"
-  vampire: "吸血鬼"
+# 悬赏奖励界面
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 悬赏奖励</gradient>"
+  
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 无奖励</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>添加物品来为此悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>创建奖励</gradient>"
+  
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ 添加物品</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>将物品放在这里以添加为奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>右键点击移除物品</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 目标: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>此悬赏设置在</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#6b7280:#9ca3af>身上</gradient>"
+  
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 悬赏奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>此物品将给予</gradient>"
+      - "<gradient:#6b7280:#9ca3af>领取悬赏的人</gradient>"
+  
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 没有添加新物品！</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 由于你的背包已满，一些物品被丢弃了！</gradient>"
 
-rank_trees:
-  warrior:
-    name: "战士"
-    description: "力量与战斗之路。"
-  cleric:
-    name: "牧师"
-    description: "治愈与支援之路。"
-  mage:
-    name: "法师"
-    description: "魔法与智慧之路。"
-  rogue:
-    name: "盗贼"
-    description: "隐匿与敏捷之路。"
-  merchant:
-    name: "商人"
-    description: "贸易与财富之路。"
-  ranger:
-    name: "游侠"
-    description: "自然与箭术之路。"
+# 前缀
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "  add_cu
+rrencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 添加货币</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击为悬赏添加</gradient>"
+      - "<gradient:#6b7280:#9ca3af>货币奖励</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ 请先选择目标！</gradient>"
 
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "权限: {permission}"
-  rank: "等级: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "等级 {level}"
+# 平台UI组件
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-time:
-  seconds: "{value}秒"
-  minutes: "{value}分"
-  hours: "{value}小时"
-  days: "{value}天"
+# 分页
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 第%current_page%页</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>当前页:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>总页数:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 第%direction%页</gradient>"
+
+# 头部物品
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 返回</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击返回到</gradient>"
+      - "<gradient:#6b7280:#9ca3af>上一个菜单</gradient>"
+  
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ 继续</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击继续到</gradient>"
+      - "<gradient:#6b7280:#9ca3af>下一步</gradient>"
+  
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ 上一页</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击前往</gradient>"
+      - "<gradient:#6b7280:#9ca3af>上一页</gradient>"
+  
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ 下一页</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击前往</gradient>"
+      - "<gradient:#6b7280:#9ca3af>下一页</gradient>"
+  
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ 向上</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击向上</gradient>"
+      - "<gradient:#6b7280:#9ca3af>一个级别</gradient>"
+  
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ 取消</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击取消</gradient>"
+      - "<gradient:#6b7280:#9ca3af>此操作</gradient>"
+  
+  pagination:
+    0:
+      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
+      lore: []
+    1:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
+      lore: []
+    2:
+      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
+      lore: []
+    3:
+      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
+      lore: []
+    4:
+      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
+      lore: []
+    5:
+      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
+      lore: []
+    6:
+      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
+      lore: []
+    7:
+      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
+      lore: []
+    8:
+      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
+      lore: []
+    9:
+      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
+      lore: []
+    10:
+      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
+      lore: []
+    11:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
+      lore: []
+    12:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
+      lore: []
+    13:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
+      lore: []
+    14:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
+      lore: []
+    15:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
+      lore: []# 选择目标按钮
+
+select_target:
+  name: "<gradient:#f59e0b:#fbbf24>🎯 选择目标: %target_name%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>点击选择一个玩家</gradient>"
+    - "<gradient:#6b7280:#9ca3af>来设置悬赏</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>当前目标: %target_name%</gradient>"
+
+# 确认悬赏按钮
+confirm_bounty:
+  name: "<gradient:#10b981:#34d399>✅ 创建悬赏</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>点击创建悬赏</gradient>"
+    - "<gradient:#6b7280:#9ca3af>使用选定的奖励</gradient>"
+
+# 确认消息
+confirm:
+  no_player_selected: "<gradient:#ef4444:#f87171>❌ 未选择玩家！</gradient> <gradient:#6b7280:#9ca3af>请先选择一个目标。</gradient>"
+  no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 未添加奖励！</gradient> <gradient:#6b7280:#9ca3af>请先添加一些奖励。</gradient>"
+  confirmation: "<gradient:#f59e0b:#fbbf24>⏳ 正在创建悬赏</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+  error: "<gradient:#ef4444:#f87171>❌ 错误:</gradient> <gradient:#6b7280:#9ca3af>找不到目标玩家 %target_name%</gradient>"
+
+# 物品退还消息
+left_overs: "<gradient:#f59e0b:#fbbf24>📦 物品已退还！</gradient> <gradient:#6b7280:#9ca3af>一些物品掉落在地上。</gradient>"

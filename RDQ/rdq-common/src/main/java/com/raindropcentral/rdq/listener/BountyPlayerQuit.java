@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -22,17 +21,17 @@ public class  BountyPlayerQuit implements Listener {
 
     private static final Logger LOGGER = Logger.getLogger(BountyPlayerQuit.class.getName());
 
-    private final BountyFactory bountyFactory;
+    private final RDQ rdq;
 
     public BountyPlayerQuit(@NotNull RDQ rdq) {
-        this.bountyFactory = rdq.getBountyFactory();
+        this.rdq = rdq;
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(@NotNull PlayerQuitEvent event) {
         var player = event.getPlayer();
 
-        bountyFactory.getDamageTracker().clearDamage(player.getUniqueId());
+        rdq.getBountyFactory().getDamageTracker().clearDamage(player.getUniqueId());
         LOGGER.fine("Cleaned up temporary bounty data for player " + player.getName());
     }
 }

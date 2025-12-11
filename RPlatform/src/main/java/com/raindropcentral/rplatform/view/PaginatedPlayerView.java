@@ -1,12 +1,13 @@
 package com.raindropcentral.rplatform.view;
 
-import com.raindropcentral.rplatform.utility.map.Maps;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import me.devnatan.inventoryframework.RootView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -27,6 +28,9 @@ import java.util.concurrent.CompletableFuture;
  * @version 1.0.1
  */
 public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
+
+    final State<Object> initialData = initialState("initialData");
+    final State<Class<? extends RootView>> parentClazz = initialState("parentClazz");
 
     /**
      * Provides the base translation key namespace for player selection strings.
@@ -81,9 +85,9 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
     ) {
         builder.withItem(
                    UnifiedBuilderFactory
-                       .head()
+                       .unifiedHead()
                        .setPlayerHead(offlinePlayer)
-                       .setName(
+                       .setDisplayName(
                            this.i18n("player_entry.name", context.getPlayer()
                                ).with(
                                    "player_name",
@@ -94,11 +98,10 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
                        .build()
                )
                .onClick(clickContext -> {
-                   clickContext.back(
-                           Maps.merge(clickContext.getInitialData()).remove("target").with(
-                                   "target", Optional.of(offlinePlayer)
-                           ).mutable()
-                   );
+                   Map<String, Object> initialData = new HashMap<>();
+                   initialData.putAll(((Map<String, Object>) this.initialData.get(context)));
+                   initialData.put("target", Optional.of(offlinePlayer));
+                   clickContext.openForPlayer(this.parentClazz.get(context), initialData);
                });
     }
 

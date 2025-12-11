@@ -1,6 +1,7 @@
 package com.raindropcentral.rdq;
 
 import com.raindropcentral.rdq.bounty.FreeBountyService;
+import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;
@@ -51,6 +52,12 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
                 @Override
                 protected @NotNull ViewFrame registerViews(@NotNull ViewFrame viewFrame) {
                     return viewFrame;
+                }
+
+                @Override
+                protected @NotNull IBountyService createBountyService() {
+                    // Create Free bounty service (doesn't need RDQ instance)
+                    return FreeBountyService.initialize(this);
                 }
             };
 

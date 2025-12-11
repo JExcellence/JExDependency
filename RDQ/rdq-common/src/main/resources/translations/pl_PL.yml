@@ -1,214 +1,46 @@
-# RDQ Polish Translations
-prefix: "<gold>[RDQ]</gold> "
+# RDQ Common Plik Tłumaczenia - Polski
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Masz aktywną nagrodę na głowie!</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 NAGRODA ZEBRANA! 🎉</gradient>"
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 System Nagród</gradient>"
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "bounty_over
+view_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 System Nagród</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Utwórz Nagrodę</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Zobacz Nagrody</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Nagroda za</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ jest inicjalizowany. Proszę czekać...</red>"
-    unknown_subcommand: "<red>Nieznana podkomenda. Użyj /rdq help.</red>"
-    reload_failed: "<red>Błąd przeładowania: {error}</red>"
-  success:
-    reloaded: "<green>Konfiguracja RDQ przeładowana!</green>"
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Utwórz Nagrodę</gradient>"
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Wybierz Cel</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Dodaj Nagrody</gradient>"
+  add_currencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Dodaj Walutę</gradient>"
 
-error:
-  not_found: "<red>Nie znaleziono {type}: {id}</red>"
-  insufficient_funds: "<red>Niewystarczające środki! Wymagane: {required}, Dostępne: {available}</red>"
-  on_cooldown: "<red>Odnowienie! Pozostało {remaining}.</red>"
-  requirements_not_met: "<red>Wymagania niespełnione: {missing}</red>"
-  self_targeting: "<red>Nie możesz wybrać siebie!</red>"
-  already_exists: "<red>{type} już istnieje: {id}</red>"
-  expired: "<red>{type} wygasł: {id}</red>"
-  not_unlocked: "<red>{type} nie odblokowany: {id}</red>"
-  permission_denied: "<red>Brak uprawnień: {permission}</red>"
-  invalid_state: "<red>Nieprawidłowy stan: {message}</red>"
-  invalid_amount: "<red>Nieprawidłowa kwota! Musi być między {min} a {max}.</red>"
-  no_permission: "<red>Nie masz uprawnień.</red>"
-  player_only: "<red>Ta komenda jest tylko dla graczy.</red>"
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-rank:
-  error:
-    unknown_subcommand: "<red>Nieznana podkomenda rangi.</red>"
-    player_not_found: "<red>Nie znaleziono gracza: {playerName}</red>"
-    grant_failed: "<red>Nie udało się nadać rangi.</red>"
-    reload_failed: "<red>Błąd przeładowania rang: {error}</red>"
-  success:
-    rank_granted: "<green>Ranga {rankName} nadana graczowi {playerName}!</green>"
-    rank_revoked: "<yellow>Ranga {rankName} odebrana graczowi {playerName}.</yellow>"
-    reloaded: "<green>Konfiguracja rang przeładowana!</green>"
-    rank_unlocked: "<green>Gratulacje! Odblokowałeś rangę {rankName}!</green>"
-  opening_view: "<gray>Otwieranie widoku rang...</gray>"
-  no_progress: "<yellow>Nie rozpocząłeś jeszcze żadnej ścieżki rang.</yellow>"
-  progress_header: "<yellow>Twój postęp rang:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Dostępne drzewa rang:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} rang)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Użycie: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Nieznana komenda admina.</red>"
-    grant:
-      usage: "<yellow>Użycie: /rank admin grant <gracz> <ranga></yellow>"
-    revoke:
-      usage: "<yellow>Użycie: /rank admin revoke <gracz> <ranga></yellow>"
-  help: |
-    <yellow>Komendy rang:</yellow>
-    <gray>/rank</gray> - Otwórz menu rang
-    <gray>/rank view</gray> - Zobacz drzewa rang
-    <gray>/rank progress</gray> - Zobacz postęp
-    <gray>/rank admin</gray> - Komendy admina
-  notification:
-    title: "<gold>Ranga odblokowana!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Odblokowałeś {rankName}!</green>"
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Strona %current_page%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Strona %direction%</gradient>"
 
-bounty:
-  error:
-    unknown_subcommand: "<red>Nieznana podkomenda nagrody.</red>"
-    player_not_found: "<red>Nie znaleziono gracza: {playerName}</red>"
-    self_target: "<red>Nie możesz wystawić nagrody na siebie!</red>"
-    invalid_amount: "<red>Nieprawidłowa kwota.</red>"
-    invalid_id: "<red>Nieprawidłowe ID nagrody.</red>"
-    create_failed: "<red>Błąd tworzenia nagrody: {error}</red>"
-    cancel_failed: "<red>Błąd anulowania nagrody.</red>"
-  success:
-    bounty_created: "<green>Nagroda {amount} wystawiona na {targetName}!</green>"
-    bounty_cancelled: "<yellow>Nagroda anulowana. Środki zwrócone.</yellow>"
-    bounty_removed: "<green>Nagroda usunięta przez admina.</green>"
-    bounty_claimed: "<green>Zdobyłeś nagrodę {amount}!</green>"
-    reloaded: "<green>Konfiguracja nagród przeładowana!</green>"
-  create:
-    usage: "<yellow>Użycie: /bounty create <gracz> <kwota></yellow>"
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Powrót</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Kontynuuj</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Poprzednia</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Następna</gradient>"
   cancel:
-    usage: "<yellow>Użycie: /bounty cancel <ID nagrody></yellow>"
-  list:
-    empty: "<yellow>Brak aktywnych nagród.</yellow>"
-    header: "<yellow>Aktywne nagrody ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(od {placer})</dark_gray></gray>"
-  leaderboard:
-    header: "<yellow>Ranking łowców nagród:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} zabójstw, zarobione {earned}</gray>"
-  my:
-    header: "<yellow>Twoje nagrody:</yellow>"
-    placed_header: "<gray>Nagrody które wystawiłeś:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Nagrody na ciebie:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(od {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Użycie: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Nieznana komenda admina.</red>"
-    remove:
-      usage: "<yellow>Użycie: /bounty admin remove <ID nagrody></yellow>"
-  help: |
-    <yellow>Komendy nagród:</yellow>
-    <gray>/bounty</gray> - Lista aktywnych nagród
-    <gray>/bounty create <gracz> <kwota></gray> - Utwórz nagrodę
-    <gray>/bounty cancel <ID></gray> - Anuluj nagrodę
-    <gray>/bounty leaderboard</gray> - Ranking
-    <gray>/bounty my</gray> - Twoje nagrody
-  announcement:
-    created: "<yellow>{placer} wystawił nagrodę {amount} na {target}!</yellow>"
-    claimed: "<green>{hunter} zdobył nagrodę za {target} o wartości {amount}!</green>"
-    expired: "<gray>Nagroda na {target} wygasła.</gray>"
-
-perk:
-  error:
-    unknown_subcommand: "<red>Nieznana podkomenda perku.</red>"
-    player_not_found: "<red>Nie znaleziono gracza: {playerName}</red>"
-    perk_not_found: "<red>Nie znaleziono perku: {perkId}</red>"
-    perk_on_cooldown: "<red>Ten perk jest na odnowieniu! Pozostało {remaining}.</red>"
-    perk_not_active: "<red>Ten perk nie jest aktywny.</red>"
-    activate_failed: "<red>Błąd aktywacji perku: {error}</red>"
-    grant_failed: "<red>Nie udało się nadać perku.</red>"
-    reload_failed: "<red>Błąd przeładowania perków: {error}</red>"
-  success:
-    perk_activated: "<green>Perk {perkName} aktywowany!</green>"
-    perk_deactivated: "<yellow>Perk {perkName} dezaktywowany.</yellow>"
-    perk_granted: "<green>Perk {perkName} nadany graczowi {playerName}!</green>"
-    perk_revoked: "<yellow>Perk {perkName} odebrany graczowi {playerName}.</yellow>"
-    perk_unlocked: "<green>Odblokowałeś perk {perkName}!</green>"
-    reloaded: "<green>Konfiguracja perków przeładowana!</green>"
-  activate:
-    usage: "<yellow>Użycie: /perk activate <ID perku></yellow>"
-  deactivate:
-    usage: "<yellow>Użycie: /perk deactivate <ID perku></yellow>"
-  info:
-    usage: "<yellow>Użycie: /perk info <ID perku></yellow>"
-    header: "<yellow>Info o perku: {id}</yellow>"
-    details: "<gray>Kategoria: {category} | Odnowienie: {cooldown}s | Czas trwania: {duration}s</gray>"
-  list:
-    empty: "<yellow>Brak dostępnych perków.</yellow>"
-    header: "<yellow>Dostępne perki ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Użycie: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Nieznana komenda admina.</red>"
-    grant:
-      usage: "<yellow>Użycie: /perk admin grant <gracz> <perk></yellow>"
-    revoke:
-      usage: "<yellow>Użycie: /perk admin revoke <gracz> <perk></yellow>"
-  help: |
-    <yellow>Komendy perków:</yellow>
-    <gray>/perk</gray> - Lista dostępnych perków
-    <gray>/perk activate <perk></gray> - Aktywuj perk
-    <gray>/perk deactivate <perk></gray> - Dezaktywuj perk
-    <gray>/perk info <perk></gray> - Szczegóły perku
-
-gui:
-  common:
-    back: "<yellow>← Wstecz</yellow>"
-    close: "<red>Zamknij</red>"
-    next_page: "<yellow>Następna strona →</yellow>"
-    previous_page: "<yellow>← Poprzednia strona</yellow>"
-    page_info: "<gray>Strona {current}/{total}</gray>"
-    loading: "<gray>Ładowanie...</gray>"
-    confirm: "<green>Potwierdź</green>"
-    cancel: "<red>Anuluj</red>"
-
-perk_names:
-  speed: "Szybkość"
-  strength: "Siła"
-  resistance: "Odporność"
-  regeneration: "Regeneracja"
-  night_vision: "Widzenie w nocy"
-  fire_resistance: "Odporność na ogień"
-  water_breathing: "Oddychanie pod wodą"
-  jump_boost: "Wysoki skok"
-  haste: "Pośpiech"
-  luck: "Szczęście"
-  fly: "Lot"
-  double_experience: "Podwójne XP"
-  prevent_death: "Ochrona przed śmiercią"
-  treasure_hunter: "Łowca skarbów"
-  vampire: "Wampir"
-
-rank_trees:
-  warrior:
-    name: "Wojownik"
-    description: "Ścieżka siły i walki."
-  cleric:
-    name: "Kleryk"
-    description: "Ścieżka leczenia i wsparcia."
-  mage:
-    name: "Mag"
-    description: "Ścieżka magii i mądrości."
-  rogue:
-    name: "Łotrzyk"
-    description: "Ścieżka skradania i zwinności."
-  merchant:
-    name: "Kupiec"
-    description: "Ścieżka handlu i bogactwa."
-  ranger:
-    name: "Łowca"
-    description: "Ścieżka natury i łucznictwa."
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Uprawnienie: {permission}"
-  rank: "Ranga: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Poziom {level}"
-
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}d"
+    name: "<gradient:#ef4444:#f87171>❌ Anuluj</gradient>"

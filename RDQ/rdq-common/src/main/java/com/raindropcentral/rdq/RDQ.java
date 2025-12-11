@@ -1,7 +1,9 @@
 package com.raindropcentral.rdq;
 
 import com.raindropcentral.commands.CommandFactory;
+import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.utility.BountyFactory;
+import com.raindropcentral.rdq.bounty.visual.VisualIndicatorManager;
 import com.raindropcentral.rdq.database.entity.RRequirement;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
@@ -13,11 +15,14 @@ import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
+import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.ConfirmationView;
+import com.raindropcentral.rplatform.view.PaginatedPlayerView;
+import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import lombok.Getter;
 import me.devnatan.inventoryframework.AnvilInputFeature;
@@ -52,8 +57,13 @@ public abstract class RDQ {
 	private RankSystemFactory rankSystemFactory;
 	private RankPathService rankPathService;
 
+	@InjectRepository
 	private RDQPlayerRepository playerRepository;
+
+	@InjectRepository
 	private BountyRepository bountyRepository;
+
+	@InjectRepository
 	private BountyHunterRepository bountyHunterRepository;
 	private RPlayerRankPathRepository playerRankPathRepository;
 	private RPlayerRankRepository playerRankRepository;
@@ -63,7 +73,9 @@ public abstract class RDQ {
 	private RRequirementRepository requirementRepository;
 
 	private LuckPermsService luckPermsService;
+	private IBountyService bountyService;
 	private BountyFactory bountyFactory;
+	private VisualIndicatorManager visualIndicatorManager;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -97,7 +109,12 @@ public abstract class RDQ {
 					rankPathService = new RankPathService(this);
 					permissionsService = new PermissionsService(this);
 
-					bountyFactory = new BountyFactory(this);
+					// Initialize bounty service (implemented by subclass)
+					bountyService = createBountyService();
+					bountyFactory = new BountyFactory(this, bountyService);
+					
+					// Initialize visual indicator manager
+					visualIndicatorManager = new VisualIndicatorManager(this);
 
 					LOGGER.info(getStartupMessage());
 					LOGGER.info("RDQ (" + edition + ") Edition enabled successfully!");
@@ -115,6 +132,9 @@ public abstract class RDQ {
 
 	@NotNull
 	protected abstract ViewFrame registerViews(@NotNull ViewFrame viewFrame);
+
+	@NotNull
+	protected abstract IBountyService createBountyService();
 
 	private void initializeRepositories() {
 		final var emf = this.platform.getEntityManagerFactory();
@@ -165,7 +185,13 @@ public abstract class RDQ {
 				.with(
 						new ConfirmationView(),
 						new AdminOverviewView(),
-						new AdminPermissionsView()
+						new AdminPermissionsView(),
+						new BountyMainView(),
+						new BountyRewardView(),
+						new BountyCreationView(),
+						new BountyPlayerInfoView(),
+						new BountyOverviewView(),
+						new PaginatedPlayerView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
@@ -177,5 +203,32 @@ public abstract class RDQ {
 				.disableMetrics();
 		frame = registerViews(frame);
 		this.viewFrame = frame.register();
+	}
+
+	/**
+	 * Gets the visual indicator manager for bounty visual effects.
+	 *
+	 * @return the visual indicator manager
+	 */
+	public VisualIndicatorManager getVisualIndicatorManager() {
+		return visualIndicatorManager;
+	}
+
+	/**
+	 * Called when the plugin is being disabled.
+	 * Shuts down the visual indicator manager and other resources.
+	 */
+	public void onDisable() {
+		disabling = true;
+		
+		if (visualIndicatorManager != null) {
+			visualIndicatorManager.shutdown();
+		}
+		
+		if (executor != null && !executor.isShutdown()) {
+			executor.shutdown();
+		}
+		
+		LOGGER.info("RDQ (" + edition + ") Edition disabled successfully!");
 	}
 }

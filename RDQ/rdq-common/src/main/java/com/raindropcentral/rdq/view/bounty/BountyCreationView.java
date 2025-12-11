@@ -14,6 +14,7 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * InventoryFramework view for creating a new bounty in the RaindropQuests system.
@@ -48,35 +50,19 @@ import java.util.logging.Level;
  * @since TBD
  */
 public class BountyCreationView extends BaseView {
-	
-	/**
-	 * The com.raindropcentral.rdq.RDQ plugin instance.
-	 */
+
+	private static final Logger LOGGER = Logger.getLogger(BountyCreationView.class.getName());
+
 	private final State<RDQ> rdq = initialState("plugin");
-	
-	/**
-	 * The currently selected target player for the bounty (if any).
-	 */
+
 	private final MutableState<Optional<OfflinePlayer>> target = initialState("target");
-	
-	/**
-	 * The set of item rewards being offered for the bounty.
-	 */
-	private final MutableState<Set<BountyReward>> rewards = initialState("rewards");
-	
-	/**
-	 * The current bounty being edited or viewed (if any).
-	 */
+
+	private final MutableState<List<BountyReward>> rewards = initialState("rewards");
+
 	private final State<Optional<Bounty>> bounty = initialState("bounty");
-	
-	/**
-	 * Tracks items inserted by players into the GUI, mapped by player UUID and slot index.
-	 */
+
 	private final State<Map<UUID, Map<Integer, ItemStack>>> insertedItems = initialState("insertedItems");
-	
-	/**
-	 * Indicates whether the view is being reopened (e.g., after navigating to a subview).
-	 */
+
 	private boolean isReopening;
 	
 	/**
@@ -87,9 +73,8 @@ public class BountyCreationView extends BaseView {
 		Optional<OfflinePlayer> targetPlayer = this.target.get(context);
 		String                  targetName   = targetPlayer.map(OfflinePlayer::getName).orElse("");
 		return UnifiedBuilderFactory
-			       .head()
-			       .setPlayerHead(targetPlayer.orElse(null))
-			       .setName(
+			       .unifiedHead(targetPlayer.orElse(null))
+			       .setDisplayName(
 				       this.i18n(
 					       "select_target.name",
 					       player
@@ -107,7 +92,6 @@ public class BountyCreationView extends BaseView {
 					       targetName
 				       ).build().splitLines()
 			       )
-			       .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			       .build();
 	});
 	
@@ -117,6 +101,8 @@ public class BountyCreationView extends BaseView {
 	private final State<ItemStack> itemAdderButton = computedState(context -> {
 		Player  player  = context.getPlayer();
 		boolean enabled = this.target.get(context).isPresent();
+		List<BountyReward> bountyRewards = new ArrayList<>(this.rewards.get(context));
+		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).toList();
 		return UnifiedBuilderFactory
 			       .item(enabled ?
 			             Material.CHEST :
@@ -141,7 +127,7 @@ public class BountyCreationView extends BaseView {
 					       player
 				       ).with(
 					       "count",
-					       this.rewards.get(context).stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).toList().size()
+					       bountyRewards.size()
 				       ).build().splitLines()
 			       )
 			       .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -154,6 +140,8 @@ public class BountyCreationView extends BaseView {
 	private final State<ItemStack> currencyAdderButton = computedState(context -> {
 		Player  player  = context.getPlayer();
 		boolean enabled = this.target.get(context).isPresent();
+		List<BountyReward> bountyRewards = new ArrayList<>(this.rewards.get(context));
+		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.CURRENCY)).toList();
 		return UnifiedBuilderFactory
 			       .item(enabled ?
 			             Material.GOLD_INGOT :
@@ -178,7 +166,7 @@ public class BountyCreationView extends BaseView {
 					       player
 				       ).with(
 					       "count",
-							   this.rewards.get(context).stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.CURRENCY)).toList().size()
+							   bountyRewards.size()
 				       ).build().splitLines()
 			       )
 			       .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -218,14 +206,9 @@ public class BountyCreationView extends BaseView {
 	}
 	
 	@Override
-	protected int getUpdateSchedule() {
-		
-		return 20;
-	}
-	
-	@Override
 	protected Map<String, Object> getTitlePlaceholders(@NotNull final OpenContext open) {
-		
+
+
 		return Map.of(
 			"target_name",
 			this.target.get(open).map(OfflinePlayer::getName).orElse("not_defined")
@@ -265,12 +248,11 @@ public class BountyCreationView extends BaseView {
 		;
 		
 		render
-			.slot(13)
+			.slot(13, this.itemAdderButton.get(render))
 			.watch(this.itemAdderButton)
 			.renderWith(() -> this.itemAdderButton.get(render))
-			.displayIf(() -> this.target
-				                 .get(render)
-				                 .isPresent())
+			.updateOnStateChange(this.itemAdderButton)
+			.displayIf(() -> this.target.get(render).isPresent())
 			.onClick(context -> {
 				if (
 					this.target.get(context).isEmpty()
@@ -286,71 +268,69 @@ public class BountyCreationView extends BaseView {
 				if (
 					this.bounty.get(context).isPresent()
 				) {
-					Map<String, Object> data = new HashMap<>((Map<String, Object>) context.getInitialData());
-					
-					data.remove("bounty");
-					data.remove("target");
-					
-					data.put(
-						"bounty",
-						this.bounty.get(context).get()
-					);
-					
-					data.put(
-						"target",
-						target.get(context).get()
-					);
-					
 					context.openForPlayer(
 						BountyPlayerInfoView.class,
-						data
+							Map.of(
+									"plugin",
+									rdq.get(context),
+									"bounty",
+									bounty.get(context),
+									"target",
+									target.get(context),
+									"rewards",
+									rewards.get(context),
+									"insertedItems",
+									insertedItems.get(context)
+							)
 					);
 					return;
 				}
 				
 				var foundBounty = this.rdq.get(context).getBountyRepository().findByAttributes(
 					Map.of(
-						"player.uniqueId",
+						"targetUniqueId",
 						this.target.get(context).get().getUniqueId()
 					)
 				);
 				
 				if (foundBounty != null) {
-					var data = (Map<String, Object>) context.getInitialData();
-					
-					data.remove("bounty");
-					
-					Optional<OfflinePlayer> target = (Optional<OfflinePlayer>) data.get("target");
-					
-					data.remove("target");
-					
-					data.put(
-						"bounty",
-						foundBounty
-					);
-					
-					data.put(
-						"target",
-						target.get()
-					);
-					
-					context.setInitialData(data);
-					
 					context.openForPlayer(
 						BountyPlayerInfoView.class,
-						context.getInitialData()
+							Map.of(
+									"plugin",
+									rdq.get(context),
+									"bounty",
+									Optional.of(foundBounty),
+									"target",
+									target.get(context),
+									"rewards",
+									rewards.get(context),
+									"insertedItems",
+									insertedItems.get(context)
+							)
 					);
 				} else {
 					context.openForPlayer(
 						BountyRewardView.class,
-						context.getInitialData()
+							Map.of(
+									"plugin",
+									rdq.get(context),
+									"bounty",
+									bounty.get(context),
+									"target",
+									target.get(context),
+									"rewards",
+									rewards.get(context),
+									"insertedItems",
+									insertedItems.get(context)
+							)
 					);
 				}
 			})
 		;
 		
 		render
-			.slot(15)
+			.slot(15, this.currencyAdderButton.get(render))
 			.watch(this.currencyAdderButton)
 			.renderWith(() -> this.currencyAdderButton.get(render))
 			.displayIf(() -> this.target.get(render).isPresent())
@@ -410,42 +390,41 @@ public class BountyCreationView extends BaseView {
 					.getBountyRepository()
 					.findByAttributesAsync(
 						Map.of(
-							"player.uniqueId",
+							"targetUniqueId",
 							target
 								.get()
 								.getUniqueId()
 						)
 					)
-					.whenCompleteAsync(
-						(bounty, throwable) -> {
-							if (
-								throwable != null
-							) {
-								CentralLogger.getLogger(BountyCreationView.class.getName()).log(
-									Level.WARNING,
-									"Error occurred, when trying to search for an existing bounty: " + throwable.getMessage()
-								);
-								clickContext.closeForPlayer();
-								return;
-							}
-							
-							if (
-								bounty != null
-							) {
-								clickContext.openForPlayer(
-									BountyPlayerInfoView.class,
-									clickContext.getInitialData()
-								);
-							}
-						}
-					)
 					.thenAcceptAsync(
 						bounty -> {
+							// Handle errors in the main logic
+							if (bounty != null) {
+								LOGGER.info("Found existing bounty for " + target.get().getName() + ", opening info view");
+								rdq.getPlatform().getScheduler().runSync(() -> {
+									clickContext.openForPlayer(
+											BountyPlayerInfoView.class,
+											Map.of(
+													"plugin",
+													rdq,
+													"bounty",
+													Optional.of(bounty),
+													"target",
+													target,
+													"rewards",
+													rewards.get(clickContext),
+													"insertedItems",
+													insertedItems.get(clickContext)
+											)
+									);
+								});
+								return;
+							}
 							rdq
 								.getPlayerRepository()
 								.findByAttributesAsync(
 									Map.of(
-										"player.uniqueId",
+										"uniqueId",
 										target
 											.get()
 											.getUniqueId()
@@ -465,36 +444,51 @@ public class BountyCreationView extends BaseView {
 											).send();
 											return;
 										}
-										
-										if (
-											bounty == null
-										) {
-											rdq
-												.getBountyFactory()
-												.createBounty(
-													rdqPlayer.getUniqueId(),
-													target.get().getUniqueId(),
-													this.mergeSimilarRewardItems(this.rewards.get(clickContext))
-												);
-										} else {
-											rdq
-												.getBountyRepository()
-												.update(
-													bounty
-												);
-											
-											this.insertedItems.get(clickContext).remove(clickContext.getPlayer().getUniqueId());
-											this.isReopening = false;
-										}
-										
-										this.i18n(
-											"confirm.success",
-											player
-										).withPrefix().with(
-											"target_name",
-											target.map(OfflinePlayer::getName).orElse("not_defined")
-										).send();
-										this.insertedItems.get(clickContext).remove(clickContext.getPlayer().getUniqueId());
+
+                                        // Create new bounty and apply visual indicators
+                                        rdq
+                                            .getBountyFactory()
+                                            .createBounty(
+                                                target.get().getUniqueId(),
+                                                rdqPlayer.getUniqueId(),
+                                                this.mergeSimilarRewardItems(this.rewards.get(clickContext))
+                                            )
+                                            .thenAccept(createdBounty -> {
+												Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+                                                // Apply visual indicators to the target player if they're online
+                                                Player targetPlayer = Bukkit.getPlayer(target.get().getUniqueId());
+                                                if (targetPlayer != null && targetPlayer.isOnline()) {
+                                                    // Force immediate visual update
+                                                    rdq.getVisualIndicatorManager().applyIndicators(targetPlayer);
+                                                    rdq.getVisualIndicatorManager().updatePlayerDisplay(targetPlayer);
+                                                    LOGGER.info("Applied visual indicators to " + targetPlayer.getName() + " for new bounty");
+                                                } else {
+                                                    LOGGER.info("Target player " + target.get().getName() + " is offline, indicators will be applied on join");
+                                                }
+
+                                                // Send success message
+
+                                                    this.i18n(
+                                                        "bounty_creation.confirm.success",
+                                                        player
+                                                    ).withPrefix().with(
+                                                        "target_name",
+                                                        target.map(OfflinePlayer::getName).orElse("not_defined")
+                                                    ).send();
+                                                });
+                                            })
+                                            .exceptionally(ex -> {
+                                                // Send error message
+                                                this.i18n(
+                                                    "confirm.error",
+                                                    player
+                                                ).withPrefix().with(
+                                                    "error_message",
+                                                    "Failed to create bounty: " + ex.getMessage()
+                                                ).send();
+                                                return null;
+                                            });
+                                        this.insertedItems.get(clickContext).remove(clickContext.getPlayer().getUniqueId());
 										this.isReopening = false;
 									},
 									rdq.getExecutor()
@@ -503,7 +497,16 @@ public class BountyCreationView extends BaseView {
 						},
 						rdq.getExecutor()
 					)
-				;
+					.exceptionally(throwable -> {
+						CentralLogger.getLogger(BountyCreationView.class.getName()).log(
+							Level.WARNING,
+							"Error occurred when trying to search for an existing bounty: " + throwable.getMessage()
+						);
+						Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+							clickContext.closeForPlayer();
+						});
+						return null;
+					});
 			})
 			.closeOnClick()
 		;
@@ -581,17 +584,9 @@ public class BountyCreationView extends BaseView {
 			player
 		).withPrefix().send();
 	}
-	
-	/**
-	 * Merges similar {@link RewardItem}s (same item type and meta) into one with the total amount.
-	 * The contributor and contributedAt fields will be taken from the first occurrence.
-	 *
-	 * @param items the set of reward items to merge
-	 *
-	 * @return a new set of merged reward items
-	 */
+
 	private List<BountyReward> mergeSimilarRewardItems(
-		final @NotNull Set<BountyReward> items
+		final @NotNull List<BountyReward> items
 	) {
 		
 		List<BountyReward> merged = new ArrayList<>();

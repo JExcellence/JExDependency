@@ -1,286 +1,43 @@
-# RDQ German (Germany) Translations
-# Deutsche Übersetzung für RaindropQuests Plugin
+# RDQ Premium Übersetzungsdatei - Deutsch (Deutschland)
+# MiniMessage Format mit Farbverläufen und Styling
+# Platzhalter verwenden %platzhalter% Format
 
-prefix: "<gold>[RDQ]</gold> "
+# Kopfgeld Listener Nachrichten
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du hast ein aktives Kopfgeld auf deinem Kopf!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Kopfgeld Wert:</gradient> <gradient:#10b981:#34d399>%bounty_value%€</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Läuft ab am:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Beauftragt von:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 KOPFGELD EINGELÖST! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Du hast erfolgreich das Kopfgeld auf</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>eingelöst!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Dein Anteil:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Jemand</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>hat das Kopfgeld auf</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>eingelöst!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% Spieler</gradient> <gradient:#a855f7:#c084fc>haben das Kopfgeld auf</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>eingelöst!</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ wird noch initialisiert. Bitte warten...</red>"
-    unknown_subcommand: "<red>Unbekannter Unterbefehl. Verwende /rdq help für verfügbare Befehle.</red>"
-    reload_failed: "<red>Neuladen fehlgeschlagen: {error}</red>"
-  success:
-    reloaded: "<green>RDQ-Konfiguration erfolgreich neu geladen!</green>"
-  help: |
-    <yellow>RDQ Befehle:</yellow>
-    <gray>/rdq rank</gray> - Rang-Menü öffnen
-    <gray>/rdq bounty</gray> - Kopfgeld-Menü öffnen
-    <gray>/rdq perk</gray> - Perk-Menü öffnen
-    <gray>/rdq reload</gray> - Konfiguration neu laden
-  rank:
-    opening_gui: "<gray>Öffne Rang-Menü...</gray>"
-  bounty:
-    opening_gui: "<gray>Öffne Kopfgeld-Menü...</gray>"
-  perk:
-    opening_gui: "<gray>Öffne Perk-Menü...</gray>"
-
-error:
-  not_found: "<red>{type} nicht gefunden: {id}</red>"
-  insufficient_funds: "<red>Nicht genug Geld! Benötigt: {required}, Verfügbar: {available}</red>"
-  on_cooldown: "<red>Abklingzeit! Noch {remaining} verbleibend.</red>"
-  requirements_not_met: "<red>Anforderungen nicht erfüllt: {missing}</red>"
-  self_targeting: "<red>Du kannst dich nicht selbst auswählen!</red>"
-  already_exists: "<red>{type} existiert bereits: {id}</red>"
-  expired: "<red>{type} ist abgelaufen: {id}</red>"
-  not_unlocked: "<red>{type} nicht freigeschaltet: {id}</red>"
-  permission_denied: "<red>Berechtigung verweigert: {permission}</red>"
-  invalid_state: "<red>Ungültiger Zustand: {message}</red>"
-  invalid_amount: "<red>Ungültiger Betrag! Muss zwischen {min} und {max} liegen.</red>"
-  no_permission: "<red>Du hast keine Berechtigung dafür.</red>"
-  player_only: "<red>Dieser Befehl kann nur von Spielern verwendet werden.</red>"
-
-rank:
-  error:
-    unknown_subcommand: "<red>Unbekannter Rang-Unterbefehl. Verwende /rank help für verfügbare Befehle.</red>"
-    player_not_found: "<red>Spieler nicht gefunden: {playerName}</red>"
-    grant_failed: "<red>Rang konnte nicht vergeben werden.</red>"
-    reload_failed: "<red>Ränge konnten nicht neu geladen werden: {error}</red>"
-  success:
-    rank_granted: "<green>Rang {rankName} an {playerName} vergeben!</green>"
-    rank_revoked: "<yellow>Rang {rankName} von {playerName} entzogen.</yellow>"
-    reloaded: "<green>Rang-Konfiguration neu geladen!</green>"
-    rank_unlocked: "<green>Herzlichen Glückwunsch! Du hast den Rang {rankName} freigeschaltet!</green>"
-  opening_view: "<gray>Öffne Rang-Ansicht...</gray>"
-  no_progress: "<yellow>Du hast noch keinen Rang-Pfad begonnen.</yellow>"
-  progress_header: "<yellow>Dein Rang-Fortschritt:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Verfügbare Rang-Bäume:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} Ränge)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Verwendung: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Unbekannter Admin-Befehl.</red>"
-    grant:
-      usage: "<yellow>Verwendung: /rank admin grant <spieler> <rang></yellow>"
-    revoke:
-      usage: "<yellow>Verwendung: /rank admin revoke <spieler> <rang></yellow>"
-  help: |
-    <yellow>Rang Befehle:</yellow>
-    <gray>/rank</gray> - Rang-Menü öffnen
-    <gray>/rank view</gray> - Rang-Bäume anzeigen
-    <gray>/rank progress</gray> - Fortschritt anzeigen
-    <gray>/rank trees</gray> - Verfügbare Bäume auflisten
-    <gray>/rank admin</gray> - Admin-Befehle
-  notification:
-    title: "<gold>Rang Freigeschaltet!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Du hast {rankName} freigeschaltet!</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>Unbekannter Kopfgeld-Unterbefehl. Verwende /bounty help für verfügbare Befehle.</red>"
-    player_not_found: "<red>Spieler nicht gefunden: {playerName}</red>"
-    self_target: "<red>Du kannst kein Kopfgeld auf dich selbst setzen!</red>"
-    invalid_amount: "<red>Ungültiger Betrag. Bitte gib eine gültige Zahl ein.</red>"
-    invalid_id: "<red>Ungültige Kopfgeld-ID.</red>"
-    create_failed: "<red>Kopfgeld konnte nicht erstellt werden: {error}</red>"
-    cancel_failed: "<red>Kopfgeld konnte nicht storniert werden. Du besitzt dieses Kopfgeld möglicherweise nicht.</red>"
-  success:
-    bounty_created: "<green>Kopfgeld von {amount} auf {targetName} gesetzt!</green>"
-    bounty_cancelled: "<yellow>Kopfgeld storniert. Geld zurückerstattet.</yellow>"
-    bounty_removed: "<green>Kopfgeld vom Admin entfernt.</green>"
-    bounty_claimed: "<green>Du hast ein Kopfgeld im Wert von {amount} eingefordert!</green>"
-    reloaded: "<green>Kopfgeld-Konfiguration neu geladen!</green>"
-  create:
-    usage: "<yellow>Verwendung: /bounty create <spieler> <betrag></yellow>"
-  cancel:
-    usage: "<yellow>Verwendung: /bounty cancel <kopfgeldId></yellow>"
-  list:
-    empty: "<yellow>Keine aktiven Kopfgelder.</yellow>"
-    header: "<yellow>Aktive Kopfgelder ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(von {placer})</dark_gray></gray>"
+# Kopfgeld Hauptmenü
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Kopfgeld System</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Kopfgeld Erstellen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicke um ein neues Kopfgeld</gradient>"
+      - "<gradient:#6b7280:#9ca3af>auf einen anderen Spieler zu setzen</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Kopfgelder Anzeigen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Alle aktiven Kopfgelder anzeigen</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Meine Kopfgelder</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Von dir erstellte Kopfgelder anzeigen</gradient>"
   leaderboard:
-    header: "<yellow>Kopfgeldjäger-Rangliste:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} Kills, {earned} verdient</gray>"
-  my:
-    header: "<yellow>Deine Kopfgelder:</yellow>"
-    placed_header: "<gray>Von dir gesetzte Kopfgelder:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Kopfgelder auf dich:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(von {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Verwendung: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Unbekannter Admin-Befehl.</red>"
-    remove:
-      usage: "<yellow>Verwendung: /bounty admin remove <kopfgeldId></yellow>"
-  help: |
-    <yellow>Kopfgeld Befehle:</yellow>
-    <gray>/bounty</gray> - Aktive Kopfgelder auflisten
-    <gray>/bounty create <spieler> <betrag></gray> - Kopfgeld erstellen
-    <gray>/bounty cancel <id></gray> - Kopfgeld stornieren
-    <gray>/bounty leaderboard</gray> - Top-Jäger anzeigen
-    <gray>/bounty my</gray> - Deine Kopfgelder anzeigen
-    <gray>/bounty admin</gray> - Admin-Befehle
-  announcement:
-    created: "<yellow>{placer} hat ein Kopfgeld von {amount} auf {target} gesetzt!</yellow>"
-    claimed: "<green>{hunter} hat das Kopfgeld auf {target} im Wert von {amount} eingefordert!</green>"
-    expired: "<gray>Kopfgeld auf {target} ist abgelaufen.</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 Bestenliste</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Top Kopfgeldjäger</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>Unbekannter Perk-Unterbefehl. Verwende /perk help für verfügbare Befehle.</red>"
-    player_not_found: "<red>Spieler nicht gefunden: {playerName}</red>"
-    perk_not_found: "<red>Perk nicht gefunden: {perkId}</red>"
-    perk_on_cooldown: "<red>Dieser Perk hat Abklingzeit! Noch {remaining} verbleibend.</red>"
-    perk_not_active: "<red>Dieser Perk ist derzeit nicht aktiv.</red>"
-    activate_failed: "<red>Perk konnte nicht aktiviert werden: {error}</red>"
-    grant_failed: "<red>Perk konnte nicht vergeben werden.</red>"
-    reload_failed: "<red>Perks konnten nicht neu geladen werden: {error}</red>"
-  success:
-    perk_activated: "<green>Perk {perkName} aktiviert!</green>"
-    perk_deactivated: "<yellow>Perk {perkName} deaktiviert.</yellow>"
-    perk_granted: "<green>Perk {perkName} an {playerName} vergeben!</green>"
-    perk_revoked: "<yellow>Perk {perkName} von {playerName} entzogen.</yellow>"
-    perk_unlocked: "<green>Du hast den Perk {perkName} freigeschaltet!</green>"
-    reloaded: "<green>Perk-Konfiguration neu geladen!</green>"
-  activate:
-    usage: "<yellow>Verwendung: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Verwendung: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Verwendung: /perk info <perkId></yellow>"
-    header: "<yellow>Perk Info: {id}</yellow>"
-    details: "<gray>Kategorie: {category} | Abklingzeit: {cooldown}s | Dauer: {duration}s</gray>"
-  list:
-    empty: "<yellow>Keine Perks verfügbar.</yellow>"
-    header: "<yellow>Verfügbare Perks ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Verwendung: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Unbekannter Admin-Befehl.</red>"
-    grant:
-      usage: "<yellow>Verwendung: /perk admin grant <spieler> <perk></yellow>"
-    revoke:
-      usage: "<yellow>Verwendung: /perk admin revoke <spieler> <perk></yellow>"
-  help: |
-    <yellow>Perk Befehle:</yellow>
-    <gray>/perk</gray> - Verfügbare Perks auflisten
-    <gray>/perk activate <perk></gray> - Perk aktivieren
-    <gray>/perk deactivate <perk></gray> - Perk deaktivieren
-    <gray>/perk info <perk></gray> - Perk-Details anzeigen
-    <gray>/perk admin</gray> - Admin-Befehle
-
-gui:
-  common:
-    back: "<yellow>← Zurück</yellow>"
-    close: "<red>Schließen</red>"
-    next_page: "<yellow>Nächste Seite →</yellow>"
-    previous_page: "<yellow>← Vorherige Seite</yellow>"
-    page_info: "<gray>Seite {current}/{total}</gray>"
-    loading: "<gray>Laden...</gray>"
-    confirm: "<green>Bestätigen</green>"
-    cancel: "<red>Abbrechen</red>"
-  rank:
-    main_title: "<dark_purple>Rang-Bäume</dark_purple>"
-    tree_title: "<dark_purple>{treeName}</dark_purple>"
-    detail_title: "<dark_purple>Rang: {rankName}</dark_purple>"
-    progress_title: "<dark_purple>Dein Fortschritt</dark_purple>"
-    unlocked: "<green>✓ Freigeschaltet</green>"
-    locked: "<red>✗ Gesperrt</red>"
-    current: "<yellow>★ Aktuell</yellow>"
-    unlock_button: "<green>Klicken zum Freischalten</green>"
-    requirements_header: "<yellow>Anforderungen:</yellow>"
-    requirement_met: "<green>✓ {requirement}</green>"
-    requirement_unmet: "<red>✗ {requirement}</red>"
-  bounty:
-    main_title: "<gold>Kopfgeld-Tafel</gold>"
-    create_title: "<gold>Kopfgeld Erstellen</gold>"
-    list_title: "<gold>Aktive Kopfgelder</gold>"
-    detail_title: "<gold>Kopfgeld-Details</gold>"
-    leaderboard_title: "<gold>Top-Jäger</gold>"
-    my_bounties_title: "<gold>Meine Kopfgelder</gold>"
-    target_select: "<yellow>Ziel Auswählen</yellow>"
-    amount_input: "<yellow>Betrag Eingeben</yellow>"
-    create_button: "<green>Kopfgeld Erstellen</green>"
-  perk:
-    main_title: "<aqua>Perks</aqua>"
-    list_title: "<aqua>Verfügbare Perks</aqua>"
-    detail_title: "<aqua>Perk: {perkName}</aqua>"
-    unlock_title: "<aqua>Perk Freischalten</aqua>"
-    admin_title: "<aqua>Perk Admin</aqua>"
-    active: "<green>● Aktiv</green>"
-    inactive: "<gray>○ Inaktiv</gray>"
-    on_cooldown: "<red>⏱ Abklingzeit ({remaining})</red>"
-    activate_button: "<green>Aktivieren</green>"
-    deactivate_button: "<red>Deaktivieren</red>"
-    unlock_button: "<green>Freischalten</green>"
-    requirements_header: "<yellow>Anforderungen:</yellow>"
-
-perk_names:
-  speed: "Geschwindigkeit"
-  strength: "Stärke"
-  resistance: "Resistenz"
-  regeneration: "Regeneration"
-  night_vision: "Nachtsicht"
-  fire_resistance: "Feuerresistenz"
-  water_breathing: "Wasseratmung"
-  jump_boost: "Sprungkraft"
-  haste: "Eile"
-  luck: "Glück"
-  fly: "Fliegen"
-  double_experience: "Doppelte EP"
-  prevent_death: "Todesschutz"
-  treasure_hunter: "Schatzjäger"
-  vampire: "Vampir"
-
-perk_descriptions:
-  speed: "Bewege dich für eine begrenzte Zeit schneller."
-  strength: "Verursache mehr Schaden an Feinden."
-  resistance: "Nimm weniger Schaden von Angriffen."
-  regeneration: "Regeneriere langsam Gesundheit."
-  night_vision: "Sieh klar in der Dunkelheit."
-  fire_resistance: "Werde immun gegen Feuerschaden."
-  water_breathing: "Atme unter Wasser."
-  jump_boost: "Springe höher als normal."
-  haste: "Baue und greife schneller an."
-  luck: "Erhöhte Chance auf seltene Drops."
-  fly: "Erhalte die Fähigkeit zu fliegen."
-  double_experience: "Verdiene doppelte Erfahrungspunkte."
-  prevent_death: "Überlebe einmal einen tödlichen Treffer."
-  treasure_hunter: "Finde bessere Beute in Truhen."
-  vampire: "Heile dich beim Verursachen von Schaden."
-
-rank_trees:
-  warrior:
-    name: "Krieger"
-    description: "Der Pfad der Stärke und des Kampfes."
-  cleric:
-    name: "Kleriker"
-    description: "Der Pfad der Heilung und Unterstützung."
-  mage:
-    name: "Magier"
-    description: "Der Pfad der Magie und Weisheit."
-  rogue:
-    name: "Schurke"
-    description: "Der Pfad der Heimlichkeit und Beweglichkeit."
-  merchant:
-    name: "Händler"
-    description: "Der Pfad des Handels und Reichtums."
-  ranger:
-    name: "Waldläufer"
-    description: "Der Pfad der Natur und Bogenschießen."
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Berechtigung: {permission}"
-  rank: "Rang: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Level {level}"
-
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}t"
-  format:
-    short: "{hours}h {minutes}m {seconds}s"
-    long: "{days} Tage, {hours} Stunden, {minutes} Minuten"
+# Prefix
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "

@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Configuration section for item-based requirements.
  * <p>
- * This section handles all configuration options specific to {@link com.raindropcentral.rdq2.requirement.ItemRequirement},
+ * This section handles all configuration options specific to {@link com.raindropcentral.rdq.requirement.ItemRequirement},
  * including whether items should be consumed on completion, if partial progress is allowed, and the full set of required
  * {@link ItemStack item stacks} to validate.
  * </p>

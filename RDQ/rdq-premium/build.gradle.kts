@@ -7,7 +7,6 @@ version = "6.0.0"
 description = "RDQ Premium - Premium edition of RaindropQuests"
 
 dependencies {
-    // Include common module
     implementation(project(":RDQ:rdq-common"))
 
     // Server API
@@ -42,9 +41,13 @@ dependencies {
 
     // Version compatibility
     compileOnly(libs.xseries)
+    compileOnly(libs.jehibernate)
 
     // Internal libraries to shade
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
+    implementation(libs.bundles.jexcellence) {
+        exclude(group = "de.jexcellence.hibernate")
+        isTransitive = false
+    }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
 
     // Inventory framework

@@ -1,216 +1,24 @@
-# RDQ Russian Translations
-# Русский перевод для плагина RaindropQuests
+# RDQ Premium Файл Перевода - Русский
+# Формат MiniMessage с градиентами и стилем
+# Заполнители используют формат %placeholder%
 
-prefix: "<gold>[RDQ]</gold> "
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>На вас объявлена награда!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Размер награды:</gradient> <gradient:#10b981:#34d399>%bounty_value%₽</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 НАГРАДА ПОЛУЧЕНА! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Вы успешно получили награду за</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ инициализируется. Пожалуйста, подождите...</red>"
-    unknown_subcommand: "<red>Неизвестная подкоманда. Используйте /rdq help для списка команд.</red>"
-    reload_failed: "<red>Ошибка перезагрузки: {error}</red>"
-  success:
-    reloaded: "<green>Конфигурация RDQ успешно перезагружена!</green>"
-
-error:
-  not_found: "<red>{type} не найден: {id}</red>"
-  insufficient_funds: "<red>Недостаточно средств! Требуется: {required}, Доступно: {available}</red>"
-  on_cooldown: "<red>Перезарядка! Осталось {remaining}.</red>"
-  requirements_not_met: "<red>Требования не выполнены: {missing}</red>"
-  self_targeting: "<red>Вы не можете выбрать себя!</red>"
-  already_exists: "<red>{type} уже существует: {id}</red>"
-  expired: "<red>{type} истёк: {id}</red>"
-  not_unlocked: "<red>{type} не разблокирован: {id}</red>"
-  permission_denied: "<red>Доступ запрещён: {permission}</red>"
-  invalid_state: "<red>Недопустимое состояние: {message}</red>"
-  invalid_amount: "<red>Недопустимая сумма! Должна быть между {min} и {max}.</red>"
-  no_permission: "<red>У вас нет разрешения на это.</red>"
-  player_only: "<red>Эта команда доступна только игрокам.</red>"
-
-rank:
-  error:
-    unknown_subcommand: "<red>Неизвестная подкоманда ранга.</red>"
-    player_not_found: "<red>Игрок не найден: {playerName}</red>"
-    grant_failed: "<red>Не удалось выдать ранг.</red>"
-    reload_failed: "<red>Ошибка перезагрузки рангов: {error}</red>"
-  success:
-    rank_granted: "<green>Ранг {rankName} выдан игроку {playerName}!</green>"
-    rank_revoked: "<yellow>Ранг {rankName} отозван у {playerName}.</yellow>"
-    reloaded: "<green>Конфигурация рангов перезагружена!</green>"
-    rank_unlocked: "<green>Поздравляем! Вы разблокировали ранг {rankName}!</green>"
-  opening_view: "<gray>Открытие просмотра рангов...</gray>"
-  no_progress: "<yellow>Вы ещё не начали ни одного пути ранга.</yellow>"
-  progress_header: "<yellow>Ваш прогресс ранга:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Доступные деревья рангов:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} рангов)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Использование: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Неизвестная команда администратора.</red>"
-    grant:
-      usage: "<yellow>Использование: /rank admin grant <игрок> <ранг></yellow>"
-    revoke:
-      usage: "<yellow>Использование: /rank admin revoke <игрок> <ранг></yellow>"
-  help: |
-    <yellow>Команды рангов:</yellow>
-    <gray>/rank</gray> - Открыть меню рангов
-    <gray>/rank view</gray> - Просмотр деревьев рангов
-    <gray>/rank progress</gray> - Просмотр прогресса
-    <gray>/rank admin</gray> - Команды администратора
-  notification:
-    title: "<gold>Ранг разблокирован!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>Вы разблокировали {rankName}!</green>"
-
-bounty:
-  error:
-    unknown_subcommand: "<red>Неизвестная подкоманда награды.</red>"
-    player_not_found: "<red>Игрок не найден: {playerName}</red>"
-    self_target: "<red>Вы не можете назначить награду на себя!</red>"
-    invalid_amount: "<red>Недопустимая сумма. Введите корректное число.</red>"
-    invalid_id: "<red>Недопустимый ID награды.</red>"
-    create_failed: "<red>Ошибка создания награды: {error}</red>"
-    cancel_failed: "<red>Ошибка отмены награды.</red>"
-  success:
-    bounty_created: "<green>Награда {amount} назначена на {targetName}!</green>"
-    bounty_cancelled: "<yellow>Награда отменена. Средства возвращены.</yellow>"
-    bounty_removed: "<green>Награда удалена администратором.</green>"
-    bounty_claimed: "<green>Вы получили награду {amount}!</green>"
-    reloaded: "<green>Конфигурация наград перезагружена!</green>"
-  create:
-    usage: "<yellow>Использование: /bounty create <игрок> <сумма></yellow>"
-  cancel:
-    usage: "<yellow>Использование: /bounty cancel <ID награды></yellow>"
-  list:
-    empty: "<yellow>Нет активных наград.</yellow>"
-    header: "<yellow>Активные награды ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(от {placer})</dark_gray></gray>"
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Система Наград</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Создать Награду</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Просмотр Наград</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Мои Награды</gradient>"
   leaderboard:
-    header: "<yellow>Таблица лидеров охотников:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} убийств, заработано {earned}</gray>"
-  my:
-    header: "<yellow>Ваши награды:</yellow>"
-    placed_header: "<gray>Награды, которые вы назначили:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Награды на вас:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(от {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Использование: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Неизвестная команда администратора.</red>"
-    remove:
-      usage: "<yellow>Использование: /bounty admin remove <ID награды></yellow>"
-  help: |
-    <yellow>Команды наград:</yellow>
-    <gray>/bounty</gray> - Список активных наград
-    <gray>/bounty create <игрок> <сумма></gray> - Создать награду
-    <gray>/bounty cancel <ID></gray> - Отменить награду
-    <gray>/bounty leaderboard</gray> - Таблица лидеров
-    <gray>/bounty my</gray> - Ваши награды
-  announcement:
-    created: "<yellow>{placer} назначил награду {amount} на {target}!</yellow>"
-    claimed: "<green>{hunter} получил награду за {target} в размере {amount}!</green>"
-    expired: "<gray>Награда на {target} истекла.</gray>"
+    name: "<gradient:#ef4444:#f87171>🏆 Таблица Лидеров</gradient>"
 
-perk:
-  error:
-    unknown_subcommand: "<red>Неизвестная подкоманда перка.</red>"
-    player_not_found: "<red>Игрок не найден: {playerName}</red>"
-    perk_not_found: "<red>Перк не найден: {perkId}</red>"
-    perk_on_cooldown: "<red>Этот перк на перезарядке! Осталось {remaining}.</red>"
-    perk_not_active: "<red>Этот перк сейчас не активен.</red>"
-    activate_failed: "<red>Ошибка активации перка: {error}</red>"
-    grant_failed: "<red>Не удалось выдать перк.</red>"
-    reload_failed: "<red>Ошибка перезагрузки перков: {error}</red>"
-  success:
-    perk_activated: "<green>Перк {perkName} активирован!</green>"
-    perk_deactivated: "<yellow>Перк {perkName} деактивирован.</yellow>"
-    perk_granted: "<green>Перк {perkName} выдан игроку {playerName}!</green>"
-    perk_revoked: "<yellow>Перк {perkName} отозван у {playerName}.</yellow>"
-    perk_unlocked: "<green>Вы разблокировали перк {perkName}!</green>"
-    reloaded: "<green>Конфигурация перков перезагружена!</green>"
-  activate:
-    usage: "<yellow>Использование: /perk activate <ID перка></yellow>"
-  deactivate:
-    usage: "<yellow>Использование: /perk deactivate <ID перка></yellow>"
-  info:
-    usage: "<yellow>Использование: /perk info <ID перка></yellow>"
-    header: "<yellow>Информация о перке: {id}</yellow>"
-    details: "<gray>Категория: {category} | Перезарядка: {cooldown}с | Длительность: {duration}с</gray>"
-  list:
-    empty: "<yellow>Нет доступных перков.</yellow>"
-    header: "<yellow>Доступные перки ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Использование: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Неизвестная команда администратора.</red>"
-    grant:
-      usage: "<yellow>Использование: /perk admin grant <игрок> <перк></yellow>"
-    revoke:
-      usage: "<yellow>Использование: /perk admin revoke <игрок> <перк></yellow>"
-  help: |
-    <yellow>Команды перков:</yellow>
-    <gray>/perk</gray> - Список доступных перков
-    <gray>/perk activate <перк></gray> - Активировать перк
-    <gray>/perk deactivate <перк></gray> - Деактивировать перк
-    <gray>/perk info <перк></gray> - Информация о перке
-
-gui:
-  common:
-    back: "<yellow>← Назад</yellow>"
-    close: "<red>Закрыть</red>"
-    next_page: "<yellow>Следующая страница →</yellow>"
-    previous_page: "<yellow>← Предыдущая страница</yellow>"
-    page_info: "<gray>Страница {current}/{total}</gray>"
-    loading: "<gray>Загрузка...</gray>"
-    confirm: "<green>Подтвердить</green>"
-    cancel: "<red>Отмена</red>"
-
-perk_names:
-  speed: "Скорость"
-  strength: "Сила"
-  resistance: "Сопротивление"
-  regeneration: "Регенерация"
-  night_vision: "Ночное зрение"
-  fire_resistance: "Огнестойкость"
-  water_breathing: "Подводное дыхание"
-  jump_boost: "Прыгучесть"
-  haste: "Спешка"
-  luck: "Удача"
-  fly: "Полёт"
-  double_experience: "Двойной опыт"
-  prevent_death: "Защита от смерти"
-  treasure_hunter: "Охотник за сокровищами"
-  vampire: "Вампир"
-
-rank_trees:
-  warrior:
-    name: "Воин"
-    description: "Путь силы и боя."
-  cleric:
-    name: "Жрец"
-    description: "Путь исцеления и поддержки."
-  mage:
-    name: "Маг"
-    description: "Путь магии и мудрости."
-  rogue:
-    name: "Разбойник"
-    description: "Путь скрытности и ловкости."
-  merchant:
-    name: "Торговец"
-    description: "Путь торговли и богатства."
-  ranger:
-    name: "Следопыт"
-    description: "Путь природы и стрельбы из лука."
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Разрешение: {permission}"
-  rank: "Ранг: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Уровень {level}"
-
-time:
-  seconds: "{value}с"
-  minutes: "{value}м"
-  hours: "{value}ч"
-  days: "{value}д"
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "

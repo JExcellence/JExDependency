@@ -1,286 +1,303 @@
-# RDQ Spanish (Spain) Translations
-# Traducción al español para el plugin RaindropQuests
+# RDQ Common Archivo de Traducción - Español
+# Formato MiniMessage con gradientes y estilo
+# Los marcadores de posición usan formato %placeholder%
 
-prefix: "<gold>[RDQ]</gold> "
+# Mensajes del Listener de Recompensas
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>¡Tienes una recompensa activa sobre tu cabeza!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Valor de la Recompensa:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Expira en:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Comisionado por:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 ¡RECOMPENSA RECLAMADA! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>¡Has reclamado exitosamente la recompensa de</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Tu parte:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Alguien</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>ha reclamado la recompensa de</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% jugadores</gradient> <gradient:#a855f7:#c084fc>han reclamado la recompensa de</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ se está inicializando. Por favor espera...</red>"
-    unknown_subcommand: "<red>Subcomando desconocido. Usa /rdq help para ver los comandos disponibles.</red>"
-    reload_failed: "<red>Error al recargar: {error}</red>"
-  success:
-    reloaded: "<green>¡Configuración de RDQ recargada exitosamente!</green>"
-  help: |
-    <yellow>Comandos RDQ:</yellow>
-    <gray>/rdq rank</gray> - Abrir menú de rangos
-    <gray>/rdq bounty</gray> - Abrir menú de recompensas
-    <gray>/rdq perk</gray> - Abrir menú de ventajas
-    <gray>/rdq reload</gray> - Recargar configuración
-  rank:
-    opening_gui: "<gray>Abriendo menú de rangos...</gray>"
-  bounty:
-    opening_gui: "<gray>Abriendo menú de recompensas...</gray>"
-  perk:
-    opening_gui: "<gray>Abriendo menú de ventajas...</gray>"
+# Mensajes de Confirmación de Creación de Recompensa
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Recompensa creada exitosamente en</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Error al crear la recompensa:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
-error:
-  not_found: "<red>{type} no encontrado: {id}</red>"
-  insufficient_funds: "<red>¡Fondos insuficientes! Requerido: {required}, Disponible: {available}</red>"
-  on_cooldown: "<red>¡En enfriamiento! {remaining} restante.</red>"
-  requirements_not_met: "<red>Requisitos no cumplidos: {missing}</red>"
-  self_targeting: "<red>¡No puedes seleccionarte a ti mismo!</red>"
-  already_exists: "<red>{type} ya existe: {id}</red>"
-  expired: "<red>{type} ha expirado: {id}</red>"
-  not_unlocked: "<red>{type} no desbloqueado: {id}</red>"
-  permission_denied: "<red>Permiso denegado: {permission}</red>"
-  invalid_state: "<red>Estado inválido: {message}</red>"
-  invalid_amount: "<red>¡Cantidad inválida! Debe estar entre {min} y {max}.</red>"
-  no_permission: "<red>No tienes permiso para hacer eso.</red>"
-  player_only: "<red>Este comando solo puede ser usado por jugadores.</red>"
+# Botón Agregar Objetos
+add_items:
+  name: "<gradient:#10b981:#34d399>💰 Agregar Recompensas de Objetos</gradient>"
+  name_disabled: "<gradient:#6b7280:#9ca3af>💰 Agregar Recompensas de Objetos</gradient>"
+  description:
+    - "<gradient:#6b7280:#9ca3af>Clic para agregar recompensas de objetos</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Objetos actuales:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+  description_disabled:
+    - "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Necesitas elegir un jugador</gradient>"
 
-rank:
-  error:
-    unknown_subcommand: "<red>Subcomando de rango desconocido. Usa /rank help para ver los comandos disponibles.</red>"
-    player_not_found: "<red>Jugador no encontrado: {playerName}</red>"
-    grant_failed: "<red>Error al otorgar el rango.</red>"
-    reload_failed: "<red>Error al recargar rangos: {error}</red>"
-  success:
-    rank_granted: "<green>¡Rango {rankName} otorgado a {playerName}!</green>"
-    rank_revoked: "<yellow>Rango {rankName} revocado de {playerName}.</yellow>"
-    reloaded: "<green>¡Configuración de rangos recargada!</green>"
-    rank_unlocked: "<green>¡Felicidades! ¡Has desbloqueado el rango {rankName}!</green>"
-  opening_view: "<gray>Abriendo vista de rangos...</gray>"
-  no_progress: "<yellow>Aún no has comenzado ningún camino de rango.</yellow>"
-  progress_header: "<yellow>Tu Progreso de Rango:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>Árboles de Rango Disponibles:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} rangos)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Uso: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Comando de admin desconocido.</red>"
-    grant:
-      usage: "<yellow>Uso: /rank admin grant <jugador> <rango></yellow>"
-    revoke:
-      usage: "<yellow>Uso: /rank admin revoke <jugador> <rango></yellow>"
-  help: |
-    <yellow>Comandos de Rango:</yellow>
-    <gray>/rank</gray> - Abrir menú de rangos
-    <gray>/rank view</gray> - Ver árboles de rango
-    <gray>/rank progress</gray> - Ver tu progreso
-    <gray>/rank trees</gray> - Listar árboles disponibles
-    <gray>/rank admin</gray> - Comandos de admin
-  notification:
-    title: "<gold>¡Rango Desbloqueado!</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>¡Has desbloqueado {rankName}!</green>"
+# Botón Agregar Moneda  
+add_currency:
+  name: "<gradient:#f59e0b:#fbbf24>💎 Agregar Recompensas de Moneda</gradient>"
+  name_disabled: "<gradient:#6b7280:#9ca3af>💎 Agregar Recompensas de Moneda</gradient>"
+  description:
+    - "<gradient:#6b7280:#9ca3af>Clic para agregar recompensas de moneda</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Monedas actuales:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+  description_disabled:
+    - "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Necesitas elegir un jugador</gradient>"
 
-bounty:
-  error:
-    unknown_subcommand: "<red>Subcomando de recompensa desconocido. Usa /bounty help para ver los comandos disponibles.</red>"
-    player_not_found: "<red>Jugador no encontrado: {playerName}</red>"
-    self_target: "<red>¡No puedes poner una recompensa sobre ti mismo!</red>"
-    invalid_amount: "<red>Cantidad inválida. Por favor ingresa un número válido.</red>"
-    invalid_id: "<red>ID de recompensa inválido.</red>"
-    create_failed: "<red>Error al crear recompensa: {error}</red>"
-    cancel_failed: "<red>Error al cancelar recompensa. Puede que no seas el dueño.</red>"
-  success:
-    bounty_created: "<green>¡Recompensa de {amount} puesta sobre {targetName}!</green>"
-    bounty_cancelled: "<yellow>Recompensa cancelada. Fondos reembolsados.</yellow>"
-    bounty_removed: "<green>Recompensa eliminada por admin.</green>"
-    bounty_claimed: "<green>¡Has reclamado una recompensa de {amount}!</green>"
-    reloaded: "<green>¡Configuración de recompensas recargada!</green>"
-  create:
-    usage: "<yellow>Uso: /bounty create <jugador> <cantidad></yellow>"
-  cancel:
-    usage: "<yellow>Uso: /bounty cancel <recompensaId></yellow>"
-  list:
-    empty: "<yellow>No hay recompensas activas.</yellow>"
-    header: "<yellow>Recompensas Activas ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(por {placer})</dark_gray></gray>"
+# Botón Confirmar Recompensa
+confirm_bounty:
+  name: "<gradient:#10b981:#34d399>✅ Crear Recompensa</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Clic para crear la recompensa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>con las recompensas seleccionadas</gradient>"
+
+# Botón Seleccionar Objetivo
+select_target:
+  name: "<gradient:#f59e0b:#fbbf24>🎯 Seleccionar Objetivo: %target_name%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Clic para elegir un jugador</gradient>"
+    - "<gradient:#6b7280:#9ca3af>para poner una recompensa</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>Objetivo actual: %target_name%</gradient>"
+
+# Mensajes de Confirmación
+confirm:
+  no_player_selected: "<gradient:#ef4444:#f87171>❌ ¡Ningún jugador seleccionado!</gradient> <gradient:#6b7280:#9ca3af>Por favor selecciona un objetivo primero.</gradient>"
+  no_rewards_selected: "<gradient:#ef4444:#f87171>❌ ¡No se agregaron recompensas!</gradient> <gradient:#6b7280:#9ca3af>Por favor agrega algunas recompensas primero.</gradient>"
+  confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Creando recompensa en</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+  error: "<gradient:#ef4444:#f87171>❌ Error:</gradient> <gradient:#6b7280:#9ca3af>No se pudo encontrar el jugador objetivo %target_name%</gradient>"
+
+# Mensaje de Devolución de Objetos
+left_overs: "<gradient:#f59e0b:#fbbf24>📦 ¡Objetos devueltos!</gradient> <gradient:#6b7280:#9ca3af>Algunos objetos fueron soltados en el suelo.</gradient>"
+
+# Interfaz de Vista General de Recompensas (Menú Principal y Vista General)
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Sistema de Recompensas</gradient>"
+  
+  # Botones del menú principal
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Crear Recompensa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para crear una nueva recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sobre otro jugador</gradient>"
+  
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Ver Recompensas</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ver todas las recompensas activas</gradient>"
+  
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Mis Recompensas</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ver recompensas que has creado</gradient>"
+  
   leaderboard:
-    header: "<yellow>Tabla de Cazarrecompensas:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} eliminaciones, {earned} ganados</gray>"
-  my:
-    header: "<yellow>Tus Recompensas:</yellow>"
-    placed_header: "<gray>Recompensas que pusiste:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>Recompensas sobre ti:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(por {placer})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Uso: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>Comando de admin desconocido.</red>"
-    remove:
-      usage: "<yellow>Uso: /bounty admin remove <recompensaId></yellow>"
-  help: |
-    <yellow>Comandos de Recompensa:</yellow>
-    <gray>/bounty</gray> - Listar recompensas activas
-    <gray>/bounty create <jugador> <cantidad></gray> - Crear recompensa
-    <gray>/bounty cancel <id></gray> - Cancelar tu recompensa
-    <gray>/bounty leaderboard</gray> - Ver mejores cazadores
-    <gray>/bounty my</gray> - Ver tus recompensas
-    <gray>/bounty admin</gray> - Comandos de admin
-  announcement:
-    created: "<yellow>¡{placer} puso una recompensa de {amount} sobre {target}!</yellow>"
-    claimed: "<green>¡{hunter} reclamó la recompensa sobre {target} por valor de {amount}!</green>"
-    expired: "<gray>La recompensa sobre {target} ha expirado.</gray>"
-
-perk:
-  error:
-    unknown_subcommand: "<red>Subcomando de ventaja desconocido. Usa /perk help para ver los comandos disponibles.</red>"
-    player_not_found: "<red>Jugador no encontrado: {playerName}</red>"
-    perk_not_found: "<red>Ventaja no encontrada: {perkId}</red>"
-    perk_on_cooldown: "<red>¡Esta ventaja está en enfriamiento! {remaining} restante.</red>"
-    perk_not_active: "<red>Esta ventaja no está activa actualmente.</red>"
-    activate_failed: "<red>Error al activar ventaja: {error}</red>"
-    grant_failed: "<red>Error al otorgar ventaja.</red>"
-    reload_failed: "<red>Error al recargar ventajas: {error}</red>"
-  success:
-    perk_activated: "<green>¡Ventaja {perkName} activada!</green>"
-    perk_deactivated: "<yellow>Ventaja {perkName} desactivada.</yellow>"
-    perk_granted: "<green>¡Ventaja {perkName} otorgada a {playerName}!</green>"
-    perk_revoked: "<yellow>Ventaja {perkName} revocada de {playerName}.</yellow>"
-    perk_unlocked: "<green>¡Has desbloqueado la ventaja {perkName}!</green>"
-    reloaded: "<green>¡Configuración de ventajas recargada!</green>"
-  activate:
-    usage: "<yellow>Uso: /perk activate <perkId></yellow>"
-  deactivate:
-    usage: "<yellow>Uso: /perk deactivate <perkId></yellow>"
-  info:
-    usage: "<yellow>Uso: /perk info <perkId></yellow>"
-    header: "<yellow>Info de Ventaja: {id}</yellow>"
-    details: "<gray>Categoría: {category} | Enfriamiento: {cooldown}s | Duración: {duration}s</gray>"
-  list:
-    empty: "<yellow>No hay ventajas disponibles.</yellow>"
-    header: "<yellow>Ventajas Disponibles ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>Uso: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>Comando de admin desconocido.</red>"
-    grant:
-      usage: "<yellow>Uso: /perk admin grant <jugador> <ventaja></yellow>"
-    revoke:
-      usage: "<yellow>Uso: /perk admin revoke <jugador> <ventaja></yellow>"
-  help: |
-    <yellow>Comandos de Ventaja:</yellow>
-    <gray>/perk</gray> - Listar ventajas disponibles
-    <gray>/perk activate <ventaja></gray> - Activar una ventaja
-    <gray>/perk deactivate <ventaja></gray> - Desactivar una ventaja
-    <gray>/perk info <ventaja></gray> - Ver detalles
-    <gray>/perk admin</gray> - Comandos de admin
-
-gui:
-  common:
-    back: "<yellow>← Volver</yellow>"
-    close: "<red>Cerrar</red>"
-    next_page: "<yellow>Página Siguiente →</yellow>"
-    previous_page: "<yellow>← Página Anterior</yellow>"
-    page_info: "<gray>Página {current}/{total}</gray>"
-    loading: "<gray>Cargando...</gray>"
-    confirm: "<green>Confirmar</green>"
-    cancel: "<red>Cancelar</red>"
-  rank:
-    main_title: "<dark_purple>Árboles de Rango</dark_purple>"
-    tree_title: "<dark_purple>{treeName}</dark_purple>"
-    detail_title: "<dark_purple>Rango: {rankName}</dark_purple>"
-    progress_title: "<dark_purple>Tu Progreso</dark_purple>"
-    unlocked: "<green>✓ Desbloqueado</green>"
-    locked: "<red>✗ Bloqueado</red>"
-    current: "<yellow>★ Actual</yellow>"
-    unlock_button: "<green>Clic para Desbloquear</green>"
-    requirements_header: "<yellow>Requisitos:</yellow>"
-    requirement_met: "<green>✓ {requirement}</green>"
-    requirement_unmet: "<red>✗ {requirement}</red>"
+    name: "<gradient:#ef4444:#f87171>🏆 Tabla de Clasificación</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mejores cazarrecompensas</gradient>"
+  
+  # Entradas de la lista de recompensas
   bounty:
-    main_title: "<gold>Tablón de Recompensas</gold>"
-    create_title: "<gold>Crear Recompensa</gold>"
-    list_title: "<gold>Recompensas Activas</gold>"
-    detail_title: "<gold>Detalles de Recompensa</gold>"
-    leaderboard_title: "<gold>Mejores Cazadores</gold>"
-    my_bounties_title: "<gold>Mis Recompensas</gold>"
-    target_select: "<yellow>Seleccionar Objetivo</yellow>"
-    amount_input: "<yellow>Ingresar Cantidad</yellow>"
-    create_button: "<green>Crear Recompensa</green>"
-  perk:
-    main_title: "<aqua>Ventajas</aqua>"
-    list_title: "<aqua>Ventajas Disponibles</aqua>"
-    detail_title: "<aqua>Ventaja: {perkName}</aqua>"
-    unlock_title: "<aqua>Desbloquear Ventaja</aqua>"
-    admin_title: "<aqua>Admin de Ventajas</aqua>"
-    active: "<green>● Activo</green>"
-    inactive: "<gray>○ Inactivo</gray>"
-    on_cooldown: "<red>⏱ En Enfriamiento ({remaining})</red>"
-    activate_button: "<green>Activar</green>"
-    deactivate_button: "<red>Desactivar</red>"
-    unlock_button: "<green>Desbloquear</green>"
-    requirements_header: "<yellow>Requisitos:</yellow>"
+    name: "<gradient:#a855f7:#c084fc>🎯 Recompensa sobre</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Objetivo:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Comisionado:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Creado:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Haz clic para ver detalles</gradient>"
 
-perk_names:
-  speed: "Velocidad"
-  strength: "Fuerza"
-  resistance: "Resistencia"
-  regeneration: "Regeneración"
-  night_vision: "Visión Nocturna"
-  fire_resistance: "Resistencia al Fuego"
-  water_breathing: "Respiración Acuática"
-  jump_boost: "Salto Mejorado"
-  haste: "Prisa"
-  luck: "Suerte"
-  fly: "Vuelo"
-  double_experience: "Doble XP"
-  prevent_death: "Prevención de Muerte"
-  treasure_hunter: "Cazador de Tesoros"
-  vampire: "Vampiro"
+# Interfaz de Creación de Recompensas
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Crear Recompensa</gradient>"
+  
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Seleccionar Objetivo</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para elegir un jugador</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sobre el cual poner una recompensa</gradient>"
+  
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Agregar Recompensas</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para agregar objetos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>como recompensas</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
+  
+  add_currencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Agregar Moneda</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para agregar recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>de moneda para la recompensa</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
+  
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Crear Recompensa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para crear la recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>con las recompensas seleccionadas</gradient>"
+  
+  confirm:
+    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ ¡Recompensa creada exitosamente sobre</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
 
-perk_descriptions:
-  speed: "Muévete más rápido por tiempo limitado."
-  strength: "Inflige más daño a los enemigos."
-  resistance: "Recibe menos daño de los ataques."
-  regeneration: "Regenera salud lentamente."
-  night_vision: "Ve claramente en la oscuridad."
-  fire_resistance: "Vuélvete inmune al daño por fuego."
-  water_breathing: "Respira bajo el agua."
-  jump_boost: "Salta más alto de lo normal."
-  haste: "Mina y ataca más rápido."
-  luck: "Mayor probabilidad de objetos raros."
-  fly: "Obtén la habilidad de volar."
-  double_experience: "Gana el doble de puntos de experiencia."
-  prevent_death: "Sobrevive a un golpe fatal una vez."
-  treasure_hunter: "Encuentra mejor botín en cofres."
-  vampire: "Cúrate al infligir daño."
+# Interfaz de Información del Jugador Recompensa
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Recompensa sobre</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Objetivo de esta recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Haz clic para ver información del jugador</gradient>"
+  
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Ver Recompensas</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para ver todas las recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>por reclamar esta recompensa</gradient>"
+  
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Eliminar Recompensa</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Advertencia: Esta acción</gradient>"
+      - "<gradient:#ef4444:#f87171>¡no se puede deshacer!</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Haz clic para eliminar esta recompensa</gradient>"
+  
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ ¡Recompensa sobre</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>ha sido eliminada!</gradient>"
 
-rank_trees:
-  warrior:
-    name: "Guerrero"
-    description: "El camino de la fuerza y el combate."
-  cleric:
-    name: "Clérigo"
-    description: "El camino de la curación y el apoyo."
-  mage:
-    name: "Mago"
-    description: "El camino de la magia y la sabiduría."
-  rogue:
-    name: "Pícaro"
-    description: "El camino del sigilo y la agilidad."
-  merchant:
-    name: "Mercader"
-    description: "El camino del comercio y la riqueza."
-  ranger:
-    name: "Guardabosques"
-    description: "El camino de la naturaleza y el arco."
+# Interfaz de Recompensa de Recompensa
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Recompensas de Recompensa</gradient>"
+  
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Sin Recompensas</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Agrega objetos para crear</gradient>"
+      - "<gradient:#6b7280:#9ca3af>recompensas para esta recompensa</gradient>"
+  
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Agregar Objeto</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Coloca objetos aquí para agregarlos como recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clic derecho para quitar objetos</gradient>"
+  
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Objetivo: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Esta recompensa está puesta sobre</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Recompensa de Recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Este objeto será dado a</gradient>"
+      - "<gradient:#6b7280:#9ca3af>quien reclame la recompensa</gradient>"
+  
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ ¡No se agregaron nuevos objetos!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ ¡Algunos objetos fueron soltados porque tu inventario estaba lleno!</gradient>"
 
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "Permiso: {permission}"
-  rank: "Rango: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "Nivel {level}"
+# Prefijo
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "# Compo
+nentes UI de la Plataforma
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-time:
-  seconds: "{value}s"
-  minutes: "{value}m"
-  hours: "{value}h"
-  days: "{value}d"
-  format:
-    short: "{hours}h {minutes}m {seconds}s"
-    long: "{days} días, {hours} horas, {minutes} minutos"
+# Paginación
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Página %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Página actual:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Páginas totales:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Página %direction%</gradient>"
+
+# Objetos de Cabeza
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Volver</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para volver</gradient>"
+      - "<gradient:#6b7280:#9ca3af>al menú anterior</gradient>"
+  
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Continuar</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para continuar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>al siguiente paso</gradient>"
+  
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Anterior</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para ir a</gradient>"
+      - "<gradient:#6b7280:#9ca3af>la página anterior</gradient>"
+  
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Siguiente</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para ir a</gradient>"
+      - "<gradient:#6b7280:#9ca3af>la página siguiente</gradient>"
+  
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Arriba</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para subir</gradient>"
+      - "<gradient:#6b7280:#9ca3af>un nivel</gradient>"
+  
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Cancelar</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Haz clic para cancelar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>esta acción</gradient>"
+  
+  pagination:
+    0:
+      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
+      lore: []
+    1:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
+      lore: []
+    2:
+      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
+      lore: []
+    3:
+      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
+      lore: []
+    4:
+      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
+      lore: []
+    5:
+      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
+      lore: []
+    6:
+      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
+      lore: []
+    7:
+      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
+      lore: []
+    8:
+      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
+      lore: []
+    9:
+      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
+      lore: []
+    10:
+      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
+      lore: []
+    11:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
+      lore: []
+    12:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
+      lore: []
+    13:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
+      lore: []
+    14:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
+      lore: []
+    15:
+      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
+      lore: []

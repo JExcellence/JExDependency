@@ -1,5 +1,7 @@
 package com.raindropcentral.rdq;
 
+import com.raindropcentral.rdq.bounty.IBountyService;
+import com.raindropcentral.rdq.bounty.PremiumBountyService;
 import com.raindropcentral.rdq2.shared.edition.EditionFeatures;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
@@ -61,6 +63,13 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
                 @Override
                 protected @NotNull ViewFrame registerViews(@NotNull ViewFrame viewFrame) {
                     return viewFrame;
+                }
+
+                @Override
+                protected @NotNull IBountyService createBountyService() {
+                    // 'this' refers to the RDQ instance being created
+                    // The service will access repositories and config from RDQ when needed
+                    return PremiumBountyService.initialize(this);
                 }
             };
         } catch (final Exception exception) {

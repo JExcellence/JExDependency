@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.bounty;
 
 import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.RDQPremiumImpl;
 import com.raindropcentral.rdq.bounty.config.BountySection;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
@@ -9,13 +8,13 @@ import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.repository.BountyHunterRepository;
 import com.raindropcentral.rdq.database.repository.BountyRepository;
+import de.jexcellence.evaluable.ConfigKeeper;
+import de.jexcellence.evaluable.ConfigManager;
+import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,64 +41,27 @@ public class PremiumBountyService implements IBountyService {
 
     private static PremiumBountyService instance;
     
-    private final BountyRepository bountyRepository;
-    private final BountyHunterRepository hunterStatsRepository;
-    private final BountySection config;
+    private final RDQ rdq;
 
     /**
-     * Constructor for ServiceLoader that extracts repositories from RDQPremiumImpl.
-     * Initializes the service with repositories and configuration from the RDQ instance.
-     */
-    public PremiumBountyService(@NotNull RDQPremiumImpl impl) {
-        // Access the RDQ instance from the impl
-        RDQ rdq = impl.getRdq();
-        
-        if (rdq == null) {
-            throw new IllegalStateException("RDQ instance not initialized in RDQPremiumImpl");
-        }
-        
-        // Extract repositories from RDQ
-        this.bountyRepository = rdq.getBountyRepository();
-        this.hunterStatsRepository = rdq.getBountyHunterRepository();
-        this.config = rdq.getBountyFactory().getBountyConfiguration();
-        
-        // Set as singleton instance
-        instance = this;
-    }
-
-    /**
-     * Creates a new Premium Bounty Service with dependencies.
+     * Private constructor.
      *
-     * @param bountyRepository the bounty repository for database operations
-     * @param hunterStatsRepository the hunter stats repository
-     * @param config the bounty configuration
+     * @param rdq the RDQ instance
      */
-    private PremiumBountyService(
-            @NotNull BountyRepository bountyRepository,
-            @NotNull BountyHunterRepository hunterStatsRepository,
-            @NotNull BountySection config
-    ) {
-        this.bountyRepository = bountyRepository;
-        this.hunterStatsRepository = hunterStatsRepository;
-        this.config = config;
+    private PremiumBountyService(@NotNull RDQ rdq) {
+        this.rdq = rdq;
     }
 
     /**
-     * Initializes the Premium Bounty Service with required dependencies.
+     * Initializes the Premium Bounty Service with the RDQ instance.
      * This must be called before using the service.
      *
-     * @param bountyRepository the bounty repository
-     * @param hunterStatsRepository the hunter stats repository
-     * @param config the bounty configuration
+     * @param rdq the RDQ instance
      * @return the initialized service instance
      */
-    public static PremiumBountyService initialize(
-            @NotNull BountyRepository bountyRepository,
-            @NotNull BountyHunterRepository hunterStatsRepository,
-            @NotNull BountySection config
-    ) {
+    public static PremiumBountyService initialize(@NotNull RDQ rdq) {
         if (instance == null) {
-            instance = new PremiumBountyService(bountyRepository, hunterStatsRepository, config);
+            instance = new PremiumBountyService(rdq);
             LOGGER.log(Level.INFO, "Premium Bounty Service initialized");
         }
         return instance;
@@ -118,21 +80,30 @@ public class PremiumBountyService implements IBountyService {
         return instance;
     }
 
-    /**
-     * Checks if dependencies are initialized.
-     */
-    private void checkInitialized() {
-        if (bountyRepository == null || hunterStatsRepository == null || config == null) {
-            throw new IllegalStateException("PremiumBountyService not properly initialized");
+    private BountyRepository getBountyRepository() {
+        return rdq.getBountyRepository();
+    }
+
+    private BountyHunterRepository getHunterStatsRepository() {
+        return rdq.getBountyHunterRepository();
+    }
+
+    private BountySection getConfig() {
+        try {
+            var cfgManager = new ConfigManager(rdq.getPlugin(), "bounty");
+            var cfgKeeper = new ConfigKeeper<>(cfgManager, "bounty.yml", BountySection.class);
+            return cfgKeeper.rootSection;
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to load bounty configuration, using defaults", e);
+            return new BountySection(new EvaluationEnvironmentBuilder());
         }
     }
 
     @Override
     public CompletableFuture<List<Bounty>> findAll(int page, int pageSize) {
         return CompletableFuture.supplyAsync(() -> {
-            checkInitialized();
             try {
-                return bountyRepository.findAll(page, pageSize);
+                return getBountyRepository().findListByAttributes(Map.of("active", true));
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Failed to fetch bounties", e);
                 throw new RuntimeException("Failed to fetch bounties", e);
@@ -142,12 +113,12 @@ public class PremiumBountyService implements IBountyService {
 
     @Override
     public CompletableFuture<Bounty> findPlayerBounty(@NotNull UUID uniqueId) {
-        return bountyRepository.findByAttributesAsync(Map.of("targetUniqueId", uniqueId));
+        return getBountyRepository().findByAttributesAsync(Map.of("targetUniqueId", uniqueId));
     }
 
     @Override
     public CompletableFuture<List<Bounty>> findBountiesByCommissioner(@NotNull UUID commissionerUniqueId) {
-        return bountyRepository.findListByAttributesAsync(Map.of("commissionerUniqueId", commissionerUniqueId));
+        return getBountyRepository().findListByAttributesAsync(Map.of("commissionerUniqueId", commissionerUniqueId));
     }
 
     @Override
@@ -166,34 +137,30 @@ public class PremiumBountyService implements IBountyService {
     ) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                // Validate commissioner hasn't exceeded their limit
-                List<Bounty> existingBounties = bountyRepository.findListByAttributes(Map.of("commissionerUniqueId", commissionerUniqueId));
-                int maxBounties = config.getMaxBountiesPerCommissioner();
+                List<Bounty> existingBounties = getBountyRepository().findListByAttributes(Map.of("commissionerUniqueId", commissionerUniqueId));
+                int maxBounties = getConfig().getMaxBountiesPerCommissioner();
                 
                 if (existingBounties.size() >= maxBounties) {
                     throw new IllegalStateException(
                         "Commissioner has reached maximum bounty limit: " + maxBounties
                     );
                 }
-                
-                // Validate reward count
-                int maxRewards = config.getMaxRewardsPerBounty();
+
+                int maxRewards = getConfig().getMaxRewardsPerBounty();
                 if (rewards.size() > maxRewards) {
                     throw new IllegalArgumentException(
                         "Too many rewards. Maximum allowed: " + maxRewards
                     );
                 }
-                
-                // Create bounty
-                Bounty bounty = new Bounty(targetUniqueId, commissionerUniqueId, rewards);
-                
-                // Add rewards
+
+                // Create bounty without rewards first, then add them
+                Bounty bounty = new Bounty(targetUniqueId, commissionerUniqueId, new ArrayList<>());
+
                 for (BountyReward reward : rewards) {
                     bounty.addReward(reward);
                 }
-                
-                // Persist to database
-                Bounty savedBounty = bountyRepository.create(bounty);
+
+                Bounty savedBounty = getBountyRepository().create(bounty);
                 
                 LOGGER.log(Level.INFO, "Created bounty for target: " + targetUniqueId + 
                           " by commissioner: " + commissionerUniqueId);
@@ -211,7 +178,7 @@ public class PremiumBountyService implements IBountyService {
     public CompletableFuture<Bounty> update(@NotNull Bounty bounty) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                Bounty updated = bountyRepository.update(bounty);
+                Bounty updated = getBountyRepository().update(bounty);
                 LOGGER.log(Level.FINE, "Updated bounty: " + bounty.getId());
                 return updated;
             } catch (Exception e) {
@@ -227,24 +194,24 @@ public class PremiumBountyService implements IBountyService {
             return CompletableFuture.completedFuture(false);
         }
 
-        return bountyRepository.deleteAsync(bounty.getId());
+        return getBountyRepository().deleteAsync(bounty.getId());
     }
 
     @Override
     public CompletableFuture<Integer> getTotalBounties() {
-        return bountyRepository.findAllAsync(0, Integer.MAX_VALUE).thenApply(bounties -> bounties.size());
+        return getBountyRepository().findAllAsync(0, Integer.MAX_VALUE).thenApply(bounties -> bounties.size());
     }
 
     @Override
     public CompletableFuture<BountyHunter> getBountyHunter(@NotNull RDQPlayer player) {
-        return hunterStatsRepository.findByAttributesAsync(Map.of("player", player));
+        return getHunterStatsRepository().findByAttributesAsync(Map.of("player", player));
     }
 
     @Override
     public CompletableFuture<List<BountyHunter>> getTopHunters(int limit, @NotNull String orderBy) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                return hunterStatsRepository.findAll(0, Integer.MAX_VALUE).stream().sorted(Comparator.comparing(BountyHunter::getHighestBountyValue)).toList();
+                return getHunterStatsRepository().findAll(0, Integer.MAX_VALUE).stream().sorted(Comparator.comparing(BountyHunter::getHighestBountyValue)).toList();
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Failed to get top hunters", e);
                 throw new RuntimeException("Failed to get top hunters", e);
@@ -256,7 +223,7 @@ public class PremiumBountyService implements IBountyService {
     public CompletableFuture<BountyHunter> claim(@NotNull RDQPlayer player, double rewardValue) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                BountyHunter stats = hunterStatsRepository.findByAttributes(Map.of("player", player));
+                BountyHunter stats = getHunterStatsRepository().findByAttributes(Map.of("player", player));
 
                 if (stats == null) {
                     BountyHunter newStats = new BountyHunter(player);
@@ -264,14 +231,12 @@ public class PremiumBountyService implements IBountyService {
                     newStats.setTotalRewardValue(0.0);
                     return newStats;
                 }
-                
-                // Update stats
+
                 stats.setBountiesClaimed(stats.getBountiesClaimed() + 1);
                 stats.setTotalRewardValue(stats.getTotalRewardValue() + rewardValue);
                 stats.setLastClaimTimestamp(System.currentTimeMillis());
-                
-                // Save updated stats
-                BountyHunter updated = hunterStatsRepository.create(stats);
+
+                BountyHunter updated = getHunterStatsRepository().create(stats);
                 
                 LOGGER.log(Level.INFO, "Hunter " + player.getUniqueId() + " claimed bounty worth " + rewardValue);
                 
@@ -288,14 +253,12 @@ public class PremiumBountyService implements IBountyService {
     public CompletableFuture<Integer> getHunterLevel(@NotNull UUID uniqueId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                BountyHunter stats = hunterStatsRepository.findByAttributes(Map.of("player.uniqueId", uniqueId));
+                BountyHunter stats = getHunterStatsRepository().findByAttributes(Map.of("player.uniqueId", uniqueId));
                 
                 if (stats == null) {
-                    return 1; // Default level
+                    return 1;
                 }
-                
-                // Calculate level based on total bounties claimed
-                // Formula: level = 1 + (totalClaimed / 10)
+
                 int totalClaimed = stats.getBountiesClaimed();
                 return 1 + (totalClaimed / 10);
                 
@@ -314,8 +277,8 @@ public class PremiumBountyService implements IBountyService {
     @Override
     public boolean canCreateBounty(@NotNull Player player) {
         try {
-            List<Bounty> existingBounties = bountyRepository.findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
-            int maxBounties = config.getMaxBountiesPerCommissioner();
+            List<Bounty> existingBounties = getBountyRepository().findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+            int maxBounties = getConfig().getMaxBountiesPerCommissioner();
             return existingBounties.size() < maxBounties;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to check bounty creation permission", e);
@@ -325,11 +288,11 @@ public class PremiumBountyService implements IBountyService {
 
     @Override
     public int getMaxBountiesPerCommissioner() {
-        return config.getMaxBountiesPerCommissioner();
+        return getConfig().getMaxBountiesPerCommissioner();
     }
 
     @Override
     public int getMaxBountyRewardsPerTarget() {
-        return config.getMaxRewardsPerBounty();
+        return getConfig().getMaxRewardsPerBounty();
     }
 }

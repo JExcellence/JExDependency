@@ -110,7 +110,7 @@ public class CurrenciesOverviewView extends APaginatedView<Currency> {
 	) {
 		return this.jexEconomy.get(renderContext).getCurrencyRepository().findAllAsync(
 			1,
-			128
+				Integer.MAX_VALUE
 		);
 	}
 	

@@ -32,13 +32,41 @@ public class FreeBountyService implements IBountyService {
     private static final int MAX_REWARDS_PER_BOUNTY = 1;
     private static final int FREE_HUNTER_LEVEL = 1;
 
+    private static FreeBountyService instance;
     private final List<Bounty> mockBounties = new ArrayList<>();
 
     /**
-     * No-arg constructor required for ServiceLoader.
+     * Private constructor.
      */
-    public FreeBountyService() {
+    private FreeBountyService() {
         // Initialize with empty mock data
+    }
+
+    /**
+     * Initializes the Free Bounty Service.
+     * Note: Free version doesn't use repositories or RDQ instance.
+     *
+     * @param rdq ignored in free version (for API compatibility)
+     * @return the initialized service instance
+     */
+    public static FreeBountyService initialize(Object rdq) {
+        if (instance == null) {
+            instance = new FreeBountyService();
+        }
+        return instance;
+    }
+
+    /**
+     * Gets the initialized instance.
+     * 
+     * @return the service instance
+     * @throws IllegalStateException if not initialized
+     */
+    public static FreeBountyService getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("FreeBountyService not initialized. Call initialize() first.");
+        }
+        return instance;
     }
 
     @Override

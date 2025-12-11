@@ -66,9 +66,12 @@ dependencies:
   - "com.tcoded:FoliaLib:0.5.1"
 
   # Inventory Framework
-  - "me.devnatan:inventory-framework-api:3.5.1"
-  - "me.devnatan:inventory-framework-core:3.5.1"
-  - "me.devnatan:inventory-framework-platform:3.5.1"
-  - "me.devnatan:inventory-framework-platform-bukkit:3.5.1"
-  - "me.devnatan:inventory-framework-platform-paper:3.5.1"
-  - "me.devnatan:inventory-framework-anvil-input:3.5.1"
+  - "me.devnatan:inventory-framework-api:3.7.1"
+  - "me.devnatan:inventory-framework-core:3.7.1"
+  - "me.devnatan:inventory-framework-platform:3.7.1"
+  - "me.devnatan:inventory-framework-platform-bukkit:3.7.1"
+  - "me.devnatan:inventory-framework-platform-paper:3.7.1"
+  - "me.devnatan:inventory-framework-anvil-input:3.7.1"
+
+
+  - "de.jexcellence.hibernate:JEHibernate:1.0.3"

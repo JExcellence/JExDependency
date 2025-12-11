@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 
@@ -144,7 +144,7 @@ public class BountyMainView extends BaseView {
 				      "target",
 				      Optional.empty(),
 				      "rewards",
-				      new HashSet<>(),
+				      new ArrayList<>(),
 				      "bounty",
 				      Optional.empty(),
 				      "insertedItems",

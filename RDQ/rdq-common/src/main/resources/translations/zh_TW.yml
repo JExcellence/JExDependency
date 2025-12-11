@@ -1,216 +1,52 @@
-# RDQ Traditional Chinese (Taiwan) Translations
-# RaindropQuests 插件繁體中文翻譯
+# RDQ Common 翻譯檔案 - 繁體中文
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>你的頭上有一個活躍的懸賞！</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 懸賞已領取！🎉</gradient>"
 
-prefix: "<gold>[RDQ]</gold> "
+# 懸賞創建確認消息
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ 成功創建懸賞</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>！</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 創建懸賞失敗:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 懸賞系統</gradient>"
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "bounty_o
+verview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 懸賞系統</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 創建懸賞</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 查看懸賞</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 對</gradient><gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#a855f7:#c084fc>的懸賞</gradient>"
 
-rdq:
-  error:
-    not_initialized: "<red>RDQ 正在初始化中，請稍候...</red>"
-    unknown_subcommand: "<red>未知子命令。使用 /rdq help 查看可用命令。</red>"
-    reload_failed: "<red>重載失敗: {error}</red>"
-  success:
-    reloaded: "<green>RDQ 設定重載成功！</green>"
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 創建懸賞</gradient>"
+  select_target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 選擇目標</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 添加獎勵</gradient>"
+  add_currencies:
+    name: "<gradient:#f59e0b:#fbbf24>💎 添加貨幣</gradient>"
 
-error:
-  not_found: "<red>未找到 {type}: {id}</red>"
-  insufficient_funds: "<red>資金不足！需要: {required}，可用: {available}</red>"
-  on_cooldown: "<red>冷卻中！剩餘 {remaining}。</red>"
-  requirements_not_met: "<red>未滿足要求: {missing}</red>"
-  self_targeting: "<red>不能選擇自己！</red>"
-  already_exists: "<red>{type} 已存在: {id}</red>"
-  expired: "<red>{type} 已過期: {id}</red>"
-  not_unlocked: "<red>{type} 未解鎖: {id}</red>"
-  permission_denied: "<red>權限不足: {permission}</red>"
-  invalid_state: "<red>無效狀態: {message}</red>"
-  invalid_amount: "<red>無效金額！必須在 {min} 和 {max} 之間。</red>"
-  no_permission: "<red>你沒有權限執行此操作。</red>"
-  player_only: "<red>此命令只能由玩家使用。</red>"
+paginated_player_ui:
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
 
-rank:
-  error:
-    unknown_subcommand: "<red>未知等級子命令。</red>"
-    player_not_found: "<red>未找到玩家: {playerName}</red>"
-    grant_failed: "<red>授予等級失敗。</red>"
-    reload_failed: "<red>重載等級失敗: {error}</red>"
-  success:
-    rank_granted: "<green>已將等級 {rankName} 授予 {playerName}！</green>"
-    rank_revoked: "<yellow>已從 {playerName} 撤銷等級 {rankName}。</yellow>"
-    reloaded: "<green>等級設定已重載！</green>"
-    rank_unlocked: "<green>恭喜！你已解鎖等級 {rankName}！</green>"
-  opening_view: "<gray>正在開啟等級視圖...</gray>"
-  no_progress: "<yellow>你還沒有開始任何等級路徑。</yellow>"
-  progress_header: "<yellow>你的等級進度:</yellow>"
-  progress_entry: "<gray>• {tree}: <white>{rank}</white></gray>"
-  trees_header: "<yellow>可用等級樹:</yellow>"
-  tree_entry: "<gray>• {id} <dark_gray>({ranks} 個等級)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>用法: /rank admin <grant|revoke|reload></yellow>"
-    unknown: "<red>未知管理員命令。</red>"
-    grant:
-      usage: "<yellow>用法: /rank admin grant <玩家> <等級></yellow>"
-    revoke:
-      usage: "<yellow>用法: /rank admin revoke <玩家> <等級></yellow>"
-  help: |
-    <yellow>等級命令:</yellow>
-    <gray>/rank</gray> - 開啟等級選單
-    <gray>/rank view</gray> - 查看等級樹
-    <gray>/rank progress</gray> - 查看進度
-    <gray>/rank admin</gray> - 管理員命令
-  notification:
-    title: "<gold>等級解鎖！</gold>"
-    subtitle: "<yellow>{rankName}</yellow>"
-    actionbar: "<green>你已解鎖 {rankName}！</green>"
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 第%current_page%頁</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 第%direction%頁</gradient>"
 
-bounty:
-  error:
-    unknown_subcommand: "<red>未知懸賞子命令。</red>"
-    player_not_found: "<red>未找到玩家: {playerName}</red>"
-    self_target: "<red>不能對自己懸賞！</red>"
-    invalid_amount: "<red>無效金額。請輸入有效數字。</red>"
-    invalid_id: "<red>無效懸賞 ID。</red>"
-    create_failed: "<red>建立懸賞失敗: {error}</red>"
-    cancel_failed: "<red>取消懸賞失敗。</red>"
-  success:
-    bounty_created: "<green>已對 {targetName} 懸賞 {amount}！</green>"
-    bounty_cancelled: "<yellow>懸賞已取消。資金已退還。</yellow>"
-    bounty_removed: "<green>管理員已移除懸賞。</green>"
-    bounty_claimed: "<green>你獲得了 {amount} 的懸賞！</green>"
-    reloaded: "<green>懸賞設定已重載！</green>"
-  create:
-    usage: "<yellow>用法: /bounty create <玩家> <金額></yellow>"
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 返回</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ 繼續</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ 上一頁</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ 下一頁</gradient>"
   cancel:
-    usage: "<yellow>用法: /bounty cancel <懸賞ID></yellow>"
-  list:
-    empty: "<yellow>沒有活躍的懸賞。</yellow>"
-    header: "<yellow>活躍懸賞 ({count}):</yellow>"
-    entry: "<gray>• <white>{target}</white> - {amount} <dark_gray>(由 {placer} 發布)</dark_gray></gray>"
-  leaderboard:
-    header: "<yellow>賞金獵人排行榜:</yellow>"
-    entry: "<gray>{rank}. <white>{player}</white> - {kills} 擊殺, 獲得 {earned}</gray>"
-  my:
-    header: "<yellow>你的懸賞:</yellow>"
-    placed_header: "<gray>你發布的懸賞:</gray>"
-    placed_entry: "<gray>• <white>{target}</white> - {amount}</gray>"
-    targeted_header: "<gray>針對你的懸賞:</gray>"
-    targeted_entry: "<gray>• {amount} <dark_gray>(由 {placer} 發布)</dark_gray></gray>"
-  admin:
-    usage: "<yellow>用法: /bounty admin <remove|reload></yellow>"
-    unknown: "<red>未知管理員命令。</red>"
-    remove:
-      usage: "<yellow>用法: /bounty admin remove <懸賞ID></yellow>"
-  help: |
-    <yellow>懸賞命令:</yellow>
-    <gray>/bounty</gray> - 查看活躍懸賞
-    <gray>/bounty create <玩家> <金額></gray> - 建立懸賞
-    <gray>/bounty cancel <ID></gray> - 取消懸賞
-    <gray>/bounty leaderboard</gray> - 查看排行榜
-    <gray>/bounty my</gray> - 查看你的懸賞
-  announcement:
-    created: "<yellow>{placer} 對 {target} 懸賞了 {amount}！</yellow>"
-    claimed: "<green>{hunter} 獲得了 {target} 的懸賞 {amount}！</green>"
-    expired: "<gray>{target} 的懸賞已過期。</gray>"
-
-perk:
-  error:
-    unknown_subcommand: "<red>未知特權子命令。</red>"
-    player_not_found: "<red>未找到玩家: {playerName}</red>"
-    perk_not_found: "<red>未找到特權: {perkId}</red>"
-    perk_on_cooldown: "<red>此特權正在冷卻中！剩餘 {remaining}。</red>"
-    perk_not_active: "<red>此特權當前未啟動。</red>"
-    activate_failed: "<red>啟動特權失敗: {error}</red>"
-    grant_failed: "<red>授予特權失敗。</red>"
-    reload_failed: "<red>重載特權失敗: {error}</red>"
-  success:
-    perk_activated: "<green>特權 {perkName} 已啟動！</green>"
-    perk_deactivated: "<yellow>特權 {perkName} 已停用。</yellow>"
-    perk_granted: "<green>已將特權 {perkName} 授予 {playerName}！</green>"
-    perk_revoked: "<yellow>已從 {playerName} 撤銷特權 {perkName}。</yellow>"
-    perk_unlocked: "<green>你已解鎖特權 {perkName}！</green>"
-    reloaded: "<green>特權設定已重載！</green>"
-  activate:
-    usage: "<yellow>用法: /perk activate <特權ID></yellow>"
-  deactivate:
-    usage: "<yellow>用法: /perk deactivate <特權ID></yellow>"
-  info:
-    usage: "<yellow>用法: /perk info <特權ID></yellow>"
-    header: "<yellow>特權資訊: {id}</yellow>"
-    details: "<gray>類別: {category} | 冷卻: {cooldown}秒 | 持續: {duration}秒</gray>"
-  list:
-    empty: "<yellow>沒有可用的特權。</yellow>"
-    header: "<yellow>可用特權 ({count}):</yellow>"
-    entry: "<gray>• <white>{id}</white> <dark_gray>({category})</dark_gray></gray>"
-  admin:
-    usage: "<yellow>用法: /perk admin <grant|revoke|reload></yellow>"
-    unknown: "<red>未知管理員命令。</red>"
-    grant:
-      usage: "<yellow>用法: /perk admin grant <玩家> <特權></yellow>"
-    revoke:
-      usage: "<yellow>用法: /perk admin revoke <玩家> <特權></yellow>"
-  help: |
-    <yellow>特權命令:</yellow>
-    <gray>/perk</gray> - 查看可用特權
-    <gray>/perk activate <特權></gray> - 啟動特權
-    <gray>/perk deactivate <特權></gray> - 停用特權
-    <gray>/perk info <特權></gray> - 查看詳情
-
-gui:
-  common:
-    back: "<yellow>← 返回</yellow>"
-    close: "<red>關閉</red>"
-    next_page: "<yellow>下一頁 →</yellow>"
-    previous_page: "<yellow>← 上一頁</yellow>"
-    page_info: "<gray>第 {current}/{total} 頁</gray>"
-    loading: "<gray>載入中...</gray>"
-    confirm: "<green>確認</green>"
-    cancel: "<red>取消</red>"
-
-perk_names:
-  speed: "速度"
-  strength: "力量"
-  resistance: "抗性"
-  regeneration: "再生"
-  night_vision: "夜視"
-  fire_resistance: "火焰抗性"
-  water_breathing: "水下呼吸"
-  jump_boost: "跳躍提升"
-  haste: "急迫"
-  luck: "幸運"
-  fly: "飛行"
-  double_experience: "雙倍經驗"
-  prevent_death: "死亡保護"
-  treasure_hunter: "尋寶獵人"
-  vampire: "吸血鬼"
-
-rank_trees:
-  warrior:
-    name: "戰士"
-    description: "力量與戰鬥之路。"
-  cleric:
-    name: "牧師"
-    description: "治癒與支援之路。"
-  mage:
-    name: "法師"
-    description: "魔法與智慧之路。"
-  rogue:
-    name: "盜賊"
-    description: "隱匿與敏捷之路。"
-  merchant:
-    name: "商人"
-    description: "貿易與財富之路。"
-  ranger:
-    name: "遊俠"
-    description: "自然與箭術之路。"
-
-requirements:
-  statistic: "{amount}x {statistic}"
-  permission: "權限: {permission}"
-  rank: "等級: {rank}"
-  currency: "{amount} {currency}"
-  item: "{amount}x {item}"
-  level: "等級 {level}"
-
-time:
-  seconds: "{value}秒"
-  minutes: "{value}分"
-  hours: "{value}小時"
-  days: "{value}天"
+    name: "<gradient:#ef4444:#f87171>❌ 取消</gradient>"
