@@ -2,8 +2,19 @@ plugins {
     id("raindrop.shadow-conventions")
 }
 
+// ===========================================
+// Dynamic Version Configuration
+// ===========================================
+val versionMajor: String by project.rootProject.extra { findProperty("rdq.version.major")?.toString() ?: "6" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "0" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "0" }
+val versionStage: String by project.rootProject.extra { findProperty("rdq.version.stage")?.toString() ?: "Alpha" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdq.version.build")?.toString() ?: "1" }
+
+val rdqVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
+
 group = "com.raindropcentral.rdq"
-version = "6.0.0"
+version = rdqVersion
 description = "RDQ Free - Free edition of RaindropQuests"
 
 dependencies {
@@ -63,8 +74,10 @@ tasks.processResources {
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    archiveBaseName.set("RDQFree")
-    archiveClassifier.set("")
+    // Output: RDQ-6.0.0-Alpha-Build-123-Free.jar
+    archiveBaseName.set("RDQ")
+    archiveVersion.set(rdqVersion)
+    archiveClassifier.set("Free")
 
     dependencies {
         include(project(":RDQ:rdq-common"))

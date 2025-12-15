@@ -18,7 +18,7 @@ dependencies {
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
     compileOnly(libs.jehibernate)
-
+    compileOnly(libs.adventure.platform.bukkit)
     compileOnly(libs.rplatform)
     
     implementation(libs.bundles.jexcellence) {
@@ -52,6 +52,7 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
+
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()

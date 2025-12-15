@@ -142,8 +142,14 @@ public class PaperPluginLoader implements PluginLoader {
 
     private void initializeDependencies(@NotNull final File librariesDirectory, @NotNull final Path pluginSource) {
         try {
-            // Load dependencies from the loader's own resources (JEDependency JAR)
-            final List<String> yamlDependencies = yamlDependencyLoader.loadDependencies(getClass());
+            // First, try to load dependencies from the plugin JAR itself
+            List<String> yamlDependencies = yamlDependencyLoader.loadDependenciesFromJar(pluginSource);
+            
+            if (yamlDependencies == null || yamlDependencies.isEmpty()) {
+                // Fall back to loader's own resources (JEDependency JAR)
+                logger.fine("No dependencies in plugin JAR, checking loader resources");
+                yamlDependencies = yamlDependencyLoader.loadDependencies(getClass());
+            }
 
             if (yamlDependencies == null || yamlDependencies.isEmpty()) {
                 logger.info("No dependencies found in YAML configuration");

@@ -1,344 +1,104 @@
-# Permissions
-permissions:
-  rdq.*:
-    description: "Grants all RDQ permissions"
-    default: op
-    children:
-      rdq.rank.*: true
-      rdq.bounty.*: true
-      rdq.perk.*: true
-      rdq.admin.*: true
-
-  rdq.use:
-    description: "Allows basic RDQ command usage"
-    default: true
-
-  rdq.help:
-    description: "Allows viewing RDQ help"
-    default: true
-
-  rdq.rank.*:
-    description: "Grants all rank permissions"
-    default: op
-    children:
-      rdq.rank.use: true
-      rdq.rank.view: true
-      rdq.rank.progress: true
-      rdq.rank.trees: true
-      rdq.rank.unlock: true
-      rdq.rank.admin.*: true
-
-  rdq.rank.use:
-    description: "Allows using rank commands"
-    default: true
-
-  rdq.rank.view:
-    description: "Allows viewing rank trees and details"
-    default: true
-
-  rdq.rank.progress:
-    description: "Allows viewing personal rank progress"
-    default: true
-
-  rdq.rank.trees:
-    description: "Allows listing available rank trees"
-    default: true
-
-  rdq.rank.unlock:
-    description: "Allows unlocking ranks when requirements are met"
-    default: true
-
-  rdq.rank.switch:
-    description: "Allows switching between rank trees (premium)"
-    default: false
-
-  rdq.rank.bypass.cooldown:
-    description: "Bypasses rank switching cooldown"
-    default: op
-
-  rdq.rank.bypass.requirements:
-    description: "Bypasses rank requirements"
-    default: op
-
-  rdq.rank.admin.*:
-    description: "Grants all rank admin permissions"
-    default: op
-    children:
-      rdq.rank.admin.grant: true
-      rdq.rank.admin.revoke: true
-      rdq.rank.admin.reload: true
-      rdq.rank.admin.reset: true
-
-  rdq.rank.admin.grant:
-    description: "Allows granting ranks to players"
-    default: op
-
-  rdq.rank.admin.revoke:
-    description: "Allows revoking ranks from players"
-    default: op
-
-  rdq.rank.admin.reload:
-    description: "Allows reloading rank configuration"
-    default: op
-
-  rdq.rank.admin.reset:
-    description: "Allows resetting player rank progress"
-    default: op
-
-  rdq.bounty.*:
-    description: "Grants all bounty permissions"
-    default: op
-    children:
-      rdq.bounty.use: true
-      rdq.bounty.create: true
-      rdq.bounty.list: true
-      rdq.bounty.cancel: true
-      rdq.bounty.leaderboard: true
-      rdq.bounty.my: true
-      rdq.bounty.admin.*: true
-
-  rdq.bounty.use:
-    description: "Allows using bounty commands"
-    default: true
-
-  rdq.bounty.create:
-    description: "Allows creating bounties on players"
-    default: true
-
-  rdq.bounty.list:
-    description: "Allows viewing active bounties"
-    default: true
-
-  rdq.bounty.cancel:
-    description: "Allows cancelling own bounties"
-    default: true
-
-  rdq.bounty.leaderboard:
-    description: "Allows viewing bounty leaderboard"
-    default: true
-
-  rdq.bounty.my:
-    description: "Allows viewing personal bounty information"
-    default: true
-
-  rdq.bounty.bypass.cooldown:
-    description: "Bypasses bounty placement cooldown"
-    default: op
-
-  rdq.bounty.bypass.limit:
-    description: "Bypasses bounty amount limits"
-    default: op
-
-  rdq.bounty.bypass.selftarget:
-    description: "Allows placing bounties on self (testing)"
-    default: op
-
-  rdq.bounty.admin.*:
-    description: "Grants all bounty admin permissions"
-    default: op
-    children:
-      rdq.bounty.admin.remove: true
-      rdq.bounty.admin.reload: true
-      rdq.bounty.admin.clear: true
-
-  rdq.bounty.admin.remove:
-    description: "Allows removing any bounty"
-    default: op
-
-  rdq.bounty.admin.reload:
-    description: "Allows reloading bounty configuration"
-    default: op
-
-  rdq.bounty.admin.clear:
-    description: "Allows clearing all bounties"
-    default: op
-
-  rdq.perk.*:
-    description: "Grants all perk permissions"
-    default: op
-    children:
-      rdq.perk.use: true
-      rdq.perk.list: true
-      rdq.perk.info: true
-      rdq.perk.activate: true
-      rdq.perk.deactivate: true
-      rdq.perk.admin.*: true
-
-  rdq.perk.use:
-    description: "Allows using perk commands"
-    default: true
-
-  rdq.perk.list:
-    description: "Allows listing available perks"
-    default: true
-
-  rdq.perk.info:
-    description: "Allows viewing perk details"
-    default: true
-
-  rdq.perk.activate:
-    description: "Allows activating unlocked perks"
-    default: true
-
-  rdq.perk.deactivate:
-    description: "Allows deactivating active perks"
-    default: true
-
-  rdq.perk.bypass.cooldown:
-    description: "Bypasses perk cooldowns"
-    default: op
-
-  rdq.perk.bypass.requirements:
-    description: "Bypasses perk requirements"
-    default: op
-
-
-  rdq.perk.fly:
-    description: "Allows using the flight perk"
-    default: false
-
-  rdq.perk.prevent_death:
-    description: "Allows using the death prevention perk"
-    default: false
-
-  rdq.perk.double_experience:
-    description: "Allows using the double experience perk"
-    default: true
-
-  rdq.perk.vampire:
-    description: "Allows using the vampire perk"
-    default: true
-
-  rdq.perk.treasure_hunter:
-    description: "Allows using the treasure hunter perk"
-    default: true
-
-
-  rdq.perk.admin.*:
-    description: "Grants all perk admin permissions"
-    default: op
-    children:
-      rdq.perk.admin.grant: true
-      rdq.perk.admin.revoke: true
-      rdq.perk.admin.reload: true
-      rdq.perk.admin.reset: true
-
-  rdq.perk.admin.grant:
-    description: "Allows granting perks to players"
-    default: op
-
-  rdq.perk.admin.revoke:
-    description: "Allows revoking perks from players"
-    default: op
-
-  rdq.perk.admin.reload:
-    description: "Allows reloading perk configuration"
-    default: op
-
-  rdq.perk.admin.reset:
-    description: "Allows resetting player perk data"
-    default: op
-
-
-
-
-  rdq.admin.*:
-    description: "Grants all admin permissions"
-    default: op
-    children:
-      rdq.admin.reload: true
-      rdq.admin.debug: true
-      rdq.admin.database: true
-
-  rdq.admin.reload:
-    description: "Allows reloading all RDQ configuration"
-    default: op
-
-  rdq.admin.debug:
-    description: "Allows using debug commands"
-    default: op
-
-  rdq.admin.database:
-    description: "Allows database management commands"
-    default: op
-
-
-
-
-  rdq.gui.rank:
-    description: "Allows opening rank GUI"
-    default: true
-
-  rdq.gui.bounty:
-    description: "Allows opening bounty GUI"
-    default: true
-
-  rdq.gui.perk:
-    description: "Allows opening perk GUI"
-    default: true
-
-  rdq.notify.rank:
-    description: "Receives rank unlock notifications"
-    default: true
-
-  rdq.notify.bounty:
-    description: "Receives bounty announcements"
-    default: true
-
-  rdq.notify.broadcast:
-    description: "Receives server-wide RDQ broadcasts"
-    default: true
-
-groups:
-  rdq_default:
-    description: "Default player permissions"
-    permissions:
-      - rdq.use
-      - rdq.help
-      - rdq.rank.use
-      - rdq.rank.view
-      - rdq.rank.progress
-      - rdq.rank.trees
-      - rdq.rank.unlock
-      - rdq.bounty.use
-      - rdq.bounty.create
-      - rdq.bounty.list
-      - rdq.bounty.cancel
-      - rdq.bounty.leaderboard
-      - rdq.bounty.my
-      - rdq.perk.use
-      - rdq.perk.list
-      - rdq.perk.info
-      - rdq.perk.activate
-      - rdq.perk.deactivate
-      - rdq.gui.rank
-      - rdq.gui.bounty
-      - rdq.gui.perk
-      - rdq.notify.rank
-      - rdq.notify.bounty
-      - rdq.notify.broadcast
-
-  rdq_vip:
-    description: "VIP player permissions"
-    inherits:
-      - rdq_default
-    permissions:
-      - rdq.perk.fly
-      - rdq.perk.prevent_death
-      - rdq.rank.switch
-
-  rdq_moderator:
-    description: "Moderator permissions"
-    inherits:
-      - rdq_vip
-    permissions:
-      - rdq.bounty.admin.remove
-      - rdq.rank.bypass.cooldown
-      - rdq.perk.bypass.cooldown
-
-  rdq_admin:
-    description: "Administrator permissions"
-    inherits:
-      - rdq_moderator
-    permissions:
-      - rdq.*
+# Permissions Configuration for Admin View
+# Format: defaultGroupPermissions contains plugin names as keys with their permissions as lists
+
+defaultGroup: "default"
+
+defaultGroupPermissions:
+  RDQ:
+    - rdq.use
+    - rdq.help
+    - rdq.rank.use
+    - rdq.rank.view
+    - rdq.rank.progress
+    - rdq.rank.trees
+    - rdq.rank.unlock
+    - rdq.rank.switch
+    - rdq.rank.bypass.cooldown
+    - rdq.rank.bypass.requirements
+    - rdq.rank.admin.grant
+    - rdq.rank.admin.revoke
+    - rdq.rank.admin.reload
+    - rdq.rank.admin.reset
+    - rdq.bounty.use
+    - rdq.bounty.create
+    - rdq.bounty.list
+    - rdq.bounty.cancel
+    - rdq.bounty.leaderboard
+    - rdq.bounty.my
+    - rdq.bounty.bypass.cooldown
+    - rdq.bounty.bypass.limit
+    - rdq.bounty.bypass.selftarget
+    - rdq.bounty.admin.remove
+    - rdq.bounty.admin.reload
+    - rdq.bounty.admin.clear
+    - rdq.perk.use
+    - rdq.perk.list
+    - rdq.perk.info
+    - rdq.perk.activate
+    - rdq.perk.deactivate
+    - rdq.perk.bypass.cooldown
+    - rdq.perk.bypass.requirements
+    - rdq.perk.fly
+    - rdq.perk.prevent_death
+    - rdq.perk.double_experience
+    - rdq.perk.vampire
+    - rdq.perk.treasure_hunter
+    - rdq.perk.admin.grant
+    - rdq.perk.admin.revoke
+    - rdq.perk.admin.reload
+    - rdq.perk.admin.reset
+    - rdq.admin.reload
+    - rdq.admin.debug
+    - rdq.admin.database
+    - rdq.gui.rank
+    - rdq.gui.bounty
+    - rdq.gui.perk
+    - rdq.notify.rank
+    - rdq.notify.bounty
+    - rdq.notify.broadcast
+    - rdq.command
+    - rdq.command.admin
+    - rdq.command.bounty
+    - rdq.command.main
+    - rdq.command.quests
+    - rdq.command.ranks
+    - rdq.command.perks
+  
+  RCore:
+    - rcore.use
+    - rcore.admin
+    - rcore.statistics.view
+    - rcore.statistics.modify
+    - rcore.player.view
+    - rcore.player.modify
+  
+  JExEconomy:
+    - jexeconomy.use
+    - jexeconomy.balance
+    - jexeconomy.pay
+    - jexeconomy.admin
+    - jexeconomy.admin.give
+    - jexeconomy.admin.take
+    - jexeconomy.admin.set
+    - jexeconomy.admin.reset
+  
+  LuckPerms:
+    - luckperms.user.info
+    - luckperms.user.permission.info
+    - luckperms.user.permission.set
+    - luckperms.user.permission.unset
+    - luckperms.user.parent.info
+    - luckperms.user.parent.set
+    - luckperms.user.parent.add
+    - luckperms.user.parent.remove
+    - luckperms.group.info
+    - luckperms.group.permission.info
+    - luckperms.group.permission.set
+    - luckperms.group.permission.unset
+  
+  Vault:
+    - vault.admin
+  
+  PlaceholderAPI:
+    - placeholderapi.admin
+    - placeholderapi.reload

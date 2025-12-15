@@ -2,8 +2,19 @@ plugins {
     id("raindrop.shadow-conventions")
 }
 
+// ===========================================
+// Dynamic Version Configuration
+// ===========================================
+val versionMajor: String by project.rootProject.extra { findProperty("rdq.version.major")?.toString() ?: "6" }
+val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "0" }
+val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "0" }
+val versionStage: String by project.rootProject.extra { findProperty("rdq.version.stage")?.toString() ?: "Alpha" }
+val versionBuild: String by project.rootProject.extra { findProperty("rdq.version.build")?.toString() ?: "1" }
+
+val rdqVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
+
 group = "com.raindropcentral.rdq"
-version = "6.0.0"
+version = rdqVersion
 description = "RDQ Premium - Premium edition of RaindropQuests"
 
 dependencies {
@@ -18,9 +29,7 @@ dependencies {
     compileOnly(libs.adventure.serializer.legacy)
     compileOnly(libs.adventure.serializer.json)
     compileOnly(libs.adventure.serializer.plain)
-    
-    // Adventure Platform Bukkit must be shaded for Spigot compatibility
-    implementation(libs.adventure.platform.bukkit)
+    compileOnly(libs.adventure.platform.bukkit)
 
     // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
@@ -76,8 +85,8 @@ tasks.processResources {
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
     archiveBaseName.set("RDQ")
+    archiveVersion.set(rdqVersion)
     archiveClassifier.set("Premium")
-    archiveVersion.set(project.version.toString())
 
     relocate("tools.jackson.core", "de.jexcellence.remapped.tools.jackson.core")
     relocate("tools.jackson.databind", "de.jexcellence.remapped.tools.jackson.databind")
@@ -88,7 +97,7 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
-    relocate("net.kyori.adventure.platform", "de.jexcellence.remapped.net.kyori.adventure.platform")
+
 
     // Include all runtime dependencies (not just specific patterns)
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))

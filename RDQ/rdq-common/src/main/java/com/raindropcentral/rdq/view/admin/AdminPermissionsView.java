@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public class AdminPermissionsView extends BaseView {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(AdminPermissionsView.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
 	
 	/**
 	 * State for storing the main plugin instance.
@@ -65,8 +65,7 @@ public class AdminPermissionsView extends BaseView {
 	
 	private static final int PLUGINS_PER_PAGE     = 7;
 	private static final int PERMISSIONS_PER_PAGE = 7;
-	
-	// Slot layout for 6-row inventory (54 slots: 0-53)
+
 	private static final int[] PLUGIN_SLOTS     = {10, 11, 12, 13, 14, 15, 16};
 	private static final int[] PERMISSION_SLOTS = {28, 29, 30, 31, 32, 33, 34};
 	
@@ -78,8 +77,7 @@ public class AdminPermissionsView extends BaseView {
 	private static final int STATUS_INDICATOR_SLOT = 22;
 	private static final int CLEAR_SELECTION_SLOT  = 21;
 	private static final int ASSIGN_SELECTED_SLOT  = 23;
-	
-	// Control bar slots (avoiding slot 45 which is auto-managed by BaseView for back button)
+
 	private static final int REFRESH_DATA_SLOT = 49;
 	private static final int ASSIGN_ALL_SLOT   = 52;
 	
@@ -336,7 +334,6 @@ public class AdminPermissionsView extends BaseView {
 	 * Render decorative elements.
 	 */
 	private void renderDecorations(final @NotNull RenderContext render, final @NotNull Player player) {
-		// Decoration slots for 6-row inventory, avoiding all functional slots and slot 45 (back button)
 		for (int slot : new int[]{0, 8, 18, 19, 20, 24, 25, 26, 36, 37, 38, 39, 40, 41, 42, 43, 44, 46, 47, 48, 50, 51, 53}) {
 			render.slot(slot).renderWith(() -> this.createDecorationItem(player));
 		}
@@ -478,8 +475,7 @@ public class AdminPermissionsView extends BaseView {
 			                            .build();
 		}
 	}
-	
-	// Helper methods for creating various UI elements
+
 	private @NotNull ItemStack createNoSelectionItem(final @NotNull Player player) {
 		return UnifiedBuilderFactory.item(Material.BARRIER)
 		                            .setName(this.i18n("permissions.no_selection.name", player).build().component())
@@ -591,8 +587,7 @@ public class AdminPermissionsView extends BaseView {
 		}
 		return UnifiedBuilderFactory.item(Material.ARROW).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).build();
 	}
-	
-	// Event handlers and navigation logic
+
 	private void handleRefreshData(@NotNull SlotClickContext clickContext) {
 		this.initializeData(clickContext);
 		this.selectedPlugin.set(null, clickContext);
@@ -628,6 +623,9 @@ public class AdminPermissionsView extends BaseView {
 	}
 	
 	private void handlePluginSlotClick(@NotNull SlotClickContext clickContext, int slotIndex) {
+		// Clear any item on cursor to prevent pickup issues
+		clickContext.getPlayer().setItemOnCursor(null);
+		
 		final List<String> allPlugins = this.cachedPlugins.get(clickContext);
 		final int currentPage = this.pluginPage.get(clickContext);
 		final int pluginIndex = (currentPage * PLUGINS_PER_PAGE) + slotIndex;
@@ -638,6 +636,9 @@ public class AdminPermissionsView extends BaseView {
 	}
 	
 	private void handlePermissionSlotClick(@NotNull SlotClickContext clickContext, int slotIndex) {
+		// Clear any item on cursor to prevent pickup issues
+		clickContext.getPlayer().setItemOnCursor(null);
+		
 		final String selectedPluginName = this.selectedPlugin.get(clickContext);
 		if (selectedPluginName == null) return;
 		

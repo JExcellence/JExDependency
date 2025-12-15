@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.requirement;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.raindropcentral.rdq2.service.RCoreBridge;
+import com.raindropcentral.core.api.RCoreAdapter;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.statistic.StatisticType;
 import com.raindropcentral.rplatform.type.EStatisticType;
@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Requirement that validates player progress against statistics provided by {@link RCoreBridge}.
+ * Requirement that validates player progress against statistics provided by RCore's {@link RCoreAdapter}.
  *
  * <p>The requirement supports both absolute and relative comparisons depending on the configured
  * {@link RequirementMode} and can be initialized through a number of convenience factory methods.
@@ -26,29 +26,29 @@ import java.util.logging.Logger;
  *
  * @author JExcellence
  * @since 1.0.0
- * @version 1.0.1
+ * @version 2.0.0
  */
 public final class RStatisticRequirement extends AbstractRequirement {
 
     private static final Logger LOGGER = CentralLogger.getLogger(RStatisticRequirement.class);
     private static final long DEFAULT_TIMEOUT_MS = 75L;
 
-    private static volatile @Nullable Supplier<@Nullable RCoreBridge> BRIDGE_SUPPLIER;
+    private static volatile @Nullable Supplier<@Nullable RCoreAdapter> ADAPTER_SUPPLIER;
 
     /**
-     * Registers the supplier that delivers {@link RCoreBridge} instances used to fetch statistics.
+     * Registers the supplier that delivers {@link RCoreAdapter} instances used to fetch statistics.
      *
-     * @param supplier supplier returning the shared bridge instance or {@code null}
+     * @param supplier supplier returning the shared adapter instance or {@code null}
      */
-    public static void setBridgeSupplier(@NotNull Supplier<@Nullable RCoreBridge> supplier) {
-        BRIDGE_SUPPLIER = supplier;
+    public static void setAdapterSupplier(@NotNull Supplier<@Nullable RCoreAdapter> supplier) {
+        ADAPTER_SUPPLIER = supplier;
     }
 
     /**
-     * Clears any previously registered bridge supplier.
+     * Clears any previously registered adapter supplier.
      */
-    public static void clearBridgeSupplier() {
-        BRIDGE_SUPPLIER = null;
+    public static void clearAdapterSupplier() {
+        ADAPTER_SUPPLIER = null;
     }
 
     public enum RequirementMode {
@@ -408,13 +408,13 @@ public final class RStatisticRequirement extends AbstractRequirement {
 
     private double getCurrentStatisticValue(final @NotNull Player player) {
         try {
-            final RCoreBridge bridge = resolveBridge();
-            if (bridge == null) {
-                LOGGER.log(Level.FINE, "RCoreBridge not available");
+            final RCoreAdapter adapter = resolveAdapter();
+            if (adapter == null) {
+                LOGGER.log(Level.FINE, "RCoreAdapter not available");
                 return 0.0;
             }
             final CompletableFuture<Optional<Object>> future =
-                    bridge.findStatisticValueAsync(player.getUniqueId(), this.identifier, this.plugin);
+                    adapter.findStatisticValueAsync(player.getUniqueId(), this.identifier, this.plugin);
             final Optional<Object> opt = future
                     .completeOnTimeout(Optional.empty(), this.timeoutMillis, TimeUnit.MILLISECONDS)
                     .join();
@@ -471,8 +471,8 @@ public final class RStatisticRequirement extends AbstractRequirement {
         }
     }
 
-    private @Nullable RCoreBridge resolveBridge() {
-        final Supplier<RCoreBridge> s = BRIDGE_SUPPLIER;
+    private @Nullable RCoreAdapter resolveAdapter() {
+        final Supplier<RCoreAdapter> s = ADAPTER_SUPPLIER;
         return s != null ? s.get() : null;
     }
 }

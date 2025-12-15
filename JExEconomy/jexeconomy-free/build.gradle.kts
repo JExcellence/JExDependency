@@ -25,6 +25,9 @@ dependencies {
     compileOnly(libs.bundles.inventory)
     compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.placeholderapi)
+    
+    // Adventure Platform Bukkit must be shaded - RPlatform uses BukkitAudiences
+    implementation(libs.adventure.platform.bukkit)
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
@@ -41,6 +44,7 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("org.h2", "de.jexcellence.remapped.org.h2")
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
+
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()

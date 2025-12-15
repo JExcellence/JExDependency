@@ -5,14 +5,31 @@ plugins {
     `maven-publish`
 }
 
+// ===========================================
+// Dynamic Version Configuration
+// ===========================================
+val versionMajor: String by project.rootProject.extra { findProperty("rcore.version.major")?.toString() ?: "2" }
+val versionMinor: String by project.rootProject.extra { findProperty("rcore.version.minor")?.toString() ?: "0" }
+val versionPatch: String by project.rootProject.extra { findProperty("rcore.version.patch")?.toString() ?: "0" }
+val versionStage: String by project.rootProject.extra { findProperty("rcore.version.stage")?.toString() ?: "Alpha" }
+val versionBuild: String by project.rootProject.extra { findProperty("rcore.version.build")?.toString() ?: "1" }
+
+val rcoreVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
+
 group = "com.raindropcentral.core"
-version = "2.0.0"
+version = rcoreVersion
 description = "Core plugin providing shared functionality for Raindrop plugins"
 
 dependencies {
     compileOnly(libs.paper.api)
 
-    compileOnly(libs.bundles.adventure)
+    // Adventure APIs (core APIs are compileOnly as Paper provides them)
+    compileOnly(libs.adventure.api)
+    compileOnly(libs.adventure.minimessage)
+    compileOnly(libs.adventure.serializer.legacy)
+    compileOnly(libs.adventure.serializer.json)
+    compileOnly(libs.adventure.serializer.plain)
+    compileOnly(libs.adventure.platform.bukkit)    
 
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
@@ -46,13 +63,27 @@ dependencies {
     compileOnly(libs.jexeconomy)
 }
 
+tasks.processResources {
+    val props = mapOf(
+        "version" to rcoreVersion,
+        "name" to "RCore",
+        "description" to project.description,
+        "apiVersion" to "1.21"
+    )
+    inputs.properties(props)
+    filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
+        expand(props)
+    }
+}
+
 tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("RCore")
     archiveClassifier.set("")
-    archiveVersion.set(project.version.toString())
+    archiveVersion.set(rcoreVersion)
 
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("org.h2", "de.jexcellence.remapped.org.h2")
+
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()

@@ -21,6 +21,9 @@ dependencies {
     
     // Server API
     compileOnly(libs.paper.api)
+    
+    // RPlatform (provides BaseView and other platform utilities)
+    compileOnly(project(":RPlatform"))
 
     // Adventure APIs
     compileOnly(libs.bundles.adventure)

@@ -29,7 +29,7 @@ public final class JExEconomyFreeImpl extends AbstractPluginDelegate<JExEconomyF
 
                 @Override
                 protected int getMetricsId() {
-                    return 25813;
+                    return 0;
                 }
 
                 @Override

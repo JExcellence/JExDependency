@@ -1,7 +1,7 @@
-name: RCore
+name: ${name}
 main: com.raindropcentral.core.RCore
-version: 2.0.0
-api-version: "1.16"
+version: ${version}
+api-version: "${apiVersion}"
 description: RCore
 authors: [ ItsRainingHP, JExcellence ]
 website: https://www.raindropcentral.com

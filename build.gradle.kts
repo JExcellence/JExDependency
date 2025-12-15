@@ -63,21 +63,31 @@ tasks.register("buildAll") {
     tasks.findByPath(":RDQ:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
+        val major = findProperty("rdq.version.major") ?: "6"
+        val minor = findProperty("rdq.version.minor") ?: "0"
+        val patch = findProperty("rdq.version.patch") ?: "0"
+        val stage = findProperty("rdq.version.stage") ?: "Alpha"
+        val build = findProperty("rdq.version.build") ?: "1"
+        val rdqVersion = "$major.$minor.$patch-$stage-Build-$build"
+        
         println("========================================================================")
         println("                    BUILD COMPLETE")
         println("========================================================================")
         println("✓ All modules built successfully!")
+        println("  RDQ Version: $rdqVersion")
         println()
         println("Build artifacts:")
-        val rcoreFree = file("RCore/rcore-free/build/libs/RCore-Free-2.0.0.jar")
-        val rcorePremium = file("RCore/rcore-premium/build/libs/RCore-Premium-2.0.0.jar")
-        val rdqFree = file("RDQ/rdq-free/build/libs/RDQ-Free-6.0.1.jar")
-        val rdqPremium = file("RDQ/rdq-premium/build/libs/RDQ-Premium-6.0.1.jar")
         
-        if (rcoreFree.exists()) println("  - ${rcoreFree.absolutePath}")
-        if (rcorePremium.exists()) println("  - ${rcorePremium.absolutePath}")
-        if (rdqFree.exists()) println("  - ${rdqFree.absolutePath}")
-        if (rdqPremium.exists()) println("  - ${rdqPremium.absolutePath}")
+        // Find RDQ jars dynamically
+        val rdqFreeDir = file("RDQ/rdq-free/build/libs")
+        val rdqPremiumDir = file("RDQ/rdq-premium/build/libs")
+        
+        rdqFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdqPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
         println("========================================================================")
     }
 }
@@ -108,6 +118,123 @@ tasks.register("publishAllToMavenLocal") {
     description = "Publishes all library modules to Maven Local"
     
     dependsOn(":publishDependencies")
+}
+
+/**
+ * Increments the RDQ build number in gradle.properties
+ */
+tasks.register("incrementBuildNumber") {
+    group = "versioning"
+    description = "Increments the RDQ build number"
+    
+    doLast {
+        val propsFile = file("gradle.properties")
+        val props = java.util.Properties()
+        propsFile.inputStream().use { props.load(it) }
+        
+        val currentBuild = (props.getProperty("rdq.version.build") ?: "0").toInt()
+        val newBuild = currentBuild + 1
+        props.setProperty("rdq.version.build", newBuild.toString())
+        
+        propsFile.outputStream().use { props.store(it, null) }
+        
+        val major = props.getProperty("rdq.version.major") ?: "6"
+        val minor = props.getProperty("rdq.version.minor") ?: "0"
+        val patch = props.getProperty("rdq.version.patch") ?: "0"
+        val stage = props.getProperty("rdq.version.stage") ?: "Alpha"
+        
+        println("========================================================================")
+        println("✓ Build number incremented: $currentBuild → $newBuild")
+        println("  New version: RDQ-$major.$minor.$patch-$stage-Build-$newBuild")
+        println("========================================================================")
+    }
+}
+
+/**
+ * Sets the RDQ version stage (Alpha, Beta, RC, Release)
+ * Usage: ./gradlew setVersionStage -Pstage=Beta
+ */
+tasks.register("setVersionStage") {
+    group = "versioning"
+    description = "Sets the RDQ version stage (Alpha, Beta, RC, Release)"
+    
+    doLast {
+        val newStage = project.findProperty("stage") as String?
+        if (newStage == null) {
+            println("Usage: ./gradlew setVersionStage -Pstage=<Alpha|Beta|RC|Release>")
+            return@doLast
+        }
+        
+        val validStages = listOf("Alpha", "Beta", "RC", "Release")
+        if (newStage !in validStages) {
+            println("Invalid stage: $newStage. Valid stages: $validStages")
+            return@doLast
+        }
+        
+        val propsFile = file("gradle.properties")
+        val props = java.util.Properties()
+        propsFile.inputStream().use { props.load(it) }
+        
+        props.setProperty("rdq.version.stage", newStage)
+        // Reset build number when changing stage
+        props.setProperty("rdq.version.build", "1")
+        
+        propsFile.outputStream().use { props.store(it, null) }
+        
+        val major = props.getProperty("rdq.version.major") ?: "6"
+        val minor = props.getProperty("rdq.version.minor") ?: "0"
+        val patch = props.getProperty("rdq.version.patch") ?: "0"
+        
+        println("========================================================================")
+        println("✓ Version stage set to: $newStage")
+        println("  New version: RDQ-$major.$minor.$patch-$newStage-Build-1")
+        println("========================================================================")
+    }
+}
+
+/**
+ * Bumps the RDQ version (major, minor, or patch)
+ * Usage: ./gradlew bumpVersion -Pbump=minor
+ */
+tasks.register("bumpVersion") {
+    group = "versioning"
+    description = "Bumps the RDQ version (major, minor, or patch)"
+    
+    doLast {
+        val bump = project.findProperty("bump") as String? ?: "patch"
+        
+        val propsFile = file("gradle.properties")
+        val props = java.util.Properties()
+        propsFile.inputStream().use { props.load(it) }
+        
+        var major = (props.getProperty("rdq.version.major") ?: "6").toInt()
+        var minor = (props.getProperty("rdq.version.minor") ?: "0").toInt()
+        var patch = (props.getProperty("rdq.version.patch") ?: "0").toInt()
+        
+        when (bump) {
+            "major" -> { major++; minor = 0; patch = 0 }
+            "minor" -> { minor++; patch = 0 }
+            "patch" -> { patch++ }
+            else -> {
+                println("Invalid bump type: $bump. Use: major, minor, or patch")
+                return@doLast
+            }
+        }
+        
+        props.setProperty("rdq.version.major", major.toString())
+        props.setProperty("rdq.version.minor", minor.toString())
+        props.setProperty("rdq.version.patch", patch.toString())
+        props.setProperty("rdq.version.build", "1") // Reset build number
+        
+        propsFile.outputStream().use { props.store(it, null) }
+        
+        val stage = props.getProperty("rdq.version.stage") ?: "Alpha"
+        
+        println("========================================================================")
+        println("✓ Version bumped ($bump): $major.$minor.$patch")
+        println("  New version: RDQ-$major.$minor.$patch-$stage-Build-1")
+        println("========================================================================")
+    }
 }
 
 /**
@@ -142,19 +269,30 @@ tasks.register("deployPremium") {
         println("Target directory: ${targetDir.absolutePath}")
         println()
         
-        val jarsToDeploy = listOf(
-            file("RCore/rcore-premium/build/libs/RCore-Premium-2.0.0.jar"),
-            file("RDQ/rdq-premium/build/libs/RDQ-Premium-6.0.1.jar")
-        )
+        // Find and deploy premium JARs dynamically
+        val rcorePremiumDir = file("RCore/rcore-premium/build/libs")
+        val rdqPremiumDir = file("RDQ/rdq-premium/build/libs")
+        
+        val jarsToDeploy = mutableListOf<File>()
+        
+        rcorePremiumDir.listFiles()?.filter { 
+            it.name.endsWith(".jar") && it.name.contains("Premium") && 
+            !it.name.contains("sources") && !it.name.contains("javadoc") 
+        }?.forEach { jarsToDeploy.add(it) }
+        
+        rdqPremiumDir.listFiles()?.filter { 
+            it.name.endsWith(".jar") && it.name.contains("Premium") && 
+            !it.name.contains("sources") && !it.name.contains("javadoc") 
+        }?.forEach { jarsToDeploy.add(it) }
         
         jarsToDeploy.forEach { jar ->
-            if (jar.exists()) {
-                val target = file("${targetDir.absolutePath}/${jar.name}")
-                jar.copyTo(target, overwrite = true)
-                println("✓ Deployed: ${jar.name}")
-            } else {
-                println("✗ Not found: ${jar.absolutePath}")
-            }
+            val target = file("${targetDir.absolutePath}/${jar.name}")
+            jar.copyTo(target, overwrite = true)
+            println("✓ Deployed: ${jar.name}")
+        }
+        
+        if (jarsToDeploy.isEmpty()) {
+            println("✗ No premium JARs found to deploy")
         }
         
         println("========================================================================")

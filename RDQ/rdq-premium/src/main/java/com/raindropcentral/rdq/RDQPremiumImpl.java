@@ -2,7 +2,6 @@ package com.raindropcentral.rdq;
 
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.PremiumBountyService;
-import com.raindropcentral.rdq2.shared.edition.EditionFeatures;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;
@@ -30,7 +29,6 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
     private static final String EDITION = "Premium";
 
     private @Nullable RDQ rdq;
-    private @Nullable EditionFeatures editionFeatures;
 
     public RDQPremiumImpl(@NotNull RDQPremium plugin) {
         super(plugin);

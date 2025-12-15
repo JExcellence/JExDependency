@@ -28,7 +28,7 @@ public class ExperienceLevelRequirementSection extends AConfigSection {
 	 * Required experience level.
 	 * YAML key: "requiredLevel"
 	 */
-	private Integer requiredExperience;
+	private Integer requiredLevel;
 	
 	/**
 	 * Type of experience requirement (LEVEL, POINTS).
@@ -62,17 +62,12 @@ public class ExperienceLevelRequirementSection extends AConfigSection {
 	}
 	
 	/**
-	 * Gets the required experience level, trying multiple field names.
+	 * Gets the required experience level.
 	 *
-	 * @return the required level, defaulting to 1
+	 * @return the required level, defaulting to 0
 	 */
 	public Integer getRequiredLevel() {
-		if (
-			this.requiredExperience != null
-		) {
-			return this.requiredExperience;
-		}
-		return 0;
+		return this.requiredLevel != null ? this.requiredLevel : 0;
 	}
 	
 	/**

@@ -51,7 +51,7 @@ import java.util.stream.Collectors;
  *
  * <h3>Internationalization Support:</h3>
  * <p>
- * All user feedback is processed through the {@link TranslationService} system, providing localized
+ * All user feedback is processed through the {@link I18n} system, providing localized
  * content based on player language preferences. Error messages, balance displays, and
  * help information are all culturally and linguistically appropriate.
  * </p>
