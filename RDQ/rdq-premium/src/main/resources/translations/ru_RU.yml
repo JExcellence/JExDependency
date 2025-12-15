@@ -1,24 +1,95 @@
-# RDQ Premium Файл Перевода - Русский
-# Формат MiniMessage с градиентами и стилем
-# Заполнители используют формат %placeholder%
+# RDQ Файл перевода - Русский
+# Формат MiniMessage с градиентами и стилями
+# Плейсхолдеры используют формат %placeholder%
+
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>На вас объявлена награда!</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 Размер награды:</gradient> <gradient:#10b981:#34d399>%bounty_value%₽</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>На вашу голову назначена награда!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Сумма награды:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Истекает:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Заказчик:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 НАГРАДА ПОЛУЧЕНА! 🎉</gradient>"
     victim: "<gradient:#a855f7:#c084fc>Вы успешно получили награду за</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Ваша доля:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Кто-то</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>получил награду за</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% игроков</gradient> <gradient:#a855f7:#c084fc>получили награду за</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Система Наград</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Создать Награду</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 Просмотр Наград</gradient>"
-  my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 Мои Награды</gradient>"
-  leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 Таблица Лидеров</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Награда успешно создана для</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Ошибка обработки награды:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Обновление награды...</gradient>"
 
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Начат прогресс для ранга</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Просмотр требований для</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Требования не выполнены для</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% выполнено)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Требование не выполнено:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>не имеет требований!</gradient>"
+
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Режим просмотра:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Вы владеете</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Заблокировано:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Сначала выполните предварительные требования</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms не установлен!</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Помощь RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Открыть главное меню</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Просмотр рангов</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Просмотр наград</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Панель администратора</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Доступ к инструментам администрирования</gradient>"
+      - "<gradient:#6b7280:#9ca3af>и параметрам конфигурации</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Награды</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотр и управление наградами</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Охотьтесь на игроков за призы!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Привилегии</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотр доступных привилегий</gradient>"
+      - "<gradient:#6b7280:#9ca3af>и особых способностей</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Квесты</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотр доступных квестов</gradient>"
+      - "<gradient:#6b7280:#9ca3af>и отслеживание прогресса</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Ранги</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотр прогресса рангов</gradient>"
+      - "<gradient:#6b7280:#9ca3af>и разблокировка новых способностей</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Система рангов</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Деревья рангов</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Просмотр доступных деревьев рангов</gradient>"
+      - "<gradient:#6b7280:#9ca3af>и выбор своего пути</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Назад</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы вернуться</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Предыдущая</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Предыдущая страница</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Следующая</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Следующая страница</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Отмена</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Отменить действие</gradient>"

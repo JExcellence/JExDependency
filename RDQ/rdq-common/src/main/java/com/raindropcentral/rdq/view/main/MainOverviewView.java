@@ -120,7 +120,7 @@ public class MainOverviewView extends BaseView {
                                 player
                             )
                             .build()
-                            .splitLines()
+                            .children()
                     )
                     .build()
             )
@@ -166,7 +166,7 @@ public class MainOverviewView extends BaseView {
                                 player
                             )
                             .build()
-                            .splitLines()
+                            .children()
                     )
                     .build()
             )
@@ -211,7 +211,7 @@ public class MainOverviewView extends BaseView {
                                 player
                             )
                             .build()
-                            .splitLines()
+                            .children()
                     )
                     .build()
             )
@@ -250,7 +250,7 @@ public class MainOverviewView extends BaseView {
                                 player
                             )
                             .build()
-                            .splitLines()
+                            .children()
                     )
                     .build()
             )
@@ -298,7 +298,7 @@ public class MainOverviewView extends BaseView {
                                 player
                             )
                             .build()
-                            .splitLines()
+                            .children()
                     )
                     .build()
             )

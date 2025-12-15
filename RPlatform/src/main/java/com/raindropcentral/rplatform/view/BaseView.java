@@ -4,9 +4,7 @@ import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.heads.view.Return;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.version.ServerEnvironment;
-import de.jexcellence.jextranslate.api.TranslatedMessage;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
 import me.devnatan.inventoryframework.context.Context;
@@ -27,12 +25,6 @@ import java.util.logging.Level;
 /**
  * Template-method implementation for Inventory Framework views that centralizes
  * common layout, translation, and navigation behaviour.
- *
- * <p>The view bootstraps titles through {@link TranslationService} using the
- * base translation key supplied by subclasses and wires a {@link Return} head
- * into the default navigation row. Concrete views extend this class and
- * override the lifecycle hooks to provide domain specific rendering while
- * preserving the shared UX contract.</p>
  *
  * @author JExcellence
  * @since 1.0.0
@@ -82,18 +74,18 @@ public abstract class BaseView extends View {
         }
 
         /**
-         * Creates a {@link TranslationService} builder scoped to the view's translation namespace so
+         * Creates an {@link I18n.Builder} scoped to the view's translation namespace so
          * that downstream calls only provide the suffix for a specific message or lore entry.
          *
          * @param suffix the suffix to append to the base key (for example {@code "button.confirm"})
          * @param player the player whose locale should be used when building the component
          * @return a translation builder with the prefixed key ready for placeholder injection
          */
-        protected TranslationService i18n(
+        protected I18n.Builder i18n(
                 final @NotNull String suffix,
                 final @NotNull Player player
         ) {
-        return TranslationService.create(TranslationKey.of(this.baseKey, suffix), player);
+        return new I18n.Builder(this.baseKey + "." + suffix, player);
 	}
 	
         /**
@@ -341,16 +333,16 @@ public abstract class BaseView extends View {
         public void onOpen(
                 final @NotNull OpenContext open
         ) {
-		final TranslatedMessage titleComponent = this.i18n(
+		final Component titleComponent = this.i18n(
 			this.getTitleKey(),
 			open.getPlayer()
-		).withAll(this.getTitlePlaceholders(open))
-		 .build();
+		).withPlaceholders(this.getTitlePlaceholders(open))
+		 .build().component();
 		
 		if (ServerEnvironment.getInstance().isPaper()) {
-			open.modifyConfig().title(titleComponent.asLegacyText());
+			open.modifyConfig().title(titleComponent);
 		} else {
-            open.modifyConfig().title(titleComponent.asLegacyText());
+            open.modifyConfig().title(titleComponent);
 		}
 		
 		CentralLogger.getLogger(BaseView.class.getName()).log(

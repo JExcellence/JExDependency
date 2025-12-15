@@ -5,8 +5,7 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.type.ERankStatus;
 import com.raindropcentral.rdq.view.ranks.hierarchy.RankNode;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -72,10 +71,10 @@ public class RankClickHandler {
 	 */
 	private void handlePreviewModeClick(final @NotNull Player player, final @NotNull RankNode rankNode) {
 		try {
-            TranslationService.create(TranslationKey.of("rank_click.preview_mode"), player)
-				.with("rank_name", rankNode.rank.getIdentifier())
-				.withPrefix()
-				.send();
+            new I18n.Builder("rank_click.preview_mode", player)
+				.withPlaceholder("rank_name", rankNode.rank.getIdentifier())
+				.includePrefix()
+				.build().sendMessage();
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to send preview mode message", exception);
 		}
@@ -86,10 +85,10 @@ public class RankClickHandler {
 	 */
 	private void handleOwnedRankClick(final @NotNull Player player, final @NotNull RankNode rankNode) {
 		try {
-            TranslationService.create(TranslationKey.of("rank_click.owned"), player)
-				.with("rank_name", rankNode.rank.getIdentifier())
-				.withPrefix()
-				.send();
+            new I18n.Builder("rank_click.owned", player)
+				.withPlaceholder("rank_name", rankNode.rank.getIdentifier())
+				.includePrefix()
+				.build().sendMessage();
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to send owned rank message", exception);
 		}
@@ -135,10 +134,10 @@ public class RankClickHandler {
 	 */
 	private void handleLockedRankClick(final @NotNull Player player, final @NotNull RankNode rankNode) {
 		try {
-            TranslationService.create(TranslationKey.of("rank_click.locked"), player)
-				.with("rank_name", rankNode.rank.getIdentifier())
-				.withPrefix()
-				.send();
+            new I18n.Builder("rank_click.locked", player)
+				.withPlaceholder("rank_name", rankNode.rank.getIdentifier())
+				.includePrefix()
+				.build().sendMessage();
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to send locked rank message", exception);
 		}
@@ -149,9 +148,9 @@ public class RankClickHandler {
 	 */
 	private void sendErrorMessage(final @NotNull Player player, final @NotNull String messageKey) {
 		try {
-            TranslationService.create(TranslationKey.of(messageKey), player)
-				.withPrefix()
-				.send();
+            new I18n.Builder(messageKey, player)
+				.includePrefix()
+				.build().sendMessage();
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to send error message", exception);
 		}

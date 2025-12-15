@@ -4,8 +4,8 @@ import com.raindropcentral.rplatform.utility.heads.RHead;
 import com.raindropcentral.rplatform.utility.heads.view.Next;
 import com.raindropcentral.rplatform.utility.heads.view.Previous;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
+import net.kyori.adventure.text.Component;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.component.Pagination;
@@ -264,19 +264,13 @@ public abstract class APaginatedView<T> extends BaseView {
 		render
 			.layoutSlot(this.getPageIndicatorChar(), UnifiedBuilderFactory.item(pageItem)
 			                                       .setName(
-                                                           TranslationService.create(
-                                                                   TranslationKey.of("page.name"),
-                                                                   player
-                                                           ).with(
-                                                                   "page", currentPage + 1
-                                                           ).build().component()
+                                                           new I18n.Builder("page.name", player)
+                                                                   .withPlaceholder("page", currentPage + 1)
+                                                                   .build().component()
 			                                       )
 			                                       .setLore(
-                                                           TranslationService.create(
-                                                                   TranslationKey.of("page.lore"),
-                                                                   player
-                                                           ).withAll(
-                                                                   Map.of(
+                                                           new I18n.Builder("page.lore", player)
+                                                                   .withPlaceholders(Map.of(
                                                                            "page",
                                                                            currentPage + 1,
                                                                            "max_page",
@@ -287,8 +281,8 @@ public abstract class APaginatedView<T> extends BaseView {
                                                                            pagination.source() == null ?
                                                                                    0 :
                                                                                    pagination.source().size()
-                                                                   )
-                                                           ).build().splitLines()
+                                                                   ))
+                                                                   .build().children()
 			                                       )
 			                                       .build())
 			.updateOnStateChange(this.pagination);
@@ -318,12 +312,9 @@ public abstract class APaginatedView<T> extends BaseView {
 		return UnifiedBuilderFactory
 			       .item(Material.PAPER)
 			       .setName(
-                           TranslationService.create(
-                                   TranslationKey.of("page.fallback"),
-                                   player
-                           ).with(
-                                   "page", pageIndex + 1
-                           ).build().component()
+                           new I18n.Builder("page.fallback", player)
+                                   .withPlaceholder("page", pageIndex + 1)
+                                   .build().component()
 			       )
 			       .build();
 	}

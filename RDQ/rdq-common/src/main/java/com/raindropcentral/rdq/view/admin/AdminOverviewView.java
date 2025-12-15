@@ -68,10 +68,9 @@ public class AdminOverviewView extends BaseView {
 			       UnifiedBuilderFactory.item(Material.DIAMOND)
 			                            .setName(i18n("view_permissions.name", player).build().component())
 			                            .setLore(i18n("view_permissions.lore", player)
-			                                         .withAll(Map.of(
-				                                         "total_plugins", totalPlugins,
-				                                         "total_permissions", totalPermissions
-			                                         )).build().splitLines())
+			                                         .withPlaceholder("total_plugins", totalPlugins)
+			                                         .withPlaceholder("total_permissions", totalPermissions)
+			                                         .build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build()
 		       ).onClick(clickContext -> {
@@ -89,7 +88,7 @@ public class AdminOverviewView extends BaseView {
 					       exception
 				       );
 				       
-				       i18n("view_permissions.error", player).withPrefix().send();
+				       i18n("view_permissions.error", player).includePrefix().build().sendMessage();
 			       }
 		       });
 	}
@@ -105,7 +104,7 @@ public class AdminOverviewView extends BaseView {
 		       .withItem(
 			       UnifiedBuilderFactory.item(Material.REDSTONE)
 			                            .setName(i18n("create_ranks.name", player).build().component())
-			                            .setLore(i18n("create_ranks.lore", player).build().splitLines())
+			                            .setLore(i18n("create_ranks.lore", player).build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build()
 		       ).onClick(clickContext -> {
@@ -113,8 +112,8 @@ public class AdminOverviewView extends BaseView {
 				       // Check if LuckPerms service is available
 				       if (rdq.get(clickContext).getLuckPermsService() == null) {
 					       i18n("create_ranks.no_luckperms", player)
-					           .withPrefix()
-					           .send();
+					           .includePrefix()
+					           .build().sendMessage();
 					       return;
 				       }
 				       
@@ -138,8 +137,8 @@ public class AdminOverviewView extends BaseView {
 				       
 				       if (groups.isEmpty()) {
 					       i18n("create_ranks.no_ranks_found", player)
-					           .withPrefix()
-					           .send();
+					           .includePrefix()
+					           .build().sendMessage();
 					       return;
 				       }
 				       
@@ -147,13 +146,13 @@ public class AdminOverviewView extends BaseView {
 				       
 				       if (created > 0) {
 					       i18n("create_ranks.created", player)
-					           .with("groups_created", created)
-					           .withPrefix()
-					           .send();
+					           .withPlaceholder("groups_created", created)
+					           .includePrefix()
+					           .build().sendMessage();
 				       } else {
 					       i18n("create_ranks.no_changes", player)
-					           .withPrefix()
-					           .send();
+					           .includePrefix()
+					           .build().sendMessage();
 				       }
 				       
 			       } catch (ExecutionException | InterruptedException exception) {
@@ -164,8 +163,8 @@ public class AdminOverviewView extends BaseView {
 				       );
 				       
 				       i18n("create_ranks.error", player)
-				           .withPrefix()
-				           .send();
+				           .includePrefix()
+				           .build().sendMessage();
 			       }
 		       });
 	}

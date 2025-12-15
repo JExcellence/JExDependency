@@ -7,8 +7,7 @@ import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.service.RankUpgradeProgressService;
 import com.raindropcentral.rdq.view.ranks.hierarchy.RankNode;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -97,15 +96,13 @@ public class RankProgressionManager {
 			this.createProgressTrackingEntries(rdqPlayer, upgradeRequirements);
 			
 			// Send confirmation message
-            TranslationService.create(
-                    TranslationKey.of("rank_progression.started"),
-                    player
-            ).withAll(
-                    Map.of(
+            new I18n.Builder("rank_progression.started", player)
+                    .withPlaceholders(Map.of(
                             "rank_name", rankNode.rank.getIdentifier(),
                             "requirement_count", upgradeRequirements.size()
-                    )
-            ).withPrefix().send();
+                    ))
+                    .includePrefix()
+                    .build().sendMessage();
 			
 			LOGGER.log(Level.INFO, "Started rank progression for player " + player.getName() + " on rank " + rankNode.rank.getIdentifier());
 			
@@ -162,10 +159,10 @@ public class RankProgressionManager {
 			
 			// TODO: Open requirements detail view
 			// This would typically open another GUI showing detailed progress
-            TranslationService.create(
-                    TranslationKey.of("rank_progression.requirements_view_opened"),
-                    player
-            ).withPrefix().with("rank_name", rankNode.rank.getIdentifier()).send();
+            new I18n.Builder("rank_progression.requirements_view_opened", player)
+                    .includePrefix()
+                    .withPlaceholder("rank_name", rankNode.rank.getIdentifier())
+                    .build().sendMessage();
 			
 			LOGGER.log(Level.FINE, "Opened requirements view for rank " + rankNode.rank.getIdentifier() + " for player " + player.getName());
 			
@@ -223,10 +220,10 @@ public class RankProgressionManager {
 			// Send appropriate success message
 			final String messageKey = isInitialRank ? "rank_progression.initial_rank_assigned" : "rank_progression.redeemed_successfully";
 
-            TranslationService.create(
-                    TranslationKey.of(messageKey),
-                    player
-            ).withPrefix().with("rank_name", rank.getIdentifier()).send();
+            new I18n.Builder(messageKey, player)
+                    .includePrefix()
+                    .withPlaceholder("rank_name", rank.getIdentifier())
+                    .build().sendMessage();
 			
 			// Execute rank rewards/commands if any
 			this.executeRankRewards(rdqPlayer, rank);
@@ -462,15 +459,13 @@ public class RankProgressionManager {
 			final double completionPercentage = this.rankUpgradeProgressService.getOverallCompletionPercentage(rdqPlayer, rank);
 			final int completionPercent = (int) Math.round(completionPercentage * 100);
 
-            TranslationService.create(
-                    TranslationKey.of("rank_progression.requirements_incomplete"),
-                    player
-            ).withAll(
-                    Map.of(
+            new I18n.Builder("rank_progression.requirements_incomplete", player)
+                    .withPlaceholders(Map.of(
                             "rank_name", rank.getIdentifier(),
                             "completion_percentage", String.valueOf(completionPercent)
-                    )
-            ).withPrefix().send();
+                    ))
+                    .includePrefix()
+                    .build().sendMessage();
 			
 			// Show which requirements are still needed
 			this.showIncompleteRequirements(player, rdqPlayer, rank);
@@ -506,17 +501,15 @@ public class RankProgressionManager {
 				final double requiredProgress = 1.0;
 				final int progressPercent = (int) Math.round((currentProgress / requiredProgress) * 100);
 
-                TranslationService.create(
-                        TranslationKey.of("rank_progression.requirement_incomplete"),
-                        player
-                ).withPrefix().withAll(
-                        Map.of(
+                new I18n.Builder("rank_progression.requirement_incomplete", player)
+                        .includePrefix()
+                        .withPlaceholders(Map.of(
                                 "requirement_type", requirement.getRequirement().getRequirement().getType().name(),
                                 "current_progress", String.valueOf((int) currentProgress),
                                 "required_progress", String.valueOf((int) requiredProgress),
                                 "progress_percentage", String.valueOf(progressPercent)
-                        )
-                ).send();
+                        ))
+                        .build().sendMessage();
 			}
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to show incomplete requirements", exception);
@@ -547,10 +540,10 @@ public class RankProgressionManager {
 	 */
 	private void sendNoRequirementsMessage(final @NotNull Player player, final @NotNull RRank rank) {
 		try {
-            TranslationService.create(
-                    TranslationKey.of("rank_progression.no_requirements"),
-                    player
-            ).withPrefix().with("rank_name", rank.getIdentifier()).send();
+            new I18n.Builder("rank_progression.no_requirements", player)
+                    .includePrefix()
+                    .withPlaceholder("rank_name", rank.getIdentifier())
+                    .build().sendMessage();
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to send no requirements message", exception);
 		}
@@ -633,10 +626,9 @@ public class RankProgressionManager {
 	 */
 	private void sendErrorMessage(final @NotNull Player player, final @NotNull String messageKey) {
 		try {
-            TranslationService.create(
-                    TranslationKey.of(messageKey),
-                    player
-            ).withPrefix().send();
+            new I18n.Builder(messageKey, player)
+                    .includePrefix()
+                    .build().sendMessage();
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to send error message", exception);
 		}

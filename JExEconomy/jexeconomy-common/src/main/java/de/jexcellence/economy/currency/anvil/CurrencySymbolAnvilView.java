@@ -260,10 +260,10 @@ public class CurrencySymbolAnvilView extends AbstractAnvilView {
 				                                this.i18n(
 					                                "input.lore",
 					                                contextPlayer
-				                                ).with(
+				                                ).withPlaceholder(
 					                                "max_length",
 					                                MAXIMUM_SYMBOL_LENGTH
-				                                ).build().splitLines()
+				                                ).build().children()
 			                                )
 			                                .build();
 		
@@ -312,8 +312,8 @@ public class CurrencySymbolAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .withPrefix()
-		    .withAll(
+		    .includePrefix()
+		    .withPlaceholders(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "",
@@ -323,7 +323,7 @@ public class CurrencySymbolAnvilView extends AbstractAnvilView {
 				    invalidInput != null ? invalidInput.length() : 0
 			    )
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**

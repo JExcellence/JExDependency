@@ -90,7 +90,7 @@ public class BountyMainView extends BaseView {
 						this.i18n(
 							"view_bounties.lore",
 							player
-						).build().splitLines()
+						).build().children()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -131,7 +131,7 @@ public class BountyMainView extends BaseView {
 					      this.i18n(
 						      "create_bounty.lore",
 						      player
-					      ).build().splitLines()
+					      ).build().children()
 				      )
 				      .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 				      .build()

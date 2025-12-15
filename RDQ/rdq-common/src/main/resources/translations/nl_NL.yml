@@ -1,255 +1,92 @@
-# RDQ Common Vertaalbestand - Nederlands
-# MiniMessage formaat met gradiënten en styling
-# Placeholders gebruiken %placeholder% formaat
+# RDQ Vertaalbestand - Nederlands
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
-# Beloning Listener Berichten
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Je hebt een actieve beloning op je hoofd!</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 Beloningswaarde:</gradient> <gradient:#10b981:#34d399>€%bounty_value%</gradient>"
-    expires: "<gradient:#f59e0b:#fbbf24>⏰ Verloopt om:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Er staat een premie op je hoofd!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Premie Waarde:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Verloopt:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
     commissioner: "<gradient:#ef4444:#f87171>👤 Opdrachtgever:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
-  
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 BELONING OPGEËIST! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>Je hebt succesvol de beloning op</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>opgeëist!</gradient>"
-    share: "<gradient:#3b82f6:#60a5fa>Jouw aandeel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 PREMIE GECLAIMD! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Je hebt de premie op</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>succesvol geclaimd!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Jouw deel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>Iemand</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de beloning op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>opgeëist!</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de beloning op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>opgeëist!</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
 
-# Beloning Creatie Bevestigingsberichten
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ Beloning succesvol aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Fout bij het aanmaken van beloning:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Premie succesvol aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Fout bij verwerken premie:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie wordt bijgewerkt...</gradient>"
 
-# Beloning Overzicht UI (Hoofdmenu & Overzicht)
-bounty_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Beloningssysteem</gradient>"
-  
-  # Hoofdmenu knoppen
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Beloning Maken</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe beloning</gradient>"
-      - "<gradient:#6b7280:#9ca3af>op een andere speler te zetten</gradient>"
-  
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 Beloningen Bekijken</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk alle actieve beloningen</gradient>"
-  
-  my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 Mijn Beloningen</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk beloningen die je hebt gemaakt</gradient>"
-  
-  leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 Ranglijst</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Top beloningsjagers</gradient>"
-  
-  # Beloning lijst items
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯 Beloning op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Doelwit:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Opdrachtgever:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Gemaakt:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Klik om details te bekijken</gradient>"
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Vereisten bekijken voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten onvolledig voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% voltooid)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereiste onvolledig:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
 
-# Beloning Creatie UI
-bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 Beloning Maken</gradient>"
-  
-  select_target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Doelwit Selecteren</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om een speler te kiezen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>om een beloning op te zetten</gradient>"
-  
-  add_items:
-    name: "<gradient:#10b981:#34d399>💰 Beloningen Toevoegen</gradient>"
-    description:
-      - "<gradient:#6b7280:#9ca3af>Klik om items toe te voegen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>als beloningen</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
-  
-  confirm_bounty:
-    name: "<gradient:#10b981:#34d399>✅ Beloning Maken</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om de beloning te maken</gradient>"
-      - "<gradient:#6b7280:#9ca3af>met de geselecteerde beloningen</gradient>"
-  
-  confirm:
-    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ Beloning succesvol gemaakt op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Je bezit</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
 
-# Beloning Speler Info UI
-bounty_player_info_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Beloning op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-  
-  target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Doelwit van deze beloning</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik om speler info te bekijken</gradient>"
-  
-  rewards:
-    name: "<gradient:#10b981:#34d399>💰 Beloningen Bekijken</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om alle beloningen te zien</gradient>"
-      - "<gradient:#6b7280:#9ca3af>voor het opeisen van deze beloning</gradient>"
-  
-  delete:
-    name: "<gradient:#ef4444:#f87171>🗑 Beloning Verwijderen</gradient>"
-    lore:
-      - "<gradient:#ef4444:#f87171>⚠ Waarschuwing: Deze actie</gradient>"
-      - "<gradient:#ef4444:#f87171>kan niet ongedaan worden gemaakt!</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Klik om deze beloning te verwijderen</gradient>"
-  
-  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Beloning op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>is verwijderd!</gradient>"
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open hoofdmenu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Bekijk rangen</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Bekijk premies</gradient>"
 
-# Beloning Beloning UI
-bounty_reward_ui:
-  title: "<gradient:#a855f7:#c084fc>💰 Beloning Beloningen</gradient>"
-  
-  pseudo:
-    name: "<gradient:#6b7280:#9ca3af>📦 Geen Beloningen</gradient>"
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Admin Paneel</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>voor deze beloning te maken</gradient>"
-  
-  input_slot:
-    name: "<gradient:#10b981:#34d399>➕ Item Toevoegen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Toegang tot beheertools</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en configuratie-opties</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Premies</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plaats items hier om ze als beloningen toe te voegen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Rechtermuisklik om items te verwijderen</gradient>"
-  
-  target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Doelwit: %target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bekijk en beheer premies</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jaag op spelers voor beloningen!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Voordelen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Deze beloning is geplaatst op</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-  
-  reward_item:
+      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare voordelen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en speciale vaardigheden</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Opdrachten</gradient>"
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Beloning Beloning</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Dit item wordt gegeven aan</gradient>"
-      - "<gradient:#6b7280:#9ca3af>degene die de beloning opeist</gradient>"
-  
-  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Geen nieuwe items toegevoegd!</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Sommige items zijn gevallen omdat je inventaris vol was!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare opdrachten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en volg je voortgang</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Rangen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk rang voortgang</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en ontgrendel nieuwe vaardigheden</gradient>"
 
-# Voorvoegsel
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "  add_cu
-rrencies:
-    name: "<gradient:#f59e0b:#fbbf24>💎 Valuta Toevoegen</gradient>"
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rang Systeem</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rang Bomen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om valuta beloningen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>voor de beloning toe te voegen</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Blader door beschikbare rang bomen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en kies je pad</gradient>"
 
-# Platform UI Componenten
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
-
-# Paginering
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
-  lore:
-    - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
-
-# Hoofd Items
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Terug</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
-      - "<gradient:#6b7280:#9ca3af>naar het vorige menu</gradient>"
-  
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ Doorgaan</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om door te gaan</gradient>"
-      - "<gradient:#6b7280:#9ca3af>naar de volgende stap</gradient>"
-  
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Vorige</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om naar de</gradient>"
-      - "<gradient:#6b7280:#9ca3af>vorige pagina te gaan</gradient>"
-  
+      - "<gradient:#6b7280:#9ca3af>Vorige pagina</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Volgende</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om naar de</gradient>"
-      - "<gradient:#6b7280:#9ca3af>volgende pagina te gaan</gradient>"
-  
-  up:
-    name: "<gradient:#a855f7:#c084fc>⬆️ Omhoog</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om een</gradient>"
-      - "<gradient:#6b7280:#9ca3af>niveau omhoog te gaan</gradient>"
-  
+      - "<gradient:#6b7280:#9ca3af>Volgende pagina</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om deze</gradient>"
-      - "<gradient:#6b7280:#9ca3af>actie te annuleren</gradient>"
-  
-  pagination:
-    0:
-      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
-      lore: []
-    1:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
-      lore: []
-    2:
-      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
-      lore: []
-    3:
-      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
-      lore: []
-    4:
-      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
-      lore: []
-    5:
-      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
-      lore: []
-    6:
-      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
-      lore: []
-    7:
-      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
-      lore: []
-    8:
-      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
-      lore: []
-    9:
-      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
-      lore: []
-    10:
-      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
-      lore: []
-    11:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
-      lore: []
-    12:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
-      lore: []
-    13:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
-      lore: []
-    14:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
-      lore: []
-    15:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
-      lore: []
+      - "<gradient:#6b7280:#9ca3af>Actie annuleren</gradient>"

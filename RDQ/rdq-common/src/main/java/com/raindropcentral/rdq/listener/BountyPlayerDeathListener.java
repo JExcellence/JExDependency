@@ -2,8 +2,7 @@ package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.bounty.claim.ClaimResult;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,6 +40,10 @@ public class BountyPlayerDeathListener implements Listener {
         var lastHitterUuid = killer != null ? killer.getUniqueId() : null;
         var deathLocation = victim.getLocation();
 
+        LOGGER.info("Player death: " + victim.getName() + ", killer: " + 
+                   (killer != null ? killer.getName() : "null") + 
+                   ", has bounty: " + rdq.getBountyFactory().hasBounty(victimUuid));
+
         // Use BountyFactory's claim method which handles everything
         rdq.getBountyFactory().claimBounty(victimUuid, lastHitterUuid, deathLocation).thenAccept(claimResult -> {
             if (!claimResult.hasWinners()) {
@@ -69,17 +72,17 @@ public class BountyPlayerDeathListener implements Listener {
             var winner = Bukkit.getPlayer(winnerUuid);
 
             if (winner != null && winner.isOnline()) {
-                TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.title"), winner)
-                        .withPrefix()
-                        .send();
-                TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.victim"), winner)
-                        .with("victim_name", victim.getName())
-                        .send();
+                new I18n.Builder("bounty_listener.bounty_claimed.title", winner)
+                        .includePrefix()
+                        .build().sendMessage();
+                new I18n.Builder("bounty_listener.bounty_claimed.victim", winner)
+                        .withPlaceholder("victim_name", victim.getName())
+                        .build().sendMessage();
                 
                 if (claimResult.getWinnerCount() > 1) {
-                    TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.share"), winner)
-                            .with("percentage", String.format("%.1f", proportion * 100))
-                            .send();
+                    new I18n.Builder("bounty_listener.bounty_claimed.share", winner)
+                            .withPlaceholder("percentage", String.format("%.1f", proportion * 100))
+                            .build().sendMessage();
                 }
             }
         }
@@ -89,19 +92,17 @@ public class BountyPlayerDeathListener implements Listener {
         if (claimResult.getWinnerCount() == 1) {
             var winnerUuid = claimResult.winners().keySet().iterator().next();
             var winner = Bukkit.getPlayer(winnerUuid);
-            var winnerName = winner != null ? winner.getName() : 
-                    TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.someone"), victim)
-                            .build().component().toString();
+            var winnerName = winner != null ? winner.getName() : "Someone";
 
-            var broadcastMsg = TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.broadcast"), victim)
-                    .with("claimer_name", winnerName)
-                    .with("victim_name", victim.getName())
+            net.kyori.adventure.text.Component broadcastMsg = new I18n.Builder("bounty_listener.bounty_claimed.broadcast", victim)
+                    .withPlaceholder("claimer_name", winnerName)
+                    .withPlaceholder("victim_name", victim.getName())
                     .build().component();
             Bukkit.broadcast(broadcastMsg);
         } else {
-            var broadcastMsg = TranslationService.create(TranslationKey.of("bounty_listener.bounty_claimed.broadcast_multiple"), victim)
-                    .with("winner_count", String.valueOf(claimResult.getWinnerCount()))
-                    .with("victim_name", victim.getName())
+            net.kyori.adventure.text.Component broadcastMsg = new I18n.Builder("bounty_listener.bounty_claimed.broadcast_multiple", victim)
+                    .withPlaceholder("winner_count", String.valueOf(claimResult.getWinnerCount()))
+                    .withPlaceholder("victim_name", victim.getName())
                     .build().component();
             Bukkit.broadcast(broadcastMsg);
         }

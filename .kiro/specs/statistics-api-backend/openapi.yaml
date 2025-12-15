@@ -1,0 +1,576 @@
+openapi: 3.0.3
+info:
+  title: RaindropCentral Statistics API
+  description: API for receiving and querying Minecraft server statistics from RCore plugin
+  version: 1.0.0
+  contact:
+    name: RaindropCentral
+    url: https://raindropcentral.com
+
+servers:
+  - url: https://raindropcentral.com/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Development server
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /statistics/deliver:
+    post:
+      summary: Deliver statistics batch
+      description: Receives a batch of player statistics from a Minecraft server
+      operationId: deliverStatistics
+      tags:
+        - Statistics Delivery
+      parameters:
+        - name: X-API-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          description: Server API key for authentication
+        - name: X-Batch-Id
+          in: header
+          required: false
+          schema:
+            type: string
+          description: Batch ID (required for compressed payloads)
+        - name: Content-Encoding
+          in: header
+          required: false
+          schema:
+            type: string
+            enum: [gzip]
+          description: Set to 'gzip' for compressed payloads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchPayload'
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+              description: GZIP compressed BatchPayload JSON
+      responses:
+        '200':
+          description: Statistics delivered successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeliveryReceipt'
+        '400':
+          description: Invalid payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Invalid API key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Signature verification failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Seconds to wait before retrying
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /statistics/player/{playerUuid}:
+    get:
+      summary: Get player statistics
+      description: Retrieves statistics for a specific player
+      operationId: getPlayerStatistics
+      tags:
+        - Player Statistics
+      parameters:
+        - name: playerUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Player UUID
+        - name: from
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Start timestamp (epoch milliseconds)
+        - name: to
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: End timestamp (epoch milliseconds)
+        - name: keys
+          in: query
+          schema:
+            type: string
+          description: Comma-separated statistic keys to filter
+        - name: source
+          in: query
+          schema:
+            type: string
+          description: Filter by source plugin
+        - name: aggregate
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: Return aggregated values
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+            maximum: 1000
+          description: Maximum results to return
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+          description: Pagination offset
+      responses:
+        '200':
+          description: Player statistics retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlayerStatisticsResponse'
+        '404':
+          description: Player not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /statistics/server/{serverUuid}:
+    get:
+      summary: Get server statistics
+      description: Retrieves server metrics and aggregated statistics
+      operationId: getServerStatistics
+      tags:
+        - Server Statistics
+      parameters:
+        - name: serverUuid
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Server UUID
+        - name: from
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Start timestamp for historical data
+        - name: to
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: End timestamp for historical data
+        - name: interval
+          in: query
+          schema:
+            type: string
+            enum: [hourly, daily]
+            default: hourly
+          description: Interval for time-series data
+      responses:
+        '200':
+          description: Server statistics retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerStatisticsResponse'
+        '404':
+          description: Server not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /statistics/leaderboard/{statisticKey}:
+    get:
+      summary: Get leaderboard
+      description: Retrieves top players for a specific statistic
+      operationId: getLeaderboard
+      tags:
+        - Leaderboards
+      parameters:
+        - name: statisticKey
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Statistic key (e.g., mc_player_kills)
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+            maximum: 100
+          description: Number of entries to return
+        - name: timeRange
+          in: query
+          schema:
+            type: string
+            enum: [all-time, monthly, weekly, daily]
+            default: all-time
+          description: Time range for leaderboard
+        - name: serverUuid
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by server (optional)
+      responses:
+        '200':
+          description: Leaderboard retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeaderboardResponse'
+
+  /statistics/export:
+    get:
+      summary: Export statistics
+      description: Exports statistics data in CSV or JSON format
+      operationId: exportStatistics
+      tags:
+        - Export
+      parameters:
+        - name: serverUuid
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Server UUID
+        - name: playerUuid
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Filter by player (optional)
+        - name: from
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: Start timestamp
+        - name: to
+          in: query
+          schema:
+            type: integer
+            format: int64
+          description: End timestamp
+        - name: keys
+          in: query
+          schema:
+            type: string
+          description: Comma-separated statistic keys
+      responses:
+        '200':
+          description: Export data
+          content:
+            text/csv:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StatisticEntry'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    BatchPayload:
+      type: object
+      required:
+        - serverUuid
+        - batchId
+        - timestamp
+        - entries
+      properties:
+        serverUuid:
+          type: string
+          format: uuid
+          description: Server UUID
+        batchId:
+          type: string
+          description: Unique batch identifier
+        timestamp:
+          type: integer
+          format: int64
+          description: Batch creation timestamp (epoch ms)
+        compressed:
+          type: boolean
+          default: false
+          description: Whether payload is compressed
+        entryCount:
+          type: integer
+          description: Number of entries in batch
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticEntry'
+        serverMetrics:
+          $ref: '#/components/schemas/ServerMetrics'
+        pluginMetrics:
+          $ref: '#/components/schemas/PluginMetrics'
+        aggregates:
+          $ref: '#/components/schemas/AggregatedStatistics'
+        continuationToken:
+          type: string
+          nullable: true
+          description: Token for next batch if split
+        checksum:
+          type: string
+          description: SHA-256 checksum of payload
+        signature:
+          type: string
+          description: HMAC-SHA256 signature
+
+    StatisticEntry:
+      type: object
+      required:
+        - playerUuid
+        - statisticKey
+        - value
+        - dataType
+        - collectionTimestamp
+        - sourcePlugin
+      properties:
+        playerUuid:
+          type: string
+          format: uuid
+        statisticKey:
+          type: string
+          maxLength: 128
+        value:
+          oneOf:
+            - type: number
+            - type: string
+            - type: boolean
+        dataType:
+          type: string
+          enum: [NUMBER, STRING, BOOLEAN, TIMESTAMP]
+        collectionTimestamp:
+          type: integer
+          format: int64
+        isDelta:
+          type: boolean
+          default: false
+        sourcePlugin:
+          type: string
+          maxLength: 64
+
+    ServerMetrics:
+      type: object
+      properties:
+        tps1m:
+          type: number
+          format: double
+        tps5m:
+          type: number
+          format: double
+        tps15m:
+          type: number
+          format: double
+        heapUsed:
+          type: integer
+          format: int64
+        heapMax:
+          type: integer
+          format: int64
+        nonHeapUsed:
+          type: integer
+          format: int64
+        cpuUsage:
+          type: number
+          format: double
+        onlinePlayers:
+          type: integer
+        maxPlayers:
+          type: integer
+        uptimeMs:
+          type: integer
+          format: int64
+        worldCount:
+          type: integer
+        loadedChunks:
+          type: integer
+        entityCount:
+          type: integer
+        tileEntityCount:
+          type: integer
+
+    PluginMetrics:
+      type: object
+      properties:
+        activeQuestCount:
+          type: integer
+        completedQuestsInPeriod:
+          type: integer
+        economyTransactionCount:
+          type: integer
+        economyTransactionVolume:
+          type: number
+          format: double
+        perkActivationCount:
+          type: integer
+        activePerkCount:
+          type: integer
+        activeBountyCount:
+          type: integer
+        completedBountiesInPeriod:
+          type: integer
+
+    AggregatedStatistics:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int64
+        totalPlayersTracked:
+          type: integer
+        averagePlaytimeMs:
+          type: number
+          format: double
+        totalEconomyVolume:
+          type: number
+          format: double
+        totalQuestCompletions:
+          type: integer
+        customAggregates:
+          type: object
+          additionalProperties: true
+
+    DeliveryReceipt:
+      type: object
+      properties:
+        success:
+          type: boolean
+        batchId:
+          type: string
+        receivedCount:
+          type: integer
+        processedCount:
+          type: integer
+        timestamp:
+          type: integer
+          format: int64
+        signature:
+          type: string
+          nullable: true
+        errorMessage:
+          type: string
+          nullable: true
+
+    PlayerStatisticsResponse:
+      type: object
+      properties:
+        playerUuid:
+          type: string
+          format: uuid
+        statistics:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatisticEntry'
+        totalCount:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+
+    ServerStatisticsResponse:
+      type: object
+      properties:
+        serverUuid:
+          type: string
+          format: uuid
+        serverMetrics:
+          $ref: '#/components/schemas/ServerMetrics'
+        pluginMetrics:
+          $ref: '#/components/schemas/PluginMetrics'
+        aggregates:
+          $ref: '#/components/schemas/AggregatedStatistics'
+        lastUpdated:
+          type: integer
+          format: int64
+        metricsHistory:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerMetrics'
+
+    LeaderboardResponse:
+      type: object
+      properties:
+        statisticKey:
+          type: string
+        timeRange:
+          type: string
+          enum: [all-time, monthly, weekly, daily]
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/LeaderboardEntry'
+        totalParticipants:
+          type: integer
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        playerUuid:
+          type: string
+          format: uuid
+        playerName:
+          type: string
+        value:
+          type: number
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: boolean
+          default: true
+        code:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: integer
+          format: int64
+        path:
+          type: string

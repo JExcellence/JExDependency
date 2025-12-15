@@ -11,11 +11,12 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.permissions.PermissionsService;
+import com.raindropcentral.rdq.rank.RankSystemFactory;
 import com.raindropcentral.rdq.service.RankPathService;
-import com.raindropcentral.rdq.utility.rank.RankSystemFactory;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
 import com.raindropcentral.rdq.view.bounty.*;
+import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
@@ -40,7 +41,7 @@ import java.util.logging.Logger;
 @Getter
 public abstract class RDQ {
 
-	private static final Logger LOGGER = CentralLogger.getLogger(RDQ.class);
+	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
 
 	private final JavaPlugin plugin;
 	private final String edition;
@@ -65,11 +66,23 @@ public abstract class RDQ {
 
 	@InjectRepository
 	private BountyHunterRepository bountyHunterRepository;
+
+	@InjectRepository
 	private RPlayerRankPathRepository playerRankPathRepository;
+
+	@InjectRepository
 	private RPlayerRankRepository playerRankRepository;
+
+	@InjectRepository
 	private RPlayerRankUpgradeProgressRepository playerRankUpgradeProgressRepository;
+
+	@InjectRepository
 	private RRankRepository rankRepository;
+
+	@InjectRepository
 	private RRankTreeRepository rankTreeRepository;
+
+	@InjectRepository
 	private RRequirementRepository requirementRepository;
 
 	private LuckPermsService luckPermsService;
@@ -109,9 +122,13 @@ public abstract class RDQ {
 					rankPathService = new RankPathService(this);
 					permissionsService = new PermissionsService(this);
 
-					// Initialize bounty service (implemented by subclass)
 					bountyService = createBountyService();
 					bountyFactory = new BountyFactory(this, bountyService);
+
+					//todo rankservice = createrankservice();
+					rankSystemFactory = new RankSystemFactory(this); //todo this, rankservice
+					this.rankSystemFactory.initialize();
+					LOGGER.log(Level.INFO, "Rank system initialized");
 					
 					// Initialize visual indicator manager
 					visualIndicatorManager = new VisualIndicatorManager(this);
@@ -140,7 +157,7 @@ public abstract class RDQ {
 		final var emf = this.platform.getEntityManagerFactory();
 
 		if (emf == null) {
-			CentralLogger.getLogger(RDQ.class).warning("EntityManagerFactory not initialized");
+			LOGGER.warning("EntityManagerFactory not initialized");
 			return;
 		}
 
@@ -172,8 +189,7 @@ public abstract class RDQ {
 		).optional().maxAttempts(30).retryDelay(500).onSuccess(luckPerms -> {
 					luckPermsService = new LuckPermsService(platform);
 					LOGGER.log(Level.INFO, "LuckPerms service initialized");
-				}
-		).onFailure(() -> {
+		}).onFailure(() -> {
 			LOGGER.log(Level.INFO, "LuckPerms service initialization failed, not present.");
 		}).load();
 	}
@@ -191,7 +207,12 @@ public abstract class RDQ {
 						new BountyCreationView(),
 						new BountyPlayerInfoView(),
 						new BountyOverviewView(),
-						new PaginatedPlayerView()
+						new PaginatedPlayerView(),
+						new RankMainView(),
+						new RankTreeOverviewView(),
+						new RankRequirementDetailView(),
+						new RankPathOverview(),
+						new RankPathRankRequirementOverview()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
@@ -203,15 +224,6 @@ public abstract class RDQ {
 				.disableMetrics();
 		frame = registerViews(frame);
 		this.viewFrame = frame.register();
-	}
-
-	/**
-	 * Gets the visual indicator manager for bounty visual effects.
-	 *
-	 * @return the visual indicator manager
-	 */
-	public VisualIndicatorManager getVisualIndicatorManager() {
-		return visualIndicatorManager;
 	}
 
 	/**

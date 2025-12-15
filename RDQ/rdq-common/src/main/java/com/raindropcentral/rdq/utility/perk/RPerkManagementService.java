@@ -27,7 +27,7 @@ import java.util.concurrent.CompletableFuture;
  * </ul>
  * </p>
  * <p>
- * This service is separate from {@link com.raindropcentral.rdq2.service.RPerkActivationService} which handles
+ * This service is separate from {@link com.raindropcentral.rdq.service.RPerkActivationService} which handles
  * the actual activation/deactivation of perk effects.
  * </p>
  *

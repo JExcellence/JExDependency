@@ -2,8 +2,7 @@ package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class BountyPlayerJoinListener implements Listener {
 
-    private static final Logger LOGGER = Logger.getLogger(BountyPlayerJoinListener.class.getName());
+    private static final Logger LOGGER = Logger.getLogger("RDQ");
 
     private final RDQ rdq;
 
@@ -146,21 +145,21 @@ public class BountyPlayerJoinListener implements Listener {
     }
 
     private void notifyPlayerOfBounty(@NotNull Player player, @NotNull Bounty bounty) {
-        TranslationService.create(TranslationKey.of("bounty_listener.bounty_active.warning"), player)
-                .withPrefix()
-                .send();
-        TranslationService.create(TranslationKey.of("bounty_listener.bounty_active.value"), player)
-                .with("bounty_value", String.format("%.2f", bounty.getTotalEstimatedValue()))
-                .send();
+        new I18n.Builder("bounty_listener.bounty_active.warning", player)
+                .includePrefix()
+                .build().sendMessage();
+        new I18n.Builder("bounty_listener.bounty_active.value", player)
+                .withPlaceholder("bounty_value", String.format("%.2f", bounty.getTotalEstimatedValue()))
+                .build().sendMessage();
 
         if (bounty.getExpiresAt() != null) {
-            TranslationService.create(TranslationKey.of("bounty_listener.bounty_active.expires"), player)
-                    .with("expires_at", bounty.getExpiresAt().toString())
-                    .send();
+            new I18n.Builder("bounty_listener.bounty_active.expires", player)
+                    .withPlaceholder("expires_at", bounty.getExpiresAt().toString())
+                    .build().sendMessage();
         }
 
-        TranslationService.create(TranslationKey.of("bounty_listener.bounty_active.commissioner"), player)
-                .with("commissioner_uuid", bounty.getCommissionerUniqueId().toString())
-                .send();
+        new I18n.Builder("bounty_listener.bounty_active.commissioner", player)
+                .withPlaceholder("commissioner_uuid", bounty.getCommissionerUniqueId().toString())
+                .build().sendMessage();
     }
 }

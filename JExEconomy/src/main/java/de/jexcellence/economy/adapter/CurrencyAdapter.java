@@ -8,8 +8,7 @@ import de.jexcellence.economy.database.entity.User;
 import de.jexcellence.economy.database.entity.UserCurrency;
 import de.jexcellence.economy.event.*;
 import de.jexcellence.economy.type.EChangeType;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -430,7 +429,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
         if (createEvent.isCancelled()) {
             ADAPTER_LOGGER.log(Level.INFO, "Currency creation cancelled: " + createEvent.getCancelReason());
             if (creator != null) {
-                TranslationService.create(TranslationKey.of("currency_adapter.creation_cancelled"), creator).with("reason", createEvent.getCancelReason()).send();
+                new I18n.Builder("currency_adapter.creation_cancelled", creator).withPlaceholder("reason", createEvent.getCancelReason()).build().sendMessage();
             }
             return CompletableFuture.completedFuture(false);
         }
@@ -442,7 +441,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
         if (currencyAlreadyExists) {
             ADAPTER_LOGGER.log(Level.WARNING, "Currency already exists: " + newCurrencyEntity.getIdentifier());
             if (creator != null) {
-                TranslationService.create(TranslationKey.of("currency_adapter.already_exists"), creator).with("currency_identifier", newCurrencyEntity.getIdentifier()).send();
+                new I18n.Builder("currency_adapter.already_exists", creator).withPlaceholder("currency_identifier", newCurrencyEntity.getIdentifier()).build().sendMessage();
             }
             return CompletableFuture.completedFuture(false);
         }
@@ -477,7 +476,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
                     ADAPTER_LOGGER.log(Level.INFO, "Currency created successfully: " + currency.getIdentifier());
                     if (creator != null) {
-                        TranslationService.create(TranslationKey.of("currency_adapter.created_successfully"), creator).with("currency_identifier", currency.getIdentifier()).send();
+                        new I18n.Builder("currency_adapter.created_successfully", creator).withPlaceholder("currency_identifier", currency.getIdentifier()).build().sendMessage();
                     }
 
                     return true;
@@ -488,9 +487,9 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                             throwable);
 
                     if (creator != null) {
-                        TranslationService.create(TranslationKey.of("currency_adapter.creation_failed"), creator).withAll(
+                        new I18n.Builder("currency_adapter.creation_failed", creator).withPlaceholders(
                                 Map.of("currency_identifier", newCurrencyEntity.getIdentifier(), "error_message", throwable.getMessage())
-                        ).send();
+                        ).build().sendMessage();
                     }
 
                     this.createManagementLog(
@@ -527,7 +526,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                     if (currency == null) {
                         ADAPTER_LOGGER.log(Level.WARNING, "Currency not found for deletion: " + currencyIdentifier);
                         if (deleter != null) {
-                            TranslationService.create(TranslationKey.of("currency_adapter.not_found"), deleter).with("currency_identifier", currencyIdentifier).send();
+                            new I18n.Builder("currency_adapter.not_found", deleter).withPlaceholder("currency_identifier", currencyIdentifier).build().sendMessage();
                         }
                         return CompletableFuture.completedFuture(false);
                     }
@@ -543,7 +542,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                                 if (deleteEvent.isCancelled()) {
                                     ADAPTER_LOGGER.log(Level.INFO, "Currency deletion cancelled: " + deleteEvent.getCancelReason());
                                     if (deleter != null) {
-                                        TranslationService.create(TranslationKey.of("currency_adapter.deletion_cancelled"), deleter).with("reason", deleteEvent.getCancelReason()).send();
+                                        new I18n.Builder("currency_adapter.deletion_cancelled", deleter).withPlaceholder("reason", deleteEvent.getCancelReason()).build().sendMessage();
                                     }
                                     return CompletableFuture.completedFuture(false);
                                 }
@@ -568,18 +567,18 @@ public class CurrencyAdapter implements ICurrencyAdapter {
 
                                                 ADAPTER_LOGGER.log(Level.INFO, "Currency deleted successfully: " + currencyIdentifier);
                                                 if (deleter != null) {
-                                                    TranslationService.create(TranslationKey.of("currency_adapter.deleted_successfully"), deleter).withAll(
+                                                    new I18n.Builder("currency_adapter.deleted_successfully", deleter).withPlaceholders(
                                                             Map.of(
                                                                     "currency_identifier", currencyIdentifier,
                                                                     "affected_players", String.valueOf(playerCount),
                                                                     "total_balance", String.format("%.2f", totalBalance)
                                                             )
-                                                    ).send();
+                                                    ).build().sendMessage();
                                                 }
                                             } else {
                                                 ADAPTER_LOGGER.log(Level.WARNING, "Failed to delete currency: " + currencyIdentifier);
                                                 if (deleter != null) {
-                                                    TranslationService.create(TranslationKey.of("currency_adapter.deletion_failed"), deleter).with("currency_identifier", currencyIdentifier).send();
+                                                    new I18n.Builder("currency_adapter.deletion_failed", deleter).withPlaceholder("currency_identifier", currencyIdentifier).build().sendMessage();
                                                 }
                                             }
                                             return success;

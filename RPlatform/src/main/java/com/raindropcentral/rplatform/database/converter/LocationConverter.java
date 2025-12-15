@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 /**
- * Serialises Bukkit {@link Location} values to a semicolon-delimited representation and rebuilds them when
+ * Serializes Bukkit {@link Location} values to a semicolon-delimited representation and rebuilds them when
  * hydrating entities.
  *
  * <p>The converter writes the world UUID followed by the x, y, z, yaw and pitch values using a fixed order.

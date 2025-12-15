@@ -16,7 +16,7 @@ import com.raindropcentral.rdq.requirement.ItemRequirement;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.*;
 import me.devnatan.inventoryframework.state.State;
@@ -59,7 +59,7 @@ import java.util.logging.Logger;
  */
 public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgradeRequirement> {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankPathRankRequirementOverview.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
 	
 	private final State<RDQ> rdq = initialState("plugin");
 	private final State<RDQPlayer> currentPlayer = initialState("player");
@@ -97,24 +97,40 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	) {
 		return CompletableFuture.supplyAsync(() -> {
 			try {
-				final RRank rank = this.targetRank.get(context);
-				if (
-					rank == null
-				) {
+				final RRank passedRank = this.targetRank.get(context);
+				if (passedRank == null) {
 					LOGGER.log(Level.WARNING, "Target rank is null, returning empty requirements list");
 					return new ArrayList<>();
 				}
 				
-				if (
-					this.progressManager == null
-				) {
-					this.progressManager = new RankRequirementProgressManager(this.rdq.get(context));
+				final RDQ plugin = this.rdq.get(context);
+				
+				if (this.progressManager == null) {
+					this.progressManager = new RankRequirementProgressManager(plugin);
 				}
+				
+				// Use the cached rank from RankSystemFactory to avoid LazyInitializationException
+				// The passed rank entity may be detached from the Hibernate session
+				final RRankTree rankTree = this.selectedRankTree.get(context);
+				RRank cachedRank = null;
+				
+				if (rankTree != null) {
+					final RRankTree cachedTree = plugin.getRankSystemFactory().getRankTrees().get(rankTree.getIdentifier());
+					if (cachedTree != null) {
+						cachedRank = cachedTree.getRanks().stream()
+							.filter(r -> r.getIdentifier().equals(passedRank.getIdentifier()))
+							.findFirst()
+							.orElse(null);
+					}
+				}
+				
+				// Fallback to passed rank if cached rank not found
+				final RRank rank = cachedRank != null ? cachedRank : passedRank;
 				
 				final List<RRankUpgradeRequirement> requirements = new ArrayList<>(rank.getUpgradeRequirements());
 				requirements.sort(Comparator.comparingInt(RRankUpgradeRequirement::getDisplayOrder));
 				
-				LOGGER.log(Level.FINE, "Loaded " + requirements.size() + " requirements for rank: " + rank.getIdentifier());
+				LOGGER.log(Level.INFO, "Loaded " + requirements.size() + " requirements for rank: " + rank.getIdentifier());
 				return requirements;
 				
 			} catch (final Exception exception) {
@@ -157,28 +173,40 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		final @NotNull Player player
 	) {
 		try {
-			final RRank rank = this.targetRank.get(render);
+			final RRank passedRank = this.targetRank.get(render);
 			final RDQPlayer rdqPlayer = this.currentPlayer.get(render);
 			
-			if (
-				rank == null
-			) {
+			if (passedRank == null) {
 				LOGGER.log(Level.WARNING, "Target rank is null during first render");
 				this.renderErrorState(render, player);
 				return;
 			}
 			
-			if (
-				this.progressManager == null
-			) {
-				this.progressManager = new RankRequirementProgressManager(this.rdq.get(render));
+			final RDQ plugin = this.rdq.get(render);
+			
+			if (this.progressManager == null) {
+				this.progressManager = new RankRequirementProgressManager(plugin);
 			}
+			
+			// Use the cached rank from RankSystemFactory to avoid LazyInitializationException
+			final RRankTree rankTree = this.selectedRankTree.get(render);
+			RRank cachedRank = null;
+			
+			if (rankTree != null) {
+				final RRankTree cachedTree = plugin.getRankSystemFactory().getRankTrees().get(rankTree.getIdentifier());
+				if (cachedTree != null) {
+					cachedRank = cachedTree.getRanks().stream()
+						.filter(r -> r.getIdentifier().equals(passedRank.getIdentifier()))
+						.findFirst()
+						.orElse(null);
+				}
+			}
+			
+			final RRank rank = cachedRank != null ? cachedRank : passedRank;
 			
 			this.progressManager.initializeRankProgressTracking(rdqPlayer, rank);
 			this.renderAdditionalInfo(render, player, rank, rdqPlayer);
-		} catch (
-			  final Exception exception
-		) {
+		} catch (final Exception exception) {
 			LOGGER.log(Level.SEVERE, "Critical error during requirements overview render", exception);
 			this.renderErrorState(render, player);
 		}
@@ -293,16 +321,16 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 			String requirementName = this.getRequirementName(requirement);
 			int itemCount = this.getRequirementItemCount(requirement);
 
-            TranslationService i18n = this.i18n(statusKey, player)
-                    .with("index", index + 1)
-                    .with("requirement_name", requirementName)
-                    .with("item_count", itemCount)
-                    .with("progress", progress.getFormattedProgress());
+            I18n.Builder i18n = this.i18n(statusKey, player)
+                    .withPlaceholder("index", index + 1)
+                    .withPlaceholder("requirement_name", requirementName)
+                    .withPlaceholder("item_count", itemCount)
+                    .withPlaceholder("progress", progress.getFormattedProgress());
 			
 			if (
 				isPreviewMode
 			) {
-				i18n.with("preview_prefix", "[PREVIEW] ");
+				i18n.withPlaceholder("preview_prefix", "[PREVIEW] ");
 			}
 			
 			return i18n.build().component();
@@ -312,7 +340,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		) {
 			LOGGER.log(Level.WARNING, "Failed to create requirement display name", exception);
 			return this.i18n("requirement.fallback", player)
-			           .with("index", index + 1)
+			           .withPlaceholder("index", index + 1)
 			           .build()
 			           .component();
 		}
@@ -334,18 +362,18 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 			int itemCount = getRequirementItemCount(requirement);
 			
 			lore.add(this.i18n("requirement.type", player)
-			             .with("type", progress.getRequirementType())
+			             .withPlaceholder("type", progress.getRequirementType())
 			             .build()
 			             .component());
 			
 			lore.add(this.i18n("requirement.lore", player)
-			             .with("description", description)
+			             .withPlaceholder("description", description)
 			             .build()
 			             .component());
 			
 			if (itemCount > 1) {
 				lore.add(this.i18n("requirement.item_count", player)
-				             .with("count", itemCount)
+				             .withPlaceholder("count", itemCount)
 				             .build()
 				             .component());
 			}
@@ -353,66 +381,31 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 			lore.add(Component.empty());
 			
 			lore.add(this.i18n("requirement.progress", player)
-			             .with("progress", progress.getProgressAsPercentage())
+			             .withPlaceholder("progress", progress.getProgressAsPercentage())
 			             .build()
 			             .component());
 			
-			switch (progress.getStatus()) {
-				case COMPLETED -> {
-					lore.add(this.i18n("requirement.info.completed", player)
-					             .build()
-					             .component());
-				}
-				case READY_TO_COMPLETE -> {
-					lore.add(this.i18n("requirement.info.ready_to_complete", player)
-					             .build()
-					             .component());
-				}
-				case IN_PROGRESS -> {
-					lore.add(this.i18n("requirement.info.in_progress", player)
-					             .build()
-					             .component());
-				}
-				case NOT_STARTED -> {
-					lore.add(this.i18n("requirement.info.not_started", player)
-					             .build()
-					             .component());
-				}
-				case ERROR -> {
-					lore.add(this.i18n("requirement.info.error", player)
-					             .build()
-					             .component());
-				}
-			}
+			var statusInfoKey = switch (progress.getStatus()) {
+				case COMPLETED -> "requirement.info.completed";
+				case READY_TO_COMPLETE -> "requirement.info.ready_to_complete";
+				case IN_PROGRESS -> "requirement.info.in_progress";
+				case NOT_STARTED -> "requirement.info.not_started";
+				case ERROR -> "requirement.info.error";
+			};
+			lore.add(this.i18n(statusInfoKey, player).build().component());
 			
 			lore.add(Component.empty());
 			
-			if (
-				isPreviewMode
-			) {
-				lore.add(this.i18n("requirement.preview_mode", player)
-				             .build()
-				             .component());
+			if (isPreviewMode) {
+				lore.add(this.i18n("requirement.preview_mode", player).build().component());
 			} else {
 				switch (progress.getStatus()) {
 					case READY_TO_COMPLETE -> {
-						lore.add(this.i18n("requirement.click.complete", player)
-						             .build()
-						             .component());
-						lore.add(this.i18n("requirement.click.details", player)
-						             .build()
-						             .component());
+						lore.add(this.i18n("requirement.click.complete", player).build().component());
+						lore.add(this.i18n("requirement.click.details", player).build().component());
 					}
-					case COMPLETED -> {
-						lore.add(this.i18n("requirement.click.already_completed", player)
-						             .build()
-						             .component());
-					}
-					default -> {
-						lore.add(this.i18n("requirement.click.for_details", player)
-						             .build()
-						             .component());
-					}
+					case COMPLETED -> lore.add(this.i18n("requirement.click.already_completed", player).build().component());
+					default -> lore.add(this.i18n("requirement.click.for_details", player).build().component());
 				}
 			}
 			
@@ -444,9 +437,9 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 				isPreviewMode
 			) {
 				this.i18n("messages.preview_mode_click", player)
-				    .with("requirement_name", this.getRequirementName(requirement))
-				    .withPrefix()
-				    .send();
+				    .withPlaceholder("requirement_name", this.getRequirementName(requirement))
+				    .includePrefix()
+				    .build().sendMessage();
 				return;
 			}
 			
@@ -465,8 +458,8 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		) {
 			LOGGER.log(Level.WARNING, "Failed to handle requirement click", exception);
 			this.i18n("error.click_failed", player)
-			    .withPrefix()
-			    .send();
+			    .includePrefix()
+			    .build().sendMessage();
 		}
 	}
 	
@@ -483,17 +476,17 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		
 		if (progress.getStatus() == RequirementStatus.COMPLETED) {
 			this.i18n("messages.already_completed", player)
-			    .with("requirement_name", this.getRequirementName(requirement))
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("requirement_name", this.getRequirementName(requirement))
+			    .includePrefix()
+			    .build().sendMessage();
 			return;
 		}
 		
 		if (progress.getStatus() != RequirementStatus.READY_TO_COMPLETE) {
 			this.i18n("messages.not_ready_to_complete", player)
-			    .with("requirement_name", this.getRequirementName(requirement))
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("requirement_name", this.getRequirementName(requirement))
+			    .includePrefix()
+			    .build().sendMessage();
 			return;
 		}
 		
@@ -502,7 +495,21 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		if (result.isSuccess()) {
 			clickContext.update();
 			
-			final RRank rank = this.targetRank.get(clickContext);
+			// Use the cached rank from RankSystemFactory to avoid LazyInitializationException
+			final RDQ plugin = this.rdq.get(clickContext);
+			final RRank passedRank = this.targetRank.get(clickContext);
+			final RRankTree rankTree = this.selectedRankTree.get(clickContext);
+			RRank rank = passedRank;
+			
+			if (rankTree != null && passedRank != null) {
+				final RRankTree cachedTree = plugin.getRankSystemFactory().getRankTrees().get(rankTree.getIdentifier());
+				if (cachedTree != null) {
+					rank = cachedTree.getRanks().stream()
+						.filter(r -> r.getIdentifier().equals(passedRank.getIdentifier()))
+						.findFirst()
+						.orElse(passedRank);
+				}
+			}
 			
 			if (this.progressManager.areAllRequirementsCompleted(player, rdqPlayer, rank)) {
 				LOGGER.log(Level.INFO, "All requirements completed for rank " + rank.getIdentifier() + " by player " + player.getName() + ". Starting rank progression.");
@@ -530,9 +537,9 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 			this.updateLuckPermsGroup(plugin, player, rank);
 			
 			this.i18n("messages.rank_progression_completed", player)
-			    .with("rank_name", rank.getIdentifier())
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("rank_name", rank.getIdentifier())
+			    .includePrefix()
+			    .build().sendMessage();
 			
 			Map<String, Object> updatedData = new HashMap<>((Map<String, Object>) clickContext.getInitialData());
 			updatedData.put("rank_progression_completed", true);
@@ -546,9 +553,9 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		} catch (Exception exception) {
 			LOGGER.log(Level.SEVERE, "Failed to process rank progression", exception);
 			this.i18n("error.rank_progression_failed", player)
-			    .with("rank_name", rank.getIdentifier())
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("rank_name", rank.getIdentifier())
+			    .includePrefix()
+			    .build().sendMessage();
 		}
 	}
 	
@@ -664,10 +671,12 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		try {
 			final Map<String, Object> initialData = new HashMap<>((Map<String, Object>) clickContext.getInitialData());
 			
+			// Ensure the requirement is properly added to initial data for the detail view
 			initialData.put("requirement", requirement);
 			initialData.put("progress", progress);
 			
-			LOGGER.log(Level.FINE, "Player " + player.getName() + " opened detailed view for requirement: " + this.getRequirementName(requirement));
+			LOGGER.log(Level.INFO, "Player " + player.getName() + " opening detailed view for requirement: " + 
+				this.getRequirementName(requirement) + " - Initial data keys: " + initialData.keySet());
 			
 			clickContext.openForPlayer(
 				RankRequirementDetailView.class,
@@ -678,8 +687,8 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		) {
 			LOGGER.log(Level.WARNING, "Failed to open requirement detail view", exception);
 			this.i18n("error.detail_view_failed", player)
-			    .withPrefix()
-			    .send();
+			    .includePrefix()
+			    .build().sendMessage();
 		}
 	}
 	
@@ -756,7 +765,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	) {
 		return UnifiedBuilderFactory.item(Material.PAPER)
 		                            .setName(this.i18n("requirement.fallback", player)
-		                                         .with("index", index + 1)
+		                                         .withPlaceholder("index", index + 1)
 		                                         .build()
 		                                         .component())
 		                            .setLore(List.of(
@@ -780,8 +789,8 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		builder.withItem(fallbackItem)
 		       .onClick(clickContext -> {
 			       this.i18n("error.requirement_unavailable", player)
-			           .withPrefix()
-			           .send();
+			           .includePrefix()
+			           .build().sendMessage();
 		       });
 	}
 	

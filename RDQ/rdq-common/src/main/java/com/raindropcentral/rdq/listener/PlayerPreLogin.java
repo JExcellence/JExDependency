@@ -2,6 +2,7 @@ package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
@@ -51,9 +52,15 @@ public class PlayerPreLogin implements Listener {
     private CompletableFuture<RDQPlayer> createPlayer(@NotNull UUID uniqueId, @NotNull String playerName) {
         var player = new RDQPlayer(uniqueId, playerName);
 
-        return rdq.getPlayerRepository().createAsync(player).thenCompose(created -> {
-           return addPlayerStatistic(player);
-        });
+        if (rdq.getRankSystemFactory().getDefaultRank() != null) {
+            var defaultRank = this.rdq.getRankRepository().findByAttributes(Map.of("identifier", this.rdq.getRankSystemFactory().getDefaultRank().getIdentifier()));
+            if (defaultRank != null) {
+                var defaultPlayerRank = new RPlayerRank(player, defaultRank);
+                player.addPlayerRank(defaultPlayerRank);
+            }
+        }
+
+        return rdq.getPlayerRepository().createAsync(player).thenCompose(created -> addPlayerStatistic(player));
     }
 
     private CompletableFuture<RDQPlayer> addPlayerStatistic(@NotNull RDQPlayer player) {

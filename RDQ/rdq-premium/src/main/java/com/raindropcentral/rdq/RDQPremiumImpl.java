@@ -67,8 +67,6 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
 
                 @Override
                 protected @NotNull IBountyService createBountyService() {
-                    // 'this' refers to the RDQ instance being created
-                    // The service will access repositories and config from RDQ when needed
                     return PremiumBountyService.initialize(this);
                 }
             };

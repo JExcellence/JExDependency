@@ -160,11 +160,11 @@ public class CurrenciesOverviewView extends APaginatedView<Currency> {
 							    "currency.name",
 							    contextPlayer
 						    )
-						    .with(
+						    .withPlaceholder(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier()
 						    )
-						    .with(
+						    .withPlaceholder(
 							    "currency_symbol",
 							    displayedCurrency.getSymbol()
 						    )
@@ -175,7 +175,7 @@ public class CurrenciesOverviewView extends APaginatedView<Currency> {
 							    "currency.lore",
 							    contextPlayer
 						    )
-						    .withAll(
+						    .withPlaceholders(
 							    Map.of(
 								    "currency_identifier",
 								    displayedCurrency.getIdentifier(),
@@ -190,7 +190,7 @@ public class CurrenciesOverviewView extends APaginatedView<Currency> {
 							    )
 						    )
 						    .build()
-						    .splitLines()
+						    .children()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()

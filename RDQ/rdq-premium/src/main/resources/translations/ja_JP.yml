@@ -1,43 +1,166 @@
-# RDQ Premium 翻訳ファイル - 日本語
-# MiniMessage形式、グラデーションとスタイル付き
+# RDQ 翻訳ファイル - 日本語
+# MiniMessageフォーマット（グラデーションとスタイリング）
 # プレースホルダーは %placeholder% 形式を使用
 
-# 賞金リスナーメッセージ
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>あなたの頭にアクティブな賞金がかかっています！</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 賞金額：</gradient> <gradient:#10b981:#34d399>%bounty_value%</gradient>"
-    expires: "<gradient:#f59e0b:#fbbf24>⏰ 期限：</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
-    commissioner: "<gradient:#ef4444:#f87171>👤 依頼者：</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
-  
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>あなたには懸賞金がかけられています！</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 懸賞金額:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ 期限:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 依頼者:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 賞金獲得！🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>あなたは</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の賞金を獲得しました！</gradient>"
-    share: "<gradient:#3b82f6:#60a5fa>あなたの取り分：</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 懸賞金獲得！ 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc></gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の懸賞金を獲得しました！</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>あなたの取り分:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>誰か</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>が</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の賞金を獲得しました！</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% 人のプレイヤー</gradient> <gradient:#a855f7:#c084fc>が</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の賞金を獲得しました！</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>が</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の懸賞金を獲得しました！</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count%人のプレイヤー</gradient> <gradient:#a855f7:#c084fc>が</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の懸賞金を獲得しました！</gradient>"
 
-# 賞金メインビュー
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 賞金システム</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 賞金作成</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして新しい賞金を</gradient>"
-      - "<gradient:#6b7280:#9ca3af>他のプレイヤーにかける</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 賞金表示</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>すべてのアクティブな賞金を表示</gradient>"
-  my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 私の賞金</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>あなたが作成した賞金を表示</gradient>"
-  leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 リーダーボード</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>トップ賞金ハンター</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>への懸賞金が作成されました！</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 懸賞金の処理に失敗:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ 懸賞金を更新中...</gradient>"
 
-# プレフィックス
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ ランク</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>の進行を開始しました</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#3b82f6:#60a5fa>の要件を表示中</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>の要件が未完了です</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% 完了)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要件未完了:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>には要件がありません！</gradient>"
+
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>を所有しています</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 ロック中:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 先に前提条件を完了してください</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPermsがインストールされていません！</gradient> <gradient:#6b7280:#9ca3af>この機能にはLuckPermsが必要です。</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests ヘルプ</gradient>\n<gradient:#6b7280:#9ca3af>/rq - メインメニューを開く</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - ランクを表示</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - 懸賞金を表示</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ 管理パネル</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>管理ツールと設定オプションに</gradient>"
+      - "<gradient:#6b7280:#9ca3af>アクセスします</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 懸賞金</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>懸賞金を表示・管理</gradient>"
+      - "<gradient:#6b7280:#9ca3af>報酬のためにプレイヤーを狩ろう！</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ 特典</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>利用可能な特典と</gradient>"
+      - "<gradient:#6b7280:#9ca3af>特殊能力を表示</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 クエスト</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>利用可能なクエストを表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>進捗を追跡</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ ランク</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>ランクの進行状況を表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>新しい能力をアンロック</gradient>"
+
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ ランクシステム</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 ランクツリー</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>利用可能なランクツリーを閲覧</gradient>"
+      - "<gradient:#6b7280:#9ca3af>あなたの道を選択</gradient>"
+
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 ランクツリー</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>左クリックでプレビュー</gradient>"
+      - "<gradient:#10b981:#34d399>右クリックで選択</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 このランクツリーはロックされています</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>先に %minimum_rank_paths_to_be_absolved_needed% 個のランクツリーを完了してください</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>前提条件:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 このランクパスはロックされています！</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ 現在アクティブ</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>左クリックでプレビュー</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>右クリックで続行</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 以前選択済み</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>右クリックで再アクティブ化</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ アクティブなランクパスの上限に達しました！</gradient> <gradient:#6b7280:#9ca3af>(最大: %maximum_rank_path_amount%)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ このパスの開始ランクが見つかりません！</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ ランクパスを選択:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(開始ランク: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ ランクパスの選択に失敗しました！</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ ランクパスを再アクティブ化:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ ランクパスの再アクティブ化に失敗しました！</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ ランクツリー作成は近日公開！</gradient>"
+
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 プレビュー: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>不明なツリー</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ 左へ移動</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ 右へ移動</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ 上へ移動</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ 下へ移動</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>%direction% へ移動</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ 所有済み</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 利用可能</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 ロック中</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>クリックで要件を表示</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>クリックで進行</gradient>"
+
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 懸賞金システム</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#a855f7:#c084fc>への懸賞金</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>ターゲット:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>依頼者:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>作成日:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>クリックで詳細を表示</gradient>"
+
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 懸賞金作成 - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 ターゲット選択</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 ターゲット: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックでプレイヤーを選択</gradient>"
+      - "<gradient:#6b7280:#9ca3af>現在: %target_name%</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ プレイヤーが選択されていません！</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 報酬が追加されていません！</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient> <gradient:#f59e0b:#fbbf24>への懸賞金を作成中...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ エラー:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>への懸賞金が作成されました！</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 アイテムが返却されました！</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 戻る</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックで戻る</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ 前へ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>前のページ</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ 次へ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>次のページ</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ キャンセル</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>アクションをキャンセル</gradient>"

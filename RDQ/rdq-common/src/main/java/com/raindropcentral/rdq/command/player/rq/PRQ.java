@@ -5,8 +5,8 @@ import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import com.raindropcentral.rdq.view.ranks.RankMainView;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
@@ -85,10 +85,7 @@ public class PRQ extends PlayerCommand {
                 if (
                     this.rdq.getLuckPermsService() == null
                 ) {
-                    TranslationService.create(
-                            TranslationKey.of("rq.no_luckperms_installed"),
-                            player
-                    ).withPrefix().send();
+                    new I18n.Builder("rq.no_luckperms_installed", player).includePrefix().build().sendMessage();
                     return;
                 }
                 
@@ -154,7 +151,7 @@ public class PRQ extends PlayerCommand {
                     EPRQPermission.RANKS
                 )) {
                     return;
-                }/*
+                }
                 this.rdq.getViewFrame().open(
                     RankMainView.class,
                     player,
@@ -162,7 +159,7 @@ public class PRQ extends PlayerCommand {
                         "plugin",
                         this.rdq
                     )
-                );*/
+                );
             }
             case PERKS -> {
                 if (this.hasNoPermission(
@@ -181,7 +178,7 @@ public class PRQ extends PlayerCommand {
                 );*/
             }
             default -> {
-                TranslationService.create(TranslationKey.of("rq.help"), player).withPrefix().send();
+                new I18n.Builder("rq.help", player).includePrefix().build().sendMessage();
             }
         }
     }

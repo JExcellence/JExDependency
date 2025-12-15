@@ -1,52 +1,92 @@
-# RDQ Common 翻譯檔案 - 繁體中文
+# RDQ 翻譯檔案 - 繁體中文
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>你的頭上有一個活躍的懸賞！</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>你的頭上有懸賞！</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 懸賞金額:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ 到期時間:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 委託人:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 懸賞已領取！🎉</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 懸賞已領取！ 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>你成功領取了</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的懸賞！</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>你的份額:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>某人</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>領取了</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的懸賞！</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count%名玩家</gradient> <gradient:#a855f7:#c084fc>領取了</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的懸賞！</gradient>"
 
-# 懸賞創建確認消息
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ 成功創建懸賞</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>！</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 創建懸賞失敗:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 懸賞系統</gradient>"
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "bounty_o
-verview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 懸賞系統</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 創建懸賞</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 查看懸賞</gradient>"
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯 對</gradient><gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#a855f7:#c084fc>的懸賞</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 成功為</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>建立懸賞！</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 處理懸賞失敗:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ 正在更新懸賞...</gradient>"
 
-bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 創建懸賞</gradient>"
-  select_target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 選擇目標</gradient>"
-  add_items:
-    name: "<gradient:#10b981:#34d399>💰 添加獎勵</gradient>"
-  add_currencies:
-    name: "<gradient:#f59e0b:#fbbf24>💎 添加貨幣</gradient>"
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ 開始</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>等級的進度</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 查看</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#3b82f6:#60a5fa>的要求</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>的要求未完成</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% 完成)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要求未完成:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>沒有要求！</gradient>"
 
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 預覽模式:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ 你擁有</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 已鎖定:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 請先完成前置條件</gradient>"
 
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 第%current_page%頁</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 第%direction%頁</gradient>"
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms未安裝！</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests 幫助</gradient>\n<gradient:#6b7280:#9ca3af>/rq - 開啟主選單</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - 查看等級</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - 查看懸賞</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ 管理面板</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>存取管理工具</gradient>"
+      - "<gradient:#6b7280:#9ca3af>和設定選項</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 懸賞</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>查看和管理懸賞</gradient>"
+      - "<gradient:#6b7280:#9ca3af>獵殺玩家獲取獎勵！</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ 特權</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>查看可用特權</gradient>"
+      - "<gradient:#6b7280:#9ca3af>和特殊能力</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 任務</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>查看可用任務</gradient>"
+      - "<gradient:#6b7280:#9ca3af>追蹤你的進度</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ 等級</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>查看等級進度</gradient>"
+      - "<gradient:#6b7280:#9ca3af>解鎖新能力</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ 等級系統</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 等級樹</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>瀏覽可用的等級樹</gradient>"
+      - "<gradient:#6b7280:#9ca3af>選擇你的道路</gradient>"
 
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 返回</gradient>"
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ 繼續</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊返回</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ 上一頁</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>上一頁</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ 下一頁</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>下一頁</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ 取消</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>取消操作</gradient>"

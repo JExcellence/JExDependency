@@ -142,14 +142,25 @@ public class RPlatform {
 
             this.initializeDatabaseResources();
 
-            translationManager = new TranslationManager(plugin);
-            translationManager.initialize();
+            translationManager = TranslationManager.builder(plugin)
+                    .defaultLocale("en_US")
+                    .enableMetrics(true)
+                    .entityManagerFactory(entityManagerFactory)
+                    .build();
             
             commandUpdater = new CommandUpdater(plugin);
             
             logger.info("RPlatform initialized successfully");
             initialized = true;
-        }, scheduler::runAsync);
+        }, scheduler::runAsync).thenCompose(v -> {
+            // Initialize translations after platform setup - must be awaited
+            logger.info("Initializing translation system...");
+            return translationManager.initialize().thenRun(() -> {
+                logger.info("Translation system initialized with " + 
+                    translationManager.getKeyCount() + " keys in " + 
+                    translationManager.getLocaleCount() + " locales");
+            });
+        });
     }
 
     /**

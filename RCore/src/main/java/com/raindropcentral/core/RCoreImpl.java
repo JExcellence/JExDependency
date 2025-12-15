@@ -10,6 +10,8 @@ import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
 import com.raindropcentral.core.database.repository.*;
 import com.raindropcentral.core.service.RCoreService;
 import com.raindropcentral.core.service.central.RCentralService;
+import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
+import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFactory;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
@@ -94,6 +96,11 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     private RCentralService rCentralService;
 
+    /**
+     * Statistics delivery service for transmitting player statistics to RaindropCentral.
+     */
+    private StatisticsDeliveryService statisticsDeliveryService;
+
     private RCoreAdapter rCoreAdapter;
 
     @InjectRepository
@@ -174,6 +181,14 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     @Override
     public void onDisable() {
+        // Shutdown statistics delivery service first to flush pending statistics
+        StatisticsDeliveryServiceFactory.shutdown(this.statisticsDeliveryService);
+
+        // Notify RCentral of shutdown
+        if (this.rCentralService != null) {
+            this.rCentralService.notifyShutdown().join();
+        }
+
         shutdownExecutor();
         LOGGER.info("RCore disabled successfully");
     }
@@ -251,6 +266,12 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     private void initializeComponents() {
         this.rCentralService = new RCentralService(this.getPlugin());
+
+        // Initialize statistics delivery service
+        this.statisticsDeliveryService = StatisticsDeliveryServiceFactory.create(
+            this.getPlugin(), this.rCentralService
+        );
+        StatisticsDeliveryServiceFactory.initialize(this.statisticsDeliveryService);
 
         var commandFactory = new CommandFactory(this.getPlugin(), this);
         commandFactory.registerAllCommandsAndListeners();
@@ -397,5 +418,14 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
 
     public RPlayerRepository getPlayerRepository() {
         return playerRepository;
+    }
+
+    /**
+     * Provides access to the StatisticsDeliveryService for components that need it.
+     *
+     * @return the StatisticsDeliveryService instance, or null if disabled
+     */
+    public StatisticsDeliveryService getStatisticsDeliveryService() {
+        return statisticsDeliveryService;
     }
 }

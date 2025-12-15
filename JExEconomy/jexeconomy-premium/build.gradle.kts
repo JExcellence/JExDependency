@@ -42,10 +42,10 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("Premium")
     archiveVersion.set(project.version.toString())
 
-    relocate("com.fasterxml.jackson.core", "de.jexcellence.remapped.com.fasterxml.jackson.core")
-    relocate("com.fasterxml.jackson.databind", "de.jexcellence.remapped.com.fasterxml.jackson.databind")
+    relocate("tools.jackson.core", "de.jexcellence.remapped.tools.jackson.core")
+    relocate("tools.jackson.databind", "de.jexcellence.remapped.tools.jackson.databind")
     relocate("com.fasterxml.jackson.annotation", "de.jexcellence.remapped.com.fasterxml.jackson.annotation")
-    relocate("com.fasterxml.jackson.datatype", "de.jexcellence.remapped.com.fasterxml.jackson.datatype")
+    relocate("tools.jackson.core.datatype", "de.jexcellence.remapped.tools.jackson.core.datatype")
 
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("org.h2", "de.jexcellence.remapped.org.h2")

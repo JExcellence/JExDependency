@@ -23,31 +23,31 @@ import org.jetbrains.annotations.NotNull;
  */
 @Entity
 @Table(
-	name = "r_player_rank_upgrade_progress",
-	uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "upgrade_requirement_id"})
+		name = "r_player_rank_upgrade_progress",
+		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "upgrade_requirement_id"})
 )
 public class RPlayerRankUpgradeProgress extends AbstractEntity {
-	
+
 	/**
 	 * The player whose progress is being tracked.
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(
-		name = "player_id",
-		nullable = false
+			name = "player_id",
+			nullable = false
 	)
 	private RDQPlayer player;
-	
+
 	/**
 	 * The rank upgrade requirement for which progress is being tracked.
 	 */
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(
-		name = "upgrade_requirement_id",
-		nullable = false
+			name = "upgrade_requirement_id",
+			nullable = false
 	)
 	private RRankUpgradeRequirement upgradeRequirement;
-	
+
 	/**
 	 * The progress value towards completing the requirement.
 	 * <p>
@@ -57,12 +57,12 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	 */
 	@Column(name = "progress_value", nullable = false)
 	private double progress;
-	
+
 	/**
 	 * Protected no-argument constructor for JPA.
 	 */
 	protected RPlayerRankUpgradeProgress() {}
-	
+
 	/**
 	 * Constructs a new {@code RPlayerRankUpgradeProgress} entity for the given player and upgrade requirement.
 	 *
@@ -70,14 +70,14 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	 * @param upgradeRequirement the upgrade requirement being progressed towards
 	 */
 	public RPlayerRankUpgradeProgress(
-		@NotNull final RDQPlayer player,
-		@NotNull final RRankUpgradeRequirement upgradeRequirement
+			@NotNull final RDQPlayer player,
+			@NotNull final RRankUpgradeRequirement upgradeRequirement
 	) {
 		this.player = player;
 		this.upgradeRequirement = upgradeRequirement;
 		this.progress = 0.0;
 	}
-	
+
 	/**
 	 * Gets the player whose progress is being tracked.
 	 *
@@ -87,7 +87,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public RDQPlayer getPlayer() {
 		return this.player;
 	}
-	
+
 	/**
 	 * Sets the player whose progress is being tracked.
 	 *
@@ -96,7 +96,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public void setPlayer(@NotNull final RDQPlayer player) {
 		this.player = player;
 	}
-	
+
 	/**
 	 * Gets the upgrade requirement for which progress is being tracked.
 	 *
@@ -106,7 +106,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public RRankUpgradeRequirement getUpgradeRequirement() {
 		return this.upgradeRequirement;
 	}
-	
+
 	/**
 	 * Sets the upgrade requirement for which progress is being tracked.
 	 *
@@ -115,7 +115,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public void setUpgradeRequirement(@NotNull final RRankUpgradeRequirement upgradeRequirement) {
 		this.upgradeRequirement = upgradeRequirement;
 	}
-	
+
 	/**
 	 * Gets the current progress value towards the requirement.
 	 *
@@ -124,7 +124,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public double getProgress() {
 		return this.progress;
 	}
-	
+
 	/**
 	 * Sets the progress value towards the requirement.
 	 * Progress is capped at 1.0 to prevent overflow.
@@ -134,7 +134,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public void setProgress(final double progress) {
 		this.progress = Math.min(progress, 1.0);
 	}
-	
+
 	/**
 	 * Increments the progress by a given amount, capping at 1.0.
 	 *
@@ -145,14 +145,14 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 		setProgress(this.progress + amount);
 		return this.progress;
 	}
-	
+
 	/**
 	 * Resets the progress to zero.
 	 */
 	public void resetProgress() {
 		this.progress = 0.0;
 	}
-	
+
 	/**
 	 * Checks if this requirement has been completed (progress >= 1.0).
 	 *
@@ -161,7 +161,7 @@ public class RPlayerRankUpgradeProgress extends AbstractEntity {
 	public boolean isCompleted() {
 		return this.progress >= 1.0;
 	}
-	
+
 	/**
 	 * Gets the rank this progress is ultimately for.
 	 * This is a convenience method to navigate up the relationship chain.

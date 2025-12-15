@@ -5,8 +5,7 @@ import com.raindropcentral.rdq.config.permissions.PermissionsSection;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.evaluable.ConfigKeeper;
 import de.jexcellence.evaluable.ConfigManager;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -107,20 +106,19 @@ public class PermissionsService {
 			check &&
 			! Bukkit.getPluginManager().isPluginEnabled(pluginName)
 		) {
-            TranslationService.create(
-                    TranslationKey.of("admin_permissions_overview_ui.errors.plugin_not_found"),
-                    player
-            ).withPrefix().with("plugin_name", pluginName).send();
+            new I18n.Builder("admin_permissions_overview_ui.errors.plugin_not_found", player)
+                    .includePrefix()
+                    .withPlaceholder("plugin_name", pluginName)
+                    .build().sendMessage();
 			return false;
 		}
 		
 		if (
 			this.rdq.getLuckPermsService() == null
 		) {
-            TranslationService.create(
-                    TranslationKey.of("admin_permissions_overview_ui.errors.no_luckperms_installed"),
-                    player
-            ).withPrefix().send();
+            new I18n.Builder("admin_permissions_overview_ui.errors.no_luckperms_installed", player)
+                    .includePrefix()
+                    .build().sendMessage();
 			return false;
 		}
 		

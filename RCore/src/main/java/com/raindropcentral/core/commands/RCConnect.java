@@ -4,8 +4,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.core.RCore;
 import com.raindropcentral.core.service.central.RCentralService;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,56 +39,56 @@ public final class RCConnect extends PlayerCommand {
         }
 
         if (args.length != 1) {
-            TranslationService.create(TranslationKey.of("rcconnect.usage"), player)
-                    .withPrefix()
-                    .send();
+            new I18n.Builder("rcconnect.usage", player)
+                    .includePrefix()
+                    .build().sendMessage();
             return;
         }
 
         var apiKey = stringParameter(args, 0);
 
         if (!API_KEY_PATTERN.matcher(apiKey).matches()) {
-            TranslationService.create(TranslationKey.of("rcconnect.error.invalid_key"), player)
-                    .withPrefix()
-                    .send();
+            new I18n.Builder("rcconnect.error.invalid_key", player)
+                    .includePrefix()
+                    .build().sendMessage();
             return;
         }
 
         if (centralService.isConnected()) {
-            TranslationService.create(TranslationKey.of("rcconnect.error.already_connected"), player)
-                    .withPrefix()
-                    .send();
+            new I18n.Builder("rcconnect.error.already_connected", player)
+                    .includePrefix()
+                    .build().sendMessage();
             return;
         }
 
-        TranslationService.create(TranslationKey.of("rcconnect.connecting"), player)
-                .withPrefix()
-                .send();
+        new I18n.Builder("rcconnect.connecting", player)
+                .includePrefix()
+                .build().sendMessage();
 
         var playerUuid = player.getUniqueId().toString();
         var playerName = player.getName();
 
         centralService.connect(apiKey, playerUuid, playerName).thenAccept(result -> {
             if (result.success()) {
-                TranslationService.create(TranslationKey.of("rcconnect.success"), player)
-                        .withPrefix()
-                        .send();
+                new I18n.Builder("rcconnect.success", player)
+                        .includePrefix()
+                        .build().sendMessage();
             } else {
                 var errorKey = switch (result.errorCode()) {
                     case "UUID_MISMATCH" -> "rcconnect.error.uuid_mismatch";
                     case "INVALID_KEY" -> "rcconnect.error.invalid_key";
                     default -> "rcconnect.error.network";
                 };
-                TranslationService.create(TranslationKey.of(errorKey), player)
-                        .withPrefix()
-                        .with("error", result.errorMessage())
-                        .send();
+                new I18n.Builder(errorKey, player)
+                        .includePrefix()
+                        .withPlaceholder("error", result.errorMessage())
+                        .build().sendMessage();
             }
         }).exceptionally(throwable -> {
-            TranslationService.create(TranslationKey.of("rcconnect.error.network"), player)
-                    .withPrefix()
-                    .with("error", throwable.getMessage())
-                    .send();
+            new I18n.Builder("rcconnect.error.network", player)
+                    .includePrefix()
+                    .withPlaceholder("error", throwable.getMessage())
+                    .build().sendMessage();
             return null;
         });
     }

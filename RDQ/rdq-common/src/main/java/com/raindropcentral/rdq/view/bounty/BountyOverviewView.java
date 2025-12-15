@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -64,12 +65,11 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 				UnifiedBuilderFactory
 					.unifiedHead(target)
 					.setDisplayName(
-						this.i18n(
+						(net.kyori.adventure.text.Component) this.i18n(
 							    "bounty.name",
 							    player
 						    )
-						    .with(
-							    "target_name",
+						    .withPlaceholder("target_name",
 									target.getName()
 						    )
 						    .build()
@@ -80,7 +80,7 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 							    "bounty.lore",
 							    player
 						    )
-						    .withAll(
+						    .withPlaceholders(
 							    Map.of(
 								    "target_name",
 										target.getName(),
@@ -93,7 +93,7 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 							    )
 						    )
 						    .build()
-						    .splitLines()
+						    .children()
 					)
 					.build()
 			)
@@ -107,10 +107,10 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 						Optional.of(bounty),
 						"target",
 						Optional.of(target),
-						"parentClazz",
-						BountyOverviewView.class,
-						"initialData",
-						clickContext.getInitialData()
+						"rewards",
+						bounty.getRewards(),
+						"insertedItems",
+						new HashMap<>()
 					)
 				);
 			});

@@ -98,7 +98,7 @@ public class RankMainView extends BaseView {
                             this.i18n("rank_tree.name", player).build().component()
                     )
                     .setLore(
-                            this.i18n("rank_tree.lore", player).build().splitLines()
+                            this.i18n("rank_tree.lore", player).build().children()
                     )
                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build()

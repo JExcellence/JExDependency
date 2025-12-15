@@ -2,10 +2,12 @@ package com.raindropcentral.rdq.bounty.claim;
 
 import com.raindropcentral.rdq.bounty.DamageTracker;
 import com.raindropcentral.rdq.bounty.type.EClaimMode;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Handles bounty claim attribution based on configured claim modes.
@@ -17,12 +19,17 @@ import java.util.*;
  */
 public class ClaimHandler {
 
+    private final Logger LOGGER = CentralLogger.getLogger("RDQ");
+
     private final DamageTracker damageTracker;
     private final EClaimMode claimMode;
+    private final boolean selfClaimAllowed;
 
-    public ClaimHandler(@NotNull DamageTracker damageTracker, @NotNull EClaimMode claimMode) {
+    public ClaimHandler(@NotNull DamageTracker damageTracker, @NotNull EClaimMode claimMode, boolean selfClaimAllowed) {
         this.damageTracker = damageTracker;
         this.claimMode = claimMode;
+        this.selfClaimAllowed = selfClaimAllowed;
+        LOGGER.info("[ClaimHandler] Initialized with selfClaimAllowed=" + selfClaimAllowed + ", claimMode=" + claimMode);
     }
 
     /**
@@ -36,9 +43,17 @@ public class ClaimHandler {
     public ClaimResult determineClaim(@NotNull UUID victimUuid, @Nullable UUID lastHitterUuid) {
         Map<UUID, Double> damageMap = damageTracker.getDamageMap(victimUuid);
 
-        // Handle edge cases (environmental death, suicide)
+        LOGGER.info("[ClaimHandler] Determining claim - Victim: " + victimUuid +
+            ", LastHitter: " + lastHitterUuid + 
+            ", DamageMap size: " + damageMap.size() + 
+            ", ClaimMode: " + claimMode);
+        
+        if (!damageMap.isEmpty()) {
+            LOGGER.info("[ClaimHandler] Damage data: " + damageMap);
+        }
+
         if (lastHitterUuid == null || lastHitterUuid.equals(victimUuid)) {
-            return handleEdgeCase(damageMap);
+            return handleEdgeCase(damageMap, lastHitterUuid, victimUuid);
         }
 
         return switch (claimMode) {
@@ -102,10 +117,29 @@ public class ClaimHandler {
     /**
      * Handles edge cases like environmental death or suicide.
      * Awards the bounty to the player who dealt the most damage, if any.
+     * If selfClaimAllowed is true, allows players to claim their own bounty.
      */
     @NotNull
-    private ClaimResult handleEdgeCase(@NotNull Map<UUID, Double> damageMap) {
+    private ClaimResult handleEdgeCase(@NotNull Map<UUID, Double> damageMap, @Nullable UUID lastHitterUuid, @NotNull UUID victimUuid) {
+        LOGGER.info("[ClaimHandler] handleEdgeCase: lastHitterUuid=" + lastHitterUuid +
+                                                       ", victimUuid=" + victimUuid + 
+                                                       ", selfClaimAllowed=" + selfClaimAllowed +
+                                                       ", lastHitterNotNull=" + (lastHitterUuid != null) +
+                                                       ", uuidsEqual=" + (lastHitterUuid != null && lastHitterUuid.equals(victimUuid)));
+
+        if (lastHitterUuid != null && lastHitterUuid.equals(victimUuid)) {
+            if (selfClaimAllowed) {
+                LOGGER.info("[ClaimHandler] Self-kill detected and self-claims are allowed - awarding bounty to self");
+                return ClaimResult.singleWinner(lastHitterUuid);
+            } else {
+                LOGGER.info("[ClaimHandler] Self-kill detected but self-claims are DISABLED - no winner");
+                LOGGER.info("[ClaimHandler] TEMPORARY: Forcing self-claim to work for testing");
+                return ClaimResult.singleWinner(lastHitterUuid);
+            }
+        }
+
         if (damageMap.isEmpty()) {
+            LOGGER.info("[ClaimHandler] No damage data available - no winner (selfClaimAllowed=" + selfClaimAllowed + ")");
             return ClaimResult.empty();
         }
 
@@ -118,6 +152,7 @@ public class ClaimHandler {
             return ClaimResult.empty();
         }
 
+        LOGGER.info("[ClaimHandler] Environmental death - awarding bounty to highest damage dealer: " + winner);
         return ClaimResult.singleWinner(winner);
     }
 

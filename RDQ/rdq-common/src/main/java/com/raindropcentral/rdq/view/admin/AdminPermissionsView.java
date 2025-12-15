@@ -167,13 +167,13 @@ public class AdminPermissionsView extends BaseView {
 			
 			return UnifiedBuilderFactory.item(Material.EMERALD)
 			                            .setName(this.i18n("actions.assign_selected.name", player)
-			                                         .with("plugin_name", selectedPlugin)
+			                                         .withPlaceholder("plugin_name", selectedPlugin)
 			                                         .build().component())
 			                            .setLore(this.i18n("actions.assign_selected.lore", player)
-			                                         .withAll(Map.of(
+			                                         .withPlaceholders(Map.of(
 				                                         "plugin_name", selectedPlugin,
 				                                         "permission_count", permissionCount
-			                                         )).build().splitLines())
+			                                         )).build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build();
 		} else {
@@ -206,12 +206,12 @@ public class AdminPermissionsView extends BaseView {
 				}
 				
 				this.i18n("feedback.permissions_assigned.plugin_all", clickContext.getPlayer())
-				    .withAll(Map.of(
+				    .withPlaceholders(Map.of(
 					    "plugin_name", selectedPlugin,
 					    "permission_count", permissions.size()
 				    ))
-				    .withPrefix()
-				    .send();
+				    .includePrefix()
+				    .build().sendMessage();
 				
 				LOGGER.log(
 					Level.INFO,
@@ -219,16 +219,16 @@ public class AdminPermissionsView extends BaseView {
 				);
 			} else {
 				this.i18n("errors.no_permissions_available", clickContext.getPlayer())
-				    .withPrefix()
-				    .send();
+				    .includePrefix()
+				    .build().sendMessage();
 				
 				LOGGER.log(Level.WARNING, "No permissions found for plugin: " + selectedPlugin);
 			}
 		} else {
 			this.i18n("errors.plugin_not_found", clickContext.getPlayer())
-			    .with("plugin_name", "Unknown")
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("plugin_name", "Unknown")
+			    .includePrefix()
+			    .build().sendMessage();
 			
 			LOGGER.log(Level.WARNING, "Attempted to assign permissions for null plugin selection");
 		}
@@ -400,18 +400,18 @@ public class AdminPermissionsView extends BaseView {
 		Material material = isSelected ? Material.ENCHANTED_BOOK : Material.BOOK;
 		
 		List<Component> lore = new ArrayList<>(this.i18n("plugins.entry.lore", player)
-		                                           .withAll(Map.of(
+		                                           .withPlaceholders(Map.of(
 			                                           "plugin_name", pluginName,
 			                                           "permission_count", permissionCount,
 			                                           "status", isSelected ? "selected" : "available"
-		                                           )).build().splitLines());
+		                                           )).build().children());
 		
 		lore.add(Component.empty());
-		lore.addAll(this.i18n("plugins.entry.click_instructions", player).build().splitLines());
+		lore.addAll(this.i18n("plugins.entry.click_instructions", player).build().children());
 		
 		return UnifiedBuilderFactory.item(material)
 		                            .setName(this.i18n("plugins.entry.name", player)
-		                                         .with("plugin_name", pluginName)
+		                                         .withPlaceholder("plugin_name", pluginName)
 		                                         .build().component())
 		                            .setLore(lore)
 		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -426,18 +426,18 @@ public class AdminPermissionsView extends BaseView {
 		
 		List<Component> lore = new ArrayList<>();
 		lore.add(this.i18n("permissions.entry.plugin", player)
-		             .with("plugin_name", pluginName)
+		             .withPlaceholder("plugin_name", pluginName)
 		             .build().component());
 		lore.add(this.i18n("permissions.entry.node", player)
-		             .with("permission", permission)
+		             .withPlaceholder("permission", permission)
 		             .build().component());
 		
 		lore.add(Component.empty());
-		lore.addAll(this.i18n("permissions.entry.click_instructions", player).build().splitLines());
+		lore.addAll(this.i18n("permissions.entry.click_instructions", player).build().children());
 		
 		return UnifiedBuilderFactory.item(Material.PAPER)
 		                            .setName(this.i18n("permissions.entry.name", player)
-		                                         .with("permission", permission)
+		                                         .withPlaceholder("permission", permission)
 		                                         .build().component())
 		                            .setLore(lore)
 		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -458,22 +458,22 @@ public class AdminPermissionsView extends BaseView {
 			
 			return UnifiedBuilderFactory.item(Material.COMPASS)
 			                            .setName(this.i18n("status.selected_plugin.name", player)
-			                                         .with("plugin_name", selectedPlugin)
+			                                         .withPlaceholder("plugin_name", selectedPlugin)
 			                                         .build().component())
 			                            .setLore(this.i18n("status.selected_plugin.lore", player)
-			                                         .withAll(Map.of(
+			                                         .withPlaceholders(Map.of(
 				                                         "plugin_name", selectedPlugin,
 				                                         "permission_count", permissionCount,
 				                                         "total_plugins", totalPlugins
-			                                         )).build().splitLines())
+			                                         )).build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build();
 		} else {
 			return UnifiedBuilderFactory.item(Material.CLOCK)
 			                            .setName(this.i18n("status.overview.name", player).build().component())
 			                            .setLore(this.i18n("status.overview.lore", player)
-			                                         .with("total_plugins", totalPlugins)
-			                                         .build().splitLines())
+			                                         .withPlaceholder("total_plugins", totalPlugins)
+			                                         .build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build();
 		}
@@ -483,7 +483,7 @@ public class AdminPermissionsView extends BaseView {
 	private @NotNull ItemStack createNoSelectionItem(final @NotNull Player player) {
 		return UnifiedBuilderFactory.item(Material.BARRIER)
 		                            .setName(this.i18n("permissions.no_selection.name", player).build().component())
-		                            .setLore(this.i18n("permissions.no_selection.lore", player).build().splitLines())
+		                            .setLore(this.i18n("permissions.no_selection.lore", player).build().children())
 		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 		                            .build();
 	}
@@ -519,7 +519,7 @@ public class AdminPermissionsView extends BaseView {
 	private @NotNull ItemStack createRefreshDataItem(@NotNull Player player) {
 		return UnifiedBuilderFactory.item(Material.EMERALD)
 		                            .setName(this.i18n("controls.refresh.name", player).build().component())
-		                            .setLore(this.i18n("controls.refresh.lore", player).build().splitLines())
+		                            .setLore(this.i18n("controls.refresh.lore", player).build().children())
 		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 		                            .build();
 	}
@@ -527,7 +527,7 @@ public class AdminPermissionsView extends BaseView {
 	private @NotNull ItemStack createClearSelectionItem(final @NotNull Player player) {
 		return UnifiedBuilderFactory.item(Material.BARRIER)
 		                            .setName(this.i18n("clear_selection.name", player).build().component())
-		                            .setLore(this.i18n("clear_selection.lore", player).build().splitLines())
+		                            .setLore(this.i18n("clear_selection.lore", player).build().children())
 		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 		                            .build();
 	}
@@ -541,9 +541,9 @@ public class AdminPermissionsView extends BaseView {
 		if (selected != null) {
 			return UnifiedBuilderFactory.item(Material.EMERALD)
 			                            .setName(this.i18n("assign_selected_plugin_permissions.name", player)
-			                                         .with("plugin_name", selected)
+			                                         .withPlaceholder("plugin_name", selected)
 			                                         .build().component())
-			                            .setLore(this.i18n("assign_selected_plugin_permissions.lore", player).build().splitLines())
+			                            .setLore(this.i18n("assign_selected_plugin_permissions.lore", player).build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build();
 		} else {
@@ -551,8 +551,8 @@ public class AdminPermissionsView extends BaseView {
 			return UnifiedBuilderFactory.item(Material.DIAMOND)
 			                            .setName(this.i18n("assign_all_permissions.name", player).build().component())
 			                            .setLore(this.i18n("assign_all_permissions.lore", player)
-			                                         .with("total_plugins", totalPlugins)
-			                                         .build().splitLines())
+			                                         .withPlaceholder("total_plugins", totalPlugins)
+			                                         .build().children())
 			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                            .build();
 		}
@@ -600,8 +600,8 @@ public class AdminPermissionsView extends BaseView {
 		this.permissionPage.set(0, clickContext);
 		
 		this.i18n("feedback.data_refreshed", clickContext.getPlayer())
-		    .withPrefix()
-		    .send();
+		    .includePrefix()
+		    .build().sendMessage();
 	}
 	
 	private boolean canNavigatePlugins(@NotNull RenderContext render, int delta) {
@@ -666,9 +666,9 @@ public class AdminPermissionsView extends BaseView {
 			}
 			
 			this.i18n("plugin_selected", clickContext.getPlayer())
-			    .with("plugin_name", pluginName)
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("plugin_name", pluginName)
+			    .includePrefix()
+			    .build().sendMessage();
 		} else if (clickContext.getClickOrigin().getClick().isRightClick()) {
 			Map<String, List<String>> permissionsMap = this.cachedPermissions.get(clickContext);
 			List<String> permissions = permissionsMap.get(pluginName);
@@ -685,12 +685,12 @@ public class AdminPermissionsView extends BaseView {
 				}
 				
 				this.i18n("plugin_permissions_assigned", clickContext.getPlayer())
-				    .withAll(Map.of(
+				    .withPlaceholders(Map.of(
 					    "plugin_name", pluginName,
 					    "permission_count", permissions.size()
 				    ))
-				    .withPrefix()
-				    .send();
+				    .includePrefix()
+				    .build().sendMessage();
 			}
 		}
 	}
@@ -712,12 +712,12 @@ public class AdminPermissionsView extends BaseView {
 		}
 		
 		this.i18n("single_permission_assigned", clickContext.getPlayer())
-		    .withAll(Map.of(
+		    .withPlaceholders(Map.of(
 			    "permission", permission,
 			    "plugin_name", pluginName
 		    ))
-		    .withPrefix()
-		    .send();
+		    .includePrefix()
+		    .build().sendMessage();
 	}
 	
 	private void handleClearSelection(final @NotNull SlotClickContext clickContext) {
@@ -725,8 +725,8 @@ public class AdminPermissionsView extends BaseView {
 		this.permissionPage.set(0, clickContext);
 		
 		this.i18n("selection_cleared", clickContext.getPlayer())
-		    .withPrefix()
-		    .send();
+		    .includePrefix()
+		    .build().sendMessage();
 	}
 	
 	private void handleAssignAllClick(final @NotNull SlotClickContext clickContext) {
@@ -748,21 +748,21 @@ public class AdminPermissionsView extends BaseView {
 				}
 				
 				this.i18n("selected_plugin_all_assigned", clickContext.getPlayer())
-				    .withAll(Map.of(
+				    .withPlaceholders(Map.of(
 					    "plugin_name", selected,
 					    "permission_count", permissions.size()
 				    ))
-				    .withPrefix()
-				    .send();
+				    .includePrefix()
+				    .build().sendMessage();
 			}
 		} else {
 			this.rdq.get(clickContext).getPermissionsService().addAllPermissionSets(clickContext.getPlayer());
 			
 			int totalPlugins = this.cachedPlugins.get(clickContext).size();
 			this.i18n("all_plugins_assigned", clickContext.getPlayer())
-			    .with("plugin_count", totalPlugins)
-			    .withPrefix()
-			    .send();
+			    .withPlaceholder("plugin_count", totalPlugins)
+			    .includePrefix()
+			    .build().sendMessage();
 		}
 	}
 	
@@ -797,7 +797,7 @@ public class AdminPermissionsView extends BaseView {
 		try {
 			final ItemStack errorItem = UnifiedBuilderFactory.item(Material.BARRIER)
 			                                                 .setName(this.i18n("error.general.name", player).build().component())
-			                                                 .setLore(this.i18n("error.general.lore", player).build().splitLines())
+			                                                 .setLore(this.i18n("error.general.lore", player).build().children())
 			                                                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                                                 .build();
 			

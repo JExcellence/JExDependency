@@ -248,7 +248,7 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 				                                this.i18n(
 					                                "input.lore",
 					                                contextPlayer
-				                                ).withAll(
+				                                ).withPlaceholders(
 					                                Map.of(
 						                                "min_length",
 						                                MINIMUM_IDENTIFIER_LENGTH,
@@ -257,7 +257,7 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 						                                "pattern",
 						                                "a-z, A-Z, 0-9, _, -"
 					                                )
-				                                ).build().splitLines()
+				                                ).build().children()
 			                                )
 			                                .build();
 		
@@ -318,8 +318,8 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .withPrefix()
-		    .withAll(
+		    .includePrefix()
+		    .withPlaceholders(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "not_defined",
@@ -331,7 +331,7 @@ public class CurrencyIdentifierAnvilView extends AbstractAnvilView {
 				    "a-z, A-Z, 0-9, _, -"
 			    )
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**

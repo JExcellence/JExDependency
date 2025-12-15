@@ -1,15 +1,15 @@
-# RDQ Common Translation File - English (UK)
+# RDQ Translation File - English (UK)
 # MiniMessage format with gradients and styling
 # Placeholders use %placeholder% format
 
-# Bounty Listener Messages
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
     value: "<gradient:#3b82f6:#60a5fa>💰 Bounty Value:</gradient> <gradient:#10b981:#34d399>£%bounty_value%</gradient>"
     expires: "<gradient:#f59e0b:#fbbf24>⏰ Expires at:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
     commissioner: "<gradient:#ef4444:#f87171>👤 Commissioned by:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
-  
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 BOUNTY CLAIMED! 🎉</gradient>"
     victim: "<gradient:#a855f7:#c084fc>You successfully claimed the bounty on</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
@@ -18,238 +18,78 @@ bounty_listener:
     broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>has claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
     broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% players</gradient> <gradient:#a855f7:#c084fc>have claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-# Bounty Creation Confirmation Messages
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ Bounty successfully created on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Failed to create bounty:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Bounty successfully created for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Failed to process bounty:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Processing bounty update...</gradient>"
 
-# Bounty Overview UI (Main Menu & Overview)
-bounty_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Bounty System</gradient>"
-  
-  # Main menu buttons
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Create Bounty</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to create a new bounty</gradient>"
-      - "<gradient:#6b7280:#9ca3af>on another player</gradient>"
-  
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 View Bounties</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>View all active bounties</gradient>"
-  
-  my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 My Bounties</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>View bounties you've created</gradient>"
-  
-  leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 Leaderboard</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Top bounty hunters</gradient>"
-  
-  # Bounty list entries
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯 Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Target:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Commissioner:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Created:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Click to view details</gradient>"
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Started progression for rank</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Viewing requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Requirements incomplete for</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% complete)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Requirement incomplete:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>has no requirements!</gradient>"
 
-# Bounty Creation UI
-bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 Create Bounty</gradient>"
-  
-  select_target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Select Target</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to choose a player</gradient>"
-      - "<gradient:#6b7280:#9ca3af>to place a bounty on</gradient>"
-  
-  add_items:
-    name: "<gradient:#10b981:#34d399>💰 Add Rewards</gradient>"
-    description:
-      - "<gradient:#6b7280:#9ca3af>Click to add item rewards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>for the bounty</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>❌ Select a target first!</gradient>"
-  
-  confirm_bounty:
-    name: "<gradient:#10b981:#34d399>✅ Create Bounty</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to create the bounty</gradient>"
-      - "<gradient:#6b7280:#9ca3af>with the selected rewards</gradient>"
-  
-  confirm:
-    error: "<gradient:#ef4444:#f87171>❌ %error_message%</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ Bounty created successfully on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Preview mode:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ You own</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Locked:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Complete prerequisites first</gradient>"
 
-# Bounty Player Info UI
-bounty_player_info_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-  
-  target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Target of this bounty</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Click to view player info</gradient>"
-  
-  rewards:
-    name: "<gradient:#10b981:#34d399>💰 View Rewards</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to see all rewards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>for claiming this bounty</gradient>"
-  
-  delete:
-    name: "<gradient:#ef4444:#f87171>🗑 Delete Bounty</gradient>"
-    lore:
-      - "<gradient:#ef4444:#f87171>⚠ Warning: This action</gradient>"
-      - "<gradient:#ef4444:#f87171>cannot be undone!</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Click to delete this bounty</gradient>"
-  
-  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>has been deleted!</gradient>"
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is not installed!</gradient> <gradient:#6b7280:#9ca3af>This feature requires LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open main menu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - View ranks</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - View bounties</gradient>"
 
-# Bounty Reward UI
-bounty_reward_ui:
-  title: "<gradient:#a855f7:#c084fc>💰 Bounty Rewards</gradient>"
-  
-  pseudo:
-    name: "<gradient:#6b7280:#9ca3af>📦 No Rewards</gradient>"
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Admin Panel</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Add items to create rewards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>for this bounty</gradient>"
-  
-  input_slot:
-    name: "<gradient:#10b981:#34d399>➕ Add Item</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Access administrative tools</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and configuration options</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Bounties</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Place items here to add as rewards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Right-click to remove items</gradient>"
-  
-  target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Target: %target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>View and manage bounties</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hunt players for rewards!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Perks</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>This bounty is placed on</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-  
-  reward_item:
+      - "<gradient:#6b7280:#9ca3af>View available perks</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and special abilities</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Bounty Reward</gradient>"
-      - "<gradient:#6b7280:#9ca3af>This item will be given to</gradient>"
-      - "<gradient:#6b7280:#9ca3af>whoever claims the bounty</gradient>"
-  
-  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ No new items were added!</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Some items were dropped as your inventory was full!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>View available quests</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and track your progress</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Ranks</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View rank progression</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and unlock new abilities</gradient>"
 
-# Prefix
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "  
-add_currencies:
-    name: "<gradient:#f59e0b:#fbbf24>💎 Add Currency</gradient>"
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rank System</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rank Trees</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Click to add currency rewards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>for the bounty</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>❌ Select a target first!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Browse available rank trees</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and choose your path</gradient>"
 
-# Platform UI Components
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
-
-# Pagination
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
-  lore:
-    - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"
-
-# Head Items
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
-      - "<gradient:#6b7280:#9ca3af>to the previous menu</gradient>"
-  
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ Proceed</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to continue</gradient>"
-      - "<gradient:#6b7280:#9ca3af>to the next step</gradient>"
-  
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Previous</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Click to go to</gradient>"
-      - "<gradient:#6b7280:#9ca3af>the previous page</gradient>"
-  
+      - "<gradient:#6b7280:#9ca3af>Previous page</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Next</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Click to go to</gradient>"
-      - "<gradient:#6b7280:#9ca3af>the next page</gradient>"
-  
-  up:
-    name: "<gradient:#a855f7:#c084fc>⬆️ Up</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to go up</gradient>"
-      - "<gradient:#6b7280:#9ca3af>one level</gradient>"
-  
+      - "<gradient:#6b7280:#9ca3af>Next page</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Click to cancel</gradient>"
-      - "<gradient:#6b7280:#9ca3af>this action</gradient>"
-  
-  pagination:
-    0:
-      name: "<gradient:#6b7280:#9ca3af>0️⃣</gradient>"
-      lore: []
-    1:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣</gradient>"
-      lore: []
-    2:
-      name: "<gradient:#6b7280:#9ca3af>2️⃣</gradient>"
-      lore: []
-    3:
-      name: "<gradient:#6b7280:#9ca3af>3️⃣</gradient>"
-      lore: []
-    4:
-      name: "<gradient:#6b7280:#9ca3af>4️⃣</gradient>"
-      lore: []
-    5:
-      name: "<gradient:#6b7280:#9ca3af>5️⃣</gradient>"
-      lore: []
-    6:
-      name: "<gradient:#6b7280:#9ca3af>6️⃣</gradient>"
-      lore: []
-    7:
-      name: "<gradient:#6b7280:#9ca3af>7️⃣</gradient>"
-      lore: []
-    8:
-      name: "<gradient:#6b7280:#9ca3af>8️⃣</gradient>"
-      lore: []
-    9:
-      name: "<gradient:#6b7280:#9ca3af>9️⃣</gradient>"
-      lore: []
-    10:
-      name: "<gradient:#6b7280:#9ca3af>🔟</gradient>"
-      lore: []
-    11:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣1️⃣</gradient>"
-      lore: []
-    12:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣2️⃣</gradient>"
-      lore: []
-    13:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣3️⃣</gradient>"
-      lore: []
-    14:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣4️⃣</gradient>"
-      lore: []
-    15:
-      name: "<gradient:#6b7280:#9ca3af>1️⃣5️⃣</gradient>"
-      lore: []
+      - "<gradient:#6b7280:#9ca3af>Cancel action</gradient>"

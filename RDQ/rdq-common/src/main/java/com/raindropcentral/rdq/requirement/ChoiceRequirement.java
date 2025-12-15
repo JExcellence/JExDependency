@@ -21,49 +21,70 @@ public final class ChoiceRequirement extends AbstractRequirement {
     @JsonProperty("minimumChoicesRequired")
     private final int minimumChoicesRequired;
 
+    @JsonProperty("maximumRequired")
+    private final Integer maximumRequired;
+
     @JsonProperty("description")
     private final String description;
 
     @JsonProperty("allowPartialProgress")
     private final boolean allowPartialProgress;
 
+    @JsonProperty("mutuallyExclusive")
+    private final boolean mutuallyExclusive;
+
+    @JsonProperty("allowChoiceChange")
+    private final boolean allowChoiceChange;
+
     public ChoiceRequirement(@NotNull List<AbstractRequirement> choices) {
-        this(choices, 1, null, true);
+        this(choices, 1, null, null, null, true, false, true);
     }
 
     public ChoiceRequirement(
             @NotNull List<AbstractRequirement> choices,
             int minimumChoicesRequired
     ) {
-        this(choices, minimumChoicesRequired, null, true);
+        this(choices, minimumChoicesRequired, null, null, null, true, false, true);
     }
 
     @JsonCreator
     public ChoiceRequirement(
             @JsonProperty("choices") @NotNull List<AbstractRequirement> choices,
             @JsonProperty("minimumChoicesRequired") int minimumChoicesRequired,
+            @JsonProperty("minimumRequired") @Nullable Integer minimumRequired,
+            @JsonProperty("maximumRequired") @Nullable Integer maximumRequired,
             @JsonProperty("description") @Nullable String description,
-            @JsonProperty("allowPartialProgress") @Nullable Boolean allowPartialProgress
+            @JsonProperty("allowPartialProgress") @Nullable Boolean allowPartialProgress,
+            @JsonProperty("mutuallyExclusive") @Nullable Boolean mutuallyExclusive,
+            @JsonProperty("allowChoiceChange") @Nullable Boolean allowChoiceChange
     ) {
         super(Type.CHOICE);
 
         if (choices.isEmpty()) {
             throw new IllegalArgumentException("At least one alternative requirement is needed.");
         }
-        if (minimumChoicesRequired < 1) {
-            throw new IllegalArgumentException("Minimum choices required must be at least 1.");
+        
+        // Use minimumRequired as fallback if minimumChoicesRequired is 0
+        int effectiveMinimum = minimumChoicesRequired;
+        if (effectiveMinimum == 0 && minimumRequired != null) {
+            effectiveMinimum = minimumRequired;
         }
-        if (minimumChoicesRequired > choices.size()) {
-            throw new IllegalArgumentException(
-                    "Minimum choices required (" + minimumChoicesRequired +
-                    ") cannot exceed total choices (" + choices.size() + ")."
-            );
+        
+        // Auto-adjust minimumChoicesRequired if invalid
+        int adjustedMinimum = effectiveMinimum;
+        if (effectiveMinimum < 1) {
+            adjustedMinimum = 1;
+        } else if (effectiveMinimum > choices.size()) {
+            adjustedMinimum = choices.size();
         }
 
         this.choices = new ArrayList<>(choices);
-        this.minimumChoicesRequired = minimumChoicesRequired;
+        this.minimumChoicesRequired = adjustedMinimum;
+        this.maximumRequired = maximumRequired;
         this.description = description;
         this.allowPartialProgress = allowPartialProgress != null ? allowPartialProgress : true;
+        this.mutuallyExclusive = mutuallyExclusive != null ? mutuallyExclusive : false;
+        this.allowChoiceChange = allowChoiceChange != null ? allowChoiceChange : true;
     }
 
     @Override
@@ -140,12 +161,25 @@ public final class ChoiceRequirement extends AbstractRequirement {
     }
 
     @Nullable
+    public Integer getMaximumRequired() {
+        return this.maximumRequired;
+    }
+
+    @Nullable
     public String getDescription() {
         return this.description;
     }
 
     public boolean isAllowPartialProgress() {
         return this.allowPartialProgress;
+    }
+
+    public boolean isMutuallyExclusive() {
+        return this.mutuallyExclusive;
+    }
+
+    public boolean isAllowChoiceChange() {
+        return this.allowChoiceChange;
     }
 
     @JsonIgnore

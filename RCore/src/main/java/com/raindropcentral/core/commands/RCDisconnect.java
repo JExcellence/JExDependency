@@ -4,8 +4,7 @@ import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.core.RCore;
 import com.raindropcentral.core.service.central.RCentralService;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,31 +37,31 @@ public final class RCDisconnect extends PlayerCommand {
         }
 
         if (!centralService.isConnected()) {
-            TranslationService.create(TranslationKey.of("rcdisconnect.error.not_connected"), player)
-                    .withPrefix()
-                    .send();
+            new I18n.Builder("rcdisconnect.error.not_connected", player)
+                    .includePrefix()
+                    .build().sendMessage();
             return;
         }
 
-        TranslationService.create(TranslationKey.of("rcdisconnect.disconnecting"), player)
-                .withPrefix()
-                .send();
+        new I18n.Builder("rcdisconnect.disconnecting", player)
+                .includePrefix()
+                .build().sendMessage();
 
         centralService.disconnect().thenAccept(success -> {
             if (success) {
-                TranslationService.create(TranslationKey.of("rcdisconnect.success"), player)
-                        .withPrefix()
-                        .send();
+                new I18n.Builder("rcdisconnect.success", player)
+                        .includePrefix()
+                        .build().sendMessage();
             } else {
-                TranslationService.create(TranslationKey.of("rcdisconnect.error.failed"), player)
-                        .withPrefix()
-                        .send();
+                new I18n.Builder("rcdisconnect.error.failed", player)
+                        .includePrefix()
+                        .build().sendMessage();
             }
         }).exceptionally(throwable -> {
-            TranslationService.create(TranslationKey.of("rcdisconnect.error.network"), player)
-                    .withPrefix()
-                    .with("error", throwable.getMessage())
-                    .send();
+            new I18n.Builder("rcdisconnect.error.network", player)
+                    .includePrefix()
+                    .withPlaceholder("error", throwable.getMessage())
+                    .build().sendMessage();
             return null;
         });
     }

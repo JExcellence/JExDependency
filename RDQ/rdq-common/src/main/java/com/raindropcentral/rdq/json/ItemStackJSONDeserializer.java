@@ -1,17 +1,16 @@
 package com.raindropcentral.rdq.json;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectInputStream;
 import org.jetbrains.annotations.NotNull;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.deser.std.StdDeserializer;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +31,11 @@ import java.util.Map;
  * @version 2.0.0
  * @since TBD
  */
-public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
+public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
+
+    public ItemStackJSONDeserializer() {
+        super(ItemStack.class);
+    }
 
     /**
      * Deserializes a JSON representation into an {@link ItemStack} object.
@@ -44,20 +47,19 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      * @param jsonParser             the JSON parser
      * @param deserializationContext the deserialization context
      * @return the deserialized {@code ItemStack}
-     * @throws IOException if an I/O error occurs during parsing
      */
     @Override
     public @NotNull ItemStack deserialize(
             @NotNull final JsonParser jsonParser,
             @NotNull final DeserializationContext deserializationContext
-    ) throws IOException {
-        final JsonNode node = jsonParser.getCodec().readTree(jsonParser);
+    ) {
+        final JsonNode node = jsonParser.readValueAsTree();
 
         if (node.has("serializationType")) {
-            String serializationType = node.get("serializationType").asText();
+            String serializationType = node.get("serializationType").asString();
             
             if ("binary".equals(serializationType) && node.has("binaryData")) {
-                return deserializeFromBinary(node.get("binaryData").asText());
+                return deserializeFromBinary(node.get("binaryData").asString());
             } else if ("map".equals(serializationType) && node.has("mapData")) {
                 return deserializeFromMap(node.get("mapData"));
             }
@@ -70,21 +72,18 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
     /**
      * Deserializes an ItemStack from Base64-encoded binary data.
      * This preserves ALL metadata including complex data like persistent data containers.
+     * Uses the modern ItemStack.deserializeBytes() API introduced in 1.21.
      *
      * @param binaryData Base64-encoded binary data
      * @return the deserialized ItemStack
-     * @throws IOException if deserialization fails
+     * @throws RuntimeException if deserialization fails
      */
-    private @NotNull ItemStack deserializeFromBinary(@NotNull String binaryData) throws IOException {
+    private @NotNull ItemStack deserializeFromBinary(@NotNull String binaryData) {
         try {
             byte[] data = Base64.getDecoder().decode(binaryData);
-            try (ByteArrayInputStream inputStream = new ByteArrayInputStream(data);
-                 BukkitObjectInputStream dataInput = new BukkitObjectInputStream(inputStream)) {
-                
-                return (ItemStack) dataInput.readObject();
-            }
-        } catch (ClassNotFoundException e) {
-            throw new IOException("Failed to deserialize ItemStack from binary data", e);
+            return ItemStack.deserializeBytes(data);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to deserialize ItemStack from binary data", e);
         }
     }
 
@@ -93,30 +92,19 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      *
      * @param mapNode the JSON node containing the map data
      * @return the deserialized ItemStack
-     * @throws IOException if deserialization fails
+     * @throws RuntimeException if deserialization fails
      */
-    private @NotNull ItemStack deserializeFromMap(@NotNull JsonNode mapNode) throws IOException {
+    private @NotNull ItemStack deserializeFromMap(@NotNull JsonNode mapNode) {
         try {
             Map<String, Object> map = new HashMap<>();
-            mapNode.fields().forEachRemaining(entry -> {
+            mapNode.properties().forEach(entry -> {
                 JsonNode value = entry.getValue();
-                if (value.isTextual()) {
-                    map.put(entry.getKey(), value.asText());
-                } else if (value.isInt()) {
-                    map.put(entry.getKey(), value.asInt());
-                } else if (value.isDouble()) {
-                    map.put(entry.getKey(), value.asDouble());
-                } else if (value.isBoolean()) {
-                    map.put(entry.getKey(), value.asBoolean());
-                } else if (value.isObject() || value.isArray()) {
-                    // Handle nested objects/arrays - convert back to map/list
-                    map.put(entry.getKey(), convertJsonNodeToObject(value));
-                }
+                map.put(entry.getKey(), convertJsonNodeToObject(value));
             });
             
             return ItemStack.deserialize(map);
         } catch (Exception e) {
-            throw new IOException("Failed to deserialize ItemStack from map data", e);
+            throw new RuntimeException("Failed to deserialize ItemStack from map data", e);
         }
     }
 
@@ -127,8 +115,8 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      * @return the converted object
      */
     private Object convertJsonNodeToObject(@NotNull JsonNode node) {
-        if (node.isTextual()) {
-            return node.asText();
+        if (node.isString()) {
+            return node.asString();
         } else if (node.isInt()) {
             return node.asInt();
         } else if (node.isDouble()) {
@@ -136,12 +124,12 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
         } else if (node.isBoolean()) {
             return node.asBoolean();
         } else if (node.isArray()) {
-            java.util.List<Object> list = new java.util.ArrayList<>();
+            List<Object> list = new ArrayList<>();
             node.forEach(element -> list.add(convertJsonNodeToObject(element)));
             return list;
         } else if (node.isObject()) {
             Map<String, Object> map = new HashMap<>();
-            node.fields().forEachRemaining(entry -> 
+            node.properties().forEach(entry -> 
                 map.put(entry.getKey(), convertJsonNodeToObject(entry.getValue())));
             return map;
         }
@@ -154,22 +142,20 @@ public class ItemStackJSONDeserializer extends JsonDeserializer<ItemStack> {
      *
      * @param node the JSON node in legacy format
      * @return the deserialized ItemStack
-     * @throws IOException if deserialization fails
+     * @throws RuntimeException if deserialization fails
      */
-    private @NotNull ItemStack deserializeLegacyFormat(@NotNull JsonNode node) throws IOException {
-        // This would contain the old deserialization logic for backward compatibility
-        // For now, we'll create a basic ItemStack and log a warning
+    private @NotNull ItemStack deserializeLegacyFormat(@NotNull JsonNode node) {
         if (node.has("type")) {
-            String typeStr = node.get("type").asText();
+            String typeStr = node.get("type").asString();
             try {
                 org.bukkit.Material material = org.bukkit.Material.valueOf(typeStr);
                 int amount = node.has("amount") ? node.get("amount").asInt(1) : 1;
                 return new ItemStack(material, amount);
             } catch (IllegalArgumentException e) {
-                throw new IOException("Invalid material type: " + typeStr, e);
+                throw new RuntimeException("Invalid material type: " + typeStr, e);
             }
         }
         
-        throw new IOException("Unable to deserialize ItemStack: missing required fields");
+        throw new RuntimeException("Unable to deserialize ItemStack: missing required fields");
     }
 }

@@ -1,97 +1,79 @@
-# Warrior Rank Tree
-# The path of strength and combat
+settings:
+  enableRankSystem: true
+  enableFinalRankRules: true
+  enableCrossTreeProgression: true
+  enableProgressTracking: true
+  enableRankBroadcasts: true
 
-id: warrior
-displayNameKey: rank_trees.warrior.name
-descriptionKey: rank_trees.warrior.description
-iconMaterial: IRON_SWORD
-displayOrder: 1
-enabled: true
+defaultRank:
+  displayNameKey: "rank.default.name"
+  descriptionKey: "rank.default.lore"
+  tier: -1
+  weight: -1
+  luckPermsGroup: "default"
+  prefixKey: "&8[&7Default&8]"
+  suffixKey: ""
+  isInitialRank: true
+  enabled: true
+  icon:
+    type: "IRON_INGOT"
+    displayNameKey: "rank.icon.default.name"
+    descriptionKey: "rank.icon.default.lore"
 
-ranks:
-  - id: warrior_1
-    displayNameKey: rank.warrior.recruit
-    tier: 1
-    weight: 100
-    luckPermsGroup: warrior_recruit
-    prefixKey: rank.warrior.recruit.prefix
-    iconMaterial: WOODEN_SWORD
-    enabled: true
-    requirements: []
+finalRankRule:
+  requireAllRankTrees: true
+  minimumRequiredRankTrees: 4
+  minimumRankTierPerRankTree: 5
+  specificRequiredRankTrees: [ "warrior", "cleric", "mage", "rogue", "merchant" ]
+  allowAlternateFinalRank: true
+  enableUltimateRanks: true
 
-  - id: warrior_2
-    displayNameKey: rank.warrior.soldier
-    tier: 2
-    weight: 200
-    luckPermsGroup: warrior_soldier
-    prefixKey: rank.warrior.soldier.prefix
-    iconMaterial: STONE_SWORD
-    enabled: true
-    requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 10
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 100
+progressionRule:
+  requireLinearRankProgression: true
+  allowSkippingRanks: false
+  enableMultipleActiveRankTrees: true
+  maximumActiveRankTrees: 2
+  requireConfirmationForRankUp: true
+  enableCrossRankTreeSwitching: true
+  globalSwitchingTiers: [ 3, 5, 7, 10 ]
+  switchingCooldown: 1728000
+  switchingCost: ""
 
-  - id: warrior_3
-    displayNameKey: rank.warrior.veteran
-    tier: 3
-    weight: 300
-    luckPermsGroup: warrior_veteran
-    prefixKey: rank.warrior.veteran.prefix
-    iconMaterial: IRON_SWORD
-    enabled: true
-    requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 50
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 500
-      - type: CURRENCY
-        currency: default
-        amount: 5000
-
-  - id: warrior_4
-    displayNameKey: rank.warrior.champion
-    tier: 4
-    weight: 400
-    luckPermsGroup: warrior_champion
-    prefixKey: rank.warrior.champion.prefix
-    iconMaterial: DIAMOND_SWORD
-    enabled: true
-    requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 150
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 1500
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: warrior_3
-
-  - id: warrior_5
-    displayNameKey: rank.warrior.warlord
-    tier: 5
-    weight: 500
-    luckPermsGroup: warrior_warlord
-    prefixKey: rank.warrior.warlord.prefix
-    iconMaterial: NETHERITE_SWORD
-    enabled: true
-    requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 500
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 5000
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: warrior_4
+notification:
+  rankUnlock:
+    isEnabled: true
+    broadcast: false
+    sendToPlayer: true
+    soundType: "ENTITY_PLAYER_LEVELUP"
+    showTitle: true
+    titleTextKey: "rank.notification.unlock.title"
+    subtitleTextKey: "rank.notification.unlock.subtitle"
+    showActionBar: true
+    actionBarTextKey: "rank.notification.unlock.actionbar"
+  rankTreeComplete:
+    isEnabled: true
+    broadcast: true
+    sendToPlayer: true
+    soundType: "UI_TOAST_CHALLENGE_COMPLETE"
+    showTitle: true
+    titleTextKey: "rank.notification.tree_complete.title"
+    subtitleTextKey: "rank.notification.tree_complete.subtitle"
+    showActionBar: false
+  finalRankUnlock:
+    isEnabled: true
+    broadcast: true
+    sendToPlayer: true
+    soundType: "ENTITY_ENDER_DRAGON_DEATH"
+    showTitle: true
+    titleTextKey: "rank.notification.final_unlock.title"
+    subtitleTextKey: "rank.notification.final_unlock.subtitle"
+    showActionBar: true
+    actionBarTextKey: "rank.notification.final_unlock.actionbar"
+  crossRankTreeSwitch:
+    isEnabled: true
+    broadcast: false
+    sendToPlayer: true
+    soundType: "BLOCK_PORTAL_TRAVEL"
+    showTitle: false
+    showActionBar: true
+    actionBarTextKey: "rank.notification.tree_switch.actionbar"

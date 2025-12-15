@@ -27,10 +27,17 @@ public final class ItemReward extends AbstractReward {
     public ItemReward(@JsonProperty("item") @NotNull ItemStack item, 
                       @JsonProperty("estimatedValue") double estimatedValue) {
         super(Type.ITEM, "reward.item");
-        this.item = item.clone();
+        // Store the amount first, before cloning
         this.amount = item.getAmount();
+        // Clone the item and ensure it has amount=1 for safe serialization
+        this.item = item.clone();
         this.item.setAmount(1);
         this.estimatedValue = estimatedValue;
+        
+        // Validate that the stored item has amount=1 for serialization safety
+        if (this.item.getAmount() != 1) {
+            throw new IllegalStateException("ItemReward item field must have amount=1 for serialization, but was: " + this.item.getAmount());
+        }
     }
 
     @Override
@@ -48,6 +55,7 @@ public final class ItemReward extends AbstractReward {
     @Override
     public double getEstimatedValue() { return estimatedValue; }
 
+    @com.fasterxml.jackson.annotation.JsonIgnore
     public ItemStack getItem() { 
         ItemStack result = item.clone(); 
         result.setAmount(amount != null ? amount : 1);

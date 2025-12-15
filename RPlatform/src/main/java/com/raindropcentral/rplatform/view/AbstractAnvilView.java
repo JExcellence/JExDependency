@@ -3,8 +3,7 @@ package com.raindropcentral.rplatform.view;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.version.ServerEnvironment;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.AnvilInput;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.ViewConfigBuilder;
@@ -174,7 +173,7 @@ public abstract class AbstractAnvilView extends View {
     ItemStack item = UnifiedBuilderFactory.item(
             Material.NAME_TAG)
                                           .setName(this.i18n("input.name", player).build().component())
-                                          .setLore(this.i18n("input.lore", player).build().splitLines())
+                                          .setLore(this.i18n("input.lore", player).build().children())
                                           .build();
     
     render.firstSlot(item);
@@ -202,7 +201,10 @@ public abstract class AbstractAnvilView extends View {
       final @Nullable String input,
       final @NotNull Context context
   ) {
-    this.i18n(this.getValidationErrorKey(), context.getPlayer()).withPrefix().with("input", input != null ? input : "").send();
+    this.i18n(this.getValidationErrorKey(), context.getPlayer())
+        .includePrefix()
+        .withPlaceholder("input", input != null ? input : "")
+        .build().sendMessage();
   }
   
   /**
@@ -219,7 +221,10 @@ public abstract class AbstractAnvilView extends View {
   ) {
     CentralLogger.getLogger(this.getClass()).log(Level.WARNING, "Failed to process anvil input: " + input, exception);
     
-    this.i18n("error.processing_failed", context.getPlayer()).withPrefix().with("input", input).send();
+    this.i18n("error.processing_failed", context.getPlayer())
+        .includePrefix()
+        .withPlaceholder("input", input)
+        .build().sendMessage();
   }
   
   /**
@@ -269,11 +274,11 @@ public abstract class AbstractAnvilView extends View {
    * @param player the player
    * @return i18n builder
    */
-  protected TranslationService i18n(
+  protected I18n.Builder i18n(
       final @NotNull String suffix,
       final @NotNull Player player
   ) {
-      return TranslationService.create(TranslationKey.of(this.baseKey, suffix), player);
+      return new I18n.Builder(this.baseKey + "." + suffix, player);
   }
   
   /**
@@ -286,7 +291,7 @@ public abstract class AbstractAnvilView extends View {
       final @NotNull OpenContext context
   ) {
     
-    return this.i18n(this.getTitleKey(), context.getPlayer()).withAll(this.getTitlePlaceholders(context)).build().component();
+    return this.i18n(this.getTitleKey(), context.getPlayer()).withPlaceholders(this.getTitlePlaceholders(context)).build().component();
   }
   
   

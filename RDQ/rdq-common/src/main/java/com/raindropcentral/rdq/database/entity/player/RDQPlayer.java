@@ -4,117 +4,226 @@ import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
 import de.jexcellence.hibernate.entity.AbstractEntity;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.Serial;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
+/**
+ * Entity representing a RaindropQuests player extension.
+ * <p>
+ * This entity is mapped to the {@code rdq_player} table and extends the core player
+ * with quest-specific features like bounties, ranks, rank paths, and perks.
+ * Uses UUID reference to RCore's RPlayer instead of direct entity relationship.
+ * </p>
+ *
+ * @author JExcellence
+ */
 @Entity
 @Table(name = "rdq_player")
-@Getter
-@Setter
 public class RDQPlayer extends AbstractEntity {
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @Column(name = "unqiue_id", nullable = false, unique = true)
+    /**
+     * The unique identifier (UUID) of the player.
+     */
+    @Column(name = "unique_id", unique = true, nullable = false)
     private UUID uniqueId;
 
-    @Column(name = "player_name", nullable = false, length = 16)
+    /**
+     * The name of the player.
+     */
+    @Column(name = "player_name", nullable = false)
     private String playerName;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    /**
+     * The player's rank associations across multiple rank trees.
+     * <p>
+     * This field establishes a one-to-many relationship with the {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank} entity,
+     * representing the player's current ranks across different rank trees. The association is eagerly fetched,
+     * cascades all operations, and removes orphans when the relationship is broken.
+     * </p>
+     * <p>
+     * A player can have multiple rank records - one for each rank tree they are progressing in.
+     * Mapped by the {@code rdqPlayer} property in {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank}.
+     * </p>
+     */
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "player"
+    )
     private List<RPlayerRank> playerRanks = new ArrayList<>();
 
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "player")
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            mappedBy = "player"
+    )
     private List<RPlayerRankPath> playerRankPaths = new ArrayList<>();
 
-    protected RDQPlayer() {}
+    /**
+     * Protected no-argument constructor for JPA/Hibernate.
+     */
+    protected RDQPlayer() {
+    }
 
+    /**
+     * Constructs a new {@code RDQPlayer} entity with the specified UUID and player name.
+     *
+     * @param uniqueId   the unique identifier of the player
+     * @param playerName the name of the player
+     */
     public RDQPlayer(
-            @NotNull UUID uniqueId,
-            @NotNull String playerName
+            final @NotNull UUID uniqueId,
+            final @NotNull String playerName
     ) {
         this.uniqueId = uniqueId;
         this.playerName = playerName;
     }
 
-    public RDQPlayer(
-            @NotNull Player player
-    ) {
+    /**
+     * Constructs a new {@code RDQPlayer} entity from a Bukkit {@link Player} instance.
+     *
+     * @param player the Bukkit player
+     */
+    public RDQPlayer(final @NotNull Player player) {
         this(player.getUniqueId(), player.getName());
     }
 
     /**
-     * Adds a player rank to this player.
-     * If adding a new active rank, deactivates all other ranks.
+     * Gets the unique identifier (UUID) of the player.
+     * Alias for getPlayerUuid() for backward compatibility.
      *
-     * @param playerRank the rank to add
+     * @return the player's UUID
      */
-    public void addPlayerRank(@NotNull RPlayerRank playerRank) {
-        if (playerRank.isActive()) {
-            // Deactivate all other ranks when adding a new active rank
-            playerRanks.forEach(rank -> rank.setActive(false));
+    public UUID getUniqueId() {
+        return this.uniqueId;
+    }
+
+    /**
+     * Gets all rank associations for this player across different rank trees.
+     *
+     * @return a list of {@link RPlayerRank} entities representing the player's ranks in various trees
+     */
+    public List<RPlayerRank> getPlayerRanks() {
+        return this.playerRanks;
+    }
+
+    public List<RPlayerRankPath> getPlayerRankPaths() {
+        return this.playerRankPaths;
+    }
+
+    public void setUniqueId(UUID uniqueId) {
+        this.uniqueId = uniqueId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    /**
+     * Sets the player's rank associations.
+     *
+     * @param playerRanks the list of {@link RPlayerRank} entities
+     */
+    public void setPlayerRanks(final List<RPlayerRank> playerRanks) {
+        this.playerRanks = playerRanks != null ? playerRanks : new ArrayList<>();
+    }
+
+    /**
+     * Adds a new rank association for this player.
+     *
+     * @param playerRank the {@link RPlayerRank} entity to add
+     */
+    public void addPlayerRank(final @NotNull RPlayerRank playerRank) {
+        if (this.playerRanks == null) {
+            this.playerRanks = new ArrayList<>();
         }
-        playerRanks.add(playerRank);
-        playerRank.setPlayer(this);
+        this.playerRanks.add(playerRank);
+        playerRank.setRdqPlayer(this);
     }
 
     /**
-     * Removes a player rank from this player.
+     * Gets the player's rank for a specific rank tree.
      *
-     * @param playerRank the rank to remove
+     * @param rankTreeIdentifier the identifier of the rank tree
+     * @return an Optional containing the player's rank in the specified tree, or empty if not found
      */
-    public void removePlayerRank(@NotNull RPlayerRank playerRank) {
-        playerRanks.remove(playerRank);
-        playerRank.setPlayer(null);
+    public Optional<RPlayerRank> getPlayerRankForTree(final @NotNull String rankTreeIdentifier) {
+        if (this.playerRanks == null) {
+            return Optional.empty();
+        }
+
+        return this.playerRanks.stream()
+                .filter(rank -> rank.belongsToRankTree(rankTreeIdentifier))
+                .findFirst();
     }
 
     /**
-     * Gets the currently active rank for this player.
+     * Gets the player's currently active rank (if any).
      *
-     * @return the active rank, or empty if no rank is active
+     * @return an Optional containing the active rank, or empty if no rank is active
      */
-    @NotNull
-    public Optional<RPlayerRank> getActiveRank() {
-        return playerRanks.stream()
+    public Optional<RPlayerRank> getActivePlayerRank() {
+        if (this.playerRanks == null) {
+            return Optional.empty();
+        }
+
+        return this.playerRanks.stream()
                 .filter(RPlayerRank::isActive)
                 .findFirst();
     }
 
     /**
-     * Sets a specific rank as the active rank.
-     * Deactivates all other ranks.
+     * Checks if the player has any rank associations.
      *
-     * @param playerRank the rank to set as active
+     * @return true if the player has at least one rank, false otherwise
      */
-    public void setActiveRank(@NotNull RPlayerRank playerRank) {
-        if (!playerRanks.contains(playerRank)) {
-            throw new IllegalArgumentException("Rank does not belong to this player");
-        }
-        
-        // Deactivate all ranks
-        playerRanks.forEach(rank -> rank.setActive(false));
-        
-        // Activate the specified rank
-        playerRank.setActive(true);
+    public boolean hasAnyRanks() {
+        return this.playerRanks != null && !this.playerRanks.isEmpty();
     }
 
     /**
-     * Gets all ranks for this player.
+     * Checks if the player has a rank in the specified rank tree.
      *
-     * @return list of all player ranks
+     * @param rankTreeIdentifier the identifier of the rank tree to check
+     * @return true if the player has a rank in the specified tree, false otherwise
      */
-    @NotNull
-    public List<RPlayerRank> getPlayerRanks() {
-        return new ArrayList<>(playerRanks);
+    public boolean hasRankInTree(final @NotNull String rankTreeIdentifier) {
+        return getPlayerRankForTree(rankTreeIdentifier).isPresent();
     }
+
+    /**
+     * Legacy method for backward compatibility.
+     * Returns the first rank found, or null if no ranks exist.
+     *
+     * @return the first {@link RPlayerRank} entity, or null
+     * @deprecated Use {@link #getPlayerRanks()}, {@link #getActivePlayerRank()}, or {@link #getPlayerRankForTree(String)} instead
+     */
+    @Deprecated
+    public RPlayerRank getPlayerRank() {
+        if (this.playerRanks == null || this.playerRanks.isEmpty()) {
+            return null;
+        }
+        return this.playerRanks.getFirst();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof final RDQPlayer rdqPlayer)) return false;
+        return uniqueId.equals(rdqPlayer.uniqueId);
+    }
+
+    @Override
+    public int hashCode() {
+        return uniqueId.hashCode();
+    }
+
 }

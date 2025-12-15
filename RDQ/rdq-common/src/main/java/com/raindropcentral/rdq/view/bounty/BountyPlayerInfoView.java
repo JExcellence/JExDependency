@@ -13,12 +13,14 @@ import com.raindropcentral.rplatform.view.ConfirmationView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -42,21 +44,12 @@ import java.util.*;
  * @since TBD
  */
 public class BountyPlayerInfoView extends BaseView {
-	
-	/**
-	 * The RDQ plugin instance, used for accessing repositories and services.
-	 */
-	private final State<RDQ> rdq = initialState("plugin");
-	
-	/**
-	 * The bounty being displayed in this view.
-	 */
-	private final State<Optional<Bounty>> bounty = initialState("bounty");
-	
-	/**
-	 * The target player of the bounty.
-	 */
-	private final State<Optional<OfflinePlayer>> target = initialState("target");
+
+	private final State<RDQ>                                rdq              = initialState("plugin");
+	private final MutableState<Optional<OfflinePlayer>> target           = initialState("target");
+	private final MutableState<List<BountyReward>>             rewards      = initialState("rewards");
+	private final State<Optional<Bounty>>                  bounty           = initialState("bounty");
+	private final State<Map<UUID, Map<Integer, ItemStack>>> insertedItems    = initialState("insertedItems");
 	
 	@Override
 	protected String[] getLayout() {
@@ -104,12 +97,11 @@ public class BountyPlayerInfoView extends BaseView {
 			UnifiedBuilderFactory
 				.unifiedHead(this.target.get(render).get())
 				.setDisplayName(
-					this.i18n(
+					(net.kyori.adventure.text.Component) this.i18n(
 						    "target.name",
 						    player
 					    )
-					    .with(
-						    "player_name",
+					    .withPlaceholder("player_name",
 						    player.getName()
 					    )
 					    .build()
@@ -145,7 +137,7 @@ public class BountyPlayerInfoView extends BaseView {
 							    "rewards.lore",
 							    player
 						    )
-						    .withAll(
+						    .withPlaceholders(
 							    Map.of(
 								    "item_amount",
 										bountyRewards.stream().mapToInt(bountyReward -> ((ItemReward) bountyReward.getReward()).getItem().getAmount()),
@@ -154,7 +146,7 @@ public class BountyPlayerInfoView extends BaseView {
 							    )
 						    )
 						    .build()
-						    .splitLines()
+						    .children()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -210,7 +202,7 @@ public class BountyPlayerInfoView extends BaseView {
 					this.i18n(
 						"delete.lore",
 						player
-					).build().splitLines()
+					).build().children()
 				).build()
 			).displayIf(
 				context -> context.getPlayer().isOp()
@@ -296,11 +288,10 @@ public class BountyPlayerInfoView extends BaseView {
 					player -> {
 						rdq.getBountyRepository().deleteAsync(bounty.get().getId()).thenAccept(
 								(v) -> {
-									// Remove visual indicators when bounty is deleted (Requirement 14.4)
 									rdq.getVisualIndicatorManager().removeIndicators(targetPlayer.get().getUniqueId());
 
 									i18n("deleted_bounty_successfully", origin.getPlayer()
-									).withPrefix().withAll(
+									).includePrefix().withPlaceholders(
 											Map.of(
 													"bounty_id",
 													bounty.get().getId(),
@@ -309,7 +300,7 @@ public class BountyPlayerInfoView extends BaseView {
 													"target_uniqueId",
 													targetPlayer.get().getUniqueId()
 											)
-									).send();
+									).build().sendMessage();
 								}
 						);
 					},
@@ -320,10 +311,18 @@ public class BountyPlayerInfoView extends BaseView {
 		
 		target.openForPlayer(
 			BountyMainView.class,
-			Map.of(
-				"plugin",
-				rdq
-			)
+				Map.of(
+						"plugin",
+						rdq,
+						"target",
+						targetPlayer,
+						"rewards",
+						rewards,
+						"bounty",
+						this.bounty.get(target),
+						"insertedItems",
+						insertedItems
+				)
 		);
 	}
 	

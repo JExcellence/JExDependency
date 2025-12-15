@@ -13,6 +13,8 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import net.kyori.adventure.text.Component;
+
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
@@ -88,8 +90,8 @@ public class PaginatedPlayerView extends APaginatedView<OfflinePlayer> {
                        .unifiedHead()
                        .setPlayerHead(offlinePlayer)
                        .setDisplayName(
-                           this.i18n("player_entry.name", context.getPlayer()
-                               ).with(
+                           (Component) this.i18n("player_entry.name", context.getPlayer()
+                               ).withPlaceholder(
                                    "player_name",
                                    offlinePlayer.getName()
                                )

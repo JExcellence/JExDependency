@@ -1,15 +1,12 @@
 package com.raindropcentral.rdq.json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import tools.jackson.core.JsonGenerator;
+import tools.jackson.databind.SerializationContext;
+import tools.jackson.databind.ser.std.StdSerializer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.Base64;
 import java.util.Map;
 
@@ -31,7 +28,11 @@ import java.util.Map;
  * @version 2.0.0
  * @since TBD
  */
-public class ItemStackJSONSerializer extends JsonSerializer<ItemStack> {
+public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
+
+    public ItemStackJSONSerializer() {
+        super(ItemStack.class);
+    }
 
     /**
      * Serializes an {@link ItemStack} object to JSON.
@@ -40,17 +41,16 @@ public class ItemStackJSONSerializer extends JsonSerializer<ItemStack> {
      * First tries binary serialization (most complete), then falls back to Map serialization.
      * </p>
      *
-     * @param itemStack          the {@code ItemStack} to serialize (may be {@code null})
-     * @param jsonGenerator      the JSON generator to write to
-     * @param serializerProvider the serializer provider
-     * @throws IOException if an I/O error occurs during serialization
+     * @param itemStack            the {@code ItemStack} to serialize (may be {@code null})
+     * @param jsonGenerator        the JSON generator to write to
+     * @param serializationContext the serialization context
      */
     @Override
     public void serialize(
             @Nullable final ItemStack itemStack,
             @NotNull final JsonGenerator jsonGenerator,
-            @NotNull final SerializerProvider serializerProvider
-    ) throws IOException {
+            @NotNull final SerializationContext serializationContext
+    ) {
         if (itemStack == null) {
             jsonGenerator.writeNull();
             return;
@@ -61,13 +61,14 @@ public class ItemStackJSONSerializer extends JsonSerializer<ItemStack> {
         // Try binary serialization first (preserves ALL metadata)
         try {
             String binaryData = serializeToBinary(itemStack);
-            jsonGenerator.writeStringField("binaryData", binaryData);
-            jsonGenerator.writeStringField("serializationType", "binary");
+            jsonGenerator.writeStringProperty("binaryData", binaryData);
+            jsonGenerator.writeStringProperty("serializationType", "binary");
         } catch (Exception e) {
             // Fallback to Map serialization
             Map<String, Object> serialized = itemStack.serialize();
-            jsonGenerator.writeObjectField("mapData", serialized);
-            jsonGenerator.writeStringField("serializationType", "map");
+            jsonGenerator.writeName("mapData");
+            serializationContext.writeValue(jsonGenerator, serialized);
+            jsonGenerator.writeStringProperty("serializationType", "map");
         }
         
         jsonGenerator.writeEndObject();
@@ -76,19 +77,13 @@ public class ItemStackJSONSerializer extends JsonSerializer<ItemStack> {
     /**
      * Serializes an ItemStack to a Base64-encoded binary string using Bukkit's serialization.
      * This preserves ALL metadata including complex data like persistent data containers.
+     * Uses the modern ItemStack.serializeAsBytes() API introduced in 1.21.
      *
      * @param itemStack the ItemStack to serialize
      * @return Base64-encoded binary data
-     * @throws IOException if serialization fails
      */
-    private String serializeToBinary(@NotNull ItemStack itemStack) throws IOException {
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-             BukkitObjectOutputStream dataOutput = new BukkitObjectOutputStream(outputStream)) {
-            
-            dataOutput.writeObject(itemStack);
-            return Base64.getEncoder().encodeToString(outputStream.toByteArray());
-        }
+    private String serializeToBinary(@NotNull ItemStack itemStack) {
+        byte[] data = itemStack.serializeAsBytes();
+        return Base64.getEncoder().encodeToString(data);
     }
-
-
 }

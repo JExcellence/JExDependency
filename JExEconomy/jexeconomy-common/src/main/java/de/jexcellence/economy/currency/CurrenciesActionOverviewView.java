@@ -157,7 +157,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "create_currency.lore",
 					                     contextPlayer
-				                     ).build().splitLines()
+				                     ).build().children()
 			                     )
 			                     .build()
 		).onClick(clickContext -> {
@@ -198,7 +198,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "edit_currency.lore",
 					                     contextPlayer
-				                     ).build().splitLines()
+				                     ).build().children()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()
@@ -240,7 +240,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "view_currencies.lore",
 					                     contextPlayer
-				                     ).build().splitLines()
+				                     ).build().children()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()
@@ -293,7 +293,7 @@ public class CurrenciesActionOverviewView extends BaseView {
 				                     this.i18n(
 					                     "delete_currency.lore",
 					                     contextPlayer
-				                     ).build().splitLines()
+				                     ).build().children()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()

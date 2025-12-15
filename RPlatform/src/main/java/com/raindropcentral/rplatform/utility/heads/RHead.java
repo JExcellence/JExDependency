@@ -1,13 +1,14 @@
 package com.raindropcentral.rplatform.utility.heads;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
+
+@SuppressWarnings("unchecked")
 
 /**
  * Base definition for catalogued heads containing the UUID, texture payload, and translation key
@@ -105,16 +106,10 @@ public abstract class RHead {
                 this.texture
             )
             .setName(
-                    TranslationService.create(
-                            TranslationKey.of(this.translationKey, "name"),
-                            player
-                    ).build().component()
+                    new I18n.Builder(this.translationKey + ".name", player).build().component()
             )
             .setLore(
-                    TranslationService.create(
-                            TranslationKey.of(this.translationKey, "lore"),
-                            player
-                    ).build().splitLines()
+                    new I18n.Builder(this.translationKey + ".lore", player).build().children()
             )
             .build();
   }

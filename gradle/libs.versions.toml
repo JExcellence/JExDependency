@@ -2,7 +2,6 @@
 java = "21"
 junit = "5.10.2"
 mockito = "5.14.2"
-jqwik = "1.9.2"
 
 paper = "1.21.10-R0.1-SNAPSHOT"
 adventure = "4.17.0"
@@ -15,8 +14,10 @@ luckperms = "5.5"
 caffeine = "3.2.2"
 inventory-framework = "3.5.1"
 
-# Keep all Jackson components aligned to the same minor release
-jackson = "2.17.2"
+# Jackson 3.x versions - core/databind are 3.0.3, but annotations and jsr310 have different versions
+jackson = "3.0.3"
+jackson-annotations = "3.0-rc5"
+jackson-jsr310 = "3.0.0-rc2"
 jackson-uuid = "5.1.0"
 
 hibernate-platform = "6.6.4.Final"
@@ -63,10 +64,10 @@ inventory-framework-core = { module = "me.devnatan:inventory-framework-core", ve
 
 # Data, logging, util
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
-jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
-jackson-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-core = { module = "tools.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson-annotations" }
+jackson-jsr310 = { module = "tools.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson-jsr310" }
 java-uuid = { module = "com.fasterxml.uuid:java-uuid-generator", version.ref = "jackson-uuid" }
 jboss-logging = { module = "org.jboss.logging:jboss-logging", version.ref = "jboss-logging" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
@@ -75,10 +76,10 @@ junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.re
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform" }
 mockbukkit = { module = "com.github.seeseemelk:MockBukkit-v1.21", version.ref = "mockbukkit" }
-jqwik = { module = "net.jqwik:jqwik", version.ref = "jqwik" }
 
 # DB
 hibernate-platform = { module = "org.hibernate.orm:hibernate-platform", version.ref = "hibernate-platform" }

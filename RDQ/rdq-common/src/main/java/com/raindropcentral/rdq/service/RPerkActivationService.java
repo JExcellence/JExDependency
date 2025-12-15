@@ -28,7 +28,7 @@ import java.util.logging.Logger;
  * </ul>
  * </p>
  * <p>
- * This service is separate from {@link com.raindropcentral.rdq2.utility.perk.RPerkManagementService} which handles
+ * This service is separate from {@link com.raindropcentral.rdq.utility.perk.RPerkManagementService} which handles
  * perk ownership and enablement.
  * </p>
  *

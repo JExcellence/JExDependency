@@ -1,6 +1,5 @@
 package com.raindropcentral.rdq.utility.requirement;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.requirement.*;
 import com.raindropcentral.rdq.database.entity.RRequirement;
@@ -13,6 +12,7 @@ import de.jexcellence.configmapper.sections.AConfigSection;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -224,82 +224,180 @@ public class RequirementFactory {
 	private AConfigSection getSpecificRequirementSection(BaseRequirementSection baseRequirementSection) {
 		
 		String type = baseRequirementSection.getType();
+		LOGGER.info("getSpecificRequirementSection: type=" + type);
 		
-		if (type == null || type.equals("not_defined")) {
-			if (baseRequirementSection.getItemRequirement() != null &&
-			    ! baseRequirementSection.getItemRequirement().getRequiredItemsList().isEmpty()) {
+		if (type == null || type.equals("not_defined") || type.equals("UNKNOWN")) {
+			// Auto-detect based on which section has data
+			LOGGER.info("Auto-detecting requirement type...");
+			
+			if (hasValidItemRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected ITEM requirement");
 				return baseRequirementSection.getItemRequirement();
 			}
-			if (baseRequirementSection.getCurrencyRequirement() != null &&
-			    baseRequirementSection.getCurrencyRequirement().getRequiredCurrencies() != null &&
-			    ! baseRequirementSection.getCurrencyRequirement().getRequiredCurrencies().isEmpty()) {
+			if (hasValidCurrencyRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected CURRENCY requirement");
 				return baseRequirementSection.getCurrencyRequirement();
 			}
-			if (baseRequirementSection.getExperienceRequirement() != null &&
-			    baseRequirementSection.getExperienceRequirement().getRequiredLevel() > 0) {
+			if (hasValidExperienceRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected EXPERIENCE_LEVEL requirement");
 				return baseRequirementSection.getExperienceRequirement();
 			}
-			if (baseRequirementSection.getPlaytimeRequirement() != null &&
-			    baseRequirementSection.getPlaytimeRequirement().getRequiredPlaytimeSeconds() > 0) {
+			if (hasValidPlaytimeRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected PLAYTIME requirement");
 				return baseRequirementSection.getPlaytimeRequirement();
 			}
-			if (baseRequirementSection.getPermissionRequirement() != null &&
-			    baseRequirementSection.getPermissionRequirement().getRequiredPermissions() != null &&
-			    ! baseRequirementSection.getPermissionRequirement().getRequiredPermissions().isEmpty()) {
+			if (hasValidPermissionRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected PERMISSION requirement");
 				return baseRequirementSection.getPermissionRequirement();
 			}
-			if (baseRequirementSection.getLocationRequirement() != null) {
+			if (hasValidLocationRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected LOCATION requirement");
 				return baseRequirementSection.getLocationRequirement();
 			}
-			if (baseRequirementSection.getCompositeRequirement() != null &&
-			    baseRequirementSection.getCompositeRequirement().getCompositeRequirements() != null &&
-			    ! baseRequirementSection.getCompositeRequirement().getCompositeRequirements().isEmpty()) {
+			if (hasValidCompositeRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected COMPOSITE requirement");
 				return baseRequirementSection.getCompositeRequirement();
 			}
-			if (baseRequirementSection.getChoiceRequirement() != null &&
-			    baseRequirementSection.getChoiceRequirement().getChoices() != null &&
-			    ! baseRequirementSection.getChoiceRequirement().getChoices().isEmpty()) {
+			if (hasValidChoiceRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected CHOICE requirement");
 				return baseRequirementSection.getChoiceRequirement();
 			}
-			if (baseRequirementSection.getAchievementRequirement() != null &&
-			    baseRequirementSection.getAchievementRequirement().getRequiredAchievements() != null &&
-			    ! baseRequirementSection.getAchievementRequirement().getRequiredAchievements().isEmpty()) {
+			if (hasValidAchievementRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected ACHIEVEMENT requirement");
 				return baseRequirementSection.getAchievementRequirement();
 			}
-			if (baseRequirementSection.getSkillRequirement() != null &&
-			    baseRequirementSection.getSkillRequirement().getRequiredSkills() != null &&
-			    ! baseRequirementSection.getSkillRequirement().getRequiredSkills().isEmpty()) {
+			if (hasValidSkillRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected SKILLS requirement");
 				return baseRequirementSection.getSkillRequirement();
 			}
-			if (baseRequirementSection.getJobRequirement() != null &&
-			    baseRequirementSection.getJobRequirement().getRequiredJobs() != null &&
-			    ! baseRequirementSection.getJobRequirement().getRequiredJobs().isEmpty()) {
+			if (hasValidJobRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected JOBS requirement");
 				return baseRequirementSection.getJobRequirement();
 			}
-			if (baseRequirementSection.getTimeBasedRequirement() != null &&
-			    baseRequirementSection.getTimeBasedRequirement().getTimeConstraintSeconds() > 0) {
+			if (hasValidTimeBasedRequirement(baseRequirementSection)) {
+				LOGGER.info("  -> Detected TIME_BASED requirement");
 				return baseRequirementSection.getTimeBasedRequirement();
 			}
+			
+			LOGGER.warning("  -> No valid requirement section detected!");
 		} else {
-			return switch (type.toUpperCase()) {
-				case "ITEM" -> baseRequirementSection.getItemRequirement();
-				case "CURRENCY" -> baseRequirementSection.getCurrencyRequirement();
-				case "EXPERIENCE_LEVEL" -> baseRequirementSection.getExperienceRequirement();
-				case "PLAYTIME" -> baseRequirementSection.getPlaytimeRequirement();
-				case "TIME_BASED" -> baseRequirementSection.getTimeBasedRequirement();
-				case "PERMISSION" -> baseRequirementSection.getPermissionRequirement();
-				case "LOCATION" -> baseRequirementSection.getLocationRequirement();
-				case "COMPOSITE" -> baseRequirementSection.getCompositeRequirement();
-				case "CHOICE" -> baseRequirementSection.getChoiceRequirement();
-				case "ACHIEVEMENT",
-				     "CUSTOM" -> baseRequirementSection.getAchievementRequirement();
-				case "SKILLS" -> baseRequirementSection.getSkillRequirement();
-				case "JOBS" -> baseRequirementSection.getJobRequirement();
+			// Type is explicitly set - validate and return the corresponding section
+			AConfigSection result = switch (type.toUpperCase()) {
+				case "ITEM" -> hasValidItemRequirement(baseRequirementSection) 
+					? baseRequirementSection.getItemRequirement() : null;
+				case "CURRENCY" -> hasValidCurrencyRequirement(baseRequirementSection) 
+					? baseRequirementSection.getCurrencyRequirement() : null;
+				case "EXPERIENCE_LEVEL" -> hasValidExperienceRequirement(baseRequirementSection) 
+					? baseRequirementSection.getExperienceRequirement() : null;
+				case "PLAYTIME" -> hasValidPlaytimeRequirement(baseRequirementSection) 
+					? baseRequirementSection.getPlaytimeRequirement() : null;
+				case "TIME_BASED" -> hasValidTimeBasedRequirement(baseRequirementSection) 
+					? baseRequirementSection.getTimeBasedRequirement() : null;
+				case "PERMISSION" -> hasValidPermissionRequirement(baseRequirementSection) 
+					? baseRequirementSection.getPermissionRequirement() : null;
+				case "LOCATION" -> hasValidLocationRequirement(baseRequirementSection) 
+					? baseRequirementSection.getLocationRequirement() : null;
+				case "COMPOSITE" -> hasValidCompositeRequirement(baseRequirementSection) 
+					? baseRequirementSection.getCompositeRequirement() : null;
+				case "CHOICE" -> hasValidChoiceRequirement(baseRequirementSection) 
+					? baseRequirementSection.getChoiceRequirement() : null;
+				case "ACHIEVEMENT", "CUSTOM" -> hasValidAchievementRequirement(baseRequirementSection) 
+					? baseRequirementSection.getAchievementRequirement() : null;
+				case "SKILLS" -> hasValidSkillRequirement(baseRequirementSection) 
+					? baseRequirementSection.getSkillRequirement() : null;
+				case "JOBS" -> hasValidJobRequirement(baseRequirementSection) 
+					? baseRequirementSection.getJobRequirement() : null;
 				default -> null;
 			};
+			
+			if (result == null) {
+				LOGGER.warning("Type '" + type + "' specified but no valid data found for that type");
+				// Debug: log what we have
+				debugLogRequirementSections(baseRequirementSection);
+			} else {
+				LOGGER.info("Found valid " + type + " requirement section");
+			}
+			
+			return result;
 		}
 		
 		return null;
+	}
+	
+	// ==================== Validation helpers ====================
+	
+	private boolean hasValidItemRequirement(BaseRequirementSection section) {
+		var req = section.getItemRequirement();
+		return req != null && req.getRequiredItemsList() != null && !req.getRequiredItemsList().isEmpty();
+	}
+	
+	private boolean hasValidCurrencyRequirement(BaseRequirementSection section) {
+		var req = section.getCurrencyRequirement();
+		return req != null && req.getRequiredCurrencies() != null && !req.getRequiredCurrencies().isEmpty();
+	}
+	
+	private boolean hasValidExperienceRequirement(BaseRequirementSection section) {
+		var req = section.getExperienceRequirement();
+		return req != null && req.getRequiredLevel() > 0;
+	}
+	
+	private boolean hasValidPlaytimeRequirement(BaseRequirementSection section) {
+		var req = section.getPlaytimeRequirement();
+		return req != null && req.getRequiredPlaytimeSeconds() > 0;
+	}
+	
+	private boolean hasValidPermissionRequirement(BaseRequirementSection section) {
+		var req = section.getPermissionRequirement();
+		return req != null && req.getRequiredPermissions() != null && !req.getRequiredPermissions().isEmpty();
+	}
+	
+	private boolean hasValidLocationRequirement(BaseRequirementSection section) {
+		var req = section.getLocationRequirement();
+		if (req == null) return false;
+		return (req.getRequiredWorld() != null && !req.getRequiredWorld().trim().isEmpty()) ||
+		       (req.getRequiredRegion() != null && !req.getRequiredRegion().trim().isEmpty()) ||
+		       (req.getRequiredCoordinates() != null && !req.getRequiredCoordinates().isEmpty()) ||
+		       req.getRequiredDistance() > 0;
+	}
+	
+	private boolean hasValidCompositeRequirement(BaseRequirementSection section) {
+		var req = section.getCompositeRequirement();
+		return req != null && req.getCompositeRequirements() != null && !req.getCompositeRequirements().isEmpty();
+	}
+	
+	private boolean hasValidChoiceRequirement(BaseRequirementSection section) {
+		var req = section.getChoiceRequirement();
+		return req != null && req.getChoices() != null && !req.getChoices().isEmpty();
+	}
+	
+	private boolean hasValidAchievementRequirement(BaseRequirementSection section) {
+		var req = section.getAchievementRequirement();
+		return req != null && req.getRequiredAchievements() != null && !req.getRequiredAchievements().isEmpty();
+	}
+	
+	private boolean hasValidSkillRequirement(BaseRequirementSection section) {
+		var req = section.getSkillRequirement();
+		return req != null && req.getRequiredSkills() != null && !req.getRequiredSkills().isEmpty();
+	}
+	
+	private boolean hasValidJobRequirement(BaseRequirementSection section) {
+		var req = section.getJobRequirement();
+		return req != null && req.getRequiredJobs() != null && !req.getRequiredJobs().isEmpty();
+	}
+	
+	private boolean hasValidTimeBasedRequirement(BaseRequirementSection section) {
+		var req = section.getTimeBasedRequirement();
+		return req != null && req.getTimeConstraintSeconds() > 0;
+	}
+	
+	private void debugLogRequirementSections(BaseRequirementSection section) {
+		LOGGER.info("Debug - Requirement sections state:");
+		LOGGER.info("  itemRequirement: items=" + (section.getItemRequirement() != null ? section.getItemRequirement().getRequiredItemsList().size() : "null"));
+		LOGGER.info("  currencyRequirement: currencies=" + (section.getCurrencyRequirement() != null && section.getCurrencyRequirement().getRequiredCurrencies() != null ? section.getCurrencyRequirement().getRequiredCurrencies().size() : "null"));
+		LOGGER.info("  experienceRequirement: level=" + (section.getExperienceRequirement() != null ? section.getExperienceRequirement().getRequiredLevel() : "null"));
+		LOGGER.info("  playtimeRequirement: seconds=" + (section.getPlaytimeRequirement() != null ? section.getPlaytimeRequirement().getRequiredPlaytimeSeconds() : "null"));
+		LOGGER.info("  compositeRequirement: reqs=" + (section.getCompositeRequirement() != null && section.getCompositeRequirement().getCompositeRequirements() != null ? section.getCompositeRequirement().getCompositeRequirements().size() : "null"));
+		LOGGER.info("  choiceRequirement: choices=" + (section.getChoiceRequirement() != null && section.getChoiceRequirement().getChoices() != null ? section.getChoiceRequirement().getChoices().size() : "null"));
 	}
 	
 	/**
@@ -832,13 +930,19 @@ public class RequirementFactory {
 		if (compositeRequirements != null && ! compositeRequirements.isEmpty()) {
 			List<Map<String, Object>> subRequirements = new ArrayList<>();
 			for (BaseRequirementSection subReq : compositeRequirements) {
-				String subJson = convertSectionToJson(subReq);
-				@SuppressWarnings("unchecked")
-				Map<String, Object> subMap = OBJECT_MAPPER.readValue(
-					subJson,
-					Map.class
-				);
-				subRequirements.add(subMap);
+				// Get the specific requirement section from the BaseRequirementSection
+				AConfigSection specificSection = getSpecificRequirementSection(subReq);
+				if (specificSection != null) {
+					String subJson = convertSectionToJson(specificSection);
+					@SuppressWarnings("unchecked")
+					Map<String, Object> subMap = OBJECT_MAPPER.readValue(
+						subJson,
+						Map.class
+					);
+					subRequirements.add(subMap);
+				} else {
+					LOGGER.warning("Could not determine specific requirement type for sub-requirement in composite");
+				}
 			}
 			jsonMap.put(
 				"requirements",
@@ -898,13 +1002,19 @@ public class RequirementFactory {
 		if (choices != null && ! choices.isEmpty()) {
 			List<Map<String, Object>> choicesList = new ArrayList<>();
 			for (BaseRequirementSection choice : choices) {
-				String choiceJson = convertSectionToJson(choice);
-				@SuppressWarnings("unchecked")
-				Map<String, Object> choiceMap = OBJECT_MAPPER.readValue(
-					choiceJson,
-					Map.class
-				);
-				choicesList.add(choiceMap);
+				// Get the specific requirement section from the BaseRequirementSection
+				AConfigSection specificSection = getSpecificRequirementSection(choice);
+				if (specificSection != null) {
+					String choiceJson = convertSectionToJson(specificSection);
+					@SuppressWarnings("unchecked")
+					Map<String, Object> choiceMap = OBJECT_MAPPER.readValue(
+						choiceJson,
+						Map.class
+					);
+					choicesList.add(choiceMap);
+				} else {
+					LOGGER.warning("Could not determine specific requirement type for choice in choice requirement");
+				}
 			}
 			jsonMap.put(
 				"choices",

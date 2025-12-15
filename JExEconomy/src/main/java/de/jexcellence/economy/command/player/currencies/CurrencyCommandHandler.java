@@ -3,8 +3,7 @@ package de.jexcellence.economy.command.player.currencies;
 import de.jexcellence.economy.JExEconomyImpl;
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.UserCurrency;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.I18n;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -692,10 +691,10 @@ public class CurrencyCommandHandler {
 		final @NotNull Player targetPlayer,
 		final int currencyCount
 	) {
-		TranslationService.create(TranslationKey.of("currency.list.header"), targetPlayer)
-			.withPrefix()
-			.with("count", currencyCount)
-			.send();
+		new I18n.Builder("currency.list.header", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("count", currencyCount)
+			.build().sendMessage();
 	}
 
 	/**
@@ -713,13 +712,13 @@ public class CurrencyCommandHandler {
 		final @NotNull List<Currency> currencyList
 	) {
 		for (final Currency currencyEntity : currencyList) {
-			TranslationService.create(TranslationKey.of("currency.list.entry"), targetPlayer)
-				.withPrefix()
-				.with("identifier", currencyEntity.getIdentifier())
-				.with("symbol", currencyEntity.getSymbol())
-				.with("prefix", currencyEntity.getPrefix())
-				.with("suffix", currencyEntity.getSuffix())
-				.send();
+			new I18n.Builder("currency.list.entry", targetPlayer)
+				.includePrefix()
+				.withPlaceholder("identifier", currencyEntity.getIdentifier())
+				.withPlaceholder("symbol", currencyEntity.getSymbol())
+				.withPlaceholder("prefix", currencyEntity.getPrefix())
+				.withPlaceholder("suffix", currencyEntity.getSuffix())
+				.build().sendMessage();
 		}
 	}
 
@@ -738,18 +737,18 @@ public class CurrencyCommandHandler {
 		final @NotNull Currency currencyEntity
 	) {
 		// Send header message
-		TranslationService.create(TranslationKey.of("currency.info.header"), targetPlayer)
-			.withPrefix()
-			.with("identifier", currencyEntity.getIdentifier())
-			.send();
+		new I18n.Builder("currency.info.header", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("identifier", currencyEntity.getIdentifier())
+			.build().sendMessage();
 
 		// Send details message
-		TranslationService.create(TranslationKey.of("currency.info.details"), targetPlayer)
-			.withPrefix()
-			.with("symbol", currencyEntity.getSymbol())
-			.with("prefix", currencyEntity.getPrefix())
-			.with("suffix", currencyEntity.getSuffix())
-			.send();
+		new I18n.Builder("currency.info.details", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("symbol", currencyEntity.getSymbol())
+			.withPlaceholder("prefix", currencyEntity.getPrefix())
+			.withPlaceholder("suffix", currencyEntity.getSuffix())
+			.build().sendMessage();
 	}
 
 	/**
@@ -766,10 +765,10 @@ public class CurrencyCommandHandler {
 		final @NotNull Player targetPlayer,
 		final @NotNull String usageSyntax
 	) {
-		TranslationService.create(TranslationKey.of("currency.command.usage"), targetPlayer)
-			.withPrefix()
-			.with("usage", usageSyntax)
-			.send();
+		new I18n.Builder("currency.command.usage", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("usage", usageSyntax)
+			.build().sendMessage();
 	}
 
 	/**
@@ -782,9 +781,9 @@ public class CurrencyCommandHandler {
 	 * @param targetPlayer the player to send the fields information to, must not be null
 	 */
 	private void sendEditableFieldsMessage(final @NotNull Player targetPlayer) {
-		TranslationService.create(TranslationKey.of("currency.edit.fields"), targetPlayer)
-			.withPrefix()
-			.send();
+		new I18n.Builder("currency.edit.fields", targetPlayer)
+			.includePrefix()
+			.build().sendMessage();
 	}
 
 	/**
@@ -801,10 +800,10 @@ public class CurrencyCommandHandler {
 		final @NotNull Player targetPlayer,
 		final @NotNull String currencyIdentifier
 	) {
-		TranslationService.create(TranslationKey.of("currency.create.already_exists"), targetPlayer)
-			.withPrefix()
-			.with("identifier", currencyIdentifier)
-			.send();
+		new I18n.Builder("currency.create.already_exists", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("identifier", currencyIdentifier)
+			.build().sendMessage();
 	}
 
 	/**
@@ -821,10 +820,10 @@ public class CurrencyCommandHandler {
 		final @NotNull Player targetPlayer,
 		final @NotNull String currencyIdentifier
 	) {
-		TranslationService.create(TranslationKey.of("currency.delete.not_found"), targetPlayer)
-			.withPrefix()
-			.with("identifier", currencyIdentifier)
-			.send();
+		new I18n.Builder("currency.delete.not_found", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("identifier", currencyIdentifier)
+			.build().sendMessage();
 	}
 
 	/**
@@ -837,9 +836,9 @@ public class CurrencyCommandHandler {
 	 * @param targetPlayer the player to send the message to, must not be null
 	 */
         private void sendEmptyCurrencyListMessage(final @NotNull Player targetPlayer) {
-                TranslationService.create(TranslationKey.of("currency.list.empty"), targetPlayer)
-                        .withPrefix()
-                        .send();
+                new I18n.Builder("currency.list.empty", targetPlayer)
+                        .includePrefix()
+                        .build().sendMessage();
         }
 
         /**
@@ -852,10 +851,10 @@ public class CurrencyCommandHandler {
                 final @NotNull Player targetPlayer,
                 final @NotNull String filterExpression
         ) {
-                TranslationService.create(TranslationKey.of("currency.list.invalid_filter"), targetPlayer)
-                        .withPrefix()
-                        .with("filter", filterExpression)
-                        .send();
+                new I18n.Builder("currency.list.invalid_filter", targetPlayer)
+                        .includePrefix()
+                        .withPlaceholder("filter", filterExpression)
+                        .build().sendMessage();
         }
 
         /**
@@ -899,10 +898,10 @@ public class CurrencyCommandHandler {
 		final @NotNull Player targetPlayer,
 		final @NotNull String currencyIdentifier
 	) {
-		TranslationService.create(TranslationKey.of("currency.create.success"), targetPlayer)
-			.withPrefix()
-			.with("identifier", currencyIdentifier)
-			.send();
+		new I18n.Builder("currency.create.success", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("identifier", currencyIdentifier)
+			.build().sendMessage();
 	}
 
 	/**
@@ -915,9 +914,9 @@ public class CurrencyCommandHandler {
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 */
 	private void sendCurrencyCreationFailedMessage(final @NotNull Player targetPlayer) {
-		TranslationService.create(TranslationKey.of("currency.create.failed"), targetPlayer)
-			.withPrefix()
-			.send();
+		new I18n.Builder("currency.create.failed", targetPlayer)
+			.includePrefix()
+			.build().sendMessage();
 	}
 
 	/**
@@ -936,11 +935,11 @@ public class CurrencyCommandHandler {
 		final int playerCount,
 		final @NotNull String currencyIdentifier
 	) {
-		TranslationService.create(TranslationKey.of("currency.create.success.player_accounts_created"), targetPlayer)
-			.withPrefix()
-			.with("player_amount", playerCount)
-			.with("identifier", currencyIdentifier)
-			.send();
+		new I18n.Builder("currency.create.success.player_accounts_created", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("player_amount", playerCount)
+			.withPlaceholder("identifier", currencyIdentifier)
+			.build().sendMessage();
 	}
 
 	/**
@@ -957,10 +956,10 @@ public class CurrencyCommandHandler {
 		final @NotNull Player targetPlayer,
 		final @NotNull String currencyIdentifier
 	) {
-		TranslationService.create(TranslationKey.of("currency.delete.success"), targetPlayer)
-			.withPrefix()
-			.with("identifier", currencyIdentifier)
-			.send();
+		new I18n.Builder("currency.delete.success", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("identifier", currencyIdentifier)
+			.build().sendMessage();
 	}
 
 	/**
@@ -973,9 +972,9 @@ public class CurrencyCommandHandler {
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 */
 	private void sendCurrencyDeletionFailedMessage(final @NotNull Player targetPlayer) {
-		TranslationService.create(TranslationKey.of("currency.delete.failed"), targetPlayer)
-			.withPrefix()
-			.send();
+		new I18n.Builder("currency.delete.failed", targetPlayer)
+			.includePrefix()
+			.build().sendMessage();
 	}
 
 	/**
@@ -996,12 +995,12 @@ public class CurrencyCommandHandler {
 		final @NotNull String fieldName,
 		final @NotNull String newValue
 	) {
-		TranslationService.create(TranslationKey.of("currency.edit.success"), targetPlayer)
-			.withPrefix()
-			.with("identifier", currencyIdentifier)
-			.with("field", fieldName)
-			.with("value", newValue)
-			.send();
+		new I18n.Builder("currency.edit.success", targetPlayer)
+			.includePrefix()
+			.withPlaceholder("identifier", currencyIdentifier)
+			.withPlaceholder("field", fieldName)
+			.withPlaceholder("value", newValue)
+			.build().sendMessage();
 	}
 
 	/**
@@ -1014,8 +1013,8 @@ public class CurrencyCommandHandler {
 	 * @param targetPlayer the player to send the error message to, must not be null
 	 */
 	private void sendCurrencyEditFailedMessage(final @NotNull Player targetPlayer) {
-		TranslationService.create(TranslationKey.of("currency.edit.failed"), targetPlayer)
-			.withPrefix()
-			.send();
+		new I18n.Builder("currency.edit.failed", targetPlayer)
+			.includePrefix()
+			.build().sendMessage();
 	}
 }

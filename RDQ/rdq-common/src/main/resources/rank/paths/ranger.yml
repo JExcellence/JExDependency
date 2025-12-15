@@ -1,97 +1,206 @@
 # Ranger Rank Tree
 # The path of nature and archery
 
-id: ranger
-displayNameKey: rank_trees.ranger.name
-descriptionKey: rank_trees.ranger.description
-iconMaterial: BOW
 displayOrder: 6
-enabled: true
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 0
+
+icon:
+  type: "BOW"
+
+prerequisiteRankTrees: []
+connectedRankTrees: []
+switchableRankTiers: []
+
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: []
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 
 ranks:
-  - id: ranger_1
-    displayNameKey: rank.ranger.scout
+  scout:
     tier: 1
     weight: 100
-    luckPermsGroup: ranger_scout
-    prefixKey: rank.ranger.scout.prefix
-    iconMaterial: BOW
-    enabled: true
-    requirements: []
+    luckPermsGroup: "ranger_scout"
+    prefixKey: "&8[&7Scout&8]"
+    suffixKey: ""
+    isInitialRank: true
+    isEnabled: true
+    icon:
+      type: "BOW"
+    nextRanks: ["hunter"]
 
-  - id: ranger_2
-    displayNameKey: rank.ranger.hunter
+  hunter:
     tier: 2
     weight: 200
-    luckPermsGroup: ranger_hunter
-    prefixKey: rank.ranger.hunter.prefix
-    iconMaterial: CROSSBOW
-    enabled: true
+    luckPermsGroup: "ranger_hunter"
+    prefixKey: "&8[&eHunter&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "CROSSBOW"
+    previousRanks: ["scout"]
+    nextRanks: ["tracker"]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 50
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 100
+      hunting_gear:
+        icon:
+          type: "BOW"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "BOW"
+              amount: 1
+            item2:
+              type: "ARROW"
+              amount: 64
+            item3:
+              type: "LEATHER"
+              amount: 32
+            item4:
+              type: "FEATHER"
+              amount: 32
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 10
 
-  - id: ranger_3
-    displayNameKey: rank.ranger.tracker
+  tracker:
     tier: 3
     weight: 300
-    luckPermsGroup: ranger_tracker
-    prefixKey: rank.ranger.tracker.prefix
-    iconMaterial: SPECTRAL_ARROW
-    enabled: true
+    luckPermsGroup: "ranger_tracker"
+    prefixKey: "&8[&6Tracker&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "SPECTRAL_ARROW"
+    previousRanks: ["hunter"]
+    nextRanks: ["warden"]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 200
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 500
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      tracker_gear:
+        icon:
+          type: "CROSSBOW"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "CROSSBOW"
+              amount: 1
+            item2:
+              type: "SPECTRAL_ARROW"
+              amount: 32
+            item3:
+              type: "RABBIT_HIDE"
+              amount: 16
+            item4:
+              type: "STRING"
+              amount: 32
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 20
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 21600
 
-  - id: ranger_4
-    displayNameKey: rank.ranger.warden
+  warden:
     tier: 4
     weight: 400
-    luckPermsGroup: ranger_warden
-    prefixKey: rank.ranger.warden.prefix
-    iconMaterial: TRIDENT
-    enabled: true
+    luckPermsGroup: "ranger_warden"
+    prefixKey: "&8[&bWarden&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "TRIDENT"
+    previousRanks: ["tracker"]
+    nextRanks: ["beastmaster"]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 500
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 2000
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: ranger_3
+      warden_gear:
+        icon:
+          type: "TRIDENT"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "TRIDENT"
+              amount: 1
+            item2:
+              type: "TURTLE_HELMET"
+              amount: 1
+            item3:
+              type: "PRISMARINE_SHARD"
+              amount: 32
+            item4:
+              type: "NAUTILUS_SHELL"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 43200
 
-  - id: ranger_5
-    displayNameKey: rank.ranger.beastmaster
+  beastmaster:
     tier: 5
     weight: 500
-    luckPermsGroup: ranger_beastmaster
-    prefixKey: rank.ranger.beastmaster.prefix
-    iconMaterial: DRAGON_HEAD
-    enabled: true
+    luckPermsGroup: "ranger_beastmaster"
+    prefixKey: "&8[&5Beastmaster&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "DRAGON_HEAD"
+    previousRanks: ["warden"]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 1000
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 10000
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: ranger_4
+      ultimate_ranger:
+        icon:
+          type: "DRAGON_HEAD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "DRAGON_HEAD"
+              amount: 1
+            item2:
+              type: "ELYTRA"
+              amount: 1
+            item3:
+              type: "HEART_OF_THE_SEA"
+              amount: 1
+            item4:
+              type: "WITHER_SKELETON_SKULL"
+              amount: 3
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 162000

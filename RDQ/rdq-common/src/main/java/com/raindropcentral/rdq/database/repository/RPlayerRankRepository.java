@@ -6,9 +6,10 @@ import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
- * Repository for managing persistent {@link com.raindropcentral.rdq2.database.entity.rank.RPlayerRank} entities.
+ * Repository for managing persistent {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank} entities.
  *
  * @author JExcellence
  * @version 1.0.0
@@ -24,13 +25,15 @@ public class RPlayerRankRepository extends GenericCachedRepository<RPlayerRank, 
 	 */
 	public RPlayerRankRepository(
 		final @NotNull ExecutorService executor,
-		final @NotNull EntityManagerFactory entityManagerFactory
+		final @NotNull EntityManagerFactory entityManagerFactory,
+		@NotNull Class<RPlayerRank> entityClass,
+		@NotNull Function<RPlayerRank, Long> keyExtractor
 	) {
 		super(
 			executor,
 			entityManagerFactory,
-			RPlayerRank.class,
-			RPlayerRank::getId
+			entityClass,
+			keyExtractor
 		);
 	}
 }

@@ -1,5 +1,6 @@
 package com.raindropcentral.core.service.central;
 
+import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
@@ -7,14 +8,9 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.time.Duration;
 import java.util.HexFormat;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -38,7 +34,7 @@ public class RCentralService {
     public RCentralService(final @NotNull Plugin plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
-        this.rcentralConfig = new com.raindropcentral.core.config.RCentralConfig(plugin);
+        this.rcentralConfig = new RCentralConfig(plugin);
 
         var backendUrl = detectBackendUrl();
         this.apiClient = new RCentralApiClient(plugin, backendUrl);
@@ -70,37 +66,8 @@ public class RCentralService {
             return "http://localhost:3000";
         }
 
-        if (rcentralConfig.isAutoDetect() && isLocalhostReachable()) {
-            LOGGER.info("Localhost backend detected - using http://localhost:3000");
-            return "http://localhost:3000";
-        }
-
         LOGGER.info("Using production backend: https://raindropcentral.com");
         return "https://raindropcentral.com";
-    }
-
-    private boolean isLocalhostReachable() {
-        try {
-            var testRequest = HttpRequest.newBuilder()
-                    .uri(URI.create("http://localhost:3000/"))
-                    .timeout(Duration.ofSeconds(2))
-                    .GET()
-                    .build();
-
-            var testClient = HttpClient.newBuilder()
-                    .connectTimeout(Duration.ofSeconds(2))
-                    .build();
-
-            var response = testClient.send(testRequest, HttpResponse.BodyHandlers.ofString());
-            LOGGER.fine("Localhost:3000 responded with status: " + response.statusCode());
-            return true;
-        } catch (java.net.ConnectException e) {
-            LOGGER.fine("Localhost:3000 not reachable: " + e.getMessage());
-            return false;
-        } catch (Exception e) {
-            LOGGER.fine("Localhost:3000 check failed: " + e.getMessage());
-            return false;
-        }
     }
 
     /**
@@ -119,6 +86,9 @@ public class RCentralService {
                 .thenApply(response -> {
                     if (response.isSuccess()) {
                         config.set("connection.api-key", apiKey);
+                        // Store player info for wakeup pings after server restart
+                        config.set("connection.minecraft-uuid", playerUuid);
+                        config.set("connection.minecraft-username", playerName);
                         plugin.saveConfig();
 
                         if (serverEntity == null) {
@@ -225,8 +195,13 @@ public class RCentralService {
 
         var serverVersion = Bukkit.getVersion();
         var pluginVersion = plugin.getDescription().getVersion();
+        var maxPlayers = Bukkit.getMaxPlayers();
+        
+        // Retrieve stored player info from last successful connection
+        var minecraftUuid = config.getString("connection.minecraft-uuid");
+        var minecraftUsername = config.getString("connection.minecraft-username");
 
-        apiClient.wakeupServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion)
+        apiClient.wakeupServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, maxPlayers, minecraftUuid, minecraftUsername)
                 .thenAccept(response -> {
                     if (response.isSuccess()) {
                         LOGGER.info("Wakeup ping sent successfully - server marked as online");
@@ -307,4 +282,24 @@ public class RCentralService {
     }
 
     public record ConnectionResult(boolean success, String errorMessage, String errorCode) {}
+
+    // ==================== Getters for Statistics Delivery ====================
+
+    /**
+     * Gets the API client for statistics delivery.
+     *
+     * @return the API client
+     */
+    public RCentralApiClient getApiClient() {
+        return apiClient;
+    }
+
+    /**
+     * Gets the API key for statistics delivery.
+     *
+     * @return the API key or null if not connected
+     */
+    public String getApiKey() {
+        return config.getString("connection.api-key");
+    }
 }

@@ -1,12 +1,92 @@
-# RDQ Premium Çeviri Dosyası - Türkçe
+# RDQ Çeviri Dosyası - Türkçe
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Başınızda aktif bir ödül var!</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 Ödül Değeri:</gradient> <gradient:#10b981:#34d399>%bounty_value% ₺</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Başınıza ödül konuldu!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Ödül Değeri:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Bitiş:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Sipariş Veren:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 ÖDÜL ALINDI! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc></gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>üzerindeki ödülü başarıyla aldınız!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Payınız:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Birisi</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc></gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>üzerindeki ödülü aldı!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% oyuncu</gradient> <gradient:#a855f7:#c084fc></gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>üzerindeki ödülü aldı!</gradient>"
 
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Ödül Sistemi</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Ödül Oluştur</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>için ödül başarıyla oluşturuldu!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Ödül işleme hatası:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Ödül güncelleniyor...</gradient>"
 
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Rütbe için ilerleme başladı</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#3b82f6:#60a5fa>için gereksinimler görüntüleniyor</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>için gereksinimler tamamlanmadı</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% tamamlandı)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Gereksinim tamamlanmadı:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>için gereksinim yok!</gradient>"
+
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Önizleme modu:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>sahibisiniz</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Kilitli:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Önce ön koşulları tamamlayın</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms yüklü değil!</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Yardım</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Ana menüyü aç</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Rütbeleri görüntüle</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Ödülleri görüntüle</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Yönetici Paneli</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Yönetim araçlarına ve</gradient>"
+      - "<gradient:#6b7280:#9ca3af>yapılandırma seçeneklerine erişin</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Ödüller</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ödülleri görüntüle ve yönet</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ödüller için oyuncuları avlayın!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Avantajlar</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mevcut avantajları ve</gradient>"
+      - "<gradient:#6b7280:#9ca3af>özel yetenekleri görüntüle</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Görevler</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mevcut görevleri görüntüle</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ve ilerlemenizi takip edin</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Rütbeler</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Rütbe ilerlemesini görüntüle</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ve yeni yeteneklerin kilidini açın</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rütbe Sistemi</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rütbe Ağaçları</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mevcut rütbe ağaçlarına göz atın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ve yolunuzu seçin</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Geri</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Önceki</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Önceki sayfa</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Sonraki</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Sonraki sayfa</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ İptal</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>İşlemi iptal et</gradient>"

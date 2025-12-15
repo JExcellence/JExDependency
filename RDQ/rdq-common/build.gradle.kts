@@ -77,7 +77,6 @@ dependencies {
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
-    testImplementation(libs.jqwik)
     testImplementation(libs.caffeine)
 
     // Hibernate for test runtime (needed for entity annotations)

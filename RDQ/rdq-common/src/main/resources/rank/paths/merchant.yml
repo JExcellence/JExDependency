@@ -1,97 +1,194 @@
 # Merchant Rank Tree
 # The path of trade and wealth
 
-id: merchant
-displayNameKey: rank_trees.merchant.name
-descriptionKey: rank_trees.merchant.description
-iconMaterial: EMERALD
 displayOrder: 5
-enabled: true
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 0
+
+icon:
+  type: "EMERALD"
+
+prerequisiteRankTrees: []
+connectedRankTrees: []
+switchableRankTiers: []
+
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: []
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 
 ranks:
-  - id: merchant_1
-    displayNameKey: rank.merchant.peddler
+  peddler:
     tier: 1
     weight: 100
-    luckPermsGroup: merchant_peddler
-    prefixKey: rank.merchant.peddler.prefix
-    iconMaterial: COPPER_INGOT
-    enabled: true
-    requirements: []
+    luckPermsGroup: "merchant_peddler"
+    prefixKey: "&8[&7Peddler&8]"
+    suffixKey: ""
+    isInitialRank: true
+    isEnabled: true
+    icon:
+      type: "COPPER_INGOT"
+    nextRanks: ["trader"]
 
-  - id: merchant_2
-    displayNameKey: rank.merchant.trader
+  trader:
     tier: 2
     weight: 200
-    luckPermsGroup: merchant_trader
-    prefixKey: rank.merchant.trader.prefix
-    iconMaterial: IRON_INGOT
-    enabled: true
+    luckPermsGroup: "merchant_trader"
+    prefixKey: "&8[&eTrader&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "IRON_INGOT"
+    previousRanks: ["peddler"]
+    nextRanks: ["broker"]
     requirements:
-      - type: CURRENCY
-        currency: default
-        amount: 1000
-      - type: STATISTIC
-        statisticType: TRADED_WITH_VILLAGER
-        amount: 10
+      trade_goods:
+        icon:
+          type: "EMERALD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "EMERALD"
+              amount: 16
+            item2:
+              type: "GOLD_INGOT"
+              amount: 32
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 10
 
-  - id: merchant_3
-    displayNameKey: rank.merchant.broker
+  broker:
     tier: 3
     weight: 300
-    luckPermsGroup: merchant_broker
-    prefixKey: rank.merchant.broker.prefix
-    iconMaterial: GOLD_INGOT
-    enabled: true
+    luckPermsGroup: "merchant_broker"
+    prefixKey: "&8[&6Broker&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "GOLD_INGOT"
+    previousRanks: ["trader"]
+    nextRanks: ["magnate"]
     requirements:
-      - type: CURRENCY
-        currency: default
-        amount: 10000
-      - type: STATISTIC
-        statisticType: TRADED_WITH_VILLAGER
-        amount: 50
-      - type: ITEM
-        material: EMERALD
-        amount: 32
+      broker_wealth:
+        icon:
+          type: "GOLD_BLOCK"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "EMERALD"
+              amount: 32
+            item2:
+              type: "GOLD_BLOCK"
+              amount: 8
+            item3:
+              type: "DIAMOND"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 20
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 21600
 
-  - id: merchant_4
-    displayNameKey: rank.merchant.magnate
+  magnate:
     tier: 4
     weight: 400
-    luckPermsGroup: merchant_magnate
-    prefixKey: rank.merchant.magnate.prefix
-    iconMaterial: DIAMOND
-    enabled: true
+    luckPermsGroup: "merchant_magnate"
+    prefixKey: "&8[&bMagnate&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "DIAMOND"
+    previousRanks: ["broker"]
+    nextRanks: ["tycoon"]
     requirements:
-      - type: CURRENCY
-        currency: default
-        amount: 50000
-      - type: STATISTIC
-        statisticType: TRADED_WITH_VILLAGER
-        amount: 200
-      - type: ITEM
-        material: EMERALD_BLOCK
-        amount: 16
-      - type: RANK
-        requiredRankId: merchant_3
+      magnate_fortune:
+        icon:
+          type: "DIAMOND_BLOCK"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "EMERALD_BLOCK"
+              amount: 16
+            item2:
+              type: "DIAMOND_BLOCK"
+              amount: 8
+            item3:
+              type: "GOLD_BLOCK"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 43200
 
-  - id: merchant_5
-    displayNameKey: rank.merchant.tycoon
+  tycoon:
     tier: 5
     weight: 500
-    luckPermsGroup: merchant_tycoon
-    prefixKey: rank.merchant.tycoon.prefix
-    iconMaterial: NETHERITE_INGOT
-    enabled: true
+    luckPermsGroup: "merchant_tycoon"
+    prefixKey: "&8[&5Tycoon&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHERITE_INGOT"
+    previousRanks: ["magnate"]
     requirements:
-      - type: CURRENCY
-        currency: default
-        amount: 250000
-      - type: STATISTIC
-        statisticType: TRADED_WITH_VILLAGER
-        amount: 500
-      - type: ITEM
-        material: DIAMOND_BLOCK
-        amount: 16
-      - type: RANK
-        requiredRankId: merchant_4
+      ultimate_wealth:
+        icon:
+          type: "BEACON"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "BEACON"
+              amount: 1
+            item2:
+              type: "NETHERITE_BLOCK"
+              amount: 4
+            item3:
+              type: "DIAMOND_BLOCK"
+              amount: 16
+            item4:
+              type: "EMERALD_BLOCK"
+              amount: 32
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 162000

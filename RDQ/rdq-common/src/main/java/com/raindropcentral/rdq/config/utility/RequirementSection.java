@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * Represents a comprehensive configuration section for requirements within the RaindropQuests system.
  * <p>
- * This section supports all requirement types defined in {@link com.raindropcentral.rdq2.requirement.AbstractRequirement.Type}
+ * This section supports all requirement types defined in {@link com.raindropcentral.rdq.requirement.AbstractRequirement.Type}
  * and provides flexible configuration options for complex requirement structures including items, currencies,
  * composite requirements, choice requirements, and plugin-specific requirements.
  * </p>

@@ -1,97 +1,197 @@
 # Cleric Rank Tree
 # The path of healing and support
 
-id: cleric
-displayNameKey: rank_trees.cleric.name
-descriptionKey: rank_trees.cleric.description
-iconMaterial: GOLDEN_APPLE
 displayOrder: 2
-enabled: true
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 0
+
+icon:
+  type: "GOLDEN_APPLE"
+
+prerequisiteRankTrees: []
+connectedRankTrees: []
+switchableRankTiers: []
+
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: []
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 
 ranks:
-  - id: cleric_1
-    displayNameKey: rank.cleric.acolyte
+  acolyte:
     tier: 1
     weight: 100
-    luckPermsGroup: cleric_acolyte
-    prefixKey: rank.cleric.acolyte.prefix
-    iconMaterial: APPLE
-    enabled: true
-    requirements: []
+    luckPermsGroup: "cleric_acolyte"
+    prefixKey: "&8[&7Acolyte&8]"
+    suffixKey: ""
+    isInitialRank: true
+    isEnabled: true
+    icon:
+      type: "APPLE"
+    nextRanks: ["healer"]
 
-  - id: cleric_2
-    displayNameKey: rank.cleric.healer
+  healer:
     tier: 2
     weight: 200
-    luckPermsGroup: cleric_healer
-    prefixKey: rank.cleric.healer.prefix
-    iconMaterial: GOLDEN_APPLE
-    enabled: true
+    luckPermsGroup: "cleric_healer"
+    prefixKey: "&8[&eHealer&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "GOLDEN_APPLE"
+    previousRanks: ["acolyte"]
+    nextRanks: ["priest"]
     requirements:
-      - type: STATISTIC
-        statisticType: DAMAGE_DEALT
-        amount: 10000
-      - type: ITEM
-        material: GOLDEN_APPLE
-        amount: 10
+      healing_supplies:
+        icon:
+          type: "GOLDEN_APPLE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "GOLDEN_APPLE"
+              amount: 10
+            item2:
+              type: "GLISTERING_MELON_SLICE"
+              amount: 16
+            item3:
+              type: "GOLDEN_CARROT"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 10
 
-  - id: cleric_3
-    displayNameKey: rank.cleric.priest
+  priest:
     tier: 3
     weight: 300
-    luckPermsGroup: cleric_priest
-    prefixKey: rank.cleric.priest.prefix
-    iconMaterial: ENCHANTED_GOLDEN_APPLE
-    enabled: true
+    luckPermsGroup: "cleric_priest"
+    prefixKey: "&8[&6Priest&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "ENCHANTED_GOLDEN_APPLE"
+    previousRanks: ["healer"]
+    nextRanks: ["bishop"]
     requirements:
-      - type: STATISTIC
-        statisticType: DAMAGE_DEALT
-        amount: 50000
-      - type: ITEM
-        material: GOLDEN_APPLE
-        amount: 50
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      priest_supplies:
+        icon:
+          type: "ENCHANTED_GOLDEN_APPLE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "GOLDEN_APPLE"
+              amount: 32
+            item2:
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 2
+            item3:
+              type: "GHAST_TEAR"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 20
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 21600
 
-  - id: cleric_4
-    displayNameKey: rank.cleric.bishop
+  bishop:
     tier: 4
     weight: 400
-    luckPermsGroup: cleric_bishop
-    prefixKey: rank.cleric.bishop.prefix
-    iconMaterial: TOTEM_OF_UNDYING
-    enabled: true
+    luckPermsGroup: "cleric_bishop"
+    prefixKey: "&8[&bBishop&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "TOTEM_OF_UNDYING"
+    previousRanks: ["priest"]
+    nextRanks: ["high_priest"]
     requirements:
-      - type: STATISTIC
-        statisticType: DAMAGE_DEALT
-        amount: 150000
-      - type: ITEM
-        material: ENCHANTED_GOLDEN_APPLE
-        amount: 10
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: cleric_3
+      bishop_supplies:
+        icon:
+          type: "TOTEM_OF_UNDYING"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 8
+            item2:
+              type: "TOTEM_OF_UNDYING"
+              amount: 2
+            item3:
+              type: "BLAZE_ROD"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 43200
 
-  - id: cleric_5
-    displayNameKey: rank.cleric.high_priest
+  high_priest:
     tier: 5
     weight: 500
-    luckPermsGroup: cleric_high_priest
-    prefixKey: rank.cleric.high_priest.prefix
-    iconMaterial: BEACON
-    enabled: true
+    luckPermsGroup: "cleric_high_priest"
+    prefixKey: "&8[&5High Priest&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "BEACON"
+    previousRanks: ["bishop"]
     requirements:
-      - type: STATISTIC
-        statisticType: DAMAGE_DEALT
-        amount: 500000
-      - type: ITEM
-        material: TOTEM_OF_UNDYING
-        amount: 5
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: cleric_4
+      ultimate_healer:
+        icon:
+          type: "BEACON"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "BEACON"
+              amount: 1
+            item2:
+              type: "TOTEM_OF_UNDYING"
+              amount: 5
+            item3:
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 16
+            item4:
+              type: "NETHER_STAR"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 162000

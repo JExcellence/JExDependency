@@ -235,7 +235,7 @@ public class CurrenciesCreatingView extends BaseView {
 					                     this.i18n(
 						                     "identifier.lore",
 						                     contextPlayer
-					                     ).build().splitLines()
+					                     ).build().children()
 				                     )
 				                     .build()
 			)
@@ -280,7 +280,7 @@ public class CurrenciesCreatingView extends BaseView {
 					                     this.i18n(
 						                     "symbol.lore",
 						                     contextPlayer
-					                     ).build().splitLines()
+					                     ).build().children()
 				                     )
 				                     .build()
 			)
@@ -325,7 +325,7 @@ public class CurrenciesCreatingView extends BaseView {
 					                     this.i18n(
 						                     "icon.lore",
 						                     contextPlayer
-					                     ).build().splitLines()
+					                     ).build().children()
 				                     )
 				                     .build()
 			)
@@ -370,7 +370,7 @@ public class CurrenciesCreatingView extends BaseView {
 					                     this.i18n(
 						                     "prefix.lore",
 						                     contextPlayer
-					                     ).build().splitLines()
+					                     ).build().children()
 				                     )
 				                     .build()
 			)
@@ -415,7 +415,7 @@ public class CurrenciesCreatingView extends BaseView {
 					                     this.i18n(
 						                     "suffix.lore",
 						                     contextPlayer
-					                     ).build().splitLines()
+					                     ).build().children()
 				                     )
 				                     .build()
 			)
@@ -467,7 +467,7 @@ public class CurrenciesCreatingView extends BaseView {
 					                     this.i18n(
 						                     "create_currency.lore",
 						                     contextPlayer
-					                     ).build().splitLines()
+					                     ).build().children()
 				                     )
 				                     .build()
 			)
@@ -588,12 +588,12 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.processing",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "identifier",
 			    currencyToCreate.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -614,12 +614,12 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.already_exists",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "identifier",
 			    currencyToCreate.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -642,14 +642,14 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.error",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "identifier",
 			    currencyToCreate.getIdentifier(),
 			    "error",
 			    creationException.getMessage()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -793,12 +793,12 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.currency_not_found_in_cache",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "identifier",
 			    newCurrencyEntity.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -819,12 +819,12 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.failed",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "identifier",
 			    newCurrencyEntity.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -847,14 +847,14 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.database_error",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "identifier",
 			    newCurrencyEntity.getIdentifier(),
 			    "error",
 			    databaseException.getMessage()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -875,12 +875,12 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.successfully_created",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "identifier",
 			    savedCurrency.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -989,14 +989,14 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.success.player_accounts_created",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "player_amount",
 			    accountCount,
 			    "identifier",
 			    savedCurrency.getIdentifier()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -1019,14 +1019,14 @@ public class CurrenciesCreatingView extends BaseView {
 			    "create.player_accounts_error",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "identifier",
 			    savedCurrency.getIdentifier(),
 			    "error",
 			    accountCreationException.getMessage()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**

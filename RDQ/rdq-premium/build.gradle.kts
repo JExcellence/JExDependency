@@ -12,8 +12,15 @@ dependencies {
     // Server API
     compileOnly(libs.paper.api)
 
-    // Adventure APIs
-    compileOnly(libs.bundles.adventure)
+    // Adventure APIs (core APIs are compileOnly as Paper provides them)
+    compileOnly(libs.adventure.api)
+    compileOnly(libs.adventure.minimessage)
+    compileOnly(libs.adventure.serializer.legacy)
+    compileOnly(libs.adventure.serializer.json)
+    compileOnly(libs.adventure.serializer.plain)
+    
+    // Adventure Platform Bukkit must be shaded for Spigot compatibility
+    implementation(libs.adventure.platform.bukkit)
 
     // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
@@ -72,20 +79,23 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
     archiveClassifier.set("Premium")
     archiveVersion.set(project.version.toString())
 
-    // Relocations must be outside dependencies block
-    relocate("com.fasterxml.jackson.core", "de.jexcellence.remapped.com.fasterxml.jackson.core")
-    relocate("com.fasterxml.jackson.databind", "de.jexcellence.remapped.com.fasterxml.jackson.databind")
+    relocate("tools.jackson.core", "de.jexcellence.remapped.tools.jackson.core")
+    relocate("tools.jackson.databind", "de.jexcellence.remapped.tools.jackson.databind")
     relocate("com.fasterxml.jackson.annotation", "de.jexcellence.remapped.com.fasterxml.jackson.annotation")
-    relocate("com.fasterxml.jackson.datatype", "de.jexcellence.remapped.com.fasterxml.jackson.datatype")
+    relocate("tools.jackson.core.datatype", "de.jexcellence.remapped.tools.jackson.core.datatype")
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("org.h2", "de.jexcellence.remapped.org.h2")
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
+    relocate("net.kyori.adventure.platform", "de.jexcellence.remapped.net.kyori.adventure.platform")
 
     // Include all runtime dependencies (not just specific patterns)
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
+    
+    // Explicitly include resources from rdq-common (translations, configs, etc.)
+    from(project(":RDQ:rdq-common").sourceSets.main.get().resources)
 }
 
 tasks.build {

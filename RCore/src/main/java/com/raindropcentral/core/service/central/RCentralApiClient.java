@@ -2,16 +2,23 @@ package com.raindropcentral.core.service.central;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+import com.raindropcentral.core.service.statistics.delivery.BatchPayload;
+import com.raindropcentral.core.service.statistics.delivery.DeliveryReceipt;
+import com.raindropcentral.core.service.statistics.delivery.StatisticEntry;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -94,15 +101,158 @@ public class RCentralApiClient {
             final @NotNull String apiKey,
             final @NotNull String serverUuid,
             final @NotNull String serverVersion,
-            final @NotNull String pluginVersion
+            final @NotNull String pluginVersion,
+            final int maxPlayers,
+            final @Nullable String minecraftUuid,
+            final @Nullable String minecraftUsername
     ) {
         var payload = new JsonObject();
         payload.addProperty("serverUuid", serverUuid);
         payload.addProperty("serverVersion", serverVersion);
         payload.addProperty("pluginVersion", pluginVersion);
+        payload.addProperty("maxPlayers", maxPlayers);
+        if (minecraftUuid != null) {
+            payload.addProperty("minecraftUuid", minecraftUuid);
+        }
+        if (minecraftUsername != null) {
+            payload.addProperty("minecraftUsername", minecraftUsername);
+        }
 
         return sendRequest("/api/server-data/wakeup", "POST", apiKey, payload);
     }
+
+    // ==================== Statistics Delivery Methods ====================
+
+    /**
+     * Delivers statistics to the RaindropCentral backend.
+     *
+     * @param apiKey  the API key
+     * @param payload the batch payload to deliver
+     * @return a future containing the delivery receipt
+     */
+    public CompletableFuture<DeliveryReceipt> deliverStatistics(
+            final @NotNull String apiKey,
+            final @NotNull BatchPayload payload
+    ) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String json = gson.toJson(payload);
+                var request = HttpRequest.newBuilder()
+                        .uri(URI.create(baseUrl + "/api/statistics/deliver"))
+                        .header("X-API-Key", apiKey)
+                        .header("Content-Type", "application/json")
+                        .timeout(Duration.ofSeconds(30))
+                        .POST(HttpRequest.BodyPublishers.ofString(json))
+                        .build();
+
+                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    return gson.fromJson(response.body(), DeliveryReceipt.class);
+                } else {
+                    throw new RuntimeException("Delivery failed with status " + response.statusCode() +
+                            ": " + response.body());
+                }
+
+            } catch (IOException | InterruptedException e) {
+                if (e instanceof ConnectException) {
+                    logger.log(Level.INFO, "Backend not reachable of " + baseUrl + ". If you think this is an issue contact the administrator of the plugin.");
+                    return null;
+                }
+
+                logger.log(Level.WARNING, "Statistics delivery failed", e);
+                throw new RuntimeException("Statistics delivery failed: " + e.getMessage(), e);
+            }
+        });
+    }
+
+    /**
+     * Delivers compressed statistics to the RaindropCentral backend.
+     *
+     * @param apiKey            the API key
+     * @param compressedPayload the GZIP compressed payload
+     * @param batchId           the batch ID
+     * @return a future containing the delivery receipt
+     */
+    public CompletableFuture<DeliveryReceipt> deliverStatisticsCompressed(
+            final @NotNull String apiKey,
+            final byte @NotNull [] compressedPayload,
+            final @NotNull String batchId
+    ) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                var request = HttpRequest.newBuilder()
+                        .uri(URI.create(baseUrl + "/api/statistics/deliver"))
+                        .header("X-API-Key", apiKey)
+                        .header("Content-Type", "application/json")
+                        .header("Content-Encoding", "gzip")
+                        .header("X-Batch-Id", batchId)
+                        .timeout(Duration.ofSeconds(30))
+                        .POST(HttpRequest.BodyPublishers.ofByteArray(compressedPayload))
+                        .build();
+
+                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    return gson.fromJson(response.body(), DeliveryReceipt.class);
+                } else {
+                    throw new RuntimeException("Compressed delivery failed with status " +
+                            response.statusCode() + ": " + response.body());
+                }
+
+            } catch (IOException | InterruptedException e) {
+                logger.log(Level.WARNING, "Compressed statistics delivery failed", e);
+                throw new RuntimeException("Compressed statistics delivery failed: " + e.getMessage(), e);
+            }
+        });
+    }
+
+    /**
+     * Requests player statistics from the backend for cross-server sync.
+     *
+     * @param apiKey     the API key
+     * @param playerUuid the player UUID
+     * @return a future containing the list of statistic entries
+     */
+    public CompletableFuture<List<StatisticEntry>> requestPlayerStatistics(
+            final @NotNull String apiKey,
+            final @NotNull UUID playerUuid
+    ) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                var request = HttpRequest.newBuilder()
+                        .uri(URI.create(baseUrl + "/api/statistics/player/" + playerUuid))
+                        .header("X-API-Key", apiKey)
+                        .header("Content-Type", "application/json")
+                        .timeout(Duration.ofSeconds(30))
+                        .GET()
+                        .build();
+
+                var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+                if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                    return gson.fromJson(response.body(),
+                            new TypeToken<List<StatisticEntry>>(){}.getType());
+                } else if (response.statusCode() == 404) {
+                    return List.of(); // No statistics found for player
+                } else {
+                    throw new RuntimeException("Request failed with status " + response.statusCode() +
+                            ": " + response.body());
+                }
+
+            } catch (IOException | InterruptedException e) {
+                if (e instanceof ConnectException) {
+                    logger.log(Level.INFO, "Backend not reachable of " + baseUrl + ". If you think this is an issue contact the administrator of the plugin.");
+                    return List.of();
+                }
+
+                logger.log(Level.WARNING, "Player statistics request failed for " + playerUuid, e);
+                throw new RuntimeException("Player statistics request failed: " + e.getMessage(), e);
+            }
+        });
+    }
+
+    // ==================== Internal Methods ====================
 
     private CompletableFuture<ApiResponse> sendRequest(
             final @NotNull String endpoint,
@@ -130,6 +280,11 @@ public class RCentralApiClient {
                 return new ApiResponse(response.statusCode(), response.body(), null);
 
             } catch (IOException | InterruptedException e) {
+                if (e instanceof ConnectException) {
+                    logger.log(Level.INFO, "Backend not reachable of " + baseUrl + endpoint + ". If you think this is an issue contact the administrator of the plugin.");
+                    return new ApiResponse(0, null, null);
+                }
+
                 logger.log(Level.WARNING, "API request failed: " + endpoint, e);
                 return new ApiResponse(0, null, e.getMessage());
             }

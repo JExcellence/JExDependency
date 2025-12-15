@@ -41,631 +41,650 @@ import java.util.logging.Logger;
  * @since TBD
  */
 public class RankRequirementDetailView extends APaginatedView<RankRequirementDetailView.RequirementDetailItem> {
-	
+
 	private static final Logger LOGGER = CentralLogger.getLogger(RankRequirementDetailView.class.getName());
-	
+
 	private final State<RDQ>                     rdq               = initialState("plugin");
 	private final State<RDQPlayer>                 currentPlayer     = initialState("player");
 	private final State<RRankTree>               selectedRankTree  = this.initialState("rankTree");
 	private final State<RRankUpgradeRequirement> targetRequirement = initialState("requirement");
-	
+
 	private RankRequirementProgressManager progressManager;
-	
+
 	/**
 	 * Represents an item to display in the paginated view.
 	 */
 	public static class RequirementDetailItem {
-		
+
 		private final ItemStack                    displayItem;
 		private final String                       itemName;
 		private final ItemRequirement.ItemProgress itemProgress;
 		private final int                          itemIndex;
 		private final RequirementDetailItemType    type;
-		
+
 		public RequirementDetailItem(
-			final @NotNull ItemStack displayItem,
-			final @NotNull String itemName,
-			final @NotNull ItemRequirement.ItemProgress itemProgress,
-			final int itemIndex
+				final @NotNull ItemStack displayItem,
+				final @NotNull String itemName,
+				final @NotNull ItemRequirement.ItemProgress itemProgress,
+				final int itemIndex
 		) {
-			
+
 			this.displayItem = displayItem;
 			this.itemName = itemName;
 			this.itemProgress = itemProgress;
 			this.itemIndex = itemIndex;
 			this.type = RequirementDetailItemType.ITEM_PROGRESS;
 		}
-		
+
 		public RequirementDetailItem(
-			final @NotNull ItemStack displayItem,
-			final @NotNull String itemName,
-			final @NotNull RequirementDetailItemType type
+				final @NotNull ItemStack displayItem,
+				final @NotNull String itemName,
+				final @NotNull RequirementDetailItemType type
 		) {
-			
+
 			this.displayItem = displayItem;
 			this.itemName = itemName;
 			this.itemProgress = null;
 			this.itemIndex = - 1;
 			this.type = type;
 		}
-		
+
 		public ItemStack getDisplayItem() {
-			
+
 			return displayItem;
 		}
-		
+
 		public String getItemName() {
-			
+
 			return itemName;
 		}
-		
+
 		public ItemRequirement.ItemProgress getItemProgress() {
-			
+
 			return itemProgress;
 		}
-		
+
 		public int getItemIndex() {
-			
+
 			return itemIndex;
 		}
-		
+
 		public RequirementDetailItemType getType() {
-			
+
 			return type;
 		}
-		
+
 	}
-	
+
 	public enum RequirementDetailItemType {
 		ITEM_PROGRESS,
 		SUMMARY,
 		TIPS,
 		FILLER
 	}
-	
+
 	public RankRequirementDetailView() {
-		
+
 		super(RankPathRankRequirementOverview.class);
 	}
-	
+
 	@Override
 	protected String getKey() {
-		
+
 		return "rank_requirement_detail_ui";
 	}
-	
+
 	@Override
 	protected String[] getLayout() {
-		
+
 		return new String[]{
-			"         ",
-			"    i    ",
-			"  t s a  ",
-			" O O O O ",
-			" O O O O ",
-			"b  <p>   "
+				"         ",
+				"    i    ",
+				"  t s a  ",
+				" O O O O ",
+				" O O O O ",
+				"b  <p>   "
 		};
 	}
-	
+
 	@Override
 	protected CompletableFuture<List<RequirementDetailItem>> getAsyncPaginationSource(
-		final @NotNull Context context
+			final @NotNull Context context
 	) {
-		
+
 		return CompletableFuture.supplyAsync(() -> {
 			try {
 				final RRankUpgradeRequirement requirement = this.targetRequirement.get(context);
 				final Player                  player      = context.getPlayer();
-				
+
 				if (
-					requirement == null
+						requirement == null
 				) {
 					return null;
 				}
-				
+
 				List<RequirementDetailItem> items       = new ArrayList<>();
 				AbstractRequirement         abstractReq = requirement.getRequirement().getRequirement();
-				
+
 				if (
-					abstractReq instanceof ItemRequirement itemReq
+						abstractReq instanceof ItemRequirement itemReq
 				) {
 					List<ItemRequirement.ItemProgress> itemProgressList = itemReq.getDetailedProgress(player);
-					
+
 					for (
-						int i = 0; i < itemProgressList.size(); i++
+							int i = 0; i < itemProgressList.size(); i++
 					) {
 						ItemRequirement.ItemProgress itemProgress = itemProgressList.get(i);
 						ItemStack                    displayItem  = this.createItemProgressItem(
-							player,
-							itemProgress,
-							i + 1
+								player,
+								itemProgress,
+								i + 1
 						);
 						items.add(new RequirementDetailItem(
-							displayItem,
-							"Item " + (i + 1),
-							itemProgress,
-							i
+								displayItem,
+								"Item " + (i + 1),
+								itemProgress,
+								i
 						));
 					}
-					
+
 					if (
-						itemProgressList.size() > 1
+							itemProgressList.size() > 1
 					) {
 						ItemStack summaryItem = this.createItemRequirementSummary(
-							player,
-							itemReq
+								player,
+								itemReq
 						);
 						items.add(new RequirementDetailItem(
-							summaryItem,
-							"Summary",
-							RequirementDetailItemType.SUMMARY
+								summaryItem,
+								"Summary",
+								RequirementDetailItemType.SUMMARY
 						));
 					}
-					
+
 					ItemStack tipsItem = this.createItemRequirementTips(
-						player,
-						itemReq
+							player,
+							itemReq
 					);
 					items.add(new RequirementDetailItem(
-						tipsItem,
-						"Tips",
-						RequirementDetailItemType.TIPS
+							tipsItem,
+							"Tips",
+							RequirementDetailItemType.TIPS
 					));
 				} else {
 					ItemStack summaryItem = this.createGenericSummaryItem(
-						player,
-						abstractReq,
-						requirement,
-						context
+							player,
+							abstractReq,
+							requirement,
+							context
 					);
 					items.add(new RequirementDetailItem(
-						summaryItem,
-						"Summary",
-						RequirementDetailItemType.SUMMARY
+							summaryItem,
+							"Summary",
+							RequirementDetailItemType.SUMMARY
 					));
-					
+
 					ItemStack tipsItem = this.createRequirementTipsItem(
-						player,
-						abstractReq
+							player,
+							abstractReq
 					);
 					items.add(new RequirementDetailItem(
-						tipsItem,
-						"Tips",
-						RequirementDetailItemType.TIPS
+							tipsItem,
+							"Tips",
+							RequirementDetailItemType.TIPS
 					));
 				}
-				
+
 				return items;
 			} catch (
-				  final Exception exception
+					final Exception exception
 			) {
 				LOGGER.log(
-					Level.SEVERE,
-					"Error generating pagination source",
-					exception
+						Level.SEVERE,
+						"Error generating pagination source",
+						exception
 				);
 				return null;
 			}
 		});
 	}
-	
+
 	@Override
 	protected void renderEntry(
-		final @NotNull Context context,
-		final @NotNull BukkitItemComponentBuilder builder,
-		final int index,
-		final @NotNull RequirementDetailItem entry
+			final @NotNull Context context,
+			final @NotNull BukkitItemComponentBuilder builder,
+			final int index,
+			final @NotNull RequirementDetailItem entry
 	) {
-		
+
 		builder.withItem(entry.getDisplayItem()).updateOnClick().onClick(clickContext -> handleDetailItemClick(
-			context,
-			entry
+				context,
+				entry
 		));
 	}
-	
+
 	@Override
 	protected Map<String, Object> getTitlePlaceholders(final @NotNull OpenContext open) {
-		
+
 		try {
 			final RRankUpgradeRequirement requirement = this.targetRequirement.get(open);
-			
+
 			if (
-				requirement == null
+					requirement == null
 			) {
 				return Map.of(
-					"requirement_type",
-					"UNKNOWN"
+						"requirement_type",
+						"UNKNOWN"
 				);
 			}
-			
+
 			return Map.of(
-				"requirement_type",
-				this.getRequirementType(requirement),
-				"requirement_name",
-				this.getRequirementName(requirement)
+					"requirement_type",
+					this.getRequirementType(requirement),
+					"requirement_name",
+					this.getRequirementName(requirement)
 			);
 		} catch (
-			  final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Error in getTitlePlaceholders",
-				exception
+					Level.WARNING,
+					"Error in getTitlePlaceholders",
+					exception
 			);
 			return Map.of(
-				"requirement_type",
-				"ERROR"
+					"requirement_type",
+					"ERROR"
 			);
 		}
 	}
-	
+
 	@Override
 	protected void onPaginatedRender(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
+			final @NotNull RenderContext render,
+			final @NotNull Player player
 	) {
-		
+
 		this.progressManager = new RankRequirementProgressManager(this.rdq.get(render));
-		
+
 		try {
 			final RRankUpgradeRequirement requirement = this.targetRequirement.get(render);
 			if (
-				requirement == null
+					requirement == null
 			) {
 				this.renderErrorState(
-					render,
-					player
+						render,
+						player
 				);
 				return;
 			}
-			
+
 			final RDQPlayer                                                rdqPlayer  = this.currentPlayer.get(render);
 			final RankRequirementProgressManager.RequirementProgressData progress = this.progressManager.getRequirementProgress(
-				player,
-				rdqPlayer,
-				requirement
+					player,
+					rdqPlayer,
+					requirement
 			);
-			
+
 			render.layoutSlot(
-				'i',
-				this.createRequirementInfoItem(
-					player,
-					requirement,
-					progress
-				)
+					'i',
+					this.createRequirementInfoItem(
+							player,
+							requirement,
+							progress
+					)
 			).onClick(this::handleInfoClick);
-			
+
 			render.layoutSlot(
-				't',
-				this.createProgressItem(
-					player,
-					requirement,
-					progress
-				)
+					't',
+					this.createProgressItem(
+							player,
+							requirement,
+							progress
+					)
 			).onClick(context -> this.handleProgressClick(
-				context,
-				requirement
+					context,
+					requirement
 			));
-			
+
 			render.layoutSlot(
-				's',
-				this.createStatusItem(
-					player,
-					requirement,
-					progress
-				)
+					's',
+					this.createStatusItem(
+							player,
+							requirement,
+							progress
+					)
 			).onClick(context -> this.handleStatusClick(
-				context,
-				requirement
+					context,
+					requirement
 			));
-			
+
 			render.layoutSlot(
-				'a',
-				this.createActionButton(
-					player,
+					'a',
+					this.createActionButton(
+							player,
+							requirement,
+							progress
+					)
+			).onClick(context -> this.handleActionClick(
+					context,
 					requirement,
 					progress
-				)
-			).onClick(context -> this.handleActionClick(
-				context,
-				requirement,
-				progress
 			));
+
+			// Render back button
+			render.layoutSlot(
+					'b',
+					this.createBackButton(player)
+			).onClick(context -> context.back());
 		} catch (
-			  final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.SEVERE,
-				"Critical error during requirement detail render",
-				exception
+					Level.SEVERE,
+					"Critical error during requirement detail render",
+					exception
 			);
 			this.renderErrorState(
-				render,
-				player
+					render,
+					player
 			);
 		}
 	}
-	
+
+	/**
+	 * Creates the back button item.
+	 */
+	private ItemStack createBackButton(final @NotNull Player player) {
+		try {
+			return UnifiedBuilderFactory.item(
+					new com.raindropcentral.rplatform.utility.heads.view.Return().getHead(player)
+			).setLore(
+					this.i18n("back.lore", player).build().children()
+			).build();
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to create back button", exception);
+			return UnifiedBuilderFactory.item(Material.ARROW)
+					.setName(Component.text("Back"))
+					.build();
+		}
+	}
+
 	/**
 	 * Creates an item showing progress for a specific required item.
 	 */
 	private ItemStack createItemProgressItem(
-		final @NotNull Player player,
-		final @NotNull ItemRequirement.ItemProgress itemProgress,
-		final int itemNumber
+			final @NotNull Player player,
+			final @NotNull ItemRequirement.ItemProgress itemProgress,
+			final int itemNumber
 	) {
-		
+
 		try {
 			List<Component> lore = new ArrayList<>(List.of(
-				Component.empty(),
-				this.i18n(
-					"progress_text",
-					player
-				).build().component(),
-				this.createProgressBar(
-					itemProgress.progress(),
-					10
-				),
-				Component.empty(),
-				this.i18n(
-					"current_progress",
-					player
-				).withAll(
-					Map.of(
-						"current_amount",
-						itemProgress.currentAmount(),
-						"required_amount",
-						itemProgress.requiredAmount()
-					)
-				).build().component(),
-				Component.empty(),
-				this.i18n(
-					"current_progress_percentage",
-					player
-				).with(
-					"progress_percentage",
-					itemProgress.getProgressPercentage()
-				).build().component()
+					Component.empty(),
+					this.i18n(
+							"progress_text",
+							player
+					).build().component(),
+					this.createProgressBar(
+							itemProgress.progress(),
+							10
+					),
+					Component.empty(),
+					this.i18n(
+							"current_progress",
+							player
+					).withPlaceholders(
+							Map.of(
+									"current_amount",
+									itemProgress.currentAmount(),
+									"required_amount",
+									itemProgress.requiredAmount()
+							)
+					).build().component(),
+					Component.empty(),
+					this.i18n(
+							"current_progress_percentage",
+							player
+					).withPlaceholder("progress_percentage",
+							itemProgress.getProgressPercentage()
+					).build().component()
 			));
-			
+
 			if (
-				! itemProgress.completed()
+					! itemProgress.completed()
 			) {
 				lore.addAll(
-					List.of(
-						Component.empty(),
-						this.i18n(
-							"required_amount_left",
-							player
-						).with(
-							"required_amount",
-							itemProgress.getShortage()
-						).build().component()
-					)
+						List.of(
+								Component.empty(),
+								this.i18n(
+										"required_amount_left",
+										player
+								).withPlaceholder("required_amount",
+										itemProgress.getShortage()
+								).build().component()
+						)
 				);
 			}
-			
+
 			lore.add(Component.empty());
-			
+
 			if (
-				itemProgress.completed()
+					itemProgress.completed()
 			) {
 				lore.add(
-					this.i18n(
-						"progress_completed",
-						player
-					).build().component()
+						this.i18n(
+								"progress_completed",
+								player
+						).build().component()
 				);
 			} else if (
-				       itemProgress.currentAmount() > 0
+					itemProgress.currentAmount() > 0
 			) {
 				lore.add(
-					this.i18n(
-						"in_progress",
-						player
-					).build().component()
+						this.i18n(
+								"in_progress",
+								player
+						).build().component()
 				);
 			} else {
 				lore.add(
-					this.i18n(
-						"progress_not_started",
-						player
-					).build().component()
+						this.i18n(
+								"progress_not_started",
+								player
+						).build().component()
 				);
 			}
-			
+
 			lore.addAll(
-				List.of(
-					Component.empty(),
-					this.i18n(
-						"progress_details",
-						player
-					).with(
-						"item_number",
-						itemNumber
-					).build().component()
-				)
-			);
-			
-			return
-				UnifiedBuilderFactory
-					.item(
-						itemProgress.requiredItem()
+					List.of(
+							Component.empty(),
+							this.i18n(
+									"progress_details",
+									player
+							).withPlaceholder("item_number",
+									itemNumber
+							).build().component()
 					)
-					.setLore(
-						lore
-					).setAmount(
-						Math.max(
-							1,
-							Math.min(
-								64,
-								itemProgress.requiredAmount()
+			);
+
+			return
+					UnifiedBuilderFactory
+							.item(
+									itemProgress.requiredItem()
 							)
-						)
-					).setGlowing(itemProgress.completed()).addItemFlags(
-						ItemFlag.HIDE_ATTRIBUTES,
-						ItemFlag.HIDE_ENCHANTS,
-						ItemFlag.HIDE_STORED_ENCHANTS,
-						ItemFlag.HIDE_DESTROYS
-					).build()
-				;
+							.setLore(
+									lore
+							).setAmount(
+									Math.max(
+											1,
+											Math.min(
+													64,
+													itemProgress.requiredAmount()
+											)
+									)
+							).setGlowing(itemProgress.completed()).addItemFlags(
+									ItemFlag.HIDE_ATTRIBUTES,
+									ItemFlag.HIDE_ENCHANTS,
+									ItemFlag.HIDE_STORED_ENCHANTS,
+									ItemFlag.HIDE_DESTROYS
+							).build()
+					;
 		} catch (
-			  final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to create item progress item",
-				exception
+					Level.WARNING,
+					"Failed to create item progress item",
+					exception
 			);
 			return this.createFallbackItem(
-				player,
-				"Item " + itemNumber + " (Error)"
+					player,
+					"Item " + itemNumber + " (Error)"
 			);
 		}
 	}
-	
+
 	/**
 	 * Creates a summary item for item requirements.
 	 */
 	private ItemStack createItemRequirementSummary(
-		final @NotNull Player player,
-		final @NotNull ItemRequirement itemReq
+			final @NotNull Player player,
+			final @NotNull ItemRequirement itemReq
 	) {
-		
+
 		List<ItemRequirement.ItemProgress> itemProgressList = itemReq.getDetailedProgress(player);
-		
+
 		int    completedItems  = 0;
 		int    totalItems      = itemProgressList.size();
 		double overallProgress = 0.0;
-		
+
 		for (
-			ItemRequirement.ItemProgress progress : itemProgressList
+				ItemRequirement.ItemProgress progress : itemProgressList
 		) {
 			if (
-				progress.completed()
+					progress.completed()
 			) {
 				completedItems++;
 			}
 			overallProgress += progress.progress();
 		}
-		
+
 		overallProgress = overallProgress / totalItems;
-		
+
 		List<Component> lore = new ArrayList<>(
-			List.of(
-				Component.empty(),
-				this.i18n(
-					"summary.items_completed",
-					player
-				).withAll(
-					Map.of(
-						"completed_item_amount",
-						completedItems,
-						"total_item_amount",
-						totalItems
-					)
-				).build().component(),
-				Component.empty(),
-				this.createProgressBar(
-					overallProgress,
-					15
-				),
-				Component.empty(),
-				this.i18n(
-					"current_progress_percentage",
-					player
-				).with(
-					"progress_percentage",
-					String.format(
-						"%.1f",
-						overallProgress * 100
-					) + "%"
-				).build().component(),
-				this.i18n(
-					"current_progress_status",
-					player
-				).with(
-					"progress_status",
-					overallProgress >= 1.0 ?
-					"COMPLETED" :
-					"IN PROGRESS"
-				).build().component()
-			)
+				List.of(
+						Component.empty(),
+						this.i18n(
+								"summary.items_completed",
+								player
+						).withPlaceholders(
+								Map.of(
+										"completed_item_amount",
+										completedItems,
+										"total_item_amount",
+										totalItems
+								)
+						).build().component(),
+						Component.empty(),
+						this.createProgressBar(
+								overallProgress,
+								15
+						),
+						Component.empty(),
+						this.i18n(
+								"current_progress_percentage",
+								player
+						).withPlaceholder("progress_percentage",
+								String.format(
+										"%.1f",
+										overallProgress * 100
+								) + "%"
+						).build().component(),
+						this.i18n(
+								"current_progress_status",
+								player
+						).withPlaceholder("progress_status",
+								overallProgress >= 1.0 ?
+										"COMPLETED" :
+										"IN PROGRESS"
+						).build().component()
+				)
 		);
-		
+
 		return UnifiedBuilderFactory.item(Material.CHEST)
-		                            .setName(
-			                            this.i18n(
-				                            "current_progress_summary",
-				                            player
-			                            ).build().component()
-		                            )
-		                            .setLore(lore)
-		                            .addItemFlags(
-			                            ItemFlag.HIDE_ATTRIBUTES,
-			                            ItemFlag.HIDE_ENCHANTS,
-			                            ItemFlag.HIDE_ATTRIBUTES,
-			                            ItemFlag.HIDE_UNBREAKABLE
-		                            )
-		                            .setGlowing(overallProgress >= 1.0)
-		                            .build();
+				.setName(
+						this.i18n(
+								"current_progress_summary",
+								player
+						).build().component()
+				)
+				.setLore(lore)
+				.addItemFlags(
+						ItemFlag.HIDE_ATTRIBUTES,
+						ItemFlag.HIDE_ENCHANTS,
+						ItemFlag.HIDE_ATTRIBUTES,
+						ItemFlag.HIDE_UNBREAKABLE
+				)
+				.setGlowing(overallProgress >= 1.0)
+				.build();
 	}
-	
+
 	/**
 	 * Creates a tips item for item requirements.
 	 */
 	private ItemStack createItemRequirementTips(
-		final @NotNull Player player,
-		final @NotNull ItemRequirement itemReq
+			final @NotNull Player player,
+			final @NotNull ItemRequirement itemReq
 	) {
-		
+
 		return
-			UnifiedBuilderFactory
-				.item(Material.KNOWLEDGE_BOOK)
-				.setLore(
-					this.i18n(
-						"item_requirement.tip",
-						player
-					).build().splitLines()
-				)
-				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-				.build();
+				UnifiedBuilderFactory
+						.item(Material.KNOWLEDGE_BOOK)
+						.setLore(
+								this.i18n(
+										"item_requirement.tip",
+										player
+								).build().children()
+						)
+						.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+						.build();
 	}
-	
+
 	/**
 	 * Creates a visual progress bar string.
 	 */
 	private Component createProgressBar(
-		double progress,
-		int length
+			double progress,
+			int length
 	) {
-		
+
 		int filled = (int) (progress * length);
 		return
-			Component
-				.text("")
-				.append(
-					MiniMessage.miniMessage().deserialize(
-						"<green>█</green>".repeat(Math.max(0, filled))
-					)
-				)
-				.append(
-					MiniMessage.miniMessage().deserialize(
-						"<gray>█</gray>".repeat(Math.max(0, length - filled))
-					)
-				);
+				Component
+						.text("")
+						.append(
+								MiniMessage.miniMessage().deserialize(
+										"<green>█</green>".repeat(Math.max(0, filled))
+								)
+						)
+						.append(
+								MiniMessage.miniMessage().deserialize(
+										"<gray>█</gray>".repeat(Math.max(0, length - filled))
+								)
+						);
 	}
-	
+
 	/**
 	 * Creates a summary item for generic requirements.
 	 */
 	private ItemStack createGenericSummaryItem(
-		final @NotNull Player player,
-		final @NotNull AbstractRequirement abstractReq,
-		final @NotNull RRankUpgradeRequirement requirement,
-		final @NotNull Context context
+			final @NotNull Player player,
+			final @NotNull AbstractRequirement abstractReq,
+			final @NotNull RRankUpgradeRequirement requirement,
+			final @NotNull Context context
 	) {
-		
+
 		Material iconMaterial = switch (abstractReq.getType()) {
 			case CURRENCY -> Material.GOLD_INGOT;
 			case EXPERIENCE_LEVEL -> Material.EXPERIENCE_BOTTLE;
@@ -675,353 +694,340 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			default -> Material.BOOK;
 		};
 		final RankRequirementProgressManager.RequirementProgressData progress = this.progressManager.getRequirementProgress(
-			player,
-			this.currentPlayer.get(context),
-			requirement
+				player,
+				this.currentPlayer.get(context),
+				requirement
 		);
-		
+
 		List<Component> lore = new ArrayList<>(
-			List.of(
-				this.i18n(
-					"summary.requirement_type",
-					player
-				).with(
-					"type",
-					abstractReq.getType()
-				).build().component(),
-				Component.empty(),
-				this.createProgressBar(
-					progress.getProgressPercentage() / 100,
-					15
-				),
-				this.i18n(
-					"summary.progress_percentage",
-					player
-				).with(
-					"completion_progress_percentage",
-					progress.getProgressAsPercentage() + "%"
-				).build().component(),
-				Component.empty(),
-				this.i18n(
-					"summary.completion_status",
-					player
-				).with(
-					"completion_status",
-					progress.getStatus().name()
-				).build().component()
-			)
+				List.of(
+						this.i18n(
+								"summary.requirement_type",
+								player
+						).withPlaceholder("type",
+								abstractReq.getType()
+						).build().component(),
+						Component.empty(),
+						this.createProgressBar(
+								progress.getProgressPercentage() / 100,
+								15
+						),
+						this.i18n(
+								"summary.progress_percentage",
+								player
+						).withPlaceholder("completion_progress_percentage",
+								progress.getProgressAsPercentage() + "%"
+						).build().component(),
+						Component.empty(),
+						this.i18n(
+								"summary.completion_status",
+								player
+						).withPlaceholder("completion_status",
+								progress.getStatus().name()
+						).build().component()
+				)
 		);
-		
+
 		return
-			UnifiedBuilderFactory.item(
-				iconMaterial
-			).setName(
-				this.i18n(
-					"summary.requirement_summary.name",
-					player
-				).build().component()
-			).setLore(
-				lore
-			).addItemFlags(
-				ItemFlag.HIDE_ATTRIBUTES,
-				ItemFlag.HIDE_ENCHANTS,
-				ItemFlag.HIDE_STORED_ENCHANTS
-			).setGlowing(progress.isCompleted()).build();
+				UnifiedBuilderFactory.item(
+						iconMaterial
+				).setName(
+						this.i18n(
+								"summary.requirement_summary.name",
+								player
+						).build().component()
+				).setLore(
+						lore
+				).addItemFlags(
+						ItemFlag.HIDE_ATTRIBUTES,
+						ItemFlag.HIDE_ENCHANTS,
+						ItemFlag.HIDE_STORED_ENCHANTS
+				).setGlowing(progress.isCompleted()).build();
 	}
-	
+
 	/**
 	 * Creates a tips item for the requirement.
 	 */
 	private ItemStack createRequirementTipsItem(
-		final @NotNull Player player,
-		final @NotNull AbstractRequirement abstractReq
+			final @NotNull Player player,
+			final @NotNull AbstractRequirement abstractReq
 	) {
-		
+
 		List<Component> lore = new ArrayList<>();
-		
+
 		switch (abstractReq.getType()) {
 			case CURRENCY -> {
 				lore.addAll(
-					this.i18n(
-						"requirement_tip.currency",
-						player
-					).build().splitLines()
+						this.i18n(
+								"requirement_tip.currency",
+								player
+						).build().children()
 				);
 			}
 			case EXPERIENCE_LEVEL -> {
 				lore.addAll(
-					this.i18n(
-						"requirement_tip.experience_level",
-						player
-					).build().splitLines()
+						this.i18n(
+								"requirement_tip.experience_level",
+								player
+						).build().children()
 				);
 			}
 			case PLAYTIME -> {
 				lore.addAll(
-					this.i18n(
-						"requirement_tip.playtime",
-						player
-					).build().splitLines()
+						this.i18n(
+								"requirement_tip.playtime",
+								player
+						).build().children()
 				);
 			}
 			default -> {
 				lore.addAll(
-					this.i18n(
-						"requirement_tip.other",
-						player
-					).build().splitLines()
+						this.i18n(
+								"requirement_tip.other",
+								player
+						).build().children()
 				);
 			}
 		}
-		
+
 		return UnifiedBuilderFactory.item(
-			Material.KNOWLEDGE_BOOK
+				Material.KNOWLEDGE_BOOK
 		).setName(
-			this.i18n(
-				"summary.requirement_tip.name",
-				player
-			).build().component()
+				this.i18n(
+						"summary.requirement_tip.name",
+						player
+				).build().component()
 		).setLore(
-			lore
+				lore
 		).addItemFlags(
-			ItemFlag.HIDE_ATTRIBUTES,
-			ItemFlag.HIDE_ENCHANTS,
-			ItemFlag.HIDE_STORED_ENCHANTS
+				ItemFlag.HIDE_ATTRIBUTES,
+				ItemFlag.HIDE_ENCHANTS,
+				ItemFlag.HIDE_STORED_ENCHANTS
 		).build();
 	}
-	
+
 	/**
 	 * Handles clicking on detail items in the pagination.
 	 */
 	private void handleDetailItemClick(
-		final @NotNull Context context,
-		final @NotNull RequirementDetailItem detailItem
+			final @NotNull Context context,
+			final @NotNull RequirementDetailItem detailItem
 	) {
-		
+
 		final Player player = context.getPlayer();
-		
+
 		try {
 			switch (detailItem.getType()) {
 				case ITEM_PROGRESS -> {
 					if (detailItem.getItemProgress() != null) {
 						handleItemProgressClick(
-							context,
-							detailItem.getItemProgress()
+								context,
+								detailItem.getItemProgress()
 						);
 					}
 				}
 				case SUMMARY -> {
 					this.i18n(
-						    "summary_clicked",
-						    player
-					    )
-					    .withPrefix()
-					    .send();
+									"summary_clicked",
+									player
+							)
+							.includePrefix()
+							.build().sendMessage();
 				}
 				case TIPS -> {
 					this.i18n(
-						    "tips_clicked",
-						    player
-					    )
-					    .withPrefix()
-					    .send();
+									"tips_clicked",
+									player
+							)
+							.includePrefix()
+							.build().sendMessage();
 				}
 				default -> {
 				}
 			}
 		} catch (Exception e) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to handle detail item click",
-				e
+					Level.WARNING,
+					"Failed to handle detail item click",
+					e
 			);
 		}
 	}
-	
+
 	/**
 	 * Handles clicking on individual item progress items.
 	 */
 	private void handleItemProgressClick(
-		final @NotNull Context context,
-		final @NotNull ItemRequirement.ItemProgress itemProgress
+			final @NotNull Context context,
+			final @NotNull ItemRequirement.ItemProgress itemProgress
 	) {
-		
+
 		final Player player = context.getPlayer();
-		
+
 		try {
 			this.i18n(
-				    "item_detail.header",
-				    player
-			    )
-			    .with(
-				    "item_name",
-				    itemProgress.requiredItem().getType().name()
-			    )
-			    .with(
-				    "item_number",
-				    itemProgress.index() + 1
-			    )
-			    .withPrefix()
-			    .send();
-			
+							"item_detail.header",
+							player
+					)
+					.withPlaceholder("item_name",
+							itemProgress.requiredItem().getType().name()
+					)
+					.withPlaceholder("item_number",
+							itemProgress.index() + 1
+					)
+					.includePrefix()
+					.build().sendMessage();
+
 			this.i18n(
-				    "item_detail.progress",
-				    player
-			    )
-			    .with(
-				    "current",
-				    itemProgress.currentAmount()
-			    )
-			    .with(
-				    "required",
-				    itemProgress.requiredAmount()
-			    )
-			    .with(
-				    "percentage",
-				    itemProgress.getProgressPercentage()
-			    )
-			    .withPrefix()
-			    .send();
-			
+							"item_detail.progress",
+							player
+					)
+					.withPlaceholder("current",
+							itemProgress.currentAmount()
+					)
+					.withPlaceholder("required",
+							itemProgress.requiredAmount()
+					)
+					.withPlaceholder("percentage",
+							itemProgress.getProgressPercentage()
+					)
+					.includePrefix()
+					.build().sendMessage();
+
 			if (! itemProgress.completed()) {
 				this.i18n(
-					    "item_detail.missing",
-					    player
-				    )
-				    .with(
-					    "shortage",
-					    itemProgress.getShortage()
-				    )
-				    .withPrefix()
-				    .send();
+								"item_detail.missing",
+								player
+						)
+						.withPlaceholder("shortage",
+								itemProgress.getShortage()
+						)
+						.includePrefix()
+						.build().sendMessage();
 			}
 		} catch (Exception e) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to handle item progress click",
-				e
+					Level.WARNING,
+					"Failed to handle item progress click",
+					e
 			);
 		}
 	}
-	
+
 	/**
 	 * Enhanced requirement info item with more details.
 	 */
 	private ItemStack createRequirementInfoItem(
-		final @NotNull Player player,
-		final @NotNull RRankUpgradeRequirement requirement,
-		final @NotNull RankRequirementProgressManager.RequirementProgressData progress
+			final @NotNull Player player,
+			final @NotNull RRankUpgradeRequirement requirement,
+			final @NotNull RankRequirementProgressManager.RequirementProgressData progress
 	) {
-		
+
 		try {
 			Material iconMaterial = Material.valueOf(requirement.getIcon().getMaterial());
-			
+
 			List<Component> lore = new ArrayList<>(
-				List.of(
-					this.i18n(
-						"requirement_info.requirement_type",
-						player
-					).with(
-						"type",
-						requirement.getRequirement().getRequirement().getType().name()
-					).build().component(),
-					Component.empty(),
-					this.createProgressBar(
-						progress.getProgressPercentage() / 100,
-						20
-					),
-					this.i18n(
-						"requirement_info.progress_percentage",
-						player
-					).with(
-						"completion_progress_percentage",
-						progress.getProgressAsPercentage() + "%"
-					).build().component(),
-					Component.empty(),
-					this.i18n(
-						"requirement_info.completion_status",
-						player
-					).with(
-						"completion_status",
-						progress.getStatus().name()
-					).build().component()
-				)
+					List.of(
+							this.i18n(
+									"requirement_info.requirement_type",
+									player
+							).withPlaceholder("type",
+									requirement.getRequirement().getRequirement().getType().name()
+							).build().component(),
+							Component.empty(),
+							this.createProgressBar(
+									progress.getProgressPercentage() / 100,
+									20
+							),
+							this.i18n(
+									"requirement_info.progress_percentage",
+									player
+							).withPlaceholder("completion_progress_percentage",
+									progress.getProgressAsPercentage() + "%"
+							).build().component(),
+							Component.empty(),
+							this.i18n(
+									"requirement_info.completion_status",
+									player
+							).withPlaceholder("completion_status",
+									progress.getStatus().name()
+							).build().component()
+					)
 			);
-			
+
 			AbstractRequirement abstractReq = requirement.getRequirement().getRequirement();
 			if (
-				abstractReq instanceof ItemRequirement itemReq
+					abstractReq instanceof ItemRequirement itemReq
 			) {
 				List<ItemStack> missingItems = itemReq.getMissingItems(player);
 				if (
-					! missingItems.isEmpty()
+						! missingItems.isEmpty()
 				) {
 					lore.addAll(
-						List.of(
-							Component.empty(),
-							this.i18n("requirement_info.missing_items.item", player).build().component()
-						)
+							List.of(
+									Component.empty(),
+									this.i18n("requirement_info.missing_items.item", player).build().component()
+							)
 					);
-					
-					Map<String, Object> placeholder = new HashMap<>();
-					
-					for (
-						int i = 0; i <= missingItems.subList(0, Math.min(3, missingItems.size())).size(); i++
-					) {
+
+					// Dynamically build the missing items list instead of using fixed placeholders
+					int itemCount = Math.min(3, missingItems.size());
+					for (int i = 0; i < itemCount; i++) {
 						ItemStack missingItem = missingItems.get(i);
-						placeholder.put("item_" + i, "• " + missingItem.getAmount() + "x " + missingItem.getType().name());
+						String itemInfo = "• " + missingItem.getAmount() + "x " + missingItem.getType().name();
+						lore.add(this.i18n("requirement_info.missing_items.entry", player)
+								.withPlaceholder("item_info", itemInfo)
+								.build().component());
 					}
-					
-					lore.addAll(this.i18n("requirement_info.missing_items.items", player).withAll(placeholder).build().splitLines());
-					
+
 					if (
-						missingItems.size() > 3
+							missingItems.size() > 3
 					) {
-						lore.add(this.i18n("requirement_info.missing_items.more", player).with("item_amount", missingItems.size() - 3).build().component());
+						lore.add(this.i18n("requirement_info.missing_items.more", player).withPlaceholder("item_amount", missingItems.size() - 3).build().component());
 					}
 				}
 			}
-			
+
 			lore.addAll(
-				List.of(
-					Component.empty(),
-					this.i18n("requirement_info.detailed_information", player).build().component()
-				)
+					List.of(
+							Component.empty(),
+							this.i18n("requirement_info.detailed_information", player).build().component()
+					)
 			);
-			
+
 			return UnifiedBuilderFactory
-				       .item(iconMaterial)
-				       .setName(
-						   this.i18n("requirement_info.name", player).with("requirement_name", this.getRequirementName(requirement)).build().component()
-				       )
-				       .setLore(lore)
-				       .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-				       .setGlowing(progress.isCompleted())
-				       .build();
+					.item(iconMaterial)
+					.setName(
+							this.i18n("requirement_info.name", player).withPlaceholder("requirement_name", this.getRequirementName(requirement)).build().component()
+					)
+					.setLore(lore)
+					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+					.setGlowing(progress.isCompleted())
+					.build();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to create requirement info item",
-				exception
+					Level.WARNING,
+					"Failed to create requirement info item",
+					exception
 			);
 			return this.createFallbackItem(
-				player,
-				"Requirement Info"
+					player,
+					"Requirement Info"
 			);
 		}
 	}
-	
+
 	/**
 	 * Enhanced status item showing current state.
 	 */
 	private ItemStack createStatusItem(
-		final @NotNull Player player,
-		final @NotNull RRankUpgradeRequirement requirement,
-		final @NotNull RankRequirementProgressManager.RequirementProgressData progress
+			final @NotNull Player player,
+			final @NotNull RRankUpgradeRequirement requirement,
+			final @NotNull RankRequirementProgressManager.RequirementProgressData progress
 	) {
-		
+
 		Material statusMaterial = switch (progress.getStatus()) {
 			case COMPLETED -> Material.EMERALD_BLOCK;
 			case READY_TO_COMPLETE -> Material.GOLD_BLOCK;
@@ -1029,52 +1035,52 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			case NOT_STARTED -> Material.REDSTONE_BLOCK;
 			case ERROR -> Material.BARRIER;
 		};
-		
+
 		List<Component> lore = new ArrayList<>();
-		
+
 		switch (progress.getStatus()) {
 			case COMPLETED -> {
 				lore.addAll(
-					this.i18n("requirement.completed", player).build().splitLines()
+						this.i18n("requirement.completed", player).build().children()
 				);
 			}
 			case READY_TO_COMPLETE -> {
 				lore.addAll(
-					this.i18n("requirement.ready_to_complete", player).build().splitLines()
+						this.i18n("requirement.ready_to_complete", player).build().children()
 				);
 			}
 			case IN_PROGRESS -> {
 				lore.addAll(
-					this.i18n("requirement.in_progress", player).build().splitLines()
+						this.i18n("requirement.in_progress", player).build().children()
 				);
 			}
 			case NOT_STARTED -> {
 				lore.addAll(
-					this.i18n("requirement.not_started", player).build().splitLines()
+						this.i18n("requirement.not_started", player).build().children()
 				);
 			}
 			case ERROR -> {
 				lore.addAll(
-					this.i18n("requirement.error", player).build().splitLines()
+						this.i18n("requirement.error", player).build().children()
 				);
 			}
 		}
-		
+
 		return UnifiedBuilderFactory.item(statusMaterial)
-		                            .setName(
-										this.i18n("requirement.status_name", player).with("requirement_status", progress.getStatus().name()).build().component()
-		                            )
-		                            .setLore(lore)
-		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-		                            .setGlowing(progress.getStatus() == RankRequirementProgressManager.RequirementStatus.READY_TO_COMPLETE)
-		                            .build();
+				.setName(
+						this.i18n("requirement.status_name", player).withPlaceholder("requirement_status", progress.getStatus().name()).build().component()
+				)
+				.setLore(lore)
+				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+				.setGlowing(progress.getStatus() == RankRequirementProgressManager.RequirementStatus.READY_TO_COMPLETE)
+				.build();
 	}
-	
+
 	/**
 	 * Gets the appropriate color for a requirement status.
 	 */
 	private NamedTextColor getStatusColor(RankRequirementProgressManager.RequirementStatus status) {
-		
+
 		return switch (status) {
 			case COMPLETED -> NamedTextColor.GREEN;
 			case READY_TO_COMPLETE -> NamedTextColor.GOLD;
@@ -1083,13 +1089,13 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			case ERROR -> NamedTextColor.DARK_RED;
 		};
 	}
-	
+
 	private ItemStack createProgressItem(
-		final @NotNull Player player,
-		final @NotNull RRankUpgradeRequirement requirement,
-		final @NotNull RankRequirementProgressManager.RequirementProgressData progress
+			final @NotNull Player player,
+			final @NotNull RRankUpgradeRequirement requirement,
+			final @NotNull RankRequirementProgressManager.RequirementProgressData progress
 	) {
-		
+
 		try {
 			Material progressMaterial = switch (progress.getStatus()) {
 				case COMPLETED -> Material.LIME_CONCRETE;
@@ -1098,57 +1104,57 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 				case NOT_STARTED -> Material.RED_CONCRETE;
 				case ERROR -> Material.GRAY_CONCRETE;
 			};
-			
+
 			List<Component> lore = new ArrayList<>(
-				List.of(
-					Component.empty(),
-					this.i18n("progress_item", player).build().component(),
-					this.createProgressBar(progress.getProgressPercentage() / 100.0, 15),
-					this.i18n("progress_item_completion", player).with("progress_item_percentage", progress.getProgressAsPercentage()).build().component(),
-					Component.empty(),
-					this.i18n("progress_item_status", player).with("progress_item_status", progress.getStatus().name()).build().component(),
-					Component.empty(),
-					this.i18n("progress_click_to_refresh", player).build().component()
-				)
+					List.of(
+							Component.empty(),
+							this.i18n("progress_item", player).build().component(),
+							this.createProgressBar(progress.getProgressPercentage() / 100.0, 15),
+							this.i18n("progress_item_completion", player).withPlaceholder("progress_item_percentage", progress.getProgressAsPercentage()).build().component(),
+							Component.empty(),
+							this.i18n("progress_item_status", player).withPlaceholder("progress_item_status", progress.getStatus().name()).build().component(),
+							Component.empty(),
+							this.i18n("progress_click_to_refresh", player).build().component()
+					)
 			);
-			
+
 			return UnifiedBuilderFactory.item(progressMaterial)
-			                            .setName(
-											this.i18n("progress_overview", player).build().component()
-			                            )
-			                            .setLore(lore)
-			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-			                            .setGlowing(progress.getStatus() == RankRequirementProgressManager.RequirementStatus.COMPLETED)
-			                            .build();
+					.setName(
+							this.i18n("progress_overview", player).build().component()
+					)
+					.setLore(lore)
+					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+					.setGlowing(progress.getStatus() == RankRequirementProgressManager.RequirementStatus.COMPLETED)
+					.build();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to create progress item",
-				exception
+					Level.WARNING,
+					"Failed to create progress item",
+					exception
 			);
 			return this.createFallbackItem(
-				player,
-				"Progress Unknown"
+					player,
+					"Progress Unknown"
 			);
 		}
 	}
-	
+
 	private ItemStack createActionButton(
-		final @NotNull Player player,
-		final @NotNull RRankUpgradeRequirement requirement,
-		final @NotNull RankRequirementProgressManager.RequirementProgressData progress
+			final @NotNull Player player,
+			final @NotNull RRankUpgradeRequirement requirement,
+			final @NotNull RankRequirementProgressManager.RequirementProgressData progress
 	) {
-		
+
 		try {
 			boolean canComplete = progress.getStatus() == RankRequirementProgressManager.RequirementStatus.READY_TO_COMPLETE;
 			boolean isCompleted = progress.getStatus() == RankRequirementProgressManager.RequirementStatus.COMPLETED;
-			
+
 			Material buttonMaterial;
 			String   nameKey;
 			String   loreKey;
-			
+
 			if (isCompleted) {
 				buttonMaterial = Material.EMERALD_BLOCK;
 				nameKey = "action_button.completed_name";
@@ -1162,385 +1168,372 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 				nameKey = "action_button.refresh_name";
 				loreKey = "action_button.refresh_lore";
 			}
-			
+
 			return UnifiedBuilderFactory.item(buttonMaterial)
-			                            .setName(this.i18n(
-				                            nameKey,
-				                            player
-			                            ).build().component())
-			                            .setLore(this.i18n(
-				                            loreKey,
-				                            player
-			                            ).build().splitLines())
-			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-			                            .setGlowing(canComplete)
-			                            .build();
+					.setName(this.i18n(
+							nameKey,
+							player
+					).build().component())
+					.setLore(this.i18n(
+							loreKey,
+							player
+					).build().children())
+					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+					.setGlowing(canComplete)
+					.build();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to create action button",
-				exception
+					Level.WARNING,
+					"Failed to create action button",
+					exception
 			);
 			return this.createFallbackItem(
-				player,
-				"Action (Error)"
+					player,
+					"Action (Error)"
 			);
 		}
 	}
-	
+
 	private void handleInfoClick(
-		final @NotNull Context context
+			final @NotNull Context context
 	) {
-		
+
 		final Player                  player      = context.getPlayer();
 		final RRankUpgradeRequirement requirement = this.targetRequirement.get(context);
-		
+
 		try {
 			this.sendDetailedRequirementInfo(
-				player,
-				requirement
+					player,
+					requirement
 			);
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to handle info click",
-				exception
+					Level.WARNING,
+					"Failed to handle info click",
+					exception
 			);
 		}
 	}
-	
+
 	private void handleProgressClick(
-		final @NotNull Context context,
-		final @NotNull RRankUpgradeRequirement requirement
+			final @NotNull Context context,
+			final @NotNull RRankUpgradeRequirement requirement
 	) {
-		
+
 		final Player  player  = context.getPlayer();
 		final RDQPlayer rdqPlayer = this.currentPlayer.get(context);
-		
+
 		try {
 			RankRequirementProgressManager.RequirementProgressData progress =
-				this.progressManager.getRequirementProgress(
-					player,
-					rdqPlayer,
-					requirement
-				);
-			
+					this.progressManager.getRequirementProgress(
+							player,
+							rdqPlayer,
+							requirement
+					);
+
 			this.i18n(
-				    "progress_info",
-				    player
-			    )
-			    .with(
-				    "progress",
-				    progress.getProgressAsPercentage()
-			    )
-			    .with(
-				    "formatted_progress",
-				    progress.getFormattedProgress()
-			    )
-			    .with(
-				    "status",
-				    progress.getStatus().name().toLowerCase()
-			    )
-			    .withPrefix()
-			    .send();
-			
+							"progress_info",
+							player
+					)
+					.withPlaceholder("progress",
+							progress.getProgressAsPercentage()
+					)
+					.withPlaceholder("formatted_progress",
+							progress.getFormattedProgress()
+					)
+					.withPlaceholder("status",
+							progress.getStatus().name().toLowerCase()
+					)
+					.includePrefix()
+					.build().sendMessage();
+
 			context.update();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to handle progress click",
-				exception
+					Level.WARNING,
+					"Failed to handle progress click",
+					exception
 			);
 		}
 	}
-	
+
 	private void handleStatusClick(
-		final @NotNull Context context,
-		final @NotNull RRankUpgradeRequirement requirement
+			final @NotNull Context context,
+			final @NotNull RRankUpgradeRequirement requirement
 	) {
-		
+
 		final Player  player  = context.getPlayer();
 		final RDQPlayer rdqPlayer = this.currentPlayer.get(context);
-		
+
 		try {
 			this.progressManager.refreshRequirementProgress(
-				player,
-				rdqPlayer,
-				requirement
-			);
-			
-			RankRequirementProgressManager.RequirementProgressData updatedProgress =
-				this.progressManager.getRequirementProgress(
 					player,
 					rdqPlayer,
 					requirement
-				);
-			
+			);
+
+			RankRequirementProgressManager.RequirementProgressData updatedProgress =
+					this.progressManager.getRequirementProgress(
+							player,
+							rdqPlayer,
+							requirement
+					);
+
 			this.i18n(
-				    "status_update",
-				    player
-			    )
-			    .with(
-				    "status",
-				    updatedProgress.getStatus().name()
-			    )
-			    .with(
-				    "progress",
-				    updatedProgress.getProgressAsPercentage()
-			    )
-			    .withPrefix()
-			    .send();
-			
+							"status_update",
+							player
+					)
+					.withPlaceholder("status",
+							updatedProgress.getStatus().name()
+					)
+					.withPlaceholder("progress",
+							updatedProgress.getProgressAsPercentage()
+					)
+					.includePrefix()
+					.build().sendMessage();
+
 			context.update();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to handle status click",
-				exception
+					Level.WARNING,
+					"Failed to handle status click",
+					exception
 			);
 		}
 	}
-	
+
 	private void handleActionClick(
-		final @NotNull Context context,
-		final @NotNull RRankUpgradeRequirement requirement,
-		final @NotNull RankRequirementProgressManager.RequirementProgressData currentProgress
+			final @NotNull Context context,
+			final @NotNull RRankUpgradeRequirement requirement,
+			final @NotNull RankRequirementProgressManager.RequirementProgressData currentProgress
 	) {
-		
+
 		final Player  player  = context.getPlayer();
 		final RDQPlayer rdqPlayer = this.currentPlayer.get(context);
-		
+
 		try {
 			if (
-				currentProgress.getStatus() == RankRequirementProgressManager.RequirementStatus.COMPLETED
+					currentProgress.getStatus() == RankRequirementProgressManager.RequirementStatus.COMPLETED
 			) {
 				this.i18n(
-					    "already_completed",
-					    player
-				    )
-				    .with(
-					    "requirement_name",
-					    this.getRequirementName(requirement)
-				    )
-				    .withPrefix()
-				    .send();
+								"already_completed",
+								player
+						)
+						.withPlaceholder("requirement_name",
+								this.getRequirementName(requirement)
+						)
+						.includePrefix()
+						.build().sendMessage();
 				return;
 			}
-			
+
 			if (
-				currentProgress.getStatus() == RankRequirementProgressManager.RequirementStatus.READY_TO_COMPLETE
+					currentProgress.getStatus() == RankRequirementProgressManager.RequirementStatus.READY_TO_COMPLETE
 			) {
 				RankRequirementProgressManager.RequirementCompletionResult result =
-					this.progressManager.attemptRequirementCompletion(
-						player,
-						rdqPlayer,
-						requirement
-					);
-				
+						this.progressManager.attemptRequirementCompletion(
+								player,
+								rdqPlayer,
+								requirement
+						);
+
 				if (result.isSuccess()) {
 					context.update();
 				}
 			} else {
 				this.progressManager.refreshRankProgress(
-					player,
-					rdqPlayer,
-					requirement.getRank()
+						player,
+						rdqPlayer,
+						requirement.getRank()
 				);
-				
+
 				this.i18n(
-					    "progress_refreshed",
-					    player
-				    )
-				    .withPrefix()
-				    .send();
-				
+								"progress_refreshed",
+								player
+						)
+						.includePrefix()
+						.build().sendMessage();
+
 				context.update();
 			}
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to handle action click",
-				exception
+					Level.WARNING,
+					"Failed to handle action click",
+					exception
 			);
 			this.i18n(
-				    "action_error",
-				    player
-			    )
-			    .withPrefix()
-			    .send();
+							"action_error",
+							player
+					)
+					.includePrefix()
+					.build().sendMessage();
 		}
 	}
-	
+
 	private void sendDetailedRequirementInfo(
-		final @NotNull Player player,
-		final @NotNull RRankUpgradeRequirement requirement
+			final @NotNull Player player,
+			final @NotNull RRankUpgradeRequirement requirement
 	) {
-		
+
 		try {
 			this.i18n(
-				    "detailed_info.header",
-				    player
-			    )
-			    .with(
-				    "requirement_type",
-				    this.getRequirementType(requirement)
-			    )
-			    .with(
-				    "requirement_name",
-				    this.getRequirementName(requirement)
-			    )
-			    .withPrefix()
-			    .send();
-			
+							"detailed_info.header",
+							player
+					)
+					.withPlaceholder("requirement_type",
+							this.getRequirementType(requirement)
+					)
+					.withPlaceholder("requirement_name",
+							this.getRequirementName(requirement)
+					)
+					.includePrefix()
+					.build().sendMessage();
+
 			this.i18n(
-				    "detailed_info.lore",
-				    player
-			    )
-			    .withPrefix()
-			    .with(
-				    "description",
-				    this.getRequirementDescription(requirement)
-			    )
-			    .send();
-			
+							"detailed_info.lore",
+							player
+					)
+					.includePrefix()
+					.withPlaceholder("description",
+							this.getRequirementDescription(requirement)
+					)
+					.build().sendMessage();
+
 			AbstractRequirement abstractReq = requirement.getRequirement().getRequirement();
 			if (
-				abstractReq instanceof ItemRequirement itemReq
+					abstractReq instanceof ItemRequirement itemReq
 			) {
 				List<ItemRequirement.ItemProgress> itemProgressList = itemReq.getDetailedProgress(player);
-				
+
 				this.i18n(
-					    "detailed_info.item_breakdown",
-					    player
-				    )
-				    .withPrefix()
-				    .send();
-				
+								"detailed_info.item_breakdown",
+								player
+						)
+						.includePrefix()
+						.build().sendMessage();
+
 				for (
-					ItemRequirement.ItemProgress itemProgress : itemProgressList
+						ItemRequirement.ItemProgress itemProgress : itemProgressList
 				) {
 					this.i18n(
-						    "detailed_info.item_entry",
-						    player
-					    )
-					    .with(
-						    "item_name",
-						    itemProgress.requiredItem().getType().name()
-					    )
-					    .with(
-						    "current",
-						    itemProgress.currentAmount()
-					    )
-					    .with(
-						    "required",
-						    itemProgress.requiredAmount()
-					    )
-					    .with(
-						    "percentage",
-						    itemProgress.getProgressPercentage()
-					    )
-					    .withPrefix()
-					    .send();
+									"detailed_info.item_entry",
+									player
+							)
+							.withPlaceholder("item_name",
+									itemProgress.requiredItem().getType().name()
+							)
+							.withPlaceholder("current",
+									itemProgress.currentAmount()
+							)
+							.withPlaceholder("required",
+									itemProgress.requiredAmount()
+							)
+							.withPlaceholder("percentage",
+									itemProgress.getProgressPercentage()
+							)
+							.includePrefix()
+							.build().sendMessage();
 				}
 			}
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.WARNING,
-				"Failed to send detailed requirement info",
-				exception
+					Level.WARNING,
+					"Failed to send detailed requirement info",
+					exception
 			);
 		}
 	}
-	
+
 	private String getRequirementType(
-		final @NotNull RRankUpgradeRequirement requirement
+			final @NotNull RRankUpgradeRequirement requirement
 	) {
-		
+
 		try {
 			return requirement.getRequirement().getRequirement().getType().name();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			return "UNKNOWN";
 		}
 	}
-	
+
 	private String getRequirementName(
-		final @NotNull RRankUpgradeRequirement requirement
+			final @NotNull RRankUpgradeRequirement requirement
 	) {
-		
+
 		try {
 			return requirement.getRequirement().getRequirement().getType().name();
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			return "Unknown Requirement";
 		}
 	}
-	
+
 	private String getRequirementDescription(
-		final @NotNull RRankUpgradeRequirement requirement
+			final @NotNull RRankUpgradeRequirement requirement
 	) {
-		
+
 		try {
 			return requirement.getRequirement().getRequirement().getDescriptionKey();
 		} catch (final Exception exception) {
 			return "A requirement for rank progression";
 		}
 	}
-	
+
 	private ItemStack createFallbackItem(
-		final @NotNull Player player,
-		final @NotNull String name
+			final @NotNull Player player,
+			final @NotNull String name
 	) {
-		
+
 		return UnifiedBuilderFactory.item(Material.PAPER)
-		                            .setName(this.i18n("fallback.name", player).build().component())
-		                            .setLore(this.i18n("fallback.lore", player).build().splitLines())
-		                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-		                            .build();
+				.setName(this.i18n("fallback.name", player).build().component())
+				.setLore(this.i18n("fallback.lore", player).build().children())
+				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+				.build();
 	}
-	
+
 	private void renderErrorState(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
+			final @NotNull RenderContext render,
+			final @NotNull Player player
 	) {
-		
+
 		try {
 			render.slot(
-				22,
-				UnifiedBuilderFactory.item(Material.BARRIER)
-				                     .setName(this.i18n("error.name", player).build().component())
-				                     .setLore(this.i18n("error.lore", player).build().splitLines())
-				                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-				                     .build()
+					22,
+					UnifiedBuilderFactory.item(Material.BARRIER)
+							.setName(this.i18n("error.name", player).build().component())
+							.setLore(this.i18n("error.lore", player).build().children())
+							.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+							.build()
 			);
-			
+
 			LOGGER.log(
-				Level.WARNING,
-				"Rendering error state for requirement detail view"
+					Level.WARNING,
+					"Rendering error state for requirement detail view"
 			);
 		} catch (
-			final Exception exception
+				final Exception exception
 		) {
 			LOGGER.log(
-				Level.SEVERE,
-				"Failed to render error state",
-				exception
+					Level.SEVERE,
+					"Failed to render error state",
+					exception
 			);
 		}
 	}
-	
+
 }

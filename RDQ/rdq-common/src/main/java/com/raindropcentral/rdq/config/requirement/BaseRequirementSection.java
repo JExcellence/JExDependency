@@ -1,6 +1,7 @@
 package com.raindropcentral.rdq.config.requirement;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.configmapper.sections.CSIgnore;
@@ -8,6 +9,7 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * Base configuration section for all requirement types in the rank progression system.
@@ -23,6 +25,9 @@ import java.util.List;
  */
 @CSAlways
 public class BaseRequirementSection extends AConfigSection {
+	
+	@CSIgnore
+	private static final Logger LOGGER = CentralLogger.getLogger(BaseRequirementSection.class);
 	
 	/**
 	 * The type of requirement (ITEM, CURRENCY, EXPERIENCE_LEVEL, etc.).
@@ -54,6 +59,43 @@ public class BaseRequirementSection extends AConfigSection {
 	private SkillRequirementSection           skillRequirement;
 	private JobRequirementSection             jobRequirement;
 	private TimeBasedRequirementSection       timeBasedRequirement;
+	
+	// ==================== Flat-structure fields for inline YAML format ====================
+	// These allow YAML like: type: "COMPOSITE", operator: "AND", requirements: [...]
+	// instead of requiring: compositeRequirement: { operator: "AND", requirements: [...] }
+	
+	/** For COMPOSITE/CHOICE: logical operator (AND, OR, XOR, MINIMUM) */
+	private String operator;
+	
+	/** For COMPOSITE/CHOICE: list of sub-requirements */
+	private List<BaseRequirementSection> requirements;
+	
+	/** For COMPOSITE/CHOICE: list of choices */
+	private List<BaseRequirementSection> choices;
+	
+	/** For COMPOSITE/CHOICE: minimum required count */
+	private Integer minimumRequired;
+	
+	/** For COMPOSITE/CHOICE: minimum choices required (alias) */
+	private Integer minimumChoicesRequired;
+	
+	/** For COMPOSITE/CHOICE: maximum required count */
+	private Integer maximumRequired;
+	
+	/** For COMPOSITE/CHOICE: allow partial progress */
+	private Boolean allowPartialProgress;
+	
+	/** For CHOICE: mutually exclusive choices */
+	private Boolean mutuallyExclusive;
+	
+	/** For CHOICE: allow changing choice */
+	private Boolean allowChoiceChange;
+	
+	/** For EXPERIENCE_LEVEL: required level (flat format) */
+	private Integer level;
+	
+	/** For ITEM: single required item (flat format) */
+	private de.jexcellence.evaluable.section.ItemStackSection requiredItem;
 	
 	/**
 	 * Context information for auto-generating keys (set by the factory).
@@ -91,6 +133,9 @@ public class BaseRequirementSection extends AConfigSection {
 		
 		super.afterParsing(fields);
 		
+		// Map flat-structure fields to nested requirement sections based on type
+		mapFlatStructureToNestedSections();
+		
 		if (
 			this.type == null ||
 			this.type.equals("not_defined")
@@ -118,6 +163,199 @@ public class BaseRequirementSection extends AConfigSection {
 				this.icon.setDescriptionKey(baseKey + ".lore");
 			}
 		}
+	}
+	
+	/**
+	 * Maps flat-structure YAML fields to nested requirement sections.
+	 * This allows YAML configs to use either format:
+	 * 
+	 * Flat format:
+	 *   type: "COMPOSITE"
+	 *   operator: "AND"
+	 *   requirements: [...]
+	 * 
+	 * Nested format:
+	 *   compositeRequirement:
+	 *     operator: "AND"
+	 *     requirements: [...]
+	 */
+	private void mapFlatStructureToNestedSections() {
+		if (this.type == null || this.type.equals("not_defined")) {
+			return;
+		}
+		
+		String upperType = this.type.toUpperCase();
+		LOGGER.fine("Mapping flat structure for type: " + upperType);
+		
+		switch (upperType) {
+			case "COMPOSITE" -> mapToCompositeRequirement();
+			case "CHOICE" -> mapToChoiceRequirement();
+			case "EXPERIENCE_LEVEL" -> mapToExperienceRequirement();
+			case "ITEM" -> mapToItemRequirement();
+			case "PLAYTIME" -> mapToPlaytimeRequirement();
+		}
+	}
+	
+	/**
+	 * Maps flat COMPOSITE fields to CompositeRequirementSection.
+	 */
+	private void mapToCompositeRequirement() {
+		if (this.compositeRequirement != null && 
+		    this.compositeRequirement.getCompositeRequirements() != null &&
+		    !this.compositeRequirement.getCompositeRequirements().isEmpty()) {
+			return; // Already has nested section
+		}
+		
+		if (this.requirements == null || this.requirements.isEmpty()) {
+			LOGGER.warning("COMPOSITE requirement has no sub-requirements");
+			return;
+		}
+		
+		// Create a new CompositeRequirementSection and populate it
+		CompositeRequirementSection composite = new CompositeRequirementSection(
+			new EvaluationEnvironmentBuilder()
+		);
+		
+		// Use reflection to set private fields since we can't modify the class
+		try {
+			setFieldValue(composite, "operator", this.operator);
+			setFieldValue(composite, "requirements", this.requirements);
+			setFieldValue(composite, "minimumRequired", this.minimumRequired);
+			setFieldValue(composite, "maximumRequired", this.maximumRequired);
+			setFieldValue(composite, "allowPartialProgress", this.allowPartialProgress);
+			
+			this.compositeRequirement = composite;
+			LOGGER.info("Mapped flat COMPOSITE with " + this.requirements.size() + " sub-requirements, operator=" + this.operator);
+		} catch (Exception e) {
+			LOGGER.warning("Failed to map flat COMPOSITE structure: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Maps flat CHOICE fields to ChoiceRequirementSection.
+	 */
+	private void mapToChoiceRequirement() {
+		if (this.choiceRequirement != null && 
+		    this.choiceRequirement.getChoices() != null &&
+		    !this.choiceRequirement.getChoices().isEmpty()) {
+			return; // Already has nested section
+		}
+		
+		List<BaseRequirementSection> choiceList = this.choices != null ? this.choices : this.requirements;
+		if (choiceList == null || choiceList.isEmpty()) {
+			LOGGER.warning("CHOICE requirement has no choices");
+			return;
+		}
+		
+		ChoiceRequirementSection choice = new ChoiceRequirementSection(
+			new EvaluationEnvironmentBuilder()
+		);
+		
+		try {
+			setFieldValue(choice, "choices", choiceList);
+			Integer minReq = this.minimumChoicesRequired != null ? this.minimumChoicesRequired : this.minimumRequired;
+			setFieldValue(choice, "minimumRequired", minReq);
+			setFieldValue(choice, "maximumRequired", this.maximumRequired);
+			setFieldValue(choice, "allowPartialProgress", this.allowPartialProgress);
+			setFieldValue(choice, "mutuallyExclusive", this.mutuallyExclusive);
+			setFieldValue(choice, "allowChoiceChange", this.allowChoiceChange);
+			
+			this.choiceRequirement = choice;
+			LOGGER.info("Mapped flat CHOICE with " + choiceList.size() + " choices, minRequired=" + minReq);
+		} catch (Exception e) {
+			LOGGER.warning("Failed to map flat CHOICE structure: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Maps flat EXPERIENCE_LEVEL fields to ExperienceLevelRequirementSection.
+	 */
+	private void mapToExperienceRequirement() {
+		if (this.experienceRequirement != null && this.experienceRequirement.getRequiredLevel() > 0) {
+			return; // Already has nested section
+		}
+		
+		if (this.level == null || this.level <= 0) {
+			LOGGER.warning("EXPERIENCE_LEVEL requirement has no level specified");
+			return;
+		}
+		
+		ExperienceLevelRequirementSection exp = new ExperienceLevelRequirementSection(
+			new EvaluationEnvironmentBuilder()
+		);
+		
+		try {
+			// The field in ExperienceLevelRequirementSection is 'requiredExperience', not 'requiredLevel'
+			setFieldValue(exp, "requiredExperience", this.level);
+			setFieldValue(exp, "requiredType", "LEVEL");
+			
+			this.experienceRequirement = exp;
+			LOGGER.info("Mapped flat EXPERIENCE_LEVEL with level=" + this.level);
+		} catch (Exception e) {
+			LOGGER.warning("Failed to map flat EXPERIENCE_LEVEL structure: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Maps flat ITEM fields to ItemRequirementSection.
+	 */
+	private void mapToItemRequirement() {
+		if (this.itemRequirement != null && 
+		    this.itemRequirement.getRequiredItemsList() != null &&
+		    !this.itemRequirement.getRequiredItemsList().isEmpty()) {
+			return; // Already has nested section
+		}
+		
+		if (this.requiredItem == null) {
+			LOGGER.warning("ITEM requirement has no requiredItem specified");
+			return;
+		}
+		
+		ItemRequirementSection item = new ItemRequirementSection(
+			new EvaluationEnvironmentBuilder()
+		);
+		
+		try {
+			// Convert ItemStackSection to the expected map format
+			java.util.Map<String, de.jexcellence.evaluable.section.ItemStackSection> itemsMap = new java.util.HashMap<>();
+			itemsMap.put("item1", this.requiredItem);
+			setFieldValue(item, "requiredItems", itemsMap);
+			
+			this.itemRequirement = item;
+			LOGGER.info("Mapped flat ITEM with requiredItem");
+		} catch (Exception e) {
+			LOGGER.warning("Failed to map flat ITEM structure: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Maps flat PLAYTIME fields to PlaytimeRequirementSection.
+	 */
+	private void mapToPlaytimeRequirement() {
+		if (this.playtimeRequirement != null && this.playtimeRequirement.getRequiredPlaytimeSeconds() > 0) {
+			// Already has nested section - just ensure it's assigned
+			return;
+		}
+	}
+	
+	/**
+	 * Helper to set private field values via reflection.
+	 */
+	private void setFieldValue(Object target, String fieldName, Object value) throws Exception {
+		if (value == null) return;
+		
+		Class<?> clazz = target.getClass();
+		while (clazz != null) {
+			try {
+				Field field = clazz.getDeclaredField(fieldName);
+				field.setAccessible(true);
+				field.set(target, value);
+				return;
+			} catch (NoSuchFieldException e) {
+				clazz = clazz.getSuperclass();
+			}
+		}
+		throw new NoSuchFieldException("Field " + fieldName + " not found in " + target.getClass().getName());
 	}
 	
 	/**

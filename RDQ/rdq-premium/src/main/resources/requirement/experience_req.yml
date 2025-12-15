@@ -1,0 +1,9 @@
+# Experience Requirement Configuration
+# Basic experience requirement for rank progression
+requirement:
+  type: "EXPERIENCE_LEVEL"
+  description: "Gain experience levels to unlock this rank"
+  experience:
+    required_level: 10
+    consume_on_complete: false
+    experience_type: "LEVEL"

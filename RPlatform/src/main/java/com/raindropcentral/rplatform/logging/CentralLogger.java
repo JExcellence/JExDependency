@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -159,6 +160,7 @@ public class CentralLogger {
             final Logger l = lm.getLogger(name);
             if (l != null) {
                 stripConsoleHandlers(l);
+                applyNagFilter(l);
                 MANAGED_LOGGERS.put(name, l);
             }
         }
@@ -171,6 +173,19 @@ public class CentralLogger {
 
         // Apply package-level overrides from config
         applyPackageLevels(cfg);
+    }
+
+    private static void applyNagFilter(final Logger logger) {
+        if (logger == null) return;
+        final Filter existing = logger.getFilter();
+        logger.setFilter(record -> {
+            if (record == null) return false;
+            final String msg = record.getMessage();
+            if (msg != null && msg.contains("Nag author") && msg.contains("System.out/err")) {
+                return false;
+            }
+            return existing == null || existing.isLoggable(record);
+        });
     }
 
     private static void applyPackageLevels(final LoggerConfig cfg) {
@@ -376,6 +391,12 @@ public class CentralLogger {
             setFilter(record -> {
                 if (record == null) return false;
 
+                // Filter out Paper/Spigot nag messages early
+                final String msg = record.getMessage();
+                if (msg != null && msg.contains("Nag author") && msg.contains("System.out/err")) {
+                    return false;
+                }
+
                 // Honor debug flag
                 if (!DEBUG_MODE) {
                     final Level lvl = record.getLevel();
@@ -415,9 +436,9 @@ public class CentralLogger {
                     FILE_HANDLER.publish(enhanced);
                 }
 
-                // Avoid console loops and optionally suppress our own internal logs
+                // Avoid console loops, suppress internal logs, and filter nag messages
                 if (CONSOLE_LOGGING_ENABLED && CONSOLE_HANDLER != null && CONSOLE_HANDLER.isLoggable(enhanced)) {
-                    if (!isFromLoggingSystem(enhanced)) {
+                    if (!isFromLoggingSystem(enhanced) && !isNagMessage(enhanced)) {
                         CONSOLE_HANDLER.publish(enhanced);
                     }
                 }
@@ -455,13 +476,20 @@ public class CentralLogger {
                     || name.contains("CentralLogger");
         }
 
+        private boolean isNagMessage(final LogRecord r) {
+            final String msg = r.getMessage();
+            if (msg == null) return false;
+            // Filter out Paper/Spigot nag messages about System.out/err usage
+            return msg.contains("Nag author") && msg.contains("System.out/err");
+        }
+
         private LogRecord enhance(final LogRecord original) {
             final LogRecord out = new LogRecord(original.getLevel(), original.getMessage());
             out.setLoggerName(original.getLoggerName());
-            out.setMillis(original.getMillis());
+            out.setInstant(Instant.ofEpochMilli(original.getMillis()));
             out.setThrown(original.getThrown());
             out.setParameters(original.getParameters());
-            out.setThreadID(original.getThreadID());
+            out.setLongThreadID(original.getLongThreadID());
 
             try {
                 if (original.getSourceClassName() != null) {

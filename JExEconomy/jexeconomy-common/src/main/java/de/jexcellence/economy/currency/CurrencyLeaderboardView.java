@@ -196,7 +196,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 							    "player_entry.name",
 							    contextPlayer
 						    )
-						    .withAll(Map.of(
+						    .withPlaceholders(Map.of(
 							    "rank",
 							    playerRank,
 							    "rank_color",
@@ -214,7 +214,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 							    "player_entry.lore",
 							    contextPlayer
 						    )
-						    .withAll(Map.of(
+						    .withPlaceholders(Map.of(
 							    "rank",
 							    playerRank,
 							    "rank_color",
@@ -236,7 +236,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 							    )
 						    ))
 						    .build()
-						    .splitLines()
+						    .children()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -307,7 +307,7 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 					                         "currency_info.name",
 					                         contextPlayer
 				                         )
-				                         .withAll(Map.of(
+				                         .withPlaceholders(Map.of(
 					                         "currency_identifier",
 					                         displayedCurrency.getIdentifier(),
 					                         "currency_symbol",
@@ -321,14 +321,14 @@ public class CurrencyLeaderboardView extends APaginatedView<UserCurrency> {
 					                         "currency_info.lore",
 					                         contextPlayer
 				                         )
-				                         .withAll(Map.of(
+				                         .withPlaceholders(Map.of(
 					                         "currency_identifier",
 					                         displayedCurrency.getIdentifier(),
 					                         "currency_symbol",
 					                         displayedCurrency.getSymbol()
 				                         ))
 				                         .build()
-				                         .splitLines()
+				                         .children()
 			                     )
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()

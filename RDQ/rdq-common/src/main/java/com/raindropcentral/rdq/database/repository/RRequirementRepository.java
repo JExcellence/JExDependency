@@ -1,14 +1,15 @@
 package com.raindropcentral.rdq.database.repository;
 
 import com.raindropcentral.rdq.database.entity.RRequirement;
-import de.jexcellence.hibernate.entity.AbstractEntity;
 import de.jexcellence.hibernate.repository.GenericCachedRepository;
 import jakarta.persistence.EntityManagerFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
- * Repository for managing {@link com.raindropcentral.rdq2.database.entity.RDQPlayer} entities in the RaindropQuests system.
+ *
  * <p>
  * Extends {@link de.jexcellence.hibernate.repository.GenericCachedRepository} to provide caching and asynchronous database operations
  * for player entities, using the player's unique UUID as the cache key.
@@ -28,8 +29,10 @@ public class RRequirementRepository extends GenericCachedRepository<RRequirement
      */
     public RRequirementRepository(
             final ExecutorService executor,
-            final EntityManagerFactory entityManagerFactory
+            final EntityManagerFactory entityManagerFactory,
+            @NotNull Class<RRequirement> entityClass,
+            @NotNull Function<RRequirement, Long> keyExtractor
     ) {
-        super(executor, entityManagerFactory, RRequirement.class, AbstractEntity::getId);
+        super(executor, entityManagerFactory, entityClass, keyExtractor);
     }
 }

@@ -1,0 +1,115 @@
+package com.raindropcentral.core.service.statistics.monitoring;
+
+import com.raindropcentral.core.service.statistics.queue.BackpressureLevel;
+import com.raindropcentral.core.service.statistics.queue.DeliveryPriority;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.time.Instant;
+import java.util.Map;
+
+/**
+ * Current status of the statistics delivery system.
+ *
+ * @param running            whether the service is running
+ * @param paused             whether delivery is paused
+ * @param lastSuccessTime    timestamp of last successful delivery
+ * @param lastFailureTime    timestamp of last failed delivery
+ * @param pendingByPriority  count of pending statistics by priority
+ * @param totalPending       total pending statistics count
+ * @param failedCount        count of failed deliveries in current session
+ * @param retryCount         count of retries in current session
+ * @param queueDepth         current queue depth
+ * @param backpressureStatus current backpressure level
+ * @param offlineMode        whether operating in offline mode
+ *
+ * @author JExcellence
+ * @since 1.0.0
+ */
+public record DeliveryStatus(
+    boolean running,
+    boolean paused,
+    @Nullable Instant lastSuccessTime,
+    @Nullable Instant lastFailureTime,
+    @NotNull Map<DeliveryPriority, Integer> pendingByPriority,
+    int totalPending,
+    long failedCount,
+    long retryCount,
+    int queueDepth,
+    @NotNull BackpressureLevel backpressureStatus,
+    boolean offlineMode
+) {
+
+    /**
+     * Creates a status indicating the service is not running.
+     */
+    public static DeliveryStatus notRunning() {
+        return new DeliveryStatus(
+            false, false, null, null,
+            Map.of(), 0, 0, 0, 0,
+            BackpressureLevel.NONE, false
+        );
+    }
+
+    /**
+     * Creates a builder for constructing status.
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * Checks if the service is healthy (running, not paused, not in offline mode).
+     */
+    public boolean isHealthy() {
+        return running && !paused && !offlineMode &&
+               backpressureStatus != BackpressureLevel.OVERFLOW;
+    }
+
+    /**
+     * Gets the time since last successful delivery in seconds.
+     */
+    public long secondsSinceLastSuccess() {
+        if (lastSuccessTime == null) {
+            return -1;
+        }
+        return Instant.now().getEpochSecond() - lastSuccessTime.getEpochSecond();
+    }
+
+    /**
+     * Builder for DeliveryStatus.
+     */
+    public static class Builder {
+        private boolean running = false;
+        private boolean paused = false;
+        private Instant lastSuccessTime;
+        private Instant lastFailureTime;
+        private Map<DeliveryPriority, Integer> pendingByPriority = Map.of();
+        private int totalPending = 0;
+        private long failedCount = 0;
+        private long retryCount = 0;
+        private int queueDepth = 0;
+        private BackpressureLevel backpressureStatus = BackpressureLevel.NONE;
+        private boolean offlineMode = false;
+
+        public Builder running(boolean running) { this.running = running; return this; }
+        public Builder paused(boolean paused) { this.paused = paused; return this; }
+        public Builder lastSuccessTime(Instant time) { this.lastSuccessTime = time; return this; }
+        public Builder lastFailureTime(Instant time) { this.lastFailureTime = time; return this; }
+        public Builder pendingByPriority(Map<DeliveryPriority, Integer> map) { this.pendingByPriority = map; return this; }
+        public Builder totalPending(int count) { this.totalPending = count; return this; }
+        public Builder failedCount(long count) { this.failedCount = count; return this; }
+        public Builder retryCount(long count) { this.retryCount = count; return this; }
+        public Builder queueDepth(int depth) { this.queueDepth = depth; return this; }
+        public Builder backpressureStatus(BackpressureLevel level) { this.backpressureStatus = level; return this; }
+        public Builder offlineMode(boolean offline) { this.offlineMode = offline; return this; }
+
+        public DeliveryStatus build() {
+            return new DeliveryStatus(
+                running, paused, lastSuccessTime, lastFailureTime,
+                pendingByPriority, totalPending, failedCount, retryCount,
+                queueDepth, backpressureStatus, offlineMode
+            );
+        }
+    }
+}

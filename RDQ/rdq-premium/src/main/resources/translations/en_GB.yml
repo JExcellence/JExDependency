@@ -1,15 +1,15 @@
-# RDQ Premium Translation File - English (UK)
+# RDQ Translation File - English (UK)
 # MiniMessage format with gradients and styling
 # Placeholders use %placeholder% format
 
-# Bounty Listener Messages
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
     value: "<gradient:#3b82f6:#60a5fa>💰 Bounty Value:</gradient> <gradient:#10b981:#34d399>£%bounty_value%</gradient>"
     expires: "<gradient:#f59e0b:#fbbf24>⏰ Expires at:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
     commissioner: "<gradient:#ef4444:#f87171>👤 Commissioned by:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
-  
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 BOUNTY CLAIMED! 🎉</gradient>"
     victim: "<gradient:#a855f7:#c084fc>You successfully claimed the bounty on</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
@@ -18,26 +18,78 @@ bounty_listener:
     broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>has claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
     broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% players</gradient> <gradient:#a855f7:#c084fc>have claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-# Bounty Main View
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Bounty System</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Create Bounty</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Click to create a new bounty</gradient>"
-      - "<gradient:#6b7280:#9ca3af>on another player</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 View Bounties</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>View all active bounties</gradient>"
-  my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 My Bounties</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>View bounties you've created</gradient>"
-  leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 Leaderboard</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Top bounty hunters</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Bounty successfully created for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Failed to process bounty:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Processing bounty update...</gradient>"
 
-# Prefix
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Started progression for rank</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Viewing requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Requirements incomplete for</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% complete)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Requirement incomplete:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>has no requirements!</gradient>"
+
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Preview mode:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ You own</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Locked:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Complete prerequisites first</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is not installed!</gradient> <gradient:#6b7280:#9ca3af>This feature requires LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open main menu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - View ranks</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - View bounties</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Admin Panel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Access administrative tools</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and configuration options</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View and manage bounties</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hunt players for rewards!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Perks</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View available perks</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and special abilities</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View available quests</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and track your progress</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Ranks</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View rank progression</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and unlock new abilities</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rank System</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rank Trees</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Browse available rank trees</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and choose your path</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Previous</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Previous page</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Next</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Next page</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Cancel action</gradient>"

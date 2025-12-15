@@ -4,7 +4,7 @@ junit = "5.10.2"
 mockito = "5.14.2"
 mockbukkit = "3.133.2"
 
-paper = "1.21.8-R0.1-SNAPSHOT"
+paper = "1.21.10-R0.1-SNAPSHOT"
 adventure = "4.17.0"
 adventure-platform-bukkit = "4.3.4"
 
@@ -15,7 +15,7 @@ luckperms = "5.5"
 caffeine = "3.2.2"
 
 # Keep all Jackson components aligned to the same minor release
-jackson = "2.17.2"
+jackson = "3.0.3"
 jackson-uuid = "5.1.0"
 
 hibernate-platform = "6.6.4.Final"
@@ -60,10 +60,10 @@ inventory-framework-core = { module = "me.devnatan:inventory-framework-core", ve
 
 # Data, logging, util
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
-jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
-jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
-jackson-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+jackson-core = { module = "tools.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version = "3.0-rc5" }
+jackson-jsr310 = { module = "tools.jackson.datatype:jackson-datatype-jsr310", version = "3.0.0-rc2" }
 java-uuid = { module = "com.fasterxml.uuid:java-uuid-generator", version.ref = "jackson-uuid" }
 jboss-logging = { module = "org.jboss.logging:jboss-logging", version.ref = "jboss-logging" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }

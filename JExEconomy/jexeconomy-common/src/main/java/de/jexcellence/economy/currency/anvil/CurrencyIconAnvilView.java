@@ -266,7 +266,7 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 					this.i18n(
 						"input.lore",
 						contextPlayer
-					).build().splitLines()
+					).build().children()
 				)
 				.build()
 		);
@@ -330,8 +330,8 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .withPrefix()
-		    .withAll(
+		    .includePrefix()
+		    .withPlaceholders(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "",
@@ -339,7 +339,7 @@ public class CurrencyIconAnvilView extends AbstractAnvilView {
 				    "GOLD_INGOT, DIAMOND, EMERALD, IRON_INGOT"
 			    )
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**

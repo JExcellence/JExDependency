@@ -1,46 +1,92 @@
-# RDQ Common Översättningsfil - Svenska
+# RDQ Översättningsfil - Svenska
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du har en aktiv belöning på ditt huvud!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Belöningsvärde:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Går ut:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Beställare:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 BELÖNING INSAMLAD! 🎉</gradient>"
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Belöningssystem</gradient>"
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "bount
-y_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Belöningssystem</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Skapa Belöning</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 Se Belöningar</gradient>"
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯 Belöning på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 BELÖNING HÄMTAD! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Du hämtade framgångsrikt belöningen på</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Din andel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Någon</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>har hämtat belöningen på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelare</gradient> <gradient:#a855f7:#c084fc>har hämtat belöningen på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 Skapa Belöning</gradient>"
-  select_target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Välj Mål</gradient>"
-  add_items:
-    name: "<gradient:#10b981:#34d399>💰 Lägg till Belöningar</gradient>"
-  add_currencies:
-    name: "<gradient:#f59e0b:#fbbf24>💎 Lägg till Valuta</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Belöning skapad framgångsrikt för</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Fel vid bearbetning av belöning:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Uppdaterar belöning...</gradient>"
 
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Progression startad för rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Visar krav för</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Krav ofullständiga för</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% klart)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Krav ofullständigt:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>har inga krav!</gradient>"
 
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Sida %current_page%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Sida %direction%</gradient>"
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Förhandsgranskningsläge:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Du äger</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Låst:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Slutför förutsättningarna först</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms är inte installerat!</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjälp</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Öppna huvudmenyn</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Visa ranger</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Visa belöningar</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Adminpanel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Åtkomst till administrationsverktyg</gradient>"
+      - "<gradient:#6b7280:#9ca3af>och konfigurationsalternativ</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Belöningar</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Visa och hantera belöningar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jaga spelare för priser!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Förmåner</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Visa tillgängliga förmåner</gradient>"
+      - "<gradient:#6b7280:#9ca3af>och speciella förmågor</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Uppdrag</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Visa tillgängliga uppdrag</gradient>"
+      - "<gradient:#6b7280:#9ca3af>och spåra din framsteg</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Visa rangprogression</gradient>"
+      - "<gradient:#6b7280:#9ca3af>och lås upp nya förmågor</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rangsystem</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rangträd</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bläddra bland tillgängliga rangträd</gradient>"
+      - "<gradient:#6b7280:#9ca3af>och välj din väg</gradient>"
 
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Tillbaka</gradient>"
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ Fortsätt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicka för att gå tillbaka</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Föregående</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Föregående sida</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Nästa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nästa sida</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Avbryt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Avbryt åtgärd</gradient>"

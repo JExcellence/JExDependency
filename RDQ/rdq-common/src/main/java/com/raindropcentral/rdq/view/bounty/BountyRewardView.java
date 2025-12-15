@@ -8,8 +8,7 @@ import com.raindropcentral.rdq.reward.Reward;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.CloseContext;
 import me.devnatan.inventoryframework.context.Context;
@@ -128,7 +127,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 									                  context.getPlayer()
 								                  )
 								                  .build()
-								                  .splitLines()
+								                  .children()
 							              )
 							              .addLoreLines(
 								              item.lore() == null ?
@@ -181,11 +180,10 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 			UnifiedBuilderFactory
 				.unifiedHead(target.getPlayer())
 				.setDisplayName(
-					this.i18n(
+					(net.kyori.adventure.text.Component) this.i18n(
 						    "target.name",
 						    player
-					    ).with(
-						    "target_name",
+					    ).withPlaceholder("target_name",
 						    target.getName() == null ?
 						    "" :
 						    target.getName()
@@ -197,14 +195,14 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 					this.i18n(
 						"target.lore",
 						player
-					).withAll(
+					).withPlaceholders(
 						Map.of(
 							"target_name",
 							target.getName() == null ?
 							"" :
 							target.getName()
 						)
-					).build().splitLines()
+					).build().children()
 				)
 				.build()
 		);
@@ -222,20 +220,32 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 					playerSlots != null &&
 					! playerSlots.isEmpty()
 				) {
-					List<BountyReward> rewards = new ArrayList<>();
+					List<BountyReward> newRewards = new ArrayList<>();
 					for (
 						ItemStack stack : playerSlots.values()
 					) {
-						rewards.add(new BountyReward(
-								new ItemReward(
-									stack,
-									stack.getAmount()
-								),
+						// Create a clean ItemStack with amount=1 for the ItemReward constructor
+						ItemStack template = stack.clone();
+						int originalAmount = template.getAmount();
+						
+						// Ensure the template has amount=1 before passing to constructor
+						template.setAmount(1);
+						
+						// Create the ItemReward - constructor will handle amount properly
+						ItemReward itemReward = new ItemReward(template, originalAmount);
+						// The constructor should set the amount correctly, but let's be explicit
+						itemReward.setAmount(originalAmount);
+						
+						newRewards.add(new BountyReward(
+								itemReward,
 								player.getUniqueId()
 						));
 					}
 					
-					this.rewards.get(clickContext).addAll(rewards);
+					// Only add the new rewards that were just inserted, don't accumulate with existing ones
+					// The existing rewards are already in the bounty, we just want to add the new ones
+					this.rewards.get(clickContext).clear();
+					this.rewards.get(clickContext).addAll(newRewards);
 					this.isReturning = true;
 					
 					clickContext.openForPlayer(
@@ -257,7 +267,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 					this.i18n(
 						"no_new_items_inserted",
 						player
-					).withPrefix().send();
+					).includePrefix().build().sendMessage();
 				}
 			});
 	}
@@ -266,7 +276,6 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 	public void onClick(
 		final @NotNull SlotClickContext click
 	) {
-		
 		if (
 			click.isShiftClick() &&
 			click.getClickedContainer().isEntityContainer()
@@ -274,6 +283,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 			this.handleShiftClick(click);
 			return;
 		}
+
 		if (
 			! click.isShiftClick() &&
 			click.getClickedContainer().isEntityContainer()
@@ -480,16 +490,10 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 		return UnifiedBuilderFactory
 			       .item(paneType)
 			       .setName(
-						   TranslationService.create(
-					       TranslationKey.of(nameKey),
-					       player
-				       ).build().component()
+						   new I18n.Builder(nameKey, player).build().component()
 			       )
 			       .setLore(
-				       TranslationService.create(
-					       TranslationKey.of(loreKey),
-					       player
-				       ).build().splitLines()
+				       new I18n.Builder(loreKey, player).build().children()
 			       )
 			       .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			       .build();
@@ -501,7 +505,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 		
 		List<ItemStack> result   = new ArrayList<>();
 		ItemStack       base     = rewardItem.getItem();
-		int             total    = rewardItem.getItem().getAmount();
+		int             total    = rewardItem.getAmount(); // Use the reward amount, not the ItemStack amount
 		int             maxStack = base.getMaxStackSize();
 		
 		while (
@@ -551,8 +555,8 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 			    "left_overs",
 			    player
 		    )
-		    .withPrefix()
-		    .send();
+		    .includePrefix()
+		    .build().sendMessage();
 		;
 	}
 	

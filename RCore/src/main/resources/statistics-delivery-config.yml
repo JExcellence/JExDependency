@@ -1,0 +1,102 @@
+# Statistics Delivery Configuration
+# This section configures the statistics delivery system for RaindropCentral
+
+statistics-delivery:
+  # Enable or disable statistics delivery
+  enabled: true
+  
+  # Enable diagnostic/debug mode for detailed logging
+  diagnostic-mode: false
+  
+  # Delivery interval in seconds (30-3600, default 300)
+  delivery-interval-seconds: 300
+  
+  # Native Minecraft statistic collection interval in seconds
+  native-stat-collection-interval-seconds: 60
+
+  # Queue settings
+  queue:
+    # Maximum queue size before rejecting new entries
+    max-size: 50000
+    # Queue size threshold for WARNING backpressure level
+    backpressure-warning-threshold: 5000
+    # Queue size threshold for CRITICAL backpressure level
+    backpressure-critical-threshold: 7500
+    # Interval for persisting queue to disk (seconds)
+    persistence-interval-seconds: 60
+
+  # Batch settings
+  batch:
+    # Maximum batch size for CRITICAL/HIGH priority
+    max-size-high-priority: 500
+    # Maximum batch size for NORMAL/LOW/BULK priority
+    max-size-normal: 2000
+    # Payload size threshold for GZIP compression (bytes)
+    compression-threshold-bytes: 5120
+
+  # Rate limiting
+  rate-limit:
+    # Maximum API requests per minute
+    max-requests-per-minute: 60
+    # Maximum retry attempts for failed deliveries
+    max-retries: 5
+    # Initial backoff delay in milliseconds
+    initial-backoff-ms: 2000
+    # Maximum backoff delay in milliseconds
+    max-backoff-ms: 60000
+
+  # Filtering settings
+  filter:
+    # Enabled statistic categories (PROGRESSION, ECONOMY, SOCIAL, GAMEPLAY, ACHIEVEMENT, CUSTOM)
+    enabled-categories:
+      - PROGRESSION
+      - ECONOMY
+      - SOCIAL
+      - GAMEPLAY
+      - ACHIEVEMENT
+      - CUSTOM
+    
+    # Specific statistic keys to exclude
+    excluded-keys: []
+    
+    # Specific statistic keys to include (if empty, all non-excluded keys are included)
+    included-keys: []
+    
+    # Regex patterns for excluding statistics
+    exclude-patterns: []
+    
+    # Regex patterns for including statistics
+    include-patterns: []
+    
+    # Native Minecraft statistics settings
+    native-statistics:
+      enabled: true
+      blocks: true
+      items: true
+      mobs: true
+      travel: true
+      general: true
+
+  # Event-driven collection settings
+  events:
+    # Percentage change threshold for triggering event-driven collection
+    significant-change-threshold-percent: 10.0
+    # Economy transaction threshold for triggering collection
+    economy-transaction-threshold: 1000.0
+    # Consolidation window for batching events (milliseconds)
+    consolidation-window-ms: 5000
+
+  # Cross-server synchronization
+  cross-server-sync:
+    enabled: true
+    # Cache validity duration in milliseconds
+    cache-validity-ms: 300000
+    # Conflict resolution strategy: LATEST_WINS, HIGHEST_WINS, LOWEST_WINS, SUM_MERGE, LOCAL_WINS, REMOTE_WINS
+    conflict-strategy: LATEST_WINS
+
+  # Security settings
+  security:
+    # Sign payloads with HMAC
+    sign-payloads: true
+    # Encrypt sensitive data (IP addresses, locations)
+    encrypt-sensitive-data: true

@@ -2,8 +2,10 @@ package com.raindropcentral.rplatform.view;
 
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
+import net.kyori.adventure.text.Component;
+
+import java.util.List;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
@@ -94,10 +96,8 @@ public class ConfirmationView extends BaseView {
         }
 
         open.modifyConfig().title(
-                TranslationService.create(
-                        TranslationKey.of(key, "title"),
-                        open.getPlayer()
-                ).withAll(this.getTitlePlaceholders(open)).build().component()
+                new I18n.Builder(key + ".title", open.getPlayer())
+                        .withPlaceholders(this.getTitlePlaceholders(open)).build().component()
         );
     }
 
@@ -142,16 +142,11 @@ public class ConfirmationView extends BaseView {
                 UnifiedBuilderFactory
                         .item(Material.LIME_STAINED_GLASS_PANE)
                         .setName(
-                                TranslationService.create(
-                                        TranslationKey.of(this.customKey.get(render), "confirm.name"),
-                                        player
-                                ).build().component()
+                                new I18n.Builder(this.customKey.get(render) + ".confirm.name", player).build().component()
                         )
                         .setLore(
-                                TranslationService.create(
-                                        TranslationKey.of(this.customKey.get(render), "confirm.lore"),
-                                        player
-                                ).withAll(this.initialData.get(render)).build().splitLines()
+                                new I18n.Builder(this.customKey.get(render) + ".confirm.lore", player)
+                                        .withPlaceholders(this.initialData.get(render)).build().children()
                         )
                         .build()
         ).onClick(this::handleConfirm);
@@ -161,16 +156,11 @@ public class ConfirmationView extends BaseView {
                 UnifiedBuilderFactory
                         .item(Material.RED_STAINED_GLASS_PANE)
                         .setName(
-                                TranslationService.create(
-                                        TranslationKey.of(this.customKey.get(render), "cancel.name"),
-                                        player
-                                ).build().component()
+                                new I18n.Builder(this.customKey.get(render) + ".cancel.name", player).build().component()
                         )
                         .setLore(
-                                TranslationService.create(
-                                        TranslationKey.of(this.customKey.get(render), "cancel.lore"),
-                                        player
-                                ).withAll(this.initialData.get(render)).build().splitLines()
+                                new I18n.Builder(this.customKey.get(render) + ".cancel.lore", player)
+                                        .withPlaceholders(this.initialData.get(render)).build().children()
                         )
                         .build()
         ).onClick(this::handleCancel);

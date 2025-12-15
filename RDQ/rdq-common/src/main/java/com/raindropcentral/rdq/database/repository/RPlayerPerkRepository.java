@@ -10,7 +10,7 @@ import java.util.concurrent.ExecutorService;
 
 */
 /**
- * Repository for managing persistent {@link com.raindropcentral.rdq2.database.entity.perk.RPlayerPerk} entities.
+ * Repository for managing persistent {@link com.raindropcentral.rdq.database.entity.perk.RPlayerPerk} entities.
  *
  * @author JExcellence
  * @version 1.0.0
@@ -21,7 +21,7 @@ public class RPlayerPerkRepository extends GenericCachedRepository<RPlayerPerk, 
 	
 	*/
 /**
-	 * Constructs a new {@code RPlayerPerkRepository} for managing {@link com.raindropcentral.rdq2.database.entity.perk.RPlayerPerk} entities.
+	 * Constructs a new {@code RPlayerPerkRepository} for managing {@link com.raindropcentral.rdq.database.entity.perk.RPlayerPerk} entities.
 	 *
 	 * @param executor             the {@link java.util.concurrent.ExecutorService} used for asynchronous repository operations
 	 * @param entityManagerFactory the {@link jakarta.persistence.EntityManagerFactory} used to create and manage entity managers

@@ -12,7 +12,7 @@
  * {@link com.raindropcentral.rplatform.statistic.StatisticType.DataType} only when absolutely necessary, and provide sane
  * defaults so freshly provisioned player rows remain back-fill friendly. The definitions mirror the legacy
  * {@link com.raindropcentral.rplatform.type.EStatisticType} constants consumed inside
- * {@link com.raindropcentral.rdq2.requirement.RStatisticRequirement} so RDQ gameplay logic and platform persistence remain in
+ * {@link com.raindropcentral.rdq.requirement.RStatisticRequirement} so RDQ gameplay logic and platform persistence remain in
  * sync during migrations.</p>
  */
 package com.raindropcentral.rplatform.statistic;

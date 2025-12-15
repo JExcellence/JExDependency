@@ -10,8 +10,7 @@ import de.jexcellence.economy.database.entity.CurrencyLog;
 import de.jexcellence.economy.type.EChangeType;
 import de.jexcellence.economy.type.ELogLevel;
 import de.jexcellence.economy.type.ELogType;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.I18n;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -221,7 +220,7 @@ public class PCurrencyLog extends PlayerCommand {
             int page = Integer.parseInt(pageArg);
             this.displayCurrencyLogs(player, page);
         } catch (NumberFormatException e) {
-            TranslationService.create(TranslationKey.of("currency_log.invalid_page_format"), player).withPrefix().with("input", pageArg).send();
+            new I18n.Builder("currency_log.invalid_page_format", player).includePrefix().withPlaceholder("input", pageArg).build().sendMessage();
         }
     }
 
@@ -235,10 +234,10 @@ public class PCurrencyLog extends PlayerCommand {
             try {
                 page = Integer.parseInt(args[1]);
                 if (page < 1) {
-                    TranslationService.create(TranslationKey.of("currency_log.invalid_page_number"), player).withPrefix().with("page", args[1]).send();
+                    new I18n.Builder("currency_log.invalid_page_number", player).includePrefix().withPlaceholder("page", args[1]).build().sendMessage();
                 }
             } catch (NumberFormatException e) {
-                TranslationService.create(TranslationKey.of("currency_log.invalid_page_format"), player).withPrefix().with("input", args[1]).send();
+                new I18n.Builder("currency_log.invalid_page_format", player).includePrefix().withPlaceholder("input", args[1]).build().sendMessage();
             }
         }
 

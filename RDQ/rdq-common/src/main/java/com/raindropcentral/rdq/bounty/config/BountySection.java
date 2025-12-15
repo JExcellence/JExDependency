@@ -15,6 +15,7 @@ public class BountySection extends AConfigSection {
 
     private Boolean enabled;
     private Boolean selfTargetAllowed;
+    private Boolean selfClaimAllowed;
     private Boolean instantDistributionEnabled;
     private Boolean chestDistributionEnabled;
     private Boolean dropDistributionEnabled;
@@ -46,6 +47,10 @@ public class BountySection extends AConfigSection {
 
     public Boolean getSelfTargetAllowed() {
         return selfTargetAllowed == null || selfTargetAllowed;
+    }
+
+    public Boolean getSelfClaimAllowed() {
+        return selfClaimAllowed != null && selfClaimAllowed;
     }
 
     public Boolean getInstantDistributionEnabled() {
@@ -105,7 +110,7 @@ public class BountySection extends AConfigSection {
     }
 
     public Long getTrackingWindowInMs() {
-        return trackingWindowInMs == null ? 0L : trackingWindowInMs;
+        return trackingWindowInMs == null ? 30000L : trackingWindowInMs; // Default 30 seconds
     }
 
     /**

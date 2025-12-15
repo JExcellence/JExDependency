@@ -197,7 +197,7 @@ public class CurrencyDetailView extends BaseView {
 							    "currency_icon.name",
 							    contextPlayer
 						    )
-						    .with(
+						    .withPlaceholder(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier()
 						    )
@@ -208,14 +208,14 @@ public class CurrencyDetailView extends BaseView {
 							    "currency_icon.lore",
 							    contextPlayer
 						    )
-						    .withAll(
+						    .withPlaceholders(
 							    Map.of(
 								    "material_name",
 								    displayedCurrency.getIcon().translationKey(),
 								    "currency_identifier",
 								    displayedCurrency.getIdentifier()
 							    )
-						    ).build().splitLines()
+						    ).build().children()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -247,7 +247,7 @@ public class CurrencyDetailView extends BaseView {
 						    "currency_symbol.name",
 						    contextPlayer
 					    )
-					    .with(
+					    .withPlaceholder(
 						    "currency_symbol",
 						    displayedCurrency.getSymbol()
 					    )
@@ -257,14 +257,14 @@ public class CurrencyDetailView extends BaseView {
 						    "currency_symbol.lore",
 						    contextPlayer
 					    )
-					    .withAll(
+					    .withPlaceholders(
 						    Map.of(
 							    "currency_symbol",
 							    displayedCurrency.getSymbol(),
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier()
 						    )
-					    ).build().splitLines()
+					    ).build().children()
 				)
 				.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 				.build()
@@ -301,13 +301,13 @@ public class CurrencyDetailView extends BaseView {
 				                                  "currency_prefix.lore",
 				                                  contextPlayer
 			                                  )
-			                                  .withAll(Map.of(
+			                                  .withPlaceholders(Map.of(
 				                                  "currency_prefix",
 				                                  hasPrefixConfigured ? currencyPrefix : "None",
 				                                  "has_prefix",
 				                                  hasPrefixConfigured ? "true" : "false"
 			                                  ))
-			                                  .build().splitLines())
+			                                  .build().children())
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()
 		);
@@ -343,13 +343,13 @@ public class CurrencyDetailView extends BaseView {
 				                                  "currency_suffix.lore",
 				                                  contextPlayer
 			                                  )
-			                                  .withAll(Map.of(
+			                                  .withPlaceholders(Map.of(
 				                                  "currency_suffix",
 				                                  hasSuffixConfigured ? currencySuffix : "None",
 				                                  "has_suffix",
 				                                  hasSuffixConfigured ? "true" : "false"
 			                                  ))
-			                                  .build().splitLines())
+			                                  .build().children())
 			                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 			                     .build()
 		);
@@ -378,7 +378,7 @@ public class CurrencyDetailView extends BaseView {
 				                                  "leaderboard.name",
 				                                  contextPlayer
 			                                  )
-			                                  .with(
+			                                  .withPlaceholder(
 				                                  "currency_identifier",
 				                                  displayedCurrency.getIdentifier()
 			                                  )
@@ -387,13 +387,13 @@ public class CurrencyDetailView extends BaseView {
 				                                  "leaderboard.lore",
 				                                  contextPlayer
 			                                  )
-			                                  .withAll(Map.of(
+			                                  .withPlaceholders(Map.of(
 				                                  "currency_identifier",
 				                                  displayedCurrency.getIdentifier(),
 				                                  "currency_symbol",
 				                                  displayedCurrency.getSymbol()
 			                                  ))
-			                                  .build().splitLines())
+			                                  .build().children())
 			                     .build()
 		).onClick(clickContext -> {
 			clickContext.openForPlayer(
@@ -438,7 +438,7 @@ public class CurrencyDetailView extends BaseView {
 				                                  "reset_all.name",
 				                                  contextPlayer
 			                                  )
-			                                  .with(
+			                                  .withPlaceholder(
 				                                  "currency_identifier",
 				                                  displayedCurrency.getIdentifier()
 			                                  )
@@ -447,13 +447,13 @@ public class CurrencyDetailView extends BaseView {
 				                                  "reset_all.lore",
 				                                  contextPlayer
 			                                  )
-			                                  .withAll(Map.of(
+			                                  .withPlaceholders(Map.of(
 				                                  "currency_identifier",
 				                                  displayedCurrency.getIdentifier(),
 				                                  "currency_symbol",
 				                                  displayedCurrency.getSymbol()
 			                                  ))
-			                                  .build().splitLines())
+			                                  .build().children())
 			                     .build()
 		).displayIf(clickContext -> {
 			final Player viewingPlayer = clickContext.getPlayer();
@@ -532,12 +532,12 @@ public class CurrencyDetailView extends BaseView {
 							    "reset_all.no_players",
 							    requestingPlayer
 						    )
-						    .withPrefix()
-						    .with(
+						    .includePrefix()
+						    .withPlaceholder(
 							    "currency_identifier",
 							    targetCurrency.getIdentifier()
 							)
-						    .send();
+						    .build().sendMessage();
 						return;
 					}
 					
@@ -563,12 +563,12 @@ public class CurrencyDetailView extends BaseView {
 					    "reset_all.error",
 					    requestingPlayer
 				    )
-				    .withPrefix()
-				    .with(
+				    .includePrefix()
+				    .withPlaceholder(
 					    "error",
 					    resetException.getMessage()
 				    )
-				    .send();
+				    .build().sendMessage();
 				return null;
 			});
 	}
@@ -657,12 +657,12 @@ public class CurrencyDetailView extends BaseView {
 			    "reset_all.cancelled",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "currency_identifier",
 			    targetCurrency.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -698,14 +698,14 @@ public class CurrencyDetailView extends BaseView {
 			    "reset_all.processing",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "currency_identifier",
 			    targetCurrency.getIdentifier(),
 			    "player_count",
 			    userCurrenciesToReset.size()
 		    ))
-		    .send();
+		    .build().sendMessage();
 		
 		try {
 			userCurrenciesToReset.forEach(userCurrencyToReset -> {
@@ -752,8 +752,8 @@ public class CurrencyDetailView extends BaseView {
 			    "reset_all.success",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "currency_identifier",
 			    targetCurrency.getIdentifier(),
 			    "player_count",
@@ -763,7 +763,7 @@ public class CurrencyDetailView extends BaseView {
 			    "currency_symbol",
 			    targetCurrency.getSymbol()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -786,13 +786,13 @@ public class CurrencyDetailView extends BaseView {
 			    "reset_all.execution_error",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "currency_identifier",
 			    targetCurrency.getIdentifier(),
 			    "error",
 			    resetException.getMessage()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 }

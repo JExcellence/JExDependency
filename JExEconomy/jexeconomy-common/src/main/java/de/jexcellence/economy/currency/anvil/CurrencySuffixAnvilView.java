@@ -261,10 +261,10 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 				                                this.i18n(
 					                                "input.lore",
 					                                contextPlayer
-				                                ).with(
+				                                ).withPlaceholder(
 					                                "max_length",
 					                                MAXIMUM_SUFFIX_LENGTH
-				                                ).build().splitLines()
+				                                ).build().children()
 			                                )
 			                                .build();
 		
@@ -308,8 +308,8 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 			    specificErrorKey,
 			    validationContext.getPlayer()
 		    )
-		    .withPrefix()
-		    .withAll(
+		    .includePrefix()
+		    .withPlaceholders(
 			    Map.of(
 				    "input",
 				    invalidInput != null ? invalidInput : "",
@@ -319,7 +319,7 @@ public class CurrencySuffixAnvilView extends AbstractAnvilView {
 				    invalidInput != null ? invalidInput.length() : 0
 			    )
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**

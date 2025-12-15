@@ -1,97 +1,212 @@
 # Warrior Rank Tree
 # The path of strength and combat
 
-id: warrior
-displayNameKey: rank_trees.warrior.name
-descriptionKey: rank_trees.warrior.description
-iconMaterial: IRON_SWORD
 displayOrder: 1
-enabled: true
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 0
+
+icon:
+  type: "IRON_SWORD"
+
+prerequisiteRankTrees: []
+connectedRankTrees: []
+switchableRankTiers: []
+
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: []
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 
 ranks:
-  - id: warrior_1
-    displayNameKey: rank.warrior.recruit
+  recruit:
     tier: 1
     weight: 100
-    luckPermsGroup: warrior_recruit
-    prefixKey: rank.warrior.recruit.prefix
-    iconMaterial: WOODEN_SWORD
-    enabled: true
-    requirements: []
+    luckPermsGroup: "warrior_recruit"
+    prefixKey: "&8[&7Recruit&8]"
+    suffixKey: ""
+    isInitialRank: true
+    isEnabled: true
+    icon:
+      type: "WOODEN_SWORD"
+    nextRanks: ["soldier"]
 
-  - id: warrior_2
-    displayNameKey: rank.warrior.soldier
+  soldier:
     tier: 2
     weight: 200
-    luckPermsGroup: warrior_soldier
-    prefixKey: rank.warrior.soldier.prefix
-    iconMaterial: STONE_SWORD
-    enabled: true
+    luckPermsGroup: "warrior_soldier"
+    prefixKey: "&8[&eSoldier&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "STONE_SWORD"
+    previousRanks: ["recruit"]
+    nextRanks: ["veteran"]
     requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 10
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 100
+      combat_training:
+        icon:
+          type: "STONE_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "STONE_SWORD"
+              amount: 1
+            item2:
+              type: "LEATHER_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "IRON_INGOT"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 10
 
-  - id: warrior_3
-    displayNameKey: rank.warrior.veteran
+  veteran:
     tier: 3
     weight: 300
-    luckPermsGroup: warrior_veteran
-    prefixKey: rank.warrior.veteran.prefix
-    iconMaterial: IRON_SWORD
-    enabled: true
+    luckPermsGroup: "warrior_veteran"
+    prefixKey: "&8[&6Veteran&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "IRON_SWORD"
+    previousRanks: ["soldier"]
+    nextRanks: ["champion"]
     requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 50
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 500
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      veteran_gear:
+        icon:
+          type: "IRON_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "IRON_SWORD"
+              amount: 1
+            item2:
+              type: "IRON_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "IRON_HELMET"
+              amount: 1
+            item4:
+              type: "DIAMOND"
+              amount: 4
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 20
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 21600
 
-  - id: warrior_4
-    displayNameKey: rank.warrior.champion
+  champion:
     tier: 4
     weight: 400
-    luckPermsGroup: warrior_champion
-    prefixKey: rank.warrior.champion.prefix
-    iconMaterial: DIAMOND_SWORD
-    enabled: true
+    luckPermsGroup: "warrior_champion"
+    prefixKey: "&8[&bChampion&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "DIAMOND_SWORD"
+    previousRanks: ["veteran"]
+    nextRanks: ["warlord"]
     requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 150
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 1500
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: warrior_3
+      champion_gear:
+        icon:
+          type: "DIAMOND_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "DIAMOND_SWORD"
+              amount: 1
+            item2:
+              type: "DIAMOND_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "DIAMOND_HELMET"
+              amount: 1
+            item4:
+              type: "DIAMOND_LEGGINGS"
+              amount: 1
+            item5:
+              type: "DIAMOND_BOOTS"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 43200
 
-  - id: warrior_5
-    displayNameKey: rank.warrior.warlord
+  warlord:
     tier: 5
     weight: 500
-    luckPermsGroup: warrior_warlord
-    prefixKey: rank.warrior.warlord.prefix
-    iconMaterial: NETHERITE_SWORD
-    enabled: true
+    luckPermsGroup: "warrior_warlord"
+    prefixKey: "&8[&4Warlord&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHERITE_SWORD"
+    previousRanks: ["champion"]
     requirements:
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 500
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 5000
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: warrior_4
+      ultimate_warrior:
+        icon:
+          type: "NETHERITE_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "NETHERITE_SWORD"
+              amount: 1
+            item2:
+              type: "NETHERITE_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "NETHERITE_HELMET"
+              amount: 1
+            item4:
+              type: "NETHERITE_LEGGINGS"
+              amount: 1
+            item5:
+              type: "NETHERITE_BOOTS"
+              amount: 1
+            item6:
+              type: "TOTEM_OF_UNDYING"
+              amount: 2
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 162000

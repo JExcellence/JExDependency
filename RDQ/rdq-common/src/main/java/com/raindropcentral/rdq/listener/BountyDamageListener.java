@@ -2,17 +2,17 @@ package com.raindropcentral.rdq.listener;
 
 import com.raindropcentral.rdq.RDQ;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.logging.Logger;
+
 /**
- * Listener for tracking damage dealt to players for bounty attribution.
+ * Listener for damage events related to the bounty system.
+ * Tracks damage dealt to players with active bounties for claim attribution.
  *
  * @author JExcellence
  * @version 1.0.0
@@ -20,57 +20,40 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BountyDamageListener implements Listener {
 
+    private static final Logger LOGGER = Logger.getLogger(BountyDamageListener.class.getName());
+
     private final RDQ rdq;
 
     public BountyDamageListener(@NotNull RDQ rdq) {
         this.rdq = rdq;
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)  // Changed to catch cancelled events too
     public void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
+        // Log ALL damage events for debugging
+        LOGGER.info("Damage event detected: " + event.getDamager().getType() + " -> " + event.getEntity().getType() + 
+                   " (damage: " + event.getFinalDamage() + ", cancelled: " + event.isCancelled() + ")");
+        
+        // Only track player-on-player damage
         if (!(event.getEntity() instanceof Player victim)) {
+            LOGGER.info("Not a player victim, skipping");
+            return;
+        }
+        
+        if (!(event.getDamager() instanceof Player attacker)) {
+            LOGGER.info("Not a player attacker, skipping");
             return;
         }
 
-        Player attacker = getAttacker(event);
-        if (attacker == null || attacker.equals(victim)) {
-            return;
-        }
-
+        // Always record damage for all player-vs-player combat
+        // The ClaimHandler will check for bounties later during death processing
         double damage = event.getFinalDamage();
-        rdq.getBountyFactory().getDamageTracker().recordDamage(victim.getUniqueId(), attacker.getUniqueId(), damage);
-    }
+        rdq.getBountyFactory().getDamageTracker().recordDamage(
+            victim.getUniqueId(),
+            attacker.getUniqueId(),
+            damage
+        );
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerQuit(@NotNull PlayerQuitEvent event) {
-        rdq.getBountyFactory().getDamageTracker().clearDamage(event.getPlayer().getUniqueId());
-    }
-
-    /**
-     * Extracts the attacking player from various damage sources.
-     * Handles direct attacks, projectiles, and tamed entities.
-     */
-    private Player getAttacker(@NotNull EntityDamageByEntityEvent event) {
-        var damager = event.getDamager();
-
-        if (damager instanceof Player player) {
-            return player;
-        }
-
-        if (damager instanceof Projectile projectile) {
-            var shooter = projectile.getShooter();
-            if (shooter instanceof Player player) {
-                return player;
-            }
-        }
-
-        if (damager instanceof Wolf wolf && wolf.isTamed()) {
-            var owner = wolf.getOwner();
-            if (owner instanceof Player player) {
-                return player;
-            }
-        }
-
-        return null;
+        LOGGER.info("Recorded " + damage + " PvP damage from " + attacker.getName() + " to " + victim.getName());
     }
 }

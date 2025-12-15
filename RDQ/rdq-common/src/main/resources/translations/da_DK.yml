@@ -1,54 +1,92 @@
-# RDQ Common Oversættelsesfil - Dansk
+# RDQ Oversettelsesfil - Dansk
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du har en aktiv dusør på dit hoved!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Dusørværdi:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Udløber:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Bestiller:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 DUSØR INDSAMLET! 🎉</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 DUSØR HENTET! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Du hentede dusøren på</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Din andel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Nogen</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>har hentet dusøren på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spillere</gradient> <gradient:#a855f7:#c084fc>har hentet dusøren på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-bounty_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Dusør System</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Opret Dusør</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 Se Dusører</gradient>"
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯 Dusør på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Dusør oprettet for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Fejl ved behandling af dusør:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Opdaterer dusør...</gradient>"
 
-bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 Opret Dusør</gradient>"
-  select_target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Vælg Mål</gradient>"
-  add_items:
-    name: "<gradient:#10b981:#34d399>💰 Tilføj Belønninger</gradient>"
-  add_currencies:
-    name: "<gradient:#f59e0b:#fbbf24>💎 Tilføj Valuta</gradient>"
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Progression startet for rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Viser krav for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Krav ufuldstændige for</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% fuldført)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Krav ufuldstændigt:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>har ingen krav!</gradient>"
 
-bounty_player_info_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Dusør på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-  target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningstilstand:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Du ejer</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Låst:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Fuldfør forudsætningerne først</gradient>"
 
-bounty_reward_ui:
-  title: "<gradient:#a855f7:#c084fc>💰 Dusør Belønninger</gradient>"
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installeret!</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjælp</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Åbn hovedmenuen</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Vis ranger</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Vis dusører</gradient>"
 
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Adminpanel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Adgang til administrationsværktøjer</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og konfigurationsmuligheder</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Dusører</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis og administrer dusører</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jagt spillere for præmier!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Fordele</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis tilgængelige fordele</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og specielle evner</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Opgaver</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis tilgængelige opgaver</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og spor din fremgang</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis rangprogression</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og lås op for nye evner</gradient>"
 
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Side %current_page%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Side %direction%</gradient>"
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rangsystem</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rangtræer</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gennemse tilgængelige rangtræer</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og vælg din vej</gradient>"
 
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Tilbage</gradient>"
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ Fortsæt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Forrige</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Forrige side</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Næste</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Næste side</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuller</gradient>"
-
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Annuller handling</gradient>"

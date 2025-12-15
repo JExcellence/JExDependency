@@ -3,8 +3,10 @@ package com.raindropcentral.rplatform.utility.heads.view.pagination;
 
 import com.raindropcentral.rplatform.utility.heads.RHead;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
+import net.kyori.adventure.text.Component;
+
+import java.util.List;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -56,16 +58,10 @@ public class Number0 extends RHead {
                 this.getTexture()
             )
             .setName(
-                    TranslationService.create(
-                            TranslationKey.of(translationKey, "name"),
-                            player
-                    ).build().component()
+                    new I18n.Builder(translationKey + ".name", player).build().<Component>component()
             )
             .setLore(
-                    TranslationService.create(
-                            TranslationKey.of(translationKey, "lore"),
-                            player
-                    ).build().splitLines()
+                    new I18n.Builder(translationKey + ".lore", player).build().children()
             )
             .build();
   }

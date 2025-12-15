@@ -1,97 +1,314 @@
-# Ranger Rank Tree
-# The path of nature and archery
+# Only specify displayNameKey and descriptionKey if you want to override the auto-generated ones
 
-id: ranger
-displayNameKey: rank_trees.ranger.name
-descriptionKey: rank_trees.ranger.description
-iconMaterial: BOW
-displayOrder: 6
-enabled: true
+# Auto-generated:
+# tree.<path>.name
+# tree.<path>.description
+# rank.<path>.<rank_id>.name
+# rank.<path>.<rank_id>.description
 
+displayOrder: 4
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 1
+icon:
+  type: "BOW"
+  # Auto-generated: displayNameKey: "tree.ranger.name"
+  # Auto-generated: descriptionKey: "tree.ranger.lore"
+prerequisiteRankTrees: [ ]
+connectedRankTrees: [ ]
+switchableRankTiers: [ ]
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: [ ]
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 ranks:
-  - id: ranger_1
-    displayNameKey: rank.ranger.scout
+  hunter:
+    # Auto-generated: displayNameKey: "rank.ranger.hunter.name"
+    # Auto-generated: descriptionKey: "rank.ranger.hunter.lore"
     tier: 1
-    weight: 100
-    luckPermsGroup: ranger_scout
-    prefixKey: rank.ranger.scout.prefix
-    iconMaterial: BOW
+    weight: 10
+    luckPermsGroup: "ranger_hunter"
+    prefixKey: "&8[&7Hunter&8]"
+    suffixKey: ""
+    isInitialRank: true
     enabled: true
-    requirements: []
+    icon:
+      type: "WOODEN_SWORD"
+      # Auto-generated: displayNameKey: "rank.ranger.hunter.name"
+      # Auto-generated: descriptionKey: "rank.ranger.hunter.lore"
+    nextRanks: [ "archer" ]
 
-  - id: ranger_2
-    displayNameKey: rank.ranger.hunter
+  archer:
+    # Auto-generated: displayNameKey: "rank.ranger.archer.name"
+    # Auto-generated: descriptionKey: "rank.ranger.archer.lore"
     tier: 2
-    weight: 200
-    luckPermsGroup: ranger_hunter
-    prefixKey: rank.ranger.hunter.prefix
-    iconMaterial: CROSSBOW
+    weight: 20
+    luckPermsGroup: "ranger_archer"
+    prefixKey: "&8[&2Archer&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "BOW"
+      # Auto-generated: displayNameKey: "rank.ranger.archer.name"
+      # Auto-generated: descriptionKey: "rank.ranger.archer.lore"
+    previousRanks: [ "hunter" ]
+    nextRanks: [ "tracker", "marksman" ]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 50
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 100
+      archery_training:
+        type: "COMPOSITE"
+        operator: "AND"
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "BOW"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "ARROW"
+              amount: 64
+          - type: "ITEM"
+            requiredItem:
+              type: "STRING"
+              amount: 8
+          - type: "ITEM"
+            requiredItem:
+              type: "FEATHER"
+              amount: 16
+          - type: "EXPERIENCE_LEVEL"
+            level: 8
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 5
 
-  - id: ranger_3
-    displayNameKey: rank.ranger.tracker
+  tracker:
+    # Auto-generated: displayNameKey: "rank.ranger.tracker.name"
+    # Auto-generated: descriptionKey: "rank.ranger.tracker.lore"
     tier: 3
-    weight: 300
-    luckPermsGroup: ranger_tracker
-    prefixKey: rank.ranger.tracker.prefix
-    iconMaterial: SPECTRAL_ARROW
+    weight: 30
+    luckPermsGroup: "ranger_tracker"
+    prefixKey: "&8[&aTracker&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "COMPASS"
+      # Auto-generated: displayNameKey: "rank.ranger.tracker.name"
+      # Auto-generated: descriptionKey: "rank.ranger.tracker.lore"
+    previousRanks: [ "archer" ]
+    nextRanks: [ "pathfinder" ]
+    cross_tree_connections: [ "rogue:infiltrator" ]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 200
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 500
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      wilderness_tracking:
+        type: "COMPOSITE"
+        operator: "MINIMUM"
+        minimumRequired: 3
+        allowPartialProgress: true
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "COMPASS"
+              amount: 2
+          - type: "ITEM"
+            requiredItem:
+              type: "CLOCK"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "SPYGLASS"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "LEAD"
+              amount: 4
+          - type: "ITEM"
+            requiredItem:
+              type: "NAME_TAG"
+              amount: 3
+          - type: "EXPERIENCE_LEVEL"
+            level: 15
 
-  - id: ranger_4
-    displayNameKey: rank.ranger.warden
+  marksman:
+    # Auto-generated: displayNameKey: "rank.ranger.marksman.name"
+    # Auto-generated: descriptionKey: "rank.ranger.marksman.lore"
+    tier: 3
+    weight: 30
+    luckPermsGroup: "ranger_marksman"
+    prefixKey: "&8[&6Marksman&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      type: "CROSSBOW"
+      # Auto-generated: displayNameKey: "rank.ranger.marksman.name"
+      # Auto-generated: descriptionKey: "rank.ranger.marksman.lore"
+    previousRanks: [ "archer" ]
+    nextRanks: [ "sniper" ]
+    requirements:
+      precision_shooting:
+        type: "COMPOSITE"
+        operator: "AND"
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "CROSSBOW"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "FIREWORK_ROCKET"
+              amount: 16
+          - type: "ITEM"
+            requiredItem:
+              type: "TIPPED_ARROW"
+              amount: 32
+          - type: "ITEM"
+            requiredItem:
+              type: "TRIPWIRE_HOOK"
+              amount: 8
+          - type: "EXPERIENCE_LEVEL"
+            level: 18
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 12
+
+  pathfinder:
+    # Auto-generated: displayNameKey: "rank.ranger.pathfinder.name"
+    # Auto-generated: descriptionKey: "rank.ranger.pathfinder.lore"
     tier: 4
-    weight: 400
-    luckPermsGroup: ranger_warden
-    prefixKey: rank.ranger.warden.prefix
-    iconMaterial: TRIDENT
+    weight: 40
+    luckPermsGroup: "ranger_pathfinder"
+    prefixKey: "&8[&ePathfinder&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "MAP"
+      # Auto-generated: displayNameKey: "rank.ranger.pathfinder.name"
+      # Auto-generated: descriptionKey: "rank.ranger.pathfinder.description"
+    previousRanks: [ "tracker" ]
+    nextRanks: [ "forest_lord" ]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 500
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 2000
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: ranger_3
+      exploration_mastery:
+        type: "COMPOSITE"
+        operator: "OR"
+        requirements:
+          - type: "COMPOSITE"
+            operator: "AND"
+            requirements:
+              - type: "ITEM"
+                requiredItem:
+                  type: "MAP"
+                  amount: 8
+              - type: "ITEM"
+                requiredItem:
+                  type: "ITEM_FRAME"
+                  amount: 16
+          - type: "COMPOSITE"
+            operator: "AND"
+            requirements:
+              - type: "ITEM"
+                requiredItem:
+                  type: "ELYTRA"
+                  amount: 1
+              - type: "ITEM"
+                requiredItem:
+                  type: "FIREWORK_ROCKET"
+                  amount: 64
 
-  - id: ranger_5
-    displayNameKey: rank.ranger.beastmaster
-    tier: 5
-    weight: 500
-    luckPermsGroup: ranger_beastmaster
-    prefixKey: rank.ranger.beastmaster.prefix
-    iconMaterial: DRAGON_HEAD
+  sniper:
+    # Auto-generated: displayNameKey: "rank.ranger.sniper.name"
+    # Auto-generated: descriptionKey: "rank.ranger.sniper.description"
+    tier: 4
+    weight: 40
+    luckPermsGroup: "ranger_sniper"
+    prefixKey: "&8[&cSniper&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "SPECTRAL_ARROW"
+      # Auto-generated: displayNameKey: "rank.ranger.sniper.name"
+      # Auto-generated: descriptionKey: "rank.ranger.sniper.description"
+    previousRanks: [ "marksman" ]
+    nextRanks: [ "forest_lord" ]
     requirements:
-      - type: STATISTIC
-        statisticType: ANIMALS_BRED
-        amount: 1000
-      - type: STATISTIC
-        statisticType: MOB_KILLS
-        amount: 10000
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: ranger_4
+      elite_marksmanship:
+        type: "COMPOSITE"
+        operator: "AND"
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "SPECTRAL_ARROW"
+              amount: 32
+          - type: "ITEM"
+            requiredItem:
+              type: "PHANTOM_MEMBRANE"
+              amount: 8
+          - type: "ITEM"
+            requiredItem:
+              type: "GLOWSTONE_DUST"
+              amount: 16
+          - type: "ITEM"
+            requiredItem:
+              type: "ENDER_PEARL"
+              amount: 4
+          - type: "EXPERIENCE_LEVEL"
+            level: 25
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 20
+
+  forest_lord:
+    # Auto-generated: displayNameKey: "rank.ranger.forest_lord.name"
+    # Auto-generated: descriptionKey: "rank.ranger.forest_lord.description"
+    tier: 5
+    weight: 50
+    luckPermsGroup: "ranger_forest_lord"
+    prefixKey: "&8[&2&lForest Lord&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      type: "ENCHANTED_GOLDEN_APPLE"
+      # Auto-generated: displayNameKey: "rank.ranger.forest_lord.name"
+      # Auto-generated: descriptionKey: "rank.ranger.forest_lord.description"
+    previousRanks: [ "pathfinder", "sniper" ]
+    nextRanks: [ ]
+    requirements:
+      nature_mastery:
+        type: "COMPOSITE"
+        operator: "MINIMUM"
+        minimumRequired: 4
+        allowPartialProgress: true
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 2
+          - type: "ITEM"
+            requiredItem:
+              type: "TOTEM_OF_UNDYING"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "HEART_OF_THE_SEA"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "DRAGON_BREATH"
+              amount: 8
+          - type: "ITEM"
+            requiredItem:
+              type: "BEACON"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "CONDUIT"
+              amount: 1
+          - type: "EXPERIENCE_LEVEL"
+            level: 40
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 45

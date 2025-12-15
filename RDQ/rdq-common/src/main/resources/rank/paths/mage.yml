@@ -1,97 +1,197 @@
 # Mage Rank Tree
 # The path of magic and wisdom
 
-id: mage
-displayNameKey: rank_trees.mage.name
-descriptionKey: rank_trees.mage.description
-iconMaterial: BLAZE_ROD
 displayOrder: 3
-enabled: true
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 0
+
+icon:
+  type: "BLAZE_ROD"
+
+prerequisiteRankTrees: []
+connectedRankTrees: []
+switchableRankTiers: []
+
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: []
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 
 ranks:
-  - id: mage_1
-    displayNameKey: rank.mage.apprentice
+  apprentice:
     tier: 1
     weight: 100
-    luckPermsGroup: mage_apprentice
-    prefixKey: rank.mage.apprentice.prefix
-    iconMaterial: STICK
-    enabled: true
-    requirements: []
+    luckPermsGroup: "mage_apprentice"
+    prefixKey: "&8[&7Apprentice&8]"
+    suffixKey: ""
+    isInitialRank: true
+    isEnabled: true
+    icon:
+      type: "STICK"
+    nextRanks: ["adept"]
 
-  - id: mage_2
-    displayNameKey: rank.mage.adept
+  adept:
     tier: 2
     weight: 200
-    luckPermsGroup: mage_adept
-    prefixKey: rank.mage.adept.prefix
-    iconMaterial: BLAZE_ROD
-    enabled: true
+    luckPermsGroup: "mage_adept"
+    prefixKey: "&8[&eAdept&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "BLAZE_ROD"
+    previousRanks: ["apprentice"]
+    nextRanks: ["wizard"]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 1000
-      - type: ITEM
-        material: ENCHANTED_BOOK
-        amount: 5
+      magic_supplies:
+        icon:
+          type: "ENCHANTED_BOOK"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_BOOK"
+              amount: 5
+            item2:
+              type: "LAPIS_LAZULI"
+              amount: 32
+            item3:
+              type: "BLAZE_POWDER"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 15
 
-  - id: mage_3
-    displayNameKey: rank.mage.wizard
+  wizard:
     tier: 3
     weight: 300
-    luckPermsGroup: mage_wizard
-    prefixKey: rank.mage.wizard.prefix
-    iconMaterial: END_ROD
-    enabled: true
+    luckPermsGroup: "mage_wizard"
+    prefixKey: "&8[&6Wizard&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "END_ROD"
+    previousRanks: ["adept"]
+    nextRanks: ["sorcerer"]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 5000
-      - type: ITEM
-        material: ENCHANTED_BOOK
-        amount: 25
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      wizard_supplies:
+        icon:
+          type: "END_ROD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENCHANTED_BOOK"
+              amount: 15
+            item2:
+              type: "ENDER_PEARL"
+              amount: 16
+            item3:
+              type: "BLAZE_ROD"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 25
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 21600
 
-  - id: mage_4
-    displayNameKey: rank.mage.sorcerer
+  sorcerer:
     tier: 4
     weight: 400
-    luckPermsGroup: mage_sorcerer
-    prefixKey: rank.mage.sorcerer.prefix
-    iconMaterial: ENDER_EYE
-    enabled: true
+    luckPermsGroup: "mage_sorcerer"
+    prefixKey: "&8[&bSorcerer&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "ENDER_EYE"
+    previousRanks: ["wizard"]
+    nextRanks: ["archmage"]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 25000
-      - type: ITEM
-        material: ENDER_PEARL
-        amount: 64
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: mage_3
+      sorcerer_supplies:
+        icon:
+          type: "ENDER_EYE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "ENDER_EYE"
+              amount: 12
+            item2:
+              type: "ENCHANTED_BOOK"
+              amount: 25
+            item3:
+              type: "DRAGON_BREATH"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 35
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 43200
 
-  - id: mage_5
-    displayNameKey: rank.mage.archmage
+  archmage:
     tier: 5
     weight: 500
-    luckPermsGroup: mage_archmage
-    prefixKey: rank.mage.archmage.prefix
-    iconMaterial: NETHER_STAR
-    enabled: true
+    luckPermsGroup: "mage_archmage"
+    prefixKey: "&8[&5Archmage&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHER_STAR"
+    previousRanks: ["sorcerer"]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 100000
-      - type: ITEM
-        material: NETHER_STAR
-        amount: 1
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: mage_4
+      ultimate_mage:
+        icon:
+          type: "NETHER_STAR"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "NETHER_STAR"
+              amount: 1
+            item2:
+              type: "DRAGON_EGG"
+              amount: 1
+            item3:
+              type: "ENCHANTED_BOOK"
+              amount: 50
+            item4:
+              type: "END_CRYSTAL"
+              amount: 4
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 50
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 162000

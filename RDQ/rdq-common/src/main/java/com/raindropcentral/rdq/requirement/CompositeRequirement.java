@@ -29,6 +29,9 @@ public final class CompositeRequirement extends AbstractRequirement {
     @JsonProperty("minimumRequired")
     private final int minimumRequired;
 
+    @JsonProperty("maximumRequired")
+    private final Integer maximumRequired;
+
     @JsonProperty("description")
     private final String description;
 
@@ -36,21 +39,22 @@ public final class CompositeRequirement extends AbstractRequirement {
     private final boolean allowPartialProgress;
 
     public CompositeRequirement(@NotNull List<AbstractRequirement> requirements) {
-        this(requirements, Operator.AND, requirements.size(), null, true);
+        this(requirements, Operator.AND, requirements.size(), null, null, true);
     }
 
     public CompositeRequirement(@NotNull List<AbstractRequirement> requirements, @NotNull Operator operator) {
-        this(requirements, operator, operator == Operator.OR ? 1 : requirements.size(), null, true);
+        this(requirements, operator, operator == Operator.OR ? 1 : requirements.size(), null, null, true);
     }
 
     public CompositeRequirement(@NotNull List<AbstractRequirement> requirements, int minimumRequired) {
-        this(requirements, Operator.MINIMUM, minimumRequired, null, true);
+        this(requirements, Operator.MINIMUM, minimumRequired, null, null, true);
     }
 
     @JsonCreator
     public CompositeRequirement(@JsonProperty("requirements") @NotNull List<AbstractRequirement> requirements,
                                @JsonProperty("operator") @Nullable Operator operator,
                                @JsonProperty("minimumRequired") int minimumRequired,
+                               @JsonProperty("maximumRequired") @Nullable Integer maximumRequired,
                                @JsonProperty("description") @Nullable String description,
                                @JsonProperty("allowPartialProgress") @Nullable Boolean allowPartialProgress) {
         super(Type.COMPOSITE);
@@ -58,19 +62,19 @@ public final class CompositeRequirement extends AbstractRequirement {
         if (requirements.isEmpty()) {
             throw new IllegalArgumentException("CompositeRequirement must contain at least one requirement.");
         }
+        
+        // Auto-adjust minimumRequired if it exceeds requirements size
+        int adjustedMinimum = minimumRequired;
         if (minimumRequired < 1) {
-            throw new IllegalArgumentException("Minimum required must be at least 1.");
-        }
-        if (minimumRequired > requirements.size()) {
-            throw new IllegalArgumentException(
-                    "Minimum required (" + minimumRequired + ") cannot exceed total requirements (" +
-                    requirements.size() + ")."
-            );
+            adjustedMinimum = 1;
+        } else if (minimumRequired > requirements.size()) {
+            adjustedMinimum = requirements.size();
         }
 
         this.requirements = new ArrayList<>(requirements);
         this.operator = operator != null ? operator : Operator.AND;
-        this.minimumRequired = minimumRequired;
+        this.minimumRequired = adjustedMinimum;
+        this.maximumRequired = maximumRequired;
         this.description = description;
         this.allowPartialProgress = allowPartialProgress != null ? allowPartialProgress : true;
     }
@@ -194,6 +198,16 @@ public final class CompositeRequirement extends AbstractRequirement {
      */
     public int getMinimumRequired() {
         return this.minimumRequired;
+    }
+
+    /**
+     * Returns the maximum number of requirements that can be satisfied.
+     *
+     * @return the maximum number of completed sub-requirements, or {@code null} if unlimited
+     */
+    @Nullable
+    public Integer getMaximumRequired() {
+        return this.maximumRequired;
     }
 
     /**
@@ -343,7 +357,7 @@ public final class CompositeRequirement extends AbstractRequirement {
                     "Invalid operator: " + operatorString + ". Valid operators are: AND, OR, MINIMUM."
             );
         }
-        return new CompositeRequirement(requirements, operator, minimumRequired, null, true);
+        return new CompositeRequirement(requirements, operator, minimumRequired, null, null, true);
     }
 
     /**

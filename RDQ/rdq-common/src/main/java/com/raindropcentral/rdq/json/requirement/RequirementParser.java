@@ -1,14 +1,13 @@
 package com.raindropcentral.rdq.json.requirement;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.raindropcentral.rdq.json.ItemStackJSONDeserializer;
 import com.raindropcentral.rdq.json.ItemStackJSONSerializer;
 import com.raindropcentral.rdq.requirement.AbstractRequirement;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
+import tools.jackson.databind.module.SimpleModule;
 
 import java.io.IOException;
 
@@ -22,7 +21,7 @@ import java.io.IOException;
  *
  * <ul>
  *   <li>Supports custom serialization/deserialization for {@link ItemStack}.</li>
- *   <li>Handles polymorphic requirement types via {@link com.raindropcentral.rdq2.json.requirement.RequirementMixin}.</li>
+ *   <li>Handles polymorphic requirement types via {@link com.raindropcentral.rdq.json.requirement.RequirementMixin}.</li>
  *   <li>Intended for use in persistence, configuration, and network transfer of requirements.</li>
  * </ul>
  *
@@ -49,10 +48,8 @@ public class RequirementParser {
      * Registers support for:
      * <ul>
      *   <li>{@link ItemStack} serialization and deserialization</li>
-     *   <li>Java time types via {@link JavaTimeModule}</li>
-     *   <li>Polymorphic requirement types via {@link com.raindropcentral.rdq2.json.requirement.RequirementMixin}</li>
+     *   <li>Polymorphic requirement types via {@link com.raindropcentral.rdq.json.requirement.RequirementMixin}</li>
      * </ul>
-     * Disables {@link SerializationFeature#FAIL_ON_EMPTY_BEANS} to allow serialization of empty objects.
      * </p>
      *
      * @return Configured {@link ObjectMapper} instance
@@ -62,11 +59,10 @@ public class RequirementParser {
         bukkitModule.addSerializer(ItemStack.class, new ItemStackJSONSerializer());
         bukkitModule.addDeserializer(ItemStack.class, new ItemStackJSONDeserializer());
 
-        return new ObjectMapper()
-                .registerModule(new JavaTimeModule())
-                .registerModule(bukkitModule)
+        return JsonMapper.builder()
+                .addModule(bukkitModule)
                 .addMixIn(AbstractRequirement.class, RequirementMixin.class)
-                .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+                .build();
     }
 
     /**

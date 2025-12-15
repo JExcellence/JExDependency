@@ -1,97 +1,206 @@
 # Rogue Rank Tree
 # The path of stealth and agility
 
-id: rogue
-displayNameKey: rank_trees.rogue.name
-descriptionKey: rank_trees.rogue.description
-iconMaterial: LEATHER_BOOTS
 displayOrder: 4
-enabled: true
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 0
+
+icon:
+  type: "LEATHER_BOOTS"
+
+prerequisiteRankTrees: []
+connectedRankTrees: []
+switchableRankTiers: []
+
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: []
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 
 ranks:
-  - id: rogue_1
-    displayNameKey: rank.rogue.pickpocket
+  pickpocket:
     tier: 1
     weight: 100
-    luckPermsGroup: rogue_pickpocket
-    prefixKey: rank.rogue.pickpocket.prefix
-    iconMaterial: LEATHER_BOOTS
-    enabled: true
-    requirements: []
+    luckPermsGroup: "rogue_pickpocket"
+    prefixKey: "&8[&7Pickpocket&8]"
+    suffixKey: ""
+    isInitialRank: true
+    isEnabled: true
+    icon:
+      type: "LEATHER_BOOTS"
+    nextRanks: ["thief"]
 
-  - id: rogue_2
-    displayNameKey: rank.rogue.thief
+  thief:
     tier: 2
     weight: 200
-    luckPermsGroup: rogue_thief
-    prefixKey: rank.rogue.thief.prefix
-    iconMaterial: CHAINMAIL_BOOTS
-    enabled: true
+    luckPermsGroup: "rogue_thief"
+    prefixKey: "&8[&eThief&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "CHAINMAIL_BOOTS"
+    previousRanks: ["pickpocket"]
+    nextRanks: ["assassin"]
     requirements:
-      - type: STATISTIC
-        statisticType: SPRINT_ONE_CM
-        amount: 100000
-      - type: STATISTIC
-        statisticType: SNEAK_TIME
-        amount: 6000
+      thief_gear:
+        icon:
+          type: "CHAINMAIL_BOOTS"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "CHAINMAIL_BOOTS"
+              amount: 1
+            item2:
+              type: "CHAINMAIL_LEGGINGS"
+              amount: 1
+            item3:
+              type: "IRON_NUGGET"
+              amount: 32
+            item4:
+              type: "SPIDER_EYE"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 10
 
-  - id: rogue_3
-    displayNameKey: rank.rogue.assassin
+  assassin:
     tier: 3
     weight: 300
-    luckPermsGroup: rogue_assassin
-    prefixKey: rank.rogue.assassin.prefix
-    iconMaterial: IRON_BOOTS
-    enabled: true
+    luckPermsGroup: "rogue_assassin"
+    prefixKey: "&8[&6Assassin&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "IRON_BOOTS"
+    previousRanks: ["thief"]
+    nextRanks: ["shadow"]
     requirements:
-      - type: STATISTIC
-        statisticType: SPRINT_ONE_CM
-        amount: 500000
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 25
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      assassin_gear:
+        icon:
+          type: "IRON_SWORD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "IRON_BOOTS"
+              amount: 1
+            item2:
+              type: "IRON_SWORD"
+              amount: 1
+            item3:
+              type: "FERMENTED_SPIDER_EYE"
+              amount: 8
+            item4:
+              type: "PHANTOM_MEMBRANE"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 20
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 21600
 
-  - id: rogue_4
-    displayNameKey: rank.rogue.shadow
+  shadow:
     tier: 4
     weight: 400
-    luckPermsGroup: rogue_shadow
-    prefixKey: rank.rogue.shadow.prefix
-    iconMaterial: DIAMOND_BOOTS
-    enabled: true
+    luckPermsGroup: "rogue_shadow"
+    prefixKey: "&8[&bShadow&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "DIAMOND_BOOTS"
+    previousRanks: ["assassin"]
+    nextRanks: ["phantom"]
     requirements:
-      - type: STATISTIC
-        statisticType: SPRINT_ONE_CM
-        amount: 2000000
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 100
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: rogue_3
+      shadow_gear:
+        icon:
+          type: "DIAMOND_BOOTS"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "DIAMOND_BOOTS"
+              amount: 1
+            item2:
+              type: "DIAMOND_SWORD"
+              amount: 1
+            item3:
+              type: "ENDER_PEARL"
+              amount: 16
+            item4:
+              type: "INVISIBILITY_POTION"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 43200
 
-  - id: rogue_5
-    displayNameKey: rank.rogue.phantom
+  phantom:
     tier: 5
     weight: 500
-    luckPermsGroup: rogue_phantom
-    prefixKey: rank.rogue.phantom.prefix
-    iconMaterial: NETHERITE_BOOTS
-    enabled: true
+    luckPermsGroup: "rogue_phantom"
+    prefixKey: "&8[&5Phantom&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHERITE_BOOTS"
+    previousRanks: ["shadow"]
     requirements:
-      - type: STATISTIC
-        statisticType: SPRINT_ONE_CM
-        amount: 10000000
-      - type: STATISTIC
-        statisticType: PLAYER_KILLS
-        amount: 300
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: rogue_4
+      ultimate_rogue:
+        icon:
+          type: "NETHERITE_BOOTS"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "NETHERITE_BOOTS"
+              amount: 1
+            item2:
+              type: "NETHERITE_SWORD"
+              amount: 1
+            item3:
+              type: "ELYTRA"
+              amount: 1
+            item4:
+              type: "CHORUS_FRUIT"
+              amount: 64
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+      playtime_req:
+        icon:
+          type: "CLOCK"
+        playtimeRequirement:
+          useTotalPlaytime: true
+          requiredPlaytimeSeconds: 162000

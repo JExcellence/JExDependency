@@ -164,7 +164,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 							    "currency.name",
 							    contextPlayer
 						    )
-						    .withAll(Map.of(
+						    .withPlaceholders(Map.of(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier(),
 							    "currency_symbol",
@@ -178,7 +178,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 							    "currency.lore",
 							    contextPlayer
 						    )
-						    .withAll(Map.of(
+						    .withPlaceholders(Map.of(
 							    "currency_identifier",
 							    displayedCurrency.getIdentifier(),
 							    "currency_symbol",
@@ -191,7 +191,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 							    entryIndex + 1
 						    ))
 						    .build()
-						    .splitLines()
+						    .children()
 					)
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
 					.build()
@@ -322,12 +322,12 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.cancelled",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -366,14 +366,14 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.processing",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier(),
 			    "affected_players",
 			    affectedPlayers
 		    ))
-		    .send();
+		    .build().sendMessage();
 		
 		// Execute the deletion process asynchronously
 		CompletableFuture.supplyAsync(() -> {
@@ -479,8 +479,8 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.success",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "currency_identifier",
 			    deletedCurrency.getIdentifier(),
 			    "affected_players",
@@ -490,7 +490,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "currency_symbol",
 			    deletedCurrency.getSymbol()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -511,12 +511,12 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.failed",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .with(
+		    .includePrefix()
+		    .withPlaceholder(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier()
 		    )
-		    .send();
+		    .build().sendMessage();
 	}
 	
 	/**
@@ -539,13 +539,13 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			    "delete.error",
 			    requestingPlayer
 		    )
-		    .withPrefix()
-		    .withAll(Map.of(
+		    .includePrefix()
+		    .withPlaceholders(Map.of(
 			    "currency_identifier",
 			    currencyToDelete.getIdentifier(),
 			    "error",
 			    deletionException.getMessage()
 		    ))
-		    .send();
+		    .build().sendMessage();
 	}
 }

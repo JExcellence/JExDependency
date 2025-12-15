@@ -1,97 +1,309 @@
-# Mage Rank Tree
-# The path of magic and wisdom
+# Only specify displayNameKey and descriptionKey if you want to override the auto-generated ones
 
-id: mage
-displayNameKey: rank_trees.mage.name
-descriptionKey: rank_trees.mage.description
-iconMaterial: BLAZE_ROD
+# Auto-generated:
+# tree.<path>.name
+# tree.<path>.description
+# rank.<path>.<rank_id>.name
+# rank.<path>.<rank_id>.description
+
 displayOrder: 3
-enabled: true
-
+isEnabled: true
+isFinalRankTree: false
+requiresAllRankTreesToBeDone: false
+minimumRankTreesToBeDone: 1
+icon:
+  type: "EMERALD"
+  # Auto-generated: displayNameKey: "tree.merchant.name"
+  # Auto-generated: descriptionKey: "tree.merchant.lore"
+prerequisiteRankTrees: [ ]
+connectedRankTrees: [ ]
+switchableRankTiers: [ ]
+crossTreeProgression:
+  allowSwitching: true
+  switchRankTiers: [ ]
+  requireSameRankTier: false
+  allowDowngrade: false
+  switchingCosts: ""
+  switchingCooldown: 86400
 ranks:
-  - id: mage_1
-    displayNameKey: rank.mage.apprentice
+  trader:
+    # Auto-generated: displayNameKey: "rank.merchant.trader.name"
+    # Auto-generated: descriptionKey: "rank.merchant.trader.lore"
     tier: 1
-    weight: 100
-    luckPermsGroup: mage_apprentice
-    prefixKey: rank.mage.apprentice.prefix
-    iconMaterial: STICK
+    weight: 10
+    luckPermsGroup: "merchant_trader"
+    prefixKey: "&8[&7Trader&8]"
+    suffixKey: ""
+    isInitialRank: true
     enabled: true
-    requirements: []
+    icon:
+      type: "CHEST"
+      # Auto-generated: displayNameKey: "rank.merchant.trader.name"
+      # Auto-generated: descriptionKey: "rank.merchant.trader.lore"
+    nextRanks: [ "vendor" ]
 
-  - id: mage_2
-    displayNameKey: rank.mage.adept
+  vendor:
+    # Auto-generated: displayNameKey: "rank.merchant.vendor.name"
+    # Auto-generated: descriptionKey: "rank.merchant.vendor.lore"
     tier: 2
-    weight: 200
-    luckPermsGroup: mage_adept
-    prefixKey: rank.mage.adept.prefix
-    iconMaterial: BLAZE_ROD
+    weight: 20
+    luckPermsGroup: "merchant_vendor"
+    prefixKey: "&8[&aVendor&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "EMERALD"
+      # Auto-generated: displayNameKey: "rank.merchant.vendor.name"
+      # Auto-generated: descriptionKey: "rank.merchant.vendor.lore"
+    previousRanks: [ "trader" ]
+    nextRanks: [ "artificer", "alchemist" ]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 1000
-      - type: ITEM
-        material: ENCHANTED_BOOK
-        amount: 5
+      established_trade:
+        type: "COMPOSITE"
+        operator: "AND"
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "EMERALD"
+              amount: 16
+          - type: "ITEM"
+            requiredItem:
+              type: "BARREL"
+              amount: 8
+          - type: "ITEM"
+            requiredItem:
+              type: "LECTERN"
+              amount: 2
+          - type: "EXPERIENCE_LEVEL"
+            level: 8
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 6
 
-  - id: mage_3
-    displayNameKey: rank.mage.wizard
+  artificer:
+    # Auto-generated: displayNameKey: "rank.merchant.artificer.name"
+    descriptionKey: "rank.merchant.artificer.lore"
     tier: 3
-    weight: 300
-    luckPermsGroup: mage_wizard
-    prefixKey: rank.mage.wizard.prefix
-    iconMaterial: END_ROD
+    weight: 30
+    luckPermsGroup: "merchant_artificer"
+    prefixKey: "&8[&6Artificer&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "ANVIL"
+      # Auto-generated: displayNameKey: "rank.merchant.artificer.name"
+      # Auto-generated: descriptionKey: "rank.merchant.artificer.lore"
+    previousRanks: [ "vendor" ]
+    nextRanks: [ "master_crafter" ]
+    cross_tree_connections: [ "mage:enchanter" ]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 5000
-      - type: ITEM
-        material: ENCHANTED_BOOK
-        amount: 25
-      - type: CURRENCY
-        currency: default
-        amount: 5000
+      crafting_mastery:
+        type: "COMPOSITE"
+        operator: "MINIMUM"
+        minimumRequired: 3
+        allowPartialProgress: true
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "ANVIL"
+              amount: 2
+          - type: "ITEM"
+            requiredItem:
+              type: "SMITHING_TABLE"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "LOOM"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "STONECUTTER"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "IRON_INGOT"
+              amount: 32
 
-  - id: mage_4
-    displayNameKey: rank.mage.sorcerer
+  alchemist:
+    # Auto-generated: displayNameKey: "rank.merchant.alchemist.name"
+    # Auto-generated: descriptionKey: "rank.merchant.alchemist.lore"
+    tier: 3
+    weight: 30
+    luckPermsGroup: "merchant_alchemist"
+    prefixKey: "&8[&5Alchemist&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      type: "BREWING_STAND"
+      # Auto-generated: displayNameKey: "rank.merchant.alchemist.name"
+      # Auto-generated: descriptionKey: "rank.merchant.alchemist.lore"
+    previousRanks: [ "vendor" ]
+    nextRanks: [ "merchant_prince" ]
+    cross_tree_connections: [ "cleric:healer" ]
+    requirements:
+      alchemical_expertise:
+        type: "COMPOSITE"
+        operator: "AND"
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "BREWING_STAND"
+              amount: 2
+          - type: "ITEM"
+            requiredItem:
+              type: "CAULDRON"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "GLASS_BOTTLE"
+              amount: 16
+          - type: "ITEM"
+            requiredItem:
+              type: "NETHER_WART"
+              amount: 32
+          - type: "EXPERIENCE_LEVEL"
+            level: 15
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 12
+
+  master_crafter:
+    # Auto-generated: displayNameKey: "rank.merchant.master_crafter.name"
+    # Auto-generated: descriptionKey: "rank.merchant.master_crafter.lore"
     tier: 4
-    weight: 400
-    luckPermsGroup: mage_sorcerer
-    prefixKey: rank.mage.sorcerer.prefix
-    iconMaterial: ENDER_EYE
+    weight: 40
+    luckPermsGroup: "merchant_master_crafter"
+    prefixKey: "&8[&bMaster Crafter&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "CRAFTING_TABLE"
+      # Auto-generated: displayNameKey: "rank.merchant.master_crafter.name"
+      # Auto-generated: descriptionKey: "rank.merchant.master_crafter.lore"
+    previousRanks: [ "artificer" ]
+    nextRanks: [ "guild_master" ]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 25000
-      - type: ITEM
-        material: ENDER_PEARL
-        amount: 64
-      - type: CURRENCY
-        currency: default
-        amount: 25000
-      - type: RANK
-        requiredRankId: mage_3
+      advanced_crafting:
+        type: "COMPOSITE"
+        operator: "OR"
+        requirements:
+          - type: "COMPOSITE"
+            operator: "AND"
+            requirements:
+              - type: "ITEM"
+                requiredItem:
+                  type: "NETHERITE_INGOT"
+                  amount: 2
+              - type: "ITEM"
+                requiredItem:
+                  type: "DIAMOND"
+                  amount: 8
+          - type: "COMPOSITE"
+            operator: "AND"
+            requirements:
+              - type: "ITEM"
+                requiredItem:
+                  type: "SHULKER_BOX"
+                  amount: 4
+              - type: "ITEM"
+                requiredItem:
+                  type: "ENDER_CHEST"
+                  amount: 2
 
-  - id: mage_5
-    displayNameKey: rank.mage.archmage
-    tier: 5
-    weight: 500
-    luckPermsGroup: mage_archmage
-    prefixKey: rank.mage.archmage.prefix
-    iconMaterial: NETHER_STAR
+  merchant_prince:
+    # Auto-generated: displayNameKey: "rank.merchant.merchant_prince.name"
+    # Auto-generated: descriptionKey: "rank.merchant.merchant_prince.lore"
+    tier: 4
+    weight: 40
+    luckPermsGroup: "merchant_merchant_prince"
+    prefixKey: "&8[&dMerchant Prince&8]"
+    suffixKey: ""
     enabled: true
+    icon:
+      type: "GOLD_BLOCK"
+      # Auto-generated: displayNameKey: "rank.merchant.merchant_prince.name"
+      # Auto-generated: descriptionKey: "rank.merchant.merchant_prince.lore"
+    previousRanks: [ "alchemist" ]
+    nextRanks: [ "guild_master" ]
     requirements:
-      - type: STATISTIC
-        statisticType: EXPERIENCE_GAINED
-        amount: 100000
-      - type: ITEM
-        material: NETHER_STAR
-        amount: 1
-      - type: CURRENCY
-        currency: default
-        amount: 100000
-      - type: RANK
-        requiredRankId: mage_4
+      wealth_accumulation:
+        type: "COMPOSITE"
+        operator: "AND"
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "GOLD_BLOCK"
+              amount: 16
+          - type: "ITEM"
+            requiredItem:
+              type: "EMERALD_BLOCK"
+              amount: 8
+          - type: "ITEM"
+            requiredItem:
+              type: "VILLAGER_SPAWN_EGG"
+              amount: 4
+          - type: "ITEM"
+            requiredItem:
+              type: "BELL"
+              amount: 2
+          - type: "EXPERIENCE_LEVEL"
+            level: 30
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 25
+
+  guild_master:
+    # Auto-generated: displayNameKey: "rank.merchant.guild_master.name"
+    # Auto-generated: descriptionKey: "rank.merchant.guild_master.lore"
+    tier: 5
+    weight: 50
+    luckPermsGroup: "merchant_guild_master"
+    prefixKey: "&8[&e&lGuild Master&8]"
+    suffixKey: ""
+    enabled: true
+    icon:
+      type: "DIAMOND_BLOCK"
+      # Auto-generated: displayNameKey: "rank.merchant.guild_master.name"
+      # Auto-generated: descriptionKey: "rank.merchant.guild_master.description"
+    previousRanks: [ "master_crafter", "merchant_prince" ]
+    nextRanks: [ ]
+    requirements:
+      guild_leadership:
+        type: "COMPOSITE"
+        operator: "MINIMUM"
+        minimumRequired: 4
+        allowPartialProgress: true
+        requirements:
+          - type: "ITEM"
+            requiredItem:
+              type: "DIAMOND_BLOCK"
+              amount: 8
+          - type: "ITEM"
+            requiredItem:
+              type: "BEACON"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "CONDUIT"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "ELYTRA"
+              amount: 1
+          - type: "ITEM"
+            requiredItem:
+              type: "MENDING"
+              amount: 3
+          - type: "ITEM"
+            requiredItem:
+              type: "TOTEM_OF_UNDYING"
+              amount: 2
+          - type: "EXPERIENCE_LEVEL"
+            level: 45
+          - type: "PLAYTIME"
+            playtimeRequirement:
+              useTotalPlayTime: true
+              requiredPlaytimeHours: 40

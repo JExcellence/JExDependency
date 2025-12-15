@@ -8,8 +8,7 @@ import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -494,10 +493,7 @@ public class RankRequirementProgressManager {
 		public RequirementProgressData getUpdatedProgress() { return updatedProgress; }
 		
 		public void sendMessage(@NotNull Player player) {
-            TranslationService.create(
-                    TranslationKey.of(messageKey),
-                    player
-            ).withPrefix().send();
+            new I18n.Builder(messageKey, player).includePrefix().build().sendMessage();
 		}
 	}
 }

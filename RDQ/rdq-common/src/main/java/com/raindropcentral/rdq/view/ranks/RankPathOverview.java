@@ -9,9 +9,8 @@ import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.heads.view.*;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
-import de.jexcellence.jextranslate.api.TranslatedMessage;
-import de.jexcellence.jextranslate.api.TranslationKey;
-import de.jexcellence.jextranslate.api.TranslationService;
+import de.jexcellence.jextranslate.i18n.I18n;
+
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
@@ -54,7 +53,7 @@ import java.util.stream.Collectors;
  */
 public class RankPathOverview extends BaseView {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(RankPathOverview.class.getName());
+    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
 
     private final State<RDQ> rdq = this.initialState("plugin");
     private final State<RDQPlayer> currentPlayer = this.initialState("player");
@@ -117,20 +116,20 @@ public class RankPathOverview extends BaseView {
             final RRankTree rankTree = this.selectedRankTree.get(openContext);
             final boolean previewMode = this.isPreviewMode.get(openContext);
 
-            TranslatedMessage rankTreeDisplayName = this.extractRankTreeDisplayName(
+            I18n rankTreeDisplayName = this.extractRankTreeDisplayName(
                     rankTree,
                     openContext.getPlayer()
             );
 
-            if (
-                    previewMode
-            ) {
-                rankTreeDisplayName = this.i18n("preview_prefix", openContext.getPlayer()).build().append(rankTreeDisplayName.component());
+            Component displayComponent = rankTreeDisplayName.component();
+            if (previewMode) {
+                Component prefix = this.i18n("preview_prefix", openContext.getPlayer()).build().component();
+                displayComponent = prefix.append(displayComponent);
             }
 
             return Map.of(
                     "rank_tree_name",
-                    rankTreeDisplayName.asLegacyText()
+                    net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().serialize(displayComponent)
             );
         } catch (
                 final Exception exception
@@ -629,7 +628,7 @@ public class RankPathOverview extends BaseView {
                 .anyMatch(parent -> ownedRanks.contains(parent.rank.getIdentifier()));
     }
 
-    private @NotNull TranslatedMessage extractRankTreeDisplayName(
+    private @NotNull I18n extractRankTreeDisplayName(
             final RRankTree rankTree,
             final @NotNull Player player
     ) {
@@ -641,10 +640,7 @@ public class RankPathOverview extends BaseView {
             ).build();
         }
 
-        return TranslationService.create(TranslationKey.of(
-                        rankTree.getDisplayNameKey()),
-                player
-        ).build();
+        return new I18n.Builder(rankTree.getDisplayNameKey(), player).build();
     }
 
     private void initializeViewOffsets(final @NotNull RenderContext renderContext) {
@@ -822,8 +818,7 @@ public class RankPathOverview extends BaseView {
                                     "nav.fallback",
                                     player
                             )
-                            .with(
-                                    "direction",
+                            .withPlaceholder("direction",
                                     direction
                             )
                             .build().component())
@@ -928,11 +923,11 @@ public class RankPathOverview extends BaseView {
                 lore.addAll(this.i18n(
                         "back.lore",
                         player
-                ).build().splitLines());
+                ).build().children());
                 lore.addAll(this.i18n(
                         "preview_mode.lore",
                         player
-                ).build().splitLines());
+                ).build().children());
 
                 return UnifiedBuilderFactory.item(backItem).addItemFlags(ItemFlag.HIDE_ATTRIBUTES).setLore(lore).build();
             }
@@ -984,7 +979,7 @@ public class RankPathOverview extends BaseView {
                     .setLore(this.i18n(
                             "center_view.lore",
                             player
-                    ).build().splitLines())
+                    ).build().children())
                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build();
         } catch (final Exception exception) {
@@ -1047,7 +1042,7 @@ public class RankPathOverview extends BaseView {
                     .setLore(this.i18n(
                             "preview_mode.lore",
                             player
-                    ).build().splitLines())
+                    ).build().children())
                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build();
         } catch (final Exception exception) {
@@ -1472,8 +1467,7 @@ public class RankPathOverview extends BaseView {
                             "connection.from",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             parentNode.rank.getIdentifier()
                     )
                     .build().component());
@@ -1481,8 +1475,7 @@ public class RankPathOverview extends BaseView {
                             "connection.to",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             childNode.rank.getIdentifier()
                     )
                     .build().component());
@@ -1491,7 +1484,7 @@ public class RankPathOverview extends BaseView {
                 lore.addAll(this.i18n(
                         "preview_mode.lore",
                         player
-                ).build().splitLines());
+                ).build().children());
             }
 
             return UnifiedBuilderFactory.item(connectionMaterial)
@@ -1658,12 +1651,11 @@ public class RankPathOverview extends BaseView {
                             "messages.preview_rank_click",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -1674,11 +1666,10 @@ public class RankPathOverview extends BaseView {
                             "messages.preview_rank_click_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -1692,12 +1683,11 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_owned",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -1708,11 +1698,10 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_owned_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -1764,12 +1753,11 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_locked",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -1780,11 +1768,10 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_locked_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -1828,12 +1815,11 @@ public class RankPathOverview extends BaseView {
                             "messages.no_requirements",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -1844,11 +1830,10 @@ public class RankPathOverview extends BaseView {
                             "messages.no_requirements_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -1863,16 +1848,14 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_started",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .with(
-                            "requirement_count",
+                    .withPlaceholder("requirement_count",
                             requirementCount
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -1883,15 +1866,13 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_started_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .with(
-                            "requirement_count",
+                    .withPlaceholder("requirement_count",
                             requirementCount
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -1905,12 +1886,11 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_start_error",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -1921,11 +1901,10 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_start_error_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -2016,12 +1995,11 @@ public class RankPathOverview extends BaseView {
                             "messages.requirements_not_completed",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -2032,11 +2010,10 @@ public class RankPathOverview extends BaseView {
                             "messages.requirements_not_completed_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -2243,12 +2220,11 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_redemption_error",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -2259,11 +2235,10 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_redemption_error_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -2277,12 +2252,11 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_redeemed",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .withPrefix()
-                    .send();
+                    .includePrefix()
+                    .build().sendMessage();
         } catch (final Exception exception) {
             LOGGER.log(
                     Level.WARNING,
@@ -2293,11 +2267,10 @@ public class RankPathOverview extends BaseView {
                             "messages.rank_redeemed_fallback",
                             player
                     )
-                    .with(
-                            "rank_name",
+                    .withPlaceholder("rank_name",
                             rank.getIdentifier()
                     )
-                    .send();
+                    .build().sendMessage();
         }
     }
 
@@ -2356,12 +2329,11 @@ public class RankPathOverview extends BaseView {
                                 "error.requirements_view_failed",
                                 clickContext.getPlayer()
                         )
-                        .with(
-                                "rank_name",
+                        .withPlaceholder("rank_name",
                                 rankNode.rank.getIdentifier()
                         )
-                        .withPrefix()
-                        .send();
+                        .includePrefix()
+                        .build().sendMessage();
             } catch (
                     final Exception fallbackException
             ) {
@@ -2374,8 +2346,8 @@ public class RankPathOverview extends BaseView {
                                 "error.general",
                                 clickContext.getPlayer()
                         )
-                        .withPrefix()
-                        .send();
+                        .includePrefix()
+                        .build().sendMessage();
             }
         }
     }
@@ -2759,10 +2731,7 @@ public class RankPathOverview extends BaseView {
     ) {
 
         try {
-            return TranslationService.create(
-                    TranslationKey.of(rank.getDisplayNameKey()),
-                    player
-            ).build().component();
+            return new I18n.Builder(rank.getDisplayNameKey(), player).build().component();
         } catch (
                 final Exception exception
         ) {
@@ -2775,8 +2744,7 @@ public class RankPathOverview extends BaseView {
                             "rank.fallback_name",
                             player
                     )
-                    .with(
-                            "rank_id",
+                    .withPlaceholder("rank_id",
                             rank.getIdentifier()
                     )
                     .build().component();
@@ -3025,7 +2993,7 @@ public class RankPathOverview extends BaseView {
             this.i18n(
                     "error.general",
                     clickContext.getPlayer()
-            ).send();
+            ).build().sendMessage();
         }
     }
 
@@ -3150,7 +3118,7 @@ public class RankPathOverview extends BaseView {
             lore.addAll(this.i18n(
                     rank.getDescriptionKey(),
                     player
-            ).build().splitLines());
+            ).build().children());
             lore.add(Component.empty());
         } catch (
                 final Exception exception
@@ -3164,8 +3132,7 @@ public class RankPathOverview extends BaseView {
                             "rank.fallback_description",
                             player
                     )
-                    .with(
-                            "rank_id",
+                    .withPlaceholder("rank_id",
                             rank.getIdentifier()
                     )
                     .build().component());
@@ -3181,8 +3148,7 @@ public class RankPathOverview extends BaseView {
                         "rank.tier",
                         player
                 )
-                .with(
-                        "tier",
+                .withPlaceholder("tier",
                         rank.getTier()
                 )
                 .build().component());
@@ -3190,8 +3156,7 @@ public class RankPathOverview extends BaseView {
                         "rank.weight",
                         player
                 )
-                .with(
-                        "weight",
+                .withPlaceholder("weight",
                         rank.getWeight()
                 )
                 .build().component());
@@ -3210,7 +3175,7 @@ public class RankPathOverview extends BaseView {
             lore.addAll(this.i18n(
                     "preview_mode.lore",
                     player
-            ).build().splitLines());
+            ).build().children());
         }
 
         return lore;
@@ -3301,8 +3266,7 @@ public class RankPathOverview extends BaseView {
                                         "fallback.rank",
                                         player
                                 )
-                                .with(
-                                        "rank_id",
+                                .withPlaceholder("rank_id",
                                         rank.getIdentifier()
                                 )
                                 .build().component())
@@ -3357,7 +3321,7 @@ public class RankPathOverview extends BaseView {
                     .setLore(this.i18n(
                             "error.no_rank_tree_lore",
                             player
-                    ).build().splitLines())
+                    ).build().children())
                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build();
 
@@ -3397,7 +3361,7 @@ public class RankPathOverview extends BaseView {
                     .setLore(this.i18n(
                             "error.critical.lore",
                             player
-                    ).build().splitLines())
+                    ).build().children())
                     .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build();
 

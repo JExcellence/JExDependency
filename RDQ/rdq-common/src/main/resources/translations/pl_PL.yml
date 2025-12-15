@@ -1,46 +1,92 @@
-# RDQ Common Plik Tłumaczenia - Polski
+# RDQ Plik Tłumaczenia - Polski
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Masz aktywną nagrodę na głowie!</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Masz aktywną nagrodę na głowę!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Wartość Nagrody:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Wygasa:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Zleceniodawca:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 NAGRODA ZEBRANA! 🎉</gradient>"
-bounty_main_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 System Nagród</gradient>"
-prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "bounty_over
-view_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 System Nagród</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 Utwórz Nagrodę</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 Zobacz Nagrody</gradient>"
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯 Nagroda za</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 NAGRODA ODEBRANA! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Pomyślnie odebrałeś nagrodę za</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Twój udział:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Ktoś</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>odebrał nagrodę za</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% graczy</gradient> <gradient:#a855f7:#c084fc>odebrało nagrodę za</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
-bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 Utwórz Nagrodę</gradient>"
-  select_target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Wybierz Cel</gradient>"
-  add_items:
-    name: "<gradient:#10b981:#34d399>💰 Dodaj Nagrody</gradient>"
-  add_currencies:
-    name: "<gradient:#f59e0b:#fbbf24>💎 Dodaj Walutę</gradient>"
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Nagroda pomyślnie utworzona dla</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Błąd przetwarzania nagrody:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Aktualizowanie nagrody...</gradient>"
 
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Rozpoczęto postęp dla rangi</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Wyświetlanie wymagań dla</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Wymagania niekompletne dla</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% ukończone)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Wymaganie niekompletne:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>nie ma wymagań!</gradient>"
 
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Strona %current_page%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Strona %direction%</gradient>"
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Tryb podglądu:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Posiadasz</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Zablokowane:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Najpierw spełnij wymagania wstępne</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms nie jest zainstalowany!</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Pomoc RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Otwórz menu główne</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Zobacz rangi</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Zobacz nagrody</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Panel Admina</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Dostęp do narzędzi administracyjnych</gradient>"
+      - "<gradient:#6b7280:#9ca3af>i opcji konfiguracji</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Nagrody</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Przeglądaj i zarządzaj nagrodami</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Poluj na graczy za nagrody!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Przywileje</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Zobacz dostępne przywileje</gradient>"
+      - "<gradient:#6b7280:#9ca3af>i specjalne umiejętności</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Zadania</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Zobacz dostępne zadania</gradient>"
+      - "<gradient:#6b7280:#9ca3af>i śledź swój postęp</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Rangi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Zobacz postęp rang</gradient>"
+      - "<gradient:#6b7280:#9ca3af>i odblokuj nowe umiejętności</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ System Rang</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Drzewa Rang</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Przeglądaj dostępne drzewa rang</gradient>"
+      - "<gradient:#6b7280:#9ca3af>i wybierz swoją ścieżkę</gradient>"
 
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Powrót</gradient>"
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ Kontynuuj</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknij, aby wrócić</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Poprzednia</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Poprzednia strona</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Następna</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Następna strona</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Anuluj</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Anuluj akcję</gradient>"

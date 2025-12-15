@@ -153,7 +153,6 @@ public class PremiumBountyService implements IBountyService {
                     );
                 }
 
-                // Create bounty without rewards first, then add them
                 Bounty bounty = new Bounty(targetUniqueId, commissionerUniqueId, new ArrayList<>());
 
                 for (BountyReward reward : rewards) {
@@ -177,15 +176,57 @@ public class PremiumBountyService implements IBountyService {
     @Override
     public CompletableFuture<Bounty> update(@NotNull Bounty bounty) {
         return CompletableFuture.supplyAsync(() -> {
+            return updateWithRetry(bounty, 3);
+        });
+    }
+    
+    private Bounty updateWithRetry(@NotNull Bounty bounty, int maxRetries) {
+        for (int attempt = 1; attempt <= maxRetries; attempt++) {
             try {
                 Bounty updated = getBountyRepository().update(bounty);
-                LOGGER.log(Level.FINE, "Updated bounty: " + bounty.getId());
+                LOGGER.log(Level.FINE, "Updated bounty: " + bounty.getId() + " (attempt " + attempt + ")");
                 return updated;
             } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Failed to update bounty: " + bounty.getId(), e);
-                throw new RuntimeException("Failed to update bounty", e);
+                if (e.getCause() != null && e.getCause().getClass().getSimpleName().contains("OptimisticLock")) {
+                    if (attempt < maxRetries) {
+                        LOGGER.log(Level.WARNING, "OptimisticLockException on bounty " + bounty.getId() + 
+                                  ", attempt " + attempt + "/" + maxRetries + ". Retrying with fresh entity...");
+
+                        try {
+                            // Add a small delay before retry to allow other transactions to complete
+                            Thread.sleep(50 * attempt);
+                            
+                            Bounty freshBounty = getBountyRepository().findById(bounty.getId());
+                            if (freshBounty != null) {
+                                // Copy the claim state from the stale bounty to the fresh one
+                                freshBounty.setActive(bounty.isActive());
+                                if (bounty.getClaimedAt() != null) {
+                                    freshBounty.setClaimedAt(bounty.getClaimedAt());
+                                }
+                                if (bounty.getClaimedBy() != null) {
+                                    freshBounty.claim(bounty.getClaimedBy());
+                                }
+                                bounty = freshBounty;
+                                LOGGER.log(Level.INFO, "Retrying with fresh bounty entity (attempt " + attempt + ")");
+                                continue;
+                            }
+                        } catch (Exception fetchEx) {
+                            LOGGER.log(Level.WARNING, "Failed to fetch fresh bounty entity for retry", fetchEx);
+                        }
+                    } else {
+                        LOGGER.log(Level.SEVERE, "Failed to update bounty " + bounty.getId() + 
+                                  " after " + maxRetries + " attempts due to OptimisticLockException", e);
+                    }
+                }
+                
+                if (attempt == maxRetries) {
+                    LOGGER.log(Level.SEVERE, "Failed to update bounty: " + bounty.getId() + 
+                              " after " + maxRetries + " attempts", e);
+                    throw new RuntimeException("Failed to update bounty", e);
+                }
             }
-        });
+        }
+        throw new RuntimeException("Update retry loop completed without success");
     }
 
     @Override

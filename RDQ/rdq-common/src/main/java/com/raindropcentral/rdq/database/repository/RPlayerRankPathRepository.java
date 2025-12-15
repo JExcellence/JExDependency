@@ -6,6 +6,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
+import java.util.function.Function;
 
 /**
  * Repository for managing persistent {@link RPlayerRankPath} entities.
@@ -25,13 +26,15 @@ public class RPlayerRankPathRepository extends GenericCachedRepository<RPlayerRa
      */
     public RPlayerRankPathRepository(
             final @NotNull ExecutorService executor,
-            final @NotNull EntityManagerFactory entityManagerFactory
+            final @NotNull EntityManagerFactory entityManagerFactory,
+            @NotNull Class<RPlayerRankPath> entityClass,
+            @NotNull Function<RPlayerRankPath, Long> keyExtractor
     ) {
         super(
                 executor,
                 entityManagerFactory,
-                RPlayerRankPath.class,
-                RPlayerRankPath::getId
+                entityClass,
+                keyExtractor
         );
     }
 }

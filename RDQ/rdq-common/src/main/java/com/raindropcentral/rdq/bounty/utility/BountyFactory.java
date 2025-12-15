@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,7 +84,13 @@ public class BountyFactory {
         claimMode = bountyConfiguration.getClaimMode();
         distributionMode = bountyConfiguration.getDefaultDistributionMode();
         damageTracker = new DamageTracker(bountyConfiguration.getTrackingWindowInMs());
-        claimHandler = new ClaimHandler(damageTracker, claimMode);
+        
+        boolean selfClaimAllowed = bountyConfiguration.getSelfClaimAllowed();
+        LOGGER.info("BountyFactory: selfClaimAllowed from config = " + selfClaimAllowed);
+        LOGGER.info("BountyFactory: trackingWindowInMs = " + bountyConfiguration.getTrackingWindowInMs());
+        LOGGER.info("BountyFactory: claimMode = " + bountyConfiguration.getClaimMode());
+        
+        claimHandler = new ClaimHandler(damageTracker, claimMode, selfClaimAllowed);
         
         // Load active bounties into cache
         loadActiveBounties();
@@ -153,10 +160,76 @@ public class BountyFactory {
      * @return a future containing the updated bounty
      */
     public CompletableFuture<Bounty> updateBounty(@NotNull Bounty bounty) {
+        LOGGER.log(Level.INFO, "Updating bounty for " + bounty.getTargetUniqueId() + " with " + bounty.getRewards().size() + " rewards");
         return bountyService.update(bounty)
                 .thenApply(updated -> {
                     bountyCache.put(updated.getTargetUniqueId(), updated);
+                    LOGGER.log(Level.INFO, "Successfully updated bounty for " + updated.getTargetUniqueId() + " - cache updated");
                     return updated;
+                })
+                .exceptionally(throwable -> {
+                    LOGGER.log(Level.SEVERE, "Failed to update bounty for " + bounty.getTargetUniqueId(), throwable);
+                    throw new RuntimeException("Bounty update failed", throwable);
+                });
+    }
+
+    /**
+     * Adds rewards to an existing bounty by target UUID.
+     * This method avoids Hibernate entity conflicts by fetching the bounty fresh from the database.
+     *
+     * @param targetUniqueId the UUID of the bounty target
+     * @param newRewards the list of new rewards to add
+     * @return a future containing the updated bounty
+     */
+    public CompletableFuture<Bounty> addRewardsToBounty(@NotNull UUID targetUniqueId, @NotNull List<BountyReward> newRewards) {
+        LOGGER.log(Level.INFO, "Adding " + newRewards.size() + " rewards to bounty for target: " + targetUniqueId);
+        
+        return bountyService.findPlayerBounty(targetUniqueId)
+                .thenCompose(bounty -> {
+                    if (bounty == null) {
+                        throw new RuntimeException("Bounty not found for target: " + targetUniqueId);
+                    }
+                    
+                    // Merge rewards with existing ones from the same contributor
+                    for (BountyReward newReward : newRewards) {
+                        boolean merged = false;
+                        
+                        // Check if we can merge with an existing reward from the same contributor
+                        for (BountyReward existingReward : bounty.getRewards()) {
+                            if (canMergeRewards(existingReward, newReward)) {
+                                mergeRewards(existingReward, newReward);
+                                merged = true;
+                                LOGGER.info("Merged reward from contributor " + newReward.getContributorUniqueId());
+                                break;
+                            }
+                        }
+                        
+                        // If not merged, add as new reward
+                        if (!merged) {
+                            BountyReward freshReward = new BountyReward(
+                                newReward.getReward(),
+                                newReward.getIcon(),
+                                newReward.getContributorUniqueId()
+                            );
+                            freshReward.setEstimatedValue(newReward.getEstimatedValue());
+                            bounty.getRewards().add(freshReward);
+                            LOGGER.info("Added new reward from contributor " + newReward.getContributorUniqueId());
+                        }
+                    }
+                    
+                    LOGGER.log(Level.INFO, "Bounty now has " + bounty.getRewards().size() + " total rewards");
+                    
+                    // Update the bounty
+                    return bountyService.update(bounty);
+                })
+                .thenApply(updated -> {
+                    bountyCache.put(updated.getTargetUniqueId(), updated);
+                    LOGGER.log(Level.INFO, "Successfully added rewards to bounty for " + updated.getTargetUniqueId() + " - cache updated");
+                    return updated;
+                })
+                .exceptionally(throwable -> {
+                    LOGGER.log(Level.SEVERE, "Failed to add rewards to bounty for target: " + targetUniqueId, throwable);
+                    throw new RuntimeException("Failed to add rewards to bounty", throwable);
                 });
     }
 
@@ -330,15 +403,32 @@ public class BountyFactory {
             @Nullable UUID lastHitterUuid,
             @NotNull Location deathLocation
     ) {
+        LOGGER.info("ClaimBounty called for victim: " + victimUuid + ", lastHitter: " + lastHitterUuid);
+        
         return getBountyAsync(victimUuid).thenCompose(bounty -> {
+            LOGGER.info("Bounty lookup result: " + (bounty != null ? "found (active: " + bounty.isActive() + ")" : "null"));
+            
             if (bounty == null || !bounty.isActive()) {
+                LOGGER.info("No active bounty found, returning empty result");
                 return CompletableFuture.completedFuture(ClaimResult.empty());
             }
 
+            // Check damage tracker before calling ClaimHandler
+            Map<UUID, Double> damageData = damageTracker.getDamageMap(victimUuid);
+            LOGGER.info("DamageTracker has " + damageData.size() + " damage entries for victim");
+            if (!damageData.isEmpty()) {
+                LOGGER.info("Damage data: " + damageData);
+            }
+            
             // Determine winner(s) using ClaimHandler
+            LOGGER.info("About to call ClaimHandler.determineClaim...");
             ClaimResult claimResult = claimHandler.determineClaim(victimUuid, lastHitterUuid);
+            LOGGER.info("ClaimHandler.determineClaim returned");
+            
+            LOGGER.info("Claim result: " + claimResult.getWinnerCount() + " winners");
             
             if (!claimResult.hasWinners()) {
+                LOGGER.info("No winners determined, clearing damage and returning empty result");
                 claimHandler.clearDamage(victimUuid);
                 return CompletableFuture.completedFuture(ClaimResult.empty());
             }
@@ -363,7 +453,7 @@ public class BountyFactory {
 
             // Wait for all distributions to complete, then update bounty
             return CompletableFuture.allOf(distributionFutures.toArray(new CompletableFuture[0]))
-                    .thenCompose(v -> updateBounty(bounty))
+                    .thenCompose(v -> bountyService.update(bounty))
                     .thenApply(updated -> {
                         bountyCache.remove(victimUuid);
                         claimHandler.clearDamage(victimUuid);
@@ -400,5 +490,68 @@ public class BountyFactory {
     public void refreshCache() {
         bountyCache.clear();
         loadActiveBounties();
+    }
+
+    /**
+     * Checks if two rewards can be merged (same contributor and same item type).
+     */
+    private boolean canMergeRewards(BountyReward existing, BountyReward newReward) {
+        // Must be from the same contributor
+        if (!Objects.equals(existing.getContributorUniqueId(), newReward.getContributorUniqueId())) {
+            return false;
+        }
+        
+        // Must be the same reward type
+        if (!existing.getReward().getType().equals(newReward.getReward().getType())) {
+            return false;
+        }
+        
+        // For item rewards, must be similar items AND stackable
+        if (existing.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
+            com.raindropcentral.rdq.reward.ItemReward existingItem = (com.raindropcentral.rdq.reward.ItemReward) existing.getReward();
+            com.raindropcentral.rdq.reward.ItemReward newItem = (com.raindropcentral.rdq.reward.ItemReward) newReward.getReward();
+            
+            // Check if items are similar
+            if (!existingItem.getItem().isSimilar(newItem.getItem())) {
+                return false;
+            }
+            
+            // Check if items can be stacked (max stack size > 1)
+            int maxStackSize = existingItem.getItem().getMaxStackSize();
+            if (maxStackSize <= 1) {
+                LOGGER.info("Cannot merge items with max stack size " + maxStackSize + " - creating separate entries");
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // For other reward types, they can be merged if they're the same type
+        return true;
+    }
+
+    /**
+     * Merges a new reward into an existing reward.
+     */
+    private void mergeRewards(BountyReward existing, BountyReward newReward) {
+        if (existing.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
+            // Merge item amounts
+            com.raindropcentral.rdq.reward.ItemReward existingItem = (com.raindropcentral.rdq.reward.ItemReward) existing.getReward();
+            com.raindropcentral.rdq.reward.ItemReward newItem = (com.raindropcentral.rdq.reward.ItemReward) newReward.getReward();
+            
+            int existingAmount = existingItem.getAmount();
+            int newAmount = newItem.getAmount();
+            int totalAmount = existingAmount + newAmount;
+            
+            LOGGER.info("Merging items: " + existingAmount + " (existing) + " + newAmount + " (new) = " + totalAmount + " (total)");
+            
+            // For bounty rewards, we don't limit by max stack size since they're stored as database entities
+            // Players should be able to add unlimited amounts to bounties
+            existingItem.setAmount(totalAmount);
+            LOGGER.info("Final merged amount: " + existingItem.getAmount());
+        } else {
+            // For other reward types, add estimated values
+            existing.setEstimatedValue(existing.getEstimatedValue() + newReward.getEstimatedValue());
+        }
     }
 }

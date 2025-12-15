@@ -1,14 +1,14 @@
 package com.raindropcentral.rdq.database.converter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.raindropcentral.rdq.config.utility.IconSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.bukkit.Material;
 import org.jetbrains.annotations.Nullable;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +49,7 @@ public class IconSectionConverter implements AttributeConverter<IconSection, Str
             );
             
             return OBJECT_MAPPER.writeValueAsString(data);
-        } catch (final JsonProcessingException e) {
+        } catch (final JacksonException e) {
             LOGGER.log(
                 Level.SEVERE,
                 "Failed to convert IconSection to JSON",
