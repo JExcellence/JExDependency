@@ -112,20 +112,70 @@ public class LuckPermsService {
 		saveUserAsync(user);
 	}
 	
-	public void assignPermission(final @NotNull String groupName, final @NotNull String permission) {
-		CompletableFuture<Optional<Group>> groupFuture = this.get().getGroupManager().loadGroup(groupName);
-		groupFuture.thenAcceptAsync(group -> {
-			if (group.isPresent()) {
+	/**
+	 * Assigns a permission to a group, creating the group if it doesn't exist.
+	 *
+	 * @param groupName  The name of the group
+	 * @param permission The permission node to assign
+	 * @return CompletableFuture that completes with true if successful, false otherwise
+	 */
+	public CompletableFuture<Boolean> assignPermission(final @NotNull String groupName, final @NotNull String permission) {
+		return this.get().getGroupManager().loadGroup(groupName)
+			.thenComposeAsync(optionalGroup -> {
+				if (optionalGroup.isPresent()) {
+					return CompletableFuture.completedFuture(optionalGroup.get());
+				} else {
+					// Group doesn't exist, create it
+					LOGGER.info("Group '" + groupName + "' doesn't exist, creating it...");
+					return this.get().getGroupManager().createAndLoadGroup(groupName);
+				}
+			})
+			.thenApplyAsync(group -> {
 				final PermissionNode node = PermissionNode.builder(permission).build();
-				group.get().data().add(node);
-				saveGroupAsync(group.get());
-			} else {
-				LOGGER.info("Attempted to assign permission to non-existent group: " + groupName);
-			}
-		}).exceptionally(ex -> {
-			LOGGER.log(Level.SEVERE, "Error assigning permission to group " + groupName + ": " + ex.getMessage());
-			return null;
-		});
+				group.data().add(node);
+				saveGroupAsync(group);
+				LOGGER.info("Assigned permission '" + permission + "' to group '" + groupName + "'");
+				return true;
+			})
+			.exceptionally(ex -> {
+				LOGGER.log(Level.SEVERE, "Error assigning permission to group " + groupName + ": " + ex.getMessage());
+				return false;
+			});
+	}
+	
+	/**
+	 * Creates a LuckPerms group if it doesn't exist.
+	 *
+	 * @param groupName The name of the group to create
+	 * @return CompletableFuture that completes with the created/existing group
+	 */
+	public CompletableFuture<Group> createGroup(final @NotNull String groupName) {
+		return this.get().getGroupManager().loadGroup(groupName)
+			.thenComposeAsync(optionalGroup -> {
+				if (optionalGroup.isPresent()) {
+					LOGGER.info("Group '" + groupName + "' already exists");
+					return CompletableFuture.completedFuture(optionalGroup.get());
+				} else {
+					LOGGER.info("Creating group '" + groupName + "'...");
+					return this.get().getGroupManager().createAndLoadGroup(groupName);
+				}
+			})
+			.thenApplyAsync(group -> {
+				saveGroupAsync(group);
+				LOGGER.info("Group '" + groupName + "' is ready");
+				return group;
+			});
+	}
+	
+	/**
+	 * Checks if a group exists.
+	 *
+	 * @param groupName The name of the group to check
+	 * @return CompletableFuture that completes with true if the group exists
+	 */
+	public CompletableFuture<Boolean> groupExists(final @NotNull String groupName) {
+		return this.get().getGroupManager().loadGroup(groupName)
+			.thenApply(Optional::isPresent);
 	}
 	
 	@NotNull

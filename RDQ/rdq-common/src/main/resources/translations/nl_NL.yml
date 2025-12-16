@@ -1,5 +1,44 @@
-# RDQ Vertaalbestand - Nederlands
+# RDQ Vertaalbestand - Nederlands (Nederland)
+# MiniMessage formaat met gradiënten en styling
+# Placeholders gebruiken %placeholder% formaat
+
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Geen Beloningen</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen te maken</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Item Toevoegen</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
+
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Krijger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Magiër</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Schurk</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Geestelijke</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Handelaar</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
 
 bounty_listener:
   bounty_active:
@@ -9,17 +48,17 @@ bounty_listener:
     commissioner: "<gradient:#ef4444:#f87171>👤 Opdrachtgever:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 PREMIE GECLAIMD! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>Je hebt de premie op</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>succesvol geclaimd!</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Je hebt de premie op</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
     share: "<gradient:#3b82f6:#60a5fa>Jouw deel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>Iemand</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
 
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ Premie succesvol aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Premie aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Fout bij verwerken premie:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie wordt bijgewerkt...</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie wordt verwerkt...</gradient>"
 
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -34,7 +73,7 @@ rank_click:
   locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
 
 rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient>"
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient> <gradient:#6b7280:#9ca3af>Deze functie vereist LuckPerms.</gradient>"
   help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open hoofdmenu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Bekijk rangen</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Bekijk premies</gradient>"
 
 main_overview_ui:
@@ -55,9 +94,582 @@ main_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare voordelen</gradient>"
       - "<gradient:#6b7280:#9ca3af>en speciale vaardigheden</gradient>"
   quest_overview:
-    name: "<gradient:#3b82f6:#60a5fa>📜 Opdrachten</gradient>"
+    name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare opdrachten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare quests</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en volg je voortgang</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Rangen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk rang voortgang</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en ontgrendel nieuwe vaardigheden</gradient>"
+
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rang Systeem</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rang Bomen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Blader door beschikbare rang bomen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en kies je pad</gradient>"
+
+
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 Rang Bomen</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ Krijger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ Magiër</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Schurk</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Geestelijke</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 Handelaar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>Linksklik voor voorbeeld</gradient>"
+      - "<gradient:#10b981:#34d399>Rechtsklik om te selecteren</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Deze rang boom is vergrendeld</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>Voltooi eerst %minimum_rank_paths_to_be_absolved_needed% rang bomen</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>Voorwaarden:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Dit rang pad is vergrendeld!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ Momenteel Actief</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>Linksklik voor voorbeeld</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>Rechtsklik om door te gaan</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 Eerder Geselecteerd</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>Rechtsklik om te heractiveren</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ Maximum actieve rang paden bereikt!</gradient> <gradient:#6b7280:#9ca3af>(Max: %maximum_rank_path_amount%)</gradient>"
+  create_rank_tree:
+    name: "<gradient:#10b981:#34d399>➕ Rang Boom Maken</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Maak een nieuwe rang boom</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(Alleen admin)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Start rang niet gevonden voor dit pad!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ Rang pad geselecteerd:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Start rang: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ Kon rang pad niet selecteren!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Rang pad geheractiveerd:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ Kon rang pad niet heractiveren!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Rang boom creatie komt binnenkort!</gradient>"
+
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>Onbekende Boom</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ Navigeer Links</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ Navigeer Rechts</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ Navigeer Omhoog</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ Navigeer Omlaag</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Navigeer %direction%</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ In Bezit</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Beschikbaar</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Klik om vereisten te bekijken</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Klik om voort te gaan</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Geen beschrijving beschikbaar voor %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Niveau:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Gewicht:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 Centreer Weergave</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om de weergave te centreren</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Centreer Weergave</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Je bekijkt in voorbeeldmodus</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Wijzigingen worden niet opgeslagen</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Voorbeeldmodus</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ Fout bij renderen rang</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ Geen Rang Boom</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>Kon rang boom niet laden</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ Kritieke Fout</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ In Bezit</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Beschikbaar</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Onbekend</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>Van:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>Naar:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Verbinding</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ Bezeten Verbinding</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Beschikbare Verbinding</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Bezig Verbinding</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig Verbinding</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Vergrendelde Verbinding</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ Je bezit al</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ Je bezit al</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% vereisten)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ Kon voortgang niet starten voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Kon voortgang niet starten voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten niet voltooid voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten niet voltooid voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je hebt ontgrendeld</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je hebt ontgrendeld</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Kon niet inwisselen</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Kon niet inwisselen</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>Linksklik om voortgang te starten</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>Rechtsklik om vereisten te bekijken</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Linksklik om in te wisselen</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>Rechtsklik om voortgang te bekijken</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% Vereisten</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>Vereiste #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>Kon vereiste details niet laden</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>Items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>Klik om te voltooien!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>Rechtsklik voor details</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ Al voltooid</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>Klik voor details</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>Fout bij laden vereiste</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Voltooid</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Klaar om te Voltooien</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Niet Gestart</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>is al voltooid!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>is nog niet klaar om te voltooien!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je bent gepromoveerd naar</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Voltooid</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Klaar om te Voltooien</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Niet Gestart</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌ Kon klik niet verwerken!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ Kon niet promoveren naar</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ Kon vereiste details niet openen!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ Deze vereiste is momenteel niet beschikbaar!</gradient>"
+  decoration:
+    name: " "
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>Klik om details te bekijken</gradient>"
+
+
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Vereiste Details</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>Voortgang</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>Huidig:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Voltooiing:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>Resterend:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ Voltooid!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>Niet Gestart</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>Item %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ Voltooid</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>Deze vereiste is al voltooid</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ Vereiste Voltooien</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om deze vereiste te voltooien</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Voortgang Vernieuwen</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om je voortgang te vernieuwen</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>Items Voltooid:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Voortgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Vereiste Samenvatting</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Tips</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 Voortgang Samenvatting</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Verzamel de vereiste items</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en keer hier terug om te voltooien</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Verdien de vereiste valuta</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Krijg ervaringsniveaus</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Speel op de server</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voltooi de vereiste</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Samenvatting bekijken...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Tips bekijken...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 Item %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>Ontbrekend:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Voortgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>Ontbrekende Items:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...en %item_amount% meer</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>Gedetailleerde Informatie</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ Voltooid!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ Klaar om te voltooien!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik om af te ronden</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>Niet Gestart</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>Status: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>Voortgang</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>Klik om te vernieuwen</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 Voortgang Overzicht</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>Onbekende Vereiste</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kon details niet laden</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>Kon vereiste niet laden</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 Status:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>is al voltooid!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ Voortgang vernieuwd!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 Item Uitsplitsing:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Premie Systeem</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Premie Maken</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>op een andere speler</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Premies Bekijken</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk alle actieve premies</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Mijn Premies</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk premies die je hebt gemaakt</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Ranglijst</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Top premiejagers</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Premie op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Doelwit:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Opdrachtgever:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gemaakt:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Klik voor details</gradient>"
+
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Premie Maken - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 Doelwit Selecteren</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Doelwit: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om een speler te kiezen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Huidig: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Premie Maken</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Item Beloningen Toevoegen</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Item Beloningen Toevoegen</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Klik om item beloningen toe te voegen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Huidige items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Valuta Beloningen Toevoegen</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Valuta Beloningen Toevoegen</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Klik om valuta beloningen toe te voegen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Huidige valuta's:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Premie Maken</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om de premie te maken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>met de geselecteerde beloningen</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ Geen speler geselecteerd!</gradient> <gradient:#6b7280:#9ca3af>Selecteer eerst een doelwit.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Geen beloningen toegevoegd!</gradient> <gradient:#6b7280:#9ca3af>Voeg eerst beloningen toe.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Premie maken op</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Fout:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Premie gemaakt op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 Items geretourneerd!</gradient> <gradient:#6b7280:#9ca3af>Sommige items zijn op de grond gevallen.</gradient>"
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie verwerken...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅ Premie gemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kon premie niet verwerken:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Premie Beloningen</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Geen Beloningen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen te maken</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Item Toevoegen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Doelwit: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Deze premie is geplaatst op</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Premie Beloning</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Dit item wordt gegeven aan</gradient>"
+      - "<gradient:#6b7280:#9ca3af>degene die de premie claimt</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Geen nieuwe items toegevoegd!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Sommige items zijn gevallen omdat je inventory vol was!</gradient>"
+
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Premie op %target_name%</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Doelwit van deze premie</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Beloningen Bekijken</gradient>"
+    lore:
+      - "<grad>"
+en</gradientm te annuler>Klik o80:#9ca3af6b72:#radient - "<gre:
+     t>"
+    lo/gradiennuleren<#f87171>❌ An44:44dient:#efgraname: "<ncel:
+    >"
+  caentditigen</graevesKlik om te b#9ca3af>0:t:#6b728 "<gradiene:
+      -
+    lor"nt>diestigen</gra4d399>✅ Beve981:#3#10b<gradient:e: "rm:
+    nam"
+  configradient>stigen</e Bevec>⚠️ Acti7:#c084f:#a855fdient<grale: "n_ui:
+  titmatio
+
+confirnt>"radienput%</gca3af>%i6b7280:#9gradient:#> <gradienten:</rkr niet verwe❌ Kon invoe71>4:#f871444efgradient:#led: "<ocessing_faipr:
+    
+  error/gradient>"igen<e bevest klik om t:#9ca3af>en6b7280ent:#gradi    - "<"
+  t>radienen</govr hierbinvoe je #9ca3af>Typ80:72gradient:#6b
+      - "<e:or>"
+    lradienten</gvoer️ Waarde Inbbf24>✏b:#f#f59e0t:iene: "<grad  nam  ut:
+"
+  inpdient>/gran< Invoerefc>✏️ Waarde0845f7:#cent:#a85"<gradi:   title_anvil_ui:
+
+abstractdient>"
+t%</graaf>%inpub7280:#9ca3t:#6radien> <gntukt:</gradieislerking mrw#f87171>❌ Veef4444::#ent"<gradi_failed: ingrocess
+  pnt>"gradiee.</versiemium prereist de f>v280:#9ca3aadient:#6b7radient> <grture%</gfea:#fbbf24>%ent:#f59e0bient> <gradiie</gradDe funct80:#9ca3af>ient:#6b72ient> <grad!</grad Vereist1>❌ Premium1787f4444:#f:#eadiented: "<grmium_requirre
+error:
+  pient>"
+raden</gerannulie 9ca3af>Act:#280dient:#6b7ra   - "<gre:
+   
+    loadient>"grAnnuleren</87171>❌ t:#ef4444:#f<gradien: " nameel:
+   nc  ca"
+ent>adig</gra omlaa3af>G:#9cant:#6b7280"<gradie  - e:
+     lor   dient>"
+mlaag</gra O>⬇️7:#c084fct:#a855f"<gradienname: :
+    "
+  down></gradienthoog9ca3af>Ga om280:#adient:#6b7"<gr
+      -    lore:dient>"
+ Omhoog</gra️ :#c084fc>⬆f7t:#a855<gradiene: "am:
+    nnt>"
+  updieina</grade pagen3af>Volg0:#9caient:#6b728"<grad:
+      - ore
+    l>"adientende</grfa>➡️ Volg6:#60a5ient:#3b82f<gradname: "   ext:
+ 
+  nient>"pagina</grad>Vorige a3af#6b7280:#9cent:adi     - "<gr
+ ore:  l
+  nt>"rige</gradieVo:#60a5fa>⬅️ ent:#3b82f6<gradi   name: "vious:
+ 
+  predient>"gaan</grar te doo3af>Klik om 0:#9ca28ient:#6b7"<grad -      ore:
+
+    lient>"n</grad9>➡️ Doorgaa981:#34d390bdient:#1"<gra name: roceed:
+   ient>"
+  paan</grad te gik om terugf>Klca3at:#6b7280:#9- "<gradien
+         lore:adient>"
+ /grf24>🔙 Terug<bbe0b:#fradient:#f59: "<game  n return:
+  
+ "
+
+head:dient>on%</gractidire %Pagina#9ca3af>📄 6b7280:ient:#: "<grad fallback"
+ t>adiengrges%</al_pa>%tot0a5fa#6#3b82f6:adient:nt> <grdie's:</graotaal pagina0:#9ca3af>Tient:#6b728  - "<grad>"
+  ntieradt_page%</gcurren6:#60a5fa>%#3b82fnt:iet> <gradadienina:</gr pagge3af>Huidib7280:#9caradient:#6- "<glore:
+    
+  t>"gradien_page%</rrentina %cu3af>📄 Pag#9ca7280:nt:#6b "<gradieme::
+  na"
+
+page</gradient>er_name%4>%playbf2:#f59e0b:#fb<gradientnt> diec>👤</gra:#c084f#a855f7"<gradient:me:    naentry:
+ 
+  player_nt>"en</gradielecterer Se4fc>👥 Spel:#c08f7dient:#a855: "<graui:
+  titleyer_d_plaateagin
+
+p"ent>ken!</gradiiet mapen nms groeLuckPerKon 1>❌ f4444:#f8717nt:#eie"<gradrror: >"
+    eradientakt.</gmaroepen gen nieuwe gaf>Gee#9ca3t:#6b7280: "<gradiennges:
+    no_chat>"dienpen!</grackPerms groe1:#34d399>Luient:#10b98nt> <gradgradiecreated%</>%groups_#fbbf24e0b:nt:#f59gradiegradient> <kt</emaa4d399>✅ Gt:#10b981:#3: "<gradien   createdient>"
+ grad te maken!</epen voorden om groangen gevonGeen rb:#fbbf24>⚠ 59e0adient:#ffound: "<granks_
+    no_r"!</gradient>eerdïnstallet gePerms is ni87171>❌ Luck4444:#f:#ef "<gradiento_luckperms:  ndient>"
+   rangen</gravanrms groepen ckPea3af>Maak Lu280:#9cdient:#6b7 - "<graore:
+     "
+    lient>/graden<roepen Makms GkPer>⚔ Lucfca855f7:#c084dient:#grae: "<ks:
+    namanreate_rient>"
+  cadnen!</grder niet opebeheern rechten Ko1>❌ #f8717#ef4444:adient:<gr: "   errorent>"
+ /gradiissions%<permtal_#fbbf24>%to#f59e0b:nt:iedient> <gradechten:</gra3af>Totaal r6b7280:#9cant:#<gradie     - "ient>"
+ ins%</gradug4>%total_pl:#fbbf29e0b#f5<gradient:</gradient> ins:lugotaal p>T80:#9ca3afnt:#6b72"<gradie - t>"
+     ten</gradienin recheheer plug9ca3af>Bnt:#6b7280:#ie   - "<grad  lore:
+   
+  t>"iengraderder</ Beheechten5fa>🔑 R:#60aient:#3b82f6e: "<gradns:
+    namew_permissio"
+  viradient>n Paneel</g171>⚙ Admi44:#f87adient:#ef44"<gr
+  title: view_ui:_overint>"
+
+admiengrad</erd!jdwid399>is ver#340b981:ent:#1ent> <gradiradi/get_name%<24>%targf59e0b:#fbbfadient:#t> <grradienPremie op</g9>✅ 34d390b981:#<gradient:#1ully: "_successfeted_bountydel>"
+  gradientjderen</e te verwiremie pom dezk 3af>Kli9ca#6b7280:#adient:    - "<grient>"
+  </gradorden!ongedaan wet wing: Kan ni1>⚠ Waarschu8717:#ef4444:#f<gradient     - "
+   lore:t>"
+  adiengrderen</erwij1>🗑 Premie V:#f8717ient:#ef4444"<grad  name: elete:
+  >"
+  d/gradientn<en te ziebeloningalle om af>Klik b7280:#9ca3ient:#6    vic
+tim: "<gradient:#a855f7:#c084fc>Je hebt de premie op</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Jouw deel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Iemand</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
+
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Premie aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Fout bij verwerken premie:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie wordt verwerkt...</gradient>"
+
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Vereisten bekijken voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten onvolledig voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% voltooid)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereiste onvolledig:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
+
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Je bezit</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
+
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient> <gradient:#6b7280:#9ca3af>Deze functie vereist LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open hoofdmenu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Bekijk rangen</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Bekijk premies</gradient>"
+
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Admin Paneel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Toegang tot beheertools</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en configuratie-opties</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Premies</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk en beheer premies</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jaag op spelers voor beloningen!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Voordelen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare voordelen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en speciale vaardigheden</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare quests</gradient>"
       - "<gradient:#6b7280:#9ca3af>en volg je voortgang</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Rangen</gradient>"
@@ -78,6 +690,10 @@ head:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Terug</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Doorgaan</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om door te gaan</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Vorige</gradient>"
     lore:
@@ -86,7 +702,52 @@ head:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Volgende</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Volgende pagina</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Omhoog</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ga omhoog</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ Omlaag</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ga omlaag</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Actie annuleren</gradient>"
+
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Premium Vereist!</gradient> <gradient:#6b7280:#9ca3af>De functie</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>vereist de premium versie.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Verwerking mislukt:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Waarde Invoeren</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Waarde Invoeren</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Typ je invoer hierboven</gradient>"
+      - "<gradient:#6b7280:#9ca3af>en klik om te bevestigen</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Kon invoer niet verwerken:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Actie Bevestigen</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Bevestigen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om te bevestigen</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om te annuleren</gradient>"
+
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Speler Selecteren</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"

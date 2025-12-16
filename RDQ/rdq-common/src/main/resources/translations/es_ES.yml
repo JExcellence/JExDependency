@@ -2,8 +2,260 @@
 # Formato MiniMessage con degradados y estilos
 # Los marcadores usan formato %placeholder%
 
+# ============================================
+# PREFIJO GLOBAL
+# ============================================
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
+# ============================================
+# CLAVES DE NIVEL RAÍZ
+# ============================================
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Sin Recompensas</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Añade objetos para crear recompensas</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Añadir Objeto</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Coloca objetos aquí para añadir como recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clic izquierdo para colocar objeto</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clic derecho para quitar objeto</gradient>"
+
+# ============================================
+# NOMBRES Y DESCRIPCIONES DE ÁRBOLES DE RANGO
+# ============================================
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Guardabosques</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Domina el arte del tiro con arco y rastreo</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Conviértete en uno con la naturaleza</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Guerrero</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Domina el arte del combate</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Conviértete en un luchador legendario</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Mago</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Aprovecha el poder de la magia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Conviértete en maestro de lo arcano</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Pícaro</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Domina el sigilo y la astucia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ataca desde las sombras</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Clérigo</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Canaliza el poder divino</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sana y protege a tus aliados</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Mercader</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Domina el arte del comercio</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Construye tu fortuna</gradient>"
+
+# ============================================
+# NOMBRES Y DESCRIPCIONES DE RANGOS
+# ============================================
+rank:
+  default:
+    name: "<gradient:#6b7280:#9ca3af>Sin Rango</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Selecciona un camino de rango para comenzar</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>Sin Rango</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>Rango Predeterminado</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ningún rango seleccionado</gradient>"
+  # Rangos del Árbol Guardabosques
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹 Cazador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Un rastreador novato aprendiendo los caminos de la naturaleza</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 Arquero</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Hábil con el arco, mortal a distancia</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 Rastreador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Experto en encontrar y seguir presas</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 Tirador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tirador de precisión con puntería mortal</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 Explorador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro explorador de tierras inexploradas</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 Francotirador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tirador de élite, un disparo una muerte</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 Señor del Bosque</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro de la naturaleza, uno con el bosque</gradient>"
+  # Rangos del Árbol Guerrero
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>⚔ Recluta</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Un nuevo guerrero comenzando su viaje</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>⚔ Soldado</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Entrenado en el arte del combate</gradient>"
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>⚔ Caballero</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Guerrero honorable del reino</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>⚔ Campeón</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Luchador legendario, temido por todos</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>⚔ Señor de la Guerra</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro de la guerra, comandante de ejércitos</gradient>"
+  # Rangos del Árbol Mago
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ Aprendiz</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Aprendiendo los fundamentos de la magia</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ Adepto</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Creciendo en poder mágico</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Hechicero</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro de las artes arcanas</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨ Archimago</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro supremo de toda la magia</gradient>"
+  # Rangos del Árbol Pícaro
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Carterista</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Dedos rápidos, escape más rápido</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Ladrón</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro del sigilo y el robo</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 Explorador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ojos y oídos de las sombras</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 Asesino</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Asesino silencioso, muerte desde las sombras</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 Infiltrador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Experto en entrar y salir sin ser detectado</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Hoja Sombría</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Guerrero mortal de la noche</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Maestro Espía</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Controlador de redes de información</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 Maestro de las Sombras</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Uno con la oscuridad misma</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 Señor de las Sombras</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Gobernante supremo de todas las sombras</gradient>"
+  # Rangos del Árbol Clérigo
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Acólito</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Servidor devoto de lo divino</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Devoto</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Seguidor fiel del camino divino</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ Sacerdote</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Sanador y protector de los fieles</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ Sanador</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro de las artes restaurativas</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ Obispo</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Líder de los fieles</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ Oráculo</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vidente de visiones divinas</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ Sumo Sacerdote</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Voz suprema de lo divino</gradient>"
+  # Rangos del Árbol Mercader
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 Vendedor Ambulante</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vendiendo mercancías en la calle</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 Comerciante</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mercader establecido con conexiones</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 Vendedor</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vendedor hábil de bienes</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Artífice</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Artesano de mercancías finas</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰 Alquimista</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro de pociones y elixires</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Mercader</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Propietario de negocio exitoso</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 Maestro Artesano</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Artesano supremo del reino</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 Príncipe Mercader</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Realeza del comercio</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 Magnate</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maestro del comercio y el intercambio</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 Maestro del Gremio</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Líder del gremio de mercaderes</gradient>"
+
+# ============================================
+# MENSAJES DEL LISTENER DE RECOMPENSAS
+# ============================================
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>¡Tienes una recompensa activa sobre tu cabeza!</gradient>"
@@ -18,12 +270,18 @@ bounty_listener:
     broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>ha reclamado la recompensa de</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
     broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% jugadores</gradient> <gradient:#a855f7:#c084fc>han reclamado la recompensa de</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
+# ============================================
+# MENSAJES DE CREACIÓN DE RECOMPENSAS
+# ============================================
 bounty_creation:
   confirm:
     success: "<gradient:#10b981:#34d399>✅ ¡Recompensa creada exitosamente para</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Error al procesar recompensa:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ Procesando actualización de recompensa...</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Procesando recompensa...</gradient>"
 
+# ============================================
+# MENSAJES DE PROGRESIÓN DE RANGO
+# ============================================
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Progresión iniciada para el rango</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Viendo requisitos para</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -31,15 +289,24 @@ rank_progression:
   requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Requisito incompleto:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
   no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>¡no tiene requisitos!</gradient>"
 
+# ============================================
+# MENSAJES DE CLIC EN RANGO
+# ============================================
 rank_click:
   preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Modo vista previa:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   owned: "<gradient:#10b981:#34d399>✅ Posees</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   locked: "<gradient:#ef4444:#f87171>🔒 Bloqueado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Completa los prerrequisitos primero</gradient>"
 
+# ============================================
+# MENSAJES DEL COMANDO RQ
+# ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ ¡LuckPerms no está instalado!</gradient> <gradient:#6b7280:#9ca3af>Esta función requiere LuckPerms.</gradient>"
   help: "<gradient:#a855f7:#c084fc>📖 Ayuda de RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Abrir menú principal</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Ver rangos</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Ver recompensas</gradient>"
 
+# ============================================
+# UI DE VISTA GENERAL PRINCIPAL
+# ============================================
 main_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
   admin_overview:
@@ -68,6 +335,9 @@ main_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Ver progresión de rangos</gradient>"
       - "<gradient:#6b7280:#9ca3af>y desbloquear nuevas habilidades</gradient>"
 
+# ============================================
+# UI PRINCIPAL DE RANGOS
+# ============================================
 rank_main_ui:
   title: "<gradient:#a855f7:#c084fc>⚔ Sistema de Rangos</gradient>"
   rank_tree:
@@ -76,8 +346,42 @@ rank_main_ui:
       - "<gradient:#6b7280:#9ca3af>Explorar árboles de rangos disponibles</gradient>"
       - "<gradient:#6b7280:#9ca3af>y elegir tu camino</gradient>"
 
+# ============================================
+# UI DE VISTA GENERAL DE ÁRBOLES DE RANGO
+# ============================================
 rank_tree_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🌳 Árboles de Rangos</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 Guardabosques</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Domina el arte del tiro con arco y rastreo</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Conviértete en uno con la naturaleza</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ Guerrero</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Domina el arte del combate</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Conviértete en un luchador legendario</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ Mago</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Aprovecha el poder de la magia</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Conviértete en maestro de lo arcano</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Pícaro</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Domina el sigilo y la astucia</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ataca desde las sombras</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Clérigo</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Canaliza el poder divino</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sana y protege a tus aliados</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 Mercader</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Domina el arte del comercio</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Construye tu fortuna</gradient>"
   click:
     preview_rank_path:
       - "<gradient:#3b82f6:#60a5fa>Clic izquierdo para vista previa</gradient>"
@@ -86,13 +390,13 @@ rank_tree_overview_ui:
     locked.required:
       - "<gradient:#6b7280:#9ca3af>Completa primero %minimum_rank_paths_to_be_absolved_needed% árboles de rangos</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Prerrequisitos:</gradient>"
-    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 ¡Este camino de rangos está bloqueado!</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 ¡Este camino de rango está bloqueado!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Actualmente Activo</gradient>"
   click_to_preview: "<gradient:#3b82f6:#60a5fa>Clic izquierdo para vista previa</gradient>"
   click_to_continue: "<gradient:#10b981:#34d399>Clic derecho para continuar</gradient>"
   previously_selected: "<gradient:#f59e0b:#fbbf24>📋 Seleccionado Anteriormente</gradient>"
   click_to_reactivate: "<gradient:#a855f7:#c084fc>Clic derecho para reactivar</gradient>"
-  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ ¡Máximo de caminos de rangos activos alcanzado!</gradient> <gradient:#6b7280:#9ca3af>(Máx: %maximum_rank_path_amount%)</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ ¡Máximo de caminos de rango activos alcanzado!</gradient> <gradient:#6b7280:#9ca3af>(Máx: %maximum_rank_path_amount%)</gradient>"
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Crear Árbol de Rangos</gradient>"
     lore:
@@ -100,12 +404,15 @@ rank_tree_overview_ui:
       - "<gradient:#6b7280:#9ca3af>(Solo Admin)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ ¡Rango inicial no encontrado para este camino!</gradient>"
-    rank_path_selected: "<gradient:#10b981:#34d399>✅ Camino de rangos seleccionado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Rango inicial: %rank%)</gradient>"
-    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ ¡Error al seleccionar camino de rangos!</gradient>"
-    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Camino de rangos reactivado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
-    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ ¡Error al reactivar camino de rangos!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ Camino de rango seleccionado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Rango inicial: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ ¡Error al seleccionar camino de rango!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Camino de rango reactivado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ ¡Error al reactivar camino de rango!</gradient>"
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ ¡Creación de árbol de rangos próximamente!</gradient>"
 
+# ============================================
+# UI DE VISTA GENERAL DE CAMINO DE RANGO
+# ============================================
 rank_path_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
   preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 Vista previa: </gradient>"
@@ -123,9 +430,268 @@ rank_path_overview_ui:
     locked: "<gradient:#ef4444:#f87171>🔒 Bloqueado</gradient>"
     click_to_view: "<gradient:#6b7280:#9ca3af>Clic para ver requisitos</gradient>"
     click_to_progress: "<gradient:#10b981:#34d399>Clic para progresar</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Sin descripción disponible para %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Nivel:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Peso:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para volver</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 Centrar Vista</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para centrar la vista</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Centrar Vista</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Modo Vista Previa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Estás viendo en modo vista previa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Los cambios no se guardarán</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Modo Vista Previa</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ Error al renderizar rango</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ Sin Árbol de Rangos</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>No se pudo cargar el árbol de rangos</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ Error Crítico</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>Ocurrió un error al renderizar</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>Ocurrió un error al renderizar</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ Poseído</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ En Progreso</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ En Progreso</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Disponible</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Bloqueado</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Desconocido</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>Desde:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>Hasta:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Conexión</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ Conexión Poseída</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Conexión Disponible</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Conexión En Progreso</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Conexión En Progreso</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Conexión Bloqueada</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Vista previa:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Vista previa:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ Ya posees</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ Ya posees</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 Bloqueado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Completa los prerrequisitos primero</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 Bloqueado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>¡no tiene requisitos!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>¡no tiene requisitos!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ Progresión iniciada para</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% requisitos)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Progresión iniciada para</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ Error al iniciar progresión para</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Error al iniciar progresión para</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Requisitos no completados para</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Requisitos no completados para</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 ¡Felicidades! Has desbloqueado</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 ¡Felicidades! Has desbloqueado</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Error al canjear</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Error al canjear</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>Clic izquierdo para iniciar progresión</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>Clic derecho para ver requisitos</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Clic izquierdo para canjear</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>Clic derecho para ver progreso</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
 
+# ============================================
+# UI DE VISTA GENERAL DE REQUISITOS DE RANGO
+# ============================================
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Requisitos de %rank_name%</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>Requisito #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>No se pudieron cargar los detalles del requisito</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>Objetos:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>Progreso:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Modo Vista Previa</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>¡Clic para completar!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>Clic derecho para detalles</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ Ya completado</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>Clic para detalles</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>Error al cargar requisito</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Completado</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Listo para Completar</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ En Progreso</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>No Iniciado</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Error</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 Vista previa:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>¡ya está completado!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>¡aún no está listo para completar!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 ¡Felicidades! Has progresado a</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Completado</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Listo para Completar</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ En Progreso</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>No Iniciado</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Error</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌ ¡Error al procesar clic!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ Error al progresar a</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ ¡Error al abrir detalles del requisito!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ ¡Este requisito no está disponible actualmente!</gradient>"
+  decoration:
+    name: " "
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para volver</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Progreso:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>Clic para ver detalles</gradient>"
+
+# ============================================
+# UI DE DETALLE DE REQUISITO DE RANGO
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Detalles del Requisito</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para volver</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>Progreso</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>Actual:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Completado:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>Restante:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ ¡Completado!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ En Progreso</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>No Iniciado</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>Objeto %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ Completado</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>Este requisito ya está completado</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ Completar Requisito</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para completar este requisito</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Actualizar Progreso</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para actualizar tu progreso</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>Objetos Completados:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Progreso:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Estado:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Resumen del Requisito</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Consejos</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 Resumen de Progreso</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>Estado:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Consejo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Recolecta los objetos requeridos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>y vuelve aquí para completar</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Consejo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gana la moneda requerida</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Consejo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gana niveles de experiencia</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Consejo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Juega en el servidor</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Consejo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Completa el requisito</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Viendo resumen...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Viendo consejos...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 Objeto %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>Progreso:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>Faltante:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Progreso:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Estado:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>Objetos Faltantes:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...y %item_amount% más</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>Información Detallada</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ ¡Completado!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ ¡Listo para completar!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clic para finalizar</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ En Progreso</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>No Iniciado</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ Error</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>Estado: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>Progreso</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>Estado:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>Clic para actualizar</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 Vista General del Progreso</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>Requisito Desconocido</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>No se pudieron cargar los detalles</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ Error</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>Error al cargar requisito</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 Progreso:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 Estado:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>¡ya está completado!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ ¡Progreso actualizado!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 Desglose de Objetos:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+# ============================================
+# UI DE VISTA GENERAL DE RECOMPENSAS
+# ============================================
 bounty_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🎯 Sistema de Recompensas</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Crear Recompensa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para crear una nueva recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sobre otro jugador</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Ver Recompensas</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ver todas las recompensas activas</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Mis Recompensas</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ver recompensas que has creado</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Clasificación</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mejores cazarrecompensas</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
@@ -135,6 +701,9 @@ bounty_overview_ui:
       - ""
       - "<gradient:#a855f7:#c084fc>Clic para ver detalles</gradient>"
 
+# ============================================
+# UI DE CREACIÓN DE RECOMPENSAS
+# ============================================
 bounty_creation_ui:
   title: "<gradient:#a855f7:#c084fc>📝 Crear Recompensa - %target_name%</gradient>"
   select_target:
@@ -143,37 +712,178 @@ bounty_creation_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>Clic para elegir un jugador</gradient>"
       - "<gradient:#6b7280:#9ca3af>Actual: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Crear Recompensa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para crear una nueva recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sobre otro jugador</gradient>"
   add_items:
-    name: "<gradient:#10b981:#34d399>💰 Añadir Recompensas de Objetos</gradient>"
-    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Añadir Recompensas de Objetos</gradient>"
+    name: "<gradient:#10b981:#34d399>💰 Añadir Premios de Objetos</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Añadir Premios de Objetos</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Clic para añadir recompensas de objetos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clic para añadir premios de objetos</gradient>"
       - "<gradient:#6b7280:#9ca3af>Objetos actuales:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
       - "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Añadir Premios de Moneda</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Añadir Premios de Moneda</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Clic para añadir premios de moneda</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Monedas actuales:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ ¡Selecciona un objetivo primero!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Crear Recompensa</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para crear la recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>con los premios seleccionados</gradient>"
   confirm:
-    no_player_selected: "<gradient:#ef4444:#f87171>❌ ¡Ningún jugador seleccionado!</gradient>"
-    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ ¡No se añadieron recompensas!</gradient>"
-    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Creando recompensa para</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ ¡Ningún jugador seleccionado!</gradient> <gradient:#6b7280:#9ca3af>Por favor selecciona un objetivo primero.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ ¡No se añadieron premios!</gradient> <gradient:#6b7280:#9ca3af>Por favor añade algunos premios primero.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Creando recompensa sobre</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Error:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ ¡Recompensa creada exitosamente para</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>📦 ¡Objetos devueltos!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ ¡Recompensa creada exitosamente sobre</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 ¡Objetos devueltos!</gradient> <gradient:#6b7280:#9ca3af>Algunos objetos fueron tirados al suelo.</gradient>"
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ Procesando recompensa...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅ ¡Recompensa creada exitosamente para</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Error al procesar recompensa:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
-head:
-  return:
-    name: "<gradient:#f59e0b:#fbbf24>🔙 Volver</gradient>"
+# ============================================
+# UI DE PREMIOS DE RECOMPENSA
+# ============================================
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Premios de Recompensa</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Sin Premios</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clic para volver</gradient>"
-  previous:
-    name: "<gradient:#3b82f6:#60a5fa>⬅️ Anterior</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Añade objetos para crear premios</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Añadir Objeto</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Página anterior</gradient>"
-  next:
-    name: "<gradient:#3b82f6:#60a5fa>➡️ Siguiente</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Coloca objetos aquí para añadir como premios</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Objetivo: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Página siguiente</gradient>"
-  cancel:
-    name: "<gradient:#ef4444:#f87171>❌ Cancelar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Esta recompensa está puesta sobre</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  reward_item:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Cancelar acción</gradient>"
+      - "<gradient:#a855f7:#c084fc>💰 Premio de Recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Este objeto será dado a</gradient>"
+      - "<gradient:#6b7280:#9ca3af>quien reclame la recompensa</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ ¡No se añadieron nuevos objetos!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ ¡Algunos objetos fueron tirados porque tu inventario estaba lleno!</gradient>"
+
+# ============================================
+# UI DE INFO DE JUGADOR DE RECOMPENSA
+# ============================================
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Recompensa por %target_name%</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Objetivo de esta recompensa</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Ver Premios</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clic para ver todos los premios</gradient>"
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Eliminar Recompensa</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ ¡Advertencia: No se puede deshacer!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clic para eliminar esta recompensa</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ ¡Recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>ha sido eliminada!</gradient>"
+
+# ============================================
+# UI DE VISTA GENERAL DE ADMIN
+# ============================================
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ Panel de Admin</gradient>"
+  view_permissions:
+    name: "<gradient:#3b82f6:#60a5fa>🔑 Gestor de Permisos</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gestionar permisos de plugins</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Total de permisos:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ ¡Error al abrir el gestor de permisos!</gradient>"
+  create_ranks:
+    name: "<gradient:#a855f7:#c084fc>⚔ Crear Grupos de LuckPerms</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Crear grupos de LuckPerms desde rangos</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ ¡LuckPerms no está instalado!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ ¡No se encontraron rangos para crear grupos!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ ¡Creados</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>grupos de LuckPerms!</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>No se crearon nuevos grupos.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ ¡Error al crear grupos de LuckPerms!</gradient>"
+
+# ============================================
+# UI DE VISTA GENERAL DE PERMISOS DE ADMIN
+# ============================================
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 Gestor de Permisos</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ Plugin no encontrado:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ ¡LuckPerms no está instalado!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ ¡No hay permisos disponibles para este plugin!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Plugins Anteriores</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Siguientes Plugins</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Permisos:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Estado:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>Clic izquierdo para seleccionar</gradient>"
+        - "<gradient:#10b981:#34d399>Clic derecho para asignar todos</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Vacío</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Permisos Anteriores</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Siguientes Permisos</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>Nodo:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>Clic para asignar este permiso</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Ningún Plugin Seleccionado</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Selecciona un plugin arriba</gradient>"
+        - "<gradient:#6b7280:#9ca3af>para ver sus permisos</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Vacío</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ Asignar Permisos de %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Asignar todos los permisos de</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% permisos)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Sin Selección</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 Seleccionado: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Permisos:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 Vista General</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Selecciona un plugin para ver permisos</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 Actualizar Datos</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Clic para actualizar datos de permisos</gradient>"

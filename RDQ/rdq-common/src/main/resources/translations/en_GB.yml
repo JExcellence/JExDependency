@@ -4,6 +4,42 @@
 
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 No Rewards</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Add items to create rewards</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Add Item</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Place items here to add as rewards</gradient>"
+
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Master the art of archery and tracking</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Warrior</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Master the art of combat</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Mage</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Harness the power of magic</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Rogue</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Master stealth and cunning</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Cleric</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Channel divine power</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Merchant</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Master the art of trade</gradient>"
+
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
@@ -22,7 +58,7 @@ bounty_creation:
   confirm:
     success: "<gradient:#10b981:#34d399>✅ Bounty successfully created for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Failed to process bounty:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ Processing bounty update...</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Processing bounty...</gradient>"
 
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Started progression for rank</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -81,6 +117,10 @@ head:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Proceed</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to continue</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Previous</gradient>"
     lore:
@@ -89,7 +129,52 @@ head:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Next</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Next page</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Up</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Go up</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ Down</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Go down</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Cancel action</gradient>"
+
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Premium Required!</gradient> <gradient:#6b7280:#9ca3af>The feature</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>requires the premium version.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Processing failed:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Enter Value</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Enter Value</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Type your input above</gradient>"
+      - "<gradient:#6b7280:#9ca3af>and click to confirm</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Failed to process input:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Confirm Action</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Confirm</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to confirm</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to cancel</gradient>"
+
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Select Player</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"

@@ -654,44 +654,42 @@ public class AdminPermissionsView extends BaseView {
 	
 	private void handlePluginSelection(final @NotNull SlotClickContext clickContext, final @NotNull String pluginName) {
 		final String currentSelection = this.selectedPlugin.get(clickContext);
+		LOGGER.info("handlePluginSelection called - plugin: " + pluginName + ", current: " + currentSelection);
 		
 		if (clickContext.getClickOrigin().getClick().isLeftClick()) {
 			if (pluginName.equals(currentSelection)) {
 				this.selectedPlugin.set(null, clickContext);
 				this.permissionPage.set(0, clickContext);
-				LOGGER.log(Level.FINE, "Deselected plugin: " + pluginName);
+				LOGGER.info("Deselected plugin: " + pluginName);
+				clickContext.getPlayer().sendMessage("§a[RDQ] §7Deselected plugin §e" + pluginName);
 			} else {
 				this.selectedPlugin.set(pluginName, clickContext);
 				this.permissionPage.set(0, clickContext);
-				LOGGER.log(Level.FINE, "Selected plugin: " + pluginName);
+				LOGGER.info("Selected plugin: " + pluginName);
+				clickContext.getPlayer().sendMessage("§a[RDQ] §7Selected plugin §e" + pluginName);
 			}
-			
-			this.i18n("plugin_selected", clickContext.getPlayer())
-			    .withPlaceholder("plugin_name", pluginName)
-			    .includePrefix()
-			    .build().sendMessage();
 		} else if (clickContext.getClickOrigin().getClick().isRightClick()) {
+			LOGGER.info("Right-click on plugin: " + pluginName + " - assigning all permissions");
 			Map<String, List<String>> permissionsMap = this.cachedPermissions.get(clickContext);
 			List<String> permissions = permissionsMap.get(pluginName);
 			
 			if (permissions != null && !permissions.isEmpty()) {
-				if (!this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
+				boolean success = this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
 					clickContext.getPlayer(),
 					pluginName,
 					pluginName.toLowerCase(),
 					permissions,
 					true
-				)) {
+				);
+				
+				if (!success) {
+					LOGGER.warning("Failed to assign permissions for plugin: " + pluginName);
 					return;
 				}
 				
-				this.i18n("plugin_permissions_assigned", clickContext.getPlayer())
-				    .withPlaceholders(Map.of(
-					    "plugin_name", pluginName,
-					    "permission_count", permissions.size()
-				    ))
-				    .includePrefix()
-				    .build().sendMessage();
+				clickContext.getPlayer().sendMessage("§a[RDQ] §7Assigned §e" + permissions.size() + " §7permissions to group §e" + pluginName.toLowerCase());
+			} else {
+				clickContext.getPlayer().sendMessage("§c[RDQ] §7No permissions found for plugin §e" + pluginName);
 			}
 		}
 	}
@@ -701,24 +699,26 @@ public class AdminPermissionsView extends BaseView {
 		final @NotNull String pluginName,
 		final @NotNull String permission
 	) {
+		LOGGER.info("handlePermissionClick called - plugin: " + pluginName + ", permission: " + permission);
 		
-		if (!this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
+		boolean success = this.rdq.get(clickContext).getPermissionsService().addPermissionSet(
 			clickContext.getPlayer(),
 			pluginName,
 			pluginName.toLowerCase(),
 			List.of(permission),
 			true
-		)) {
+		);
+		
+		LOGGER.info("addPermissionSet returned: " + success);
+		
+		if (!success) {
+			LOGGER.warning("Permission assignment failed for: " + permission);
 			return;
 		}
 		
-		this.i18n("single_permission_assigned", clickContext.getPlayer())
-		    .withPlaceholders(Map.of(
-			    "permission", permission,
-			    "plugin_name", pluginName
-		    ))
-		    .includePrefix()
-		    .build().sendMessage();
+		// Send feedback message to player
+		LOGGER.info("Sending feedback message to player: " + clickContext.getPlayer().getName());
+		clickContext.getPlayer().sendMessage("§a[RDQ] §7Assigned permission §e" + permission + " §7to group §e" + pluginName.toLowerCase());
 	}
 	
 	private void handleClearSelection(final @NotNull SlotClickContext clickContext) {

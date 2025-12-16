@@ -122,11 +122,12 @@ public class PermissionsService {
 			return false;
 		}
 		
-		for (
-			String permission : permissions
-		) {
+		// Assign permissions - the LuckPermsService will create the group if it doesn't exist
+		for (String permission : permissions) {
 			this.rdq.getLuckPermsService().assignPermission(group, permission);
 		}
+		
+		LOGGER.info("Assigning " + permissions.size() + " permissions to group '" + group + "'");
 		
 		return true;
 	}

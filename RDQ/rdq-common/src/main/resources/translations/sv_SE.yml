@@ -1,5 +1,44 @@
-# RDQ Översättningsfil - Svenska
+# RDQ Översättningsfil - Svenska (Sverige)
+# MiniMessage format med gradienter och styling
+# Platshållare använder %placeholder% format
+
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Inga Belöningar</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Lägg till föremål för att skapa belöningar</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Lägg till Föremål</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Placera föremål här som belöningar</gradient>"
+
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bemästra konsten att skjuta med båge och spåra</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Krigare</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bemästra stridskonstens</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Magiker</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Utnyttja magiens kraft</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Skurk</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bemästra smygande och list</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Präst</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kanalisera gudomlig kraft</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Handlare</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bemästra handelns konst</gradient>"
 
 bounty_listener:
   bounty_active:
@@ -9,7 +48,7 @@ bounty_listener:
     commissioner: "<gradient:#ef4444:#f87171>👤 Beställare:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 BELÖNING HÄMTAD! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>Du hämtade framgångsrikt belöningen på</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Du har hämtat belöningen på</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
     share: "<gradient:#3b82f6:#60a5fa>Din andel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>Någon</gradient>"
     broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>har hämtat belöningen på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
@@ -17,9 +56,9 @@ bounty_listener:
 
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ Belöning skapad framgångsrikt för</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Belöning skapad för</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Fel vid bearbetning av belöning:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ Uppdaterar belöning...</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Bearbetar belöning...</gradient>"
 
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Progression startad för rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -34,13 +73,13 @@ rank_click:
   locked: "<gradient:#ef4444:#f87171>🔒 Låst:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Slutför förutsättningarna först</gradient>"
 
 rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms är inte installerat!</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjälp</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Öppna huvudmenyn</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Visa ranger</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Visa belöningar</gradient>"
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms är inte installerat!</gradient> <gradient:#6b7280:#9ca3af>Denna funktion kräver LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjälp</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Öppna huvudmeny</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Visa ranger</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Visa belöningar</gradient>"
 
 main_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
   admin_overview:
-    name: "<gradient:#ef4444:#f87171>⚙ Adminpanel</gradient>"
+    name: "<gradient:#ef4444:#f87171>⚙ Admin Panel</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Åtkomst till administrationsverktyg</gradient>"
       - "<gradient:#6b7280:#9ca3af>och konfigurationsalternativ</gradient>"
@@ -78,6 +117,10 @@ head:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Tillbaka</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klicka för att gå tillbaka</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Fortsätt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicka för att fortsätta</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Föregående</gradient>"
     lore:
@@ -86,7 +129,52 @@ head:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Nästa</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Nästa sida</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Upp</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gå upp</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ Ner</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gå ner</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Avbryt</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Avbryt åtgärd</gradient>"
+
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Premium Krävs!</gradient> <gradient:#6b7280:#9ca3af>Funktionen</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>kräver premium-versionen.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Bearbetning misslyckades:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Ange Värde</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Ange Värde</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Skriv din inmatning ovan</gradient>"
+      - "<gradient:#6b7280:#9ca3af>och klicka för att bekräfta</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Kunde inte bearbeta inmatning:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Bekräfta Åtgärd</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Bekräfta</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicka för att bekräfta</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Avbryt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicka för att avbryta</gradient>"
+
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Välj Spelare</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Sida %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Nuvarande sida:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totalt sidor:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Sida %direction%</gradient>"

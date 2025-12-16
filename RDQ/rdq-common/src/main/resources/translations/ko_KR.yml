@@ -1,28 +1,64 @@
 # RDQ 번역 파일 - 한국어
-# MiniMessage 형식 (그라데이션 및 스타일링)
+# MiniMessage 형식 (그라데이션 및 스타일 포함)
 # 플레이스홀더는 %placeholder% 형식 사용
 
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 보상 없음</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>아이템을 추가하여 보상 생성</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ 아이템 추가</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>여기에 아이템을 놓아 보상으로 추가</gradient>"
+
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 레인저</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>궁술과 추적의 기술을 마스터</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ 전사</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>전투의 기술을 마스터</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ 마법사</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>마법의 힘을 다루다</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 도적</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>은신과 교활함을 마스터</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ 성직자</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>신성한 힘을 인도</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 상인</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>상업의 기술을 마스터</gradient>"
+
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>당신에게 현상금이 걸려있습니다!</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 현상금:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>당신의 머리에 현상금이 걸려 있습니다!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 현상금 가치:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
     expires: "<gradient:#f59e0b:#fbbf24>⏰ 만료:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
     commissioner: "<gradient:#ef4444:#f87171>👤 의뢰인:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 현상금 획득! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc></gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>의 현상금을 획득했습니다!</gradient>"
+    victim: "<gradient:#a855f7:#c084fc></gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>의 현상금을 성공적으로 획득했습니다!</gradient>"
     share: "<gradient:#3b82f6:#60a5fa>당신의 몫:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>누군가</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>님이</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>의 현상금을 획득했습니다!</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>이(가)</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>의 현상금을 획득했습니다!</gradient>"
     broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count%명의 플레이어</gradient> <gradient:#a855f7:#c084fc>가</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>의 현상금을 획득했습니다!</gradient>"
 
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>에 대한 현상금이 생성되었습니다!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>에 대한 현상금이 성공적으로 생성되었습니다!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 현상금 처리 실패:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ 현상금 업데이트 중...</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ 현상금 처리 중...</gradient>"
 
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ 랭크</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>진행 시작</gradient>"
@@ -33,11 +69,11 @@ rank_progression:
 
 rank_click:
   preview_mode: "<gradient:#3b82f6:#60a5fa>👁 미리보기 모드:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>보유 중</gradient>"
-  locked: "<gradient:#ef4444:#f87171>🔒 잠김:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 선행 조건을 먼저 완료하세요</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>을(를) 소유하고 있습니다</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 잠김:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 먼저 선행 조건을 완료하세요</gradient>"
 
 rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms가 설치되지 않았습니다!</gradient>"
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms가 설치되어 있지 않습니다!</gradient> <gradient:#6b7280:#9ca3af>이 기능에는 LuckPerms가 필요합니다.</gradient>"
   help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests 도움말</gradient>\n<gradient:#6b7280:#9ca3af>/rq - 메인 메뉴 열기</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - 랭크 보기</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - 현상금 보기</gradient>"
 
 main_overview_ui:
@@ -45,28 +81,23 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ 관리자 패널</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>관리 도구 및 설정 옵션에</gradient>"
-      - "<gradient:#6b7280:#9ca3af>접근합니다</gradient>"
+      - "<gradient:#6b7280:#9ca3af>관리 도구에 접근</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 현상금</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>현상금 보기 및 관리</gradient>"
-      - "<gradient:#6b7280:#9ca3af>보상을 위해 플레이어를 사냥하세요!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ 특전</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>사용 가능한 특전 및</gradient>"
-      - "<gradient:#6b7280:#9ca3af>특수 능력 보기</gradient>"
+      - "<gradient:#6b7280:#9ca3af>사용 가능한 특전 보기</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 퀘스트</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>사용 가능한 퀘스트 보기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>진행 상황 추적</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ 랭크</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>랭크 진행 상황 보기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>새로운 능력 잠금 해제</gradient>"
+      - "<gradient:#6b7280:#9ca3af>랭크 진행 보기</gradient>"
 
 rank_main_ui:
   title: "<gradient:#a855f7:#c084fc>⚔ 랭크 시스템</gradient>"
@@ -74,22 +105,507 @@ rank_main_ui:
     name: "<gradient:#f59e0b:#fbbf24>🌳 랭크 트리</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>사용 가능한 랭크 트리 탐색</gradient>"
-      - "<gradient:#6b7280:#9ca3af>당신의 길을 선택하세요</gradient>"
 
-head:
-  return:
-    name: "<gradient:#f59e0b:#fbbf24>🔙 돌아가기</gradient>"
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 랭크 트리</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 레인저</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>궁술과 추적의 기술을 마스터</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ 전사</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>전투의 기술을 마스터</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ 마법사</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>마법의 힘을 다루다</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 도적</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>은신과 교활함을 마스터</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ 성직자</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>신성한 힘을 인도</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 상인</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>상업의 기술을 마스터</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>좌클릭으로 미리보기</gradient>"
+      - "<gradient:#10b981:#34d399>우클릭으로 선택</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 이 랭크 트리는 잠겨 있습니다</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>먼저 %minimum_rank_paths_to_be_absolved_needed%개의 랭크 트리를 완료하세요</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>선행 조건:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 이 랭크 경로는 잠겨 있습니다!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ 현재 활성</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>좌클릭으로 미리보기</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>우클릭으로 계속</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 이전에 선택됨</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>우클릭으로 재활성화</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ 활성 랭크 경로 최대치에 도달했습니다!</gradient> <gradient:#6b7280:#9ca3af>(최대: %maximum_rank_path_amount%)</gradient>"
+  create_rank_tree:
+    name: "<gradient:#10b981:#34d399>➕ 랭크 트리 생성</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>새 랭크 트리 생성</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(관리자 전용)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ 이 경로의 시작 랭크를 찾을 수 없습니다!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ 랭크 경로 선택:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(시작 랭크: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ 랭크 경로 선택 실패!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ 랭크 경로 재활성화:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ 랭크 경로 재활성화 실패!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 랭크 트리 생성 곧 출시!</gradient>"
+
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 미리보기: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>알 수 없는 트리</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ 왼쪽으로 이동</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ 오른쪽으로 이동</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ 위로 이동</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ 아래로 이동</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>%direction%으로 이동</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ 소유함</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 사용 가능</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 잠김</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>클릭하여 요구사항 보기</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>클릭하여 진행</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>%rank_id%에 대한 설명이 없습니다</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>티어:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>가중치:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+  back:
     lore:
       - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
-  previous:
-    name: "<gradient:#3b82f6:#60a5fa>⬅️ 이전</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 뷰 중앙 정렬</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>이전 페이지</gradient>"
-  next:
-    name: "<gradient:#3b82f6:#60a5fa>➡️ 다음</gradient>"
+      - "<gradient:#6b7280:#9ca3af>클릭하여 뷰 중앙 정렬</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>뷰 중앙 정렬</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 미리보기 모드</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>다음 페이지</gradient>"
-  cancel:
-    name: "<gradient:#ef4444:#f87171>❌ 취소</gradient>"
+      - "<gradient:#6b7280:#9ca3af>미리보기 모드로 보고 있습니다</gradient>"
+      - "<gradient:#6b7280:#9ca3af>변경사항은 저장되지 않습니다</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>미리보기 모드</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ 랭크 렌더링 오류</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ 랭크 트리 없음</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>랭크 트리를 로드할 수 없습니다</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ 치명적 오류</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>렌더링 중 오류가 발생했습니다</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>렌더링 중 오류가 발생했습니다</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ 소유함</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 사용 가능</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 잠김</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ 알 수 없음</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>시작:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>도착:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>연결</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ 소유한 연결</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 사용 가능한 연결</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중인 연결</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중인 연결</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 잠긴 연결</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 미리보기:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 미리보기:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>을(를) 이미 소유하고 있습니다</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>을(를) 이미 소유하고 있습니다</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 잠김:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 먼저 선행 조건을 완료하세요</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 잠김:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>에는 요구사항이 없습니다!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>에는 요구사항이 없습니다!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>진행 시작</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% 요구사항)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>진행 시작</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>진행 시작 실패</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>진행 시작 실패</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>요구사항 미완료</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>요구사항 미완료</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 축하합니다!</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>을(를) 잠금 해제했습니다!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 축하합니다!</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>을(를) 잠금 해제했습니다!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>교환 실패</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>교환 실패</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>좌클릭으로 진행 시작</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>우클릭으로 요구사항 보기</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>좌클릭으로 교환</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>우클릭으로 진행 보기</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% 요구사항</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>요구사항 #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>요구사항 세부정보를 로드할 수 없습니다</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>아이템:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>진행:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 미리보기 모드</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>클릭하여 완료!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>우클릭으로 세부정보</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ 이미 완료됨</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>클릭하여 세부정보</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>요구사항 로드 오류</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ 완료됨</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ 완료 준비됨</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>시작되지 않음</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 미리보기:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>은(는) 이미 완료되었습니다!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>은(는) 아직 완료 준비가 되지 않았습니다!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 축하합니다!</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>으로 진행했습니다!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ 완료됨</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ 완료 준비됨</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>시작되지 않음</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌ 클릭 처리 실패!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>으로 진행 실패</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ 요구사항 세부정보를 열 수 없습니다!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ 이 요구사항은 현재 사용할 수 없습니다!</gradient>"
+  decoration:
+    name: " "
+  back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>작업 취소</gradient>"
+      - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>진행:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>클릭하여 세부정보 보기</gradient>"
+
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 요구사항 세부정보</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>진행</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>현재:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>완료율:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>남은 양:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ 완료!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>시작되지 않음</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>아이템 %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ 완료됨</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>이 요구사항은 이미 완료되었습니다</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ 요구사항 완료</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 이 요구사항 완료</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 진행 새로고침</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 진행 새로고침</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>완료된 아이템:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>진행:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 요구사항 요약</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 팁</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 진행 요약</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>필요한 아이템을 수집하고</gradient>"
+      - "<gradient:#6b7280:#9ca3af>여기로 돌아와 완료하세요</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>필요한 화폐를 획득하세요</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>경험치 레벨을 획득하세요</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>서버에서 플레이하세요</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>요구사항을 완료하세요</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 요약 보기...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 팁 보기...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 아이템 %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>진행:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>부족:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>진행:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>부족한 아이템:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...외 %item_amount%개</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>상세 정보</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ 완료!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ 완료 준비됨!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>클릭하여 완료</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>시작되지 않음</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>상태: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>진행</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>클릭하여 새로고침</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 진행 개요</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>알 수 없는 요구사항</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>세부정보를 로드할 수 없습니다</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>요구사항 로드 실패</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 진행:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 상태:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>은(는) 이미 완료되었습니다!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ 진행이 새로고침되었습니다!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 아이템 분류:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 현상금 시스템</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 현상금 생성</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 새 현상금 생성</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 현상금 보기</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>모든 활성 현상금 보기</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 내 현상금</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>생성한 현상금 보기</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 리더보드</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>최고의 현상금 사냥꾼</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#a855f7:#c084fc>현상금</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>대상:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>의뢰인:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>생성일:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>클릭하여 세부정보 보기</gradient>"
+
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 현상금 생성 - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 대상 선택</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 대상: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 플레이어 선택</gradient>"
+      - "<gradient:#6b7280:#9ca3af>현재: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 현상금 생성</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 새 현상금 생성</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 아이템 보상 추가</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 아이템 보상 추가</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 아이템 보상 추가</gradient>"
+      - "<gradient:#6b7280:#9ca3af>현재 아이템:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 화폐 보상 추가</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 화폐 보상 추가</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 화폐 보상 추가</gradient>"
+      - "<gradient:#6b7280:#9ca3af>현재 화폐:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ 현상금 생성</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 현상금 생성</gradient>"
+      - "<gradient:#6b7280:#9ca3af>선택한 보상으로</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ 플레이어가 선택되지 않았습니다!</gradient> <gradient:#6b7280:#9ca3af>먼저 대상을 선택하세요.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 보상이 추가되지 않았습니다!</gradient> <gradient:#6b7280:#9ca3af>먼저 보상을 추가하세요.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient> <gradient:#f59e0b:#fbbf24>에 대한 현상금 생성 중...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 오류:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>에 대한 현상금이 성공적으로 생성되었습니다!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 아이템이 반환되었습니다!</gradient> <gradient:#6b7280:#9ca3af>일부 아이템이 바닥에 떨어졌습니다.</gradient>"
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ 현상금 처리 중...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>에 대한 현상금이 성공적으로 생성되었습니다!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 현상금 처리 실패:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 현상금 보상</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 보상 없음</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>아이템을 추가하여 보상 생성</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ 아이템 추가</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>여기에 아이템을 놓아 보상으로 추가</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 대상: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>이 현상금은</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#6b7280:#9ca3af>에게 걸려 있습니다</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 현상금 보상</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 아이템은 현상금을</gradient>"
+      - "<gradient:#6b7280:#9ca3af>획득한 사람에게 주어집니다</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 새 아이템이 추가되지 않았습니다!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 인벤토리가 가득 차서 일부 아이템이 떨어졌습니다!</gradient>"
+
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 %target_name% 현상금</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>이 현상금의 대상</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 보상 보기</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 모든 보상 보기</gradient>"
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 현상금 삭제</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ 경고: 되돌릴 수 없습니다!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>클릭하여 이 현상금 삭제</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>현상금이 삭제되었습니다!</gradient>"
+
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ 관리자 패널</gradient>"
+  view_permissions:
+    name: "<gradient:#3b82f6:#60a5fa>🔑 권한 관리자</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>플러그인 권한 관리</gradient>"
+      - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>총 권한:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 권한 관리자를 열 수 없습니다!</gradient>"
+  create_ranks:
+    name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms 그룹 생성</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>랭크에서 LuckPerms 그룹 생성</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms가 설치되어 있지 않습니다!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ 그룹을 생성할 랭크를 찾을 수 없습니다!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>개의 LuckPerms 그룹이 생성되었습니다!</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>새 그룹이 생성되지 않았습니다.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ LuckPerms 그룹 생성 실패!</gradient>"
+
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 권한 관리자</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ 플러그인을 찾을 수 없습니다:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms가 설치되어 있지 않습니다!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ 이 플러그인에 사용 가능한 권한이 없습니다!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ 이전 플러그인</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ 다음 플러그인</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>권한:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>좌클릭으로 선택</gradient>"
+        - "<gradient:#10b981:#34d399>우클릭으로 모두 할당</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>비어 있음</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ 이전 권한</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ 다음 권한</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>노드:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>클릭하여 이 권한 할당</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>플러그인 선택되지 않음</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>위에서 플러그인을 선택하여</gradient>"
+        - "<gradient:#6b7280:#9ca3af>권한 보기</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>비어 있음</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ %plugin_name% 권한 할당</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>모든 권한 할당</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% 권한)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>선택 없음</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 선택됨: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>권한:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 개요</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>플러그인을 선택하여 권한 보기</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 데이터 새로고침</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>클릭하여 권한 데이터 새로고침</gradient>"

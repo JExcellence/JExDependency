@@ -1,5 +1,44 @@
-# RDQ Plik Tłumaczenia - Polski
+# RDQ Plik Tłumaczenia - Polski (Polska)
+# Format MiniMessage z gradientami i stylizacją
+# Symbole zastępcze używają formatu %placeholder%
+
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Brak Nagród</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Dodaj przedmioty, aby utworzyć nagrody</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Dodaj Przedmiot</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Umieść przedmioty tutaj jako nagrody</gradient>"
+
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Łowca</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Opanuj sztukę łucznictwa i tropienia</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Wojownik</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Opanuj sztukę walki</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Mag</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Wykorzystaj moc magii</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Łotrzyk</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Opanuj skradanie i przebiegłość</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Kleryk</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kanalizuj boską moc</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Kupiec</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Opanuj sztukę handlu</gradient>"
 
 bounty_listener:
   bounty_active:
@@ -9,7 +48,7 @@ bounty_listener:
     commissioner: "<gradient:#ef4444:#f87171>👤 Zleceniodawca:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
     title: "<gradient:#10b981:#34d399>🎉 NAGRODA ODEBRANA! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>Pomyślnie odebrałeś nagrodę za</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Odebrałeś nagrodę za</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
     share: "<gradient:#3b82f6:#60a5fa>Twój udział:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>Ktoś</gradient>"
     broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>odebrał nagrodę za</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
@@ -17,9 +56,9 @@ bounty_listener:
 
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ Nagroda pomyślnie utworzona dla</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Nagroda utworzona dla</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Błąd przetwarzania nagrody:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ Aktualizowanie nagrody...</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Przetwarzanie nagrody...</gradient>"
 
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Rozpoczęto postęp dla rangi</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -34,7 +73,7 @@ rank_click:
   locked: "<gradient:#ef4444:#f87171>🔒 Zablokowane:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Najpierw spełnij wymagania wstępne</gradient>"
 
 rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms nie jest zainstalowany!</gradient>"
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms nie jest zainstalowany!</gradient> <gradient:#6b7280:#9ca3af>Ta funkcja wymaga LuckPerms.</gradient>"
   help: "<gradient:#a855f7:#c084fc>📖 Pomoc RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Otwórz menu główne</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Zobacz rangi</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Zobacz nagrody</gradient>"
 
 main_overview_ui:
@@ -78,6 +117,10 @@ head:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Powrót</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Kliknij, aby wrócić</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Kontynuuj</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknij, aby kontynuować</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Poprzednia</gradient>"
     lore:
@@ -86,7 +129,52 @@ head:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Następna</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Następna strona</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ W górę</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Idź w górę</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ W dół</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Idź w dół</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Anuluj</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Anuluj akcję</gradient>"
+
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Wymagane Premium!</gradient> <gradient:#6b7280:#9ca3af>Funkcja</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>wymaga wersji premium.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Przetwarzanie nie powiodło się:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Wprowadź Wartość</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Wprowadź Wartość</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Wpisz powyżej</gradient>"
+      - "<gradient:#6b7280:#9ca3af>i kliknij, aby potwierdzić</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Nie można przetworzyć danych:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Potwierdź Akcję</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Potwierdź</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknij, aby potwierdzić</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Anuluj</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknij, aby anulować</gradient>"
+
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Wybierz Gracza</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Strona %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Bieżąca strona:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Łącznie stron:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Strona %direction%</gradient>"
