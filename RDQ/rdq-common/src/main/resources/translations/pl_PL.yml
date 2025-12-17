@@ -178,3 +178,82 @@ page:
     - "<gradient:#6b7280:#9ca3af>Bieżąca strona:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
     - "<gradient:#6b7280:#9ca3af>Łącznie stron:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Strona %direction%</gradient>"
+
+
+# ============================================
+# INTERFEJS SZCZEGÓŁÓW WYMAGAŃ RANGI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Szczegóły Wymagania</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknij aby wrócić</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Nie masz wszystkich wymaganych przedmiotów!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Przedmioty przesłane pomyślnie!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Przesyłanie nie powiodło się. Spróbuj ponownie.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Wystąpił błąd podczas przesyłania.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ To wymaganie zostało już ukończone!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Twój Poziom:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Wymagany Poziom:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Brakujące Poziomy:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Wymaganie poziomu spełnione!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Twój Czas Gry:</gradient> <gradient:#10b981:#34d399>%hours%g %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Wymagany Czas Gry:</gradient> <gradient:#f59e0b:#fbbf24>%hours%g %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Pozostały Czas:</gradient> <gradient:#f59e0b:#fbbf24>%hours%g %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Wymaganie czasu gry spełnione!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Typ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Postęp:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Podsumowanie Wymagania</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Wskazówki</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Wskazówka:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zdobądź wymaganą walutę</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Wskazówka:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zdobądź poziomy doświadczenia</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Wskazówka:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Graj na serwerze</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Wskazówka:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ukończ wymaganie</gradient>"
+
+# ============================================
+# INTERFEJS PODRÓŻY WYMAGAŃ RANGI
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 Wymagania %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ukończ wszystkie wymagania</gradient>"
+      - "<gradient:#6b7280:#9ca3af>aby odblokować tę rangę</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Ogólny Postęp</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Postęp:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ukończone:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Odbierz Rangę</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknij aby odebrać rangę!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Zablokowane</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ukończ wszystkie wymagania</gradient>"
+        - "<gradient:#6b7280:#9ca3af>aby odblokować tę rangę</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Tryb Podglądu - Akcje wyłączone</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Wymaganie ukończone!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Wszystkie wymagania ukończone! Możesz teraz odebrać rangę!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ To wymaganie nie jest jeszcze gotowe do ukończenia.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ To wymaganie zostało już ukończone.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Gratulacje! Otrzymałeś rangę %rank_name%!</gradient>"

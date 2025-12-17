@@ -178,3 +178,82 @@ page:
     - "<gradient:#6b7280:#9ca3af>Nåværende side:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
     - "<gradient:#6b7280:#9ca3af>Totalt sider:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Side %direction%</gradient>"
+
+
+# ============================================
+# RANG KRAV DETALJ UI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Kravdetaljer</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å gå tilbake</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Du har ikke alle nødvendige gjenstander!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Gjenstander sendt!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Sending mislyktes. Prøv igjen.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ En feil oppstod under sending.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Dette kravet er allerede fullført!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Ditt Nivå:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Påkrevd Nivå:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Manglende Nivåer:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Nivåkrav oppfylt!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Din Spilletid:</gradient> <gradient:#10b981:#34d399>%hours%t %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Påkrevd Spilletid:</gradient> <gradient:#f59e0b:#fbbf24>%hours%t %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Gjenværende Tid:</gradient> <gradient:#f59e0b:#fbbf24>%hours%t %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Spilletidskrav oppfylt!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Fremgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Kravsammendrag</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Tips</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tjen den nødvendige valutaen</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Få erfaringsnivåer</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Spill på serveren</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Fullfør kravet</gradient>"
+
+# ============================================
+# RANG KRAV REISE UI
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% Krav</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Fullfør alle krav</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for å låse opp denne rangen</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Total Fremgang</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Fremgang:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Fullført:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Hent Rang</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å hente rangen!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Låst</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Fullfør alle krav</gradient>"
+        - "<gradient:#6b7280:#9ca3af>for å låse opp denne rangen</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningsmodus - Handlinger deaktivert</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Krav fullført!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Alle krav fullført! Du kan nå hente rangen!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Dette kravet er ikke klart til å fullføres ennå.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Dette kravet er allerede fullført.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Gratulerer! Du har fått rangen %rank_name%!</gradient>"

@@ -178,3 +178,82 @@ page:
     - "<gradient:#6b7280:#9ca3af>Mevcut sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
     - "<gradient:#6b7280:#9ca3af>Toplam sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Sayfa %direction%</gradient>"
+
+
+# ============================================
+# RÜTBE GEREKSİNİM DETAY ARAYÜZÜ
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Gereksinim Detayları</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıkla</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Gerekli tüm eşyalara sahip değilsin!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Eşyalar başarıyla gönderildi!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Gönderim başarısız. Lütfen tekrar dene.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Gönderim sırasında bir hata oluştu.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Bu gereksinim zaten tamamlandı!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Seviyeniz:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Gereken Seviye:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Eksik Seviye:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Seviye gereksinimi karşılandı!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Oyun Süreniz:</gradient> <gradient:#10b981:#34d399>%hours%s %minutes%d</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Gereken Oyun Süresi:</gradient> <gradient:#f59e0b:#fbbf24>%hours%s %minutes%d</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Kalan Süre:</gradient> <gradient:#f59e0b:#fbbf24>%hours%s %minutes%d</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Oyun süresi gereksinimi karşılandı!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Tür:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>İlerleme:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Gereksinim Özeti</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 İpuçları</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gereken parayı kazan</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Deneyim seviyeleri kazan</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sunucuda oyna</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 İpucu:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gereksinimi tamamla</gradient>"
+
+# ============================================
+# RÜTBE GEREKSİNİMLERİ YOLCULUK ARAYÜZÜ
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% Gereksinimleri</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>bu rütbeyi açmak için</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Genel İlerleme</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>İlerleme:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tamamlanan:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Rütbeyi Al</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Rütbeyi almak için tıkla!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Kilitli</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tüm gereksinimleri tamamla</gradient>"
+        - "<gradient:#6b7280:#9ca3af>bu rütbeyi açmak için</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Önizleme Modu - İşlemler devre dışı</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Gereksinim tamamlandı!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Tüm gereksinimler tamamlandı! Artık rütbeyi alabilirsin!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Bu gereksinim henüz tamamlanmaya hazır değil.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Bu gereksinim zaten tamamlandı.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Tebrikler! %rank_name% rütbesini aldın!</gradient>"

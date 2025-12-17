@@ -609,3 +609,82 @@ admin_permissions_overview_ui:
       name: "<gradient:#10b981:#34d399>🔄 데이터 새로고침</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>클릭하여 권한 데이터 새로고침</gradient>"
+
+
+# ============================================
+# 랭크 요구사항 상세 UI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 요구사항 상세</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ 필요한 아이템이 모두 없습니다!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 아이템 제출 성공!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ 제출 실패. 다시 시도해주세요.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 제출 중 오류가 발생했습니다.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ 이 요구사항은 이미 완료되었습니다!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>현재 레벨:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>필요 레벨:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>부족한 레벨:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ 레벨 요구사항 달성!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>플레이 시간:</gradient> <gradient:#10b981:#34d399>%hours%시간 %minutes%분</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>필요 플레이 시간:</gradient> <gradient:#f59e0b:#fbbf24>%hours%시간 %minutes%분</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>남은 시간:</gradient> <gradient:#f59e0b:#fbbf24>%hours%시간 %minutes%분</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ 플레이 시간 요구사항 달성!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>진행률:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 요구사항 요약</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 팁</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>필요한 화폐를 획득하세요</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>경험치 레벨을 올리세요</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>서버에서 플레이하세요</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>요구사항을 완료하세요</gradient>"
+
+# ============================================
+# 랭크 요구사항 여정 UI
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% 요구사항</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>모든 요구사항을 완료하여</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 랭크를 해제하세요</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 전체 진행률</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>진행률:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>완료:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ 랭크 획득</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>클릭하여 랭크 획득!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 잠김</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>모든 요구사항을 완료하여</gradient>"
+        - "<gradient:#6b7280:#9ca3af>이 랭크를 해제하세요</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 미리보기 모드 - 작업 비활성화</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ 요구사항 완료!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 모든 요구사항 완료! 이제 랭크를 획득할 수 있습니다!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ 이 요구사항은 아직 완료할 준비가 되지 않았습니다.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ 이 요구사항은 이미 완료되었습니다.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 축하합니다! %rank_name% 랭크를 획득했습니다!</gradient>"

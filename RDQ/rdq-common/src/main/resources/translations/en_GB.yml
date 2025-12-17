@@ -178,3 +178,82 @@ page:
     - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
     - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"
+
+
+# ============================================
+# RANK REQUIREMENT DETAIL UI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Requirement Details</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ You don't have all the required items!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Items submitted successfully!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Failed to submit items. Please try again.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ An error occurred while submitting items.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ This requirement has already been completed!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Your Level:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Required Level:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Levels Needed:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Level requirement met!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Your Playtime:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Required Playtime:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Time Remaining:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Playtime requirement met!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Progress:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Requirement Summary</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Tips</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Earn the required currency</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gain experience levels</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Play on the server</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Complete the requirement</gradient>"
+
+# ============================================
+# RANK REQUIREMENTS JOURNEY UI
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% Requirements</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Complete all requirements</gradient>"
+      - "<gradient:#6b7280:#9ca3af>to unlock this rank</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Overall Progress</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Progress:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Completed:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Claim Rank</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to claim the rank!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Complete all requirements</gradient>"
+        - "<gradient:#6b7280:#9ca3af>to unlock this rank</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Preview Mode - Actions disabled</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Requirement completed!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 All requirements completed! You can now claim the rank!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ This requirement is not ready to be completed yet.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ This requirement has already been completed.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Congratulations! You have obtained the rank %rank_name%!</gradient>"

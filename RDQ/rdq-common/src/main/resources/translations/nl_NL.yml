@@ -758,3 +758,82 @@ page:
     - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
     - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
+
+
+# ============================================
+# RANG VEREISTE DETAIL UI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Vereiste Details</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Je hebt niet alle benodigde items!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Items succesvol ingediend!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Indienen mislukt. Probeer het opnieuw.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Er is een fout opgetreden bij het indienen.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Deze vereiste is al voltooid!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Jouw Level:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Vereist Level:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Levels Nodig:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Level vereiste behaald!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Jouw Speeltijd:</gradient> <gradient:#10b981:#34d399>%hours%u %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Vereiste Speeltijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Resterende Tijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Speeltijd vereiste behaald!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Voortgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Vereiste Samenvatting</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Tips</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Verdien de vereiste valuta</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Verdien ervaringsniveaus</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Speel op de server</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voltooi de vereiste</gradient>"
+
+# ============================================
+# RANG VEREISTEN REIS UI
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% Vereisten</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Totale Voortgang</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voltooid:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Rang Claimen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om de rang te claimen!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus - Acties uitgeschakeld</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Vereiste voltooid!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Alle vereisten voltooid! Je kunt nu de rang claimen!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Deze vereiste is nog niet klaar om te voltooien.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Deze vereiste is al voltooid.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je hebt de rang %rank_name% verkregen!</gradient>"

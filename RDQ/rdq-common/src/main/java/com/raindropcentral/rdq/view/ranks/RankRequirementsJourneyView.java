@@ -25,14 +25,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Journey-style view for displaying rank requirements with visual progress indicators.
@@ -459,7 +457,16 @@ public class RankRequirementsJourneyView extends BaseView {
                     .build().sendMessage();
 
             // Return to rank overview
-            ctx.back();
+            ctx.openForPlayer(RankPathOverview.class, Map.of(
+                    "plugin",
+                    plugin,
+                    "player",
+                    rdqPlayer,
+                    "rankTree",
+                    rankTree,
+                    "previewMode",
+                    false
+            ));
 
         } catch (final Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to claim rank", e);

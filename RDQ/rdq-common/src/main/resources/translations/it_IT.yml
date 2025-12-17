@@ -610,3 +610,82 @@ admin_permissions_overview_ui:
       name: "<gradient:#10b981:#34d399>🔄 Aggiorna Dati</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Clicca per aggiornare i dati dei permessi</gradient>"
+
+
+# ============================================
+# INTERFACCIA DETTAGLI REQUISITI GRADO
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Dettagli Requisito</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per tornare indietro</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Non hai tutti gli oggetti richiesti!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Oggetti inviati con successo!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Invio fallito. Riprova.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Si è verificato un errore durante l'invio.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Questo requisito è già stato completato!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Il Tuo Livello:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Livello Richiesto:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Livelli Mancanti:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Requisito livello raggiunto!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Il Tuo Tempo di Gioco:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Tempo di Gioco Richiesto:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Tempo Rimanente:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Requisito tempo di gioco raggiunto!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Progresso:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Stato:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Riepilogo Requisito</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Suggerimenti</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Suggerimento:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Guadagna la valuta richiesta</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Suggerimento:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Guadagna livelli di esperienza</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Suggerimento:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gioca sul server</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Suggerimento:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Completa il requisito</gradient>"
+
+# ============================================
+# INTERFACCIA PERCORSO REQUISITI GRADO
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 Requisiti %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Completa tutti i requisiti</gradient>"
+      - "<gradient:#6b7280:#9ca3af>per sbloccare questo grado</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Progresso Generale</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Progresso:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Completato:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Riscatta Grado</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clicca per riscattare il grado!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Bloccato</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Completa tutti i requisiti</gradient>"
+        - "<gradient:#6b7280:#9ca3af>per sbloccare questo grado</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Modalità Anteprima - Azioni disabilitate</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Requisito completato!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Tutti i requisiti completati! Ora puoi riscattare il grado!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Questo requisito non è ancora pronto per essere completato.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Questo requisito è già stato completato.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Congratulazioni! Hai ottenuto il grado %rank_name%!</gradient>"

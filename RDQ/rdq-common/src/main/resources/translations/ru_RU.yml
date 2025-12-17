@@ -610,3 +610,82 @@ admin_permissions_overview_ui:
       name: "<gradient:#10b981:#34d399>🔄 Обновить Данные</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Нажмите для обновления данных разрешений</gradient>"
+
+
+# ============================================
+# ИНТЕРФЕЙС ДЕТАЛЕЙ ТРЕБОВАНИЙ РАНГА
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Детали Требования</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите чтобы вернуться</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ У вас нет всех необходимых предметов!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Предметы успешно отправлены!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Ошибка отправки. Попробуйте снова.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Произошла ошибка при отправке.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Это требование уже выполнено!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Ваш Уровень:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Требуемый Уровень:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Недостающие Уровни:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Требование уровня выполнено!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Ваше Время Игры:</gradient> <gradient:#10b981:#34d399>%hours%ч %minutes%м</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Требуемое Время Игры:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ч %minutes%м</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Оставшееся Время:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ч %minutes%м</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Требование времени игры выполнено!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Тип:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Прогресс:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Статус:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Сводка Требования</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Советы</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Заработайте необходимую валюту</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Получите уровни опыта</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Играйте на сервере</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Совет:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Выполните требование</gradient>"
+
+# ============================================
+# ИНТЕРФЕЙС ПУТЕШЕСТВИЯ ТРЕБОВАНИЙ РАНГА
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 Требования %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
+      - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Общий Прогресс</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Прогресс:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Выполнено:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Получить Ранг</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите чтобы получить ранг!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Заблокировано</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Выполните все требования</gradient>"
+        - "<gradient:#6b7280:#9ca3af>чтобы разблокировать этот ранг</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Режим Просмотра - Действия отключены</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Требование выполнено!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Все требования выполнены! Теперь вы можете получить ранг!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Это требование ещё не готово к выполнению.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Это требование уже выполнено.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Поздравляем! Вы получили ранг %rank_name%!</gradient>"

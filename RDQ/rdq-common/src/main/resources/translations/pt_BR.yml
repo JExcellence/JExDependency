@@ -610,3 +610,82 @@ admin_permissions_overview_ui:
       name: "<gradient:#10b981:#34d399>🔄 Atualizar Dados</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Clique para atualizar dados de permissões</gradient>"
+
+
+# ============================================
+# INTERFACE DE DETALHES DE REQUISITOS DE RANK
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Detalhes do Requisito</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Você não tem todos os itens necessários!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Itens enviados com sucesso!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Falha ao enviar. Por favor, tente novamente.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Ocorreu um erro ao enviar os itens.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Este requisito já foi completado!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Seu Nível:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Nível Necessário:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Níveis Faltando:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Requisito de nível atingido!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Seu Tempo de Jogo:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Tempo de Jogo Necessário:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Tempo Restante:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Requisito de tempo de jogo atingido!</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Progresso:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Resumo do Requisito</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Dicas</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ganhe a moeda necessária</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ganhe níveis de experiência</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jogue no servidor</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Complete o requisito</gradient>"
+
+# ============================================
+# INTERFACE DE JORNADA DE REQUISITOS DE RANK
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 Requisitos de %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para desbloquear este rank</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 Progresso Geral</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Progresso:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Completado:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Reivindicar Rank</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Clique para reivindicar o rank!</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Bloqueado</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
+        - "<gradient:#6b7280:#9ca3af>para desbloquear este rank</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Modo Visualização - Ações desativadas</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Requisito completado!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Todos os requisitos completados! Agora você pode reivindicar o rank!</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Este requisito ainda não está pronto para ser completado.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Este requisito já foi completado.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 Parabéns! Você obteve o rank %rank_name%!</gradient>"

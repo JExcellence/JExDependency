@@ -178,3 +178,82 @@ page:
     - "<gradient:#6b7280:#9ca3af>當前頁:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
     - "<gradient:#6b7280:#9ca3af>總頁數:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 第 %direction% 頁</gradient>"
+
+
+# ============================================
+# 等級要求詳情介面
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 要求詳情</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊返回</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ 你沒有所有需要的物品！</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 物品提交成功！</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ 提交失敗，請重試。</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 提交時發生錯誤。</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ 此要求已完成！</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>當前等級:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>需要等級:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>缺少等級:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ 等級要求已達成！</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>遊戲時間:</gradient> <gradient:#10b981:#34d399>%hours%小時 %minutes%分鐘</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>需要遊戲時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%小時 %minutes%分鐘</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>剩餘時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%小時 %minutes%分鐘</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ 遊戲時間要求已達成！</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>類型:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>進度:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>狀態:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 要求摘要</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 提示</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>賺取所需貨幣</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>獲得經驗等級</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>在伺服器上遊玩</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>完成要求</gradient>"
+
+# ============================================
+# 等級要求旅程介面
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% 要求</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>完成所有要求</gradient>"
+      - "<gradient:#6b7280:#9ca3af>以解鎖此等級</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 總體進度</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>進度:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>已完成:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ 領取等級</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊領取等級！</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 已鎖定</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>完成所有要求</gradient>"
+        - "<gradient:#6b7280:#9ca3af>以解鎖此等級</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 預覽模式 - 操作已禁用</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ 要求已完成！</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 所有要求已完成！現在可以領取等級了！</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ 此要求尚未準備好完成。</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ 此要求已完成。</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 恭喜！你已獲得 %rank_name% 等級！</gradient>"

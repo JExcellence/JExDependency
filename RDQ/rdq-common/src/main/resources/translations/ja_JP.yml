@@ -610,3 +610,82 @@ admin_permissions_overview_ui:
       name: "<gradient:#10b981:#34d399>🔄 データを更新</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>クリックで権限データを更新</gradient>"
+
+
+# ============================================
+# ランク要件詳細UI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 要件の詳細</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ 必要なアイテムが揃っていません！</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ アイテムの提出に成功しました！</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ 提出に失敗しました。もう一度お試しください。</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 提出中にエラーが発生しました。</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ この要件は既に完了しています！</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>現在のレベル:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>必要レベル:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>不足レベル:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ レベル要件達成！</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>プレイ時間:</gradient> <gradient:#10b981:#34d399>%hours%時間 %minutes%分</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>必要プレイ時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%時間 %minutes%分</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>残り時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%時間 %minutes%分</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ プレイ時間要件達成！</gradient>"
+  summary:
+    requirement_type: "<gradient:#6b7280:#9ca3af>タイプ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>進捗:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 要件サマリー</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 ヒント</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>必要な通貨を獲得しましょう</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>経験値レベルを上げましょう</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>サーバーでプレイしましょう</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>要件を完了しましょう</gradient>"
+
+# ============================================
+# ランク要件ジャーニーUI
+# ============================================
+rank_requirements_journey_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% 要件</gradient>"
+  rank_info:
+    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>すべての要件を完了して</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクを解除しましょう</gradient>"
+  overall_progress:
+    name: "<gradient:#3b82f6:#60a5fa>📊 全体の進捗</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>進捗:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>完了:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ ランクを取得</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックしてランクを取得！</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 ロック中</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>すべての要件を完了して</gradient>"
+        - "<gradient:#6b7280:#9ca3af>このランクを解除しましょう</gradient>"
+  messages:
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード - アクション無効</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ 要件完了！</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 すべての要件が完了しました！ランクを取得できます！</gradient>"
+    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ この要件はまだ完了できません。</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ この要件は既に完了しています。</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🎉 おめでとうございます！ランク %rank_name% を取得しました！</gradient>"
