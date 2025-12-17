@@ -2349,21 +2349,16 @@ public class RankPathOverview extends BaseView {
         try {
             final RDQ plugin = this.rdq.get(clickContext);
             final RDQPlayer rdqPlayer = this.currentPlayer.get(clickContext);
-            final Player player = clickContext.getPlayer();
             final boolean previewMode = this.isPreviewMode.get(clickContext);
-
-            LOGGER.log(
-                    Level.INFO,
-                    "Opening requirements view for rank " + rankNode.rank.getIdentifier() + " for player " + player.getName()
-            );
 
             this.dataRefreshTimestamp.set(
                     0L,
                     clickContext
             );
 
+            // Use the new Journey View for a better visual experience
             clickContext.openForPlayer(
-                    RankPathRankRequirementOverview.class,
+                    RankRequirementsJourneyView.class,
                     Map.of(
                             "plugin",
                             plugin,
@@ -2374,13 +2369,7 @@ public class RankPathOverview extends BaseView {
                             "rankTree",
                             selectedRankTree.get(clickContext),
                             "previewMode",
-                            previewMode,
-                            "initialData",
-                            clickContext.getInitialData(),
-                            "cachedRequirementProgress",
-                            new HashMap<>(),
-                            "lastProgressRefresh",
-                            0L
+                            previewMode
                     )
             );
         } catch (
@@ -2391,31 +2380,15 @@ public class RankPathOverview extends BaseView {
                     "Failed to open requirements view for rank " + rankNode.rank.getIdentifier(),
                     exception
             );
-            try {
-                this.i18n(
-                                "error.requirements_view_failed",
-                                clickContext.getPlayer()
-                        )
-                        .withPlaceholder("rank_name",
-                                rankNode.rank.getIdentifier()
-                        )
-                        .includePrefix()
-                        .build().sendMessage();
-            } catch (
-                    final Exception fallbackException
-            ) {
-                LOGGER.log(
-                        Level.WARNING,
-                        "Failed to send requirements view error message",
-                        fallbackException
-                );
-                this.i18n(
-                                "error.general",
-                                clickContext.getPlayer()
-                        )
-                        .includePrefix()
-                        .build().sendMessage();
-            }
+            this.i18n(
+                            "error.requirements_view_failed",
+                            clickContext.getPlayer()
+                    )
+                    .withPlaceholder("rank_name",
+                            rankNode.rank.getIdentifier()
+                    )
+                    .includePrefix()
+                    .build().sendMessage();
         }
     }
 

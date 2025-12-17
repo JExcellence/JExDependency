@@ -217,7 +217,8 @@ public abstract class RDQ {
 						new RankTreeOverviewView(),
 						new RankRequirementDetailView(),
 						new RankPathOverview(),
-						new RankPathRankRequirementOverview()
+						new RankPathRankRequirementOverview(),
+						new RankRequirementsJourneyView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
