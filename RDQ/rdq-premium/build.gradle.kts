@@ -3,16 +3,12 @@ plugins {
     id("raindrop.dependencies-yml")
 }
 
-// Configure runtime dependencies.yml generation (Paper + Spigot variants)
 dependenciesYml {
     usePaperDependencies()
     generatePaperVariant.set(true)
     generateSpigotVariant.set(true)
 }
 
-// ===========================================
-// Dynamic Version Configuration
-// ===========================================
 val versionMajor: String by project.rootProject.extra { findProperty("rdq.version.major")?.toString() ?: "6" }
 val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "0" }
 val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "0" }
@@ -28,10 +24,8 @@ description = "RDQ Premium - Premium edition of RaindropQuests"
 dependencies {
     implementation(project(":RDQ:rdq-common"))
 
-    // Server API
     compileOnly(libs.paper.api)
 
-    // Adventure APIs (core APIs are compileOnly as Paper provides them)
     compileOnly(libs.adventure.api)
     compileOnly(libs.adventure.minimessage)
     compileOnly(libs.adventure.serializer.legacy)
@@ -39,7 +33,6 @@ dependencies {
     compileOnly(libs.adventure.serializer.plain)
     compileOnly(libs.adventure.platform.bukkit)
 
-    // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false }
@@ -75,7 +68,7 @@ dependencies {
     implementation(libs.bundles.jeconfig) { isTransitive = false }
 
     // Inventory framework
-    implementation(libs.bundles.inventory)
+    compileOnly(libs.bundles.inventory)
 }
 
 tasks.processResources {
@@ -96,19 +89,14 @@ tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJ
     archiveVersion.set(rdqVersion)
     archiveClassifier.set("Premium")
 
-    // NOTE: Jackson 2.x (com.fasterxml) is NOT relocated - compatible with server's bundled version
-    
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
 
-
-    // Include all runtime dependencies (not just specific patterns)
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
     
-    // Explicitly include resources from rdq-common (translations, configs, etc.)
     from(project(":RDQ:rdq-common").sourceSets.main.get().resources)
 }
 
@@ -116,12 +104,10 @@ tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
-// Disable the regular jar task since we use shadowJar
 tasks.named<Jar>("jar") {
     enabled = false
 }
 
-// Create a shadow publication instead of using the default maven one
 publishing {
     publications {
         create<MavenPublication>("shadow") {

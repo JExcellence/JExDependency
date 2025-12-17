@@ -2,6 +2,8 @@ package com.raindropcentral.rdq;
 
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.PremiumBountyService;
+import com.raindropcentral.rdq.rank.IRankSystemService;
+import com.raindropcentral.rdq.rank.PremiumRankSystemService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;
@@ -66,6 +68,12 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
                 @Override
                 protected @NotNull IBountyService createBountyService() {
                     return PremiumBountyService.initialize(this);
+                }
+
+                @Override
+                protected @NotNull IRankSystemService createRankSystemService() {
+                    // Create Premium rank system service with no limits
+                    return PremiumRankSystemService.initialize(this);
                 }
             };
         } catch (final Exception exception) {

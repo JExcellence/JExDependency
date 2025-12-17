@@ -1,10 +1,14 @@
 plugins {
     id("raindrop.shadow-conventions")
+    id("raindrop.dependencies-yml")
 }
 
-// ===========================================
-// Dynamic Version Configuration
-// ===========================================
+dependenciesYml {
+    usePaperDependencies()
+    generatePaperVariant.set(true)
+    generateSpigotVariant.set(true)
+}
+
 val versionMajor: String by project.rootProject.extra { findProperty("rdq.version.major")?.toString() ?: "6" }
 val versionMinor: String by project.rootProject.extra { findProperty("rdq.version.minor")?.toString() ?: "0" }
 val versionPatch: String by project.rootProject.extra { findProperty("rdq.version.patch")?.toString() ?: "0" }
@@ -18,20 +22,24 @@ version = rdqVersion
 description = "RDQ Free - Free edition of RaindropQuests"
 
 dependencies {
-    // Include common module
     implementation(project(":RDQ:rdq-common"))
 
     // Server API
     compileOnly(libs.paper.api)
 
-    // Adventure APIs
-    compileOnly(libs.bundles.adventure)
+    compileOnly(libs.adventure.api)
+    compileOnly(libs.adventure.minimessage)
+    compileOnly(libs.adventure.serializer.legacy)
+    compileOnly(libs.adventure.serializer.json)
+    compileOnly(libs.adventure.serializer.plain)
+    compileOnly(libs.adventure.platform.bukkit)
 
-    // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.luckperms.api)
+
+    compileOnly("com.raindropcentral.core:rcore:2.0.0")
 
     // Logging
     compileOnly(libs.slf4j.api)
@@ -51,13 +59,17 @@ dependencies {
 
     // Version compatibility
     compileOnly(libs.xseries)
+    compileOnly(libs.jehibernate)
 
     // Internal libraries to shade
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
+    implementation(libs.bundles.jexcellence) {
+        exclude(group = "de.jexcellence.hibernate")
+        isTransitive = false
+    }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
 
     // Inventory framework
-    implementation(libs.bundles.inventory)
+    compileOnly(libs.bundles.inventory)
 }
 
 tasks.processResources {
@@ -74,38 +86,18 @@ tasks.processResources {
 }
 
 tasks.named<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar>("shadowJar") {
-    // Output: RDQ-6.0.0-Alpha-Build-123-Free.jar
     archiveBaseName.set("RDQ")
     archiveVersion.set(rdqVersion)
     archiveClassifier.set("Free")
 
-    dependencies {
-        include(project(":RDQ:rdq-common"))
-        // JExcellence libraries
-        include(dependency("de.jexcellence.translate:.*"))
-        include(dependency("de.jexcellence.hibernate:.*"))
-        include(dependency("de.jexcellence.dependency:.*"))
-        include(dependency("de.jexcellence.config:.*"))
-        // Raindrop libraries
-        include(dependency("com.raindropcentral.platform:.*"))
-        include(dependency("com.raindropcentral.commands:.*"))
-        // Inventory framework
-        include(dependency("me.devnatan:.*"))
-    }
-
-    // Relocations must be outside dependencies block
-    // NOTE: Jackson 2.x (com.fasterxml) is NOT relocated - compatible with server's bundled version
-    
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
 
-    minimize {
-        exclude(project(":RDQ:rdq-common"))
-    }
-    
-    // Explicitly include resources from rdq-common (translations, configs, etc.)
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+    mergeServiceFiles()
+
     from(project(":RDQ:rdq-common").sourceSets.main.get().resources)
 }
 
@@ -113,12 +105,10 @@ tasks.build {
     dependsOn(tasks.shadowJar)
 }
 
-// Disable the regular jar task since we use shadowJar
 tasks.named<Jar>("jar") {
     enabled = false
 }
 
-// Create a shadow publication instead of using the default maven one
 publishing {
     publications {
         create<MavenPublication>("shadow") {

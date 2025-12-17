@@ -181,16 +181,13 @@ public class RankPathService {
 					LOGGER.log(Level.INFO, "Reactivated existing rank for player " + player.getPlayerName() + " in tree " + rankTree.getIdentifier());
 				}
 			} else {
-				final RPlayerRank newPlayerRank = new RPlayerRank(player, startingRank, rankTree);
-				player.addPlayerRank(newPlayerRank);
+				// Fetch fresh player to avoid stale state
+				RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(player.getId()).orElse(player);
+				final RPlayerRank newPlayerRank = new RPlayerRank(freshPlayer, startingRank, rankTree);
 				this.rdq.getPlayerRankRepository().create(newPlayerRank);
-				LOGGER.log(Level.INFO, "Created new rank assignment for player " + player.getPlayerName() + " in tree " + rankTree.getIdentifier());
+				LOGGER.log(Level.INFO, "Created new rank assignment for player " + freshPlayer.getPlayerName() + " in tree " + rankTree.getIdentifier());
 			}
-			
-			RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(player.getId()).orElse(null);
-			if (freshPlayer != null) {
-				this.rdq.getPlayerRepository().update(freshPlayer);
-			}
+			// Removed redundant player update that caused OptimisticLockException
 		} catch (final Exception exception) {
 			LOGGER.log(Level.SEVERE, "Failed to handle rank assignment for tree", exception);
 			throw new RuntimeException("Rank assignment failed", exception);

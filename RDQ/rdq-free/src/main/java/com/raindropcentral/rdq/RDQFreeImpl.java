@@ -2,6 +2,8 @@ package com.raindropcentral.rdq;
 
 import com.raindropcentral.rdq.bounty.FreeBountyService;
 import com.raindropcentral.rdq.bounty.IBountyService;
+import com.raindropcentral.rdq.rank.FreeRankSystemService;
+import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;
@@ -56,8 +58,12 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
 
                 @Override
                 protected @NotNull IBountyService createBountyService() {
-                    // Create Free bounty service (doesn't need RDQ instance)
                     return FreeBountyService.initialize(this);
+                }
+
+                @Override
+                protected @NotNull IRankSystemService createRankSystemService() {
+                    return FreeRankSystemService.initialize(this);
                 }
             };
 
@@ -83,7 +89,7 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
     public void onDisable() {
         try {
             if (this.rdq != null) {
-                //this.rdq.onDisable();
+                this.rdq.onDisable();
             }
             LOGGER.info("RDQ (" + EDITION + ") Edition disabled successfully");
         } catch (final Exception exception) {

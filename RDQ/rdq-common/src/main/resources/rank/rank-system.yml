@@ -91,3 +91,20 @@ gui:
   showLockedRanks: true
   # Show requirement progress
   showRequirementProgress: true
+
+# System settings
+settings:
+  # Enable the rank system
+  enableRankSystem: true
+  # Enable final rank rules
+  enableFinalRankRules: true
+  # Enable cross-tree progression
+  enableCrossTreeProgression: true
+  # Enable progress tracking
+  enableProgressTracking: true
+  # Enable rank broadcasts
+  enableRankBroadcasts: true
+  # Invert navigation buttons (up/down) in rank path overview
+  # When true, the up button moves down and the down button moves up
+  # This is useful for users who prefer inverted navigation
+  invertNavigation: false

@@ -11,6 +11,7 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.permissions.PermissionsService;
+import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.rank.RankSystemFactory;
 import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
@@ -87,6 +88,7 @@ public abstract class RDQ {
 
 	private LuckPermsService luckPermsService;
 	private IBountyService bountyService;
+	private IRankSystemService rankSystemService;
 	private BountyFactory bountyFactory;
 	private VisualIndicatorManager visualIndicatorManager;
 
@@ -125,8 +127,8 @@ public abstract class RDQ {
 					bountyService = createBountyService();
 					bountyFactory = new BountyFactory(this, bountyService);
 
-					//todo rankservice = createrankservice();
-					rankSystemFactory = new RankSystemFactory(this); //todo this, rankservice
+					rankSystemService = createRankSystemService();
+					rankSystemFactory = new RankSystemFactory(this);
 					this.rankSystemFactory.initialize();
 					LOGGER.log(Level.INFO, "Rank system initialized");
 					
@@ -152,6 +154,9 @@ public abstract class RDQ {
 
 	@NotNull
 	protected abstract IBountyService createBountyService();
+
+	@NotNull
+	protected abstract IRankSystemService createRankSystemService();
 
 	private void initializeRepositories() {
 		final var emf = this.platform.getEntityManagerFactory();

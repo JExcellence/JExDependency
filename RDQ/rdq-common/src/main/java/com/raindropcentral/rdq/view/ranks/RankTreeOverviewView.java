@@ -5,6 +5,7 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
+import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
@@ -144,63 +145,88 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			final @NotNull RRankTree rankTree
 	) {
 
-		Player          player      = context.getPlayer();
-		RankPathService pathService = this.rdq.get(context).getRankPathService();
+		try {
+			Player          player      = context.getPlayer();
+			RDQ             plugin      = this.rdq.get(context);
+			RankPathService pathService = plugin.getRankPathService();
+			IRankSystemService rankSystemService = plugin.getRankSystemService();
 
-		RDQPlayer currentPlayer = this.rdqPlayer.get(context);
-
-		boolean hasSelectedPath = this.hasPlayerSelectedRankTree(
-				currentPlayer,
-				rankTree
-		);
-
-		boolean isCurrentlyActive = pathService.hasSelectedRankPath(
-				currentPlayer,
-				rankTree
-		);
-
-		boolean meetsPrerequisites = this.checkRankTreePrerequisites(
-				currentPlayer,
-				rankTree,
-				pathService
-		);
-
-		RankTreeDisplayState displayState = this.determineDisplayState(
-				hasSelectedPath,
-				isCurrentlyActive,
-				meetsPrerequisites,
-				rankTree
-		);
-
-		Material        material = this.getMaterialForState(
-				rankTree,
-				displayState
-		);
-		List<Component> lore     = this.buildLoreForRankTree(
-				player,
-				rankTree,
-				displayState,
-				hasSelectedPath,
-				isCurrentlyActive
-		);
-
-		builder.withItem(UnifiedBuilderFactory.item(material)
-						.setName(this.i18n(
-								rankTree.getDisplayNameKey(),
-								player
-						).build().component())
-						.setLore(lore)
+			RDQPlayer currentPlayer = this.rdqPlayer.get(context);
+			
+			if (currentPlayer == null) {
+				LOGGER.warning("RankTreeOverviewView - currentPlayer is null for tree: " + rankTree.getIdentifier());
+				// Render a fallback item
+				builder.withItem(UnifiedBuilderFactory.item(Material.PAPER)
+						.setName(this.i18n(rankTree.getDisplayNameKey(), player).build().component())
 						.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-						.build())
-				.updateOnClick().onClick(clickContext -> {
-					this.handleRankTreeClick(
-							clickContext,
-							rankTree,
-							displayState,
-							hasSelectedPath,
-							isCurrentlyActive
-					);
-				});
+						.build());
+				return;
+			}
+
+			boolean hasSelectedPath = this.hasPlayerSelectedRankTree(
+					currentPlayer,
+					rankTree
+			);
+
+			boolean isCurrentlyActive = pathService.hasSelectedRankPath(
+					currentPlayer,
+					rankTree
+			);
+
+			boolean meetsPrerequisites = this.checkRankTreePrerequisites(
+					currentPlayer,
+					rankTree,
+					pathService
+			);
+
+			boolean isPreviewOnlyDueToFreeVersion = rankSystemService != null && rankSystemService.isPreviewOnly(currentPlayer, rankTree);
+
+			RankTreeDisplayState displayState = this.determineDisplayState(
+					hasSelectedPath,
+					isCurrentlyActive,
+					meetsPrerequisites,
+					isPreviewOnlyDueToFreeVersion,
+					rankTree
+			);
+
+			Material        material = this.getMaterialForState(
+					rankTree,
+					displayState
+			);
+			
+			List<Component> lore     = this.buildLoreForRankTree(
+					player,
+					rankTree,
+					displayState,
+					hasSelectedPath,
+					isCurrentlyActive
+			);
+
+			builder.withItem(UnifiedBuilderFactory.item(material)
+							.setName(this.i18n(
+									rankTree.getDisplayNameKey(),
+									player
+							).build().component())
+							.setLore(lore)
+							.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+							.build())
+					.updateOnClick().onClick(clickContext -> {
+						this.handleRankTreeClick(
+								clickContext,
+								rankTree,
+								displayState,
+								hasSelectedPath,
+								isCurrentlyActive
+						);
+					});
+		} catch (final Exception exception) {
+			LOGGER.log(java.util.logging.Level.SEVERE, "Failed to render rank tree entry: " + rankTree.getIdentifier(), exception);
+			// Render a fallback error item
+			builder.withItem(UnifiedBuilderFactory.item(Material.BARRIER)
+					.setName(Component.text("Error: " + rankTree.getIdentifier()))
+					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+					.build());
+		}
 	}
 
 	/**
@@ -211,8 +237,12 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			final @NotNull RRankTree rankTree
 	) {
 
+		if (player.getPlayerRankPaths() == null) {
+			return false;
+		}
 		return player.getPlayerRankPaths().stream()
-				.anyMatch(rankPath -> rankPath.getSelectedRankPath().equals(rankTree));
+				.anyMatch(rankPath -> rankPath.getSelectedRankPath() != null && 
+						rankPath.getSelectedRankPath().equals(rankTree));
 	}
 
 	/**
@@ -222,6 +252,7 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			boolean hasSelectedPath,
 			boolean isCurrentlyActive,
 			boolean meetsPrerequisites,
+			boolean isPreviewOnlyDueToFreeVersion,
 			RRankTree rankTree
 	) {
 
@@ -235,6 +266,10 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			} else {
 				return RankTreeDisplayState.PREVIOUSLY_SELECTED;
 			}
+		} else if (
+				isPreviewOnlyDueToFreeVersion
+		) {
+			return RankTreeDisplayState.FREE_VERSION_PREVIEW_ONLY;
 		} else if (
 				! meetsPrerequisites
 		) {
@@ -260,6 +295,14 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 				completedTrees < minimumRequired
 		) {
 			return false;
+		}
+
+		// Check if prerequisiteRankTrees collection is initialized before accessing
+		// to avoid LazyInitializationException when entities are cached outside session
+		if (!org.hibernate.Hibernate.isInitialized(rankTree.getPrerequisiteRankTrees())) {
+			// Collection not initialized - assume no prerequisites (safe default)
+			// Prerequisites are typically empty for most rank trees
+			return true;
 		}
 
 		for (
@@ -289,6 +332,7 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 		try {
 			return switch (state) {
 				case LOCKED -> Material.BARRIER;
+				case FREE_VERSION_PREVIEW_ONLY -> Material.SPYGLASS; // Preview icon for free version
 				default -> Material.valueOf(rankTree.getIcon().getMaterial().toUpperCase());
 			};
 		} catch (
@@ -341,8 +385,10 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 							)
 							.build().children());
 				}
+				// Check if prerequisiteRankTrees is initialized before accessing
 				if (
-						! rankTree.getPrerequisiteRankTrees().isEmpty()
+						org.hibernate.Hibernate.isInitialized(rankTree.getPrerequisiteRankTrees())
+						&& ! rankTree.getPrerequisiteRankTrees().isEmpty()
 				) {
 					lore.add(this.i18n(
 							"click.pre_requisites",
@@ -387,6 +433,18 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 						"click_to_reactivate",
 						player
 				).build().component());
+				break;
+
+			case FREE_VERSION_PREVIEW_ONLY:
+				lore.add(Component.empty());
+				lore.add(this.i18n(
+						"free_version_preview_only",
+						player
+				).build().component());
+				lore.addAll(this.i18n(
+						"free_version_preview_only_lore",
+						player
+				).build().children());
 				break;
 		}
 
@@ -491,6 +549,25 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 							clickContext,
 							rankTree
 					);
+				}
+				break;
+
+			case FREE_VERSION_PREVIEW_ONLY:
+				// Free version: only allow preview, show upgrade message on right-click
+				if (
+						clickType == ClickType.LEFT
+				) {
+					this.openRankTreePreview(
+							clickContext,
+							rankTree
+					);
+				} else if (
+						clickType == ClickType.RIGHT
+				) {
+					this.i18n(
+							"free_version_upgrade_required",
+							player
+					).includePrefix().build().sendMessage();
 				}
 				break;
 		}
@@ -722,7 +799,8 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 		AVAILABLE,
 		LOCKED,
 		CURRENTLY_ACTIVE,
-		PREVIOUSLY_SELECTED
+		PREVIOUSLY_SELECTED,
+		FREE_VERSION_PREVIEW_ONLY
 	}
 
 }

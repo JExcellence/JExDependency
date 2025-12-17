@@ -76,15 +76,11 @@ public class RankMainView extends BaseView {
         final @NotNull RenderContext render,
         final @NotNull Player player
     ) {
-        java.util.concurrent.CompletableFuture.supplyAsync(
-            () -> this.rdq.get(render).getPlayerRepository().findByAttributes(
-                Map.of("uniqueId", player.getUniqueId())
-            ).orElse(null),
-            this.rdq.get(render).getExecutor()
-        ).thenAcceptAsync(
-            rdqPlayer -> this.rdqPlayer = rdqPlayer,
-            this.rdq.get(render).getExecutor()
-        );
+        // Load player synchronously to ensure it's available when clicking
+        // This is a quick database lookup so it's acceptable
+        this.rdqPlayer = this.rdq.get(render).getPlayerRepository().findByAttributes(
+            Map.of("uniqueId", player.getUniqueId())
+        ).orElse(null);
         
         render
             .slot(
@@ -103,15 +99,24 @@ public class RankMainView extends BaseView {
             )
             .onClick(
                 clickContext -> {
-                    clickContext.openForPlayer(
-                    RankTreeOverviewView.class,
-                        Map.of(
-                            "plugin",
-                            this.rdq.get(clickContext),
-                            "player",
-                            this.rdqPlayer
-                        )
-                    );
+                    if (this.rdqPlayer == null) {
+                        // Try to load again if still null
+                        this.rdqPlayer = this.rdq.get(clickContext).getPlayerRepository().findByAttributes(
+                            Map.of("uniqueId", clickContext.getPlayer().getUniqueId())
+                        ).orElse(null);
+                    }
+                    
+                    if (this.rdqPlayer != null) {
+                        clickContext.openForPlayer(
+                            RankTreeOverviewView.class,
+                            Map.of(
+                                "plugin",
+                                this.rdq.get(clickContext),
+                                "player",
+                                this.rdqPlayer
+                            )
+                        );
+                    }
                 }
             );
     }

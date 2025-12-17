@@ -410,6 +410,13 @@ rank_tree_overview_ui:
     rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Reactivated rank path:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
     rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ Failed to reactivate rank path!</gradient>"
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Rank tree creation coming soon!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Free Version - Preview Only</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>This rank tree is available for preview only.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Upgrade to Premium to unlock!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>Left-click to preview</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium Required:</gradient> <gradient:#6b7280:#9ca3af>Upgrade to Premium to select additional rank trees!</gradient>"
 
 # ============================================
 # RANK PATH OVERVIEW UI
@@ -461,6 +468,8 @@ rank_path_overview_ui:
       - "<gradient:#6b7280:#9ca3af>An error occurred while rendering</gradient>"
     critical.lore:
       - "<gradient:#6b7280:#9ca3af>An error occurred while rendering</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Failed to open requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ An error occurred. Please try again.</gradient>"
   status:
     owned: "<gradient:#10b981:#34d399>✅ Owned</gradient>"
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress</gradient>"
@@ -468,6 +477,7 @@ rank_path_overview_ui:
     available: "<gradient:#3b82f6:#60a5fa>🔓 Available</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
     unknown: "<gradient:#6b7280:#9ca3af>❓ Unknown</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium Required</gradient>"
   connection:
     from: "<gradient:#6b7280:#9ca3af>From:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     to: "<gradient:#6b7280:#9ca3af>To:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -692,6 +702,7 @@ rank_path_overview_ui:
     rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Congratulations! You've unlocked</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Failed to redeem</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Failed to redeem</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium Required:</gradient> <gradient:#6b7280:#9ca3af>The rank</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>requires Premium to unlock. Upgrade to access all ranks!</gradient>"
   click:
     left_start: "<gradient:#10b981:#34d399>Left-click to start progression</gradient>"
     right_requirements: "<gradient:#6b7280:#9ca3af>Right-click to view requirements</gradient>"
@@ -1207,3 +1218,34 @@ confirmation_ui:
     name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Click to cancel</gradient>"
+
+# ============================================
+# FREE VERSION RESTRICTIONS
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Free Version Limit:</gradient> <gradient:#6b7280:#9ca3af>You can only complete</gradient> <gradient:#f59e0b:#fbbf24>1 rank tree</gradient><gradient:#6b7280:#9ca3af>. Upgrade to Premium for unlimited!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Free Version Limit:</gradient> <gradient:#6b7280:#9ca3af>You can only progress through</gradient> <gradient:#f59e0b:#fbbf24>3 ranks</gradient> <gradient:#6b7280:#9ca3af>per tree. Upgrade to Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ Free Version Limit:</gradient> <gradient:#6b7280:#9ca3af>You can only have</gradient> <gradient:#f59e0b:#fbbf24>1 active rank path</gradient><gradient:#6b7280:#9ca3af>. Upgrade to Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Preview Only:</gradient> <gradient:#6b7280:#9ca3af>This rank tree is preview-only in the free version. Upgrade to Premium to unlock!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Premium Required:</gradient> <gradient:#6b7280:#9ca3af>This rank requires Premium to unlock.</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Free Version</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>You are using the free version</gradient>"
+      - "<gradient:#6b7280:#9ca3af>with limited features.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Upgrade to Premium for:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Unlimited rank trees</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Unlimited ranks per tree</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Multiple active paths</gradient>"
+
+# ============================================
+# PREMIUM VERSION MESSAGES
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premium:</gradient> <gradient:#6b7280:#9ca3af>No restrictions apply.</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ Premium Version</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>All features unlocked!</gradient>"

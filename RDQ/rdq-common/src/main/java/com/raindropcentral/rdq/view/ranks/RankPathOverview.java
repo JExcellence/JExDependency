@@ -5,6 +5,7 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager;
+import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.heads.view.*;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -271,6 +272,7 @@ public class RankPathOverview extends BaseView {
             final RRankTree rankTree = this.selectedRankTree.get(renderContext);
             final RDQPlayer rdqPlayer = this.currentPlayer.get(renderContext);
             final RDQ plugin = this.rdq.get(renderContext);
+            final IRankSystemService rankSystemService = plugin.getRankSystemService();
 
             LOGGER.log(
                     Level.FINE,
@@ -314,7 +316,9 @@ public class RankPathOverview extends BaseView {
                         rankHierarchy,
                         ownedRanks,
                         inProgressRanks,
-                        previewMode
+                        previewMode,
+                        rankTree,
+                        rankSystemService
                 );
                 this.cachedRankStatuses.set(
                         rankStatuses,
@@ -326,16 +330,15 @@ public class RankPathOverview extends BaseView {
                         "Cached data: " + ownedRanks.size() + " owned ranks, " + inProgressRanks.size() + " in-progress ranks"
                 );
             } else {
-                final Map<String, RankStatus> previewStatuses = new HashMap<>();
-                for (final String rankId : rankHierarchy.keySet()) {
-                    final RRank rank = rankHierarchy.get(rankId).rank;
-                    previewStatuses.put(
-                            rankId,
-                            rank.isInitialRank() ?
-                                    RankStatus.OWNED :
-                                    RankStatus.AVAILABLE
-                    );
-                }
+                // Preview mode - also check for free version limits
+                final Map<String, RankStatus> previewStatuses = this.calculateAllRankStatuses(
+                        rankHierarchy,
+                        new HashSet<>(),
+                        new HashSet<>(),
+                        previewMode,
+                        rankTree,
+                        rankSystemService
+                );
                 this.cachedRankStatuses.set(
                         previewStatuses,
                         renderContext
@@ -561,7 +564,9 @@ public class RankPathOverview extends BaseView {
             final @NotNull Map<String, RankNode> rankHierarchy,
             final @NotNull Set<String> ownedRanks,
             final @NotNull Set<String> inProgressRanks,
-            final boolean previewMode
+            final boolean previewMode,
+            final @NotNull RRankTree rankTree,
+            final IRankSystemService rankSystemService
     ) {
 
         final Map<String, RankStatus> statuses = new HashMap<>();
@@ -569,12 +574,17 @@ public class RankPathOverview extends BaseView {
         if (previewMode) {
             for (final Map.Entry<String, RankNode> entry : rankHierarchy.entrySet()) {
                 final RRank rank = entry.getValue().rank;
-                statuses.put(
-                        entry.getKey(),
-                        rank.isInitialRank() ?
-                                RankStatus.OWNED :
-                                RankStatus.AVAILABLE
-                );
+                // In preview mode, check if rank is beyond free version limit
+                if (rankSystemService != null && rankSystemService.isRankBeyondLimit(rank, rankTree)) {
+                    statuses.put(entry.getKey(), RankStatus.FREE_VERSION_LOCKED);
+                } else {
+                    statuses.put(
+                            entry.getKey(),
+                            rank.isInitialRank() ?
+                                    RankStatus.OWNED :
+                                    RankStatus.AVAILABLE
+                    );
+                }
             }
             return statuses;
         }
@@ -582,6 +592,13 @@ public class RankPathOverview extends BaseView {
         for (final Map.Entry<String, RankNode> entry : rankHierarchy.entrySet()) {
             final String rankId = entry.getKey();
             final RankNode rankNode = entry.getValue();
+            final RRank rank = rankNode.rank;
+
+            // Check if rank is beyond free version limit
+            if (rankSystemService != null && rankSystemService.isRankBeyondLimit(rank, rankTree)) {
+                statuses.put(rankId, RankStatus.FREE_VERSION_LOCKED);
+                continue;
+            }
 
             if (ownedRanks.contains(rankId)) {
                 statuses.put(
@@ -718,6 +735,17 @@ public class RankPathOverview extends BaseView {
             final @NotNull Player player
     ) {
 
+        // Check if navigation should be inverted from config
+        final boolean invertNavigation = this.rdq.get(renderContext)
+                .getRankSystemFactory()
+                .getRankSystemSection()
+                .getSettings()
+                .getInvertNavigation();
+        
+        // When inverted: up moves down (+1) and down moves up (-1)
+        final int upDeltaY = invertNavigation ? 1 : -1;
+        final int downDeltaY = invertNavigation ? -1 : 1;
+
         this.renderNavigationArrow(
                 renderContext,
                 player,
@@ -743,7 +771,7 @@ public class RankPathOverview extends BaseView {
                 new Up(),
                 "up",
                 0,
-                -1
+                upDeltaY
         );
         this.renderNavigationArrow(
                 renderContext,
@@ -752,7 +780,7 @@ public class RankPathOverview extends BaseView {
                 new Down(),
                 "down",
                 0,
-                1
+                downDeltaY
         );
     }
 
@@ -855,18 +883,23 @@ public class RankPathOverview extends BaseView {
         final int currentX = this.viewOffsetX.get(renderContext);
         final int currentY = this.viewOffsetY.get(renderContext);
 
+        final int newOffsetX = currentX + deltaX;
+        final int newOffsetY = currentY + deltaY;
+
+        // No bounds clamping - allow ranks to scroll off screen in all directions
+        // This allows ranks to disappear at the top just like they do at the bottom
         this.viewOffsetX.set(
-                currentX + deltaX,
+                newOffsetX,
                 renderContext
         );
         this.viewOffsetY.set(
-                currentY + deltaY,
+                newOffsetY,
                 renderContext
         );
 
         LOGGER.log(
                 Level.FINE,
-                "Navigation " + direction + ": offset X=" + (currentX + deltaX) + ", Y=" + (currentY + deltaY)
+                "Navigation " + direction + ": offset X=" + newOffsetX + ", Y=" + newOffsetY
         );
     }
 
@@ -1158,6 +1191,12 @@ public class RankPathOverview extends BaseView {
 
             final GridPosition slotGridPosition = this.findGridPositionForSlot(slotNumber);
             if (slotGridPosition == null) {
+                return this.createBackgroundPane(player);
+            }
+
+            // Don't render ranks or connections in the top row (Y=0) - this is the navigation row
+            // Ranks should disappear when they scroll to this row, not move aside
+            if (slotGridPosition.y == 0) {
                 return this.createBackgroundPane(player);
             }
 
@@ -1637,6 +1676,34 @@ public class RankPathOverview extends BaseView {
             case LOCKED -> this.handleLockedRankClick(
                     player,
                     rankNode.rank
+            );
+            case FREE_VERSION_LOCKED -> this.handleFreeVersionLockedRankClick(
+                    player,
+                    rankNode.rank
+            );
+        }
+    }
+
+    private void handleFreeVersionLockedRankClick(
+            final @NotNull Player player,
+            final @NotNull RRank rank
+    ) {
+
+        try {
+            this.i18n(
+                            "messages.free_version_locked",
+                            player
+                    )
+                    .withPlaceholder("rank_name",
+                            rank.getIdentifier()
+                    )
+                    .includePrefix()
+                    .build().sendMessage();
+        } catch (final Exception exception) {
+            LOGGER.log(
+                    Level.WARNING,
+                    "Failed to send free version locked rank click message",
+                    exception
             );
         }
     }
@@ -2760,6 +2827,7 @@ public class RankPathOverview extends BaseView {
             final RRankTree rankTree = this.selectedRankTree.get(renderContext);
             final RDQPlayer rdqPlayer = this.currentPlayer.get(renderContext);
             final RDQ plugin = this.rdq.get(renderContext);
+            final IRankSystemService rankSystemService = plugin.getRankSystemService();
 
             if (
                     this.progressManager == null
@@ -2812,7 +2880,9 @@ public class RankPathOverview extends BaseView {
                         rankHierarchy,
                         ownedRanks,
                         inProgressRanks,
-                        previewMode
+                        previewMode,
+                        rankTree,
+                        rankSystemService
                 );
                 this.cachedRankStatuses.set(
                         rankStatuses,
@@ -2824,16 +2894,15 @@ public class RankPathOverview extends BaseView {
                         "Cached data: " + ownedRanks.size() + " owned ranks, " + inProgressRanks.size() + " in-progress ranks"
                 );
             } else {
-                final Map<String, RankStatus> previewStatuses = new HashMap<>();
-                for (final String rankId : rankHierarchy.keySet()) {
-                    final RRank rank = rankHierarchy.get(rankId).rank;
-                    previewStatuses.put(
-                            rankId,
-                            rank.isInitialRank() ?
-                                    RankStatus.OWNED :
-                                    RankStatus.AVAILABLE
-                    );
-                }
+                // Preview mode - also check for free version limits
+                final Map<String, RankStatus> previewStatuses = this.calculateAllRankStatuses(
+                        rankHierarchy,
+                        new HashSet<>(),
+                        new HashSet<>(),
+                        previewMode,
+                        rankTree,
+                        rankSystemService
+                );
                 this.cachedRankStatuses.set(
                         previewStatuses,
                         renderContext
@@ -3201,6 +3270,10 @@ public class RankPathOverview extends BaseView {
             ).build().component();
             case LOCKED -> this.i18n(
                     "status.locked",
+                    player
+            ).build().component();
+            case FREE_VERSION_LOCKED -> this.i18n(
+                    "status.free_version_locked",
                     player
             ).build().component();
         };
@@ -3746,7 +3819,8 @@ public class RankPathOverview extends BaseView {
         OWNED,
         AVAILABLE,
         IN_PROGRESS,
-        LOCKED
+        LOCKED,
+        FREE_VERSION_LOCKED
     }
 
 }

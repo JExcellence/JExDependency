@@ -4,6 +4,7 @@ settings:
   enableCrossTreeProgression: true
   enableProgressTracking: true
   enableRankBroadcasts: true
+  invertNavigation: false
 
 defaultRank:
   displayNameKey: "rank.default.name"

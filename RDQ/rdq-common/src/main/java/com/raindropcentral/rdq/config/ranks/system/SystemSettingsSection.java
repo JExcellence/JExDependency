@@ -68,6 +68,16 @@ public class SystemSettingsSection extends AConfigSection {
 	private Boolean enableRankBroadcasts;
 	
 	/**
+	 * Whether navigation buttons (up/down) should be inverted in the rank path overview.
+	 * <p>
+	 * When {@code true}, the up button moves down and the down button moves up.
+	 * This is useful for users who prefer inverted navigation (common in some regions).
+	 * If {@code null}, inverted navigation is disabled by default.
+	 * </p>
+	 */
+	private Boolean invertNavigation;
+	
+	/**
 	 * Constructs a new {@code SystemSettingsSection} with the specified evaluation environment.
 	 *
 	 * @param baseEnvironment the base evaluation environment for this configuration section
@@ -134,5 +144,18 @@ public class SystemSettingsSection extends AConfigSection {
 	 */
 	public Boolean getEnableRankBroadcasts() {
 		return this.enableRankBroadcasts == null || this.enableRankBroadcasts;
+	}
+	
+	/**
+	 * Returns whether navigation buttons should be inverted.
+	 * <p>
+	 * When inverted, the up button moves down and the down button moves up.
+	 * If the value is {@code null}, inverted navigation is disabled by default.
+	 * </p>
+	 *
+	 * @return {@code true} if navigation should be inverted; {@code false} otherwise
+	 */
+	public Boolean getInvertNavigation() {
+		return this.invertNavigation != null && this.invertNavigation;
 	}
 }

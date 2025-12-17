@@ -80,24 +80,35 @@ public class PaperPluginLoader implements PluginLoader {
      */
     private static final long MINIMUM_JAR_SIZE = 1024L;
 
-    private final Logger logger;
     private final DependencyDownloader dependencyDownloader;
     private final YamlDependencyLoader yamlDependencyLoader;
+    
+    /**
+     * Plugin name extracted from the data directory path, used for logging context.
+     */
+    private String pluginName = "Unknown";
+    
+    /**
+     * Logger instance configured with the plugin name for clear identification.
+     */
+    private Logger logger;
 
     /**
      * Creates the loader with fresh downloader and YAML loader instances.
      */
     public PaperPluginLoader() {
-        this.logger = createLogger();
+        this.logger = createLogger(LOGGER_NAME);
         this.dependencyDownloader = new DependencyDownloader();
         this.yamlDependencyLoader = new YamlDependencyLoader();
     }
 
     /**
-     * Creates a logger with a clean output format (no class/method names).
+     * Creates a logger with a clean output format that includes the plugin name.
+     *
+     * @param loggerName the name to use for the logger (typically includes plugin name)
      */
-    private static Logger createLogger() {
-        final Logger log = Logger.getLogger(LOGGER_NAME);
+    private Logger createLogger(final String loggerName) {
+        final Logger log = Logger.getLogger(loggerName);
         log.setUseParentHandlers(false);
         
         // Remove existing handlers
@@ -105,12 +116,15 @@ public class PaperPluginLoader implements PluginLoader {
             log.removeHandler(handler);
         }
         
-        // Add console handler with simple format
+        // Capture pluginName for use in formatter
+        final String currentPluginName = this.pluginName;
+        
+        // Add console handler with simple format that includes plugin name
         final ConsoleHandler handler = new ConsoleHandler();
         handler.setFormatter(new Formatter() {
             @Override
             public String format(final LogRecord record) {
-                return String.format("[%s] %s%n", LOGGER_NAME, record.getMessage());
+                return String.format("[%s/%s] %s%n", LOGGER_NAME, currentPluginName, record.getMessage());
             }
         });
         handler.setLevel(Level.ALL);
@@ -118,6 +132,25 @@ public class PaperPluginLoader implements PluginLoader {
         log.setLevel(Level.INFO);
         
         return log;
+    }
+    
+    /**
+     * Extracts the plugin name from the data directory path.
+     * The data directory is typically named after the plugin (e.g., "plugins/MyPlugin").
+     *
+     * @param dataDirectory the plugin's data directory path
+     * @return the extracted plugin name, or "Unknown" if extraction fails
+     */
+    private String extractPluginName(@NotNull final Path dataDirectory) {
+        try {
+            final Path fileName = dataDirectory.getFileName();
+            if (fileName != null) {
+                return fileName.toString();
+            }
+        } catch (final Exception ignored) {
+            // Fall through to default
+        }
+        return "Unknown";
     }
 
     /**
@@ -136,8 +169,12 @@ public class PaperPluginLoader implements PluginLoader {
         final Path librariesDirectory = determineLibrariesDirectory(dataDirectory);
         final Path remappedDirectory = librariesDirectory.resolve(REMAPPED_DIRECTORY_NAME);
 
+        // Extract plugin name from data directory and reinitialize logger with plugin context
+        this.pluginName = extractPluginName(dataDirectory);
+        this.logger = createLogger(LOGGER_NAME + "." + pluginName);
+
         try {
-            logger.info("Loading plugin dependencies...");
+            logger.info("Loading dependencies...");
 
             ensureDirectoryExists(librariesDirectory);
             warnIfNestedLibraries(librariesDirectory);
