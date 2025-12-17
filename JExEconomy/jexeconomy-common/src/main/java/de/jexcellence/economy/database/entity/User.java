@@ -1,6 +1,6 @@
 package de.jexcellence.economy.database.entity;
 
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -27,7 +27,7 @@ import java.util.UUID;
  */
 @Table(name = "p_player")
 @Entity
-public class User extends AbstractEntity {
+public class User extends BaseEntity {
 	
 	/**
 	 * The unique identifier (UUID) of the player.

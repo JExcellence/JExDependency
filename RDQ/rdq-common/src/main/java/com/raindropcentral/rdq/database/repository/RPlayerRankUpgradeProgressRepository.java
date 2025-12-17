@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.repository;
 
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +14,7 @@ import java.util.function.Function;
  * @version 1.0.0
  * @since TBD
  */
-public class RPlayerRankUpgradeProgressRepository extends GenericCachedRepository<RPlayerRankUpgradeProgress, Long, Long> {
+public class RPlayerRankUpgradeProgressRepository extends CachedRepository<RPlayerRankUpgradeProgress, Long, Long> {
 	
 	/**
 	 *

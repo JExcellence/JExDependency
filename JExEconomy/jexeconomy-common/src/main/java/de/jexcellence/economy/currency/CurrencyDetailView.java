@@ -516,7 +516,7 @@ public class CurrencyDetailView extends BaseView {
 	) {
 		pluginInstance
 			.getUserCurrencyRepository()
-			.findListByAttributesAsync(
+			.findAllByAttributesAsync(
 				Map.of(
 					"currency.id",
 					targetCurrency.getId()

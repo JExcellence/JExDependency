@@ -2,7 +2,13 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("raindrop.shadow-conventions")
+    id("raindrop.dependencies-yml")
     `maven-publish`
+}
+
+// Configure runtime dependencies.yml generation
+dependenciesYml {
+    useRCoreDependencies()
 }
 
 // ===========================================
@@ -82,8 +88,6 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveVersion.set(rcoreVersion)
 
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
-    relocate("org.h2", "de.jexcellence.remapped.org.h2")
-
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()

@@ -570,7 +570,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 	) {
 		try {
 			final List<RPlayerRank> playerRanks = plugin.getPlayerRankRepository()
-			                                            .findListByAttributes(Map.of(
+			                                            .findAllByAttributes(Map.of(
 				                                            "player.uniqueId", rdqPlayer.getUniqueId()
 			                                            ));
 			

@@ -4,8 +4,8 @@ import de.jexcellence.economy.database.entity.CurrencyLog;
 import de.jexcellence.economy.type.EChangeType;
 import de.jexcellence.economy.type.ELogLevel;
 import de.jexcellence.economy.type.ELogType;
-import de.jexcellence.hibernate.entity.AbstractEntity;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.entity.BaseEntity;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.criteria.*;
@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutorService;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class CurrencyLogRepository extends GenericCachedRepository<CurrencyLog, Long, Long> {
+public class CurrencyLogRepository extends CachedRepository<CurrencyLog, Long, Long> {
     
     private final ExecutorService asyncExecutorService;
     private final EntityManagerFactory entityManagerFactory;
@@ -45,7 +45,7 @@ public class CurrencyLogRepository extends GenericCachedRepository<CurrencyLog, 
             asyncExecutorService,
             jpaEntityManagerFactory,
             CurrencyLog.class,
-            AbstractEntity::getId
+            BaseEntity::getId
         );
         
         this.asyncExecutorService = asyncExecutorService;

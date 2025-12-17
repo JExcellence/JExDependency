@@ -3,13 +3,13 @@ package com.raindropcentral.rdq.database.repository;
 
 import com.raindropcentral.rdq.database.entity.perk.RPerk;
 import com.raindropcentral.rdq2.perk.Perk;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ExecutorService;
 
-public class RPerkRepository extends GenericCachedRepository<Perk, Long, String> {
+public class RPerkRepository extends CachedRepository<Perk, Long, String> {
 	
 	*/
 /**

@@ -52,11 +52,11 @@ folialib = { module = "com.tcoded:FoliaLib", version.ref = "folialib" }
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 vault-api = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 luckperms-api = { module = "net.luckperms:api", version.ref = "luckperms" }
-inventory-framework-bukkit = { module = "me.devnatan:inventory-framework-platform-bukkit", version = "3.5.1" }
-inventory-framework-paper = { module = "me.devnatan:inventory-framework-platform-paper", version = "3.5.1" }
-inventory-framework-anvil = { module = "me.devnatan:inventory-framework-anvil-input", version = "3.5.1" }
-inventory-framework-api = { module = "me.devnatan:inventory-framework-api", version = "3.5.1" }
-inventory-framework-core = { module = "me.devnatan:inventory-framework-core", version = "3.5.1" }
+inventory-framework-bukkit = { module = "me.devnatan:inventory-framework-platform-bukkit", version = "3.7.1" }
+inventory-framework-paper = { module = "me.devnatan:inventory-framework-platform-paper", version = "3.7.1" }
+inventory-framework-anvil = { module = "me.devnatan:inventory-framework-anvil-input", version = "3.7.1" }
+inventory-framework-api = { module = "me.devnatan:inventory-framework-api", version = "3.7.1" }
+inventory-framework-core = { module = "me.devnatan:inventory-framework-core", version = "3.7.1" }
 
 # Data, logging, util
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }

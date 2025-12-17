@@ -99,7 +99,9 @@ public class TranslationManager {
      * @return a CompletableFuture that completes when initialization is done
      */
     public @NotNull CompletableFuture<Void> initialize() {
+        // Build configuration with auto-detect locales (empty set enables auto-detection)
         R18nConfiguration config = R18nConfiguration.defaultConfiguration()
+                .withAutoDetectLocales() // Must be called to enable auto-detection
                 .withCacheEnabled(true)
                 .withCacheMaxSize(2000)
                 .withCacheExpireMinutes(60)
@@ -111,12 +113,11 @@ public class TranslationManager {
 
         var builder = R18nManager.builder(plugin)
                 .defaultLocale(defaultLocale)
-                .autoDetectLocales() // Auto-detect all locales from translation files
                 .enableKeyValidation(true)
                 .enablePlaceholderAPI(true)
                 .translationDirectory("translations")
                 .enableFileWatcher(enableFileWatcher)
-                .configuration(config);
+                .configuration(config); // Configuration already has auto-detect enabled
 
         // Enable database storage if EMF is provided
         if (entityManagerFactory != null) {

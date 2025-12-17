@@ -899,13 +899,25 @@ balance:
   all_entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient>"
   not_found: "<gradient:#FF6B6B:#FF8E8E>✖ No Balance:</gradient> <white>You don't have any balance for <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
 
-# Pay Commands
+# Pay Commands / Zahlungsbefehle
 pay:
-  success_sender: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  success_receiver: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You don't have enough funds! Required: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
-  failed: "<gradient:#FF6B6B:#FF8E8E>✖ Payment Failed:</gradient> <white>Payment failed. Please try again.</white>"
+  usage: "<gradient:#FFD700:#FFA500>⚠ Verwendung:</gradient> <white>/pay <Währung> <Spieler> <Betrag></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Deaktiviert:</gradient> <white>Der Pay-Befehl ist derzeit deaktiviert.</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Währung nicht erlaubt:</gradient> <white>Die Währung <gradient:#FFD700:#FFA500>%currency%</gradient> ist für Zahlungen nicht erlaubt.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Währung nicht gefunden:</gradient> <white>Die Währung <gradient:#FFD700:#FFA500>%currency%</gradient> existiert nicht.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Ungültiger Betrag:</gradient> <white>'<gradient:#FFD700:#FFA500>%amount%</gradient>' ist kein gültiger Betrag.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Betrag außerhalb des Bereichs:</gradient> <white>Der Betrag <gradient:#FFD700:#FFA500>%amount%</gradient> muss zwischen <gradient:#FFD700:#FFA500>%min%</gradient> und <gradient:#FFD700:#FFA500>%max%</gradient> liegen.</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Ungültiges Ziel:</gradient> <white>Du kannst dir selbst kein Geld senden!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Spieler nicht gefunden:</gradient> <white>Der Spieler <gradient:#4ECDC4:#45B7B8>%player%</gradient> wurde nicht gefunden.</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Nicht genügend Guthaben:</gradient> <white>Du benötigst <gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient>, hast aber nur <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Überweisung fehlgeschlagen:</gradient> <white>Die Zahlung konnte nicht abgeschlossen werden. Bitte versuche es erneut.</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Zahlung gesendet:</gradient> <white>Du hast <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> an <gradient:#4ECDC4:#45B7B8>%target%</gradient> gesendet!</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Zahlung erhalten:</gradient> <white>Du hast <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> von <gradient:#4ECDC4:#45B7B8>%sender%</gradient> erhalten!</white>"
+  # Legacy keys for backwards compatibility
+  success_sender: "<gradient:#00FF00:#32CD32>✓ Zahlung gesendet:</gradient> <white>Du hast <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> an <gradient:#4ECDC4:#45B7B8>%player%</gradient> gesendet!</white>"
+  success_receiver: "<gradient:#00FF00:#32CD32>✓ Zahlung erhalten:</gradient> <white>Du hast <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> von <gradient:#4ECDC4:#45B7B8>%player%</gradient> erhalten!</white>"
+  self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Ungültiges Ziel:</gradient> <white>Du kannst dir selbst kein Geld senden!</white>"
+  failed: "<gradient:#FF6B6B:#FF8E8E>✖ Zahlung fehlgeschlagen:</gradient> <white>Die Zahlung ist fehlgeschlagen. Bitte versuche es erneut.</white>"
 
 # Admin Commands
 admin:

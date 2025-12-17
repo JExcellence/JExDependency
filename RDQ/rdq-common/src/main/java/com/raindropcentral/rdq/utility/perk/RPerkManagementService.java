@@ -165,7 +165,7 @@ public class RPerkManagementService {
             player,
             "perk",
             perk
-        ));
+        )).orElse(null);
         if (playerPerk != null) {
             this.RPlayerPerkRepository.delete(playerPerk.getId());
             return true;
@@ -214,7 +214,7 @@ public class RPerkManagementService {
             player,
             "perk",
             perk
-        ));
+        )).orElse(null);
         
         if (
             playerPerk == null
@@ -270,7 +270,7 @@ public class RPerkManagementService {
             player,
             "perk.identifier",
             perkIdentifier
-        ));
+        )).orElse(null);
         if (playerPerk == null)
             return false;
         
@@ -344,7 +344,7 @@ public class RPerkManagementService {
             player,
             "perk",
             perk
-        ));
+        )).orElse(null);
         if (playerPerk == null) {
             return false;
         }
@@ -373,7 +373,7 @@ public class RPerkManagementService {
             player,
             "perk.identifier",
             perkIdentifier
-        ));
+        )).orElse(null);
         if (playerPerk == null)
             return false;
         
@@ -426,7 +426,7 @@ public class RPerkManagementService {
             player,
             "perk",
             perk
-        ));
+        )).orElse(null);
         if (playerPerk == null) {
             return false;
         }
@@ -459,7 +459,7 @@ public class RPerkManagementService {
             player,
             "perk.identifier",
             perkIdentifier
-        ));
+        )).orElse(null);
         if (playerPerk == null)
             return false;
         
@@ -507,7 +507,7 @@ public class RPerkManagementService {
 
     public int disableAllPerks(final @NotNull RDQPlayer player) {
         
-        final List<RPlayerPerk> enabledPerks = this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        final List<RPlayerPerk> enabledPerks = this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player,
             "enabled",
@@ -604,7 +604,7 @@ public class RPerkManagementService {
             player,
             "perk",
             perk
-        ));
+        )).orElse(null);
     }
     
     */
@@ -622,7 +622,7 @@ public class RPerkManagementService {
             player,
             "perk.identifier",
             perkIdentifier
-        ));
+        )).orElse(null);
     }
     
     */
@@ -632,7 +632,7 @@ public class RPerkManagementService {
 
     public List<RPlayerPerk> getOwnedPlayerPerks(final @NotNull RDQPlayer player) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player
         ));
@@ -645,7 +645,7 @@ public class RPerkManagementService {
 
     public List<RPlayerPerk> getEnabledPlayerPerks(final @NotNull RDQPlayer player) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player,
             "enabled",
@@ -663,7 +663,7 @@ public class RPerkManagementService {
         final @NotNull EPerkType perkType
     ) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player,
             "enabled",
@@ -680,7 +680,7 @@ public class RPerkManagementService {
 
     public List<RPlayerPerk> getActivePlayerPerks(final @NotNull RDQPlayer player) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player,
             "active",
@@ -695,7 +695,7 @@ public class RPerkManagementService {
 
     public int getOwnedPerkCount(final @NotNull RDQPlayer player) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player
         )).size();
@@ -708,7 +708,7 @@ public class RPerkManagementService {
 
     public int getEnabledPerkCount(final @NotNull RDQPlayer player) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player,
             "enabled",
@@ -723,7 +723,7 @@ public class RPerkManagementService {
 
     public int getActivePerkCount(final @NotNull RDQPlayer player) {
         
-        return this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        return this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player",
             player,
             "active",
@@ -948,7 +948,7 @@ public class RPerkManagementService {
         final @NotNull UUID playerUniqueId
     ) {
         
-        final List<RPlayerPerk> playerPerks = this.RPlayerPerkRepository.findListByAttributes(Map.of(
+        final List<RPlayerPerk> playerPerks = this.RPlayerPerkRepository.findAllByAttributes(Map.of(
             "player.uniqueId",
             playerUniqueId
         ));

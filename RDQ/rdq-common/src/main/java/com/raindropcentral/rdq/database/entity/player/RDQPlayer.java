@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.database.entity.player;
 
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +21,7 @@ import java.util.*;
  */
 @Entity
 @Table(name = "rdq_player")
-public class RDQPlayer extends AbstractEntity {
+public class RDQPlayer extends BaseEntity {
 
     /**
      * The unique identifier (UUID) of the player.

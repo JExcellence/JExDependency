@@ -2,10 +2,16 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     id("raindrop.shadow-conventions")
+    id("raindrop.dependencies-yml")
 }
 
-group = "de.jexcellence.economy"
 version = "2.0.0"
+
+dependenciesYml {
+    usePaperDependencies()
+    generatePaperVariant.set(true)
+    generateSpigotVariant.set(true)
+}
 
 dependencies {
     implementation(project(":JExEconomy:jexeconomy-common"))
@@ -17,17 +23,18 @@ dependencies {
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
-
+    compileOnly(libs.jehibernate)
+    compileOnly(libs.adventure.platform.bukkit)
     compileOnly(libs.rplatform)
-    
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
+
+    implementation(libs.bundles.jexcellence) {
+        isTransitive = false
+        exclude(group = "de.jexcellence.hibernate")
+    }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)
     compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.placeholderapi)
-    
-    // Adventure Platform Bukkit must be shaded - RPlatform uses BukkitAudiences
-    implementation(libs.adventure.platform.bukkit)
 
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
@@ -41,10 +48,14 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("Free")
     archiveVersion.set(project.version.toString())
 
-    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
-    relocate("org.h2", "de.jexcellence.remapped.org.h2")
-    relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
+    // Jackson 3.x core (tools.jackson namespace)
+    relocate("tools.jackson", "de.jexcellence.remapped.tools.jackson")
+    // NOTE: com.fasterxml is NOT relocated - Hibernate expects original Jackson paths
 
+    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
+    relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
+    relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
@@ -52,6 +63,10 @@ tasks.named<ShadowJar>("shadowJar") {
 
 tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
 
 tasks.named<Jar>("jar") {

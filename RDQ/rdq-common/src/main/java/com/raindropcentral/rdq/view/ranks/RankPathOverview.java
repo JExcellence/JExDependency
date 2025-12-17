@@ -524,7 +524,7 @@ public class RankPathOverview extends BaseView {
 
             for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
                 final List<RPlayerRankUpgradeProgress> progressList = plugin.getPlayerRankUpgradeProgressRepository()
-                        .findListByAttributes(Map.of(
+                        .findAllByAttributes(Map.of(
                                 "player.uniqueId",
                                 rdqPlayer.getUniqueId(),
                                 "upgradeRequirement.id",
@@ -1784,7 +1784,7 @@ public class RankPathOverview extends BaseView {
 
         for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
             final List<RPlayerRankUpgradeProgress> existingProgress = plugin.getPlayerRankUpgradeProgressRepository()
-                    .findListByAttributes(Map.of(
+                    .findAllByAttributes(Map.of(
                             "player.uniqueId",
                             player.getUniqueId(),
                             "upgradeRequirement.id",
@@ -1916,7 +1916,7 @@ public class RankPathOverview extends BaseView {
 
         for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
             final List<RPlayerRankUpgradeProgress> progressList = plugin.getPlayerRankUpgradeProgressRepository()
-                    .findListByAttributes(Map.of(
+                    .findAllByAttributes(Map.of(
                             "player.uniqueId",
                             player.getUniqueId(),
                             "upgradeRequirement.id",
@@ -2032,7 +2032,7 @@ public class RankPathOverview extends BaseView {
             );
 
             if (existingRankInTree != null) {
-                RPlayerRank freshRank = plugin.getPlayerRankRepository().findById(existingRankInTree.getId());
+                RPlayerRank freshRank = plugin.getPlayerRankRepository().findById(existingRankInTree.getId()).orElse(null);
                 if (freshRank != null) {
                     freshRank.setCurrentRank(newRank);
                     freshRank.setActive(true);
@@ -2050,7 +2050,7 @@ public class RankPathOverview extends BaseView {
                 LOGGER.info("Created new rank assignment for player " + rdqPlayer.getPlayerName() + " with rank " + newRank.getIdentifier() + " in tree " + rankTree.getIdentifier());
             }
 
-            RDQPlayer freshPlayer = plugin.getPlayerRepository().findById(rdqPlayer.getId());
+            RDQPlayer freshPlayer = plugin.getPlayerRepository().findById(rdqPlayer.getId()).orElse(null);
             if (freshPlayer != null) {
                 plugin.getPlayerRepository().update(freshPlayer);
             }
@@ -2146,7 +2146,7 @@ public class RankPathOverview extends BaseView {
 
             for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
                 final List<RPlayerRankUpgradeProgress> progressList = plugin.getPlayerRankUpgradeProgressRepository()
-                        .findListByAttributes(Map.of(
+                        .findAllByAttributes(Map.of(
                                 "player.uniqueId",
                                 rdqPlayer.getUniqueId(),
                                 "upgradeRequirement.id",
@@ -2156,7 +2156,7 @@ public class RankPathOverview extends BaseView {
                 for (final RPlayerRankUpgradeProgress progress : progressList) {
                     if (!progress.isCompleted()) {
                         final RPlayerRankUpgradeProgress freshProgress = plugin.getPlayerRankUpgradeProgressRepository()
-                                .findById(progress.getId());
+                                .findById(progress.getId()).orElse(null);
                         if (freshProgress != null) {
                             freshProgress.setProgress(1.0);
                             plugin.getPlayerRankUpgradeProgressRepository().update(freshProgress);
@@ -2185,7 +2185,7 @@ public class RankPathOverview extends BaseView {
     ) {
 
         try {
-            final List<RPlayerRank> playerRanks = plugin.getPlayerRankRepository().findListByAttributes(Map.of(
+            final List<RPlayerRank> playerRanks = plugin.getPlayerRankRepository().findAllByAttributes(Map.of(
                     "player.uniqueId",
                     rdqPlayer.getUniqueId()
             ));

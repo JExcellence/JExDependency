@@ -421,7 +421,7 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 				) {
 					final int maximumRankPathsAllowed = this.rdq.get(clickContext).getRankSystemFactory().getRankSystemSection().getProgressionRule().getMaximumActiveRankTrees();
 					if (
-							maximumRankPathsAllowed <= this.rdq.get(clickContext).getPlayerRankPathRepository().findListByAttributes(Map.of(
+							maximumRankPathsAllowed <= this.rdq.get(clickContext).getPlayerRankPathRepository().findAllByAttributes(Map.of(
 									"player.uniqueId",
 									player.getUniqueId()
 							)).stream().toList().size()

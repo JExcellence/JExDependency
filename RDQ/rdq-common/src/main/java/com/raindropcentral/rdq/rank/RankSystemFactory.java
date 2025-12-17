@@ -554,7 +554,7 @@ public class RankSystemFactory {
         try {
             for (RRankUpgradeRequirement upgradeReq : rank.getUpgradeRequirements()) {
                 List<RPlayerRankUpgradeProgress> progress = rdq.getPlayerRankUpgradeProgressRepository()
-                    .findListByAttributes(Map.of("upgradeRequirement", upgradeReq));
+                    .findAllByAttributes(Map.of("upgradeRequirement", upgradeReq));
 
                 for (RPlayerRankUpgradeProgress p : progress) {
                     rdq.getPlayerRankUpgradeProgressRepository().delete(p.getId());
@@ -656,12 +656,12 @@ public class RankSystemFactory {
 
     @Nullable
     private RRank findRankByIdentifier(String identifier) {
-        return rdq.getRankRepository().findByAttributes(Map.of("identifier", identifier));
+        return rdq.getRankRepository().findByAttributes(Map.of("identifier", identifier)).orElse(null);
     }
 
     @Nullable
     private RRankTree findTreeByIdentifier(String identifier) {
-        return rdq.getRankTreeRepository().findByAttributes(Map.of("identifier", identifier));
+        return rdq.getRankTreeRepository().findByAttributes(Map.of("identifier", identifier)).orElse(null);
     }
 
     private String toIdentifier(String fileName) {

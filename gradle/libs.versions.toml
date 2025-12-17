@@ -12,12 +12,10 @@ placeholderapi = "2.11.6"
 vault = "1.7"
 luckperms = "5.5"
 caffeine = "3.2.2"
-inventory-framework = "3.5.1"
+inventory-framework = "3.7.1"
 
-# Jackson 3.x versions - core/databind are 3.0.3, but annotations and jsr310 have different versions
-jackson = "3.0.3"
-jackson-annotations = "3.0-rc5"
-jackson-jsr310 = "3.0.0-rc2"
+# Jackson 2.x (compatible with server's bundled Jackson)
+jackson = "2.18.2"
 jackson-uuid = "5.1.0"
 
 hibernate-platform = "6.6.4.Final"
@@ -37,7 +35,7 @@ jeconfig-evaluable = "1.0.0"
 jeconfig-gpeee = "1.0.0"
 jeconfig-mapper = "1.0.0"
 jetranslate = "3.0.0"
-jehibernate = "1.0.3"
+jehibernate = "1.1.0"
 jedependency = "2.0.0"
 jexeconomy = "2.0.0"
 
@@ -64,10 +62,10 @@ inventory-framework-core = { module = "me.devnatan:inventory-framework-core", ve
 
 # Data, logging, util
 caffeine = { module = "com.github.ben-manes.caffeine:caffeine", version.ref = "caffeine" }
-jackson-core = { module = "tools.jackson.core:jackson-core", version.ref = "jackson" }
-jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson-annotations" }
-jackson-jsr310 = { module = "tools.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson-jsr310" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jackson" }
+jackson-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
 java-uuid = { module = "com.fasterxml.uuid:java-uuid-generator", version.ref = "jackson-uuid" }
 jboss-logging = { module = "org.jboss.logging:jboss-logging", version.ref = "jboss-logging" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }

@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -381,17 +382,12 @@ public class BountyCreationView extends BaseView {
 					return;
 				}
 				
-				rdq
-					.getBountyRepository()
-					.findByAttributesAsync(
-						Map.of(
-							"targetUniqueId",
-							target
-								.get()
-								.getUniqueId()
-						)
-					)
-					.thenAcceptAsync(
+				CompletableFuture.supplyAsync(
+					() -> rdq.getBountyRepository().findByAttributes(
+						Map.of("targetUniqueId", target.get().getUniqueId())
+					).orElse(null),
+					rdq.getExecutor()
+				).thenAcceptAsync(
 						bounty -> {
 							if (bounty != null) {
 								// Update existing bounty with new reward

@@ -13,6 +13,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,11 +99,11 @@ public class OnJoin implements Listener {
 	public void onPlayerPreLogin(
 		final @NotNull AsyncPlayerPreLoginEvent playerPreLoginEvent
 	) {
-		this.jexEconomyImpl.getUserRepository().findByAttributesAsync(
-			Map.of(
-				"uniqueId",
-				playerPreLoginEvent.getUniqueId()
-			)
+		CompletableFuture.supplyAsync(
+			() -> this.jexEconomyImpl.getUserRepository().findByAttributes(
+				Map.of("uniqueId", playerPreLoginEvent.getUniqueId())
+			).orElse(null),
+			this.jexEconomyImpl.getExecutor()
 		).thenAcceptAsync(
 			existingUser -> {
 				final User processedUser;
@@ -175,13 +176,14 @@ public class OnJoin implements Listener {
 		final @NotNull User targetPlayer,
 		final @NotNull Currency targetCurrency
 	) {
-		this.jexEconomyImpl.getUserCurrencyRepository().findByAttributesAsync(
-			Map.of(
-				"player.uniqueId",
-				targetPlayer.getUniqueId(),
-				"currency.id",
-				targetCurrency.getId()
-			)
+		CompletableFuture.supplyAsync(
+			() -> this.jexEconomyImpl.getUserCurrencyRepository().findByAttributes(
+				Map.of(
+					"player.uniqueId", targetPlayer.getUniqueId(),
+					"currency.id", targetCurrency.getId()
+				)
+			).orElse(null),
+			this.jexEconomyImpl.getExecutor()
 		).thenAcceptAsync(
 			existingUserCurrency -> {
 				if (

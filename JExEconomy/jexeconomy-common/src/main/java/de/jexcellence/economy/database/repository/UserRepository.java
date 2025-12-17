@@ -1,7 +1,7 @@
 package de.jexcellence.economy.database.repository;
 
 import de.jexcellence.economy.database.entity.User;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService;
  * <p>
  * This repository provides asynchronous and cached access to user entities,
  * allowing efficient retrieval and management of users by their unique UUID.
- * It extends {@link GenericCachedRepository} to leverage generic CRUD operations and caching.
+ * It extends {@link CachedRepository} to leverage generic CRUD operations and caching.
  * </p>
  *
  * <p>
@@ -35,9 +35,9 @@ import java.util.concurrent.ExecutorService;
  * @since 1.0.0
  * @version 1.0.1
  * @see User
- * @see GenericCachedRepository
+ * @see CachedRepository
  */
-public class UserRepository extends GenericCachedRepository<User, Long, UUID> {
+public class UserRepository extends CachedRepository<User, Long, UUID> {
 
     /**
      * Constructs a new {@code UserRepository} with the specified executor service and entity manager factory.
@@ -58,7 +58,7 @@ public class UserRepository extends GenericCachedRepository<User, Long, UUID> {
 
     /**
      * Retrieves a user by UUID using asynchronous execution. The lookup first attempts to resolve
-     * the entity from the cache maintained by {@link GenericCachedRepository} before falling back
+     * the entity from the cache maintained by {@link CachedRepository} before falling back
      * to the persistence layer if necessary.
      *
      * @param uniqueId the UUID used to locate the user
@@ -67,8 +67,10 @@ public class UserRepository extends GenericCachedRepository<User, Long, UUID> {
     public @NotNull CompletableFuture<Optional<User>> findByUuidAsync(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
 
-        return findByAttributesAsync(Map.of("uniqueId", uniqueId))
-            .thenApply(Optional::ofNullable);
+        return CompletableFuture.supplyAsync(
+            () -> findByAttributes(Map.of("uniqueId", uniqueId)),
+            getExecutorService()
+        );
     }
 
     /**
@@ -81,7 +83,7 @@ public class UserRepository extends GenericCachedRepository<User, Long, UUID> {
     public @NotNull Optional<User> findByUuid(final @NotNull UUID uniqueId) {
         Objects.requireNonNull(uniqueId, "uniqueId cannot be null");
 
-        return Optional.ofNullable(findByAttributes(Map.of("uniqueId", uniqueId)));
+        return findByAttributes(Map.of("uniqueId", uniqueId));
     }
 
     /**
@@ -95,8 +97,10 @@ public class UserRepository extends GenericCachedRepository<User, Long, UUID> {
     public @NotNull CompletableFuture<Optional<User>> findByNameAsync(final @NotNull String playerName) {
         Objects.requireNonNull(playerName, "playerName cannot be null");
 
-        return findByAttributesAsync(Map.of("playerName", playerName))
-            .thenApply(Optional::ofNullable);
+        return CompletableFuture.supplyAsync(
+            () -> findByAttributes(Map.of("playerName", playerName)),
+            getExecutorService()
+        );
     }
 
     /**
@@ -109,7 +113,7 @@ public class UserRepository extends GenericCachedRepository<User, Long, UUID> {
     public @NotNull Optional<User> findByName(final @NotNull String playerName) {
         Objects.requireNonNull(playerName, "playerName cannot be null");
 
-        return Optional.ofNullable(findByAttributes(Map.of("playerName", playerName)));
+        return findByAttributes(Map.of("playerName", playerName));
     }
 
     /**

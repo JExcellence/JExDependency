@@ -24,6 +24,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * View for displaying detailed information about a specific bounty and its target player.
@@ -275,8 +276,9 @@ public class BountyPlayerInfoView extends BaseView {
 		
 		var commissionerUniqueId = bounty.get().getCommissionerUniqueId();
 
-		rdq.getPlayerRepository().findByAttributesAsync(
-				Map.of("uniqueId", commissionerUniqueId)
+		CompletableFuture.supplyAsync(
+				() -> rdq.getPlayerRepository().findByAttributes(Map.of("uniqueId", commissionerUniqueId)).orElse(null),
+				rdq.getExecutor()
 		).thenCompose(rdqPlayer -> {
 			if (rdqPlayer == null) {
 				return null;

@@ -331,7 +331,7 @@ public class PerkManagementService {
         try {
             // Load player-perk relationships
             final List<RPlayerPerk> playerPerks = this.plugin.getPlayerPerkRepository()
-                .findListByAttributes(Map.of("player.uniqueId", rdqPlayer.getUniqueId()));
+                .findAllByAttributes(Map.of("player.uniqueId", rdqPlayer.getUniqueId()));
 
             for (final RPlayerPerk playerPerk : playerPerks) {
                 final String perkId = playerPerk.getPerk().getIdentifier();
@@ -542,7 +542,7 @@ public class PerkManagementService {
         try {
             // Find existing player-perk relationship
             final List<RPlayerPerk> playerPerks = this.plugin.getPlayerPerkRepository()
-                .findListByAttributes(Map.of(
+                .findAllByAttributes(Map.of(
                     "player.uniqueId", rdqPlayer.getUniqueId(),
                     "perk.identifier", perk.getIdentifier()
                 ));
@@ -576,7 +576,7 @@ public class PerkManagementService {
     private @NotNull RPlayerPerk getOrCreatePlayerPerk(final @NotNull RDQPlayer rdqPlayer, final @NotNull RPerk perk) {
         try {
             final List<RPlayerPerk> existing = this.plugin.getPlayerPerkRepository()
-                .findListByAttributes(Map.of(
+                .findAllByAttributes(Map.of(
                     "player.uniqueId", rdqPlayer.getUniqueId(),
                     "perk.identifier", perk.getIdentifier()
                 ));
@@ -599,7 +599,7 @@ public class PerkManagementService {
     private long countActiveUsers(final @NotNull String perkId) {
         try {
             return this.plugin.getPlayerPerkRepository()
-                .findListByAttributes(Map.of(
+                .findAllByAttributes(Map.of(
                     "perk.identifier", perkId,
                     "active", true
                 )).size();

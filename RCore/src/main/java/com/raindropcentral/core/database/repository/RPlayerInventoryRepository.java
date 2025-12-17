@@ -3,13 +3,14 @@ package com.raindropcentral.core.database.repository;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.inventory.RPlayerInventory;
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
@@ -26,7 +27,7 @@ import java.util.function.Function;
  * @since 1.0.0
  * @version 1.0.0
  */
-public class RPlayerInventoryRepository extends GenericCachedRepository<RPlayerInventory, Long, Long> {
+public class RPlayerInventoryRepository extends CachedRepository<RPlayerInventory, Long, Long> {
 
     /**
      * Constructs a new RPlayerInventoryRepository.
@@ -60,7 +61,7 @@ public class RPlayerInventoryRepository extends GenericCachedRepository<RPlayerI
             final @NotNull RPlayer player,
             final @NotNull RCentralServer server
     ) {
-        return findListByAttributesAsync(Map.of(
+        return findAllByAttributesAsync(Map.of(
                 "rPlayer", player,
                 "rCentralServer", server
         ));
@@ -77,14 +78,14 @@ public class RPlayerInventoryRepository extends GenericCachedRepository<RPlayerI
      * @return CompletableFuture containing the most recent inventory, or null if none exists
      * @throws NullPointerException if any parameter is null
      */
-    public CompletableFuture<RPlayerInventory> findLatestByPlayerAndServer(
+    public CompletableFuture<Optional<RPlayerInventory>> findLatestByPlayerAndServer(
             final @NotNull RPlayer player,
             final @NotNull RCentralServer server
     ) {
-        return findByAttributesAsync(Map.of(
-                "rPlayer", player,
-                "rCentralServer", server
-        ));
+        return CompletableFuture.supplyAsync(
+            () -> findByAttributes(Map.of("rPlayer", player, "rCentralServer", server)),
+            getExecutorService()
+        );
     }
 
     /**
@@ -98,7 +99,7 @@ public class RPlayerInventoryRepository extends GenericCachedRepository<RPlayerI
      * @throws NullPointerException if player is null
      */
     public CompletableFuture<List<RPlayerInventory>> findByPlayer(final @NotNull RPlayer player) {
-        return findListByAttributesAsync(Map.of("rPlayer", player));
+        return findAllByAttributesAsync(Map.of("rPlayer", player));
     }
 
     /**
@@ -112,7 +113,7 @@ public class RPlayerInventoryRepository extends GenericCachedRepository<RPlayerI
      * @throws NullPointerException if server is null
      */
     public CompletableFuture<List<RPlayerInventory>> findByServer(final @NotNull RCentralServer server) {
-        return findListByAttributesAsync(Map.of("rCentralServer", server));
+        return findAllByAttributesAsync(Map.of("rCentralServer", server));
     }
 
     /**

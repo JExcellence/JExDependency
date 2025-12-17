@@ -1,6 +1,6 @@
 package com.raindropcentral.core.database.entity.statistic;
 
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -43,7 +43,7 @@ import java.util.Objects;
     name = "r_statistic",
     uniqueConstraints = @UniqueConstraint(columnNames = {"identifier", "player_statistic_id"})
 )
-public abstract class RAbstractStatistic extends AbstractEntity {
+public abstract class RAbstractStatistic extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

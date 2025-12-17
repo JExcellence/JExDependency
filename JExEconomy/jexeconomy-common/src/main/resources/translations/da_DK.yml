@@ -901,9 +901,21 @@ balance:
 
 # Pay Commands
 pay:
+  usage: "<gradient:#FFD700:#FFA500>⚠ Brug:</gradient> <white>/pay <valuta> <spiller> <beløb></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Deaktiveret:</gradient> <white>Pay-kommandoen er i øjeblikket deaktiveret.</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Valuta ikke tilladt:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%currency%</gradient> er ikke tilladt til betalinger.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Valuta ikke fundet:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%currency%</gradient> eksisterer ikke.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Ugyldigt beløb:</gradient> <white>'<gradient:#FFD700:#FFA500>%amount%</gradient>' er ikke et gyldigt beløb.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Beløb uden for interval:</gradient> <white>Beløb <gradient:#FFD700:#FFA500>%amount%</gradient> skal være mellem <gradient:#FFD700:#FFA500>%min%</gradient> og <gradient:#FFD700:#FFA500>%max%</gradient>.</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Ugyldigt mål:</gradient> <white>Du kan ikke betale dig selv!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Spiller ikke fundet:</gradient> <white>Spiller <gradient:#4ECDC4:#45B7B8>%player%</gradient> blev ikke fundet.</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Utilstrækkelige midler:</gradient> <white>Du har brug for <gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient> men har kun <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Overførsel mislykkedes:</gradient> <white>Betalingen kunne ikke gennemføres. Prøv venligst igen.</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Betaling sendt:</gradient> <white>Du sendte <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> til <gradient:#4ECDC4:#45B7B8>%target%</gradient>!</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Betaling modtaget:</gradient> <white>Du modtog <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> fra <gradient:#4ECDC4:#45B7B8>%sender%</gradient>!</white>"
+  # Legacy keys for backwards compatibility
   success_sender: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
   success_receiver: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You don't have enough funds! Required: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
   self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
   failed: "<gradient:#FF6B6B:#FF8E8E>✖ Payment Failed:</gradient> <white>Payment failed. Please try again.</white>"
 

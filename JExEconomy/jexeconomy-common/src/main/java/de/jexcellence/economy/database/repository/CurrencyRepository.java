@@ -1,7 +1,7 @@
 package de.jexcellence.economy.database.repository;
 
 import de.jexcellence.economy.database.entity.Currency;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutorService;
  * <p>
  * This repository provides asynchronous and cached access to currency entities,
  * allowing efficient retrieval and management of currencies by their unique identifier.
- * It extends {@link GenericCachedRepository} to leverage generic CRUD operations and caching.
+ * It extends {@link CachedRepository} to leverage generic CRUD operations and caching.
  * </p>
  *
  * <p>
@@ -38,11 +38,11 @@ import java.util.concurrent.ExecutorService;
  *
  * @author JExcellence
  * @see Currency
- * @see GenericCachedRepository
+ * @see CachedRepository
  * @since 1.0.0
  * @version 1.0.1
  */
-public class CurrencyRepository extends GenericCachedRepository<Currency, Long, String> {
+public class CurrencyRepository extends CachedRepository<Currency, Long, String> {
 	
 	/**
 	 * Constructs a new {@code CurrencyRepository} with the specified executor service and entity manager factory.
@@ -75,7 +75,7 @@ public class CurrencyRepository extends GenericCachedRepository<Currency, Long, 
          * @since 1.0.1
          */
         public @NotNull Optional<Currency> findByIdentifier(final @NotNull String identifier) {
-                return Optional.ofNullable(findByCacheKey("identifier", identifier));
+                return findByKey("identifier", identifier);
         }
 
         /**
@@ -86,6 +86,6 @@ public class CurrencyRepository extends GenericCachedRepository<Currency, Long, 
          * @since 1.0.1
          */
         public @NotNull CompletableFuture<Optional<Currency>> findByIdentifierAsync(final @NotNull String identifier) {
-                return findByCacheKeyAsync("identifier", identifier).thenApply(Optional::ofNullable);
+                return findByKeyAsync("identifier", identifier);
         }
 }

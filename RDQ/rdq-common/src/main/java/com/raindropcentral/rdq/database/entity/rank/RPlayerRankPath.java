@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "rank_tree_id"})
 )
 @Getter
-public class RPlayerRankPath extends AbstractEntity {
+public class RPlayerRankPath extends BaseEntity {
 
 	/**
 	 * The player associated with this rank path record.

@@ -369,7 +369,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                     }
 
                     final User existingUserEntity = this.jexEconomyImpl.getUserRepository()
-                            .findByAttributes(Map.of("uniqueId", targetOfflinePlayer.getUniqueId()));
+                            .findByAttributes(Map.of("uniqueId", targetOfflinePlayer.getUniqueId())).orElse(null);
 
                     if (existingUserEntity != null) {
                         return false;
@@ -521,8 +521,10 @@ public class CurrencyAdapter implements ICurrencyAdapter {
             final @NotNull String currencyIdentifier,
             final @Nullable Player deleter
     ) {
-        return this.jexEconomyImpl.getCurrencyRepository().findByAttributesAsync(Map.of("identifier", currencyIdentifier))
-                .thenCompose(currency -> {
+        return CompletableFuture.supplyAsync(
+                () -> this.jexEconomyImpl.getCurrencyRepository().findByAttributes(Map.of("identifier", currencyIdentifier)).orElse(null),
+                this.jexEconomyImpl.getExecutor()
+        ).thenCompose(currency -> {
                     if (currency == null) {
                         ADAPTER_LOGGER.log(Level.WARNING, "Currency not found for deletion: " + currencyIdentifier);
                         if (deleter != null) {
@@ -607,7 +609,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                         return false;
                     }
 
-                    final Currency foundCurrencyEntity = this.jexEconomyImpl.getCurrencyRepository().findByAttributes(Map.of("identifier", currencyIdentifier));
+                    final Currency foundCurrencyEntity = this.jexEconomyImpl.getCurrencyRepository().findByAttributes(Map.of("identifier", currencyIdentifier)).orElse(null);
 
                     return foundCurrencyEntity != null;
                 },
@@ -639,7 +641,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                             .findByAttributes(Map.of(
                                     "player.uniqueId", targetPlayerEntity.getUniqueId(),
                                     "currency.id", targetCurrencyEntity.getId()
-                            ));
+                            )).orElse(null);
 
                     if (existingUserCurrencyEntity != null) {
                         return false;
@@ -672,7 +674,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
     public @NotNull CompletableFuture<List<UserCurrency>> getUserCurrencies(final @NotNull OfflinePlayer targetOfflinePlayer) {
         return CompletableFuture.supplyAsync(
                 () -> this.jexEconomyImpl.getUserCurrencyRepository()
-                        .findListByAttributes(Map.of("player.uniqueId", targetOfflinePlayer.getUniqueId())),
+                        .findAllByAttributes(Map.of("player.uniqueId", targetOfflinePlayer.getUniqueId())),
                 this.jexEconomyImpl.getExecutor()
         );
     }
@@ -703,7 +705,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                         }
 
                         final List<UserCurrency> playerCurrencyEntities = this.jexEconomyImpl.getUserCurrencyRepository()
-                                .findListByAttributes(Map.of("player.uniqueId", targetOfflinePlayer.getUniqueId()));
+                                .findAllByAttributes(Map.of("player.uniqueId", targetOfflinePlayer.getUniqueId()));
 
                         return playerCurrencyEntities.stream()
                                 .filter(userCurrencyEntity -> {
@@ -758,7 +760,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                         .findByAttributes(Map.of(
                                 "player.uniqueId", targetOfflinePlayer.getUniqueId(),
                                 "currency.id", targetCurrency.getId()
-                        )),
+                        )).orElse(null),
                 this.jexEconomyImpl.getExecutor()
         );
     }
@@ -772,7 +774,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                         .findByAttributes(Map.of(
                                 "player.uniqueId", targetOfflinePlayer.getUniqueId(),
                                 "currency.identifier", targetCurrencyIdentifier
-                        )),
+                        )).orElse(null),
                 this.jexEconomyImpl.getExecutor()
         );
     }
@@ -792,7 +794,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                 () -> {
                     try {
                         final List<UserCurrency> userCurrencies = this.jexEconomyImpl.getUserCurrencyRepository()
-                                .findListByAttributes(Map.of("currency.id", currency.getId()));
+                                .findAllByAttributes(Map.of("currency.id", currency.getId()));
                         return userCurrencies.size();
                     } catch (final Exception e) {
                         ADAPTER_LOGGER.log(Level.WARNING, "Failed to get affected players count for currency: " + currency.getIdentifier(), e);
@@ -818,7 +820,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                 () -> {
                     try {
                         final List<UserCurrency> userCurrencies = this.jexEconomyImpl.getUserCurrencyRepository()
-                                .findListByAttributes(Map.of("currency.id", currency.getId()));
+                                .findAllByAttributes(Map.of("currency.id", currency.getId()));
                         return userCurrencies.stream()
                                 .mapToDouble(UserCurrency::getBalance)
                                 .sum();

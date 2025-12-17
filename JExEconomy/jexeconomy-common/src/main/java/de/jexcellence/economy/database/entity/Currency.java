@@ -1,7 +1,7 @@
 package de.jexcellence.economy.database.entity;
 
 import com.raindropcentral.rplatform.database.converter.BasicMaterialConverter;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -55,12 +55,12 @@ import java.util.Objects;
  * @author JExcellence
  * @version 1.0.1
  * @since 1.0.0
- * @see AbstractEntity
+ * @see BaseEntity
  * @see BasicMaterialConverter
  */
 @Table(name = "p_currency")
 @Entity
-public class Currency extends AbstractEntity {
+public class Currency extends BaseEntity {
 	
 	/**
 	 * The prefix text displayed before currency amounts in user interfaces.

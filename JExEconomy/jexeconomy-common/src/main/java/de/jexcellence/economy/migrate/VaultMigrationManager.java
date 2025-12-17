@@ -408,7 +408,7 @@ public class VaultMigrationManager {
                     return false;
                 }
 
-                User userEntity = jexEconomyImpl.getUserRepository().findByAttributes(Map.of("uniqueId", player.getUniqueId()));
+                User userEntity = jexEconomyImpl.getUserRepository().findByAttributes(Map.of("uniqueId", player.getUniqueId())).orElse(null);
                 if (userEntity == null) {
                     logger.warning("Failed to find user entity for: " + playerName);
                     return false;

@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Table(name = "r_rank")
-public class RRank extends AbstractEntity {
+public class RRank extends BaseEntity {
 	
 	@Transient
 	private static final Logger LOGGER = Logger.getLogger(RRank.class.getName());

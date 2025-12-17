@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.database.entity.rank;
 
 
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 		name = "r_player_rank",
 		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "rank_tree_id"})
 )
-public class RPlayerRank extends AbstractEntity {
+public class RPlayerRank extends BaseEntity {
 
 	/**
 	 * The player associated with this rank record.

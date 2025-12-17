@@ -11,7 +11,7 @@
  * {@link io.papermc.paper.plugin.loader.PluginClasspathBuilder#addLibrary}. When control returns to
  * the plugin's main class, {@code JEDependency} detects the {@code paper.plugin.loader.active}
  * marker and reuses the {@code ClasspathInjector} to inject those same jars into the live
- * {@link ClassLoader}, ensuring feature modules can be resolved during {@code onLoad}/{@code onEnable}
+ * {@link java.lang.ClassLoader}, ensuring feature modules can be resolved during {@code onLoad}/{@code onEnable}
  * execution.
  * </p>
  * <h2>Safeguards for repeated injections</h2>
@@ -20,12 +20,6 @@
  *         Each injector instance maintains a {@link java.util.Set} of injected {@link java.net.URL}
  *         entries so duplicate calls are ignored with fine-grained logging rather than surfacing
  *         reflective errors.
- *     </li>
- *     <li>
- *         {@link de.jexcellence.dependency.injector.ClasspathInjector#ensureModuleDeencapsulation()}
- *         invokes {@link de.jexcellence.dependency.module.Deencapsulation} exactly once per JVM via
- *         a static guard, preventing redundant {@code ModuleLayer} mutations while still allowing
- *         later calls to succeed.
  *     </li>
  *     <li>
  *         {@link de.jexcellence.dependency.injector.ClasspathInjector#tryInject(ClassLoader, java.io.File)}

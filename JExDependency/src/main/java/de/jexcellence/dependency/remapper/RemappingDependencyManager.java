@@ -483,9 +483,23 @@ public class RemappingDependencyManager {
     }
 
     private static boolean isRestrictedRoot(final String pkg) {
-        return pkg.equals("java") || pkg.startsWith("java.")
+        // JDK internals
+        if (pkg.equals("java") || pkg.startsWith("java.")
                 || pkg.equals("javax") || pkg.startsWith("javax.")
-                || pkg.equals("jakarta") || pkg.startsWith("jakarta.");
+                || pkg.equals("jakarta") || pkg.startsWith("jakarta.")) {
+            return true;
+        }
+        // Hibernate - must not be relocated as it expects original Jackson paths
+        if (pkg.equals("org.hibernate") || pkg.startsWith("org.hibernate.")) {
+            return true;
+        }
+        // Jackson 3.x: com.fasterxml only contains annotations now, but Hibernate
+        // references com.fasterxml.jackson.core which doesn't exist in Jackson 3.x.
+        // Excluding com.fasterxml prevents broken relocations.
+        if (pkg.equals("com.fasterxml") || pkg.startsWith("com.fasterxml.")) {
+            return true;
+        }
+        return false;
     }
 
     private static String relocateResourcePath(final String name, final Map<String, String> relocations) {

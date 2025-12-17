@@ -901,9 +901,21 @@ balance:
 
 # Pay Commands
 pay:
+  usage: "<gradient:#FFD700:#FFA500>⚠ Usage:</gradient> <white>/pay <currency> <player> <amount></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Disabled:</gradient> <white>The pay command is currently disabled.</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Allowed:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%currency%</gradient> is not allowed for payments.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%currency%</gradient> does not exist.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Amount:</gradient> <white>'<gradient:#FFD700:#FFA500>%amount%</gradient>' is not a valid amount.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Amount Out of Range:</gradient> <white>Amount <gradient:#FFD700:#FFA500>%amount%</gradient> must be between <gradient:#FFD700:#FFA500>%min%</gradient> and <gradient:#FFD700:#FFA500>%max%</gradient>.</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>Player <gradient:#4ECDC4:#45B7B8>%player%</gradient> was not found.</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You need <gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient> but only have <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Transfer Failed:</gradient> <white>The payment could not be completed. Please try again.</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> to <gradient:#4ECDC4:#45B7B8>%target%</gradient>!</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> from <gradient:#4ECDC4:#45B7B8>%sender%</gradient>!</white>"
+  # Legacy keys for backwards compatibility
   success_sender: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
   success_receiver: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You don't have enough funds! Required: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
   self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
   failed: "<gradient:#FF6B6B:#FF8E8E>✖ Payment Failed:</gradient> <white>Payment failed. Please try again.</white>"
 
@@ -1152,3 +1164,49 @@ currency_log:
   filter_desc_type: "Type: {type}"
   filter_desc_level: "Level: {level}"
   filter_desc_operation: "Operation: {operation}"
+
+
+# ═══════════════════════════════════════════════════════════════
+# PAY COMMAND MESSAGES
+# ═══════════════════════════════════════════════════════════════
+
+pay:
+  usage: "<gradient:#FFD700:#FFA500>Usage:</gradient> <white>/pay <currency> <player> <amount></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Pay Disabled:</gradient> <white>The pay command is currently disabled on this server.</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Allowed:</gradient> <white>You cannot pay with <gradient:#FFD700:#FFA500>%currency%</gradient>. This currency is not enabled for payments.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>The currency <gradient:#FFD700:#FFA500>%currency%</gradient> does not exist.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Amount:</gradient> <white><gradient:#FFD700:#FFA500>%amount%</gradient> is not a valid amount. Please enter a positive number.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Amount Out of Range:</gradient> <white>The amount <gradient:#FFD700:#FFA500>%amount%</gradient> is outside the allowed range (min: <gradient:#FFD700:#FFA500>%min%</gradient>, max: <gradient:#FFD700:#FFA500>%max%</gradient>).</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>The player <gradient:#FFD700:#FFA500>%player%</gradient> could not be found.</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You don't have enough <gradient:#FFD700:#FFA500>%currency%</gradient>. Required: <gradient:#FFD700:#FFA500>%required%</gradient>, Available: <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Transfer Failed:</gradient> <white>The payment could not be completed. Please try again later.</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You paid <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> to <gradient:#4ECDC4:#45B7B8>%target%</gradient>.</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> from <gradient:#4ECDC4:#45B7B8>%sender%</gradient>.</white>"
+
+# ═══════════════════════════════════════════════════════════════
+# PAY COMMAND MESSAGES
+# ═══════════════════════════════════════════════════════════════
+
+pay:
+  # Usage and Help
+  usage: "<gradient:#FFD700:#FFA500>⚠ Usage:</gradient> <white>/pay <currency> <player> <amount></white>"
+  
+  # Status Messages
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Pay Disabled:</gradient> <white>The pay command is currently disabled on this server.</white>"
+  
+  # Validation Errors
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Allowed:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%currency%</gradient> is not allowed for player payments.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%currency%</gradient> does not exist.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Amount:</gradient> <white>The amount '<gradient:#FFD700:#FFA500>%amount%</gradient>' is not a valid number.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Amount Out of Range:</gradient> <white>Amount <gradient:#FFD700:#FFA500>%amount%</gradient> must be between <gradient:#FFD700:#FFA500>%min%</gradient> and <gradient:#FFD700:#FFA500>%max%</gradient>.</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>Player <gradient:#4ECDC4:#45B7B8>%player%</gradient> could not be found.</white>"
+  
+  # Transaction Errors
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You need <gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient> but only have <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Transfer Failed:</gradient> <white>The payment could not be processed. Please try again later.</white>"
+  
+  # Success Messages
+  success: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> to <gradient:#4ECDC4:#45B7B8>%target%</gradient>!</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> from <gradient:#4ECDC4:#45B7B8>%sender%</gradient>!</white>"

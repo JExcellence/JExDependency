@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 public class YamlDependencyLoader {
 
+    private static final String LOGGER_NAME = "JExDependency";
     private static final String DEPENDENCIES_YAML_PATH = "/dependency/dependencies.yml";
     private static final String PAPER_DEPENDENCIES_PATH = "/dependency/paper/dependencies.yml";
     private static final String SPIGOT_DEPENDENCIES_PATH = "/dependency/spigot/dependencies.yml";
@@ -37,7 +38,7 @@ public class YamlDependencyLoader {
      * Creates a loader that immediately determines the current server type for subsequent lookups.
      */
     public YamlDependencyLoader() {
-        this.logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(LOGGER_NAME);
         this.serverType = detectServerType();
     }
 
@@ -54,16 +55,16 @@ public class YamlDependencyLoader {
         if (serverSpecificPath != null) {
             final List<String> dependencies = loadFromPath(anchorClass, serverSpecificPath);
             if (dependencies != null) {
-                logger.info("Loaded " + dependencies.size() + " dependencies from server-specific configuration");
+                logger.fine("Loaded " + dependencies.size() + " dependencies from server-specific config");
                 return dependencies;
             }
         }
 
         final List<String> dependencies = loadFromPath(anchorClass, DEPENDENCIES_YAML_PATH);
         if (dependencies != null) {
-            logger.info("Loaded " + dependencies.size() + " dependencies from generic configuration");
+            logger.fine("Loaded " + dependencies.size() + " dependencies from config");
         } else {
-            logger.fine("No YAML dependency configuration found");
+            logger.fine("No dependency configuration found");
         }
 
         return dependencies;
@@ -92,7 +93,7 @@ public class YamlDependencyLoader {
                     try (final InputStream inputStream = jarFile.getInputStream(entry)) {
                         final List<String> dependencies = parseDependencies(inputStream);
                         if (!dependencies.isEmpty()) {
-                            logger.info("Loaded " + dependencies.size() + " dependencies from server-specific configuration in plugin JAR");
+                            logger.fine("Loaded " + dependencies.size() + " dependencies from plugin JAR");
                             return dependencies;
                         }
                     }
@@ -109,13 +110,13 @@ public class YamlDependencyLoader {
                 try (final InputStream inputStream = jarFile.getInputStream(entry)) {
                     final List<String> dependencies = parseDependencies(inputStream);
                     if (!dependencies.isEmpty()) {
-                        logger.info("Loaded " + dependencies.size() + " dependencies from generic configuration in plugin JAR");
+                        logger.fine("Loaded " + dependencies.size() + " dependencies from plugin JAR");
                         return dependencies;
                     }
                 }
             }
             
-            logger.fine("No YAML dependency configuration found in plugin JAR: " + jarPath);
+            logger.fine("No dependency configuration found in plugin JAR");
             return null;
             
         } catch (final Exception exception) {

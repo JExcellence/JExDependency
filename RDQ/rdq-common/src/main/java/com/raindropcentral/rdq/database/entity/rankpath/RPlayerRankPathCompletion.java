@@ -3,7 +3,7 @@ package com.raindropcentral.rdq.database.entity.rankpath;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "r_player_rank_path_completion")
-public class RPlayerRankPathCompletion extends AbstractEntity {
+public class RPlayerRankPathCompletion extends BaseEntity {
 	
 	/**
 	 * The player who completed the rank tree.

@@ -103,7 +103,7 @@ public class PremiumBountyService implements IBountyService {
     public CompletableFuture<List<Bounty>> findAll(int page, int pageSize) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                return getBountyRepository().findListByAttributes(Map.of("active", true));
+                return getBountyRepository().findAllByAttributes(Map.of("active", true));
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Failed to fetch bounties", e);
                 throw new RuntimeException("Failed to fetch bounties", e);
@@ -113,12 +113,18 @@ public class PremiumBountyService implements IBountyService {
 
     @Override
     public CompletableFuture<Bounty> findPlayerBounty(@NotNull UUID uniqueId) {
-        return getBountyRepository().findByAttributesAsync(Map.of("targetUniqueId", uniqueId));
+        return CompletableFuture.supplyAsync(
+            () -> getBountyRepository().findByAttributes(Map.of("targetUniqueId", uniqueId)).orElse(null),
+            this.rdq.getExecutor()
+        );
     }
 
     @Override
     public CompletableFuture<List<Bounty>> findBountiesByCommissioner(@NotNull UUID commissionerUniqueId) {
-        return getBountyRepository().findListByAttributesAsync(Map.of("commissionerUniqueId", commissionerUniqueId));
+        return CompletableFuture.supplyAsync(
+            () -> getBountyRepository().findAllByAttributes(Map.of("commissionerUniqueId", commissionerUniqueId)),
+            this.rdq.getExecutor()
+        );
     }
 
     @Override
@@ -137,7 +143,7 @@ public class PremiumBountyService implements IBountyService {
     ) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                List<Bounty> existingBounties = getBountyRepository().findListByAttributes(Map.of("commissionerUniqueId", commissionerUniqueId));
+                List<Bounty> existingBounties = getBountyRepository().findAllByAttributes(Map.of("commissionerUniqueId", commissionerUniqueId));
                 int maxBounties = getConfig().getMaxBountiesPerCommissioner();
                 
                 if (existingBounties.size() >= maxBounties) {
@@ -196,7 +202,7 @@ public class PremiumBountyService implements IBountyService {
                             // Add a small delay before retry to allow other transactions to complete
                             Thread.sleep(50 * attempt);
                             
-                            Bounty freshBounty = getBountyRepository().findById(bounty.getId());
+                            Bounty freshBounty = getBountyRepository().findById(bounty.getId()).orElse(null);
                             if (freshBounty != null) {
                                 // Copy the claim state from the stale bounty to the fresh one
                                 freshBounty.setActive(bounty.isActive());
@@ -245,7 +251,10 @@ public class PremiumBountyService implements IBountyService {
 
     @Override
     public CompletableFuture<BountyHunter> getBountyHunter(@NotNull RDQPlayer player) {
-        return getHunterStatsRepository().findByAttributesAsync(Map.of("player", player));
+        return CompletableFuture.supplyAsync(
+            () -> getHunterStatsRepository().findByAttributes(Map.of("player", player)).orElse(null),
+            this.rdq.getExecutor()
+        );
     }
 
     @Override
@@ -264,7 +273,7 @@ public class PremiumBountyService implements IBountyService {
     public CompletableFuture<BountyHunter> claim(@NotNull RDQPlayer player, double rewardValue) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                BountyHunter stats = getHunterStatsRepository().findByAttributes(Map.of("player", player));
+                BountyHunter stats = getHunterStatsRepository().findByAttributes(Map.of("player", player)).orElse(null);
 
                 if (stats == null) {
                     BountyHunter newStats = new BountyHunter(player);
@@ -294,7 +303,7 @@ public class PremiumBountyService implements IBountyService {
     public CompletableFuture<Integer> getHunterLevel(@NotNull UUID uniqueId) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                BountyHunter stats = getHunterStatsRepository().findByAttributes(Map.of("player.uniqueId", uniqueId));
+                BountyHunter stats = getHunterStatsRepository().findByAttributes(Map.of("player.uniqueId", uniqueId)).orElse(null);
                 
                 if (stats == null) {
                     return 1;
@@ -318,7 +327,7 @@ public class PremiumBountyService implements IBountyService {
     @Override
     public boolean canCreateBounty(@NotNull Player player) {
         try {
-            List<Bounty> existingBounties = getBountyRepository().findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+            List<Bounty> existingBounties = getBountyRepository().findAllByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
             int maxBounties = getConfig().getMaxBountiesPerCommissioner();
             return existingBounties.size() < maxBounties;
         } catch (Exception e) {

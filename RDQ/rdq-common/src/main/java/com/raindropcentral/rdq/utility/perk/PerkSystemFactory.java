@@ -465,7 +465,7 @@ public class PerkSystemFactory {
 			final PerkSection config
 		) {
 			try {
-				RPerk existingPerk = rdq.getPerkRepository().findByAttributes(Map.of("identifier", perkId));
+				RPerk existingPerk = rdq.getPerkRepository().findByAttributes(Map.of("identifier", perkId)).orElse(null);
 				if (
 					existingPerk != null
 				) {

@@ -2,7 +2,7 @@ package de.jexcellence.economy.database.repository;
 
 import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.UserCurrency;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutorService;
  * <p>
  * This repository provides asynchronous and cached access to user-currency associations,
  * allowing efficient retrieval and management of user balances for specific currencies.
- * It extends {@link GenericCachedRepository} to leverage generic CRUD operations and caching.
+ * It extends {@link CachedRepository} to leverage generic CRUD operations and caching.
  * </p>
  *
  * <p>
@@ -45,11 +45,11 @@ import java.util.concurrent.ExecutorService;
  * @author JExcellence
  * @see UserCurrency
  * @see Currency
- * @see GenericCachedRepository
+ * @see CachedRepository
  * @since 1.0.0
  * @version 1.0.1
  */
-public class UserCurrencyRepository extends GenericCachedRepository<UserCurrency, Long, UUID> {
+public class UserCurrencyRepository extends CachedRepository<UserCurrency, Long, UUID> {
 	
 	/**
 	 * Constructs a new {@code UserCurrencyRepository} with the specified executor service and entity manager factory.
@@ -91,7 +91,7 @@ public class UserCurrencyRepository extends GenericCachedRepository<UserCurrency
 
                 Objects.requireNonNull(playerUniqueId, "playerUniqueId cannot be null");
 
-                return this.findListByAttributesAsync(
+                return this.findAllByAttributesAsync(
                         Map.of(
                                 "player.uniqueId",
                                 playerUniqueId
@@ -116,7 +116,7 @@ public class UserCurrencyRepository extends GenericCachedRepository<UserCurrency
 
                 Objects.requireNonNull(targetCurrency, "currency cannot be null");
 
-                return this.findListByAttributesAsync(
+                return this.findAllByAttributesAsync(
                         Map.of(
                                 "currency.id",
                                 targetCurrency.getId()
@@ -156,7 +156,7 @@ public class UserCurrencyRepository extends GenericCachedRepository<UserCurrency
 			throw new IllegalArgumentException("Result limit must be positive");
 		}
 		
-		return this.findListByAttributesAsync(
+		return this.findAllByAttributesAsync(
 			Map.of(
 				"currency.id",
 				targetCurrency.getId()

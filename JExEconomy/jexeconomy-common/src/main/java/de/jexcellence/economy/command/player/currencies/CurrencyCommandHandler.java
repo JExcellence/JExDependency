@@ -396,7 +396,7 @@ public class CurrencyCommandHandler {
 		CompletableFuture.supplyAsync(
 			() -> this.jexEconomyImpl.getCurrencyRepository().findByAttributes(
 				Map.of("identifier", currencyIdentifier)
-			),
+			).orElse(null),
 			this.jexEconomyImpl.getExecutor()
 		).thenAcceptAsync(
 			currencyEntity -> {
@@ -550,7 +550,7 @@ public class CurrencyCommandHandler {
 		CompletableFuture.supplyAsync(
 			() -> {
 				final Currency currencyToDelete = this.jexEconomyImpl.getCurrencyRepository()
-				                                                     .findByAttributes(Map.of("identifier", currencyIdentifier));
+				                                                     .findByAttributes(Map.of("identifier", currencyIdentifier)).orElse(null);
 
 				if (currencyToDelete != null) {
 					this.jexEconomyImpl.getCurrencyRepository().delete(currencyToDelete.getId());
@@ -593,7 +593,7 @@ public class CurrencyCommandHandler {
 		CompletableFuture.supplyAsync(
 			() -> {
 				final Currency currencyToEdit = this.jexEconomyImpl.getCurrencyRepository()
-				                                                   .findByAttributes(Map.of("identifier", currencyIdentifier));
+				                                                   .findByAttributes(Map.of("identifier", currencyIdentifier)).orElse(null);
 
 				if (currencyToEdit != null) {
 					final boolean fieldUpdateSuccessful = this.updateCurrencyField(
@@ -660,7 +660,7 @@ public class CurrencyCommandHandler {
 			case "identifier" -> {
 				final Currency existingCurrencyWithIdentifier = this.jexEconomyImpl
 					                                                .getCurrencyRepository()
-					                                                .findByAttributes(Map.of("identifier", newValue));
+					                                                .findByAttributes(Map.of("identifier", newValue)).orElse(null);
 
 				if (existingCurrencyWithIdentifier != null) {
 					return false;

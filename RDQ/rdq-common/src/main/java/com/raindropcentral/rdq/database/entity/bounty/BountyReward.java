@@ -5,7 +5,7 @@ import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.converter.RewardConverter;
 import com.raindropcentral.rdq.reward.AbstractReward;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -25,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 @Table(name = "rdq_bounty_reward")
 @Getter
 @Setter
-public class BountyReward extends AbstractEntity {
+public class BountyReward extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

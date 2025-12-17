@@ -253,7 +253,7 @@ public class CurrencyLogService {
         int limit
     ) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> logs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(Map.of(
                 "playerUuid", playerUuid,
                 "logType", ELogType.TRANSACTION,
                 "success", true
@@ -279,7 +279,7 @@ public class CurrencyLogService {
         int limit
     ) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> logs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(Map.of(
                 "currency.id", currencyId,
                 "logType", ELogType.TRANSACTION,
                 "success", true
@@ -301,15 +301,15 @@ public class CurrencyLogService {
     @NotNull
     public CompletableFuture<List<CurrencyLog>> getRecentErrors(int limit) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> errorLogs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> errorLogs = logRepository.findAllByAttributes(Map.of(
                 "logLevel", ELogLevel.ERROR
             ));
             
-            List<CurrencyLog> criticalLogs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> criticalLogs = logRepository.findAllByAttributes(Map.of(
                 "logLevel", ELogLevel.CRITICAL
             ));
             
-            List<CurrencyLog> failedLogs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> failedLogs = logRepository.findAllByAttributes(Map.of(
                 "success", false
             ));
             
@@ -361,7 +361,7 @@ public class CurrencyLogService {
                 attributes.put("success", success);
             }
             
-            List<CurrencyLog> logs = logRepository.findListByAttributes(attributes);
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(attributes);
             
             return logs.stream()
                        .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
@@ -383,7 +383,7 @@ public class CurrencyLogService {
         int limit
     ) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> logs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(Map.of(
                 "operationType", operationType,
                 "logType", ELogType.TRANSACTION
             ));
@@ -408,7 +408,7 @@ public class CurrencyLogService {
         int limit
     ) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> logs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(Map.of(
                 "currency.id", currencyId,
                 "logType", ELogType.MANAGEMENT
             ));
@@ -433,7 +433,7 @@ public class CurrencyLogService {
         int limit
     ) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> logs = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(Map.of(
                 "playerUuid", playerUuid,
                 "logType", ELogType.AUDIT
             ));
@@ -467,7 +467,7 @@ public class CurrencyLogService {
                 );
             }
             
-            List<CurrencyLog> logs = logRepository.findListByAttributes(attributes);
+            List<CurrencyLog> logs = logRepository.findAllByAttributes(attributes);
             
             return logs.stream()
                        .sorted((a, b) -> b.getTimestamp().compareTo(a.getTimestamp()))
@@ -485,7 +485,7 @@ public class CurrencyLogService {
     @NotNull
     public CompletableFuture<BasicCurrencyStats> getBasicCurrencyStats(@NotNull Long currencyId) {
         return CompletableFuture.supplyAsync(() -> {
-            List<CurrencyLog> allTransactions = logRepository.findListByAttributes(Map.of(
+            List<CurrencyLog> allTransactions = logRepository.findAllByAttributes(Map.of(
                 "currency.id", currencyId,
                 "logType", ELogType.TRANSACTION,
                 "success", true

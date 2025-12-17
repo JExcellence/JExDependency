@@ -3,7 +3,7 @@ package com.raindropcentral.rdq.database.entity.rank;
 import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.entity.RRequirement;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -37,7 +37,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "r_rank_upgrade_requirement")
-public class RRankUpgradeRequirement extends AbstractEntity {
+public class RRankUpgradeRequirement extends BaseEntity {
 	
 	/**
 	 * The rank to which this upgrade requirement belongs.

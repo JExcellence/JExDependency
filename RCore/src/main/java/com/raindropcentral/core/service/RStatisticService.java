@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -51,7 +52,7 @@ public class RStatisticService {
      * @param id the statistic's database identifier
      * @return future containing an optional with the statistic if found
      */
-    public CompletableFuture<RAbstractStatistic> findById(final @NotNull Long id) {
+    public CompletableFuture<Optional<RAbstractStatistic>> findById(final @NotNull Long id) {
         return statisticRepository.findByIdAsync(id);
     }
 
@@ -137,7 +138,7 @@ public class RStatisticService {
      * @return future containing true if the statistic exists
      */
     public CompletableFuture<Boolean> existsById(final @NotNull Long id) {
-        return findById(id).thenApply(Objects::nonNull);
+        return findById(id).thenApply(Optional::isPresent);
     }
 
     /**

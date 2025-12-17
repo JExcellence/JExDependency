@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.repository;
 
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +11,7 @@ import java.util.function.Function;
 /**
  * Repository for managing {@link BountyHunter} entities in the RaindropQuests system.
  * <p>
- * Extends {@link GenericCachedRepository} to provide caching and asynchronous database operations
+ * Extends {@link CachedRepository} to provide caching and asynchronous database operations
  * for bounty entities, using the commissioner's UUID as the cache key.
  * </p>
  *
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @version 1.0.0
  * @since TBD
  */
-public class BountyHunterRepository extends GenericCachedRepository<BountyHunter, Long, Long> {
+public class BountyHunterRepository extends CachedRepository<BountyHunter, Long, Long> {
 
     /**
      * Constructs a new {@code BountyHunterRepository} with the specified executor and entity manager factory.

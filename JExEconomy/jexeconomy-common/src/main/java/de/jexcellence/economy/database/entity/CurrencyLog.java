@@ -3,7 +3,7 @@ package de.jexcellence.economy.database.entity;
 import de.jexcellence.economy.type.EChangeType;
 import de.jexcellence.economy.type.ELogLevel;
 import de.jexcellence.economy.type.ELogType;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -51,7 +51,7 @@ import java.util.UUID;
     }
 )
 @Entity
-public class CurrencyLog extends AbstractEntity {
+public class CurrencyLog extends BaseEntity {
     
     /**
      * The timestamp when this log entry was created.

@@ -12,6 +12,7 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -336,14 +337,10 @@ public abstract class BaseView extends View {
 		final Component titleComponent = this.i18n(
 			this.getTitleKey(),
 			open.getPlayer()
-		).withPlaceholders(this.getTitlePlaceholders(open))
-		 .build().component();
+		).withPlaceholders(this.getTitlePlaceholders(open)).build().component();
 		
-		if (ServerEnvironment.getInstance().isPaper()) {
-			open.modifyConfig().title(titleComponent);
-		} else {
-            open.modifyConfig().title(titleComponent);
-		}
+		final String titleString = LegacyComponentSerializer.legacySection().serialize(titleComponent);
+		open.modifyConfig().title(titleString);
 		
 		CentralLogger.getLogger(BaseView.class.getName()).log(
 			Level.FINE,

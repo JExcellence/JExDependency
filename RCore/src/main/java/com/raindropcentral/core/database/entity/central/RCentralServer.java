@@ -1,7 +1,7 @@
 package com.raindropcentral.core.database.entity.central;
 
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "r_central_server")
-public class RCentralServer extends AbstractEntity {
+public class RCentralServer extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

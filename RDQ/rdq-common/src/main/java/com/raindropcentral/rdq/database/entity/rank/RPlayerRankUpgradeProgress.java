@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,7 +26,7 @@ import org.jetbrains.annotations.NotNull;
 		name = "r_player_rank_upgrade_progress",
 		uniqueConstraints = @UniqueConstraint(columnNames = {"player_id", "upgrade_requirement_id"})
 )
-public class RPlayerRankUpgradeProgress extends AbstractEntity {
+public class RPlayerRankUpgradeProgress extends BaseEntity {
 
 	/**
 	 * The player whose progress is being tracked.

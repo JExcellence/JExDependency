@@ -2,7 +2,7 @@ package com.raindropcentral.core.database.entity.statistic;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -38,7 +38,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "r_player_statistic")
-public class RPlayerStatistic extends AbstractEntity {
+public class RPlayerStatistic extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -4,7 +4,7 @@ import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.rplatform.database.converter.ItemStackMapConverter;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -44,7 +44,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "r_player_inventory")
-public class RPlayerInventory extends AbstractEntity {
+public class RPlayerInventory extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;

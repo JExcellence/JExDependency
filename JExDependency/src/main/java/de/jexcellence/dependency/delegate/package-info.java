@@ -15,9 +15,7 @@
  * {@link org.bukkit.plugin.PluginManager}, and {@link java.util.logging.Logger}) and enforces
  * consistent interaction with the Paper plugin loader handshake. Production plugins such as the
  * RCore and RDQ editions extend this class so they can focus on registering services, initializing
- * asynchronous workflows, and forwarding lifecycle notifications to their feature managers (see
- * {@link com.raindropcentral.core.RCoreFreeImpl} and
- * {@link com.raindropcentral.rdq.RDQPremiumImpl}).
+ * asynchronous workflows, and forwarding lifecycle notifications to their feature managers.
  * </p>
  * <h2>Choosing an implementation</h2>
  * <ul>

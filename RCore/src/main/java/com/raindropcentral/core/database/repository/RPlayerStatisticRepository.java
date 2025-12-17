@@ -3,7 +3,7 @@ package com.raindropcentral.core.database.repository;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.player.RPlayer;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,7 +30,7 @@ import java.util.function.Function;
  * </p>
  * <p>
  * All asynchronous work is scheduled on the shared {@link ExecutorService}
- * provided by the {@link GenericCachedRepository} base class. This guarantees that database and
+ * provided by the {@link CachedRepository} base class. This guarantees that database and
  * hydration tasks operate on the same bounded executor configured for the core services, avoiding
  * accidental execution on the common fork-join pool and ensuring predictable threading semantics
  * during batch statistic updates.
@@ -47,7 +47,7 @@ import java.util.function.Function;
  * @since 1.0.0
  * @version 1.0.1
  */
-public class RPlayerStatisticRepository extends GenericCachedRepository<RPlayerStatistic, Long, Long> {
+public class RPlayerStatisticRepository extends CachedRepository<RPlayerStatistic, Long, Long> {
 
     /**
      * Configures the repository with the shared executor and entity manager factory.
@@ -80,7 +80,7 @@ public class RPlayerStatisticRepository extends GenericCachedRepository<RPlayerS
             final @NotNull RPlayer player,
             final @NotNull RCentralServer server
     ) {
-        return findListByAttributesAsync(Map.of(
+        return findAllByAttributesAsync(Map.of(
                 "player", player,
                 "rCentralServer", server
         ));
@@ -97,7 +97,7 @@ public class RPlayerStatisticRepository extends GenericCachedRepository<RPlayerS
      * @throws NullPointerException if server is null
      */
     public CompletableFuture<List<RPlayerStatistic>> findByServer(final @NotNull RCentralServer server) {
-        return findListByAttributesAsync(Map.of("rCentralServer", server));
+        return findAllByAttributesAsync(Map.of("rCentralServer", server));
     }
 
     /**
@@ -111,7 +111,7 @@ public class RPlayerStatisticRepository extends GenericCachedRepository<RPlayerS
      * @throws NullPointerException if player is null
      */
     public CompletableFuture<List<RPlayerStatistic>> findByPlayer(final @NotNull RPlayer player) {
-        return findListByAttributesAsync(Map.of("player", player));
+        return findAllByAttributesAsync(Map.of("player", player));
     }
 
     /**

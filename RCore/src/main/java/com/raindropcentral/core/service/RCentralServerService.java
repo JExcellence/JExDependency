@@ -50,8 +50,7 @@ public class RCentralServerService {
      * @return future containing an optional with the server if found
      */
     public CompletableFuture<Optional<RCentralServer>> findByServerUuid(final @NotNull UUID serverUuid) {
-        return serverRepository.findByServerUuid(serverUuid)
-                .thenApply(Optional::ofNullable);
+        return serverRepository.findByServerUuid(serverUuid);
     }
 
     /**
@@ -63,8 +62,7 @@ public class RCentralServerService {
      * @return future containing an optional with the connected server if found
      */
     public CompletableFuture<Optional<RCentralServer>> findConnectedServer() {
-        return serverRepository.findConnectedServer()
-                .thenApply(Optional::ofNullable);
+        return serverRepository.findConnectedServer();
     }
 
     /**

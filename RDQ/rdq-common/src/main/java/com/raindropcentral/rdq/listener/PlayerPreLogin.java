@@ -31,7 +31,10 @@ public class PlayerPreLogin implements Listener {
         var uniqueId = event.getUniqueId();
         var playerName = event.getName();
 
-        rdq.getPlayerRepository().findByAttributesAsync(Map.of("uniqueId", uniqueId)).thenCompose(
+        CompletableFuture.supplyAsync(
+                () -> rdq.getPlayerRepository().findByAttributes(Map.of("uniqueId", uniqueId)).orElse(null),
+                rdq.getExecutor()
+        ).thenCompose(
                 existing -> (existing == null ? createPlayer(uniqueId, playerName) : handlePlayer(existing, playerName))
         ).exceptionally(throwable -> {
             LOGGER.log(Level.WARNING, "Error handling pre-login for " + playerName + " (" + uniqueId + ")", throwable);
@@ -53,7 +56,7 @@ public class PlayerPreLogin implements Listener {
         var player = new RDQPlayer(uniqueId, playerName);
 
         if (rdq.getRankSystemFactory().getDefaultRank() != null) {
-            var defaultRank = this.rdq.getRankRepository().findByAttributes(Map.of("identifier", this.rdq.getRankSystemFactory().getDefaultRank().getIdentifier()));
+            var defaultRank = this.rdq.getRankRepository().findByAttributes(Map.of("identifier", this.rdq.getRankSystemFactory().getDefaultRank().getIdentifier())).orElse(null);
             if (defaultRank != null) {
                 var defaultPlayerRank = new RPlayerRank(player, defaultRank);
                 player.addPlayerRank(defaultPlayerRank);

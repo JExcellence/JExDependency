@@ -3,9 +3,9 @@ package com.raindropcentral.rdq.json;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tools.jackson.core.JsonGenerator;
-import tools.jackson.databind.SerializationContext;
-import tools.jackson.databind.ser.std.StdSerializer;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.util.Base64;
 import java.util.Map;
@@ -43,14 +43,14 @@ public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
      *
      * @param itemStack            the {@code ItemStack} to serialize (may be {@code null})
      * @param jsonGenerator        the JSON generator to write to
-     * @param serializationContext the serialization context
+     * @param serializerProvider the serialization context
      */
     @Override
     public void serialize(
             @Nullable final ItemStack itemStack,
             @NotNull final JsonGenerator jsonGenerator,
-            @NotNull final SerializationContext serializationContext
-    ) {
+            @NotNull final SerializerProvider serializerProvider
+    ) throws java.io.IOException {
         if (itemStack == null) {
             jsonGenerator.writeNull();
             return;
@@ -61,14 +61,14 @@ public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
         // Try binary serialization first (preserves ALL metadata)
         try {
             String binaryData = serializeToBinary(itemStack);
-            jsonGenerator.writeStringProperty("binaryData", binaryData);
-            jsonGenerator.writeStringProperty("serializationType", "binary");
+            jsonGenerator.writeStringField("binaryData", binaryData);
+            jsonGenerator.writeStringField("serializationType", "binary");
         } catch (Exception e) {
             // Fallback to Map serialization
             Map<String, Object> serialized = itemStack.serialize();
-            jsonGenerator.writeName("mapData");
-            serializationContext.writeValue(jsonGenerator, serialized);
-            jsonGenerator.writeStringProperty("serializationType", "map");
+            jsonGenerator.writeFieldName("mapData");
+            serializerProvider.defaultSerializeValue(serialized, jsonGenerator);
+            jsonGenerator.writeStringField("serializationType", "map");
         }
         
         jsonGenerator.writeEndObject();

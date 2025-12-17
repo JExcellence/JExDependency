@@ -1,11 +1,11 @@
 package com.raindropcentral.core.database.repository;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -15,7 +15,7 @@ import java.util.function.Function;
  * Repository for managing RCentralServer entities.
  * Handles persistence of server connection state to RaindropCentral platform.
  */
-public class RCentralServerRepository extends GenericCachedRepository<RCentralServer, Long, Long> {
+public class RCentralServerRepository extends CachedRepository<RCentralServer, Long, Long> {
 
     public RCentralServerRepository(
             final @NotNull ExecutorService executor,
@@ -32,8 +32,11 @@ public class RCentralServerRepository extends GenericCachedRepository<RCentralSe
      * @param serverUuid the server UUID to search for
      * @return CompletableFuture containing the server if found
      */
-    public CompletableFuture<RCentralServer> findByServerUuid(final @NotNull UUID serverUuid) {
-        return findByAttributesAsync(Map.of("uuid", serverUuid));
+    public CompletableFuture<Optional<RCentralServer>> findByServerUuid(final @NotNull UUID serverUuid) {
+        return CompletableFuture.supplyAsync(
+            () -> findByAttribute("serverUuid", serverUuid),
+            getExecutorService()
+        );
     }
 
     /**
@@ -41,7 +44,10 @@ public class RCentralServerRepository extends GenericCachedRepository<RCentralSe
      *
      * @return CompletableFuture containing the connected server if found
      */
-    public CompletableFuture<RCentralServer> findConnectedServer() {
-        return findByAttributesAsync(Map.of("status", RCentralServer.ConnectionStatus.CONNECTED));
+    public CompletableFuture<Optional<RCentralServer>> findConnectedServer() {
+        return CompletableFuture.supplyAsync(
+            () -> findByAttribute("connectionStatus", RCentralServer.ConnectionStatus.CONNECTED),
+            getExecutorService()
+        );
     }
 }

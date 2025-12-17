@@ -2,1105 +2,998 @@ prefix:
   - "<gradient:#FFD700:#FFA500>✦ JExEconomy ✦</gradient> <gradient:#8B0000:#DC143C>|</gradient> <white>"
 
 general:
-  no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ Access Denied:</gradient> <white>You don't have permission to use this command.</white>"
-  invalid_player: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>The specified player could not be found.</white>"
-  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Amount:</gradient> <white>Please enter a valid numerical amount.</white>"
-  invalid_currency: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>The specified currency does not exist.</white>"
-  loading: "<gradient:#FFD700:#FFA500>⌛ Loading:</gradient> <white>Please wait while we process your request...</white>"
-  success: "<gradient:#00FF00:#32CD32>✓ Success:</gradient> <white>Operation completed successfully!</white>"
-  error: "<gradient:#FF6B6B:#FF8E8E>✖ Error:</gradient> <white>An unexpected error occurred. Please try again later.</white>"
+  no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ Accesso Negato:</gradient> <white>Non hai il permesso di usare questo comando.</white>"
+  invalid_player: "<gradient:#FF6B6B:#FF8E8E>✖ Giocatore Non Trovato:</gradient> <white>Il giocatore specificato non è stato trovato.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Importo Non Valido:</gradient> <white>Inserisci un importo numerico valido.</white>"
+  invalid_currency: "<gradient:#FF6B6B:#FF8E8E>✖ Valuta Non Trovata:</gradient> <white>La valuta specificata non esiste.</white>"
+  loading: "<gradient:#FFD700:#FFA500>⌛ Caricamento:</gradient> <white>Attendere mentre elaboriamo la tua richiesta...</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Successo:</gradient> <white>Operazione completata con successo!</white>"
+  error: "<gradient:#FF6B6B:#FF8E8E>✖ Errore:</gradient> <white>Si è verificato un errore imprevisto. Riprova più tardi.</white>"
 
 # ═══════════════════════════════════════════════════════════════
-# CURRENCY MANAGEMENT UI VIEWS
+# INTERFACCE UI GESTIONE VALUTE
 # ═══════════════════════════════════════════════════════════════
 
-# Currency Action Overview UI
 currencies_action_overview_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Management</gradient>"
-
+  title: "<gradient:#FFD700:#FFA500>Gestione Valute</gradient>"
   create_currency:
-    name: "<gradient:#00FF00:#32CD32>✚ Create Currency</gradient>"
+    name: "<gradient:#00FF00:#32CD32>✚ Crea Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Create a new currency for your server"
-      - "<gray>with custom properties and settings."
+      - "<gray>Crea una nuova valuta per il tuo server"
+      - "<gray>con proprietà e impostazioni personalizzate.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• Custom identifier and symbol</white>"
-      - "<white>• Configurable prefix and suffix</white>"
-      - "<white>• Custom icon material</white>"
-      - "<white>• Automatic player account creation</white>"
+      - "<gradient:#FFD700:#FFA500>Funzionalità:</gradient>"
+      - "<white>• Identificatore e simbolo personalizzati</white>"
+      - "<white>• Prefisso e suffisso configurabili</white>"
+      - "<white>• Materiale icona personalizzato</white>"
+      - "<white>• Creazione automatica account giocatori</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to create new currency</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per creare nuova valuta</gradient>"
   edit_currency:
-    name: "<gradient:#FFD700:#FFA500>🔧 Edit Currency</gradient>"
+    name: "<gradient:#FFD700:#FFA500>🔧 Modifica Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Modify existing currency properties"
-      - "<gray>and update their configurations."
+      - "<gray>Modifica le proprietà delle valute esistenti"
+      - "<gray>e aggiorna le loro configurazioni.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>You can edit:</gradient>"
-      - "<white>• Currency symbol</white>"
-      - "<white>• Display prefix and suffix</white>"
-      - "<white>• Icon material</white>"
-      - "<white>• Other properties</white>"
+      - "<gradient:#FFD700:#FFA500>Puoi modificare:</gradient>"
+      - "<white>• Simbolo della valuta</white>"
+      - "<white>• Prefisso e suffisso di visualizzazione</white>"
+      - "<white>• Materiale icona</white>"
+      - "<white>• Altre proprietà</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>Note: Identifier cannot be changed</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>Nota: L'identificatore non può essere modificato</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>▶ Click to edit currency</gradient>"
+      - "<gradient:#FFD700:#FFA500>▶ Clicca per modificare valuta</gradient>"
 
   view_currencies:
-    name: "<gradient:#4ECDC4:#45B7B8>👁 View Currencies</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>👁 Visualizza Valute</gradient>"
     lore:
       - ""
-      - "<gray>Browse through all available currencies"
-      - "<gray>in the system with detailed information."
+      - "<gray>Sfoglia tutte le valute disponibili"
+      - "<gray>nel sistema con informazioni dettagliate.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• Paginated currency list</white>"
-      - "<white>• Detailed currency information</white>"
-      - "<white>• Leaderboard access</white>"
-      - "<white>• Administrative functions</white>"
+      - "<gradient:#FFD700:#FFA500>Funzionalità:</gradient>"
+      - "<white>• Lista valute paginata</white>"
+      - "<white>• Informazioni dettagliate sulle valute</white>"
+      - "<white>• Accesso alla classifica</white>"
+      - "<white>• Funzioni amministrative</white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>▶ Click to browse currencies</gradient>"
-
+      - "<gradient:#4ECDC4:#45B7B8>▶ Clicca per sfogliare le valute</gradient>"
   delete_currency:
-    name: "<gradient:#FF6B6B:#FF8E8E>🗑 Delete Currency</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>🗑 Elimina Valuta</gradient>"
     lore:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ ZONA PERICOLOSA ⚠️</gradient>"
       - ""
-      - "<gray>Permanently remove a currency from"
-      - "<gray>the system and all player balances."
+      - "<gray>Rimuovi permanentemente una valuta dal"
+      - "<gray>sistema e tutti i saldi dei giocatori.</gray>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>This action cannot be undone!</gradient>"
-      - "<gradient:#FFD700:#FFA500>Admin permission required.</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>Questa azione non può essere annullata!</gradient>"
+      - "<gradient:#FFD700:#FFA500>Permesso amministratore richiesto.</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>What gets deleted:</gradient>"
-      - "<white>• Currency configuration</white>"
-      - "<white>• All player balances</white>"
-      - "<white>• Transaction history</white>"
+      - "<gradient:#FFD700:#FFA500>Cosa viene eliminato:</gradient>"
+      - "<white>• Configurazione della valuta</white>"
+      - "<white>• Tutti i saldi dei giocatori</white>"
+      - "<white>• Cronologia transazioni</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>▶ Click to delete currency</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>▶ Clicca per eliminare valuta</gradient>"
+    not_implemented: "<gradient:#FFD700:#FFA500>ℹ️ Prossimamente:</gradient> <white>La funzionalità di eliminazione valuta non è ancora implementata.</white>"
 
-    not_implemented: "<gradient:#FFD700:#FFA500>ℹ️ Coming Soon:</gradient> <white>Currency deletion functionality is not yet implemented.</white>"
-
-# Currency Creating UI
 currencies_creating_ui:
-  title: "<gradient:#4ECDC4:#45B7B8>Create Currency</gradient>"
-
+  title: "<gradient:#4ECDC4:#45B7B8>Crea Valuta</gradient>"
   identifier:
-    name: "<gradient:#FFD700:#FFA500>🏷️ Currency Identifier</gradient>"
+    name: "<gradient:#FFD700:#FFA500>🏷️ Identificatore Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Set the unique name that identifies"
-      - "<gray>this currency in the system."
+      - "<gray>Imposta il nome univoco che identifica"
+      - "<gray>questa valuta nel sistema.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Requirements:</gradient>"
-      - "<white>• 2-16 characters</white>"
-      - "<white>• Letters, numbers, _, - only</white>"
+      - "<gradient:#FFD700:#FFA500>Requisiti:</gradient>"
+      - "<white>• 2-16 caratteri</white>"
+      - "<white>• Solo lettere, numeri, _, -</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set identifier</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per impostare identificatore</gradient>"
   symbol:
-    name: "<gradient:#FFD700:#FFA500>💰 Currency Symbol</gradient>"
+    name: "<gradient:#FFD700:#FFA500>💰 Simbolo Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Set the short symbol that represents"
-      - "<gray>this currency (e.g., $, €, ★)."
+      - "<gray>Imposta il simbolo breve che rappresenta"
+      - "<gray>questa valuta (es., $, €, ★).</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Requirements:</gradient>"
-      - "<white>• 1-5 characters</white>"
-      - "<white>• Cannot be empty</white>"
+      - "<gradient:#FFD700:#FFA500>Requisiti:</gradient>"
+      - "<white>• 1-5 caratteri</white>"
+      - "<white>• Non può essere vuoto</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set symbol</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per impostare simbolo</gradient>"
   icon:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Currency Icon</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 Icona Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Set the visual icon that represents"
-      - "<gray>this currency in menus and displays."
+      - "<gray>Imposta l'icona visiva che rappresenta"
+      - "<gray>questa valuta nei menu e nelle visualizzazioni.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to select material</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per selezionare materiale</gradient>"
   prefix:
-    name: "<gradient:#4ECDC4:#45B7B8>📝 Currency Prefix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📝 Prefisso Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Set text to display before the"
-      - "<gray>currency amount (optional)."
+      - "<gray>Imposta il testo da visualizzare prima"
+      - "<gray>dell'importo della valuta (opzionale).</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>'$', 'Credits: ', 'Gold: '</white>"
-      - "<white>• Maximum 16 characters</white>"
-      - "<white>• Can be empty</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>'$', 'Crediti: ', 'Oro: '</white>"
+      - "<white>• Massimo 16 caratteri</white>"
+      - "<white>• Può essere vuoto</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set prefix</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per impostare prefisso</gradient>"
   suffix:
-    name: "<gradient:#4ECDC4:#45B7B8>📄 Currency Suffix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📄 Suffisso Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Set text to display after the"
-      - "<gray>currency amount (optional)."
+      - "<gray>Imposta il testo da visualizzare dopo"
+      - "<gray>l'importo della valuta (opzionale).</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>' coins', ' points', ' credits'</white>"
-      - "<white>• Maximum 16 characters</white>"
-      - "<white>• Can be empty</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>' monete', ' punti', ' crediti'</white>"
+      - "<white>• Massimo 16 caratteri</white>"
+      - "<white>• Può essere vuoto</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set suffix</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per impostare suffisso</gradient>"
   create_currency:
-    name: "<gradient:#00FF00:#32CD32>✓ Create Currency</gradient>"
+    name: "<gradient:#00FF00:#32CD32>✓ Crea Valuta</gradient>"
     lore:
       - ""
-      - "<gray>All required fields have been filled."
-      - "<gray>Click to create your new currency."
+      - "<gray>Tutti i campi richiesti sono stati compilati.</gray>"
+      - "<gray>Clicca per creare la tua nuova valuta.</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to create currency</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per creare valuta</gradient>"
   create:
-    processing: "<gradient:#FFD700:#FFA500>🔄 Processing:</gradient> <white>Creating currency <gradient:#FFD700:#FFA500>%identifier%</gradient>...</white>"
-    already_exists: "<gradient:#FF6B6B:#FF8E8E>❌ Already Exists:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> already exists! Please choose a different identifier.</white>"
-    successfully_created: "<gradient:#00FF00:#32CD32>✅ Currency Created:</gradient> <white>Successfully created currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Creation Failed:</gradient> <white>Failed to create currency <gradient:#FFD700:#FFA500>%identifier%</gradient>. Please try again.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Unexpected Error:</gradient> <white>An error occurred while creating currency <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-    database_error: "<gradient:#FF6B6B:#FF8E8E>❌ Database Error:</gradient> <white>Database error while creating currency <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-    currency_not_found_in_cache: "<gradient:#FF6B6B:#FF8E8E>❌ Cache Error:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> was created but not found in cache. Please restart the server.</white>"
-    player_accounts_error: "<gradient:#FF6B6B:#FF8E8E>❌ Account Creation Error:</gradient> <white>Failed to create player accounts for currency <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-
+    processing: "<gradient:#FFD700:#FFA500>🔄 Elaborazione:</gradient> <white>Creazione valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>...</white>"
+    already_exists: "<gradient:#FF6B6B:#FF8E8E>❌ Già Esistente:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> esiste già! Scegli un identificatore diverso.</white>"
+    successfully_created: "<gradient:#00FF00:#32CD32>✅ Valuta Creata:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> creata con successo!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Creazione Fallita:</gradient> <white>Impossibile creare la valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>. Riprova.</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Imprevisto:</gradient> <white>Si è verificato un errore durante la creazione della valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    database_error: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Database:</gradient> <white>Errore database durante la creazione della valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    currency_not_found_in_cache: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Cache:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> è stata creata ma non trovata nella cache. Riavvia il server.</white>"
+    player_accounts_error: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Creazione Account:</gradient> <white>Impossibile creare gli account giocatori per la valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
     success:
-      player_accounts_created: "<gradient:#00FF00:#32CD32>✅ Accounts Created:</gradient> <white>Successfully created <gradient:#FFD700:#FFA500>%player_amount%</gradient> player accounts for currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
+      player_accounts_created: "<gradient:#00FF00:#32CD32>✅ Account Creati:</gradient> <white><gradient:#FFD700:#FFA500>%player_amount%</gradient> account giocatori creati con successo per la valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
 
-# Currency Overview UI
 currencies_overview_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Overview</gradient>"
-
+  title: "<gradient:#FFD700:#FFA500>Panoramica Valute</gradient>"
   currency:
     name: "<gradient:#FFD700:#FFA500>%currency_symbol%</gradient> <white>%currency_identifier%</white>"
     lore:
       - ""
-      - "<gray>▪ <white>Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Prefix:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Suffix:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Position:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
+      - "<gray>▪ <white>Identificatore:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Simbolo:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>Prefisso:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>Suffisso:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>Posizione:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• View detailed information</white>"
-      - "<white>• Access leaderboard</white>"
-      - "<white>• Administrative functions</white>"
+      - "<gradient:#FFD700:#FFA500>Funzionalità:</gradient>"
+      - "<white>• Visualizza informazioni dettagliate</white>"
+      - "<white>• Accedi alla classifica</white>"
+      - "<white>• Funzioni amministrative</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to view details</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per vedere i dettagli</gradient>"
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Page</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Page ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
-
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Pagina Precedente</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>Pagina Successiva ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>Pagina %current_page% di %total_pages%</gradient>"
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Currencies Found</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>Nessuna Valuta Trovata</gradient>"
     description:
       - ""
-      - "<gray>There are currently no currencies"
-      - "<gray>available in the system."
+      - "<gray>Attualmente non ci sono valute"
+      - "<gray>disponibili nel sistema.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>💡 Tip:</gradient>"
-      - "<white>Create a new currency to get started!</white>"
+      - "<gradient:#FFD700:#FFA500>💡 Suggerimento:</gradient>"
+      - "<white>Crea una nuova valuta per iniziare!</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Go back to create one</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Torna indietro per crearne una</gradient>"
   loading:
-    title: "<gradient:#FFD700:#FFA500>Loading Currencies...</gradient>"
+    title: "<gradient:#FFD700:#FFA500>Caricamento Valute...</gradient>"
     description:
       - ""
-      - "<gray>Please wait while we load"
-      - "<gray>all available currencies."
+      - "<gray>Attendere mentre carichiamo"
+      - "<gray>tutte le valute disponibili.</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>⏳ This may take a moment...</gradient>"
+      - "<gradient:#FFD700:#FFA500>⏳ Potrebbe richiedere un momento...</gradient>"
 
-# Currency Detail UI
+
 currency_detail_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Details</gradient> <gray>- <white>%currency_identifier%</white>"
-
+  title: "<gradient:#FFD700:#FFA500>Dettagli Valuta</gradient> <gray>- <white>%currency_identifier%</white>"
   currency_icon:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Currency Icon</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 Icona Valuta</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Material:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Materiale:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
+      - "<gray>▪ <white>Valuta:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
-      - "<gray>This material represents the currency"
-      - "<gray>in various UI elements and displays."
+      - "<gray>Questo materiale rappresenta la valuta"
+      - "<gray>in vari elementi UI e visualizzazioni."
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
-
+      - "<gradient:#6C7B7F:#95A5A6>Informazione di sola lettura</gradient>"
   currency_symbol:
-    name: "<gradient:#FFD700:#FFA500>💰 Currency Symbol</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+    name: "<gradient:#FFD700:#FFA500>💰 Simbolo Valuta</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Simbolo:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>Valuta:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
-      - "<gray>This symbol is used to represent"
-      - "<gray>the currency in short form."
+      - "<gray>Questo simbolo viene usato per rappresentare"
+      - "<gray>la valuta in forma abbreviata."
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
-
+      - "<gradient:#6C7B7F:#95A5A6>Informazione di sola lettura</gradient>"
   currency_prefix:
-    name: "<gradient:#4ECDC4:#45B7B8>📝 Currency Prefix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📝 Prefisso Valuta</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Prefix:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Has Prefix:</white> %has_prefix%"
+      - "<gray>▪ <white>Prefisso:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>Ha Prefisso:</white> %has_prefix%"
       - ""
-      - "<gray>Text displayed before the currency"
-      - "<gray>amount in transactions and displays."
+      - "<gray>Testo visualizzato prima dell'importo"
+      - "<gray>della valuta nelle transazioni e visualizzazioni."
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
-
+      - "<gradient:#6C7B7F:#95A5A6>Informazione di sola lettura</gradient>"
   currency_suffix:
-    name: "<gradient:#4ECDC4:#45B7B8>📄 Currency Suffix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📄 Suffisso Valuta</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Suffix:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Has Suffix:</white> %has_suffix%"
+      - "<gray>▪ <white>Suffisso:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>Ha Suffisso:</white> %has_suffix%"
       - ""
-      - "<gray>Text displayed after the currency"
-      - "<gray>amount in transactions and displays."
+      - "<gray>Testo visualizzato dopo l'importo"
+      - "<gray>della valuta nelle transazioni e visualizzazioni."
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
-
+      - "<gradient:#6C7B7F:#95A5A6>Informazione di sola lettura</gradient>"
   leaderboard:
-    name: "<gradient:#FFD700:#FFA500>🏆 View Leaderboard (%currency_identifier%)</gradient>"
+    name: "<gradient:#FFD700:#FFA500>🏆 Visualizza Classifica (%currency_identifier%)</gradient>"
     lore:
       - ""
-      - "<gray>View the top players with the most"
+      - "<gray>Visualizza i migliori giocatori con più"
       - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%)</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• Top players with positive balances</white>"
-      - "<white>• Real-time balance updates</white>"
-      - "<white>• Detailed player statistics</white>"
-      - "<white>• Rank-based visual indicators</white>"
+      - "<gradient:#FFD700:#FFA500>Funzionalità:</gradient>"
+      - "<white>• Migliori giocatori con saldi positivi</white>"
+      - "<white>• Aggiornamenti saldo in tempo reale</white>"
+      - "<white>• Statistiche dettagliate giocatori</white>"
+      - "<white>• Indicatori visivi basati sul rango</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to view leaderboard</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per vedere la classifica</gradient>"
   reset_all:
-    name: "<gradient:#FF6B6B:#FF8E8E>🔄 Reset All Balances</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>🔄 Azzera Tutti i Saldi</gradient>"
     lore:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ ZONA PERICOLOSA ⚠️</gradient>"
       - ""
-      - "<gray>Reset ALL player balances for"
-      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%) to <white>0</white>"
+      - "<gray>Azzera TUTTI i saldi dei giocatori per"
+      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%) a <white>0</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>This action requires confirmation!</gradient>"
-      - "<gradient:#FFD700:#FFA500>Admin permission required.</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>Questa azione richiede conferma!</gradient>"
+      - "<gradient:#FFD700:#FFA500>Permesso amministratore richiesto.</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>What gets reset:</gradient>"
-      - "<white>• All player balances</white>"
-      - "<white>• Leaderboard positions</white>"
-      - "<white>• Balance history</white>"
+      - "<gradient:#FFD700:#FFA500>Cosa viene azzerato:</gradient>"
+      - "<white>• Tutti i saldi dei giocatori</white>"
+      - "<white>• Posizioni in classifica</white>"
+      - "<white>• Cronologia saldi</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>▶ Click to start reset process</gradient>"
-
+      - "<gradient:#FF6B6B:#FF8E8E>▶ Clicca per avviare il processo di azzeramento</gradient>"
     confirm:
-      title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Confirm Balance Reset</gradient>"
+      title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Conferma Azzeramento Saldi</gradient>"
       message:
         - ""
-        - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+        - "<gradient:#FF6B6B:#FF8E8E>⚠️ ZONA PERICOLOSA ⚠️</gradient>"
         - ""
-        - "<gray>You are about to reset ALL player balances"
-        - "<gray>for currency: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+        - "<gray>Stai per azzerare TUTTI i saldi dei giocatori"
+        - "<gray>per la valuta: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
         - ""
-        - "<gradient:#FFD700:#FFA500>Reset Statistics:</gradient>"
-        - "<white>• Players affected: <gradient:#FF6B6B:#FF8E8E>%player_count%</gradient></white>"
-        - "<white>• Total amount to reset: <gradient:#FF6B6B:#FF8E8E>%total_amount_formatted% %currency_symbol%</gradient></white>"
+        - "<gradient:#FFD700:#FFA500>Statistiche Azzeramento:</gradient>"
+        - "<white>• Giocatori interessati: <gradient:#FF6B6B:#FF8E8E>%player_count%</gradient></white>"
+        - "<white>• Importo totale da azzerare: <gradient:#FF6B6B:#FF8E8E>%total_amount_formatted% %currency_symbol%</gradient></white>"
         - ""
-        - "<gradient:#FF6B6B:#FF8E8E>This action CANNOT be undone!</gradient>"
-        - "<gradient:#FF6B6B:#FF8E8E>All player progress will be lost!</gradient>"
+        - "<gradient:#FF6B6B:#FF8E8E>Questa azione NON può essere annullata!</gradient>"
+        - "<gradient:#FF6B6B:#FF8E8E>Tutti i progressi dei giocatori andranno persi!</gradient>"
         - ""
-        - "<gray>Are you absolutely sure you want to continue?</gray>"
-
-    processing: "<gradient:#FFD700:#FFA500>🔄 Processing Reset:</gradient> <white>Resetting <gradient:#FFD700:#FFA500>%player_count%</gradient> player balances for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>...</white>"
-    success: "<gradient:#00FF00:#32CD32>✅ Reset Complete:</gradient> <white>Successfully reset <gradient:#FFD700:#FFA500>%player_count%</gradient> players' <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> balances. Total amount reset: <gradient:#FF6B6B:#FF8E8E>%total_amount_reset% %currency_symbol%</gradient></white>"
-    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ Reset Cancelled:</gradient> <white>Balance reset operation for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> was cancelled by user.</white>"
-    no_players: "<gradient:#FFD700:#FFA500>ℹ️ No Players Found:</gradient> <white>No players found with <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> currency balances to reset.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Database Error:</gradient> <white>Failed to load currency data for reset: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-    execution_error: "<gradient:#FF6B6B:#FF8E8E>❌ Reset Failed:</gradient> <white>Failed to reset balances for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-
+        - "<gray>Sei assolutamente sicuro di voler continuare?</gray>"
+    processing: "<gradient:#FFD700:#FFA500>🔄 Elaborazione Azzeramento:</gradient> <white>Azzeramento di <gradient:#FFD700:#FFA500>%player_count%</gradient> saldi giocatori per <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>...</white>"
+    success: "<gradient:#00FF00:#32CD32>✅ Azzeramento Completato:</gradient> <white>Azzerati con successo i saldi di <gradient:#FFD700:#FFA500>%player_count%</gradient> giocatori per <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Importo totale azzerato: <gradient:#FF6B6B:#FF8E8E>%total_amount_reset% %currency_symbol%</gradient></white>"
+    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ Azzeramento Annullato:</gradient> <white>L'operazione di azzeramento saldi per <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> è stata annullata dall'utente.</white>"
+    no_players: "<gradient:#FFD700:#FFA500>ℹ️ Nessun Giocatore Trovato:</gradient> <white>Nessun giocatore trovato con saldi <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> da azzerare.</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Database:</gradient> <white>Impossibile caricare i dati della valuta per l'azzeramento: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    execution_error: "<gradient:#FF6B6B:#FF8E8E>❌ Azzeramento Fallito:</gradient> <white>Impossibile azzerare i saldi per <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
   back:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Back to Overview</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ Torna alla Panoramica</gradient>"
     lore:
       - ""
-      - "<gray>Return to the currency overview"
-      - "<gray>to browse other currencies."
+      - "<gray>Torna alla panoramica delle valute"
+      - "<gray>per sfogliare altre valute."
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to go back</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per tornare indietro</gradient>"
 
-# Currency Leaderboard UI
 currency_leaderboard_ui:
-  title: "<gradient:#FFD700:#FFA500>🏆 Leaderboard</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-
+  title: "<gradient:#FFD700:#FFA500>🏆 Classifica</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
   currency_info:
-    name: "<gradient:#FFD700:#FFA500>📊 %currency_identifier% Leaderboard</gradient>"
+    name: "<gradient:#FFD700:#FFA500>📊 Classifica %currency_identifier%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>Valuta:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Simbolo:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
       - ""
-      - "<gray>Showing the top players with the"
-      - "<gray>highest balances for this currency."
+      - "<gray>Mostra i migliori giocatori con i"
+      - "<gray>saldi più alti per questa valuta."
       - ""
-      - "<gradient:#00FF00:#32CD32>🏆 Rankings below 🏆</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>🏆 Classifiche sotto 🏆</gradient>"
   player_entry:
     name: "%rank_color%#%rank%</gradient> <white>%player_name%</white> <gray>- <gradient:#FFD700:#FFA500>%balance% %currency_symbol%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Rank:</white> %rank_color%#%rank%</gradient>"
-      - "<gray>▪ <white>Player:</white> <gradient:#FFD700:#FFA500>%player_name%</gradient>"
-      - "<gray>▪ <white>Balance:</white> <gradient:#00FF00:#32CD32>%formatted_balance%</gradient>"
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Rango:</white> %rank_color%#%rank%</gradient>"
+      - "<gray>▪ <white>Giocatore:</white> <gradient:#FFD700:#FFA500>%player_name%</gradient>"
+      - "<gray>▪ <white>Saldo:</white> <gradient:#00FF00:#32CD32>%formatted_balance%</gradient>"
+      - "<gray>▪ <white>Valuta:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
       - "<gradient:#6C7B7F:#95A5A6>UUID: %player_uuid%</gradient>"
-
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Rankings</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Rankings ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
-
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Classifiche Precedenti</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>Classifiche Successive ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>Pagina %current_page% di %total_pages%</gradient>"
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Rankings Available</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>Nessuna Classifica Disponibile</gradient>"
     description:
-      - "<gray>No players have a positive balance"
-      - "<gray>for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> yet."
+      - "<gray>Nessun giocatore ha un saldo positivo"
+      - "<gray>per <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> ancora."
       - ""
-      - "<gradient:#FFD700:#FFA500>Be the first to earn some currency!</gradient>"
-
+      - "<gradient:#FFD700:#FFA500>Sii il primo a guadagnare della valuta!</gradient>"
   back_button:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Back to Details</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ Torna ai Dettagli</gradient>"
     lore:
       - ""
-      - "<gray>Return to the currency detail view"
-      - "<gray>to see more information and options."
+      - "<gray>Torna alla vista dettagli valuta"
+      - "<gray>per vedere più informazioni e opzioni."
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to go back</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per tornare indietro</gradient>"
 
-# Currency Editing UI (Selection)
+
 currency_editing_ui:
-  title: "<gradient:#FFD700:#FFA500>Edit Currency</gradient> <gray>- <white>Select Currency</white>"
-
+  title: "<gradient:#FFD700:#FFA500>Modifica Valuta</gradient> <gray>- <white>Seleziona Valuta</white>"
   currency:
     name: "<gradient:#FFD700:#FFA500>🔧 %currency_symbol%</gradient> <white>%currency_identifier%</white>"
     lore:
       - ""
-      - "<gray>▪ <white>Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Prefix:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Suffix:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Position:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
+      - "<gray>▪ <white>Identificatore:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Simbolo:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>Prefisso:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>Suffisso:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>Posizione:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Editable Properties:</gradient>"
-      - "<white>• Symbol and visual representation</white>"
-      - "<white>• Display prefix and suffix</white>"
-      - "<white>• Icon material</white>"
+      - "<gradient:#FFD700:#FFA500>Proprietà Modificabili:</gradient>"
+      - "<white>• Simbolo e rappresentazione visiva</white>"
+      - "<white>• Prefisso e suffisso di visualizzazione</white>"
+      - "<white>• Materiale icona</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>Note: Identifier cannot be changed</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>Nota: L'identificatore non può essere modificato</gradient>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit this currency</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per modificare questa valuta</gradient>"
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Page</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Page ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
-
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Pagina Precedente</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>Pagina Successiva ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>Pagina %current_page% di %total_pages%</gradient>"
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Currencies Available</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>Nessuna Valuta Disponibile</gradient>"
     description:
       - ""
-      - "<gray>There are currently no currencies"
-      - "<gray>available to edit in the system."
+      - "<gray>Attualmente non ci sono valute"
+      - "<gray>disponibili da modificare nel sistema."
       - ""
-      - "<gradient:#FFD700:#FFA500>💡 Tip:</gradient>"
-      - "<white>Create a currency first before editing!</white>"
+      - "<gradient:#FFD700:#FFA500>💡 Suggerimento:</gradient>"
+      - "<white>Crea prima una valuta prima di modificare!</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Go back to create one</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ Torna indietro per crearne una</gradient>"
 
-# Currency Properties Editing UI
 currency_properties_editing_ui:
-  title: "<gradient:#FFD700:#FFA500>Edit Currency Properties</gradient> <gray>- <white>%currency_identifier%</white>"
-
+  title: "<gradient:#FFD700:#FFA500>Modifica Proprietà Valuta</gradient> <gray>- <white>%currency_identifier%</white>"
   identifier:
-    name: "<gradient:#6C7B7F:#95A5A6>🏷️ Currency Identifier</gradient> <gray>(Read-Only)</gray>"
+    name: "<gradient:#6C7B7F:#95A5A6>🏷️ Identificatore Valuta</gradient> <gray>(Sola Lettura)</gray>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Identificatore Attuale:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ Cannot be changed</gradient>"
-      - "<gray>The identifier is permanent to maintain"
-      - "<gray>database integrity and prevent conflicts."
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ Non può essere modificato</gradient>"
+      - "<gray>L'identificatore è permanente per mantenere"
+      - "<gray>l'integrità del database e prevenire conflitti."
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
-
+      - "<gradient:#6C7B7F:#95A5A6>Informazione di sola lettura</gradient>"
   symbol:
-    name: "<gradient:#FFD700:#FFA500>💰 Edit Symbol</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+    name: "<gradient:#FFD700:#FFA500>💰 Modifica Simbolo</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>Simbolo Attuale:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
       - ""
-      - "<gray>Click to modify the currency symbol"
-      - "<gray>that represents this currency."
+      - "<gray>Clicca per modificare il simbolo della valuta"
+      - "<gray>che rappresenta questa valuta."
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>$, €, ★, ♦, 🪙</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>$, €, ★, ♦, 🪙</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit symbol</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per modificare simbolo</gradient>"
   icon:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Edit Icon</gradient> <gray>- <gradient:#FFD700:#FFA500>%material_name%</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 Modifica Icona</gradient> <gray>- <gradient:#FFD700:#FFA500>%material_name%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Material:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
+      - "<gray>▪ <white>Materiale Attuale:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
       - ""
-      - "<gray>Click to change the material icon"
-      - "<gray>used to represent this currency."
+      - "<gray>Clicca per cambiare l'icona materiale"
+      - "<gray>usata per rappresentare questa valuta."
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to select new material</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per selezionare nuovo materiale</gradient>"
   prefix:
-    name: "<gradient:#4ECDC4:#45B7B8>📝 Edit Prefix</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📝 Modifica Prefisso</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Prefix:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Has Prefix:</white> %has_prefix%"
+      - "<gray>▪ <white>Prefisso Attuale:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>Ha Prefisso:</white> %has_prefix%"
       - ""
-      - "<gray>Click to modify the text displayed"
-      - "<gray>before currency amounts."
+      - "<gray>Clicca per modificare il testo visualizzato"
+      - "<gray>prima degli importi della valuta."
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>'$', 'Credits: ', 'Gold: '</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>'$', 'Crediti: ', 'Oro: '</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit prefix</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per modificare prefisso</gradient>"
   suffix:
-    name: "<gradient:#4ECDC4:#45B7B8>📄 Edit Suffix</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📄 Modifica Suffisso</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Suffix:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Has Suffix:</white> %has_suffix%"
+      - "<gray>▪ <white>Suffisso Attuale:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>Ha Suffisso:</white> %has_suffix%"
       - ""
-      - "<gray>Click to modify the text displayed"
-      - "<gray>after currency amounts."
+      - "<gray>Clicca per modificare il testo visualizzato"
+      - "<gray>dopo gli importi della valuta."
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>' coins', ' points', ' credits'</white>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient> <white>' monete', ' punti', ' crediti'</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit suffix</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per modificare suffisso</gradient>"
   save_changes:
-    name: "<gradient:#00FF00:#32CD32>💾 Save Changes</gradient>"
+    name: "<gradient:#00FF00:#32CD32>💾 Salva Modifiche</gradient>"
     lore:
       - ""
-      - "<gray>Save all modifications made to"
-      - "<gray>this currency's properties."
+      - "<gray>Salva tutte le modifiche apportate"
+      - "<gray>alle proprietà di questa valuta."
       - ""
-      - "<gradient:#FFD700:#FFA500>What gets saved:</gradient>"
-      - "<white>• Symbol changes</white>"
-      - "<white>• Icon material updates</white>"
-      - "<white>• Prefix modifications</white>"
-      - "<white>• Suffix modifications</white>"
+      - "<gradient:#FFD700:#FFA500>Cosa viene salvato:</gradient>"
+      - "<white>• Modifiche al simbolo</white>"
+      - "<white>• Aggiornamenti materiale icona</white>"
+      - "<white>• Modifiche al prefisso</white>"
+      - "<white>• Modifiche al suffisso</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to save all changes</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per salvare tutte le modifiche</gradient>"
   save:
-    processing: "<gradient:#FFD700:#FFA500>💾 Saving Changes:</gradient> <white>Updating currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> properties...</white>"
-    success: "<gradient:#00FF00:#32CD32>✅ Changes Saved:</gradient> <white>Successfully updated currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> properties!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Save Failed:</gradient> <white>Failed to save changes to currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Please try again.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Save Error:</gradient> <white>An error occurred while saving currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    processing: "<gradient:#FFD700:#FFA500>💾 Salvataggio Modifiche:</gradient> <white>Aggiornamento proprietà valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>...</white>"
+    success: "<gradient:#00FF00:#32CD32>✅ Modifiche Salvate:</gradient> <white>Proprietà valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> aggiornate con successo!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Salvataggio Fallito:</gradient> <white>Impossibile salvare le modifiche alla valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Riprova.</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Salvataggio:</gradient> <white>Si è verificato un errore durante il salvataggio della valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
 
-# Currency Deletion UI
 currency_deletion_ui:
-  title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Delete Currency</gradient> <gray>- <white>Select Currency</white>"
-
+  title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Elimina Valuta</gradient> <gray>- <white>Seleziona Valuta</white>"
   currency:
     name: "<gradient:#FF6B6B:#FF8E8E>🗑️ %currency_symbol%</gradient> <white>%currency_identifier%</white>"
     lore:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ ZONA PERICOLOSA ⚠️</gradient>"
       - ""
-      - "<gray>▪ <white>Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Affected Players:</white> <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient>"
-      - "<gray>▪ <white>Total Balance:</white> <gradient:#FF6B6B:#FF8E8E>%total_balance%</gradient>"
-      - "<gray>▪ <white>Position:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
+      - "<gray>▪ <white>Identificatore:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>Simbolo:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>Giocatori Interessati:</white> <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient>"
+      - "<gray>▪ <white>Saldo Totale:</white> <gradient:#FF6B6B:#FF8E8E>%total_balance%</gradient>"
+      - "<gray>▪ <white>Posizione:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>This action will permanently:</gradient>"
-      - "<white>• Delete the currency configuration</white>"
-      - "<white>• Remove ALL player balances</white>"
-      - "<white>• Clear transaction history</white>"
+      - "<gradient:#FF6B6B:#FF8E8E>Questa azione eliminerà permanentemente:</gradient>"
+      - "<white>• La configurazione della valuta</white>"
+      - "<white>• TUTTI i saldi dei giocatori</white>"
+      - "<white>• La cronologia delle transazioni</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ THIS CANNOT BE UNDONE! ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ QUESTO NON PUÒ ESSERE ANNULLATO! ⚠️</gradient>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>▶ Click to delete this currency</gradient>"
-
+      - "<gradient:#FF6B6B:#FF8E8E>▶ Clicca per eliminare questa valuta</gradient>"
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Page</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Page ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
-
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Pagina Precedente</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>Pagina Successiva ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>Pagina %current_page% di %total_pages%</gradient>"
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Currencies Available</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>Nessuna Valuta Disponibile</gradient>"
     description:
       - ""
-      - "<gray>There are currently no currencies"
-      - "<gray>available to delete in the system."
+      - "<gray>Attualmente non ci sono valute"
+      - "<gray>disponibili da eliminare nel sistema."
       - ""
-      - "<gradient:#FFD700:#FFA500>💡 Note:</gradient>"
-      - "<white>This is actually a good thing!</white>"
+      - "<gradient:#FFD700:#FFA500>💡 Nota:</gradient>"
+      - "<white>Questo è in realtà una cosa buona!</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Go back to main menu</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Torna al menu principale</gradient>"
   confirm:
-    title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Confirm Currency Deletion</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Conferma Eliminazione Valuta</gradient>"
     message:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ FINAL WARNING ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ ULTIMO AVVISO ⚠️</gradient>"
       - ""
-      - "<gray>You are about to permanently delete:"
-      - "<gray>Currency: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> (%currency_symbol%)"
+      - "<gray>Stai per eliminare permanentemente:"
+      - "<gray>Valuta: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> (%currency_symbol%)"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>Deletion Impact:</gradient>"
-      - "<white>• Players affected: <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient></white>"
-      - "<white>• Total balance lost: <gradient:#FF6B6B:#FF8E8E>%total_balance_formatted% %currency_symbol%</gradient></white>"
-      - "<white>• All transaction history will be erased</white>"
-      - "<white>• Currency configuration will be removed</white>"
+      - "<gradient:#FF6B6B:#FF8E8E>Impatto Eliminazione:</gradient>"
+      - "<white>• Giocatori interessati: <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient></white>"
+      - "<white>• Saldo totale perso: <gradient:#FF6B6B:#FF8E8E>%total_balance_formatted% %currency_symbol%</gradient></white>"
+      - "<white>• Tutta la cronologia transazioni sarà cancellata</white>"
+      - "<white>• La configurazione della valuta sarà rimossa</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>THIS ACTION IS IRREVERSIBLE!</gradient>"
-      - "<gradient:#FF6B6B:#FF8E8E>ALL PLAYER PROGRESS WILL BE LOST!</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>QUESTA AZIONE È IRREVERSIBILE!</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>TUTTI I PROGRESSI DEI GIOCATORI ANDRANNO PERSI!</gradient>"
       - ""
-      - "<gray>Are you absolutely certain you want to proceed?</gray>"
-
+      - "<gray>Sei assolutamente certo di voler procedere?</gray>"
   delete:
-    processing: "<gradient:#FFD700:#FFA500>🗑️ Processing Deletion:</gradient> <white>Deleting currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> and <gradient:#FFD700:#FFA500>%affected_players%</gradient> player accounts...</white>"
-    success: "<gradient:#00FF00:#32CD32>✅ Deletion Complete:</gradient> <white>Successfully deleted currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Removed <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient> player accounts with total balance of <gradient:#FF6B6B:#FF8E8E>%total_balance_removed% %currency_symbol%</gradient>.</white>"
-    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ Deletion Cancelled:</gradient> <white>Currency deletion for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> was cancelled by user.</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Deletion Failed:</gradient> <white>Failed to delete currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Please try again or contact an administrator.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Deletion Error:</gradient> <white>An error occurred while deleting currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    processing: "<gradient:#FFD700:#FFA500>🗑️ Elaborazione Eliminazione:</gradient> <white>Eliminazione valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> e <gradient:#FFD700:#FFA500>%affected_players%</gradient> account giocatori...</white>"
+    success: "<gradient:#00FF00:#32CD32>✅ Eliminazione Completata:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> eliminata con successo. Rimossi <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient> account giocatori con saldo totale di <gradient:#FF6B6B:#FF8E8E>%total_balance_removed% %currency_symbol%</gradient>.</white>"
+    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ Eliminazione Annullata:</gradient> <white>L'eliminazione della valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> è stata annullata dall'utente.</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Eliminazione Fallita:</gradient> <white>Impossibile eliminare la valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Riprova o contatta un amministratore.</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ Errore Eliminazione:</gradient> <white>Si è verificato un errore durante l'eliminazione della valuta <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+
 
 # ═══════════════════════════════════════════════════════════════
-# ANVIL INPUT VIEWS
+# VISTE INPUT ANVIL
 # ═══════════════════════════════════════════════════════════════
 
-# Currency Identifier Anvil View
 currency_identifier_anvil_ui:
-  title: "<gradient:#9370DB:#8A2BE2>Edit Currency Identifier</gradient>"
-
+  title: "<gradient:#9370DB:#8A2BE2>Modifica Identificatore Valuta</gradient>"
   input:
-    name: "<gradient:#FF69B4:#FF1493>🏷️ Currency Identifier</gradient>"
+    name: "<gradient:#FF69B4:#FF1493>🏷️ Identificatore Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Enter a unique identifier for your currency"
-      - "<gray>This is the <gradient:#FFD700:#FFA500>internal name</gradient> used by the system"
+      - "<gray>Inserisci un identificatore univoco per la tua valuta"
+      - "<gray>Questo è il <gradient:#FFD700:#FFA500>nome interno</gradient> usato dal sistema"
       - ""
-      - "<gradient:#00FF00:#32CD32>Requirements:</gradient>"
-      - "<white>  • Only <gradient:#FFD700:#FFA500>%pattern%</gradient></white>"
-      - "<white>  • Between <gradient:#FFD700:#FFA500>%min_length%</gradient> and <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</white>"
-      - "<white>  • Must be <gradient:#FFD700:#FFA500>unique</gradient></white>"
+      - "<gradient:#00FF00:#32CD32>Requisiti:</gradient>"
+      - "<white>  • Solo <gradient:#FFD700:#FFA500>%pattern%</gradient></white>"
+      - "<white>  • Tra <gradient:#FFD700:#FFA500>%min_length%</gradient> e <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri</white>"
+      - "<white>  • Deve essere <gradient:#FFD700:#FFA500>univoco</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Examples:</gradient>"
-      - "<white>  • <gradient:#FFD700:#FFA500>coins</gradient>, <gradient:#FFD700:#FFA500>gems</gradient>, <gradient:#FFD700:#FFA500>tokens</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>vip_points</gradient>, <gradient:#FFD700:#FFA500>event-coins</gradient></white>"
+      - "<gradient:#4ECDC4:#45B7B8>Esempi:</gradient>"
+      - "<white>  • <gradient:#FFD700:#FFA500>monete</gradient>, <gradient:#FFD700:#FFA500>gemme</gradient>, <gradient:#FFD700:#FFA500>gettoni</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>punti_vip</gradient>, <gradient:#FFD700:#FFA500>monete-evento</gradient></white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca sul risultato per salvare!</gradient>"
   validation_error:
-    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Empty Identifier:</gradient> <white>Currency identifier cannot be empty. Please enter a valid name.</white>"
-    invalid_characters: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Characters:</gradient> <white>Identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' contains invalid characters. Only <gradient:#FFD700:#FFA500>%pattern%</gradient> are allowed.</white>"
-    too_short: "<gradient:#FF6B6B:#FF8E8E>❌ Too Short:</gradient> <white>Identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' is too short. Minimum length is <gradient:#FFD700:#FFA500>%min_length%</gradient> characters.</white>"
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Too Long:</gradient> <white>Identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' is too long. Maximum length is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    already_defined: "<gradient:#FF6B6B:#FF8E8E>❌ Already Exists:</gradient> <white>A currency with identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' already exists. Please choose a different name.</white>"
+    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Identificatore Vuoto:</gradient> <white>L'identificatore della valuta non può essere vuoto. Inserisci un nome valido.</white>"
+    invalid_characters: "<gradient:#FF6B6B:#FF8E8E>❌ Caratteri Non Validi:</gradient> <white>L'identificatore '<gradient:#FFD700:#FFA500>%input%</gradient>' contiene caratteri non validi. Solo <gradient:#FFD700:#FFA500>%pattern%</gradient> sono permessi.</white>"
+    too_short: "<gradient:#FF6B6B:#FF8E8E>❌ Troppo Corto:</gradient> <white>L'identificatore '<gradient:#FFD700:#FFA500>%input%</gradient>' è troppo corto. La lunghezza minima è <gradient:#FFD700:#FFA500>%min_length%</gradient> caratteri.</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Troppo Lungo:</gradient> <white>L'identificatore '<gradient:#FFD700:#FFA500>%input%</gradient>' è troppo lungo. La lunghezza massima è <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri.</white>"
+    already_defined: "<gradient:#FF6B6B:#FF8E8E>❌ Già Esistente:</gradient> <white>Una valuta con identificatore '<gradient:#FFD700:#FFA500>%input%</gradient>' esiste già. Scegli un nome diverso.</white>"
 
-# Currency Symbol Anvil View
 currency_symbol_anvil_ui:
-  title: "<gradient:#FF4500:#FF6347>Edit Currency Symbol</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
-
+  title: "<gradient:#FF4500:#FF6347>Modifica Simbolo Valuta</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
   input:
-    name: "<gradient:#DAA520:#B8860B>💰 Currency Symbol</gradient>"
+    name: "<gradient:#DAA520:#B8860B>💰 Simbolo Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Enter a symbol for your currency"
-      - "<gray>This is a <gradient:#FFD700:#FFA500>short representation</gradient> of your currency"
+      - "<gray>Inserisci un simbolo per la tua valuta"
+      - "<gray>Questa è una <gradient:#FFD700:#FFA500>rappresentazione breve</gradient> della tua valuta"
       - ""
-      - "<gradient:#00FF00:#32CD32>Examples:</gradient>"
+      - "<gradient:#00FF00:#32CD32>Esempi:</gradient>"
       - "<white>  • <gradient:#FFD700:#FFA500>$</gradient>, <gradient:#FFD700:#FFA500>€</gradient>, <gradient:#FFD700:#FFA500>£</gradient>, <gradient:#FFD700:#FFA500>¥</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>★</gradient>, <gradient:#FFD700:#FFA500>♦</gradient>, <gradient:#FFD700:#FFA500>⚡</gradient>, <gradient:#FFD700:#FFA500>🪙</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>C</gradient>, <gradient:#FFD700:#FFA500>G</gradient>, <gradient:#FFD700:#FFA500>T</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_symbol%</gradient>"
-      - "<gray>Max length: <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</gray>"
-      - "<gradient:#FF6B6B:#FF8E8E>Cannot be empty!</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>Attuale:</gradient> <gradient:#FFD700:#FFA500>%current_symbol%</gradient>"
+      - "<gray>Lunghezza max: <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri</gray>"
+      - "<gradient:#FF6B6B:#FF8E8E>Non può essere vuoto!</gradient>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca sul risultato per salvare!</gradient>"
   validation_error:
-    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Empty Symbol:</gradient> <white>Currency symbol cannot be empty. Please enter a valid symbol.</white>"
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Symbol Too Long:</gradient> <white>Your symbol '<gradient:#FFD700:#FFA500>%input%</gradient>' is <gradient:#FFD700:#FFA500>%current_length%</gradient> characters long, but the maximum is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Symbol:</gradient> <white>The symbol '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid. Please try again.</white>"
+    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Simbolo Vuoto:</gradient> <white>Il simbolo della valuta non può essere vuoto. Inserisci un simbolo valido.</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Simbolo Troppo Lungo:</gradient> <white>Il tuo simbolo '<gradient:#FFD700:#FFA500>%input%</gradient>' è lungo <gradient:#FFD700:#FFA500>%current_length%</gradient> caratteri, ma il massimo è <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri.</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ Simbolo Non Valido:</gradient> <white>Il simbolo '<gradient:#FFD700:#FFA500>%input%</gradient>' non è valido. Riprova.</white>"
 
-# Currency Icon Anvil View
 currency_icon_anvil_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Icon</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
-
+  title: "<gradient:#FFD700:#FFA500>Icona Valuta</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
   input:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Select Icon Material</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 Seleziona Materiale Icona</gradient>"
     lore:
       - ""
-      - "<gray>Enter a valid Minecraft material name"
-      - "<gray>to use as the currency icon."
+      - "<gray>Inserisci un nome materiale Minecraft valido"
+      - "<gray>da usare come icona della valuta."
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient>"
+      - "<gradient:#FFD700:#FFA500>Esempi:</gradient>"
       - "<white>• GOLD_INGOT</white>"
       - "<white>• DIAMOND</white>"
       - "<white>• EMERALD</white>"
       - "<white>• IRON_INGOT</white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_icon%</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>Attuale:</gradient> <gradient:#FFD700:#FFA500>%current_icon%</gradient>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Type material name and confirm</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Digita il nome del materiale e conferma</gradient>"
   validation_error:
-    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>Material name cannot be empty!</white>"
-    invalid_material: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' is not a valid material!</white>"
-    air_material: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>Air materials cannot be used as icons!</white>"
-    not_item: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' is not a valid item material!</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>Invalid material: <gradient:#FFD700:#FFA500>%input%</gradient></white>"
-
+    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Errore:</gradient> <white>Il nome del materiale non può essere vuoto!</white>"
+    invalid_material: "<gradient:#FF6B6B:#FF8E8E>❌ Errore:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' non è un materiale valido!</white>"
+    air_material: "<gradient:#FF6B6B:#FF8E8E>❌ Errore:</gradient> <white>I materiali aria non possono essere usati come icone!</white>"
+    not_item: "<gradient:#FF6B6B:#FF8E8E>❌ Errore:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' non è un materiale oggetto valido!</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ Errore:</gradient> <white>Materiale non valido: <gradient:#FFD700:#FFA500>%input%</gradient></white>"
   examples:
-    - "<gradient:#FFD700:#FFA500>Valid examples: %example_materials%</gradient>"
+    - "<gradient:#FFD700:#FFA500>Esempi validi: %example_materials%</gradient>"
 
-# Currency Prefix Anvil View
 currency_prefix_anvil_ui:
-  title: "<gradient:#32CD32:#228B22>Edit Currency Prefix</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
-
+  title: "<gradient:#32CD32:#228B22>Modifica Prefisso Valuta</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
   input:
-    name: "<gradient:#FFA500:#FF8C00>📝 Currency Prefix</gradient>"
+    name: "<gradient:#FFA500:#FF8C00>📝 Prefisso Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Enter the prefix for your currency"
-      - "<gray>This appears <gradient:#FFD700:#FFA500>before</gradient> the currency value"
+      - "<gray>Inserisci il prefisso per la tua valuta"
+      - "<gray>Questo appare <gradient:#FFD700:#FFA500>prima</gradient> del valore della valuta"
       - ""
-      - "<gradient:#00FF00:#32CD32>Examples:</gradient>"
+      - "<gradient:#00FF00:#32CD32>Esempi:</gradient>"
       - "<white>  • <gradient:#FFD700:#FFA500>$</gradient><gradient:#FFD700:#FFA500>100</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>€</gradient><gradient:#FFD700:#FFA500>50</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>Credits: </gradient><gradient:#FFD700:#FFA500>25</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>Crediti: </gradient><gradient:#FFD700:#FFA500>25</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_prefix%</gradient>"
-      - "<gray>Max length: <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</gray>"
-      - "<gray>Leave empty for no prefix</gray>"
+      - "<gradient:#4ECDC4:#45B7B8>Attuale:</gradient> <gradient:#FFD700:#FFA500>%current_prefix%</gradient>"
+      - "<gray>Lunghezza max: <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri</gray>"
+      - "<gray>Lascia vuoto per nessun prefisso</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca sul risultato per salvare!</gradient>"
   validation_error:
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Prefix Too Long:</gradient> <white>Your prefix '<gradient:#FFD700:#FFA500>%input%</gradient>' is <gradient:#FFD700:#FFA500>%current_length%</gradient> characters long, but the maximum is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Prefix:</gradient> <white>The prefix '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid. Please try again.</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Prefisso Troppo Lungo:</gradient> <white>Il tuo prefisso '<gradient:#FFD700:#FFA500>%input%</gradient>' è lungo <gradient:#FFD700:#FFA500>%current_length%</gradient> caratteri, ma il massimo è <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri.</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ Prefisso Non Valido:</gradient> <white>Il prefisso '<gradient:#FFD700:#FFA500>%input%</gradient>' non è valido. Riprova.</white>"
 
-# Currency Suffix Anvil View
 currency_suffix_anvil_ui:
-  title: "<gradient:#FFD700:#FFAA00>Edit Currency Suffix</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
-
+  title: "<gradient:#FFD700:#FFAA00>Modifica Suffisso Valuta</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
   input:
-    name: "<gradient:#87CEEB:#4169E1>📄 Currency Suffix</gradient>"
+    name: "<gradient:#87CEEB:#4169E1>📄 Suffisso Valuta</gradient>"
     lore:
       - ""
-      - "<gray>Enter the suffix for your currency"
-      - "<gray>This appears <gradient:#FFD700:#FFA500>after</gradient> the currency value"
+      - "<gray>Inserisci il suffisso per la tua valuta"
+      - "<gray>Questo appare <gradient:#FFD700:#FFA500>dopo</gradient> il valore della valuta"
       - ""
-      - "<gradient:#00FF00:#32CD32>Examples:</gradient>"
-      - "<white>  • <gradient:#FFD700:#FFA500>100</gradient><gradient:#FFD700:#FFA500> coins</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>50</gradient><gradient:#FFD700:#FFA500> points</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>25</gradient><gradient:#FFD700:#FFA500> credits</gradient></white>"
+      - "<gradient:#00FF00:#32CD32>Esempi:</gradient>"
+      - "<white>  • <gradient:#FFD700:#FFA500>100</gradient><gradient:#FFD700:#FFA500> monete</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>50</gradient><gradient:#FFD700:#FFA500> punti</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>25</gradient><gradient:#FFD700:#FFA500> crediti</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_suffix%</gradient>"
-      - "<gray>Max length: <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</gray>"
+      - "<gradient:#4ECDC4:#45B7B8>Attuale:</gradient> <gradient:#FFD700:#FFA500>%current_suffix%</gradient>"
+      - "<gray>Lunghezza max: <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>▶ Clicca sul risultato per salvare!</gradient>"
   validation_error:
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Suffix Too Long:</gradient> <white>Your suffix '<gradient:#FFD700:#FFA500>%input%</gradient>' is <gradient:#FFD700:#FFA500>%current_length%</gradient> characters long, but the maximum is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Suffix:</gradient> <white>The suffix '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid. Please try again.</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Suffisso Troppo Lungo:</gradient> <white>Il tuo suffisso '<gradient:#FFD700:#FFA500>%input%</gradient>' è lungo <gradient:#FFD700:#FFA500>%current_length%</gradient> caratteri, ma il massimo è <gradient:#FFD700:#FFA500>%max_length%</gradient> caratteri.</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ Suffisso Non Valido:</gradient> <white>Il suffisso '<gradient:#FFD700:#FFA500>%input%</gradient>' non è valido. Riprova.</white>"
 
 # ═══════════════════════════════════════════════════════════════
-# COMMON UI ELEMENTS
+# ELEMENTI UI COMUNI
 # ═══════════════════════════════════════════════════════════════
 
-# Navigation Elements
 navigation:
   back_to_actions:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Back to Actions</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ Torna alle Azioni</gradient>"
     lore:
       - ""
-      - "<gray>Return to the currency action"
-      - "<gray>overview to perform other operations."
+      - "<gray>Torna alla panoramica azioni valuta"
+      - "<gray>per eseguire altre operazioni."
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to go back</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ Clicca per tornare indietro</gradient>"
 
-# Head UI Elements
 head:
   return:
-    name: "<gradient:#9B59B6:#8E44AD>◀ Return</gradient>"
+    name: "<gradient:#9B59B6:#8E44AD>◀ Ritorna</gradient>"
     lore:
-      - "<gradient:#9B59B6:#8E44AD>Click here to return</gradient>"
-
+      - "<gradient:#9B59B6:#8E44AD>Clicca qui per tornare</gradient>"
   proceed:
-    name: "<gradient:#00FF00:#32CD32>✓ Proceed</gradient>"
+    name: "<gradient:#00FF00:#32CD32>✓ Procedi</gradient>"
     lore:
-      - "<gradient:#00FF00:#32CD32>Click here to proceed</gradient>"
-
+      - "<gradient:#00FF00:#32CD32>Clicca qui per procedere</gradient>"
   next:
-    name: "<gradient:#4ECDC4:#45B7B8>Next ▶</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>Avanti ▶</gradient>"
     lore:
-      - "<gradient:#4ECDC4:#45B7B8>Go to the next page</gradient>"
-
+      - "<gradient:#4ECDC4:#45B7B8>Vai alla pagina successiva</gradient>"
   previous:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Previous</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ Indietro</gradient>"
     lore:
-      - "<gradient:#FF6B6B:#FF8E8E>Go to the previous page</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>Vai alla pagina precedente</gradient>"
 
-# Page Elements
 page:
-  name: "<gradient:#4ECDC4:#45B7B8>📄 Page %page%</gradient>"
+  name: "<gradient:#4ECDC4:#45B7B8>📄 Pagina %page%</gradient>"
   lore:
     - ""
-    - "<gray>▪ <white>Current Page:</white> <gradient:#FFD700:#FFA500>%page%</gradient>"
-    - "<gray>▪ <white>Total Pages:</white> <gradient:#FFD700:#FFA500>%max_page%</gradient>"
-    - "<gray>▪ <white>First Page:</white> <gradient:#FFD700:#FFA500>%first_page%</gradient>"
-    - "<gray>▪ <white>Items Count:</white> <gradient:#FFD700:#FFA500>%items_count%</gradient>"
+    - "<gray>▪ <white>Pagina Attuale:</white> <gradient:#FFD700:#FFA500>%page%</gradient>"
+    - "<gray>▪ <white>Pagine Totali:</white> <gradient:#FFD700:#FFA500>%max_page%</gradient>"
+    - "<gray>▪ <white>Prima Pagina:</white> <gradient:#FFD700:#FFA500>%first_page%</gradient>"
+    - "<gray>▪ <white>Conteggio Elementi:</white> <gradient:#FFD700:#FFA500>%items_count%</gradient>"
     - ""
-    - "<gray>Navigate through pages to view all items."
+    - "<gray>Naviga tra le pagine per vedere tutti gli elementi."
+  fallback: "<gradient:#4ECDC4:#45B7B8>📄 Pagina %page%</gradient>"
 
-  fallback: "<gradient:#4ECDC4:#45B7B8>📄 Page %page%</gradient>"
-
-# ═══════════════════════════════════════════════════════════════
-# CONDITIONAL VALUES & HELPERS
-# ═══════════════════════════════════════════════════════════════
-
-# Conditional Display Values
 conditional_values:
   has_prefix:
-    "true": "<gradient:#00FF00:#32CD32>✓ Yes</gradient>"
+    "true": "<gradient:#00FF00:#32CD32>✓ Sì</gradient>"
     "false": "<gradient:#FF6B6B:#FF8E8E>✗ No</gradient>"
   has_suffix:
-    "true": "<gradient:#00FF00:#32CD32>✓ Yes</gradient>"
+    "true": "<gradient:#00FF00:#32CD32>✓ Sì</gradient>"
     "false": "<gradient:#FF6B6B:#FF8E8E>✗ No</gradient>"
 
-# Rank Colors for Leaderboards
 rank_colors:
-  first: "<gradient:#FFD700:#FFA500>"   # Gold
-  second: "<gradient:#C0C0C0:#A8A8A8>"  # Silver
-  third: "<gradient:#CD7F32:#B87333>"   # Bronze
-  default: "<white>"                     # White for others
+  first: "<gradient:#FFD700:#FFA500>"
+  second: "<gradient:#C0C0C0:#A8A8A8>"
+  third: "<gradient:#CD7F32:#B87333>"
+  default: "<white>"
 
-# Rank Medals
 rank_medals:
   first: "🥇"
   second: "🥈"
   third: "🥉"
   default: "🏅"
 
+
 # ═══════════════════════════════════════════════════════════════
-# PERMISSION MESSAGES
+# MESSAGGI PERMESSI
 # ═══════════════════════════════════════════════════════════════
 
 permissions:
-  no_delete_permission: "<gradient:#FF6B6B:#FF8E8E>❌ Access Denied:</gradient> <white>You don't have permission to delete currencies.</white>"
-  required_permission: "<gray>Required permission: <gradient:#FFD700:#FFA500>jexeconomy.admin.delete</gradient></gray>"
-
+  no_delete_permission: "<gradient:#FF6B6B:#FF8E8E>❌ Accesso Negato:</gradient> <white>Non hai il permesso di eliminare valute.</white>"
+  required_permission: "<gray>Permesso richiesto: <gradient:#FFD700:#FFA500>jexeconomy.admin.delete</gradient></gray>"
   reset:
-    no_permission: "<gradient:#FF6B6B:#FF8E8E>❌ Access Denied:</gradient> <white>You don't have permission to reset currency balances.</white>"
-    required: "<gray>Required permission: <gradient:#FFD700:#FFA500>jexeconomy.admin.reset</gradient></gray>"
+    no_permission: "<gradient:#FF6B6B:#FF8E8E>❌ Accesso Negato:</gradient> <white>Non hai il permesso di azzerare i saldi delle valute.</white>"
+    required: "<gray>Permesso richiesto: <gradient:#FFD700:#FFA500>jexeconomy.admin.reset</gradient></gray>"
 
 # ═══════════════════════════════════════════════════════════════
-# COMMAND MESSAGES
+# MESSAGGI COMANDI
 # ═══════════════════════════════════════════════════════════════
 
-# Currency Commands
 currency:
   command:
-    usage: "<gradient:#FFD700:#FFA500>⚠ Usage:</gradient> <white>/currency %usage%</white>"
-
+    usage: "<gradient:#FFD700:#FFA500>⚠ Utilizzo:</gradient> <white>/currency %usage%</white>"
   create:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Created:</gradient> <white>Successfully created currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    player_accounts_created: "<gradient:#00FF00:#32CD32>✓ Accounts Created:</gradient> <white>Successfully created <gradient:#FFD700:#FFA500>%player_amount%</gradient> player accounts for currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    already_exists: "<gradient:#FF6B6B:#FF8E8E>✖ Already Exists:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> already exists!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Creation Failed:</gradient> <white>Failed to create currency. Please try again.</white>"
-
+    success: "<gradient:#00FF00:#32CD32>✓ Valuta Creata:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> creata con successo!</white>"
+    player_accounts_created: "<gradient:#00FF00:#32CD32>✓ Account Creati:</gradient> <white><gradient:#FFD700:#FFA500>%player_amount%</gradient> account giocatori creati con successo per la valuta <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
+    already_exists: "<gradient:#FF6B6B:#FF8E8E>✖ Già Esistente:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> esiste già!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Creazione Fallita:</gradient> <white>Impossibile creare la valuta. Riprova.</white>"
   delete:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Deleted:</gradient> <white>Successfully deleted currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> does not exist!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Deletion Failed:</gradient> <white>Failed to delete currency. Please try again.</white>"
-
+    success: "<gradient:#00FF00:#32CD32>✓ Valuta Eliminata:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> eliminata con successo!</white>"
+    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Non Trovata:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> non esiste!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Eliminazione Fallita:</gradient> <white>Impossibile eliminare la valuta. Riprova.</white>"
   edit:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Updated:</gradient> <white>Successfully updated <gradient:#FFD700:#FFA500>%field%</gradient> of currency <gradient:#FFD700:#FFA500>%identifier%</gradient> to <gradient:#FFD700:#FFA500>%value%</gradient>!</white>"
-    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> does not exist!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Update Failed:</gradient> <white>Failed to update currency. Please try again.</white>"
-    fields: "<gradient:#FFD700:#FFA500>ℹ Available Fields:</gradient> <white><gradient:#FFD700:#FFA500>symbol</gradient>, <gradient:#FFD700:#FFA500>prefix</gradient>, <gradient:#FFD700:#FFA500>suffix</gradient>, <gradient:#FFD700:#FFA500>identifier</gradient></white>"
-
+    success: "<gradient:#00FF00:#32CD32>✓ Valuta Aggiornata:</gradient> <white><gradient:#FFD700:#FFA500>%field%</gradient> della valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> aggiornato con successo a <gradient:#FFD700:#FFA500>%value%</gradient>!</white>"
+    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Non Trovata:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> non esiste!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Aggiornamento Fallito:</gradient> <white>Impossibile aggiornare la valuta. Riprova.</white>"
+    fields: "<gradient:#FFD700:#FFA500>ℹ Campi Disponibili:</gradient> <white><gradient:#FFD700:#FFA500>symbol</gradient>, <gradient:#FFD700:#FFA500>prefix</gradient>, <gradient:#FFD700:#FFA500>suffix</gradient>, <gradient:#FFD700:#FFA500>identifier</gradient></white>"
   list:
-    header: "<gradient:#FFD700:#FFA500>📋 Available Currencies</gradient> <gray>(<gradient:#FFD700:#FFA500>%count%</gradient>):</gray>"
-    entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient> - Symbol: <gradient:#FFD700:#FFA500>%symbol%</gradient>, Prefix: <gradient:#FFD700:#FFA500>%prefix%</gradient>, Suffix: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
-    empty: "<gradient:#FFD700:#FFA500>ℹ No Currencies:</gradient> <white>No currencies found. Create one with /currency create</white>"
-
+    header: "<gradient:#FFD700:#FFA500>📋 Valute Disponibili</gradient> <gray>(<gradient:#FFD700:#FFA500>%count%</gradient>):</gray>"
+    entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient> - Simbolo: <gradient:#FFD700:#FFA500>%symbol%</gradient>, Prefisso: <gradient:#FFD700:#FFA500>%prefix%</gradient>, Suffisso: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
+    empty: "<gradient:#FFD700:#FFA500>ℹ Nessuna Valuta:</gradient> <white>Nessuna valuta trovata. Creane una con /currency create</white>"
   info:
-    header: "<gradient:#FFD700:#FFA500>📊 Currency Information:</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>"
-    details: "<gradient:#4ECDC4:#45B7B8>➤</gradient> Symbol: <gradient:#FFD700:#FFA500>%symbol%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> Prefix: <gradient:#FFD700:#FFA500>%prefix%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> Suffix: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
-    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> does not exist!</white>"
-
+    header: "<gradient:#FFD700:#FFA500>📊 Informazioni Valuta:</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>"
+    details: "<gradient:#4ECDC4:#45B7B8>➤</gradient> Simbolo: <gradient:#FFD700:#FFA500>%symbol%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> Prefisso: <gradient:#FFD700:#FFA500>%prefix%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> Suffisso: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
+    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Non Trovata:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%identifier%</gradient> non esiste!</white>"
   error:
-    no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ No Currencies:</gradient> <white>There are no currencies configured yet.</white>"
-
+    no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ Nessuna Valuta:</gradient> <white>Non ci sono ancora valute configurate.</white>"
   balance:
-    self: "<gradient:#00FF00:#32CD32>✓ Your Balance:</gradient> <white>Your <gradient:#FFD700:#FFA500>%currency%</gradient> balance: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
-    other: "<gradient:#00FF00:#32CD32>✓ Player Balance:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient>'s <gradient:#FFD700:#FFA500>%currency%</gradient> balance: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
-
-    all_header_self: "<gradient:#FFD700:#FFA500>━━━━━━━ Your Currency Balances ━━━━━━━</gradient>"
-    all_header_other: "<gradient:#FFD700:#FFA500>━━━━━━━ %player%'s Currency Balances━━━━━━━ </gradient>"
+    self: "<gradient:#00FF00:#32CD32>✓ Il Tuo Saldo:</gradient> <white>Il tuo saldo <gradient:#FFD700:#FFA500>%currency%</gradient>: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
+    other: "<gradient:#00FF00:#32CD32>✓ Saldo Giocatore:</gradient> <white>Saldo <gradient:#FFD700:#FFA500>%currency%</gradient> di <gradient:#4ECDC4:#45B7B8>%player%</gradient>: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
+    all_header_self: "<gradient:#FFD700:#FFA500>━━━━━━━ I Tuoi Saldi Valute ━━━━━━━</gradient>"
+    all_header_other: "<gradient:#FFD700:#FFA500>━━━━━━━ Saldi Valute di %player% ━━━━━━━</gradient>"
     all_footer: "<gradient:#FFD700:#FFA500></gradient>"
-
     entry: "<white>║ <gradient:#FFD700:#FFA500>%currency%</gradient>: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
-
-    no_currencies_self: "<gradient:#FF6B6B:#FF8E8E>✖ No Balances:</gradient> <white>You don't have any currency balances yet.</white>"
-    no_currencies_other: "<gradient:#FF6B6B:#FF8E8E>✖ No Balances:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> doesn't have any currency balances yet.</white>"
-
+    no_currencies_self: "<gradient:#FF6B6B:#FF8E8E>✖ Nessun Saldo:</gradient> <white>Non hai ancora nessun saldo valuta.</white>"
+    no_currencies_other: "<gradient:#FF6B6B:#FF8E8E>✖ Nessun Saldo:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> non ha ancora nessun saldo valuta.</white>"
     error:
-      currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%currency%</gradient> not found. Available currencies: <gradient:#6C7B7F:#95A5A6>%available_currencies%</gradient></white>"
-      player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>Player <gradient:#4ECDC4:#45B7B8>%player%</gradient> not found or has never played before.</white>"
-      no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ No Currencies:</gradient> <white>There are no currencies configured in the system.</white>"
-      no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ No Permission:</gradient> <white>You don't have permission to use this command.</white>"
-
+      currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Valuta Non Trovata:</gradient> <white>Valuta <gradient:#FFD700:#FFA500>%currency%</gradient> non trovata. Valute disponibili: <gradient:#6C7B7F:#95A5A6>%available_currencies%</gradient></white>"
+      player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Giocatore Non Trovato:</gradient> <white>Giocatore <gradient:#4ECDC4:#45B7B8>%player%</gradient> non trovato o non ha mai giocato prima.</white>"
+      no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ Nessuna Valuta:</gradient> <white>Non ci sono valute configurate nel sistema.</white>"
+      no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ Nessun Permesso:</gradient> <white>Non hai il permesso di usare questo comando.</white>"
   help:
-    header: "<gradient:#FFD700:#FFA500>✦ Currency Command Help ✦</gradient>"
+    header: "<gradient:#FFD700:#FFA500>✦ Aiuto Comando Valuta ✦</gradient>"
     usage: "<gradient:#6C7B7F:#95A5A6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
     commands:
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency</gradient> <gray>- View all your currency balances</gray>"
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <currency></gradient> <gray>- View your balance for a specific currency</gray>"
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <player></gradient> <gray>- View all balances of another player</gray>"
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <currency> <player></gradient> <gray>- View another player's balance for a specific currency</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency</gradient> <gray>- Visualizza tutti i tuoi saldi valute</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <valuta></gradient> <gray>- Visualizza il tuo saldo per una valuta specifica</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <giocatore></gradient> <gray>- Visualizza tutti i saldi di un altro giocatore</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <valuta> <giocatore></gradient> <gray>- Visualizza il saldo di un altro giocatore per una valuta specifica</gray>"
     footer: "<gradient:#6C7B7F:#95A5A6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
 
-# Balance Commands
 balance:
-  self: "<gradient:#FFD700:#FFA500>💰 Your Balance:</gradient> <white><gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  other: "<gradient:#FFD700:#FFA500>💰 Player Balance:</gradient> <white><gradient:#FFD700:#FFA500>%player%</gradient>'s balance: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  all: "<gradient:#FFD700:#FFA500>💰 Your Balances:</gradient>"
+  self: "<gradient:#FFD700:#FFA500>💰 Il Tuo Saldo:</gradient> <white><gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
+  other: "<gradient:#FFD700:#FFA500>💰 Saldo Giocatore:</gradient> <white>Saldo di <gradient:#FFD700:#FFA500>%player%</gradient>: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
+  all: "<gradient:#FFD700:#FFA500>💰 I Tuoi Saldi:</gradient>"
   all_entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient>"
-  not_found: "<gradient:#FF6B6B:#FF8E8E>✖ No Balance:</gradient> <white>You don't have any balance for <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
+  not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Nessun Saldo:</gradient> <white>Non hai nessun saldo per <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
 
-# Pay Commands
 pay:
-  success_sender: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  success_receiver: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You don't have enough funds! Required: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
-  failed: "<gradient:#FF6B6B:#FF8E8E>✖ Payment Failed:</gradient> <white>Payment failed. Please try again.</white>"
+  usage: "<gradient:#FFD700:#FFA500>⚠ Utilizzo:</gradient> <white>/pay <valuta> <giocatore> <importo></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Disabilitato:</gradient> <white>Il comando pay è attualmente disabilitato.</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Valuta Non Consentita:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%currency%</gradient> non è consentita per i pagamenti.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Valuta Non Trovata:</gradient> <white>La valuta <gradient:#FFD700:#FFA500>%currency%</gradient> non esiste.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Importo Non Valido:</gradient> <white>'<gradient:#FFD700:#FFA500>%amount%</gradient>' non è un importo valido.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Importo Fuori Intervallo:</gradient> <white>L'importo <gradient:#FFD700:#FFA500>%amount%</gradient> deve essere tra <gradient:#FFD700:#FFA500>%min%</gradient> e <gradient:#FFD700:#FFA500>%max%</gradient>.</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Destinatario Non Valido:</gradient> <white>Non puoi pagare te stesso!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Giocatore Non Trovato:</gradient> <white>Il giocatore <gradient:#4ECDC4:#45B7B8>%player%</gradient> non è stato trovato.</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Fondi Insufficienti:</gradient> <white>Hai bisogno di <gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient> ma hai solo <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Trasferimento Fallito:</gradient> <white>Il pagamento non è stato completato. Riprova.</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Pagamento Inviato:</gradient> <white>Hai inviato <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> a <gradient:#4ECDC4:#45B7B8>%target%</gradient>!</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Pagamento Ricevuto:</gradient> <white>Hai ricevuto <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> da <gradient:#4ECDC4:#45B7B8>%sender%</gradient>!</white>"
+  # Legacy keys for backwards compatibility
+  success_sender: "<gradient:#00FF00:#32CD32>✓ Pagamento Inviato:</gradient> <white>Hai inviato <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> a <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
+  success_receiver: "<gradient:#00FF00:#32CD32>✓ Pagamento Ricevuto:</gradient> <white>Hai ricevuto <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> da <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
+  self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Destinatario Non Valido:</gradient> <white>Non puoi pagare te stesso!</white>"
+  failed: "<gradient:#FF6B6B:#FF8E8E>✖ Pagamento Fallito:</gradient> <white>Pagamento fallito. Riprova.</white>"
 
-# Admin Commands
 admin:
   set:
-    success: "<gradient:#00FF00:#32CD32>✓ Balance Set:</gradient> <white>Set <gradient:#4ECDC4:#45B7B8>%player%</gradient>'s balance to <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient>!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Set Failed:</gradient> <white>Failed to set balance. Please try again.</white>"
-
+    success: "<gradient:#00FF00:#32CD32>✓ Saldo Impostato:</gradient> <white>Saldo di <gradient:#4ECDC4:#45B7B8>%player%</gradient> impostato a <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient>!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Impostazione Fallita:</gradient> <white>Impossibile impostare il saldo. Riprova.</white>"
   give:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Given:</gradient> <white>Gave <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Give Failed:</gradient> <white>Failed to give currency. Please try again.</white>"
-
+    success: "<gradient:#00FF00:#32CD32>✓ Valuta Data:</gradient> <white><gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> dato a <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Dare Fallito:</gradient> <white>Impossibile dare la valuta. Riprova.</white>"
   take:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Taken:</gradient> <white>Took <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-    insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> doesn't have enough funds!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Take Failed:</gradient> <white>Failed to take currency. Please try again.</white>"
-
+    success: "<gradient:#00FF00:#32CD32>✓ Valuta Presa:</gradient> <white><gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> preso da <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
+    insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Fondi Insufficienti:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> non ha abbastanza fondi!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Prendere Fallito:</gradient> <white>Impossibile prendere la valuta. Riprova.</white>"
   reset:
-    success: "<gradient:#00FF00:#32CD32>✓ Balance Reset:</gradient> <white>Reset <gradient:#4ECDC4:#45B7B8>%player%</gradient>'s balance for <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    all_success: "<gradient:#00FF00:#32CD32>✓ All Balances Reset:</gradient> <white>Reset all of <gradient:#4ECDC4:#45B7B8>%player%</gradient>'s balances!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Reset Failed:</gradient> <white>Failed to reset balance. Please try again.</white>"
-
-# ═══════════════════════════════════════════════════════════════
-# HELP MESSAGES
-# ═══════════════════════════════════════════════════════════════
+    success: "<gradient:#00FF00:#32CD32>✓ Saldo Azzerato:</gradient> <white>Saldo di <gradient:#4ECDC4:#45B7B8>%player%</gradient> per <gradient:#FFD700:#FFA500>%identifier%</gradient> azzerato!</white>"
+    all_success: "<gradient:#00FF00:#32CD32>✓ Tutti i Saldi Azzerati:</gradient> <white>Tutti i saldi di <gradient:#4ECDC4:#45B7B8>%player%</gradient> azzerati!</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Azzeramento Fallito:</gradient> <white>Impossibile azzerare il saldo. Riprova.</white>"
 
 help:
-  header: "<gradient:#FFD700:#FFA500>📚 JExEconomy Help Menu:</gradient>"
-  currency: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies</gradient> <gray>- Manage currencies</gray>"
-  balance: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/balance [player] [currency]</gradient> <gray>- Check balance</gray>"
-  pay: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/pay <player> <amount> [currency]</gradient> <gray>- Pay another player</gray>"
+  header: "<gradient:#FFD700:#FFA500>📚 Menu Aiuto JExEconomy:</gradient>"
+  currency: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies</gradient> <gray>- Gestisci valute</gray>"
+  balance: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/balance [giocatore] [valuta]</gradient> <gray>- Controlla saldo</gray>"
+  pay: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/pay <giocatore> <importo> [valuta]</gradient> <gray>- Paga un altro giocatore</gray>"
 
-# Currency Command Help
 currencies:
   help:
-    - "<gradient:#FFD700:#FFA500>📚 Currencies Command Help:</gradient>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies create <identifier> <symbol> [prefix] [suffix]</gradient> <gray>- Create a new currency</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies delete <identifier></gradient> <gray>- Delete a currency</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies edit <identifier> <field> <value></gradient> <gray>- Edit a currency</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies overview</gradient> <gray>- List all currencies</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies info <identifier></gradient> <gray>- Show currency details</gray>"
-
-# ═══════════════════════════════════════════════════════════════
-# ERROR MESSAGES
-# ═══════════════════════════════════════════════════════════════
+    - "<gradient:#FFD700:#FFA500>📚 Aiuto Comandi Valute:</gradient>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies create <identificatore> <simbolo> [prefisso] [suffisso]</gradient> <gray>- Crea una nuova valuta</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies delete <identificatore></gradient> <gray>- Elimina una valuta</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies edit <identificatore> <campo> <valore></gradient> <gray>- Modifica una valuta</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies overview</gradient> <gray>- Elenca tutte le valute</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies info <identificatore></gradient> <gray>- Mostra dettagli valuta</gray>"
 
 error:
-  processing_failed: "<gradient:#FF6B6B:#FF8E8E>❌ Processing Failed:</gradient> <white>Failed to process your input '<gradient:#FFD700:#FFA500>%input%</gradient>'. Please try again or contact an administrator.</white>"
-  invalid_input: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Input:</gradient> <white>Your input '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid.</white>"
-
+  processing_failed: "<gradient:#FF6B6B:#FF8E8E>❌ Elaborazione Fallita:</gradient> <white>Impossibile elaborare il tuo input '<gradient:#FFD700:#FFA500>%input%</gradient>'. Riprova o contatta un amministratore.</white>"
+  invalid_input: "<gradient:#FF6B6B:#FF8E8E>❌ Input Non Valido:</gradient> <white>Il tuo input '<gradient:#FFD700:#FFA500>%input%</gradient>' non è valido.</white>"
 
 currency_adapter:
-  # Currency Creation Messages
-  creation_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Currency creation was <bold>cancelled</bold></gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
-  already_exists: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>A currency with identifier</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>already exists!</gradient>"
-  created_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>has been <bold>created successfully</bold>!</gradient>"
-  creation_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to create currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient><gray>:</gray> <gradient:#868e96:#adb5bd><italic>%error_message%</italic></gradient>"
-
-  # Currency Deletion Messages
-  not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>was <bold>not found</bold>!</gradient>"
-  deletion_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Currency deletion was <bold>cancelled</bold></gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
-  deleted_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>has been <bold>deleted successfully</bold>!</gradient>\n<gradient:#868e96:#adb5bd>Affected</gradient> <gradient:#74c0fc:#91a7ff><bold>%affected_players%</bold></gradient> <gradient:#868e96:#adb5bd>players with total balance of</gradient> <gradient:#ffd93d:#ffed4e><bold>%total_balance%</bold></gradient>"
-  deletion_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to <bold>delete</bold> currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient><gradient:#ff6b6b:#ffaaaa>!</gradient>"
-
-  # Additional Context Messages
+  creation_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>La creazione della valuta è stata <bold>annullata</bold></gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
+  already_exists: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Una valuta con identificatore</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>esiste già!</gradient>"
+  created_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>La valuta</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>è stata <bold>creata con successo</bold>!</gradient>"
+  creation_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossibile creare la valuta</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient><gray>:</gray> <gradient:#868e96:#adb5bd><italic>%error_message%</italic></gradient>"
+  not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>La valuta</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa><bold>non è stata trovata</bold>!</gradient>"
+  deletion_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>L'eliminazione della valuta è stata <bold>annullata</bold></gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
+  deleted_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>La valuta</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>è stata <bold>eliminata con successo</bold>!</gradient>\n<gradient:#868e96:#adb5bd>Interessati</gradient> <gradient:#74c0fc:#91a7ff><bold>%affected_players%</bold></gradient> <gradient:#868e96:#adb5bd>giocatori con saldo totale di</gradient> <gradient:#ffd93d:#ffed4e><bold>%total_balance%</bold></gradient>"
+  deletion_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossibile <bold>eliminare</bold> la valuta</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient><gradient:#ff6b6b:#ffaaaa>!</gradient>"
   validation:
-    invalid_amount: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Invalid amount specified:</gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient>"
-    insufficient_funds: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Insufficient funds! Required:</gradient> <gradient:#ffd93d:#ffed4e><bold>%required%</bold></gradient><gray>,</gray> <gradient:#ff6b6b:#ffaaaa>Available:</gradient> <gradient:#74c0fc:#91a7ff><bold>%available%</bold></gradient>"
-    player_not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Player account not found for UUID:</gradient> <gradient:#868e96:#adb5bd><italic>%uuid%</italic></gradient>"
-
-  # Transaction Messages
+    invalid_amount: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Importo non valido specificato:</gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient>"
+    insufficient_funds: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Fondi insufficienti! Richiesto:</gradient> <gradient:#ffd93d:#ffed4e><bold>%required%</bold></gradient><gray>,</gray> <gradient:#ff6b6b:#ffaaaa>Disponibile:</gradient> <gradient:#74c0fc:#91a7ff><bold>%available%</bold></gradient>"
+    player_not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Account giocatore non trovato per UUID:</gradient> <gradient:#868e96:#adb5bd><italic>%uuid%</italic></gradient>"
   transaction:
-    deposit_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Successfully <bold>deposited</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>to your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>account!</gradient>"
-    withdraw_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Successfully <bold>withdrew</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>from your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>account!</gradient>"
-    deposit_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to <bold>deposit</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>to your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>account!</gradient>"
-    withdraw_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to <bold>withdraw</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>from your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>account!</gradient>"
-
-  # Balance Information
+    deposit_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a><bold>Depositato</bold> con successo</gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>sul tuo account</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#51cf66:#8ce99a>!</gradient>"
+    withdraw_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a><bold>Prelevato</bold> con successo</gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>dal tuo account</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#51cf66:#8ce99a>!</gradient>"
+    deposit_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossibile <bold>depositare</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>sul tuo account</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#ff6b6b:#ffaaaa>!</gradient>"
+    withdraw_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossibile <bold>prelevare</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>dal tuo account</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#ff6b6b:#ffaaaa>!</gradient>"
   balance:
-    current: "<gradient:#74c0fc:#91a7ff><bold>💰</bold></gradient> <gradient:#868e96:#adb5bd>Your current</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#868e96:#adb5bd>balance:</gradient> <gradient:#ffd93d:#ffed4e><bold>%balance%</bold></gradient>"
-    updated: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Balance updated!</gradient> <gradient:#868e96:#adb5bd>New balance:</gradient> <gradient:#ffd93d:#ffed4e><bold>%new_balance%</bold></gradient>"
-
-  # System Messages
+    current: "<gradient:#74c0fc:#91a7ff><bold>💰</bold></gradient> <gradient:#868e96:#adb5bd>Il tuo saldo attuale</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#868e96:#adb5bd>:</gradient> <gradient:#ffd93d:#ffed4e><bold>%balance%</bold></gradient>"
+    updated: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Saldo aggiornato!</gradient> <gradient:#868e96:#adb5bd>Nuovo saldo:</gradient> <gradient:#ffd93d:#ffed4e><bold>%new_balance%</bold></gradient>"
   system:
-    loading: "<gradient:#74c0fc:#91a7ff><bold>⏳</bold></gradient> <gradient:#868e96:#adb5bd>Loading currency data...</gradient>"
-    loaded: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Successfully loaded</gradient> <gradient:#ffd93d:#ffed4e><bold>%count%</bold></gradient> <gradient:#51cf66:#8ce99a>currencies into cache!</gradient>"
-    cache_error: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to load currencies into cache:</gradient> <gradient:#868e96:#adb5bd><italic>%error%</italic></gradient>"
+    loading: "<gradient:#74c0fc:#91a7ff><bold>⏳</bold></gradient> <gradient:#868e96:#adb5bd>Caricamento dati valuta...</gradient>"
+    loaded: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Caricate con successo</gradient> <gradient:#ffd93d:#ffed4e><bold>%count%</bold></gradient> <gradient:#51cf66:#8ce99a>valute nella cache!</gradient>"
+    cache_error: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossibile caricare le valute nella cache:</gradient> <gradient:#868e96:#adb5bd><italic>%error%</italic></gradient>"
 
-# Currency Log Command I18n Keys
+
+# Chiavi I18n Comando Log Valuta
 currency_log:
-  # Error Messages
-  invalid_page_format: "<gradient:#e74c3c:#c0392b>✗ Invalid Page Format</gradient>\n<gray>Please enter a valid page number instead of '<white>{input}</white>'.</gray>"
-  invalid_page_number: "<gradient:#e74c3c:#c0392b>✗ Invalid Page Number</gradient>\n<gray>Page number must be 1 or higher, not '<white>{page}</white>'.</gray>"
-  no_permission_export: "<gradient:#e74c3c:#c0392b>✗ Access Denied</gradient>\n<gray>You don't have permission to export currency logs.</gray>"
-  player_not_found: "<gradient:#e74c3c:#c0392b>✗ Player Not Found</gradient>\n<gray>Player <white>{player}</white> has never joined this server.</gray>"
-  currency_not_found: "<gradient:#e74c3c:#c0392b>✗ Currency Not Found</gradient>\n<gray>Currency <white>{currency}</white> does not exist.</gray>\n<dark_gray>Available currencies: {available_currencies}</dark_gray>"
-  invalid_log_type: "<gradient:#e74c3c:#c0392b>✗ Invalid Log Type</gradient>\n<gray>Unknown log type: <white>{type}</white></gray>\n<dark_gray>Valid types: {valid_types}</dark_gray>"
-  invalid_log_level: "<gradient:#e74c3c:#c0392b>✗ Invalid Log Level</gradient>\n<gray>Unknown log level: <white>{level}</white></gray>\n<dark_gray>Valid levels: {valid_levels}</dark_gray>"
-  invalid_operation_type: "<gradient:#e74c3c:#c0392b>✗ Invalid Operation Type</gradient>\n<gray>Unknown operation: <white>{operation}</white></gray>\n<dark_gray>Valid operations: {valid_operations}</dark_gray>"
-  statistics_error: "<gradient:#e74c3c:#c0392b>✗ Statistics Error</gradient>\n<gray>Failed to generate log statistics. Please try again later.</gray>"
-  export_failed: "<gradient:#e74c3c:#c0392b>✗ Export Failed</gradient>\n<gray>An error occurred during the export process.</gray>"
+  # Messaggi di Errore
+  invalid_page_format: "<gradient:#e74c3c:#c0392b>✗ Formato Pagina Non Valido</gradient>\n<gray>Inserisci un numero di pagina valido invece di '<white>{input}</white>'.</gray>"
+  invalid_page_number: "<gradient:#e74c3c:#c0392b>✗ Numero Pagina Non Valido</gradient>\n<gray>Il numero di pagina deve essere 1 o superiore, non '<white>{page}</white>'.</gray>"
+  no_permission_export: "<gradient:#e74c3c:#c0392b>✗ Accesso Negato</gradient>\n<gray>Non hai il permesso di esportare i log delle valute.</gray>"
+  player_not_found: "<gradient:#e74c3c:#c0392b>✗ Giocatore Non Trovato</gradient>\n<gray>Il giocatore <white>{player}</white> non si è mai unito a questo server.</gray>"
+  currency_not_found: "<gradient:#e74c3c:#c0392b>✗ Valuta Non Trovata</gradient>\n<gray>La valuta <white>{currency}</white> non esiste.</gray>\n<dark_gray>Valute disponibili: {available_currencies}</dark_gray>"
+  invalid_log_type: "<gradient:#e74c3c:#c0392b>✗ Tipo Log Non Valido</gradient>\n<gray>Tipo log sconosciuto: <white>{type}</white></gray>\n<dark_gray>Tipi validi: {valid_types}</dark_gray>"
+  invalid_log_level: "<gradient:#e74c3c:#c0392b>✗ Livello Log Non Valido</gradient>\n<gray>Livello log sconosciuto: <white>{level}</white></gray>\n<dark_gray>Livelli validi: {valid_levels}</dark_gray>"
+  invalid_operation_type: "<gradient:#e74c3c:#c0392b>✗ Tipo Operazione Non Valido</gradient>\n<gray>Operazione sconosciuta: <white>{operation}</white></gray>\n<dark_gray>Operazioni valide: {valid_operations}</dark_gray>"
+  statistics_error: "<gradient:#e74c3c:#c0392b>✗ Errore Statistiche</gradient>\n<gray>Impossibile generare le statistiche dei log. Riprova più tardi.</gray>"
+  export_failed: "<gradient:#e74c3c:#c0392b>✗ Esportazione Fallita</gradient>\n<gray>Si è verificato un errore durante il processo di esportazione.</gray>"
 
-  # Success Messages
-  filters_cleared: "<gradient:#2ecc71:#27ae60>✓ Filters Cleared</gradient>\n<gray>All active filters have been removed successfully!</gray>"
-  export_started: "<gradient:#f39c12:#e67e22>🔄 Export Started</gradient>\n<gray>Preparing currency logs for export...</gray>"
-  export_complete: "<gradient:#2ecc71:#27ae60>✓ Export Complete</gradient>\n<gray>Currency logs have been exported successfully!</gray>\n<gray>Logs exported to: <white>{filename}</white></gray>\n<gray>Location: <white>plugins/JExEconomy/logs/</white></gray>"
-  player_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Player Filter Applied</gradient>\n<gray>Now showing logs for player: <gradient:#3498db:#2980b9>{player}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  currency_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Currency Filter Applied</gradient>\n<gray>Now showing logs for currency: <gradient:#f1c40f:#f39c12>{currency}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  type_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Type Filter Applied</gradient>\n<gray>Now showing logs of type: {icon} <gradient:#9b59b6:#8e44ad>{type}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  level_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Level Filter Applied</gradient>\n<gray>Now showing logs with level: {color}{level}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  operation_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Operation Filter Applied</gradient>\n<gray>Now showing logs for operation: <gradient:#f39c12:#e67e22>{operation}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
+  # Messaggi di Successo
+  filters_cleared: "<gradient:#2ecc71:#27ae60>✓ Filtri Cancellati</gradient>\n<gray>Tutti i filtri attivi sono stati rimossi con successo!</gray>"
+  export_started: "<gradient:#f39c12:#e67e22>🔄 Esportazione Avviata</gradient>\n<gray>Preparazione dei log valuta per l'esportazione...</gray>"
+  export_complete: "<gradient:#2ecc71:#27ae60>✓ Esportazione Completata</gradient>\n<gray>I log delle valute sono stati esportati con successo!</gray>\n<gray>Log esportati in: <white>{filename}</white></gray>\n<gray>Posizione: <white>plugins/JExEconomy/logs/</white></gray>"
+  player_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtro Giocatore Applicato</gradient>\n<gray>Ora mostrando i log per il giocatore: <gradient:#3498db:#2980b9>{player}</gradient></gray>\n<dark_gray>Usa <yellow>/currencylog view</yellow> per vedere i risultati filtrati</dark_gray>"
+  currency_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtro Valuta Applicato</gradient>\n<gray>Ora mostrando i log per la valuta: <gradient:#f1c40f:#f39c12>{currency}</gradient></gray>\n<dark_gray>Usa <yellow>/currencylog view</yellow> per vedere i risultati filtrati</dark_gray>"
+  type_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtro Tipo Applicato</gradient>\n<gray>Ora mostrando i log di tipo: {icon} <gradient:#9b59b6:#8e44ad>{type}</gradient></gray>\n<dark_gray>Usa <yellow>/currencylog view</yellow> per vedere i risultati filtrati</dark_gray>"
+  level_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtro Livello Applicato</gradient>\n<gray>Ora mostrando i log con livello: {color}{level}</gradient></gray>\n<dark_gray>Usa <yellow>/currencylog view</yellow> per vedere i risultati filtrati</dark_gray>"
+  operation_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtro Operazione Applicato</gradient>\n<gray>Ora mostrando i log per l'operazione: <gradient:#f39c12:#e67e22>{operation}</gradient></gray>\n<dark_gray>Usa <yellow>/currencylog view</yellow> per vedere i risultati filtrati</dark_gray>"
 
-  # Headers and Titles
+  # Intestazioni e Titoli
   header_line: "<gradient:#9b59b6:#8e44ad>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
   filter_header_line: "<gradient:#3498db:#2980b9>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
   no_logs_header_line: "<gradient:#95a5a6:#7f8c8d>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
 
-  title_logs: "<gradient:#9b59b6:#8e44ad>📋 Currency Transaction Logs</gradient>"
-  title_filters: "<gradient:#3498db:#2980b9>🔍 Currency Log Filters</gradient>"
-  title_commands: "<gradient:#9b59b6:#8e44ad>📋 Currency Log Commands</gradient>"
-  title_statistics: "<gradient:#9b59b6:#8e44ad>📊 Currency Log Statistics</gradient>"
-  title_no_logs: "<gradient:#95a5a6:#7f8c8d>📋 No Currency Logs Found</gradient>"
+  title_logs: "<gradient:#9b59b6:#8e44ad>📋 Log Transazioni Valuta</gradient>"
+  title_filters: "<gradient:#3498db:#2980b9>🔍 Filtri Log Valuta</gradient>"
+  title_commands: "<gradient:#9b59b6:#8e44ad>📋 Comandi Log Valuta</gradient>"
+  title_statistics: "<gradient:#9b59b6:#8e44ad>📊 Statistiche Log Valuta</gradient>"
+  title_no_logs: "<gradient:#95a5a6:#7f8c8d>📋 Nessun Log Valuta Trovato</gradient>"
 
-  # Subtitles and Descriptions
-  subtitle_filters: "<gray>Select a filter type to narrow down your log search</gray>"
-  subtitle_no_logs: "<gray>No transaction logs match your current criteria.</gray>\n<gray>Try adjusting your filters or check back later!</gray>"
+  # Sottotitoli e Descrizioni
+  subtitle_filters: "<gray>Seleziona un tipo di filtro per affinare la tua ricerca nei log</gray>"
+  subtitle_no_logs: "<gray>Nessun log di transazione corrisponde ai tuoi criteri attuali.</gray>\n<gray>Prova ad aggiustare i filtri o torna più tardi!</gray>"
 
-  # Page Information
-  page_info: "<gray>Page <gradient:#f39c12:#e67e22>{current_page}</gradient><gray>/<gradient:#f39c12:#e67e22>{total_pages}</gradient> <dark_gray>•</dark_gray> <gradient:#9b59b6:#8e44ad>{total_logs}</gradient> <gray>total entries</gray>"
-  active_filters: "<gradient:#f39c12:#e67e22>🔍 Active Filters:</gradient> <gray>{filters}</gray>"
+  # Informazioni Pagina
+  page_info: "<gray>Pagina <gradient:#f39c12:#e67e22>{current_page}</gradient><gray>/<gradient:#f39c12:#e67e22>{total_pages}</gradient> <dark_gray>•</dark_gray> <gradient:#9b59b6:#8e44ad>{total_logs}</gradient> <gray>voci totali</gray>"
+  active_filters: "<gradient:#f39c12:#e67e22>🔍 Filtri Attivi:</gradient> <gray>{filters}</gray>"
 
-  # Instructions
-  instructions_logs: "<dark_gray>▪ <yellow>Click</yellow> <dark_gray>»</dark_gray> <gray>View detailed log information</gray>\n<dark_gray>▪ <yellow>Hover</yellow> <dark_gray>»</dark_gray> <gray>See transaction details and metadata</gray>"
-  instructions_filters: "<dark_gray>▪ <yellow>Click</yellow> <dark_gray>»</dark_gray> <gray>Apply filter type</gray>\n<dark_gray>▪ <yellow>Hover</yellow> <dark_gray>»</dark_gray> <gray>See filter description</gray>"
+  # Istruzioni
+  instructions_logs: "<dark_gray>▪ <yellow>Clicca</yellow> <dark_gray>»</dark_gray> <gray>Visualizza informazioni dettagliate del log</gray>\n<dark_gray>▪ <yellow>Passa sopra</yellow> <dark_gray>»</dark_gray> <gray>Vedi dettagli transazione e metadati</gray>"
+  instructions_filters: "<dark_gray>▪ <yellow>Clicca</yellow> <dark_gray>»</dark_gray> <gray>Applica tipo di filtro</gray>\n<dark_gray>▪ <yellow>Passa sopra</yellow> <dark_gray>»</dark_gray> <gray>Vedi descrizione filtro</gray>"
 
-  # Navigation
-  navigation_previous: "[← Previous]"
-  navigation_next: "[Next →]"
-  navigation_page_indicator: "[Page {current_page}/{total_pages}]"
-  navigation_filters_button: "[🔍 Filters]"
-  navigation_adjust_filters: "[🔍 Adjust Filters]"
+  # Navigazione
+  navigation_previous: "[← Precedente]"
+  navigation_next: "[Successivo →]"
+  navigation_page_indicator: "[Pagina {current_page}/{total_pages}]"
+  navigation_filters_button: "[🔍 Filtri]"
+  navigation_adjust_filters: "[🔍 Regola Filtri]"
 
-  # Hover Texts
-  hover_previous_page: "<gradient:#2ecc71:#27ae60>Go to page {page}</gradient>"
-  hover_next_page: "<gradient:#2ecc71:#27ae60>Go to page {page}</gradient>"
-  hover_filters_menu: "<gradient:#3498db:#2980b9>Open filter menu</gradient>"
-  hover_adjust_filters: "<gradient:#3498db:#2980b9>Open filter menu</gradient>"
-  hover_log_details: "<gradient:#9b59b6:#8e44ad>Transaction Log Details</gradient>\n\n<dark_gray>▪ <gray>Log ID: <gradient:#ecf0f1:#bdc3c7>{log_id}</gradient></gray>\n<dark_gray>▪ <gray>Type: <gradient:#f39c12:#e67e22>{log_type}</gradient></gray>\n<dark_gray>▪ <gray>Level: {level_color}{log_level}</gradient></gray>\n<dark_gray>▪ <gray>Status: {status}</gray>\n{player_info}{currency_info}{amount_info}<dark_gray>▪ <gray>Timestamp: <gradient:#95a5a6:#7f8c8d>{timestamp}</gradient></gray>\n\n<gradient:#f1c40f:#f39c12>Click</gradient> <dark_gray>»</dark_gray> <gray>View full details</gray>"
-  hover_filter_info: "<gradient:#3498db:#2980b9>Filter Information</gradient>\n\n<dark_gray>▪ <gray>Type: <white>{filter_type}</white></gray>\n<dark_gray>▪ <gray>Description: <white>{filter_description}</white></gray>\n\n<gradient:#f1c40f:#f39c12>Click</gradient> <dark_gray>»</dark_gray> <gray>Apply this filter</gray>"
+  # Testi Hover
+  hover_previous_page: "<gradient:#2ecc71:#27ae60>Vai a pagina {page}</gradient>"
+  hover_next_page: "<gradient:#2ecc71:#27ae60>Vai a pagina {page}</gradient>"
+  hover_filters_menu: "<gradient:#3498db:#2980b9>Apri menu filtri</gradient>"
+  hover_adjust_filters: "<gradient:#3498db:#2980b9>Apri menu filtri</gradient>"
+  hover_log_details: "<gradient:#9b59b6:#8e44ad>Dettagli Log Transazione</gradient>\n\n<dark_gray>▪ <gray>ID Log: <gradient:#ecf0f1:#bdc3c7>{log_id}</gradient></gray>\n<dark_gray>▪ <gray>Tipo: <gradient:#f39c12:#e67e22>{log_type}</gradient></gray>\n<dark_gray>▪ <gray>Livello: {level_color}{log_level}</gradient></gray>\n<dark_gray>▪ <gray>Stato: {status}</gray>\n{player_info}{currency_info}{amount_info}<dark_gray>▪ <gray>Timestamp: <gradient:#95a5a6:#7f8c8d>{timestamp}</gradient></gray>\n\n<gradient:#f1c40f:#f39c12>Clicca</gradient> <dark_gray>»</dark_gray> <gray>Vedi tutti i dettagli</gray>"
+  hover_filter_info: "<gradient:#3498db:#2980b9>Informazioni Filtro</gradient>\n\n<dark_gray>▪ <gray>Tipo: <white>{filter_type}</white></gray>\n<dark_gray>▪ <gray>Descrizione: <white>{filter_description}</white></gray>\n\n<gradient:#f1c40f:#f39c12>Clicca</gradient> <dark_gray>»</dark_gray> <gray>Applica questo filtro</gray>"
 
-  # Filter Options
-  filter_player_name: "player"
+  # Opzioni Filtro
+  filter_player_name: "giocatore"
   filter_player_icon: "👤"
-  filter_player_description: "Filter by player name"
-  filter_currency_name: "currency"
+  filter_player_description: "Filtra per nome giocatore"
+  filter_currency_name: "valuta"
   filter_currency_icon: "💰"
-  filter_currency_description: "Filter by currency type"
-  filter_type_name: "type"
+  filter_currency_description: "Filtra per tipo valuta"
+  filter_type_name: "tipo"
   filter_type_icon: "📋"
-  filter_type_description: "Filter by log type"
-  filter_level_name: "level"
+  filter_type_description: "Filtra per tipo log"
+  filter_level_name: "livello"
   filter_level_icon: "⚠️"
-  filter_level_description: "Filter by severity level"
-  filter_operation_name: "operation"
+  filter_level_description: "Filtra per livello di gravità"
+  filter_operation_name: "operazione"
   filter_operation_icon: "🔄"
-  filter_operation_description: "Filter by operation type"
+  filter_operation_description: "Filtra per tipo operazione"
 
-  # Command Usage
-  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/pcurrencylog view [page]</gradient> <dark_gray>»</dark_gray> <gray>View paginated transaction logs</gray>"
-  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog filter <filter> <value></gradient> <dark_gray>»</dark_gray> <gray>Apply filters to log display</gray>"
-  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/pcurrencylog clear</gradient> <dark_gray>»</dark_gray> <gray>Clear all active filters</gray>"
-  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog stats</gradient> <dark_gray>»</dark_gray> <gray>View log statistics and analytics</gray>"
-  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/pcurrencylog export</gradient> <dark_gray>»</dark_gray> <gray>Export logs to file (admin only)</gray>"
-  command_help: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog help</gradient> <dark_gray>»</dark_gray> <gray>Show command usage information</gray>"
-  command_details: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog details <log_id></gradient> <dark_gray>»</dark_gray> <gray>Inspect a specific transaction log entry</gray>"
+  # Utilizzo Comandi
+  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/pcurrencylog view [pagina]</gradient> <dark_gray>»</dark_gray> <gray>Visualizza log transazioni paginati</gray>"
+  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog filter <filtro> <valore></gradient> <dark_gray>»</dark_gray> <gray>Applica filtri alla visualizzazione log</gray>"
+  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/pcurrencylog clear</gradient> <dark_gray>»</dark_gray> <gray>Cancella tutti i filtri attivi</gray>"
+  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog stats</gradient> <dark_gray>»</dark_gray> <gray>Visualizza statistiche e analisi log</gray>"
+  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/pcurrencylog export</gradient> <dark_gray>»</dark_gray> <gray>Esporta log su file (solo admin)</gray>"
+  command_help: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog help</gradient> <dark_gray>»</dark_gray> <gray>Mostra informazioni utilizzo comandi</gray>"
+  command_details: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog details <log_id></gradient> <dark_gray>»</dark_gray> <gray>Ispeziona una voce log transazione specifica</gray>"
 
-  # Statistics
-  stats_overall_title: "<gradient:#3498db:#2980b9>📈 Overall Statistics</gradient>"
-  stats_type_title: "<gradient:#f39c12:#e67e22>📋 Log Type Distribution</gradient>"
-  stats_level_title: "<gradient:#e74c3c:#c0392b>⚠️ Log Level Distribution</gradient>"
+  # Statistiche
+  stats_overall_title: "<gradient:#3498db:#2980b9>📈 Statistiche Generali</gradient>"
+  stats_type_title: "<gradient:#f39c12:#e67e22>📋 Distribuzione Tipo Log</gradient>"
+  stats_level_title: "<gradient:#e74c3c:#c0392b>⚠️ Distribuzione Livello Log</gradient>"
 
-  stats_total_logs: "<dark_gray>▪ <gray>Total Logs: <gradient:#f1c40f:#f39c12>{total}</gradient></gray>"
-  stats_successful: "<dark_gray>▪ <gray>Successful: <gradient:#2ecc71:#27ae60>{successful}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
-  stats_failed: "<dark_gray>▪ <gray>Failed: <gradient:#e74c3c:#c0392b>{failed}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
-  stats_recent_activity: "<dark_gray>▪ <gray>Recent Activity (24h): <gradient:#f39c12:#e67e22>{recent}</gradient></gray>"
-  stats_unique_players: "<dark_gray>▪ <gray>Unique Players: <gradient:#9b59b6:#8e44ad>{players}</gradient></gray>"
-  stats_total_volume: "<dark_gray>▪ <gray>Total Volume: <gradient:#2ecc71:#27ae60>{volume}</gradient></gray>"
+  stats_total_logs: "<dark_gray>▪ <gray>Log Totali: <gradient:#f1c40f:#f39c12>{total}</gradient></gray>"
+  stats_successful: "<dark_gray>▪ <gray>Riusciti: <gradient:#2ecc71:#27ae60>{successful}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_failed: "<dark_gray>▪ <gray>Falliti: <gradient:#e74c3c:#c0392b>{failed}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_recent_activity: "<dark_gray>▪ <gray>Attività Recente (24h): <gradient:#f39c12:#e67e22>{recent}</gradient></gray>"
+  stats_unique_players: "<dark_gray>▪ <gray>Giocatori Unici: <gradient:#9b59b6:#8e44ad>{players}</gradient></gray>"
+  stats_total_volume: "<dark_gray>▪ <gray>Volume Totale: <gradient:#2ecc71:#27ae60>{volume}</gradient></gray>"
 
   stats_type_entry: "<dark_gray>▪ <gray>{icon} {type}: <gradient:#ecf0f1:#bdc3c7>{count}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
   stats_level_entry: "<dark_gray>▪ <gray>{color}{level}</gradient>: <gradient:#ecf0f1:#bdc3c7>{count}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
 
-  # Status Indicators
-  status_success: "<gradient:#2ecc71:#27ae60>Success</gradient>"
-  status_failed: "<gradient:#e74c3c:#c0392b>Failed</gradient>"
+  # Indicatori di Stato
+  status_success: "<gradient:#2ecc71:#27ae60>Successo</gradient>"
+  status_failed: "<gradient:#e74c3c:#c0392b>Fallito</gradient>"
 
-  # Log Type Icons (for reference)
+  # Icone Tipo Log
   icon_transaction: "💰"
   icon_management: "⚙️"
   icon_system: "🔧"
@@ -1108,47 +1001,47 @@ currency_log:
   icon_audit: "📋"
   icon_debug: "🐛"
 
-  # Log Level Colors (for reference)
+  # Colori Livello Log
   color_info: "<gradient:#2ecc71:#27ae60>"
   color_warning: "<gradient:#f39c12:#e67e22>"
   color_error: "<gradient:#e74c3c:#c0392b>"
   color_debug: "<gradient:#3498db:#2980b9>"
   color_critical: "<gradient:#8e44ad:#9b59b6>"
 
-  # Export File Headers
-  export_header: "JECURRENCY TRANSACTION LOGS EXPORT"
+  # Intestazioni File Esportazione
+  export_header: "ESPORTAZIONE LOG TRANSAZIONI JECURRENCY"
   export_separator: "="
   export_sub_separator: "-"
-  export_date_label: "Export Date:"
-  export_user_label: "Exported by:"
-  export_total_label: "Total Logs:"
-  export_footer: "END OF EXPORT"
+  export_date_label: "Data Esportazione:"
+  export_user_label: "Esportato da:"
+  export_total_label: "Log Totali:"
+  export_footer: "FINE ESPORTAZIONE"
 
-  # Export Log Entry Labels
-  export_log_id: "Log ID:"
+  # Etichette Voci Log Esportazione
+  export_log_id: "ID Log:"
   export_timestamp: "Timestamp:"
-  export_type: "Type:"
-  export_level: "Level:"
-  export_success: "Success:"
-  export_player: "Player:"
-  export_currency: "Currency:"
-  export_operation: "Operation:"
-  export_amount: "Amount:"
-  export_balance_change: "Balance Change:"
-  export_description: "Description:"
-  export_details: "Details:"
-  export_error: "Error:"
-  export_yes: "YES"
+  export_type: "Tipo:"
+  export_level: "Livello:"
+  export_success: "Successo:"
+  export_player: "Giocatore:"
+  export_currency: "Valuta:"
+  export_operation: "Operazione:"
+  export_amount: "Importo:"
+  export_balance_change: "Variazione Saldo:"
+  export_description: "Descrizione:"
+  export_details: "Dettagli:"
+  export_error: "Errore:"
+  export_yes: "SÌ"
   export_no: "NO"
 
-  # Additional Hover Information
-  hover_player_info: "<dark_gray>▪ <gray>Player: <gradient:#3498db:#2980b9>{player_name}</gradient></gray>\n"
-  hover_currency_info: "<dark_gray>▪ <gray>Currency: <gradient:#f1c40f:#f39c12>{currency_id}</gradient></gray>\n"
-  hover_amount_info: "<dark_gray>▪ <gray>Amount: <gradient:#2ecc71:#27ae60>{amount}</gradient></gray>\n"
+  # Informazioni Hover Aggiuntive
+  hover_player_info: "<dark_gray>▪ <gray>Giocatore: <gradient:#3498db:#2980b9>{player_name}</gradient></gray>\n"
+  hover_currency_info: "<dark_gray>▪ <gray>Valuta: <gradient:#f1c40f:#f39c12>{currency_id}</gradient></gray>\n"
+  hover_amount_info: "<dark_gray>▪ <gray>Importo: <gradient:#2ecc71:#27ae60>{amount}</gradient></gray>\n"
 
-  # Filter Descriptions for Active Filters Display
-  filter_desc_player: "Player: {player}"
-  filter_desc_currency: "Currency: {currency}"
-  filter_desc_type: "Type: {type}"
-  filter_desc_level: "Level: {level}"
-  filter_desc_operation: "Operation: {operation}"
+  # Descrizioni Filtri per Visualizzazione Filtri Attivi
+  filter_desc_player: "Giocatore: {player}"
+  filter_desc_currency: "Valuta: {currency}"
+  filter_desc_type: "Tipo: {type}"
+  filter_desc_level: "Livello: {level}"
+  filter_desc_operation: "Operazione: {operation}"

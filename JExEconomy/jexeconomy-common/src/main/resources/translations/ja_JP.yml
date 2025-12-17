@@ -2,1105 +2,1075 @@ prefix:
   - "<gradient:#FFD700:#FFA500>✦ JExEconomy ✦</gradient> <gradient:#8B0000:#DC143C>|</gradient> <white>"
 
 general:
-  no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ Access Denied:</gradient> <white>You don't have permission to use this command.</white>"
-  invalid_player: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>The specified player could not be found.</white>"
-  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Amount:</gradient> <white>Please enter a valid numerical amount.</white>"
-  invalid_currency: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>The specified currency does not exist.</white>"
-  loading: "<gradient:#FFD700:#FFA500>⌛ Loading:</gradient> <white>Please wait while we process your request...</white>"
-  success: "<gradient:#00FF00:#32CD32>✓ Success:</gradient> <white>Operation completed successfully!</white>"
-  error: "<gradient:#FF6B6B:#FF8E8E>✖ Error:</gradient> <white>An unexpected error occurred. Please try again later.</white>"
+  no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ アクセス拒否:</gradient> <white>このコマンドを使用する権限がありません。</white>"
+  invalid_player: "<gradient:#FF6B6B:#FF8E8E>✖ プレイヤーが見つかりません:</gradient> <white>指定されたプレイヤーが見つかりませんでした。</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ 無効な金額:</gradient> <white>有効な数値を入力してください。</white>"
+  invalid_currency: "<gradient:#FF6B6B:#FF8E8E>✖ 通貨が見つかりません:</gradient> <white>指定された通貨は存在しません。</white>"
+  loading: "<gradient:#FFD700:#FFA500>⌛ 読み込み中:</gradient> <white>リクエストを処理しています。しばらくお待ちください...</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ 成功:</gradient> <white>操作が正常に完了しました！</white>"
+  error: "<gradient:#FF6B6B:#FF8E8E>✖ エラー:</gradient> <white>予期しないエラーが発生しました。後でもう一度お試しください。</white>"
 
 # ═══════════════════════════════════════════════════════════════
-# CURRENCY MANAGEMENT UI VIEWS
+# 通貨管理UIビュー
 # ═══════════════════════════════════════════════════════════════
 
-# Currency Action Overview UI
 currencies_action_overview_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Management</gradient>"
+  title: "<gradient:#FFD700:#FFA500>通貨管理</gradient>"
 
   create_currency:
-    name: "<gradient:#00FF00:#32CD32>✚ Create Currency</gradient>"
+    name: "<gradient:#00FF00:#32CD32>✚ 通貨を作成</gradient>"
     lore:
       - ""
-      - "<gray>Create a new currency for your server"
-      - "<gray>with custom properties and settings."
+      - "<gray>カスタムプロパティと設定で</gray>"
+      - "<gray>サーバー用の新しい通貨を作成します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• Custom identifier and symbol</white>"
-      - "<white>• Configurable prefix and suffix</white>"
-      - "<white>• Custom icon material</white>"
-      - "<white>• Automatic player account creation</white>"
+      - "<gradient:#FFD700:#FFA500>機能:</gradient>"
+      - "<white>• カスタム識別子とシンボル</white>"
+      - "<white>• 設定可能なプレフィックスとサフィックス</white>"
+      - "<white>• カスタムアイコンマテリアル</white>"
+      - "<white>• 自動プレイヤーアカウント作成</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to create new currency</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして新しい通貨を作成</gradient>"
 
   edit_currency:
-    name: "<gradient:#FFD700:#FFA500>🔧 Edit Currency</gradient>"
+    name: "<gradient:#FFD700:#FFA500>🔧 通貨を編集</gradient>"
     lore:
       - ""
-      - "<gray>Modify existing currency properties"
-      - "<gray>and update their configurations."
+      - "<gray>既存の通貨プロパティを変更し、</gray>"
+      - "<gray>設定を更新します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>You can edit:</gradient>"
-      - "<white>• Currency symbol</white>"
-      - "<white>• Display prefix and suffix</white>"
-      - "<white>• Icon material</white>"
-      - "<white>• Other properties</white>"
+      - "<gradient:#FFD700:#FFA500>編集可能:</gradient>"
+      - "<white>• 通貨シンボル</white>"
+      - "<white>• 表示プレフィックスとサフィックス</white>"
+      - "<white>• アイコンマテリアル</white>"
+      - "<white>• その他のプロパティ</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>Note: Identifier cannot be changed</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>注意: 識別子は変更できません</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>▶ Click to edit currency</gradient>"
+      - "<gradient:#FFD700:#FFA500>▶ クリックして通貨を編集</gradient>"
 
   view_currencies:
-    name: "<gradient:#4ECDC4:#45B7B8>👁 View Currencies</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>👁 通貨を表示</gradient>"
     lore:
       - ""
-      - "<gray>Browse through all available currencies"
-      - "<gray>in the system with detailed information."
+      - "<gray>システム内のすべての利用可能な通貨を</gray>"
+      - "<gray>詳細情報とともに閲覧します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• Paginated currency list</white>"
-      - "<white>• Detailed currency information</white>"
-      - "<white>• Leaderboard access</white>"
-      - "<white>• Administrative functions</white>"
+      - "<gradient:#FFD700:#FFA500>機能:</gradient>"
+      - "<white>• ページ分割された通貨リスト</white>"
+      - "<white>• 詳細な通貨情報</white>"
+      - "<white>• リーダーボードアクセス</white>"
+      - "<white>• 管理機能</white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>▶ Click to browse currencies</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>▶ クリックして通貨を閲覧</gradient>"
 
   delete_currency:
-    name: "<gradient:#FF6B6B:#FF8E8E>🗑 Delete Currency</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>🗑 通貨を削除</gradient>"
     lore:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ 危険ゾーン ⚠️</gradient>"
       - ""
-      - "<gray>Permanently remove a currency from"
-      - "<gray>the system and all player balances."
+      - "<gray>システムから通貨を完全に削除し、</gray>"
+      - "<gray>すべてのプレイヤー残高も削除します。</gray>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>This action cannot be undone!</gradient>"
-      - "<gradient:#FFD700:#FFA500>Admin permission required.</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>この操作は元に戻せません！</gradient>"
+      - "<gradient:#FFD700:#FFA500>管理者権限が必要です。</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>What gets deleted:</gradient>"
-      - "<white>• Currency configuration</white>"
-      - "<white>• All player balances</white>"
-      - "<white>• Transaction history</white>"
+      - "<gradient:#FFD700:#FFA500>削除されるもの:</gradient>"
+      - "<white>• 通貨設定</white>"
+      - "<white>• すべてのプレイヤー残高</white>"
+      - "<white>• 取引履歴</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>▶ Click to delete currency</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>▶ クリックして通貨を削除</gradient>"
 
-    not_implemented: "<gradient:#FFD700:#FFA500>ℹ️ Coming Soon:</gradient> <white>Currency deletion functionality is not yet implemented.</white>"
+    not_implemented: "<gradient:#FFD700:#FFA500>ℹ️ 近日公開:</gradient> <white>通貨削除機能はまだ実装されていません。</white>"
 
-# Currency Creating UI
 currencies_creating_ui:
-  title: "<gradient:#4ECDC4:#45B7B8>Create Currency</gradient>"
+  title: "<gradient:#4ECDC4:#45B7B8>通貨を作成</gradient>"
 
   identifier:
-    name: "<gradient:#FFD700:#FFA500>🏷️ Currency Identifier</gradient>"
+    name: "<gradient:#FFD700:#FFA500>🏷️ 通貨識別子</gradient>"
     lore:
       - ""
-      - "<gray>Set the unique name that identifies"
-      - "<gray>this currency in the system."
+      - "<gray>システム内でこの通貨を識別する</gray>"
+      - "<gray>一意の名前を設定します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Requirements:</gradient>"
-      - "<white>• 2-16 characters</white>"
-      - "<white>• Letters, numbers, _, - only</white>"
+      - "<gradient:#FFD700:#FFA500>要件:</gradient>"
+      - "<white>• 2-16文字</white>"
+      - "<white>• 英字、数字、_、- のみ</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set identifier</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして識別子を設定</gradient>"
 
   symbol:
-    name: "<gradient:#FFD700:#FFA500>💰 Currency Symbol</gradient>"
+    name: "<gradient:#FFD700:#FFA500>💰 通貨シンボル</gradient>"
     lore:
       - ""
-      - "<gray>Set the short symbol that represents"
-      - "<gray>this currency (e.g., $, €, ★)."
+      - "<gray>この通貨を表す短いシンボルを</gray>"
+      - "<gray>設定します（例: $, €, ★）。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Requirements:</gradient>"
-      - "<white>• 1-5 characters</white>"
-      - "<white>• Cannot be empty</white>"
+      - "<gradient:#FFD700:#FFA500>要件:</gradient>"
+      - "<white>• 1-5文字</white>"
+      - "<white>• 空にはできません</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set symbol</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてシンボルを設定</gradient>"
 
   icon:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Currency Icon</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 通貨アイコン</gradient>"
     lore:
       - ""
-      - "<gray>Set the visual icon that represents"
-      - "<gray>this currency in menus and displays."
+      - "<gray>メニューや表示でこの通貨を表す</gray>"
+      - "<gray>ビジュアルアイコンを設定します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to select material</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてマテリアルを選択</gradient>"
 
   prefix:
-    name: "<gradient:#4ECDC4:#45B7B8>📝 Currency Prefix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📝 通貨プレフィックス</gradient>"
     lore:
       - ""
-      - "<gray>Set text to display before the"
-      - "<gray>currency amount (optional)."
+      - "<gray>通貨金額の前に表示する</gray>"
+      - "<gray>テキストを設定します（オプション）。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>'$', 'Credits: ', 'Gold: '</white>"
-      - "<white>• Maximum 16 characters</white>"
-      - "<white>• Can be empty</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>'$', 'クレジット: ', 'ゴールド: '</white>"
+      - "<white>• 最大16文字</white>"
+      - "<white>• 空でも可</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set prefix</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてプレフィックスを設定</gradient>"
 
   suffix:
-    name: "<gradient:#4ECDC4:#45B7B8>📄 Currency Suffix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📄 通貨サフィックス</gradient>"
     lore:
       - ""
-      - "<gray>Set text to display after the"
-      - "<gray>currency amount (optional)."
+      - "<gray>通貨金額の後に表示する</gray>"
+      - "<gray>テキストを設定します（オプション）。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>' coins', ' points', ' credits'</white>"
-      - "<white>• Maximum 16 characters</white>"
-      - "<white>• Can be empty</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>' コイン', ' ポイント', ' クレジット'</white>"
+      - "<white>• 最大16文字</white>"
+      - "<white>• 空でも可</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to set suffix</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてサフィックスを設定</gradient>"
 
   create_currency:
-    name: "<gradient:#00FF00:#32CD32>✓ Create Currency</gradient>"
+    name: "<gradient:#00FF00:#32CD32>✓ 通貨を作成</gradient>"
     lore:
       - ""
-      - "<gray>All required fields have been filled."
-      - "<gray>Click to create your new currency."
+      - "<gray>すべての必須フィールドが入力されました。</gray>"
+      - "<gray>クリックして新しい通貨を作成します。</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to create currency</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして通貨を作成</gradient>"
 
   create:
-    processing: "<gradient:#FFD700:#FFA500>🔄 Processing:</gradient> <white>Creating currency <gradient:#FFD700:#FFA500>%identifier%</gradient>...</white>"
-    already_exists: "<gradient:#FF6B6B:#FF8E8E>❌ Already Exists:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> already exists! Please choose a different identifier.</white>"
-    successfully_created: "<gradient:#00FF00:#32CD32>✅ Currency Created:</gradient> <white>Successfully created currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Creation Failed:</gradient> <white>Failed to create currency <gradient:#FFD700:#FFA500>%identifier%</gradient>. Please try again.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Unexpected Error:</gradient> <white>An error occurred while creating currency <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-    database_error: "<gradient:#FF6B6B:#FF8E8E>❌ Database Error:</gradient> <white>Database error while creating currency <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-    currency_not_found_in_cache: "<gradient:#FF6B6B:#FF8E8E>❌ Cache Error:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> was created but not found in cache. Please restart the server.</white>"
-    player_accounts_error: "<gradient:#FF6B6B:#FF8E8E>❌ Account Creation Error:</gradient> <white>Failed to create player accounts for currency <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    processing: "<gradient:#FFD700:#FFA500>🔄 処理中:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> を作成しています...</white>"
+    already_exists: "<gradient:#FF6B6B:#FF8E8E>❌ 既に存在:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> は既に存在します！別の識別子を選択してください。</white>"
+    successfully_created: "<gradient:#00FF00:#32CD32>✅ 通貨作成完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> が正常に作成されました！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>❌ 作成失敗:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> の作成に失敗しました。もう一度お試しください。</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ 予期しないエラー:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> の作成中にエラーが発生しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    database_error: "<gradient:#FF6B6B:#FF8E8E>❌ データベースエラー:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> の作成中にデータベースエラーが発生しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    currency_not_found_in_cache: "<gradient:#FF6B6B:#FF8E8E>❌ キャッシュエラー:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> は作成されましたがキャッシュに見つかりません。サーバーを再起動してください。</white>"
+    player_accounts_error: "<gradient:#FF6B6B:#FF8E8E>❌ アカウント作成エラー:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> のプレイヤーアカウント作成に失敗しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
 
     success:
-      player_accounts_created: "<gradient:#00FF00:#32CD32>✅ Accounts Created:</gradient> <white>Successfully created <gradient:#FFD700:#FFA500>%player_amount%</gradient> player accounts for currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
+      player_accounts_created: "<gradient:#00FF00:#32CD32>✅ アカウント作成完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> 用に <gradient:#FFD700:#FFA500>%player_amount%</gradient> 個のプレイヤーアカウントが正常に作成されました！</white>"
 
-# Currency Overview UI
 currencies_overview_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Overview</gradient>"
+  title: "<gradient:#FFD700:#FFA500>通貨概要</gradient>"
 
   currency:
     name: "<gradient:#FFD700:#FFA500>%currency_symbol%</gradient> <white>%currency_identifier%</white>"
     lore:
       - ""
-      - "<gray>▪ <white>Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Prefix:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Suffix:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Position:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
+      - "<gray>▪ <white>識別子:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>シンボル:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>プレフィックス:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>サフィックス:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>位置:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• View detailed information</white>"
-      - "<white>• Access leaderboard</white>"
-      - "<white>• Administrative functions</white>"
+      - "<gradient:#FFD700:#FFA500>機能:</gradient>"
+      - "<white>• 詳細情報を表示</white>"
+      - "<white>• リーダーボードにアクセス</white>"
+      - "<white>• 管理機能</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to view details</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして詳細を表示</gradient>"
 
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Page</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Page ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ 前のページ</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>次のページ ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>ページ %current_page% / %total_pages%</gradient>"
 
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Currencies Found</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>通貨が見つかりません</gradient>"
     description:
       - ""
-      - "<gray>There are currently no currencies"
-      - "<gray>available in the system."
+      - "<gray>現在、システムに利用可能な</gray>"
+      - "<gray>通貨がありません。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>💡 Tip:</gradient>"
-      - "<white>Create a new currency to get started!</white>"
+      - "<gradient:#FFD700:#FFA500>💡 ヒント:</gradient>"
+      - "<white>新しい通貨を作成して始めましょう！</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Go back to create one</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ 戻って作成する</gradient>"
 
   loading:
-    title: "<gradient:#FFD700:#FFA500>Loading Currencies...</gradient>"
+    title: "<gradient:#FFD700:#FFA500>通貨を読み込み中...</gradient>"
     description:
       - ""
-      - "<gray>Please wait while we load"
-      - "<gray>all available currencies."
+      - "<gray>すべての利用可能な通貨を</gray>"
+      - "<gray>読み込んでいます。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>⏳ This may take a moment...</gradient>"
+      - "<gradient:#FFD700:#FFA500>⏳ しばらくお待ちください...</gradient>"
 
-# Currency Detail UI
 currency_detail_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Details</gradient> <gray>- <white>%currency_identifier%</white>"
+  title: "<gradient:#FFD700:#FFA500>通貨詳細</gradient> <gray>- <white>%currency_identifier%</white>"
 
   currency_icon:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Currency Icon</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 通貨アイコン</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Material:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>マテリアル:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
+      - "<gray>▪ <white>通貨:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
-      - "<gray>This material represents the currency"
-      - "<gray>in various UI elements and displays."
+      - "<gray>このマテリアルは様々なUI要素や</gray>"
+      - "<gray>表示で通貨を表します。</gray>"
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
+      - "<gradient:#6C7B7F:#95A5A6>読み取り専用情報</gradient>"
 
   currency_symbol:
-    name: "<gradient:#FFD700:#FFA500>💰 Currency Symbol</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+    name: "<gradient:#FFD700:#FFA500>💰 通貨シンボル</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>シンボル:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>通貨:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
-      - "<gray>This symbol is used to represent"
-      - "<gray>the currency in short form."
+      - "<gray>このシンボルは通貨を</gray>"
+      - "<gray>短い形式で表すために使用されます。</gray>"
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
+      - "<gradient:#6C7B7F:#95A5A6>読み取り専用情報</gradient>"
 
   currency_prefix:
-    name: "<gradient:#4ECDC4:#45B7B8>📝 Currency Prefix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📝 通貨プレフィックス</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Prefix:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Has Prefix:</white> %has_prefix%"
+      - "<gray>▪ <white>プレフィックス:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>プレフィックスあり:</white> %has_prefix%"
       - ""
-      - "<gray>Text displayed before the currency"
-      - "<gray>amount in transactions and displays."
+      - "<gray>取引や表示で通貨金額の</gray>"
+      - "<gray>前に表示されるテキスト。</gray>"
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
+      - "<gradient:#6C7B7F:#95A5A6>読み取り専用情報</gradient>"
 
   currency_suffix:
-    name: "<gradient:#4ECDC4:#45B7B8>📄 Currency Suffix</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📄 通貨サフィックス</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Suffix:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Has Suffix:</white> %has_suffix%"
+      - "<gray>▪ <white>サフィックス:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>サフィックスあり:</white> %has_suffix%"
       - ""
-      - "<gray>Text displayed after the currency"
-      - "<gray>amount in transactions and displays."
+      - "<gray>取引や表示で通貨金額の</gray>"
+      - "<gray>後に表示されるテキスト。</gray>"
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
+      - "<gradient:#6C7B7F:#95A5A6>読み取り専用情報</gradient>"
 
   leaderboard:
-    name: "<gradient:#FFD700:#FFA500>🏆 View Leaderboard (%currency_identifier%)</gradient>"
+    name: "<gradient:#FFD700:#FFA500>🏆 リーダーボードを表示 (%currency_identifier%)</gradient>"
     lore:
       - ""
-      - "<gray>View the top players with the most"
-      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%)</gray>"
+      - "<gray>最も多くの</gray>"
+      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%) を持つ</gray>"
+      - "<gray>トッププレイヤーを表示します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Features:</gradient>"
-      - "<white>• Top players with positive balances</white>"
-      - "<white>• Real-time balance updates</white>"
-      - "<white>• Detailed player statistics</white>"
-      - "<white>• Rank-based visual indicators</white>"
+      - "<gradient:#FFD700:#FFA500>機能:</gradient>"
+      - "<white>• プラス残高のトッププレイヤー</white>"
+      - "<white>• リアルタイム残高更新</white>"
+      - "<white>• 詳細なプレイヤー統計</white>"
+      - "<white>• ランクベースのビジュアル表示</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to view leaderboard</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてリーダーボードを表示</gradient>"
 
   reset_all:
-    name: "<gradient:#FF6B6B:#FF8E8E>🔄 Reset All Balances</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>🔄 全残高をリセット</gradient>"
     lore:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ 危険ゾーン ⚠️</gradient>"
       - ""
-      - "<gray>Reset ALL player balances for"
-      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%) to <white>0</white>"
+      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> <gray>(%currency_symbol%) の</gray>"
+      - "<gray>すべてのプレイヤー残高を <white>0</white> にリセット</gray>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>This action requires confirmation!</gradient>"
-      - "<gradient:#FFD700:#FFA500>Admin permission required.</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>この操作には確認が必要です！</gradient>"
+      - "<gradient:#FFD700:#FFA500>管理者権限が必要です。</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>What gets reset:</gradient>"
-      - "<white>• All player balances</white>"
-      - "<white>• Leaderboard positions</white>"
-      - "<white>• Balance history</white>"
+      - "<gradient:#FFD700:#FFA500>リセットされるもの:</gradient>"
+      - "<white>• すべてのプレイヤー残高</white>"
+      - "<white>• リーダーボード順位</white>"
+      - "<white>• 残高履歴</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>▶ Click to start reset process</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>▶ クリックしてリセットプロセスを開始</gradient>"
 
     confirm:
-      title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Confirm Balance Reset</gradient>"
+      title: "<gradient:#FF6B6B:#FF8E8E>⚠️ 残高リセットの確認</gradient>"
       message:
         - ""
-        - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+        - "<gradient:#FF6B6B:#FF8E8E>⚠️ 危険ゾーン ⚠️</gradient>"
         - ""
-        - "<gray>You are about to reset ALL player balances"
-        - "<gray>for currency: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+        - "<gray>通貨: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の</gray>"
+        - "<gray>すべてのプレイヤー残高をリセットしようとしています</gray>"
         - ""
-        - "<gradient:#FFD700:#FFA500>Reset Statistics:</gradient>"
-        - "<white>• Players affected: <gradient:#FF6B6B:#FF8E8E>%player_count%</gradient></white>"
-        - "<white>• Total amount to reset: <gradient:#FF6B6B:#FF8E8E>%total_amount_formatted% %currency_symbol%</gradient></white>"
+        - "<gradient:#FFD700:#FFA500>リセット統計:</gradient>"
+        - "<white>• 影響を受けるプレイヤー: <gradient:#FF6B6B:#FF8E8E>%player_count%</gradient></white>"
+        - "<white>• リセットされる合計金額: <gradient:#FF6B6B:#FF8E8E>%total_amount_formatted% %currency_symbol%</gradient></white>"
         - ""
-        - "<gradient:#FF6B6B:#FF8E8E>This action CANNOT be undone!</gradient>"
-        - "<gradient:#FF6B6B:#FF8E8E>All player progress will be lost!</gradient>"
+        - "<gradient:#FF6B6B:#FF8E8E>この操作は元に戻せません！</gradient>"
+        - "<gradient:#FF6B6B:#FF8E8E>すべてのプレイヤーの進行状況が失われます！</gradient>"
         - ""
-        - "<gray>Are you absolutely sure you want to continue?</gray>"
+        - "<gray>本当に続行しますか？</gray>"
 
-    processing: "<gradient:#FFD700:#FFA500>🔄 Processing Reset:</gradient> <white>Resetting <gradient:#FFD700:#FFA500>%player_count%</gradient> player balances for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>...</white>"
-    success: "<gradient:#00FF00:#32CD32>✅ Reset Complete:</gradient> <white>Successfully reset <gradient:#FFD700:#FFA500>%player_count%</gradient> players' <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> balances. Total amount reset: <gradient:#FF6B6B:#FF8E8E>%total_amount_reset% %currency_symbol%</gradient></white>"
-    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ Reset Cancelled:</gradient> <white>Balance reset operation for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> was cancelled by user.</white>"
-    no_players: "<gradient:#FFD700:#FFA500>ℹ️ No Players Found:</gradient> <white>No players found with <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> currency balances to reset.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Database Error:</gradient> <white>Failed to load currency data for reset: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
-    execution_error: "<gradient:#FF6B6B:#FF8E8E>❌ Reset Failed:</gradient> <white>Failed to reset balances for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    processing: "<gradient:#FFD700:#FFA500>🔄 リセット処理中:</gradient> <white><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の <gradient:#FFD700:#FFA500>%player_count%</gradient> 人のプレイヤー残高をリセットしています...</white>"
+    success: "<gradient:#00FF00:#32CD32>✅ リセット完了:</gradient> <white><gradient:#FFD700:#FFA500>%player_count%</gradient> 人のプレイヤーの <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> 残高が正常にリセットされました。リセットされた合計金額: <gradient:#FF6B6B:#FF8E8E>%total_amount_reset% %currency_symbol%</gradient></white>"
+    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ リセットキャンセル:</gradient> <white><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の残高リセット操作がユーザーによってキャンセルされました。</white>"
+    no_players: "<gradient:#FFD700:#FFA500>ℹ️ プレイヤーが見つかりません:</gradient> <white><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> 通貨残高を持つプレイヤーが見つかりませんでした。</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ データベースエラー:</gradient> <white>リセット用の通貨データの読み込みに失敗しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    execution_error: "<gradient:#FF6B6B:#FF8E8E>❌ リセット失敗:</gradient> <white><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の残高リセットに失敗しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
 
   back:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Back to Overview</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ 概要に戻る</gradient>"
     lore:
       - ""
-      - "<gray>Return to the currency overview"
-      - "<gray>to browse other currencies."
+      - "<gray>通貨概要に戻って</gray>"
+      - "<gray>他の通貨を閲覧します。</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to go back</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして戻る</gradient>"
 
-# Currency Leaderboard UI
+
 currency_leaderboard_ui:
-  title: "<gradient:#FFD700:#FFA500>🏆 Leaderboard</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+  title: "<gradient:#FFD700:#FFA500>🏆 リーダーボード</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
 
   currency_info:
-    name: "<gradient:#FFD700:#FFA500>📊 %currency_identifier% Leaderboard</gradient>"
+    name: "<gradient:#FFD700:#FFA500>📊 %currency_identifier% リーダーボード</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>通貨:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>シンボル:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
       - ""
-      - "<gray>Showing the top players with the"
-      - "<gray>highest balances for this currency."
+      - "<gray>この通貨で最も高い残高を持つ</gray>"
+      - "<gray>トッププレイヤーを表示しています。</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>🏆 Rankings below 🏆</gradient>"
+      - "<gradient:#00FF00:#32CD32>🏆 以下にランキング 🏆</gradient>"
 
   player_entry:
     name: "%rank_color%#%rank%</gradient> <white>%player_name%</white> <gray>- <gradient:#FFD700:#FFA500>%balance% %currency_symbol%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Rank:</white> %rank_color%#%rank%</gradient>"
-      - "<gray>▪ <white>Player:</white> <gradient:#FFD700:#FFA500>%player_name%</gradient>"
-      - "<gray>▪ <white>Balance:</white> <gradient:#00FF00:#32CD32>%formatted_balance%</gradient>"
-      - "<gray>▪ <white>Currency:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>ランク:</white> %rank_color%#%rank%</gradient>"
+      - "<gray>▪ <white>プレイヤー:</white> <gradient:#FFD700:#FFA500>%player_name%</gradient>"
+      - "<gray>▪ <white>残高:</white> <gradient:#00FF00:#32CD32>%formatted_balance%</gradient>"
+      - "<gray>▪ <white>通貨:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
       - "<gradient:#6C7B7F:#95A5A6>UUID: %player_uuid%</gradient>"
 
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Rankings</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Rankings ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ 前のランキング</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>次のランキング ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>ページ %current_page% / %total_pages%</gradient>"
 
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Rankings Available</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>ランキングがありません</gradient>"
     description:
-      - "<gray>No players have a positive balance"
-      - "<gray>for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> yet."
+      - "<gray><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> でプラス残高を</gray>"
+      - "<gray>持つプレイヤーがまだいません。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Be the first to earn some currency!</gradient>"
+      - "<gradient:#FFD700:#FFA500>最初に通貨を獲得しましょう！</gradient>"
 
   back_button:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Back to Details</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ 詳細に戻る</gradient>"
     lore:
       - ""
-      - "<gray>Return to the currency detail view"
-      - "<gray>to see more information and options."
+      - "<gray>通貨詳細ビューに戻って</gray>"
+      - "<gray>詳細情報とオプションを確認します。</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to go back</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして戻る</gradient>"
 
-# Currency Editing UI (Selection)
 currency_editing_ui:
-  title: "<gradient:#FFD700:#FFA500>Edit Currency</gradient> <gray>- <white>Select Currency</white>"
+  title: "<gradient:#FFD700:#FFA500>通貨を編集</gradient> <gray>- <white>通貨を選択</white>"
 
   currency:
     name: "<gradient:#FFD700:#FFA500>🔧 %currency_symbol%</gradient> <white>%currency_identifier%</white>"
     lore:
       - ""
-      - "<gray>▪ <white>Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Prefix:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Suffix:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Position:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
+      - "<gray>▪ <white>識別子:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>シンボル:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>プレフィックス:</white> <gradient:#4ECDC4:#45B7B8>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>サフィックス:</white> <gradient:#4ECDC4:#45B7B8>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>位置:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Editable Properties:</gradient>"
-      - "<white>• Symbol and visual representation</white>"
-      - "<white>• Display prefix and suffix</white>"
-      - "<white>• Icon material</white>"
+      - "<gradient:#FFD700:#FFA500>編集可能なプロパティ:</gradient>"
+      - "<white>• シンボルとビジュアル表現</white>"
+      - "<white>• 表示プレフィックスとサフィックス</white>"
+      - "<white>• アイコンマテリアル</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>Note: Identifier cannot be changed</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>注意: 識別子は変更できません</gradient>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit this currency</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてこの通貨を編集</gradient>"
 
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Page</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Page ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ 前のページ</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>次のページ ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>ページ %current_page% / %total_pages%</gradient>"
 
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Currencies Available</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>利用可能な通貨がありません</gradient>"
     description:
       - ""
-      - "<gray>There are currently no currencies"
-      - "<gray>available to edit in the system."
+      - "<gray>現在、システムに編集可能な</gray>"
+      - "<gray>通貨がありません。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>💡 Tip:</gradient>"
-      - "<white>Create a currency first before editing!</white>"
+      - "<gradient:#FFD700:#FFA500>💡 ヒント:</gradient>"
+      - "<white>編集する前にまず通貨を作成してください！</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Go back to create one</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ 戻って作成する</gradient>"
 
-# Currency Properties Editing UI
 currency_properties_editing_ui:
-  title: "<gradient:#FFD700:#FFA500>Edit Currency Properties</gradient> <gray>- <white>%currency_identifier%</white>"
+  title: "<gradient:#FFD700:#FFA500>通貨プロパティを編集</gradient> <gray>- <white>%currency_identifier%</white>"
 
   identifier:
-    name: "<gradient:#6C7B7F:#95A5A6>🏷️ Currency Identifier</gradient> <gray>(Read-Only)</gray>"
+    name: "<gradient:#6C7B7F:#95A5A6>🏷️ 通貨識別子</gradient> <gray>(読み取り専用)</gray>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>現在の識別子:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ Cannot be changed</gradient>"
-      - "<gray>The identifier is permanent to maintain"
-      - "<gray>database integrity and prevent conflicts."
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ 変更できません</gradient>"
+      - "<gray>識別子はデータベースの整合性を維持し、</gray>"
+      - "<gray>競合を防ぐために永続的です。</gray>"
       - ""
-      - "<gradient:#6C7B7F:#95A5A6>Read-only information</gradient>"
+      - "<gradient:#6C7B7F:#95A5A6>読み取り専用情報</gradient>"
 
   symbol:
-    name: "<gradient:#FFD700:#FFA500>💰 Edit Symbol</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+    name: "<gradient:#FFD700:#FFA500>💰 シンボルを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>現在のシンボル:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
       - ""
-      - "<gray>Click to modify the currency symbol"
-      - "<gray>that represents this currency."
+      - "<gray>この通貨を表す通貨シンボルを</gray>"
+      - "<gray>変更するにはクリックしてください。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>$, €, ★, ♦, 🪙</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>$, €, ★, ♦, 🪙</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit symbol</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてシンボルを編集</gradient>"
 
   icon:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Edit Icon</gradient> <gray>- <gradient:#FFD700:#FFA500>%material_name%</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 アイコンを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%material_name%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Material:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
+      - "<gray>▪ <white>現在のマテリアル:</white> <gradient:#FFD700:#FFA500>%material_name%</gradient>"
       - ""
-      - "<gray>Click to change the material icon"
-      - "<gray>used to represent this currency."
+      - "<gray>この通貨を表すマテリアルアイコンを</gray>"
+      - "<gray>変更するにはクリックしてください。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>GOLD_INGOT, DIAMOND, EMERALD</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to select new material</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして新しいマテリアルを選択</gradient>"
 
   prefix:
-    name: "<gradient:#4ECDC4:#45B7B8>📝 Edit Prefix</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📝 プレフィックスを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Prefix:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
-      - "<gray>▪ <white>Has Prefix:</white> %has_prefix%"
+      - "<gray>▪ <white>現在のプレフィックス:</white> <gradient:#FFD700:#FFA500>%currency_prefix%</gradient>"
+      - "<gray>▪ <white>プレフィックスあり:</white> %has_prefix%"
       - ""
-      - "<gray>Click to modify the text displayed"
-      - "<gray>before currency amounts."
+      - "<gray>通貨金額の前に表示される</gray>"
+      - "<gray>テキストを変更するにはクリックしてください。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>'$', 'Credits: ', 'Gold: '</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>'$', 'クレジット: ', 'ゴールド: '</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit prefix</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてプレフィックスを編集</gradient>"
 
   suffix:
-    name: "<gradient:#4ECDC4:#45B7B8>📄 Edit Suffix</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>📄 サフィックスを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
     lore:
       - ""
-      - "<gray>▪ <white>Current Suffix:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
-      - "<gray>▪ <white>Has Suffix:</white> %has_suffix%"
+      - "<gray>▪ <white>現在のサフィックス:</white> <gradient:#FFD700:#FFA500>%currency_suffix%</gradient>"
+      - "<gray>▪ <white>サフィックスあり:</white> %has_suffix%"
       - ""
-      - "<gray>Click to modify the text displayed"
-      - "<gray>after currency amounts."
+      - "<gray>通貨金額の後に表示される</gray>"
+      - "<gray>テキストを変更するにはクリックしてください。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient> <white>' coins', ' points', ' credits'</white>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient> <white>' コイン', ' ポイント', ' クレジット'</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to edit suffix</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてサフィックスを編集</gradient>"
 
   save_changes:
-    name: "<gradient:#00FF00:#32CD32>💾 Save Changes</gradient>"
+    name: "<gradient:#00FF00:#32CD32>💾 変更を保存</gradient>"
     lore:
       - ""
-      - "<gray>Save all modifications made to"
-      - "<gray>this currency's properties."
+      - "<gray>この通貨のプロパティに加えた</gray>"
+      - "<gray>すべての変更を保存します。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>What gets saved:</gradient>"
-      - "<white>• Symbol changes</white>"
-      - "<white>• Icon material updates</white>"
-      - "<white>• Prefix modifications</white>"
-      - "<white>• Suffix modifications</white>"
+      - "<gradient:#FFD700:#FFA500>保存されるもの:</gradient>"
+      - "<white>• シンボルの変更</white>"
+      - "<white>• アイコンマテリアルの更新</white>"
+      - "<white>• プレフィックスの変更</white>"
+      - "<white>• サフィックスの変更</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to save all changes</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックしてすべての変更を保存</gradient>"
 
   save:
-    processing: "<gradient:#FFD700:#FFA500>💾 Saving Changes:</gradient> <white>Updating currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> properties...</white>"
-    success: "<gradient:#00FF00:#32CD32>✅ Changes Saved:</gradient> <white>Successfully updated currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> properties!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Save Failed:</gradient> <white>Failed to save changes to currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Please try again.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Save Error:</gradient> <white>An error occurred while saving currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    processing: "<gradient:#FFD700:#FFA500>💾 変更を保存中:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> のプロパティを更新しています...</white>"
+    success: "<gradient:#00FF00:#32CD32>✅ 変更保存完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> のプロパティが正常に更新されました！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>❌ 保存失敗:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> への変更の保存に失敗しました。もう一度お試しください。</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ 保存エラー:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の保存中にエラーが発生しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
 
-# Currency Deletion UI
 currency_deletion_ui:
-  title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Delete Currency</gradient> <gray>- <white>Select Currency</white>"
+  title: "<gradient:#FF6B6B:#FF8E8E>⚠️ 通貨を削除</gradient> <gray>- <white>通貨を選択</white>"
 
   currency:
     name: "<gradient:#FF6B6B:#FF8E8E>🗑️ %currency_symbol%</gradient> <white>%currency_identifier%</white>"
     lore:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ DANGER ZONE ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ 危険ゾーン ⚠️</gradient>"
       - ""
-      - "<gray>▪ <white>Identifier:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
-      - "<gray>▪ <white>Symbol:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
-      - "<gray>▪ <white>Affected Players:</white> <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient>"
-      - "<gray>▪ <white>Total Balance:</white> <gradient:#FF6B6B:#FF8E8E>%total_balance%</gradient>"
-      - "<gray>▪ <white>Position:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
+      - "<gray>▪ <white>識別子:</white> <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>"
+      - "<gray>▪ <white>シンボル:</white> <gradient:#FFD700:#FFA500>%currency_symbol%</gradient>"
+      - "<gray>▪ <white>影響を受けるプレイヤー:</white> <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient>"
+      - "<gray>▪ <white>合計残高:</white> <gradient:#FF6B6B:#FF8E8E>%total_balance%</gradient>"
+      - "<gray>▪ <white>位置:</white> <gradient:#9B59B6:#8E44AD>#%index%</gradient>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>This action will permanently:</gradient>"
-      - "<white>• Delete the currency configuration</white>"
-      - "<white>• Remove ALL player balances</white>"
-      - "<white>• Clear transaction history</white>"
+      - "<gradient:#FF6B6B:#FF8E8E>この操作は永久に:</gradient>"
+      - "<white>• 通貨設定を削除</white>"
+      - "<white>• すべてのプレイヤー残高を削除</white>"
+      - "<white>• 取引履歴を消去</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ THIS CANNOT BE UNDONE! ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ これは元に戻せません！ ⚠️</gradient>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>▶ Click to delete this currency</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>▶ クリックしてこの通貨を削除</gradient>"
 
   pagination:
-    previous: "<gradient:#FF6B6B:#FF8E8E>◀ Previous Page</gradient>"
-    next: "<gradient:#4ECDC4:#45B7B8>Next Page ▶</gradient>"
-    current_page: "<gradient:#FFD700:#FFA500>Page %current_page% of %total_pages%</gradient>"
+    previous: "<gradient:#FF6B6B:#FF8E8E>◀ 前のページ</gradient>"
+    next: "<gradient:#4ECDC4:#45B7B8>次のページ ▶</gradient>"
+    current_page: "<gradient:#FFD700:#FFA500>ページ %current_page% / %total_pages%</gradient>"
 
   empty:
-    title: "<gradient:#FF6B6B:#FF8E8E>No Currencies Available</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>利用可能な通貨がありません</gradient>"
     description:
       - ""
-      - "<gray>There are currently no currencies"
-      - "<gray>available to delete in the system."
+      - "<gray>現在、システムに削除可能な</gray>"
+      - "<gray>通貨がありません。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>💡 Note:</gradient>"
-      - "<white>This is actually a good thing!</white>"
+      - "<gradient:#FFD700:#FFA500>💡 注意:</gradient>"
+      - "<white>これは実際には良いことです！</white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Go back to main menu</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ メインメニューに戻る</gradient>"
 
   confirm:
-    title: "<gradient:#FF6B6B:#FF8E8E>⚠️ Confirm Currency Deletion</gradient>"
+    title: "<gradient:#FF6B6B:#FF8E8E>⚠️ 通貨削除の確認</gradient>"
     message:
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>⚠️ FINAL WARNING ⚠️</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>⚠️ 最終警告 ⚠️</gradient>"
       - ""
-      - "<gray>You are about to permanently delete:"
-      - "<gray>Currency: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> (%currency_symbol%)"
+      - "<gray>以下を永久に削除しようとしています:</gray>"
+      - "<gray>通貨: <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> (%currency_symbol%)"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>Deletion Impact:</gradient>"
-      - "<white>• Players affected: <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient></white>"
-      - "<white>• Total balance lost: <gradient:#FF6B6B:#FF8E8E>%total_balance_formatted% %currency_symbol%</gradient></white>"
-      - "<white>• All transaction history will be erased</white>"
-      - "<white>• Currency configuration will be removed</white>"
+      - "<gradient:#FF6B6B:#FF8E8E>削除の影響:</gradient>"
+      - "<white>• 影響を受けるプレイヤー: <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient></white>"
+      - "<white>• 失われる合計残高: <gradient:#FF6B6B:#FF8E8E>%total_balance_formatted% %currency_symbol%</gradient></white>"
+      - "<white>• すべての取引履歴が消去されます</white>"
+      - "<white>• 通貨設定が削除されます</white>"
       - ""
-      - "<gradient:#FF6B6B:#FF8E8E>THIS ACTION IS IRREVERSIBLE!</gradient>"
-      - "<gradient:#FF6B6B:#FF8E8E>ALL PLAYER PROGRESS WILL BE LOST!</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>この操作は元に戻せません！</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>すべてのプレイヤーの進行状況が失われます！</gradient>"
       - ""
-      - "<gray>Are you absolutely certain you want to proceed?</gray>"
+      - "<gray>本当に続行しますか？</gray>"
 
   delete:
-    processing: "<gradient:#FFD700:#FFA500>🗑️ Processing Deletion:</gradient> <white>Deleting currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> and <gradient:#FFD700:#FFA500>%affected_players%</gradient> player accounts...</white>"
-    success: "<gradient:#00FF00:#32CD32>✅ Deletion Complete:</gradient> <white>Successfully deleted currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Removed <gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient> player accounts with total balance of <gradient:#FF6B6B:#FF8E8E>%total_balance_removed% %currency_symbol%</gradient>.</white>"
-    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ Deletion Cancelled:</gradient> <white>Currency deletion for <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> was cancelled by user.</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>❌ Deletion Failed:</gradient> <white>Failed to delete currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>. Please try again or contact an administrator.</white>"
-    error: "<gradient:#FF6B6B:#FF8E8E>❌ Deletion Error:</gradient> <white>An error occurred while deleting currency <gradient:#FFD700:#FFA500>%currency_identifier%</gradient>: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+    processing: "<gradient:#FFD700:#FFA500>🗑️ 削除処理中:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> と <gradient:#FFD700:#FFA500>%affected_players%</gradient> 個のプレイヤーアカウントを削除しています...</white>"
+    success: "<gradient:#00FF00:#32CD32>✅ 削除完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> が正常に削除されました。<gradient:#FF6B6B:#FF8E8E>%affected_players%</gradient> 個のプレイヤーアカウント（合計残高 <gradient:#FF6B6B:#FF8E8E>%total_balance_removed% %currency_symbol%</gradient>）が削除されました。</white>"
+    cancelled: "<gradient:#4ECDC4:#45B7B8>ℹ️ 削除キャンセル:</gradient> <white><gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の通貨削除がユーザーによってキャンセルされました。</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>❌ 削除失敗:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の削除に失敗しました。もう一度お試しいただくか、管理者にお問い合わせください。</white>"
+    error: "<gradient:#FF6B6B:#FF8E8E>❌ 削除エラー:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency_identifier%</gradient> の削除中にエラーが発生しました: <gradient:#FF6B6B:#FF8E8E>%error%</gradient></white>"
+
 
 # ═══════════════════════════════════════════════════════════════
-# ANVIL INPUT VIEWS
+# アンビル入力ビュー
 # ═══════════════════════════════════════════════════════════════
 
-# Currency Identifier Anvil View
 currency_identifier_anvil_ui:
-  title: "<gradient:#9370DB:#8A2BE2>Edit Currency Identifier</gradient>"
+  title: "<gradient:#9370DB:#8A2BE2>通貨識別子を編集</gradient>"
 
   input:
-    name: "<gradient:#FF69B4:#FF1493>🏷️ Currency Identifier</gradient>"
+    name: "<gradient:#FF69B4:#FF1493>🏷️ 通貨識別子</gradient>"
     lore:
       - ""
-      - "<gray>Enter a unique identifier for your currency"
-      - "<gray>This is the <gradient:#FFD700:#FFA500>internal name</gradient> used by the system"
+      - "<gray>通貨の一意の識別子を入力してください</gray>"
+      - "<gray>これはシステムで使用される<gradient:#FFD700:#FFA500>内部名</gradient>です</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>Requirements:</gradient>"
-      - "<white>  • Only <gradient:#FFD700:#FFA500>%pattern%</gradient></white>"
-      - "<white>  • Between <gradient:#FFD700:#FFA500>%min_length%</gradient> and <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</white>"
-      - "<white>  • Must be <gradient:#FFD700:#FFA500>unique</gradient></white>"
+      - "<gradient:#00FF00:#32CD32>要件:</gradient>"
+      - "<white>  • <gradient:#FFD700:#FFA500>%pattern%</gradient> のみ</white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>%min_length%</gradient> から <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字</white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>一意</gradient>である必要があります</white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Examples:</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>例:</gradient>"
       - "<white>  • <gradient:#FFD700:#FFA500>coins</gradient>, <gradient:#FFD700:#FFA500>gems</gradient>, <gradient:#FFD700:#FFA500>tokens</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>vip_points</gradient>, <gradient:#FFD700:#FFA500>event-coins</gradient></white>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ 結果をクリックして保存！</gradient>"
 
   validation_error:
-    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Empty Identifier:</gradient> <white>Currency identifier cannot be empty. Please enter a valid name.</white>"
-    invalid_characters: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Characters:</gradient> <white>Identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' contains invalid characters. Only <gradient:#FFD700:#FFA500>%pattern%</gradient> are allowed.</white>"
-    too_short: "<gradient:#FF6B6B:#FF8E8E>❌ Too Short:</gradient> <white>Identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' is too short. Minimum length is <gradient:#FFD700:#FFA500>%min_length%</gradient> characters.</white>"
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Too Long:</gradient> <white>Identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' is too long. Maximum length is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    already_defined: "<gradient:#FF6B6B:#FF8E8E>❌ Already Exists:</gradient> <white>A currency with identifier '<gradient:#FFD700:#FFA500>%input%</gradient>' already exists. Please choose a different name.</white>"
+    empty: "<gradient:#FF6B6B:#FF8E8E>❌ 空の識別子:</gradient> <white>通貨識別子は空にできません。有効な名前を入力してください。</white>"
+    invalid_characters: "<gradient:#FF6B6B:#FF8E8E>❌ 無効な文字:</gradient> <white>識別子 '<gradient:#FFD700:#FFA500>%input%</gradient>' に無効な文字が含まれています。<gradient:#FFD700:#FFA500>%pattern%</gradient> のみ使用できます。</white>"
+    too_short: "<gradient:#FF6B6B:#FF8E8E>❌ 短すぎます:</gradient> <white>識別子 '<gradient:#FFD700:#FFA500>%input%</gradient>' は短すぎます。最小長は <gradient:#FFD700:#FFA500>%min_length%</gradient> 文字です。</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ 長すぎます:</gradient> <white>識別子 '<gradient:#FFD700:#FFA500>%input%</gradient>' は長すぎます。最大長は <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字です。</white>"
+    already_defined: "<gradient:#FF6B6B:#FF8E8E>❌ 既に存在:</gradient> <white>識別子 '<gradient:#FFD700:#FFA500>%input%</gradient>' の通貨は既に存在します。別の名前を選択してください。</white>"
 
-# Currency Symbol Anvil View
 currency_symbol_anvil_ui:
-  title: "<gradient:#FF4500:#FF6347>Edit Currency Symbol</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
+  title: "<gradient:#FF4500:#FF6347>通貨シンボルを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
 
   input:
-    name: "<gradient:#DAA520:#B8860B>💰 Currency Symbol</gradient>"
+    name: "<gradient:#DAA520:#B8860B>💰 通貨シンボル</gradient>"
     lore:
       - ""
-      - "<gray>Enter a symbol for your currency"
-      - "<gray>This is a <gradient:#FFD700:#FFA500>short representation</gradient> of your currency"
+      - "<gray>通貨のシンボルを入力してください</gray>"
+      - "<gray>これは通貨の<gradient:#FFD700:#FFA500>短い表現</gradient>です</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>Examples:</gradient>"
+      - "<gradient:#00FF00:#32CD32>例:</gradient>"
       - "<white>  • <gradient:#FFD700:#FFA500>$</gradient>, <gradient:#FFD700:#FFA500>€</gradient>, <gradient:#FFD700:#FFA500>£</gradient>, <gradient:#FFD700:#FFA500>¥</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>★</gradient>, <gradient:#FFD700:#FFA500>♦</gradient>, <gradient:#FFD700:#FFA500>⚡</gradient>, <gradient:#FFD700:#FFA500>🪙</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>C</gradient>, <gradient:#FFD700:#FFA500>G</gradient>, <gradient:#FFD700:#FFA500>T</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_symbol%</gradient>"
-      - "<gray>Max length: <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</gray>"
-      - "<gradient:#FF6B6B:#FF8E8E>Cannot be empty!</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>現在:</gradient> <gradient:#FFD700:#FFA500>%current_symbol%</gradient>"
+      - "<gray>最大長: <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字</gray>"
+      - "<gradient:#FF6B6B:#FF8E8E>空にはできません！</gradient>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ 結果をクリックして保存！</gradient>"
 
   validation_error:
-    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Empty Symbol:</gradient> <white>Currency symbol cannot be empty. Please enter a valid symbol.</white>"
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Symbol Too Long:</gradient> <white>Your symbol '<gradient:#FFD700:#FFA500>%input%</gradient>' is <gradient:#FFD700:#FFA500>%current_length%</gradient> characters long, but the maximum is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Symbol:</gradient> <white>The symbol '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid. Please try again.</white>"
+    empty: "<gradient:#FF6B6B:#FF8E8E>❌ 空のシンボル:</gradient> <white>通貨シンボルは空にできません。有効なシンボルを入力してください。</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ シンボルが長すぎます:</gradient> <white>シンボル '<gradient:#FFD700:#FFA500>%input%</gradient>' は <gradient:#FFD700:#FFA500>%current_length%</gradient> 文字ですが、最大は <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字です。</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ 無効なシンボル:</gradient> <white>シンボル '<gradient:#FFD700:#FFA500>%input%</gradient>' は有効ではありません。もう一度お試しください。</white>"
 
-# Currency Icon Anvil View
 currency_icon_anvil_ui:
-  title: "<gradient:#FFD700:#FFA500>Currency Icon</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
+  title: "<gradient:#FFD700:#FFA500>通貨アイコン</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
 
   input:
-    name: "<gradient:#4ECDC4:#45B7B8>🎨 Select Icon Material</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>🎨 アイコンマテリアルを選択</gradient>"
     lore:
       - ""
-      - "<gray>Enter a valid Minecraft material name"
-      - "<gray>to use as the currency icon."
+      - "<gray>通貨アイコンとして使用する</gray>"
+      - "<gray>有効なMinecraftマテリアル名を入力してください。</gray>"
       - ""
-      - "<gradient:#FFD700:#FFA500>Examples:</gradient>"
+      - "<gradient:#FFD700:#FFA500>例:</gradient>"
       - "<white>• GOLD_INGOT</white>"
       - "<white>• DIAMOND</white>"
       - "<white>• EMERALD</white>"
       - "<white>• IRON_INGOT</white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_icon%</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>現在:</gradient> <gradient:#FFD700:#FFA500>%current_icon%</gradient>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Type material name and confirm</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ マテリアル名を入力して確認</gradient>"
 
   validation_error:
-    empty: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>Material name cannot be empty!</white>"
-    invalid_material: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' is not a valid material!</white>"
-    air_material: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>Air materials cannot be used as icons!</white>"
-    not_item: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' is not a valid item material!</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Error:</gradient> <white>Invalid material: <gradient:#FFD700:#FFA500>%input%</gradient></white>"
+    empty: "<gradient:#FF6B6B:#FF8E8E>❌ エラー:</gradient> <white>マテリアル名は空にできません！</white>"
+    invalid_material: "<gradient:#FF6B6B:#FF8E8E>❌ エラー:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' は有効なマテリアルではありません！</white>"
+    air_material: "<gradient:#FF6B6B:#FF8E8E>❌ エラー:</gradient> <white>空気マテリアルはアイコンとして使用できません！</white>"
+    not_item: "<gradient:#FF6B6B:#FF8E8E>❌ エラー:</gradient> <white>'<gradient:#FFD700:#FFA500>%input%</gradient>' は有効なアイテムマテリアルではありません！</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ エラー:</gradient> <white>無効なマテリアル: <gradient:#FFD700:#FFA500>%input%</gradient></white>"
 
   examples:
-    - "<gradient:#FFD700:#FFA500>Valid examples: %example_materials%</gradient>"
+    - "<gradient:#FFD700:#FFA500>有効な例: %example_materials%</gradient>"
 
-# Currency Prefix Anvil View
 currency_prefix_anvil_ui:
-  title: "<gradient:#32CD32:#228B22>Edit Currency Prefix</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
+  title: "<gradient:#32CD32:#228B22>通貨プレフィックスを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
 
   input:
-    name: "<gradient:#FFA500:#FF8C00>📝 Currency Prefix</gradient>"
+    name: "<gradient:#FFA500:#FF8C00>📝 通貨プレフィックス</gradient>"
     lore:
       - ""
-      - "<gray>Enter the prefix for your currency"
-      - "<gray>This appears <gradient:#FFD700:#FFA500>before</gradient> the currency value"
+      - "<gray>通貨のプレフィックスを入力してください</gray>"
+      - "<gray>これは通貨値の<gradient:#FFD700:#FFA500>前</gradient>に表示されます</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>Examples:</gradient>"
+      - "<gradient:#00FF00:#32CD32>例:</gradient>"
       - "<white>  • <gradient:#FFD700:#FFA500>$</gradient><gradient:#FFD700:#FFA500>100</gradient></white>"
       - "<white>  • <gradient:#FFD700:#FFA500>€</gradient><gradient:#FFD700:#FFA500>50</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>Credits: </gradient><gradient:#FFD700:#FFA500>25</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>クレジット: </gradient><gradient:#FFD700:#FFA500>25</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_prefix%</gradient>"
-      - "<gray>Max length: <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</gray>"
-      - "<gray>Leave empty for no prefix</gray>"
+      - "<gradient:#4ECDC4:#45B7B8>現在:</gradient> <gradient:#FFD700:#FFA500>%current_prefix%</gradient>"
+      - "<gray>最大長: <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字</gray>"
+      - "<gray>プレフィックスなしの場合は空のまま</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ 結果をクリックして保存！</gradient>"
 
   validation_error:
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Prefix Too Long:</gradient> <white>Your prefix '<gradient:#FFD700:#FFA500>%input%</gradient>' is <gradient:#FFD700:#FFA500>%current_length%</gradient> characters long, but the maximum is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Prefix:</gradient> <white>The prefix '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid. Please try again.</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ プレフィックスが長すぎます:</gradient> <white>プレフィックス '<gradient:#FFD700:#FFA500>%input%</gradient>' は <gradient:#FFD700:#FFA500>%current_length%</gradient> 文字ですが、最大は <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字です。</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ 無効なプレフィックス:</gradient> <white>プレフィックス '<gradient:#FFD700:#FFA500>%input%</gradient>' は有効ではありません。もう一度お試しください。</white>"
 
-# Currency Suffix Anvil View
 currency_suffix_anvil_ui:
-  title: "<gradient:#FFD700:#FFAA00>Edit Currency Suffix</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
+  title: "<gradient:#FFD700:#FFAA00>通貨サフィックスを編集</gradient> <gray>- <gradient:#FFD700:#FFA500>%identifier%</gradient>"
 
   input:
-    name: "<gradient:#87CEEB:#4169E1>📄 Currency Suffix</gradient>"
+    name: "<gradient:#87CEEB:#4169E1>📄 通貨サフィックス</gradient>"
     lore:
       - ""
-      - "<gray>Enter the suffix for your currency"
-      - "<gray>This appears <gradient:#FFD700:#FFA500>after</gradient> the currency value"
+      - "<gray>通貨のサフィックスを入力してください</gray>"
+      - "<gray>これは通貨値の<gradient:#FFD700:#FFA500>後</gradient>に表示されます</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>Examples:</gradient>"
-      - "<white>  • <gradient:#FFD700:#FFA500>100</gradient><gradient:#FFD700:#FFA500> coins</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>50</gradient><gradient:#FFD700:#FFA500> points</gradient></white>"
-      - "<white>  • <gradient:#FFD700:#FFA500>25</gradient><gradient:#FFD700:#FFA500> credits</gradient></white>"
+      - "<gradient:#00FF00:#32CD32>例:</gradient>"
+      - "<white>  • <gradient:#FFD700:#FFA500>100</gradient><gradient:#FFD700:#FFA500> コイン</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>50</gradient><gradient:#FFD700:#FFA500> ポイント</gradient></white>"
+      - "<white>  • <gradient:#FFD700:#FFA500>25</gradient><gradient:#FFD700:#FFA500> クレジット</gradient></white>"
       - ""
-      - "<gradient:#4ECDC4:#45B7B8>Current:</gradient> <gradient:#FFD700:#FFA500>%current_suffix%</gradient>"
-      - "<gray>Max length: <gradient:#FFD700:#FFA500>%max_length%</gradient> characters</gray>"
+      - "<gradient:#4ECDC4:#45B7B8>現在:</gradient> <gradient:#FFD700:#FFA500>%current_suffix%</gradient>"
+      - "<gray>最大長: <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click the result to save!</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ 結果をクリックして保存！</gradient>"
 
   validation_error:
-    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ Suffix Too Long:</gradient> <white>Your suffix '<gradient:#FFD700:#FFA500>%input%</gradient>' is <gradient:#FFD700:#FFA500>%current_length%</gradient> characters long, but the maximum is <gradient:#FFD700:#FFA500>%max_length%</gradient> characters.</white>"
-    general: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Suffix:</gradient> <white>The suffix '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid. Please try again.</white>"
+    too_long: "<gradient:#FF6B6B:#FF8E8E>❌ サフィックスが長すぎます:</gradient> <white>サフィックス '<gradient:#FFD700:#FFA500>%input%</gradient>' は <gradient:#FFD700:#FFA500>%current_length%</gradient> 文字ですが、最大は <gradient:#FFD700:#FFA500>%max_length%</gradient> 文字です。</white>"
+    general: "<gradient:#FF6B6B:#FF8E8E>❌ 無効なサフィックス:</gradient> <white>サフィックス '<gradient:#FFD700:#FFA500>%input%</gradient>' は有効ではありません。もう一度お試しください。</white>"
 
 # ═══════════════════════════════════════════════════════════════
-# COMMON UI ELEMENTS
+# 共通UI要素
 # ═══════════════════════════════════════════════════════════════
 
-# Navigation Elements
 navigation:
   back_to_actions:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Back to Actions</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ アクションに戻る</gradient>"
     lore:
       - ""
-      - "<gray>Return to the currency action"
-      - "<gray>overview to perform other operations."
+      - "<gray>通貨アクション概要に戻って</gray>"
+      - "<gray>他の操作を実行します。</gray>"
       - ""
-      - "<gradient:#00FF00:#32CD32>▶ Click to go back</gradient>"
+      - "<gradient:#00FF00:#32CD32>▶ クリックして戻る</gradient>"
 
-# Head UI Elements
 head:
   return:
-    name: "<gradient:#9B59B6:#8E44AD>◀ Return</gradient>"
+    name: "<gradient:#9B59B6:#8E44AD>◀ 戻る</gradient>"
     lore:
-      - "<gradient:#9B59B6:#8E44AD>Click here to return</gradient>"
+      - "<gradient:#9B59B6:#8E44AD>ここをクリックして戻る</gradient>"
 
   proceed:
-    name: "<gradient:#00FF00:#32CD32>✓ Proceed</gradient>"
+    name: "<gradient:#00FF00:#32CD32>✓ 続行</gradient>"
     lore:
-      - "<gradient:#00FF00:#32CD32>Click here to proceed</gradient>"
+      - "<gradient:#00FF00:#32CD32>ここをクリックして続行</gradient>"
 
   next:
-    name: "<gradient:#4ECDC4:#45B7B8>Next ▶</gradient>"
+    name: "<gradient:#4ECDC4:#45B7B8>次へ ▶</gradient>"
     lore:
-      - "<gradient:#4ECDC4:#45B7B8>Go to the next page</gradient>"
+      - "<gradient:#4ECDC4:#45B7B8>次のページへ</gradient>"
 
   previous:
-    name: "<gradient:#FF6B6B:#FF8E8E>◀ Previous</gradient>"
+    name: "<gradient:#FF6B6B:#FF8E8E>◀ 前へ</gradient>"
     lore:
-      - "<gradient:#FF6B6B:#FF8E8E>Go to the previous page</gradient>"
+      - "<gradient:#FF6B6B:#FF8E8E>前のページへ</gradient>"
 
-# Page Elements
 page:
-  name: "<gradient:#4ECDC4:#45B7B8>📄 Page %page%</gradient>"
+  name: "<gradient:#4ECDC4:#45B7B8>📄 ページ %page%</gradient>"
   lore:
     - ""
-    - "<gray>▪ <white>Current Page:</white> <gradient:#FFD700:#FFA500>%page%</gradient>"
-    - "<gray>▪ <white>Total Pages:</white> <gradient:#FFD700:#FFA500>%max_page%</gradient>"
-    - "<gray>▪ <white>First Page:</white> <gradient:#FFD700:#FFA500>%first_page%</gradient>"
-    - "<gray>▪ <white>Items Count:</white> <gradient:#FFD700:#FFA500>%items_count%</gradient>"
+    - "<gray>▪ <white>現在のページ:</white> <gradient:#FFD700:#FFA500>%page%</gradient>"
+    - "<gray>▪ <white>総ページ数:</white> <gradient:#FFD700:#FFA500>%max_page%</gradient>"
+    - "<gray>▪ <white>最初のページ:</white> <gradient:#FFD700:#FFA500>%first_page%</gradient>"
+    - "<gray>▪ <white>アイテム数:</white> <gradient:#FFD700:#FFA500>%items_count%</gradient>"
     - ""
-    - "<gray>Navigate through pages to view all items."
+    - "<gray>ページを移動してすべてのアイテムを表示します。"
 
-  fallback: "<gradient:#4ECDC4:#45B7B8>📄 Page %page%</gradient>"
+  fallback: "<gradient:#4ECDC4:#45B7B8>📄 ページ %page%</gradient>"
 
-# ═══════════════════════════════════════════════════════════════
-# CONDITIONAL VALUES & HELPERS
-# ═══════════════════════════════════════════════════════════════
-
-# Conditional Display Values
 conditional_values:
   has_prefix:
-    "true": "<gradient:#00FF00:#32CD32>✓ Yes</gradient>"
-    "false": "<gradient:#FF6B6B:#FF8E8E>✗ No</gradient>"
+    "true": "<gradient:#00FF00:#32CD32>✓ はい</gradient>"
+    "false": "<gradient:#FF6B6B:#FF8E8E>✗ いいえ</gradient>"
   has_suffix:
-    "true": "<gradient:#00FF00:#32CD32>✓ Yes</gradient>"
-    "false": "<gradient:#FF6B6B:#FF8E8E>✗ No</gradient>"
+    "true": "<gradient:#00FF00:#32CD32>✓ はい</gradient>"
+    "false": "<gradient:#FF6B6B:#FF8E8E>✗ いいえ</gradient>"
 
-# Rank Colors for Leaderboards
 rank_colors:
-  first: "<gradient:#FFD700:#FFA500>"   # Gold
-  second: "<gradient:#C0C0C0:#A8A8A8>"  # Silver
-  third: "<gradient:#CD7F32:#B87333>"   # Bronze
-  default: "<white>"                     # White for others
+  first: "<gradient:#FFD700:#FFA500>"
+  second: "<gradient:#C0C0C0:#A8A8A8>"
+  third: "<gradient:#CD7F32:#B87333>"
+  default: "<white>"
 
-# Rank Medals
 rank_medals:
   first: "🥇"
   second: "🥈"
   third: "🥉"
   default: "🏅"
 
-# ═══════════════════════════════════════════════════════════════
-# PERMISSION MESSAGES
-# ═══════════════════════════════════════════════════════════════
-
 permissions:
-  no_delete_permission: "<gradient:#FF6B6B:#FF8E8E>❌ Access Denied:</gradient> <white>You don't have permission to delete currencies.</white>"
-  required_permission: "<gray>Required permission: <gradient:#FFD700:#FFA500>jexeconomy.admin.delete</gradient></gray>"
+  no_delete_permission: "<gradient:#FF6B6B:#FF8E8E>❌ アクセス拒否:</gradient> <white>通貨を削除する権限がありません。</white>"
+  required_permission: "<gray>必要な権限: <gradient:#FFD700:#FFA500>jexeconomy.admin.delete</gradient></gray>"
 
   reset:
-    no_permission: "<gradient:#FF6B6B:#FF8E8E>❌ Access Denied:</gradient> <white>You don't have permission to reset currency balances.</white>"
-    required: "<gray>Required permission: <gradient:#FFD700:#FFA500>jexeconomy.admin.reset</gradient></gray>"
+    no_permission: "<gradient:#FF6B6B:#FF8E8E>❌ アクセス拒否:</gradient> <white>通貨残高をリセットする権限がありません。</white>"
+    required: "<gray>必要な権限: <gradient:#FFD700:#FFA500>jexeconomy.admin.reset</gradient></gray>"
+
 
 # ═══════════════════════════════════════════════════════════════
-# COMMAND MESSAGES
+# コマンドメッセージ
 # ═══════════════════════════════════════════════════════════════
 
-# Currency Commands
 currency:
   command:
-    usage: "<gradient:#FFD700:#FFA500>⚠ Usage:</gradient> <white>/currency %usage%</white>"
+    usage: "<gradient:#FFD700:#FFA500>⚠ 使用法:</gradient> <white>/currency %usage%</white>"
 
   create:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Created:</gradient> <white>Successfully created currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    player_accounts_created: "<gradient:#00FF00:#32CD32>✓ Accounts Created:</gradient> <white>Successfully created <gradient:#FFD700:#FFA500>%player_amount%</gradient> player accounts for currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    already_exists: "<gradient:#FF6B6B:#FF8E8E>✖ Already Exists:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> already exists!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Creation Failed:</gradient> <white>Failed to create currency. Please try again.</white>"
+    success: "<gradient:#00FF00:#32CD32>✓ 通貨作成完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> が正常に作成されました！</white>"
+    player_accounts_created: "<gradient:#00FF00:#32CD32>✓ アカウント作成完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> 用に <gradient:#FFD700:#FFA500>%player_amount%</gradient> 個のプレイヤーアカウントが正常に作成されました！</white>"
+    already_exists: "<gradient:#FF6B6B:#FF8E8E>✖ 既に存在:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> は既に存在します！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ 作成失敗:</gradient> <white>通貨の作成に失敗しました。もう一度お試しください。</white>"
 
   delete:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Deleted:</gradient> <white>Successfully deleted currency <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> does not exist!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Deletion Failed:</gradient> <white>Failed to delete currency. Please try again.</white>"
+    success: "<gradient:#00FF00:#32CD32>✓ 通貨削除完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> が正常に削除されました！</white>"
+    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ 見つかりません:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> は存在しません！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ 削除失敗:</gradient> <white>通貨の削除に失敗しました。もう一度お試しください。</white>"
 
   edit:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Updated:</gradient> <white>Successfully updated <gradient:#FFD700:#FFA500>%field%</gradient> of currency <gradient:#FFD700:#FFA500>%identifier%</gradient> to <gradient:#FFD700:#FFA500>%value%</gradient>!</white>"
-    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> does not exist!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Update Failed:</gradient> <white>Failed to update currency. Please try again.</white>"
-    fields: "<gradient:#FFD700:#FFA500>ℹ Available Fields:</gradient> <white><gradient:#FFD700:#FFA500>symbol</gradient>, <gradient:#FFD700:#FFA500>prefix</gradient>, <gradient:#FFD700:#FFA500>suffix</gradient>, <gradient:#FFD700:#FFA500>identifier</gradient></white>"
+    success: "<gradient:#00FF00:#32CD32>✓ 通貨更新完了:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> の <gradient:#FFD700:#FFA500>%field%</gradient> を <gradient:#FFD700:#FFA500>%value%</gradient> に正常に更新しました！</white>"
+    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ 見つかりません:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> は存在しません！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ 更新失敗:</gradient> <white>通貨の更新に失敗しました。もう一度お試しください。</white>"
+    fields: "<gradient:#FFD700:#FFA500>ℹ 利用可能なフィールド:</gradient> <white><gradient:#FFD700:#FFA500>symbol</gradient>, <gradient:#FFD700:#FFA500>prefix</gradient>, <gradient:#FFD700:#FFA500>suffix</gradient>, <gradient:#FFD700:#FFA500>identifier</gradient></white>"
 
   list:
-    header: "<gradient:#FFD700:#FFA500>📋 Available Currencies</gradient> <gray>(<gradient:#FFD700:#FFA500>%count%</gradient>):</gray>"
-    entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient> - Symbol: <gradient:#FFD700:#FFA500>%symbol%</gradient>, Prefix: <gradient:#FFD700:#FFA500>%prefix%</gradient>, Suffix: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
-    empty: "<gradient:#FFD700:#FFA500>ℹ No Currencies:</gradient> <white>No currencies found. Create one with /currency create</white>"
+    header: "<gradient:#FFD700:#FFA500>📋 利用可能な通貨</gradient> <gray>(<gradient:#FFD700:#FFA500>%count%</gradient>):</gray>"
+    entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient> - シンボル: <gradient:#FFD700:#FFA500>%symbol%</gradient>, プレフィックス: <gradient:#FFD700:#FFA500>%prefix%</gradient>, サフィックス: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
+    empty: "<gradient:#FFD700:#FFA500>ℹ 通貨なし:</gradient> <white>通貨が見つかりません。/currency create で作成してください</white>"
 
   info:
-    header: "<gradient:#FFD700:#FFA500>📊 Currency Information:</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>"
-    details: "<gradient:#4ECDC4:#45B7B8>➤</gradient> Symbol: <gradient:#FFD700:#FFA500>%symbol%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> Prefix: <gradient:#FFD700:#FFA500>%prefix%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> Suffix: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
-    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%identifier%</gradient> does not exist!</white>"
+    header: "<gradient:#FFD700:#FFA500>📊 通貨情報:</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>"
+    details: "<gradient:#4ECDC4:#45B7B8>➤</gradient> シンボル: <gradient:#FFD700:#FFA500>%symbol%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> プレフィックス: <gradient:#FFD700:#FFA500>%prefix%</gradient>\n<gradient:#4ECDC4:#45B7B8>➤</gradient> サフィックス: <gradient:#FFD700:#FFA500>%suffix%</gradient>"
+    not_found: "<gradient:#FF6B6B:#FF8E8E>✖ 見つかりません:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%identifier%</gradient> は存在しません！</white>"
 
   error:
-    no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ No Currencies:</gradient> <white>There are no currencies configured yet.</white>"
+    no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ 通貨なし:</gradient> <white>まだ設定された通貨がありません。</white>"
 
   balance:
-    self: "<gradient:#00FF00:#32CD32>✓ Your Balance:</gradient> <white>Your <gradient:#FFD700:#FFA500>%currency%</gradient> balance: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
-    other: "<gradient:#00FF00:#32CD32>✓ Player Balance:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient>'s <gradient:#FFD700:#FFA500>%currency%</gradient> balance: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
+    self: "<gradient:#00FF00:#32CD32>✓ あなたの残高:</gradient> <white>あなたの <gradient:#FFD700:#FFA500>%currency%</gradient> 残高: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
+    other: "<gradient:#00FF00:#32CD32>✓ プレイヤー残高:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> の <gradient:#FFD700:#FFA500>%currency%</gradient> 残高: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
 
-    all_header_self: "<gradient:#FFD700:#FFA500>━━━━━━━ Your Currency Balances ━━━━━━━</gradient>"
-    all_header_other: "<gradient:#FFD700:#FFA500>━━━━━━━ %player%'s Currency Balances━━━━━━━ </gradient>"
+    all_header_self: "<gradient:#FFD700:#FFA500>━━━━━━━ あなたの通貨残高 ━━━━━━━</gradient>"
+    all_header_other: "<gradient:#FFD700:#FFA500>━━━━━━━ %player% の通貨残高 ━━━━━━━</gradient>"
     all_footer: "<gradient:#FFD700:#FFA500></gradient>"
 
     entry: "<white>║ <gradient:#FFD700:#FFA500>%currency%</gradient>: <gradient:#FFD700:#FFA500>%prefix%</gradient><gradient:#FFFFFF:#F8F8FF>%balance%</gradient><gradient:#FFD700:#FFA500>%suffix% %symbol%</gradient></white>"
 
-    no_currencies_self: "<gradient:#FF6B6B:#FF8E8E>✖ No Balances:</gradient> <white>You don't have any currency balances yet.</white>"
-    no_currencies_other: "<gradient:#FF6B6B:#FF8E8E>✖ No Balances:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> doesn't have any currency balances yet.</white>"
+    no_currencies_self: "<gradient:#FF6B6B:#FF8E8E>✖ 残高なし:</gradient> <white>まだ通貨残高がありません。</white>"
+    no_currencies_other: "<gradient:#FF6B6B:#FF8E8E>✖ 残高なし:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> にはまだ通貨残高がありません。</white>"
 
     error:
-      currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Currency Not Found:</gradient> <white>Currency <gradient:#FFD700:#FFA500>%currency%</gradient> not found. Available currencies: <gradient:#6C7B7F:#95A5A6>%available_currencies%</gradient></white>"
-      player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Player Not Found:</gradient> <white>Player <gradient:#4ECDC4:#45B7B8>%player%</gradient> not found or has never played before.</white>"
-      no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ No Currencies:</gradient> <white>There are no currencies configured in the system.</white>"
-      no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ No Permission:</gradient> <white>You don't have permission to use this command.</white>"
+      currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ 通貨が見つかりません:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency%</gradient> が見つかりません。利用可能な通貨: <gradient:#6C7B7F:#95A5A6>%available_currencies%</gradient></white>"
+      player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ プレイヤーが見つかりません:</gradient> <white>プレイヤー <gradient:#4ECDC4:#45B7B8>%player%</gradient> が見つからないか、まだプレイしたことがありません。</white>"
+      no_currencies: "<gradient:#FF6B6B:#FF8E8E>✖ 通貨なし:</gradient> <white>システムに設定された通貨がありません。</white>"
+      no_permission: "<gradient:#FF6B6B:#FF8E8E>✖ 権限なし:</gradient> <white>このコマンドを使用する権限がありません。</white>"
 
   help:
-    header: "<gradient:#FFD700:#FFA500>✦ Currency Command Help ✦</gradient>"
+    header: "<gradient:#FFD700:#FFA500>✦ 通貨コマンドヘルプ ✦</gradient>"
     usage: "<gradient:#6C7B7F:#95A5A6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
     commands:
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency</gradient> <gray>- View all your currency balances</gray>"
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <currency></gradient> <gray>- View your balance for a specific currency</gray>"
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <player></gradient> <gray>- View all balances of another player</gray>"
-      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <currency> <player></gradient> <gray>- View another player's balance for a specific currency</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency</gradient> <gray>- すべての通貨残高を表示</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <通貨></gradient> <gray>- 特定の通貨の残高を表示</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <プレイヤー></gradient> <gray>- 他のプレイヤーのすべての残高を表示</gray>"
+      - "<gradient:#FFD700:#FFA500>•</gradient> <gradient:#4ECDC4:#45B7B8>/currency <通貨> <プレイヤー></gradient> <gray>- 他のプレイヤーの特定の通貨残高を表示</gray>"
     footer: "<gradient:#6C7B7F:#95A5A6>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gradient>"
 
-# Balance Commands
 balance:
-  self: "<gradient:#FFD700:#FFA500>💰 Your Balance:</gradient> <white><gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  other: "<gradient:#FFD700:#FFA500>💰 Player Balance:</gradient> <white><gradient:#FFD700:#FFA500>%player%</gradient>'s balance: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  all: "<gradient:#FFD700:#FFA500>💰 Your Balances:</gradient>"
+  self: "<gradient:#FFD700:#FFA500>💰 あなたの残高:</gradient> <white><gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
+  other: "<gradient:#FFD700:#FFA500>💰 プレイヤー残高:</gradient> <white><gradient:#FFD700:#FFA500>%player%</gradient> の残高: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
+  all: "<gradient:#FFD700:#FFA500>💰 あなたの残高:</gradient>"
   all_entry: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>%identifier%</gradient>: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient>"
-  not_found: "<gradient:#FF6B6B:#FF8E8E>✖ No Balance:</gradient> <white>You don't have any balance for <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
+  not_found: "<gradient:#FF6B6B:#FF8E8E>✖ 残高なし:</gradient> <white><gradient:#FFD700:#FFA500>%identifier%</gradient> の残高がありません！</white>"
 
-# Pay Commands
 pay:
-  success_sender: "<gradient:#00FF00:#32CD32>✓ Payment Sent:</gradient> <white>You sent <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  success_receiver: "<gradient:#00FF00:#32CD32>✓ Payment Received:</gradient> <white>You received <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white>You don't have enough funds! Required: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
-  self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Invalid Target:</gradient> <white>You cannot pay yourself!</white>"
-  failed: "<gradient:#FF6B6B:#FF8E8E>✖ Payment Failed:</gradient> <white>Payment failed. Please try again.</white>"
+  usage: "<gradient:#FFD700:#FFA500>⚠ 使用法:</gradient> <white>/pay <通貨> <プレイヤー> <金額></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ 無効:</gradient> <white>支払いコマンドは現在無効です。</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ 通貨が許可されていません:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency%</gradient> は支払いに使用できません。</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ 通貨が見つかりません:</gradient> <white>通貨 <gradient:#FFD700:#FFA500>%currency%</gradient> は存在しません。</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ 無効な金額:</gradient> <white>'<gradient:#FFD700:#FFA500>%amount%</gradient>' は有効な金額ではありません。</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ 金額が範囲外:</gradient> <white>金額 <gradient:#FFD700:#FFA500>%amount%</gradient> は <gradient:#FFD700:#FFA500>%min%</gradient> から <gradient:#FFD700:#FFA500>%max%</gradient> の間である必要があります。</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ 無効な対象:</gradient> <white>自分自身に支払うことはできません！</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ プレイヤーが見つかりません:</gradient> <white>プレイヤー <gradient:#4ECDC4:#45B7B8>%player%</gradient> が見つかりませんでした。</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ 資金不足:</gradient> <white><gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient> が必要ですが、<gradient:#FFD700:#FFA500>%available%</gradient> しかありません。</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ 送金失敗:</gradient> <white>支払いを完了できませんでした。もう一度お試しください。</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ 支払い送信:</gradient> <white><gradient:#4ECDC4:#45B7B8>%target%</gradient> に <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> を送りました！</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ 支払い受信:</gradient> <white><gradient:#4ECDC4:#45B7B8>%sender%</gradient> から <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> を受け取りました！</white>"
+  # 後方互換性のためのレガシーキー
+  success_sender: "<gradient:#00FF00:#32CD32>✓ 支払い送信:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> に <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> を送りました！</white>"
+  success_receiver: "<gradient:#00FF00:#32CD32>✓ 支払い受信:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> から <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> を受け取りました！</white>"
+  self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ 無効な対象:</gradient> <white>自分自身に支払うことはできません！</white>"
+  failed: "<gradient:#FF6B6B:#FF8E8E>✖ 支払い失敗:</gradient> <white>支払いに失敗しました。もう一度お試しください。</white>"
 
-# Admin Commands
 admin:
   set:
-    success: "<gradient:#00FF00:#32CD32>✓ Balance Set:</gradient> <white>Set <gradient:#4ECDC4:#45B7B8>%player%</gradient>'s balance to <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient>!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Set Failed:</gradient> <white>Failed to set balance. Please try again.</white>"
+    success: "<gradient:#00FF00:#32CD32>✓ 残高設定:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> の残高を <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> に設定しました！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ 設定失敗:</gradient> <white>残高の設定に失敗しました。もう一度お試しください。</white>"
 
   give:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Given:</gradient> <white>Gave <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> to <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Give Failed:</gradient> <white>Failed to give currency. Please try again.</white>"
+    success: "<gradient:#00FF00:#32CD32>✓ 通貨付与:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> に <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> を付与しました！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ 付与失敗:</gradient> <white>通貨の付与に失敗しました。もう一度お試しください。</white>"
 
   take:
-    success: "<gradient:#00FF00:#32CD32>✓ Currency Taken:</gradient> <white>Took <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> from <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-    insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Insufficient Funds:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> doesn't have enough funds!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Take Failed:</gradient> <white>Failed to take currency. Please try again.</white>"
+    success: "<gradient:#00FF00:#32CD32>✓ 通貨徴収:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> から <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> を徴収しました！</white>"
+    insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ 資金不足:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> には十分な資金がありません！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ 徴収失敗:</gradient> <white>通貨の徴収に失敗しました。もう一度お試しください。</white>"
 
   reset:
-    success: "<gradient:#00FF00:#32CD32>✓ Balance Reset:</gradient> <white>Reset <gradient:#4ECDC4:#45B7B8>%player%</gradient>'s balance for <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
-    all_success: "<gradient:#00FF00:#32CD32>✓ All Balances Reset:</gradient> <white>Reset all of <gradient:#4ECDC4:#45B7B8>%player%</gradient>'s balances!</white>"
-    failed: "<gradient:#FF6B6B:#FF8E8E>✖ Reset Failed:</gradient> <white>Failed to reset balance. Please try again.</white>"
-
-# ═══════════════════════════════════════════════════════════════
-# HELP MESSAGES
-# ═══════════════════════════════════════════════════════════════
+    success: "<gradient:#00FF00:#32CD32>✓ 残高リセット:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> の <gradient:#FFD700:#FFA500>%identifier%</gradient> 残高をリセットしました！</white>"
+    all_success: "<gradient:#00FF00:#32CD32>✓ 全残高リセット:</gradient> <white><gradient:#4ECDC4:#45B7B8>%player%</gradient> のすべての残高をリセットしました！</white>"
+    failed: "<gradient:#FF6B6B:#FF8E8E>✖ リセット失敗:</gradient> <white>残高のリセットに失敗しました。もう一度お試しください。</white>"
 
 help:
-  header: "<gradient:#FFD700:#FFA500>📚 JExEconomy Help Menu:</gradient>"
-  currency: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies</gradient> <gray>- Manage currencies</gray>"
-  balance: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/balance [player] [currency]</gradient> <gray>- Check balance</gray>"
-  pay: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/pay <player> <amount> [currency]</gradient> <gray>- Pay another player</gray>"
+  header: "<gradient:#FFD700:#FFA500>📚 JExEconomy ヘルプメニュー:</gradient>"
+  currency: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies</gradient> <gray>- 通貨を管理</gray>"
+  balance: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/balance [プレイヤー] [通貨]</gradient> <gray>- 残高を確認</gray>"
+  pay: "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/pay <プレイヤー> <金額> [通貨]</gradient> <gray>- 他のプレイヤーに支払う</gray>"
 
-# Currency Command Help
 currencies:
   help:
-    - "<gradient:#FFD700:#FFA500>📚 Currencies Command Help:</gradient>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies create <identifier> <symbol> [prefix] [suffix]</gradient> <gray>- Create a new currency</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies delete <identifier></gradient> <gray>- Delete a currency</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies edit <identifier> <field> <value></gradient> <gray>- Edit a currency</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies overview</gradient> <gray>- List all currencies</gray>"
-    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies info <identifier></gradient> <gray>- Show currency details</gray>"
-
-# ═══════════════════════════════════════════════════════════════
-# ERROR MESSAGES
-# ═══════════════════════════════════════════════════════════════
+    - "<gradient:#FFD700:#FFA500>📚 通貨コマンドヘルプ:</gradient>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies create <識別子> <シンボル> [プレフィックス] [サフィックス]</gradient> <gray>- 新しい通貨を作成</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies delete <識別子></gradient> <gray>- 通貨を削除</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies edit <識別子> <フィールド> <値></gradient> <gray>- 通貨を編集</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies overview</gradient> <gray>- すべての通貨を一覧表示</gray>"
+    - "<gradient:#4ECDC4:#45B7B8>➤</gradient> <gradient:#FFD700:#FFA500>/currencies info <識別子></gradient> <gray>- 通貨の詳細を表示</gray>"
 
 error:
-  processing_failed: "<gradient:#FF6B6B:#FF8E8E>❌ Processing Failed:</gradient> <white>Failed to process your input '<gradient:#FFD700:#FFA500>%input%</gradient>'. Please try again or contact an administrator.</white>"
-  invalid_input: "<gradient:#FF6B6B:#FF8E8E>❌ Invalid Input:</gradient> <white>Your input '<gradient:#FFD700:#FFA500>%input%</gradient>' is not valid.</white>"
-
+  processing_failed: "<gradient:#FF6B6B:#FF8E8E>❌ 処理失敗:</gradient> <white>入力 '<gradient:#FFD700:#FFA500>%input%</gradient>' の処理に失敗しました。もう一度お試しいただくか、管理者にお問い合わせください。</white>"
+  invalid_input: "<gradient:#FF6B6B:#FF8E8E>❌ 無効な入力:</gradient> <white>入力 '<gradient:#FFD700:#FFA500>%input%</gradient>' は有効ではありません。</white>"
 
 currency_adapter:
-  # Currency Creation Messages
-  creation_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Currency creation was <bold>cancelled</bold></gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
-  already_exists: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>A currency with identifier</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>already exists!</gradient>"
-  created_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>has been <bold>created successfully</bold>!</gradient>"
-  creation_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to create currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient><gray>:</gray> <gradient:#868e96:#adb5bd><italic>%error_message%</italic></gradient>"
+  creation_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>通貨作成が<bold>キャンセル</bold>されました</gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
+  already_exists: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>識別子</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>の通貨は既に存在します！</gradient>"
+  created_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>通貨</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>が<bold>正常に作成</bold>されました！</gradient>"
+  creation_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>通貨</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>の作成に失敗しました</gradient><gray>:</gray> <gradient:#868e96:#adb5bd><italic>%error_message%</italic></gradient>"
 
-  # Currency Deletion Messages
-  not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>was <bold>not found</bold>!</gradient>"
-  deletion_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Currency deletion was <bold>cancelled</bold></gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
-  deleted_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>has been <bold>deleted successfully</bold>!</gradient>\n<gradient:#868e96:#adb5bd>Affected</gradient> <gradient:#74c0fc:#91a7ff><bold>%affected_players%</bold></gradient> <gradient:#868e96:#adb5bd>players with total balance of</gradient> <gradient:#ffd93d:#ffed4e><bold>%total_balance%</bold></gradient>"
-  deletion_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to <bold>delete</bold> currency</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient><gradient:#ff6b6b:#ffaaaa>!</gradient>"
+  not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>通貨</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>が<bold>見つかりません</bold>！</gradient>"
+  deletion_cancelled: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>通貨削除が<bold>キャンセル</bold>されました</gradient><gray>:</gray> <gradient:#ffd93d:#ffed4e><italic>%reason%</italic></gradient>"
+  deleted_successfully: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>通貨</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>が<bold>正常に削除</bold>されました！</gradient>\n<gradient:#868e96:#adb5bd>影響を受けた</gradient> <gradient:#74c0fc:#91a7ff><bold>%affected_players%</bold></gradient> <gradient:#868e96:#adb5bd>プレイヤー、合計残高</gradient> <gradient:#ffd93d:#ffed4e><bold>%total_balance%</bold></gradient>"
+  deletion_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>通貨</gradient> <gradient:#ffd93d:#ffed4e><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>の<bold>削除</bold>に失敗しました！</gradient>"
 
-  # Additional Context Messages
   validation:
-    invalid_amount: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Invalid amount specified:</gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient>"
-    insufficient_funds: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Insufficient funds! Required:</gradient> <gradient:#ffd93d:#ffed4e><bold>%required%</bold></gradient><gray>,</gray> <gradient:#ff6b6b:#ffaaaa>Available:</gradient> <gradient:#74c0fc:#91a7ff><bold>%available%</bold></gradient>"
-    player_not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Player account not found for UUID:</gradient> <gradient:#868e96:#adb5bd><italic>%uuid%</italic></gradient>"
+    invalid_amount: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>無効な金額が指定されました:</gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient>"
+    insufficient_funds: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>資金不足！必要:</gradient> <gradient:#ffd93d:#ffed4e><bold>%required%</bold></gradient><gray>,</gray> <gradient:#ff6b6b:#ffaaaa>利用可能:</gradient> <gradient:#74c0fc:#91a7ff><bold>%available%</bold></gradient>"
+    player_not_found: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>UUIDのプレイヤーアカウントが見つかりません:</gradient> <gradient:#868e96:#adb5bd><italic>%uuid%</italic></gradient>"
 
-  # Transaction Messages
   transaction:
-    deposit_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Successfully <bold>deposited</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>to your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>account!</gradient>"
-    withdraw_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Successfully <bold>withdrew</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>from your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>account!</gradient>"
-    deposit_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to <bold>deposit</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>to your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>account!</gradient>"
-    withdraw_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to <bold>withdraw</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>from your</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>account!</gradient>"
+    deposit_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>を</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>アカウントに正常に<bold>入金</bold>しました！</gradient>"
+    withdraw_success: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a><bold>%amount%</bold></gradient> <gradient:#51cf66:#8ce99a>を</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#51cf66:#8ce99a>アカウントから正常に<bold>出金</bold>しました！</gradient>"
+    deposit_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>を</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>アカウントに<bold>入金</bold>できませんでした！</gradient>"
+    withdraw_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>を</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>アカウントから<bold>出金</bold>できませんでした！</gradient>"
 
-  # Balance Information
   balance:
-    current: "<gradient:#74c0fc:#91a7ff><bold>💰</bold></gradient> <gradient:#868e96:#adb5bd>Your current</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#868e96:#adb5bd>balance:</gradient> <gradient:#ffd93d:#ffed4e><bold>%balance%</bold></gradient>"
-    updated: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Balance updated!</gradient> <gradient:#868e96:#adb5bd>New balance:</gradient> <gradient:#ffd93d:#ffed4e><bold>%new_balance%</bold></gradient>"
+    current: "<gradient:#74c0fc:#91a7ff><bold>💰</bold></gradient> <gradient:#868e96:#adb5bd>あなたの現在の</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient> <gradient:#868e96:#adb5bd>残高:</gradient> <gradient:#ffd93d:#ffed4e><bold>%balance%</bold></gradient>"
+    updated: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>残高が更新されました！</gradient> <gradient:#868e96:#adb5bd>新しい残高:</gradient> <gradient:#ffd93d:#ffed4e><bold>%new_balance%</bold></gradient>"
 
-  # System Messages
   system:
-    loading: "<gradient:#74c0fc:#91a7ff><bold>⏳</bold></gradient> <gradient:#868e96:#adb5bd>Loading currency data...</gradient>"
-    loaded: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Successfully loaded</gradient> <gradient:#ffd93d:#ffed4e><bold>%count%</bold></gradient> <gradient:#51cf66:#8ce99a>currencies into cache!</gradient>"
-    cache_error: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Failed to load currencies into cache:</gradient> <gradient:#868e96:#adb5bd><italic>%error%</italic></gradient>"
+    loading: "<gradient:#74c0fc:#91a7ff><bold>⏳</bold></gradient> <gradient:#868e96:#adb5bd>通貨データを読み込み中...</gradient>"
+    loaded: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a><bold>%count%</bold></gradient> <gradient:#51cf66:#8ce99a>個の通貨をキャッシュに正常に読み込みました！</gradient>"
+    cache_error: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>通貨をキャッシュに読み込めませんでした:</gradient> <gradient:#868e96:#adb5bd><italic>%error%</italic></gradient>"
 
-# Currency Log Command I18n Keys
+
+# 通貨ログコマンド I18n キー
 currency_log:
-  # Error Messages
-  invalid_page_format: "<gradient:#e74c3c:#c0392b>✗ Invalid Page Format</gradient>\n<gray>Please enter a valid page number instead of '<white>{input}</white>'.</gray>"
-  invalid_page_number: "<gradient:#e74c3c:#c0392b>✗ Invalid Page Number</gradient>\n<gray>Page number must be 1 or higher, not '<white>{page}</white>'.</gray>"
-  no_permission_export: "<gradient:#e74c3c:#c0392b>✗ Access Denied</gradient>\n<gray>You don't have permission to export currency logs.</gray>"
-  player_not_found: "<gradient:#e74c3c:#c0392b>✗ Player Not Found</gradient>\n<gray>Player <white>{player}</white> has never joined this server.</gray>"
-  currency_not_found: "<gradient:#e74c3c:#c0392b>✗ Currency Not Found</gradient>\n<gray>Currency <white>{currency}</white> does not exist.</gray>\n<dark_gray>Available currencies: {available_currencies}</dark_gray>"
-  invalid_log_type: "<gradient:#e74c3c:#c0392b>✗ Invalid Log Type</gradient>\n<gray>Unknown log type: <white>{type}</white></gray>\n<dark_gray>Valid types: {valid_types}</dark_gray>"
-  invalid_log_level: "<gradient:#e74c3c:#c0392b>✗ Invalid Log Level</gradient>\n<gray>Unknown log level: <white>{level}</white></gray>\n<dark_gray>Valid levels: {valid_levels}</dark_gray>"
-  invalid_operation_type: "<gradient:#e74c3c:#c0392b>✗ Invalid Operation Type</gradient>\n<gray>Unknown operation: <white>{operation}</white></gray>\n<dark_gray>Valid operations: {valid_operations}</dark_gray>"
-  statistics_error: "<gradient:#e74c3c:#c0392b>✗ Statistics Error</gradient>\n<gray>Failed to generate log statistics. Please try again later.</gray>"
-  export_failed: "<gradient:#e74c3c:#c0392b>✗ Export Failed</gradient>\n<gray>An error occurred during the export process.</gray>"
+  # エラーメッセージ
+  invalid_page_format: "<gradient:#e74c3c:#c0392b>✗ 無効なページ形式</gradient>\n<gray>'<white>{input}</white>' ではなく、有効なページ番号を入力してください。</gray>"
+  invalid_page_number: "<gradient:#e74c3c:#c0392b>✗ 無効なページ番号</gradient>\n<gray>ページ番号は '<white>{page}</white>' ではなく、1以上である必要があります。</gray>"
+  no_permission_export: "<gradient:#e74c3c:#c0392b>✗ アクセス拒否</gradient>\n<gray>通貨ログをエクスポートする権限がありません。</gray>"
+  player_not_found: "<gradient:#e74c3c:#c0392b>✗ プレイヤーが見つかりません</gradient>\n<gray>プレイヤー <white>{player}</white> はこのサーバーに参加したことがありません。</gray>"
+  currency_not_found: "<gradient:#e74c3c:#c0392b>✗ 通貨が見つかりません</gradient>\n<gray>通貨 <white>{currency}</white> は存在しません。</gray>\n<dark_gray>利用可能な通貨: {available_currencies}</dark_gray>"
+  invalid_log_type: "<gradient:#e74c3c:#c0392b>✗ 無効なログタイプ</gradient>\n<gray>不明なログタイプ: <white>{type}</white></gray>\n<dark_gray>有効なタイプ: {valid_types}</dark_gray>"
+  invalid_log_level: "<gradient:#e74c3c:#c0392b>✗ 無効なログレベル</gradient>\n<gray>不明なログレベル: <white>{level}</white></gray>\n<dark_gray>有効なレベル: {valid_levels}</dark_gray>"
+  invalid_operation_type: "<gradient:#e74c3c:#c0392b>✗ 無効な操作タイプ</gradient>\n<gray>不明な操作: <white>{operation}</white></gray>\n<dark_gray>有効な操作: {valid_operations}</dark_gray>"
+  statistics_error: "<gradient:#e74c3c:#c0392b>✗ 統計エラー</gradient>\n<gray>ログ統計の生成に失敗しました。後でもう一度お試しください。</gray>"
+  export_failed: "<gradient:#e74c3c:#c0392b>✗ エクスポート失敗</gradient>\n<gray>エクスポートプロセス中にエラーが発生しました。</gray>"
 
-  # Success Messages
-  filters_cleared: "<gradient:#2ecc71:#27ae60>✓ Filters Cleared</gradient>\n<gray>All active filters have been removed successfully!</gray>"
-  export_started: "<gradient:#f39c12:#e67e22>🔄 Export Started</gradient>\n<gray>Preparing currency logs for export...</gray>"
-  export_complete: "<gradient:#2ecc71:#27ae60>✓ Export Complete</gradient>\n<gray>Currency logs have been exported successfully!</gray>\n<gray>Logs exported to: <white>{filename}</white></gray>\n<gray>Location: <white>plugins/JExEconomy/logs/</white></gray>"
-  player_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Player Filter Applied</gradient>\n<gray>Now showing logs for player: <gradient:#3498db:#2980b9>{player}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  currency_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Currency Filter Applied</gradient>\n<gray>Now showing logs for currency: <gradient:#f1c40f:#f39c12>{currency}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  type_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Type Filter Applied</gradient>\n<gray>Now showing logs of type: {icon} <gradient:#9b59b6:#8e44ad>{type}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  level_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Level Filter Applied</gradient>\n<gray>Now showing logs with level: {color}{level}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
-  operation_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Operation Filter Applied</gradient>\n<gray>Now showing logs for operation: <gradient:#f39c12:#e67e22>{operation}</gradient></gray>\n<dark_gray>Use <yellow>/currencylog view</yellow> to see filtered results</dark_gray>"
+  # 成功メッセージ
+  filters_cleared: "<gradient:#2ecc71:#27ae60>✓ フィルタークリア</gradient>\n<gray>すべてのアクティブなフィルターが正常に削除されました！</gray>"
+  export_started: "<gradient:#f39c12:#e67e22>🔄 エクスポート開始</gradient>\n<gray>通貨ログのエクスポートを準備しています...</gray>"
+  export_complete: "<gradient:#2ecc71:#27ae60>✓ エクスポート完了</gradient>\n<gray>通貨ログが正常にエクスポートされました！</gray>\n<gray>エクスポート先: <white>{filename}</white></gray>\n<gray>場所: <white>plugins/JExEconomy/logs/</white></gray>"
+  player_filter_applied: "<gradient:#2ecc71:#27ae60>✓ プレイヤーフィルター適用</gradient>\n<gray>プレイヤー: <gradient:#3498db:#2980b9>{player}</gradient> のログを表示しています</gray>\n<dark_gray><yellow>/currencylog view</yellow> でフィルター結果を確認</dark_gray>"
+  currency_filter_applied: "<gradient:#2ecc71:#27ae60>✓ 通貨フィルター適用</gradient>\n<gray>通貨: <gradient:#f1c40f:#f39c12>{currency}</gradient> のログを表示しています</gray>\n<dark_gray><yellow>/currencylog view</yellow> でフィルター結果を確認</dark_gray>"
+  type_filter_applied: "<gradient:#2ecc71:#27ae60>✓ タイプフィルター適用</gradient>\n<gray>タイプ: {icon} <gradient:#9b59b6:#8e44ad>{type}</gradient> のログを表示しています</gray>\n<dark_gray><yellow>/currencylog view</yellow> でフィルター結果を確認</dark_gray>"
+  level_filter_applied: "<gradient:#2ecc71:#27ae60>✓ レベルフィルター適用</gradient>\n<gray>レベル: {color}{level}</gradient> のログを表示しています</gray>\n<dark_gray><yellow>/currencylog view</yellow> でフィルター結果を確認</dark_gray>"
+  operation_filter_applied: "<gradient:#2ecc71:#27ae60>✓ 操作フィルター適用</gradient>\n<gray>操作: <gradient:#f39c12:#e67e22>{operation}</gradient> のログを表示しています</gray>\n<dark_gray><yellow>/currencylog view</yellow> でフィルター結果を確認</dark_gray>"
 
-  # Headers and Titles
+  # ヘッダーとタイトル
   header_line: "<gradient:#9b59b6:#8e44ad>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
   filter_header_line: "<gradient:#3498db:#2980b9>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
   no_logs_header_line: "<gradient:#95a5a6:#7f8c8d>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
 
-  title_logs: "<gradient:#9b59b6:#8e44ad>📋 Currency Transaction Logs</gradient>"
-  title_filters: "<gradient:#3498db:#2980b9>🔍 Currency Log Filters</gradient>"
-  title_commands: "<gradient:#9b59b6:#8e44ad>📋 Currency Log Commands</gradient>"
-  title_statistics: "<gradient:#9b59b6:#8e44ad>📊 Currency Log Statistics</gradient>"
-  title_no_logs: "<gradient:#95a5a6:#7f8c8d>📋 No Currency Logs Found</gradient>"
+  title_logs: "<gradient:#9b59b6:#8e44ad>📋 通貨取引ログ</gradient>"
+  title_filters: "<gradient:#3498db:#2980b9>🔍 通貨ログフィルター</gradient>"
+  title_commands: "<gradient:#9b59b6:#8e44ad>📋 通貨ログコマンド</gradient>"
+  title_statistics: "<gradient:#9b59b6:#8e44ad>📊 通貨ログ統計</gradient>"
+  title_no_logs: "<gradient:#95a5a6:#7f8c8d>📋 通貨ログが見つかりません</gradient>"
 
-  # Subtitles and Descriptions
-  subtitle_filters: "<gray>Select a filter type to narrow down your log search</gray>"
-  subtitle_no_logs: "<gray>No transaction logs match your current criteria.</gray>\n<gray>Try adjusting your filters or check back later!</gray>"
+  # サブタイトルと説明
+  subtitle_filters: "<gray>ログ検索を絞り込むフィルタータイプを選択してください</gray>"
+  subtitle_no_logs: "<gray>現在の条件に一致する取引ログがありません。</gray>\n<gray>フィルターを調整するか、後でもう一度確認してください！</gray>"
 
-  # Page Information
-  page_info: "<gray>Page <gradient:#f39c12:#e67e22>{current_page}</gradient><gray>/<gradient:#f39c12:#e67e22>{total_pages}</gradient> <dark_gray>•</dark_gray> <gradient:#9b59b6:#8e44ad>{total_logs}</gradient> <gray>total entries</gray>"
-  active_filters: "<gradient:#f39c12:#e67e22>🔍 Active Filters:</gradient> <gray>{filters}</gray>"
+  # ページ情報
+  page_info: "<gray>ページ <gradient:#f39c12:#e67e22>{current_page}</gradient><gray>/<gradient:#f39c12:#e67e22>{total_pages}</gradient> <dark_gray>•</dark_gray> <gradient:#9b59b6:#8e44ad>{total_logs}</gradient> <gray>件の合計エントリ</gray>"
+  active_filters: "<gradient:#f39c12:#e67e22>🔍 アクティブなフィルター:</gradient> <gray>{filters}</gray>"
 
-  # Instructions
-  instructions_logs: "<dark_gray>▪ <yellow>Click</yellow> <dark_gray>»</dark_gray> <gray>View detailed log information</gray>\n<dark_gray>▪ <yellow>Hover</yellow> <dark_gray>»</dark_gray> <gray>See transaction details and metadata</gray>"
-  instructions_filters: "<dark_gray>▪ <yellow>Click</yellow> <dark_gray>»</dark_gray> <gray>Apply filter type</gray>\n<dark_gray>▪ <yellow>Hover</yellow> <dark_gray>»</dark_gray> <gray>See filter description</gray>"
+  # 説明
+  instructions_logs: "<dark_gray>▪ <yellow>クリック</yellow> <dark_gray>»</dark_gray> <gray>詳細なログ情報を表示</gray>\n<dark_gray>▪ <yellow>ホバー</yellow> <dark_gray>»</dark_gray> <gray>取引詳細とメタデータを確認</gray>"
+  instructions_filters: "<dark_gray>▪ <yellow>クリック</yellow> <dark_gray>»</dark_gray> <gray>フィルタータイプを適用</gray>\n<dark_gray>▪ <yellow>ホバー</yellow> <dark_gray>»</dark_gray> <gray>フィルターの説明を確認</gray>"
 
-  # Navigation
-  navigation_previous: "[← Previous]"
-  navigation_next: "[Next →]"
-  navigation_page_indicator: "[Page {current_page}/{total_pages}]"
-  navigation_filters_button: "[🔍 Filters]"
-  navigation_adjust_filters: "[🔍 Adjust Filters]"
+  # ナビゲーション
+  navigation_previous: "[← 前へ]"
+  navigation_next: "[次へ →]"
+  navigation_page_indicator: "[ページ {current_page}/{total_pages}]"
+  navigation_filters_button: "[🔍 フィルター]"
+  navigation_adjust_filters: "[🔍 フィルターを調整]"
 
-  # Hover Texts
-  hover_previous_page: "<gradient:#2ecc71:#27ae60>Go to page {page}</gradient>"
-  hover_next_page: "<gradient:#2ecc71:#27ae60>Go to page {page}</gradient>"
-  hover_filters_menu: "<gradient:#3498db:#2980b9>Open filter menu</gradient>"
-  hover_adjust_filters: "<gradient:#3498db:#2980b9>Open filter menu</gradient>"
-  hover_log_details: "<gradient:#9b59b6:#8e44ad>Transaction Log Details</gradient>\n\n<dark_gray>▪ <gray>Log ID: <gradient:#ecf0f1:#bdc3c7>{log_id}</gradient></gray>\n<dark_gray>▪ <gray>Type: <gradient:#f39c12:#e67e22>{log_type}</gradient></gray>\n<dark_gray>▪ <gray>Level: {level_color}{log_level}</gradient></gray>\n<dark_gray>▪ <gray>Status: {status}</gray>\n{player_info}{currency_info}{amount_info}<dark_gray>▪ <gray>Timestamp: <gradient:#95a5a6:#7f8c8d>{timestamp}</gradient></gray>\n\n<gradient:#f1c40f:#f39c12>Click</gradient> <dark_gray>»</dark_gray> <gray>View full details</gray>"
-  hover_filter_info: "<gradient:#3498db:#2980b9>Filter Information</gradient>\n\n<dark_gray>▪ <gray>Type: <white>{filter_type}</white></gray>\n<dark_gray>▪ <gray>Description: <white>{filter_description}</white></gray>\n\n<gradient:#f1c40f:#f39c12>Click</gradient> <dark_gray>»</dark_gray> <gray>Apply this filter</gray>"
+  # ホバーテキスト
+  hover_previous_page: "<gradient:#2ecc71:#27ae60>ページ {page} へ移動</gradient>"
+  hover_next_page: "<gradient:#2ecc71:#27ae60>ページ {page} へ移動</gradient>"
+  hover_filters_menu: "<gradient:#3498db:#2980b9>フィルターメニューを開く</gradient>"
+  hover_adjust_filters: "<gradient:#3498db:#2980b9>フィルターメニューを開く</gradient>"
+  hover_log_details: "<gradient:#9b59b6:#8e44ad>取引ログ詳細</gradient>\n\n<dark_gray>▪ <gray>ログID: <gradient:#ecf0f1:#bdc3c7>{log_id}</gradient></gray>\n<dark_gray>▪ <gray>タイプ: <gradient:#f39c12:#e67e22>{log_type}</gradient></gray>\n<dark_gray>▪ <gray>レベル: {level_color}{log_level}</gradient></gray>\n<dark_gray>▪ <gray>ステータス: {status}</gray>\n{player_info}{currency_info}{amount_info}<dark_gray>▪ <gray>タイムスタンプ: <gradient:#95a5a6:#7f8c8d>{timestamp}</gradient></gray>\n\n<gradient:#f1c40f:#f39c12>クリック</gradient> <dark_gray>»</dark_gray> <gray>全詳細を表示</gray>"
+  hover_filter_info: "<gradient:#3498db:#2980b9>フィルター情報</gradient>\n\n<dark_gray>▪ <gray>タイプ: <white>{filter_type}</white></gray>\n<dark_gray>▪ <gray>説明: <white>{filter_description}</white></gray>\n\n<gradient:#f1c40f:#f39c12>クリック</gradient> <dark_gray>»</dark_gray> <gray>このフィルターを適用</gray>"
 
-  # Filter Options
-  filter_player_name: "player"
+  # フィルターオプション
+  filter_player_name: "プレイヤー"
   filter_player_icon: "👤"
-  filter_player_description: "Filter by player name"
-  filter_currency_name: "currency"
+  filter_player_description: "プレイヤー名でフィルター"
+  filter_currency_name: "通貨"
   filter_currency_icon: "💰"
-  filter_currency_description: "Filter by currency type"
-  filter_type_name: "type"
+  filter_currency_description: "通貨タイプでフィルター"
+  filter_type_name: "タイプ"
   filter_type_icon: "📋"
-  filter_type_description: "Filter by log type"
-  filter_level_name: "level"
+  filter_type_description: "ログタイプでフィルター"
+  filter_level_name: "レベル"
   filter_level_icon: "⚠️"
-  filter_level_description: "Filter by severity level"
-  filter_operation_name: "operation"
+  filter_level_description: "重要度レベルでフィルター"
+  filter_operation_name: "操作"
   filter_operation_icon: "🔄"
-  filter_operation_description: "Filter by operation type"
+  filter_operation_description: "操作タイプでフィルター"
 
-  # Command Usage
-  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/pcurrencylog view [page]</gradient> <dark_gray>»</dark_gray> <gray>View paginated transaction logs</gray>"
-  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog filter <filter> <value></gradient> <dark_gray>»</dark_gray> <gray>Apply filters to log display</gray>"
-  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/pcurrencylog clear</gradient> <dark_gray>»</dark_gray> <gray>Clear all active filters</gray>"
-  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog stats</gradient> <dark_gray>»</dark_gray> <gray>View log statistics and analytics</gray>"
-  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/pcurrencylog export</gradient> <dark_gray>»</dark_gray> <gray>Export logs to file (admin only)</gray>"
-  command_help: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog help</gradient> <dark_gray>»</dark_gray> <gray>Show command usage information</gray>"
-  command_details: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog details <log_id></gradient> <dark_gray>»</dark_gray> <gray>Inspect a specific transaction log entry</gray>"
+  # コマンド使用法
+  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/pcurrencylog view [ページ]</gradient> <dark_gray>»</dark_gray> <gray>ページ分割された取引ログを表示</gray>"
+  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog filter <フィルター> <値></gradient> <dark_gray>»</dark_gray> <gray>ログ表示にフィルターを適用</gray>"
+  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/pcurrencylog clear</gradient> <dark_gray>»</dark_gray> <gray>すべてのアクティブなフィルターをクリア</gray>"
+  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog stats</gradient> <dark_gray>»</dark_gray> <gray>ログ統計と分析を表示</gray>"
+  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/pcurrencylog export</gradient> <dark_gray>»</dark_gray> <gray>ログをファイルにエクスポート（管理者のみ）</gray>"
+  command_help: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog help</gradient> <dark_gray>»</dark_gray> <gray>コマンド使用法情報を表示</gray>"
+  command_details: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog details <ログID></gradient> <dark_gray>»</dark_gray> <gray>特定の取引ログエントリを検査</gray>"
 
-  # Statistics
-  stats_overall_title: "<gradient:#3498db:#2980b9>📈 Overall Statistics</gradient>"
-  stats_type_title: "<gradient:#f39c12:#e67e22>📋 Log Type Distribution</gradient>"
-  stats_level_title: "<gradient:#e74c3c:#c0392b>⚠️ Log Level Distribution</gradient>"
+  # 統計
+  stats_overall_title: "<gradient:#3498db:#2980b9>📈 全体統計</gradient>"
+  stats_type_title: "<gradient:#f39c12:#e67e22>📋 ログタイプ分布</gradient>"
+  stats_level_title: "<gradient:#e74c3c:#c0392b>⚠️ ログレベル分布</gradient>"
 
-  stats_total_logs: "<dark_gray>▪ <gray>Total Logs: <gradient:#f1c40f:#f39c12>{total}</gradient></gray>"
-  stats_successful: "<dark_gray>▪ <gray>Successful: <gradient:#2ecc71:#27ae60>{successful}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
-  stats_failed: "<dark_gray>▪ <gray>Failed: <gradient:#e74c3c:#c0392b>{failed}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
-  stats_recent_activity: "<dark_gray>▪ <gray>Recent Activity (24h): <gradient:#f39c12:#e67e22>{recent}</gradient></gray>"
-  stats_unique_players: "<dark_gray>▪ <gray>Unique Players: <gradient:#9b59b6:#8e44ad>{players}</gradient></gray>"
-  stats_total_volume: "<dark_gray>▪ <gray>Total Volume: <gradient:#2ecc71:#27ae60>{volume}</gradient></gray>"
+  stats_total_logs: "<dark_gray>▪ <gray>合計ログ: <gradient:#f1c40f:#f39c12>{total}</gradient></gray>"
+  stats_successful: "<dark_gray>▪ <gray>成功: <gradient:#2ecc71:#27ae60>{successful}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_failed: "<dark_gray>▪ <gray>失敗: <gradient:#e74c3c:#c0392b>{failed}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_recent_activity: "<dark_gray>▪ <gray>最近のアクティビティ (24時間): <gradient:#f39c12:#e67e22>{recent}</gradient></gray>"
+  stats_unique_players: "<dark_gray>▪ <gray>ユニークプレイヤー: <gradient:#9b59b6:#8e44ad>{players}</gradient></gray>"
+  stats_total_volume: "<dark_gray>▪ <gray>合計ボリューム: <gradient:#2ecc71:#27ae60>{volume}</gradient></gray>"
 
   stats_type_entry: "<dark_gray>▪ <gray>{icon} {type}: <gradient:#ecf0f1:#bdc3c7>{count}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
   stats_level_entry: "<dark_gray>▪ <gray>{color}{level}</gradient>: <gradient:#ecf0f1:#bdc3c7>{count}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
 
-  # Status Indicators
-  status_success: "<gradient:#2ecc71:#27ae60>Success</gradient>"
-  status_failed: "<gradient:#e74c3c:#c0392b>Failed</gradient>"
+  # ステータスインジケーター
+  status_success: "<gradient:#2ecc71:#27ae60>成功</gradient>"
+  status_failed: "<gradient:#e74c3c:#c0392b>失敗</gradient>"
 
-  # Log Type Icons (for reference)
+  # ログタイプアイコン
   icon_transaction: "💰"
   icon_management: "⚙️"
   icon_system: "🔧"
@@ -1108,47 +1078,47 @@ currency_log:
   icon_audit: "📋"
   icon_debug: "🐛"
 
-  # Log Level Colors (for reference)
+  # ログレベルカラー
   color_info: "<gradient:#2ecc71:#27ae60>"
   color_warning: "<gradient:#f39c12:#e67e22>"
   color_error: "<gradient:#e74c3c:#c0392b>"
   color_debug: "<gradient:#3498db:#2980b9>"
   color_critical: "<gradient:#8e44ad:#9b59b6>"
 
-  # Export File Headers
-  export_header: "JECURRENCY TRANSACTION LOGS EXPORT"
+  # エクスポートファイルヘッダー
+  export_header: "JECURRENCY 取引ログエクスポート"
   export_separator: "="
   export_sub_separator: "-"
-  export_date_label: "Export Date:"
-  export_user_label: "Exported by:"
-  export_total_label: "Total Logs:"
-  export_footer: "END OF EXPORT"
+  export_date_label: "エクスポート日:"
+  export_user_label: "エクスポート者:"
+  export_total_label: "合計ログ:"
+  export_footer: "エクスポート終了"
 
-  # Export Log Entry Labels
-  export_log_id: "Log ID:"
-  export_timestamp: "Timestamp:"
-  export_type: "Type:"
-  export_level: "Level:"
-  export_success: "Success:"
-  export_player: "Player:"
-  export_currency: "Currency:"
-  export_operation: "Operation:"
-  export_amount: "Amount:"
-  export_balance_change: "Balance Change:"
-  export_description: "Description:"
-  export_details: "Details:"
-  export_error: "Error:"
-  export_yes: "YES"
-  export_no: "NO"
+  # エクスポートログエントリラベル
+  export_log_id: "ログID:"
+  export_timestamp: "タイムスタンプ:"
+  export_type: "タイプ:"
+  export_level: "レベル:"
+  export_success: "成功:"
+  export_player: "プレイヤー:"
+  export_currency: "通貨:"
+  export_operation: "操作:"
+  export_amount: "金額:"
+  export_balance_change: "残高変更:"
+  export_description: "説明:"
+  export_details: "詳細:"
+  export_error: "エラー:"
+  export_yes: "はい"
+  export_no: "いいえ"
 
-  # Additional Hover Information
-  hover_player_info: "<dark_gray>▪ <gray>Player: <gradient:#3498db:#2980b9>{player_name}</gradient></gray>\n"
-  hover_currency_info: "<dark_gray>▪ <gray>Currency: <gradient:#f1c40f:#f39c12>{currency_id}</gradient></gray>\n"
-  hover_amount_info: "<dark_gray>▪ <gray>Amount: <gradient:#2ecc71:#27ae60>{amount}</gradient></gray>\n"
+  # 追加ホバー情報
+  hover_player_info: "<dark_gray>▪ <gray>プレイヤー: <gradient:#3498db:#2980b9>{player_name}</gradient></gray>\n"
+  hover_currency_info: "<dark_gray>▪ <gray>通貨: <gradient:#f1c40f:#f39c12>{currency_id}</gradient></gray>\n"
+  hover_amount_info: "<dark_gray>▪ <gray>金額: <gradient:#2ecc71:#27ae60>{amount}</gradient></gray>\n"
 
-  # Filter Descriptions for Active Filters Display
-  filter_desc_player: "Player: {player}"
-  filter_desc_currency: "Currency: {currency}"
-  filter_desc_type: "Type: {type}"
-  filter_desc_level: "Level: {level}"
-  filter_desc_operation: "Operation: {operation}"
+  # アクティブフィルター表示用フィルター説明
+  filter_desc_player: "プレイヤー: {player}"
+  filter_desc_currency: "通貨: {currency}"
+  filter_desc_type: "タイプ: {type}"
+  filter_desc_level: "レベル: {level}"
+  filter_desc_operation: "操作: {operation}"

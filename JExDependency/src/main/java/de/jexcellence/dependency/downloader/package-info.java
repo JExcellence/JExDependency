@@ -5,7 +5,7 @@
  * {@link de.jexcellence.dependency.loader.YamlDependencyLoader} reads. The loader prioritizes the
  * server-specific path (Paper or Spigot) before falling back to the generic descriptor, ensuring
  * that every declared string is parsed into a {@link de.jexcellence.dependency.model.DependencyCoordinate}
- * by {@link de.jexcellence.dependency.manager.DependencyManager#collectDependencies(String[])} and the
+ * by {@link de.jexcellence.dependency.manager.DependencyManager} and the
  * equivalent flow inside {@link de.jexcellence.dependency.remapper.RemappingDependencyManager}. These
  * coordinates directly determine the JAR names and repository paths handed to this package.
  * <p>

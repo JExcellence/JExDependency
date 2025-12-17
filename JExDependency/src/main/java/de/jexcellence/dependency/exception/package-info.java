@@ -18,7 +18,7 @@
  *     resource quickly.
  *     </li>
  *     <li><strong>Download failures</strong> occur when remote artifacts cannot be fetched
- *     or validated. {@link DownloadException} is paired with downloader warnings such as
+ *     or validated. {@link de.jexcellence.dependency.exception.DownloadException} is paired with downloader warnings such as
  *     {@code "Failed to download from any repository"} or HTTP status messages. Plugins
  *     should surface these failures to the console, optionally perform a single retry if
  *     connectivity was transient, and then halt dependency usage because the required

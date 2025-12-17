@@ -1,10 +1,17 @@
 plugins {
     id("raindrop.library-conventions")
+    id("raindrop.dependencies-yml")
 }
 
 group = "com.raindropcentral.rdq"
 version = "6.0.0"
 description = "RDQ Common - Shared library for RaindropQuests"
+
+dependenciesYml {
+    usePaperDependencies()
+    generatePaperVariant.set(true)
+    generateSpigotVariant.set(true)
+}
 
 tasks.test {
     useJUnitPlatform()
@@ -18,17 +25,11 @@ dependencies {
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.36")
     annotationProcessor("org.projectlombok:lombok:1.18.36")
-    
-    // Server API
-    compileOnly(libs.paper.api)
-    
-    // RPlatform (provides BaseView and other platform utilities)
-    compileOnly(project(":RPlatform"))
 
-    // Adventure APIs
+    // Paper
+    compileOnly(libs.paper.api)
     compileOnly(libs.bundles.adventure)
 
-    // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false }
@@ -44,29 +45,20 @@ dependencies {
     compileOnly(libs.bundles.hibernate)
     compileOnly(libs.jehibernate)
 
-    compileOnly("com.raindropcentral.core:rcore:2.0.0")
-
-    // Caching
     compileOnly(libs.caffeine)
-
-    // JSON processing
     compileOnly(libs.jackson.core)
     compileOnly(libs.jackson.databind)
     compileOnly(libs.jackson.annotations)
     compileOnly(libs.jackson.jsr310)
     compileOnly(libs.java.uuid)
-
-    // Version compatibility
     compileOnly(libs.xseries)
 
-    // Internal libraries (to be shaded by variants)
     compileOnly(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
         isTransitive = false
     }
+    compileOnly(project(":RCore"))
     compileOnly(libs.bundles.jeconfig) { isTransitive = false }
-
-    // Inventory framework
     compileOnly(libs.bundles.inventory)
 
     // Test dependencies
@@ -81,8 +73,6 @@ dependencies {
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
     testImplementation(libs.caffeine)
-
-    // Hibernate for test runtime (needed for entity annotations)
     testImplementation(platform(libs.hibernate.platform))
     testImplementation(libs.bundles.hibernate)
 }

@@ -2,7 +2,7 @@
 package com.raindropcentral.rdq.database.repository;
 
 import com.raindropcentral.rdq.database.entity.perk.RPlayerPerk;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService;
  * @since TBD
  *//*
 
-public class RPlayerPerkRepository extends GenericCachedRepository<RPlayerPerk, Long, Long> {
+public class RPlayerPerkRepository extends CachedRepository<RPlayerPerk, Long, Long> {
 	
 	*/
 /**

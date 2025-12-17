@@ -1,7 +1,7 @@
 package com.raindropcentral.core.database.repository;
 
 import com.raindropcentral.core.database.entity.statistic.RAbstractStatistic;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ import java.util.function.Function;
  * @since 1.0.0
  * @version 1.0.1
  */
-public class RStatisticRepository extends GenericCachedRepository<RAbstractStatistic, Long, Long> {
+public class RStatisticRepository extends CachedRepository<RAbstractStatistic, Long, Long> {
 
     /**
      * Sets up the repository with module-wide executor and entity manager factory bindings. Use

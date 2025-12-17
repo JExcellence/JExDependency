@@ -2,7 +2,7 @@ package com.raindropcentral.core.database.repository;
 
 
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import de.jexcellence.hibernate.repository.InjectRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +33,7 @@ import java.util.function.Function;
  * @version 1.0.1
  */
 @InjectRepository
-public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UUID> {
+public class RPlayerRepository extends CachedRepository<RPlayer, Long, UUID> {
 
     /**
      * Creates the repository binding it to the module executor and entity manager factory.
@@ -52,7 +52,7 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
 
     /**
      * Retrieves a player by UUID using asynchronous execution. The lookup first consults the
-     * identifier cache maintained by {@link GenericCachedRepository}, falling back to the entity
+     * identifier cache maintained by {@link CachedRepository}, falling back to the entity
      * manager when needed, and executes on the repository's dedicated executor. The result is
      * wrapped in an {@link Optional} so callers can safely react to missing records.
      *
@@ -60,8 +60,7 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
      * @return future resolving to an optional containing the cached or freshly loaded entity
      */
     public CompletableFuture<Optional<RPlayer>> findByUuidAsync(final @NotNull UUID uniqueId) {
-        return findByAttributesAsync(Map.of("uniqueId", uniqueId))
-            .thenApply(Optional::ofNullable);
+        return findByKeyAsync("uniqueId", uniqueId);
     }
 
     /**
@@ -74,9 +73,10 @@ public class RPlayerRepository extends GenericCachedRepository<RPlayer, Long, UU
      * @return future containing an optional with the resolved player when found
      */
     public CompletableFuture<Optional<RPlayer>> findByNameAsync(final @NotNull String playerName) {
-
-        return findByAttributesAsync(Map.of("playerName", playerName))
-            .thenApply(Optional::ofNullable);
+        return CompletableFuture.supplyAsync(
+            () -> findByAttribute("playerName", playerName),
+            getExecutorService()
+        );
     }
 
     /**

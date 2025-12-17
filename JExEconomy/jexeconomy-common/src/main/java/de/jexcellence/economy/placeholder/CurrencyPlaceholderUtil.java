@@ -176,7 +176,7 @@ public class CurrencyPlaceholderUtil {
 				"currency.id",
 				targetCurrency.get().getId()
 			)
-		);
+		).orElse(null);
 		
 		if (
 			playerCurrencyAssociation == null

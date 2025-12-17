@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.entity.bounty;
 
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ import java.util.*;
 )
 @Getter
 @Setter
-public class Bounty extends AbstractEntity {
+public class Bounty extends BaseEntity {
 
         @Serial
         private static final long serialVersionUID = 1L;

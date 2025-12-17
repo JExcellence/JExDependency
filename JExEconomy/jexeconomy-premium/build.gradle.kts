@@ -3,9 +3,16 @@ import org.gradle.api.tasks.testing.Test
 
 plugins {
     id("raindrop.shadow-conventions")
+    id("raindrop.dependencies-yml")
 }
 
 version = "2.0.0"
+
+dependenciesYml {
+    usePaperDependencies()
+    generatePaperVariant.set(true)
+    generateSpigotVariant.set(true)
+}
 
 dependencies {
     implementation(project(":JExEconomy:jexeconomy-common"))
@@ -42,17 +49,14 @@ tasks.named<ShadowJar>("shadowJar") {
     archiveClassifier.set("Premium")
     archiveVersion.set(project.version.toString())
 
-    relocate("tools.jackson.core", "de.jexcellence.remapped.tools.jackson.core")
-    relocate("tools.jackson.databind", "de.jexcellence.remapped.tools.jackson.databind")
-    relocate("com.fasterxml.jackson.annotation", "de.jexcellence.remapped.com.fasterxml.jackson.annotation")
-    relocate("tools.jackson.core.datatype", "de.jexcellence.remapped.tools.jackson.core.datatype")
+    // Jackson 3.x core (tools.jackson namespace)
+    relocate("tools.jackson", "de.jexcellence.remapped.tools.jackson")
+    // NOTE: com.fasterxml is NOT relocated - Hibernate expects original Jackson paths
 
     relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
-    relocate("org.h2", "de.jexcellence.remapped.org.h2")
     relocate("me.devnatan.inventoryframework", "de.jexcellence.remapped.me.devnatan.inventoryframework")
     relocate("com.tcoded", "de.jexcellence.remapped.com.tcoded")
     relocate("com.cryptomorin.xseries", "de.jexcellence.remapped.com.cryptomorin.xseries")
-
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()

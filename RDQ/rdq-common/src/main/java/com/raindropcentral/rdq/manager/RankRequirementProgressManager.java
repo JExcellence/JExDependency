@@ -369,7 +369,7 @@ public class RankRequirementProgressManager {
 		try {
 			// Try to find existing progress entry
 			final List<RPlayerRankUpgradeProgress> existingProgress = rdq.getPlayerRankUpgradeProgressRepository()
-			                                                                .findListByAttributes(Map.of(
+			                                                                .findAllByAttributes(Map.of(
 				                                                                "player.uniqueId", rdqPlayer.getUniqueId(),
 				                                                                "upgradeRequirement.id", requirement.getId()
 			                                                                ));

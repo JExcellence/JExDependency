@@ -367,7 +367,7 @@ public class JExEconomyVaultProvider implements Economy {
             }
             
             // Get the user entity
-            User userEntity = this.jexEconomyImpl.getUserRepository().findByAttributes(Map.of("uniqueId", player.getUniqueId()));
+            User userEntity = this.jexEconomyImpl.getUserRepository().findByAttributes(Map.of("uniqueId", player.getUniqueId())).orElse(null);
             if (userEntity == null) {
                 return false;
             }

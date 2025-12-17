@@ -74,7 +74,7 @@ public class RankPathService {
 			RPlayerRankPath existingRankPath = this.getRankPathForTree(player, selectedRankTree);
 			
 			if (existingRankPath != null) {
-				RPlayerRankPath freshRankPath = this.rdq.getPlayerRankPathRepository().findById(existingRankPath.getId());
+				RPlayerRankPath freshRankPath = this.rdq.getPlayerRankPathRepository().findById(existingRankPath.getId()).orElse(null);
 				if (freshRankPath != null) {
 					freshRankPath.setActive(true);
 					this.rdq.getPlayerRankPathRepository().update(freshRankPath);
@@ -129,11 +129,11 @@ public class RankPathService {
 	private void deactivateAllRankPaths(final @NotNull RDQPlayer player) {
 		try {
 			final List<RPlayerRankPath> allRankPaths = this.rdq.getPlayerRankPathRepository()
-			                                                   .findListByAttributes(Map.of("player", player));
+			                                                   .findAllByAttributes(Map.of("player", player));
 			
 			for (final RPlayerRankPath rankPath : allRankPaths) {
 				if (rankPath.isActive()) {
-					RPlayerRankPath freshRankPath = this.rdq.getPlayerRankPathRepository().findById(rankPath.getId());
+					RPlayerRankPath freshRankPath = this.rdq.getPlayerRankPathRepository().findById(rankPath.getId()).orElse(null);
 					if (freshRankPath != null && freshRankPath.isActive()) {
 						freshRankPath.setActive(false);
 						this.rdq.getPlayerRankPathRepository().update(freshRankPath);
@@ -157,7 +157,7 @@ public class RankPathService {
 		               .findByAttributes(Map.of(
 			               "player", player,
 			               "selectedRankPath", rankTree
-		               ));
+		               )).orElse(null);
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public class RankPathService {
 			RPlayerRank existingRankInTree = this.getPlayerRankForTree(player, rankTree);
 			
 			if (existingRankInTree != null) {
-				RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(existingRankInTree.getId());
+				RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(existingRankInTree.getId()).orElse(null);
 				if (freshRank != null) {
 					freshRank.setActive(true);
 					this.rdq.getPlayerRankRepository().update(freshRank);
@@ -187,7 +187,7 @@ public class RankPathService {
 				LOGGER.log(Level.INFO, "Created new rank assignment for player " + player.getPlayerName() + " in tree " + rankTree.getIdentifier());
 			}
 			
-			RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(player.getId());
+			RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(player.getId()).orElse(null);
 			if (freshPlayer != null) {
 				this.rdq.getPlayerRepository().update(freshPlayer);
 			}
@@ -203,11 +203,11 @@ public class RankPathService {
 	private void deactivateAllPlayerRanks(final @NotNull RDQPlayer player) {
 		try {
 			final List<RPlayerRank> allPlayerRanks = this.rdq.getPlayerRankRepository()
-			                                                 .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+			                                                 .findAllByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
 			
 			for (final RPlayerRank playerRank : allPlayerRanks) {
 				if (playerRank.isActive()) {
-					RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(playerRank.getId());
+					RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(playerRank.getId()).orElse(null);
 					if (freshRank != null && freshRank.isActive()) {
 						freshRank.setActive(false);
 						this.rdq.getPlayerRankRepository().update(freshRank);
@@ -229,7 +229,7 @@ public class RankPathService {
 	) {
 		try {
 			final List<RPlayerRank> playerRanks = this.rdq.getPlayerRankRepository()
-			                                              .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+			                                              .findAllByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
 			
 			return playerRanks.stream()
 			                  .filter(rank -> {
@@ -273,7 +273,7 @@ public class RankPathService {
 	private RPlayerRankPath getCurrentRankPath(final @NotNull RDQPlayer player) {
 		try {
 			final List<RPlayerRankPath> rankPaths = this.rdq.getPlayerRankPathRepository()
-			                                                .findListByAttributes(Map.of("player", player));
+			                                                .findAllByAttributes(Map.of("player", player));
 			
 			return rankPaths.stream()
 			                .filter(RPlayerRankPath::isActive)
@@ -348,7 +348,7 @@ public class RankPathService {
 	) {
 		try {
 			final List<RPlayerRank> allPlayerRanks = this.rdq.getPlayerRankRepository()
-			                                                 .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
+			                                                 .findAllByAttributes(Map.of("player.uniqueId", player.getUniqueId()));
 			
 			if (rankTree == null) {
 				return allPlayerRanks;

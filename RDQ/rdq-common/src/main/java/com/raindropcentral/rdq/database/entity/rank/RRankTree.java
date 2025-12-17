@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.hibernate.Hibernate;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "r_rank_tree")
-public class RRankTree extends AbstractEntity {
+public class RRankTree extends BaseEntity {
 	
 	@Column(name = "identifier", unique = true, nullable = false)
 	private String identifier;

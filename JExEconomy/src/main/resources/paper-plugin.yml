@@ -1,8 +1,0 @@
-name: JExEconomy
-version: '2.0.0'
-main: de.jexcellence.economy.JExEconomy
-description: Modern currency plugin with automatic dependency management
-author: JExcellence
-website: https://github.com/JExcellence/JExEconomy
-loader: de.jexcellence.dependency.loader.PaperPluginLoader
-api-version: '1.19'

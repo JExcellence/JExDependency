@@ -5,7 +5,7 @@ import com.raindropcentral.rdq.database.converter.IconSectionConverter;
 import com.raindropcentral.rdq.database.converter.RequirementConverter;
 import com.raindropcentral.rdq.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.database.converter.BasicMaterialConverter;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -28,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  */
 @Entity
 @Table(name = "r_requirement")
-public class RRequirement extends AbstractEntity {
+public class RRequirement extends BaseEntity {
 
     /**
      * The requirement data, persisted as a JSON string using {@link RequirementConverter}.

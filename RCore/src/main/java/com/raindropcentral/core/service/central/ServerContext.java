@@ -59,8 +59,8 @@ public class ServerContext {
 
         // Load server entity from repository
         return serverRepository.findByServerUuid(serverUuid)
-                .thenAccept(server -> {
-                    this.cachedServer = server;
+                .thenAccept(serverOpt -> {
+                    this.cachedServer = serverOpt.orElse(null);
                 });
     }
 
@@ -122,8 +122,8 @@ public class ServerContext {
         }
 
         return serverRepository.findByServerUuid(serverUuid)
-                .thenAccept(server -> {
-                    this.cachedServer = server;
+                .thenAccept(serverOpt -> {
+                    this.cachedServer = serverOpt.orElse(null);
                 });
     }
 

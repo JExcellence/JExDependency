@@ -146,7 +146,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 		final Player         contextPlayer  = renderContext.getPlayer();
 		final JExEconomy jexEconomyImpl = this.jexEconomy.get(renderContext);
 		
-		final List<UserCurrency> userCurrencies = jexEconomyImpl.getUserCurrencyRepository().findListByAttributes(
+		final List<UserCurrency> userCurrencies = jexEconomyImpl.getUserCurrencyRepository().findAllByAttributes(
 			Map.of("currency.id", displayedCurrency.getId())
 		);
 		
@@ -380,7 +380,7 @@ public class CurrencyDeletionView extends APaginatedView<Currency> {
 			try {
 				// Step 1: Delete all UserCurrency records that reference this currency
 				final List<UserCurrency> userCurrencies = jexEconomyImpl.getUserCurrencyRepository()
-				                                                        .findListByAttributes(
+				                                                        .findAllByAttributes(
 					                                                     Map.of("currency.id", currencyToDelete.getId())
 				                                                     );
 				

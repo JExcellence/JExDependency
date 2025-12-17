@@ -33,6 +33,7 @@ import java.util.logging.Logger;
  */
 public class DependencyDownloader {
 
+    private static final String LOGGER_NAME = "JExDependency";
     private static final String USER_AGENT = "JEDependency-Downloader/2.0.0";
     private static final String ACCEPT = "application/java-archive, application/octet-stream, */*;q=0.1";
     private static final int CONNECTION_TIMEOUT_MS = 10_000;
@@ -49,7 +50,7 @@ public class DependencyDownloader {
      * Creates a new downloader backed by a virtual-thread executor that can be used for asynchronous operations.
      */
     public DependencyDownloader() {
-        this.logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(LOGGER_NAME);
         this.customRepositories = new ArrayList<>();
         this.executorService = Executors.newVirtualThreadPerTaskExecutor();
     }
@@ -203,9 +204,7 @@ public class DependencyDownloader {
 
         moveToFinalLocation(tempFile, targetFile);
 
-        logger.fine(String.format(Locale.ROOT,
-                "Successfully downloaded %s (%d bytes, Content-Type=%s) to %s",
-                url, bytesWritten, contentType, targetFile.getAbsolutePath()));
+        logger.fine("Downloaded: " + targetFile.getName() + " (" + bytesWritten + " bytes)");
 
         return true;
     }

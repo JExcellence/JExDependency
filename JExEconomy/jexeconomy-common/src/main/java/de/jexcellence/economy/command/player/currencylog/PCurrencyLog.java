@@ -993,7 +993,7 @@ public class PCurrencyLog extends PlayerCommand {
     private void displayLogDetails(final @NotNull Player player, final long logId) {
         CompletableFuture.supplyAsync(() -> {
             try {
-                return this.jexEconomyImpl.getCurrencyLogRepository().findById(logId);
+                return this.jexEconomyImpl.getCurrencyLogRepository().findById(logId).orElse(null);
             } catch (Exception e) {
                 LOGGER.warning("Failed to retrieve log details for ID " + logId + ": " + e.getMessage());
                 return null;

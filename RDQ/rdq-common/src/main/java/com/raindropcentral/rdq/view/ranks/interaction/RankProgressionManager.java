@@ -289,7 +289,7 @@ public class RankProgressionManager {
 			
 			if (existingRankInTree != null) {
 				// Update existing rank
-				final RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(existingRankInTree.getId());
+				final RPlayerRank freshRank = this.rdq.getPlayerRankRepository().findById(existingRankInTree.getId()).orElse(null);
 				if (freshRank == null) {
 					throw new RuntimeException("Could not find existing rank to update");
 				}
@@ -307,7 +307,7 @@ public class RankProgressionManager {
 			}
 			
 			// Update player entity
-			final RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(rdqPlayer.getId());
+			final RDQPlayer freshPlayer = this.rdq.getPlayerRepository().findById(rdqPlayer.getId()).orElse(null);
 			if (freshPlayer != null) {
 				this.rdq.getPlayerRepository().update(freshPlayer);
 			}
@@ -334,7 +334,7 @@ public class RankProgressionManager {
 		try {
 			for (final RRankUpgradeRequirement upgradeRequirement : newRank.getUpgradeRequirements()) {
 				final List<RPlayerRankUpgradeProgress> progressList = this.rdq.getPlayerRankUpgradeProgressRepository()
-				                                                              .findListByAttributes(Map.of(
+				                                                              .findAllByAttributes(Map.of(
 					                                                              "player.id", rdqPlayer.getId(),
 					                                                              "upgradeRequirement.id", upgradeRequirement.getId()
 				                                                              ));
@@ -345,7 +345,7 @@ public class RankProgressionManager {
 					}
 					
 					final RPlayerRankUpgradeProgress freshProgress = this.rdq.getPlayerRankUpgradeProgressRepository()
-					                                                         .findById(progress.getId());
+					                                                         .findById(progress.getId()).orElse(null);
 					if (freshProgress == null) {
 						continue;
 					}
@@ -372,7 +372,7 @@ public class RankProgressionManager {
 	) {
 		for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
 			final List<RPlayerRankUpgradeProgress> existingProgress = this.rdq.getPlayerRankUpgradeProgressRepository()
-			                                                                  .findListByAttributes(Map.of(
+			                                                                  .findAllByAttributes(Map.of(
 				                                                                  "player.uniqueId", rdqPlayer.getUniqueId(),
 				                                                                  "upgradeRequirement.id", requirement.getId()
 			                                                                  ));
@@ -565,7 +565,7 @@ public class RankProgressionManager {
 	private boolean playerHasRank(final @NotNull RDQPlayer rdqPlayer, final @NotNull RRank rank) {
 		try {
 			final List<RPlayerRank> playerRanks = this.rdq.getPlayerRankRepository()
-			                                              .findListByAttributes(Map.of("player.uniqueId", rdqPlayer.getUniqueId()));
+			                                              .findAllByAttributes(Map.of("player.uniqueId", rdqPlayer.getUniqueId()));
 			
 			return playerRanks.stream()
 			                  .anyMatch(playerRank -> Objects.equals(playerRank.getCurrentRank(), rank));
@@ -594,7 +594,7 @@ public class RankProgressionManager {
 	) {
 		try {
 			final List<RPlayerRank> playerRanks = this.rdq.getPlayerRankRepository()
-			                                              .findListByAttributes(Map.of("player.uniqueId", rdqPlayer.getUniqueId()));
+			                                              .findAllByAttributes(Map.of("player.uniqueId", rdqPlayer.getUniqueId()));
 			
 			return playerRanks.stream()
 			                  .filter(playerRank -> {
@@ -614,7 +614,7 @@ public class RankProgressionManager {
 	 */
 	private @Nullable RDQPlayer getRDQPlayer(final @NotNull SlotClickContext clickContext) {
 		try {
-			return this.rdq.getPlayerRepository().findByAttributes(Map.of("uniqueId", clickContext.getPlayer().getUniqueId()));
+			return this.rdq.getPlayerRepository().findByAttributes(Map.of("uniqueId", clickContext.getPlayer().getUniqueId())).orElse(null);
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to get RDQPlayer for player", exception);
 			return null;

@@ -44,7 +44,7 @@ public class BountyOverviewView extends APaginatedView<Bounty> {
 	protected CompletableFuture<List<Bounty>> getAsyncPaginationSource(
 		final @NotNull Context context
 	) {
-		return rdq.get(context).getBountyRepository().findListByAttributesAsync(
+		return rdq.get(context).getBountyRepository().findAllByAttributesAsync(
 			Map.of("active", true)
 		);
 	}

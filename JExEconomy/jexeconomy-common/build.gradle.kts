@@ -1,22 +1,31 @@
 plugins {
     id("raindrop.library-conventions")
+    id("raindrop.dependencies-yml")
 }
 
 group = "de.jexcellence.economy"
 version = "2.0.0"
+description = "JExEconomy Common - Shared library for JExEconomy"
+
+dependenciesYml {
+    usePaperDependencies()
+    generatePaperVariant.set(true)
+    generateSpigotVariant.set(true)
+}
 
 tasks.processResources {
     exclude("plugin.yml", "paper-plugin.yml")
 }
 
 dependencies {
-    // Server API
-    compileOnly(libs.paper.api)
+    // Lombok
+    compileOnly("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
 
-    // Adventure APIs
+    // Paper
+    compileOnly(libs.paper.api)
     compileOnly(libs.bundles.adventure)
 
-    // Ecosystem (provided by other plugins)
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false}
@@ -30,6 +39,7 @@ dependencies {
     // DB & platform (compileOnly)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
+    compileOnly(libs.jehibernate)
 
     // Misc (compileOnly)
     compileOnly(libs.caffeine)
@@ -40,11 +50,14 @@ dependencies {
     compileOnly(libs.java.uuid)
     compileOnly(libs.xseries)
 
-    // Internal libraries to be shaded by variants
-    implementation(libs.bundles.jexcellence) { isTransitive = false }
-    implementation(libs.bundles.jeconfig) { isTransitive = false }
+    compileOnly(libs.bundles.jexcellence) {
+        exclude(group = "de.jexcellence.hibernate")
+        isTransitive = false
+    }
+    compileOnly(libs.bundles.jeconfig) { isTransitive = false }
     compileOnly(libs.bundles.inventory)
 
+    // Test dependencies
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter.api)
     testRuntimeOnly(libs.junit.jupiter.engine)
@@ -55,12 +68,27 @@ dependencies {
     testImplementation(libs.jackson.databind)
     testImplementation(libs.adventure.api)
     testImplementation(libs.adventure.minimessage)
+    testImplementation(libs.caffeine)
+    testImplementation(platform(libs.hibernate.platform))
+    testImplementation(libs.bundles.hibernate)
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+    }
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks.withType<JavaCompile>().configureEach {
+    options.compilerArgs.addAll(listOf(
+        "--enable-preview"
+    ))
+}
+
+tasks.withType<Test>().configureEach {
+    jvmArgs("--enable-preview")
 }

@@ -73,7 +73,7 @@ public class RankUpgradeProgressService {
 	) {
 		try {
 			final List<RPlayerRankUpgradeProgress> existingProgress = this.rdq.getPlayerRankUpgradeProgressRepository()
-			                                                                  .findListByAttributes(Map.of(
+			                                                                  .findAllByAttributes(Map.of(
 				                                                                  "player.uniqueId", player.getUniqueId(),
 				                                                                  "upgradeRequirement.id", upgradeRequirement.getId()
 			                                                                  ));
@@ -106,7 +106,7 @@ public class RankUpgradeProgressService {
 			final Set<RRankUpgradeRequirement> upgradeRequirements = targetRank.getUpgradeRequirements();
 			
 			return this.rdq.getPlayerRankUpgradeProgressRepository()
-			               .findListByAttributes(Map.of("player.uniqueId", player.getUniqueId()))
+			               .findAllByAttributes(Map.of("player.uniqueId", player.getUniqueId()))
 			               .stream()
 			               .filter(progress -> upgradeRequirements.contains(progress.getUpgradeRequirement()))
 			               .toList();
@@ -163,7 +163,7 @@ public class RankUpgradeProgressService {
 	) {
 		try {
 			final List<RPlayerRankUpgradeProgress> progressList = this.rdq.getPlayerRankUpgradeProgressRepository()
-			                                                              .findListByAttributes(Map.of(
+			                                                              .findAllByAttributes(Map.of(
 				                                                              "player.uniqueId", player.getUniqueId(),
 				                                                              "upgradeRequirement.id", upgradeRequirement.getId()
 			                                                              ));
@@ -240,7 +240,7 @@ public class RankUpgradeProgressService {
 		final @NotNull RRankUpgradeRequirement upgradeRequirement
 	) {
 		final List<RPlayerRankUpgradeProgress> progressList = this.rdq.getPlayerRankUpgradeProgressRepository()
-		                                                              .findListByAttributes(Map.of(
+		                                                              .findAllByAttributes(Map.of(
 			                                                              "player.uniqueId", player.getUniqueId(),
 			                                                              "upgradeRequirement.id", upgradeRequirement.getId()
 		                                                              ));
@@ -267,7 +267,7 @@ public class RankUpgradeProgressService {
 	) {
 		try {
 			final List<RPlayerRankUpgradeProgress> progressList = this.rdq.getPlayerRankUpgradeProgressRepository()
-			                                                              .findListByAttributes(Map.of(
+			                                                              .findAllByAttributes(Map.of(
 				                                                              "player.uniqueId", player.getUniqueId(),
 				                                                              "upgradeRequirement.id", upgradeRequirement.getId()
 			                                                              ));

@@ -2,8 +2,8 @@ package com.raindropcentral.core.database.entity.player;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.statistic.RPlayerStatistic;
-import de.jexcellence.hibernate.converter.UUIDConverter;
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.converter.UuidBytesConverter;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +22,7 @@ import java.util.UUID;
  */
 @Entity
 @Table(name = "r_player")
-public class RPlayer extends AbstractEntity {
+public class RPlayer extends BaseEntity {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -31,7 +31,7 @@ public class RPlayer extends AbstractEntity {
     private static final int MAX_NAME_LENGTH = 16;
 
     @Column(name = "unique_id", unique = true, nullable = false)
-    @Convert(converter = UUIDConverter.class)
+    @Convert(converter = UuidBytesConverter.class)
     private UUID uniqueId;
 
     @Column(name = "player_name", nullable = false, length = MAX_NAME_LENGTH)

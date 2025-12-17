@@ -1,6 +1,6 @@
 package de.jexcellence.economy.database.entity;
 
-import de.jexcellence.hibernate.entity.AbstractEntity;
+import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 @Table(name = "join_p_player_currency")
 @Entity
-public class UserCurrency extends AbstractEntity {
+public class UserCurrency extends BaseEntity {
 	
 	/**
 	 * The user (player) associated with this balance.

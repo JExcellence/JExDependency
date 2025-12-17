@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.repository;
 
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRank;
-import de.jexcellence.hibernate.repository.GenericCachedRepository;
+import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,7 +15,7 @@ import java.util.function.Function;
  * @version 1.0.0
  * @since TBD
  */
-public class RPlayerRankRepository extends GenericCachedRepository<RPlayerRank, Long, Long> {
+public class RPlayerRankRepository extends CachedRepository<RPlayerRank, Long, Long> {
 	
 	/**
 	 * Constructs a new {@code RPlayerRankRepository} for managing {@link RPlayerRank} entities.

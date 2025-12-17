@@ -76,13 +76,11 @@ public class RankMainView extends BaseView {
         final @NotNull RenderContext render,
         final @NotNull Player player
     ) {
-        this.rdq.get(
-            render
-        ).getPlayerRepository().findByAttributesAsync(
-            Map.of(
-                "uniqueId",
-                player.getUniqueId()
-            )
+        java.util.concurrent.CompletableFuture.supplyAsync(
+            () -> this.rdq.get(render).getPlayerRepository().findByAttributes(
+                Map.of("uniqueId", player.getUniqueId())
+            ).orElse(null),
+            this.rdq.get(render).getExecutor()
         ).thenAcceptAsync(
             rdqPlayer -> this.rdqPlayer = rdqPlayer,
             this.rdq.get(render).getExecutor()

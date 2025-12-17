@@ -758,9 +758,21 @@ balance:
   not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Pas de Solde:</gradient> <white>Vous n'avez pas de solde pour <gradient:#FFD700:#FFA500>%identifier%</gradient>!</white>"
 
 pay:
+  usage: "<gradient:#FFD700:#FFA500>⚠ Utilisation:</gradient> <white>/pay <devise> <joueur> <montant></white>"
+  disabled: "<gradient:#FF6B6B:#FF8E8E>✖ Désactivé:</gradient> <white>La commande pay est actuellement désactivée.</white>"
+  currency_not_allowed: "<gradient:#FF6B6B:#FF8E8E>✖ Devise Non Autorisée:</gradient> <white>La devise <gradient:#FFD700:#FFA500>%currency%</gradient> n'est pas autorisée pour les paiements.</white>"
+  currency_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Devise Non Trouvée:</gradient> <white>La devise <gradient:#FFD700:#FFA500>%currency%</gradient> n'existe pas.</white>"
+  invalid_amount: "<gradient:#FF6B6B:#FF8E8E>✖ Montant Invalide:</gradient> <white>'<gradient:#FFD700:#FFA500>%amount%</gradient>' n'est pas un montant valide.</white>"
+  amount_out_of_range: "<gradient:#FF6B6B:#FF8E8E>✖ Montant Hors Limites:</gradient> <white>Le montant <gradient:#FFD700:#FFA500>%amount%</gradient> doit être entre <gradient:#FFD700:#FFA500>%min%</gradient> et <gradient:#FFD700:#FFA500>%max%</gradient>.</white>"
+  cannot_pay_self: "<gradient:#FF6B6B:#FF8E8E>✖ Cible Invalide:</gradient> <white>Vous ne pouvez pas vous payer vous-même!</white>"
+  player_not_found: "<gradient:#FF6B6B:#FF8E8E>✖ Joueur Non Trouvé:</gradient> <white>Le joueur <gradient:#4ECDC4:#45B7B8>%player%</gradient> n'a pas été trouvé.</white>"
+  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Fonds Insuffisants:</gradient> <white>Vous avez besoin de <gradient:#FFD700:#FFA500>%required%</gradient> <gradient:#FFD700:#FFA500>%currency%</gradient> mais n'avez que <gradient:#FFD700:#FFA500>%available%</gradient>.</white>"
+  transfer_failed: "<gradient:#FF6B6B:#FF8E8E>✖ Transfert Échoué:</gradient> <white>Le paiement n'a pas pu être effectué. Veuillez réessayer.</white>"
+  success: "<gradient:#00FF00:#32CD32>✓ Paiement Envoyé:</gradient> <white>Vous avez envoyé <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> à <gradient:#4ECDC4:#45B7B8>%target%</gradient>!</white>"
+  received: "<gradient:#00FF00:#32CD32>✓ Paiement Reçu:</gradient> <white>Vous avez reçu <gradient:#FFD700:#FFA500>%amount% %symbol%</gradient> de <gradient:#4ECDC4:#45B7B8>%sender%</gradient>!</white>"
+  # Legacy keys for backwards compatibility
   success_sender: "<gradient:#00FF00:#32CD32>✓ Paiement Envoyé:</gradient> <white>Vous avez envoyé <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> à <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
   success_receiver: "<gradient:#00FF00:#32CD32>✓ Paiement Reçu:</gradient> <white>Vous avez reçu <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient> de <gradient:#4ECDC4:#45B7B8>%player%</gradient>!</white>"
-  insufficient_funds: "<gradient:#FF6B6B:#FF8E8E>✖ Fonds Insuffisants:</gradient> <white>Vous n'avez pas assez de fonds! Requis: <gradient:#FFD700:#FFA500>%prefix%%amount%%symbol%%suffix%</gradient></white>"
   self_pay: "<gradient:#FF6B6B:#FF8E8E>✖ Cible Invalide:</gradient> <white>Vous ne pouvez pas vous payer vous-même!</white>"
   failed: "<gradient:#FF6B6B:#FF8E8E>✖ Paiement Échoué:</gradient> <white>Le paiement a échoué. Veuillez réessayer.</white>"
 
@@ -819,3 +831,168 @@ currency_adapter:
     withdraw_failed: "<gradient:#ff6b6b:#ff8e8e><bold>✗</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossible de <bold>retirer</bold></gradient> <gradient:#ffd93d:#ffed4e><bold>%amount%</bold></gradient> <gradient:#ff6b6b:#ffaaaa>de votre compte</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#ff6b6b:#ffaaaa>!</gradient>"
   balance:
     current: "<gradient:#74c0fc:#91a7ff><bold>💰</bold></gradient> <gradient:#868e96:#adb5bd>Votre solde actuel</gradient> <gradient:#74c0fc:#91a7ff><bold>%currency_identifier%</bold></gradient><gradient:#868e96:#adb5bd>:</gradient> <gradient:#ffd93d:#ffed4e><bold>%balance%</bold></gradient>"
+
+  system:
+    loading: "<gradient:#74c0fc:#91a7ff><bold>⏳</bold></gradient> <gradient:#868e96:#adb5bd>Chargement des données de devise...</gradient>"
+    loaded: "<gradient:#51cf66:#69db7c><bold>✓</bold></gradient> <gradient:#51cf66:#8ce99a>Chargé avec succès</gradient> <gradient:#ffd93d:#ffed4e><bold>%count%</bold></gradient> <gradient:#51cf66:#8ce99a>devises dans le cache!</gradient>"
+    cache_error: "<gradient:#ff6b6b:#ff8e8e><bold>⚠</bold></gradient> <gradient:#ff6b6b:#ffaaaa>Impossible de charger les devises dans le cache:</gradient> <gradient:#868e96:#adb5bd><italic>%error%</italic></gradient>"
+
+# Currency Log Command I18n Keys
+currency_log:
+  # Error Messages
+  invalid_page_format: "<gradient:#e74c3c:#c0392b>✗ Format de Page Invalide</gradient>\n<gray>Veuillez entrer un numéro de page valide au lieu de '<white>{input}</white>'.</gray>"
+  invalid_page_number: "<gradient:#e74c3c:#c0392b>✗ Numéro de Page Invalide</gradient>\n<gray>Le numéro de page doit être 1 ou plus, pas '<white>{page}</white>'.</gray>"
+  no_permission_export: "<gradient:#e74c3c:#c0392b>✗ Accès Refusé</gradient>\n<gray>Vous n'avez pas la permission d'exporter les journaux de devise.</gray>"
+  player_not_found: "<gradient:#e74c3c:#c0392b>✗ Joueur Non Trouvé</gradient>\n<gray>Le joueur <white>{player}</white> n'a jamais rejoint ce serveur.</gray>"
+  currency_not_found: "<gradient:#e74c3c:#c0392b>✗ Devise Non Trouvée</gradient>\n<gray>La devise <white>{currency}</white> n'existe pas.</gray>\n<dark_gray>Devises disponibles: {available_currencies}</dark_gray>"
+  invalid_log_type: "<gradient:#e74c3c:#c0392b>✗ Type de Journal Invalide</gradient>\n<gray>Type de journal inconnu: <white>{type}</white></gray>\n<dark_gray>Types valides: {valid_types}</dark_gray>"
+  invalid_log_level: "<gradient:#e74c3c:#c0392b>✗ Niveau de Journal Invalide</gradient>\n<gray>Niveau de journal inconnu: <white>{level}</white></gray>\n<dark_gray>Niveaux valides: {valid_levels}</dark_gray>"
+  invalid_operation_type: "<gradient:#e74c3c:#c0392b>✗ Type d'Opération Invalide</gradient>\n<gray>Opération inconnue: <white>{operation}</white></gray>\n<dark_gray>Opérations valides: {valid_operations}</dark_gray>"
+  statistics_error: "<gradient:#e74c3c:#c0392b>✗ Erreur de Statistiques</gradient>\n<gray>Impossible de générer les statistiques de journal. Veuillez réessayer plus tard.</gray>"
+  export_failed: "<gradient:#e74c3c:#c0392b>✗ Exportation Échouée</gradient>\n<gray>Une erreur s'est produite pendant le processus d'exportation.</gray>"
+
+  # Success Messages
+  filters_cleared: "<gradient:#2ecc71:#27ae60>✓ Filtres Effacés</gradient>\n<gray>Tous les filtres actifs ont été supprimés avec succès!</gray>"
+  export_started: "<gradient:#f39c12:#e67e22>🔄 Exportation Démarrée</gradient>\n<gray>Préparation des journaux de devise pour l'exportation...</gray>"
+  export_complete: "<gradient:#2ecc71:#27ae60>✓ Exportation Terminée</gradient>\n<gray>Les journaux de devise ont été exportés avec succès!</gray>\n<gray>Journaux exportés vers: <white>{filename}</white></gray>\n<gray>Emplacement: <white>plugins/JExEconomy/logs/</white></gray>"
+  player_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtre Joueur Appliqué</gradient>\n<gray>Affichage des journaux pour le joueur: <gradient:#3498db:#2980b9>{player}</gradient></gray>\n<dark_gray>Utilisez <yellow>/currencylog view</yellow> pour voir les résultats filtrés</dark_gray>"
+  currency_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtre Devise Appliqué</gradient>\n<gray>Affichage des journaux pour la devise: <gradient:#f1c40f:#f39c12>{currency}</gradient></gray>\n<dark_gray>Utilisez <yellow>/currencylog view</yellow> pour voir les résultats filtrés</dark_gray>"
+  type_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtre Type Appliqué</gradient>\n<gray>Affichage des journaux de type: {icon} <gradient:#9b59b6:#8e44ad>{type}</gradient></gray>\n<dark_gray>Utilisez <yellow>/currencylog view</yellow> pour voir les résultats filtrés</dark_gray>"
+  level_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtre Niveau Appliqué</gradient>\n<gray>Affichage des journaux avec niveau: {color}{level}</gradient></gray>\n<dark_gray>Utilisez <yellow>/currencylog view</yellow> pour voir les résultats filtrés</dark_gray>"
+  operation_filter_applied: "<gradient:#2ecc71:#27ae60>✓ Filtre Opération Appliqué</gradient>\n<gray>Affichage des journaux pour l'opération: <gradient:#f39c12:#e67e22>{operation}</gradient></gray>\n<dark_gray>Utilisez <yellow>/currencylog view</yellow> pour voir les résultats filtrés</dark_gray>"
+
+  # Headers and Titles
+  header_line: "<gradient:#9b59b6:#8e44ad>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
+  filter_header_line: "<gradient:#3498db:#2980b9>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
+  no_logs_header_line: "<gradient:#95a5a6:#7f8c8d>▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬</gradient>"
+
+  title_logs: "<gradient:#9b59b6:#8e44ad>📋 Journaux de Transactions de Devise</gradient>"
+  title_filters: "<gradient:#3498db:#2980b9>🔍 Filtres de Journal de Devise</gradient>"
+  title_commands: "<gradient:#9b59b6:#8e44ad>📋 Commandes de Journal de Devise</gradient>"
+  title_statistics: "<gradient:#9b59b6:#8e44ad>📊 Statistiques de Journal de Devise</gradient>"
+  title_no_logs: "<gradient:#95a5a6:#7f8c8d>📋 Aucun Journal de Devise Trouvé</gradient>"
+
+  # Subtitles and Descriptions
+  subtitle_filters: "<gray>Sélectionnez un type de filtre pour affiner votre recherche de journal</gray>"
+  subtitle_no_logs: "<gray>Aucun journal de transaction ne correspond à vos critères actuels.</gray>\n<gray>Essayez d'ajuster vos filtres ou revenez plus tard!</gray>"
+
+  # Page Information
+  page_info: "<gray>Page <gradient:#f39c12:#e67e22>{current_page}</gradient><gray>/<gradient:#f39c12:#e67e22>{total_pages}</gradient> <dark_gray>•</dark_gray> <gradient:#9b59b6:#8e44ad>{total_logs}</gradient> <gray>entrées totales</gray>"
+  active_filters: "<gradient:#f39c12:#e67e22>🔍 Filtres Actifs:</gradient> <gray>{filters}</gray>"
+
+  # Instructions
+  instructions_logs: "<dark_gray>▪ <yellow>Cliquez</yellow> <dark_gray>»</dark_gray> <gray>Voir les informations détaillées du journal</gray>\n<dark_gray>▪ <yellow>Survolez</yellow> <dark_gray>»</dark_gray> <gray>Voir les détails de transaction et métadonnées</gray>"
+  instructions_filters: "<dark_gray>▪ <yellow>Cliquez</yellow> <dark_gray>»</dark_gray> <gray>Appliquer le type de filtre</gray>\n<dark_gray>▪ <yellow>Survolez</yellow> <dark_gray>»</dark_gray> <gray>Voir la description du filtre</gray>"
+
+  # Navigation
+  navigation_previous: "[← Précédent]"
+  navigation_next: "[Suivant →]"
+  navigation_page_indicator: "[Page {current_page}/{total_pages}]"
+  navigation_filters_button: "[🔍 Filtres]"
+  navigation_adjust_filters: "[🔍 Ajuster les Filtres]"
+
+  # Hover Texts
+  hover_previous_page: "<gradient:#2ecc71:#27ae60>Aller à la page {page}</gradient>"
+  hover_next_page: "<gradient:#2ecc71:#27ae60>Aller à la page {page}</gradient>"
+  hover_filters_menu: "<gradient:#3498db:#2980b9>Ouvrir le menu des filtres</gradient>"
+  hover_adjust_filters: "<gradient:#3498db:#2980b9>Ouvrir le menu des filtres</gradient>"
+  hover_log_details: "<gradient:#9b59b6:#8e44ad>Détails du Journal de Transaction</gradient>\n\n<dark_gray>▪ <gray>ID Journal: <gradient:#ecf0f1:#bdc3c7>{log_id}</gradient></gray>\n<dark_gray>▪ <gray>Type: <gradient:#f39c12:#e67e22>{log_type}</gradient></gray>\n<dark_gray>▪ <gray>Niveau: {level_color}{log_level}</gradient></gray>\n<dark_gray>▪ <gray>Statut: {status}</gray>\n{player_info}{currency_info}{amount_info}<dark_gray>▪ <gray>Horodatage: <gradient:#95a5a6:#7f8c8d>{timestamp}</gradient></gray>\n\n<gradient:#f1c40f:#f39c12>Cliquez</gradient> <dark_gray>»</dark_gray> <gray>Voir tous les détails</gray>"
+  hover_filter_info: "<gradient:#3498db:#2980b9>Information du Filtre</gradient>\n\n<dark_gray>▪ <gray>Type: <white>{filter_type}</white></gray>\n<dark_gray>▪ <gray>Description: <white>{filter_description}</white></gray>\n\n<gradient:#f1c40f:#f39c12>Cliquez</gradient> <dark_gray>»</dark_gray> <gray>Appliquer ce filtre</gray>"
+
+  # Filter Options
+  filter_player_name: "joueur"
+  filter_player_icon: "👤"
+  filter_player_description: "Filtrer par nom de joueur"
+  filter_currency_name: "devise"
+  filter_currency_icon: "💰"
+  filter_currency_description: "Filtrer par type de devise"
+  filter_type_name: "type"
+  filter_type_icon: "📋"
+  filter_type_description: "Filtrer par type de journal"
+  filter_level_name: "niveau"
+  filter_level_icon: "⚠️"
+  filter_level_description: "Filtrer par niveau de gravité"
+  filter_operation_name: "opération"
+  filter_operation_icon: "🔄"
+  filter_operation_description: "Filtrer par type d'opération"
+
+  # Command Usage
+  command_view: "<dark_gray>▪ <gradient:#2ecc71:#27ae60>/pcurrencylog view [page]</gradient> <dark_gray>»</dark_gray> <gray>Voir les journaux de transaction paginés</gray>"
+  command_filter: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog filter <filtre> <valeur></gradient> <dark_gray>»</dark_gray> <gray>Appliquer des filtres à l'affichage des journaux</gray>"
+  command_clear: "<dark_gray>▪ <gradient:#f39c12:#e67e22>/pcurrencylog clear</gradient> <dark_gray>»</dark_gray> <gray>Effacer tous les filtres actifs</gray>"
+  command_stats: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog stats</gradient> <dark_gray>»</dark_gray> <gray>Voir les statistiques et analyses des journaux</gray>"
+  command_export: "<dark_gray>▪ <gradient:#e74c3c:#c0392b>/pcurrencylog export</gradient> <dark_gray>»</dark_gray> <gray>Exporter les journaux vers un fichier (admin uniquement)</gray>"
+  command_help: "<dark_gray>▪ <gradient:#9b59b6:#8e44ad>/pcurrencylog help</gradient> <dark_gray>»</dark_gray> <gray>Afficher les informations d'utilisation des commandes</gray>"
+  command_details: "<dark_gray>▪ <gradient:#3498db:#2980b9>/pcurrencylog details <log_id></gradient> <dark_gray>»</dark_gray> <gray>Inspecter une entrée de journal de transaction spécifique</gray>"
+
+  # Statistics
+  stats_overall_title: "<gradient:#3498db:#2980b9>📈 Statistiques Globales</gradient>"
+  stats_type_title: "<gradient:#f39c12:#e67e22>📋 Distribution par Type de Journal</gradient>"
+  stats_level_title: "<gradient:#e74c3c:#c0392b>⚠️ Distribution par Niveau de Journal</gradient>"
+
+  stats_total_logs: "<dark_gray>▪ <gray>Total des Journaux: <gradient:#f1c40f:#f39c12>{total}</gradient></gray>"
+  stats_successful: "<dark_gray>▪ <gray>Réussis: <gradient:#2ecc71:#27ae60>{successful}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_failed: "<dark_gray>▪ <gray>Échoués: <gradient:#e74c3c:#c0392b>{failed}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_recent_activity: "<dark_gray>▪ <gray>Activité Récente (24h): <gradient:#f39c12:#e67e22>{recent}</gradient></gray>"
+  stats_unique_players: "<dark_gray>▪ <gray>Joueurs Uniques: <gradient:#9b59b6:#8e44ad>{players}</gradient></gray>"
+  stats_total_volume: "<dark_gray>▪ <gray>Volume Total: <gradient:#2ecc71:#27ae60>{volume}</gradient></gray>"
+
+  stats_type_entry: "<dark_gray>▪ <gray>{icon} {type}: <gradient:#ecf0f1:#bdc3c7>{count}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+  stats_level_entry: "<dark_gray>▪ <gray>{color}{level}</gradient>: <gradient:#ecf0f1:#bdc3c7>{count}</gradient> <dark_gray>({percentage}%)</dark_gray></gray>"
+
+  # Status Indicators
+  status_success: "<gradient:#2ecc71:#27ae60>Succès</gradient>"
+  status_failed: "<gradient:#e74c3c:#c0392b>Échoué</gradient>"
+
+  # Log Type Icons
+  icon_transaction: "💰"
+  icon_management: "⚙️"
+  icon_system: "🔧"
+  icon_error: "❌"
+  icon_audit: "📋"
+  icon_debug: "🐛"
+
+  # Log Level Colors
+  color_info: "<gradient:#2ecc71:#27ae60>"
+  color_warning: "<gradient:#f39c12:#e67e22>"
+  color_error: "<gradient:#e74c3c:#c0392b>"
+  color_debug: "<gradient:#3498db:#2980b9>"
+  color_critical: "<gradient:#8e44ad:#9b59b6>"
+
+  # Export File Headers
+  export_header: "EXPORTATION DES JOURNAUX DE TRANSACTIONS JECURRENCY"
+  export_separator: "="
+  export_sub_separator: "-"
+  export_date_label: "Date d'Exportation:"
+  export_user_label: "Exporté par:"
+  export_total_label: "Total des Journaux:"
+  export_footer: "FIN DE L'EXPORTATION"
+
+  # Export Log Entry Labels
+  export_log_id: "ID Journal:"
+  export_timestamp: "Horodatage:"
+  export_type: "Type:"
+  export_level: "Niveau:"
+  export_success: "Succès:"
+  export_player: "Joueur:"
+  export_currency: "Devise:"
+  export_operation: "Opération:"
+  export_amount: "Montant:"
+  export_balance_change: "Changement de Solde:"
+  export_description: "Description:"
+  export_details: "Détails:"
+  export_error: "Erreur:"
+  export_yes: "OUI"
+  export_no: "NON"
+
+  # Additional Hover Information
+  hover_player_info: "<dark_gray>▪ <gray>Joueur: <gradient:#3498db:#2980b9>{player_name}</gradient></gray>\n"
+  hover_currency_info: "<dark_gray>▪ <gray>Devise: <gradient:#f1c40f:#f39c12>{currency_id}</gradient></gray>\n"
+  hover_amount_info: "<dark_gray>▪ <gray>Montant: <gradient:#2ecc71:#27ae60>{amount}</gradient></gray>\n"
+
+  # Filter Descriptions for Active Filters Display
+  filter_desc_player: "Joueur: {player}"
+  filter_desc_currency: "Devise: {currency}"
+  filter_desc_type: "Type: {type}"
+  filter_desc_level: "Niveau: {level}"
+  filter_desc_operation: "Opération: {operation}"

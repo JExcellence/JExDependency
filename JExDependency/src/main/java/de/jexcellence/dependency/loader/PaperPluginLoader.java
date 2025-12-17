@@ -24,7 +24,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -40,6 +43,10 @@ import java.util.zip.ZipException;
 @SuppressWarnings({"unused", "UnstableApiUsage"})
 public class PaperPluginLoader implements PluginLoader {
 
+    /**
+     * Short logger name for clean console output.
+     */
+    private static final String LOGGER_NAME = "JExDependency";
     /**
      * System property controlling whether remapping should run: {@code auto} (default), {@code true}, {@code false}.
      */
@@ -81,9 +88,36 @@ public class PaperPluginLoader implements PluginLoader {
      * Creates the loader with fresh downloader and YAML loader instances.
      */
     public PaperPluginLoader() {
-        this.logger = Logger.getLogger(getClass().getName());
+        this.logger = createLogger();
         this.dependencyDownloader = new DependencyDownloader();
         this.yamlDependencyLoader = new YamlDependencyLoader();
+    }
+
+    /**
+     * Creates a logger with a clean output format (no class/method names).
+     */
+    private static Logger createLogger() {
+        final Logger log = Logger.getLogger(LOGGER_NAME);
+        log.setUseParentHandlers(false);
+        
+        // Remove existing handlers
+        for (var handler : log.getHandlers()) {
+            log.removeHandler(handler);
+        }
+        
+        // Add console handler with simple format
+        final ConsoleHandler handler = new ConsoleHandler();
+        handler.setFormatter(new Formatter() {
+            @Override
+            public String format(final LogRecord record) {
+                return String.format("[%s] %s%n", LOGGER_NAME, record.getMessage());
+            }
+        });
+        handler.setLevel(Level.ALL);
+        log.addHandler(handler);
+        log.setLevel(Level.INFO);
+        
+        return log;
     }
 
     /**
@@ -103,7 +137,7 @@ public class PaperPluginLoader implements PluginLoader {
         final Path remappedDirectory = librariesDirectory.resolve(REMAPPED_DIRECTORY_NAME);
 
         try {
-            logger.info("Initializing plugin classpath with JEDependency system (Paper loader)");
+            logger.info("Loading plugin dependencies...");
 
             ensureDirectoryExists(librariesDirectory);
             warnIfNestedLibraries(librariesDirectory);
@@ -133,10 +167,7 @@ public class PaperPluginLoader implements PluginLoader {
     private void warnIfNestedLibraries(@NotNull final Path librariesDirectory) {
         final Path nested = librariesDirectory.resolve(LIBRARIES_DIRECTORY_NAME);
         if (Files.isDirectory(nested)) {
-            logger.warning("Detected nested libraries directory: " + nested
-                    + " (likely from a previous path bug). Remapper will now target "
-                    + librariesDirectory.resolve(REMAPPED_DIRECTORY_NAME)
-                    + ". You can move any content up and delete the nested folder.");
+            logger.warning("Detected nested libraries folder - please clean up: " + nested);
         }
     }
 
@@ -152,15 +183,15 @@ public class PaperPluginLoader implements PluginLoader {
             }
 
             if (yamlDependencies == null || yamlDependencies.isEmpty()) {
-                logger.info("No dependencies found in YAML configuration");
+                logger.info("No dependencies configured");
                 return;
             }
 
-            logger.info("Found " + yamlDependencies.size() + " dependencies in YAML configuration");
+            logger.info("Found " + yamlDependencies.size() + " dependencies");
             processDependencies(yamlDependencies, librariesDirectory);
 
         } catch (final Exception exception) {
-            logger.log(Level.WARNING, "Failed to load dependencies from YAML configuration", exception);
+            logger.log(Level.WARNING, "Failed to load dependencies", exception);
         }
     }
 
@@ -168,26 +199,45 @@ public class PaperPluginLoader implements PluginLoader {
             @NotNull final List<String> dependencies,
             @NotNull final File librariesDirectory
     ) {
+        final int total = dependencies.size();
+        int completed = 0;
+        int failed = 0;
+        int lastLoggedPercent = 0;
+
         for (final String dependencyString : dependencies) {
             try {
                 final DependencyCoordinate coordinate = DependencyCoordinate.parse(dependencyString);
                 if (coordinate == null) {
-                    logger.warning("Invalid dependency format: " + dependencyString);
+                    logger.warning("Invalid dependency: " + dependencyString);
+                    failed++;
+                    completed++;
                     continue;
                 }
 
-                logger.fine("Processing dependency: " + dependencyString);
-
                 final DownloadResult result = dependencyDownloader.download(coordinate, librariesDirectory);
+                completed++;
+                
                 if (result.success()) {
-                    logger.fine("Successfully processed dependency: " + dependencyString);
+                    final int percent = (completed * 100) / total;
+                    // Log at 25%, 50%, 75%, 100%
+                    if (percent >= lastLoggedPercent + 25 || completed == total) {
+                        logger.info("Downloading dependencies... " + completed + "/" + total + " (" + percent + "%)");
+                        lastLoggedPercent = (percent / 25) * 25;
+                    }
                 } else {
-                    logger.warning("Failed to download dependency: " + dependencyString);
+                    failed++;
+                    logger.warning("Failed to download: " + coordinate.artifactId());
                 }
 
             } catch (final Exception exception) {
-                logger.log(Level.WARNING, "Error processing dependency: " + dependencyString, exception);
+                completed++;
+                failed++;
+                logger.log(Level.FINE, "Error downloading dependency: " + dependencyString, exception);
             }
+        }
+
+        if (failed > 0) {
+            logger.warning("Downloaded " + (total - failed) + "/" + total + " dependencies (" + failed + " failed)");
         }
     }
 
@@ -257,11 +307,11 @@ public class PaperPluginLoader implements PluginLoader {
         final boolean remappingSuccessful = attemptRemapping(librariesDirectory, remappedDirectory);
 
         if (remappingSuccessful) {
-            logger.info("Using remapped libraries from: " + remappedDirectory);
+            logger.fine("Using remapped libraries from: " + remappedDirectory);
             return remappedDirectory;
         }
 
-        logger.warning("Remapping requested but failed, falling back to unremapped libraries");
+        logger.warning("Remapping failed, using original libraries");
         return librariesDirectory;
     }
 
@@ -335,7 +385,7 @@ public class PaperPluginLoader implements PluginLoader {
 
         final int automaticRelocations = applyAutomaticRelocations(remappingManager, inputJars);
         if (automaticRelocations > 0) {
-            logger.info("Applied " + automaticRelocations + " automatic relocation(s) based on detected package roots");
+            logger.fine("Applied " + automaticRelocations + " automatic relocations");
         }
 
         return automaticRelocations;
@@ -412,8 +462,15 @@ public class PaperPluginLoader implements PluginLoader {
 
     private @NotNull Set<String> createExcludedRootsSet() {
         final Set<String> excludes = new HashSet<>(Arrays.asList(
+                // JDK internals
                 "java", "javax", "jakarta", "sun", "com.sun", "jdk",
-                "org.w3c", "org.xml", "org.ietf", "org.hibernate"
+                "org.w3c", "org.xml", "org.ietf",
+                // Hibernate - must not be relocated as it expects original paths
+                "org.hibernate",
+                // Database drivers - Hibernate loads these by class name from config
+                "org.h2", "com.mysql", "org.postgresql", "org.mariadb", "com.microsoft",
+                // Jackson 2.x (com.fasterxml) - compatible with server's bundled version
+                "com.fasterxml"
         ));
 
         final String excludesProperty = System.getProperty(RELOCATIONS_EXCLUDES_PROPERTY);
@@ -512,38 +569,45 @@ public class PaperPluginLoader implements PluginLoader {
             @NotNull final List<Path> inputJars,
             @NotNull final Path outputDirectory
     ) {
+        final int total = inputJars.size();
         int processedCount = 0;
         int remappedCount = 0;
+        int lastLoggedPercent = 0;
 
         for (final Path inputJar : inputJars) {
             final Path outputJar = outputDirectory.resolve(inputJar.getFileName());
 
             if (isRemappedJarUpToDate(outputJar, inputJar)) {
-                logger.fine("Using cached remapped JAR: " + outputJar.getFileName());
+                logger.fine("Using cached: " + outputJar.getFileName());
                 processedCount++;
                 remappedCount++;
-                continue;
+            } else {
+                deleteExistingFile(outputJar);
+
+                if (performRemapping(remappingManager, inputJar, outputJar)) {
+                    processedCount++;
+                    if (isValidJarFile(outputJar)) {
+                        remappedCount++;
+                        logger.fine("Remapped: " + inputJar.getFileName());
+                    } else {
+                        logger.warning("Failed to remap: " + inputJar.getFileName());
+                    }
+                }
             }
 
-            deleteExistingFile(outputJar);
-
-            if (performRemapping(remappingManager, inputJar, outputJar)) {
-                processedCount++;
-                if (isValidJarFile(outputJar)) {
-                    remappedCount++;
-                    logger.fine("Remapped: " + inputJar.getFileName() + " -> " + outputJar.getFileName());
-                } else {
-                    logger.warning("Remapper produced no valid output for: " + inputJar.getFileName());
-                }
+            // Log at 25%, 50%, 75%, 100%
+            final int percent = (processedCount * 100) / total;
+            if (percent >= lastLoggedPercent + 25 || processedCount == total) {
+                logger.info("Remapping libraries... " + processedCount + "/" + total + " (" + percent + "%)");
+                lastLoggedPercent = (percent / 25) * 25;
             }
         }
 
         if (processedCount == 0) {
-            logger.warning("No JARs processed for remapping");
+            logger.warning("No libraries to remap");
             return false;
         }
 
-        logger.info("Remapping complete: " + remappedCount + " of " + processedCount + " JAR(s) available");
         return remappedCount > 0;
     }
 
@@ -585,19 +649,12 @@ public class PaperPluginLoader implements PluginLoader {
             return true;
         } catch (final InvocationTargetException ite) {
             final Throwable cause = ite.getCause() != null ? ite.getCause() : ite;
-            if (cause instanceof ZipException && cause.getMessage() != null
-                    && cause.getMessage().contains("duplicate entry: META-INF/MANIFEST.MF")) {
-                logger.log(Level.WARNING,
-                        "Failed to remap " + inputJar.getFileName()
-                                + " due to duplicate MANIFEST in output. This indicates the remapper is writing the manifest twice. "
-                                + "Please update the remapper to write the manifest once and skip META-INF signature files.",
-                        cause);
-            } else {
-                logger.log(Level.WARNING, "Failed to remap " + inputJar.getFileName(), cause);
-            }
+            logger.warning("Failed to remap: " + inputJar.getFileName());
+            logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), cause);
             return false;
         } catch (final Throwable throwable) {
-            logger.log(Level.WARNING, "Failed to remap " + inputJar.getFileName(), throwable);
+            logger.warning("Failed to remap: " + inputJar.getFileName());
+            logger.log(Level.FINE, "Remap error details for " + inputJar.getFileName(), throwable);
             return false;
         }
     }
@@ -626,16 +683,16 @@ public class PaperPluginLoader implements PluginLoader {
                         try {
                             classpathBuilder.addLibrary(new JarLibrary(jarPath));
                             jarCount.incrementAndGet();
-                            logger.fine("Added JAR to classpath: " + jarPath.getFileName());
+                            logger.fine("Added: " + jarPath.getFileName());
                         } catch (final Exception exception) {
-                            logger.log(Level.WARNING, "Failed to add JAR to classpath: " + jarPath, exception);
+                            logger.log(Level.WARNING, "Failed to load: " + jarPath.getFileName(), exception);
                         }
                     });
 
-            logger.info("Successfully loaded " + jarCount.get() + " JAR files into classpath from " + librariesDirectory);
+            logger.info("Loaded " + jarCount.get() + " libraries");
 
         } catch (final Exception exception) {
-            logger.log(Level.SEVERE, "Failed to load libraries from directory: " + librariesDirectory, exception);
+            logger.log(Level.SEVERE, "Failed to load libraries", exception);
         }
     }
 }

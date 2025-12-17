@@ -2,16 +2,13 @@ package com.raindropcentral.rdq.json;
 
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import tools.jackson.core.JsonParser;
-import tools.jackson.databind.DeserializationContext;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Custom deserializer for Bukkit {@link ItemStack} objects.
@@ -52,14 +49,14 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
     public @NotNull ItemStack deserialize(
             @NotNull final JsonParser jsonParser,
             @NotNull final DeserializationContext deserializationContext
-    ) {
+    ) throws IOException {
         final JsonNode node = jsonParser.readValueAsTree();
 
         if (node.has("serializationType")) {
-            String serializationType = node.get("serializationType").asString();
+            String serializationType = node.get("serializationType").asText();
             
             if ("binary".equals(serializationType) && node.has("binaryData")) {
-                return deserializeFromBinary(node.get("binaryData").asString());
+                return deserializeFromBinary(node.get("binaryData").asText());
             } else if ("map".equals(serializationType) && node.has("mapData")) {
                 return deserializeFromMap(node.get("mapData"));
             }
@@ -97,7 +94,7 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
     private @NotNull ItemStack deserializeFromMap(@NotNull JsonNode mapNode) {
         try {
             Map<String, Object> map = new HashMap<>();
-            mapNode.properties().forEach(entry -> {
+            mapNode.fields().forEachRemaining(entry -> {
                 JsonNode value = entry.getValue();
                 map.put(entry.getKey(), convertJsonNodeToObject(value));
             });
@@ -115,8 +112,8 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
      * @return the converted object
      */
     private Object convertJsonNodeToObject(@NotNull JsonNode node) {
-        if (node.isString()) {
-            return node.asString();
+        if (node.isTextual()) {
+            return node.asText();
         } else if (node.isInt()) {
             return node.asInt();
         } else if (node.isDouble()) {
@@ -129,7 +126,7 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
             return list;
         } else if (node.isObject()) {
             Map<String, Object> map = new HashMap<>();
-            node.properties().forEach(entry -> 
+            node.fields().forEachRemaining(entry ->
                 map.put(entry.getKey(), convertJsonNodeToObject(entry.getValue())));
             return map;
         }
@@ -146,7 +143,7 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
      */
     private @NotNull ItemStack deserializeLegacyFormat(@NotNull JsonNode node) {
         if (node.has("type")) {
-            String typeStr = node.get("type").asString();
+            String typeStr = node.get("type").asText();
             try {
                 org.bukkit.Material material = org.bukkit.Material.valueOf(typeStr);
                 int amount = node.has("amount") ? node.get("amount").asInt(1) : 1;
