@@ -289,14 +289,14 @@ public class BountyCreationView extends BaseView {
 					)
 				);
 				
-				if (foundBounty != null) {
+				if (foundBounty.isPresent()) {
 					context.openForPlayer(
 						BountyPlayerInfoView.class,
 							Map.of(
 									"plugin",
 									rdq.get(context),
 									"bounty",
-									Optional.of(foundBounty),
+									foundBounty,
 									"target",
 									target.get(context),
 									"rewards",

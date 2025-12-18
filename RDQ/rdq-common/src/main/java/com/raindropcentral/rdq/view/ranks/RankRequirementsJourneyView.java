@@ -117,6 +117,25 @@ public class RankRequirementsJourneyView extends BaseView {
         }
     }
 
+    /**
+     * Override back button handling to properly pass all required data to RankPathOverview.
+     */
+    @Override
+    protected void handleBackButtonClick(final @NotNull SlotClickContext clickContext) {
+        try {
+            final Map<String, Object> data = new HashMap<>();
+            data.put("plugin", this.rdq.get(clickContext));
+            data.put("player", this.currentPlayer.get(clickContext));
+            data.put("rankTree", this.selectedRankTree.get(clickContext));
+            data.put("previewMode", this.previewMode.get(clickContext));
+            
+            clickContext.openForPlayer(RankPathOverview.class, data);
+        } catch (final Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to navigate back to RankPathOverview", e);
+            clickContext.closeForPlayer();
+        }
+    }
+
     @Override
     public void onFirstRender(final @NotNull RenderContext render, final @NotNull Player player) {
         try {

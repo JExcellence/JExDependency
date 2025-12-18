@@ -114,6 +114,8 @@ public class RankProgressionManager {
 	
 	/**
 	 * Attempts to redeem a rank that the player has been working on.
+	 * If all requirements are ready to complete (player has the items/met conditions),
+	 * this will auto-complete them and redeem the rank.
 	 */
 	public void attemptRankRedemption(
 		final @NotNull SlotClickContext clickContext,
@@ -128,10 +130,20 @@ public class RankProgressionManager {
 				return;
 			}
 			
-			// Check if all requirements are completed
+			// Check if all requirements are already completed
 			if (this.rankUpgradeProgressService.hasCompletedAllUpgradeRequirements(rdqPlayer, rankNode.rank)) {
 				this.processRankAssignmentWithPlayer(player, rdqPlayer, rankNode.rank, rankNode.rank.getRankTree(), false);
+				return;
+			}
+			
+			// Try to auto-complete all ready requirements
+			final boolean allCompleted = this.attemptAutoCompleteAllRequirements(player, rdqPlayer, rankNode.rank);
+			
+			if (allCompleted) {
+				// All requirements were successfully completed, redeem the rank
+				this.processRankAssignmentWithPlayer(player, rdqPlayer, rankNode.rank, rankNode.rank.getRankTree(), false);
 			} else {
+				// Some requirements are still incomplete
 				this.handleIncompleteRequirements(player, rdqPlayer, rankNode.rank);
 			}
 			
@@ -139,6 +151,87 @@ public class RankProgressionManager {
 			LOGGER.log(Level.SEVERE, "Failed to attempt rank redemption", exception);
 			this.sendErrorMessage(clickContext.getPlayer(), "rank_progression.redemption_failed");
 		}
+	}
+	
+	/**
+	 * Attempts to auto-complete all requirements that are ready to be completed.
+	 * This consumes the required resources and marks requirements as completed.
+	 *
+	 * @return true if all requirements are now completed, false otherwise
+	 */
+	private boolean attemptAutoCompleteAllRequirements(
+		final @NotNull Player player,
+		final @NotNull RDQPlayer rdqPlayer,
+		final @NotNull RRank rank
+	) {
+		try {
+			final Set<RRankUpgradeRequirement> upgradeRequirements = rank.getUpgradeRequirements();
+			
+			if (upgradeRequirements.isEmpty()) {
+				return true;
+			}
+			
+			boolean allCompleted = true;
+			
+			for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
+				// Check if already completed
+				if (this.rankUpgradeProgressService.hasCompletedUpgradeRequirement(rdqPlayer, requirement)) {
+					continue;
+				}
+				
+				// Check if requirement can be completed (player has items/met conditions)
+				final com.raindropcentral.rdq.requirement.AbstractRequirement abstractRequirement = 
+					requirement.getRequirement().getRequirement();
+				
+				if (abstractRequirement.isMet(player)) {
+					// Try to consume resources and complete the requirement
+					try {
+						abstractRequirement.consume(player);
+						
+						// Mark as completed in database
+						final RPlayerRankUpgradeProgress progress = this.getOrCreateProgress(rdqPlayer, requirement);
+						progress.setProgress(1.0);
+						this.rdq.getPlayerRankUpgradeProgressRepository().update(progress);
+						
+						LOGGER.log(Level.INFO, "Auto-completed requirement " + requirement.getId() + 
+						           " for player " + player.getName() + " during rank redemption");
+					} catch (final Exception consumeException) {
+						LOGGER.log(Level.WARNING, "Failed to auto-complete requirement " + requirement.getId(), consumeException);
+						allCompleted = false;
+					}
+				} else {
+					allCompleted = false;
+				}
+			}
+			
+			return allCompleted;
+			
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to auto-complete requirements for rank " + rank.getIdentifier(), exception);
+			return false;
+		}
+	}
+	
+	/**
+	 * Gets or creates a progress entry for a requirement.
+	 */
+	private RPlayerRankUpgradeProgress getOrCreateProgress(
+		final @NotNull RDQPlayer rdqPlayer,
+		final @NotNull RRankUpgradeRequirement requirement
+	) {
+		final List<RPlayerRankUpgradeProgress> progressList = this.rdq.getPlayerRankUpgradeProgressRepository()
+		                                                              .findAllByAttributes(Map.of(
+			                                                              "player.uniqueId", rdqPlayer.getUniqueId(),
+			                                                              "upgradeRequirement.id", requirement.getId()
+		                                                              ));
+		
+		if (!progressList.isEmpty()) {
+			return progressList.get(0);
+		}
+		
+		final RPlayerRankUpgradeProgress newProgress = new RPlayerRankUpgradeProgress(rdqPlayer, requirement);
+		this.rdq.getPlayerRankUpgradeProgressRepository().create(newProgress);
+		return newProgress;
 	}
 	
 	/**

@@ -105,23 +105,71 @@ rank:
   # Warrior Tree Ranks
   warrior:
     recruit:
-      name: "<gradient:#6b7280:#9ca3af>⚔ Recruit</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>Recruit</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>A new warrior beginning their journey</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Learn the basics of combat</gradient>"
     soldier:
-      name: "<gradient:#3b82f6:#60a5fa>⚔ Soldier</gradient>"
+      name: "<gradient:#3b82f6:#60a5fa>Soldier</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Trained in the art of combat</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ready for battle</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>Veteran</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Battle-hardened warrior</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Choose your specialization path</gradient>"
+    # Specialization Branch 1: Berserker (Offensive)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Path of Fury</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Unleash devastating attacks</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sacrifice defense for raw power</gradient>"
+    # Specialization Branch 2: Guardian (Defensive)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>Guardian</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Path of Protection</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Become an unbreakable shield</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Protect your allies at all costs</gradient>"
+    # Specialization Branch 3: Gladiator (Balanced)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Path of Glory</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Master of arena combat</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Balance offense and defense</gradient>"
+    # Final Ranks
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>Warlord of Fury</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Ultimate Berserker</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Unstoppable force of destruction</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Fear incarnate on the battlefield</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>Warlord of the Shield</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Ultimate Guardian</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Immovable object, eternal protector</gradient>"
+        - "<gradient:#6b7280:#9ca3af>None shall pass while you stand</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>Warlord of the Arena</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Ultimate Gladiator</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Champion of champions</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Legend of the arena</gradient>"
+    # Legacy ranks (for backwards compatibility)
     knight:
-      name: "<gradient:#f59e0b:#fbbf24>⚔ Knight</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>Knight</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Honorable warrior of the realm</gradient>"
     champion:
-      name: "<gradient:#a855f7:#c084fc>⚔ Champion</gradient>"
+      name: "<gradient:#a855f7:#c084fc>Champion</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Legendary fighter, feared by all</gradient>"
     warlord:
-      name: "<gradient:#ef4444:#f87171>⚔ Warlord</gradient>"
+      name: "<gradient:#ef4444:#f87171>Warlord</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Master of war, commander of armies</gradient>"
   # Mage Tree Ranks
@@ -1021,16 +1069,20 @@ bounty_player_info_ui:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Target of this bounty</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ More info coming soon...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 View Rewards</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Click to see all rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Total rewards:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Delete Bounty</gradient>"
     lore:
       - "<gradient:#ef4444:#f87171>⚠ Warning: Cannot be undone!</gradient>"
       - "<gradient:#6b7280:#9ca3af>Click to delete this bounty</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Bounty on</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>has been deleted!</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>Are you sure you want to delete this bounty?</gradient>"
 
 # ============================================
 # ADMIN OVERVIEW UI

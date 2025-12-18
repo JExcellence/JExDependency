@@ -1,5 +1,6 @@
 # Warrior Rank Tree
 # The path of strength and combat
+# This tree branches at Veteran into 3 specializations: Berserker, Guardian, or Gladiator
 
 displayOrder: 1
 isEnabled: true
@@ -23,6 +24,9 @@ crossTreeProgression:
   switchingCooldown: 86400
 
 ranks:
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 1 - Starting Rank
+  # ═══════════════════════════════════════════════════════════════
   recruit:
     tier: 1
     weight: 100
@@ -35,6 +39,9 @@ ranks:
       type: "WOODEN_SWORD"
     nextRanks: ["soldier"]
 
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 2 - Basic Warrior
+  # ═══════════════════════════════════════════════════════════════
   soldier:
     tier: 2
     weight: 200
@@ -70,6 +77,9 @@ ranks:
           requiredType: "LEVEL"
           requiredLevel: 10
 
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 3 - Veteran (BRANCHING POINT - Choose 1 of 3 paths)
+  # ═══════════════════════════════════════════════════════════════
   veteran:
     tier: 3
     weight: 300
@@ -80,7 +90,8 @@ ranks:
     icon:
       type: "IRON_SWORD"
     previousRanks: ["soldier"]
-    nextRanks: ["champion"]
+    # BRANCHING: Player can choose between 3 specializations
+    nextRanks: ["berserker", "guardian", "gladiator"]
     requirements:
       veteran_gear:
         icon:
@@ -114,19 +125,101 @@ ranks:
           useTotalPlaytime: true
           requiredPlaytimeSeconds: 21600
 
-  champion:
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 4 - SPECIALIZATION BRANCH 1: Berserker (Offensive)
+  # ═══════════════════════════════════════════════════════════════
+  berserker:
     tier: 4
     weight: 400
-    luckPermsGroup: "warrior_champion"
-    prefixKey: "&8[&bChampion&8]"
+    luckPermsGroup: "warrior_berserker"
+    prefixKey: "&8[&cBerserker&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "NETHERITE_AXE"
+    previousRanks: ["veteran"]
+    nextRanks: ["warlord_fury"]
+    requirements:
+      berserker_gear:
+        icon:
+          type: "NETHERITE_AXE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "DIAMOND_AXE"
+              amount: 1
+            item2:
+              type: "DIAMOND_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "BLAZE_POWDER"
+              amount: 16
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 4 - SPECIALIZATION BRANCH 2: Guardian (Defensive)
+  # ═══════════════════════════════════════════════════════════════
+  guardian:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "warrior_guardian"
+    prefixKey: "&8[&9Guardian&8]"
+    suffixKey: ""
+    isEnabled: true
+    icon:
+      type: "SHIELD"
+    previousRanks: ["veteran"]
+    nextRanks: ["warlord_shield"]
+    requirements:
+      guardian_gear:
+        icon:
+          type: "SHIELD"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "SHIELD"
+              amount: 1
+            item2:
+              type: "DIAMOND_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "DIAMOND_HELMET"
+              amount: 1
+            item4:
+              type: "IRON_BLOCK"
+              amount: 8
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 30
+
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 4 - SPECIALIZATION BRANCH 3: Gladiator (Balanced)
+  # ═══════════════════════════════════════════════════════════════
+  gladiator:
+    tier: 4
+    weight: 400
+    luckPermsGroup: "warrior_gladiator"
+    prefixKey: "&8[&dGladiator&8]"
     suffixKey: ""
     isEnabled: true
     icon:
       type: "DIAMOND_SWORD"
     previousRanks: ["veteran"]
-    nextRanks: ["warlord"]
+    nextRanks: ["warlord_arena"]
     requirements:
-      champion_gear:
+      gladiator_gear:
         icon:
           type: "DIAMOND_SWORD"
         itemRequirement:
@@ -139,14 +232,8 @@ ranks:
               type: "DIAMOND_CHESTPLATE"
               amount: 1
             item3:
-              type: "DIAMOND_HELMET"
-              amount: 1
-            item4:
-              type: "DIAMOND_LEGGINGS"
-              amount: 1
-            item5:
-              type: "DIAMOND_BOOTS"
-              amount: 1
+              type: "GOLDEN_APPLE"
+              amount: 8
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -154,26 +241,99 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 30
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 43200
 
-  warlord:
+  # ═══════════════════════════════════════════════════════════════
+  # TIER 5 - FINAL RANKS (One for each specialization)
+  # ═══════════════════════════════════════════════════════════════
+  warlord_fury:
     tier: 5
     weight: 500
-    luckPermsGroup: "warrior_warlord"
-    prefixKey: "&8[&4Warlord&8]"
+    luckPermsGroup: "warrior_warlord_fury"
+    prefixKey: "&8[&4Warlord of Fury&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHERITE_AXE"
+    previousRanks: ["berserker"]
+    requirements:
+      ultimate_berserker:
+        icon:
+          type: "NETHERITE_AXE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "NETHERITE_AXE"
+              amount: 1
+            item2:
+              type: "NETHERITE_CHESTPLATE"
+              amount: 1
+            item3:
+              type: "NETHER_STAR"
+              amount: 1
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  warlord_shield:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "warrior_warlord_shield"
+    prefixKey: "&8[&1Warlord of the Shield&8]"
+    suffixKey: ""
+    isEnabled: true
+    isFinalRank: true
+    icon:
+      type: "NETHERITE_CHESTPLATE"
+    previousRanks: ["guardian"]
+    requirements:
+      ultimate_guardian:
+        icon:
+          type: "NETHERITE_CHESTPLATE"
+        itemRequirement:
+          consumeOnComplete: true
+          requiredItems:
+            item1:
+              type: "NETHERITE_CHESTPLATE"
+              amount: 1
+            item2:
+              type: "NETHERITE_HELMET"
+              amount: 1
+            item3:
+              type: "NETHERITE_LEGGINGS"
+              amount: 1
+            item4:
+              type: "NETHERITE_BOOTS"
+              amount: 1
+            item5:
+              type: "TOTEM_OF_UNDYING"
+              amount: 2
+      experience_req:
+        icon:
+          type: "EXPERIENCE_BOTTLE"
+        experienceRequirement:
+          consumeOnComplete: true
+          requiredType: "LEVEL"
+          requiredLevel: 45
+
+  warlord_arena:
+    tier: 5
+    weight: 500
+    luckPermsGroup: "warrior_warlord_arena"
+    prefixKey: "&8[&5Warlord of the Arena&8]"
     suffixKey: ""
     isEnabled: true
     isFinalRank: true
     icon:
       type: "NETHERITE_SWORD"
-    previousRanks: ["champion"]
+    previousRanks: ["gladiator"]
     requirements:
-      ultimate_warrior:
+      ultimate_gladiator:
         icon:
           type: "NETHERITE_SWORD"
         itemRequirement:
@@ -186,17 +346,8 @@ ranks:
               type: "NETHERITE_CHESTPLATE"
               amount: 1
             item3:
-              type: "NETHERITE_HELMET"
-              amount: 1
-            item4:
-              type: "NETHERITE_LEGGINGS"
-              amount: 1
-            item5:
-              type: "NETHERITE_BOOTS"
-              amount: 1
-            item6:
-              type: "TOTEM_OF_UNDYING"
-              amount: 2
+              type: "ENCHANTED_GOLDEN_APPLE"
+              amount: 4
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -204,9 +355,3 @@ ranks:
           consumeOnComplete: true
           requiredType: "LEVEL"
           requiredLevel: 45
-      playtime_req:
-        icon:
-          type: "CLOCK"
-        playtimeRequirement:
-          useTotalPlaytime: true
-          requiredPlaytimeSeconds: 162000

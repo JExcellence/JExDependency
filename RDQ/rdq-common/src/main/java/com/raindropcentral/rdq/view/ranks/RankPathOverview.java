@@ -1779,10 +1779,16 @@ public class RankPathOverview extends BaseView {
     ) {
 
         if (clickType == ClickType.LEFT) {
-            this.startRankProgression(
-                    clickContext,
-                    rankNode
-            );
+            // Check if all requirements are already completed - if so, redeem directly
+            final Player player = clickContext.getPlayer();
+            final RDQPlayer rdqPlayer = this.currentPlayer.get(clickContext);
+            final RRank rank = rankNode.rank;
+            
+            if (progressManager != null && progressManager.areAllRequirementsCompleted(player, rdqPlayer, rank)) {
+                this.redeemRank(clickContext, rankNode);
+            } else {
+                this.startRankProgression(clickContext, rankNode);
+            }
         } else if (clickType == ClickType.RIGHT) {
             this.openRankRequirementsView(
                     clickContext,
@@ -1798,7 +1804,11 @@ public class RankPathOverview extends BaseView {
     ) {
 
         if (clickType == ClickType.LEFT) {
-            this.attemptRankRedemption(
+            /*this.attemptRankRedemption(
+                    clickContext,
+                    rankNode
+            );*/
+            this.openRankRequirementsView(
                     clickContext,
                     rankNode
             );
@@ -3185,23 +3195,6 @@ public class RankPathOverview extends BaseView {
                 status,
                 player
         ));
-        lore.add(Component.empty());
-        lore.add(this.i18n(
-                        "rank.tier",
-                        player
-                )
-                .withPlaceholder("tier",
-                        rank.getTier()
-                )
-                .build().component());
-        lore.add(this.i18n(
-                        "rank.weight",
-                        player
-                )
-                .withPlaceholder("weight",
-                        rank.getWeight()
-                )
-                .build().component());
 
         if (!previewMode) {
             lore.add(Component.empty());

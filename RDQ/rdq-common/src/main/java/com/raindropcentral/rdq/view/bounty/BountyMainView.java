@@ -16,141 +16,77 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Main entry point for the Bounty UI in RaindropQuests.
- * <p>
- * This view serves as the primary navigation menu for bounty-related actions, allowing players to:
- * <ul>
- *   <li>View all active bounties</li>
- *   <li>Create a new bounty</li>
- * </ul>
- * The view provides buttons for each action and manages navigation to the corresponding subviews.
- * </p>
- *
- * <p>
- * The view is initialized with a reference to the RDQImpl plugin instance and uses InventoryFramework
- * for GUI management. It leverages the organization's unified item builder and i18n systems for
- * consistent UI and localization.
- * </p>
+ * Main entry point for the Bounty UI.
+ * Compact 3-row layout with view and create buttons.
  *
  * @author JExcellence
- * @version 1.0.0
- * @since TBD
+ * @version 1.1.0
  */
 public class BountyMainView extends BaseView {
-	
-	/**
-	 * The RDQImpl plugin instance, used for accessing repositories and services.
-	 */
-	private final State<RDQ> rdq = initialState("plugin");
-	
-	@Override
-	protected String getKey() {
-		
-		return "bounty_overview_ui";
-	}
-	
-	@Override
-	public void onFirstRender(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	) {
-		
-		this.initializeCreateBountyButton(
-			render,
-			player
-		);
-		this.initializeOverviewButton(
-			render,
-			player
-		);
-	}
-	
-	/**
-	 * Initializes the "View Bounties" button, which navigates to the bounty overview view.
-	 *
-	 * @param render the render context
-	 */
-	private void initializeOverviewButton(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	) {
-		
-		render
-			.slot(
-				10,
-				UnifiedBuilderFactory
-					.item(Material.DIAMOND_SWORD)
-					.setName(
-						this.i18n(
-							"view_bounties.name",
-							player
-						).build().component()
-					)
-					.setLore(
-						this.i18n(
-							"view_bounties.lore",
-							player
-						).build().children()
-					)
-					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-					.build()
-			)
-			.onClick(
-				clickContext -> render.openForPlayer(
-					BountyOverviewView.class,
-					Map.of(
-						"plugin",
-						this.rdq.get(clickContext)
-					)
-				)
-			);
-	}
-	
-	/**
-	 * Initializes the "Create Bounty" button, which navigates to the bounty creation view.
-	 * Passes initial state for target, rewards, and currencies.
-	 *
-	 * @param render the render context
-	 */
-	private void initializeCreateBountyButton(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	) {
-		
-		render.slot(
-			      11,
-			      UnifiedBuilderFactory
-				      .item(Material.EMERALD)
-				      .setName(
-					      this.i18n(
-						      "create_bounty.name",
-						      player
-					      ).build().component()
-				      )
-				      .setLore(
-					      this.i18n(
-						      "create_bounty.lore",
-						      player
-					      ).build().children()
-				      )
-				      .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-				      .build()
-		      )
-		      .onClick(clickContext -> clickContext.openForPlayer(
-			      BountyCreationView.class,
-			      Map.of(
-				      "plugin",
-				      this.rdq.get(render),
-				      "target",
-				      Optional.empty(),
-				      "rewards",
-				      new ArrayList<>(),
-				      "bounty",
-				      Optional.empty(),
-				      "insertedItems",
-				      new HashMap<>()
-			      )
-		      ));
-	}
-	
+
+    private final State<RDQ> rdq = initialState("plugin");
+
+    @Override
+    protected String getKey() {
+        return "bounty_overview_ui";
+    }
+
+    @Override
+    protected String[] getLayout() {
+        return new String[]{
+            "   V C   "
+        };
+    }
+
+    @Override
+    protected int getSize() {
+        return 1;
+    }
+
+    @Override
+    public void onFirstRender(
+        final @NotNull RenderContext render,
+        final @NotNull Player player
+    ) {
+        renderViewBountiesButton(render, player);
+        renderCreateBountyButton(render, player);
+    }
+
+    private void renderViewBountiesButton(
+        final @NotNull RenderContext render,
+        final @NotNull Player player
+    ) {
+        render.layoutSlot('V', UnifiedBuilderFactory
+            .item(Material.DIAMOND_SWORD)
+            .setName(this.i18n("view_bounties.name", player).build().component())
+            .setLore(this.i18n("view_bounties.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build()
+        ).onClick(ctx -> ctx.openForPlayer(
+            BountyOverviewView.class,
+            Map.of("plugin", this.rdq.get(ctx))
+        ));
+    }
+
+    private void renderCreateBountyButton(
+        final @NotNull RenderContext render,
+        final @NotNull Player player
+    ) {
+        render.layoutSlot('C', UnifiedBuilderFactory
+            .item(Material.EMERALD)
+            .setName(this.i18n("create_bounty.name", player).build().component())
+            .setLore(this.i18n("create_bounty.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build()
+        ).onClick(ctx -> ctx.openForPlayer(
+            BountyCreationView.class,
+            Map.of(
+                "plugin", this.rdq.get(render),
+                "target", Optional.empty(),
+                "rewards", new ArrayList<>(),
+                "bounty", Optional.empty(),
+                "insertedItems", new HashMap<>()
+            )
+        ));
+    }
 }

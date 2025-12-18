@@ -121,7 +121,9 @@ public class BountyPlayerJoinListener implements Listener {
             LOGGER.info("Applying visual indicators to " + player.getName() + " (bounty ID: " + bounty.getId() + ")");
             
             // Apply visual indicators multiple times to ensure they stick
-            rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
+            if (rdq.getVisualIndicatorManager() != null) {
+                rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
+            }
             
             // Schedule additional applications to ensure they persist
             Bukkit.getScheduler().runTaskLater(rdq.getPlugin(), () -> {

@@ -261,27 +261,29 @@ public abstract class APaginatedView<T> extends BaseView {
 			currentPage
 		);
 		
+		final int currentPageDisplay = currentPage + 1;
+		final int totalPages = pagination.lastPageIndex() + 1;
+		final int itemsCount = pagination.source() == null ? 0 : pagination.source().size();
+		
+		// Build placeholder map with both naming conventions for compatibility
+		final Map<String, Object> placeholders = new java.util.HashMap<>();
+		placeholders.put("page", currentPageDisplay);
+		placeholders.put("max_page", totalPages);
+		placeholders.put("current_page", currentPageDisplay);
+		placeholders.put("total_pages", totalPages);
+		placeholders.put("first_page", 1);
+		placeholders.put("items_count", itemsCount);
+		
 		render
 			.layoutSlot(this.getPageIndicatorChar(), UnifiedBuilderFactory.item(pageItem)
 			                                       .setName(
                                                            new I18n.Builder("page.name", player)
-                                                                   .withPlaceholder("page", currentPage + 1)
+                                                                   .withPlaceholders(placeholders)
                                                                    .build().component()
 			                                       )
 			                                       .setLore(
                                                            new I18n.Builder("page.lore", player)
-                                                                   .withPlaceholders(Map.of(
-                                                                           "page",
-                                                                           currentPage + 1,
-                                                                           "max_page",
-                                                                           pagination.lastPageIndex() + 1,
-                                                                           "first_page",
-                                                                           1,
-                                                                           "items_count",
-                                                                           pagination.source() == null ?
-                                                                                   0 :
-                                                                                   pagination.source().size()
-                                                                   ))
+                                                                   .withPlaceholders(placeholders)
                                                                    .build().children()
 			                                       )
 			                                       .build())

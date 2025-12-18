@@ -45,9 +45,11 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 	private static final Logger LOGGER = CentralLogger.getLogger(RankRequirementDetailView.class.getName());
 
 	private final State<RDQ>                     rdq               = initialState("plugin");
-	private final State<RDQPlayer>                 currentPlayer     = initialState("player");
-	private final State<RRankTree>               selectedRankTree  = this.initialState("rankTree");
+	private final State<RDQPlayer>               currentPlayer     = initialState("player");
+	private final State<RRankTree>               selectedRankTree  = initialState("rankTree");
+	private final State<com.raindropcentral.rdq.database.entity.rank.RRank> targetRank = initialState("targetRank");
 	private final State<RRankUpgradeRequirement> targetRequirement = initialState("requirement");
+	private final State<Boolean>                 previewMode       = initialState("previewMode");
 
 	private RankRequirementProgressManager progressManager;
 
@@ -280,7 +282,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			render.layoutSlot('T', this.createRequirementTipsItem(player, abstractReq));
 
 			// Render back button
-			render.layoutSlot('b', this.createBackButton(player)).onClick(context -> context.back());
+			render.layoutSlot('b', this.createBackButton(player)).onClick(context -> this.navigateBackToJourneyView(context));
 
 			// Render submit button (S slot) - only for item requirements and not completed
 			if (abstractReq instanceof ItemRequirement itemReq) {
@@ -380,7 +382,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 		
 		if (currentProgress.isCompleted()) {
 			this.i18n("submit.already_completed", player).includePrefix().build().sendMessage();
-			context.back(); // Return to journey view
+			this.navigateBackToJourneyView(context);
 			return;
 		}
 
@@ -395,12 +397,12 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 
 			if (result.isSuccess()) {
 				this.i18n("submit.success", player).includePrefix().build().sendMessage();
-				context.back(); // Return to journey view
+				this.navigateBackToJourneyView(context);
 			} else {
 				// Check if it was already completed (race condition)
 				if (result.getUpdatedProgress().isCompleted()) {
 					this.i18n("submit.already_completed", player).includePrefix().build().sendMessage();
-					context.back();
+					this.navigateBackToJourneyView(context);
 				} else {
 					this.i18n("submit.failed", player).includePrefix().build().sendMessage();
 				}
@@ -408,6 +410,25 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to submit items", exception);
 			this.i18n("submit.error", player).includePrefix().build().sendMessage();
+		}
+	}
+	
+	/**
+	 * Navigates back to the journey view using openForPlayer to avoid back() navigation issues.
+	 */
+	private void navigateBackToJourneyView(final @NotNull Context context) {
+		try {
+			final Map<String, Object> data = new HashMap<>();
+			data.put("plugin", this.rdq.get(context));
+			data.put("player", this.currentPlayer.get(context));
+			data.put("rankTree", this.selectedRankTree.get(context));
+			data.put("targetRank", this.targetRank.get(context));
+			data.put("previewMode", this.previewMode.get(context));
+			
+			context.openForPlayer(RankRequirementsJourneyView.class, data);
+		} catch (final Exception exception) {
+			LOGGER.log(Level.WARNING, "Failed to navigate back to journey view, using fallback", exception);
+			context.back();
 		}
 	}
 

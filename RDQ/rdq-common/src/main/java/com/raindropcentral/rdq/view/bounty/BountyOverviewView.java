@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,120 +20,84 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * View for displaying a paginated overview of all bounties in the system.
- * <p>
- * This view shows a list of all active bounties with player heads and basic information.
- * Players can click on individual bounties to view detailed information.
- * </p>
+ * Compact paginated view for displaying all active bounties.
+ *
+ * @author JExcellence
+ * @version 1.1.0
  */
 public class BountyOverviewView extends APaginatedView<Bounty> {
-	
-	private final State<RDQ> rdq = initialState("plugin");
-	
-	public BountyOverviewView() {
-		
-		super(BountyMainView.class);
-	}
-	
-	@Override
-	protected String getKey() {
-		
-		return "bounty_overview_ui";
-	}
-	
-	@Override
-	protected CompletableFuture<List<Bounty>> getAsyncPaginationSource(
-		final @NotNull Context context
-	) {
-		return rdq.get(context).getBountyRepository().findAllByAttributesAsync(
-			Map.of("active", true)
-		);
-	}
-	
-	@Override
-	protected void renderEntry(
-		final @NotNull Context context,
-		final @NotNull BukkitItemComponentBuilder builder,
-		final int index,
-		final @NotNull Bounty bounty
-	) {
-		
-		var target = Bukkit.getOfflinePlayer(bounty.getTargetUniqueId());
-		var player        = context.getPlayer();
 
-		builder
-			.withItem(
-				UnifiedBuilderFactory
-					.unifiedHead(target)
-					.setDisplayName(
-						(net.kyori.adventure.text.Component) this.i18n(
-							    "bounty.name",
-							    player
-						    )
-						    .withPlaceholder("target_name",
-									target.getName()
-						    )
-						    .build()
-						    .component()
-					)
-					.setLore(
-						this.i18n(
-							    "bounty.lore",
-							    player
-						    )
-						    .withPlaceholders(
-							    Map.of(
-								    "target_name",
-										target.getName(),
-								    "commissioner_name",
-								    Bukkit.getOfflinePlayer(bounty.getCommissionerUniqueId()).getName(),
-								    "created_at",
-								    bounty.getCreatedAt().toLocalTime(),
-								    "index",
-								    index + 1
-							    )
-						    )
-						    .build()
-						    .children()
-					)
-					.build()
-			)
-			.onClick(clickContext -> {
-				clickContext.openForPlayer(
-					BountyPlayerInfoView.class,
-					Map.of(
-						"plugin",
-						this.rdq.get(clickContext),
-						"bounty",
-						Optional.of(bounty),
-						"target",
-						Optional.of(target),
-						"rewards",
-						bounty.getRewards(),
-						"insertedItems",
-						new HashMap<>()
-					)
-				);
-			});
-	}
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm");
 
-	@Override
-	protected @NotNull String[] getLayout() {
-		return new String[]{
-				"         ",
-				" OOOOOOO ",
-				"   <p>   ",
-				"         "
-		};
-	}
-	
-	@Override
-	protected void onPaginatedRender(
-		final @NotNull RenderContext render,
-		final @NotNull Player player
-	) {
-		// No additional rendering required for the bounty overview
-		// All necessary elements are handled by the pagination system
-	}
-	
+    private final State<RDQ> rdq = initialState("plugin");
+
+    public BountyOverviewView() {
+        super(BountyMainView.class);
+    }
+
+    @Override
+    protected String getKey() {
+        return "bounty_overview_ui";
+    }
+
+    @Override
+    protected @NotNull String[] getLayout() {
+        return new String[]{
+            " OOOOOOO ",
+            " OOOOOOO ",
+            "   <p>   "
+        };
+    }
+
+    @Override
+    protected CompletableFuture<List<Bounty>> getAsyncPaginationSource(final @NotNull Context context) {
+        return rdq.get(context).getBountyRepository().findAllByAttributesAsync(
+            Map.of("active", true)
+        );
+    }
+
+    @Override
+    protected void renderEntry(
+        final @NotNull Context context,
+        final @NotNull BukkitItemComponentBuilder builder,
+        final int index,
+        final @NotNull Bounty bounty
+    ) {
+        var target = Bukkit.getOfflinePlayer(bounty.getTargetUniqueId());
+        var commissioner = Bukkit.getOfflinePlayer(bounty.getCommissionerUniqueId());
+        var player = context.getPlayer();
+
+        var targetName = target.getName() != null ? target.getName() : "Unknown";
+        var commissionerName = commissioner.getName() != null ? commissioner.getName() : "Unknown";
+        var createdAt = bounty.getCreatedAt() != null ? bounty.getCreatedAt().format(DATE_FORMAT) : "Unknown";
+
+        builder.withItem(UnifiedBuilderFactory
+            .unifiedHead(target)
+            .setDisplayName((net.kyori.adventure.text.Component) this.i18n("bounty.name", player)
+                .withPlaceholder("target_name", targetName)
+                .build().component())
+            .setLore(this.i18n("bounty.lore", player)
+                .withPlaceholders(Map.of(
+                    "target_name", targetName,
+                    "commissioner_name", commissionerName,
+                    "created_at", createdAt
+                ))
+                .build().children())
+            .build()
+        ).onClick(ctx -> ctx.openForPlayer(
+            BountyPlayerInfoView.class,
+            Map.of(
+                "plugin", this.rdq.get(ctx),
+                "bounty", Optional.of(bounty),
+                "target", Optional.of(target),
+                "rewards", bounty.getRewards(),
+                "insertedItems", new HashMap<>()
+            )
+        ));
+    }
+
+    @Override
+    protected void onPaginatedRender(final @NotNull RenderContext render, final @NotNull Player player) {
+        // Pagination handles everything
+    }
 }
