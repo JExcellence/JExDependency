@@ -14,6 +14,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
@@ -119,6 +122,9 @@ public class PlayerStatisticCollector {
             for (RAbstractStatistic stat : playerStat.getStatistics()) {
                 String key = stat.getIdentifier();
                 Object value = stat.getValue();
+
+                // Normalize value - convert temporal types to epoch millis
+                value = normalizeValue(value);
 
                 // Apply filtering
                 if (!shouldCollect(key)) {

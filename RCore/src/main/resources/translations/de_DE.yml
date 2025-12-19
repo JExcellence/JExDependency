@@ -10,7 +10,7 @@ rcconnect:
     invalid_key: "<red>Ungültiges API-Key Format. API-Keys sollten 32-128 alphanumerische Zeichen haben.</red>"
     uuid_mismatch: "<red>Dieser API-Key gehört zu einem anderen Minecraft-Account.</red>"
     already_connected: "<yellow>Server ist bereits verbunden.</yellow> <gray>Nutze /rcdisconnect zuerst.</gray>"
-    network: "<red>Netzwerkfehler: {error}</red>"
+    network: "<red>Netzwerkfehler: %error%</red>"
 
 rcdisconnect:
   disconnecting: "<yellow>Trenne Verbindung zu RaindropCentral...</yellow>"
@@ -18,7 +18,7 @@ rcdisconnect:
   error:
     not_connected: "<red>Server ist nicht mit RaindropCentral verbunden.</red>"
     failed: "<red>Trennung fehlgeschlagen. Bitte erneut versuchen.</red>"
-    network: "<red>Netzwerkfehler: {error}</red>"
+    network: "<red>Netzwerkfehler: %error%</red>"
 
 general:
   no_permission: "<red>Du hast keine Berechtigung für diesen Befehl.</red>"

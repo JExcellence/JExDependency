@@ -4,4 +4,4 @@
 # Backend URL
 # Leave empty for automatic detection
 # Set to a specific URL to override (e.g., "http://localhost:3000" or "https://raindropcentral.com")
-backendUrl: "http://localhost:5000"
+backendUrl: "https://api.raindropcentral.com"

@@ -1,6 +1,8 @@
 package com.raindropcentral.core.service.central;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.raindropcentral.core.service.statistics.delivery.BatchPayload;
@@ -17,6 +19,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -41,7 +44,45 @@ public class RCentralApiClient {
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
                 .build();
-        this.gson = new Gson();
+        // Configure Gson to handle ISO timestamp strings as longs
+        this.gson = new GsonBuilder()
+                .registerTypeAdapter(long.class, (JsonDeserializer<Long>) (json, type, context) -> {
+                    if (json.isJsonPrimitive()) {
+                        var primitive = json.getAsJsonPrimitive();
+                        if (primitive.isNumber()) {
+                            return primitive.getAsLong();
+                        } else if (primitive.isString()) {
+                            // Try to parse ISO timestamp string
+                            String str = primitive.getAsString();
+                            try {
+                                return Instant.parse(str).toEpochMilli();
+                            } catch (Exception e) {
+                                // Try parsing as plain number string
+                                return Long.parseLong(str);
+                            }
+                        }
+                    }
+                    return json.getAsLong();
+                })
+                .registerTypeAdapter(Long.class, (JsonDeserializer<Long>) (json, type, context) -> {
+                    if (json.isJsonPrimitive()) {
+                        var primitive = json.getAsJsonPrimitive();
+                        if (primitive.isNumber()) {
+                            return primitive.getAsLong();
+                        } else if (primitive.isString()) {
+                            // Try to parse ISO timestamp string
+                            String str = primitive.getAsString();
+                            try {
+                                return Instant.parse(str).toEpochMilli();
+                            } catch (Exception e) {
+                                // Try parsing as plain number string
+                                return Long.parseLong(str);
+                            }
+                        }
+                    }
+                    return json.getAsLong();
+                })
+                .create();
     }
 
     public CompletableFuture<ApiResponse> connectServer(

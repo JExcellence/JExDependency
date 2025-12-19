@@ -27,8 +27,8 @@ public class RCentralService {
     private final FileConfiguration config;
     private final com.raindropcentral.core.config.RCentralConfig rcentralConfig;
     private final RCentralApiClient apiClient;
+    private final UUID serverUuid;
     private RCentralServer serverEntity;
-    private UUID serverUuid;
     private HeartbeatScheduler heartbeatScheduler;
 
     public RCentralService(final @NotNull Plugin plugin) {
@@ -79,7 +79,7 @@ public class RCentralService {
             final @NotNull String playerName
     ) {
         var serverVersion = Bukkit.getVersion();
-        var pluginVersion = plugin.getDescription().getVersion();
+        var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
 
         return apiClient.connectServer(apiKey, serverUuid.toString(), serverVersion, pluginVersion, playerUuid, playerName, maxPlayers)
@@ -194,7 +194,7 @@ public class RCentralService {
         LOGGER.info("Sending wakeup ping to RaindropCentral");
 
         var serverVersion = Bukkit.getVersion();
-        var pluginVersion = plugin.getDescription().getVersion();
+        var pluginVersion = plugin.getPluginMeta().getVersion();
         var maxPlayers = Bukkit.getMaxPlayers();
         
         // Retrieve stored player info from last successful connection
