@@ -319,4 +319,26 @@ public class PlayerStatisticCollector {
             return StatisticDataType.STRING;
         }
     }
+
+    /**
+     * Normalizes a statistic value by converting temporal types to epoch milliseconds.
+     * <p>
+     * This ensures that timestamps are stored as Long values rather than
+     * LocalDateTime or Instant objects, which would be serialized as ISO strings
+     * and cause parsing issues.
+     * </p>
+     *
+     * @param value the value to normalize
+     * @return the normalized value (epoch millis for temporal types, original value otherwise)
+     */
+    private @NotNull Object normalizeValue(final @NotNull Object value) {
+        if (value instanceof LocalDateTime localDateTime) {
+            return localDateTime.toInstant(ZoneOffset.UTC).toEpochMilli();
+        } else if (value instanceof Instant instant) {
+            return instant.toEpochMilli();
+        } else if (value instanceof java.util.Date date) {
+            return date.getTime();
+        }
+        return value;
+    }
 }
