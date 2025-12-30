@@ -1,0 +1,80 @@
+settings:
+  enableRankSystem: true
+  enableFinalRankRules: true
+  enableCrossTreeProgression: true
+  enableProgressTracking: true
+  enableRankBroadcasts: true
+  invertNavigation: false
+
+defaultRank:
+  displayNameKey: "rank.default.name"
+  descriptionKey: "rank.default.lore"
+  tier: -1
+  weight: -1
+  luckPermsGroup: "default"
+  prefixKey: "&8[&7Default&8]"
+  suffixKey: ""
+  isInitialRank: true
+  enabled: true
+  icon:
+    type: "IRON_INGOT"
+    displayNameKey: "rank.icon.default.name"
+    descriptionKey: "rank.icon.default.lore"
+
+finalRankRule:
+  requireAllRankTrees: true
+  minimumRequiredRankTrees: 4
+  minimumRankTierPerRankTree: 5
+  specificRequiredRankTrees: [ "warrior", "cleric", "mage", "rogue", "merchant" ]
+  allowAlternateFinalRank: true
+  enableUltimateRanks: true
+
+progressionRule:
+  requireLinearRankProgression: true
+  allowSkippingRanks: false
+  enableMultipleActiveRankTrees: true
+  maximumActiveRankTrees: 2
+  requireConfirmationForRankUp: true
+  enableCrossRankTreeSwitching: true
+  globalSwitchingTiers: [ 3, 5, 7, 10 ]
+  switchingCooldown: 1728000
+  switchingCost: ""
+
+notification:
+  rankUnlock:
+    isEnabled: true
+    broadcast: false
+    sendToPlayer: true
+    soundType: "ENTITY_PLAYER_LEVELUP"
+    showTitle: true
+    titleTextKey: "rank.notification.unlock.title"
+    subtitleTextKey: "rank.notification.unlock.subtitle"
+    showActionBar: true
+    actionBarTextKey: "rank.notification.unlock.actionbar"
+  rankTreeComplete:
+    isEnabled: true
+    broadcast: true
+    sendToPlayer: true
+    soundType: "UI_TOAST_CHALLENGE_COMPLETE"
+    showTitle: true
+    titleTextKey: "rank.notification.tree_complete.title"
+    subtitleTextKey: "rank.notification.tree_complete.subtitle"
+    showActionBar: false
+  finalRankUnlock:
+    isEnabled: true
+    broadcast: true
+    sendToPlayer: true
+    soundType: "ENTITY_ENDER_DRAGON_DEATH"
+    showTitle: true
+    titleTextKey: "rank.notification.final_unlock.title"
+    subtitleTextKey: "rank.notification.final_unlock.subtitle"
+    showActionBar: true
+    actionBarTextKey: "rank.notification.final_unlock.actionbar"
+  crossRankTreeSwitch:
+    isEnabled: true
+    broadcast: false
+    sendToPlayer: true
+    soundType: "BLOCK_PORTAL_TRAVEL"
+    showTitle: false
+    showActionBar: true
+    actionBarTextKey: "rank.notification.tree_switch.actionbar"

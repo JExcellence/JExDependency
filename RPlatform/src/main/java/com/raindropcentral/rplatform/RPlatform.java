@@ -3,6 +3,7 @@ package com.raindropcentral.rplatform;
 import com.raindropcentral.rplatform.api.PlatformAPI;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.integration.geyser.GeyserService;
 import com.raindropcentral.rplatform.localization.TranslationManager;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.logging.PlatformLogger;
@@ -98,6 +99,11 @@ public class RPlatform {
     private PlaceholderManager placeholderManager;
 
     /**
+     * Service for Geyser/Floodgate integration and Bedrock player detection.
+     */
+    private GeyserService geyserService;
+
+    /**
      * Flag indicating whether premium-only resources were detected on the classpath.
      */
     private boolean premiumVersion;
@@ -143,9 +149,8 @@ public class RPlatform {
             this.initializeDatabaseResources();
 
             translationManager = TranslationManager.builder(plugin)
-                    .defaultLocale("en_US")
+                    .defaultLocale("de_DE").supportedLocales("de_DE", "en_US")
                     .enableMetrics(true)
-                    .entityManagerFactory(entityManagerFactory)
                     .build();
             
             commandUpdater = new CommandUpdater(plugin);
@@ -161,6 +166,22 @@ public class RPlatform {
                     translationManager.getLocaleCount() + " locales");
             });
         });
+    }
+
+    /**
+     * Initializes Geyser/Floodgate integration for Bedrock player detection.
+     * <p>
+     * This method should be called during plugin initialization if Bedrock support is desired.
+     * The service will gracefully handle missing Floodgate installations.
+     * </p>
+     */
+    public void initializeGeyser() {
+        if (geyserService == null) {
+            geyserService = new GeyserService();
+            if (geyserService.isFloodgateAvailable()) {
+                logger.info("Geyser/Floodgate integration initialized");
+            }
+        }
     }
 
     /**
@@ -290,6 +311,15 @@ public class RPlatform {
      */
     public @NotNull TranslationManager getTranslationManager() {
         return translationManager;
+    }
+
+    /**
+     * Retrieves the Geyser service for Bedrock player detection.
+     *
+     * @return the Geyser service, or null if not initialized
+     */
+    public @Nullable GeyserService getGeyserService() {
+        return geyserService;
     }
 
     /**

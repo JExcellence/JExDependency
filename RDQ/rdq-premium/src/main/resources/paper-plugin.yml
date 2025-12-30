@@ -5,6 +5,7 @@ loader: de.jexcellence.dependency.loader.PaperPluginLoader
 api-version: "${apiVersion}"
 description: ${description}
 author: RaindropCentral
+folia-supported: true
 website: https://raindropcentral.com
 dependencies:
   server:

@@ -3,7 +3,6 @@ package com.raindropcentral.rplatform.localization;
 import de.jexcellence.jextranslate.R18nManager;
 import de.jexcellence.jextranslate.config.R18nConfiguration;
 import de.jexcellence.jextranslate.core.TranslationMetrics;
-import jakarta.persistence.EntityManagerFactory;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +32,6 @@ public class TranslationManager {
     private final String[] supportedLocales;
     private final boolean enableMetrics;
     private final boolean enableFileWatcher;
-    private final EntityManagerFactory entityManagerFactory;
     private R18nManager r18n;
 
     /**
@@ -60,7 +58,7 @@ public class TranslationManager {
             final @NotNull String defaultLocale,
             final @NotNull String... supportedLocales
     ) {
-        this(plugin, defaultLocale, false, false, null, supportedLocales);
+        this(plugin, defaultLocale, false, false, supportedLocales);
     }
 
     /**
@@ -70,7 +68,6 @@ public class TranslationManager {
      * @param defaultLocale       the fallback locale code (e.g., "en_US")
      * @param enableMetrics       whether to enable translation metrics
      * @param enableFileWatcher   whether to enable file watcher for hot reload
-     * @param entityManagerFactory optional EMF for database locale storage
      * @param supportedLocales    the supported locale codes
      */
     public TranslationManager(
@@ -78,14 +75,12 @@ public class TranslationManager {
             final @NotNull String defaultLocale,
             final boolean enableMetrics,
             final boolean enableFileWatcher,
-            final @Nullable EntityManagerFactory entityManagerFactory,
             final @NotNull String... supportedLocales
     ) {
         this.plugin = plugin;
         this.defaultLocale = defaultLocale;
         this.enableMetrics = enableMetrics;
         this.enableFileWatcher = enableFileWatcher;
-        this.entityManagerFactory = entityManagerFactory;
         this.supportedLocales = supportedLocales.length > 0 ? supportedLocales : new String[]{defaultLocale};
     }
 
@@ -118,12 +113,6 @@ public class TranslationManager {
                 .translationDirectory("translations")
                 .enableFileWatcher(enableFileWatcher)
                 .configuration(config); // Configuration already has auto-detect enabled
-
-        // Enable database storage if EMF is provided
-        if (entityManagerFactory != null) {
-            builder.entityManagerFactory(entityManagerFactory)
-                   .withDatabaseStorage();
-        }
 
         r18n = builder.build();
 
@@ -264,7 +253,6 @@ public class TranslationManager {
         };
         private boolean enableMetrics = false;
         private boolean enableFileWatcher = false;
-        private EntityManagerFactory entityManagerFactory = null;
 
         public Builder(final @NotNull JavaPlugin plugin) {
             this.plugin = plugin;
@@ -290,18 +278,12 @@ public class TranslationManager {
             return this;
         }
 
-        public Builder entityManagerFactory(final @Nullable EntityManagerFactory emf) {
-            this.entityManagerFactory = emf;
-            return this;
-        }
-
         public TranslationManager build() {
             return new TranslationManager(
                     plugin,
                     defaultLocale,
                     enableMetrics,
                     enableFileWatcher,
-                    entityManagerFactory,
                     supportedLocales
             );
         }

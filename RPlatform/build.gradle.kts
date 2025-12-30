@@ -21,6 +21,7 @@ dependencies {
     
     compileOnly(libs.placeholderapi)
     compileOnly(libs.luckperms.api)
+    compileOnly(libs.floodgate.api)
     compileOnly(libs.folialib)
     compileOnly(libs.bundles.inventory)
     

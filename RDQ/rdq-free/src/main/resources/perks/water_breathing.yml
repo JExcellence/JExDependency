@@ -1,0 +1,23 @@
+# Water Breathing Perk Configuration
+id: water_breathing
+displayNameKey: perk_names.water_breathing
+descriptionKey: perk_descriptions.water_breathing
+category: utility
+iconMaterial: PUFFERFISH
+enabled: true
+
+type: TOGGLEABLE
+cooldownSeconds: 120
+durationSeconds: 300
+
+effect:
+  type: POTION_EFFECT
+  potionType: WATER_BREATHING
+  amplifier: 0
+
+requirements:
+  - type: RANK
+    rankId: ranger_2
+  - type: CURRENCY
+    currency: default
+    amount: 300

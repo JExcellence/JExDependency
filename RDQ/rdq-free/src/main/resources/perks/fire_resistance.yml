@@ -1,0 +1,23 @@
+# Fire Resistance Perk Configuration
+id: fire_resistance
+displayNameKey: perk_names.fire_resistance
+descriptionKey: perk_descriptions.fire_resistance
+category: defense
+iconMaterial: MAGMA_CREAM
+enabled: true
+
+type: TOGGLEABLE
+cooldownSeconds: 300
+durationSeconds: 180
+
+effect:
+  type: POTION_EFFECT
+  potionType: FIRE_RESISTANCE
+  amplifier: 0
+
+requirements:
+  - type: RANK
+    rankId: mage_2
+  - type: CURRENCY
+    currency: default
+    amount: 500

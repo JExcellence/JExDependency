@@ -65,4 +65,5 @@ repositories {
     maven("https://repo.auxilor.io/repository/maven-public/")
     maven("https://repo.tcoded.com/releases")
     maven("https://jitpack.io")
+    maven("https://repo.opencollab.dev/main/") // Geyser/Floodgate repository
 }

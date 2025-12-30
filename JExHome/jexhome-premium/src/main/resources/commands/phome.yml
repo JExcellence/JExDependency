@@ -1,0 +1,26 @@
+commands:
+  phome:
+    name: 'phome'
+    description: 'Teleport to your home'
+    aliases:
+      - h
+      - home
+    usage: 'home [name]'
+    argumentUsages:
+      1$: 'lut["prefix"] & "&7/" & alias & " &c[name]"'
+    errorMessages:
+      malformedEnum$: |
+        lut["prefix"] & "&7The value &c" & value & " &7is not valid"
+      playerNotOnline$: 'lut["prefix"] & "&7The player &c" & value & " &7is &cnot online"'
+      playerUnknown$: 'lut["prefix"] & "&7The player &c" & value & " &7has &cnot played &7on this server before"'
+      internalError$: 'lut["prefix"] & "&4An internal error occurred"'
+      notAConsole$: 'lut["prefix"] & "&cYou can only execute this command in the console"'
+      notAPlayer$: 'lut["prefix"] & "&7This command can only be executed as a &cplayer"'
+    permissions:
+      missingMessage$: 'lut["prefix"] & "&7You lack the permission: &c" & permission'
+      nodes:
+        home: 'jexhome.home'
+        homeOther: 'jexhome.home.other'
+
+lut:
+  prefix: '&8[&dJExHome&8] &7'

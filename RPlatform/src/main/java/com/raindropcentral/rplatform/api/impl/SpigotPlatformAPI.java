@@ -47,6 +47,7 @@ import java.util.UUID;
  * @since 1.0.0
  * @version 1.0.1
  */
+@SuppressWarnings("deprecation")
 public final class SpigotPlatformAPI implements PlatformAPI {
 
     /**

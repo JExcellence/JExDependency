@@ -11,6 +11,7 @@ folialib = "0.5.1"
 placeholderapi = "2.11.6"
 vault = "1.7"
 luckperms = "5.5"
+floodgate = "2.2.3-SNAPSHOT"
 caffeine = "3.2.2"
 inventory-framework = "3.7.1"
 
@@ -54,6 +55,7 @@ folialib = { module = "com.tcoded:FoliaLib", version.ref = "folialib" }
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 vault-api = { module = "com.github.MilkBowl:VaultAPI", version.ref = "vault" }
 luckperms-api = { module = "net.luckperms:api", version.ref = "luckperms" }
+floodgate-api = { module = "org.geysermc.floodgate:api", version.ref = "floodgate" }
 inventory-framework-bukkit = { module = "me.devnatan:inventory-framework-platform-bukkit", version.ref = "inventory-framework" }
 inventory-framework-paper = { module = "me.devnatan:inventory-framework-platform-paper", version.ref = "inventory-framework" }
 inventory-framework-anvil = { module = "me.devnatan:inventory-framework-anvil-input", version.ref = "inventory-framework" }

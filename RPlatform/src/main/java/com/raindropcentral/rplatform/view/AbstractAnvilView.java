@@ -11,6 +11,7 @@ import me.devnatan.inventoryframework.ViewType;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.state.MutableState;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -58,7 +59,7 @@ public abstract class AbstractAnvilView extends View {
   /**
    * State backing the initial input text shown to the player when the view opens.
    */
-  protected final State<String> initialInput = initialState("initialInput");
+  protected final MutableState<String> initialInput = mutableState("");
 
   /**
    * Cached title text used to avoid rebuilding translation output on sequential opens.
@@ -162,6 +163,7 @@ public abstract class AbstractAnvilView extends View {
   
   /**
    * Configures the first slot (input slot).
+   * The item's display name becomes the initial editable text in the anvil.
    *
    * @param render the render context
    * @param player the player
@@ -170,11 +172,22 @@ public abstract class AbstractAnvilView extends View {
       final @NotNull RenderContext render,
       final @NotNull Player player
   ) {
-    ItemStack item = UnifiedBuilderFactory.item(
-            Material.NAME_TAG)
-                                          .setName(this.i18n("input.name", player).build().component())
-                                          .setLore(this.i18n("input.lore", player).build().children())
-                                          .build();
+    // Get the initial input text from state - this becomes the editable text in the anvil
+    String initialText = null;
+    try {
+      initialText = this.initialInput.get(render);
+    } catch (Exception ignored) {
+      // State not set
+    }
+    
+    if (initialText == null || initialText.isEmpty()) {
+      initialText = " "; // Use space if empty to allow editing
+    }
+    
+    ItemStack item = UnifiedBuilderFactory.item(Material.NAME_TAG)
+        .setName(Component.text(initialText))
+        .setLore(this.i18n("input.lore", player).build().children())
+        .build();
     
     render.firstSlot(item);
   }
@@ -256,11 +269,16 @@ public abstract class AbstractAnvilView extends View {
       resultData.put("input", input);
     }
     
-    Object existingData = this.data.get(context);
-    if (
-        existingData instanceof Map<?, ?>
-    ) {
-      resultData.putAll((Map<? extends String, ?>) existingData);
+    // Safely retrieve existing data - may be null if not provided during open
+    try {
+      Object existingData = this.data.get(context);
+      if (
+          existingData instanceof Map<?, ?>
+      ) {
+        resultData.putAll((Map<? extends String, ?>) existingData);
+      }
+    } catch (NullPointerException ignored) {
+      // Data state was not initialized - this is fine, just skip merging
     }
     
     return resultData;
@@ -317,6 +335,12 @@ public abstract class AbstractAnvilView extends View {
   public void onOpen(
       final @NotNull OpenContext open
   ) {
+    // Store the initial input text in state for use during render
+    String initialText = this.getInitialInputText(open);
+    if (initialText != null && !initialText.isEmpty()) {
+      this.initialInput.set(initialText, open);
+    }
+    
     Component titleComponent = this.buildTitle(open);
 
     if (ServerEnvironment.getInstance().isPaper()) {

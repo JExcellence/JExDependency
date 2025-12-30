@@ -1,0 +1,23 @@
+# Haste Perk Configuration
+id: haste
+displayNameKey: perk_names.haste
+descriptionKey: perk_descriptions.haste
+category: utility
+iconMaterial: GOLDEN_PICKAXE
+enabled: true
+
+type: TOGGLEABLE
+cooldownSeconds: 300
+durationSeconds: 120
+
+effect:
+  type: POTION_EFFECT
+  potionType: FAST_DIGGING
+  amplifier: 1
+
+requirements:
+  - type: RANK
+    rankId: merchant_2
+  - type: CURRENCY
+    currency: default
+    amount: 400

@@ -1,0 +1,207 @@
+# RDQ Premium Translation File - English
+# MiniMessage format with gradients and styling
+# Placeholders use %placeholder% format
+
+# Bounty Listener Messages
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>You have an active bounty on your head!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Bounty Value:</gradient> <gradient:#10b981:#34d399>%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Expires at:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Commissioned by:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 BOUNTY CLAIMED! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>You successfully claimed the bounty on</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Your share:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Someone</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>has claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% players</gradient> <gradient:#a855f7:#c084fc>have claimed the bounty on</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+
+# Bounty Main View
+bounty_main_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Bounty System</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Create Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to create a new bounty</gradient>"
+      - "<gradient:#6b7280:#9ca3af>on another player</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 View Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View all active bounties</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 My Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View bounties you've created</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Leaderboard</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Top bounty hunters</gradient>"
+
+# Bounty Creation View
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Create Bounty</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Target: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to select a different target</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Rewards (%count%)</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to add/modify rewards</gradient>"
+  currency_rewards:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Currency Rewards (%count%)</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to add currency rewards</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Create Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to create the bounty</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to cancel creation</gradient>"
+  errors:
+    no_target: "<gradient:#ef4444:#f87171>❌ Please select a target first!</gradient>"
+    no_rewards: "<gradient:#ef4444:#f87171>❌ Please add at least one reward!</gradient>"
+    creation_failed: "<gradient:#ef4444:#f87171>❌ Failed to create bounty. Please try again.</gradient>"
+  success:
+    created: "<gradient:#10b981:#34d399>✅ Bounty created successfully!</gradient>"
+
+# Bounty Reward View
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Bounty Rewards</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 No Rewards</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Add items to create rewards</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Add Item</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Place items here to add as rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Right-click to remove items</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Bounty Reward</gradient>"
+      - "<gradient:#6b7280:#9ca3af>This item will be given to</gradient>"
+      - "<gradient:#6b7280:#9ca3af>whoever claims the bounty</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ No new items were added!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Some items were dropped as your inventory was full!</gradient>"
+
+# Bounty Player Info View
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>👤 Player Bounty Info</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Target player information</gradient>"
+  bounty_value:
+    name: "<gradient:#10b981:#34d399>💰 Total Value</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>%bounty_value%</gradient>"
+  rewards:
+    name: "<gradient:#a855f7:#c084fc>🎁 View Rewards</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to see all rewards</gradient>"
+  claim_bounty:
+    name: "<gradient:#ef4444:#f87171>⚔ Claim Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Defeat this player to claim</gradient>"
+      - "<gradient:#6b7280:#9ca3af>the bounty rewards</gradient>"
+
+# Bounty Overview View (used by both BountyMainView and BountyOverviewView)
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Active Bounties</gradient>"
+  # Keys from BountyMainView
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 View Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>View all active bounties</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Click to browse available targets</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Create Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to create a new bounty</gradient>"
+      - "<gradient:#6b7280:#9ca3af>on another player</gradient>"
+  # Keys from BountyOverviewView
+  bounty:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bounty Target: %target_name%</gradient>"
+      - "<gradient:#10b981:#34d399>💰 Value: %bounty_value%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Click for more information</gradient>"
+  no_bounties:
+    name: "<gradient:#6b7280:#9ca3af>📭 No Active Bounties</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>There are currently no</gradient>"
+      - "<gradient:#6b7280:#9ca3af>active bounties available</gradient>"
+
+# Paginated Player View
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Select Player</gradient>"
+  search:
+    name: "<gradient:#3b82f6:#60a5fa>🔍 Search Players</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to search for a player</gradient>"
+  player_item:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to select this player</gradient>"
+
+# Admin Views
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ Admin Overview</gradient>"
+
+admin_permissions_ui:
+  title: "<gradient:#ef4444:#f87171>🔐 Admin Permissions</gradient>"
+
+# Confirmation View
+confirmation_ui:
+  title: "<gradient:#f59e0b:#fbbf24>❓ Confirm Action</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Confirm</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to confirm this action</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Cancel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to cancel this action</gradient>"
+
+# General UI Elements
+ui:
+  back:
+    name: "<gradient:#6b7280:#9ca3af>← Back</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Return to previous menu</gradient>"
+  next_page:
+    name: "<gradient:#3b82f6:#60a5fa>→ Next Page</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Go to next page</gradient>"
+  previous_page:
+    name: "<gradient:#3b82f6:#60a5fa>← Previous Page</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Go to previous page</gradient>"
+  close:
+    name: "<gradient:#ef4444:#f87171>✖ Close</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Close this menu</gradient>"
+
+# Error Messages
+errors:
+  permission_denied: "<gradient:#ef4444:#f87171>❌ You don't have permission to do that!</gradient>"
+  player_not_found: "<gradient:#ef4444:#f87171>❌ Player not found!</gradient>"
+  bounty_not_found: "<gradient:#ef4444:#f87171>❌ Bounty not found!</gradient>"
+  insufficient_funds: "<gradient:#ef4444:#f87171>❌ Insufficient funds!</gradient>"
+  max_bounties_reached: "<gradient:#ef4444:#f87171>❌ You have reached the maximum number of bounties!</gradient>"
+  cannot_target_self: "<gradient:#ef4444:#f87171>❌ You cannot place a bounty on yourself!</gradient>"
+  target_has_bounty: "<gradient:#ef4444:#f87171>❌ This player already has a bounty!</gradient>"
+
+# Success Messages
+success:
+  bounty_created: "<gradient:#10b981:#34d399>✅ Bounty created successfully!</gradient>"
+  bounty_updated: "<gradient:#10b981:#34d399>✅ Bounty updated successfully!</gradient>"
+  bounty_deleted: "<gradient:#10b981:#34d399>✅ Bounty deleted successfully!</gradient>"
+  reward_added: "<gradient:#10b981:#34d399>✅ Reward added successfully!</gradient>"
+
+# Prefix
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "

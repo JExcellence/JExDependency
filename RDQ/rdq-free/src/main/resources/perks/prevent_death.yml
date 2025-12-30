@@ -1,0 +1,23 @@
+# Death Prevention Perk Configuration
+id: prevent_death
+displayNameKey: perk_names.prevent_death
+descriptionKey: perk_descriptions.prevent_death
+category: defense
+iconMaterial: TOTEM_OF_UNDYING
+enabled: true
+
+type: EVENT_BASED
+eventType: PLAYER_DEATH
+cooldownSeconds: 3600
+durationSeconds: 0
+
+effect:
+  type: DEATH_PREVENTION
+  healthOnSave: 4
+
+requirements:
+  - type: RANK
+    rankId: cleric_4
+  - type: CURRENCY
+    currency: default
+    amount: 15000

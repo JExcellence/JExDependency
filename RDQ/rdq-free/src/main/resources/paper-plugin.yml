@@ -6,6 +6,7 @@ api-version: "${apiVersion}"
 description: ${description}
 author: RaindropCentral
 website: https://raindropcentral.com
+folia-supported: true
 dependencies:
   server:
     Vault:
