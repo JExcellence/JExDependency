@@ -1,9 +1,9 @@
 package com.raindropcentral.core.service.central;
 
+import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
@@ -19,22 +19,24 @@ public class HeartbeatScheduler {
     private static final int MAX_RETRY_ATTEMPTS = 3;
     
     private final Plugin plugin;
+    private final RPlatform platform;
     private final RCentralApiClient apiClient;
     private final MetricsCollector metricsCollector;
     private final String apiKey;
     private final boolean sharePlayerList;
     
-    private BukkitTask heartbeatTask;
     private int consecutiveFailures = 0;
     private boolean isRunning = false;
 
     public HeartbeatScheduler(
         final @NotNull Plugin plugin,
+        final @NotNull RPlatform platform,
         final @NotNull RCentralApiClient apiClient,
         final @NotNull String apiKey,
         final boolean sharePlayerList
     ) {
         this.plugin = plugin;
+        this.platform = platform;
         this.apiClient = apiClient;
         this.apiKey = apiKey;
         this.sharePlayerList = sharePlayerList;
@@ -52,8 +54,7 @@ public class HeartbeatScheduler {
 
         LOGGER.info("Starting heartbeat scheduler (interval: 5 minutes)");
         
-        heartbeatTask = Bukkit.getScheduler().runTaskTimerAsynchronously(
-            plugin,
+        platform.getScheduler().runRepeating(
             this::sendHeartbeat,
             HEARTBEAT_INTERVAL_TICKS, // Initial delay
             HEARTBEAT_INTERVAL_TICKS  // Period
@@ -71,11 +72,6 @@ public class HeartbeatScheduler {
         }
 
         LOGGER.info("Stopping heartbeat scheduler");
-        
-        if (heartbeatTask != null) {
-            heartbeatTask.cancel();
-            heartbeatTask = null;
-        }
         
         isRunning = false;
         consecutiveFailures = 0;
@@ -124,7 +120,7 @@ public class HeartbeatScheduler {
             stop();
             
             // Notify online operators
-            Bukkit.getScheduler().runTask(plugin, () -> {
+            platform.getScheduler().runSync(() -> {
                 Bukkit.getOnlinePlayers().stream()
                     .filter(p -> p.hasPermission("rcore.central.admin"))
                     .forEach(p -> p.sendMessage(

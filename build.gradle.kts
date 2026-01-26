@@ -56,7 +56,7 @@ tasks.register("buildAll") {
     
     dependsOn(
         ":publishDependencies",
-        ":RDQ:buildAll"
+        ":RDQ:buildAll",
     )
     
     // Enforce build order
@@ -106,7 +106,7 @@ tasks.register("cleanAll") {
         ":JExTranslate:clean",
         ":RPlatform:clean",
         ":RCore:clean",
-        ":RDQ:clean"
+        ":RDQ:clean",
     )
 }
 

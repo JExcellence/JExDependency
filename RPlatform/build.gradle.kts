@@ -18,6 +18,14 @@ dependencies {
     
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
+
+    compileOnly(libs.caffeine)
+    compileOnly(libs.jackson.core)
+    compileOnly(libs.jackson.databind)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jackson.jsr310)
+    compileOnly(libs.java.uuid)
+    compileOnly(libs.xseries)
     
     compileOnly(libs.placeholderapi)
     compileOnly(libs.luckperms.api)

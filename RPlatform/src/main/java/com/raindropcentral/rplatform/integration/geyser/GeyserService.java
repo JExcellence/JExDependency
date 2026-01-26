@@ -162,9 +162,6 @@ public class GeyserService {
      * @return true if the player is a Bedrock player, false otherwise
      */
     public boolean isBedrockPlayer(@NotNull Player player) {
-        if (player == null) {
-            return false;
-        }
         return isBedrockPlayer(player.getUniqueId());
     }
 
@@ -175,9 +172,6 @@ public class GeyserService {
      * @return true if the UUID belongs to a Bedrock player, false otherwise
      */
     public boolean isBedrockPlayer(@NotNull UUID uuid) {
-        if (uuid == null) {
-            return false;
-        }
 
         // Try Floodgate API first
         FloodgateAdapter adapter = floodgateAdapter.get();
@@ -220,9 +214,6 @@ public class GeyserService {
      */
     @Nullable
     public String getBedrockUsername(@NotNull UUID uuid) {
-        if (uuid == null) {
-            return null;
-        }
 
         FloodgateAdapter adapter = floodgateAdapter.get();
         if (floodgateAvailable.get() && adapter != null) {

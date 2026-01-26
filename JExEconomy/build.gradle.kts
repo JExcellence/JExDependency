@@ -1,6 +1,7 @@
 plugins {
     `maven-publish`
-    base
+    id("raindrop.shadow-conventions")
+    id("raindrop.dependencies-yml")
 }
 
 group = "de.jexcellence.economy"

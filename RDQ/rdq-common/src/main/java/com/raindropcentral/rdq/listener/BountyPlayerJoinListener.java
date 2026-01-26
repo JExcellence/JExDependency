@@ -45,7 +45,7 @@ public class BountyPlayerJoinListener implements Listener {
                 LOGGER.info("Found active bounty immediately for " + player.getName() + " (ID: " + bounty.getId() + ")");
                 
                 // Apply visual indicators immediately
-                Bukkit.getScheduler().runTaskLater(rdq.getPlugin(), () -> {
+                rdq.getPlatform().getScheduler().runDelayed(() -> {
                     if (player.isOnline()) {
                         applyVisualIndicators(player, bounty);
                         notifyPlayerOfBounty(player, bounty);
@@ -72,7 +72,7 @@ public class BountyPlayerJoinListener implements Listener {
         
         long delay = 40L * (attempt + 1); // 2, 4, 6 second delays
         
-        Bukkit.getScheduler().runTaskLater(rdq.getPlugin(), () -> {
+        rdq.getPlatform().getScheduler().runDelayed(() -> {
             if (!player.isOnline()) {
                 return;
             }
@@ -95,7 +95,7 @@ public class BountyPlayerJoinListener implements Listener {
                 LOGGER.info("Active bounty found for player: " + player.getName() + " (ID: " + bounty.getId() + ") on async attempt " + (attempt + 1));
 
                 // Apply visual indicators on main thread
-                Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+                rdq.getPlatform().getScheduler().runSync(() -> {
                     if (player.isOnline()) {
                         applyVisualIndicators(player, bounty);
                         
@@ -126,14 +126,14 @@ public class BountyPlayerJoinListener implements Listener {
             }
             
             // Schedule additional applications to ensure they persist
-            Bukkit.getScheduler().runTaskLater(rdq.getPlugin(), () -> {
+            rdq.getPlatform().getScheduler().runDelayed(() -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
                     LOGGER.info("Reapplied visual indicators to " + player.getName() + " (second attempt)");
                 }
             }, 40L); // 2 seconds later
             
-            Bukkit.getScheduler().runTaskLater(rdq.getPlugin(), () -> {
+            rdq.getPlatform().getScheduler().runDelayed(() -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
                     LOGGER.info("Reapplied visual indicators to " + player.getName() + " (third attempt)");

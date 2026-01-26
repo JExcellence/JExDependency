@@ -54,7 +54,7 @@ public class BountyPlayerDeathListener implements Listener {
             rdq.getVisualIndicatorManager().removeIndicators(victimUuid);
             
             // Announce the claim
-            Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+            rdq.getPlatform().getScheduler().runSync(() -> {
                 announceClaimToWinners(claimResult, victim);
                 announceClaimToBroadcast(claimResult, victim);
             });

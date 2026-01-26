@@ -105,13 +105,7 @@ public class CentralLogger {
 
             INITIALIZED = true;
 
-            // Optional startup line (goes straight to original to avoid loops)
-            ORIGINAL_OUT.println("[INIT] CentralLogger initialized - Console: " + CONSOLE_LOGGING_ENABLED
-                    + ", ConsoleLevel: " + CONSOLE_LEVEL + ", FileLevel: " + FILE_LEVEL
-                    + ", Debug: " + DEBUG_MODE);
-
         } catch (final Exception e) {
-            // Fail safe: print to original streams to avoid loops
             if (ORIGINAL_ERR != null) {
                 e.printStackTrace(ORIGINAL_ERR);
             } else {

@@ -1,7 +1,7 @@
 name: "RDQ"
 version: ${version}
 main: com.raindropcentral.rdq.RDQPremium
-api-version: ${apiVersion}
+api-version: '1.19'
 description: ${description}
 author: RaindropCentral
 website: https://raindropcentral.com

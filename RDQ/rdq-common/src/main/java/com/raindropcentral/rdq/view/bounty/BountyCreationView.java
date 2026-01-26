@@ -391,7 +391,7 @@ public class BountyCreationView extends BaseView {
 						bounty -> {
 							if (bounty != null) {
 								// Update existing bounty with new reward
-								Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+								rdq.getPlatform().getScheduler().runSync(() -> {
 									LOGGER.info("=== BOUNTY UPDATE START ===");
 									LOGGER.info("Found existing bounty with " + bounty.getRewards().size() + " rewards");
 									LOGGER.info("UI rewards list has " + this.rewards.get(clickContext).size() + " rewards");
@@ -435,7 +435,7 @@ public class BountyCreationView extends BaseView {
 												LOGGER.info("AddRewardsToBounty completed successfully for " + target.get().getName());
 
 												// Always run on main thread
-												Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+												rdq.getPlatform().getScheduler().runSync(() -> {
 													LOGGER.info("Running success callback on main thread for " + player.getName());
 
 													// Apply visual indicators to the target player if they're online
@@ -462,7 +462,7 @@ public class BountyCreationView extends BaseView {
 												LOGGER.log(Level.SEVERE, "Failed to add rewards to bounty for " + target.get().getName(), throwable);
 
 												// Send error message on main thread
-												Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+												rdq.getPlatform().getScheduler().runSync(() -> {
 													this.i18n(
 															"bounty_creation.confirm.error",
 															player
@@ -483,7 +483,7 @@ public class BountyCreationView extends BaseView {
 												this.mergeSimilarRewardItems(this.rewards.get(clickContext))
 										)
 										.thenAccept(createdBounty -> {
-											Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+											rdq.getPlatform().getScheduler().runSync(() -> {
 												Player targetPlayer = Bukkit.getPlayer(target.get().getUniqueId());
 												if (targetPlayer != null && targetPlayer.isOnline()) {
 													rdq.getVisualIndicatorManager().applyIndicators(targetPlayer);
@@ -526,7 +526,7 @@ public class BountyCreationView extends BaseView {
 							Level.WARNING,
 							"Error occurred when trying to search for an existing bounty: " + throwable.getMessage()
 						);
-						Bukkit.getScheduler().runTask(rdq.getPlugin(), clickContext::closeForPlayer);
+						rdq.getPlatform().getScheduler().runSync(clickContext::closeForPlayer);
 						return null;
 					});
 			})

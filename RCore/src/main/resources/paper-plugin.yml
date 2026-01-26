@@ -2,10 +2,11 @@ name: ${name}
 main: com.raindropcentral.core.RCore
 loader: de.jexcellence.dependency.loader.PaperPluginLoader
 version: ${version}
-api-version: "${apiVersion}"
+api-version: '1.19'
 description: RCore
 authors: [ ItsRainingHP, JExcellence ]
 website: https://www.raindropcentral.com
+folia-supported: true
 softdepend:
   - JExEconomy
   - LuckPerms
