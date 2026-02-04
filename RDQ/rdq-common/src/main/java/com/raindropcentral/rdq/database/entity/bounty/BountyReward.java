@@ -2,8 +2,8 @@ package com.raindropcentral.rdq.database.entity.bounty;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
-import com.raindropcentral.rdq.database.converter.RewardConverter;
-import com.raindropcentral.rdq.reward.AbstractReward;
+import com.raindropcentral.rplatform.database.converter.RewardConverter;
+import com.raindropcentral.rplatform.reward.AbstractReward;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;

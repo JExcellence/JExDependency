@@ -13,6 +13,7 @@ import com.raindropcentral.rdq.bounty.type.EDistributionMode;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import de.jexcellence.evaluable.ConfigKeeper;
 import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
@@ -501,15 +502,15 @@ public class BountyFactory {
             return false;
         }
         
-        // Must be the same reward type
-        if (!existing.getReward().getType().equals(newReward.getReward().getType())) {
+        // Must be the same reward type (use instanceof)
+        if (!existing.getReward().getClass().equals(newReward.getReward().getClass())) {
             return false;
         }
         
         // For item rewards, must be similar items AND stackable
-        if (existing.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
-            com.raindropcentral.rdq.reward.ItemReward existingItem = (com.raindropcentral.rdq.reward.ItemReward) existing.getReward();
-            com.raindropcentral.rdq.reward.ItemReward newItem = (com.raindropcentral.rdq.reward.ItemReward) newReward.getReward();
+        if (existing.getReward() instanceof ItemReward) {
+            ItemReward existingItem = (ItemReward) existing.getReward();
+            ItemReward newItem = (ItemReward) newReward.getReward();
             
             // Check if items are similar
             if (!existingItem.getItem().isSimilar(newItem.getItem())) {
@@ -534,21 +535,20 @@ public class BountyFactory {
      * Merges a new reward into an existing reward.
      */
     private void mergeRewards(BountyReward existing, BountyReward newReward) {
-        if (existing.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
+        if (existing.getReward() instanceof ItemReward) {
             // Merge item amounts
-            com.raindropcentral.rdq.reward.ItemReward existingItem = (com.raindropcentral.rdq.reward.ItemReward) existing.getReward();
-            com.raindropcentral.rdq.reward.ItemReward newItem = (com.raindropcentral.rdq.reward.ItemReward) newReward.getReward();
+            ItemReward existingItem = (ItemReward) existing.getReward();
+            ItemReward newItem = (ItemReward) newReward.getReward();
             
-            int existingAmount = existingItem.getAmount();
-            int newAmount = newItem.getAmount();
+            int existingAmount = existingItem.getItem().getAmount();
+            int newAmount = newItem.getItem().getAmount();
             int totalAmount = existingAmount + newAmount;
             
             LOGGER.info("Merging items: " + existingAmount + " (existing) + " + newAmount + " (new) = " + totalAmount + " (total)");
             
-            // For bounty rewards, we don't limit by max stack size since they're stored as database entities
-            // Players should be able to add unlimited amounts to bounties
-            existingItem.setAmount(totalAmount);
-            LOGGER.info("Final merged amount: " + existingItem.getAmount());
+            // Update the ItemStack amount
+            existingItem.getItem().setAmount(totalAmount);
+            LOGGER.info("Final merged amount: " + existingItem.getItem().getAmount());
         } else {
             // For other reward types, add estimated values
             existing.setEstimatedValue(existing.getEstimatedValue() + newReward.getEstimatedValue());

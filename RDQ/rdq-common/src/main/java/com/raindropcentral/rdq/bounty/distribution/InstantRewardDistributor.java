@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.bounty.distribution;
 
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
-import com.raindropcentral.rdq.reward.ItemReward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -44,7 +44,7 @@ public class InstantRewardDistributor implements RewardDistributor {
         List<ItemStack> excessItems = new ArrayList<>();
 
         for (BountyReward reward : bounty.getRewards()) {
-            if (reward.getReward().getType() != com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
+            if (!(reward.getReward() instanceof ItemReward)) {
                 continue;
             }
 

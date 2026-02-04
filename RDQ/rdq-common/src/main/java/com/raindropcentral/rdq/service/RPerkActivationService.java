@@ -587,8 +587,7 @@ public class RPerkActivationService {
         
         final Long durationSeconds = playerPerk.getPerk().getPerkSection().getPermissionDurations().getEffectiveDuration(Bukkit.getPlayer(playerPerk.getPlayer().getUniqueId()));
         if (durationSeconds != null && durationSeconds > 0) {
-            Bukkit.getScheduler().runTaskLater(
-                this.rdq.getImpl(),
+            rdq.getPlatform().getScheduler().runDelayed(
                 () -> deactivatePerk(playerPerk),
                 durationSeconds * 20L
             );

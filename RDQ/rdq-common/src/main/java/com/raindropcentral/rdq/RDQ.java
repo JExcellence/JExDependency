@@ -4,11 +4,11 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import com.raindropcentral.rdq.bounty.visual.VisualIndicatorManager;
-import com.raindropcentral.rdq.database.entity.RRequirement;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
+import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.permissions.PermissionsService;
 import com.raindropcentral.rdq.rank.IRankSystemService;
@@ -17,6 +17,7 @@ import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
 import com.raindropcentral.rdq.view.bounty.*;
+import com.raindropcentral.rdq.view.main.MainOverviewView;
 import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
@@ -82,6 +83,9 @@ public abstract class RDQ {
 
 	@InjectRepository
 	private RRankTreeRepository rankTreeRepository;
+	
+	@InjectRepository
+	private RRankRewardRepository rankRewardRepository;
 
 	@InjectRepository
 	private RRequirementRepository requirementRepository;
@@ -121,6 +125,12 @@ public abstract class RDQ {
 					initializeViews();
 					platform.initializeMetrics(getMetricsId());
 
+					// Initialize RDQ requirement system integration
+					com.raindropcentral.rdq.requirement.RDQRequirementSetup.initialize();
+					
+					// Initialize RDQ reward system integration
+					com.raindropcentral.rdq.reward.RDQRewardSetup.initialize();
+
 					rankPathService = new RankPathService(this);
 					permissionsService = new PermissionsService(this);
 
@@ -130,9 +140,7 @@ public abstract class RDQ {
 					rankSystemService = createRankSystemService();
 					rankSystemFactory = new RankSystemFactory(this);
 					this.rankSystemFactory.initialize();
-					LOGGER.log(Level.INFO, "Rank system initialized");
-					
-					// Initialize visual indicator manager
+
 					visualIndicatorManager = new VisualIndicatorManager(this);
 
 					LOGGER.info(getStartupMessage());
@@ -177,7 +185,8 @@ public abstract class RDQ {
 		repositoryManager.register(RPlayerRankUpgradeProgressRepository.class, RPlayerRankUpgradeProgress.class, RPlayerRankUpgradeProgress::getId);
 		repositoryManager.register(RRankRepository.class, RRank.class, RRank::getIdentifier);
 		repositoryManager.register(RRankTreeRepository.class, RRankTree.class, RRankTree::getIdentifier);
-		repositoryManager.register(RRequirementRepository.class, RRequirement.class, RRequirement::getId);
+		repositoryManager.register(RRankRewardRepository.class, RRankReward.class, RRankReward::getId);
+		repositoryManager.register(RRequirementRepository.class, BaseRequirement.class, BaseRequirement::getId);
 
 		repositoryManager.injectInto(this);
 	}
@@ -218,7 +227,8 @@ public abstract class RDQ {
 						new RankRequirementDetailView(),
 						new RankPathOverview(),
 						new RankPathRankRequirementOverview(),
-						new RankRequirementsJourneyView()
+						new RankRequirementsJourneyView(),
+						new MainOverviewView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();

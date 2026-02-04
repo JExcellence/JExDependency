@@ -7,9 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
@@ -41,12 +39,6 @@ public class VisualIndicatorManager {
 
     // Track players with active indicators
     private final Map<UUID, PlayerIndicatorState> activeIndicators = new ConcurrentHashMap<>();
-
-    // Particle task
-    private @Nullable BukkitTask particleTask;
-    
-    // Periodic refresh task
-    private @Nullable BukkitTask refreshTask;
 
     /**
      * Creates a new VisualIndicatorManager with default configuration.
@@ -220,12 +212,7 @@ public class VisualIndicatorManager {
      * - 14.3: Spawn particles around players with active bounties at configured interval
      */
     private void startParticleTask() {
-        if (particleTask != null) {
-            particleTask.cancel();
-        }
-
-        particleTask = Bukkit.getScheduler().runTaskTimer(
-                rdq.getPlugin(),
+        rdq.getPlatform().getScheduler().runRepeating(
                 this::spawnParticles,
                 particleIntervalTicks,
                 particleIntervalTicks
@@ -239,12 +226,7 @@ public class VisualIndicatorManager {
      * This task runs every 30 seconds to reapply indicators that may have been overridden.
      */
     private void startPeriodicRefreshTask() {
-        if (refreshTask != null) {
-            refreshTask.cancel();
-        }
-
-        refreshTask = Bukkit.getScheduler().runTaskTimer(
-                rdq.getPlugin(),
+        rdq.getPlatform().getScheduler().runRepeating(
                 this::refreshIndicatorsForOnlinePlayers,
                 600L, // 30 second initial delay
                 600L  // 30 second interval
@@ -347,16 +329,6 @@ public class VisualIndicatorManager {
      * - 14.4: Stop particles when bounty claimed/expired
      */
     public void shutdown() {
-        if (particleTask != null) {
-            particleTask.cancel();
-            particleTask = null;
-        }
-        
-        if (refreshTask != null) {
-            refreshTask.cancel();
-            refreshTask = null;
-        }
-
         // Remove all indicators
         for (UUID playerId : activeIndicators.keySet()) {
             Player player = Bukkit.getPlayer(playerId);
@@ -430,7 +402,7 @@ public class VisualIndicatorManager {
 
         try {
             // Force update by refreshing the player's display
-            Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
+            rdq.getPlatform().getScheduler().runSync(() -> {
                 // Trigger a player list update for all online players
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     onlinePlayer.hidePlayer(rdq.getPlugin(), player);

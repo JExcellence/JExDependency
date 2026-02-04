@@ -43,6 +43,7 @@ public class RCentralApiClient {
         this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
+                .followRedirects(HttpClient.Redirect.NORMAL) // Follow 301, 302, 303, 307, 308 redirects
                 .build();
         // Configure Gson to handle ISO timestamp strings as longs
         this.gson = new GsonBuilder()

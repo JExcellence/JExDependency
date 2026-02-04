@@ -38,8 +38,26 @@ include(":JExEconomy:jexeconomy-premium")
 include(":RCore")
 include(":RCore:rcore-common")
 
-// RDQ with submodules (v6.0.0 - Modern Java 21+ rebuild)
+// RDQ with submodules
 include(":RDQ")
 include(":RDQ:rdq-common")
 include(":RDQ:rdq-free")
 include(":RDQ:rdq-premium")
+
+// JExHome with submodules
+include(":JExHome")
+include(":JExHome:jexhome-common")
+include(":JExHome:jexhome-free")
+include(":JExHome:jexhome-premium")
+
+// JExMultiverse with submodules
+include(":JExMultiverse")
+include(":JExMultiverse:jexmultiverse-common")
+include(":JExMultiverse:jexmultiverse-free")
+include(":JExMultiverse:jexmultiverse-premium")
+
+// JExOneblock with submodules
+include(":JExOneblock")
+include(":JExOneblock:jexoneblock-common")
+include(":JExOneblock:jexoneblock-free")
+include(":JExOneblock:jexoneblock-premium")

@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.view.ranks.util;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import me.devnatan.inventoryframework.context.RenderContext;
 import net.kyori.adventure.text.Component;
@@ -153,13 +154,13 @@ public class RequirementProgressRenderer {
      * This creates a visual "filling" effect when progress increases.
      *
      * @param context     The render context
-     * @param plugin      The plugin instance for scheduling
+     * @param rdq         The RDQ instance for scheduling
      * @param oldProgress Previous progress value (0.0 to 1.0)
      * @param newProgress New progress value (0.0 to 1.0)
      */
     public void animateProgressChange(
             final @NotNull RenderContext context,
-            final @NotNull org.bukkit.plugin.java.JavaPlugin plugin,
+            final @NotNull RDQ rdq,
             final double oldProgress,
             final double newProgress
     ) {
@@ -183,7 +184,7 @@ public class RequirementProgressRenderer {
             final int slotToFill = oldFilledSlots + i;
             final long delay = delayPerSlot * (i + 1);
 
-            org.bukkit.Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            rdq.getPlatform().getScheduler().runDelayed(() -> {
                 if (slotToFill < PROGRESS_SLOTS.length) {
                     context.slot(PROGRESS_SLOTS[slotToFill])
                             .renderWith(() -> UnifiedBuilderFactory.item(FILLED_MATERIAL)

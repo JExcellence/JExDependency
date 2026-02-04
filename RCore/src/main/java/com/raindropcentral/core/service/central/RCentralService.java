@@ -2,6 +2,7 @@ package com.raindropcentral.core.service.central;
 
 import com.raindropcentral.core.config.RCentralConfig;
 import com.raindropcentral.core.database.entity.central.RCentralServer;
+import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -24,6 +25,7 @@ public class RCentralService {
     private static final Logger LOGGER = CentralLogger.getLogger(RCentralService.class);
 
     private final Plugin plugin;
+    private final RPlatform platform;
     private final FileConfiguration config;
     private final com.raindropcentral.core.config.RCentralConfig rcentralConfig;
     private final RCentralApiClient apiClient;
@@ -31,8 +33,9 @@ public class RCentralService {
     private RCentralServer serverEntity;
     private HeartbeatScheduler heartbeatScheduler;
 
-    public RCentralService(final @NotNull Plugin plugin) {
+    public RCentralService(final @NotNull Plugin plugin, final @NotNull RPlatform platform) {
         this.plugin = plugin;
+        this.platform = platform;
         this.config = plugin.getConfig();
         this.rcentralConfig = new RCentralConfig(plugin);
 
@@ -236,7 +239,7 @@ public class RCentralService {
         }
 
         var sharePlayerList = config.getBoolean("privacy.share-player-list", true);
-        heartbeatScheduler = new HeartbeatScheduler(plugin, apiClient, apiKey, sharePlayerList);
+        heartbeatScheduler = new HeartbeatScheduler(plugin, platform, apiClient, apiKey, sharePlayerList);
         heartbeatScheduler.start();
     }
 

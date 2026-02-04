@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class PremiumRankSystemService implements IRankSystemService {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ-Premium");
+    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
 
     // Premium has no limits - use Integer.MAX_VALUE for "unlimited"
     private static final int UNLIMITED = Integer.MAX_VALUE;

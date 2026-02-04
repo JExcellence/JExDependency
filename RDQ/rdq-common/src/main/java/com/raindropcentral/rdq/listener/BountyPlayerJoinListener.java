@@ -37,52 +37,46 @@ public class BountyPlayerJoinListener implements Listener {
         var player = event.getPlayer();
 
         LOGGER.info("Checking for bounty on player join: " + player.getName());
-        
-        // Try immediate check first (synchronous)
+
         try {
             Bounty bounty = rdq.getBountyFactory().getBounty(player.getUniqueId());
             if (bounty != null && bounty.isActive()) {
                 LOGGER.info("Found active bounty immediately for " + player.getName() + " (ID: " + bounty.getId() + ")");
-                
-                // Apply visual indicators immediately
+
                 rdq.getPlatform().getScheduler().runDelayed(() -> {
                     if (player.isOnline()) {
                         applyVisualIndicators(player, bounty);
                         notifyPlayerOfBounty(player, bounty);
                     }
-                }, 20L); // 1 second delay
+                }, 20L);
                 
-                return; // Success, no need for async checks
+                return;
             }
         } catch (Exception e) {
             LOGGER.warning("Immediate bounty check failed for " + player.getName() + ": " + e.getMessage());
         }
-        
-        // Fallback to async checks if immediate check failed
+
         scheduleVisualIndicatorCheck(player, 0);
     }
     
     private void scheduleVisualIndicatorCheck(@NotNull Player player, int attempt) {
         if (!player.isOnline() || attempt >= 3) {
             if (attempt >= 3) {
-                LOGGER.warning("Failed to apply visual indicators after 3 attempts for " + player.getName());
+                LOGGER.info("Failed to apply visual indicators after 3 attempts for " + player.getName());
             }
             return;
         }
         
-        long delay = 40L * (attempt + 1); // 2, 4, 6 second delays
+        long delay = 40L * (attempt + 1);
         
         rdq.getPlatform().getScheduler().runDelayed(() -> {
             if (!player.isOnline()) {
                 return;
             }
             
-            LOGGER.info("Async attempt " + (attempt + 1) + " - Checking for bounty: " + player.getName());
-            
             rdq.getBountyFactory().getBountyAsync(player.getUniqueId()).thenAccept(bounty -> {
                 if (bounty == null) {
                     LOGGER.info("No bounty found for player: " + player.getName() + " (async attempt " + (attempt + 1) + ")");
-                    // Try again
                     scheduleVisualIndicatorCheck(player, attempt + 1);
                     return;
                 }
@@ -92,14 +86,10 @@ public class BountyPlayerJoinListener implements Listener {
                     return;
                 }
 
-                LOGGER.info("Active bounty found for player: " + player.getName() + " (ID: " + bounty.getId() + ") on async attempt " + (attempt + 1));
-
-                // Apply visual indicators on main thread
                 rdq.getPlatform().getScheduler().runSync(() -> {
                     if (player.isOnline()) {
                         applyVisualIndicators(player, bounty);
-                        
-                        // Only notify on first successful attempt
+
                         if (attempt == 0) {
                             notifyPlayerOfBounty(player, bounty);
                         }
@@ -108,7 +98,6 @@ public class BountyPlayerJoinListener implements Listener {
 
             }).exceptionally(ex -> {
                 LOGGER.log(Level.SEVERE, "Error checking bounty for player " + player.getName() + " on async attempt " + (attempt + 1), ex);
-                // Try again on error
                 scheduleVisualIndicatorCheck(player, attempt + 1);
                 return null;
             });
@@ -119,26 +108,24 @@ public class BountyPlayerJoinListener implements Listener {
     private void applyVisualIndicators(@NotNull Player player, @NotNull Bounty bounty) {
         try {
             LOGGER.info("Applying visual indicators to " + player.getName() + " (bounty ID: " + bounty.getId() + ")");
-            
-            // Apply visual indicators multiple times to ensure they stick
+
             if (rdq.getVisualIndicatorManager() != null) {
                 rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
             }
-            
-            // Schedule additional applications to ensure they persist
+
             rdq.getPlatform().getScheduler().runDelayed(() -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
                     LOGGER.info("Reapplied visual indicators to " + player.getName() + " (second attempt)");
                 }
-            }, 40L); // 2 seconds later
+            }, 40L);
             
             rdq.getPlatform().getScheduler().runDelayed(() -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
                     LOGGER.info("Reapplied visual indicators to " + player.getName() + " (third attempt)");
                 }
-            }, 100L); // 5 seconds later
+            }, 100L);
             
             LOGGER.info("Applied visual indicators to " + player.getName() + " (bounty ID: " + bounty.getId() + ") on join");
         } catch (Exception e) {

@@ -1,7 +1,7 @@
 package com.raindropcentral.rdq.database.converter;
 
-import com.raindropcentral.rdq.json.requirement.RequirementParser;
-import com.raindropcentral.rdq.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.json.RequirementParser;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import org.slf4j.Logger;
@@ -10,81 +10,88 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * JPA {@link AttributeConverter} implementation for converting {@link AbstractRequirement}
- * objects to and from their JSON string representations for database storage.
+ * JPA {@link AttributeConverter} for converting {@link AbstractRequirement} objects
+ * to and from their JSON string representations for database storage.
  * <p>
- * This converter ensures that complex requirement objects, including those with Bukkit-specific
- * fields or polymorphic types, can be persisted and reconstructed reliably using Jackson-based
- * serialization provided by {@link RequirementParser}.
+ * This converter delegates to RPlatform's {@link RequirementParser} for serialization.
+ * Uses lazy initialization to avoid triggering RequirementParser during entity class loading.
  * </p>
- *
- * <ul>
- *   <li>When saving an entity, {@link #convertToDatabaseColumn(AbstractRequirement)} serializes the requirement to JSON.</li>
- *   <li>When loading an entity, {@link #convertToEntityAttribute(String)} deserializes the JSON back to an {@code AbstractRequirement}.</li>
- * </ul>
- *
- * <p>
- * Any serialization or deserialization errors are logged and rethrown as unchecked exceptions,
- * preventing silent data corruption.
- * </p>
- *
- * @author JExcellence
- * @version 1.0.0
- * @since TBD
  */
 @Converter(autoApply = true)
 public class RequirementConverter implements AttributeConverter<AbstractRequirement, String> {
 
-    /**
-     * SLF4J logger for error reporting during (de)serialization.
-     */
-    private static final Logger logger = LoggerFactory.getLogger(RequirementConverter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RequirementConverter.class);
+    
+    // Lazy initialization flag to avoid triggering RequirementParser during class loading
+    private static volatile boolean parserReady = false;
 
-    /**
-     * Converts an {@link AbstractRequirement} object to its JSON string representation for database storage.
-     * <p>
-     * If the input is {@code null}, {@code null} is returned to represent a missing requirement.
-     * Otherwise, the requirement is serialized using {@link RequirementParser#serialize(AbstractRequirement)}.
-     * </p>
-     *
-     * @param attribute the {@code AbstractRequirement} instance to convert (may be {@code null})
-     * @return the JSON string representation of the requirement, or {@code null} if the input is {@code null}
-     * @throws RuntimeException if serialization fails due to an {@link IOException}
-     */
     @Override
     public String convertToDatabaseColumn(AbstractRequirement attribute) {
         if (attribute == null) {
             return null;
         }
         try {
+            ensureParserReady();
             return RequirementParser.serialize(attribute);
         } catch (IOException e) {
-            logger.error("Failed to serialize requirement: {}", attribute, e);
+            LOGGER.error("Failed to serialize requirement: {}", attribute, e);
             throw new RuntimeException("Failed to serialize requirement", e);
         }
     }
 
-    /**
-     * Converts a JSON string from the database back into an {@link AbstractRequirement} object.
-     * <p>
-     * If the input is {@code null}, {@code null} is returned to represent a missing requirement.
-     * Otherwise, the JSON is deserialized using {@link RequirementParser#parse(String)}.
-     * </p>
-     *
-     * @param dbData the JSON string from the database (may be {@code null})
-     * @return the deserialized {@code AbstractRequirement} instance, or {@code null} if the input is {@code null}
-     * @throws RuntimeException if deserialization fails due to an {@link IOException}
-     */
     @Override
     public AbstractRequirement convertToEntityAttribute(String dbData) {
-        if (dbData == null) {
+        if (dbData == null || dbData.isEmpty()) {
             return null;
         }
         try {
-            return RequirementParser.parse(dbData);
+            ensureParserReady();
+            // Migrate old format to new format if needed
+            String migratedJson = migrateOldFormat(dbData);
+            return RequirementParser.parse(migratedJson);
         } catch (IOException e) {
-            logger.error("Failed to deserialize requirement from database string: {}", dbData, e);
+            LOGGER.error("Failed to deserialize requirement from JSON: {}", dbData, e);
             throw new RuntimeException("Failed to deserialize requirement", e);
         }
+    }
+    
+    /**
+     * Ensures the RequirementParser is ready before use.
+     * This prevents triggering parser initialization during entity class loading.
+     */
+    private void ensureParserReady() {
+        if (!parserReady) {
+            synchronized (RequirementConverter.class) {
+                if (!parserReady) {
+                    // Trigger parser initialization
+                    RequirementParser.getObjectMapper();
+                    parserReady = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * Migrates old requirement JSON format (class names) to new format (type IDs).
+     * 
+     * @param json the JSON string to migrate
+     * @return the migrated JSON string
+     */
+    private String migrateOldFormat(String json) {
+        // Check if migration is needed
+        if (!json.contains("Requirement\"")) {
+            return json;
+        }
+        
+        // Migrate class names to type IDs
+        return json
+            .replace("\"type\":\"ItemRequirement\"", "\"type\":\"ITEM\"")
+            .replace("\"type\":\"CurrencyRequirement\"", "\"type\":\"CURRENCY\"")
+            .replace("\"type\":\"ExperienceLevelRequirement\"", "\"type\":\"EXPERIENCE_LEVEL\"")
+            .replace("\"type\":\"PermissionRequirement\"", "\"type\":\"PERMISSION\"")
+            .replace("\"type\":\"LocationRequirement\"", "\"type\":\"LOCATION\"")
+            .replace("\"type\":\"PlaytimeRequirement\"", "\"type\":\"PLAYTIME\"")
+            .replace("\"type\":\"CompositeRequirement\"", "\"type\":\"COMPOSITE\"")
+            .replace("\"type\":\"ChoiceRequirement\"", "\"type\":\"CHOICE\"");
     }
 }

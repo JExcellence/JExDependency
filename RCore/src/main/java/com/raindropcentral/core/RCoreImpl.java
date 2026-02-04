@@ -265,7 +265,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * </p>
      */
     private void initializeComponents() {
-        this.rCentralService = new RCentralService(this.getPlugin());
+        this.rCentralService = new RCentralService(this.getPlugin(), this.platform);
 
         // Initialize statistics delivery service
         this.statisticsDeliveryService = StatisticsDeliveryServiceFactory.create(
@@ -361,7 +361,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     private CompletableFuture<Void> runSync(final Runnable runnable) {
         final CompletableFuture<Void> future = new CompletableFuture<>();
-        Bukkit.getScheduler().runTask(this.getPlugin(), () -> {
+        this.platform.getScheduler().runSync(() -> {
             try {
                 runnable.run();
                 future.complete(null);

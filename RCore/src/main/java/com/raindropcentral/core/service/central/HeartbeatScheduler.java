@@ -113,20 +113,30 @@ public class HeartbeatScheduler {
     private void handleHeartbeatFailure(final String reason) {
         consecutiveFailures++;
         
-        LOGGER.warning("Heartbeat failed (attempt " + consecutiveFailures + "/" + MAX_RETRY_ATTEMPTS + "): " + reason);
+        if (consecutiveFailures <= MAX_RETRY_ATTEMPTS) {
+            LOGGER.warning("Heartbeat failed (attempt " + consecutiveFailures + "/" + MAX_RETRY_ATTEMPTS + "): " + reason);
+        }
         
         if (consecutiveFailures >= MAX_RETRY_ATTEMPTS) {
-            LOGGER.severe("Max heartbeat failures reached. Stopping scheduler.");
-            stop();
+            if (consecutiveFailures == MAX_RETRY_ATTEMPTS) {
+                LOGGER.severe("Max heartbeat failures reached. Stopping scheduler.");
+                LOGGER.severe("Last error: " + reason);
+                
+                // Notify online operators
+                platform.getScheduler().runSync(() -> {
+                    Bukkit.getOnlinePlayers().stream()
+                        .filter(p -> p.hasPermission("rcore.central.admin"))
+                        .forEach(p -> p.sendMessage(
+                            "§c[RCore] Connection to RaindropCentral lost after " + MAX_RETRY_ATTEMPTS + " attempts."
+                        ));
+                });
+            }
             
-            // Notify online operators
-            platform.getScheduler().runSync(() -> {
-                Bukkit.getOnlinePlayers().stream()
-                    .filter(p -> p.hasPermission("rcore.central.admin"))
-                    .forEach(p -> p.sendMessage(
-                        "§c[RCore] Connection to RaindropCentral lost after " + MAX_RETRY_ATTEMPTS + " attempts."
-                    ));
-            });
+            // Don't increment further to avoid spam
+            consecutiveFailures = MAX_RETRY_ATTEMPTS;
+            
+            // Note: We don't call stop() here because that would prevent future heartbeats
+            // The scheduler continues running but logs are suppressed after max attempts
         }
     }
 

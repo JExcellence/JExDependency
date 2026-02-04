@@ -1,6 +1,6 @@
 package com.raindropcentral.rdq.database.repository;
 
-import com.raindropcentral.rdq.database.entity.RRequirement;
+import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @version 1.0.0
  * @since TBD
  */
-public class RRequirementRepository extends CachedRepository<RRequirement, Long, Long> {
+public class RRequirementRepository extends CachedRepository<BaseRequirement, Long, Long> {
 
     /**
      * Constructs a new {@code RDQPlayerRepository} with the specified executor and entity manager factory.
@@ -30,8 +30,8 @@ public class RRequirementRepository extends CachedRepository<RRequirement, Long,
     public RRequirementRepository(
             final ExecutorService executor,
             final EntityManagerFactory entityManagerFactory,
-            @NotNull Class<RRequirement> entityClass,
-            @NotNull Function<RRequirement, Long> keyExtractor
+            @NotNull Class<BaseRequirement> entityClass,
+            @NotNull Function<BaseRequirement, Long> keyExtractor
     ) {
         super(executor, entityManagerFactory, entityClass, keyExtractor);
     }

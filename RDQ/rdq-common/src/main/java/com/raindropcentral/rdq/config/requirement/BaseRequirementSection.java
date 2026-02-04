@@ -5,10 +5,13 @@ import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.configmapper.sections.CSIgnore;
+import de.jexcellence.evaluable.section.ItemStackSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -317,7 +320,7 @@ public class BaseRequirementSection extends AConfigSection {
 		
 		try {
 			// Convert ItemStackSection to the expected map format
-			java.util.Map<String, de.jexcellence.evaluable.section.ItemStackSection> itemsMap = new java.util.HashMap<>();
+			Map<String, ItemStackSection> itemsMap = new HashMap<>();
 			itemsMap.put("item1", this.requiredItem);
 			setFieldValue(item, "requiredItems", itemsMap);
 			

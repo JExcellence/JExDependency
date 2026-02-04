@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.database.entity.rank;
 
 import com.raindropcentral.rdq.config.utility.IconSection;
 import com.raindropcentral.rdq.database.converter.IconSectionConverter;
-import com.raindropcentral.rdq.database.entity.RRequirement;
+import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +24,7 @@ import java.util.Objects;
 /**
  * Entity representing a single upgrade requirement for a {@link RRank} in the RaindropQuests system.
  * <p>
- * This entity encapsulates a single {@link RRequirement} that must be satisfied
+ * This entity encapsulates a single {@link com.raindropcentral.rdq.database.entity.requirement.BaseRequirement} that must be satisfied
  * to fulfill part of the upgrade condition for the associated rank. It also includes an icon for visual representation.
  * </p>
  *
@@ -37,6 +39,8 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "r_rank_upgrade_requirement")
+@Getter
+@Setter
 public class RRankUpgradeRequirement extends BaseEntity {
 	
 	/**
@@ -57,7 +61,7 @@ public class RRankUpgradeRequirement extends BaseEntity {
 		name = "requirement_id",
 		nullable = false
 	)
-	private RRequirement requirement;
+	private BaseRequirement requirement;
 	
 	/**
 	 * The icon representing this upgrade requirement, stored as a serialized {@link ItemStack}.
@@ -89,12 +93,12 @@ public class RRankUpgradeRequirement extends BaseEntity {
 	 * Constructs a new {@code RRankUpgradeRequirement} with the specified rank, requirement, and icon.
 	 *
 	 * @param rank        the {@link RRank} to which this upgrade requirement belongs
-	 * @param requirement the {@link RRequirement} that must be satisfied
+	 * @param requirement the {@link BaseRequirement} that must be satisfied
 	 * @param icon        the {@link ItemStack} used as the icon for this upgrade requirement
 	 */
 	public RRankUpgradeRequirement(
 		@Nullable final RRank rank,
-		@NotNull final RRequirement requirement,
+		@NotNull final BaseRequirement requirement,
 		@NotNull final IconSection icon
 	) {
 		this.rank = rank;
@@ -119,10 +123,10 @@ public class RRankUpgradeRequirement extends BaseEntity {
 	/**
 	 * Returns the requirement that must be satisfied for this upgrade.
 	 *
-	 * @return the {@link RRequirement} object
+	 * @return the {@link BaseRequirement} object
 	 */
 	@NotNull
-	public RRequirement getRequirement() {
+	public BaseRequirement getRequirement() {
 		return this.requirement;
 	}
 	
@@ -131,47 +135,10 @@ public class RRankUpgradeRequirement extends BaseEntity {
 	 *
 	 * @param requirement the requirement
 	 */
-	public void setRequirement(@NotNull final RRequirement requirement) {
+	public void setRequirement(@NotNull final BaseRequirement requirement) {
 		this.requirement = requirement;
 	}
-	
-	/**
-	 * Returns the icon representing this upgrade requirement.
-	 *
-	 * @return the {@link IconSection} icon
-	 */
-	@NotNull
-	public IconSection getIcon() {
-		return this.icon;
-	}
-	
-	/**
-	 * Sets the icon for this upgrade requirement.
-	 *
-	 * @param icon the {@link IconSection} icon
-	 */
-	public void setIcon(@NotNull final IconSection icon) {
-		this.icon = icon;
-	}
-	
-	/**
-	 * Gets the display order for this requirement.
-	 *
-	 * @return the display order
-	 */
-	public int getDisplayOrder() {
-		return this.displayOrder;
-	}
-	
-	/**
-	 * Sets the display order for this requirement.
-	 *
-	 * @param displayOrder the display order
-	 */
-	public void setDisplayOrder(final int displayOrder) {
-		this.displayOrder = displayOrder;
-	}
-	
+
 	/**
 	 * Convenience method to check if this requirement is met for a player.
 	 *
@@ -243,12 +210,8 @@ public class RRankUpgradeRequirement extends BaseEntity {
 		
 		this.rank = rank;
 		
-		if (rank != null && !rank.getUpgradeRequirements().contains(this)) {
+		if (rank != null) {
 			rank.getUpgradeRequirements().add(this);
 		}
-	}
-	
-	public int getVersion() {
-		return version;
 	}
 }

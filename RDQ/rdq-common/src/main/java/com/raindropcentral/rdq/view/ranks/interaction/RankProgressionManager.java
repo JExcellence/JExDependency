@@ -4,11 +4,13 @@ package com.raindropcentral.rdq.view.ranks.interaction;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
+import com.raindropcentral.rdq.event.RankAssignedEvent;
 import com.raindropcentral.rdq.service.RankUpgradeProgressService;
 import com.raindropcentral.rdq.view.ranks.hierarchy.RankNode;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.jextranslate.i18n.I18n;
 import me.devnatan.inventoryframework.context.SlotClickContext;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -174,14 +176,11 @@ public class RankProgressionManager {
 			boolean allCompleted = true;
 			
 			for (final RRankUpgradeRequirement requirement : upgradeRequirements) {
-				// Check if already completed
 				if (this.rankUpgradeProgressService.hasCompletedUpgradeRequirement(rdqPlayer, requirement)) {
 					continue;
 				}
-				
-				// Check if requirement can be completed (player has items/met conditions)
-				final com.raindropcentral.rdq.requirement.AbstractRequirement abstractRequirement = 
-					requirement.getRequirement().getRequirement();
+
+				final var abstractRequirement = requirement.getRequirement().getRequirement();
 				
 				if (abstractRequirement.isMet(player)) {
 					// Try to consume resources and complete the requirement
@@ -326,7 +325,7 @@ public class RankProgressionManager {
 				this.processAutoCompletableRanks(rdqPlayer, rankTree);
 			}
 			
-			LOGGER.log(Level.INFO, "Player " + rdqPlayer.getPlayerName() + " successfully " + (isInitialRank ? "received initial" : "redeemed") + " rank " + rank.getIdentifier());
+			LOGGER.log(Level.INFO, "Player " + rdqPlayer.getPlayerName() + " successfully " + (isInitialRank ? "received initial" : "redeemed") + "ranks " + rank.getIdentifier());
 			
 		} catch (final Exception exception) {
 			LOGGER.log(Level.SEVERE, "Failed to process rank assignment", exception);
@@ -359,7 +358,7 @@ public class RankProgressionManager {
 				this.processAutoCompletableRanks(rdqPlayer, rankTree);
 			}
 			
-			LOGGER.log(Level.INFO, "Player " + rdqPlayer.getPlayerName() + " successfully " + (isInitialRank ? "received initial" : "redeemed") + " rank " + rank.getIdentifier());
+			LOGGER.log(Level.INFO, "Player " + rdqPlayer.getPlayerName() + " successfully " + (isInitialRank ? "received initial" : "redeemed") + "ranks " + rank.getIdentifier());
 			
 		} catch (final Exception exception) {
 			LOGGER.log(Level.SEVERE, "Failed to process rank assignment", exception);
@@ -597,7 +596,7 @@ public class RankProgressionManager {
                 new I18n.Builder("rank_progression.requirement_incomplete", player)
                         .includePrefix()
                         .withPlaceholders(Map.of(
-                                "requirement_type", requirement.getRequirement().getRequirement().getType().name(),
+                                "requirement_type", requirement.getRequirement().getRequirement().getTypeId(),
                                 "current_progress", String.valueOf((int) currentProgress),
                                 "required_progress", String.valueOf((int) requiredProgress),
                                 "progress_percentage", String.valueOf(progressPercent)
@@ -610,18 +609,24 @@ public class RankProgressionManager {
 	}
 	
 	/**
-	 * Executes any rewards or commands associated with the rank.
+	 * Executes any rewards or commands associated with the rank by firing a custom event.
+	 * The RankRewardListener will automatically handle reward granting.
 	 */
 	private void executeRankRewards(final @NotNull RDQPlayer rdqPlayer, final @NotNull RRank rank) {
 		try {
-			// TODO: Implement rank reward execution
-			// This could include:
-			// - Running commands
-			// - Giving items
-			// - Granting permissions
-			// - Playing effects
+			final Player player = this.rdq.getPlugin().getServer().getPlayer(rdqPlayer.getUniqueId());
+			if (player == null || !player.isOnline()) {
+				LOGGER.log(Level.WARNING, "Cannot execute rank rewards - player is offline: " + rdqPlayer.getPlayerName());
+				return;
+			}
 			
-			LOGGER.log(Level.FINE, "Executed rank rewards for " + rdqPlayer.getPlayerName() + " on rank " + rank.getIdentifier());
+			// Fire custom event - RankRewardListener will handle the rewards
+			Bukkit.getScheduler().runTask(this.rdq.getPlugin(), () -> {
+				final RankAssignedEvent event = new RankAssignedEvent(player, rdqPlayer, rank);
+				Bukkit.getPluginManager().callEvent(event);
+			});
+			
+			LOGGER.log(Level.FINE, "Fired rank assigned event for " + rdqPlayer.getPlayerName() + " on rank " + rank.getIdentifier());
 			
 		} catch (final Exception exception) {
 			LOGGER.log(Level.WARNING, "Failed to execute rank rewards", exception);

@@ -15,9 +15,10 @@ import java.util.Map;
 /**
  * Represents a comprehensive configuration section for requirements within the RaindropQuests system.
  * <p>
- * This section supports all requirement types defined in {@link com.raindropcentral.rdq.requirement.AbstractRequirement.Type}
- * and provides flexible configuration options for complex requirement structures including items, currencies,
- * composite requirements, choice requirements, and plugin-specific requirements.
+ * This section supports all requirement types (ITEM, CURRENCY, EXPERIENCE_LEVEL, PERMISSION, LOCATION, 
+ * PLAYTIME, COMPOSITE, CHOICE) and provides flexible configuration options for complex requirement 
+ * structures including items, currencies, composite requirements, choice requirements, and 
+ * plugin-specific requirements.
  * </p>
  * <p>
  * The section follows a hierarchical structure where the base requirement type determines which
@@ -32,7 +33,8 @@ import java.util.Map;
 public class RequirementSection extends AConfigSection {
 
 	/**
-	 * The type of requirement. Must match one of the values from AbstractRequirement.Type enum.
+	 * The type of requirement. Must be one of: ITEM, CURRENCY, EXPERIENCE_LEVEL, PERMISSION, 
+	 * LOCATION, PLAYTIME, COMPOSITE, CHOICE.
 	 * YAML key: "type"
 	 */
 	@CSAlways

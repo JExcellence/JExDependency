@@ -5,13 +5,15 @@ import com.raindropcentral.rdq.config.ranks.rank.RankSection;
 import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;
 import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
 import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
-import com.raindropcentral.rdq.database.entity.RRequirement;
-import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
-import com.raindropcentral.rdq.database.entity.rank.RRank;
-import com.raindropcentral.rdq.database.entity.rank.RRankTree;
-import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
-import com.raindropcentral.rdq.utility.requirement.RequirementFactory;
+import com.raindropcentral.rdq.config.requirement.BaseRequirementSectionAdapter;
+import com.raindropcentral.rdq.config.utility.RewardSection;
+import com.raindropcentral.rdq.database.entity.rank.*;
+import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
+import com.raindropcentral.rplatform.reward.AbstractReward;
+import com.raindropcentral.rplatform.reward.config.RewardFactory;
 import de.jexcellence.evaluable.ConfigKeeper;
 import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
@@ -43,7 +45,7 @@ public class RankSystemFactory {
 
     private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
 
-    private static final String FILE_PATH = "rank";
+    private static final String FILE_PATH = "ranks";
     private static final String FILE_RANK_PATH = "paths";
     private static final String FILE_NAME = "rank-system.yml";
     private static final List<String> INITIAL_RANKS = List.of(
@@ -65,7 +67,12 @@ public class RankSystemFactory {
 
     public RankSystemFactory(@NotNull RDQ rdq) {
         this.rdq = rdq;
-        this.requirementFactory = new RequirementFactory(rdq);
+        this.requirementFactory = RequirementFactory.getInstance();
+
+        this.requirementFactory.registerSectionAdapter(
+            BaseRequirementSection.class,
+            BaseRequirementSectionAdapter.getInstance()
+        );
     }
 
     /**
@@ -94,6 +101,9 @@ public class RankSystemFactory {
 
             // Phase 4: Establish connections (separate pass to avoid version conflicts)
             establishConnections();
+            
+            // Phase 5: Clean up orphaned player progress entries (after requirements are updated)
+            cleanupOrphanedPlayerProgress();
 
             LOGGER.info("Rank system initialization completed successfully");
             logSummary();
@@ -103,6 +113,58 @@ public class RankSystemFactory {
             clearData();
         } finally {
             isInitializing = false;
+        }
+    }
+    
+    /**
+     * Cleans up orphaned player progress entries that reference non-existent requirements.
+     * This should be called AFTER requirements are updated to avoid foreign key violations.
+     */
+    private void cleanupOrphanedPlayerProgress() {
+        try {
+            LOGGER.info("Cleaning up orphaned player progress entries...");
+            List<RPlayerRankUpgradeProgress> allProgress = rdq.getPlayerRankUpgradeProgressRepository().findAll();
+            int deletedCount = 0;
+            int keptCount = 0;
+            
+            for (RPlayerRankUpgradeProgress progress : allProgress) {
+                try {
+                    // Check if the upgrade requirement still exists
+                    RRankUpgradeRequirement upgradeReq = progress.getUpgradeRequirement();
+                    if (upgradeReq == null || upgradeReq.getId() == null) {
+                        // Orphaned - delete it
+                        rdq.getPlayerRankUpgradeProgressRepository().delete(progress.getId());
+                        deletedCount++;
+                    } else {
+                        // Verify the requirement actually exists in the database
+                        boolean exists = false;
+                        for (Map<String, RRank> treeRanks : ranks.values()) {
+                            for (RRank rank : treeRanks.values()) {
+                                if (rank.getUpgradeRequirements().stream()
+                                    .anyMatch(req -> req.getId() != null && req.getId().equals(upgradeReq.getId()))) {
+                                    exists = true;
+                                    break;
+                                }
+                            }
+                            if (exists) break;
+                        }
+                        
+                        if (!exists) {
+                            // Orphaned - delete it
+                            rdq.getPlayerRankUpgradeProgressRepository().delete(progress.getId());
+                            deletedCount++;
+                        } else {
+                            keptCount++;
+                        }
+                    }
+                } catch (Exception e) {
+                    LOGGER.warning("Failed to check/delete progress entry " + progress.getId() + ": " + e.getMessage());
+                }
+            }
+            
+            LOGGER.info("Cleaned up " + deletedCount + " orphaned progress entries, kept " + keptCount + " valid entries");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to cleanup orphaned player progress", e);
         }
     }
 
@@ -415,6 +477,56 @@ public class RankSystemFactory {
 
         int total = ranks.values().stream().mapToInt(Map::size).sum();
         LOGGER.info("Created/updated " + total + " ranks");
+        
+        // Now update requirements and rewards for all ranks
+        LOGGER.info("Updating requirements and rewards for all ranks...");
+        rankSections.forEach((treeId, treeRanks) -> {
+            treeRanks.forEach((rankId, config) -> {
+                try {
+                    updateRankRequirements(rankId, config);
+                    updateRankRewards(rankId, config);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Failed to update requirements/rewards for rank: " + rankId, e);
+                }
+            });
+        });
+        LOGGER.info("Requirements and rewards updated");
+        
+        // Refresh cached ranks after updating requirements/rewards
+        refreshCachedRanks();
+    }
+    
+    /**
+     * Refreshes the cached ranks by fetching fresh entities from the database.
+     * This ensures that the cached ranks have the latest requirements and rewards.
+     */
+    private void refreshCachedRanks() {
+        LOGGER.info("Refreshing cached ranks...");
+        
+        // Refresh the rank maps
+        ranks.forEach((treeId, treeRanks) -> {
+            treeRanks.forEach((rankId, rank) -> {
+                RRank freshRank = findRankByIdentifier(rankId);
+                if (freshRank != null) {
+                    treeRanks.put(rankId, freshRank);
+                }
+            });
+        });
+        
+        // CRITICAL: Also refresh the RRankTree objects themselves
+        // The trees have their own ranks collection that needs to be updated
+        rankTrees.forEach((treeId, tree) -> {
+            RRankTree freshTree = findTreeByIdentifier(treeId);
+            if (freshTree != null) {
+                rankTrees.put(treeId, freshTree);
+                LOGGER.fine("Refreshed tree: " + treeId);
+            }
+        });
+        
+        // Re-populate the ranks collection on the refreshed trees
+        populateRankTreeRanksCollections();
+        
+        LOGGER.info("Cached ranks and trees refreshed");
     }
 
     /**
@@ -447,8 +559,8 @@ public class RankSystemFactory {
                 rdq.getRankRepository().update(existing);
             }
 
-            // Update requirements separately (fresh fetch to avoid version conflict)
-            updateRankRequirements(rankId, config);
+            // Note: Requirements and rewards are updated separately in their own methods
+            // to avoid version conflicts. They will be updated after all ranks are created.
 
             return findRankByIdentifier(rankId); // Return fresh entity
         }
@@ -471,9 +583,6 @@ public class RankSystemFactory {
         rdq.getRankRepository().create(newRank);
         LOGGER.fine("Created rank: " + rankId);
 
-        // Add requirements to the newly created rank
-        updateRankRequirements(rankId, config);
-
         return findRankByIdentifier(rankId); // Return fresh entity
     }
 
@@ -490,64 +599,299 @@ public class RankSystemFactory {
                 return;
             }
 
-            // Clean up existing player progress first
-            cleanupPlayerProgress(rank);
-
             // Debug: Log what requirements we're getting from config
             var configReqs = config.getRequirements();
             LOGGER.info("updateRankRequirements for '" + rankId + "': config has " + 
                 (configReqs != null ? configReqs.size() : 0) + " requirements: " + 
                 (configReqs != null ? configReqs.keySet() : "null"));
 
-            // Parse new requirements
-            List<RRankUpgradeRequirement> newRequirements = requirementFactory.parseRequirements(
-                rank, configReqs
-            );
-
-            if (newRequirements.isEmpty()) {
-                // Clear existing and update
-                rank.getUpgradeRequirements().clear();
-                rdq.getRankRepository().update(rank);
+            if (configReqs == null || configReqs.isEmpty()) {
+                // Clear existing and update only if there are requirements to clear
+                if (!rank.getUpgradeRequirements().isEmpty()) {
+                    LOGGER.info("Clearing " + rank.getUpgradeRequirements().size() + " existing requirements for rank: " + rankId);
+                    // Clean up player progress before clearing requirements
+                    cleanupPlayerProgress(rank);
+                    rank.getUpgradeRequirements().clear();
+                    rdq.getRankRepository().update(rank);
+                }
                 LOGGER.info("No requirements found for rank: " + rankId);
                 return;
             }
 
+            // Check if rank already has requirements - skip if it does to avoid duplicates
+            int existingCount = rank.getUpgradeRequirements().size();
+            if (existingCount > 0) {
+                LOGGER.info("Rank '" + rankId + "' already has " + existingCount + 
+                    " requirements in database. Skipping update to preserve existing data and IDs.");
+                return;
+            }
+
+            // Parse requirements using the new adapter-based API
+            List<RRankUpgradeRequirement> newRequirements = parseRequirements(rank, configReqs);
+            LOGGER.info("Parsed " + newRequirements.size() + " requirements for rank: " + rankId);
+
+            if (newRequirements.isEmpty()) {
+                LOGGER.info("No valid requirements parsed for rank: " + rankId);
+                return;
+            }
+
             // Save each requirement entity first
-            List<RRequirement> savedRequirements = new ArrayList<>();
+            List<BaseRequirement> savedRequirements = new ArrayList<>();
             for (RRankUpgradeRequirement upgradeReq : newRequirements) {
-                RRequirement req = upgradeReq.getRequirement();
+                BaseRequirement req = upgradeReq.getRequirement();
                 if (req.getId() == null) {
                     req = rdq.getRequirementRepository().create(req);
+                    LOGGER.fine("Created BaseRequirement with ID: " + req.getId());
                 }
                 savedRequirements.add(req);
             }
+            LOGGER.info("Saved " + savedRequirements.size() + " BaseRequirement entities");
 
-            // Fetch fresh rank again before modifying
+            // Fetch fresh rank again before modifying to ensure we have the latest version
             rank = findRankByIdentifier(rankId);
-            if (rank == null) return;
+            if (rank == null) {
+                LOGGER.warning("Rank disappeared after saving requirements: " + rankId);
+                return;
+            }
 
-            // Clear existing requirements
-            rank.getUpgradeRequirements().clear();
+            // Double-check requirements haven't been added by another thread
+            if (!rank.getUpgradeRequirements().isEmpty()) {
+                LOGGER.info("Rank '" + rankId + "' already has requirements (race condition detected). Skipping.");
+                return;
+            }
 
-            // Add new requirements
+            // Add new requirements to the rank entity
+            // IMPORTANT: Set the rank directly in the constructor to avoid double-adding to the Set
             for (int i = 0; i < newRequirements.size(); i++) {
                 RRankUpgradeRequirement template = newRequirements.get(i);
                 RRankUpgradeRequirement newUpgradeReq = new RRankUpgradeRequirement(
-                    null, // Don't set rank yet - addUpgradeRequirement will handle it
+                    rank, // Set rank in constructor - it will call addUpgradeRequirement internally
                     savedRequirements.get(i),
                     template.getIcon()
                 );
                 newUpgradeReq.setDisplayOrder(template.getDisplayOrder());
-                rank.addUpgradeRequirement(newUpgradeReq);
+                // Don't call rank.addUpgradeRequirement() - already done in constructor!
+                LOGGER.fine("Added requirement " + (i+1) + " to rank: " + rankId);
             }
 
-            // Single update at the end
-            rdq.getRankRepository().update(rank);
-            LOGGER.info("Updated " + newRequirements.size() + " requirements for rank: " + rankId);
+            // Single update at the end - this persists the rank with all its requirements
+            LOGGER.info("About to update rank " + rankId + " with " + rank.getUpgradeRequirements().size() + " requirements");
+            try {
+                rdq.getRankRepository().update(rank);
+                LOGGER.info("Update completed for rank: " + rankId);
+            } catch (jakarta.persistence.OptimisticLockException ole) {
+                LOGGER.warning("OptimisticLockException for rank " + rankId + ". This usually means the rank was modified elsewhere. Retrying once...");
+                
+                // Retry once with a fresh fetch
+                rank = findRankByIdentifier(rankId);
+                if (rank != null && rank.getUpgradeRequirements().isEmpty()) {
+                    // Re-add requirements (set rank in constructor to avoid double-adding)
+                    for (int i = 0; i < newRequirements.size(); i++) {
+                        RRankUpgradeRequirement template = newRequirements.get(i);
+                        RRankUpgradeRequirement newUpgradeReq = new RRankUpgradeRequirement(
+                            rank, // Set rank in constructor
+                            savedRequirements.get(i),
+                            template.getIcon()
+                        );
+                        newUpgradeReq.setDisplayOrder(template.getDisplayOrder());
+                        // Don't call addUpgradeRequirement - already done in constructor
+                    }
+                    rdq.getRankRepository().update(rank);
+                    LOGGER.info("Retry successful for rank: " + rankId);
+                } else {
+                    LOGGER.warning("Retry skipped - rank already has requirements or not found: " + rankId);
+                }
+            }
+            
+            // Verify the requirements were saved by fetching fresh from DB
+            RRank verifyRank = findRankByIdentifier(rankId);
+            if (verifyRank != null) {
+                int savedCount = verifyRank.getUpgradeRequirements().size();
+                LOGGER.info("Verification: rank " + rankId + " now has " + savedCount + " requirements in database (expected: " + newRequirements.size() + ")");
+                
+                // Log the IDs of saved requirements
+                if (savedCount > 0) {
+                    String ids = verifyRank.getUpgradeRequirements().stream()
+                        .map(r -> String.valueOf(r.getId()))
+                        .collect(Collectors.joining(", "));
+                    LOGGER.info("  Requirement IDs in database: " + ids);
+                } else {
+                    LOGGER.severe("  WARNING: No requirements found in database after save! This indicates a transaction rollback.");
+                }
+            } else {
+                LOGGER.severe("  WARNING: Could not verify rank after save!");
+            }
 
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to update requirements for rank: " + rankId, e);
         }
+    }
+    
+    /**
+     * Updates rank rewards with proper entity lifecycle management.
+     * Always fetches fresh entity to avoid OptimisticLockException.
+     */
+    private void updateRankRewards(String rankId, RankSection config) {
+        try {
+            // Always fetch fresh entity
+            RRank rank = findRankByIdentifier(rankId);
+            if (rank == null) {
+                LOGGER.warning("Rank not found for rewards update: " + rankId);
+                return;
+            }
+
+            var configRewards = config.getRewards();
+            LOGGER.info("updateRankRewards for '" + rankId + "': config has " + 
+                (configRewards != null ? configRewards.size() : 0) + " rewards: " + 
+                (configRewards != null ? configRewards.keySet() : "null"));
+
+            if (configRewards == null || configRewards.isEmpty()) {
+                // Clear existing rewards only if there are any
+                if (!rank.getRewards().isEmpty()) {
+                    rank.getRewards().clear();
+                    rdq.getRankRepository().update(rank);
+                }
+                LOGGER.info("No rewards found for rank: " + rankId);
+                return;
+            }
+
+            // Parse rewards using the reward factory
+            List<RRankReward> newRewards = parseRewards(rank, configRewards);
+
+            if (newRewards.isEmpty()) {
+                // Clear existing rewards only if there are any
+                if (!rank.getRewards().isEmpty()) {
+                    rank.getRewards().clear();
+                    rdq.getRankRepository().update(rank);
+                }
+                LOGGER.info("No valid rewards parsed for rank: " + rankId);
+                return;
+            }
+
+            // Check if rewards actually changed to avoid unnecessary updates
+            boolean rewardsChanged = rank.getRewards().size() != newRewards.size();
+            
+            if (!rewardsChanged) {
+                // Quick check if rewards are different (simplified comparison)
+                // If sizes match but we still want to update, set to true
+                rewardsChanged = true; // For now, always update if we have rewards
+            }
+
+            if (rewardsChanged) {
+                // Clear existing rewards
+                rank.getRewards().clear();
+                
+                // Update the rank to persist the cleared rewards
+                rdq.getRankRepository().update(rank);
+                
+                // Fetch fresh rank after clearing
+                rank = findRankByIdentifier(rankId);
+                if (rank == null) return;
+
+                // Add new rewards one by one
+                for (RRankReward reward : newRewards) {
+                    rank.addReward(reward);
+                }
+
+                // Final update to persist all new rewards
+                rdq.getRankRepository().update(rank);
+                LOGGER.info("Updated " + newRewards.size() + " rewards for rank: " + rankId);
+            } else {
+                LOGGER.info("Rewards unchanged for rank: " + rankId);
+            }
+
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to update rewards for rank: " + rankId, e);
+        }
+    }
+
+    /**
+     * Parses BaseRequirementSection map into RRankUpgradeRequirement list.
+     */
+    private List<RRankUpgradeRequirement> parseRequirements(
+            RRank rank,
+            Map<String, BaseRequirementSection> configReqs
+    ) {
+        if (configReqs == null || configReqs.isEmpty()) {
+            return List.of();
+        }
+
+        List<RRankUpgradeRequirement> requirements = new ArrayList<>();
+        int displayOrder = 0;
+
+        for (var entry : configReqs.entrySet()) {
+            String key = entry.getKey();
+            BaseRequirementSection section = entry.getValue();
+
+            try {
+                // Convert section to AbstractRequirement using the adapter
+                AbstractRequirement abstractReq = requirementFactory.fromSection(section);
+
+                // Wrap in BaseRequirement entity
+                BaseRequirement baseReq = new BaseRequirement(abstractReq, section.getIcon());
+
+                // Create upgrade requirement
+                RRankUpgradeRequirement upgradeReq = new RRankUpgradeRequirement(
+                    null, // rank will be set later
+                    baseReq,
+                    section.getIcon()
+                );
+                upgradeReq.setDisplayOrder(section.getDisplayOrder() != null ? section.getDisplayOrder() : displayOrder);
+                
+                requirements.add(upgradeReq);
+                displayOrder++;
+
+                LOGGER.fine("Parsed requirement '" + key + "' of type: " + section.getType());
+
+            } catch (Exception e) {
+                LOGGER.warning("Failed to parse requirement '" + key + "': " + e.getMessage());
+            }
+        }
+
+        return requirements;
+    }
+    
+    /**
+     * Parses RewardSection map into RRankReward list.
+     */
+    private List<RRankReward> parseRewards(
+            RRank rank,
+            Map<String, RewardSection> configRewards
+    ) {
+        if (configRewards == null || configRewards.isEmpty()) {
+            return List.of();
+        }
+
+        List<RRankReward> rewards = new ArrayList<>();
+        int displayOrder = 0;
+
+        for (var entry : configRewards.entrySet()) {
+            String key = entry.getKey();
+            RewardSection section = entry.getValue();
+
+            try {
+                // Convert section to AbstractReward using the reward factory
+                @SuppressWarnings("unchecked")
+                final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>) (RewardFactory<?>) RewardFactory.getInstance();
+                AbstractReward abstractReward = rewardFactory.fromSection(section);
+
+                // Create rank reward WITHOUT setting rank (will be set by addReward method)
+                RRankReward rankReward = new RRankReward();
+                rankReward.setReward(abstractReward);
+                rankReward.setDisplayOrder(displayOrder);
+                rankReward.setAutoGrant(true); // Default to auto-grant
+                
+                rewards.add(rankReward);
+                displayOrder++;
+
+                LOGGER.fine("Parsed reward '" + key + "' of type: " + section.getType());
+
+            } catch (Exception e) {
+                LOGGER.warning("Failed to parse reward '" + key + "': " + e.getMessage());
+            }
+        }
+
+        return rewards;
     }
 
     private void cleanupPlayerProgress(RRank rank) {
@@ -596,31 +940,28 @@ public class RankSystemFactory {
     }
 
     private void updateRankConnections(String rankId, RankSection config, Set<String> validRankIds, String treeId) {
-        // Always fetch fresh entity
-        RRank rank = findRankByIdentifier(rankId);
-        if (rank == null) return;
+        // During initialization, we only update the cached rank objects, not the database
+        // This avoids OptimisticLockException from too many sequential updates
+        Map<String, RRank> cachedTreeRanks = ranks.get(treeId);
+        if (cachedTreeRanks == null) return;
+        
+        RRank cachedRank = cachedTreeRanks.get(rankId);
+        if (cachedRank == null) return;
 
         List<String> prevRanks = config.getPreviousRanks().stream()
             .filter(validRankIds::contains)
             .collect(Collectors.toList());
-        rank.setPreviousRanks(prevRanks);
-
+        
         List<String> nextRanks = config.getNextRanks().stream()
             .filter(validRankIds::contains)
             .collect(Collectors.toList());
-        rank.setNextRanks(nextRanks);
 
-        rdq.getRankRepository().update(rank);
-
-        // Also update the cached rank with the connections
-        Map<String, RRank> cachedTreeRanks = ranks.get(treeId);
-        if (cachedTreeRanks != null) {
-            RRank cachedRank = cachedTreeRanks.get(rankId);
-            if (cachedRank != null) {
-                cachedRank.setPreviousRanks(prevRanks);
-                cachedRank.setNextRanks(nextRanks);
-            }
-        }
+        // Only update the cached object - no database update during initialization
+        cachedRank.setPreviousRanks(prevRanks);
+        cachedRank.setNextRanks(nextRanks);
+        
+        LOGGER.fine("Set connections for cached rank: " + rankId + 
+            " (prev: " + prevRanks.size() + ", next: " + nextRanks.size() + ")");
     }
 
     private void updateTreeConnections(String treeId, RankTreeSection config) {

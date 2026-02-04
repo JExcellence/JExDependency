@@ -135,19 +135,28 @@ public class BountyPlayerInfoView extends BaseView {
             var b = this.bounty.get(ctx);
             if (b.isEmpty()) return;
 
+            var plugin = rdq.get(ctx);
+            var targetPlayer = this.target.get(render);
+            
+            if (plugin == null || targetPlayer == null) {
+                player.sendMessage("§cError: Missing required data");
+                return;
+            }
+
+            Map<String, Object> initialData = new HashMap<>();
+            initialData.put("plugin", plugin);
+            initialData.put("target", targetPlayer);
+            initialData.put("rewards", new ArrayList<>());
+            initialData.put("bounty", b.get());
+            initialData.put("insertedItems", new HashMap<>());
+
             new ConfirmationView.Builder()
                 .withKey("bounty_player_info_ui")
                 .withMessageKey("bounty_player_info_ui.confirm.message")
-                .withInitialData(Map.of(
-                    "plugin", rdq.get(ctx),
-                    "target", this.target.get(render),
-                    "rewards", new ArrayList<>(),
-                    "bounty", b,
-                    "insertedItems", new HashMap<>()
-                ))
+                .withInitialData(initialData)
                 .withCallback(confirmed -> {
                     if (confirmed) {
-                        rdq.get(ctx).getBountyFactory().deleteBounty(b.get());
+                        plugin.getBountyFactory().deleteBounty(b.get());
                         player.closeInventory();
                     }
                 })
@@ -165,23 +174,23 @@ public class BountyPlayerInfoView extends BaseView {
             return;
         }
 
-        @SuppressWarnings("unchecked")
-        var bountyOpt = (Optional<Bounty>) initialData.get("bounty");
-        if (bountyOpt == null || bountyOpt.isEmpty()) return;
+        // Bounty is stored as the actual object, not Optional
+        var bounty = (Bounty) initialData.get("bounty");
+        if (bounty == null) return;
 
         @SuppressWarnings("unchecked")
         var targetPlayer = (Optional<OfflinePlayer>) initialData.get("target");
         var rdqPlugin = (RDQ) initialData.get("plugin");
-        var commissionerUniqueId = bountyOpt.get().getCommissionerUniqueId();
+        var commissionerUniqueId = bounty.getCommissionerUniqueId();
 
         CompletableFuture.supplyAsync(
             () -> rdqPlugin.getPlayerRepository().findByAttributes(Map.of("uniqueId", commissionerUniqueId)).orElse(null),
             rdqPlugin.getExecutor()
         ).thenCompose(rdqPlayer -> {
-            if (rdqPlayer == null) return null;
+            if (rdqPlayer == null) return CompletableFuture.completedFuture(null);
 
-            rdqPlugin.getPlayerRepository().updateAsync(rdqPlayer).thenAcceptAsync(p -> {
-                rdqPlugin.getBountyRepository().deleteAsync(bountyOpt.get().getId()).thenAccept(v -> {
+            return rdqPlugin.getPlayerRepository().updateAsync(rdqPlayer).thenCompose(p -> 
+                rdqPlugin.getBountyRepository().deleteAsync(bounty.getId()).thenAccept(v -> {
                     if (targetPlayer != null && targetPlayer.isPresent()) {
                         rdqPlugin.getVisualIndicatorManager().removeIndicators(targetPlayer.get().getUniqueId());
                     }
@@ -192,21 +201,21 @@ public class BountyPlayerInfoView extends BaseView {
                     i18n("deleted_bounty_successfully", origin.getPlayer())
                         .includePrefix()
                         .withPlaceholders(Map.of(
-                            "bounty_id", bountyOpt.get().getId(),
+                            "bounty_id", bounty.getId(),
                             "target_name", targetName
                         ))
                         .build().sendMessage();
-                });
-            }, rdqPlugin.getExecutor());
-            return null;
+                    
+                    // Open the view AFTER deletion completes
+                    target.openForPlayer(BountyMainView.class, Map.of(
+                        "plugin", rdqPlugin,
+                        "target", targetPlayer,
+                        "rewards", rewards,
+                        "bounty", this.bounty.get(target),
+                        "insertedItems", insertedItems
+                    ));
+                })
+            );
         });
-
-        target.openForPlayer(BountyMainView.class, Map.of(
-            "plugin", rdqPlugin,
-            "target", targetPlayer,
-            "rewards", rewards,
-            "bounty", this.bounty.get(target),
-            "insertedItems", insertedItems
-        ));
     }
 }

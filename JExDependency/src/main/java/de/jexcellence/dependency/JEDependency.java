@@ -2,6 +2,7 @@ package de.jexcellence.dependency;
 
 import de.jexcellence.dependency.injector.ClasspathInjector;
 import de.jexcellence.dependency.manager.DependencyManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -142,8 +143,10 @@ public class JEDependency {
      * @return human-readable server type string for logging purposes
      */
     public static @NotNull String getServerType() {
-        if (isPaperPluginLoaderActive()) {
+        if (isPaperPluginLoaderActive() && isVersion120OrHigher()) {
             return "Paper (with plugin loader)";
+        } else if (isPaperPluginLoaderActive() && !isVersion120OrHigher()) {
+            return "Paper (plugin loader disabled - version < 1.20)";
         } else if (isPaperServer()) {
             return "Paper (legacy mode)";
         } else {
@@ -171,6 +174,43 @@ public class JEDependency {
         }
     }
 
+    /**
+     * Checks if the server version is 1.20 or higher.
+     * Paper plugin loader features are only available on 1.20+.
+     *
+     * @return {@code true} if server version is 1.20 or higher, {@code false} otherwise
+     */
+    public static boolean isVersion120OrHigher() {
+        try {
+            final String version = Bukkit.getVersion();
+            // Extract version number from strings like "1.20.1-R0.1-SNAPSHOT" or "git-Paper-123 (MC: 1.20.1)"
+            final String mcVersion;
+            if (version.contains("MC: ")) {
+                // Paper format: "git-Paper-123 (MC: 1.20.1)"
+                final int mcStart = version.indexOf("MC: ") + 4;
+                final int mcEnd = version.indexOf(")", mcStart);
+                mcVersion = version.substring(mcStart, mcEnd);
+            } else {
+                // Spigot format: "1.20.1-R0.1-SNAPSHOT"
+                final int dashIndex = version.indexOf("-");
+                mcVersion = dashIndex > 0 ? version.substring(0, dashIndex) : version;
+            }
+            
+            final String[] parts = mcVersion.split("\\.");
+            if (parts.length >= 2) {
+                final int major = Integer.parseInt(parts[0]);
+                final int minor = Integer.parseInt(parts[1]);
+                
+                // Check if version is 1.20 or higher
+                return major > 1 || (major == 1 && minor >= 20);
+            }
+        } catch (final Exception e) {
+            // If version parsing fails, assume it's an older version for safety
+            return false;
+        }
+        return false;
+    }
+
     private static void performInitialization(
             @NotNull final JavaPlugin plugin,
             @NotNull final Class<?> anchorClass,
@@ -180,11 +220,13 @@ public class JEDependency {
         final String serverType = getServerType();
         plugin.getLogger().info("JEDependency initializing on " + serverType);
 
-        // On Paper plugin loader, inject pre-downloaded libraries but do NOT return early.
+        // On Paper plugin loader (1.20+), inject pre-downloaded libraries but do NOT return early.
         // Continue with full initialization to leverage the complete feature set.
-        if (isPaperPluginLoaderActive()) {
-            plugin.getLogger().info("Paper plugin loader detected - injecting pre-downloaded libraries, then continuing with full initialization");
+        if (isPaperPluginLoaderActive() && isVersion120OrHigher()) {
+            plugin.getLogger().info("Paper plugin loader detected (1.20+) - injecting pre-downloaded libraries, then continuing with full initialization");
             injectPreDownloadedLibraries(plugin, anchorClass);
+        } else if (isPaperPluginLoaderActive() && !isVersion120OrHigher()) {
+            plugin.getLogger().info("Paper plugin loader detected but server version is below 1.20 - skipping pre-downloaded library injection for compatibility");
         }
 
         logServerSpecificLoading(plugin);

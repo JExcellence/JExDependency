@@ -655,7 +655,7 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 					Map.of(
 							"rank_path",
 							rankTree.getIdentifier(),
-							"rank",
+                            "ranks",
 							startingRank.getIdentifier()
 					)
 			).build().sendMessage();

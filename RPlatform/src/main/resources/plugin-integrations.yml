@@ -1,0 +1,57 @@
+# Plugin Integration Configuration
+# Server owners: Just enable/disable plugins and configure settings
+# We handle all the technical API details for you!
+
+# Supported Plugins (Built-in bridges - just enable them!)
+supported-plugins:
+  # Skills Plugins
+  ecoskills:
+    enabled: true
+    category: SKILLS
+    # No API configuration needed - we handle it!
+  
+  auraskills:
+    enabled: true
+    category: SKILLS
+  
+  mcmmo:
+    enabled: true
+    category: SKILLS
+  
+  # Jobs Plugins
+  ecojobs:
+    enabled: true
+    category: JOBS
+  
+  jobsreborn:
+    enabled: true
+    category: JOBS
+
+# Auto-detection settings
+auto-detection:
+  # When using "plugin: auto", which plugins to prefer by category
+  skills-priority:
+    - ecoskills
+    - auraskills
+    - mcmmo
+  
+  jobs-priority:
+    - ecojobs
+    - jobsreborn
+
+# Advanced: Custom plugin integrations (for unsupported plugins)
+# Only use this if you need a plugin we don't support yet
+custom-integrations:
+  # Example custom plugin (uncomment and configure if needed)
+  # customskills:
+  #   enabled: false
+  #   plugin-name: "YourCustomPlugin"
+  #   category: "SKILLS"
+  #   api-class: "com.yourplugin.api.SkillsAPI"
+  #   get-instance-method: "getInstance"
+  #   get-value-method: "getPlayerSkillLevel"
+  #   get-value-params: ["Player", "String"]
+  #   available-keys:
+  #     - "magic"
+  #     - "strength"
+  #     - "agility"

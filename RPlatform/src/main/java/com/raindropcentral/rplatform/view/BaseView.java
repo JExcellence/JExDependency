@@ -465,14 +465,26 @@ public abstract class BaseView extends View {
 			}
 		}
 		
-		render
-			.slot(bottomLeftSlot, new Return().getHead(player))
-			.onClick(this::handleBackButtonClick);
-		
-		CentralLogger.getLogger(BaseView.class.getName()).log(
-			Level.FINE,
-			"Placed back button at bottom-left slot " + bottomLeftSlot + " for view: " + this.getClass().getSimpleName()
-		);
+		try {
+			render
+				.slot(bottomLeftSlot, new Return().getHead(player))
+				.onClick(this::handleBackButtonClick);
+			
+			CentralLogger.getLogger(BaseView.class.getName()).log(
+				Level.FINE,
+				"Placed back button at bottom-left slot " + bottomLeftSlot + " for view: " + this.getClass().getSimpleName()
+			);
+		} catch (Exception e) {
+			CentralLogger.getLogger(BaseView.class.getName()).log(
+				Level.WARNING,
+				"Failed to create custom head for back button, using fallback: " + e.getMessage()
+			);
+			
+			// Fallback to a simple barrier item
+			render
+				.slot(bottomLeftSlot, new org.bukkit.inventory.ItemStack(org.bukkit.Material.BARRIER))
+				.onClick(this::handleBackButtonClick);
+		}
 	}
 	
 }

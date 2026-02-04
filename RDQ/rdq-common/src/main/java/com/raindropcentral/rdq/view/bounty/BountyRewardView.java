@@ -3,8 +3,7 @@ package com.raindropcentral.rdq.view.bounty;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
-import com.raindropcentral.rdq.reward.ItemReward;
-import com.raindropcentral.rdq.reward.Reward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
@@ -75,8 +74,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 							context.getPlayer(),
 							"pseudo.name",
 							"pseudo.lore"
-					),
-					0
+					)
 					),
 					UUID.randomUUID()
 			);
@@ -90,7 +88,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 			));
 		}
 		return CompletableFuture.completedFuture(
-			this.bounty.get(context).get().getRewards().stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).toList()
+			this.bounty.get(context).get().getRewards().stream().filter(bountyReward -> bountyReward.getReward() instanceof ItemReward).toList()
 		);
 	}
 	
@@ -231,10 +229,8 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 						// Ensure the template has amount=1 before passing to constructor
 						template.setAmount(1);
 						
-						// Create the ItemReward - constructor will handle amount properly
+						// Create the ItemReward with explicit amount (can exceed max stack size)
 						ItemReward itemReward = new ItemReward(template, originalAmount);
-						// The constructor should set the amount correctly, but let's be explicit
-						itemReward.setAmount(originalAmount);
 						
 						newRewards.add(new BountyReward(
 								itemReward,
@@ -440,6 +436,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 				targetSlot != - 1
 			) {
 				player
+
 					.getInventory()
 					.removeItem(clickedItem);
 				guiInv.setItem(
@@ -505,7 +502,7 @@ public class BountyRewardView extends APaginatedView<BountyReward> {
 		
 		List<ItemStack> result   = new ArrayList<>();
 		ItemStack       base     = rewardItem.getItem();
-		int             total    = rewardItem.getAmount(); // Use the reward amount, not the ItemStack amount
+		int             total    = base.getAmount(); // Get amount from ItemStack
 		int             maxStack = base.getMaxStackSize();
 		
 		while (

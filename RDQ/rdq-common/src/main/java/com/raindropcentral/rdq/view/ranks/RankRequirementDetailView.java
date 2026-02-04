@@ -5,9 +5,12 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager;
-import com.raindropcentral.rdq.requirement.AbstractRequirement;
-import com.raindropcentral.rdq.requirement.ItemRequirement;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.impl.ExperienceLevelRequirement;
+import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
+import com.raindropcentral.rplatform.requirement.impl.PlaytimeRequirement;
+import com.raindropcentral.rplatform.utility.heads.view.Return;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
@@ -306,7 +309,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 	private ItemStack createBackButton(final @NotNull Player player) {
 		try {
 			return UnifiedBuilderFactory.item(
-					new com.raindropcentral.rplatform.utility.heads.view.Return().getHead(player)
+					new Return().getHead(player)
 			).setLore(
 					this.i18n("back.lore", player).build().children()
 			).build();
@@ -532,12 +535,12 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			final @NotNull Context context
 	) {
 
-		Material iconMaterial = switch (abstractReq.getType()) {
-			case CURRENCY -> Material.GOLD_INGOT;
-			case EXPERIENCE_LEVEL -> Material.EXPERIENCE_BOTTLE;
-			case PLAYTIME -> Material.CLOCK;
-			case PERMISSION -> Material.PAPER;
-			case LOCATION -> Material.COMPASS;
+		Material iconMaterial = switch (abstractReq.getTypeId()) {
+			case "CURRENCY" -> Material.GOLD_INGOT;
+			case "EXPERIENCE_LEVEL" -> Material.EXPERIENCE_BOTTLE;
+			case "PLAYTIME" -> Material.CLOCK;
+			case "PERMISSION" -> Material.PAPER;
+			case "LOCATION" -> Material.COMPASS;
 			default -> Material.BOOK;
 		};
 		final RankRequirementProgressManager.RequirementProgressData progress = this.progressManager.getRequirementProgress(
@@ -549,7 +552,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 		List<Component> lore = new ArrayList<>();
 		
 		// Add type-specific details
-		if (abstractReq instanceof com.raindropcentral.rdq.requirement.ExperienceLevelRequirement expReq) {
+		if (abstractReq instanceof ExperienceLevelRequirement expReq) {
 			// Experience Level specific display
 			int currentLevel = expReq.getCurrentExperience(player);
 			int requiredLevel = expReq.getRequiredLevel();
@@ -577,7 +580,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			lore.add(Component.text(progress.getProgressAsPercentage() + "% Complete").color(
 					progress.isCompleted() ? NamedTextColor.GREEN : NamedTextColor.YELLOW));
 			
-		} else if (abstractReq instanceof com.raindropcentral.rdq.requirement.PlaytimeRequirement playReq) {
+		} else if (abstractReq instanceof PlaytimeRequirement playReq) {
 			// Playtime specific display
 			long currentSeconds = playReq.getTotalPlaytimeSeconds(player);
 			long requiredSeconds = playReq.getRequiredPlaytimeSeconds();
@@ -619,7 +622,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 		} else {
 			// Default generic display
 			lore.add(this.i18n("summary.requirement_type", player)
-					.withPlaceholder("type", abstractReq.getType())
+					.withPlaceholder("type", abstractReq.getTypeId())
 					.build().component());
 			lore.add(Component.empty());
 			// Progress bar - getProgressPercentage() returns 0.0-1.0
@@ -651,8 +654,8 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 
 		List<Component> lore = new ArrayList<>();
 
-		switch (abstractReq.getType()) {
-			case CURRENCY -> {
+		switch (abstractReq.getTypeId()) {
+			case "CURRENCY" -> {
 				lore.addAll(
 						this.i18n(
 								"requirement_tip.currency",
@@ -660,7 +663,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 						).build().children()
 				);
 			}
-			case EXPERIENCE_LEVEL -> {
+			case "EXPERIENCE_LEVEL" -> {
 				lore.addAll(
 						this.i18n(
 								"requirement_tip.experience_level",
@@ -668,7 +671,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 						).build().children()
 				);
 			}
-			case PLAYTIME -> {
+			case "PLAYTIME" -> {
 				lore.addAll(
 						this.i18n(
 								"requirement_tip.playtime",
@@ -779,7 +782,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 									"requirement_info.requirement_type",
 									player
 							).withPlaceholder("type",
-									requirement.getRequirement().getRequirement().getType().name()
+									requirement.getRequirement().getRequirement().getTypeId()
 							).build().component(),
 							Component.empty(),
 							this.createProgressBar(
@@ -1151,7 +1154,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 	) {
 
 		try {
-			return requirement.getRequirement().getRequirement().getType().name();
+			return requirement.getRequirement().getRequirement().getTypeId();
 		} catch (
 				final Exception exception
 		) {
@@ -1164,7 +1167,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 	) {
 
 		try {
-			return requirement.getRequirement().getRequirement().getType().name();
+			return requirement.getRequirement().getRequirement().getTypeId();
 		} catch (
 				final Exception exception
 		) {

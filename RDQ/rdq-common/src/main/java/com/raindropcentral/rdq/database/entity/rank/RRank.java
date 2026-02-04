@@ -156,6 +156,17 @@ public class RRank extends BaseEntity {
 	private Set<RRankUpgradeRequirement> upgradeRequirements = new HashSet<>();
 	
 	/**
+	 * The rewards granted when achieving this rank.
+	 */
+	@OneToMany(
+		mappedBy = "rank",
+		cascade = CascadeType.ALL,
+		orphanRemoval = true,
+		fetch = FetchType.EAGER
+	)
+	private Set<RRankReward> rewards = new HashSet<>();
+	
+	/**
 	 * Optimistic locking version field.
 	 */
 	@Version
@@ -302,6 +313,28 @@ public class RRank extends BaseEntity {
 		                               .collect(Collectors.toList());
 	}
 	
+	/**
+	 * Gets the rewards for this rank.
+	 *
+	 * @return a set of rewards
+	 */
+	@NotNull
+	public Set<RRankReward> getRewards() {
+		return this.rewards;
+	}
+	
+	/**
+	 * Gets rewards ordered by display order.
+	 *
+	 * @return a list of rewards sorted by display order
+	 */
+	@NotNull
+	public List<RRankReward> getRewardsOrdered() {
+		return this.rewards.stream()
+		                   .sorted((r1, r2) -> Integer.compare(r1.getDisplayOrder(), r2.getDisplayOrder()))
+		                   .collect(Collectors.toList());
+	}
+	
 	public IconSection getIcon() {
 		return this.icon;
 	}
@@ -377,6 +410,55 @@ public class RRank extends BaseEntity {
 			LOGGER.log(
 				Level.FINE, "Removed upgrade requirement from rank: " + this.identifier +
 				            ". Remaining requirements: " + this.upgradeRequirements.size());
+		}
+		
+		return removed;
+	}
+	
+	/**
+	 * Adds a reward to this rank.
+	 * Properly manages the bidirectional relationship and prevents duplicates.
+	 *
+	 * @param reward the reward to add
+	 * @return true if the reward was added, false if it was already present
+	 */
+	public boolean addReward(@NotNull final RRankReward reward) {
+		if (this.rewards.contains(reward)) {
+			LOGGER.log(Level.FINE, "Reward already exists for rank: " + this.identifier);
+			return false;
+		}
+		
+		boolean added = this.rewards.add(reward);
+		
+		if (added) {
+			if (reward.getRank() != this) {
+				reward.setRank(this);
+			}
+			
+			LOGGER.log(Level.FINE, "Added reward to rank: " + this.identifier +
+			                       ". Total rewards: " + this.rewards.size());
+		}
+		
+		return added;
+	}
+	
+	/**
+	 * Removes a reward from this rank.
+	 * Properly manages the bidirectional relationship.
+	 *
+	 * @param reward the reward to remove
+	 * @return true if the reward was removed, false if it wasn't present
+	 */
+	public boolean removeReward(@NotNull final RRankReward reward) {
+		boolean removed = this.rewards.remove(reward);
+		
+		if (removed) {
+			if (reward.getRank() == this) {
+				reward.setRank(null);
+			}
+			
+			LOGGER.log(Level.FINE, "Removed reward from rank: " + this.identifier +
+			                      ". Remaining rewards: " + this.rewards.size());
 		}
 		
 		return removed;

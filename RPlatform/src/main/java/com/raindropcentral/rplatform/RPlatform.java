@@ -146,12 +146,21 @@ public class RPlatform {
         return CompletableFuture.runAsync(() -> {
             logger.info("Initializing RPlatform for " + platformType.name());
 
+            // Initialize requirement system first
+            logger.info("Initializing requirement system...");
+            com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider.initialize();
+            logger.info("Requirement system initialized");
+
             this.initializeDatabaseResources();
 
             translationManager = TranslationManager.builder(plugin)
                     .defaultLocale("de_DE").supportedLocales("de_DE", "en_US")
                     .enableMetrics(true)
                     .build();
+
+            //TODO add actual support of the file deny progress..
+
+            translationManager.cleanupUnsupportedFiles();
             
             commandUpdater = new CommandUpdater(plugin);
             

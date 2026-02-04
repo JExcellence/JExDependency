@@ -40,10 +40,7 @@ public class TranslationManager {
      * @param plugin the plugin responsible for hosting translation files
      */
     public TranslationManager(final @NotNull JavaPlugin plugin) {
-        this(plugin, "en_US", false, false, null,
-                "en_US", "en_GB", "de_DE", "es_ES", "fr_FR", "ja_JP",
-                "ko_KR", "zh_CN", "zh_TW", "pt_BR", "ru_RU", "it_IT",
-                "nl_NL", "pl_PL", "tr_TR", "sv_SE", "no_NO", "da_DK");
+        this(plugin, "en_US", false, false, "en_US", "de_DE");
     }
 
     /**
@@ -228,6 +225,18 @@ public class TranslationManager {
      */
     public boolean isMetricsEnabled() {
         return enableMetrics;
+    }
+
+    /**
+     * Manually cleans up translation files for unsupported locales.
+     * This removes files that are not in the supportedLocales configuration.
+     */
+    public void cleanupUnsupportedFiles() {
+        if (r18n == null) {
+            LOGGER.warning("Cannot cleanup files - TranslationManager not initialized");
+            return;
+        }
+        r18n.getTranslationLoader().cleanupUnsupportedFiles();
     }
 
     /**

@@ -5,6 +5,7 @@ import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
+import com.raindropcentral.rdq.view.main.MainOverviewView;
 import com.raindropcentral.rdq.view.ranks.RankMainView;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
@@ -127,7 +128,7 @@ public class PRQ extends PlayerCommand {
                     EPRQPermission.MAIN
                 )) {
                     return;
-                }/*
+                }
                 this.rdq.getViewFrame().open(
                     MainOverviewView.class,
                     player,
@@ -135,7 +136,7 @@ public class PRQ extends PlayerCommand {
                         "plugin",
                         this.rdq
                     )
-                );*/
+                );
             }
             case QUESTS -> {
                 if (this.hasNoPermission(

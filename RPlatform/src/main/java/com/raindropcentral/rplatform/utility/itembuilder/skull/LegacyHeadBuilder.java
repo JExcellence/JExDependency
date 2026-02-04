@@ -99,6 +99,13 @@ public class LegacyHeadBuilder extends AItemBuilder<SkullMeta, LegacyHeadBuilder
                                 setProfileViaField(profile);
                         }
                 } catch (Exception e) {
+                        // Log the actual error for debugging
+                        java.util.logging.Logger.getLogger("LegacyHeadBuilder")
+                                .severe("Failed to set custom texture: " + e.getClass().getName() + ": " + e.getMessage());
+                        if (e.getCause() != null) {
+                                java.util.logging.Logger.getLogger("LegacyHeadBuilder")
+                                        .severe("Caused by: " + e.getCause().getClass().getName() + ": " + e.getCause().getMessage());
+                        }
                         throw new RuntimeException("Failed to set custom texture on legacy head", e);
                 }
                 return this;

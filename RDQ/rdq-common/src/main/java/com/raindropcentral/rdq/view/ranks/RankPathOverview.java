@@ -2109,6 +2109,7 @@ public class RankPathOverview extends BaseView {
             );
 
             if (existingRankInTree != null) {
+                // Update existing player rank
                 RPlayerRank freshRank = plugin.getPlayerRankRepository().findById(existingRankInTree.getId()).orElse(null);
                 if (freshRank != null) {
                     freshRank.setCurrentRank(newRank);
@@ -2117,20 +2118,20 @@ public class RankPathOverview extends BaseView {
                     LOGGER.info("Updated existing rank for player " + rdqPlayer.getPlayerName() + " to " + newRank.getIdentifier() + " in tree " + rankTree.getIdentifier());
                 }
             } else {
+                // Create new player rank - don't modify rdqPlayer directly
                 final RPlayerRank newPlayerRank = new RPlayerRank(
                         rdqPlayer,
                         newRank,
                         rankTree
                 );
-                rdqPlayer.addPlayerRank(newPlayerRank);
+                // Just create the entity - the bidirectional relationship will be managed by Hibernate
                 plugin.getPlayerRankRepository().create(newPlayerRank);
                 LOGGER.info("Created new rank assignment for player " + rdqPlayer.getPlayerName() + " with rank " + newRank.getIdentifier() + " in tree " + rankTree.getIdentifier());
             }
 
-            RDQPlayer freshPlayer = plugin.getPlayerRepository().findById(rdqPlayer.getId()).orElse(null);
-            if (freshPlayer != null) {
-                plugin.getPlayerRepository().update(freshPlayer);
-            }
+            // No need to update the player entity - the PlayerRank changes are already persisted
+            // Updating the player here causes OptimisticLockException because we're not working
+            // with the latest version of the player entity
 
             this.markProgressEntriesCompleted(
                     plugin,

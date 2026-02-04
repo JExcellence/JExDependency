@@ -3,9 +3,9 @@ package com.raindropcentral.rdq.view.ranks.util;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementProgressData;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementStatus;
-import com.raindropcentral.rdq.requirement.AbstractRequirement;
-import com.raindropcentral.rdq.requirement.ItemRequirement;
-import com.raindropcentral.rdq.requirement.Requirement;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.Requirement;
+import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -30,13 +30,13 @@ public class RequirementCardRenderer {
     /**
      * Mapping of requirement types to their display icons.
      */
-    private static final Map<Requirement.Type, Material> TYPE_ICONS = Map.of(
-            Requirement.Type.ITEM, Material.CHEST,
-            Requirement.Type.CURRENCY, Material.EMERALD,
-            Requirement.Type.EXPERIENCE_LEVEL, Material.EXPERIENCE_BOTTLE,
-            Requirement.Type.PLAYTIME, Material.CLOCK,
-            Requirement.Type.PERMISSION, Material.PAPER,
-            Requirement.Type.LOCATION, Material.COMPASS
+    private static final Map<String, Material> TYPE_ICONS = Map.of(
+            "ITEM", Material.CHEST,
+            "CURRENCY", Material.EMERALD,
+            "EXPERIENCE_LEVEL", Material.EXPERIENCE_BOTTLE,
+            "PLAYTIME", Material.CLOCK,
+            "PERMISSION", Material.PAPER,
+            "LOCATION", Material.COMPASS
     );
 
     /**
@@ -69,15 +69,15 @@ public class RequirementCardRenderer {
             final @NotNull RequirementProgressData progress
     ) {
         final AbstractRequirement abstractReq = requirement.getRequirement().getRequirement();
-        final Requirement.Type type = abstractReq.getType();
-        final Material icon = getIconForType(type);
+        final String typeId = abstractReq.getTypeId();
+        final Material icon = getIconForType(typeId);
         final boolean shouldGlow = progress.getStatus() == RequirementStatus.READY_TO_COMPLETE 
                 || progress.getStatus() == RequirementStatus.COMPLETED;
 
         final List<Component> lore = buildCardLore(player, requirement, progress);
 
         // Get type name
-        final String typeName = formatTypeName(type);
+        final String typeName = formatTypeName(typeId);
 
         return UnifiedBuilderFactory.item(icon)
                 .setName(Component.text(typeName))
@@ -110,7 +110,7 @@ public class RequirementCardRenderer {
                 final String prefixColor = task.completed() ? "<green>" : "<gray>";
                 final String closingTag = task.completed() ? "</green>" : "</gray>";
                 
-                lore.add(net.kyori.adventure.text.minimessage.MiniMessage.miniMessage()
+                lore.add(MiniMessage.miniMessage()
                         .deserialize(prefixColor + prefix + closingTag + " <gray>" + task.name() + "</gray>"));
             }
 
@@ -148,22 +148,22 @@ public class RequirementCardRenderer {
     /**
      * Gets the icon material for a requirement type.
      */
-    public static @NotNull Material getIconForType(final @NotNull Requirement.Type type) {
-        return TYPE_ICONS.getOrDefault(type, Material.BOOK);
+    public static @NotNull Material getIconForType(final @NotNull String typeId) {
+        return TYPE_ICONS.getOrDefault(typeId, Material.BOOK);
     }
 
     /**
      * Formats a requirement type name for display.
      */
-    private static @NotNull String formatTypeName(final @NotNull Requirement.Type type) {
-        return switch (type) {
-            case ITEM -> "📦 Item Collection";
-            case CURRENCY -> "💰 Currency";
-            case EXPERIENCE_LEVEL -> "⭐ Experience Level";
-            case PLAYTIME -> "🕐 Playtime";
-            case PERMISSION -> "📄 Permission";
-            case LOCATION -> "🧭 Location";
-            default -> type.name().replace("_", " ");
+    private static @NotNull String formatTypeName(final @NotNull String typeId) {
+        return switch (typeId) {
+            case "ITEM" -> "📦 Item Collection";
+            case "CURRENCY" -> "💰 Currency";
+            case "EXPERIENCE_LEVEL" -> "⭐ Experience Level";
+            case "PLAYTIME" -> "🕐 Playtime";
+            case "PERMISSION" -> "📄 Permission";
+            case "LOCATION" -> "🧭 Location";
+            default -> typeId.replace("_", " ");
         };
     }
 
@@ -200,7 +200,7 @@ public class RequirementCardRenderer {
             }
         } else {
             // For non-item requirements, create a single task preview
-            final String typeName = abstractReq.getType().name().toLowerCase().replace("_", " ");
+            final String typeName = abstractReq.getTypeId().toLowerCase().replace("_", " ");
             final String capitalizedName = typeName.substring(0, 1).toUpperCase() + typeName.substring(1);
             
             previews.add(new TaskPreview(

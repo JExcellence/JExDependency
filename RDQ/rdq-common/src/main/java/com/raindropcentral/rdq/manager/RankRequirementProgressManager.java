@@ -6,8 +6,9 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
-import com.raindropcentral.rdq.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.RequirementService;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -23,15 +24,20 @@ import java.util.logging.Logger;
  * Manages rank requirement progress, including persistence, validation, and state management.
  * <p>
  * This manager handles:
- * - Calculating and caching requirement progress
+ * - Calculating and caching requirement progress (via RequirementService)
  * - Persisting completion states to the database
  * - Preventing over-completion of requirements
  * - Validating rank completion eligibility
  * - Coordinating between different rank views
  * </p>
+ * <p>
+ * <b>IMPORTANT:</b> This manager now uses {@link RequirementService} instead of calling
+ * requirement methods directly. This ensures that requirement events are properly fired
+ * and the rank progression system integrates with the event-driven architecture.
+ * </p>
  *
  * @author ItsRainingHP
- * @version 1.0.0
+ * @version 2.0.0
  * @since TBD
  */
 public class RankRequirementProgressManager {
@@ -39,6 +45,7 @@ public class RankRequirementProgressManager {
 	private static final Logger LOGGER = CentralLogger.getLogger(RankRequirementProgressManager.class.getName());
 	
 	private final RDQ rdq;
+	private final RequirementService requirementService;
 	
 	// Cache for requirement progress to avoid repeated database queries
 	private final Map<String, RequirementProgressData> progressCache = new ConcurrentHashMap<>();
@@ -49,6 +56,7 @@ public class RankRequirementProgressManager {
 	
 	public RankRequirementProgressManager(@NotNull RDQ rdq) {
 		this.rdq = rdq;
+		this.requirementService = RequirementService.getInstance();
 	}
 	
 	/**
@@ -81,6 +89,11 @@ public class RankRequirementProgressManager {
 	
 	/**
 	 * Attempts to complete a requirement and persists the result.
+	 * <p>
+	 * This method now uses {@link RequirementService#isMet(Player, AbstractRequirement)}
+	 * and {@link RequirementService#consume(Player, AbstractRequirement)} to ensure
+	 * that requirement events are properly fired throughout the completion process.
+	 * </p>
 	 * This method will consume the required resources if the requirement is successfully completed.
 	 */
 	public @NotNull RequirementCompletionResult attemptRequirementCompletion(
@@ -101,9 +114,9 @@ public class RankRequirementProgressManager {
 				);
 			}
 			
-			// Check if requirement can be completed now
+			// Check if requirement can be completed now using RequirementService (fires events!)
 			final AbstractRequirement abstractRequirement = requirement.getRequirement().getRequirement();
-			final boolean isMet = abstractRequirement.isMet(player);
+			final boolean isMet = requirementService.isMet(player, abstractRequirement);
 			
 			if (!isMet) {
 				LOGGER.log(Level.FINE, "Requirement " + requirement.getId() + " not yet met for player " + player.getName());
@@ -116,9 +129,10 @@ public class RankRequirementProgressManager {
 			
 			// IMPORTANT: Consume the resources BEFORE marking as completed
 			// This ensures that if consumption fails, we don't mark it as completed
+			// Use RequirementService to fire consume events!
 			try {
 				LOGGER.log(Level.INFO, "Consuming resources for requirement " + requirement.getId() + " for player " + player.getName());
-				abstractRequirement.consume(player);
+				requirementService.consume(player, abstractRequirement);
 				LOGGER.log(Level.INFO, "Successfully consumed resources for requirement " + requirement.getId());
 			} catch (Exception consumeException) {
 				LOGGER.log(Level.SEVERE, "Failed to consume resources for requirement " + requirement.getId() + " for player " + player.getName(), consumeException);
@@ -285,6 +299,16 @@ public class RankRequirementProgressManager {
 	
 	// Private helper methods
 	
+	/**
+	 * Calculates the current progress for a specific requirement.
+	 * <p>
+	 * This method now uses {@link RequirementService#checkRequirement(Player, AbstractRequirement)}
+	 * instead of calling requirement methods directly. This ensures that:
+	 * - RequirementCheckEvent is fired
+	 * - Progress is automatically tracked by RankRequirementListener
+	 * - The system integrates with the event-driven architecture
+	 * </p>
+	 */
 	private @NotNull RequirementProgressData calculateRequirementProgress(
 		@NotNull Player player,
 		@NotNull RDQPlayer rdqPlayer,
@@ -298,7 +322,7 @@ public class RankRequirementProgressManager {
 			if (dbProgress.isCompleted()) {
 				return new RequirementProgressData(
 					requirement.getId().toString(),
-					requirement.getRequirement().getRequirement().getType().name(),
+					requirement.getRequirement().getRequirement().getTypeId(),
 					requirement.getRequirement().getRequirement().getDescriptionKey(),
 					true,
 					1.0,
@@ -308,7 +332,7 @@ public class RankRequirementProgressManager {
 				);
 			}
 			
-			// Calculate current progress from the requirement logic
+			// Calculate current progress using RequirementService (fires events!)
 			final AbstractRequirement abstractRequirement = requirement.getRequirement().getRequirement();
 			
 			boolean isMet = false;
@@ -317,8 +341,9 @@ public class RankRequirementProgressManager {
 			String statusMessage = "requirement.status.not_started";
 			
 			try {
-				isMet = abstractRequirement.isMet(player);
-				progressPercentage = abstractRequirement.calculateProgress(player);
+				// Use RequirementService instead of direct calls - this fires events!
+				isMet = requirementService.isMet(player, abstractRequirement);
+				progressPercentage = requirementService.calculateProgress(player, abstractRequirement);
 				progressPercentage = Math.max(0.0, Math.min(1.0, progressPercentage));
 				
 				if (isMet) {
@@ -337,7 +362,7 @@ public class RankRequirementProgressManager {
 			
 			return new RequirementProgressData(
 				requirement.getId().toString(),
-				abstractRequirement.getType().name(),
+				abstractRequirement.getTypeId(),
 				abstractRequirement.getDescriptionKey(),
 				false, // Not completed since dbProgress.isCompleted() was false
 				progressPercentage,
@@ -346,6 +371,21 @@ public class RankRequirementProgressManager {
 				requirement.getDisplayOrder()
 			);
 			
+		} catch (IllegalStateException e) {
+			// Requirement no longer exists - this is expected when requirements are updated
+			LOGGER.log(Level.WARNING, "Requirement " + requirement.getId() + " no longer exists in database. " +
+				"This is normal after requirement updates. Returning error state.");
+			
+			return new RequirementProgressData(
+				requirement.getId().toString(),
+				"DELETED",
+				"requirement.error.deleted",
+				false,
+				0.0,
+				RequirementStatus.ERROR,
+				"requirement.status.deleted",
+				requirement.getDisplayOrder()
+			);
 		} catch (Exception exception) {
 			LOGGER.log(Level.SEVERE, "Critical error calculating requirement progress for " + requirement.getId(), exception);
 			
@@ -367,6 +407,11 @@ public class RankRequirementProgressManager {
 		@NotNull RRankUpgradeRequirement requirement
 	) {
 		try {
+			// Validate that the requirement exists and has a valid ID
+			if (requirement.getId() == null) {
+				throw new IllegalArgumentException("Requirement has no ID");
+			}
+			
 			// Try to find existing progress entry
 			final List<RPlayerRankUpgradeProgress> existingProgress = rdq.getPlayerRankUpgradeProgressRepository()
 			                                                                .findAllByAttributes(Map.of(
@@ -376,6 +421,23 @@ public class RankRequirementProgressManager {
 			
 			if (!existingProgress.isEmpty()) {
 				return existingProgress.get(0);
+			}
+			
+			// Verify the requirement actually exists in the database before creating progress
+			// This prevents foreign key violations when requirements have been deleted
+			RRank rank = requirement.getRank();
+			if (rank != null) {
+				RRank freshRank = rdq.getRankRepository().findById(rank.getId()).orElse(null);
+				if (freshRank != null) {
+					boolean requirementExists = freshRank.getUpgradeRequirements().stream()
+						.anyMatch(req -> req.getId() != null && req.getId().equals(requirement.getId()));
+					
+					if (!requirementExists) {
+						LOGGER.warning("Attempted to create progress for non-existent requirement ID: " + requirement.getId() + 
+							" in rank: " + rank.getIdentifier() + ". This requirement may have been deleted.");
+						throw new IllegalStateException("Requirement no longer exists in database");
+					}
+				}
 			}
 			
 			// Create new progress entry

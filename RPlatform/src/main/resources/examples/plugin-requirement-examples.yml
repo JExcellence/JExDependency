@@ -1,0 +1,87 @@
+# Plugin Requirement Examples
+# These show how to use the new PluginRequirement system
+
+# Example 1: Single skill requirement (EcoSkills)
+requirements:
+  mining_skill:
+    type: PLUGIN
+    plugin: ecoskills
+    category: SKILLS
+    values:
+      mining: 50
+    description: "requirement.skills.mining_level"
+
+# Example 2: Multiple skills requirement
+  multiple_skills:
+    type: PLUGIN
+    plugin: ecoskills
+    category: SKILLS
+    values:
+      mining: 50
+      combat: 30
+      farming: 25
+    description: "requirement.skills.multiple"
+
+# Example 3: Job requirement (JobsReborn)
+  miner_job:
+    type: PLUGIN
+    plugin: jobsreborn
+    category: JOBS
+    values:
+      Miner: 10
+    description: "requirement.jobs.miner"
+
+# Example 4: Auto-detection by category
+  any_skills_plugin:
+    type: PLUGIN
+    plugin: auto
+    category: SKILLS
+    values:
+      mining: 50
+    description: "requirement.skills.auto"
+
+# Example 5: mcMMO skills
+  mcmmo_skills:
+    type: PLUGIN
+    plugin: mcmmo
+    category: SKILLS
+    values:
+      mining: 100
+      woodcutting: 75
+      excavation: 50
+
+# Example 6: Custom plugin (configured in plugin-integrations.yml)
+  custom_magic:
+    type: PLUGIN
+    plugin: custommagic
+    category: MAGIC
+    values:
+      fire_magic: 25
+      water_magic: 20
+
+# Example 7: Consumable requirement (for economy plugins)
+  vault_money:
+    type: PLUGIN
+    plugin: vault
+    category: ECONOMY
+    values:
+      balance: 1000
+    consumable: true
+    description: "requirement.economy.money"
+
+# Migration from old system:
+# OLD (hardcoded):
+# requirements:
+#   skill:
+#     type: SKILLS
+#     skillPlugin: ECOSKILLS
+#     skill: mining
+#     level: 50
+#
+# NEW (flexible):
+# requirements:
+#   skill:
+#     type: PLUGIN
+#     plugin: ecoskills
+#     values:
+#       mining: 50

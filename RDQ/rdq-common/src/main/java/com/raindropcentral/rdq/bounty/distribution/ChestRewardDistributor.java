@@ -2,7 +2,7 @@ package com.raindropcentral.rdq.bounty.distribution;
 
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
-import com.raindropcentral.rdq.reward.ItemReward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -83,11 +83,10 @@ public class ChestRewardDistributor implements RewardDistributor {
             Inventory inventory = chest.getInventory();
 
             for (BountyReward reward : bounty.getRewards()) {
-                if (reward.getReward().getType() != com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
+                if (!(reward.getReward() instanceof ItemReward itemReward)) {
                     continue;
                 }
 
-                ItemReward itemReward = (ItemReward) reward.getReward();
                 ItemStack item = itemReward.getItem().clone();
                 
                 int adjustedAmount = Math.max(1, (int) (item.getAmount() * proportion));
@@ -105,7 +104,7 @@ public class ChestRewardDistributor implements RewardDistributor {
 
     private void dropItems(@NotNull Location location, @NotNull Bounty bounty, double proportion) {
         for (BountyReward reward : bounty.getRewards()) {
-            if (reward.getReward().getType() != com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
+            if (!(reward.getReward() instanceof ItemReward)) {
                 continue;
             }
 

@@ -3,15 +3,14 @@ package com.raindropcentral.rplatform.view;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import de.jexcellence.jextranslate.i18n.I18n;
-import net.kyori.adventure.text.Component;
-
-import java.util.List;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -95,10 +94,12 @@ public class ConfirmationView extends BaseView {
             key = super.getTitleKey();
         }
 
-        open.modifyConfig().title(
-                new I18n.Builder(key + ".title", open.getPlayer())
-                        .withPlaceholders(this.getTitlePlaceholders(open)).build().component()
-        );
+        Component titleComponent = new I18n.Builder(key + ".title", open.getPlayer())
+                .withPlaceholders(this.getTitlePlaceholders(open)).build().component();
+        
+        String titleString = LegacyComponentSerializer.legacySection().serialize(titleComponent);
+        
+        open.modifyConfig().title(titleString);
     }
 
     /**

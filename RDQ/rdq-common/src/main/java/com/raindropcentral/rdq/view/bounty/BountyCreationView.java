@@ -3,8 +3,7 @@ package com.raindropcentral.rdq.view.bounty;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyReward;
-import com.raindropcentral.rdq.reward.ItemReward;
-import com.raindropcentral.rdq.reward.Reward;
+import com.raindropcentral.rplatform.reward.impl.ItemReward;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
@@ -98,7 +97,7 @@ public class BountyCreationView extends BaseView {
 		Player  player  = context.getPlayer();
 		boolean enabled = this.target.get(context).isPresent();
 		List<BountyReward> bountyRewards = new ArrayList<>(this.rewards.get(context));
-		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.ITEM)).toList();
+		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward() instanceof ItemReward).toList();
 		return UnifiedBuilderFactory
 			       .item(enabled ?
 			             Material.CHEST :
@@ -137,7 +136,7 @@ public class BountyCreationView extends BaseView {
 		Player  player  = context.getPlayer();
 		boolean enabled = this.target.get(context).isPresent();
 		List<BountyReward> bountyRewards = new ArrayList<>(this.rewards.get(context));
-		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward().getType().equals(Reward.Type.CURRENCY)).toList();
+		bountyRewards = bountyRewards.stream().filter(bountyReward -> bountyReward.getReward() instanceof com.raindropcentral.rplatform.reward.impl.CurrencyReward).toList();
 		return UnifiedBuilderFactory
 			       .item(enabled ?
 			             Material.GOLD_INGOT :
@@ -399,10 +398,10 @@ public class BountyCreationView extends BaseView {
 									// Debug: Log what's in the UI rewards list BEFORE merging
 									for (int i = 0; i < this.rewards.get(clickContext).size(); i++) {
 										BountyReward reward = this.rewards.get(clickContext).get(i);
-										if (reward.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
-											com.raindropcentral.rdq.reward.ItemReward itemReward = (com.raindropcentral.rdq.reward.ItemReward) reward.getReward();
+										if (reward.getReward() instanceof ItemReward) {
+											ItemReward itemReward = (ItemReward) reward.getReward();
 											LOGGER.info("UI reward [" + i + "] BEFORE merge: " + itemReward.getItem().getType() +
-													" x" + itemReward.getAmount() + " (ItemStack: " + itemReward.getItem().getAmount() + ")");
+													" x" + itemReward.getItem().getAmount());
 										}
 									}
 
@@ -415,10 +414,10 @@ public class BountyCreationView extends BaseView {
 									// Debug: Log what we're sending to addRewardsToBounty
 									for (int i = 0; i < newRewards.size(); i++) {
 										BountyReward reward = newRewards.get(i);
-										if (reward.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
-											com.raindropcentral.rdq.reward.ItemReward itemReward = (com.raindropcentral.rdq.reward.ItemReward) reward.getReward();
+										if (reward.getReward() instanceof ItemReward) {
+											ItemReward itemReward = (ItemReward) reward.getReward();
 											LOGGER.info("Sending to BountyFactory [" + i + "]: " + itemReward.getItem().getType() +
-													" x" + itemReward.getAmount() + " (ItemStack amount: " + itemReward.getItem().getAmount() + ")");
+													" x" + itemReward.getItem().getAmount());
 										}
 									}
 
@@ -614,9 +613,9 @@ public class BountyCreationView extends BaseView {
 		LOGGER.info("[BountyCreationView] mergeSimilarRewardItems called with " + items.size() + " items");
 		for (int i = 0; i < items.size(); i++) {
 			BountyReward item = items.get(i);
-			if (item.getReward().getType() == com.raindropcentral.rdq.reward.Reward.Type.ITEM) {
-				com.raindropcentral.rdq.reward.ItemReward itemReward = (com.raindropcentral.rdq.reward.ItemReward) item.getReward();
-				LOGGER.info("[BountyCreationView] Input item " + i + ": " + itemReward.getItem().getType() + " x" + itemReward.getAmount());
+			if (item.getReward() instanceof ItemReward) {
+				ItemReward itemReward = (ItemReward) item.getReward();
+				LOGGER.info("[BountyCreationView] Input item " + i + ": " + itemReward.getItem().getType() + " x" + itemReward.getItem().getAmount());
 			}
 		}
 		
@@ -624,7 +623,7 @@ public class BountyCreationView extends BaseView {
 
 		outer:
 		for (BountyReward bountyReward : items) {
-			if (! bountyReward.getReward().getType().equals(Reward.Type.ITEM)) {
+			if (!(bountyReward.getReward() instanceof ItemReward)) {
 				merged.add(bountyReward); // Add non-item rewards directly
 				continue;
 			}
@@ -633,26 +632,24 @@ public class BountyCreationView extends BaseView {
 			ItemStack currentItem = currentItemReward.getItem();
 			
 			LOGGER.info("[BountyCreationView] Processing item: " + currentItem.getType() + 
-			                  " with ItemReward.getAmount()=" + currentItemReward.getAmount() + 
-			                  " and ItemStack.getAmount()=" + currentItem.getAmount());
+			                  " with ItemStack.getAmount()=" + currentItem.getAmount());
 			
             for (BountyReward existing : merged) {
-				if (existing.getReward().getType().equals(Reward.Type.ITEM)) {
+				if (existing.getReward() instanceof ItemReward) {
 					ItemReward existingItemReward = (ItemReward) existing.getReward();
 					ItemStack existingItem = existingItemReward.getItem();
 					
 					if (existingItem.isSimilar(currentItem)) {
-						// Merge the amounts
-						int existingAmount = existingItemReward.getAmount();
-						int currentAmount = currentItemReward.getAmount();
+						// Merge the amounts - just add the ItemStack amounts
+						int existingAmount = existingItem.getAmount();
+						int currentAmount = currentItem.getAmount();
 						int totalAmount = existingAmount + currentAmount;
 						
 						LOGGER.info("[BountyCreationView] Merging in UI: " + existingAmount + " (existing) + " + currentAmount + " (current) = " + totalAmount);
 						
-						// For bounty rewards, we don't limit by max stack size since they're stored as database entities
-						// Players should be able to add unlimited amounts to bounties
-						existingItemReward.setAmount(totalAmount);
-						LOGGER.info("[BountyCreationView] Final UI merge amount: " + existingItemReward.getAmount());
+						// Update the ItemStack amount
+						existingItem.setAmount(totalAmount);
+						LOGGER.info("[BountyCreationView] Final UI merge amount: " + existingItem.getAmount());
 						continue outer;
 					}
 				}

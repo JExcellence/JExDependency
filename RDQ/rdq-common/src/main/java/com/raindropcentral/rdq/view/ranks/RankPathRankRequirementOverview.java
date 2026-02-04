@@ -11,9 +11,9 @@ import com.raindropcentral.rdq.manager.RankRequirementProgressManager;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementCompletionResult;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementProgressData;
 import com.raindropcentral.rdq.manager.RankRequirementProgressManager.RequirementStatus;
-import com.raindropcentral.rdq.requirement.AbstractRequirement;
-import com.raindropcentral.rdq.requirement.ItemRequirement;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import com.raindropcentral.rplatform.requirement.impl.ItemRequirement;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
 import de.jexcellence.jextranslate.i18n.I18n;
@@ -720,7 +720,7 @@ public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgrade
 		final @NotNull RRankUpgradeRequirement requirement
 	) {
 		try {
-			return requirement.getRequirement().getRequirement().getType().name();
+			return requirement.getRequirement().getRequirement().getTypeId();
 		} catch (
 			  final Exception exception
 		) {
