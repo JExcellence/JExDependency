@@ -34,6 +34,18 @@ ranks:
     icon:
       type: "STICK"
     nextRanks: ["adept"]
+    rewards:
+      welcome_kit:
+        type: "ITEM"
+        items:
+          - material: "ENCHANTED_BOOK"
+            amount: 1
+          - material: "LAPIS_LAZULI"
+            amount: 16
+      starting_currency:
+        type: "CURRENCY"
+        amount: 50
+        currency: "coins"
 
   adept:
     tier: 2
@@ -46,6 +58,21 @@ ranks:
       type: "BLAZE_ROD"
     previousRanks: ["apprentice"]
     nextRanks: ["wizard"]
+    rewards:
+      adept_reward:
+        type: "CURRENCY"
+        amount: 150
+        currency: "coins"
+      magic_bonus:
+        type: "ITEM"
+        items:
+          - material: "ENCHANTED_BOOK"
+            amount: 3
+          - material: "BLAZE_POWDER"
+            amount: 8
+      adept_experience:
+        type: "EXPERIENCE"
+        amount: 750
     requirements:
       magic_supplies:
         icon:
@@ -81,6 +108,21 @@ ranks:
       type: "END_ROD"
     previousRanks: ["adept"]
     nextRanks: ["sorcerer"]
+    rewards:
+      wizard_reward:
+        type: "CURRENCY"
+        amount: 300
+        currency: "coins"
+      wizard_power:
+        type: "ITEM"
+        items:
+          - material: "ENCHANTED_BOOK"
+            amount: 8
+          - material: "ENDER_PEARL"
+            amount: 8
+      wizard_experience:
+        type: "EXPERIENCE"
+        amount: 1250
     requirements:
       wizard_supplies:
         icon:
@@ -122,6 +164,21 @@ ranks:
       type: "ENDER_EYE"
     previousRanks: ["wizard"]
     nextRanks: ["archmage"]
+    rewards:
+      sorcerer_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      sorcerer_mastery:
+        type: "ITEM"
+        items:
+          - material: "ENDER_EYE"
+            amount: 6
+          - material: "ENCHANTED_BOOK"
+            amount: 15
+      sorcerer_experience:
+        type: "EXPERIENCE"
+        amount: 1750
     requirements:
       sorcerer_supplies:
         icon:
@@ -163,6 +220,23 @@ ranks:
     icon:
       type: "NETHER_STAR"
     previousRanks: ["sorcerer"]
+    rewards:
+      archmage_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      ultimate_magic:
+        type: "ITEM"
+        items:
+          - material: "NETHER_STAR"
+            amount: 1
+          - material: "ENCHANTED_BOOK"
+            amount: 25
+          - material: "END_CRYSTAL"
+            amount: 2
+      archmage_experience:
+        type: "EXPERIENCE"
+        amount: 5000
     requirements:
       ultimate_mage:
         icon:

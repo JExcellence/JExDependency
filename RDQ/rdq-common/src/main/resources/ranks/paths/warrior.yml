@@ -38,6 +38,21 @@ ranks:
     icon:
       type: "WOODEN_SWORD"
     nextRanks: ["soldier"]
+    rewards:
+      welcome_sword:
+        type: "ITEM"
+        item:
+          material: "WOODEN_SWORD"
+          amount: 1
+      welcome_armor:
+        type: "ITEM"
+        item:
+          material: "LEATHER_CHESTPLATE"
+          amount: 1
+      starting_currency:
+        type: "CURRENCY"
+        amount: 50
+        currencyId: "coins"
 
   # ═══════════════════════════════════════════════════════════════
   # TIER 2 - Basic Warrior
@@ -53,6 +68,15 @@ ranks:
       type: "STONE_SWORD"
     previousRanks: ["recruit"]
     nextRanks: ["veteran"]
+    rewards:
+      soldier_bonus:
+        type: "CURRENCY"
+        amount: 150
+        currencyId: "coins"
+      combat_experience:
+        type: "EXPERIENCE"
+        experienceAmount: 500
+        experienceType: "POINTS"
     requirements:
       combat_training:
         icon:
@@ -92,6 +116,21 @@ ranks:
     previousRanks: ["soldier"]
     # BRANCHING: Player can choose between 3 specializations
     nextRanks: ["berserker", "guardian", "gladiator"]
+    rewards:
+      veteran_reward:
+        type: "CURRENCY"
+        amount: 300
+        currency: "coins"
+      veteran_gear:
+        type: "ITEM"
+        items:
+          - material: "IRON_SWORD"
+            amount: 1
+          - material: "IRON_CHESTPLATE"
+            amount: 1
+      veteran_experience:
+        type: "EXPERIENCE"
+        amount: 1000
     requirements:
       veteran_gear:
         icon:
@@ -139,6 +178,21 @@ ranks:
       type: "NETHERITE_AXE"
     previousRanks: ["veteran"]
     nextRanks: ["warlord_fury"]
+    rewards:
+      berserker_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      berserker_power:
+        type: "ITEM"
+        items:
+          - material: "DIAMOND_AXE"
+            amount: 1
+          - material: "STRENGTH_POTION"
+            amount: 5
+      berserker_experience:
+        type: "EXPERIENCE"
+        amount: 1500
     requirements:
       berserker_gear:
         icon:
@@ -177,6 +231,21 @@ ranks:
       type: "SHIELD"
     previousRanks: ["veteran"]
     nextRanks: ["warlord_shield"]
+    rewards:
+      guardian_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      guardian_defense:
+        type: "ITEM"
+        items:
+          - material: "SHIELD"
+            amount: 1
+          - material: "DIAMOND_CHESTPLATE"
+            amount: 1
+      guardian_experience:
+        type: "EXPERIENCE"
+        amount: 1500
     requirements:
       guardian_gear:
         icon:
@@ -218,6 +287,21 @@ ranks:
       type: "DIAMOND_SWORD"
     previousRanks: ["veteran"]
     nextRanks: ["warlord_arena"]
+    rewards:
+      gladiator_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      gladiator_gear:
+        type: "ITEM"
+        items:
+          - material: "DIAMOND_SWORD"
+            amount: 1
+          - material: "GOLDEN_APPLE"
+            amount: 8
+      gladiator_experience:
+        type: "EXPERIENCE"
+        amount: 1500
     requirements:
       gladiator_gear:
         icon:
@@ -256,6 +340,23 @@ ranks:
     icon:
       type: "NETHERITE_AXE"
     previousRanks: ["berserker"]
+    rewards:
+      warlord_fury_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      ultimate_fury:
+        type: "ITEM"
+        items:
+          - material: "NETHERITE_AXE"
+            amount: 1
+          - material: "NETHERITE_CHESTPLATE"
+            amount: 1
+          - material: "ENCHANTED_GOLDEN_APPLE"
+            amount: 5
+      warlord_experience:
+        type: "EXPERIENCE"
+        amount: 3000
     requirements:
       ultimate_berserker:
         icon:
@@ -291,6 +392,23 @@ ranks:
     icon:
       type: "NETHERITE_CHESTPLATE"
     previousRanks: ["guardian"]
+    rewards:
+      warlord_shield_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      ultimate_defense:
+        type: "ITEM"
+        items:
+          - material: "NETHERITE_CHESTPLATE"
+            amount: 1
+          - material: "NETHERITE_HELMET"
+            amount: 1
+          - material: "TOTEM_OF_UNDYING"
+            amount: 2
+      warlord_experience:
+        type: "EXPERIENCE"
+        amount: 3000
     requirements:
       ultimate_guardian:
         icon:
@@ -332,6 +450,23 @@ ranks:
     icon:
       type: "NETHERITE_SWORD"
     previousRanks: ["gladiator"]
+    rewards:
+      warlord_arena_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      ultimate_champion:
+        type: "ITEM"
+        items:
+          - material: "NETHERITE_SWORD"
+            amount: 1
+          - material: "NETHERITE_CHESTPLATE"
+            amount: 1
+          - material: "ENCHANTED_GOLDEN_APPLE"
+            amount: 8
+      warlord_experience:
+        type: "EXPERIENCE"
+        amount: 3000
     requirements:
       ultimate_gladiator:
         icon:

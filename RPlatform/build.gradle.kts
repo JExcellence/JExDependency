@@ -42,34 +42,36 @@ tasks {
     }
 }
 
-publishing {
-    publications {
-        named<MavenPublication>("maven") {
-            artifactId = "rplatform"
-            pom {
-                url.set("https://github.com/raindropcentral/rplatform")
-                developers {
-                    developer {
-                        id.set("jexcellence")
-                        name.set("JExcellence")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/raindropcentral/rplatform.git")
-                    developerConnection.set("scm:git:ssh://github.com/raindropcentral/rplatform.git")
+afterEvaluate {
+    publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                artifactId = "rplatform"
+                pom {
                     url.set("https://github.com/raindropcentral/rplatform")
+                    developers {
+                        developer {
+                            id.set("jexcellence")
+                            name.set("JExcellence")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:git://github.com/raindropcentral/rplatform.git")
+                        developerConnection.set("scm:git:ssh://github.com/raindropcentral/rplatform.git")
+                        url.set("https://github.com/raindropcentral/rplatform")
+                    }
                 }
             }
         }
-    }
-    
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/raindropcentral/rplatform")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: findProperty("gpr.user") as String?
-                password = System.getenv("GITHUB_TOKEN") ?: findProperty("gpr.key") as String?
+        
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/raindropcentral/rplatform")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR") ?: findProperty("gpr.user") as String?
+                    password = System.getenv("GITHUB_TOKEN") ?: findProperty("gpr.key") as String?
+                }
             }
         }
     }

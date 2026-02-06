@@ -86,7 +86,9 @@ public class RankSystemFactory {
 
         isInitializing = true;
         try {
-            LOGGER.info("Starting rank system initialization...");
+            LOGGER.info("╔════════════════════════════════════════════════════════════╗");
+            LOGGER.info("║          RANK SYSTEM INITIALIZATION STARTED                ║");
+            LOGGER.info("╚════════════════════════════════════════════════════════════╝");
 
             // Phase 1: Load all configurations
             loadConfigurations();
@@ -105,7 +107,9 @@ public class RankSystemFactory {
             // Phase 5: Clean up orphaned player progress entries (after requirements are updated)
             cleanupOrphanedPlayerProgress();
 
-            LOGGER.info("Rank system initialization completed successfully");
+            LOGGER.info("╔════════════════════════════════════════════════════════════╗");
+            LOGGER.info("║       RANK SYSTEM INITIALIZATION COMPLETED                 ║");
+            LOGGER.info("╚════════════════════════════════════════════════════════════╝");
             logSummary();
 
         } catch (Exception e) {
@@ -172,7 +176,7 @@ public class RankSystemFactory {
     // ==================== Configuration Loading ====================
 
     private void loadConfigurations() {
-        LOGGER.info("Loading configurations...");
+        LOGGER.info("→ Loading rank configurations...");
 
         // Load system config
         rankSystemSection = loadSystemConfig();
@@ -180,7 +184,7 @@ public class RankSystemFactory {
         // Ensure paths directory exists
         File pathsDir = new File(rdq.getPlugin().getDataFolder(), FILE_PATH + "/" + FILE_RANK_PATH);
         if (pathsDir.mkdirs()) {
-            LOGGER.info("Created rank paths directory");
+            LOGGER.fine("Created rank paths directory");
         }
 
         // Load rank tree configs
@@ -189,8 +193,8 @@ public class RankSystemFactory {
         // Load rank configs from trees
         loadRankConfigs();
 
-        LOGGER.info("Loaded " + rankTreeSections.size() + " trees with " +
-            rankSections.values().stream().mapToInt(Map::size).sum() + " total ranks");
+        int totalRanks = rankSections.values().stream().mapToInt(Map::size).sum();
+        LOGGER.info("  ✓ Loaded " + rankTreeSections.size() + " trees with " + totalRanks + " ranks");
     }
 
     private RankSystemSection loadSystemConfig() {
@@ -249,18 +253,20 @@ public class RankSystemFactory {
                 return;
             }
 
-            LOGGER.info("Loading " + treeRanks.size() + " ranks from tree: " + treeId);
+            LOGGER.fine("  Loading " + treeRanks.size() + " ranks from tree: " + treeId);
             
             treeRanks.forEach((rankId, rankSection) -> {
                 rankSection.setRankTreeName(treeId);
                 rankSection.setRankName(rankId);
                 
-                // Log requirements found in config
+                // Log requirements and rewards found in config (FINE level only)
                 var configRequirements = rankSection.getRequirements();
+                var configRewards = rankSection.getRewards();
                 if (configRequirements != null && !configRequirements.isEmpty()) {
-                    LOGGER.info("  Config: Rank '" + rankId + "' has " + configRequirements.size() + " requirements: " + configRequirements.keySet());
-                } else {
-                    LOGGER.info("  Config: Rank '" + rankId + "' has no requirements configured");
+                    LOGGER.fine("    Rank '" + rankId + "' has " + configRequirements.size() + " requirements");
+                }
+                if (configRewards != null && !configRewards.isEmpty()) {
+                    LOGGER.fine("    Rank '" + rankId + "' has " + configRewards.size() + " rewards");
                 }
                 
                 processRequirementContext(rankSection, treeId, rankId);
@@ -447,7 +453,7 @@ public class RankSystemFactory {
     private void createRanks() {
         if (rankSections.isEmpty()) return;
 
-        LOGGER.info("Creating ranks...");
+        LOGGER.info("→ Creating/updating ranks...");
 
         rankSections.forEach((treeId, treeRanks) -> {
             RRankTree rankTree = rankTrees.get(treeId);
@@ -476,10 +482,12 @@ public class RankSystemFactory {
         populateRankTreeRanksCollections();
 
         int total = ranks.values().stream().mapToInt(Map::size).sum();
-        LOGGER.info("Created/updated " + total + " ranks");
+        LOGGER.info("  ✓ Created/updated " + total + " ranks");
         
         // Now update requirements and rewards for all ranks
-        LOGGER.info("Updating requirements and rewards for all ranks...");
+        LOGGER.info("→ Processing requirements and rewards...");
+        int reqCount = 0;
+        int rewCount = 0;
         rankSections.forEach((treeId, treeRanks) -> {
             treeRanks.forEach((rankId, config) -> {
                 try {
@@ -490,7 +498,15 @@ public class RankSystemFactory {
                 }
             });
         });
-        LOGGER.info("Requirements and rewards updated");
+        
+        // Count total requirements and rewards
+        for (Map<String, RRank> treeRanks : ranks.values()) {
+            for (RRank rank : treeRanks.values()) {
+                reqCount += rank.getUpgradeRequirements().size();
+                rewCount += rank.getRewards().size();
+            }
+        }
+        LOGGER.info("  ✓ Processed " + reqCount + " requirements and " + rewCount + " rewards");
         
         // Refresh cached ranks after updating requirements/rewards
         refreshCachedRanks();
@@ -601,37 +617,32 @@ public class RankSystemFactory {
 
             // Debug: Log what requirements we're getting from config
             var configReqs = config.getRequirements();
-            LOGGER.info("updateRankRequirements for '" + rankId + "': config has " + 
-                (configReqs != null ? configReqs.size() : 0) + " requirements: " + 
-                (configReqs != null ? configReqs.keySet() : "null"));
+            LOGGER.fine("Processing requirements for '" + rankId + "': " + 
+                (configReqs != null ? configReqs.size() : 0) + " configured");
 
             if (configReqs == null || configReqs.isEmpty()) {
                 // Clear existing and update only if there are requirements to clear
                 if (!rank.getUpgradeRequirements().isEmpty()) {
-                    LOGGER.info("Clearing " + rank.getUpgradeRequirements().size() + " existing requirements for rank: " + rankId);
+                    LOGGER.fine("Clearing " + rank.getUpgradeRequirements().size() + " existing requirements for rank: " + rankId);
                     // Clean up player progress before clearing requirements
                     cleanupPlayerProgress(rank);
                     rank.getUpgradeRequirements().clear();
                     rdq.getRankRepository().update(rank);
                 }
-                LOGGER.info("No requirements found for rank: " + rankId);
                 return;
             }
 
             // Check if rank already has requirements - skip if it does to avoid duplicates
             int existingCount = rank.getUpgradeRequirements().size();
             if (existingCount > 0) {
-                LOGGER.info("Rank '" + rankId + "' already has " + existingCount + 
-                    " requirements in database. Skipping update to preserve existing data and IDs.");
+                LOGGER.fine("Rank '" + rankId + "' already has " + existingCount + " requirements (preserved)");
                 return;
             }
 
             // Parse requirements using the new adapter-based API
             List<RRankUpgradeRequirement> newRequirements = parseRequirements(rank, configReqs);
-            LOGGER.info("Parsed " + newRequirements.size() + " requirements for rank: " + rankId);
 
             if (newRequirements.isEmpty()) {
-                LOGGER.info("No valid requirements parsed for rank: " + rankId);
                 return;
             }
 
@@ -641,11 +652,9 @@ public class RankSystemFactory {
                 BaseRequirement req = upgradeReq.getRequirement();
                 if (req.getId() == null) {
                     req = rdq.getRequirementRepository().create(req);
-                    LOGGER.fine("Created BaseRequirement with ID: " + req.getId());
                 }
                 savedRequirements.add(req);
             }
-            LOGGER.info("Saved " + savedRequirements.size() + " BaseRequirement entities");
 
             // Fetch fresh rank again before modifying to ensure we have the latest version
             rank = findRankByIdentifier(rankId);
@@ -656,7 +665,7 @@ public class RankSystemFactory {
 
             // Double-check requirements haven't been added by another thread
             if (!rank.getUpgradeRequirements().isEmpty()) {
-                LOGGER.info("Rank '" + rankId + "' already has requirements (race condition detected). Skipping.");
+                LOGGER.fine("Rank '" + rankId + "' already has requirements (race condition detected)");
                 return;
             }
 
@@ -671,16 +680,14 @@ public class RankSystemFactory {
                 );
                 newUpgradeReq.setDisplayOrder(template.getDisplayOrder());
                 // Don't call rank.addUpgradeRequirement() - already done in constructor!
-                LOGGER.fine("Added requirement " + (i+1) + " to rank: " + rankId);
             }
 
             // Single update at the end - this persists the rank with all its requirements
-            LOGGER.info("About to update rank " + rankId + " with " + rank.getUpgradeRequirements().size() + " requirements");
             try {
                 rdq.getRankRepository().update(rank);
-                LOGGER.info("Update completed for rank: " + rankId);
+                LOGGER.fine("Added " + newRequirements.size() + " requirements to rank: " + rankId);
             } catch (jakarta.persistence.OptimisticLockException ole) {
-                LOGGER.warning("OptimisticLockException for rank " + rankId + ". This usually means the rank was modified elsewhere. Retrying once...");
+                LOGGER.fine("OptimisticLockException for rank " + rankId + ", retrying...");
                 
                 // Retry once with a fresh fetch
                 rank = findRankByIdentifier(rankId);
@@ -697,29 +704,8 @@ public class RankSystemFactory {
                         // Don't call addUpgradeRequirement - already done in constructor
                     }
                     rdq.getRankRepository().update(rank);
-                    LOGGER.info("Retry successful for rank: " + rankId);
-                } else {
-                    LOGGER.warning("Retry skipped - rank already has requirements or not found: " + rankId);
+                    LOGGER.fine("Retry successful for rank: " + rankId);
                 }
-            }
-            
-            // Verify the requirements were saved by fetching fresh from DB
-            RRank verifyRank = findRankByIdentifier(rankId);
-            if (verifyRank != null) {
-                int savedCount = verifyRank.getUpgradeRequirements().size();
-                LOGGER.info("Verification: rank " + rankId + " now has " + savedCount + " requirements in database (expected: " + newRequirements.size() + ")");
-                
-                // Log the IDs of saved requirements
-                if (savedCount > 0) {
-                    String ids = verifyRank.getUpgradeRequirements().stream()
-                        .map(r -> String.valueOf(r.getId()))
-                        .collect(Collectors.joining(", "));
-                    LOGGER.info("  Requirement IDs in database: " + ids);
-                } else {
-                    LOGGER.severe("  WARNING: No requirements found in database after save! This indicates a transaction rollback.");
-                }
-            } else {
-                LOGGER.severe("  WARNING: Could not verify rank after save!");
             }
 
         } catch (Exception e) {
@@ -741,9 +727,8 @@ public class RankSystemFactory {
             }
 
             var configRewards = config.getRewards();
-            LOGGER.info("updateRankRewards for '" + rankId + "': config has " + 
-                (configRewards != null ? configRewards.size() : 0) + " rewards: " + 
-                (configRewards != null ? configRewards.keySet() : "null"));
+            LOGGER.fine("Processing rewards for '" + rankId + "': " + 
+                (configRewards != null ? configRewards.size() : 0) + " configured");
 
             if (configRewards == null || configRewards.isEmpty()) {
                 // Clear existing rewards only if there are any
@@ -751,7 +736,6 @@ public class RankSystemFactory {
                     rank.getRewards().clear();
                     rdq.getRankRepository().update(rank);
                 }
-                LOGGER.info("No rewards found for rank: " + rankId);
                 return;
             }
 
@@ -764,7 +748,6 @@ public class RankSystemFactory {
                     rank.getRewards().clear();
                     rdq.getRankRepository().update(rank);
                 }
-                LOGGER.info("No valid rewards parsed for rank: " + rankId);
                 return;
             }
 
@@ -795,9 +778,7 @@ public class RankSystemFactory {
 
                 // Final update to persist all new rewards
                 rdq.getRankRepository().update(rank);
-                LOGGER.info("Updated " + newRewards.size() + " rewards for rank: " + rankId);
-            } else {
-                LOGGER.info("Rewards unchanged for rank: " + rankId);
+                LOGGER.fine("Added " + newRewards.size() + " rewards to rank: " + rankId);
             }
 
         } catch (Exception e) {

@@ -40,28 +40,30 @@ tasks {
     }
 }
 
-publishing {
-    publications {
-        named<MavenPublication>("maven") {
-            artifactId = "jexdependency"
-            pom {
-                url.set("https://github.com/jexcellence/JEDependency")
-                inceptionYear.set("2025")
-                developers {
-                    developer {
-                        id.set("jexcellence")
-                        name.set("JExcellence")
-                        email.set("contact@jexcellence.de")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/jexcellence/JEDependency.git")
-                    developerConnection.set("scm:git:ssh://github.com/jexcellence/JEDependency.git")
+afterEvaluate {
+    publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                artifactId = "jexdependency"
+                pom {
                     url.set("https://github.com/jexcellence/JEDependency")
-                }
-                issueManagement {
-                    system.set("GitHub Issues")
-                    url.set("https://github.com/jexcellence/JEDependency/issues")
+                    inceptionYear.set("2025")
+                    developers {
+                        developer {
+                            id.set("jexcellence")
+                            name.set("JExcellence")
+                            email.set("contact@jexcellence.de")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:git://github.com/jexcellence/JEDependency.git")
+                        developerConnection.set("scm:git:ssh://github.com/jexcellence/JEDependency.git")
+                        url.set("https://github.com/jexcellence/JEDependency")
+                    }
+                    issueManagement {
+                        system.set("GitHub Issues")
+                        url.set("https://github.com/jexcellence/JEDependency/issues")
+                    }
                 }
             }
         }

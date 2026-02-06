@@ -34,6 +34,20 @@ ranks:
     icon:
       type: "BOW"
     nextRanks: ["hunter"]
+    rewards:
+      welcome_kit:
+        type: "ITEM"
+        items:
+          - material: "BOW"
+            amount: 1
+          - material: "ARROW"
+            amount: 64
+          - material: "LEATHER"
+            amount: 8
+      starting_currency:
+        type: "CURRENCY"
+        amount: 50
+        currency: "coins"
 
   hunter:
     tier: 2
@@ -46,6 +60,21 @@ ranks:
       type: "CROSSBOW"
     previousRanks: ["scout"]
     nextRanks: ["tracker"]
+    rewards:
+      hunter_reward:
+        type: "CURRENCY"
+        amount: 150
+        currency: "coins"
+      hunter_gear:
+        type: "ITEM"
+        items:
+          - material: "BOW"
+            amount: 1
+          - material: "ARROW"
+            amount: 32
+      hunter_experience:
+        type: "EXPERIENCE"
+        amount: 500
     requirements:
       hunting_gear:
         icon:
@@ -84,6 +113,21 @@ ranks:
       type: "SPECTRAL_ARROW"
     previousRanks: ["hunter"]
     nextRanks: ["warden"]
+    rewards:
+      tracker_reward:
+        type: "CURRENCY"
+        amount: 300
+        currency: "coins"
+      tracker_tools:
+        type: "ITEM"
+        items:
+          - material: "CROSSBOW"
+            amount: 1
+          - material: "SPECTRAL_ARROW"
+            amount: 16
+      tracker_experience:
+        type: "EXPERIENCE"
+        amount: 1000
     requirements:
       tracker_gear:
         icon:
@@ -128,6 +172,21 @@ ranks:
       type: "TRIDENT"
     previousRanks: ["tracker"]
     nextRanks: ["beastmaster"]
+    rewards:
+      warden_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      warden_equipment:
+        type: "ITEM"
+        items:
+          - material: "TRIDENT"
+            amount: 1
+          - material: "TURTLE_HELMET"
+            amount: 1
+      warden_experience:
+        type: "EXPERIENCE"
+        amount: 1500
     requirements:
       warden_gear:
         icon:
@@ -172,6 +231,23 @@ ranks:
     icon:
       type: "DRAGON_HEAD"
     previousRanks: ["warden"]
+    rewards:
+      beastmaster_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      ultimate_ranger:
+        type: "ITEM"
+        items:
+          - material: "DRAGON_HEAD"
+            amount: 1
+          - material: "ELYTRA"
+            amount: 1
+          - material: "HEART_OF_THE_SEA"
+            amount: 1
+      beastmaster_experience:
+        type: "EXPERIENCE"
+        amount: 3000
     requirements:
       ultimate_ranger:
         icon:

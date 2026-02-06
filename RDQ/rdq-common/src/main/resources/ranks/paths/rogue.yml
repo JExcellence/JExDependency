@@ -34,6 +34,18 @@ ranks:
     icon:
       type: "LEATHER_BOOTS"
     nextRanks: ["thief"]
+    rewards:
+      welcome_kit:
+        type: "ITEM"
+        items:
+          - material: "LEATHER_BOOTS"
+            amount: 1
+          - material: "LEATHER_LEGGINGS"
+            amount: 1
+      starting_currency:
+        type: "CURRENCY"
+        amount: 50
+        currency: "coins"
 
   thief:
     tier: 2
@@ -46,6 +58,19 @@ ranks:
       type: "CHAINMAIL_BOOTS"
     previousRanks: ["pickpocket"]
     nextRanks: ["assassin"]
+    rewards:
+      thief_reward:
+        type: "CURRENCY"
+        amount: 150
+        currency: "coins"
+      thief_gear:
+        type: "ITEM"
+        items:
+          - material: "CHAINMAIL_BOOTS"
+            amount: 1
+      thief_experience:
+        type: "EXPERIENCE"
+        amount: 500
     requirements:
       thief_gear:
         icon:
@@ -84,6 +109,21 @@ ranks:
       type: "IRON_BOOTS"
     previousRanks: ["thief"]
     nextRanks: ["shadow"]
+    rewards:
+      assassin_reward:
+        type: "CURRENCY"
+        amount: 300
+        currency: "coins"
+      assassin_tools:
+        type: "ITEM"
+        items:
+          - material: "IRON_SWORD"
+            amount: 1
+          - material: "IRON_BOOTS"
+            amount: 1
+      assassin_experience:
+        type: "EXPERIENCE"
+        amount: 1000
     requirements:
       assassin_gear:
         icon:
@@ -128,6 +168,23 @@ ranks:
       type: "DIAMOND_BOOTS"
     previousRanks: ["assassin"]
     nextRanks: ["phantom"]
+    rewards:
+      shadow_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      shadow_equipment:
+        type: "ITEM"
+        items:
+          - material: "DIAMOND_BOOTS"
+            amount: 1
+          - material: "DIAMOND_SWORD"
+            amount: 1
+          - material: "ENDER_PEARL"
+            amount: 8
+      shadow_experience:
+        type: "EXPERIENCE"
+        amount: 1500
     requirements:
       shadow_gear:
         icon:
@@ -172,6 +229,23 @@ ranks:
     icon:
       type: "NETHERITE_BOOTS"
     previousRanks: ["shadow"]
+    rewards:
+      phantom_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      ultimate_stealth:
+        type: "ITEM"
+        items:
+          - material: "NETHERITE_BOOTS"
+            amount: 1
+          - material: "NETHERITE_SWORD"
+            amount: 1
+          - material: "ELYTRA"
+            amount: 1
+      phantom_experience:
+        type: "EXPERIENCE"
+        amount: 3000
     requirements:
       ultimate_rogue:
         icon:

@@ -34,6 +34,18 @@ ranks:
     icon:
       type: "APPLE"
     nextRanks: ["healer"]
+    rewards:
+      welcome_kit:
+        type: "ITEM"
+        items:
+          - material: "APPLE"
+            amount: 16
+          - material: "BREAD"
+            amount: 16
+      starting_currency:
+        type: "CURRENCY"
+        amount: 50
+        currency: "coins"
 
   healer:
     tier: 2
@@ -46,6 +58,19 @@ ranks:
       type: "GOLDEN_APPLE"
     previousRanks: ["acolyte"]
     nextRanks: ["priest"]
+    rewards:
+      healer_reward:
+        type: "CURRENCY"
+        amount: 150
+        currency: "coins"
+      healing_bonus:
+        type: "ITEM"
+        items:
+          - material: "GOLDEN_APPLE"
+            amount: 5
+      healer_experience:
+        type: "EXPERIENCE"
+        amount: 500
     requirements:
       healing_supplies:
         icon:
@@ -81,6 +106,21 @@ ranks:
       type: "ENCHANTED_GOLDEN_APPLE"
     previousRanks: ["healer"]
     nextRanks: ["bishop"]
+    rewards:
+      priest_reward:
+        type: "CURRENCY"
+        amount: 300
+        currency: "coins"
+      priest_blessing:
+        type: "ITEM"
+        items:
+          - material: "ENCHANTED_GOLDEN_APPLE"
+            amount: 2
+          - material: "GOLDEN_APPLE"
+            amount: 10
+      priest_experience:
+        type: "EXPERIENCE"
+        amount: 1000
     requirements:
       priest_supplies:
         icon:
@@ -122,6 +162,21 @@ ranks:
       type: "TOTEM_OF_UNDYING"
     previousRanks: ["priest"]
     nextRanks: ["high_priest"]
+    rewards:
+      bishop_reward:
+        type: "CURRENCY"
+        amount: 500
+        currency: "coins"
+      bishop_protection:
+        type: "ITEM"
+        items:
+          - material: "TOTEM_OF_UNDYING"
+            amount: 1
+          - material: "ENCHANTED_GOLDEN_APPLE"
+            amount: 5
+      bishop_experience:
+        type: "EXPERIENCE"
+        amount: 1500
     requirements:
       bishop_supplies:
         icon:
@@ -163,6 +218,23 @@ ranks:
     icon:
       type: "BEACON"
     previousRanks: ["bishop"]
+    rewards:
+      high_priest_reward:
+        type: "CURRENCY"
+        amount: 1000
+        currency: "coins"
+      divine_blessing:
+        type: "ITEM"
+        items:
+          - material: "BEACON"
+            amount: 1
+          - material: "TOTEM_OF_UNDYING"
+            amount: 3
+          - material: "ENCHANTED_GOLDEN_APPLE"
+            amount: 10
+      high_priest_experience:
+        type: "EXPERIENCE"
+        amount: 3000
     requirements:
       ultimate_healer:
         icon:

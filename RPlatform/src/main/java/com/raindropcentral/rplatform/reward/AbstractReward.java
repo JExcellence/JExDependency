@@ -2,6 +2,7 @@ package com.raindropcentral.rplatform.reward;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.raindropcentral.rplatform.reward.impl.*;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -12,12 +13,12 @@ import java.util.concurrent.CompletableFuture;
     property = "type"
 )
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = com.raindropcentral.rplatform.reward.impl.ItemReward.class, name = "ITEM"),
-    @JsonSubTypes.Type(value = com.raindropcentral.rplatform.reward.impl.CurrencyReward.class, name = "CURRENCY"),
-    @JsonSubTypes.Type(value = com.raindropcentral.rplatform.reward.impl.ExperienceReward.class, name = "EXPERIENCE"),
-    @JsonSubTypes.Type(value = com.raindropcentral.rplatform.reward.impl.CommandReward.class, name = "COMMAND"),
-    @JsonSubTypes.Type(value = com.raindropcentral.rplatform.reward.impl.CompositeReward.class, name = "COMPOSITE"),
-    @JsonSubTypes.Type(value = com.raindropcentral.rplatform.reward.impl.ChoiceReward.class, name = "CHOICE")
+    @JsonSubTypes.Type(value = ItemReward.class, name = "ITEM"),
+    @JsonSubTypes.Type(value = CurrencyReward.class, name = "CURRENCY"),
+    @JsonSubTypes.Type(value = ExperienceReward.class, name = "EXPERIENCE"),
+    @JsonSubTypes.Type(value = CommandReward.class, name = "COMMAND"),
+    @JsonSubTypes.Type(value = CompositeReward.class, name = "COMPOSITE"),
+    @JsonSubTypes.Type(value = ChoiceReward.class, name = "CHOICE")
 })
 public abstract non-sealed class AbstractReward implements Reward {
 

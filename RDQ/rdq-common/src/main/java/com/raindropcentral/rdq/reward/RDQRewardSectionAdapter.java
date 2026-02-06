@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.reward;
 
+import com.raindropcentral.rdq.config.utility.RewardSection;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import com.raindropcentral.rplatform.reward.config.RewardSectionAdapter;
 import com.raindropcentral.rplatform.reward.impl.*;
@@ -11,12 +12,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public final class RDQRewardSectionAdapter implements RewardSectionAdapter<BaseRewardSection> {
+public final class RDQRewardSectionAdapter implements RewardSectionAdapter<RewardSection> {
 
     private static final Logger LOGGER = Logger.getLogger(RDQRewardSectionAdapter.class.getName());
 
     @Override
-    public @Nullable AbstractReward convert(@NotNull BaseRewardSection section, @Nullable Map<String, Object> context) {
+    public @Nullable AbstractReward convert(@NotNull RewardSection section, @Nullable Map<String, Object> context) {
         String type = section.getType();
         if (type == null) {
             LOGGER.warning("Reward type not specified");
@@ -43,27 +44,27 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<BaseR
         }
     }
 
-    private ItemReward convertItemReward(BaseRewardSection section) {
+    private ItemReward convertItemReward(RewardSection section) {
         if (section.getItem() == null) {
             throw new IllegalArgumentException("Item reward requires 'item' field");
         }
         return new ItemReward(section.getItem());
     }
 
-    private CurrencyReward convertCurrencyReward(BaseRewardSection section) {
+    private CurrencyReward convertCurrencyReward(RewardSection section) {
         String currencyId = section.getCurrencyId() != null ? section.getCurrencyId() : "vault";
         double amount = section.getAmount() != null ? section.getAmount() : 0.0;
         return new CurrencyReward(currencyId, amount);
     }
 
-    private ExperienceReward convertExperienceReward(BaseRewardSection section) {
+    private ExperienceReward convertExperienceReward(RewardSection section) {
         int amount = section.getExperienceAmount() != null ? section.getExperienceAmount() : 0;
         String typeStr = section.getExperienceType() != null ? section.getExperienceType() : "POINTS";
         ExperienceReward.ExperienceType type = ExperienceReward.ExperienceType.valueOf(typeStr.toUpperCase());
         return new ExperienceReward(amount, type);
     }
 
-    private CommandReward convertCommandReward(BaseRewardSection section) {
+    private CommandReward convertCommandReward(RewardSection section) {
         if (section.getCommand() == null) {
             throw new IllegalArgumentException("Command reward requires 'command' field");
         }
@@ -72,14 +73,14 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<BaseR
         return new CommandReward(section.getCommand(), executeAsPlayer, delayTicks);
     }
 
-    private CompositeReward convertCompositeReward(BaseRewardSection section) {
+    private CompositeReward convertCompositeReward(RewardSection section) {
         if (section.getRewards() == null || section.getRewards().isEmpty()) {
             throw new IllegalArgumentException("Composite reward requires 'rewards' list");
         }
 
         List<AbstractReward> rewards = new ArrayList<>();
         for (var rewardSection : section.getRewards()) {
-            AbstractReward reward = convert((BaseRewardSection) rewardSection, null);
+            AbstractReward reward = convert(rewardSection, null);
             if (reward != null) {
                 rewards.add(reward);
             }
@@ -89,14 +90,14 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<BaseR
         return new CompositeReward(rewards, continueOnError);
     }
 
-    private ChoiceReward convertChoiceReward(BaseRewardSection section) {
+    private ChoiceReward convertChoiceReward(RewardSection section) {
         if (section.getChoices() == null || section.getChoices().isEmpty()) {
             throw new IllegalArgumentException("Choice reward requires 'choices' list");
         }
 
         List<AbstractReward> choices = new ArrayList<>();
         for (var choiceSection : section.getChoices()) {
-            AbstractReward choice = convert((BaseRewardSection) choiceSection, null);
+            AbstractReward choice = convert(choiceSection, null);
             if (choice != null) {
                 choices.add(choice);
             }
@@ -110,7 +111,7 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<BaseR
         return new ChoiceReward(choices, minimumRequired, maximumRequired, allowMultipleSelections);
     }
 
-    private PermissionReward convertPermissionReward(BaseRewardSection section) {
+    private PermissionReward convertPermissionReward(RewardSection section) {
         if (section.getPermissions() == null || section.getPermissions().isEmpty()) {
             throw new IllegalArgumentException("Permission reward requires 'permissions' field");
         }

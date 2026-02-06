@@ -14,21 +14,23 @@ dependencies {
     compileOnly(libs.bundles.jeconfig)
 }
 
-publishing {
-    publications {
-        named<MavenPublication>("maven") {
-            artifactId = "jexcommand"
-            pom {
-                url.set("https://github.com/jexcellence")
-                developers {
-                    developer {
-                        id.set("jexcellence")
-                        name.set("JExcellence")
-                        email.set("contact@jexcellence.de")
-                    }
-                }
-                scm {
+afterEvaluate {
+    publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                artifactId = "jexcommand"
+                pom {
                     url.set("https://github.com/jexcellence")
+                    developers {
+                        developer {
+                            id.set("jexcellence")
+                            name.set("JExcellence")
+                            email.set("contact@jexcellence.de")
+                        }
+                    }
+                    scm {
+                        url.set("https://github.com/jexcellence")
+                    }
                 }
             }
         }

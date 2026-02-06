@@ -36,3 +36,13 @@ tasks.register("publishLocal") {
         println("✓ Published ${project.group}:jexeconomy-*:${project.version} to local Maven")
     }
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                artifactId = "jexeconomy"
+            }
+        }
+    }
+}

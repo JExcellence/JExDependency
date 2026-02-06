@@ -69,6 +69,10 @@ public class RankRequirementsJourneyView extends BaseView {
     // Overflow slots (row 4) for 5+ requirements
     private static final int[] OVERFLOW_SLOTS = {37, 39, 41, 43};
     private static final int[] OVERFLOW_CONNECTION_SLOTS = {38, 40, 42};
+    
+    // Reward slots (row 5) - displayed below requirements
+    private static final int[] REWARD_SLOTS = {46, 48, 50, 52};
+    private static final int REWARDS_LABEL_SLOT = 45;
 
     private RankRequirementProgressManager progressManager;
     private RequirementProgressRenderer progressRenderer;
@@ -163,6 +167,7 @@ public class RankRequirementsJourneyView extends BaseView {
             renderProgressBar(render, player, rank, rdqPlayer);
             renderOverallProgress(render, player, rank, rdqPlayer);
             renderRequirementCards(render, player, rank, rdqPlayer, isPreviewMode);
+            renderRewardCards(render, player, rank); // Add reward display
             renderClaimOrLockedButton(render, player, rank, rdqPlayer, isPreviewMode);
             
             // Start pulsing animation for ready requirements
@@ -622,5 +627,61 @@ public class RankRequirementsJourneyView extends BaseView {
                 .renderWith(() -> UnifiedBuilderFactory.item(Material.BARRIER)
                         .setName(Component.text("Error loading requirements"))
                         .build());
+    }
+
+    /**
+     * Renders reward cards showing what the player will receive upon claiming the rank.
+     */
+    private void renderRewardCards(
+            final @NotNull RenderContext render,
+            final @NotNull Player player,
+            final @NotNull RRank rank
+    ) {
+        try {
+            final var rewards = rank.getRewardsOrdered();
+            
+            // Render rewards label
+            render.slot(REWARDS_LABEL_SLOT)
+                    .renderWith(() -> UnifiedBuilderFactory.item(Material.GOLD_INGOT)
+                            .setName(this.i18n("rewards.label", player).build().component())
+                            .setLore(this.i18n("rewards.label_lore", player)
+                                    .withPlaceholder("count", String.valueOf(rewards.size()))
+                                    .build().children())
+                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                            .build());
+            
+            if (rewards.isEmpty()) {
+                // Show "no rewards" indicator
+                render.slot(REWARD_SLOTS[0])
+                        .renderWith(() -> com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer.createNoRewardsCard(player));
+                return;
+            }
+            
+            // Render up to 4 rewards
+            for (int i = 0; i < Math.min(4, rewards.size()); i++) {
+                final var reward = rewards.get(i);
+                final int slot = REWARD_SLOTS[i];
+                
+                render.slot(slot)
+                        .renderWith(() -> com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer.createCompactRewardCard(reward, player))
+                        .onClick(clickContext -> {
+                            this.i18n(reward.getReward().getDescriptionKey(), player).withPlaceholder("reward_type", reward.getReward().getTypeId()).build().sendMessage();
+                        });
+            }
+            
+            // If more than 4 rewards, show indicator
+            if (rewards.size() > 4) {
+                render.slot(REWARD_SLOTS[3])
+                        .renderWith(() -> UnifiedBuilderFactory.item(Material.CHEST)
+                                .setName(this.i18n("rewards.more", player)
+                                        .withPlaceholder("count", String.valueOf(rewards.size() - 3))
+                                        .build().component())
+                                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                .build());
+            }
+            
+        } catch (final Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to render reward cards", e);
+        }
     }
 }

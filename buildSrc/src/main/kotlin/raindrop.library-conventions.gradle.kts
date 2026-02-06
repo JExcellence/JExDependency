@@ -5,28 +5,34 @@ plugins {
     id("raindrop.java-conventions")
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            from(components["java"])
-            
-            pom {
-                name.set(project.name)
-                description.set(project.description)
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                from(components["java"])
                 
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                        distribution.set("repo")
+                groupId = project.group.toString()
+                artifactId = project.name
+                version = project.version.toString()
+                
+                pom {
+                    name.set(project.name)
+                    description.set(project.description)
+                    
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/MIT")
+                            distribution.set("repo")
+                        }
                     }
                 }
             }
         }
-    }
-    
-    repositories {
-        mavenLocal()
+        
+        repositories {
+            mavenLocal()
+        }
     }
 }
 
