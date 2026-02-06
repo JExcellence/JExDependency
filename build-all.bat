@@ -50,9 +50,9 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 
 echo [6/8] Building and publishing JExEconomy-common...
-call gradlew :JExEconomy:jexeconomy-common:publishToMavenLocal
+call gradlew :JExEconomy:publishLocal
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: JExEconomy-common build failed!
+    echo ERROR: JExEconomy build failed!
     pause
     exit /b %ERRORLEVEL%
 )

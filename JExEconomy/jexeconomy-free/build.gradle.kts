@@ -5,6 +5,7 @@ plugins {
     id("raindrop.dependencies-yml")
 }
 
+group = "de.jexcellence.economy"
 version = "2.0.0"
 
 dependenciesYml {
@@ -77,16 +78,24 @@ tasks.test {
     useJUnitPlatform()
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenShadow") {
-            from(components["shadow"])
-            groupId = project.group.toString()
-            artifactId = "jexeconomy-free"
-            version = project.version.toString()
-            pom {
-                name.set("JExEconomy Free")
-                description.set("JExEconomy Free Edition")
+afterEvaluate {
+    publishing {
+        publications {
+            named<MavenPublication>("maven") {
+                groupId = "de.jexcellence.economy"
+                artifactId = "jexeconomy-free-shadow"
+                version = "2.0.0"
+                artifact(tasks.named("shadowJar"))
+            }
+            create<MavenPublication>("mavenShadow") {
+                from(components["shadow"])
+                groupId = "de.jexcellence.economy"
+                artifactId = "jexeconomy-free"
+                version = "2.0.0"
+                pom {
+                    name.set("JExEconomy Free")
+                    description.set("JExEconomy Free Edition")
+                }
             }
         }
     }

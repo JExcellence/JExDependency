@@ -28,9 +28,9 @@ tasks.register("publishLocal") {
     group = "publishing"
     description = "Publishes all modules to local Maven repository"
     dependsOn(
-        ":JExEconomy:jexeconomy-common:publishToMavenLocal",
-        ":JExEconomy:jexeconomy-free:publishToMavenLocal",
-        ":JExEconomy:jexeconomy-premium:publishToMavenLocal",
+        ":JExEconomy:jexeconomy-common:publishMavenPublicationToMavenLocal",
+        ":JExEconomy:jexeconomy-free:publishMavenShadowPublicationToMavenLocal",
+        ":JExEconomy:jexeconomy-premium:publishMavenShadowPublicationToMavenLocal",
     )
     doLast {
         println("✓ Published ${project.group}:jexeconomy-*:${project.version} to local Maven")
