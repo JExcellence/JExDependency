@@ -60,7 +60,7 @@ public class RDT extends JavaPlugin {
     @Override
     public void onEnable() {
         this.platformType = PlatformAPIFactory.detectPlatformType();
-        this.scheduler = ISchedulerAdapter.create(this, this.platformType);
+        this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
 
         try {
