@@ -106,6 +106,15 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
         }
     }
 
+    @Override
+    public void runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
+        final Object global = getAsyncScheduler();
+        if (!tryInvoke(global, "runAtFixedRate", new Class[]{JavaPlugin.class, Consumer.class, long.class, long.class},
+                new Object[]{plugin, toConsumer(task), delayTicks, periodTicks})) {
+            runDelayed(() -> runRepeatingAsync(task, periodTicks, periodTicks), delayTicks);
+        }
+    }
+
     /**
      * {@inheritDoc}
      * <p>
@@ -194,6 +203,16 @@ public class FoliaISchedulerImpl implements ISchedulerAdapter {
             return m.invoke(null);
         } catch (Throwable t) {
             LOG.log(Level.SEVERE, "[Scheduler/Folia] RegionScheduler not available", t);
+            return null;
+        }
+    }
+
+    private Object getAsyncScheduler() {
+        try {
+            final Method m = Bukkit.class.getMethod("getAsyncScheduler");
+            return m.invoke(null);
+        } catch (Throwable t) {
+            LOG.log(Level.SEVERE, "[Scheduler/Folia] AsyncScheduler not available", t);
             return null;
         }
     }

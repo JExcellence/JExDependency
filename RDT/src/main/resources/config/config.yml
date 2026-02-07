@@ -1,0 +1,12 @@
+founding_cost: 1000
+refund_rate: 0.75
+base_claim_cost: 100
+claim_rate: 1.5
+claim_limit: 20
+tax_base: 100
+tax_rate: 0.7
+tax_interval: 86400
+# ISO 8061 start time for taxation
+first_tax_tick: "2025-12-28T08:00:00.000Z"
+# Grace period for first taxation after town creation (in ticks). Default 1 hour
+tax_grace_period: 1200

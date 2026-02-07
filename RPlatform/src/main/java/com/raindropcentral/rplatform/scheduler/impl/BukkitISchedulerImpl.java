@@ -86,6 +86,11 @@ public class BukkitISchedulerImpl implements ISchedulerAdapter {
         Bukkit.getScheduler().runTaskTimer(plugin, safe(task), delayTicks, periodTicks);
     }
 
+    @Override
+    public void runRepeatingAsync(@NotNull Runnable task, long delayTicks, long periodTicks) {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, safe(task), delayTicks, periodTicks);
+    }
+
     /**
      * {@inheritDoc}
      * <p>

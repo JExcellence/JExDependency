@@ -23,7 +23,7 @@ val versionBuild: String by project.rootProject.extra { findProperty("rcore.vers
 val rcoreVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
 
 group = "com.raindropcentral.core"
-version = rcoreVersion
+version = "2.0.0"
 description = "Core plugin providing shared functionality for Raindrop plugins"
 
 dependencies {

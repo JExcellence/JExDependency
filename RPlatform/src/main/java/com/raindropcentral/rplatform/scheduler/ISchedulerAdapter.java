@@ -77,6 +77,8 @@ public interface ISchedulerAdapter {
      */
     void runRepeating(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
 
+    void runRepeatingAsync(final @NotNull Runnable task, final long delayTicks, final long periodTicks);
+
     /**
      * Executes {@code task} in the context of {@code entity}'s scheduler if the platform supports it.
      * <p>
