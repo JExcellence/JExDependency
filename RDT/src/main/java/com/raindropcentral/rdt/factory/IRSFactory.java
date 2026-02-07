@@ -42,13 +42,13 @@ public class IRSFactory {
             }
             // Town has never been taxed
 
-            this.plugin.getScheduler().runRepeatingAsync(
+            this.plugin.getPlatform().getScheduler().runRepeating(
                     () -> tax(rTown),
                     this.plugin.getDefaultConfig().getGracePeriod(),
                     this.plugin.getDefaultConfig().getTaxInterval().longValue()
             );
         }
-        this.plugin.getScheduler().runRepeatingAsync(
+        this.plugin.getScheduler().runRepeating(
                 () -> tax(rTown),
                 System.currentTimeMillis() >
                         (rTown.getLast_taxed() + this.plugin.getDefaultConfig().getTaxInterval()) ?

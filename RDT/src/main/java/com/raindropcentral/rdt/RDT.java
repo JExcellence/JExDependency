@@ -18,7 +18,6 @@ import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
-import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -34,27 +33,16 @@ import java.util.concurrent.Executors;
 
 public class RDT extends JavaPlugin {
 
-    @Getter
     private final JavaPlugin plugin;
-    @Getter
     private final String edition;
-    @Getter
     private ExecutorService executor;
-    @Getter
     private final RPlatform platform;
-    @Getter
     private EntityManagerFactory entityManagerFactory;
-    @Getter
     private RRTown townRepository;
-    @Getter
     private RRDTPlayer playerRepository;
-    @Getter
     private BossBarFactory bossBarFactory;
-    @Getter
     private ISchedulerAdapter scheduler;
-    @Getter
     private PlatformType platformType;
-    @Getter
     private IRSFactory irsFactory;
 
     private Object economyInstance;
@@ -185,4 +173,51 @@ public class RDT extends JavaPlugin {
         return (net.milkbowl.vault.economy.Economy) economyInstance;
     }
 
+    public JavaPlugin getPlugin() {
+        return plugin;
+    }
+
+    public String getEdition() {
+        return edition;
+    }
+
+    public ExecutorService getExecutor() {
+        return executor;
+    }
+
+    public RPlatform getPlatform() {
+        return platform;
+    }
+
+    public EntityManagerFactory getEntityManagerFactory() {
+        return entityManagerFactory;
+    }
+
+    public RRTown getTownRepository() {
+        return townRepository;
+    }
+
+    public RRDTPlayer getPlayerRepository() {
+        return playerRepository;
+    }
+
+    public BossBarFactory getBossBarFactory() {
+        return bossBarFactory;
+    }
+
+    public ISchedulerAdapter getScheduler() {
+        return scheduler;
+    }
+
+    public PlatformType getPlatformType() {
+        return platformType;
+    }
+
+    public IRSFactory getIrsFactory() {
+        return irsFactory;
+    }
+
+    public Object getEconomyInstance() {
+        return economyInstance;
+    }
 }

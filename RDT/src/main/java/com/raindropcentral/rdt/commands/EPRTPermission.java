@@ -1,7 +1,6 @@
 package com.raindropcentral.rdt.commands;
 
 import de.jexcellence.evaluable.section.IPermissionNode;
-import lombok.Getter;
 
 /**
  * Permission nodes used by the primary player command ({@code /prt}).
@@ -10,7 +9,7 @@ import lombok.Getter;
  * and a {@code fallbackNode} string that represents the default Bukkit permission
  * when no explicit mapping is provided.
  */
-@Getter
+
 public enum EPRTPermission implements IPermissionNode{
     /** Generic permission to use the base command and tab completion. */
     COMMAND("command","raindroptowns.comamnd"),
@@ -52,5 +51,15 @@ public enum EPRTPermission implements IPermissionNode{
     EPRTPermission(String internalName, String fallbackNode){
         this.internalName = internalName;
         this.fallbackNode = fallbackNode;
+    }
+
+    @Override
+    public String getInternalName() {
+        return this.internalName;
+    }
+
+    @Override
+    public String getFallbackNode() {
+        return this.fallbackNode;
     }
 }

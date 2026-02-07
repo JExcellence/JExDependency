@@ -3,64 +3,39 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     id("raindrop.shadow-conventions")
     id("raindrop.dependencies-yml")
-    `maven-publish`
-}
-
-// Configure runtime dependencies.yml generation
-dependenciesYml {
-    usePaperDependencies()
 }
 
 group = "com.raindropcentral.rdt"
 version = "1.0.0"
 description = "Core plugin providing shared functionality for Raindrop plugins"
 
+dependenciesYml {
+    usePaperDependencies()
+    generatePaperVariant.set(true)
+    generateSpigotVariant.set(true)
+}
+
 dependencies {
     compileOnly(libs.paper.api)
 
-    compileOnly(libs.adventure.api)
-    compileOnly(libs.adventure.minimessage)
-    compileOnly(libs.adventure.serializer.legacy)
-    compileOnly(libs.adventure.serializer.json)
-    compileOnly(libs.adventure.serializer.plain)
-    compileOnly(libs.adventure.platform.bukkit)
-
-    compileOnly(libs.folialib)
-    compileOnly(libs.placeholderapi)
-    compileOnly(libs.vault.api) { isTransitive = false }
-    compileOnly(libs.luckperms.api)
-
-    compileOnly("com.raindropcentral.core:rcore:2.0.0")
-
-    // Logging
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
 
-    // DB (compileOnly - provided by JExHibernate)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
-
-    // Caching & JSON
-    compileOnly(libs.caffeine)
-    compileOnly(libs.jackson.core)
-    compileOnly(libs.jackson.databind)
-    compileOnly(libs.jackson.annotations)
-    compileOnly(libs.jackson.jsr310)
-
-    // Version compatibility
-    compileOnly(libs.xseries)
     compileOnly(libs.jehibernate)
+    compileOnly(libs.adventure.platform.bukkit)
+    compileOnly(libs.rplatform)
 
-    // Internal libraries to shade
     implementation(libs.bundles.jexcellence) {
-        exclude(group = "de.jexcellence.hibernate")
         isTransitive = false
+        exclude(group = "de.jexcellence.hibernate")
     }
     implementation(libs.bundles.jeconfig) { isTransitive = false }
-
-    // Inventory framework
     compileOnly(libs.bundles.inventory)
+    compileOnly(libs.vault.api) { isTransitive = false }
+    compileOnly(libs.placeholderapi)
 }
 
 tasks.processResources {
@@ -78,9 +53,16 @@ tasks.processResources {
 
 tasks.named<ShadowJar>("shadowJar") {
     archiveBaseName.set("RDT")
-    archiveClassifier.set("")
+    archiveVersion.set(project.version.toString())
 
-    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+    // Jackson 3.x core (tools.jackson namespace)
+    relocate("tools.jackson", "com.raindropcentral.remapped.tools.jackson")
+    // NOTE: com.fasterxml is NOT relocated - Hibernate expects original Jackson paths
+
+    relocate("com.github.benmanes", "com.raindropcentral.remapped.com.github.benmanes")
+    relocate("me.devnatan.inventoryframework", "com.raindropcentral.remapped.me.devnatan.inventoryframework")
+    relocate("com.tcoded", "com.raindropcentral.remapped.com.tcoded")
+    relocate("com.cryptomorin.xseries", "com.raindropcentral.remapped.com.cryptomorin.xseries")
 
     configurations = listOf(project.configurations.getByName("runtimeClasspath"))
     mergeServiceFiles()
@@ -94,31 +76,19 @@ tasks.named<Jar>("jar") {
     enabled = false
 }
 
-publishing {
-    publications {
-        afterEvaluate {
-            publications.removeIf { it.name == "maven" }
-        }
-        create<MavenPublication>("shadow") {
-            artifact(tasks.named("shadowJar"))
-            artifact(tasks.named("sourcesJar"))
-            artifact(tasks.named("javadocJar"))
-            groupId = project.group.toString()
-            artifactId = "rdt"
-            version = project.version.toString()
-            pom {
-                name.set("RDT")
-                description.set(project.description)
+afterEvaluate {
+    publishing {
+        publications {
+            remove(findByName("maven"))
+            create<MavenPublication>("mavenShadow") {
+                from(components["shadow"])
+                groupId = "com.raindropcentral.rdt"
+                version = "2.0.0"
+                pom {
+                    name.set("RDT")
+                    description.set("RDT")
+                }
             }
         }
-    }
-}
-
-tasks.register("publishLocal") {
-    group = "publishing"
-    description = "Publishes RDT to local Maven repository"
-    dependsOn("publishShadowPublicationToMavenLocal")
-    doLast {
-        println("✓ Published ${project.group}:rdt:${project.version} to local Maven")
     }
 }
