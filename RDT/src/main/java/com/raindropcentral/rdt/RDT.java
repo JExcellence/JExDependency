@@ -8,6 +8,9 @@ import com.raindropcentral.rdt.database.repository.RRDTPlayer;
 import com.raindropcentral.rdt.database.repository.RRTown;
 import com.raindropcentral.rdt.factory.BossBarFactory;
 import com.raindropcentral.rdt.factory.IRSFactory;
+import com.raindropcentral.rdt.view.main.MainOverviewView;
+import com.raindropcentral.rdt.view.town.ServerTownsOverviewView;
+import com.raindropcentral.rdt.view.town.TownOverviewView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -18,6 +21,8 @@ import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
+import me.devnatan.inventoryframework.AnvilInputFeature;
+import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +36,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class RDT extends JavaPlugin {
 
     private final JavaPlugin plugin;
@@ -46,6 +52,7 @@ public class RDT extends JavaPlugin {
     private IRSFactory irsFactory;
 
     private Object economyInstance;
+    private ViewFrame viewFrame;
 
     public RDT(
             @NotNull JavaPlugin plugin,
@@ -74,6 +81,7 @@ public class RDT extends JavaPlugin {
         this.getLogger().info("Connecting to economy");
         initializePlugins();
         initializeCommands();
+        initializeViews();
         this.bossBarFactory = new BossBarFactory(this);
         // NO TAXATION WITHOUT REPRESENTATION
         this.irsFactory = new IRSFactory(this);
@@ -166,6 +174,19 @@ public class RDT extends JavaPlugin {
         }
 
         return new File(db, "hibernate.properties");
+    }
+
+    private void initializeViews() {
+        ViewFrame frame = ViewFrame
+                .create(plugin)
+                .install(AnvilInputFeature.AnvilInput)
+                .with(
+                        new MainOverviewView(),
+                        new ServerTownsOverviewView(),
+                        new TownOverviewView()
+                )
+                .disableMetrics();
+        this.viewFrame = frame.register();
     }
 
     public net.milkbowl.vault.economy.Economy getEco() {

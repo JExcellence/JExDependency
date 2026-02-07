@@ -20,8 +20,6 @@ import java.util.*;
 @Entity
 @Table(name = "towns")
 @SuppressWarnings({
-        "LombokGetterMayBeUsed",
-        "StringTemplateMigration",
         "DefaultAnnotationParam",
         "FieldCanBeLocal",
         "unused",
@@ -38,6 +36,9 @@ public class RTown extends BaseEntity {
     @Column(name = "mayor", unique = true, nullable = false)
     @Convert(converter = UUIDConverter.class)
     private UUID mayor;
+
+    @Column(name = "active", unique = false, nullable = false)
+    private boolean active;
 
     /** All chunks claimed by this town. */
     @OneToMany(
@@ -115,6 +116,7 @@ public class RTown extends BaseEntity {
         this.upkeep = 0;
         this.nexus_location = nexus_location;
         this.last_taxed = 0;
+        this.active = true;
     }
 
     /**
@@ -177,6 +179,10 @@ public class RTown extends BaseEntity {
 
     public void setLast_Taxed(long current_time) {
         this.last_taxed = current_time;
+    }
+
+    public boolean getActive() {
+        return this.active;
     }
 
     @Override
