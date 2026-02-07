@@ -2,14 +2,14 @@ package com.raindropcentral.rdq.config.utility;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.Map;
 
 public class RewardSection extends AConfigSection {
 
     private String type;
-    private ItemStack item;
+    private Map<String, Object> item;
     private String currencyId;
     private Double amount;
     private Integer experienceAmount;
@@ -35,7 +35,7 @@ public class RewardSection extends AConfigSection {
         return type;
     }
 
-    public ItemStack getItem() {
+    public Map<String, Object> getItem() {
         return item;
     }
 

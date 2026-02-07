@@ -201,11 +201,6 @@ public class RankPathOverview extends BaseView {
     ) {
 
         try {
-            LOGGER.log(
-                    Level.INFO,
-                    "Starting rank path overview render for player: " + player.getName()
-            );
-
             final RRankTree rankTree = this.selectedRankTree.get(renderContext);
             final boolean previewMode = this.isPreviewMode.get(renderContext);
 
@@ -240,11 +235,6 @@ public class RankPathOverview extends BaseView {
                     rankTree,
                     previewMode
             );
-
-            LOGGER.log(
-                    Level.INFO,
-                    "Rank path overview render completed successfully"
-            );
         } catch (
                 final Exception exception
         ) {
@@ -273,11 +263,6 @@ public class RankPathOverview extends BaseView {
             final RDQPlayer rdqPlayer = this.currentPlayer.get(renderContext);
             final RDQ plugin = this.rdq.get(renderContext);
             final IRankSystemService rankSystemService = plugin.getRankSystemService();
-
-            LOGGER.log(
-                    Level.FINE,
-                    "Pre-loading and caching rank data..."
-            );
 
             final Map<String, RankNode> rankHierarchy = this.buildRankNodeHierarchy(rankTree);
             this.cachedRankHierarchy.set(
@@ -348,10 +333,6 @@ public class RankPathOverview extends BaseView {
             this.dataRefreshTimestamp.set(
                     System.currentTimeMillis(),
                     renderContext
-            );
-            LOGGER.log(
-                    Level.FINE,
-                    "Data caching completed successfully"
             );
         } catch (final Exception exception) {
             LOGGER.log(

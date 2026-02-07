@@ -36,16 +36,20 @@ ranks:
     nextRanks: ["thief"]
     rewards:
       welcome_kit:
-        type: "ITEM"
-        items:
-          - material: "LEATHER_BOOTS"
-            amount: 1
-          - material: "LEATHER_LEGGINGS"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "LEATHER_BOOTS"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "LEATHER_LEGGINGS"
+              amount: 1
       starting_currency:
         type: "CURRENCY"
         amount: 50
-        currency: "coins"
+        currencyId: "coins"
 
   thief:
     tier: 2
@@ -62,15 +66,16 @@ ranks:
       thief_reward:
         type: "CURRENCY"
         amount: 150
-        currency: "coins"
+        currencyId: "coins"
       thief_gear:
         type: "ITEM"
-        items:
-          - material: "CHAINMAIL_BOOTS"
-            amount: 1
+        item:
+          material: "CHAINMAIL_BOOTS"
+          amount: 1
       thief_experience:
         type: "EXPERIENCE"
-        amount: 500
+        experienceAmount: 500
+        experienceType: "POINTS"
     requirements:
       thief_gear:
         icon:
@@ -113,17 +118,22 @@ ranks:
       assassin_reward:
         type: "CURRENCY"
         amount: 300
-        currency: "coins"
+        currencyId: "coins"
       assassin_tools:
-        type: "ITEM"
-        items:
-          - material: "IRON_SWORD"
-            amount: 1
-          - material: "IRON_BOOTS"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "IRON_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "IRON_BOOTS"
+              amount: 1
       assassin_experience:
         type: "EXPERIENCE"
-        amount: 1000
+        experienceAmount: 1000
+        experienceType: "POINTS"
     requirements:
       assassin_gear:
         icon:
@@ -172,19 +182,26 @@ ranks:
       shadow_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       shadow_equipment:
-        type: "ITEM"
-        items:
-          - material: "DIAMOND_BOOTS"
-            amount: 1
-          - material: "DIAMOND_SWORD"
-            amount: 1
-          - material: "ENDER_PEARL"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_BOOTS"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ENDER_PEARL"
+              amount: 8
       shadow_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       shadow_gear:
         icon:
@@ -233,19 +250,26 @@ ranks:
       phantom_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_stealth:
-        type: "ITEM"
-        items:
-          - material: "NETHERITE_BOOTS"
-            amount: 1
-          - material: "NETHERITE_SWORD"
-            amount: 1
-          - material: "ELYTRA"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_BOOTS"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ELYTRA"
+              amount: 1
       phantom_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_rogue:
         icon:

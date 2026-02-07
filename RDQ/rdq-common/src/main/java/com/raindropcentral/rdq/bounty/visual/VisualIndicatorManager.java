@@ -37,7 +37,6 @@ public class VisualIndicatorManager {
     private final Particle particleType;
     private final int particleIntervalTicks;
 
-    // Track players with active indicators
     private final Map<UUID, PlayerIndicatorState> activeIndicators = new ConcurrentHashMap<>();
 
     /**
@@ -48,11 +47,11 @@ public class VisualIndicatorManager {
     public VisualIndicatorManager(@NotNull RDQ rdq) {
         this(
             rdq,
-            "<gradient:#ff6b6b:#ff8e8e>💀 BOUNTY </gradient>", // More visible bounty prefix
-            "<gradient:#ff4444:#ff6666>", // Brighter red gradient for name
-            true, // Particles enabled by default
-            Particle.FLAME, // Default particle type
-            30 // Faster 1.5 second interval for more visibility
+            "<gradient:#ff6b6b:#ff8e8e>💀 BOUNTY </gradient>",
+            "<gradient:#ff4444:#ff6666>",
+            true,
+            Particle.FLAME,
+            30
         );
     }
 
@@ -84,8 +83,7 @@ public class VisualIndicatorManager {
         if (particlesEnabled) {
             startParticleTask();
         }
-        
-        // Start periodic refresh task to ensure indicators persist
+
         startPeriodicRefreshTask();
 
         LOGGER.info("VisualIndicatorManager initialized with particles: " + particlesEnabled);
@@ -104,43 +102,29 @@ public class VisualIndicatorManager {
     public void applyIndicators(@NotNull Player player) {
         UUID playerId = player.getUniqueId();
 
-        // Check if already applied - if so, refresh the indicators
         if (activeIndicators.containsKey(playerId)) {
-            LOGGER.fine("Refreshing existing indicators for " + player.getName());
-            // Remove and reapply to ensure fresh state
             removeIndicators(player);
         }
 
         try {
-            // Store original display name and tab list name
             Component originalDisplayName = player.displayName();
             Component originalTabListName = player.playerListName();
 
-            // Apply tab prefix (Requirement 14.1)
             Component prefixComponent = MINI_MESSAGE.deserialize(tabPrefix);
             Component playerNameComponent = Component.text(player.getName());
             Component newTabListName = prefixComponent.append(playerNameComponent);
             player.playerListName(newTabListName);
 
-            // Apply name color (Requirement 14.2)
             String coloredNameString = nameColor + player.getName();
             Component coloredName = MINI_MESSAGE.deserialize(coloredNameString);
             player.displayName(coloredName);
 
-            // Store state
             PlayerIndicatorState state = new PlayerIndicatorState(
                     originalDisplayName,
                     originalTabListName,
                     System.currentTimeMillis()
             );
             activeIndicators.put(playerId, state);
-
-            LOGGER.info("Applied visual indicators to " + player.getName() + " (bounty target)");
-            LOGGER.info("  - Original display name: " + originalDisplayName);
-            LOGGER.info("  - New display name: " + coloredName);
-            LOGGER.info("  - Original tab name: " + originalTabListName);
-            LOGGER.info("  - New tab name: " + newTabListName);
-            LOGGER.info("  - Active indicators count: " + activeIndicators.size());
 
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to apply visual indicators to " + player.getName(), e);
@@ -165,7 +149,6 @@ public class VisualIndicatorManager {
         }
 
         try {
-            // Restore original names
             player.displayName(state.originalDisplayName());
             player.playerListName(state.originalTabListName());
 
@@ -187,7 +170,6 @@ public class VisualIndicatorManager {
         if (player != null && player.isOnline()) {
             removeIndicators(player);
         } else {
-            // Just remove from tracking if player is offline
             PlayerIndicatorState removed = activeIndicators.remove(playerId);
             if (removed != null) {
                 LOGGER.fine("Removed indicator tracking for offline player " + playerId);
@@ -228,8 +210,8 @@ public class VisualIndicatorManager {
     private void startPeriodicRefreshTask() {
         rdq.getPlatform().getScheduler().runRepeating(
                 this::refreshIndicatorsForOnlinePlayers,
-                600L, // 30 second initial delay
-                600L  // 30 second interval
+                600L,
+                600L
         );
 
         LOGGER.info("Started periodic refresh task with 30 second interval");
@@ -245,10 +227,8 @@ public class VisualIndicatorManager {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null && player.isOnline()) {
                 try {
-                    // Check if the player still has the correct display name and tab list name
                     PlayerIndicatorState state = activeIndicators.get(playerId);
                     if (state != null) {
-                        // Reapply indicators if they seem to have been lost
                         String currentDisplayName = player.displayName().toString();
                         if (!currentDisplayName.contains("BOUNTY") && !currentDisplayName.contains("💀")) {
                             LOGGER.fine("Refreshing lost visual indicators for " + player.getName());
@@ -287,36 +267,33 @@ public class VisualIndicatorManager {
             particleCount++;
 
             try {
-                Location loc = player.getLocation().add(0, 2, 0); // Higher above player
-                
-                // Spawn main particle effect
+                Location loc = player.getLocation().add(0, 2, 0);
+
                 player.getWorld().spawnParticle(
                         particleType,
                         loc,
-                        12,  // More particles for visibility
-                        0.5, // Wider spread
-                        0.8, // Taller spread
-                        0.5, // Wider spread
-                        0.03 // Faster speed
+                        12,
+                        0.5,
+                        0.8,
+                        0.5,
+                        0.03
                 );
-                
-                // Add secondary particle effect for more visibility
+
                 player.getWorld().spawnParticle(
                         Particle.SMOKE,
                         loc.add(0, 0.5, 0),
-                        4,   // Fewer smoke particles
-                        0.3, // Smaller spread
-                        0.3, // Smaller spread
-                        0.3, // Smaller spread
-                        0.01 // Slower speed
+                        4,
+                        0.3,
+                        0.3,
+                        0.3,
+                        0.01
                 );
                 
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Failed to spawn particles for " + player.getName(), e);
             }
         }
-        
-        // Log particle spawning activity every 10 cycles (roughly every 15 seconds with default interval)
+
         if (particleCount > 0 && System.currentTimeMillis() % 10000 < particleIntervalTicks * 50) {
             LOGGER.fine("Spawned particles for " + particleCount + " players with active bounties");
         }
@@ -329,7 +306,6 @@ public class VisualIndicatorManager {
      * - 14.4: Stop particles when bounty claimed/expired
      */
     public void shutdown() {
-        // Remove all indicators
         for (UUID playerId : activeIndicators.keySet()) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null && player.isOnline()) {
@@ -358,7 +334,6 @@ public class VisualIndicatorManager {
         for (UUID playerId : activeIndicators.keySet()) {
             Player player = Bukkit.getPlayer(playerId);
             if (player != null && player.isOnline()) {
-                // Remove and re-apply indicators
                 removeIndicators(player);
                 applyIndicators(player);
             }
@@ -374,13 +349,11 @@ public class VisualIndicatorManager {
      */
     public void forceRefreshIndicators(@NotNull Player player) {
         UUID playerId = player.getUniqueId();
-        
-        // Remove existing indicators if any
+
         if (activeIndicators.containsKey(playerId)) {
             removeIndicators(player);
         }
-        
-        // Reapply indicators
+
         applyIndicators(player);
         updatePlayerDisplay(player);
         
@@ -401,9 +374,7 @@ public class VisualIndicatorManager {
         }
 
         try {
-            // Force update by refreshing the player's display
             rdq.getPlatform().getScheduler().runSync(() -> {
-                // Trigger a player list update for all online players
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     onlinePlayer.hidePlayer(rdq.getPlugin(), player);
                     onlinePlayer.showPlayer(rdq.getPlugin(), player);

@@ -1,98 +1,124 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
-    id("raindrop.library-conventions")
+    id("raindrop.shadow-conventions")
     id("raindrop.dependencies-yml")
+    `maven-publish`
+}
+
+// Configure runtime dependencies.yml generation
+dependenciesYml {
+    usePaperDependencies()
 }
 
 group = "com.raindropcentral.rdt"
 version = "1.0.0"
-description = "RDT - Town plugin"
-
-dependenciesYml {
-    usePaperDependencies()
-    generatePaperVariant.set(true)
-    generateSpigotVariant.set(true)
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-tasks.processResources {
-    exclude("plugin.yml", "paper-plugin.yml")
-}
+description = "Core plugin providing shared functionality for Raindrop plugins"
 
 dependencies {
-    // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
-
-    // Paper
     compileOnly(libs.paper.api)
-    compileOnly(libs.bundles.adventure)
+
+    compileOnly(libs.adventure.api)
+    compileOnly(libs.adventure.minimessage)
+    compileOnly(libs.adventure.serializer.legacy)
+    compileOnly(libs.adventure.serializer.json)
+    compileOnly(libs.adventure.serializer.plain)
+    compileOnly(libs.adventure.platform.bukkit)
 
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.luckperms.api)
 
-    // Logging & utils
+    compileOnly("com.raindropcentral.core:rcore:2.0.0")
+
+    // Logging
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
 
-    // DB & platform (compileOnly - provided by JExHibernate)
+    // DB (compileOnly - provided by JExHibernate)
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
-    compileOnly(libs.jehibernate)
 
+    // Caching & JSON
     compileOnly(libs.caffeine)
     compileOnly(libs.jackson.core)
     compileOnly(libs.jackson.databind)
     compileOnly(libs.jackson.annotations)
     compileOnly(libs.jackson.jsr310)
-    compileOnly(libs.java.uuid)
-    compileOnly(libs.xseries)
 
-    compileOnly(libs.bundles.jexcellence) {
+    // Version compatibility
+    compileOnly(libs.xseries)
+    compileOnly(libs.jehibernate)
+
+    // Internal libraries to shade
+    implementation(libs.bundles.jexcellence) {
         exclude(group = "de.jexcellence.hibernate")
         isTransitive = false
     }
-    compileOnly(project(":RCore"))
-    compileOnly(libs.bundles.jeconfig) { isTransitive = false }
-    compileOnly(libs.bundles.inventory)
+    implementation(libs.bundles.jeconfig) { isTransitive = false }
 
-    // Test dependencies
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(libs.junit.jupiter.api)
-    testRuntimeOnly(libs.junit.jupiter.engine)
-    testRuntimeOnly(libs.junit.platform.launcher)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.mockbukkit)
-    testImplementation(libs.jackson.databind)
-    testImplementation(libs.adventure.api)
-    testImplementation(libs.adventure.minimessage)
-    testImplementation(libs.caffeine)
-    testImplementation(platform(libs.hibernate.platform))
-    testImplementation(libs.bundles.hibernate)
+    // Inventory framework
+    compileOnly(libs.bundles.inventory)
 }
 
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
-    testLogging {
-        events("passed", "skipped", "failed")
-        showExceptions = true
-        showCauses = true
-        showStackTraces = true
+tasks.processResources {
+    val props = mapOf(
+        "version" to "1.0.0",
+        "name" to "RDT",
+        "description" to project.description,
+        "apiVersion" to "1.19"
+    )
+    inputs.properties(props)
+    filesMatching(listOf("plugin.yml", "paper-plugin.yml")) {
+        expand(props)
     }
 }
 
-tasks.withType<JavaCompile>().configureEach {
-    options.compilerArgs.addAll(listOf(
-        "--enable-preview"
-    ))
+tasks.named<ShadowJar>("shadowJar") {
+    archiveBaseName.set("RDT")
+    archiveClassifier.set("")
+
+    relocate("com.github.benmanes", "de.jexcellence.remapped.com.github.benmanes")
+
+    configurations = listOf(project.configurations.getByName("runtimeClasspath"))
+    mergeServiceFiles()
 }
 
-tasks.withType<Test>().configureEach {
-    jvmArgs("--enable-preview")
+tasks.named("build") {
+    dependsOn(tasks.named("shadowJar"))
+}
+
+tasks.named<Jar>("jar") {
+    enabled = false
+}
+
+publishing {
+    publications {
+        afterEvaluate {
+            publications.removeIf { it.name == "maven" }
+        }
+        create<MavenPublication>("shadow") {
+            artifact(tasks.named("shadowJar"))
+            artifact(tasks.named("sourcesJar"))
+            artifact(tasks.named("javadocJar"))
+            groupId = project.group.toString()
+            artifactId = "rdt"
+            version = project.version.toString()
+            pom {
+                name.set("RDT")
+                description.set(project.description)
+            }
+        }
+    }
+}
+
+tasks.register("publishLocal") {
+    group = "publishing"
+    description = "Publishes RDT to local Maven repository"
+    dependsOn("publishShadowPublicationToMavenLocal")
+    doLast {
+        println("✓ Published ${project.group}:rdt:${project.version} to local Maven")
+    }
 }

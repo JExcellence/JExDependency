@@ -108,11 +108,8 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			final @NotNull Context context
 	) {
 		var plugin = this.rdq.get(context);
-		
-		// Use the cached trees from RankSystemFactory instead of database query
-		// This ensures we see trees that were created during initialization
+
 		var cachedTrees = plugin.getRankSystemFactory().getRankTrees();
-		LOGGER.info("RankTreeOverviewView - Using cached trees: " + cachedTrees.size() + " trees: " + cachedTrees.keySet());
 
 		return CompletableFuture.supplyAsync(() -> {
 			List<RRankTree> enabledTrees = new ArrayList<>(
@@ -120,13 +117,6 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 					.filter(RRankTree::isEnabled)
 					.toList()
 			);
-			
-			LOGGER.info("RankTreeOverviewView - After filtering enabled: " + enabledTrees.size() + " trees");
-			
-			for (var tree : enabledTrees) {
-				LOGGER.info("  Tree: " + tree.getIdentifier() + ", enabled=" + tree.isEnabled() + 
-					", ranks=" + (tree.getRanks() != null ? tree.getRanks().size() : 0));
-			}
 			
 			enabledTrees.sort(Comparator.comparingInt(RRankTree::getDisplayOrder));
 			return enabledTrees;
@@ -155,7 +145,6 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			
 			if (currentPlayer == null) {
 				LOGGER.warning("RankTreeOverviewView - currentPlayer is null for tree: " + rankTree.getIdentifier());
-				// Render a fallback item
 				builder.withItem(UnifiedBuilderFactory.item(Material.PAPER)
 						.setName(this.i18n(rankTree.getDisplayNameKey(), player).build().component())
 						.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -221,7 +210,6 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 					});
 		} catch (final Exception exception) {
 			LOGGER.log(java.util.logging.Level.SEVERE, "Failed to render rank tree entry: " + rankTree.getIdentifier(), exception);
-			// Render a fallback error item
 			builder.withItem(UnifiedBuilderFactory.item(Material.BARRIER)
 					.setName(Component.text("Error: " + rankTree.getIdentifier()))
 					.addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -297,11 +285,7 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 			return false;
 		}
 
-		// Check if prerequisiteRankTrees collection is initialized before accessing
-		// to avoid LazyInitializationException when entities are cached outside session
 		if (!org.hibernate.Hibernate.isInitialized(rankTree.getPrerequisiteRankTrees())) {
-			// Collection not initialized - assume no prerequisites (safe default)
-			// Prerequisites are typically empty for most rank trees
 			return true;
 		}
 
@@ -332,7 +316,7 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 		try {
 			return switch (state) {
 				case LOCKED -> Material.BARRIER;
-				case FREE_VERSION_PREVIEW_ONLY -> Material.SPYGLASS; // Preview icon for free version
+				case FREE_VERSION_PREVIEW_ONLY -> Material.SPYGLASS;
 				default -> Material.valueOf(rankTree.getIcon().getMaterial().toUpperCase());
 			};
 		} catch (
@@ -385,7 +369,6 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 							)
 							.build().children());
 				}
-				// Check if prerequisiteRankTrees is initialized before accessing
 				if (
 						org.hibernate.Hibernate.isInitialized(rankTree.getPrerequisiteRankTrees())
 						&& ! rankTree.getPrerequisiteRankTrees().isEmpty()
@@ -553,7 +536,6 @@ public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 				break;
 
 			case FREE_VERSION_PREVIEW_ONLY:
-				// Free version: only allow preview, show upgrade message on right-click
 				if (
 						clickType == ClickType.LEFT
 				) {

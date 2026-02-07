@@ -2,8 +2,12 @@ package com.raindropcentral.rplatform.reward.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.raindropcentral.rplatform.json.ItemStackJSONDeserializer;
+import com.raindropcentral.rplatform.json.ItemStackJSONSerializer;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import com.raindropcentral.rplatform.reward.RewardRegistry;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public final class RewardParser {
@@ -23,6 +27,12 @@ public final class RewardParser {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+        
+        // Register ItemStack serializer/deserializer
+        final SimpleModule bukkitModule = new SimpleModule("BukkitModule");
+        bukkitModule.addSerializer(ItemStack.class, new ItemStackJSONSerializer());
+        bukkitModule.addDeserializer(ItemStack.class, new ItemStackJSONDeserializer());
+        mapper.registerModule(bukkitModule);
         
         RewardRegistry.getInstance().configureObjectMapper(mapper);
         

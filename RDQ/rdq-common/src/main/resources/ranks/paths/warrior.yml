@@ -120,17 +120,22 @@ ranks:
       veteran_reward:
         type: "CURRENCY"
         amount: 300
-        currency: "coins"
+        currencyId: "coins"
       veteran_gear:
-        type: "ITEM"
-        items:
-          - material: "IRON_SWORD"
-            amount: 1
-          - material: "IRON_CHESTPLATE"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "IRON_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "IRON_CHESTPLATE"
+              amount: 1
       veteran_experience:
         type: "EXPERIENCE"
-        amount: 1000
+        experienceAmount: 1000
+        experienceType: "POINTS"
     requirements:
       veteran_gear:
         icon:
@@ -182,17 +187,22 @@ ranks:
       berserker_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       berserker_power:
-        type: "ITEM"
-        items:
-          - material: "DIAMOND_AXE"
-            amount: 1
-          - material: "STRENGTH_POTION"
-            amount: 5
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_AXE"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "POTION"
+              amount: 5
       berserker_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       berserker_gear:
         icon:
@@ -235,17 +245,22 @@ ranks:
       guardian_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       guardian_defense:
-        type: "ITEM"
-        items:
-          - material: "SHIELD"
-            amount: 1
-          - material: "DIAMOND_CHESTPLATE"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "SHIELD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_CHESTPLATE"
+              amount: 1
       guardian_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       guardian_gear:
         icon:
@@ -291,17 +306,22 @@ ranks:
       gladiator_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       gladiator_gear:
-        type: "ITEM"
-        items:
-          - material: "DIAMOND_SWORD"
-            amount: 1
-          - material: "GOLDEN_APPLE"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "GOLDEN_APPLE"
+              amount: 8
       gladiator_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       gladiator_gear:
         icon:
@@ -344,19 +364,26 @@ ranks:
       warlord_fury_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_fury:
-        type: "ITEM"
-        items:
-          - material: "NETHERITE_AXE"
-            amount: 1
-          - material: "NETHERITE_CHESTPLATE"
-            amount: 1
-          - material: "ENCHANTED_GOLDEN_APPLE"
-            amount: 5
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_AXE"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_CHESTPLATE"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 5
       warlord_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_berserker:
         icon:
@@ -396,19 +423,26 @@ ranks:
       warlord_shield_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_defense:
-        type: "ITEM"
-        items:
-          - material: "NETHERITE_CHESTPLATE"
-            amount: 1
-          - material: "NETHERITE_HELMET"
-            amount: 1
-          - material: "TOTEM_OF_UNDYING"
-            amount: 2
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_CHESTPLATE"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_HELMET"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TOTEM_OF_UNDYING"
+              amount: 2
       warlord_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_guardian:
         icon:
@@ -454,19 +488,26 @@ ranks:
       warlord_arena_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_champion:
-        type: "ITEM"
-        items:
-          - material: "NETHERITE_SWORD"
-            amount: 1
-          - material: "NETHERITE_CHESTPLATE"
-            amount: 1
-          - material: "ENCHANTED_GOLDEN_APPLE"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_SWORD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_CHESTPLATE"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 8
       warlord_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_gladiator:
         icon:

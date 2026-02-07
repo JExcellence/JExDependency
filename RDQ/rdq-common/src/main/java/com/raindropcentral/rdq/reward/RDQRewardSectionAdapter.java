@@ -48,7 +48,42 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<Rewar
         if (section.getItem() == null) {
             throw new IllegalArgumentException("Item reward requires 'item' field");
         }
-        return new ItemReward(section.getItem());
+        
+        // Convert Map to ItemStack
+        Map<String, Object> itemMap = section.getItem();
+        org.bukkit.inventory.ItemStack itemStack = convertMapToItemStack(itemMap);
+        
+        return new ItemReward(itemStack);
+    }
+    
+    private org.bukkit.inventory.ItemStack convertMapToItemStack(Map<String, Object> itemMap) {
+        // Get material
+        Object materialObj = itemMap.get("material");
+        if (materialObj == null) {
+            throw new IllegalArgumentException("Item requires 'material' field");
+        }
+        
+        String materialName = materialObj.toString();
+        org.bukkit.Material material;
+        try {
+            material = org.bukkit.Material.valueOf(materialName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid material: " + materialName);
+        }
+        
+        // Get amount (default to 1)
+        int amount = 1;
+        Object amountObj = itemMap.get("amount");
+        if (amountObj != null) {
+            if (amountObj instanceof Number) {
+                amount = ((Number) amountObj).intValue();
+            } else {
+                amount = Integer.parseInt(amountObj.toString());
+            }
+        }
+        
+        // Create ItemStack
+        return new org.bukkit.inventory.ItemStack(material, amount);
     }
 
     private CurrencyReward convertCurrencyReward(RewardSection section) {

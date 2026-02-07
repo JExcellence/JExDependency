@@ -58,6 +58,107 @@ tree:
       - "<gradient:#6b7280:#9ca3af>Build your fortune</gradient>"
 
 # ============================================
+# REWARD DISPLAY NAMES
+# ============================================
+reward:
+  # Warrior rewards
+  welcome_sword: "<gradient:#6b7280:#9ca3af>Welcome Sword</gradient>"
+  welcome_armor: "<gradient:#6b7280:#9ca3af>Welcome Armor</gradient>"
+  starting_currency: "<gradient:#f59e0b:#fbbf24>Starting Currency</gradient>"
+  soldier_bonus: "<gradient:#3b82f6:#60a5fa>Soldier Bonus</gradient>"
+  combat_experience: "<gradient:#10b981:#34d399>Combat Experience</gradient>"
+  veteran_reward: "<gradient:#f59e0b:#fbbf24>Veteran Reward</gradient>"
+  veteran_gear: "<gradient:#3b82f6:#60a5fa>Veteran Gear</gradient>"
+  veteran_experience: "<gradient:#10b981:#34d399>Veteran Experience</gradient>"
+  berserker_reward: "<gradient:#f59e0b:#fbbf24>Berserker Reward</gradient>"
+  berserker_power: "<gradient:#ef4444:#f87171>Berserker Power</gradient>"
+  berserker_experience: "<gradient:#10b981:#34d399>Berserker Experience</gradient>"
+  guardian_reward: "<gradient:#f59e0b:#fbbf24>Guardian Reward</gradient>"
+  guardian_defense: "<gradient:#3b82f6:#60a5fa>Guardian Defense</gradient>"
+  guardian_experience: "<gradient:#10b981:#34d399>Guardian Experience</gradient>"
+  gladiator_reward: "<gradient:#f59e0b:#fbbf24>Gladiator Reward</gradient>"
+  gladiator_gear: "<gradient:#a855f7:#c084fc>Gladiator Gear</gradient>"
+  gladiator_experience: "<gradient:#10b981:#34d399>Gladiator Experience</gradient>"
+  warlord_fury_reward: "<gradient:#f59e0b:#fbbf24>Warlord of Fury Reward</gradient>"
+  ultimate_fury: "<gradient:#ef4444:#f87171>Ultimate Fury</gradient>"
+  warlord_shield_reward: "<gradient:#f59e0b:#fbbf24>Warlord of the Shield Reward</gradient>"
+  ultimate_defense: "<gradient:#3b82f6:#60a5fa>Ultimate Defense</gradient>"
+  warlord_arena_reward: "<gradient:#f59e0b:#fbbf24>Warlord of the Arena Reward</gradient>"
+  ultimate_champion: "<gradient:#a855f7:#c084fc>Ultimate Champion</gradient>"
+  warlord_experience: "<gradient:#10b981:#34d399>Warlord Experience</gradient>"
+  
+  # Rogue rewards
+  welcome_kit: "<gradient:#6b7280:#9ca3af>Welcome Kit</gradient>"
+  thief_reward: "<gradient:#f59e0b:#fbbf24>Thief Reward</gradient>"
+  thief_gear: "<gradient:#6b7280:#9ca3af>Thief Gear</gradient>"
+  thief_experience: "<gradient:#10b981:#34d399>Thief Experience</gradient>"
+  assassin_reward: "<gradient:#f59e0b:#fbbf24>Assassin Reward</gradient>"
+  assassin_tools: "<gradient:#ef4444:#f87171>Assassin Tools</gradient>"
+  assassin_experience: "<gradient:#10b981:#34d399>Assassin Experience</gradient>"
+  shadow_reward: "<gradient:#f59e0b:#fbbf24>Shadow Reward</gradient>"
+  shadow_equipment: "<gradient:#1f2937:#374151>Shadow Equipment</gradient>"
+  shadow_experience: "<gradient:#10b981:#34d399>Shadow Experience</gradient>"
+  phantom_reward: "<gradient:#f59e0b:#fbbf24>Phantom Reward</gradient>"
+  ultimate_stealth: "<gradient:#a855f7:#c084fc>Ultimate Stealth</gradient>"
+  phantom_experience: "<gradient:#10b981:#34d399>Phantom Experience</gradient>"
+  
+  # Cleric rewards
+  healer_reward: "<gradient:#f59e0b:#fbbf24>Healer Reward</gradient>"
+  healing_bonus: "<gradient:#10b981:#34d399>Healing Bonus</gradient>"
+  healer_experience: "<gradient:#10b981:#34d399>Healer Experience</gradient>"
+  priest_reward: "<gradient:#f59e0b:#fbbf24>Priest Reward</gradient>"
+  priest_blessing: "<gradient:#f59e0b:#fbbf24>Priest Blessing</gradient>"
+  priest_experience: "<gradient:#10b981:#34d399>Priest Experience</gradient>"
+  bishop_reward: "<gradient:#f59e0b:#fbbf24>Bishop Reward</gradient>"
+  bishop_protection: "<gradient:#a855f7:#c084fc>Bishop Protection</gradient>"
+  bishop_experience: "<gradient:#10b981:#34d399>Bishop Experience</gradient>"
+  high_priest_reward: "<gradient:#f59e0b:#fbbf24>High Priest Reward</gradient>"
+  divine_blessing: "<gradient:#ef4444:#f87171>Divine Blessing</gradient>"
+  high_priest_experience: "<gradient:#10b981:#34d399>High Priest Experience</gradient>"
+  
+  # Mage rewards
+  adept_reward: "<gradient:#f59e0b:#fbbf24>Adept Reward</gradient>"
+  magic_bonus: "<gradient:#a855f7:#c084fc>Magic Bonus</gradient>"
+  adept_experience: "<gradient:#10b981:#34d399>Adept Experience</gradient>"
+  wizard_reward: "<gradient:#f59e0b:#fbbf24>Wizard Reward</gradient>"
+  wizard_power: "<gradient:#3b82f6:#60a5fa>Wizard Power</gradient>"
+  wizard_experience: "<gradient:#10b981:#34d399>Wizard Experience</gradient>"
+  sorcerer_reward: "<gradient:#f59e0b:#fbbf24>Sorcerer Reward</gradient>"
+  sorcerer_mastery: "<gradient:#a855f7:#c084fc>Sorcerer Mastery</gradient>"
+  sorcerer_experience: "<gradient:#10b981:#34d399>Sorcerer Experience</gradient>"
+  archmage_reward: "<gradient:#f59e0b:#fbbf24>Archmage Reward</gradient>"
+  ultimate_magic: "<gradient:#ef4444:#f87171>Ultimate Magic</gradient>"
+  archmage_experience: "<gradient:#10b981:#34d399>Archmage Experience</gradient>"
+  
+  # Ranger rewards
+  hunter_reward: "<gradient:#f59e0b:#fbbf24>Hunter Reward</gradient>"
+  hunter_gear: "<gradient:#10b981:#34d399>Hunter Gear</gradient>"
+  hunter_experience: "<gradient:#10b981:#34d399>Hunter Experience</gradient>"
+  tracker_reward: "<gradient:#f59e0b:#fbbf24>Tracker Reward</gradient>"
+  tracker_tools: "<gradient:#3b82f6:#60a5fa>Tracker Tools</gradient>"
+  tracker_experience: "<gradient:#10b981:#34d399>Tracker Experience</gradient>"
+  warden_reward: "<gradient:#f59e0b:#fbbf24>Warden Reward</gradient>"
+  warden_equipment: "<gradient:#3b82f6:#60a5fa>Warden Equipment</gradient>"
+  warden_experience: "<gradient:#10b981:#34d399>Warden Experience</gradient>"
+  beastmaster_reward: "<gradient:#f59e0b:#fbbf24>Beastmaster Reward</gradient>"
+  ultimate_ranger: "<gradient:#a855f7:#c084fc>Ultimate Ranger</gradient>"
+  beastmaster_experience: "<gradient:#10b981:#34d399>Beastmaster Experience</gradient>"
+  
+  # Merchant rewards
+  trader_reward: "<gradient:#f59e0b:#fbbf24>Trader Reward</gradient>"
+  trader_bonus: "<gradient:#10b981:#34d399>Trader Bonus</gradient>"
+  trader_experience: "<gradient:#10b981:#34d399>Trader Experience</gradient>"
+  broker_reward: "<gradient:#f59e0b:#fbbf24>Broker Reward</gradient>"
+  broker_wealth: "<gradient:#3b82f6:#60a5fa>Broker Wealth</gradient>"
+  broker_experience: "<gradient:#10b981:#34d399>Broker Experience</gradient>"
+  magnate_reward: "<gradient:#f59e0b:#fbbf24>Magnate Reward</gradient>"
+  magnate_fortune: "<gradient:#a855f7:#c084fc>Magnate Fortune</gradient>"
+  magnate_experience: "<gradient:#10b981:#34d399>Magnate Experience</gradient>"
+  tycoon_reward: "<gradient:#f59e0b:#fbbf24>Tycoon Reward</gradient>"
+  ultimate_wealth: "<gradient:#ef4444:#f87171>Ultimate Wealth</gradient>"
+  tycoon_experience: "<gradient:#10b981:#34d399>Tycoon Experience</gradient>"
+
+# ============================================
 # RANK DISPLAY NAMES & DESCRIPTIONS
 # ============================================
 rank:

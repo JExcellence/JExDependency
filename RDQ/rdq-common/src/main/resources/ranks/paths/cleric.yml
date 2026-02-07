@@ -36,16 +36,20 @@ ranks:
     nextRanks: ["healer"]
     rewards:
       welcome_kit:
-        type: "ITEM"
-        items:
-          - material: "APPLE"
-            amount: 16
-          - material: "BREAD"
-            amount: 16
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "APPLE"
+              amount: 16
+          - type: "ITEM"
+            item:
+              material: "BREAD"
+              amount: 16
       starting_currency:
         type: "CURRENCY"
         amount: 50
-        currency: "coins"
+        currencyId: "coins"
 
   healer:
     tier: 2
@@ -62,15 +66,16 @@ ranks:
       healer_reward:
         type: "CURRENCY"
         amount: 150
-        currency: "coins"
+        currencyId: "coins"
       healing_bonus:
         type: "ITEM"
-        items:
-          - material: "GOLDEN_APPLE"
-            amount: 5
+        item:
+          material: "GOLDEN_APPLE"
+          amount: 5
       healer_experience:
         type: "EXPERIENCE"
-        amount: 500
+        experienceAmount: 500
+        experienceType: "POINTS"
     requirements:
       healing_supplies:
         icon:
@@ -110,17 +115,22 @@ ranks:
       priest_reward:
         type: "CURRENCY"
         amount: 300
-        currency: "coins"
+        currencyId: "coins"
       priest_blessing:
-        type: "ITEM"
-        items:
-          - material: "ENCHANTED_GOLDEN_APPLE"
-            amount: 2
-          - material: "GOLDEN_APPLE"
-            amount: 10
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "GOLDEN_APPLE"
+              amount: 10
       priest_experience:
         type: "EXPERIENCE"
-        amount: 1000
+        experienceAmount: 1000
+        experienceType: "POINTS"
     requirements:
       priest_supplies:
         icon:
@@ -166,17 +176,22 @@ ranks:
       bishop_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       bishop_protection:
-        type: "ITEM"
-        items:
-          - material: "TOTEM_OF_UNDYING"
-            amount: 1
-          - material: "ENCHANTED_GOLDEN_APPLE"
-            amount: 5
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "TOTEM_OF_UNDYING"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 5
       bishop_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       bishop_supplies:
         icon:
@@ -222,19 +237,26 @@ ranks:
       high_priest_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       divine_blessing:
-        type: "ITEM"
-        items:
-          - material: "BEACON"
-            amount: 1
-          - material: "TOTEM_OF_UNDYING"
-            amount: 3
-          - material: "ENCHANTED_GOLDEN_APPLE"
-            amount: 10
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "BEACON"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TOTEM_OF_UNDYING"
+              amount: 3
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_GOLDEN_APPLE"
+              amount: 10
       high_priest_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_healer:
         icon:

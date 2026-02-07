@@ -11,7 +11,12 @@ import java.util.concurrent.CompletableFuture;
 
 public final class ItemReward extends AbstractReward {
 
+    // Store item with amount 1 as template
+    @JsonProperty("item")
     private final ItemStack item;
+    
+    // Store actual amount separately (can exceed max stack size)
+    @JsonProperty("amount")
     private final int amount;
 
     @JsonCreator
@@ -25,7 +30,7 @@ public final class ItemReward extends AbstractReward {
         // Store actual amount separately (can exceed max stack size)
         this.amount = Math.max(1, amount);
     }
-
+    
     /**
      * Convenience constructor that uses the ItemStack's amount
      */

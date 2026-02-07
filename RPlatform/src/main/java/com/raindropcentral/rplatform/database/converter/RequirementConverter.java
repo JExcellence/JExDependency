@@ -26,6 +26,9 @@ import java.io.IOException;
 public class RequirementConverter implements AttributeConverter<AbstractRequirement, String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequirementConverter.class);
+    
+    // Lazy initialization flag to avoid triggering RequirementParser during class loading
+    private static volatile boolean parserReady = false;
 
     /**
      * Converts an {@link AbstractRequirement} to its JSON string representation.
@@ -40,6 +43,7 @@ public class RequirementConverter implements AttributeConverter<AbstractRequirem
             return null;
         }
         try {
+            ensureParserReady();
             return RequirementParser.serialize(attribute);
         } catch (IOException e) {
             LOGGER.error("Failed to serialize requirement: {}", attribute, e);
@@ -60,10 +64,53 @@ public class RequirementConverter implements AttributeConverter<AbstractRequirem
             return null;
         }
         try {
-            return RequirementParser.parse(dbData);
+            ensureParserReady();
+            // Migrate old format to new format if needed
+            String migratedJson = migrateOldFormat(dbData);
+            return RequirementParser.parse(migratedJson);
         } catch (IOException e) {
             LOGGER.error("Failed to deserialize requirement from JSON: {}", dbData, e);
             throw new RuntimeException("Failed to deserialize requirement", e);
         }
+    }
+    
+    /**
+     * Ensures the RequirementParser is ready before use.
+     * This prevents triggering parser initialization during entity class loading.
+     */
+    private void ensureParserReady() {
+        if (!parserReady) {
+            synchronized (RequirementConverter.class) {
+                if (!parserReady) {
+                    // Trigger parser initialization
+                    RequirementParser.getObjectMapper();
+                    parserReady = true;
+                }
+            }
+        }
+    }
+
+    /**
+     * Migrates old requirement JSON format (class names) to new format (type IDs).
+     * 
+     * @param json the JSON string to migrate
+     * @return the migrated JSON string
+     */
+    private String migrateOldFormat(String json) {
+        // Check if migration is needed
+        if (!json.contains("Requirement\"")) {
+            return json;
+        }
+        
+        // Migrate class names to type IDs
+        return json
+            .replace("\"type\":\"ItemRequirement\"", "\"type\":\"ITEM\"")
+            .replace("\"type\":\"CurrencyRequirement\"", "\"type\":\"CURRENCY\"")
+            .replace("\"type\":\"ExperienceLevelRequirement\"", "\"type\":\"EXPERIENCE_LEVEL\"")
+            .replace("\"type\":\"PermissionRequirement\"", "\"type\":\"PERMISSION\"")
+            .replace("\"type\":\"LocationRequirement\"", "\"type\":\"LOCATION\"")
+            .replace("\"type\":\"PlaytimeRequirement\"", "\"type\":\"PLAYTIME\"")
+            .replace("\"type\":\"CompositeRequirement\"", "\"type\":\"COMPOSITE\"")
+            .replace("\"type\":\"ChoiceRequirement\"", "\"type\":\"CHOICE\"");
     }
 }

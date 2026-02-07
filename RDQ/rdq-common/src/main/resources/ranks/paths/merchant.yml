@@ -36,16 +36,20 @@ ranks:
     nextRanks: ["trader"]
     rewards:
       welcome_kit:
-        type: "ITEM"
-        items:
-          - material: "EMERALD"
-            amount: 4
-          - material: "GOLD_INGOT"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "EMERALD"
+              amount: 4
+          - type: "ITEM"
+            item:
+              material: "GOLD_INGOT"
+              amount: 8
       starting_currency:
         type: "CURRENCY"
         amount: 100
-        currency: "coins"
+        currencyId: "coins"
 
   trader:
     tier: 2
@@ -62,15 +66,16 @@ ranks:
       trader_reward:
         type: "CURRENCY"
         amount: 250
-        currency: "coins"
+        currencyId: "coins"
       trader_bonus:
         type: "ITEM"
-        items:
-          - material: "EMERALD"
-            amount: 8
+        item:
+          material: "EMERALD"
+          amount: 8
       trader_experience:
         type: "EXPERIENCE"
-        amount: 500
+        experienceAmount: 500
+        experienceType: "POINTS"
     requirements:
       trade_goods:
         icon:
@@ -107,17 +112,22 @@ ranks:
       broker_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       broker_wealth:
-        type: "ITEM"
-        items:
-          - material: "EMERALD"
-            amount: 16
-          - material: "GOLD_BLOCK"
-            amount: 4
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "EMERALD"
+              amount: 16
+          - type: "ITEM"
+            item:
+              material: "GOLD_BLOCK"
+              amount: 4
       broker_experience:
         type: "EXPERIENCE"
-        amount: 1000
+        experienceAmount: 1000
+        experienceType: "POINTS"
     requirements:
       broker_wealth:
         icon:
@@ -163,17 +173,22 @@ ranks:
       magnate_reward:
         type: "CURRENCY"
         amount: 750
-        currency: "coins"
+        currencyId: "coins"
       magnate_fortune:
-        type: "ITEM"
-        items:
-          - material: "EMERALD_BLOCK"
-            amount: 8
-          - material: "DIAMOND_BLOCK"
-            amount: 4
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "EMERALD_BLOCK"
+              amount: 8
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_BLOCK"
+              amount: 4
       magnate_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       magnate_fortune:
         icon:
@@ -219,21 +234,30 @@ ranks:
       tycoon_reward:
         type: "CURRENCY"
         amount: 2000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_wealth:
-        type: "ITEM"
-        items:
-          - material: "BEACON"
-            amount: 1
-          - material: "NETHERITE_BLOCK"
-            amount: 2
-          - material: "DIAMOND_BLOCK"
-            amount: 8
-          - material: "EMERALD_BLOCK"
-            amount: 16
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "BEACON"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "NETHERITE_BLOCK"
+              amount: 2
+          - type: "ITEM"
+            item:
+              material: "DIAMOND_BLOCK"
+              amount: 8
+          - type: "ITEM"
+            item:
+              material: "EMERALD_BLOCK"
+              amount: 16
       tycoon_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_wealth:
         icon:

@@ -206,7 +206,7 @@ object RuntimeDependencies {
         get() = listOf(hibernate, databases, jakarta, jaxb, jacksonCore, logging, 
                        utilities, adventure, minecraftUtils, inventoryFramework, extras)
     
-    /** Full dependency set for RDQ/JExEconomy (Spigot) */
+    /** Full dependency set for RDQ/JExEconomy/RDT (Spigot) */
     val pluginFullSpigot: List<DependencyGroup>
         get() = listOf(hibernate, databases, jakarta, jaxb, jacksonCore, logging, 
                        utilities, adventure, minecraftUtils, inventoryFrameworkSpigot, extras)

@@ -36,16 +36,20 @@ ranks:
     nextRanks: ["adept"]
     rewards:
       welcome_kit:
-        type: "ITEM"
-        items:
-          - material: "ENCHANTED_BOOK"
-            amount: 1
-          - material: "LAPIS_LAZULI"
-            amount: 16
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "LAPIS_LAZULI"
+              amount: 16
       starting_currency:
         type: "CURRENCY"
         amount: 50
-        currency: "coins"
+        currencyId: "coins"
 
   adept:
     tier: 2
@@ -62,17 +66,22 @@ ranks:
       adept_reward:
         type: "CURRENCY"
         amount: 150
-        currency: "coins"
+        currencyId: "coins"
       magic_bonus:
-        type: "ITEM"
-        items:
-          - material: "ENCHANTED_BOOK"
-            amount: 3
-          - material: "BLAZE_POWDER"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 3
+          - type: "ITEM"
+            item:
+              material: "BLAZE_POWDER"
+              amount: 8
       adept_experience:
         type: "EXPERIENCE"
-        amount: 750
+        experienceAmount: 750
+        experienceType: "POINTS"
     requirements:
       magic_supplies:
         icon:
@@ -112,17 +121,22 @@ ranks:
       wizard_reward:
         type: "CURRENCY"
         amount: 300
-        currency: "coins"
+        currencyId: "coins"
       wizard_power:
-        type: "ITEM"
-        items:
-          - material: "ENCHANTED_BOOK"
-            amount: 8
-          - material: "ENDER_PEARL"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 8
+          - type: "ITEM"
+            item:
+              material: "ENDER_PEARL"
+              amount: 8
       wizard_experience:
         type: "EXPERIENCE"
-        amount: 1250
+        experienceAmount: 1250
+        experienceType: "POINTS"
     requirements:
       wizard_supplies:
         icon:
@@ -168,17 +182,22 @@ ranks:
       sorcerer_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       sorcerer_mastery:
-        type: "ITEM"
-        items:
-          - material: "ENDER_EYE"
-            amount: 6
-          - material: "ENCHANTED_BOOK"
-            amount: 15
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "ENDER_EYE"
+              amount: 6
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 15
       sorcerer_experience:
         type: "EXPERIENCE"
-        amount: 1750
+        experienceAmount: 1750
+        experienceType: "POINTS"
     requirements:
       sorcerer_supplies:
         icon:
@@ -224,19 +243,26 @@ ranks:
       archmage_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_magic:
-        type: "ITEM"
-        items:
-          - material: "NETHER_STAR"
-            amount: 1
-          - material: "ENCHANTED_BOOK"
-            amount: 25
-          - material: "END_CRYSTAL"
-            amount: 2
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "NETHER_STAR"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ENCHANTED_BOOK"
+              amount: 25
+          - type: "ITEM"
+            item:
+              material: "END_CRYSTAL"
+              amount: 2
       archmage_experience:
         type: "EXPERIENCE"
-        amount: 5000
+        experienceAmount: 5000
+        experienceType: "POINTS"
     requirements:
       ultimate_mage:
         icon:

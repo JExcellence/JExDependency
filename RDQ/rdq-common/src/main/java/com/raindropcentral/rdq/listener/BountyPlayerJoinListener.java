@@ -61,9 +61,6 @@ public class BountyPlayerJoinListener implements Listener {
     
     private void scheduleVisualIndicatorCheck(@NotNull Player player, int attempt) {
         if (!player.isOnline() || attempt >= 3) {
-            if (attempt >= 3) {
-                LOGGER.info("Failed to apply visual indicators after 3 attempts for " + player.getName());
-            }
             return;
         }
         
@@ -76,13 +73,11 @@ public class BountyPlayerJoinListener implements Listener {
             
             rdq.getBountyFactory().getBountyAsync(player.getUniqueId()).thenAccept(bounty -> {
                 if (bounty == null) {
-                    LOGGER.info("No bounty found for player: " + player.getName() + " (async attempt " + (attempt + 1) + ")");
                     scheduleVisualIndicatorCheck(player, attempt + 1);
                     return;
                 }
                 
                 if (!bounty.isActive()) {
-                    LOGGER.info("Bounty found but not active for player: " + player.getName());
                     return;
                 }
 
@@ -123,11 +118,8 @@ public class BountyPlayerJoinListener implements Listener {
             rdq.getPlatform().getScheduler().runDelayed(() -> {
                 if (player.isOnline()) {
                     rdq.getVisualIndicatorManager().forceRefreshIndicators(player);
-                    LOGGER.info("Reapplied visual indicators to " + player.getName() + " (third attempt)");
                 }
             }, 100L);
-            
-            LOGGER.info("Applied visual indicators to " + player.getName() + " (bounty ID: " + bounty.getId() + ") on join");
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to apply visual indicators to " + player.getName(), e);
         }

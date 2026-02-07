@@ -36,18 +36,24 @@ ranks:
     nextRanks: ["hunter"]
     rewards:
       welcome_kit:
-        type: "ITEM"
-        items:
-          - material: "BOW"
-            amount: 1
-          - material: "ARROW"
-            amount: 64
-          - material: "LEATHER"
-            amount: 8
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "BOW"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ARROW"
+              amount: 64
+          - type: "ITEM"
+            item:
+              material: "LEATHER"
+              amount: 8
       starting_currency:
         type: "CURRENCY"
         amount: 50
-        currency: "coins"
+        currencyId: "coins"
 
   hunter:
     tier: 2
@@ -64,17 +70,22 @@ ranks:
       hunter_reward:
         type: "CURRENCY"
         amount: 150
-        currency: "coins"
+        currencyId: "coins"
       hunter_gear:
-        type: "ITEM"
-        items:
-          - material: "BOW"
-            amount: 1
-          - material: "ARROW"
-            amount: 32
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "BOW"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ARROW"
+              amount: 32
       hunter_experience:
         type: "EXPERIENCE"
-        amount: 500
+        experienceAmount: 500
+        experienceType: "POINTS"
     requirements:
       hunting_gear:
         icon:
@@ -117,17 +128,22 @@ ranks:
       tracker_reward:
         type: "CURRENCY"
         amount: 300
-        currency: "coins"
+        currencyId: "coins"
       tracker_tools:
-        type: "ITEM"
-        items:
-          - material: "CROSSBOW"
-            amount: 1
-          - material: "SPECTRAL_ARROW"
-            amount: 16
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "CROSSBOW"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "SPECTRAL_ARROW"
+              amount: 16
       tracker_experience:
         type: "EXPERIENCE"
-        amount: 1000
+        experienceAmount: 1000
+        experienceType: "POINTS"
     requirements:
       tracker_gear:
         icon:
@@ -176,17 +192,22 @@ ranks:
       warden_reward:
         type: "CURRENCY"
         amount: 500
-        currency: "coins"
+        currencyId: "coins"
       warden_equipment:
-        type: "ITEM"
-        items:
-          - material: "TRIDENT"
-            amount: 1
-          - material: "TURTLE_HELMET"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "TRIDENT"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "TURTLE_HELMET"
+              amount: 1
       warden_experience:
         type: "EXPERIENCE"
-        amount: 1500
+        experienceAmount: 1500
+        experienceType: "POINTS"
     requirements:
       warden_gear:
         icon:
@@ -235,19 +256,26 @@ ranks:
       beastmaster_reward:
         type: "CURRENCY"
         amount: 1000
-        currency: "coins"
+        currencyId: "coins"
       ultimate_ranger:
-        type: "ITEM"
-        items:
-          - material: "DRAGON_HEAD"
-            amount: 1
-          - material: "ELYTRA"
-            amount: 1
-          - material: "HEART_OF_THE_SEA"
-            amount: 1
+        type: "COMPOSITE"
+        rewards:
+          - type: "ITEM"
+            item:
+              material: "DRAGON_HEAD"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "ELYTRA"
+              amount: 1
+          - type: "ITEM"
+            item:
+              material: "HEART_OF_THE_SEA"
+              amount: 1
       beastmaster_experience:
         type: "EXPERIENCE"
-        amount: 3000
+        experienceAmount: 3000
+        experienceType: "POINTS"
     requirements:
       ultimate_ranger:
         icon:

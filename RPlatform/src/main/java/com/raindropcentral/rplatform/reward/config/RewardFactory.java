@@ -88,9 +88,20 @@ public final class RewardFactory<T> {
 
     @SuppressWarnings("unchecked")
     public AbstractReward fromSection(@NotNull T section, @Nullable Map<String, Object> context) {
-        RewardSectionAdapter<T> adapter = (RewardSectionAdapter<T>) sectionAdapters.get(section.getClass());
+        Class<?> sectionClass = section.getClass();
+        RewardSectionAdapter<T> adapter = (RewardSectionAdapter<T>) sectionAdapters.get(sectionClass);
+        
         if (adapter == null) {
-            throw new IllegalArgumentException("No adapter registered for: " + section.getClass().getName());
+            for (Map.Entry<Class<?>, RewardSectionAdapter<?>> entry : sectionAdapters.entrySet()) {
+                if (entry.getKey().isAssignableFrom(sectionClass)) {
+                    adapter = (RewardSectionAdapter<T>) entry.getValue();
+                    break;
+                }
+            }
+        }
+        
+        if (adapter == null) {
+            throw new IllegalArgumentException("No adapter registered for: " + sectionClass.getName());
         }
 
         AbstractReward reward = adapter.convert(section, context);
