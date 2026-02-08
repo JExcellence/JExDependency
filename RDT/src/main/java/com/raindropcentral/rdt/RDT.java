@@ -25,7 +25,6 @@ import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
 import java.io.File;
@@ -39,10 +38,9 @@ import java.util.concurrent.Executors;
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class RDT extends JavaPlugin {
 
-    private final JavaPlugin plugin;
-    private final String edition;
+    private JavaPlugin plugin;
     private ExecutorService executor;
-    private final RPlatform platform;
+    private RPlatform platform;
     private EntityManagerFactory entityManagerFactory;
     private RRTown townRepository;
     private RRDTPlayer playerRepository;
@@ -54,12 +52,10 @@ public class RDT extends JavaPlugin {
     private Object economyInstance;
     private ViewFrame viewFrame;
 
-    public RDT(
-            @NotNull JavaPlugin plugin,
-            @NotNull String edition
-    ) {
-        this.plugin = plugin;
-        this.edition = edition;
+    @Override
+    public void onLoad() {
+        this.plugin = this;
+        this.getLogger().info("Loading RPlatform for RDT");
         this.platform = new RPlatform(plugin);
         this.executor = Executors.newFixedThreadPool(4);
     }
@@ -190,55 +186,55 @@ public class RDT extends JavaPlugin {
     }
 
     public net.milkbowl.vault.economy.Economy getEco() {
-        if (economyInstance == null) return null;
-        return (net.milkbowl.vault.economy.Economy) economyInstance;
+        if (this.economyInstance == null) return null;
+        return (net.milkbowl.vault.economy.Economy) this.economyInstance;
     }
 
     public JavaPlugin getPlugin() {
-        return plugin;
-    }
-
-    public String getEdition() {
-        return edition;
+        return this.plugin;
     }
 
     public ExecutorService getExecutor() {
-        return executor;
+        return this.executor;
     }
 
     public RPlatform getPlatform() {
-        return platform;
+        return this.platform;
     }
 
     public EntityManagerFactory getEntityManagerFactory() {
-        return entityManagerFactory;
+        return this.entityManagerFactory;
     }
 
     public RRTown getTownRepository() {
-        return townRepository;
+        return this.townRepository;
     }
 
     public RRDTPlayer getPlayerRepository() {
-        return playerRepository;
+        return this.playerRepository;
     }
 
     public BossBarFactory getBossBarFactory() {
-        return bossBarFactory;
+        return this.bossBarFactory;
     }
 
     public ISchedulerAdapter getScheduler() {
-        return scheduler;
+        return this.scheduler;
     }
 
     public PlatformType getPlatformType() {
-        return platformType;
+        return this.platformType;
     }
 
     public IRSFactory getIrsFactory() {
-        return irsFactory;
+        return this.irsFactory;
     }
 
     public Object getEconomyInstance() {
-        return economyInstance;
+        return this.economyInstance;
+    }
+
+    public ViewFrame getViewFrame() {
+        return this.viewFrame;
     }
 }

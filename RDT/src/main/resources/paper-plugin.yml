@@ -10,10 +10,10 @@ folia-supported: true
 dependencies:
   server:
     Vault:
-      load: AFTER
-      required: true
+      load: BEFORE
+      required: false
       join-classpath: true
     TheNewEconomy:
-      load: AFTER
-      required: true
+      load: BEFORE
+      required: false
       join-classpath: true

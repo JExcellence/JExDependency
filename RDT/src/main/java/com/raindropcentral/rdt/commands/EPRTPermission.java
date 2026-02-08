@@ -34,7 +34,8 @@ public enum EPRTPermission implements IPermissionNode{
     //deposit money to the town bank
     DEPOSIT("depositCommand","raindroptowns.command.deposit"),
     //withdraw money from the town bank
-    WITHDRAW("withdrawCommand","raindroptowns.command.withdraw");
+    WITHDRAW("withdrawCommand","raindroptowns.command.withdraw"),
+    MAIN("mainCommand","raindroptowns.command.main");
 
     /** Internal key used by the configuration system to resolve permissions. */
     private final String internalName;

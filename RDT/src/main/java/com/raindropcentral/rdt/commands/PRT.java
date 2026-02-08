@@ -62,7 +62,7 @@ public class PRT extends PlayerCommand {
         if (this.hasNoPermission(player, EPRTPermission.CREATE)){
             return;
         }
-        EPRTAction action = enumParameterOrElse(args,0, EPRTAction.class,EPRTAction.INFO);
+        EPRTAction action = enumParameterOrElse(args,0, EPRTAction.class, EPRTAction.INFO);
         switch (action) {
             case CREATE -> commandFactory.create(player, alias, args);
             case DELETE -> commandFactory.delete(player, alias, args);
@@ -72,8 +72,9 @@ public class PRT extends PlayerCommand {
             case CLAIM -> commandFactory.claim(player, alias, args);
             case UNCLAIM -> commandFactory.unclaim(player, alias, args);
             case DEBUG -> commandFactory.debug(player, alias, args);
-            case DEPOSIT -> {commandFactory.deposit(player, alias, args);}
-            case WITHDRAW -> {commandFactory.withdraw(player, alias, args);}
+            case DEPOSIT -> commandFactory.deposit(player, alias, args);
+            case WITHDRAW -> commandFactory.withdraw(player, alias, args);
+            case MAIN -> commandFactory.main(player, alias, args);
             default -> commandFactory.info(player, alias, args);
         }
     }
