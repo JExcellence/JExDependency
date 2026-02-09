@@ -1,0 +1,57 @@
+package com.raindropcentral.rds.listeners;
+
+import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.database.entity.RDSPlayer;
+import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.items.ShopItem;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
+
+@SuppressWarnings("unused")
+public class BlockListener implements Listener {
+
+    private final RDS rds;
+    public BlockListener(RDS rds) {
+        this.rds = rds;
+    }
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+
+    }
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent event){
+        if (event ==  null) return;
+        ItemStack item = event.getItemInHand();
+        if (ShopItem.equals(this.rds, item)) {
+            UUID uuid = ShopItem.getOwner(this.rds, item);
+            if (uuid == null) {
+                event.getPlayer().sendMessage("Unable to convert to uuid");
+                return;
+            }
+            var rPlayer = this.rds.getPlayerRepository().findByPlayer(event.getPlayer().getUniqueId());
+            placeShopItem(
+                    event.getPlayer(),
+                    rPlayer,
+                    event.getBlock().getLocation()
+            );
+        }
+    }
+
+    private void placeShopItem(Player player, RDSPlayer rPlayer, Location nexus_location) {
+        if (player == null) return;
+        if (rPlayer == null) return;
+        var shop = new Shop(player.getUniqueId());
+        this.rds.getShopRepository().create(shop);
+        rPlayer.addShop(1);
+        this.rds.getPlayerRepository().update(rPlayer);
+    }
+}

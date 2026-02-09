@@ -59,6 +59,7 @@ public class PRT extends PlayerCommand {
      */
     @Override
     protected void onPlayerInvocation(@NotNull Player player, @NotNull String alias, @NonNull @NotNull String[] args) {
+        //TODO FIX TO CHECK PROPER PERM FOR EACH COMMAND
         if (this.hasNoPermission(player, EPRTPermission.CREATE)){
             return;
         }

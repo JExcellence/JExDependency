@@ -2,6 +2,11 @@ package com.raindropcentral.rds;
 
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rds.configs.ConfigSection;
+import com.raindropcentral.rds.database.entity.RDSPlayer;
+import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.repository.RRDSPlayer;
+import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.view.shop.ShopOverviewView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -38,6 +43,10 @@ public class RDS extends JavaPlugin {
     private Object economyInstance;
     private ViewFrame viewFrame;
 
+    //Repositories
+    private RRDSPlayer playerRepository;
+    private RShop shopRepository;
+
     @Override
     public void onLoad() {
         this.rds = this;
@@ -61,7 +70,6 @@ public class RDS extends JavaPlugin {
             onDisable();
             return;
         }
-        this.getLogger().info("Connecting to economy");
         initializePlugins();
         initializeCommands();
         initializeViews();
@@ -107,21 +115,19 @@ public class RDS extends JavaPlugin {
     }
 
     private void initializeRepositories(){
-        /*
-        this.playerRepository = new RRDTPlayer(
+        this.playerRepository = new RRDSPlayer(
                 this.executor,
                 this.entityManagerFactory,
-                RDTPlayer.class,
-                RDTPlayer::getIdentifier
-        );
-        this.townRepository = new RRTown(
-                this.executor,
-                this.entityManagerFactory,
-                RTown.class,
-                RTown::getIdentifier
+                RDSPlayer.class,
+                RDSPlayer::getIdentifier
         );
 
-         */
+        this.shopRepository = new RShop(
+                this.executor,
+                this.entityManagerFactory,
+                Shop.class,
+                Shop::getShopByLocation
+        );
     }
 
     @SuppressWarnings("resource")
@@ -162,7 +168,7 @@ public class RDS extends JavaPlugin {
                 .create(this.rds)
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
-
+                    new ShopOverviewView()
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();
@@ -204,4 +210,10 @@ public class RDS extends JavaPlugin {
     public PlatformType getPlatformType() {
         return this.platformType;
     }
+
+    public RRDSPlayer getPlayerRepository() {
+        return this.playerRepository;
+    }
+
+    public RShop getShopRepository() { return this.shopRepository; }
 }

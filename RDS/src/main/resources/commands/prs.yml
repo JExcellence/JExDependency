@@ -1,12 +1,12 @@
 commands:
-  prt:
-    name: 'prt'
-    description: 'RDTImpl Commands'
+  prs:
+    name: 'prs'
+    description: 'RDSImpl Commands'
     aliases:
-      - rt
-    usage: 'rt <create | help>'
+      - rs
+    usage: 'rs <info | main>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<rt <create | help>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<rs <info | main>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -24,9 +24,9 @@ commands:
     permissions:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
-        command: 'raindroptown.command'
-        commandCreate: 'raindroptown.command.create'
-        commandHelp: 'raindroptown.command.help'
+        command: 'raindropshops.command'
+        commandCreate: 'raindropshops.command.create'
+        commandHelp: 'raindropshops.command.help'
 
 lut:
   prefix: '&8[&1Admin&8] &7'

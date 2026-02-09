@@ -13,7 +13,6 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "r_chunks")
 @SuppressWarnings({
-        "LombokGetterMayBeUsed",
         "unused",
         "DefaultAnnotationParam",
         "JpaDataSourceORMInspection"
