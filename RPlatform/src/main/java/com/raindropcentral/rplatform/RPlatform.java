@@ -9,6 +9,7 @@ import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.logging.PlatformLogger;
 import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
+import com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.evaluable.CommandUpdater;
@@ -148,7 +149,7 @@ public class RPlatform {
 
             // Initialize requirement system first
             logger.info("Initializing requirement system...");
-            com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider.initialize();
+            BuiltInRequirementProvider.initialize();
             logger.info("Requirement system initialized");
 
             this.initializeDatabaseResources();

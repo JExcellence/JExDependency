@@ -14,6 +14,7 @@ import com.raindropcentral.rdt.view.town.TownOverviewView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.evaluable.ConfigKeeper;
@@ -54,9 +55,12 @@ public class RDT extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        CentralLogger.initialize(this);
+
         this.plugin = this;
         this.getLogger().info("Loading RPlatform for RDT");
         this.platform = new RPlatform(plugin);
+        this.platform.initialize();
         this.executor = Executors.newFixedThreadPool(4);
     }
 
