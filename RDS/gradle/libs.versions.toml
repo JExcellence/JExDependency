@@ -3,7 +3,7 @@
 # All versions are managed centrally in the root gradle/libs.versions.toml
 
 [versions]
-rdt = "1.0.0"
+rds = "1.0.0"
 
 [libraries]
 # References to root catalog libraries are inherited automatically
