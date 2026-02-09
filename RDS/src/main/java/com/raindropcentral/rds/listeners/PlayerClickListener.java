@@ -1,10 +1,14 @@
 package com.raindropcentral.rds.listeners;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.view.shop.ShopOverviewView;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.Map;
+
+@SuppressWarnings("unused")
 public class PlayerClickListener implements Listener {
 
     private final RDS rds;
@@ -22,12 +26,13 @@ public class PlayerClickListener implements Listener {
         final var location = block.getLocation();
         var shop = this.rds.getShopRepository().findByLocation(location);
         if (shop == null) return;
-        if (player.getUniqueId().equals(shop.getOwner())) {
-            //Shop Owner
-
-
-        } else {
-
-        }
+        this.rds.getViewFrame().open(
+                ShopOverviewView.class,
+                player,
+                Map.of(
+                        "plugin",
+                        this.rds
+                )
+        );
     }
 }
