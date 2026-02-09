@@ -3,9 +3,7 @@ package com.raindropcentral.rdt.listeners;
 import com.raindropcentral.rdt.RDT;
 import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -23,7 +21,7 @@ import org.jspecify.annotations.NonNull;
  * Messages use the Adventure API with consistent coloring:
  * primary green (0,200,0), details in gray, and tips in yellow.
  */
-@SuppressWarnings({"StringTemplateMigration", "unused"})
+@SuppressWarnings("unused")
 public class PlayerJoinListener implements Listener {
 
     private final RDT plugin;
@@ -48,21 +46,21 @@ public class PlayerJoinListener implements Listener {
     ///
     /// @param event Bukkit player joins the event
     public void onPlayerJoin(@NonNull PlayerJoinEvent event) {
-        Player bukkitPlayer = event.getPlayer();
+        var bukkitPlayer = event.getPlayer();
         final int chunkX = bukkitPlayer.getLocation().getChunk().getX();
         final int chunkZ = bukkitPlayer.getLocation().getChunk().getZ();
 
-        RDTPlayer rPlayer = this.plugin.getPlayerRepository().findByPlayer(bukkitPlayer.getUniqueId());
+        var rPlayer = this.plugin.getPlayerRepository().findByPlayer(bukkitPlayer.getUniqueId());
 
         if (rPlayer == null) {
             // First join: create a record and inform the player how to get started
-            RDTPlayer newPlayer = new RDTPlayer(bukkitPlayer.getUniqueId());
+            var newPlayer = new RDTPlayer(bukkitPlayer.getUniqueId());
             this.plugin.getPlayerRepository().createAsync(newPlayer);
             this.plugin.getLogger().info("Created player entry for " + newPlayer.getIdentifier());
 
-            TextComponent welcome = Component.text("Welcome! You're not in a town yet.")
+            var welcome = Component.text("Welcome! You're not in a town yet.")
                     .color(TextColor.color(0, 200, 0));
-            TextComponent tip = Component.text("Use /prt create <name> or /prt join <name>")
+            var tip = Component.text("Use /prt create <name> or /prt join <name>")
                     .color(TextColor.color(255, 215, 0));
             bukkitPlayer.sendMessage(welcome.append(Component.newline()).append(tip));
         } else if (rPlayer.getTownUUID() != null) {
@@ -71,23 +69,23 @@ public class PlayerJoinListener implements Listener {
                 int used = town.getChunks().size();
                 int limit = this.plugin.getDefaultConfig().getClaimLimit();
 
-                TextComponent title = Component.text("Welcome back to " + town.getTownName() + "!")
+                var title = Component.text("Welcome back to " + town.getTownName() + "!")
                         .color(TextColor.color(0, 200, 0));
-                TextComponent details = Component.text(
+                var details = Component.text(
                                 String.format("Claims: %d/%d • Chunk: (%d, %d)", used, limit, chunkX, chunkZ))
                         .color(TextColor.color(160, 160, 160));
                 bukkitPlayer.sendMessage(title.append(Component.newline()).append(details));
             } else {
                 // Town reference missing; fall back to a generic message
-                TextComponent msg = Component.text("Welcome! You're not in a town yet.")
+                var msg = Component.text("Welcome! You're not in a town yet.")
                         .color(TextColor.color(0, 200, 0));
                 bukkitPlayer.sendMessage(msg);
             }
         } else {
             // Has player record but no town
-            TextComponent welcome = Component.text("Welcome! You're not in a town yet.")
+            var welcome = Component.text("Welcome! You're not in a town yet.")
                     .color(TextColor.color(0, 200, 0));
-            TextComponent tip = Component.text("Use /prt create <name> or /prt join <name>")
+            var tip = Component.text("Use /prt create <name> or /prt join <name>")
                     .color(TextColor.color(255, 215, 0));
             bukkitPlayer.sendMessage(welcome.append(Component.newline()).append(tip));
         }

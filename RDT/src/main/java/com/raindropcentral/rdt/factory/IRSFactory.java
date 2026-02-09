@@ -41,14 +41,14 @@ public class IRSFactory {
                 });
             }
             // Town has never been taxed
-
-            this.plugin.getPlatform().getScheduler().runRepeating(
+            this.plugin.getPlatform().getScheduler().runRepeatingAsync(
                     () -> tax(rTown),
                     this.plugin.getDefaultConfig().getGracePeriod(),
                     this.plugin.getDefaultConfig().getTaxInterval().longValue()
             );
+            return;
         }
-        this.plugin.getScheduler().runRepeating(
+        this.plugin.getScheduler().runRepeatingAsync(
                 () -> tax(rTown),
                 System.currentTimeMillis() >
                         (rTown.getLast_taxed() + this.plugin.getDefaultConfig().getTaxInterval()) ?

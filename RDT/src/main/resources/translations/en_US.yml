@@ -1,3 +1,7 @@
+# ============================================
+# General messages
+# ============================================
+
 no_town: "You are not in a town!"
 no_town_db: "Town {town} not found in DB! Consult developer..."
 no_player: "Player not found or offline!"
@@ -40,3 +44,39 @@ player_balance: "Player balance: {balance}"
 town_balance: "Town balance: {balance}"
 grace_period: "Your town has never been taxed. You have a grace period to fund your town. You're town will be taxed in {time} seconds."
 taxed: "Taxes have been taken from your town bank. You will be taxed again in {time} seconds!"
+
+# ============================================
+# GUI Buttons
+# ============================================
+
+town:
+  view_town:
+    lore: "Click to view town"
+
+main_overview_ui:
+  title: "RDT Main Menu"
+  main_overview:
+    name: "View Towns"
+    lore: "Open to explore all towns on the server!"
+
+server_town_overview:
+  title: "RDT Towns"
+
+# ============================================
+# PAGINATION
+# ============================================
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"

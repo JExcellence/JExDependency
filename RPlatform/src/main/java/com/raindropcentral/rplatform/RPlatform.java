@@ -142,7 +142,7 @@ public class RPlatform {
         if (initialized) {
             return CompletableFuture.completedFuture(null);
         }
-
+        logger.info("Preparing Async translation task");
         return CompletableFuture.runAsync(() -> {
             logger.info("Initializing RPlatform for " + platformType.name());
 
@@ -154,7 +154,7 @@ public class RPlatform {
             this.initializeDatabaseResources();
 
             translationManager = TranslationManager.builder(plugin)
-                    .defaultLocale("de_DE").supportedLocales("de_DE", "en_US")
+                    .defaultLocale("en_US").supportedLocales("de_DE", "en_US")
                     .enableMetrics(true)
                     .build();
 

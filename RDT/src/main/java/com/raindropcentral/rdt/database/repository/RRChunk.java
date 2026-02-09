@@ -51,6 +51,6 @@ public class RRChunk extends CachedRepository<RChunk, Long, UUID> {
      * @return matching chunk or {@code null} if none
      */
     public RChunk findByCoords(int x_loc, int z_loc) {
-        return findByAttributes(Map.of("x_loc", x_loc, "z_loc", z_loc)).orElseThrow();
+        return findByAttributes(Map.of("x_loc", x_loc, "z_loc", z_loc)).orElse(null);
     }
 }

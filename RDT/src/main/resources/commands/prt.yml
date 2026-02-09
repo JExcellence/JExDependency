@@ -24,7 +24,7 @@ commands:
     permissions:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
-        command: 'raindropquests.command'
+        command: 'raindroptown.command'
         commandCreate: 'raindroptown.command.create'
         commandHelp: 'raindroptown.command.help'
 

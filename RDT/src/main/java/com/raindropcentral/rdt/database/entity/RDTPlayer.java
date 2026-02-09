@@ -18,8 +18,7 @@ import java.util.UUID;
         "DefaultAnnotationParam",
         "FieldCanBeLocal",
         "unused",
-        "JpaDataSourceORMInspection",
-        "LombokGetterMayBeUsed"
+        "JpaDataSourceORMInspection"
 })
 public class RDTPlayer extends BaseEntity {
 

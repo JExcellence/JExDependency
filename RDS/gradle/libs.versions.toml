@@ -1,0 +1,16 @@
+# RDT Version Catalog
+# This file references the root project's version catalog for consistency
+# All versions are managed centrally in the root gradle/libs.versions.toml
+
+[versions]
+rds = "1.0.0"
+
+[libraries]
+# References to root catalog libraries are inherited automatically
+# This file exists for module-specific version overrides if needed
+
+[bundles]
+# Module-specific bundles can be defined here
+
+[plugins]
+# Module-specific plugins can be defined here

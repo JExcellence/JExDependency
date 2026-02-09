@@ -50,7 +50,7 @@ public class RRDTPlayer extends CachedRepository<RDTPlayer, Long, UUID> {
      * @return matching player or {@code null} if none
      */
     public RDTPlayer findByPlayer(UUID player_uuid) {
-        return findByAttributes(Map.of("player_uuid", player_uuid)).orElseThrow();
+        return findByAttributes(Map.of("player_uuid", player_uuid)).orElse(null);
     }
 
 }

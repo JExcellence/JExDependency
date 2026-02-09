@@ -29,5 +29,6 @@ public enum EPRTAction {
     DEPOSIT,
     //withdraw money from the town bank
     WITHDRAW,
-
+    //Main menu GUI
+    MAIN
 }

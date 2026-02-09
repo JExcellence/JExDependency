@@ -6,6 +6,7 @@ import com.raindropcentral.rdt.database.entity.RDTPlayer;
 import com.raindropcentral.rdt.database.entity.RTown;
 import com.raindropcentral.rdt.items.Nexus;
 import com.raindropcentral.rdt.utils.Type;
+import com.raindropcentral.rdt.view.main.MainOverviewView;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -41,7 +42,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * </ul>
  */
 @SuppressWarnings({
-        "StringTemplateMigration",
         "unused",
         "Duplicates"
 })
@@ -571,6 +571,7 @@ public class CommandFactory {
             new I18n.Builder("bad_args.number", player).build().sendMessage();
         }
     }
+
     public void withdraw(
             @NotNull Player player,
             @NotNull String alias,
@@ -624,5 +625,21 @@ public class CommandFactory {
         } catch (NumberFormatException e) {
             new I18n.Builder("bad_args.number", player).build().sendMessage();
         }
+    }
+
+    @SuppressWarnings("ConfusingMainMethod")
+    public void main(
+            @NotNull Player player,
+            @NotNull String alias,
+            @NotNull String[] args
+    ){
+        this.plugin.getViewFrame().open(
+                MainOverviewView.class,
+                player,
+                Map.of(
+                        "plugin",
+                        this.plugin
+                )
+        );
     }
 }

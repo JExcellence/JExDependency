@@ -16,8 +16,9 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-@SuppressWarnings({"StringTemplateMigration", "unused"})
+@SuppressWarnings("unused")
 public class BlockListener implements Listener {
+
     private final RDT plugin;
     public BlockListener(RDT plugin) {
         this.plugin = plugin;
@@ -25,9 +26,11 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        //TODO Fix this to actually check for nexus block
         String blockName = event.getBlock().getType().name().toLowerCase().replace('_', ' ');
         event.getPlayer().sendMessage("you broke a " + blockName + " block");
     }
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event){
         ItemStack item = event.getItemInHand();
@@ -45,7 +48,6 @@ public class BlockListener implements Listener {
                     Nexus.getTownName(this.plugin,item),
                     event.getBlock().getLocation()
             );
-
         }
     }
 

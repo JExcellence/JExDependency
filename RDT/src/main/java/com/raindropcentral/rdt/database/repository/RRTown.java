@@ -59,7 +59,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return the first town found where this player is mayor, or {@code null} if none
      */
     public RTown findByMayor(UUID mayor) {
-        return findByAttributes(Map.of("mayor", mayor)).orElseThrow();
+        return findByAttributes(Map.of("mayor", mayor)).orElse(null);
     }
 
 
@@ -70,7 +70,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return matching town or {@code null} if none
      */
     public RTown findByTName(String townName) {
-        return findByAttributes(Map.of("townName", townName)).orElseThrow();
+        return findByAttributes(Map.of("townName", townName)).orElse(null);
     }
 
     /**
@@ -80,7 +80,7 @@ public class RRTown extends CachedRepository<RTown, Long, UUID> {
      * @return matching town or {@code null} if none
      */
     public RTown findByTownUUID(UUID uuid) {
-        return findByAttributes(Map.of("uuid", uuid)).orElseThrow();
+        return findByAttributes(Map.of("uuid", uuid)).orElse(null);
     }
 
 }
