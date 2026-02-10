@@ -10,6 +10,7 @@ import com.raindropcentral.rds.view.shop.ShopOverviewView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.evaluable.ConfigKeeper;
@@ -49,9 +50,11 @@ public class RDS extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        CentralLogger.initialize(this);
         this.rds = this;
         this.getLogger().info("Loading RPlatform for RDS");
         this.platform = new RPlatform(rds);
+        this.platform.initialize();
         this.executor = Executors.newFixedThreadPool(4);
     }
 
@@ -59,7 +62,7 @@ public class RDS extends JavaPlugin {
     @Override
     public void onEnable() {
         this.platformType = PlatformAPIFactory.detectPlatformType();
-        this.scheduler = ISchedulerAdapter.create(this, this.platformType);
+        this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
 
         try {
