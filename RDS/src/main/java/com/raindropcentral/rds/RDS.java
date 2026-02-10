@@ -129,7 +129,7 @@ public class RDS extends JavaPlugin {
                 this.executor,
                 this.entityManagerFactory,
                 Shop.class,
-                Shop::getShopByLocation
+                Shop::getShopLocation
         );
     }
 

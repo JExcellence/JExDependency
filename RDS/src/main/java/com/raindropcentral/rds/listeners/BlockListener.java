@@ -46,10 +46,10 @@ public class BlockListener implements Listener {
         }
     }
 
-    private void placeShopItem(Player player, RDSPlayer rPlayer, Location nexus_location) {
+    private void placeShopItem(Player player, RDSPlayer rPlayer, Location shop_location) {
         if (player == null) return;
         if (rPlayer == null) return;
-        var shop = new Shop(player.getUniqueId());
+        var shop = new Shop(player.getUniqueId(), shop_location);
         this.rds.getShopRepository().create(shop);
         rPlayer.addShop(1);
         this.rds.getPlayerRepository().update(rPlayer);

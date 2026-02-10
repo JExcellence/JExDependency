@@ -31,7 +31,11 @@ public class PlayerClickListener implements Listener {
                 player,
                 Map.of(
                         "plugin",
-                        this.rds
+                        this.rds,
+                        "location",
+                        player.getLocation(),
+                        "owner",
+                        player.getName()
                 )
         );
     }
