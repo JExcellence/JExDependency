@@ -2,6 +2,7 @@ package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
+@JsonTypeName("CHOICE")
 public final class ChoiceReward extends AbstractReward {
 
     private final List<AbstractReward> choices;

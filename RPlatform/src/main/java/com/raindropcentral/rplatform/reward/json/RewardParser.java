@@ -13,12 +13,17 @@ import org.jetbrains.annotations.NotNull;
 public final class RewardParser {
 
     private static ObjectMapper objectMapper;
+    private static final Object MAPPER_LOCK = new Object();
 
     private RewardParser() {}
 
     public static ObjectMapper getObjectMapper() {
         if (objectMapper == null) {
-            objectMapper = createObjectMapper();
+            synchronized (MAPPER_LOCK) {
+                if (objectMapper == null) {
+                    objectMapper = createObjectMapper();
+                }
+            }
         }
         return objectMapper;
     }

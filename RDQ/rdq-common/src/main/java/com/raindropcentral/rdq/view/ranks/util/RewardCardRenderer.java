@@ -49,7 +49,7 @@ public class RewardCardRenderer {
             @NotNull RRankReward rankReward,
             @NotNull Player player
     ) {
-        AbstractReward reward = rankReward.getReward();
+        AbstractReward reward = rankReward.getReward().getReward();
 
         Material iconMaterial = getRewardIcon(reward);
 
@@ -78,7 +78,7 @@ public class RewardCardRenderer {
             @NotNull RRankReward rankReward,
             @NotNull Player player
     ) {
-        AbstractReward reward = rankReward.getReward();
+        AbstractReward reward = rankReward.getReward().getReward();
         Material iconMaterial = getRewardIcon(reward);
 
         Component displayName = new I18n.Builder("reward.card.compact_name", player)
@@ -135,7 +135,7 @@ public class RewardCardRenderer {
             @NotNull RRankReward rankReward
     ) {
         List<Component> lore = new ArrayList<>();
-        AbstractReward reward = rankReward.getReward();
+        AbstractReward reward = rankReward.getReward().getReward();
         
         lore.add(Component.empty());
 

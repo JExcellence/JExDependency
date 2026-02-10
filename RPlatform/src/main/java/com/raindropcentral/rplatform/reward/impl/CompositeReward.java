@@ -2,6 +2,7 @@ package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@JsonTypeName("COMPOSITE")
 public final class CompositeReward extends AbstractReward {
 
     private static final Logger LOGGER = Logger.getLogger(CompositeReward.class.getName());

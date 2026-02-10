@@ -83,18 +83,8 @@ public final class RewardRegistry {
     }
 
     public ObjectMapper configureObjectMapper(@NotNull ObjectMapper mapper) {
-        mapper.registerSubtypes(
-            com.raindropcentral.rplatform.reward.impl.ItemReward.class,
-            com.raindropcentral.rplatform.reward.impl.CurrencyReward.class,
-            com.raindropcentral.rplatform.reward.impl.ExperienceReward.class,
-            com.raindropcentral.rplatform.reward.impl.CommandReward.class,
-            com.raindropcentral.rplatform.reward.impl.CompositeReward.class,
-            com.raindropcentral.rplatform.reward.impl.ChoiceReward.class,
-            com.raindropcentral.rplatform.reward.impl.PermissionReward.class,
-            com.raindropcentral.rplatform.reward.impl.TeleportReward.class,
-            com.raindropcentral.rplatform.reward.impl.ParticleReward.class,
-            com.raindropcentral.rplatform.reward.impl.VanishingChestReward.class
-        );
+        // The @JsonSubTypes annotation on AbstractReward already handles subtype registration
+        // No need to manually register subtypes here
         return mapper;
     }
 }

@@ -20,7 +20,7 @@ public final class ExperienceReward extends AbstractReward {
     @JsonCreator
     public ExperienceReward(
         @JsonProperty("amount") int amount,
-        @JsonProperty("type") ExperienceType type
+        @JsonProperty("experienceType") ExperienceType type
     ) {
         this.amount = amount;
         this.type = type != null ? type : ExperienceType.POINTS;

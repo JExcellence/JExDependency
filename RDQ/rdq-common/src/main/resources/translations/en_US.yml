@@ -1447,3 +1447,122 @@ rank_requirement_item_detail_ui:
     name: "<gradient:#ef4444:#f87171>← Back</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Return to requirements</gradient>"
+
+
+# ============================================
+# REWARD TRANSLATIONS
+# ============================================
+rank_requirements_journey_ui:
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>No Rewards</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>This rank has no rewards configured</gradient>"
+      type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>Value:</gray> <gold>%value%</gold>"
+    
+    # Reward type descriptions
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>Receive currency rewards</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>Receive item rewards</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>Receive experience points</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>Execute special commands</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>Multiple rewards combined</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>Choose from multiple rewards</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>Gain special permissions</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>Teleport to a location</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>Unlock particle effects</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>Receive a vanishing chest</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% more rewards...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 View All Rewards</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Click to see all %count% rewards</gradient>"
+        - "<gradient:#6b7280:#9ca3af>for this rank in detail</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>Detailed rewards view coming soon!</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 No Rewards</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>This rank has no rewards</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>This rank has no rewards configured.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 Rank Rewards</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>You will receive %count% rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>when you claim this rank</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>No Rewards</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>This rank has no rewards configured</gradient>"
+    type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>Value:</gray> <gold>%value%</gold>"
+  
+  # Reward type descriptions
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>Receive currency rewards</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>Receive item rewards</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>Receive experience points</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>Execute special commands</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>Multiple rewards combined</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>Choose from multiple rewards</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>Gain special permissions</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>Teleport to a location</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>Unlock particle effects</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>Receive a vanishing chest</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% more rewards...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 View All Rewards</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to see all %count% rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for this rank in detail</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>Detailed rewards view coming soon!</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 No Rewards</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>This rank has no rewards</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>This rank has no rewards configured.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 Rank Rewards</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>You will receive %count% rewards</gradient>"
+    - "<gradient:#6b7280:#9ca3af>when you claim this rank</gradient>"
+
+
+# ============================================
+# RANK REWARDS DETAIL VIEW
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>Rewards: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>This rank has %count% rewards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Click on any reward for details</gradient>"

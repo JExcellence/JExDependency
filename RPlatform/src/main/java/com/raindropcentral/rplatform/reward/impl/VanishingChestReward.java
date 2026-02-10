@@ -2,6 +2,7 @@ package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -16,11 +17,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * Reward that spawns a temporary chest with items at the player's location.
- * The chest vanishes after a specified duration.
- */
+@JsonTypeName("VANISHING_CHEST")
 public final class VanishingChestReward extends AbstractReward {
+
 
     private final List<ItemStack> items;
     private final long durationTicks;

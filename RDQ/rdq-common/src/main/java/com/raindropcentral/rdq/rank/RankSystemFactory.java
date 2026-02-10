@@ -1,31 +1,33 @@
-package com.raindropcentral.rdq.rank;
+ package com.raindropcentral.rdq.rank;
 
-import com.raindropcentral.rdq.RDQ;
-import com.raindropcentral.rdq.config.ranks.rank.RankSection;
-import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;
-import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
-import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
-import com.raindropcentral.rdq.config.requirement.BaseRequirementSectionAdapter;
-import com.raindropcentral.rdq.config.utility.RewardSection;
-import com.raindropcentral.rdq.database.entity.rank.*;
-import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
-import com.raindropcentral.rplatform.logging.CentralLogger;
-import com.raindropcentral.rplatform.requirement.AbstractRequirement;
-import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
-import com.raindropcentral.rplatform.reward.AbstractReward;
-import com.raindropcentral.rplatform.reward.config.RewardFactory;
-import de.jexcellence.evaluable.ConfigKeeper;
-import de.jexcellence.evaluable.ConfigManager;
-import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+ import com.raindropcentral.rdq.RDQ;
+ import com.raindropcentral.rdq.config.ranks.rank.RankSection;
+ import com.raindropcentral.rdq.config.ranks.ranktree.RankTreeSection;
+ import com.raindropcentral.rdq.config.ranks.system.RankSystemSection;
+ import com.raindropcentral.rdq.config.requirement.BaseRequirementSection;
+ import com.raindropcentral.rdq.config.requirement.BaseRequirementSectionAdapter;
+ import com.raindropcentral.rdq.config.utility.IconSection;
+ import com.raindropcentral.rdq.config.utility.RewardSection;
+ import com.raindropcentral.rdq.database.entity.rank.*;
+ import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
+ import com.raindropcentral.rdq.database.entity.reward.BaseReward;
+ import com.raindropcentral.rplatform.logging.CentralLogger;
+ import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+ import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
+ import com.raindropcentral.rplatform.reward.AbstractReward;
+ import com.raindropcentral.rplatform.reward.config.RewardFactory;
+ import de.jexcellence.evaluable.ConfigKeeper;
+ import de.jexcellence.evaluable.ConfigManager;
+ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+ import lombok.Getter;
+ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
+ import java.io.File;
+ import java.util.*;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+ import java.util.stream.Collectors;
 
 /**
  * Factory responsible for loading, constructing, and validating the rank system from configuration files.
@@ -639,7 +641,7 @@ public class RankSystemFactory {
     
     /**
      * Updates rank rewards with proper entity lifecycle management.
-     * Always fetches fresh entity to avoid OptimisticLockException.
+     * Follows the same pattern as updateRankRequirements.
      */
     private void updateRankRewards(String rankId, RankSection config) {
         try {
@@ -658,28 +660,100 @@ public class RankSystemFactory {
                 return;
             }
 
-            List<RRankReward> newRewards = parseRewards(rank, configRewards);
-
-            if (newRewards.isEmpty()) {
-                if (!rank.getRewards().isEmpty()) {
-                    rank.getRewards().clear();
-                    rdq.getRankRepository().update(rank);
+            int existingCount = rank.getRewards().size();
+            if (existingCount > 0) {
+                // Force clear existing rewards to handle migration from old format
+                LOGGER.info("Clearing existing rewards for rank: " + rankId + " (migration)");
+                
+                // Delete the BaseReward entities from the database
+                List<BaseReward> rewardsToDelete = new ArrayList<>();
+                for (RRankReward rankReward : rank.getRewards()) {
+                    if (rankReward.getReward() != null) {
+                        rewardsToDelete.add(rankReward.getReward());
+                    }
                 }
+                
+                // Clear the collection first
+                rank.getRewards().clear();
+                rdq.getRankRepository().update(rank);
+                
+                // Now delete the BaseReward entities
+                for (BaseReward reward : rewardsToDelete) {
+                    try {
+                        rdq.getRewardRepository().delete(reward.getId());
+                    } catch (Exception e) {
+                        LOGGER.warning("Failed to delete old reward entity: " + e.getMessage());
+                    }
+                }
+                
+                // Refetch the rank after clearing
+                rank = findRankByIdentifier(rankId);
+                if (rank == null) {
+                    return;
+                }
+            }
+            
+            // Re-check after migration
+            if (!rank.getRewards().isEmpty()) {
                 return;
             }
 
-            rank.getRewards().clear();
+            List<RRankReward> newRewards = parseRewards(rank, configRewards);
 
-            rdq.getRankRepository().update(rank);
-
-            rank = findRankByIdentifier(rankId);
-            if (rank == null) return;
-
-            for (RRankReward reward : newRewards) {
-                rank.addReward(reward);
+            if (newRewards.isEmpty()) {
+                return;
             }
 
-            rdq.getRankRepository().update(rank);
+            // Persist BaseReward entities first
+            List<BaseReward> savedRewards = new ArrayList<>();
+            for (RRankReward rankReward : newRewards) {
+                BaseReward reward = rankReward.getReward();
+                if (reward.getId() == null) {
+                    reward = rdq.getRewardRepository().create(reward);
+                }
+                savedRewards.add(reward);
+            }
+
+            rank = findRankByIdentifier(rankId);
+            if (rank == null) {
+                return;
+            }
+
+            if (!rank.getRewards().isEmpty()) {
+                return;
+            }
+
+            // Create RRankReward entities with persisted BaseReward references
+            for (int i = 0; i < newRewards.size(); i++) {
+                RRankReward template = newRewards.get(i);
+                RRankReward newRankReward = new RRankReward(
+                    rank,
+                    savedRewards.get(i),
+                    template.getIcon()
+                );
+                newRankReward.setDisplayOrder(template.getDisplayOrder());
+                newRankReward.setAutoGrant(template.isAutoGrant());
+            }
+
+            try {
+                rdq.getRankRepository().update(rank);
+            } catch (jakarta.persistence.OptimisticLockException ole) {
+
+                rank = findRankByIdentifier(rankId);
+                if (rank != null && rank.getRewards().isEmpty()) {
+                    for (int i = 0; i < newRewards.size(); i++) {
+                        RRankReward template = newRewards.get(i);
+                        RRankReward newRankReward = new RRankReward(
+                            rank,
+                            savedRewards.get(i),
+                            template.getIcon()
+                        );
+                        newRankReward.setDisplayOrder(template.getDisplayOrder());
+                        newRankReward.setAutoGrant(template.isAutoGrant());
+                    }
+                    rdq.getRankRepository().update(rank);
+                }
+            }
 
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to update rewards for rank: " + rankId, e);
@@ -748,24 +822,102 @@ public class RankSystemFactory {
             RewardSection section = entry.getValue();
 
             try {
+                LOGGER.info("Parsing reward '" + key + "' of type: " + section.getType());
 
                 final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>) (RewardFactory<?>) RewardFactory.getInstance();
-                AbstractReward abstractReward = rewardFactory.fromSection(section);
+                AbstractReward abstractReward;
+                
+                try {
+                    abstractReward = rewardFactory.fromSection(section);
+                } catch (Exception e) {
+                    LOGGER.log(Level.SEVERE, "Failed to convert section to AbstractReward for '" + key + "'", e);
+                    continue;
+                }
 
-                RRankReward rankReward = new RRankReward();
-                rankReward.setReward(abstractReward);
-                rankReward.setDisplayOrder(displayOrder);
+                if (abstractReward == null) {
+                    LOGGER.warning("Failed to parse reward '" + key + "': AbstractReward is null (adapter returned null)");
+                    continue;
+                }
+                
+                LOGGER.info("Successfully created AbstractReward for '" + key + "', type: " + abstractReward.getClass().getSimpleName());
+
+                // Get or generate icon for the reward
+                IconSection rewardIcon = section.getIcon();
+                if (rewardIcon == null || rewardIcon.getMaterial() == null || rewardIcon.getMaterial().equals("PAPER")) {
+                    // Generate a default icon based on reward type
+                    rewardIcon = generateDefaultIcon(section.getType(), section);
+                    LOGGER.info("Generated default icon for '" + key + "': " + rewardIcon.getMaterial());
+                }
+
+                // Create BaseReward entity with the reward and icon
+                BaseReward baseReward = null;
+                try {
+                    baseReward = new BaseReward(abstractReward, rewardIcon);
+                } catch (Exception e) {
+                    LOGGER.log(Level.SEVERE, "Failed to create BaseReward for '" + key + "'", e);
+                    continue;
+                }
+                
+                // Verify that rewardJson was set properly
+                if (baseReward.getRewardJson() == null || baseReward.getRewardJson().isEmpty()) {
+                    LOGGER.warning("Failed to parse reward '" + key + "': Reward JSON is null or empty after creation");
+                    LOGGER.warning("AbstractReward class: " + abstractReward.getClass().getName());
+                    LOGGER.warning("AbstractReward toString: " + abstractReward.toString());
+                    continue;
+                }
+                
+                LOGGER.info("BaseReward created successfully for '" + key + "', JSON length: " + baseReward.getRewardJson().length());
+
+                // Create RRankReward that references the BaseReward
+                RRankReward rankReward = new RRankReward(
+                    null,
+                    baseReward,
+                    rewardIcon
+                );
+                rankReward.setDisplayOrder(section.getDisplayOrder() != null ? section.getDisplayOrder() : displayOrder);
                 rankReward.setAutoGrant(true);
                 
                 rewards.add(rankReward);
                 displayOrder++;
 
+                LOGGER.info("Successfully parsed reward '" + key + "' of type: " + section.getType());
+
             } catch (Exception e) {
-                LOGGER.warning("Failed to parse reward '" + key + "': " + e.getMessage());
+                LOGGER.log(Level.SEVERE, "Failed to parse reward '" + key + "'", e);
             }
         }
 
         return rewards;
+    }
+    
+    /**
+     * Generates a default icon for a reward based on its type.
+     */
+    private IconSection generateDefaultIcon(String rewardType, RewardSection section) {
+        IconSection icon = new IconSection(new de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder());
+        
+        String material = switch (rewardType.toUpperCase()) {
+            case "ITEM" -> {
+                // Try to get material from the item config
+                if (section.getItem() != null && section.getItem().containsKey("material")) {
+                    yield section.getItem().get("material").toString();
+                }
+                yield "CHEST";
+            }
+            case "CURRENCY" -> "GOLD_INGOT";
+            case "EXPERIENCE" -> "EXPERIENCE_BOTTLE";
+            case "COMMAND" -> "COMMAND_BLOCK";
+            case "COMPOSITE" -> "BUNDLE";
+            case "CHOICE" -> "ENDER_CHEST";
+            case "PERMISSION" -> "PAPER";
+            default -> "PAPER";
+        };
+        
+        icon.setMaterial(material);
+        icon.setDisplayNameKey("reward." + rewardType.toLowerCase());
+        icon.setDescriptionKey("reward." + rewardType.toLowerCase() + ".description");
+        
+        return icon;
     }
 
     private void cleanupPlayerProgress(RRank rank) {

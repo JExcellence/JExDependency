@@ -9,6 +9,7 @@ import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
+import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
 import com.raindropcentral.rdq.permissions.PermissionsService;
 import com.raindropcentral.rdq.rank.IRankSystemService;
@@ -89,6 +90,9 @@ public abstract class RDQ {
 
 	@InjectRepository
 	private RRequirementRepository requirementRepository;
+
+	@InjectRepository
+	private RRewardRepository rewardRepository;
 
 	private LuckPermsService luckPermsService;
 	private IBountyService bountyService;
@@ -187,6 +191,7 @@ public abstract class RDQ {
 		repositoryManager.register(RRankTreeRepository.class, RRankTree.class, RRankTree::getIdentifier);
 		repositoryManager.register(RRankRewardRepository.class, RRankReward.class, RRankReward::getId);
 		repositoryManager.register(RRequirementRepository.class, BaseRequirement.class, BaseRequirement::getId);
+		repositoryManager.register(RRewardRepository.class, BaseReward.class, BaseReward::getId);
 
 		repositoryManager.injectInto(this);
 	}
@@ -228,7 +233,8 @@ public abstract class RDQ {
 						new RankPathOverview(),
 						new RankPathRankRequirementOverview(),
 						new RankRequirementsJourneyView(),
-						new MainOverviewView()
+						new MainOverviewView(),
+						new RankRewardsDetailView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();

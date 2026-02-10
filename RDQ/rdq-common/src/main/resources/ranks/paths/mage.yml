@@ -37,6 +37,8 @@ ranks:
     rewards:
       welcome_kit:
         type: "COMPOSITE"
+        icon:
+          type: "ENCHANTED_BOOK"
         rewards:
           - type: "ITEM"
             item:
@@ -48,6 +50,8 @@ ranks:
               amount: 16
       starting_currency:
         type: "CURRENCY"
+        icon:
+          type: "GOLD_NUGGET"
         amount: 50
         currencyId: "coins"
 

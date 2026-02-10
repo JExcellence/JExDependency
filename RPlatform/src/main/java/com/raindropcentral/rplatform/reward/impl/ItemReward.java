@@ -2,6 +2,7 @@ package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -9,13 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
+@JsonTypeName("ITEM")
 public final class ItemReward extends AbstractReward {
 
-    // Store item with amount 1 as template
     @JsonProperty("item")
     private final ItemStack item;
-    
-    // Store actual amount separately (can exceed max stack size)
+
     @JsonProperty("amount")
     private final int amount;
 
@@ -24,10 +24,8 @@ public final class ItemReward extends AbstractReward {
         @JsonProperty("item") @NotNull ItemStack item,
         @JsonProperty("amount") int amount
     ) {
-        // Store item with amount 1 as template
         this.item = item.clone();
         this.item.setAmount(1);
-        // Store actual amount separately (can exceed max stack size)
         this.amount = Math.max(1, amount);
     }
     

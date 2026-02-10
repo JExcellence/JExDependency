@@ -51,7 +51,7 @@ public class RankRewardListener implements Listener {
 				for (final RRankReward rankReward : rewards) {
 					if (rankReward.isAutoGrant()) {
 						Bukkit.getScheduler().runTask(this.rdq.getPlugin(), () -> {
-							this.rewardService.grant(player, rankReward.getReward())
+							this.rewardService.grant(player, rankReward.getReward().getReward())
 								.thenAccept(success -> {
 									if (success) {
 										LOGGER.info("Granted reward to " + player.getName() + 

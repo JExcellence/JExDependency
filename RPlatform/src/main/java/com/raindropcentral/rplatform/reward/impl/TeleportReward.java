@@ -2,6 +2,7 @@ package com.raindropcentral.rplatform.reward.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletableFuture;
 /**
  * Reward that teleports the player to a specific location.
  */
+@JsonTypeName("TELEPORT")
 public final class TeleportReward extends AbstractReward {
 
     private final String worldName;

@@ -285,7 +285,7 @@ public class RankRequirementDetailView extends APaginatedView<RankRequirementDet
 			render.layoutSlot('T', this.createRequirementTipsItem(player, abstractReq));
 
 			// Render back button
-			render.layoutSlot('b', this.createBackButton(player)).onClick(context -> this.navigateBackToJourneyView(context));
+			render.layoutSlot('b', this.createBackButton(player)).onClick(this::navigateBackToJourneyView);
 
 			// Render submit button (S slot) - only for item requirements and not completed
 			if (abstractReq instanceof ItemRequirement itemReq) {

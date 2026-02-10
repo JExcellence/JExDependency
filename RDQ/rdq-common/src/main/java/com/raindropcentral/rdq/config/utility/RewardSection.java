@@ -9,6 +9,8 @@ import java.util.Map;
 public class RewardSection extends AConfigSection {
 
     private String type;
+    private IconSection icon;
+    private Integer displayOrder;
     private Map<String, Object> item;
     private String currencyId;
     private Double amount;
@@ -33,6 +35,14 @@ public class RewardSection extends AConfigSection {
 
     public String getType() {
         return type;
+    }
+
+    public IconSection getIcon() {
+        return icon == null ? new IconSection(new EvaluationEnvironmentBuilder()) : icon;
+    }
+
+    public Integer getDisplayOrder() {
+        return displayOrder == null ? 0 : displayOrder;
     }
 
     public Map<String, Object> getItem() {

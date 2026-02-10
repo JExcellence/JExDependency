@@ -73,6 +73,7 @@ public class RankRequirementsJourneyView extends BaseView {
     // Reward slots (row 5) - displayed below requirements
     private static final int[] REWARD_SLOTS = {46, 48, 50, 52};
     private static final int REWARDS_LABEL_SLOT = 45;
+    private static final int VIEW_ALL_REWARDS_SLOT = 53;
 
     private RankRequirementProgressManager progressManager;
     private RequirementProgressRenderer progressRenderer;
@@ -167,7 +168,8 @@ public class RankRequirementsJourneyView extends BaseView {
             renderProgressBar(render, player, rank, rdqPlayer);
             renderOverallProgress(render, player, rank, rdqPlayer);
             renderRequirementCards(render, player, rank, rdqPlayer, isPreviewMode);
-            renderRewardCards(render, player, rank); // Add reward display
+            // renderRewardCards(render, player, rank); // Removed - rewards shown in separate view
+            renderViewRewardsButton(render, player, rank); // Add button to view rewards
             renderClaimOrLockedButton(render, player, rank, rdqPlayer, isPreviewMode);
             
             // Start pulsing animation for ready requirements
@@ -630,6 +632,57 @@ public class RankRequirementsJourneyView extends BaseView {
     }
 
     /**
+     * Renders a button to view all rewards in a separate detailed view.
+     */
+    private void renderViewRewardsButton(
+            final @NotNull RenderContext render,
+            final @NotNull Player player,
+            final @NotNull RRank rank
+    ) {
+        render.slot(VIEW_ALL_REWARDS_SLOT)
+                .renderWith(() -> {
+                    final var rewards = rank.getRewardsOrdered();
+                    if (rewards.isEmpty()) {
+                        return UnifiedBuilderFactory.item(Material.GRAY_DYE)
+                                .setName(this.i18n("rewards.view_all.empty.name", player).build().component())
+                                .setLore(this.i18n("rewards.view_all.empty.lore", player).build().children())
+                                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                .build();
+                    } else {
+                        return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
+                                .setName(this.i18n("rewards.view_all.name", player).build().component())
+                                .setLore(this.i18n("rewards.view_all.lore", player)
+                                        .withPlaceholder("count", String.valueOf(rewards.size()))
+                                        .build().children())
+                                .setGlowing(true)
+                                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                .build();
+                    }
+                })
+                .onClick(clickContext -> {
+                    final var rewards = rank.getRewardsOrdered();
+                    if (rewards.isEmpty()) {
+                        this.i18n("rewards.view_all.empty.message", player).build().sendMessage();
+                    } else {
+                        // Open rewards detail view
+                        final Map<String, Object> data = new HashMap<>();
+                        data.put("plugin", this.rdq.get(clickContext));
+                        data.put("player", this.currentPlayer.get(clickContext));
+                        data.put("targetRank", rank);
+                        data.put("rankTree", this.selectedRankTree.get(clickContext));
+                        data.put("previewMode", this.previewMode.get(clickContext));
+                        
+                        try {
+                            clickContext.openForPlayer(RankRewardsDetailView.class, data);
+                        } catch (final Exception e) {
+                            LOGGER.log(Level.WARNING, "Failed to open rewards detail view", e);
+                            this.i18n("rewards.view_all.error", player).build().sendMessage();
+                        }
+                    }
+                });
+    }
+
+    /**
      * Renders reward cards showing what the player will receive upon claiming the rank.
      */
     private void renderRewardCards(
@@ -665,7 +718,7 @@ public class RankRequirementsJourneyView extends BaseView {
                 render.slot(slot)
                         .renderWith(() -> com.raindropcentral.rdq.view.ranks.util.RewardCardRenderer.createCompactRewardCard(reward, player))
                         .onClick(clickContext -> {
-                            this.i18n(reward.getReward().getDescriptionKey(), player).withPlaceholder("reward_type", reward.getReward().getTypeId()).build().sendMessage();
+                            this.i18n(reward.getReward().getReward().getDescriptionKey(), player).withPlaceholder("reward_type", reward.getReward().getTypeId()).build().sendMessage();
                         });
             }
             
@@ -679,6 +732,46 @@ public class RankRequirementsJourneyView extends BaseView {
                                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                                 .build());
             }
+            
+            // Always show "View All Rewards" button (even if no rewards)
+            render.slot(VIEW_ALL_REWARDS_SLOT)
+                    .renderWith(() -> {
+                        if (rewards.isEmpty()) {
+                            return UnifiedBuilderFactory.item(Material.GRAY_DYE)
+                                    .setName(this.i18n("rewards.view_all.empty.name", player).build().component())
+                                    .setLore(this.i18n("rewards.view_all.empty.lore", player).build().children())
+                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                    .build();
+                        } else {
+                            return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
+                                    .setName(this.i18n("rewards.view_all.name", player).build().component())
+                                    .setLore(this.i18n("rewards.view_all.lore", player)
+                                            .withPlaceholder("count", String.valueOf(rewards.size()))
+                                            .build().children())
+                                    .setGlowing(true)
+                                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                                    .build();
+                        }
+                    })
+                    .onClick(clickContext -> {
+                        if (rewards.isEmpty()) {
+                            this.i18n("rewards.view_all.empty.message", player).build().sendMessage();
+                        } else {
+                            // Open detailed rewards view
+                            final Map<String, Object> data = new HashMap<>();
+                            data.put("plugin", this.rdq.get(clickContext));
+                            data.put("player", this.currentPlayer.get(clickContext));
+                            data.put("targetRank", rank);
+                            data.put("rankTree", this.selectedRankTree.get(clickContext));
+                            
+                            try {
+                                clickContext.openForPlayer(RankRewardsDetailView.class, data);
+                            } catch (final Exception e) {
+                                LOGGER.log(Level.WARNING, "Failed to open rewards detail view", e);
+                                this.i18n("rewards.view_all.error", player).build().sendMessage();
+                            }
+                        }
+                    });
             
         } catch (final Exception e) {
             LOGGER.log(Level.WARNING, "Failed to render reward cards", e);

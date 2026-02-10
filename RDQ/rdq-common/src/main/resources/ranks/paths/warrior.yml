@@ -41,16 +41,22 @@ ranks:
     rewards:
       welcome_sword:
         type: "ITEM"
+        icon:
+          type: "WOODEN_SWORD"
         item:
           material: "WOODEN_SWORD"
           amount: 1
       welcome_armor:
         type: "ITEM"
+        icon:
+          type: "LEATHER_CHESTPLATE"
         item:
           material: "LEATHER_CHESTPLATE"
           amount: 1
       starting_currency:
         type: "CURRENCY"
+        icon:
+          type: "GOLD_NUGGET"
         amount: 50
         currencyId: "coins"
 
@@ -71,10 +77,14 @@ ranks:
     rewards:
       soldier_bonus:
         type: "CURRENCY"
+        icon:
+          type: "GOLD_INGOT"
         amount: 150
         currencyId: "coins"
       combat_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 500
         experienceType: "POINTS"
     requirements:
@@ -119,10 +129,14 @@ ranks:
     rewards:
       veteran_reward:
         type: "CURRENCY"
+        icon:
+          type: "GOLD_BLOCK"
         amount: 300
         currencyId: "coins"
       veteran_gear:
         type: "COMPOSITE"
+        icon:
+          type: "IRON_CHESTPLATE"
         rewards:
           - type: "ITEM"
             item:
@@ -134,6 +148,8 @@ ranks:
               amount: 1
       veteran_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 1000
         experienceType: "POINTS"
     requirements:
@@ -186,10 +202,14 @@ ranks:
     rewards:
       berserker_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD"
         amount: 500
         currencyId: "coins"
       berserker_power:
         type: "COMPOSITE"
+        icon:
+          type: "DIAMOND_AXE"
         rewards:
           - type: "ITEM"
             item:
@@ -201,6 +221,8 @@ ranks:
               amount: 5
       berserker_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
@@ -244,10 +266,14 @@ ranks:
     rewards:
       guardian_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD"
         amount: 500
         currencyId: "coins"
       guardian_defense:
         type: "COMPOSITE"
+        icon:
+          type: "SHIELD"
         rewards:
           - type: "ITEM"
             item:
@@ -259,6 +285,8 @@ ranks:
               amount: 1
       guardian_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
@@ -305,10 +333,14 @@ ranks:
     rewards:
       gladiator_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD"
         amount: 500
         currencyId: "coins"
       gladiator_gear:
         type: "COMPOSITE"
+        icon:
+          type: "DIAMOND_SWORD"
         rewards:
           - type: "ITEM"
             item:
@@ -320,6 +352,8 @@ ranks:
               amount: 8
       gladiator_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 1500
         experienceType: "POINTS"
     requirements:
@@ -363,10 +397,14 @@ ranks:
     rewards:
       warlord_fury_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "coins"
       ultimate_fury:
         type: "COMPOSITE"
+        icon:
+          type: "NETHERITE_AXE"
         rewards:
           - type: "ITEM"
             item:
@@ -382,6 +420,8 @@ ranks:
               amount: 5
       warlord_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
@@ -422,10 +462,14 @@ ranks:
     rewards:
       warlord_shield_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "coins"
       ultimate_defense:
         type: "COMPOSITE"
+        icon:
+          type: "NETHERITE_CHESTPLATE"
         rewards:
           - type: "ITEM"
             item:
@@ -441,6 +485,8 @@ ranks:
               amount: 2
       warlord_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
@@ -487,10 +533,14 @@ ranks:
     rewards:
       warlord_arena_reward:
         type: "CURRENCY"
+        icon:
+          type: "EMERALD_BLOCK"
         amount: 1000
         currencyId: "coins"
       ultimate_champion:
         type: "COMPOSITE"
+        icon:
+          type: "NETHERITE_SWORD"
         rewards:
           - type: "ITEM"
             item:
@@ -506,6 +556,8 @@ ranks:
               amount: 8
       warlord_experience:
         type: "EXPERIENCE"
+        icon:
+          type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
     requirements:
