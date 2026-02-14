@@ -1,0 +1,47 @@
+# Critical Strike Perk
+# Chance to deal extra damage when attacking
+identifier: "critical_strike"
+perkType: "EVENT_TRIGGERED"
+category: "COMBAT"
+enabled: true
+displayOrder: 17
+
+icon:
+  type: "DIAMOND_SWORD"
+  displayNameKey: "perk.critical_strike.name"
+  descriptionKey: "perk.critical_strike.description"
+  enchanted: true
+
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 38
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 6000.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Critical Strike! Deal devastating blows!\",\"color\":\"dark_red\"}"
+    executeAsPlayer: false
+
+effect:
+  triggerEvent: "ENTITY_DAMAGE_BY_ENTITY"
+  cooldownMillis: 15000  # 15 seconds
+  triggerChance: 30.0  # 30% chance
+  customConfig:
+    damageMultiplier: 1.5  # 50% extra damage
+    playSound: true
+    soundType: "ENTITY_PLAYER_ATTACK_CRIT"
+    showParticles: true
+    particleType: "CRIT"

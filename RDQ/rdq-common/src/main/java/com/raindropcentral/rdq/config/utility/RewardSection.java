@@ -28,6 +28,10 @@ public class RewardSection extends AConfigSection {
     private Integer minimumRequired;
     private Integer maximumRequired;
     private Boolean allowMultipleSelections;
+    
+    // Perk reward fields
+    private String perkIdentifier;
+    private Boolean autoEnable;
 
     public RewardSection(EvaluationEnvironmentBuilder evaluationEnvironmentBuilder) {
         super(evaluationEnvironmentBuilder);
@@ -111,5 +115,13 @@ public class RewardSection extends AConfigSection {
 
     public Boolean getAllowMultipleSelections() {
         return allowMultipleSelections;
+    }
+    
+    public String getPerkIdentifier() {
+        return perkIdentifier;
+    }
+    
+    public Boolean getAutoEnable() {
+        return autoEnable;
     }
 }

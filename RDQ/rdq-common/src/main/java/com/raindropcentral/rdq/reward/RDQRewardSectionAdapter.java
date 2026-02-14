@@ -33,6 +33,7 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<Rewar
                 case "COMPOSITE" -> convertCompositeReward(section);
                 case "CHOICE" -> convertChoiceReward(section);
                 case "PERMISSION" -> convertPermissionReward(section);
+                case "PERK" -> convertPerkReward(section);
                 default -> {
                     LOGGER.warning("Unknown reward type: " + type);
                     yield null;
@@ -155,5 +156,14 @@ public final class RDQRewardSectionAdapter implements RewardSectionAdapter<Rewar
         boolean temporary = section.getTemporary() != null && section.getTemporary();
 
         return new PermissionReward(section.getPermissions(), durationSeconds, temporary);
+    }
+    
+    private PerkReward convertPerkReward(RewardSection section) {
+        if (section.getPerkIdentifier() == null || section.getPerkIdentifier().isEmpty()) {
+            throw new IllegalArgumentException("Perk reward requires 'perkIdentifier' field");
+        }
+        
+        boolean autoEnable = section.getAutoEnable() != null && section.getAutoEnable();
+        return new PerkReward(section.getPerkIdentifier(), autoEnable);
     }
 }

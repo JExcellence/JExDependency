@@ -1,0 +1,179 @@
+# ============================================================
+# RDQ Perk System Configuration
+# ============================================================
+# This file controls global settings for the perk system.
+# Individual perks are configured in separate YAML files in the perks/ directory.
+
+# Enable or disable the entire perk system
+# Set to false to completely disable perk functionality
+enabled: true
+
+# Maximum number of perks a player can have enabled simultaneously
+# Players can unlock unlimited perks but can only enable this many at once
+# Set to -1 for unlimited enabled perks
+maxEnabledPerksPerPlayer: 5
+
+# Global cooldown multiplier for all perks
+# Multiply all perk cooldowns by this value
+# 1.0 = normal cooldowns, 2.0 = double cooldowns, 0.5 = half cooldowns
+cooldownMultiplier: 1.0
+
+# ============================================================
+# UI Settings
+# ============================================================
+ui:
+  # Number of perks to display per page in the overview GUI
+  perksPerPage: 28
+  
+  # Show locked perks in the overview GUI
+  # If false, only unlocked perks will be displayed
+  showLockedPerks: true
+  
+  # Show requirement progress bars for locked perks
+  # If false, only show whether requirements are met or not
+  showRequirementProgress: true
+  
+  # Sort order for perks in the GUI
+  # Options: DISPLAY_ORDER, CATEGORY, ALPHABETICAL, UNLOCK_STATUS
+  sortOrder: "DISPLAY_ORDER"
+  
+  # Enable category filtering in the overview GUI
+  # If true, players can filter perks by category
+  enableCategoryFilter: true
+
+# ============================================================
+# Notification Settings
+# ============================================================
+notifications:
+  # Notification when a perk is unlocked
+  unlockNotification:
+    enabled: true
+    showTitle: true
+    showActionBar: true
+    showChat: true
+    playSound: true
+    soundType: "ENTITY_PLAYER_LEVELUP"
+    soundVolume: 1.0
+    soundPitch: 1.0
+  
+  # Notification when a perk is activated
+  activationNotification:
+    enabled: true
+    showTitle: false
+    showActionBar: true
+    showChat: false
+    playSound: true
+    soundType: "BLOCK_NOTE_BLOCK_PLING"
+    soundVolume: 0.5
+    soundPitch: 1.5
+  
+  # Notification when a perk is on cooldown
+  cooldownNotification:
+    enabled: true
+    showTitle: false
+    showActionBar: true
+    showChat: false
+    playSound: true
+    soundType: "BLOCK_NOTE_BLOCK_BASS"
+    soundVolume: 0.3
+    soundPitch: 0.8
+  
+  # Notification when a perk is disabled
+  deactivationNotification:
+    enabled: true
+    showTitle: false
+    showActionBar: true
+    showChat: false
+    playSound: false
+
+# ============================================================
+# Integration Settings
+# ============================================================
+integration:
+  # Enable PERK reward type for rank system integration
+  # Allows perks to be granted as rank rewards
+  enablePerkRewards: true
+  
+  # Automatically enable perks when granted through rewards
+  # If false, players must manually enable perks after unlocking
+  autoEnableOnGrant: false
+  
+  # Enable perk statistics tracking
+  # Tracks usage count, total usage time, etc.
+  enableStatistics: true
+  
+  # Enable perk requirement progress caching
+  # Improves performance but may delay progress updates
+  cacheRequirementProgress: true
+  
+  # Requirement progress cache duration in seconds
+  requirementProgressCacheDuration: 30
+
+# ============================================================
+# Performance Settings
+# ============================================================
+performance:
+  # Refresh interval for passive potion effects in ticks
+  # Lower values = smoother effects but more CPU usage
+  # 20 ticks = 1 second
+  potionEffectRefreshInterval: 100
+  
+  # Cleanup interval for expired cooldowns in ticks
+  # How often to remove expired cooldown entries from memory
+  cooldownCleanupInterval: 1200  # 60 seconds
+  
+  # Enable async database operations for perk management
+  # Improves performance but may introduce slight delays
+  asyncDatabaseOperations: true
+  
+  # Batch size for bulk perk operations
+  # Number of perks to process in a single database transaction
+  batchSize: 50
+
+# ============================================================
+# Debug Settings
+# ============================================================
+debug:
+  # Enable debug logging for perk system
+  # Logs detailed information about perk operations
+  enabled: false
+  
+  # Log perk activation/deactivation events
+  logActivations: false
+  
+  # Log requirement checks
+  logRequirementChecks: false
+  
+  # Log cooldown operations
+  logCooldowns: false
+  
+  # Log database operations
+  logDatabaseOperations: false
+
+# ============================================================
+# Advanced Settings
+# ============================================================
+advanced:
+  # Allow players to have duplicate perks
+  # If true, players can unlock the same perk multiple times
+  allowDuplicatePerks: false
+  
+  # Persist perk states across server restarts
+  # If false, all active perks are deactivated on restart
+  persistStatesOnRestart: true
+  
+  # Reactivate enabled perks on player login
+  # If false, players must manually reactivate perks after login
+  reactivateOnLogin: true
+  
+  # Deactivate all perks on player logout
+  # Recommended to keep true to prevent issues
+  deactivateOnLogout: true
+  
+  # Allow perk configuration hot-reload
+  # If true, admins can reload perk configs without restart
+  allowHotReload: true
+  
+  # Preserve player perk data on hot-reload
+  # If false, all player perk states are reset on reload
+  preservePlayerDataOnReload: true

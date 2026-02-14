@@ -1,0 +1,11 @@
+name: "perkadmin"
+description: "Admin commands for managing perks"
+usage: "/perkadmin <grant|revoke|reload|list> [args...]"
+aliases:
+  - "perka"
+  - "padmin"
+
+permissions:
+  default:
+    permission: "rdq.perks.admin"
+    default: op

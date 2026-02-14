@@ -168,15 +168,28 @@ public class PRQ extends PlayerCommand {
                     EPRQPermission.PERKS
                 )) {
                     return;
-                }/*
+                }
+                
+                // Load player data synchronously
+                final var rdqPlayerOpt = this.rdq.getPlayerRepository().findByAttributes(
+                    Map.of("uniqueId", player.getUniqueId())
+                );
+                
+                if (rdqPlayerOpt.isEmpty()) {
+                    new I18n.Builder("error.player_not_found", player).includePrefix().build().sendMessage();
+                    return;
+                }
+                
                 this.rdq.getViewFrame().open(
-                    PerksOverviewView.class,
+                    com.raindropcentral.rdq.view.perks.PerkOverviewView.class,
                     player,
                     Map.of(
                         "plugin",
-                        this.rdq
+                        this.rdq,
+                        "player",
+                        rdqPlayerOpt.get()
                     )
-                );*/
+                );
             }
             default -> {
                 new I18n.Builder("rq.help", player).includePrefix().build().sendMessage();

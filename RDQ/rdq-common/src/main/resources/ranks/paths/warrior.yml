@@ -152,6 +152,13 @@ ranks:
           type: "EXPERIENCE_BOTTLE"
         experienceAmount: 1000
         experienceType: "POINTS"
+      # Perk reward example - grants speed boost perk
+      speed_perk:
+        type: "PERK"
+        icon:
+          type: "FEATHER"
+        perkIdentifier: "speed_boost"
+        autoEnable: false
     requirements:
       veteran_gear:
         icon:
@@ -424,6 +431,13 @@ ranks:
           type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
+      # Perk reward example - grants strength perk with auto-enable
+      strength_perk:
+        type: "PERK"
+        icon:
+          type: "BLAZE_POWDER"
+        perkIdentifier: "strength"
+        autoEnable: true
     requirements:
       ultimate_berserker:
         icon:
@@ -489,6 +503,13 @@ ranks:
           type: "EXPERIENCE_BOTTLE"
         experienceAmount: 3000
         experienceType: "POINTS"
+      # Perk reward example - grants resistance perk
+      resistance_perk:
+        type: "PERK"
+        icon:
+          type: "IRON_CHESTPLATE"
+        perkIdentifier: "resistance"
+        autoEnable: true
     requirements:
       ultimate_guardian:
         icon:

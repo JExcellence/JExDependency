@@ -1,21 +1,21 @@
-# Flight Perk
-# Grants the player the ability to fly
-identifier: "fly"
+# Keep Inventory Perk
+# Preserves the player's inventory on death
+identifier: "keep_inventory"
 perkType: "PASSIVE"
-category: "MOVEMENT"
+category: "SURVIVAL"
 enabled: true
-displayOrder: 10
+displayOrder: 13
 
 icon:
-  type: "ELYTRA"
-  displayNameKey: "perk.fly.name"
-  descriptionKey: "perk.fly.description"
+  type: "CHEST"
+  displayNameKey: "perk.keep_inventory.name"
+  descriptionKey: "perk.keep_inventory.description"
   enchanted: true
 
 requirements:
   level_requirement:
     type: "EXPERIENCE_LEVEL"
-    level: 50
+    level: 40
     icon:
       type: "EXPERIENCE_BOTTLE"
   
@@ -24,7 +24,7 @@ requirements:
     currencyRequirement:
       currencyType: "coins"
       requiredCurrencies:
-        coins: 10000.0
+        coins: 7500.0
       consumeOnComplete: true
     icon:
       type: "GOLD_INGOT"
@@ -32,8 +32,8 @@ requirements:
 unlockRewards:
   welcome_message:
     type: "COMMAND"
-    command: "tellraw {player} {\"text\":\"You unlocked Flight! Soar through the skies!\",\"color\":\"light_purple\"}"
+    command: "tellraw {player} {\"text\":\"You unlocked Keep Inventory! Your items are safe!\",\"color\":\"green\"}"
     executeAsPlayer: false
 
 effect:
-  specialType: "FLY"
+  specialType: "KEEP_INVENTORY"

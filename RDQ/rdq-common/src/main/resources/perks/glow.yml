@@ -1,21 +1,21 @@
-# Flight Perk
-# Grants the player the ability to fly
-identifier: "fly"
+# Glow Perk
+# Applies a glowing effect to the player
+identifier: "glow"
 perkType: "PASSIVE"
-category: "MOVEMENT"
+category: "COSMETIC"
 enabled: true
-displayOrder: 10
+displayOrder: 11
 
 icon:
-  type: "ELYTRA"
-  displayNameKey: "perk.fly.name"
-  descriptionKey: "perk.fly.description"
+  type: "GLOWSTONE"
+  displayNameKey: "perk.glow.name"
+  descriptionKey: "perk.glow.description"
   enchanted: true
 
 requirements:
   level_requirement:
     type: "EXPERIENCE_LEVEL"
-    level: 50
+    level: 30
     icon:
       type: "EXPERIENCE_BOTTLE"
   
@@ -24,7 +24,7 @@ requirements:
     currencyRequirement:
       currencyType: "coins"
       requiredCurrencies:
-        coins: 10000.0
+        coins: 2500.0
       consumeOnComplete: true
     icon:
       type: "GOLD_INGOT"
@@ -32,8 +32,8 @@ requirements:
 unlockRewards:
   welcome_message:
     type: "COMMAND"
-    command: "tellraw {player} {\"text\":\"You unlocked Flight! Soar through the skies!\",\"color\":\"light_purple\"}"
+    command: "tellraw {player} {\"text\":\"You unlocked Glow! Shine bright!\",\"color\":\"yellow\"}"
     executeAsPlayer: false
 
 effect:
-  specialType: "FLY"
+  specialType: "GLOW"

@@ -1,23 +1,43 @@
-# Resistance Perk Configuration
-id: resistance
-displayNameKey: perk_names.resistance
-descriptionKey: perk_descriptions.resistance
-category: defense
-iconMaterial: IRON_CHESTPLATE
+# Resistance Perk
+# Grants continuous resistance effect to the player
+identifier: "resistance"
+perkType: "PASSIVE"
+category: "SURVIVAL"
 enabled: true
+displayOrder: 5
 
-type: TOGGLEABLE
-cooldownSeconds: 600
-durationSeconds: 30
-
-effect:
-  type: POTION_EFFECT
-  potionType: DAMAGE_RESISTANCE
-  amplifier: 1
+icon:
+  type: "SHIELD"
+  displayNameKey: "perk.resistance.name"
+  descriptionKey: "perk.resistance.description"
+  enchanted: true
 
 requirements:
-  - type: RANK
-    rankId: cleric_2
-  - type: CURRENCY
-    currency: default
-    amount: 750
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 25
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 1200.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Resistance!\",\"color\":\"gray\"}"
+    executeAsPlayer: false
+
+effect:
+  potionEffectType: "DAMAGE_RESISTANCE"
+  amplifier: 0
+  durationTicks: 600  # 30 seconds (refreshed continuously)
+  ambient: false
+  particles: true

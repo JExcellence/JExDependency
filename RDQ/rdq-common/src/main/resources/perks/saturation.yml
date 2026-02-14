@@ -1,21 +1,21 @@
-# Speed Boost Perk
-# Grants continuous speed effect to the player
-identifier: "speed"
+# Saturation Perk
+# Grants continuous saturation effect to the player
+identifier: "saturation"
 perkType: "PASSIVE"
-category: "MOVEMENT"
+category: "SURVIVAL"
 enabled: true
-displayOrder: 1
+displayOrder: 7
 
 icon:
-  type: "FEATHER"
-  displayNameKey: "perk.speed.name"
-  descriptionKey: "perk.speed.description"
+  type: "COOKED_BEEF"
+  displayNameKey: "perk.saturation.name"
+  descriptionKey: "perk.saturation.description"
   enchanted: true
 
 requirements:
   level_requirement:
     type: "EXPERIENCE_LEVEL"
-    level: 10
+    level: 22
     icon:
       type: "EXPERIENCE_BOTTLE"
   
@@ -24,7 +24,7 @@ requirements:
     currencyRequirement:
       currencyType: "coins"
       requiredCurrencies:
-        coins: 500.0
+        coins: 1100.0
       consumeOnComplete: true
     icon:
       type: "GOLD_INGOT"
@@ -32,12 +32,12 @@ requirements:
 unlockRewards:
   welcome_message:
     type: "COMMAND"
-    command: "tellraw {player} {\"text\":\"You unlocked Speed Boost!\",\"color\":\"gold\"}"
+    command: "tellraw {player} {\"text\":\"You unlocked Saturation!\",\"color\":\"yellow\"}"
     executeAsPlayer: false
 
 effect:
-  potionEffectType: "SPEED"
-  amplifier: 1
+  potionEffectType: "SATURATION"
+  amplifier: 0
   durationTicks: 600  # 30 seconds (refreshed continuously)
   ambient: false
-  particles: true
+  particles: false

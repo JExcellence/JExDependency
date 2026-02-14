@@ -1,23 +1,45 @@
-# Double Experience Perk Configuration
-id: double_experience
-displayNameKey: perk_names.double_experience
-descriptionKey: perk_descriptions.double_experience
-category: utility
-iconMaterial: EXPERIENCE_BOTTLE
+# Double Experience Perk
+# Doubles experience gained from certain actions
+identifier: "double_experience"
+perkType: "EVENT_TRIGGERED"
+category: "UTILITY"
 enabled: true
+displayOrder: 16
 
-type: EVENT_BASED
-eventType: EXPERIENCE_GAIN
-cooldownSeconds: 1800
-durationSeconds: 600
-
-effect:
-  type: EXPERIENCE_MULTIPLIER
-  multiplier: 2.0
+icon:
+  type: "ENCHANTED_BOOK"
+  displayNameKey: "perk.double_experience.name"
+  descriptionKey: "perk.double_experience.description"
+  enchanted: true
 
 requirements:
-  - type: RANK
-    rankId: mage_3
-  - type: CURRENCY
-    currency: default
-    amount: 5000
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 32
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 4000.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Double Experience! Level up faster!\",\"color\":\"green\"}"
+    executeAsPlayer: false
+
+effect:
+  triggerEvent: "PLAYER_EXP_CHANGE"
+  cooldownMillis: 60000  # 60 seconds
+  triggerChance: 50.0  # 50% chance
+  customConfig:
+    multiplier: 2.0
+    playSound: true
+    soundType: "ENTITY_EXPERIENCE_ORB_PICKUP"

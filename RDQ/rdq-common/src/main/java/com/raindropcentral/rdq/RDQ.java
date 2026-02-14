@@ -4,13 +4,21 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import com.raindropcentral.rdq.bounty.visual.VisualIndicatorManager;
+import com.raindropcentral.rdq.config.perk.PerkSystemSection;
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
+import com.raindropcentral.rdq.database.entity.perk.Perk;
+import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
+import com.raindropcentral.rdq.listener.PerkEventListener;
+import com.raindropcentral.rdq.perk.PerkActivationService;
+import com.raindropcentral.rdq.perk.PerkManagementService;
+import com.raindropcentral.rdq.perk.PerkRequirementService;
+import com.raindropcentral.rdq.perk.PerkSystemFactory;
 import com.raindropcentral.rdq.permissions.PermissionsService;
 import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.rank.RankSystemFactory;
@@ -19,6 +27,8 @@ import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
 import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rdq.view.main.MainOverviewView;
+import com.raindropcentral.rdq.view.perks.PerkDetailView;
+import com.raindropcentral.rdq.view.perks.PerkOverviewView;
 import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
@@ -94,11 +104,23 @@ public abstract class RDQ {
 	@InjectRepository
 	private RRewardRepository rewardRepository;
 
+	@InjectRepository
+	private PerkRepository perkRepository;
+
+	@InjectRepository
+	private PlayerPerkRepository playerPerkRepository;
+
 	private LuckPermsService luckPermsService;
 	private IBountyService bountyService;
 	private IRankSystemService rankSystemService;
 	private BountyFactory bountyFactory;
 	private VisualIndicatorManager visualIndicatorManager;
+	
+	// Perk system components
+	private PerkSystemFactory perkSystemFactory;
+	private PerkManagementService perkManagementService;
+	private PerkActivationService perkActivationService;
+	private PerkRequirementService perkRequirementService;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -144,6 +166,9 @@ public abstract class RDQ {
 					rankSystemService = createRankSystemService();
 					rankSystemFactory = new RankSystemFactory(this);
 					this.rankSystemFactory.initialize();
+
+					// Initialize perk system
+					initializePerkSystem();
 
 					visualIndicatorManager = new VisualIndicatorManager(this);
 
@@ -192,6 +217,8 @@ public abstract class RDQ {
 		repositoryManager.register(RRankRewardRepository.class, RRankReward.class, RRankReward::getId);
 		repositoryManager.register(RRequirementRepository.class, BaseRequirement.class, BaseRequirement::getId);
 		repositoryManager.register(RRewardRepository.class, BaseReward.class, BaseReward::getId);
+		repositoryManager.register(PerkRepository.class, Perk.class, Perk::getIdentifier);
+		repositoryManager.register(PlayerPerkRepository.class, PlayerPerk.class, PlayerPerk::getId);
 
 		repositoryManager.injectInto(this);
 	}
@@ -234,7 +261,9 @@ public abstract class RDQ {
 						new RankPathRankRequirementOverview(),
 						new RankRequirementsJourneyView(),
 						new MainOverviewView(),
-						new RankRewardsDetailView()
+						new RankRewardsDetailView(),
+						new PerkOverviewView(),
+						new PerkDetailView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
@@ -249,11 +278,77 @@ public abstract class RDQ {
 	}
 
 	/**
+	 * Initializes the perk system components.
+	 * Creates the perk factory, management service, and activation service.
+	 * Registers the perk event listener and special perk handler.
+	 */
+	private void initializePerkSystem() {
+		try {
+			LOGGER.info("Initializing perk system...");
+			
+			// Create perk system factory and initialize
+			perkSystemFactory = new PerkSystemFactory(this);
+			perkSystemFactory.initialize();
+			
+			// Get system configuration
+			PerkSystemSection systemConfig = perkSystemFactory.getPerkSystemSection();
+			
+			// Create perk management service
+			perkManagementService = new PerkManagementService(
+					perkRepository,
+					playerPerkRepository,
+					systemConfig.getMaxEnabledPerksPerPlayer()
+			);
+			
+			// Create perk requirement service
+			perkRequirementService = new PerkRequirementService(perkManagementService);
+			
+			// Create perk activation service
+			perkActivationService = new PerkActivationService(
+					this,
+					playerPerkRepository,
+					perkManagementService,
+					systemConfig.getCooldownMultiplier()
+			);
+			
+			// Register perk event listener
+			PerkEventListener perkEventListener = new PerkEventListener(this, perkActivationService);
+			plugin.getServer().getPluginManager().registerEvents(perkEventListener, plugin);
+			LOGGER.info("Registered PerkEventListener");
+			
+			// Register special perk handler (it implements Listener for death/damage events)
+			plugin.getServer().getPluginManager().registerEvents(
+					perkActivationService.getSpecialPerkHandler(), 
+					plugin
+			);
+			LOGGER.info("Registered SpecialPerkHandler");
+			
+			// Start scheduled tasks (potion effect refresh, etc.)
+			perkActivationService.startScheduledTasks();
+			
+			LOGGER.info("Perk system initialized successfully!");
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "Failed to initialize perk system", e);
+		}
+	}
+
+	/**
 	 * Called when the plugin is being disabled.
 	 * Shuts down the visual indicator manager and other resources.
 	 */
 	public void onDisable() {
 		disabling = true;
+		
+		// Shutdown perk system
+		if (perkActivationService != null) {
+			try {
+				perkActivationService.stopScheduledTasks();
+				perkActivationService.handleServerShutdown().join();
+				LOGGER.info("Perk system shut down successfully");
+			} catch (Exception e) {
+				LOGGER.log(Level.WARNING, "Error shutting down perk system", e);
+			}
+		}
 		
 		if (visualIndicatorManager != null) {
 			visualIndicatorManager.shutdown();

@@ -1,0 +1,39 @@
+# Keep Experience Perk
+# Preserves the player's experience on death
+identifier: "keep_experience"
+perkType: "PASSIVE"
+category: "SURVIVAL"
+enabled: true
+displayOrder: 14
+
+icon:
+  type: "EXPERIENCE_BOTTLE"
+  displayNameKey: "perk.keep_experience.name"
+  descriptionKey: "perk.keep_experience.description"
+  enchanted: true
+
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 45
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 8000.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Keep Experience! Your XP is protected!\",\"color\":\"green\"}"
+    executeAsPlayer: false
+
+effect:
+  specialType: "KEEP_EXPERIENCE"

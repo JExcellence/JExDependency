@@ -1395,3 +1395,693 @@ reward:
       - "<gradient:#6b7280:#9ca3af>Click to see all %count% rewards</gradient>"
       - "<gradient:#6b7280:#9ca3af>for this rank in detail</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Detailed rewards view coming soon!</gradient>"
+
+# ============================================
+# PERK COMMAND MESSAGES
+# ============================================
+command:
+  perks:
+    no_permission: "<gradient:#ef4444:#f87171>You don't have permission to use this command.</gradient>"
+    player_data_error: "<gradient:#ef4444:#f87171>Failed to load player data. Please try again.</gradient>"
+  
+  perkadmin:
+    no_permission: "<gradient:#ef4444:#f87171>You don't have permission to use this command.</gradient>"
+    usage:
+      header: "<gradient:#f59e0b:#fbbf24>=== Perk Admin Commands ===</gradient>"
+      grant: "<gradient:#10b981:#34d399>/perkadmin grant <player> <perk></gradient> <gradient:#6b7280:#9ca3af>- Grant a perk to a player</gradient>"
+      revoke: "<gradient:#10b981:#34d399>/perkadmin revoke <player> <perk></gradient> <gradient:#6b7280:#9ca3af>- Revoke a perk from a player</gradient>"
+      reload: "<gradient:#10b981:#34d399>/perkadmin reload</gradient> <gradient:#6b7280:#9ca3af>- Reload perk configurations</gradient>"
+      list: "<gradient:#10b981:#34d399>/perkadmin list</gradient> <gradient:#6b7280:#9ca3af>- List all perks</gradient>"
+    grant:
+      usage: "<gradient:#ef4444:#f87171>Usage: /perkadmin grant <player> <perk></gradient>"
+      player_not_found: "<gradient:#ef4444:#f87171>Player '%player%' has never played on this server.</gradient>"
+      player_data_error: "<gradient:#ef4444:#f87171>Failed to load player data for '%player%'.</gradient>"
+      perk_not_found: "<gradient:#ef4444:#f87171>Perk '%perk%' not found.</gradient>"
+      success: "<gradient:#10b981:#34d399>Granted perk '%perk%' to %player%.</gradient>"
+      success_target: "<gradient:#10b981:#34d399>You have been granted the perk: %perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Failed to grant perk '%perk%' to %player%.</gradient>"
+    revoke:
+      usage: "<gradient:#ef4444:#f87171>Usage: /perkadmin revoke <player> <perk></gradient>"
+      player_not_found: "<gradient:#ef4444:#f87171>Player '%player%' has never played on this server.</gradient>"
+      player_data_error: "<gradient:#ef4444:#f87171>Failed to load player data for '%player%'.</gradient>"
+      perk_not_found: "<gradient:#ef4444:#f87171>Perk '%perk%' not found.</gradient>"
+      success: "<gradient:#10b981:#34d399>Revoked perk '%perk%' from %player%.</gradient>"
+      success_target: "<gradient:#ef4444:#f87171>The perk '%perk%' has been revoked.</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Failed to revoke perk '%perk%' from %player%. They may not have this perk.</gradient>"
+    reload:
+      start: "<gradient:#f59e0b:#fbbf24>Reloading perk system...</gradient>"
+      success: "<gradient:#10b981:#34d399>Perk system reloaded successfully!</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Failed to reload perk system: %error%</gradient>"
+    list:
+      header: "<gradient:#f59e0b:#fbbf24>=== Configured Perks ===</gradient>"
+      total: "<gradient:#6b7280:#9ca3af>Total: %count%</gradient>"
+      empty: "<gradient:#f59e0b:#fbbf24>No perks are currently configured.</gradient>"
+      entry_enabled: "<gradient:#10b981:#34d399>✓</gradient> <white>%identifier%</white> <gradient:#6b7280:#9ca3af>(%category%, %type%)</gradient>"
+      entry_disabled: "<gradient:#ef4444:#f87171>✗</gradient> <white>%identifier%</white> <gradient:#6b7280:#9ca3af>(%category%, %type%)</gradient>"
+
+
+# ============================================
+# PERK SYSTEM
+# ============================================
+perk:
+  # Perk States
+  state:
+    locked: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Available</gradient>"
+    unlocked: "<gradient:#10b981:#34d399>✅ Unlocked</gradient>"
+    active: "<gradient:#10b981:#34d399>⚡ Active</gradient>"
+    cooldown: "<gradient:#f59e0b:#fbbf24>⏳ Cooldown</gradient>"
+    disabled: "<gradient:#6b7280:#9ca3af>⏸ Disabled</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✅ Enabled</gradient>"
+  
+  # Perk Categories
+  category:
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Combat</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that enhance your combat abilities</gradient>"
+    movement:
+      name: "<gradient:#3b82f6:#60a5fa>🏃 Movement</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that improve your mobility</gradient>"
+    utility:
+      name: "<gradient:#10b981:#34d399>🔧 Utility</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that provide useful abilities</gradient>"
+    survival:
+      name: "<gradient:#f59e0b:#fbbf24>❤ Survival</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that help you survive</gradient>"
+    economy:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Economy</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that boost your wealth</gradient>"
+    social:
+      name: "<gradient:#a855f7:#c084fc>👥 Social</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that enhance social interactions</gradient>"
+    cosmetic:
+      name: "<gradient:#a855f7:#c084fc>✨ Cosmetic</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Perks that change your appearance</gradient>"
+    special:
+      name: "<gradient:#ef4444:#f87171>⭐ Special</gradient>"
+      description: "<gradient:#6b7280:#9ca3af>Unique and powerful perks</gradient>"
+  
+  # Perk Types
+  type:
+    passive: "<gradient:#10b981:#34d399>Passive</gradient>"
+    event_triggered: "<gradient:#3b82f6:#60a5fa>Event Triggered</gradient>"
+    cooldown_based: "<gradient:#f59e0b:#fbbf24>Cooldown Based</gradient>"
+    percentage_based: "<gradient:#a855f7:#c084fc>Percentage Based</gradient>"
+  
+  # General Messages
+  system:
+    enabled: "<gradient:#10b981:#34d399>✅ Perk system is enabled</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Perk system is disabled</gradient>"
+    max_enabled_reached: "<gradient:#ef4444:#f87171>❌ Maximum enabled perks reached!</gradient> <gradient:#6b7280:#9ca3af>(Max: %max_enabled%)</gradient>"
+    limit_info: "<gradient:#6b7280:#9ca3af>Enabled Perks:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%max%</gradient>"
+    no_perks_available: "<gradient:#6b7280:#9ca3af>No perks available in this category</gradient>"
+    loading: "<gradient:#3b82f6:#60a5fa>⏳ Loading perks...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ An error occurred with the perk system</gradient>"
+
+  
+  # Specific Perks - Potion Effects
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>⚡ Speed Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Increases your movement speed</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Speed II effect while active</gradient>"
+  
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>👁 Night Vision</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>See clearly in the dark</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Night Vision effect while active</gradient>"
+  
+  jump_boost:
+    name: "<gradient:#10b981:#34d399>🦘 Jump Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Jump higher than normal</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Jump Boost II effect while active</gradient>"
+  
+  strength:
+    name: "<gradient:#ef4444:#f87171>💪 Strength</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Deal more damage in combat</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Strength II effect while active</gradient>"
+  
+  resistance:
+    name: "<gradient:#3b82f6:#60a5fa>🛡 Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Take less damage from attacks</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Resistance II effect while active</gradient>"
+  
+  fire_resistance:
+    name: "<gradient:#f59e0b:#fbbf24>🔥 Fire Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Immunity to fire and lava damage</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Fire Resistance effect while active</gradient>"
+  
+  saturation:
+    name: "<gradient:#10b981:#34d399>🍖 Saturation</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never go hungry</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Saturation effect while active</gradient>"
+  
+  haste:
+    name: "<gradient:#f59e0b:#fbbf24>⛏ Haste</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mine and attack faster</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Haste II effect while active</gradient>"
+  
+  water_breathing:
+    name: "<gradient:#3b82f6:#60a5fa>🌊 Water Breathing</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Breathe underwater indefinitely</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Water Breathing effect while active</gradient>"
+  
+  regeneration:
+    name: "<gradient:#ef4444:#f87171>❤ Regeneration</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Slowly regenerate health</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Regeneration effect while active</gradient>"
+  
+  # Specific Perks - Special Abilities
+  fly:
+    name: "<gradient:#a855f7:#c084fc>🕊 Flight</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Fly like in creative mode</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Grants flight ability while active</gradient>"
+  
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>✨ Glow</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Emit a glowing aura</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Applies glowing effect while active</gradient>"
+  
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>🪂 Feather Falling</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never take fall damage</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Negates all fall damage while active</gradient>"
+  
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>🎒 Keep Inventory</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your items on death</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Preserves inventory on death while active</gradient>"
+  
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>⭐ Keep Experience</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your XP on death</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Preserves experience on death while active</gradient>"
+  
+  # Specific Perks - Event Triggered
+  combat_heal:
+    name: "<gradient:#ef4444:#f87171>💉 Combat Heal</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance to heal when taking damage</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>25% chance to heal 2 hearts when damaged</gradient>"
+  
+  double_experience:
+    name: "<gradient:#10b981:#34d399>📚 Double Experience</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Earn double XP from actions</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>2x experience multiplier while active</gradient>"
+  
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>⚡ Critical Strike</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance to deal extra damage</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>20% chance to deal 1.5x damage</gradient>"
+  
+  lucky_drops:
+    name: "<gradient:#f59e0b:#fbbf24>🍀 Lucky Drops</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Increased drop rates from mobs</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Chance for bonus drops while active</gradient>"
+  
+  auto_smelt:
+    name: "<gradient:#f59e0b:#fbbf24>🔥 Auto Smelt</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Automatically smelt ores when mined</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Ores drop smelted items while active</gradient>"
+
+  
+  # Notifications
+  notification:
+    unlock:
+      title: "<gradient:#10b981:#34d399>🎉 Perk Unlocked!</gradient>"
+      message: "<gradient:#10b981:#34d399>You unlocked</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      actionbar: "<gradient:#10b981:#34d399>✅ Unlocked:</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    
+    activation:
+      title: "<gradient:#10b981:#34d399>⚡ Perk Activated!</gradient>"
+      message: "<gradient:#10b981:#34d399>Activated</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+      actionbar: "<gradient:#10b981:#34d399>⚡ Activated:</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    
+    deactivation:
+      title: "<gradient:#6b7280:#9ca3af>⏸ Perk Deactivated</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>Deactivated</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+      actionbar: "<gradient:#6b7280:#9ca3af>⏸ Deactivated:</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    
+    enabled:
+      message: "<gradient:#10b981:#34d399>✅ Enabled</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+      actionbar: "<gradient:#10b981:#34d399>✅ Enabled:</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    
+    disabled:
+      message: "<gradient:#6b7280:#9ca3af>⏸ Disabled</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+      actionbar: "<gradient:#6b7280:#9ca3af>⏸ Disabled:</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    
+    cooldown:
+      started: "<gradient:#f59e0b:#fbbf24>⏳</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#f59e0b:#fbbf24>is on cooldown for %time%</gradient>"
+      remaining: "<gradient:#f59e0b:#fbbf24>⏳ Cooldown:</gradient> <gradient:#6b7280:#9ca3af>%time% remaining</gradient>"
+      expired: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#10b981:#34d399>is ready!</gradient>"
+      actionbar: "<gradient:#f59e0b:#fbbf24>⏳ %perk_name%:</gradient> <gradient:#6b7280:#9ca3af>%time%</gradient>"
+    
+    trigger:
+      success: "<gradient:#10b981:#34d399>⚡</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#10b981:#34d399>triggered!</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#ef4444:#f87171>failed to trigger</gradient>"
+  
+  # Error Messages
+  error:
+    not_unlocked: "<gradient:#ef4444:#f87171>❌ You haven't unlocked</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    already_unlocked: "<gradient:#f59e0b:#fbbf24>⚠ You already own</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient>"
+    requirements_not_met: "<gradient:#ef4444:#f87171>❌ Requirements not met for</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    max_enabled_reached: "<gradient:#ef4444:#f87171>❌ Maximum enabled perks reached!</gradient> <gradient:#6b7280:#9ca3af>(Max: %max%)</gradient>"
+    already_enabled: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#f59e0b:#fbbf24>is already enabled</gradient>"
+    not_enabled: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#f59e0b:#fbbf24>is not enabled</gradient>"
+    on_cooldown: "<gradient:#f59e0b:#fbbf24>⏳</gradient> <gradient:#a855f7:#c084fc>%perk_name%</gradient> <gradient:#f59e0b:#fbbf24>is on cooldown for %time%</gradient>"
+    activation_failed: "<gradient:#ef4444:#f87171>❌ Failed to activate</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    deactivation_failed: "<gradient:#ef4444:#f87171>❌ Failed to deactivate</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    not_found: "<gradient:#ef4444:#f87171>❌ Perk not found:</gradient> <gradient:#6b7280:#9ca3af>%perk_id%</gradient>"
+    system_disabled: "<gradient:#ef4444:#f87171>❌ The perk system is currently disabled</gradient>"
+    database_error: "<gradient:#ef4444:#f87171>❌ Database error occurred. Please try again.</gradient>"
+    permission_denied: "<gradient:#ef4444:#f87171>❌ You don't have permission to use this perk</gradient>"
+  
+  # Success Messages
+  success:
+    unlocked: "<gradient:#10b981:#34d399>✅ Successfully unlocked</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✅ Successfully enabled</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    disabled: "<gradient:#10b981:#34d399>✅ Successfully disabled</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    activated: "<gradient:#10b981:#34d399>✅ Successfully activated</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    deactivated: "<gradient:#10b981:#34d399>✅ Successfully deactivated</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient>"
+    granted: "<gradient:#10b981:#34d399>✅ Granted</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient> <gradient:#10b981:#34d399>to</gradient> <gradient:#3b82f6:#60a5fa>%player%</gradient>"
+    revoked: "<gradient:#10b981:#34d399>✅ Revoked</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient> <gradient:#10b981:#34d399>from</gradient> <gradient:#3b82f6:#60a5fa>%player%</gradient>"
+    reloaded: "<gradient:#10b981:#34d399>✅ Perk system reloaded successfully</gradient>"
+
+
+# ============================================
+# PERK OVERVIEW UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ Perks</gradient>"
+  category_title: "<gradient:#a855f7:#c084fc>✨ Perks - %category%</gradient>"
+  
+  # Category Tabs
+  tab:
+    all:
+      name: "<gradient:#6b7280:#9ca3af>📋 All Perks</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>View all available perks</gradient>"
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Combat</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Combat enhancement perks</gradient>"
+    movement:
+      name: "<gradient:#3b82f6:#60a5fa>🏃 Movement</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Movement and mobility perks</gradient>"
+    utility:
+      name: "<gradient:#10b981:#34d399>🔧 Utility</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Useful utility perks</gradient>"
+    survival:
+      name: "<gradient:#f59e0b:#fbbf24>❤ Survival</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Survival enhancement perks</gradient>"
+    economy:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Economy</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Economy and wealth perks</gradient>"
+    social:
+      name: "<gradient:#a855f7:#c084fc>👥 Social</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Social interaction perks</gradient>"
+    cosmetic:
+      name: "<gradient:#a855f7:#c084fc>✨ Cosmetic</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Cosmetic appearance perks</gradient>"
+    special:
+      name: "<gradient:#ef4444:#f87171>⭐ Special</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Special and unique perks</gradient>"
+  
+  # Perk Card
+  card:
+    state_locked: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
+    state_available: "<gradient:#3b82f6:#60a5fa>🔓 Available to Unlock</gradient>"
+    state_unlocked: "<gradient:#10b981:#34d399>✅ Unlocked</gradient>"
+    state_enabled: "<gradient:#10b981:#34d399>⚡ Enabled</gradient>"
+    state_active: "<gradient:#10b981:#34d399>⚡ Active</gradient>"
+    state_cooldown: "<gradient:#f59e0b:#fbbf24>⏳ On Cooldown</gradient>"
+    state_disabled: "<gradient:#6b7280:#9ca3af>⏸ Disabled</gradient>"
+    
+    type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    category: "<gradient:#6b7280:#9ca3af>Category:</gradient> <gradient:#f59e0b:#fbbf24>%category%</gradient>"
+    
+    progress: "<gradient:#3b82f6:#60a5fa>Progress:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    cooldown: "<gradient:#f59e0b:#fbbf24>Cooldown:</gradient> <gradient:#6b7280:#9ca3af>%time%</gradient>"
+    
+    click_to_view: "<gradient:#6b7280:#9ca3af>Click to view details</gradient>"
+    click_to_unlock: "<gradient:#10b981:#34d399>Click to unlock</gradient>"
+    click_to_toggle: "<gradient:#3b82f6:#60a5fa>Click to toggle</gradient>"
+  
+  # Pagination
+  pagination:
+    previous:
+      name: "<gradient:#3b82f6:#60a5fa>⬅ Previous Page</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Go to page %page%</gradient>"
+    next:
+      name: "<gradient:#3b82f6:#60a5fa>➡ Next Page</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Go to page %page%</gradient>"
+    current: "<gradient:#6b7280:#9ca3af>Page %current% of %total%</gradient>"
+  
+  # Info Items
+  info:
+    enabled_count:
+      name: "<gradient:#10b981:#34d399>📊 Enabled Perks</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Currently Enabled:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%max%</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>You can enable up to %max% perks</gradient>"
+    
+    filter:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 Filter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Current Filter:</gradient> <gradient:#f59e0b:#fbbf24>%filter%</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Click to change filter</gradient>"
+  
+  # Empty State
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>📭 No Perks</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>No perks available in this category</gradient>"
+  
+  # Back Button
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+
+# ============================================
+# PERK DETAIL VIEW UI
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+  
+  # Perk Header
+  header:
+    name: "<gradient:#a855f7:#c084fc>%perk_name%</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    category: "<gradient:#6b7280:#9ca3af>Category:</gradient> <gradient:#f59e0b:#fbbf24>%category%</gradient>"
+    effect: "<gradient:#6b7280:#9ca3af>Effect:</gradient> <gradient:#10b981:#34d399>%effect%</gradient>"
+  
+  # State Display
+  state:
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Complete requirements to unlock</gradient>"
+    available:
+      name: "<gradient:#3b82f6:#60a5fa>🔓 Available</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>All requirements met!</gradient>"
+        - "<gradient:#10b981:#34d399>Click to unlock</gradient>"
+    unlocked:
+      name: "<gradient:#10b981:#34d399>✅ Unlocked</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>You own this perk</gradient>"
+    enabled:
+      name: "<gradient:#10b981:#34d399>⚡ Enabled</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>This perk is currently enabled</gradient>"
+    active:
+      name: "<gradient:#10b981:#34d399>⚡ Active</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>This perk is currently active</gradient>"
+    cooldown:
+      name: "<gradient:#f59e0b:#fbbf24>⏳ On Cooldown</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Time Remaining:</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>⏸ Disabled</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>This perk is currently disabled</gradient>"
+  
+  # Requirements Section
+  requirements:
+    title:
+      name: "<gradient:#a855f7:#c084fc>📋 Requirements</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Complete these to unlock</gradient>"
+    
+    item:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement%</gradient>"
+      incomplete: "<gradient:#ef4444:#f87171>❌ %requirement%</gradient>"
+      progress: "<gradient:#3b82f6:#60a5fa>⏳ %requirement%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+    
+    all_met:
+      name: "<gradient:#10b981:#34d399>✅ All Requirements Met!</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>You can unlock this perk</gradient>"
+    
+    none:
+      name: "<gradient:#10b981:#34d399>✅ No Requirements</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>This perk has no requirements</gradient>"
+  
+  # Unlock Rewards Section
+  rewards:
+    title:
+      name: "<gradient:#f59e0b:#fbbf24>🎁 Unlock Rewards</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Rewards for unlocking this perk</gradient>"
+    
+    item: "<gradient:#10b981:#34d399>• %reward%</gradient>"
+    
+    none:
+      name: "<gradient:#6b7280:#9ca3af>No Rewards</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>This perk has no unlock rewards</gradient>"
+  
+  # Action Buttons
+  action:
+    unlock:
+      name: "<gradient:#10b981:#34d399>✅ Unlock Perk</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Click to unlock this perk</gradient>"
+    
+    enable:
+      name: "<gradient:#10b981:#34d399>⚡ Enable Perk</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Click to enable this perk</gradient>"
+    
+    disable:
+      name: "<gradient:#6b7280:#9ca3af>⏸ Disable Perk</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Click to disable this perk</gradient>"
+    
+    view_requirements:
+      name: "<gradient:#3b82f6:#60a5fa>📋 View Requirements</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Click to view detailed requirements</gradient>"
+    
+    cannot_enable:
+      name: "<gradient:#ef4444:#f87171>❌ Cannot Enable</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Maximum enabled perks reached</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Disable another perk first</gradient>"
+  
+  # Statistics
+  statistics:
+    title:
+      name: "<gradient:#3b82f6:#60a5fa>📊 Statistics</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Your usage statistics</gradient>"
+    
+    activations: "<gradient:#6b7280:#9ca3af>Activations:</gradient> <gradient:#10b981:#34d399>%count%</gradient>"
+    total_time: "<gradient:#6b7280:#9ca3af>Total Time:</gradient> <gradient:#10b981:#34d399>%time%</gradient>"
+    last_used: "<gradient:#6b7280:#9ca3af>Last Used:</gradient> <gradient:#10b981:#34d399>%time%</gradient>"
+  
+  # Back Button
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+  
+  # Messages
+  messages:
+    unlock_attempt: "<gradient:#3b82f6:#60a5fa>⏳ Attempting to unlock</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient><gradient:#3b82f6:#60a5fa>...</gradient>"
+    toggle_attempt: "<gradient:#3b82f6:#60a5fa>⏳ Toggling</gradient> <gradient:#f59e0b:#fbbf24>%perk_name%</gradient><gradient:#3b82f6:#60a5fa>...</gradient>"
+
+# ============================================
+# PERK COMMANDS
+# ============================================
+perk_command:
+  usage: "<gradient:#a855f7:#c084fc>Usage:</gradient> <gradient:#6b7280:#9ca3af>/perks</gradient>"
+  description: "<gradient:#6b7280:#9ca3af>Open the perk overview GUI</gradient>"
+  opened: "<gradient:#10b981:#34d399>✅ Opening perk overview...</gradient>"
+  
+  admin:
+    usage: "<gradient:#a855f7:#c084fc>Usage:</gradient> <gradient:#6b7280:#9ca3af>/perkadmin <grant|revoke|reload|list> [args]</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Admin commands for perk management</gradient>"
+    
+    grant:
+      usage: "<gradient:#a855f7:#c084fc>Usage:</gradient> <gradient:#6b7280:#9ca3af>/perkadmin grant <player> <perk></gradient>"
+      success: "<gradient:#10b981:#34d399>✅ Granted</gradient> <gradient:#f59e0b:#fbbf24>%perk%</gradient> <gradient:#10b981:#34d399>to</gradient> <gradient:#3b82f6:#60a5fa>%player%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Failed to grant perk</gradient>"
+    
+    revoke:
+      usage: "<gradient:#a855f7:#c084fc>Usage:</gradient> <gradient:#6b7280:#9ca3af>/perkadmin revoke <player> <perk></gradient>"
+      success: "<gradient:#10b981:#34d399>✅ Revoked</gradient> <gradient:#f59e0b:#fbbf24>%perk%</gradient> <gradient:#10b981:#34d399>from</gradient> <gradient:#3b82f6:#60a5fa>%player%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Failed to revoke perk</gradient>"
+    
+    reload:
+      usage: "<gradient:#a855f7:#c084fc>Usage:</gradient> <gradient:#6b7280:#9ca3af>/perkadmin reload</gradient>"
+      success: "<gradient:#10b981:#34d399>✅ Perk system reloaded successfully</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Failed to reload perk system</gradient>"
+      reloading: "<gradient:#3b82f6:#60a5fa>⏳ Reloading perk system...</gradient>"
+    
+    list:
+      usage: "<gradient:#a855f7:#c084fc>Usage:</gradient> <gradient:#6b7280:#9ca3af>/perkadmin list [category]</gradient>"
+      header: "<gradient:#a855f7:#c084fc>📋 Available Perks:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>• %perk_id%</gradient> <gradient:#f59e0b:#fbbf24>(%category%)</gradient>"
+      empty: "<gradient:#6b7280:#9ca3af>No perks found</gradient>"
+    
+    no_permission: "<gradient:#ef4444:#f87171>❌ You don't have permission to use this command</gradient>"
+    player_not_found: "<gradient:#ef4444:#f87171>❌ Player not found:</gradient> <gradient:#6b7280:#9ca3af>%player%</gradient>"
+    perk_not_found: "<gradient:#ef4444:#f87171>❌ Perk not found:</gradient> <gradient:#6b7280:#9ca3af>%perk%</gradient>"
+
+
+# ============================================
+# PERK SYSTEM
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>⭐ Perks</gradient>"
+  category:
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔️ Combat</gradient>"
+    movement:
+      name: "<gradient:#10b981:#34d399>🏃 Movement</gradient>"
+    utility:
+      name: "<gradient:#3b82f6:#60a5fa>🔧 Utility</gradient>"
+    survival:
+      name: "<gradient:#f59e0b:#fbbf24>🛡️ Survival</gradient>"
+    economy:
+      name: "<gradient:#10b981:#34d399>💰 Economy</gradient>"
+    social:
+      name: "<gradient:#a855f7:#c084fc>👥 Social</gradient>"
+    cosmetic:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Cosmetic</gradient>"
+    special:
+      name: "<gradient:#fbbf24:#fcd34d>⭐ Special</gradient>"
+    selected:
+      - "<green>✓ Selected</green>"
+    click_to_view:
+      - "<gray>Click to view</gray>"
+  pagination:
+    previous: "<white>◀ Previous Page</white>"
+    next: "<white>Next Page ▶</white>"
+    no_previous: "<gray>◀ No Previous Page</gray>"
+    no_next: "<gray>No Next Page ▶</gray>"
+  info:
+    title: "<gold>📖 Perk Information</gold>"
+    lore:
+      - ""
+      - "<gray>Page: <white>%current_page%/%total_pages%</white></gray>"
+      - "<gray>Enabled Perks: <white>%enabled_count%/%max_enabled%</white></gray>"
+  error:
+    title: "<red>❌ Error</red>"
+    lore:
+      - "<gray>Failed to load perks</gray>"
+      - "<gray>Please contact an administrator</gray>"
+
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>⭐ %perk_name%</gradient>"
+
+
+# ============================================
+# PERK OVERVIEW UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ Perks</gradient>"
+  category:
+    combat:
+      name: "<gradient:#ef4444:#f87171>⚔ Combat</gradient>"
+    movement:
+      name: "<gradient:#10b981:#34d399>🏃 Movement</gradient>"
+    utility:
+      name: "<gradient:#3b82f6:#60a5fa>🔧 Utility</gradient>"
+    survival:
+      name: "<gradient:#f59e0b:#fbbf24>🛡 Survival</gradient>"
+    economy:
+      name: "<gradient:#10b981:#34d399>💰 Economy</gradient>"
+    social:
+      name: "<gradient:#a855f7:#c084fc>👥 Social</gradient>"
+    cosmetic:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Cosmetic</gradient>"
+    special:
+      name: "<gradient:#ef4444:#f87171>⭐ Special</gradient>"
+    selected: "<gradient:#10b981:#34d399>✓ Selected</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Click to view</gradient>"
+  pagination:
+    previous: "<gradient:#3b82f6:#60a5fa>⬅ Previous Page</gradient>"
+    next: "<gradient:#3b82f6:#60a5fa>Next Page ➡</gradient>"
+    no_previous: "<gradient:#6b7280:#9ca3af>No Previous Page</gradient>"
+    no_next: "<gradient:#6b7280:#9ca3af>No Next Page</gradient>"
+  info:
+    title: "<gradient:#f59e0b:#fbbf24>📖 Info</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Page: <white>%current_page%/%total_pages%</white></gradient>"
+      - "<gradient:#6b7280:#9ca3af>Enabled: <white>%enabled_count%/%max_enabled%</white></gradient>"
+  error:
+    title: "<gradient:#ef4444:#f87171>❌ Error</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Failed to load perks</gradient>"
+
+# ============================================
+# PERK DETAIL UI
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+# ============================================
+# PERK NAMES & DESCRIPTIONS
+# ============================================
+perk:
+  jump_boost:
+    name: "<gradient:#10b981:#34d399>🐰 Jump Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Jump higher and reach new heights</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>👁 Night Vision</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>See clearly in the dark</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>⚡ Speed</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Move faster than ever before</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>💪 Strength</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Deal more damage in combat</gradient>"
+  haste:
+    name: "<gradient:#f59e0b:#fbbf24>⛏ Haste</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mine and break blocks faster</gradient>"
+  resistance:
+    name: "<gradient:#a855f7:#c084fc>🛡 Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Take less damage from attacks</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>🔥 Fire Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Immunity to fire and lava damage</gradient>"
+  saturation:
+    name: "<gradient:#10b981:#34d399>🍖 Saturation</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never go hungry again</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>✨ Glow</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Emit a glowing aura</gradient>"
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>🕊 Flight</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Soar through the skies</gradient>"
+  keep_inventory:
+    name: "<gradient:#a855f7:#c084fc>💼 Keep Inventory</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your items on death</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>⭐ Keep Experience</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your XP on death</gradient>"
+  no_fall_damage:
+    name: "<gradient:#3b82f6:#60a5fa>🪂 No Fall Damage</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never take fall damage</gradient>"
+  double_experience:
+    name: "<gradient:#f59e0b:#fbbf24>✨ Double XP</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Earn double experience</gradient>"
+  combat_heal:
+    name: "<gradient:#ef4444:#f87171>❤ Combat Heal</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Heal when damaging enemies</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>⚡ Critical Strike</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance for critical hits</gradient>"

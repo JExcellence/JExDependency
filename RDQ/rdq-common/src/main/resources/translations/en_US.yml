@@ -1566,3 +1566,78 @@ rank_rewards_detail_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>This rank has %count% rewards</gradient>"
       - "<gradient:#6b7280:#9ca3af>Click on any reward for details</gradient>"
+
+
+# ============================================
+# PAGINATION (for APaginatedView)
+# ============================================
+page:
+  name: "<gradient:#f59e0b:#fbbf24>📄 Page %current_page%/%total_pages%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Showing items %first_item% - %last_item% of %items_count%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>Page %page%</gradient>"
+
+# ============================================
+# PERK OVERVIEW UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ Perks</gradient>"
+
+# ============================================
+# PERK DETAIL UI
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+# ============================================
+# PERK NAMES & DESCRIPTIONS
+# ============================================
+perk:
+  jump_boost:
+    name: "<gradient:#10b981:#34d399>🐰 Jump Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Jump higher and reach new heights</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>👁 Night Vision</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>See clearly in the dark</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>⚡ Speed</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Move faster than ever before</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>💪 Strength</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Deal more damage in combat</gradient>"
+  haste:
+    name: "<gradient:#f59e0b:#fbbf24>⛏ Haste</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mine and break blocks faster</gradient>"
+  resistance:
+    name: "<gradient:#a855f7:#c084fc>🛡 Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Take less damage from attacks</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>🔥 Fire Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Immunity to fire and lava damage</gradient>"
+  saturation:
+    name: "<gradient:#10b981:#34d399>🍖 Saturation</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never go hungry again</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>✨ Glow</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Emit a glowing aura</gradient>"
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>🕊 Flight</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Soar through the skies</gradient>"
+  keep_inventory:
+    name: "<gradient:#a855f7:#c084fc>💼 Keep Inventory</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your items on death</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>⭐ Keep Experience</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your XP on death</gradient>"
+  no_fall_damage:
+    name: "<gradient:#3b82f6:#60a5fa>🪂 No Fall Damage</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never take fall damage</gradient>"
+  double_experience:
+    name: "<gradient:#f59e0b:#fbbf24>✨ Double XP</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Earn double experience</gradient>"
+  combat_heal:
+    name: "<gradient:#ef4444:#f87171>❤ Combat Heal</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Heal when damaging enemies</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>⚡ Critical Strike</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance for critical hits</gradient>"

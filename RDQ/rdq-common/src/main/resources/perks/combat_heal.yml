@@ -1,0 +1,45 @@
+# Combat Heal Perk
+# Heals the player when taking damage with a chance
+identifier: "combat_heal"
+perkType: "EVENT_TRIGGERED"
+category: "COMBAT"
+enabled: true
+displayOrder: 15
+
+icon:
+  type: "GOLDEN_APPLE"
+  displayNameKey: "perk.combat_heal.name"
+  descriptionKey: "perk.combat_heal.description"
+  enchanted: true
+
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 28
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 3000.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Combat Heal! Survive longer in battle!\",\"color\":\"red\"}"
+    executeAsPlayer: false
+
+effect:
+  triggerEvent: "ENTITY_DAMAGE_BY_ENTITY"
+  cooldownMillis: 30000  # 30 seconds
+  triggerChance: 25.0  # 25% chance
+  customConfig:
+    healAmount: 4.0  # 2 hearts
+    playSound: true
+    soundType: "ENTITY_PLAYER_LEVELUP"

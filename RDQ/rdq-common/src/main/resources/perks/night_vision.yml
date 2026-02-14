@@ -1,23 +1,37 @@
-# Night Vision Perk Configuration
-id: night_vision
-displayNameKey: perk_names.night_vision
-descriptionKey: perk_descriptions.night_vision
-category: utility
-iconMaterial: GOLDEN_CARROT
+# Night Vision Perk
+# Grants continuous night vision effect to the player
+identifier: "night_vision"
+perkType: "PASSIVE"
+category: "UTILITY"
 enabled: true
+displayOrder: 2
 
-type: TOGGLEABLE
-cooldownSeconds: 60
-durationSeconds: 300
-
-effect:
-  type: POTION_EFFECT
-  potionType: NIGHT_VISION
-  amplifier: 0
+icon:
+  type: "ENDER_EYE"
+  displayNameKey: "perk.night_vision.name"
+  descriptionKey: "perk.night_vision.description"
+  enchanted: true
 
 requirements:
-  - type: RANK
-    rankId: rogue_2
-  - type: CURRENCY
-    currency: default
-    amount: 250
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 150.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Night Vision!\",\"color\":\"green\"}"
+    executeAsPlayer: false
+
+effect:
+  potionEffectType: "NIGHT_VISION"
+  amplifier: 0
+  durationTicks: 600  # 30 seconds (refreshed continuously)
+  ambient: false
+  particles: false

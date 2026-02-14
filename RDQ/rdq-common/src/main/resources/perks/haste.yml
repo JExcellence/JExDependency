@@ -1,23 +1,43 @@
-# Haste Perk Configuration
-id: haste
-displayNameKey: perk_names.haste
-descriptionKey: perk_descriptions.haste
-category: utility
-iconMaterial: GOLDEN_PICKAXE
+# Haste Perk
+# Grants continuous haste effect to the player
+identifier: "haste"
+perkType: "PASSIVE"
+category: "UTILITY"
 enabled: true
+displayOrder: 8
 
-type: TOGGLEABLE
-cooldownSeconds: 300
-durationSeconds: 120
-
-effect:
-  type: POTION_EFFECT
-  potionType: FAST_DIGGING
-  amplifier: 1
+icon:
+  type: "GOLDEN_PICKAXE"
+  displayNameKey: "perk.haste.name"
+  descriptionKey: "perk.haste.description"
+  enchanted: true
 
 requirements:
-  - type: RANK
-    rankId: merchant_2
-  - type: CURRENCY
-    currency: default
-    amount: 400
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 16
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 800.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Haste!\",\"color\":\"yellow\"}"
+    executeAsPlayer: false
+
+effect:
+  potionEffectType: "FAST_DIGGING"
+  amplifier: 1
+  durationTicks: 600  # 30 seconds (refreshed continuously)
+  ambient: false
+  particles: true

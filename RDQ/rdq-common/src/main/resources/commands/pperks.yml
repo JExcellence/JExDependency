@@ -1,0 +1,10 @@
+name: "perks"
+description: "Open the perk overview GUI"
+usage: "/perks"
+aliases:
+  - "perk"
+
+permissions:
+  default:
+    permission: "rdq.perks.view"
+    default: true
