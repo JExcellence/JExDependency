@@ -273,37 +273,63 @@ public class PerkRequirementService {
                     );
                 }
                 
-                // Consume requirement resources
+                // Consume requirement resources on the main thread (required for Bukkit events)
                 final Set<PerkRequirement> requirements = perk.getRequirements();
                 final List<PerkRequirement> sortedRequirements = requirements.stream()
                         .sorted(Comparator.comparingInt(PerkRequirement::getDisplayOrder))
                         .collect(Collectors.toList());
                 
-                for (PerkRequirement perkRequirement : sortedRequirements) {
-                    try {
-                        final AbstractRequirement requirement = perkRequirement.getRequirement();
-                        
-                        // Only consume if the requirement is configured to consume
-                        if (requirement.shouldConsume()) {
-                            LOGGER.log(Level.FINE, "Consuming requirement {0} for perk {1}", 
-                                    new Object[]{requirement.getTypeId(), perk.getIdentifier()});
-                            requirementService.consume(player, requirement);
+                // Run consumption synchronously on main thread
+                CompletableFuture<Boolean> consumptionFuture = new CompletableFuture<>();
+                org.bukkit.Bukkit.getScheduler().runTask(
+                        org.bukkit.Bukkit.getPluginManager().getPlugin("RDQ"),
+                        () -> {
+                            try {
+                                for (PerkRequirement perkRequirement : sortedRequirements) {
+                                    try {
+                                        final AbstractRequirement requirement = perkRequirement.getRequirement();
+                                        
+                                        // Log the shouldConsume value for debugging
+                                        LOGGER.log(Level.INFO, "Requirement {0} shouldConsume: {1}", 
+                                                new Object[]{requirement.getTypeId(), requirement.shouldConsume()});
+                                        
+                                        // Only consume if the requirement is configured to consume
+                                        if (requirement.shouldConsume()) {
+                                            LOGGER.log(Level.INFO, "Consuming requirement {0} for perk {1}", 
+                                                    new Object[]{requirement.getTypeId(), perk.getIdentifier()});
+                                            requirementService.consume(player, requirement);
+                                        } else {
+                                            LOGGER.log(Level.INFO, "Skipping consumption for requirement {0} (shouldConsume=false)", 
+                                                    requirement.getTypeId());
+                                        }
+                                        
+                                    } catch (Exception e) {
+                                        LOGGER.log(Level.SEVERE, "Failed to consume requirement " + perkRequirement.getId() + 
+                                                " for perk " + perk.getIdentifier(), e);
+                                        consumptionFuture.complete(false);
+                                        return;
+                                    }
+                                }
+                                consumptionFuture.complete(true);
+                            } catch (Exception e) {
+                                LOGGER.log(Level.SEVERE, "Error during requirement consumption", e);
+                                consumptionFuture.complete(false);
+                            }
                         }
-                        
-                    } catch (Exception e) {
-                        LOGGER.log(Level.SEVERE, "Failed to consume requirement " + perkRequirement.getId() + 
-                                " for perk " + perk.getIdentifier(), e);
-                        return new UnlockResult(
-                                false,
-                                UnlockResultType.CONSUMPTION_FAILED,
-                                "perk.unlock.consumption_failed",
-                                null
-                        );
-                    }
+                );
+                
+                // Wait for consumption to complete
+                if (!consumptionFuture.join()) {
+                    return new UnlockResult(
+                            false,
+                            UnlockResultType.CONSUMPTION_FAILED,
+                            "perk.unlock.consumption_failed",
+                            null
+                    );
                 }
                 
-                // Grant the perk to the player
-                final PlayerPerk playerPerk = perkManagementService.grantPerk(rdqPlayer, perk).join();
+                // Grant the perk to the player with auto-enable
+                final PlayerPerk playerPerk = perkManagementService.grantPerk(rdqPlayer, perk, true).join();
                 
                 if (playerPerk == null) {
                     LOGGER.log(Level.SEVERE, "Failed to grant perk {0} to player {1}", 
@@ -316,7 +342,30 @@ public class PerkRequirementService {
                     );
                 }
                 
-                LOGGER.log(Level.INFO, "Successfully granted perk {0} to player {1}", 
+                // Validate perk state after grant
+                if (!playerPerk.isUnlocked()) {
+                    LOGGER.log(Level.SEVERE, "Perk {0} granted but not unlocked for player {1}", 
+                            new Object[]{perk.getIdentifier(), player.getName()});
+                    return new UnlockResult(
+                            false,
+                            UnlockResultType.GRANT_FAILED,
+                            "perk.unlock.grant_failed",
+                            null
+                    );
+                }
+                
+                if (!playerPerk.isEnabled()) {
+                    LOGGER.log(Level.SEVERE, "Perk {0} granted and unlocked but not enabled for player {1} (data inconsistency)", 
+                            new Object[]{perk.getIdentifier(), player.getName()});
+                    return new UnlockResult(
+                            false,
+                            UnlockResultType.GRANT_FAILED,
+                            "perk.unlock.grant_failed",
+                            null
+                    );
+                }
+                
+                LOGGER.log(Level.INFO, "Successfully granted and enabled perk {0} to player {1}", 
                         new Object[]{perk.getIdentifier(), player.getName()});
                 
                 // Grant unlock rewards

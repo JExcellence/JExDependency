@@ -288,8 +288,8 @@ public class BaseRequirementSection extends AConfigSection {
 		);
 		
 		try {
-			// The field in ExperienceLevelRequirementSection is 'requiredExperience', not 'requiredLevel'
-			setFieldValue(exp, "requiredExperience", this.level);
+			// The field in ExperienceLevelRequirementSection is 'requiredLevel'
+			setFieldValue(exp, "requiredLevel", this.level);
 			setFieldValue(exp, "requiredType", "LEVEL");
 			
 			this.experienceRequirement = exp;

@@ -158,10 +158,6 @@ public class RPlatform {
                     .defaultLocale("en_US").supportedLocales("de_DE", "en_US")
                     .enableMetrics(true)
                     .build();
-
-            //TODO add actual support of the file deny progress..
-
-            translationManager.cleanupUnsupportedFiles();
             
             commandUpdater = new CommandUpdater(plugin);
             
@@ -174,6 +170,10 @@ public class RPlatform {
                 logger.info("Translation system initialized with " + 
                     translationManager.getKeyCount() + " keys in " + 
                     translationManager.getLocaleCount() + " locales");
+                
+                // Cleanup unsupported files after initialization (if needed)
+                // TODO: add actual support of the file deny progress..
+                // translationManager.cleanupUnsupportedFiles();
             });
         });
     }

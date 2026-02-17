@@ -1,5 +1,7 @@
 package com.raindropcentral.rdq.perk;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PerkType;
@@ -10,12 +12,9 @@ import com.raindropcentral.rdq.perk.handler.EventPerkHandler;
 import com.raindropcentral.rdq.perk.handler.PotionPerkHandler;
 import com.raindropcentral.rdq.perk.handler.SpecialPerkHandler;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -99,24 +98,30 @@ public class PerkActivationService {
             @NotNull final Player player,
             @NotNull final PlayerPerk playerPerk
     ) {
+        // Validate perk is unlocked
+        if (!playerPerk.isUnlocked()) {
+            LOGGER.log(Level.WARNING, "Cannot activate perk " + playerPerk.getPerk().getIdentifier() + 
+                    " for player " + player.getName() + ": perk not unlocked");
+            return CompletableFuture.completedFuture(false);
+        }
+        
         // Validate perk is enabled
         if (!playerPerk.isEnabled()) {
-            LOGGER.log(Level.WARNING, "Cannot activate perk {0} for player {1}: perk not enabled",
-                    new Object[]{playerPerk.getPerk().getIdentifier(), player.getName()});
+            LOGGER.log(Level.SEVERE, "Cannot activate perk " + playerPerk.getPerk().getIdentifier() + 
+                    " for player " + player.getName() + ": perk unlocked but not enabled (data inconsistency - unlocked=" + 
+                    playerPerk.isUnlocked() + ", enabled=" + playerPerk.isEnabled() + ")");
             return CompletableFuture.completedFuture(false);
         }
         
         // Check if already active
         if (playerPerk.isActive()) {
-            LOGGER.log(Level.FINE, "Perk {0} already active for player {1}",
-                    new Object[]{playerPerk.getPerk().getIdentifier(), player.getName()});
+            LOGGER.log(Level.FINE, "Perk " + playerPerk.getPerk().getIdentifier() + " already active for player " + player.getName());
             return CompletableFuture.completedFuture(true);
         }
         
         // Check cooldown
         if (playerPerk.isOnCooldown()) {
-            LOGGER.log(Level.FINE, "Cannot activate perk {0} for player {1}: on cooldown",
-                    new Object[]{playerPerk.getPerk().getIdentifier(), player.getName()});
+            LOGGER.log(Level.FINE, "Cannot activate perk " + playerPerk.getPerk().getIdentifier() + " for player " + player.getName() + ": on cooldown");
             return CompletableFuture.completedFuture(false);
         }
         
@@ -127,8 +132,7 @@ public class PerkActivationService {
             boolean effectsApplied = applyPerkEffects(player, playerPerk);
             
             if (!effectsApplied) {
-                LOGGER.log(Level.WARNING, "Failed to apply effects for perk {0} to player {1}",
-                        new Object[]{perk.getIdentifier(), player.getName()});
+                LOGGER.log(Level.WARNING, "Failed to apply effects for perk " + perk.getIdentifier() + " to player " + player.getName());
                 return CompletableFuture.completedFuture(false);
             }
             
@@ -137,9 +141,8 @@ public class PerkActivationService {
             
             // Save to database
             return CompletableFuture.supplyAsync(() -> {
-                PlayerPerk saved = playerPerkRepository.save(playerPerk);
-                LOGGER.log(Level.INFO, "Activated perk {0} for player {1}",
-                        new Object[]{perk.getIdentifier(), player.getName()});
+                playerPerkRepository.update(playerPerk);
+                LOGGER.log(Level.INFO, "Activated perk " + perk.getIdentifier() + " for player " + player.getName());
                 
                 // Update cache
                 invalidateCache(player.getUniqueId());
@@ -148,8 +151,7 @@ public class PerkActivationService {
             });
                     
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, "Error activating perk " + perk.getIdentifier() + 
-                    " for player " + player.getName(), e);
+            LOGGER.log(Level.SEVERE, "Error activating perk " + perk.getIdentifier() + " for player " + player.getName(), e);
             return CompletableFuture.completedFuture(false);
         }
     }
@@ -190,7 +192,7 @@ public class PerkActivationService {
             
             // Save to database
             return CompletableFuture.supplyAsync(() -> {
-                PlayerPerk saved = playerPerkRepository.save(playerPerk);
+                playerPerkRepository.update(playerPerk);
                 LOGGER.log(Level.INFO, "Deactivated perk {0} for player {1}",
                         new Object[]{perk.getIdentifier(), player.getName()});
                 

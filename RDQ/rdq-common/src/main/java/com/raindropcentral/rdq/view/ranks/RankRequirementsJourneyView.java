@@ -1,4 +1,4 @@
-package com.raindropcentral.rdq.view.ranks;
+ package com.raindropcentral.rdq.view.ranks;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;

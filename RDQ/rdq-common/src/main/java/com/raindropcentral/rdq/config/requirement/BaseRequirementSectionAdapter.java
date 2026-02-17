@@ -92,6 +92,7 @@ public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<
         return RequirementBuilder.currency()
                 .currencies(currencies)
                 .plugin(currencySection.getCurrencyPlugin())
+                .consumeOnComplete(currencySection.getConsumeOnComplete())
                 .build();
     }
 

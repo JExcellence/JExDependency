@@ -42,14 +42,12 @@ public class PerkEventListener implements Listener {
      * Constructs a new PerkEventListener.
      *
      * @param rdq the RDQ plugin instance
-     * @param perkActivationService the perk activation service
      */
     public PerkEventListener(
-            @NotNull final RDQ rdq,
-            @NotNull final PerkActivationService perkActivationService
+            @NotNull final RDQ rdq
     ) {
         this.rdq = rdq;
-        this.perkActivationService = perkActivationService;
+        this.perkActivationService = rdq.getPerkActivationService();
     }
     
     // ==================== Player Lifecycle Events ====================
@@ -63,6 +61,13 @@ public class PerkEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerJoin(@NotNull final PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
+            LOGGER.log(Level.WARNING, "Perk system not yet initialized, skipping perk activation for {0}", 
+                    player.getName());
+            return;
+        }
         
         LOGGER.log(Level.FINE, "Player {0} joined, activating enabled perks", player.getName());
         
@@ -106,6 +111,11 @@ public class PerkEventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerQuit(@NotNull final PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
+            return;
+        }
         
         LOGGER.log(Level.FINE, "Player {0} quit, deactivating active perks", player.getName());
         
@@ -183,6 +193,11 @@ public class PerkEventListener implements Listener {
     public void onPlayerDeath(@NotNull final PlayerDeathEvent event) {
         Player player = event.getEntity();
         
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
+            return;
+        }
+        
         LOGGER.log(Level.FINE, "Player {0} died, processing death-related perks", player.getName());
         
         // Execute asynchronously
@@ -220,6 +235,11 @@ public class PerkEventListener implements Listener {
     public void onEntityDamage(@NotNull final EntityDamageEvent event) {
         // Only process player damage
         if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
             return;
         }
         
@@ -263,6 +283,11 @@ public class PerkEventListener implements Listener {
             return;
         }
         
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
+            return;
+        }
+        
         LOGGER.log(Level.FINE, "Player {0} dealt damage, processing combat perks", player.getName());
         
         // Execute asynchronously
@@ -303,6 +328,11 @@ public class PerkEventListener implements Listener {
         if (event.getFrom().getBlockX() == event.getTo().getBlockX() &&
             event.getFrom().getBlockY() == event.getTo().getBlockY() &&
             event.getFrom().getBlockZ() == event.getTo().getBlockZ()) {
+            return;
+        }
+        
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
             return;
         }
         

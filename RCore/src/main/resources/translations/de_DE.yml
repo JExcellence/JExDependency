@@ -3,7 +3,7 @@
 prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
 
 rcconnect:
-  usage: "<gray>Verwendung: /rcconnect <api-key></gray>"
+  usage: "<gray>Verwendung: /rcconnect [api-key]</gray>"
   connecting: "<yellow>Verbinde mit RaindropCentral...</yellow>"
   success: "<green>Erfolgreich mit RaindropCentral verbunden!</green> <gray>Server sendet jetzt Heartbeats.</gray>"
   error:

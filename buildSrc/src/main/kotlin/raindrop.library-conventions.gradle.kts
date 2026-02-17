@@ -9,7 +9,11 @@ afterEvaluate {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                from(components["java"])
+                // Only include java component if jar task is enabled
+                val jarTask = tasks.findByName("jar") as? Jar
+                if (jarTask?.enabled != false) {
+                    from(components["java"])
+                }
                 
                 groupId = project.group.toString()
                 artifactId = project.name

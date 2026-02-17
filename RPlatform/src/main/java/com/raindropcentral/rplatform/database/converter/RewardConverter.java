@@ -4,7 +4,6 @@ import com.raindropcentral.rplatform.reward.AbstractReward;
 import com.raindropcentral.rplatform.reward.json.RewardParser;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
-import org.hibernate.annotations.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

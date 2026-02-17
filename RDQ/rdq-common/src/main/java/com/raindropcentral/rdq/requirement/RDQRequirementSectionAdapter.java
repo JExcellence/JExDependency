@@ -85,11 +85,16 @@ public class RDQRequirementSectionAdapter implements RequirementSectionAdapter<B
             throw new IllegalArgumentException("No currencies specified for CURRENCY requirement");
         }
 
-        return RequirementBuilder.currency()
+        AbstractRequirement requirement = RequirementBuilder.currency()
                 .currencies(currencies)
                 .plugin(currencySection.getCurrencyPlugin())
                 .timeout(5000L) // Default timeout
                 .build();
+        
+        // Set consumeOnComplete flag
+        requirement.setConsumeOnComplete(currencySection.getConsumeOnComplete());
+        
+        return requirement;
     }
 
     private AbstractRequirement convertExperienceRequirement(BaseRequirementSection section) {

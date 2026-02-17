@@ -232,8 +232,8 @@ public class TranslationManager {
      * This removes files that are not in the supportedLocales configuration.
      */
     public void cleanupUnsupportedFiles() {
-        if (r18n == null) {
-            LOGGER.warning("Cannot cleanup files - TranslationManager not initialized");
+        if (r18n == null || !isInitialized()) {
+            LOGGER.fine("Skipping cleanup - TranslationManager not yet initialized");
             return;
         }
         r18n.getTranslationLoader().cleanupUnsupportedFiles();

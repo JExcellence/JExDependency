@@ -7,7 +7,7 @@ enabled: true
 displayOrder: 12
 
 icon:
-  type: "FEATHER_FALLING_BOOTS"
+  type: "LEATHER_BOOTS"
   displayNameKey: "perk.no_fall_damage.name"
   descriptionKey: "perk.no_fall_damage.description"
   enchanted: true

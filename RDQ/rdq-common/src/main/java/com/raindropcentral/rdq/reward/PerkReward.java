@@ -140,20 +140,23 @@ public final class PerkReward extends AbstractReward {
                     return true;
                 }
 
-                // Grant the perk
-                var playerPerk = perkManagementService.grantPerk(rdqPlayer, perk).join();
+                // Grant the perk with auto-enable based on configuration
+                var playerPerk = perkManagementService.grantPerk(rdqPlayer, perk, autoEnable).join();
                 if (playerPerk == null) {
                     LOGGER.warning("Failed to grant perk " + perkIdentifier + " to player " + player.getName());
                     return false;
                 }
-
-                // Auto-enable if configured
-                if (autoEnable) {
-                    boolean enabled = perkManagementService.enablePerk(rdqPlayer, perk).join();
-                    if (!enabled) {
-                        LOGGER.log(Level.INFO, "Perk {0} granted but could not be auto-enabled for player {1}", 
-                            new Object[]{perkIdentifier, player.getName()});
-                    }
+                
+                // Validate perk was properly granted and enabled if requested
+                if (!playerPerk.isUnlocked()) {
+                    LOGGER.warning("Perk " + perkIdentifier + " granted but not unlocked for player " + player.getName());
+                    return false;
+                }
+                
+                if (autoEnable && !playerPerk.isEnabled()) {
+                    LOGGER.log(Level.WARNING, "Perk {0} granted with autoEnable=true but not enabled for player {1}", 
+                        new Object[]{perkIdentifier, player.getName()});
+                    return false;
                 }
 
                 // Send notification to player

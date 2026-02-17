@@ -88,6 +88,7 @@ public final class RequirementBuilder {
         private final Map<String, Double> currencies = new HashMap<>();
         private String plugin;
         private long timeoutMillis = 5000L;
+        private boolean consumeOnComplete = true;
 
         public CurrencyBuilder currency(@NotNull String id, double amount) {
             this.currencies.put(id, amount);
@@ -109,11 +110,16 @@ public final class RequirementBuilder {
             return this;
         }
 
+        public CurrencyBuilder consumeOnComplete(boolean consume) {
+            this.consumeOnComplete = consume;
+            return this;
+        }
+
         public CurrencyRequirement build() {
             if (currencies.isEmpty()) {
                 throw new IllegalStateException("At least one currency is required");
             }
-            return new CurrencyRequirement(currencies, plugin, timeoutMillis);
+            return new CurrencyRequirement(currencies, plugin, timeoutMillis, consumeOnComplete);
         }
     }
 

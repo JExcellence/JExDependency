@@ -12,13 +12,20 @@ import java.util.logging.Logger;
 
 /**
  * Registry for requirement types with dynamic type registration.
+ * <p>
+ * Supports both the new RequirementType system and legacy string-based registration
+ * for backward compatibility.
+ * </p>
  */
 public final class RequirementRegistry {
 
     private static final Logger LOGGER = Logger.getLogger(RequirementRegistry.class.getName());
     private static final RequirementRegistry INSTANCE = new RequirementRegistry();
 
+    // New system - maps type names to RequirementType records
     private final Map<String, RequirementType> requirementTypes = new ConcurrentHashMap<>();
+    
+    // Plugin providers
     private final Map<String, PluginRequirementProvider> providers = new ConcurrentHashMap<>();
     
     private volatile ObjectMapper objectMapper;
@@ -35,6 +42,11 @@ public final class RequirementRegistry {
 
     // ==================== Type Registration ====================
 
+    /**
+     * Registers a requirement type with full metadata.
+     *
+     * @param type the requirement type to register
+     */
     public void registerType(@NotNull RequirementType type) {
         String key = type.id().toUpperCase();
         requirementTypes.put(key, type);
@@ -49,25 +61,53 @@ public final class RequirementRegistry {
         }
     }
 
+    /**
+     * Unregisters a requirement type.
+     *
+     * @param typeName the type name to unregister
+     */
     public void unregisterType(@NotNull String typeName) {
         requirementTypes.remove(typeName.toUpperCase());
         LOGGER.info("Unregistered requirement type: " + typeName);
     }
 
+    /**
+     * Gets a requirement type by name.
+     *
+     * @param typeName the type name
+     * @return the requirement type, or null if not registered
+     */
     @Nullable
     public RequirementType getRequirementType(@NotNull String typeName) {
         return requirementTypes.get(typeName.toUpperCase());
     }
 
+    /**
+     * Gets all registered requirement types.
+     *
+     * @return map of type names to requirement types
+     */
     @NotNull
     public Map<String, RequirementType> getRequirementTypes() {
         return Map.copyOf(requirementTypes);
     }
 
+    /**
+     * Checks if a type is registered.
+     *
+     * @param typeName the type name
+     * @return true if registered
+     */
     public boolean isRegistered(@NotNull String typeName) {
         return requirementTypes.containsKey(typeName.toUpperCase());
     }
 
+    /**
+     * Gets the implementation class for a requirement type.
+     *
+     * @param typeName the type name
+     * @return the implementation class, or null if not registered
+     */
     @Nullable
     public Class<? extends AbstractRequirement> getImplementationClass(@NotNull String typeName) {
         RequirementType type = getRequirementType(typeName);
@@ -76,6 +116,14 @@ public final class RequirementRegistry {
 
     // ==================== Provider Management ====================
 
+    /**
+     * Registers a plugin requirement provider.
+     * <p>
+     * This registers all requirement types from the provider and calls its onRegister callback.
+     * </p>
+     *
+     * @param provider the provider to register
+     */
     public void registerProvider(@NotNull PluginRequirementProvider provider) {
         String pluginId = provider.getPluginId();
         
@@ -90,6 +138,11 @@ public final class RequirementRegistry {
         LOGGER.info("Registered requirement provider: " + pluginId + " with types: " + provider.getRequirementTypes().keySet());
     }
 
+    /**
+     * Unregisters a plugin requirement provider.
+     *
+     * @param pluginId the plugin ID to unregister
+     */
     public void unregisterProvider(@NotNull String pluginId) {
         PluginRequirementProvider provider = providers.remove(pluginId);
         if (provider != null) {
@@ -98,11 +151,22 @@ public final class RequirementRegistry {
         }
     }
 
+    /**
+     * Gets a registered provider by plugin ID.
+     *
+     * @param pluginId the plugin ID
+     * @return the provider, or null if not registered
+     */
     @Nullable
     public PluginRequirementProvider getProvider(@NotNull String pluginId) {
         return providers.get(pluginId);
     }
 
+    /**
+     * Gets all registered providers.
+     *
+     * @return map of plugin IDs to providers
+     */
     @NotNull
     public Map<String, PluginRequirementProvider> getProviders() {
         return Map.copyOf(providers);
@@ -110,6 +174,12 @@ public final class RequirementRegistry {
 
     // ==================== ObjectMapper Configuration ====================
 
+    /**
+     * Configures an ObjectMapper with the RequirementMixin and all registered types.
+     *
+     * @param mapper the ObjectMapper to configure
+     * @return the configured ObjectMapper
+     */
     @NotNull
     public ObjectMapper configureObjectMapper(@NotNull ObjectMapper mapper) {
         this.objectMapper = mapper;
@@ -124,6 +194,11 @@ public final class RequirementRegistry {
 
     // ==================== Utility Methods ====================
 
+    /**
+     * Gets statistics about registered requirements.
+     *
+     * @return statistics record
+     */
     @NotNull
     public RegistryStatistics getStatistics() {
         return new RegistryStatistics(
@@ -132,6 +207,9 @@ public final class RequirementRegistry {
         );
     }
 
+    /**
+     * Statistics about the requirement registry.
+     */
     public record RegistryStatistics(
         int totalTypes,
         int providers

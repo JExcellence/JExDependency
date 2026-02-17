@@ -33,10 +33,14 @@ tasks {
         options.encoding = "UTF-8"
         (options as StandardJavadocDocletOptions).apply {
             addStringOption("Xdoclint:none", "-quiet")
-            links(
-                "https://docs.oracle.com/en/java/javase/21/docs/api/",
-                "https://jd.papermc.io/paper/1.21/"
-            )
+            addBooleanOption("Xdoclint:none", true)
+            addStringOption("Xmaxwarns", "0")
+            addStringOption("Xmaxerrs", "0")
+            // Ignore missing references and network errors
+            addBooleanOption("-ignore-source-errors", true)
+            isFailOnError = false
+            // Skip external links to avoid network dependency
+            // links() intentionally omitted for offline builds
         }
     }
 

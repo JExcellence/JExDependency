@@ -529,11 +529,31 @@ public class PerkDetailView extends BaseView {
             // Attempt to unlock
             requirementService.attemptUnlock(player, rdqPlayer, perk).thenAccept(result -> {
                 if (result.isSuccess()) {
-                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
-                    player.sendMessage(MINI_MESSAGE.deserialize("<green>Successfully unlocked perk: " + perk.getIdentifier() + "!</green>"));
+                    PlayerPerk playerPerk = result.getPlayerPerk();
                     
-                    // Refresh the view
-                    clickContext.update();
+                    // Validate perk is properly enabled after unlock
+                    if (playerPerk != null && playerPerk.isUnlocked() && playerPerk.isEnabled()) {
+                        // Optionally auto-activate the perk
+                        final PerkActivationService activationService = plugin.getPerkActivationService();
+                        activationService.activate(player, playerPerk).thenAccept(activated -> {
+                            if (activated) {
+                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+                                player.sendMessage(MINI_MESSAGE.deserialize("<green>Successfully unlocked and enabled perk: " + perk.getIdentifier() + "!</green>"));
+                            } else {
+                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
+                                player.sendMessage(MINI_MESSAGE.deserialize("<green>Successfully unlocked perk: " + perk.getIdentifier() + "!</green>"));
+                            }
+                            clickContext.update();
+                        });
+                    } else {
+                        LOGGER.log(Level.SEVERE, "Perk {0} unlocked but not properly enabled (unlocked={1}, enabled={2})", 
+                                new Object[]{perk.getIdentifier(), 
+                                        playerPerk != null && playerPerk.isUnlocked(), 
+                                        playerPerk != null && playerPerk.isEnabled()});
+                        player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
+                        player.sendMessage(MINI_MESSAGE.deserialize("<red>Perk unlocked but requires manual enabling. Please contact an administrator.</red>"));
+                        clickContext.update();
+                    }
                 } else {
                     player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1.0f, 1.0f);
                     player.sendMessage(MINI_MESSAGE.deserialize("<red>Failed to unlock perk. Please try again.</red>"));

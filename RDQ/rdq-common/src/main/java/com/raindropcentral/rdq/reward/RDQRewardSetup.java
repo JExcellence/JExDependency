@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.reward;
 
 import com.raindropcentral.rdq.config.utility.RewardSection;
-import com.raindropcentral.rplatform.reward.CoreRewardTypes;
 import com.raindropcentral.rplatform.reward.config.RewardFactory;
 
 import java.util.logging.Logger;
@@ -18,8 +17,6 @@ public final class RDQRewardSetup {
             LOGGER.warning("RDQ Reward System already initialized");
             return;
         }
-
-        CoreRewardTypes.registerAll();
         
         // Register adapter for RewardSection (the actual config class used in YAML)
         RewardFactory.getInstance().registerSectionAdapter(

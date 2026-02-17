@@ -14,7 +14,9 @@ import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
-import com.raindropcentral.rdq.listener.PerkEventListener;
+import com.raindropcentral.rdq.economy.EconomyService;
+import com.raindropcentral.rdq.economy.EconomyServiceHolder;
+import com.raindropcentral.rdq.economy.JExEconomyService;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
@@ -115,6 +117,8 @@ public abstract class RDQ {
 	private IRankSystemService rankSystemService;
 	private BountyFactory bountyFactory;
 	private VisualIndicatorManager visualIndicatorManager;
+	private Object currencyAdapter; // JExEconomy CurrencyAdapter
+	private com.raindropcentral.rdq.economy.EconomyService economyService;
 	
 	// Perk system components
 	private PerkSystemFactory perkSystemFactory;
@@ -229,14 +233,37 @@ public abstract class RDQ {
 	}
 
 	private void initializePlugins() {
-		new ServiceRegistry().register(
+		ServiceRegistry registry = new ServiceRegistry();
+
+		registry.register(
 				"net.luckperms.api.LuckPerms",
 				"LuckPerms"
 		).optional().maxAttempts(30).retryDelay(500).onSuccess(luckPerms -> {
-					luckPermsService = new LuckPermsService(platform);
-					LOGGER.log(Level.INFO, "LuckPerms service initialized");
+			luckPermsService = new LuckPermsService(platform);
+			LOGGER.log(Level.INFO, "LuckPerms service initialized");
 		}).onFailure(() -> {
 			LOGGER.log(Level.INFO, "LuckPerms service initialization failed, not present.");
+		}).load();
+
+		registry.register(
+				"de.jexcellence.economy.adapter.CurrencyAdapter",
+				"JExEconomy"
+		).optional().maxAttempts(30).retryDelay(500).onSuccess(adapter -> {
+			currencyAdapter = adapter;
+			economyService = new JExEconomyService(adapter);
+			EconomyServiceHolder.setInstance(economyService);
+			
+			// Register our wrapper service so RPlatform can find it
+			plugin.getServer().getServicesManager().register(
+					EconomyService.class,
+					economyService,
+					plugin,
+					org.bukkit.plugin.ServicePriority.Normal
+			);
+			
+			LOGGER.log(Level.INFO, "JExEconomy currency adapter initialized");
+		}).onFailure(() -> {
+			LOGGER.log(Level.INFO, "JExEconomy not found, currency requirements will be unavailable");
 		}).load();
 	}
 
@@ -310,11 +337,6 @@ public abstract class RDQ {
 					perkManagementService,
 					systemConfig.getCooldownMultiplier()
 			);
-			
-			// Register perk event listener
-			PerkEventListener perkEventListener = new PerkEventListener(this, perkActivationService);
-			plugin.getServer().getPluginManager().registerEvents(perkEventListener, plugin);
-			LOGGER.info("Registered PerkEventListener");
 			
 			// Register special perk handler (it implements Listener for death/damage events)
 			plugin.getServer().getPluginManager().registerEvents(

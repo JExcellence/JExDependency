@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 public class PerkManagementService {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(PerkManagementService.class);
+    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
     
     private final PerkRepository perkRepository;
     private final PlayerPerkRepository playerPerkRepository;
@@ -63,22 +63,31 @@ public class PerkManagementService {
      *
      * @param player the player to grant the perk to
      * @param perk the perk to grant
+     * @param autoEnable whether to automatically enable the perk upon granting
      * @return a CompletableFuture containing the PlayerPerk association
      */
     public CompletableFuture<PlayerPerk> grantPerk(
             @NotNull final RDQPlayer player,
-            @NotNull final Perk perk
+            @NotNull final Perk perk,
+            final boolean autoEnable
     ) {
         return findByPlayerAndPerk(player, perk)
                 .thenCompose(existingOpt -> {
                     if (existingOpt.isPresent()) {
                         PlayerPerk existing = existingOpt.get();
                         if (!existing.isUnlocked()) {
-                            existing.setUnlocked(true);
-                            PlayerPerk saved = playerPerkRepository.save(existing);
-                            return CompletableFuture.completedFuture(saved);
+                            return CompletableFuture.supplyAsync(() -> {
+                                existing.setUnlocked(true);
+                                if (autoEnable) {
+                                    existing.setEnabled(true);
+                                }
+                                playerPerkRepository.update(existing);
+                                LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
+                                        new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
+                                return existing;
+                            });
                         }
-                        LOGGER.log(Level.FINE, "Player {0} already has perk {1}", 
+                        LOGGER.log(Level.FINE, "Player {0} already has perk {1} unlocked", 
                                 new Object[]{player.getUniqueId(), perk.getIdentifier()});
                         return CompletableFuture.completedFuture(existing);
                     }
@@ -86,11 +95,14 @@ public class PerkManagementService {
                     // Create new PlayerPerk association
                     PlayerPerk playerPerk = new PlayerPerk(player, perk);
                     playerPerk.setUnlocked(true);
+                    if (autoEnable) {
+                        playerPerk.setEnabled(true);
+                    }
                     
                     return CompletableFuture.supplyAsync(() -> {
                         PlayerPerk saved = playerPerkRepository.save(playerPerk);
-                        LOGGER.log(Level.INFO, "Granted perk {0} to player {1}", 
-                                new Object[]{perk.getIdentifier(), player.getUniqueId()});
+                        LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
+                                new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
                         return saved;
                     });
                 })
@@ -99,6 +111,24 @@ public class PerkManagementService {
                             " to player " + player.getUniqueId(), throwable);
                     return null;
                 });
+    }
+    
+    /**
+     * Grants a perk to a player, creating a PlayerPerk association.
+     * If the player already has the perk, returns the existing association.
+     * This overload defaults to NOT auto-enabling the perk for backward compatibility.
+     *
+     * @param player the player to grant the perk to
+     * @param perk the perk to grant
+     * @return a CompletableFuture containing the PlayerPerk association
+     * @deprecated Use {@link #grantPerk(RDQPlayer, Perk, boolean)} instead to explicitly specify auto-enable behavior
+     */
+    @Deprecated
+    public CompletableFuture<PlayerPerk> grantPerk(
+            @NotNull final RDQPlayer player,
+            @NotNull final Perk perk
+    ) {
+        return grantPerk(player, perk, false);
     }
     
     /**
@@ -218,9 +248,10 @@ public class PerkManagementService {
                                     return CompletableFuture.completedFuture(false);
                                 }
                                 
-                                playerPerk.setEnabled(true);
+                                // Update the entity in a new transaction
                                 return CompletableFuture.supplyAsync(() -> {
-                                    PlayerPerk saved = playerPerkRepository.save(playerPerk);
+                                    playerPerk.setEnabled(true);
+                                    playerPerkRepository.update(playerPerk);
                                     LOGGER.log(Level.INFO, "Enabled perk {0} for player {1}", 
                                             new Object[]{perk.getIdentifier(), player.getUniqueId()});
                                     return true;
@@ -261,9 +292,9 @@ public class PerkManagementService {
                         return CompletableFuture.completedFuture(true);
                     }
                     
-                    playerPerk.setEnabled(false);
                     return CompletableFuture.supplyAsync(() -> {
-                        PlayerPerk saved = playerPerkRepository.save(playerPerk);
+                        playerPerk.setEnabled(false);
+                        playerPerkRepository.update(playerPerk);
                         LOGGER.log(Level.INFO, "Disabled perk {0} for player {1}", 
                                 new Object[]{perk.getIdentifier(), player.getUniqueId()});
                         return true;
@@ -589,9 +620,16 @@ public class PerkManagementService {
     ) {
         return CompletableFuture.supplyAsync(() -> {
             List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+            Long playerId = player.getId();
+            Long perkId = perk.getId();
             return allPlayerPerks.stream()
-                    .filter(pp -> pp.getPlayer().getUniqueId().equals(player.getUniqueId()) && 
-                                 pp.getPerk().getId().equals(perk.getId()))
+                    .filter(pp -> {
+                        // Compare by ID to avoid lazy initialization issues
+                        Long ppPlayerId = pp.getPlayer().getId();
+                        Long ppPerkId = pp.getPerk().getId();
+                        return ppPlayerId != null && ppPlayerId.equals(playerId) && 
+                               ppPerkId != null && ppPerkId.equals(perkId);
+                    })
                     .findFirst();
         });
     }
@@ -616,8 +654,12 @@ public class PerkManagementService {
     private CompletableFuture<List<PlayerPerk>> findUnlockedByPlayer(@NotNull final RDQPlayer player) {
         return CompletableFuture.supplyAsync(() -> {
             List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+            Long playerId = player.getId();
             return allPlayerPerks.stream()
-                    .filter(pp -> pp.getPlayer().getUniqueId().equals(player.getUniqueId()) && pp.isUnlocked())
+                    .filter(pp -> {
+                        Long ppPlayerId = pp.getPlayer().getId();
+                        return ppPlayerId != null && ppPlayerId.equals(playerId) && pp.isUnlocked();
+                    })
                     .collect(Collectors.toList());
         });
     }
@@ -628,8 +670,12 @@ public class PerkManagementService {
     private CompletableFuture<List<PlayerPerk>> findEnabledByPlayer(@NotNull final RDQPlayer player) {
         return CompletableFuture.supplyAsync(() -> {
             List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+            Long playerId = player.getId();
             return allPlayerPerks.stream()
-                    .filter(pp -> pp.getPlayer().getUniqueId().equals(player.getUniqueId()) && pp.isEnabled())
+                    .filter(pp -> {
+                        Long ppPlayerId = pp.getPlayer().getId();
+                        return ppPlayerId != null && ppPlayerId.equals(playerId) && pp.isEnabled();
+                    })
                     .collect(Collectors.toList());
         });
     }
@@ -640,8 +686,12 @@ public class PerkManagementService {
     private CompletableFuture<List<PlayerPerk>> findActiveByPlayer(@NotNull final RDQPlayer player) {
         return CompletableFuture.supplyAsync(() -> {
             List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+            Long playerId = player.getId();
             return allPlayerPerks.stream()
-                    .filter(pp -> pp.getPlayer().getUniqueId().equals(player.getUniqueId()) && pp.isActive())
+                    .filter(pp -> {
+                        Long ppPlayerId = pp.getPlayer().getId();
+                        return ppPlayerId != null && ppPlayerId.equals(playerId) && pp.isActive();
+                    })
                     .collect(Collectors.toList());
         });
     }

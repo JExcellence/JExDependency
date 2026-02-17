@@ -74,16 +74,14 @@ public class PotionPerkHandler {
                 config.get("potionEffectType").getAsString() : null;
         
         if (potionEffectType == null || potionEffectType.isEmpty()) {
-            LOGGER.log(Level.WARNING, "Perk {0} has no potionEffectType configured",
-                    perk.getIdentifier());
+            LOGGER.log(Level.WARNING, "Perk " + perk.getIdentifier() + " has no potionEffectType configured");
             return false;
         }
         
         // Parse potion effect type
         PotionEffectType effectType = PotionEffectType.getByName(potionEffectType.toUpperCase());
         if (effectType == null) {
-            LOGGER.log(Level.WARNING, "Invalid potion effect type: {0} for perk {1}",
-                    new Object[]{potionEffectType, perk.getIdentifier()});
+            LOGGER.log(Level.WARNING, "Invalid potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier());
             return false;
         }
         
@@ -93,7 +91,7 @@ public class PotionPerkHandler {
         boolean ambient = config.has("ambient") && config.get("ambient").getAsBoolean();
         boolean particles = !config.has("particles") || config.get("particles").getAsBoolean();
         
-        // Create and apply potion effect
+        // Create potion effect
         PotionEffect effect = new PotionEffect(
                 effectType,
                 durationTicks,
@@ -103,15 +101,18 @@ public class PotionPerkHandler {
                 true // icon
         );
         
-        player.addPotionEffect(effect);
+        // Apply potion effect on main thread (Bukkit requirement)
+        Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+            player.addPotionEffect(effect);
+        });
         
         // Track this perk for refresh
         activePlayerPerks
                 .computeIfAbsent(player.getUniqueId(), k -> new ConcurrentHashMap<>())
                 .put(playerPerk.getId(), playerPerk);
         
-        LOGGER.log(Level.INFO, "Applied potion effect {0} (amplifier {1}) to player {2} from perk {3}",
-                new Object[]{effectType.getName(), amplifier, player.getName(), perk.getIdentifier()});
+        LOGGER.log(Level.INFO, "Applied potion effect " + effectType.getName() + " (amplifier " + amplifier + 
+                ") to player " + player.getName() + " from perk " + perk.getIdentifier());
         
         return true;
     }
@@ -135,21 +136,21 @@ public class PotionPerkHandler {
                 config.get("potionEffectType").getAsString() : null;
         
         if (potionEffectType == null || potionEffectType.isEmpty()) {
-            LOGGER.log(Level.WARNING, "Perk {0} has no potionEffectType configured",
-                    perk.getIdentifier());
+            LOGGER.log(Level.WARNING, "Perk " + perk.getIdentifier() + " has no potionEffectType configured");
             return false;
         }
         
         // Parse potion effect type
         PotionEffectType effectType = PotionEffectType.getByName(potionEffectType.toUpperCase());
         if (effectType == null) {
-            LOGGER.log(Level.WARNING, "Invalid potion effect type: {0} for perk {1}",
-                    new Object[]{potionEffectType, perk.getIdentifier()});
+            LOGGER.log(Level.WARNING, "Invalid potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier());
             return false;
         }
         
-        // Remove the potion effect
-        player.removePotionEffect(effectType);
+        // Remove the potion effect on main thread (Bukkit requirement)
+        Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+            player.removePotionEffect(effectType);
+        });
         
         // Stop tracking this perk
         Map<Long, PlayerPerk> playerPerks = activePlayerPerks.get(player.getUniqueId());
@@ -160,8 +161,8 @@ public class PotionPerkHandler {
             }
         }
         
-        LOGGER.log(Level.INFO, "Removed potion effect {0} from player {1} for perk {2}",
-                new Object[]{effectType.getName(), player.getName(), perk.getIdentifier()});
+        LOGGER.log(Level.INFO, "Removed potion effect " + effectType.getName() + " from player " + player.getName() + 
+                " for perk " + perk.getIdentifier());
         
         return true;
     }
