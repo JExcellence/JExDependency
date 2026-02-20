@@ -47,6 +47,8 @@ include(":RDQ:rdq-common")
 include(":RDQ:rdq-free")
 include(":RDQ:rdq-premium")
 
+/*
+
 // JExHome with submodules
 include(":JExHome")
 include(":JExHome:jexhome-common")
@@ -66,3 +68,5 @@ include(":JExOneblock:jexoneblock-free")
 include(":JExOneblock:jexoneblock-premium")
 include("RDT")
 include("RDS")
+
+ */
