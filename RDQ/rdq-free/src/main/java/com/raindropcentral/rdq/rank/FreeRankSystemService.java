@@ -5,7 +5,6 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankPath;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -30,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class FreeRankSystemService implements IRankSystemService {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ-Free");
+    private static final Logger LOGGER = Logger.getLogger(FreeRankSystemService.class.getName());
 
     // Hardcoded limits - cannot be changed by server owners
     private static final int MAX_ABSOLVABLE_RANK_TREES = 1;

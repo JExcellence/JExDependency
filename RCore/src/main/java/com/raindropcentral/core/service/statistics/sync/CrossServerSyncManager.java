@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class CrossServerSyncManager {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(CrossServerSyncManager.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final RCentralApiClient apiClient;
     private final String apiKey;

@@ -1,6 +1,5 @@
 package com.raindropcentral.rplatform.requirement.plugin.bridges;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.plugin.PluginIntegrationBridge;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -17,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class JobsRebornBridge implements PluginIntegrationBridge {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(JobsRebornBridge.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(JobsRebornBridge.class.getName());
 	
 	private Object jobsAPI;
 	private boolean initialized = false;

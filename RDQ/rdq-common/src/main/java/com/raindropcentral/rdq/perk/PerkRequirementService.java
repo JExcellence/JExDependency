@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  */
 public class PerkRequirementService {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(PerkRequirementService.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
     private final PerkManagementService perkManagementService;
     private final RequirementService requirementService;

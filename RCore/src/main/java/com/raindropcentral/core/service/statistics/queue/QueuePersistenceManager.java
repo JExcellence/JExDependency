@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class QueuePersistenceManager {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(QueuePersistenceManager.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final String QUEUE_FILE = "statistics-queue.json";
     private static final String WAL_FILE = "statistics-queue.wal";
     private static final String BACKUP_SUFFIX = ".backup";

@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  */
 public class PotionPerkHandler {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(PotionPerkHandler.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private static final Gson GSON = new Gson();
     
     // Refresh interval in ticks (10 seconds)
@@ -78,10 +78,19 @@ public class PotionPerkHandler {
             return false;
         }
         
-        // Parse potion effect type
-        PotionEffectType effectType = PotionEffectType.getByName(potionEffectType.toUpperCase());
-        if (effectType == null) {
-            LOGGER.log(Level.WARNING, "Invalid potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier());
+        // Parse potion effect type using Registry API (modern approach)
+        PotionEffectType effectType;
+        try {
+            // Convert to lowercase for namespaced key (e.g., "JUMP_BOOST" -> "jump_boost")
+            String effectKey = potionEffectType.toLowerCase();
+            effectType = org.bukkit.Registry.EFFECT.get(org.bukkit.NamespacedKey.minecraft(effectKey));
+            
+            if (effectType == null) {
+                LOGGER.log(Level.WARNING, "Invalid potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier());
+                return false;
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to parse potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier(), e);
             return false;
         }
         
@@ -140,10 +149,19 @@ public class PotionPerkHandler {
             return false;
         }
         
-        // Parse potion effect type
-        PotionEffectType effectType = PotionEffectType.getByName(potionEffectType.toUpperCase());
-        if (effectType == null) {
-            LOGGER.log(Level.WARNING, "Invalid potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier());
+        // Parse potion effect type using Registry API (modern approach)
+        PotionEffectType effectType;
+        try {
+            // Convert to lowercase for namespaced key (e.g., "JUMP_BOOST" -> "jump_boost")
+            String effectKey = potionEffectType.toLowerCase();
+            effectType = org.bukkit.Registry.EFFECT.get(org.bukkit.NamespacedKey.minecraft(effectKey));
+            
+            if (effectType == null) {
+                LOGGER.log(Level.WARNING, "Invalid potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier());
+                return false;
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Failed to parse potion effect type: " + potionEffectType + " for perk " + perk.getIdentifier(), e);
             return false;
         }
         

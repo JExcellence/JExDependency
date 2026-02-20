@@ -32,7 +32,7 @@ dependencies {
     compileOnly(libs.adventure.serializer.json)
     compileOnly(libs.adventure.serializer.plain)
     compileOnly(libs.adventure.platform.bukkit)
-
+    compileOnly(libs.jexeconomy) { isTransitive = false}
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false }

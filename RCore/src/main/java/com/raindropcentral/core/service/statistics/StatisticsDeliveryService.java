@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class StatisticsDeliveryService {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(StatisticsDeliveryService.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final Plugin plugin;
     private final StatisticsDeliveryConfig config;

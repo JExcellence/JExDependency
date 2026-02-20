@@ -9,7 +9,6 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
-import com.raindropcentral.rdq.view.perks.util.PerkCardRenderer;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.reward.AbstractReward;
@@ -43,7 +42,7 @@ import java.util.stream.Collectors;
  */
 public class PerkDetailView extends BaseView {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
 
@@ -170,55 +169,15 @@ public class PerkDetailView extends BaseView {
         }
 
         final PerkRequirementService requirementService = plugin.getPerkRequirementService();
+        final com.raindropcentral.rdq.view.perks.util.PerkRequirementCardRenderer cardRenderer = 
+                new com.raindropcentral.rdq.view.perks.util.PerkRequirementCardRenderer(requirementService);
 
         for (int i = 0; i < Math.min(REQUIREMENT_SLOTS.length, requirements.size()); i++) {
             final PerkRequirement requirement = requirements.get(i);
             final int slot = REQUIREMENT_SLOTS[i];
 
             render.slot(slot)
-                    .renderWith(() -> createRequirementCard(player, requirement, requirementService));
-        }
-    }
-
-    /**
-     * Creates a requirement card.
-     */
-    private @NotNull ItemStack createRequirementCard(
-            @NotNull final Player player,
-            @NotNull final PerkRequirement requirement,
-            @NotNull final PerkRequirementService requirementService
-    ) {
-        try {
-            final AbstractRequirement abstractReq = requirement.getRequirement();
-            final Material icon = requirement.getIcon() != null ?
-                    Material.valueOf(requirement.getIcon().getMaterial().toUpperCase()) :
-                    Material.PAPER;
-
-            final boolean isMet = abstractReq.isMet(player);
-            final double progress = abstractReq.calculateProgress(player);
-
-            final List<Component> lore = new ArrayList<>();
-            lore.add(Component.empty());
-            lore.add(MINI_MESSAGE.deserialize("<gray>Type: <white>" + abstractReq.getTypeId() + "</white></gray>"));
-            lore.add(Component.empty());
-
-            if (isMet) {
-                lore.add(MINI_MESSAGE.deserialize("<green>✓ Completed</green>"));
-            } else {
-                final int percentage = (int) (progress * 100);
-                lore.add(MINI_MESSAGE.deserialize("<gray>Progress: <yellow>" + percentage + "%</yellow></gray>"));
-            }
-
-            return UnifiedBuilderFactory.item(icon)
-                    .setName(MINI_MESSAGE.deserialize("<white>Requirement</white>"))
-                    .setLore(lore)
-                    .setGlowing(isMet)
-                    .addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_ENCHANTS)
-                    .build();
-        } catch (final Exception e) {
-            return UnifiedBuilderFactory.item(Material.PAPER)
-                    .setName(Component.text("Requirement"))
-                    .build();
+                    .renderWith(() -> cardRenderer.createEnhancedRequirementCard(player, requirement));
         }
     }
 
@@ -427,21 +386,37 @@ public class PerkDetailView extends BaseView {
         render.slot(UNLOCK_BUTTON_SLOT)
                 .renderWith(() -> {
                     final PerkRequirementService requirementService = plugin.getPerkRequirementService();
-                    final boolean canUnlock = requirementService.canUnlock(player, perk);
+                    
+                    // Run requirement check on main thread to avoid async event errors
+                    final java.util.concurrent.atomic.AtomicBoolean canUnlock = new java.util.concurrent.atomic.AtomicBoolean(false);
+                    try {
+                        java.util.concurrent.CompletableFuture<Boolean> future = new java.util.concurrent.CompletableFuture<>();
+                        org.bukkit.Bukkit.getScheduler().runTask(plugin.getPlugin(), () -> {
+                            try {
+                                future.complete(requirementService.canUnlock(player, perk));
+                            } catch (Exception e) {
+                                future.completeExceptionally(e);
+                            }
+                        });
+                        canUnlock.set(future.get(1, java.util.concurrent.TimeUnit.SECONDS));
+                    } catch (Exception e) {
+                        // If check fails, assume cannot unlock
+                        canUnlock.set(false);
+                    }
 
                     final List<Component> lore = new ArrayList<>();
                     lore.add(Component.empty());
 
-                    if (canUnlock) {
+                    if (canUnlock.get()) {
                         lore.add(MINI_MESSAGE.deserialize("<green>Click to unlock this perk!</green>"));
                     } else {
                         lore.add(MINI_MESSAGE.deserialize("<red>Requirements not met</red>"));
                     }
 
-                    return UnifiedBuilderFactory.item(canUnlock ? Material.LIME_DYE : Material.RED_DYE)
+                    return UnifiedBuilderFactory.item(canUnlock.get() ? Material.LIME_DYE : Material.RED_DYE)
                             .setName(MINI_MESSAGE.deserialize("<white>Unlock Perk</white>"))
                             .setLore(lore)
-                            .setGlowing(canUnlock)
+                            .setGlowing(canUnlock.get())
                             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                             .build();
                 })

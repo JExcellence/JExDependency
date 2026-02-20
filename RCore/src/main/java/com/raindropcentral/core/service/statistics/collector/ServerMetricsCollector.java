@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class ServerMetricsCollector {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(ServerMetricsCollector.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final Plugin plugin;
     private final Map<String, MetricProvider> customMetricProviders;

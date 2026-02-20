@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class TimeWindowedAccumulator {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(TimeWindowedAccumulator.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final int HOURLY_BUCKETS = 24; // Keep 24 hours of hourly data
     private static final int DAILY_BUCKETS = 7;   // Keep 7 days of daily data
 

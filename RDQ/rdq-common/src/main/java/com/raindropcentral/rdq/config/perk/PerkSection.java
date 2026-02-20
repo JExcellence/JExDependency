@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 public class PerkSection extends AConfigSection {
 	
 	@CSIgnore
-	private static final Logger LOGGER = CentralLogger.getLogger(PerkSection.class);
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	/**
 	 * The unique identifier for this perk (e.g., "speed_boost", "flight").

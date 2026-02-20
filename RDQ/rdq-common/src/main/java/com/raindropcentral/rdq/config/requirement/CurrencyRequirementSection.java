@@ -84,18 +84,19 @@ public class CurrencyRequirementSection extends AConfigSection {
 	
 	/**
 	 * Gets the complete map of required currencies from all sources.
+	 * For the new API, this will typically contain a single currency.
 	 *
 	 * @return combined map of all required currencies
 	 */
 	public Map<String, Double> getRequiredCurrencies() {
 		Map<String, Double> currencies = new HashMap<>();
 		
-		// Add currencies from requiredCurrencies map
+		// Add currencies from requiredCurrencies map (old format)
 		if (this.requiredCurrencies != null) {
 			currencies.putAll(this.requiredCurrencies);
 		}
 		
-		// Add single currency if specified
+		// Add single currency if specified (new format)
 		String currencyId = getCurrencyType();
 		Double currencyAmount = getCurrencyAmount();
 		
@@ -108,31 +109,33 @@ public class CurrencyRequirementSection extends AConfigSection {
 	
 	/**
 	 * Gets the currency type, trying multiple field names.
+	 * Supports both 'currency' and 'currencyType' field names.
 	 *
-	 * @return the currency type
+	 * @return the currency type, or null if not specified
 	 */
 	public String getCurrencyType() {
-		if (this.currencyType != null) {
-			return this.currencyType;
-		}
 		if (this.currency != null) {
 			return this.currency;
 		}
-		return "money"; // Default currency type
+		if (this.currencyType != null) {
+			return this.currencyType;
+		}
+		return null;
 	}
 	
 	/**
 	 * Gets the currency amount, trying multiple field names.
+	 * Supports both 'amount' and 'currencyAmount' field names.
 	 *
-	 * @return the currency amount
+	 * @return the currency amount, or null if not specified
 	 */
 	public Double getCurrencyAmount() {
-		if (this.currencyAmount != null) {
-			return this.currencyAmount;
-		}
 		if (this.amount != null) {
 			return this.amount;
 		}
-		return 0.0;
+		if (this.currencyAmount != null) {
+			return this.currencyAmount;
+		}
+		return null;
 	}
 }

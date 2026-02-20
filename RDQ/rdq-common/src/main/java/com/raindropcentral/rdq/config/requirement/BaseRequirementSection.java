@@ -30,7 +30,7 @@ import java.util.logging.Logger;
 public class BaseRequirementSection extends AConfigSection {
 	
 	@CSIgnore
-	private static final Logger LOGGER = CentralLogger.getLogger(BaseRequirementSection.class);
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	/**
 	 * The type of requirement (ITEM, CURRENCY, EXPERIENCE_LEVEL, etc.).
@@ -96,6 +96,11 @@ public class BaseRequirementSection extends AConfigSection {
 	
 	/** For EXPERIENCE_LEVEL: required level (flat format) */
 	private Integer level;
+	
+	/** For CURRENCY: flat currency fields (YAML: currency, amount, consumable) */
+	private String currency;
+	private Double amount;
+	private Boolean consumable;
 	
 	/** For ITEM: single required item (flat format) */
 	private de.jexcellence.evaluable.section.ItemStackSection requiredItem;
@@ -194,6 +199,7 @@ public class BaseRequirementSection extends AConfigSection {
 			case "COMPOSITE" -> mapToCompositeRequirement();
 			case "CHOICE" -> mapToChoiceRequirement();
 			case "EXPERIENCE_LEVEL" -> mapToExperienceRequirement();
+			case "CURRENCY" -> mapToCurrencyRequirement();
 			case "ITEM" -> mapToItemRequirement();
 			case "PLAYTIME" -> mapToPlaytimeRequirement();
 		}
@@ -296,6 +302,32 @@ public class BaseRequirementSection extends AConfigSection {
 			LOGGER.info("Mapped flat EXPERIENCE_LEVEL with level=" + this.level);
 		} catch (Exception e) {
 			LOGGER.warning("Failed to map flat EXPERIENCE_LEVEL structure: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Maps flat CURRENCY fields to CurrencyRequirementSection.
+	 */
+	private void mapToCurrencyRequirement() {
+		// Only map if we have flat fields and no nested section
+		if (this.currency == null || this.amount == null || this.amount <= 0) {
+			LOGGER.warning("CURRENCY requirement missing currency or amount fields");
+			return;
+		}
+		
+		CurrencyRequirementSection curr = new CurrencyRequirementSection(new EvaluationEnvironmentBuilder());
+		
+		try {
+			setFieldValue(curr, "currency", this.currency);
+			setFieldValue(curr, "amount", this.amount);
+			if (this.consumable != null) {
+				setFieldValue(curr, "consumeOnComplete", this.consumable);
+			}
+			
+			this.currencyRequirement = curr;
+			LOGGER.info("Mapped flat CURRENCY: " + this.currency + " = " + this.amount);
+		} catch (Exception e) {
+			LOGGER.warning("Failed to map flat CURRENCY: " + e.getMessage());
 		}
 	}
 	
@@ -513,10 +545,7 @@ public class BaseRequirementSection extends AConfigSection {
 	}
 	
 	public CurrencyRequirementSection getCurrencyRequirement() {
-		
-		return this.currencyRequirement == null ?
-		       new CurrencyRequirementSection(new EvaluationEnvironmentBuilder()) :
-		       this.currencyRequirement;
+		return this.currencyRequirement;
 	}
 	
 	public ExperienceLevelRequirementSection getExperienceRequirement() {

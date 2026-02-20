@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ConflictResolver {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(ConflictResolver.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final ConflictStrategy defaultStrategy;
     private final Map<String, ConflictStrategy> perKeyStrategies;

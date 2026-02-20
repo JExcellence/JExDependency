@@ -59,7 +59,7 @@ import java.util.logging.Logger;
  */
 public class RankPathRankRequirementOverview extends APaginatedView<RRankUpgradeRequirement> {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final State<RDQ> rdq = initialState("plugin");
 	private final State<RDQPlayer> currentPlayer = initialState("player");

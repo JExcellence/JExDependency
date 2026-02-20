@@ -15,11 +15,9 @@ icon:
 requirements:
   currency_requirement:
     type: "CURRENCY"
-    currencyRequirement:
-      currencyType: "coins"
-      requiredCurrencies:
-        coins: 100.0
-      consumeOnComplete: true
+    currency: "coins"
+    amount: 100.0
+    consumable: true
     icon:
       type: "GOLD_INGOT"
 
@@ -30,7 +28,7 @@ unlockRewards:
     executeAsPlayer: false
 
 effect:
-  potionEffectType: "JUMP"
+  potionEffectType: "jump_boost"
   amplifier: 1
   durationTicks: 600  # 30 seconds (refreshed continuously)
   ambient: false

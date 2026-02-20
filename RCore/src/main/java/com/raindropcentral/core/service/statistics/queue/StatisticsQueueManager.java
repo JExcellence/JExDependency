@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 public class StatisticsQueueManager {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(StatisticsQueueManager.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final Map<DeliveryPriority, ConcurrentLinkedQueue<QueuedStatistic>> queues;
     private final BackpressureController backpressureController;

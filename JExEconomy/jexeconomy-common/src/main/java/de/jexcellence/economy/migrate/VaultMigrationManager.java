@@ -63,7 +63,7 @@ public class VaultMigrationManager {
     ) {
         this.jexEconomyImpl = jexEconomyImpl;
         this.currencyAdapter = this.jexEconomyImpl.getCurrencyAdapter();
-        this.logger = CentralLogger.getLogger(VaultMigrationManager.class.getName());
+        this.logger = CentralLogger.getLoggerByName("JExEconomy");
     }
     
     /**

@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class RetryHandler {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(RetryHandler.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final int maxRetries;
     private final long initialBackoffMs;

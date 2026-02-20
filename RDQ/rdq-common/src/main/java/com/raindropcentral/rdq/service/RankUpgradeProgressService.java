@@ -5,7 +5,6 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.Logger;
 
 /**
@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class RankUpgradeProgressService {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankUpgradeProgressService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(RankUpgradeProgressService.class.getName());
 	
 	private final RDQ rdq;
 	

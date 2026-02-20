@@ -53,7 +53,7 @@ public class JExEconomyVaultProvider implements Economy {
     ) {
         this.jexEconomyImpl = jexEconomyImpl;
         this.currencyAdapter = this.jexEconomyImpl.getCurrencyAdapter();
-        this.logger = CentralLogger.getLogger(JExEconomyVaultProvider.class);
+        this.logger = CentralLogger.getLoggerByName("JExEconomy");
         
         logger.info("JExEconomy Vault provider initialized");
     }

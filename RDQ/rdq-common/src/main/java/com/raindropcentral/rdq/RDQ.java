@@ -5,6 +5,7 @@ import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.utility.BountyFactory;
 import com.raindropcentral.rdq.bounty.visual.VisualIndicatorManager;
 import com.raindropcentral.rdq.config.perk.PerkSystemSection;
+
 import com.raindropcentral.rdq.database.entity.bounty.Bounty;
 import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
@@ -14,9 +15,6 @@ import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
 import com.raindropcentral.rdq.database.repository.*;
-import com.raindropcentral.rdq.economy.EconomyService;
-import com.raindropcentral.rdq.economy.EconomyServiceHolder;
-import com.raindropcentral.rdq.economy.JExEconomyService;
 import com.raindropcentral.rdq.perk.PerkActivationService;
 import com.raindropcentral.rdq.perk.PerkManagementService;
 import com.raindropcentral.rdq.perk.PerkRequirementService;
@@ -34,10 +32,11 @@ import com.raindropcentral.rdq.view.perks.PerkOverviewView;
 import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
-import com.raindropcentral.rplatform.logging.CentralLogger;
+
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.ConfirmationView;
 import com.raindropcentral.rplatform.view.PaginatedPlayerView;
+
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import lombok.Getter;
@@ -56,7 +55,7 @@ import java.util.logging.Logger;
 @Getter
 public abstract class RDQ {
 
-	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+	private static final Logger LOGGER = Logger.getLogger("RDQ");
 
 	private final JavaPlugin plugin;
 	private final String edition;
@@ -117,10 +116,8 @@ public abstract class RDQ {
 	private IRankSystemService rankSystemService;
 	private BountyFactory bountyFactory;
 	private VisualIndicatorManager visualIndicatorManager;
-	private Object currencyAdapter; // JExEconomy CurrencyAdapter
-	private com.raindropcentral.rdq.economy.EconomyService economyService;
-	
-	// Perk system components
+	private Object currencyAdapter;
+
 	private PerkSystemFactory perkSystemFactory;
 	private PerkManagementService perkManagementService;
 	private PerkActivationService perkActivationService;
@@ -140,7 +137,7 @@ public abstract class RDQ {
 		if (
 				onEnableFuture != null && !onEnableFuture.isDone()
 		) {
-			LOGGER.log(Level.WARNING, "Enable sequence already in progress");
+			LOGGER.warning("Enable sequence already in progress");
 			return;
 		}
 
@@ -150,15 +147,12 @@ public abstract class RDQ {
 					return CompletableFuture.completedFuture(null);
 				})
 				.thenRun(() -> {
-					initializeComponents();
 					initializePlugins();
 					initializeViews();
 					platform.initializeMetrics(getMetricsId());
 
-					// Initialize RDQ requirement system integration
 					com.raindropcentral.rdq.requirement.RDQRequirementSetup.initialize();
-					
-					// Initialize RDQ reward system integration
+
 					com.raindropcentral.rdq.reward.RDQRewardSetup.initialize();
 
 					rankPathService = new RankPathService(this);
@@ -171,8 +165,9 @@ public abstract class RDQ {
 					rankSystemFactory = new RankSystemFactory(this);
 					this.rankSystemFactory.initialize();
 
-					// Initialize perk system
 					initializePerkSystem();
+
+					initializeComponents();
 
 					visualIndicatorManager = new VisualIndicatorManager(this);
 
@@ -233,37 +228,16 @@ public abstract class RDQ {
 	}
 
 	private void initializePlugins() {
-		ServiceRegistry registry = new ServiceRegistry();
+		ServiceRegistry registry = platform.getServiceRegistry();
 
 		registry.register(
 				"net.luckperms.api.LuckPerms",
 				"LuckPerms"
 		).optional().maxAttempts(30).retryDelay(500).onSuccess(luckPerms -> {
 			luckPermsService = new LuckPermsService(platform);
-			LOGGER.log(Level.INFO, "LuckPerms service initialized");
+			LOGGER.info("LuckPerms service initialized");
 		}).onFailure(() -> {
-			LOGGER.log(Level.INFO, "LuckPerms service initialization failed, not present.");
-		}).load();
-
-		registry.register(
-				"de.jexcellence.economy.adapter.CurrencyAdapter",
-				"JExEconomy"
-		).optional().maxAttempts(30).retryDelay(500).onSuccess(adapter -> {
-			currencyAdapter = adapter;
-			economyService = new JExEconomyService(adapter);
-			EconomyServiceHolder.setInstance(economyService);
-			
-			// Register our wrapper service so RPlatform can find it
-			plugin.getServer().getServicesManager().register(
-					EconomyService.class,
-					economyService,
-					plugin,
-					org.bukkit.plugin.ServicePriority.Normal
-			);
-			
-			LOGGER.log(Level.INFO, "JExEconomy currency adapter initialized");
-		}).onFailure(() -> {
-			LOGGER.log(Level.INFO, "JExEconomy not found, currency requirements will be unavailable");
+			LOGGER.info("LuckPerms service initialization failed, not present.");
 		}).load();
 	}
 
@@ -307,45 +281,38 @@ public abstract class RDQ {
 	/**
 	 * Initializes the perk system components.
 	 * Creates the perk factory, management service, and activation service.
-	 * Registers the perk event listener and special perk handler.
+	 * Registers the special perk handler.
 	 */
 	private void initializePerkSystem() {
 		try {
 			LOGGER.info("Initializing perk system...");
-			
-			// Create perk system factory and initialize
+
 			perkSystemFactory = new PerkSystemFactory(this);
 			perkSystemFactory.initialize();
-			
-			// Get system configuration
+
 			PerkSystemSection systemConfig = perkSystemFactory.getPerkSystemSection();
-			
-			// Create perk management service
+
 			perkManagementService = new PerkManagementService(
 					perkRepository,
 					playerPerkRepository,
 					systemConfig.getMaxEnabledPerksPerPlayer()
 			);
-			
-			// Create perk requirement service
+
 			perkRequirementService = new PerkRequirementService(perkManagementService);
-			
-			// Create perk activation service
+
 			perkActivationService = new PerkActivationService(
 					this,
 					playerPerkRepository,
 					perkManagementService,
 					systemConfig.getCooldownMultiplier()
 			);
-			
-			// Register special perk handler (it implements Listener for death/damage events)
+
 			plugin.getServer().getPluginManager().registerEvents(
 					perkActivationService.getSpecialPerkHandler(), 
 					plugin
 			);
 			LOGGER.info("Registered SpecialPerkHandler");
-			
-			// Start scheduled tasks (potion effect refresh, etc.)
+
 			perkActivationService.startScheduledTasks();
 			
 			LOGGER.info("Perk system initialized successfully!");
@@ -360,8 +327,7 @@ public abstract class RDQ {
 	 */
 	public void onDisable() {
 		disabling = true;
-		
-		// Shutdown perk system
+
 		if (perkActivationService != null) {
 			try {
 				perkActivationService.stopScheduledTasks();
@@ -381,5 +347,14 @@ public abstract class RDQ {
 		}
 		
 		LOGGER.info("RDQ (" + edition + ") Edition disabled successfully!");
+	}
+	
+	/**
+	 * Gets the RPlatform instance.
+	 * @return the platform instance
+	 */
+	@org.jetbrains.annotations.NotNull
+	public RPlatform getPlatform() {
+		return platform;
 	}
 }

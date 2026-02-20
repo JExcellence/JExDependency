@@ -29,7 +29,7 @@ dependencies {
     // Paper
     compileOnly(libs.paper.api)
     compileOnly(libs.bundles.adventure)
-
+    compileOnly(project(":JExEconomy:jexeconomy-common"))
     compileOnly(libs.folialib)
     compileOnly(libs.placeholderapi)
     compileOnly(libs.vault.api) { isTransitive = false }

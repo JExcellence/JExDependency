@@ -63,7 +63,7 @@ public class PCurrencyLog extends PlayerCommand {
      */
     private final JExEconomy jexEconomyImpl;
 
-    private final static Logger LOGGER = CentralLogger.getLogger(PCurrencyLog.class.getName());
+    private final static Logger LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 
     /**
      * Number of log entries to display per page.

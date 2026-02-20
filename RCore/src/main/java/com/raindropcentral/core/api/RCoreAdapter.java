@@ -33,7 +33,7 @@ public class RCoreAdapter implements RCoreService {
      * Shared logger used to emit lifecycle and error information for backend
      * delegation calls, supporting RDQ and RPlatform diagnostics.
      */
-    private static final Logger LOGGER = CentralLogger.getLogger(RCoreAdapter.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private RPlayerRepository playerRepository;
     private RCoreImpl impl;

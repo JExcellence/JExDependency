@@ -54,7 +54,7 @@ import java.util.stream.Collectors;
  */
 public class RankPathOverview extends BaseView {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
     private final State<RDQ> rdq = this.initialState("plugin");
     private final State<RDQPlayer> currentPlayer = this.initialState("player");

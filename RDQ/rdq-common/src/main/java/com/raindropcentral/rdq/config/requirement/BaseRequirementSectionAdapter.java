@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<BaseRequirementSection> {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(BaseRequirementSectionAdapter.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private static final BaseRequirementSectionAdapter INSTANCE = new BaseRequirementSectionAdapter();
 
     private BaseRequirementSectionAdapter() {}
@@ -83,16 +83,24 @@ public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<
 
     private AbstractRequirement convertCurrencyRequirement(BaseRequirementSection section) {
         CurrencyRequirementSection currencySection = section.getCurrencyRequirement();
+        
+        if (currencySection == null) {
+            throw new IllegalArgumentException("Currency requirement section is null");
+        }
+        
         Map<String, Double> currencies = currencySection.getRequiredCurrencies();
 
-        if (currencies.isEmpty()) {
+        if (currencies == null || currencies.isEmpty()) {
             throw new IllegalArgumentException("No currencies specified for CURRENCY requirement");
         }
 
+        // Use the first currency from the map (new API only supports single currency)
+        Map.Entry<String, Double> firstCurrency = currencies.entrySet().iterator().next();
+        
         return RequirementBuilder.currency()
-                .currencies(currencies)
-                .plugin(currencySection.getCurrencyPlugin())
-                .consumeOnComplete(currencySection.getConsumeOnComplete())
+                .currency(firstCurrency.getKey())
+                .amount(firstCurrency.getValue())
+                .consumable(currencySection.getConsumeOnComplete())
                 .build();
     }
 

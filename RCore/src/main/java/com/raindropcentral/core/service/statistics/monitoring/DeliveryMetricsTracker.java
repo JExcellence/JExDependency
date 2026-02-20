@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class DeliveryMetricsTracker {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(DeliveryMetricsTracker.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     /** Rolling window size in milliseconds (1 hour) */
     private static final long ROLLING_WINDOW_MS = 60 * 60 * 1000L;

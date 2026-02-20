@@ -55,7 +55,6 @@ public class RDT extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        CentralLogger.initialize(this);
 
         this.plugin = this;
         this.getLogger().info("Loading RPlatform for RDT");

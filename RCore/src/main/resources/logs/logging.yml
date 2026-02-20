@@ -1,0 +1,21 @@
+defaultLevel: WARNING
+consoleLogging: true
+debugMode: true
+loggers:
+  com.raindropcentral: WARNING
+  
+  de.jexcellence: WARNING
+  me.devnatan.inventoryframework: WARNING
+  
+  org.bukkit: WARNING
+  net.minecraft: WARNING
+  
+  org.hibernate: WARNING
+  org.hibernate.SQL: WARNING
+  org.hibernate.type.descriptor.sql: WARNING
+  
+  org.apache: WARNING
+  org.springframework: WARNING
+  
+  
+  

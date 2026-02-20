@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class StatisticsDeliveryServiceFactory {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(StatisticsDeliveryServiceFactory.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     /**
      * Creates and initializes a StatisticsDeliveryService.

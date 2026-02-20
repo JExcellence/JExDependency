@@ -3,7 +3,6 @@ package com.raindropcentral.rplatform.requirement.impl;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
 
 public final class PlaytimeRequirement extends AbstractRequirement {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(PlaytimeRequirement.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PlaytimeRequirement.class.getName());
 
     @JsonProperty("requiredPlaytimeSeconds")
     private final long requiredPlaytimeSeconds;

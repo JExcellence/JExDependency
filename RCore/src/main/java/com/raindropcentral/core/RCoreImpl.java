@@ -60,7 +60,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * Logger emitting lifecycle and repository wiring information through the shared
      * {@link CentralLogger} infrastructure.
      */
-    private static final Logger LOGGER = CentralLogger.getLogger(RCoreImpl.class);
+    private static Logger LOGGER;
 
     /**
      * Executor backing asynchronous repository access and other background tasks. Created
@@ -126,7 +126,8 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      */
     @Override
     public void onLoad() {
-        CentralLogger.initialize(this.getPlugin());
+        // Initialize logger for RCore
+        LOGGER = CentralLogger.getLoggerByName(this.getPlugin().getName());
         this.platform = new RPlatform(this.getPlugin());
 
         LOGGER.info("RCore loaded successfully");
@@ -295,7 +296,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
         final var emf = this.platform.getEntityManagerFactory();
 
         if (emf == null) {
-            CentralLogger.getLogger(RCoreImpl.class).warning("EntityManagerFactory not initialized");
+            LOGGER.warning("EntityManagerFactory not initialized");
             return;
         }
 

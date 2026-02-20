@@ -1,186 +1,380 @@
 package com.raindropcentral.rplatform.requirement.impl;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
+import de.jexcellence.economy.adapter.CurrencyAdapter;
+import de.jexcellence.economy.adapter.CurrencyResponse;
+import de.jexcellence.economy.database.entity.Currency;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
-public final class
-CurrencyRequirement extends AbstractRequirement {
+/**
+ * Requirement for currency/economy checks.
+ * Supports JExEconomy (multi-currency) and Vault (single currency) directly.
+ * 
+ * Example:
+ * {"type": "CURRENCY", "currency": "coins", "amount": 1000}
+ * {"type": "CURRENCY", "currency": "gems", "amount": 50, "consumable": true}
+ */
+public final class CurrencyRequirement extends AbstractRequirement {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(CurrencyRequirement.class.getName());
-    private static final long DEFAULT_TIMEOUT_MS = 5000L;
+    private static final Logger LOGGER = Logger.getLogger(CurrencyRequirement.class.getName());
+    
+    // Cache for currency lookups to avoid repeated lookups
+    private static final Map<String, Currency> CURRENCY_CACHE = new ConcurrentHashMap<>();
 
-    @JsonProperty("requiredCurrencies")
-    private final Map<String, Double> currencyIdentifiers;
+    @JsonProperty("currency")
+    private final String currencyId;
 
-    @JsonProperty("currencyPlugin")
-    private final String currencyPlugin;
+    @JsonProperty("amount")
+    private final double amount;
 
-    @JsonProperty("timeoutMillis")
-    private final long timeoutMillis;
+    @JsonProperty("consumable")
+    private final boolean consumable;
 
-    public CurrencyRequirement(@NotNull Map<String, Double> requiredCurrencies) {
-        this(requiredCurrencies, null, DEFAULT_TIMEOUT_MS, true);
+    /**
+     * Simple constructor
+     */
+    public CurrencyRequirement(@NotNull String currencyId, double amount) {
+        this(currencyId, amount, false);
     }
 
-    public CurrencyRequirement(@NotNull Map<String, Double> requiredCurrencies, @Nullable String currencyPlugin, long timeoutMillis) {
-        this(requiredCurrencies, currencyPlugin, timeoutMillis, true);
-    }
-
-    public CurrencyRequirement(@NotNull Map<String, Double> requiredCurrencies, @Nullable String currencyPlugin, long timeoutMillis, boolean consumeOnComplete) {
-        super("CURRENCY", consumeOnComplete);
-        this.currencyIdentifiers = new HashMap<>(requiredCurrencies);
-        this.currencyPlugin = currencyPlugin;
-        this.timeoutMillis = timeoutMillis > 0 ? timeoutMillis : DEFAULT_TIMEOUT_MS;
-    }
-
+    /**
+     * Full constructor
+     */
     @JsonCreator
-    public CurrencyRequirement(@JsonProperty("requiredCurrencies") @NotNull Map<String, Double> currencyIdentifiers,
-                              @JsonProperty("currencyPlugin") @Nullable String currencyPlugin,
-                              @JsonProperty("timeoutMillis") @Nullable Long timeoutMillis,
-                              @JsonProperty("consumeOnComplete") @Nullable Boolean consumeOnComplete) {
-        super("CURRENCY", consumeOnComplete != null ? consumeOnComplete : true);
-        this.currencyIdentifiers = new HashMap<>(currencyIdentifiers);
-        this.currencyPlugin = currencyPlugin;
-        this.timeoutMillis = timeoutMillis != null && timeoutMillis > 0 ? timeoutMillis : DEFAULT_TIMEOUT_MS;
-    }
-
-    public @Nullable String getCurrencyPlugin() { return currencyPlugin; }
-    public long getTimeoutMillis() { return timeoutMillis; }
-
-    public CompletableFuture<Boolean> isMetAsync(@NotNull Player player) {
-        // Use reflection to access EconomyService to avoid compile-time dependency on RDQ module.
-        // This allows RPlatform to remain a standalone library that works with or without RDQ.
-        try {
-            org.bukkit.plugin.RegisteredServiceProvider<?> provider = 
-                    player.getServer().getServicesManager().getRegistration(
-                            Class.forName("com.raindropcentral.rdq.economy.EconomyService")
-                    );
-            
-            if (provider != null) {
-                Object service = provider.getProvider();
-                // Use reflection to call hasAll method
-                return (CompletableFuture<Boolean>) service.getClass()
-                        .getMethod("hasAll", Player.class, Map.class)
-                        .invoke(service, player, currencyIdentifiers);
-            }
-        } catch (ClassNotFoundException e) {
-            // RDQ not loaded, this is expected
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error accessing economy service", e);
-        }
-
-        LOGGER.warning("Currency requirement checking not implemented - economy system unavailable");
-        return CompletableFuture.completedFuture(false);
-    }
-
-    public CompletableFuture<Double> calculateProgressAsync(@NotNull Player player) {
-        // Try to get economy service from Bukkit's ServicesManager
-        try {
-            org.bukkit.plugin.RegisteredServiceProvider<?> provider = 
-                    player.getServer().getServicesManager().getRegistration(
-                            Class.forName("com.raindropcentral.rdq.economy.EconomyService")
-                    );
-            
-            if (provider != null) {
-                Object service = provider.getProvider();
-                
-                // Calculate progress as percentage of currencies owned
-                double totalRequired = currencyIdentifiers.values().stream().mapToDouble(Double::doubleValue).sum();
-                double totalOwned = 0.0;
-                
-                for (Map.Entry<String, Double> entry : currencyIdentifiers.entrySet()) {
-                    CompletableFuture<Double> balanceFuture = (CompletableFuture<Double>) service.getClass()
-                            .getMethod("getBalance", Player.class, String.class)
-                            .invoke(service, player, entry.getKey());
-                    double balance = balanceFuture.join();
-                    totalOwned += Math.min(balance, entry.getValue());
-                }
-                
-                return CompletableFuture.completedFuture(totalRequired > 0 ? totalOwned / totalRequired : 0.0);
-            }
-        } catch (ClassNotFoundException e) {
-            // RDQ not loaded, this is expected
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error calculating currency progress", e);
+    public CurrencyRequirement(
+        @JsonProperty("currency") @NotNull String currencyId,
+        @JsonProperty("amount") double amount,
+        @JsonProperty("consumable") @Nullable Boolean consumable
+    ) {
+        super("CURRENCY");
+        
+        if (currencyId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Currency ID cannot be null or empty");
         }
         
-        LOGGER.warning("Currency progress calculation not implemented - economy system unavailable");
-        return CompletableFuture.completedFuture(0.0);
-    }
-
-    public CompletableFuture<Void> consumeAsync(@NotNull Player player) {
-        // Try to get economy service from Bukkit's ServicesManager
-        try {
-            org.bukkit.plugin.RegisteredServiceProvider<?> provider = 
-                    player.getServer().getServicesManager().getRegistration(
-                            Class.forName("com.raindropcentral.rdq.economy.EconomyService")
-                    );
-            
-            if (provider != null) {
-                Object service = provider.getProvider();
-                // Use reflection to call withdrawAll method
-                CompletableFuture<Boolean> withdrawFuture = (CompletableFuture<Boolean>) service.getClass()
-                        .getMethod("withdrawAll", Player.class, Map.class)
-                        .invoke(service, player, currencyIdentifiers);
-                
-                return withdrawFuture.thenAccept(success -> {
-                    if (!success) {
-                        LOGGER.warning("Failed to withdraw currencies from " + player.getName());
-                    }
-                });
-            }
-        } catch (ClassNotFoundException e) {
-            // RDQ not loaded, this is expected
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Error consuming currencies", e);
+        if (amount < 0) {
+            throw new IllegalArgumentException("Amount must be non-negative");
         }
         
-        LOGGER.warning("Currency consumption not implemented - economy system unavailable");
-        return CompletableFuture.completedFuture(null);
+        this.currencyId = currencyId.toLowerCase();
+        this.amount = amount;
+        this.consumable = consumable != null && consumable;
+    }
+
+    @NotNull
+    public String getCurrencyId() {
+        return currencyId;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public boolean isConsumable() {
+        return consumable;
     }
 
     @Override
     public boolean isMet(@NotNull Player player) {
-        try {
-            return isMetAsync(player).join();
-        } catch (Exception exception) {
-            LOGGER.log(Level.WARNING, "Error checking currency requirements", exception);
-            return false;
-        }
+        return getCurrentBalance(player) >= amount;
     }
 
     @Override
     public double calculateProgress(@NotNull Player player) {
-        try {
-            return calculateProgressAsync(player).join();
-        } catch (Exception exception) {
-            LOGGER.log(Level.WARNING, "Error calculating currency progress", exception);
-            return 0.0;
+        if (amount <= 0) {
+            return 1.0;
         }
+        
+        final double balance = getCurrentBalance(player);
+        return Math.min(1.0, balance / amount);
     }
 
     @Override
     public void consume(@NotNull Player player) {
-        try {
-            consumeAsync(player).join();
-        } catch (Exception exception) {
-            LOGGER.log(Level.WARNING, "Error consuming currencies", exception);
+        if (!consumable) {
+            return;
         }
+        
+        try {
+            // Try JExEconomy first (direct API call)
+            RegisteredServiceProvider<CurrencyAdapter> jexProvider =
+                    Bukkit.getServicesManager().getRegistration(CurrencyAdapter.class);
+
+            if (jexProvider != null) {
+                CurrencyAdapter adapter = jexProvider.getProvider();
+                Currency currency = findJExCurrency(adapter, currencyId);
+
+                if (currency != null) {
+                    CompletableFuture<CurrencyResponse> withdrawFuture = 
+                        adapter.withdraw((OfflinePlayer) player, currency, amount);
+                    CurrencyResponse response = withdrawFuture.join();
+                    
+                    if (!response.isTransactionSuccessful()) {
+                        LOGGER.log(Level.WARNING, "Failed to withdraw " + amount + " " + currencyId + 
+                                   " from " + player.getName());
+                    }
+                    return;
+                }
+            }
+        } catch (NoClassDefFoundError e) {
+            // JExEconomy not available, try Vault
+            LOGGER.log(Level.FINE, "JExEconomy not available, trying Vault");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Error using JExEconomy for " + player.getName(), e);
+        }
+
+        // Fall back to Vault
+        try {
+            if (isVaultCurrency(currencyId)) {
+                Class<?> economyClass = Class.forName("net.milkbowl.vault.economy.Economy");
+                RegisteredServiceProvider<?> vaultProvider =
+                        Bukkit.getServicesManager().getRegistration(economyClass);
+
+                if (vaultProvider != null) {
+                    Object economy = vaultProvider.getProvider();
+                    Method withdrawMethod = economy.getClass().getMethod("withdrawPlayer", Player.class, double.class);
+                    Object response = withdrawMethod.invoke(economy, player, amount);
+                    
+                    Object responseType = response.getClass().getField("type").get(response);
+                    String typeName = responseType.toString();
+                    
+                    if (!"SUCCESS".equals(typeName)) {
+                        String errorMessage = (String) response.getClass().getField("errorMessage").get(response);
+                        LOGGER.log(Level.WARNING, "Failed to withdraw " + amount + " " + currencyId + 
+                                   " from " + player.getName() + ": " + errorMessage);
+                    }
+                    return;
+                }
+            }
+        } catch (ClassNotFoundException e) {
+            // Vault not available
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Error using Vault for " + player.getName(), e);
+        }
+
+        LOGGER.log(Level.WARNING, "Cannot consume - no economy plugin found for currency: " + currencyId);
     }
 
     @Override
-    public @NotNull String getDescriptionKey() {
-        return "requirement.currency";
+    @NotNull
+    public String getDescriptionKey() {
+        return "requirement.currency." + currencyId;
+    }
+    
+    /**
+     * Gets the display name of the currency.
+     * Uses JExEconomy currency identifier or falls back to capitalized identifier.
+     */
+    @JsonIgnore
+    @NotNull
+    public String getCurrencyDisplayName() {
+        try {
+            // Try JExEconomy first (direct API call)
+            RegisteredServiceProvider<CurrencyAdapter> jexProvider =
+                    Bukkit.getServicesManager().getRegistration(CurrencyAdapter.class);
+
+            if (jexProvider != null) {
+                CurrencyAdapter adapter = jexProvider.getProvider();
+                Currency currency = findJExCurrency(adapter, currencyId);
+
+                if (currency != null) {
+                    // Use the currency identifier as display name
+                    String identifier = currency.getIdentifier();
+                    if (identifier != null && !identifier.trim().isEmpty()) {
+                        return identifier.substring(0, 1).toUpperCase() + identifier.substring(1);
+                    }
+                }
+            }
+        } catch (NoClassDefFoundError e) {
+            // JExEconomy not available
+            LOGGER.log(Level.FINE, "JExEconomy not available for display name");
+        } catch (Exception e) {
+            LOGGER.log(Level.FINE, "Error getting currency display name: " + currencyId, e);
+        }
+
+        // Fall back to Vault display name
+        if (isVaultCurrency(currencyId)) {
+            return "Money";
+        }
+
+        // Final fallback: capitalize the identifier
+        return currencyId.substring(0, 1).toUpperCase() + currencyId.substring(1);
+    }
+    
+    /**
+     * Gets detailed description with current/required amounts.
+     * Format: "Have X/Y Currency" or "Need Y Currency"
+     */
+    @JsonIgnore
+    @NotNull
+    public String getDetailedDescription(@NotNull Player player) {
+        String displayName = getCurrencyDisplayName();
+        double current = getCurrentBalance(player);
+        
+        if (current >= amount) {
+            return String.format("Have %.0f/%.0f %s", current, amount, displayName);
+        } else {
+            return String.format("Need %.0f %s", amount, displayName);
+        }
+    }
+    
+    /**
+     * Gets the current balance for this currency
+     */
+    @JsonIgnore
+    public double getCurrentBalance(@NotNull Player player) {
+        try {
+            // Try JExEconomy first (direct API call)
+            RegisteredServiceProvider<CurrencyAdapter> jexProvider =
+                    Bukkit.getServicesManager().getRegistration(CurrencyAdapter.class);
+
+            if (jexProvider != null) {
+                LOGGER.log(Level.FINE, "Using JExEconomy for currency: {0}", currencyId);
+                CurrencyAdapter adapter = jexProvider.getProvider();
+                Currency currency = findJExCurrency(adapter, currencyId);
+
+                if (currency != null) {
+                    CompletableFuture<Double> balanceFuture = adapter.getBalance((OfflinePlayer) player, currency);
+                    return balanceFuture.join();
+                } else {
+                    LOGGER.log(Level.WARNING, "Currency ''{0}'' not found in JExEconomy for player {1}", 
+                        new Object[]{currencyId, player.getName()});
+                }
+            }
+        } catch (NoClassDefFoundError e) {
+            // JExEconomy not available, try Vault
+            LOGGER.log(Level.FINE, "JExEconomy not available, trying Vault");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error getting JExEconomy balance for " + player.getName() + 
+                    " with currency '" + currencyId + "'", e);
+        }
+
+        // Fall back to Vault
+        try {
+            if (isVaultCurrency(currencyId)) {
+                LOGGER.log(Level.FINE, "Using Vault for currency: {0}", currencyId);
+                Class<?> economyClass = Class.forName("net.milkbowl.vault.economy.Economy");
+                RegisteredServiceProvider<?> vaultProvider =
+                        Bukkit.getServicesManager().getRegistration(economyClass);
+
+                if (vaultProvider != null) {
+                    Object economy = vaultProvider.getProvider();
+                    Method getBalanceMethod = economy.getClass().getMethod("getBalance", Player.class);
+                    return (Double) getBalanceMethod.invoke(economy, player);
+                } else {
+                    LOGGER.log(Level.WARNING, "Vault economy provider not found");
+                }
+            } else {
+                LOGGER.log(Level.WARNING, "Currency ''{0}'' is not a valid Vault currency identifier", new Object[]{currencyId});
+            }
+        } catch (ClassNotFoundException e) {
+            // Vault not available
+            LOGGER.log(Level.WARNING, "Vault not available");
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Error getting Vault balance for " + player.getName(), e);
+        }
+
+        LOGGER.log(Level.WARNING, "No economy plugin found for currency ''{0}''", new Object[]{currencyId});
+        return 0.0;
+    }
+    
+    /**
+     * Finds a currency by identifier in JExEconomy (direct API call)
+     * Includes caching and detailed logging for debugging
+     */
+    @JsonIgnore
+    @Nullable
+    private Currency findJExCurrency(CurrencyAdapter adapter, String identifier) {
+        // Check cache first
+        String cacheKey = identifier.toLowerCase();
+        if (CURRENCY_CACHE.containsKey(cacheKey)) {
+            return CURRENCY_CACHE.get(cacheKey);
+        }
+        
+        try {
+            Map<Long, Currency> currencies = adapter.getAllCurrencies();
+            
+            // Case-insensitive search
+            for (Currency currency : currencies.values()) {
+                String currencyIdentifier = currency.getIdentifier();
+                
+                if (currencyIdentifier.equalsIgnoreCase(identifier)) {
+                    CURRENCY_CACHE.put(cacheKey, currency);
+                    LOGGER.log(Level.FINE, "Found JExEconomy currency: {0}", identifier);
+                    return currency;
+                }
+            }
+            
+            // Currency not found - log available currencies for debugging
+            List<String> availableCurrencies = currencies.values().stream()
+                .map(Currency::getIdentifier)
+                .collect(Collectors.toList());
+            
+            LOGGER.log(Level.WARNING, 
+                "Currency ''{0}'' not found in JExEconomy. Available currencies: {1}", 
+                new Object[]{identifier, availableCurrencies});
+            
+            return null;
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Error finding currency: " + identifier, e);
+            return null;
+        }
+    }
+    
+    /**
+     * Checks if this is a Vault currency identifier
+     */
+    @JsonIgnore
+    private boolean isVaultCurrency(String identifier) {
+        return "vault".equalsIgnoreCase(identifier) || 
+               "money".equalsIgnoreCase(identifier) ||
+               "dollars".equalsIgnoreCase(identifier);
+    }
+    
+    /**
+     * Validates this requirement
+     */
+    @JsonIgnore
+    public void validate() {
+        try {
+            RegisteredServiceProvider<CurrencyAdapter> jexProvider = 
+                Bukkit.getServicesManager().getRegistration(CurrencyAdapter.class);
+            if (jexProvider != null) {
+                return;
+            }
+        } catch (NoClassDefFoundError e) {
+            // JExEconomy not available
+            LOGGER.log(Level.FINE, "JExEconomy not available during validation");
+        }
+        
+        try {
+            Class<?> economyClass = Class.forName("net.milkbowl.vault.economy.Economy");
+            boolean hasVault = Bukkit.getServicesManager().getRegistration(economyClass) != null;
+            if (hasVault) {
+                return;
+            }
+        } catch (ClassNotFoundException e) {
+            // Vault not available
+            LOGGER.log(Level.FINE, "Vault not available during validation");
+        }
+        
+        throw new IllegalStateException("No economy plugin found (JExEconomy or Vault required)");
     }
 }

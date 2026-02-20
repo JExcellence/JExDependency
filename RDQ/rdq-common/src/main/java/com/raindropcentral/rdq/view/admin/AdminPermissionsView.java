@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public class AdminPermissionsView extends BaseView {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	/**
 	 * State for storing the main plugin instance.

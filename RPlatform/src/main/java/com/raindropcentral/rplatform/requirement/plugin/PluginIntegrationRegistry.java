@@ -1,6 +1,5 @@
 package com.raindropcentral.rplatform.requirement.plugin;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class PluginIntegrationRegistry {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(PluginIntegrationRegistry.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(PluginIntegrationRegistry.class.getName());
 	private static PluginIntegrationRegistry instance;
 	
 	private final Map<String, PluginIntegrationBridge> bridgesByIntegrationId = new ConcurrentHashMap<>();

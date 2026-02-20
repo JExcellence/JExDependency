@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class RankPathService {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankPathService.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(RankPathService.class.getName());
 	private final RDQ rdq;
 	private final RankProgressionManager progressionManager;
 	

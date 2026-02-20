@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class RDQPlayerJoinListener implements Listener {
     
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private final RDQ rdq;
     
     public RDQPlayerJoinListener(@NotNull RDQ rdq) {

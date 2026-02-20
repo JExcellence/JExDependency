@@ -34,10 +34,7 @@
  *     <li>{@link com.raindropcentral.rplatform.scheduler scheduler} – Scheduler adapters and
  *     implementations.</li>
  *     <li>{@link com.raindropcentral.rplatform.serializer serializer} – Serialization utilities.</li>
- *     <li>{@link com.raindropcentral.rplatform.service service} – Service registry and lookup.
- *     </li>
- *     <li>{@link com.raindropcentral.rplatform.statistic statistic} – Statistics and leaderboard tools.
- *     </li>
+ *     <li>{@link com.raindropcentral.rplatform.service service} – Service registry and lookup.</li>
  *     <li>{@link com.raindropcentral.rplatform.type type} – Platform-specific enums and identifiers.</li>
  *     <li>{@link com.raindropcentral.rplatform.utility utility} – Shared helper classes.</li>
  *     <li>{@link com.raindropcentral.rplatform.version version} – Version metadata helpers.</li>

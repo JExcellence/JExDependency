@@ -28,6 +28,9 @@ include(":JExDependency")
 include(":JExTranslate")
 include(":RPlatform")
 
+// Simple plugin modules
+include(":JExGlow")
+
 // JExEconomy with submodules
 include(":JExEconomy")
 include(":JExEconomy:jexeconomy-common")

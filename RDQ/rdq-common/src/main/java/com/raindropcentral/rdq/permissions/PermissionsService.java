@@ -2,7 +2,6 @@ package com.raindropcentral.rdq.permissions;
 
 import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.config.permissions.PermissionsSection;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.evaluable.ConfigKeeper;
 import de.jexcellence.evaluable.ConfigManager;
 import de.jexcellence.jextranslate.i18n.I18n;
@@ -39,7 +38,7 @@ import java.util.logging.Logger;
  */
 public class PermissionsService {
 	
-	private final static Logger LOGGER      = CentralLogger.getLogger(PermissionsService.class.getName());
+	private final static Logger LOGGER = Logger.getLogger(PermissionsService.class.getName());
 	private final static String FOLDER_PATH = "permissions";
 	private final static String FILE_NAME   = "permissions.yml";
 	

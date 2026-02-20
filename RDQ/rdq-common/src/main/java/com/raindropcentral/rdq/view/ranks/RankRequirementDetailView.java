@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  */
 public class RankRequirementDetailView extends APaginatedView<RankRequirementDetailView.RequirementDetailItem> {
 
-	private static final Logger LOGGER = CentralLogger.getLogger(RankRequirementDetailView.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
 	private final State<RDQ>                     rdq               = initialState("plugin");
 	private final State<RDQPlayer>               currentPlayer     = initialState("player");

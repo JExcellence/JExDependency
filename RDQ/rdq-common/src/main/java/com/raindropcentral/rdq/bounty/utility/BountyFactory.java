@@ -42,7 +42,7 @@ import java.util.logging.Logger;
  */
 public class BountyFactory {
 
-    private final static Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private final static Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private final static String FOLDER_PATH = "bounty";
     private final static String FILE_NAME = "bounty.yml";
 

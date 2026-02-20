@@ -3,7 +3,6 @@ package com.raindropcentral.rplatform.requirement.impl;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.requirement.plugin.PluginIntegrationBridge;
 import com.raindropcentral.rplatform.requirement.plugin.PluginIntegrationRegistry;
@@ -28,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class PluginRequirement extends AbstractRequirement {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(PluginRequirement.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(PluginRequirement.class.getName());
 	
 	@JsonProperty("plugin")
 	private final String pluginIntegrationId;

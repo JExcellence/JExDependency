@@ -1,6 +1,5 @@
 package com.raindropcentral.rplatform.api;
 
-import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +27,7 @@ public class PlatformAPIFactory {
      * <p><strong>Lifecycle:</strong> Shared across the JVM; the JUL bridge ensures the handlers and
      * formatters managed by {@link CentralLogger} receive all diagnostics.</p>
      */
-    private static final Logger LOGGER = CentralLogger.getLogger(RPlatform.class);
+    private static final Logger LOGGER = Logger.getLogger(PlatformAPIFactory.class.getName());
 
     /**
      * Prevents instantiation because the factory exposes only static helpers.

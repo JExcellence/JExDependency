@@ -4,7 +4,6 @@ import com.raindropcentral.rdq.bounty.IBountyService;
 import com.raindropcentral.rdq.bounty.PremiumBountyService;
 import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.rank.PremiumRankSystemService;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +26,7 @@ import java.util.logging.Logger;
  */
 public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = Logger.getLogger(RDQPremiumImpl.class.getName());
     private static final String EDITION = "Premium";
 
     private @Nullable RDQ rdq;
@@ -49,6 +48,8 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
     @Override
     public void onLoad() {
         try {
+            // Initialize RDQ
+            
             rdq = new RDQ(getPlugin(), EDITION) {
                 @Override
                 protected @NotNull String getStartupMessage() {

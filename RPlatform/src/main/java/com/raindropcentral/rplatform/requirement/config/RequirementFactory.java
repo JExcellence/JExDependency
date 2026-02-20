@@ -1,8 +1,6 @@
 package com.raindropcentral.rplatform.requirement.config;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
-import com.raindropcentral.rplatform.requirement.Requirement;
 import com.raindropcentral.rplatform.requirement.impl.*;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +39,7 @@ import java.util.logging.Logger;
  */
 public final class RequirementFactory {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(RequirementFactory.class);
+    private static final Logger LOGGER = Logger.getLogger(RequirementFactory.class.getName());
     private static final RequirementFactory INSTANCE = new RequirementFactory();
 
     private final Map<String, Function<Map<String, Object>, AbstractRequirement>> converters = new ConcurrentHashMap<>();
@@ -341,17 +339,19 @@ public final class RequirementFactory {
     }
 
     private CurrencyRequirement createCurrencyRequirement(Map<String, Object> config) {
-        @SuppressWarnings("unchecked")
-        Map<String, Double> currencies = (Map<String, Double>) config.get("requiredCurrencies");
-        if (currencies == null || currencies.isEmpty()) {
-            throw new IllegalArgumentException("No currencies specified for CURRENCY requirement");
+        String currency = getString(config, "currency", null);
+        double amount = getDouble(config, "amount");
+        Boolean consumable = getBoolean(config, "consumable", false);
+        
+        if (currency == null || currency.isEmpty()) {
+            throw new IllegalArgumentException("Currency requirement must specify 'currency'");
+        }
+        
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Currency requirement must specify a positive 'amount'");
         }
 
-        return RequirementBuilder.currency()
-                .currencies(currencies)
-                .plugin(getString(config, "currencyPlugin", null))
-                .timeout(getLong(config, "timeoutMillis", 5000L))
-                .build();
+        return new CurrencyRequirement(currency, amount, consumable);
     }
 
     private ExperienceLevelRequirement createExperienceRequirement(Map<String, Object> config) {
@@ -410,7 +410,7 @@ public final class RequirementFactory {
             builder.coordinates(coords.get("x"), coords.get("y"), coords.get("z"));
         }
 
-        double distance = getDouble(config, "requiredDistance", 0);
+        double distance = getDouble(config, "requiredDistance");
         if (distance > 0) builder.distance(distance);
 
         builder.description(getString(config, "description", null));
@@ -598,14 +598,14 @@ public final class RequirementFactory {
         return defaultValue;
     }
 
-    private double getDouble(Map<String, Object> config, String key, double defaultValue) {
+    private double getDouble(Map<String, Object> config, String key) {
         Object value = config.get(key);
         if (value instanceof Number) return ((Number) value).doubleValue();
         if (value instanceof String) {
             try { return Double.parseDouble((String) value); }
-            catch (NumberFormatException e) { return defaultValue; }
+            catch (NumberFormatException e) { return 0; }
         }
-        return defaultValue;
+        return 0;
     }
 
     private boolean getBoolean(Map<String, Object> config, String key, boolean defaultValue) {

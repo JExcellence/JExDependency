@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class BackpressureController {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(BackpressureController.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final int warningThreshold;
     private final int criticalThreshold;

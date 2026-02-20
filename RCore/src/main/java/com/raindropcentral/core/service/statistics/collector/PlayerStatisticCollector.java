@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class PlayerStatisticCollector {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(PlayerStatisticCollector.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final String SOURCE_PLUGIN = "RCore";
 
     private final StatisticsDeliveryConfig config;

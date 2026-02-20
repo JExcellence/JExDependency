@@ -46,7 +46,7 @@
  */
 public class RankSystemFactory {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
     private static final String FILE_PATH = "ranks";
     private static final String FILE_RANK_PATH = "paths";
@@ -824,7 +824,7 @@ public class RankSystemFactory {
             try {
                 LOGGER.info("Parsing reward '" + key + "' of type: " + section.getType());
 
-                final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>) (RewardFactory<?>) RewardFactory.getInstance();
+                final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>)   (RewardFactory<?>) RewardFactory.getInstance();
                 AbstractReward abstractReward;
                 
                 try {

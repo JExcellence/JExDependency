@@ -6,7 +6,7 @@ import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.integration.geyser.GeyserService;
 import com.raindropcentral.rplatform.localization.TranslationManager;
 import com.raindropcentral.rplatform.logging.CentralLogger;
-import com.raindropcentral.rplatform.logging.PlatformLogger;
+import com.raindropcentral.rplatform.logging.PluginLogger;
 import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
 import com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider;
@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Primary orchestrator for the shared Raindrop platform runtime that binds plugin lifecycle
@@ -38,6 +39,12 @@ import java.util.logging.Level;
  * @version 1.0.1
  */
 public class RPlatform {
+
+    /**
+     * Static instance holder for accessing the platform from static contexts.
+     * This is set during construction and cleared during shutdown.
+     */
+    private static RPlatform instance;
 
     /**
      * Hosting {@link JavaPlugin} providing lifecycle hooks, configuration paths, and scheduler
@@ -72,7 +79,7 @@ public class RPlatform {
      * Platform-aware logger emitting lifecycle and diagnostic messages for both initialization and
      * shutdown sequences.
      */
-    private final PlatformLogger logger;
+    private final PluginLogger logger;
 
     /**
      * Handles command updates for JEx command framework integrations once initialization completes.
@@ -127,9 +134,12 @@ public class RPlatform {
         this.platformAPI = PlatformAPIFactory.create(plugin);
         this.scheduler = ISchedulerAdapter.create(plugin, platformType);
         this.serviceRegistry = new ServiceRegistry();
-        this.logger = PlatformLogger.create(plugin);
+        this.logger = CentralLogger.getLogger(plugin);
         this.premiumVersion = false;
         this.initialized = false;
+        
+        // Set static instance for global access
+        instance = this;
     }
 
     /**
@@ -249,6 +259,18 @@ public class RPlatform {
 
         platformAPI.close();
         logger.close();
+        
+        // Clear static instance
+        instance = null;
+    }
+
+    /**
+     * Gets the global RPlatform instance.
+     * 
+     * @return the platform instance, or null if not initialized
+     */
+    public static @Nullable RPlatform getInstance() {
+        return instance;
     }
 
     /**
@@ -301,7 +323,7 @@ public class RPlatform {
      *
      * @return logger backing initialization and shutdown logging
      */
-    public @NotNull PlatformLogger getLogger() {
+    public @NotNull PluginLogger getLogger() {
         return logger;
     }
 
@@ -383,10 +405,7 @@ public class RPlatform {
             
             this.entityManagerFactory = new JEHibernate(hiberateFile.getPath()).getEntityManagerFactory();
 
-            CentralLogger.getLogger(RPlatform.class.getName()).log(
-                    Level.INFO,
-                    "Database resources initialized successfully."
-            );
+            logger.info("Database resources initialized successfully.");
         }
     }
 }

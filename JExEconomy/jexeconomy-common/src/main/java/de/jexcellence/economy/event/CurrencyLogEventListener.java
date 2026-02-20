@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class CurrencyLogEventListener implements Listener {
     
-    private static final Logger LISTENER_LOGGER = CentralLogger.getLogger(CurrencyLogEventListener.class.getName());
+    private static final Logger LISTENER_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
     
     private final CurrencyLogService logService;
     

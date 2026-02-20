@@ -8,7 +8,6 @@ import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.repository.PerkRepository;
 import com.raindropcentral.rdq.database.repository.RDQPlayerRepository;
 import com.raindropcentral.rdq.perk.PerkManagementService;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.reward.AbstractReward;
 import de.jexcellence.hibernate.repository.RepositoryManager;
 import net.kyori.adventure.text.Component;
@@ -18,6 +17,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +35,7 @@ import java.util.logging.Logger;
 @JsonTypeName("PERK")
 public final class PerkReward extends AbstractReward {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(PerkReward.class);
+    private static final Logger LOGGER = Logger.getLogger(PerkReward.class.getName());
     private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     
     // Service locator for perk management service

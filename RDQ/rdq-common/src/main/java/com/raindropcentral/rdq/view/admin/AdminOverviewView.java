@@ -18,8 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AdminOverviewView extends BaseView {
+	
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	/**
 	 * State for storing the main plugin instance.
@@ -82,7 +85,7 @@ public class AdminOverviewView extends BaseView {
 			       } catch (
 					   final Exception exception
 			       ) {
-				       CentralLogger.getLogger(AdminOverviewView.class).log(
+				       LOGGER.log(
 					       Level.SEVERE,
 					       "Failed to open permissions view for player: " + player.getName(),
 					       exception
@@ -156,7 +159,7 @@ public class AdminOverviewView extends BaseView {
 				       }
 				       
 			       } catch (ExecutionException | InterruptedException exception) {
-				       CentralLogger.getLogger(AdminOverviewView.class).log(
+				       LOGGER.log(
 					       Level.SEVERE,
 					       "Failed to create/update groups for player: " + player.getName(),
 					       exception

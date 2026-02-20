@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 public class StatisticSanitizer {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(StatisticSanitizer.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     /** Pattern for valid statistic keys: alphanumeric, underscores, dots, hyphens */
     private static final Pattern VALID_KEY_PATTERN = Pattern.compile("^[a-zA-Z0-9_.\\-:]+$");

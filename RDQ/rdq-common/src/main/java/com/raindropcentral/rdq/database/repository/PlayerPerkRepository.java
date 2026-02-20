@@ -5,7 +5,9 @@ import de.jexcellence.hibernate.repository.CachedRepository;
 import jakarta.persistence.EntityManagerFactory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -36,5 +38,28 @@ public class PlayerPerkRepository extends CachedRepository<PlayerPerk, Long, Lon
 			entityClass,
 			keyExtractor
 		);
+	}
+	
+	/**
+	 * Fetches a fresh PlayerPerk entity, applies modifications, and updates it.
+	 * This method prevents OptimisticLockException by always working with the latest entity version.
+	 *
+	 * @param id the entity ID
+	 * @param modifier the function to apply modifications to the fresh entity
+	 * @return a CompletableFuture containing the updated entity, or null if not found
+	 */
+	public CompletableFuture<PlayerPerk> fetchAndUpdate(
+		@NotNull final Long id,
+		@NotNull final Consumer<PlayerPerk> modifier
+	) {
+		return findByIdAsync(id).thenCompose(optionalPerk -> {
+			if (optionalPerk.isEmpty()) {
+				return CompletableFuture.completedFuture(null);
+			}
+			
+			PlayerPerk freshPerk = optionalPerk.get();
+			modifier.accept(freshPerk);
+			return updateAsync(freshPerk);
+		});
 	}
 }

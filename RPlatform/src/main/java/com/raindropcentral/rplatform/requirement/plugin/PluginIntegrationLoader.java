@@ -1,6 +1,5 @@
 package com.raindropcentral.rplatform.requirement.plugin;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.plugin.bridges.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -21,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class PluginIntegrationLoader {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(PluginIntegrationLoader.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(PluginIntegrationLoader.class.getName());
 	private static final String CONFIG_FILE = "plugin-integrations.yml";
 	
 	private final Plugin plugin;

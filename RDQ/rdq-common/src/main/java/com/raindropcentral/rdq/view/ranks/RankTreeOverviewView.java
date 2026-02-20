@@ -53,7 +53,7 @@ import java.util.logging.Logger;
  */
 public class RankTreeOverviewView extends APaginatedView<RRankTree> {
 
-	private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
 	/**
 	 * State holding the reference to the main RDQImpl plugin instance.

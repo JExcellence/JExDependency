@@ -29,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class SpecialPerkHandler implements Listener {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(SpecialPerkHandler.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
     // Track players with special abilities
     private final Set<UUID> flyPlayers = ConcurrentHashMap.newKeySet();
