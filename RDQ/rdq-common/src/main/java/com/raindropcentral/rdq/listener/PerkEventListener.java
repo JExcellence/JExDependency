@@ -11,9 +11,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -361,6 +363,47 @@ public class PerkEventListener implements Listener {
                 // Don't log at SEVERE level to avoid spam
                 LOGGER.log(Level.FINE, "Error handling player move for perk system: " + 
                         player.getName(), e);
+            }
+        });
+    }
+    
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerItemConsume(@NotNull final PlayerItemConsumeEvent event) {
+        Player player = event.getPlayer();
+        
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
+            return;
+        }
+        
+        //Check if consumed item is a potion
+        if (!(event.getItem().getItemMeta() instanceof PotionMeta)) {
+            return;
+        }
+        
+        LOGGER.log(Level.FINE, "Player {0} consumed item, processing item perks", player.getName());
+        
+        // Execute asynchronously
+        rdq.getExecutor().submit(() -> {
+            try {
+                Optional<RDQPlayer> rdqPlayerOpt = findRDQPlayer(player);
+                if (rdqPlayerOpt.isEmpty()) {
+                    return;
+                }
+                
+                RDQPlayer rdqPlayer = rdqPlayerOpt.get();
+                
+                // Process player consumption
+                perkActivationService.handleEvent(player, rdqPlayer, "PLAYER_ITEM_CONSUME_EVENT", event)
+                                     .exceptionally(throwable -> {
+                                         LOGGER.log(Level.SEVERE, "Failed to process consume event for player " +
+                                                                  player.getName(), throwable);
+                                         return null;
+                                     });
+                
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Error handling consume event by player for perk system: " +
+                                         player.getName(), e);
             }
         });
     }
