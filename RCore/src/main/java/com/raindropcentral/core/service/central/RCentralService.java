@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class RCentralService {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(RCentralService.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final Plugin plugin;
     private final RPlatform platform;

@@ -32,6 +32,10 @@ dependencies {
     compileOnly(libs.floodgate.api)
     compileOnly(libs.folialib)
     compileOnly(libs.bundles.inventory)
+    compileOnly(libs.vault.api) { isTransitive = false }
+    
+    // JExEconomy for currency support (runtime via services)
+    compileOnly(project(":JExEconomy:jexeconomy-common"))
     
     compileOnly("org.jetbrains:annotations:24.0.1")
 }

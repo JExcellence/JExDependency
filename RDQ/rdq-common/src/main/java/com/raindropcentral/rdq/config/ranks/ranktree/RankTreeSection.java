@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents a configuration section for a rank tree in the rank progression system.
@@ -35,6 +36,8 @@ import java.util.logging.Level;
  */
 @CSAlways
 public class RankTreeSection extends AConfigSection {
+	
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	/**
 	 * The localization key for the display name of the rank tree.
@@ -190,7 +193,7 @@ public class RankTreeSection extends AConfigSection {
 					} catch (
 						final Exception exception
 					) {
-						CentralLogger.getLogger(RankTreeSection.class.getName()).log(
+						LOGGER.log(
 							Level.WARNING, "Failed to process rank " + rankId + " in tree " + this.treeId + ": ", exception
 						);
 					}

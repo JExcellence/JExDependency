@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class StatisticsDeliveryEngine {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(StatisticsDeliveryEngine.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final RateLimiter rateLimiter;
     private final RetryHandler retryHandler;

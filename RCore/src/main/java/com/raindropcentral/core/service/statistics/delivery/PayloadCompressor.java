@@ -20,7 +20,7 @@ import java.util.zip.GZIPOutputStream;
  */
 public class PayloadCompressor {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(PayloadCompressor.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     /** Default compression threshold in bytes (5KB) */
     private static final int DEFAULT_COMPRESSION_THRESHOLD = 5 * 1024;

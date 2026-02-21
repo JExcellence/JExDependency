@@ -1,6 +1,5 @@
 package com.raindropcentral.rplatform.requirement.plugin.bridges;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.plugin.PluginIntegrationBridge;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -30,7 +29,7 @@ import java.util.logging.Logger;
  */
 public class ConfigurableBridge implements PluginIntegrationBridge {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(ConfigurableBridge.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ConfigurableBridge.class.getName());
 	
 	private final String integrationId;
 	private final String pluginName;

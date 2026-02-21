@@ -1,7 +1,6 @@
 package com.raindropcentral.rplatform.api.luckperms;
 
 import com.raindropcentral.rplatform.RPlatform;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.group.Group;
@@ -9,12 +8,7 @@ import net.luckperms.api.model.user.User;
 import net.luckperms.api.model.user.UserManager;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
-import net.luckperms.api.node.types.DisplayNameNode;
-import net.luckperms.api.node.types.InheritanceNode;
-import net.luckperms.api.node.types.PermissionNode;
-import net.luckperms.api.node.types.PrefixNode;
-import net.luckperms.api.node.types.SuffixNode;
-import net.luckperms.api.node.types.WeightNode;
+import net.luckperms.api.node.types.*;
 import net.luckperms.api.query.QueryOptions;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -22,13 +16,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
@@ -38,7 +26,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public class LuckPermsService {
 	
-	private static final Logger    LOGGER = CentralLogger.getLogger(LuckPermsService.class.getName());
+	private static final Logger    LOGGER = Logger.getLogger(LuckPermsService.class.getName());
 	private final        RPlatform platform;
 	
 	public LuckPermsService(final @NotNull RPlatform platform) {

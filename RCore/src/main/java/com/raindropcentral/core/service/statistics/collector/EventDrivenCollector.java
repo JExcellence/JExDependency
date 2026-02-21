@@ -32,7 +32,7 @@ import java.util.logging.Logger;
  */
 public class EventDrivenCollector implements Listener {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(EventDrivenCollector.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final Plugin plugin;
     private final StatisticsQueueManager queueManager;

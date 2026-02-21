@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class StatisticsAggregator {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(StatisticsAggregator.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     // Cached statistics for aggregation
     private final Map<UUID, Map<String, Object>> playerStatistics;

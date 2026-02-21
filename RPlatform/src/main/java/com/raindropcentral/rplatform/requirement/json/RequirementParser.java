@@ -5,13 +5,14 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.raindropcentral.rplatform.json.ItemStackJSONDeserializer;
 import com.raindropcentral.rplatform.json.ItemStackJSONSerializer;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.requirement.RequirementRegistry;
+import com.raindropcentral.rplatform.requirement.impl.CurrencyRequirement;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import java.util.logging.Logger;
 
 /**
@@ -51,7 +52,7 @@ public final class RequirementParser {
      * @return configured ObjectMapper instance
      */
     private static @NotNull ObjectMapper createObjectMapper() {
-        Logger logger = CentralLogger.getLogger("RDQ");
+        Logger logger = Logger.getLogger(RequirementParser.class.getName());
         logger.info("Creating new ObjectMapper for requirement serialization...");
         
         // Get the registry (should already be initialized by RPlatform)
@@ -72,6 +73,10 @@ public final class RequirementParser {
         final SimpleModule bukkitModule = new SimpleModule("BukkitModule");
         bukkitModule.addSerializer(ItemStack.class, new ItemStackJSONSerializer());
         bukkitModule.addDeserializer(ItemStack.class, new ItemStackJSONDeserializer());
+        
+        // Add custom serializer for CurrencyRequirement to avoid ClassNotFoundException
+        // when JExEconomy classes aren't available at runtime
+        bukkitModule.addSerializer(CurrencyRequirement.class, new CurrencyRequirementSerializer());
 
         ObjectMapper mapper = JsonMapper.builder()
             .addModule(bukkitModule)

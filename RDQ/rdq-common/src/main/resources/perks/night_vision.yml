@@ -15,11 +15,9 @@ icon:
 requirements:
   currency_requirement:
     type: "CURRENCY"
-    currencyRequirement:
-      currencyType: "coins"
-      requiredCurrencies:
-        coins: 150.0
-      consumeOnComplete: true
+    currency: "coins"
+    amount: 150.0
+    consumable: true
     icon:
       type: "GOLD_INGOT"
 

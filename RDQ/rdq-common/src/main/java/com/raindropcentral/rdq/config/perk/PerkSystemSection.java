@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class PerkSystemSection extends AConfigSection {
 	
 	@CSIgnore
-	private static final Logger LOGGER = CentralLogger.getLogger(PerkSystemSection.class);
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	// ==================== System Settings ====================
 	

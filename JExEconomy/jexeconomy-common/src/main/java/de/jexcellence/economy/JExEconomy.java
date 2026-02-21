@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 
 public abstract class JExEconomy {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(JExEconomy.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 
     private final JavaPlugin plugin;
     private final String edition;
@@ -61,7 +61,6 @@ public abstract class JExEconomy {
         this.plugin = plugin;
         this.edition = edition;
         this.platform = new RPlatform(plugin);
-        CentralLogger.initialize(plugin);
     }
 
     public void onLoad() {

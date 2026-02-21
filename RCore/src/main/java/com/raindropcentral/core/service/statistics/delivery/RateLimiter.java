@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class RateLimiter {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(RateLimiter.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final double ERROR_RATE_THRESHOLD = 0.10; // 10%
 
     private final int maxRequestsPerMinute;

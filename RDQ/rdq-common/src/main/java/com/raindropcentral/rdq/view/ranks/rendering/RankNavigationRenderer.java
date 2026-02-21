@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 public class RankNavigationRenderer {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankNavigationRenderer.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	// Slot positions for navigation elements
 	private static final int NAVIGATION_LEFT_SLOT = 18;

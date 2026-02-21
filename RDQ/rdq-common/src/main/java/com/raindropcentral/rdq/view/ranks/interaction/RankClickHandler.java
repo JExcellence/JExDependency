@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class RankClickHandler {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankClickHandler.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final RankProgressionManager progressionManager;
 	

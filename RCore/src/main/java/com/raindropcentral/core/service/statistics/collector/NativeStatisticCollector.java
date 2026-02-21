@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class NativeStatisticCollector {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(NativeStatisticCollector.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final String SOURCE_PLUGIN = "minecraft";
 
     private final StatisticsDeliveryConfig config;

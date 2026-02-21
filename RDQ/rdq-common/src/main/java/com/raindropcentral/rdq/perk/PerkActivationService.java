@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  */
 public class PerkActivationService {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(PerkActivationService.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private static final Gson GSON = new Gson();
     
     // Cooldown cleanup interval in ticks (60 seconds)
@@ -126,6 +126,7 @@ public class PerkActivationService {
         }
         
         Perk perk = playerPerk.getPerk();
+        Long perkId = playerPerk.getId();
         
         try {
             // Apply perk effects based on type
@@ -136,19 +137,30 @@ public class PerkActivationService {
                 return CompletableFuture.completedFuture(false);
             }
             
-            // Update PlayerPerk state
-            playerPerk.recordActivation();
-            
-            // Save to database
-            return CompletableFuture.supplyAsync(() -> {
-                playerPerkRepository.update(playerPerk);
-                LOGGER.log(Level.INFO, "Activated perk " + perk.getIdentifier() + " for player " + player.getName());
-                
-                // Update cache
-                invalidateCache(player.getUniqueId());
-                
-                return true;
-            });
+            // Fetch fresh entity and update to avoid OptimisticLockException
+            return playerPerkRepository.fetchAndUpdate(perkId, freshPerk -> {
+                freshPerk.recordActivation();
+            })
+                .thenApply(updatedPerk -> {
+                    if (updatedPerk != null) {
+                        LOGGER.log(Level.INFO, "Activated perk {0} for player {1}",
+                                new Object[]{perk.getIdentifier(), player.getName()});
+                        
+                        // Update cache
+                        invalidateCache(player.getUniqueId());
+                        
+                        return true;
+                    } else {
+                        LOGGER.log(Level.WARNING, "Failed to update perk {0} for player {1}",
+                                new Object[]{perk.getIdentifier(), player.getName()});
+                        return false;
+                    }
+                })
+                .exceptionally(throwable -> {
+                    LOGGER.log(Level.SEVERE, "Error updating perk " + perk.getIdentifier() + 
+                            " for player " + player.getName(), throwable);
+                    return false;
+                });
                     
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error activating perk " + perk.getIdentifier() + " for player " + player.getName(), e);
@@ -176,6 +188,7 @@ public class PerkActivationService {
         }
         
         Perk perk = playerPerk.getPerk();
+        Long perkId = playerPerk.getId();
         
         try {
             // Remove perk effects based on type
@@ -187,20 +200,30 @@ public class PerkActivationService {
                 // Continue anyway to update state
             }
             
-            // Update PlayerPerk state
-            playerPerk.recordDeactivation();
-            
-            // Save to database
-            return CompletableFuture.supplyAsync(() -> {
-                playerPerkRepository.update(playerPerk);
-                LOGGER.log(Level.INFO, "Deactivated perk {0} for player {1}",
-                        new Object[]{perk.getIdentifier(), player.getName()});
-                
-                // Update cache
-                invalidateCache(player.getUniqueId());
-                
-                return true;
-            });
+            // Fetch fresh entity and update to avoid OptimisticLockException
+            return playerPerkRepository.fetchAndUpdate(perkId, freshPerk -> {
+                freshPerk.recordDeactivation();
+            })
+                .thenApply(updatedPerk -> {
+                    if (updatedPerk != null) {
+                        LOGGER.log(Level.INFO, "Deactivated perk {0} for player {1}",
+                                new Object[]{perk.getIdentifier(), player.getName()});
+                        
+                        // Update cache
+                        invalidateCache(player.getUniqueId());
+                        
+                        return true;
+                    } else {
+                        LOGGER.log(Level.WARNING, "Failed to update perk {0} for player {1}",
+                                new Object[]{perk.getIdentifier(), player.getName()});
+                        return false;
+                    }
+                })
+                .exceptionally(throwable -> {
+                    LOGGER.log(Level.SEVERE, "Error updating perk " + perk.getIdentifier() + 
+                            " for player " + player.getName(), throwable);
+                    return false;
+                });
                     
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error deactivating perk " + perk.getIdentifier() + 

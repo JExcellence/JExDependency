@@ -65,7 +65,8 @@ import java.util.stream.Collectors;
  */
 @Command
 @SuppressWarnings("unused")
-public class CDeposit extends ServerCommand {
+public class
+CDeposit extends ServerCommand {
 	
 	/**
 	 * Logger instance for recording command execution details and debugging information.
@@ -74,7 +75,7 @@ public class CDeposit extends ServerCommand {
 	 * and error conditions for administrative monitoring and troubleshooting.
 	 * </p>
 	 */
-	private static final Logger COMMAND_LOGGER = CentralLogger.getLogger(CDeposit.class.getName());
+	private static final Logger COMMAND_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 	
 	/**
 	 * Reference to the main JExEconomy plugin instance.

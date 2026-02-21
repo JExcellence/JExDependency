@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 public class PlayerPreLogin implements Listener {
 
-    private final static Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private final static Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private final RDQ rdq;
 
     public  PlayerPreLogin(@NotNull RDQ rdq) {

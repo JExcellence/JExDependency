@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Modal confirmation dialog implementing a two-column accept/decline pattern with localized glass
@@ -341,7 +342,7 @@ public class ConfirmationView extends BaseView {
             } catch (
                     final Exception exception
             ) {
-                CentralLogger.getLogger(ConfirmationView.class.getName()).log(
+                Logger.getLogger(ConfirmationView.class.getName()).log(
                         Level.WARNING,
                         "Failed to open confirmation dialog",
                         exception

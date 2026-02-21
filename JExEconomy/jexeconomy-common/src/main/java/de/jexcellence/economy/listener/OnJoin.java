@@ -51,7 +51,7 @@ public class OnJoin implements Listener {
 	/**
 	 * Logger instance for tracking player join operations and debugging.
 	 */
-	private static final Logger LOGGER = CentralLogger.getLogger(OnJoin.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 	
 	/**
 	 * The main JExEconomy plugin instance for accessing repositories and services.

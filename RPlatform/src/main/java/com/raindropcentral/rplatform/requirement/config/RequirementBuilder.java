@@ -85,41 +85,33 @@ public final class RequirementBuilder {
     // ==================== Currency Builder ====================
 
     public static final class CurrencyBuilder {
-        private final Map<String, Double> currencies = new HashMap<>();
-        private String plugin;
-        private long timeoutMillis = 5000L;
-        private boolean consumeOnComplete = true;
+        private String currency;
+        private double amount;
+        private boolean consumable = false;
 
-        public CurrencyBuilder currency(@NotNull String id, double amount) {
-            this.currencies.put(id, amount);
+        public CurrencyBuilder currency(@NotNull String currency) {
+            this.currency = currency;
             return this;
         }
 
-        public CurrencyBuilder currencies(@NotNull Map<String, Double> currencies) {
-            this.currencies.putAll(currencies);
+        public CurrencyBuilder amount(double amount) {
+            this.amount = amount;
             return this;
         }
 
-        public CurrencyBuilder plugin(String plugin) {
-            this.plugin = plugin;
-            return this;
-        }
-
-        public CurrencyBuilder timeout(long millis) {
-            this.timeoutMillis = millis;
-            return this;
-        }
-
-        public CurrencyBuilder consumeOnComplete(boolean consume) {
-            this.consumeOnComplete = consume;
+        public CurrencyBuilder consumable(boolean consumable) {
+            this.consumable = consumable;
             return this;
         }
 
         public CurrencyRequirement build() {
-            if (currencies.isEmpty()) {
-                throw new IllegalStateException("At least one currency is required");
+            if (currency == null || currency.isEmpty()) {
+                throw new IllegalStateException("Currency ID is required");
             }
-            return new CurrencyRequirement(currencies, plugin, timeoutMillis, consumeOnComplete);
+            if (amount <= 0) {
+                throw new IllegalStateException("Amount must be positive");
+            }
+            return new CurrencyRequirement(currency, amount, consumable);
         }
     }
 

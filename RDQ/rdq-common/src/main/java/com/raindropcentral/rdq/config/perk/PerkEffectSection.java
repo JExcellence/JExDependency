@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 public class PerkEffectSection extends AConfigSection {
 	
 	@CSIgnore
-	private static final Logger LOGGER = CentralLogger.getLogger(PerkEffectSection.class);
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	// ==================== Potion Effect Fields ====================
 	

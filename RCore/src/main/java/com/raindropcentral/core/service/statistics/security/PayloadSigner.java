@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class PayloadSigner {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(PayloadSigner.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final String HMAC_ALGORITHM = "HmacSHA256";
 
     private final Gson gson;

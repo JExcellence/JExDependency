@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class HeartbeatScheduler {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(HeartbeatScheduler.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
     private static final int HEARTBEAT_INTERVAL_TICKS = 20 * 60 * 5; // 5 minutes
     private static final int MAX_RETRY_ATTEMPTS = 3;
     

@@ -608,6 +608,34 @@ rank_path_overview_ui:
         name: "<gradient:#6b7280:#9ca3af>🗡 Pickpocket</gradient>"
         lore:
           - "<gradient:#6b7280:#9ca3af>Quick fingers, quicker escape</gradient>"
+
+# ============================================
+# REQUIREMENT TRANSLATIONS
+# ============================================
+requirement:
+  # Currency requirement descriptions
+  currency:
+    coins: "Coins"
+    gems: "Gems"
+    tokens: "Tokens"
+    money: "Money"
+    dollars: "Dollars"
+    credits: "Credits"
+  
+  # Task preview templates
+  task:
+    currency:
+      need: "Need %amount% %currency%"
+      have: "Have %current%/%required% %currency%"
+    item:
+      need: "Need %quantity%x %item%"
+    experience:
+      need: "Reach level %level%"
+      points: "Reach %points% experience points"
+    playtime:
+      need: "Play for %time%"
+    permission:
+      need: "Requires permission: %permission%"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Thief</gradient>"
         lore:

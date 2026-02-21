@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  */
 public class BatchProcessor {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(BatchProcessor.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     /** Batch size limits by priority */
     private static final int CRITICAL_HIGH_BATCH_SIZE = 500;

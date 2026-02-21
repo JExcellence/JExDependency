@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class RankPositionCalculator {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankPositionCalculator.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private static final GridPosition INITIAL_RANK_POSITION = new GridPosition(
 		3,

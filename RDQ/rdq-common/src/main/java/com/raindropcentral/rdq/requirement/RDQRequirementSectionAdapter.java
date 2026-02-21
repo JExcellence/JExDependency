@@ -1,7 +1,6 @@
 package com.raindropcentral.rdq.requirement;
 
 import com.raindropcentral.rdq.config.requirement.*;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 import com.raindropcentral.rplatform.requirement.config.RequirementBuilder;
 import com.raindropcentral.rplatform.requirement.config.RequirementSectionAdapter;
@@ -13,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +31,7 @@ import java.util.logging.Logger;
  */
 public class RDQRequirementSectionAdapter implements RequirementSectionAdapter<BaseRequirementSection> {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(RDQRequirementSectionAdapter.class);
+    private static final Logger LOGGER = Logger.getLogger(RDQRequirementSectionAdapter.class.getName());
 
     @Override
     @Nullable
@@ -79,22 +79,25 @@ public class RDQRequirementSectionAdapter implements RequirementSectionAdapter<B
 
     private AbstractRequirement convertCurrencyRequirement(BaseRequirementSection section) {
         CurrencyRequirementSection currencySection = section.getCurrencyRequirement();
+        
+        if (currencySection == null) {
+            throw new IllegalArgumentException("Currency requirement section is null");
+        }
+        
         Map<String, Double> currencies = currencySection.getRequiredCurrencies();
         
-        if (currencies.isEmpty()) {
+        if (currencies == null || currencies.isEmpty()) {
             throw new IllegalArgumentException("No currencies specified for CURRENCY requirement");
         }
 
-        AbstractRequirement requirement = RequirementBuilder.currency()
-                .currencies(currencies)
-                .plugin(currencySection.getCurrencyPlugin())
-                .timeout(5000L) // Default timeout
+        // Use the first currency from the map (new API only supports single currency)
+        Map.Entry<String, Double> firstCurrency = currencies.entrySet().iterator().next();
+        
+        return RequirementBuilder.currency()
+                .currency(firstCurrency.getKey())
+                .amount(firstCurrency.getValue())
+                .consumable(currencySection.getConsumeOnComplete())
                 .build();
-        
-        // Set consumeOnComplete flag
-        requirement.setConsumeOnComplete(currencySection.getConsumeOnComplete());
-        
-        return requirement;
     }
 
     private AbstractRequirement convertExperienceRequirement(BaseRequirementSection section) {

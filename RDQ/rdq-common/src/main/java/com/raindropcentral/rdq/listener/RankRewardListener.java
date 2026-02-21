@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class RankRewardListener implements Listener {
 
-	private static final Logger LOGGER = CentralLogger.getLogger(RankRewardListener.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final RDQ rdq;
 	private final RewardService rewardService;

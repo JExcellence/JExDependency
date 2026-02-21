@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class PerkEventListener implements Listener {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(PerkEventListener.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
     private final RDQ rdq;
     private final PerkActivationService perkActivationService;
@@ -66,7 +66,7 @@ public class PerkEventListener implements Listener {
         
         // Check if perk system is initialized
         if (perkActivationService == null) {
-            LOGGER.log(Level.WARNING, "Perk system not yet initialized, skipping perk activation for {0}", 
+            LOGGER.log(Level.WARNING, "Perk system not yet initialized, skipping perk activation for " + 
                     player.getName());
             return;
         }

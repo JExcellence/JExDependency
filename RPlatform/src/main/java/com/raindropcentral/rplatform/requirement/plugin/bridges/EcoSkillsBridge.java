@@ -1,6 +1,5 @@
 package com.raindropcentral.rplatform.requirement.plugin.bridges;
 
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.plugin.PluginIntegrationBridge;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class EcoSkillsBridge implements PluginIntegrationBridge {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(EcoSkillsBridge.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(EcoSkillsBridge.class.getName());
 	
 	private Object ecoSkillsAPI;
 	private boolean initialized = false;

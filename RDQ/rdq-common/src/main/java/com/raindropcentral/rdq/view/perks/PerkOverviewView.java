@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  */
 public class PerkOverviewView extends APaginatedView<Perk> {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
     // State
     private final State<RDQ> rdq = initialState("plugin");

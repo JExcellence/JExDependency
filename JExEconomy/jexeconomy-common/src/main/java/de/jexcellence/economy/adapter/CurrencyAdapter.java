@@ -6,6 +6,7 @@ import de.jexcellence.economy.database.entity.Currency;
 import de.jexcellence.economy.database.entity.CurrencyLog;
 import de.jexcellence.economy.database.entity.User;
 import de.jexcellence.economy.database.entity.UserCurrency;
+import de.jexcellence.economy.database.repository.CurrencyRepository;
 import de.jexcellence.economy.event.*;
 import de.jexcellence.economy.type.EChangeType;
 import de.jexcellence.jextranslate.i18n.I18n;
@@ -81,7 +82,7 @@ public class CurrencyAdapter implements ICurrencyAdapter {
      * Database logging is handled separately through event listeners.
      * </p>
      */
-    private static final Logger ADAPTER_LOGGER = CentralLogger.getLogger(CurrencyAdapter.class.getName());
+    private static final Logger ADAPTER_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 
     /**
      * Reference to the currency runtime providing access to all system components.
@@ -1150,5 +1151,46 @@ public class CurrencyAdapter implements ICurrencyAdapter {
                         "Failed to create management log for currency operation: " + operation, e);
             }
         }, this.jexEconomyImpl.getExecutor());
+    }
+    
+    /**
+     * Retrieves all available currencies in the system.
+     * <p>
+     * This method provides access to all currencies that have been registered in the
+     * JExEconomy system. The returned map is keyed by currency ID and contains the
+     * full Currency entity for each registered currency.
+     * </p>
+     * <p>
+     * This is useful for external plugins that need to:
+     * <ul>
+     *   <li>List all available currencies</li>
+     *   <li>Register currency bridges for requirement systems</li>
+     *   <li>Provide currency selection interfaces</li>
+     *   <li>Validate currency identifiers</li>
+     * </ul>
+     * </p>
+     *
+     * @return an unmodifiable map of currency ID to Currency entity
+     * @since 1.0.0
+     */
+    @NotNull
+    public Map<Long, Currency> getAllCurrencies() {
+        return this.jexEconomyImpl.getCurrencies();
+    }
+    
+    /**
+     * Gets the currency repository for direct database access.
+     * <p>
+     * This method provides access to the underlying currency repository,
+     * allowing direct queries to the database. Useful for loading currencies
+     * before they are cached in memory.
+     * </p>
+     *
+     * @return the currency repository
+     * @since 2.0.1
+     */
+    @NotNull
+    public CurrencyRepository getCurrencyRepository() {
+        return this.jexEconomyImpl.getCurrencyRepository();
     }
 }

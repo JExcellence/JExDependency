@@ -286,7 +286,7 @@ public class RPlayerInventory extends BaseEntity {
      * @param player creative-mode player whose inventory is intentionally ignored
      */
     private static void handleCreativeMode(final @NotNull Player player) {
-        CentralLogger.getLogger(RPlayerInventory.class.getName())
+        CentralLogger.getLoggerByName("RCore")
                 .info("Player %s is in creative mode, inventory storage is disabled".formatted(player.getName()));
     }
 

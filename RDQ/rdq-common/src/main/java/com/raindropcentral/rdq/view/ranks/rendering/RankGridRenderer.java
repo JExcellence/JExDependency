@@ -32,7 +32,7 @@ import java.util.logging.Logger;
 
 public class RankGridRenderer {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankGridRenderer.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	// Materials for different rank states
 	private static final Material OWNED_RANK_MATERIAL = Material.LIME_STAINED_GLASS_PANE;

@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  */
 public class SensitiveDataEncryptor {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(SensitiveDataEncryptor.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private static final String ALGORITHM = "AES/GCM/NoPadding";
     private static final int GCM_IV_LENGTH = 12;

@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Template-method foundation for anvil-based workflows that render confirmation-style inputs using
@@ -232,7 +233,7 @@ public abstract class AbstractAnvilView extends View {
       final @NotNull Context context,
       final @NotNull Exception exception
   ) {
-    CentralLogger.getLogger(this.getClass()).log(Level.WARNING, "Failed to process anvil input: " + input, exception);
+    Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Failed to process anvil input: " + input, exception);
     
     this.i18n("error.processing_failed", context.getPlayer())
         .includePrefix()

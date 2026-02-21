@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class ClaimHandler {
 
-    private final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
     private final DamageTracker damageTracker;
     private final EClaimMode claimMode;

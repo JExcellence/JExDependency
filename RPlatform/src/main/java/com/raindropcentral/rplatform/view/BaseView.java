@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Template-method implementation for Inventory Framework views that centralizes
@@ -207,7 +208,7 @@ public abstract class BaseView extends View {
 		} catch (
 			final Exception exception
 		) {
-			CentralLogger.getLogger(BaseView.class.getName()).log(
+			Logger.getLogger(BaseView.class.getName()).log(
 				Level.WARNING,
 				"Failed to open parent view: " + this.parentClazz.getSimpleName(),
 				exception
@@ -303,13 +304,13 @@ public abstract class BaseView extends View {
 			this.meaningfulLayout()
 		) {
 			config.layout(this.getLayout());
-			CentralLogger.getLogger(BaseView.class.getName()).log(
+			Logger.getLogger(BaseView.class.getName()).log(
 				Level.FINE,
 				"Using layout configuration for view: " + this.getClass().getSimpleName()
 			);
 		} else {
 			config.size(this.getSize());
-			CentralLogger.getLogger(BaseView.class.getName()).log(
+			Logger.getLogger(BaseView.class.getName()).log(
 				Level.FINE,
 				"Using size configuration (" + this.getSize() + ") for view: " + this.getClass().getSimpleName()
 			);
@@ -342,7 +343,7 @@ public abstract class BaseView extends View {
 		final String titleString = LegacyComponentSerializer.legacySection().serialize(titleComponent);
 		open.modifyConfig().title(titleString);
 		
-		CentralLogger.getLogger(BaseView.class.getName()).log(
+		Logger.getLogger(BaseView.class.getName()).log(
 			Level.FINE,
 			"Set inventory title for " + open.getPlayer().getName() + 
 			" using " + ServerEnvironment.getInstance().getServerType().name() + " format"
@@ -406,7 +407,7 @@ public abstract class BaseView extends View {
 			});
 		} */
 		
-		CentralLogger.getLogger(BaseView.class.getName()).log(
+		Logger.getLogger(BaseView.class.getName()).log(
 			Level.FINE,
 			"Auto-filled " + totalSlots + " slots with " + getFillMaterial().name() + " for view: " + this.getClass().getSimpleName()
 		);
@@ -441,7 +442,7 @@ public abstract class BaseView extends View {
 		final int bottomLeftSlot = this.getBottomLeftSlot();
 		
 		if (bottomLeftSlot < 0) {
-			CentralLogger.getLogger(BaseView.class.getName()).log(
+			Logger.getLogger(BaseView.class.getName()).log(
 				Level.FINE,
 				"Skipped back button placement (single row inventory) for view: " + this.getClass().getSimpleName()
 			);
@@ -456,7 +457,7 @@ public abstract class BaseView extends View {
 				final char slotChar = layout[lastRowIndex].charAt(0);
 				// Only place back button if the slot is empty (space character)
 				if (slotChar != ' ') {
-					CentralLogger.getLogger(BaseView.class.getName()).log(
+					Logger.getLogger(BaseView.class.getName()).log(
 						Level.FINE,
 						"Skipped back button placement (slot occupied by '" + slotChar + "') for view: " + this.getClass().getSimpleName()
 					);
@@ -470,12 +471,12 @@ public abstract class BaseView extends View {
 				.slot(bottomLeftSlot, new Return().getHead(player))
 				.onClick(this::handleBackButtonClick);
 			
-			CentralLogger.getLogger(BaseView.class.getName()).log(
+			Logger.getLogger(BaseView.class.getName()).log(
 				Level.FINE,
 				"Placed back button at bottom-left slot " + bottomLeftSlot + " for view: " + this.getClass().getSimpleName()
 			);
 		} catch (Exception e) {
-			CentralLogger.getLogger(BaseView.class.getName()).log(
+			Logger.getLogger(BaseView.class.getName()).log(
 				Level.WARNING,
 				"Failed to create custom head for back button, using fallback: " + e.getMessage()
 			);

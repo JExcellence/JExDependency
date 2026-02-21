@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 public class PerkManagementService {
     
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
     private final PerkRepository perkRepository;
     private final PlayerPerkRepository playerPerkRepository;

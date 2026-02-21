@@ -35,7 +35,7 @@ import java.util.logging.Logger;
  */
 public class EventPerkHandler {
     
-    private static final Logger LOGGER = CentralLogger.getLogger(EventPerkHandler.class);
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private static final Gson GSON = new Gson();
     
     // Track registered event perks by player UUID and event type

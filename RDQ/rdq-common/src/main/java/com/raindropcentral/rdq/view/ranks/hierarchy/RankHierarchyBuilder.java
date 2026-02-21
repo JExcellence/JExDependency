@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  */
 public class RankHierarchyBuilder {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankHierarchyBuilder.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	/**
 	 * Builds a complete rank node hierarchy from the given rank tree.

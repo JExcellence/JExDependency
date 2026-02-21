@@ -47,7 +47,7 @@ import java.util.logging.Logger;
  */
 public class PerkSystemFactory {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 
     private static final String FILE_PATH = "perks";
     private static final String SYSTEM_FILE_NAME = "perk-system.yml";

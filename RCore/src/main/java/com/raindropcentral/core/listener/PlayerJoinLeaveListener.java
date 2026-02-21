@@ -27,7 +27,7 @@ import java.util.logging.Logger;
  */
 public class PlayerJoinLeaveListener implements Listener {
 
-    private static final Logger LOGGER = CentralLogger.getLogger(PlayerJoinLeaveListener.class.getName());
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RCore");
 
     private final RCore core;
 

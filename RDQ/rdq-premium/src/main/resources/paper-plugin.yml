@@ -18,3 +18,6 @@ dependencies:
     PlaceholderAPI:
       load: BEFORE
       required: false
+    JExEconomy:
+      load: BEFORE
+      required: false

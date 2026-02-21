@@ -4,7 +4,6 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RRank;
 import com.raindropcentral.rdq.database.entity.rank.RRankTree;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
@@ -26,7 +25,7 @@ import java.util.logging.Logger;
  */
 public class PremiumRankSystemService implements IRankSystemService {
 
-    private static final Logger LOGGER = CentralLogger.getLogger("RDQ");
+    private static final Logger LOGGER = Logger.getLogger(PremiumRankSystemService.class.getName());
 
     // Premium has no limits - use Integer.MAX_VALUE for "unlimited"
     private static final int UNLIMITED = Integer.MAX_VALUE;

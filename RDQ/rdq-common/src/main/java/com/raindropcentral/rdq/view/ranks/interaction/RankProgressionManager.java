@@ -34,7 +34,7 @@ import java.util.logging.Logger;
  */
 public class RankProgressionManager {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankProgressionManager.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final RDQ rdq;
 	private final RankUpgradeProgressService rankUpgradeProgressService;

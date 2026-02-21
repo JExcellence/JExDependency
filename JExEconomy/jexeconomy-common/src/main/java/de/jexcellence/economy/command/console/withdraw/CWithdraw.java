@@ -90,7 +90,7 @@ public class CWithdraw extends ServerCommand {
 	 * withdrawal operations are logged for audit trail purposes.
 	 * </p>
 	 */
-	private static final Logger COMMAND_LOGGER = CentralLogger.getLogger(CWithdraw.class.getName());
+	private static final Logger COMMAND_LOGGER = CentralLogger.getLoggerByName("JExEconomy");
 	
 	/**
 	 * Reference to the main JExEconomy plugin instance.

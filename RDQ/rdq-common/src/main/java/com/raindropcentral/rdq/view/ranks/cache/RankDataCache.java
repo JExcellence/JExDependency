@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  */
 public class RankDataCache {
 	
-	private static final Logger LOGGER = CentralLogger.getLogger(RankDataCache.class.getName());
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
 	
 	private final RankHierarchyBuilder hierarchyBuilder = new RankHierarchyBuilder();
 	private final RankPositionCalculator positionCalculator = new RankPositionCalculator();

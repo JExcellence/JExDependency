@@ -50,7 +50,6 @@ public class RDS extends JavaPlugin {
 
     @Override
     public void onLoad() {
-        CentralLogger.initialize(this);
         this.rds = this;
         this.getLogger().info("Loading RPlatform for RDS");
         this.platform = new RPlatform(rds);
