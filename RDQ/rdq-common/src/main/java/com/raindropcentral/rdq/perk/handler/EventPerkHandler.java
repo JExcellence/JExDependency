@@ -6,9 +6,15 @@ import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PerkType;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerFishEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -291,11 +297,96 @@ public class EventPerkHandler {
             
             if (customConfig.has("healAmount")) {
                 double healAmount = customConfig.get("healAmount").getAsDouble();
-                double newHealth = Math.min(player.getHealth() + healAmount, player.getMaxHealth());
+                double newHealth  = Math.min(
+                    player.getHealth() + healAmount,
+                    player.getMaxHealth()
+                );
                 player.setHealth(newHealth);
                 
-                LOGGER.log(Level.INFO, "Healed player {0} for {1} health",
-                        new Object[]{player.getName(), healAmount});
+                LOGGER.log(
+                    Level.INFO,
+                    "Healed player {0} for {1} health",
+                    new Object[]{player.getName(), healAmount}
+                );
+            }
+            
+            //Amplify potion consumed
+            if (customConfig.has("amplify")) {
+                double amplify = customConfig.get("amplify").getAsDouble();
+                if (args[0] instanceof PlayerItemConsumeEvent event) {
+                    if (event.getItem().getItemMeta() instanceof PotionMeta potionMeta) {
+                        List<PotionEffect> effects = potionMeta.getAllEffects();
+                        potionMeta.clearCustomEffects();
+                        for (PotionEffect potionEffect : effects) {
+                            player.addPotionEffect(new PotionEffect(
+                                potionEffect.getType(),
+                                potionEffect.getDuration(),
+                                (int) (potionEffect.getAmplifier() * amplify),
+                                potionEffect.isAmbient()
+                            ));
+                        }
+                    }
+                }
+            }
+            
+            //Extend potion duration
+            if (customConfig.has("rate")) {
+                double rate = customConfig.get("rate").getAsDouble();
+                if (args[0] instanceof PlayerItemConsumeEvent event) {
+                    if (event.getItem().getItemMeta() instanceof PotionMeta potionMeta) {
+                        List<PotionEffect> effects = potionMeta.getAllEffects();
+                        potionMeta.clearCustomEffects();
+                        for (PotionEffect potionEffect : effects) {
+                            player.addPotionEffect(new PotionEffect(
+                                potionEffect.getType(),
+                                (int) (potionEffect.getDuration() * rate),
+                                potionEffect.getAmplifier(),
+                                potionEffect.isAmbient()
+                            ));
+                        }
+                    }
+                }
+            }
+            
+            //Give potion back
+            if (customConfig.has("saved")) {
+                int saved = customConfig.get("saved").getAsInt();
+                if (args[0] instanceof PlayerItemConsumeEvent event) {
+                    for (int i = 0; i < saved; i++) {
+                        player.getInventory().addItem(event.getItem());
+                    }
+                }
+            }
+            
+            //Improve fishing rates
+            if (customConfig.has("setMinWaitTime")) {
+                double minWaitTime  = customConfig.get("minWaitTime").getAsDouble();
+                double maxWaitTime  = customConfig.get("maxWaitTime").getAsDouble();
+                double minLureTime  = customConfig.get("minLureTime").getAsDouble();
+                double maxLureTime  = customConfig.get("maxLureTime").getAsDouble();
+                if (args[0] instanceof PlayerFishEvent event) {
+                    if (event.getState() == PlayerFishEvent.State.FISHING) {
+                        FishHook hook = event.getHook();
+                        
+                        hook.setMinWaitTime((int) minWaitTime);
+                        hook.setMaxWaitTime((int) maxWaitTime);
+                        hook.setMinLureTime((int) minLureTime);
+                        hook.setMaxLureTime((int) maxLureTime);
+                    }
+                }
+                
+            }
+            
+            //Bonus fishing XP
+            if (customConfig.has("vanilla")) {
+                double vanilla =  customConfig.get("vanilla").getAsDouble();
+                double skill =  customConfig.get("skill").getAsDouble();
+                if (args[0] instanceof PlayerFishEvent event) {
+                    if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+                        player.giveExp((int) vanilla);
+                        // TODO Add fishing XP for skill plugins
+                    }
+                }
             }
             
             // Add more effect types as needed

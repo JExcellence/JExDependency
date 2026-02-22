@@ -1,0 +1,45 @@
+# Potion Enhance
+# Enhances potion when player consumes
+identifier: "potion_enhance"
+perkType: "PASSIVE"
+category: "UTILITY"
+enabled: true
+displayOrder: 17
+
+icon:
+  type: "POTION"
+  displayNameKey: "perk.potion_enhance.name"
+  descriptionKey: "perk.potion_enhance.description"
+  enchanted: true
+
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 14
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 2000.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Potion Enhancement! Strengthen potions you consume!\",\"color\":\"yellow\"}"
+    executeAsPlayer: false
+
+effect:
+  triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
+  cooldownMillis: 30000  # 30 seconds
+  triggerChance: 60.0  # 60% chance
+  customConfig:
+    amplify: 2.0  # Double potion amplification
+    playSound: true
+    soundType: "ENTITY_PLAYER_LEVELUP"

@@ -1,0 +1,45 @@
+# Potion extend
+# Extends potion duration
+identifier: "potion_extend"
+perkType: "PASSIVE"
+category: "UTILITY"
+enabled: true
+displayOrder: 18
+
+icon:
+  type: "POTION"
+  displayNameKey: "perk.potion_extend.name"
+  descriptionKey: "perk.potion_extend.description"
+  enchanted: true
+
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 9
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 1100.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Potion Extending! Chance to increase potion durations!\",\"color\":\"yellow\"}"
+    executeAsPlayer: false
+
+effect:
+  triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
+  cooldownMillis: 30000  # 30 seconds
+  triggerChance: 25.0  # 25% chance
+  customConfig:
+    rate: 1.5  # Increase potion duration by 50% - Values under 1 will reduce potion duration
+    playSound: true
+    soundType: "ENTITY_PLAYER_LEVELUP"

@@ -1,0 +1,45 @@
+# Glow Perk
+# Applies a glowing effect to the player
+identifier: "potion_save"
+perkType: "PASSIVE"
+category: "UTILITY"
+enabled: true
+displayOrder: 19
+
+icon:
+  type: "POTION"
+  displayNameKey: "perk.potion_save.name"
+  descriptionKey: "perk.potion_save.description"
+  enchanted: true
+
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 12
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+
+  currency_requirement:
+    type: "CURRENCY"
+    currencyRequirement:
+      currencyType: "coins"
+      requiredCurrencies:
+        coins: 1800.0
+      consumeOnComplete: true
+    icon:
+      type: "GOLD_INGOT"
+
+unlockRewards:
+  welcome_message:
+    type: "COMMAND"
+    command: "tellraw {player} {\"text\":\"You unlocked Potion Saves! Retain extra potions!\",\"color\":\"yellow\"}"
+    executeAsPlayer: false
+
+effect:
+  triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
+  cooldownMillis: 30000  # 30 seconds
+  triggerChance: 25.0  # 25% chance
+  customConfig:
+    saved: 1.0  # 1 potion
+    playSound: true
+    soundType: "ENTITY_PLAYER_LEVELUP"

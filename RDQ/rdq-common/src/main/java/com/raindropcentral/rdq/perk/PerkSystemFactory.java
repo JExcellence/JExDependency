@@ -162,6 +162,8 @@ public class PerkSystemFactory {
             "critical_strike.yml",
             "double_experience.yml",
             "fire_resistance.yml",
+            "fish_rate.yml",
+            "fish_xp.yml",
             "fly.yml",
             "glow.yml",
             "haste.yml",
@@ -173,7 +175,10 @@ public class PerkSystemFactory {
             "resistance.yml",
             "saturation.yml",
             "speed.yml",
-            "strength.yml"
+            "strength.yml",
+            "potion_save.yml",
+            "potion_extend.yml",
+            "potion_enhance.yml"
         };
         
         int loadedCount = 0;
