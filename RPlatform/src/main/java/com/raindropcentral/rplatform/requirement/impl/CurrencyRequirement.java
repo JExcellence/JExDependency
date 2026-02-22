@@ -63,7 +63,7 @@ public final class CurrencyRequirement extends AbstractRequirement {
         @JsonProperty("amount") double amount,
         @JsonProperty("consumable") @Nullable Boolean consumable
     ) {
-        super("CURRENCY");
+        super("CURRENCY", consumable != null && consumable);
         
         if (currencyId.trim().isEmpty()) {
             throw new IllegalArgumentException("Currency ID cannot be null or empty");

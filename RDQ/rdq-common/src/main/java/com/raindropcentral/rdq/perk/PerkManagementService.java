@@ -6,6 +6,7 @@ import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.repository.PerkRepository;
 import com.raindropcentral.rdq.database.repository.PlayerPerkRepository;
+import com.raindropcentral.rdq.perk.util.RetryableOperation;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -37,6 +38,7 @@ public class PerkManagementService {
     private final PerkRepository perkRepository;
     private final PlayerPerkRepository playerPerkRepository;
     private final int maxEnabledPerksPerPlayer;
+    private com.raindropcentral.rdq.perk.cache.PlayerPerkCache cache;
     
     /**
      * Constructs a new PerkManagementService.
@@ -53,6 +55,17 @@ public class PerkManagementService {
         this.perkRepository = perkRepository;
         this.playerPerkRepository = playerPerkRepository;
         this.maxEnabledPerksPerPlayer = maxEnabledPerksPerPlayer;
+    }
+    
+    /**
+     * Sets the player perk cache.
+     * Called after initialization to inject the cache.
+     *
+     * @param cache the player perk cache
+     */
+    public void setCache(@NotNull final com.raindropcentral.rdq.perk.cache.PlayerPerkCache cache) {
+        this.cache = cache;
+        LOGGER.log(Level.INFO, "PlayerPerkCache injected into PerkManagementService");
     }
     
     // ==================== Perk Ownership Methods ====================
@@ -76,34 +89,111 @@ public class PerkManagementService {
                     if (existingOpt.isPresent()) {
                         PlayerPerk existing = existingOpt.get();
                         if (!existing.isUnlocked()) {
-                            return CompletableFuture.supplyAsync(() -> {
-                                existing.setUnlocked(true);
-                                if (autoEnable) {
-                                    existing.setEnabled(true);
-                                }
-                                playerPerkRepository.update(existing);
-                                LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
-                                        new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
-                                return existing;
-                            });
+                            existing.setUnlocked(true);
+                            if (autoEnable) {
+                                existing.setEnabled(true);
+                            }
+                            // Update in cache (marks as dirty)
+                            if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
+                                cache.updatePlayerPerk(player.getUniqueId(), existing);
+                            } else {
+                                // Fallback to direct DB update
+                                return CompletableFuture.supplyAsync(() -> {
+                                    playerPerkRepository.update(existing);
+                                    return existing;
+                                });
+                            }
+                            LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
+                                    new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
                         }
-                        LOGGER.log(Level.FINE, "Player {0} already has perk {1} unlocked", 
-                                new Object[]{player.getUniqueId(), perk.getIdentifier()});
                         return CompletableFuture.completedFuture(existing);
                     }
                     
                     // Create new PlayerPerk association
                     PlayerPerk playerPerk = new PlayerPerk(player, perk);
                     playerPerk.setUnlocked(true);
-                    if (autoEnable) {
-                        playerPerk.setEnabled(true);
-                    }
+                    // Note: enabled state is NOT set in DB, only in cache
                     
                     return CompletableFuture.supplyAsync(() -> {
-                        PlayerPerk saved = playerPerkRepository.save(playerPerk);
-                        LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
-                                new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
-                        return saved;
+                        try {
+                            // Save to DB immediately for new entities (only unlocked=true)
+                            PlayerPerk saved = playerPerkRepository.save(playerPerk);
+                            
+                            // If autoEnable, set enabled state in cache only
+                            if (autoEnable) {
+                                saved.setEnabled(true);
+                            }
+                            
+                            // Add to cache
+                            if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
+                                cache.updatePlayerPerk(player.getUniqueId(), saved);
+                            }
+                            LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
+                                    new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
+                            return saved;
+                        } catch (org.hibernate.exception.ConstraintViolationException e) {
+                            // Race condition: another thread already created this PlayerPerk
+                            // Query again to get the existing record
+                            LOGGER.log(Level.WARNING, "Constraint violation when granting perk {0} to player {1}, fetching existing record", 
+                                    new Object[]{perk.getIdentifier(), player.getUniqueId()});
+                            try {
+                                Optional<PlayerPerk> existing = findByPlayerAndPerkFromDB(player, perk).join();
+                                if (existing.isPresent()) {
+                                    PlayerPerk existingPerk = existing.get();
+                                    // Only update unlocked state in DB if needed
+                                    if (!existingPerk.isUnlocked()) {
+                                        existingPerk.setUnlocked(true);
+                                        playerPerkRepository.update(existingPerk);
+                                    }
+                                    
+                                    // If autoEnable, set enabled state in cache only
+                                    if (autoEnable) {
+                                        existingPerk.setEnabled(true);
+                                    }
+                                    
+                                    // Add to cache
+                                    if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
+                                        cache.updatePlayerPerk(player.getUniqueId(), existingPerk);
+                                    }
+                                    return existingPerk;
+                                }
+                            } catch (Exception ex) {
+                                LOGGER.log(Level.SEVERE, "Failed to fetch existing PlayerPerk after constraint violation", ex);
+                            }
+                            throw e;
+                        } catch (Exception e) {
+                            // Check if the cause is a ConstraintViolationException
+                            Throwable cause = e.getCause();
+                            if (cause instanceof org.hibernate.exception.ConstraintViolationException) {
+                                LOGGER.log(Level.WARNING, "Constraint violation when granting perk {0} to player {1}, fetching existing record", 
+                                        new Object[]{perk.getIdentifier(), player.getUniqueId()});
+                                try {
+                                    Optional<PlayerPerk> existing = findByPlayerAndPerkFromDB(player, perk).join();
+                                    if (existing.isPresent()) {
+                                        PlayerPerk existingPerk = existing.get();
+                                        // Only update unlocked state in DB if needed
+                                        if (!existingPerk.isUnlocked()) {
+                                            existingPerk.setUnlocked(true);
+                                            playerPerkRepository.update(existingPerk);
+                                        }
+                                        
+                                        // If autoEnable, set enabled state in cache only
+                                        if (autoEnable) {
+                                            existingPerk.setEnabled(true);
+                                        }
+                                        
+                                        // Add to cache
+                                        if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
+                                            cache.updatePlayerPerk(player.getUniqueId(), existingPerk);
+                                        }
+                                        return existingPerk;
+                                    }
+                                } catch (Exception ex) {
+                                    LOGGER.log(Level.SEVERE, "Failed to fetch existing PlayerPerk after constraint violation", ex);
+                                }
+                            }
+                            throw e;
+                        }
                     });
                 })
                 .exceptionally(throwable -> {
@@ -248,14 +338,18 @@ public class PerkManagementService {
                                     return CompletableFuture.completedFuture(false);
                                 }
                                 
-                                // Update the entity in a new transaction
-                                return CompletableFuture.supplyAsync(() -> {
-                                    playerPerk.setEnabled(true);
+                                // Update the entity
+                                playerPerk.setEnabled(true);
+                                // Update in cache (marks as dirty)
+                                if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
+                                    cache.updatePlayerPerk(player.getUniqueId(), playerPerk);
+                                } else {
+                                    // Fallback to direct DB update
                                     playerPerkRepository.update(playerPerk);
-                                    LOGGER.log(Level.INFO, "Enabled perk {0} for player {1}", 
-                                            new Object[]{perk.getIdentifier(), player.getUniqueId()});
-                                    return true;
-                                });
+                                }
+                                LOGGER.log(Level.INFO, "Enabled perk {0} for player {1}", 
+                                        new Object[]{perk.getIdentifier(), player.getUniqueId()});
+                                return CompletableFuture.completedFuture(true);
                             });
                 })
                 .exceptionally(throwable -> {
@@ -294,7 +388,13 @@ public class PerkManagementService {
                     
                     return CompletableFuture.supplyAsync(() -> {
                         playerPerk.setEnabled(false);
-                        playerPerkRepository.update(playerPerk);
+                        // Update in cache (marks as dirty)
+                        if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
+                            cache.updatePlayerPerk(player.getUniqueId(), playerPerk);
+                        } else {
+                            // Fallback to direct DB update
+                            playerPerkRepository.update(playerPerk);
+                        }
                         LOGGER.log(Level.INFO, "Disabled perk {0} for player {1}", 
                                 new Object[]{perk.getIdentifier(), player.getUniqueId()});
                         return true;
@@ -612,26 +712,60 @@ public class PerkManagementService {
     // ==================== Helper Methods (Repository Replacements) ====================
     
     /**
-     * Finds a PlayerPerk by player and perk using findAll and filtering.
+     * Finds a PlayerPerk by player and perk using cache or DB fallback.
      */
     private CompletableFuture<Optional<PlayerPerk>> findByPlayerAndPerk(
             @NotNull final RDQPlayer player,
             @NotNull final Perk perk
     ) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
-            Long playerId = player.getId();
-            Long perkId = perk.getId();
-            return allPlayerPerks.stream()
-                    .filter(pp -> {
-                        // Compare by ID to avoid lazy initialization issues
+        java.util.UUID playerId = player.getUniqueId();
+        
+        // Check if cache is loaded
+        if (cache != null && cache.isCacheLoaded(playerId)) {
+            return CompletableFuture.completedFuture(
+                cache.getPlayerPerk(playerId, perk.getId())
+            );
+        }
+        
+        // Fallback to DB query
+        LOGGER.log(Level.FINE, "Cache not loaded for player {0}, using DB fallback", playerId);
+        return findByPlayerAndPerkFromDB(player, perk);
+    }
+    
+    /**
+     * Finds a PlayerPerk by player and perk using direct DB query (fallback).
+     */
+    private CompletableFuture<Optional<PlayerPerk>> findByPlayerAndPerkFromDB(
+            @NotNull final RDQPlayer player,
+            @NotNull final Perk perk
+    ) {
+        return RetryableOperation.executeWithRetry(() -> {
+            try {
+                List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+                Long playerId = player.getId();
+                Long perkId = perk.getId();
+                
+                // Filter carefully to avoid lazy initialization issues
+                for (PlayerPerk pp : allPlayerPerks) {
+                    try {
                         Long ppPlayerId = pp.getPlayer().getId();
                         Long ppPerkId = pp.getPerk().getId();
-                        return ppPlayerId != null && ppPlayerId.equals(playerId) && 
-                               ppPerkId != null && ppPerkId.equals(perkId);
-                    })
-                    .findFirst();
-        });
+                        if (ppPlayerId != null && ppPlayerId.equals(playerId) && 
+                            ppPerkId != null && ppPerkId.equals(perkId)) {
+                            return Optional.of(pp);
+                        }
+                    } catch (Exception e) {
+                        // Skip this perk if we can't access it
+                        LOGGER.log(Level.FINEST, "Skipping perk due to lazy initialization", e);
+                    }
+                }
+                return Optional.empty();
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to find player perk for player " + player.getUniqueId() + 
+                        " and perk " + perk.getIdentifier(), e);
+                throw e;
+            }
+        }, "findByPlayerAndPerkFromDB for player " + player.getUniqueId());
     }
     
     /**
@@ -649,51 +783,111 @@ public class PerkManagementService {
     }
     
     /**
-     * Finds all unlocked PlayerPerks for a player.
+     * Finds all unlocked PlayerPerks for a player using cache or DB fallback.
      */
     private CompletableFuture<List<PlayerPerk>> findUnlockedByPlayer(@NotNull final RDQPlayer player) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
-            Long playerId = player.getId();
-            return allPlayerPerks.stream()
-                    .filter(pp -> {
-                        Long ppPlayerId = pp.getPlayer().getId();
-                        return ppPlayerId != null && ppPlayerId.equals(playerId) && pp.isUnlocked();
-                    })
-                    .collect(Collectors.toList());
-        });
+        java.util.UUID playerId = player.getUniqueId();
+        
+        // Check if cache is loaded
+        if (cache != null && cache.isCacheLoaded(playerId)) {
+            return CompletableFuture.completedFuture(
+                cache.getPlayerPerks(playerId, PlayerPerk::isUnlocked)
+            );
+        }
+        
+        // Fallback to DB query with retry
+        return RetryableOperation.executeWithRetry(() -> {
+            try {
+                List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+                Long playerDbId = player.getId();
+                return allPlayerPerks.stream()
+                        .filter(pp -> {
+                            try {
+                                Long ppPlayerId = pp.getPlayer().getId();
+                                return ppPlayerId != null && ppPlayerId.equals(playerDbId) && pp.isUnlocked();
+                            } catch (Exception e) {
+                                LOGGER.log(Level.FINEST, "Skipping perk due to lazy initialization", e);
+                                return false;
+                            }
+                        })
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to find unlocked perks for player " + player.getUniqueId(), e);
+                throw e;
+            }
+        }, "findUnlockedByPlayer for player " + player.getUniqueId());
     }
     
     /**
-     * Finds all enabled PlayerPerks for a player.
+     * Finds all enabled PlayerPerks for a player using cache or DB fallback.
      */
     private CompletableFuture<List<PlayerPerk>> findEnabledByPlayer(@NotNull final RDQPlayer player) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
-            Long playerId = player.getId();
-            return allPlayerPerks.stream()
-                    .filter(pp -> {
-                        Long ppPlayerId = pp.getPlayer().getId();
-                        return ppPlayerId != null && ppPlayerId.equals(playerId) && pp.isEnabled();
-                    })
-                    .collect(Collectors.toList());
-        });
+        java.util.UUID playerId = player.getUniqueId();
+        
+        // Check if cache is loaded
+        if (cache != null && cache.isCacheLoaded(playerId)) {
+            return CompletableFuture.completedFuture(
+                cache.getPlayerPerks(playerId, PlayerPerk::isEnabled)
+            );
+        }
+        
+        // Fallback to DB query with retry
+        return RetryableOperation.executeWithRetry(() -> {
+            try {
+                List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+                Long playerDbId = player.getId();
+                return allPlayerPerks.stream()
+                        .filter(pp -> {
+                            try {
+                                Long ppPlayerId = pp.getPlayer().getId();
+                                return ppPlayerId != null && ppPlayerId.equals(playerDbId) && pp.isEnabled();
+                            } catch (Exception e) {
+                                LOGGER.log(Level.FINEST, "Skipping perk due to lazy initialization", e);
+                                return false;
+                            }
+                        })
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to find enabled perks for player " + player.getUniqueId(), e);
+                throw e;
+            }
+        }, "findEnabledByPlayer for player " + player.getUniqueId());
     }
     
     /**
-     * Finds all active PlayerPerks for a player.
+     * Finds all active PlayerPerks for a player using cache or DB fallback.
      */
     private CompletableFuture<List<PlayerPerk>> findActiveByPlayer(@NotNull final RDQPlayer player) {
-        return CompletableFuture.supplyAsync(() -> {
-            List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
-            Long playerId = player.getId();
-            return allPlayerPerks.stream()
-                    .filter(pp -> {
-                        Long ppPlayerId = pp.getPlayer().getId();
-                        return ppPlayerId != null && ppPlayerId.equals(playerId) && pp.isActive();
-                    })
-                    .collect(Collectors.toList());
-        });
+        java.util.UUID playerId = player.getUniqueId();
+        
+        // Check if cache is loaded
+        if (cache != null && cache.isCacheLoaded(playerId)) {
+            return CompletableFuture.completedFuture(
+                cache.getPlayerPerks(playerId, PlayerPerk::isActive)
+            );
+        }
+        
+        // Fallback to DB query with retry
+        return RetryableOperation.executeWithRetry(() -> {
+            try {
+                List<PlayerPerk> allPlayerPerks = playerPerkRepository.findAll();
+                Long playerDbId = player.getId();
+                return allPlayerPerks.stream()
+                        .filter(pp -> {
+                            try {
+                                Long ppPlayerId = pp.getPlayer().getId();
+                                return ppPlayerId != null && ppPlayerId.equals(playerDbId) && pp.isActive();
+                            } catch (Exception e) {
+                                LOGGER.log(Level.FINEST, "Skipping perk due to lazy initialization", e);
+                                return false;
+                            }
+                        })
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to find active perks for player " + player.getUniqueId(), e);
+                throw e;
+            }
+        }, "findActiveByPlayer for player " + player.getUniqueId());
     }
     
     /**
@@ -701,10 +895,15 @@ public class PerkManagementService {
      */
     private CompletableFuture<List<Perk>> findAllEnabledPerks() {
         return CompletableFuture.supplyAsync(() -> {
-            List<Perk> allPerks = perkRepository.findAll();
-            return allPerks.stream()
-                    .filter(Perk::isEnabled)
-                    .collect(Collectors.toList());
+            try {
+                List<Perk> allPerks = perkRepository.findAll();
+                return allPerks.stream()
+                        .filter(Perk::isEnabled)
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to find all enabled perks", e);
+                return List.of();
+            }
         });
     }
     
@@ -713,10 +912,15 @@ public class PerkManagementService {
      */
     private CompletableFuture<List<Perk>> findEnabledPerksByCategory(@NotNull final PerkCategory category) {
         return CompletableFuture.supplyAsync(() -> {
-            List<Perk> allPerks = perkRepository.findAll();
-            return allPerks.stream()
-                    .filter(p -> p.isEnabled() && p.getCategory() == category)
-                    .collect(Collectors.toList());
+            try {
+                List<Perk> allPerks = perkRepository.findAll();
+                return allPerks.stream()
+                        .filter(p -> p.isEnabled() && p.getCategory() == category)
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Failed to find enabled perks for category " + category, e);
+                return List.of();
+            }
         });
     }
     

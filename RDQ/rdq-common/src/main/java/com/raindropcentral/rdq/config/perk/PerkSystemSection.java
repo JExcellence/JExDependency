@@ -100,6 +100,44 @@ public class PerkSystemSection extends AConfigSection {
 	 */
 	private Boolean enableAutoActivation;
 	
+	// ==================== Cache Settings ====================
+	
+	/**
+	 * Whether perk caching is enabled.
+	 * If null, defaults to true.
+	 */
+	private Boolean cacheEnabled;
+	
+	/**
+	 * Maximum retry attempts for cache save operations.
+	 * If null, defaults to 3.
+	 */
+	private Integer cacheMaxRetries;
+	
+	/**
+	 * Base delay in milliseconds for retry backoff.
+	 * If null, defaults to 100.
+	 */
+	private Long cacheRetryDelayMs;
+	
+	/**
+	 * Timeout in seconds for cache save operations.
+	 * If null, defaults to 10.
+	 */
+	private Integer cacheSaveTimeoutSeconds;
+	
+	/**
+	 * Whether to log cache performance metrics.
+	 * If null, defaults to true.
+	 */
+	private Boolean cacheLogPerformance;
+	
+	/**
+	 * Performance threshold in milliseconds for warnings.
+	 * If null, defaults to 500.
+	 */
+	private Long cachePerformanceThresholdMs;
+	
 	/**
 	 * Constructs a new PerkSystemSection with the given evaluation environment.
 	 *
@@ -135,6 +173,26 @@ public class PerkSystemSection extends AConfigSection {
 		if (perksPerPage != null && perksPerPage < 1) {
 			LOGGER.warning("perksPerPage must be at least 1, setting to default (28)");
 			perksPerPage = 28;
+		}
+		
+		if (cacheMaxRetries != null && cacheMaxRetries < 1) {
+			LOGGER.warning("cacheMaxRetries must be at least 1, setting to default (3)");
+			cacheMaxRetries = 3;
+		}
+		
+		if (cacheRetryDelayMs != null && cacheRetryDelayMs < 0) {
+			LOGGER.warning("cacheRetryDelayMs cannot be negative, setting to default (100)");
+			cacheRetryDelayMs = 100L;
+		}
+		
+		if (cacheSaveTimeoutSeconds != null && cacheSaveTimeoutSeconds < 1) {
+			LOGGER.warning("cacheSaveTimeoutSeconds must be at least 1, setting to default (10)");
+			cacheSaveTimeoutSeconds = 10;
+		}
+		
+		if (cachePerformanceThresholdMs != null && cachePerformanceThresholdMs < 0) {
+			LOGGER.warning("cachePerformanceThresholdMs cannot be negative, setting to default (500)");
+			cachePerformanceThresholdMs = 500L;
 		}
 		
 		// Log configuration summary
@@ -193,5 +251,29 @@ public class PerkSystemSection extends AConfigSection {
 	
 	public Boolean getEnableAutoActivation() {
 		return enableAutoActivation != null && enableAutoActivation;
+	}
+	
+	public Boolean getCacheEnabled() {
+		return cacheEnabled == null || cacheEnabled;
+	}
+	
+	public Integer getCacheMaxRetries() {
+		return cacheMaxRetries == null ? 3 : cacheMaxRetries;
+	}
+	
+	public Long getCacheRetryDelayMs() {
+		return cacheRetryDelayMs == null ? 100L : cacheRetryDelayMs;
+	}
+	
+	public Integer getCacheSaveTimeoutSeconds() {
+		return cacheSaveTimeoutSeconds == null ? 10 : cacheSaveTimeoutSeconds;
+	}
+	
+	public Boolean getCacheLogPerformance() {
+		return cacheLogPerformance == null || cacheLogPerformance;
+	}
+	
+	public Long getCachePerformanceThresholdMs() {
+		return cachePerformanceThresholdMs == null ? 500L : cachePerformanceThresholdMs;
 	}
 }
