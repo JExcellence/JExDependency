@@ -34,7 +34,7 @@ unlockRewards:
     executeAsPlayer: false
 
 effect:
-  triggerEvent: "PLAYER_FISH_EVENT"
+  triggerEvent: "PLAYER_FISH"
   cooldownMillis: 60000  # 60 seconds (was 30)
   triggerChance: 25.0  # 25% chance
   customConfig:

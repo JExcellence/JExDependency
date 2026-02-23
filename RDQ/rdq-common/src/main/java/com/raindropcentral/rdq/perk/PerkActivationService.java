@@ -12,6 +12,7 @@ import com.raindropcentral.rdq.perk.handler.EventPerkHandler;
 import com.raindropcentral.rdq.perk.handler.PotionPerkHandler;
 import com.raindropcentral.rdq.perk.handler.SpecialPerkHandler;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +36,7 @@ import java.util.logging.Logger;
  * @author JExcellence
  * @version 1.0.0
  */
+@Getter
 public class PerkActivationService {
     
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
@@ -81,8 +83,8 @@ public class PerkActivationService {
         
         // Initialize effect handlers
         this.potionPerkHandler = new PotionPerkHandler(plugin);
-        this.specialPerkHandler = new SpecialPerkHandler();
-        this.eventPerkHandler = new EventPerkHandler();
+        this.specialPerkHandler = new SpecialPerkHandler(plugin);
+        this.eventPerkHandler = new EventPerkHandler(plugin);
     }
     
     /**
@@ -688,43 +690,7 @@ public class PerkActivationService {
     private void invalidateCache(@NotNull final java.util.UUID playerUuid) {
         activePerksCache.remove(playerUuid);
     }
-    
-    /**
-     * Gets the cooldown multiplier.
-     *
-     * @return the cooldown multiplier
-     */
-    public double getCooldownMultiplier() {
-        return cooldownMultiplier;
-    }
-    
-    /**
-     * Gets the potion perk handler.
-     *
-     * @return the potion perk handler
-     */
-    public PotionPerkHandler getPotionPerkHandler() {
-        return potionPerkHandler;
-    }
-    
-    /**
-     * Gets the special perk handler.
-     *
-     * @return the special perk handler
-     */
-    public SpecialPerkHandler getSpecialPerkHandler() {
-        return specialPerkHandler;
-    }
-    
-    /**
-     * Gets the event perk handler.
-     *
-     * @return the event perk handler
-     */
-    public EventPerkHandler getEventPerkHandler() {
-        return eventPerkHandler;
-    }
-    
+
     /**
      * Starts the scheduled tasks for perk management.
      * This includes the potion effect refresh task and cooldown cleanup task.

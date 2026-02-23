@@ -34,7 +34,7 @@ unlockRewards:
     executeAsPlayer: false
 
 effect:
-  triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
+  triggerEvent: "PLAYER_ITEM_CONSUME"
   cooldownMillis: 45000  # 45 seconds (was 30 - increased due to power)
   triggerChance: 25.0  # 25% chance (was 60% - way too high!)
   customConfig:

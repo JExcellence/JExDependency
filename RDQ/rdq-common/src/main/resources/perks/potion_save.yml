@@ -34,7 +34,7 @@ unlockRewards:
     executeAsPlayer: false
 
 effect:
-  triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
+  triggerEvent: "PLAYER_ITEM_CONSUME"
   cooldownMillis: 120000  # 2 minutes (was 30 seconds - very powerful perk!)
   triggerChance: 10.0  # 10% chance (was 25% - getting free potions is very strong)
   customConfig:

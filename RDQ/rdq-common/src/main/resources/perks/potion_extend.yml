@@ -34,10 +34,10 @@ unlockRewards:
     executeAsPlayer: false
 
 effect:
-  triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
+  triggerEvent: "PLAYER_ITEM_CONSUME"
   cooldownMillis: 30000  # 30 seconds
-  triggerChance: 25.0  # 25% chance
+  triggerChance: 100.0  # 25% chance
   customConfig:
-    rate: 1.5  # Increase potion duration by 50% - Values under 1 will reduce potion duration
+    rate: 3.0  # Increase potion duration by 50% - Values under 1 will reduce potion duration
     playSound: true
     soundType: "ENTITY_PLAYER_LEVELUP"

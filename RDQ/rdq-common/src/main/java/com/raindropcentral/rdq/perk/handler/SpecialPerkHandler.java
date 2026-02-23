@@ -1,5 +1,6 @@
 package com.raindropcentral.rdq.perk.handler;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,7 +10,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,18 +30,22 @@ import java.util.logging.Logger;
 public class SpecialPerkHandler implements Listener {
     
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
-    
+
     // Track players with special abilities
     private final Set<UUID> flyPlayers = ConcurrentHashMap.newKeySet();
     private final Set<UUID> glowPlayers = ConcurrentHashMap.newKeySet();
     private final Set<UUID> noFallDamagePlayers = ConcurrentHashMap.newKeySet();
     private final Set<UUID> keepInventoryPlayers = ConcurrentHashMap.newKeySet();
     private final Set<UUID> keepExperiencePlayers = ConcurrentHashMap.newKeySet();
+    private final RDQ rdq;
     
     /**
      * Constructs a new SpecialPerkHandler.
      */
-    public SpecialPerkHandler() {
+    public SpecialPerkHandler(
+            final @NotNull RDQ rdq
+    ) {
+        this.rdq = rdq;
     }
     
     // ==================== Fly Methods ====================
