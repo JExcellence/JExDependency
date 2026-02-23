@@ -1669,3 +1669,93 @@ perk:
   critical_strike:
     name: "<gradient:#ef4444:#f87171>⚡ Critical Strike</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Chance for critical hits</gradient>"
+
+
+# ============================================
+# PERK TRANSLATIONS
+# ============================================
+perk:
+  # Fishing Perks
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>Faster Fishing</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Catch fish faster with improved fishing rates</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>Fishing XP Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Gain bonus XP when catching fish</gradient>"
+  
+  # Potion Perks
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>Potion Amplifier</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance to enhance potion effects when consumed</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>Potion Duration</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance to extend potion duration when consumed</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>Potion Refund</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance to get your potion back after drinking it</gradient>"
+  
+  # Perk Trigger Messages
+  messages:
+    potion_enhanced: "<gold>Potion Enhanced!</gold>"
+    potion_extended: "<gold>Potion Duration Extended!</gold>"
+    potion_saved: "<gold>Potion Saved!</gold>"
+    fishing_active: "<aqua>Faster Fishing Active!</aqua>"
+    fishing_xp: "<green>+%xp% Fishing XP!</green>"
+  
+  # Existing Perks (for reference - add if missing)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>Flight</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Gain the ability to fly</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>Glow</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Apply a glowing effect to yourself</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>Haste</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mine and dig faster</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>Jump Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Jump higher than normal</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>Keep Experience</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your XP when you die</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>Keep Inventory</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Keep your items when you die</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>Night Vision</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>See clearly in the dark</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>No Fall Damage</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Take no damage from falling</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Take less damage from all sources</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>Saturation</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Never get hungry</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>Speed</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Move faster than normal</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>Strength</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Deal more damage in combat</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>Fire Resistance</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Immunity to fire and lava damage</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>Double Experience</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Gain double XP from all sources</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>Critical Strike</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Chance to deal critical damage</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Heal when dealing damage to enemies</gradient>"
+
+# ============================================
+# RANK MESSAGES
+# ============================================
+rank:
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 RANK UP!</gradient> <gradient:#6b7280:#9ca3af>You've completed all requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Use the rank menu to claim your rank upgrade!</gradient>"

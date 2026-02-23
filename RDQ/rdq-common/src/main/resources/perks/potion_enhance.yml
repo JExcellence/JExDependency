@@ -1,7 +1,7 @@
 # Potion Enhance
 # Enhances potion when player consumes
 identifier: "potion_enhance"
-perkType: "PASSIVE"
+perkType: "EVENT_TRIGGERED"
 category: "UTILITY"
 enabled: true
 displayOrder: 17
@@ -21,11 +21,9 @@ requirements:
 
   currency_requirement:
     type: "CURRENCY"
-    currencyRequirement:
-      currencyType: "coins"
-      requiredCurrencies:
-        coins: 2000.0
-      consumeOnComplete: true
+    currency: "coins"
+    amount: 2000.0
+    consumable: true
     icon:
       type: "GOLD_INGOT"
 
@@ -37,9 +35,9 @@ unlockRewards:
 
 effect:
   triggerEvent: "PLAYER_ITEM_CONSUME_EVENT"
-  cooldownMillis: 30000  # 30 seconds
-  triggerChance: 60.0  # 60% chance
+  cooldownMillis: 45000  # 45 seconds (was 30 - increased due to power)
+  triggerChance: 25.0  # 25% chance (was 60% - way too high!)
   customConfig:
-    amplify: 2.0  # Double potion amplification
+    amplify: 1.5  # 50% stronger (was 2.0 = double)
     playSound: true
     soundType: "ENTITY_PLAYER_LEVELUP"

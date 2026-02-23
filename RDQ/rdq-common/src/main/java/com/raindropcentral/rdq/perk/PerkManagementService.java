@@ -84,45 +84,55 @@ public class PerkManagementService {
             @NotNull final Perk perk,
             final boolean autoEnable
     ) {
-        return findByPlayerAndPerk(player, perk)
+        // Always check DB first to avoid race conditions with cache
+        return findByPlayerAndPerkFromDB(player, perk)
                 .thenCompose(existingOpt -> {
                     if (existingOpt.isPresent()) {
                         PlayerPerk existing = existingOpt.get();
+                        boolean needsUpdate = false;
+                        
                         if (!existing.isUnlocked()) {
                             existing.setUnlocked(true);
-                            if (autoEnable) {
-                                existing.setEnabled(true);
-                            }
-                            // Update in cache (marks as dirty)
+                            needsUpdate = true;
+                        }
+                        
+                        if (autoEnable && !existing.isEnabled()) {
+                            existing.setEnabled(true);
+                            needsUpdate = true;
+                        }
+                        
+                        if (needsUpdate) {
+                            // Update cache if loaded (marks as dirty for later DB save)
                             if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
                                 cache.updatePlayerPerk(player.getUniqueId(), existing);
+                                LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2}) - updated in cache", 
+                                        new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
+                                return CompletableFuture.completedFuture(existing);
                             } else {
-                                // Fallback to direct DB update
+                                // Only update DB directly if cache is not loaded
                                 return CompletableFuture.supplyAsync(() -> {
                                     playerPerkRepository.update(existing);
+                                    LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2}) - updated in DB", 
+                                            new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
                                     return existing;
                                 });
                             }
-                            LOGGER.log(Level.INFO, "Granted perk {0} to player {1} (unlocked=true, enabled={2})", 
-                                    new Object[]{perk.getIdentifier(), player.getUniqueId(), autoEnable});
                         }
+                        
                         return CompletableFuture.completedFuture(existing);
                     }
                     
                     // Create new PlayerPerk association
                     PlayerPerk playerPerk = new PlayerPerk(player, perk);
                     playerPerk.setUnlocked(true);
-                    // Note: enabled state is NOT set in DB, only in cache
+                    if (autoEnable) {
+                        playerPerk.setEnabled(true);
+                    }
                     
                     return CompletableFuture.supplyAsync(() -> {
                         try {
-                            // Save to DB immediately for new entities (only unlocked=true)
+                            // Save to DB with both unlocked and enabled states
                             PlayerPerk saved = playerPerkRepository.save(playerPerk);
-                            
-                            // If autoEnable, set enabled state in cache only
-                            if (autoEnable) {
-                                saved.setEnabled(true);
-                            }
                             
                             // Add to cache
                             if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {

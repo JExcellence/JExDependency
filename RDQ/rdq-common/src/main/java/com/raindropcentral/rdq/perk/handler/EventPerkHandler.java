@@ -6,6 +6,9 @@ import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PerkType;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import de.jexcellence.jextranslate.i18n.I18n;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerFishEvent;
@@ -37,6 +40,7 @@ public class EventPerkHandler {
     
     private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     private static final Gson GSON = new Gson();
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     
     // Track registered event perks by player UUID and event type
     private final Map<UUID, Map<String, Set<PlayerPerk>>> registeredPerks = new ConcurrentHashMap<>();
@@ -51,10 +55,11 @@ public class EventPerkHandler {
      * Registers an event-triggered perk for a player.
      * The perk will be checked when the configured event occurs.
      *
+     * @param player the Bukkit player
      * @param playerPerk the player perk to register
      * @return true if registered successfully, false otherwise
      */
-    public boolean registerEventPerk(@NotNull final PlayerPerk playerPerk) {
+    public boolean registerEventPerk(@NotNull final Player player, @NotNull final PlayerPerk playerPerk) {
         Perk perk = playerPerk.getPerk();
         JsonObject config = parseConfig(perk.getConfigJson());
         
@@ -68,7 +73,7 @@ public class EventPerkHandler {
             return false;
         }
         
-        UUID playerUuid = playerPerk.getPlayer().getUniqueId();
+        UUID playerUuid = player.getUniqueId();
         
         // Register the perk for this event type
         registeredPerks
@@ -85,10 +90,11 @@ public class EventPerkHandler {
     /**
      * Unregisters an event-triggered perk for a player.
      *
+     * @param player the Bukkit player
      * @param playerPerk the player perk to unregister
      * @return true if unregistered successfully, false otherwise
      */
-    public boolean unregisterEventPerk(@NotNull final PlayerPerk playerPerk) {
+    public boolean unregisterEventPerk(@NotNull final Player player, @NotNull final PlayerPerk playerPerk) {
         Perk perk = playerPerk.getPerk();
         JsonObject config = parseConfig(perk.getConfigJson());
         
@@ -102,7 +108,7 @@ public class EventPerkHandler {
             return false;
         }
         
-        UUID playerUuid = playerPerk.getPlayer().getUniqueId();
+        UUID playerUuid = player.getUniqueId();
         
         // Unregister the perk
         Map<String, Set<PlayerPerk>> playerEvents = registeredPerks.get(playerUuid);
@@ -203,10 +209,15 @@ public class EventPerkHandler {
                 new Object[]{perk.getIdentifier(), player.getName()});
         
         // Apply the perk effect based on configuration
-        applyEventEffect(player, playerPerk, eventType, args);
+        boolean effectApplied = applyEventEffect(player, playerPerk, eventType, args);
         
-        // Start cooldown if configured
-        checkAndStartCooldown(playerPerk);
+        // Start cooldown only if the effect was actually applied
+        if (effectApplied) {
+            checkAndStartCooldown(playerPerk);
+        } else {
+            LOGGER.log(Level.FINE, "Perk {0} effect was not applied for player {1}, skipping cooldown",
+                    new Object[]{perk.getIdentifier(), player.getName()});
+        }
     }
     
     /**
@@ -276,8 +287,9 @@ public class EventPerkHandler {
      * @param playerPerk the player perk
      * @param eventType the event type
      * @param args event arguments
+     * @return true if the effect was successfully applied, false otherwise
      */
-    private void applyEventEffect(
+    private boolean applyEventEffect(
             @NotNull final Player player,
             @NotNull final PlayerPerk playerPerk,
             @NotNull final String eventType,
@@ -285,6 +297,9 @@ public class EventPerkHandler {
     ) {
         Perk perk = playerPerk.getPerk();
         JsonObject config = parseConfig(perk.getConfigJson());
+        
+        // Track if any effect was applied
+        boolean effectApplied = false;
         
         // TODO: Implement specific effect handling based on customConfig
         // For now, just log that the effect would be applied
@@ -299,7 +314,7 @@ public class EventPerkHandler {
                 double healAmount = customConfig.get("healAmount").getAsDouble();
                 double newHealth  = Math.min(
                     player.getHealth() + healAmount,
-                    player.getMaxHealth()
+                    player.getAttribute(Attribute.MAX_HEALTH).getValue()
                 );
                 player.setHealth(newHealth);
                 
@@ -308,23 +323,38 @@ public class EventPerkHandler {
                     "Healed player {0} for {1} health",
                     new Object[]{player.getName(), healAmount}
                 );
+                effectApplied = true;
             }
             
             //Amplify potion consumed
             if (customConfig.has("amplify")) {
                 double amplify = customConfig.get("amplify").getAsDouble();
-                if (args[0] instanceof PlayerItemConsumeEvent event) {
+                if (args.length > 0 && args[0] instanceof PlayerItemConsumeEvent event) {
                     if (event.getItem().getItemMeta() instanceof PotionMeta potionMeta) {
-                        List<PotionEffect> effects = potionMeta.getAllEffects();
-                        potionMeta.clearCustomEffects();
+                        List<PotionEffect> effects = potionMeta.getCustomEffects();
+                        
+                        // Cancel event FIRST to prevent normal potion effects
+                        event.setCancelled(true);
+                        
+                        // Apply amplified effects to player
                         for (PotionEffect potionEffect : effects) {
                             player.addPotionEffect(new PotionEffect(
                                 potionEffect.getType(),
                                 potionEffect.getDuration(),
                                 (int) (potionEffect.getAmplifier() * amplify),
-                                potionEffect.isAmbient()
-                            ));
+                                potionEffect.isAmbient(),
+                                potionEffect.hasParticles(),
+                                potionEffect.hasIcon()
+                            ), true); // Force override existing effects
                         }
+                        
+                        // Manually consume item
+                        org.bukkit.inventory.ItemStack item = event.getItem();
+                        item.setAmount(item.getAmount() - 1);
+                        
+                        // Send translated message
+                        new I18n.Builder("perk.messages.potion_enhanced", player).build().sendMessage();
+                        effectApplied = true;
                     }
                 }
             }
@@ -332,18 +362,32 @@ public class EventPerkHandler {
             //Extend potion duration
             if (customConfig.has("rate")) {
                 double rate = customConfig.get("rate").getAsDouble();
-                if (args[0] instanceof PlayerItemConsumeEvent event) {
+                if (args.length > 0 && args[0] instanceof PlayerItemConsumeEvent event) {
                     if (event.getItem().getItemMeta() instanceof PotionMeta potionMeta) {
-                        List<PotionEffect> effects = potionMeta.getAllEffects();
-                        potionMeta.clearCustomEffects();
+                        List<PotionEffect> effects = potionMeta.getCustomEffects();
+                        
+                        // Cancel event FIRST to prevent normal potion effects
+                        event.setCancelled(true);
+                        
+                        // Apply extended effects to player
                         for (PotionEffect potionEffect : effects) {
                             player.addPotionEffect(new PotionEffect(
                                 potionEffect.getType(),
                                 (int) (potionEffect.getDuration() * rate),
                                 potionEffect.getAmplifier(),
-                                potionEffect.isAmbient()
-                            ));
+                                potionEffect.isAmbient(),
+                                potionEffect.hasParticles(),
+                                potionEffect.hasIcon()
+                            ), true); // Force override existing effects
                         }
+                        
+                        // Manually consume item
+                        org.bukkit.inventory.ItemStack item = event.getItem();
+                        item.setAmount(item.getAmount() - 1);
+                        
+                        // Send translated message
+                        new I18n.Builder("perk.messages.potion_extended", player).build().sendMessage();
+                        effectApplied = true;
                     }
                 }
             }
@@ -351,20 +395,23 @@ public class EventPerkHandler {
             //Give potion back
             if (customConfig.has("saved")) {
                 int saved = customConfig.get("saved").getAsInt();
-                if (args[0] instanceof PlayerItemConsumeEvent event) {
+                if (args.length > 0 && args[0] instanceof PlayerItemConsumeEvent event) {
                     for (int i = 0; i < saved; i++) {
-                        player.getInventory().addItem(event.getItem());
+                        player.getInventory().addItem(event.getItem().clone());
                     }
+                    // Send translated message
+                    new I18n.Builder("perk.messages.potion_saved", player).build().sendMessage();
+                    effectApplied = true;
                 }
             }
             
             //Improve fishing rates
-            if (customConfig.has("setMinWaitTime")) {
+            if (customConfig.has("minWaitTime")) {
                 double minWaitTime  = customConfig.get("minWaitTime").getAsDouble();
                 double maxWaitTime  = customConfig.get("maxWaitTime").getAsDouble();
                 double minLureTime  = customConfig.get("minLureTime").getAsDouble();
                 double maxLureTime  = customConfig.get("maxLureTime").getAsDouble();
-                if (args[0] instanceof PlayerFishEvent event) {
+                if (args.length > 0 && args[0] instanceof PlayerFishEvent event) {
                     if (event.getState() == PlayerFishEvent.State.FISHING) {
                         FishHook hook = event.getHook();
                         
@@ -372,6 +419,10 @@ public class EventPerkHandler {
                         hook.setMaxWaitTime((int) maxWaitTime);
                         hook.setMinLureTime((int) minLureTime);
                         hook.setMaxLureTime((int) maxLureTime);
+                        
+                        // Send translated message
+                        new I18n.Builder("perk.messages.fishing_active", player).build().sendMessage();
+                        effectApplied = true;
                     }
                 }
                 
@@ -381,15 +432,134 @@ public class EventPerkHandler {
             if (customConfig.has("vanilla")) {
                 double vanilla =  customConfig.get("vanilla").getAsDouble();
                 double skill =  customConfig.get("skill").getAsDouble();
-                if (args[0] instanceof PlayerFishEvent event) {
+                if (args.length > 0 && args[0] instanceof PlayerFishEvent event) {
                     if (event.getState() == PlayerFishEvent.State.CAUGHT_FISH) {
+                        // Give vanilla Minecraft XP
                         player.giveExp((int) vanilla);
-                        // TODO Add fishing XP for skill plugins
+                        
+                        // Send translated message with XP amount
+                        new I18n.Builder("perk.messages.fishing_xp", player)
+                                .withPlaceholder("xp", String.valueOf((int)vanilla))
+                                .build()
+                                .sendMessage();
+                        
+                        // Give skill plugin XP if available
+                        if (skill > 0) {
+                            giveSkillPluginXP(player, "fishing", skill);
+                        }
+                        effectApplied = true;
                     }
                 }
             }
             
+            // Play sound if configured
+            if (customConfig.has("playSound") && customConfig.get("playSound").getAsBoolean()) {
+                String soundType = customConfig.has("soundType") ? 
+                    customConfig.get("soundType").getAsString() : "ENTITY_PLAYER_LEVELUP";
+                
+                try {
+                    // Use the enum constant directly
+                    org.bukkit.Sound sound = org.bukkit.Sound.valueOf(soundType);
+                    player.playSound(player.getLocation(), sound, 1.0f, 1.0f);
+                    effectApplied = true;
+                } catch (IllegalArgumentException e) {
+                    LOGGER.log(Level.WARNING, "Invalid sound type: " + soundType, e);
+                }
+            }
+            
             // Add more effect types as needed
+        }
+        
+        return effectApplied;
+    }
+    
+    /**
+     * Gives skill plugin XP to a player for a specific skill.
+     * Supports EcoSkills and McMMO.
+     *
+     * @param player the player
+     * @param skillName the skill name (e.g., "fishing")
+     * @param amount the amount of XP to give
+     */
+    private void giveSkillPluginXP(@NotNull final Player player, @NotNull final String skillName, double amount) {
+        // Try EcoSkills first
+        if (tryGiveEcoSkillsXP(player, skillName, amount)) {
+            return;
+        }
+        
+        // Try McMMO
+        if (tryGiveMcMMOXP(player, skillName, amount)) {
+            return;
+        }
+        
+        LOGGER.log(Level.FINE, "No skill plugin available to give {0} XP for skill {1}",
+                new Object[]{amount, skillName});
+    }
+    
+    /**
+     * Attempts to give EcoSkills XP.
+     *
+     * @return true if successful, false if EcoSkills not available
+     */
+    private boolean tryGiveEcoSkillsXP(@NotNull final Player player, @NotNull final String skillName, double amount) {
+        try {
+            // Check if EcoSkills is available
+            org.bukkit.plugin.Plugin plugin = org.bukkit.Bukkit.getPluginManager().getPlugin("EcoSkills");
+            if (plugin == null || !plugin.isEnabled()) {
+                return false;
+            }
+            
+            // Get EcoSkills API
+            Class<?> apiClass = Class.forName("com.willfp.ecoskills.api.EcoSkillsAPI");
+            java.lang.reflect.Method getInstanceMethod = apiClass.getMethod("getInstance");
+            Object apiInstance = getInstanceMethod.invoke(null);
+            
+            // Give XP: EcoSkillsAPI.getInstance().giveSkillExperience(player, skillName, amount)
+            java.lang.reflect.Method giveXPMethod = apiClass.getMethod("giveSkillExperience", 
+                    Player.class, String.class, double.class);
+            giveXPMethod.invoke(apiInstance, player, skillName, amount);
+            
+            LOGGER.log(Level.FINE, "Gave {0} EcoSkills {1} XP to player {2}",
+                    new Object[]{amount, skillName, player.getName()});
+            return true;
+            
+        } catch (Exception e) {
+            LOGGER.log(Level.FINE, "EcoSkills not available or failed to give XP", e);
+            return false;
+        }
+    }
+    
+    /**
+     * Attempts to give McMMO XP.
+     *
+     * @return true if successful, false if McMMO not available
+     */
+    private boolean tryGiveMcMMOXP(@NotNull final Player player, @NotNull final String skillName, double amount) {
+        try {
+            // Check if McMMO is available
+            org.bukkit.plugin.Plugin plugin = org.bukkit.Bukkit.getPluginManager().getPlugin("mcMMO");
+            if (plugin == null || !plugin.isEnabled()) {
+                return false;
+            }
+            
+            // Get McMMO ExperienceAPI
+            Class<?> experienceAPI = Class.forName("com.gmail.nossr50.api.ExperienceAPI");
+            
+            // Convert skill name to McMMO format (FISHING)
+            String mcmmoSkillName = skillName.toUpperCase();
+            
+            // Give XP: ExperienceAPI.addXP(player, skillName, amount)
+            java.lang.reflect.Method addXPMethod = experienceAPI.getMethod("addXP", 
+                    Player.class, String.class, int.class);
+            addXPMethod.invoke(null, player, mcmmoSkillName, (int) amount);
+            
+            LOGGER.log(Level.FINE, "Gave {0} McMMO {1} XP to player {2}",
+                    new Object[]{amount, mcmmoSkillName, player.getName()});
+            return true;
+            
+        } catch (Exception e) {
+            LOGGER.log(Level.FINE, "McMMO not available or failed to give XP", e);
+            return false;
         }
     }
     

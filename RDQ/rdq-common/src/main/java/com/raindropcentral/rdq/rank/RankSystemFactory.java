@@ -824,7 +824,7 @@ public class RankSystemFactory {
             try {
                 LOGGER.info("Parsing reward '" + key + "' of type: " + section.getType());
 
-                final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>)   (RewardFactory<?>) RewardFactory.getInstance();
+                final RewardFactory<RewardSection> rewardFactory = (RewardFactory<RewardSection>) (RewardFactory<?>) RewardFactory.getInstance();
                 AbstractReward abstractReward;
                 
                 try {

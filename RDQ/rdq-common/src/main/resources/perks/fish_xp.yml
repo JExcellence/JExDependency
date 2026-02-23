@@ -1,7 +1,7 @@
 # Fish XP
 # Extra XP from fishing
 identifier: "fish_xp"
-perkType: "PASSIVE"
+perkType: "EVENT_TRIGGERED"
 category: "UTILITY"
 enabled: true
 displayOrder: 20
@@ -21,11 +21,9 @@ requirements:
 
   currency_requirement:
     type: "CURRENCY"
-    currencyRequirement:
-      currencyType: "coins"
-      requiredCurrencies:
-        coins: 5000.0
-      consumeOnComplete: true
+    currency: "coins"
+    amount: 5000.0
+    consumable: true
     icon:
       type: "GOLD_INGOT"
 
@@ -37,10 +35,10 @@ unlockRewards:
 
 effect:
   triggerEvent: "PLAYER_FISH_EVENT"
-  cooldownMillis: 30000  # 30 seconds
+  cooldownMillis: 60000  # 60 seconds (was 30)
   triggerChance: 25.0  # 25% chance
   customConfig:
-    vanilla: 100.0  # Vanilla MC XP
-    skill: 1000.0   # Skill plugin fishing XP
+    vanilla: 5.0  # 5 extra XP (was 100 - way too much!)
+    skill: 50.0   # 50 skill XP (was 1000)
     playSound: true
     soundType: "ENTITY_PLAYER_LEVELUP"

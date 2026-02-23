@@ -4,10 +4,12 @@ import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.database.entity.rank.RPlayerRankUpgradeProgress;
 import com.raindropcentral.rdq.database.entity.rank.RRankUpgradeRequirement;
+import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.requirement.RequirementService;
 import com.raindropcentral.rplatform.requirement.event.RequirementCheckEvent;
 import com.raindropcentral.rplatform.requirement.event.RequirementConsumeEvent;
 import com.raindropcentral.rplatform.requirement.event.RequirementMetEvent;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -21,10 +23,11 @@ import java.util.logging.Logger;
 
 /**
  * Automatically tracks rank requirement progress by listening to requirement events.
+ * Only processes requirements that belong to ranks, not perks.
  */
 public class RankRequirementListener implements Listener {
 
-    private static final Logger LOGGER = Logger.getLogger(RankRequirementListener.class.getName());
+    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
     
     private final RDQ rdq;
     private final RequirementService requirementService;
@@ -85,6 +88,10 @@ public class RankRequirementListener implements Listener {
             RDQPlayer rdqPlayer = rdqPlayerOpt.get();
             Optional<RRankUpgradeRequirement> upgradeReqOpt = findMatchingRankRequirement(rdqPlayer, requirementTypeId);
             if (upgradeReqOpt.isEmpty()) {
+                // This requirement doesn't belong to any rank requirement for this player
+                // It might be a perk requirement, so we skip it
+                LOGGER.fine("No matching rank requirement found for " + requirementTypeId + 
+                           " for player " + player.getName() + " (might be a perk requirement)");
                 return;
             }
             
@@ -193,9 +200,15 @@ public class RankRequirementListener implements Listener {
                 
                 Bukkit.getScheduler().runTask(rdq.getPlugin(), () -> {
                     if (player.isOnline()) {
-                        player.sendMessage("§a§lRANK UP! §7You've completed all requirements for " + 
-                                          currentRank.getDisplayNameKey());
-                        player.sendMessage("§7Use the rank menu to claim your rank upgrade!");
+                        // Send translated rank-up notification
+                        new I18n.Builder("rank.messages.requirements_complete", player)
+                                .withPlaceholder("rank", currentRank.getDisplayNameKey())
+                                .build()
+                                .sendMessage();
+                        
+                        new I18n.Builder("rank.messages.claim_upgrade", player)
+                                .build()
+                                .sendMessage();
                     }
                 });
             }

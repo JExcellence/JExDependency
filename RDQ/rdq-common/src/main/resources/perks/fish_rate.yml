@@ -1,7 +1,7 @@
 # Fish Rate
 # Improve fishing rates to catch fish faster
 identifier: "fish_rate"
-perkType: "PASSIVE"
+perkType: "EVENT_TRIGGERED"
 category: "UTILITY"
 enabled: true
 displayOrder: 21
@@ -21,11 +21,9 @@ requirements:
 
   currency_requirement:
     type: "CURRENCY"
-    currencyRequirement:
-      currencyType: "coins"
-      requiredCurrencies:
-        coins: 5000.0
-      consumeOnComplete: true
+    currency: "coins"
+    amount: 5000.0
+    consumable: true
     icon:
       type: "GOLD_INGOT"
 
@@ -37,14 +35,14 @@ unlockRewards:
 
 effect:
   triggerEvent: "PLAYER_FISH_EVENT"
-  cooldownMillis: 30000  # 30 seconds
+  cooldownMillis: 60000  # 60 seconds (was 30)
   triggerChance: 25.0  # 25% chance
   customConfig:
-    # Lower values to catch fish faster - Default 5-30 seconds
-    minWaitTime: 60.0  # 3 seconds
-    maxWaitTime: 100.0 # 5 seconds
+    # More balanced values - Default MC: 100-600 ticks (5-30 seconds)
+    minWaitTime: 200  # 10 seconds (was 60 = 3 seconds)
+    maxWaitTime: 400  # 20 seconds (was 100 = 5 seconds)
     # Lower values to lure fish faster (time fish circles before biting)
-    minLureTime: 10.0
-    maxLureTime: 30.0
+    minLureTime: 20   # 1 second
+    maxLureTime: 60   # 3 seconds
     playSound: true
     soundType: "ENTITY_PLAYER_LEVELUP"

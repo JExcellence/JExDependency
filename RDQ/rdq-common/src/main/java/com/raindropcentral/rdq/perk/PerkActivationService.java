@@ -296,7 +296,7 @@ public class PerkActivationService {
             case EVENT_TRIGGERED:
             case PERCENTAGE_BASED:
                 // Register with event handler
-                return eventPerkHandler.registerEventPerk(playerPerk);
+                return eventPerkHandler.registerEventPerk(player, playerPerk);
                 
             case COOLDOWN_BASED:
                 // Manual activation perks - effects applied when triggered
@@ -381,7 +381,7 @@ public class PerkActivationService {
             case EVENT_TRIGGERED:
             case PERCENTAGE_BASED:
                 // Unregister from event handler
-                return eventPerkHandler.unregisterEventPerk(playerPerk);
+                return eventPerkHandler.unregisterEventPerk(player, playerPerk);
                 
             case COOLDOWN_BASED:
                 // Manual activation perks - no persistent effects to remove

@@ -408,6 +408,48 @@ public class PerkEventListener implements Listener {
         });
     }
     
+    /**
+     * Handles player fishing events for fishing-related perks.
+     * Triggers perks that activate when a player fishes.
+     *
+     * @param event the player fish event
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerFish(@NotNull final org.bukkit.event.player.PlayerFishEvent event) {
+        Player player = event.getPlayer();
+        
+        // Check if perk system is initialized
+        if (perkActivationService == null) {
+            return;
+        }
+        
+        LOGGER.log(Level.FINE, "Player {0} fishing, processing fishing perks", player.getName());
+        
+        // Execute asynchronously
+        rdq.getExecutor().submit(() -> {
+            try {
+                Optional<RDQPlayer> rdqPlayerOpt = findRDQPlayer(player);
+                if (rdqPlayerOpt.isEmpty()) {
+                    return;
+                }
+                
+                RDQPlayer rdqPlayer = rdqPlayerOpt.get();
+                
+                // Process fishing event
+                perkActivationService.handleEvent(player, rdqPlayer, "PLAYER_FISH_EVENT", event)
+                                     .exceptionally(throwable -> {
+                                         LOGGER.log(Level.SEVERE, "Failed to process fishing event for player " +
+                                                                  player.getName(), throwable);
+                                         return null;
+                                     });
+                
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Error handling fishing event for perk system: " +
+                                         player.getName(), e);
+            }
+        });
+    }
+    
     // ==================== Utility Methods ====================
     
     /**
