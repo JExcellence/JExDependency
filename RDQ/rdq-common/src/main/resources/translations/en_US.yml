@@ -1694,13 +1694,33 @@ perk:
     name: "<gradient:#10b981:#34d399>Potion Refund</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Chance to get your potion back after drinking it</gradient>"
   
-  # Perk Trigger Messages
+  # Perk Messages
   messages:
-    potion_enhanced: "<gold>Potion Enhanced!</gold>"
-    potion_extended: "<gold>Potion Duration Extended!</gold>"
-    potion_saved: "<gold>Potion Saved!</gold>"
-    fishing_active: "<aqua>Faster Fishing Active!</aqua>"
-    fishing_xp: "<green>+%xp% Fishing XP!</green>"
+    # Unlock/Enable/Disable
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ Perk Unlocked!</gradient> <gradient:#6b7280:#9ca3af>You've unlocked</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Successfully unlocked and enabled perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Failed to unlock perk. Please try again.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>You don't meet the requirements to unlock this perk!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>Enabled perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Failed to enable perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>You've reached the maximum number of enabled perks (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>Disabled perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Failed to disable perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # Cooldown
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>This perk is on cooldown for</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Perk is ready to use!</gradient>"
+    
+    # Effect Triggers
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Potion Enhanced!</gradient> <gradient:#6b7280:#9ca3af>Effects amplified</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Potion Duration Extended!</gradient> <gradient:#6b7280:#9ca3af>Lasts longer</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 Potion Saved!</gradient> <gradient:#6b7280:#9ca3af>Returned to inventory</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Faster Fishing Active!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% Fishing XP!</gradient>"
   
   # Existing Perks (for reference - add if missing)
   fly:

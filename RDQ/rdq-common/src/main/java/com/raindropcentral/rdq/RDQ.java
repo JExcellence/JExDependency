@@ -325,19 +325,6 @@ public abstract class RDQ {
 			// Inject cache into activation service
 			perkActivationService.setCache(playerPerkCache);
 
-			plugin.getServer().getPluginManager().registerEvents(
-					perkActivationService.getSpecialPerkHandler(), 
-					plugin
-			);
-			LOGGER.info("Registered SpecialPerkHandler");
-
-			// Register cache listener
-			plugin.getServer().getPluginManager().registerEvents(
-					new com.raindropcentral.rdq.perk.cache.PerkCacheListener(playerPerkCache),
-					plugin
-			);
-			LOGGER.info("Registered PerkCacheListener");
-
 			perkActivationService.startScheduledTasks();
 			
 			LOGGER.info("Perk system initialized successfully!");
@@ -382,22 +369,5 @@ public abstract class RDQ {
 		}
 		
 		LOGGER.info("RDQ (" + edition + ") Edition disabled successfully!");
-	}
-	
-	/**
-	 * Gets the RPlatform instance.
-	 * @return the platform instance
-	 */
-	@org.jetbrains.annotations.NotNull
-	public RPlatform getPlatform() {
-		return platform;
-	}
-	
-	/**
-	 * Gets the player perk cache.
-	 * @return the player perk cache
-	 */
-	public com.raindropcentral.rdq.perk.cache.PlayerPerkCache getPlayerPerkCache() {
-		return playerPerkCache;
 	}
 }

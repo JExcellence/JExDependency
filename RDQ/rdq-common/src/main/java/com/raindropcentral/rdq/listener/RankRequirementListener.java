@@ -58,11 +58,29 @@ public class RankRequirementListener implements Listener {
         String requirementTypeId = event.getRequirement().getTypeId();
         double progress = event.getProgress();
         
-        LOGGER.info("Requirement met for " + player.getName() + ": " + requirementTypeId + 
+        LOGGER.fine("Requirement met for " + player.getName() + ": " + requirementTypeId + 
                     " (progress: " + progress + ")");
         
         rdq.getExecutor().submit(() -> {
             try {
+                // Only process rank requirements, not perk requirements
+                Optional<RDQPlayer> rdqPlayerOpt = findRDQPlayer(player);
+                if (rdqPlayerOpt.isEmpty()) {
+                    return;
+                }
+                
+                RDQPlayer rdqPlayer = rdqPlayerOpt.get();
+                Optional<RRankUpgradeRequirement> upgradeReqOpt = findMatchingRankRequirement(rdqPlayer, requirementTypeId);
+                
+                if (upgradeReqOpt.isEmpty()) {
+                    // This requirement doesn't belong to any rank requirement for this player
+                    // It might be a perk requirement, so we skip it
+                    LOGGER.fine("Skipping non-rank requirement: " + requirementTypeId + 
+                               " for player " + player.getName());
+                    return;
+                }
+                
+                // This is a rank requirement, process it
                 updateProgressForPlayer(player, requirementTypeId, progress);
                 checkForRankUp(player);
             } catch (Exception e) {

@@ -47,6 +47,7 @@ public class EventPerkHandler {
 	
 	private final RDQ plugin;
 	private final Map<UUID, Map<String, Set<PlayerPerk>>> registeredPerks = new ConcurrentHashMap<>();
+	private final Map<String, PerkSection> configCache = new ConcurrentHashMap<>();
 	
 	public EventPerkHandler(@NotNull final RDQ plugin) {
 		this.plugin = plugin;
@@ -60,6 +61,8 @@ public class EventPerkHandler {
 	 * @return true if registered successfully, false otherwise
 	 */
 	public boolean registerEventPerk(@NotNull final Player player, @NotNull final PlayerPerk playerPerk) {
+		LOGGER.info("Attempting to register event perk " + playerPerk.getPerk().getIdentifier() + " for player " + player.getName());
+		
 		PerkSection perkSection = loadPerkConfig(playerPerk.getPerk());
 		if (perkSection == null || perkSection.getEffect() == null) {
 			LOGGER.warning("Cannot register perk " + playerPerk.getPerk().getIdentifier() + " - no effect config");
@@ -77,7 +80,9 @@ public class EventPerkHandler {
 				.computeIfAbsent(triggerEvent.toUpperCase(), k -> ConcurrentHashMap.newKeySet())
 				.add(playerPerk);
 		
-		LOGGER.info("Registered event perk " + playerPerk.getPerk().getIdentifier() + " for player " + player.getName());
+		LOGGER.info("Successfully registered event perk " + playerPerk.getPerk().getIdentifier() + 
+				" for player " + player.getName() + " on event " + triggerEvent + 
+				". Total registered perks for player: " + registeredPerks.get(player.getUniqueId()).size());
 		return true;
 	}
 	
@@ -124,13 +129,18 @@ public class EventPerkHandler {
 	 * @param args additional event arguments
 	 */
 	public void processEvent(@NotNull final Player player, @NotNull final String eventType, @NotNull final Object... args) {
+		LOGGER.fine("Processing event " + eventType + " for player " + player.getName());
+		
 		Map<String, Set<PlayerPerk>> playerEvents = registeredPerks.get(player.getUniqueId());
 		if (playerEvents == null) {
+			LOGGER.fine("No registered perks for player " + player.getName());
 			return;
 		}
 		
 		Set<PlayerPerk> perks = playerEvents.get(eventType.toUpperCase());
 		if (perks == null || perks.isEmpty()) {
+			LOGGER.fine("No perks registered for event " + eventType + " for player " + player.getName() + 
+					". Available events: " + playerEvents.keySet());
 			return;
 		}
 		
@@ -246,23 +256,33 @@ public class EventPerkHandler {
 			return false;
 		}
 		
+		// Cancel the event to prevent normal potion effects
 		event.setCancelled(true);
 		
-		for (PotionEffect effect : meta.getCustomEffects()) {
-			player.addPotionEffect(new PotionEffect(
-					effect.getType(),
-					(int) (effect.getDuration() * rate),
-					effect.getAmplifier(),
-					effect.isAmbient(),
-					effect.hasParticles(),
-					effect.hasIcon()
-			), true);
-		}
+		// Apply effects on next tick to ensure event cancellation is processed
+		plugin.getPlatform().getScheduler().runSync(() -> {
+			for (PotionEffect effect : meta.getAllEffects()) {
+				player.addPotionEffect(new PotionEffect(
+						effect.getType(),
+						(int) (effect.getDuration() * rate),
+						effect.getAmplifier(),
+						effect.isAmbient(),
+						effect.hasParticles(),
+						effect.hasIcon()
+				), true);
+			}
+			
+			// Manually consume the item from the player's hand
+			ItemStack itemInHand = player.getInventory().getItemInMainHand();
+			if (itemInHand.getAmount() > 1) {
+				itemInHand.setAmount(itemInHand.getAmount() - 1);
+			} else {
+				player.getInventory().setItemInMainHand(null);
+			}
+			
+			new I18n.Builder("perk.messages.potion_extended", player).build().sendMessage();
+		});
 		
-		ItemStack item = event.getItem();
-		item.setAmount(item.getAmount() - 1);
-		
-		new I18n.Builder("perk.messages.potion_extended", player).build().sendMessage();
 		return true;
 	}
 	
@@ -271,23 +291,33 @@ public class EventPerkHandler {
 			return false;
 		}
 		
+		// Cancel the event to prevent normal potion effects
 		event.setCancelled(true);
 		
-		for (PotionEffect effect : meta.getCustomEffects()) {
-			player.addPotionEffect(new PotionEffect(
-					effect.getType(),
-					effect.getDuration(),
-					(int) (effect.getAmplifier() * amplify),
-					effect.isAmbient(),
-					effect.hasParticles(),
-					effect.hasIcon()
-			), true);
-		}
+		// Apply effects on next tick to ensure event cancellation is processed
+		plugin.getPlatform().getScheduler().runSync(() -> {
+			for (PotionEffect effect : meta.getCustomEffects()) {
+				player.addPotionEffect(new PotionEffect(
+						effect.getType(),
+						effect.getDuration(),
+						(int) (effect.getAmplifier() * amplify),
+						effect.isAmbient(),
+						effect.hasParticles(),
+						effect.hasIcon()
+				), true);
+			}
+			
+			// Manually consume the item from the player's hand
+			ItemStack itemInHand = player.getInventory().getItemInMainHand();
+			if (itemInHand.getAmount() > 1) {
+				itemInHand.setAmount(itemInHand.getAmount() - 1);
+			} else {
+				player.getInventory().setItemInMainHand(null);
+			}
+			
+			new I18n.Builder("perk.messages.potion_enhanced", player).build().sendMessage();
+		});
 		
-		ItemStack item = event.getItem();
-		item.setAmount(item.getAmount() - 1);
-		
-		new I18n.Builder("perk.messages.potion_enhanced", player).build().sendMessage();
 		return true;
 	}
 	
@@ -350,14 +380,25 @@ public class EventPerkHandler {
 	
 	@Nullable
 	private PerkSection loadPerkConfig(@NotNull final Perk perk) {
-		try {
-			ConfigManager cfgManager = new ConfigManager(plugin.getPlugin(), PERKS_PATH);
-			ConfigKeeper<PerkSection> cfgKeeper = new ConfigKeeper<>(cfgManager, perk.getIdentifier() + ".yml", PerkSection.class);
-			return cfgKeeper.rootSection;
-		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, "Failed to load perk config for " + perk.getIdentifier(), e);
-			return null;
-		}
+		// Check cache first
+		return configCache.computeIfAbsent(perk.getIdentifier(), identifier -> {
+			try {
+				ConfigManager cfgManager = new ConfigManager(plugin.getPlugin(), PERKS_PATH);
+				ConfigKeeper<PerkSection> cfgKeeper = new ConfigKeeper<>(cfgManager, identifier + ".yml", PerkSection.class);
+				return cfgKeeper.rootSection;
+			} catch (Exception e) {
+				LOGGER.log(Level.WARNING, "Failed to load perk config for " + identifier, e);
+				return null;
+			}
+		});
+	}
+	
+	/**
+	 * Clears the config cache. Call this when configs are reloaded.
+	 */
+	public void clearConfigCache() {
+		configCache.clear();
+		LOGGER.info("Cleared perk config cache");
 	}
 	
 	public void cleanupPlayer(@NotNull final UUID playerUuid) {
