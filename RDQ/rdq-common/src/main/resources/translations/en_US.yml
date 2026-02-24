@@ -1542,6 +1542,9 @@ reward:
     type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Value:</gray> <gold>%value%</gold>"
   
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>You unlocked the perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
   # Reward type descriptions
   currency:
     description: "<gradient:#fbbf24:#fcd34d>Receive currency rewards</gradient>"
@@ -1701,6 +1704,7 @@ perk:
       notification: "<gradient:#10b981:#34d399>✨ Perk Unlocked!</gradient> <gradient:#6b7280:#9ca3af>You've unlocked</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       success: "<gradient:#10b981:#34d399>Successfully unlocked and enabled perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
       failed: "<gradient:#ef4444:#f87171>Failed to unlock perk. Please try again.</gradient>"
+      error: "<gradient:#ef4444:#f87171>An error occurred while unlocking the perk.</gradient>"
       requirements_not_met: "<gradient:#ef4444:#f87171>You don't meet the requirements to unlock this perk!</gradient>"
     enable:
       success: "<gradient:#10b981:#34d399>Enabled perk:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
@@ -1721,6 +1725,46 @@ perk:
     potion_saved: "<gradient:#10b981:#34d399>💾 Potion Saved!</gradient> <gradient:#6b7280:#9ca3af>Returned to inventory</gradient>"
     fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Faster Fishing Active!</gradient>"
     fishing_xp: "<gradient:#10b981:#34d399>+%xp% Fishing XP!</gradient>"
+  
+  # UI Elements
+  ui:
+    header:
+      type_label: "<gray>Type: <white>%type%</white></gray>"
+      category_label: "<gray>Category: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>No Requirements</green>"
+      no_requirements_lore: "<gray>This perk has no unlock requirements</gray>"
+    
+    rewards:
+      title: "<gold>Unlock Reward</gold>"
+      no_rewards: "<gray>No Unlock Rewards</gray>"
+      no_rewards_lore: "<gray>This perk has no unlock rewards</gray>"
+      type_label: "<gray>Type: <white>%type%</white></gray>"
+      value_label: "<gray>Value: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>Perk Status</white>"
+      locked: "<red>✖ Locked</red>"
+      locked_hint: "<gray>Complete requirements to unlock</gray>"
+      active: "<green>✓ Active</green>"
+      enabled: "<yellow>○ Enabled</yellow>"
+      disabled: "<gray>○ Disabled</gray>"
+      enabled_count: "<gray>Enabled Perks: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Cooldown: <gold>%time%</gold></gray>"
+      activations_label: "<gray>Activations: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>Unlock Perk</white>"
+        hint: "<green>Click to unlock this perk!</green>"
+      enable:
+        title: "<white>Enable Perk</white>"
+        hint: "<green>Click to enable this perk</green>"
+        limit_reached: "<red>Maximum enabled perks reached</red>"
+      disable:
+        title: "<white>Disable Perk</white>"
+        hint: "<yellow>Click to disable this perk</yellow>"
   
   # Existing Perks (for reference - add if missing)
   fly:

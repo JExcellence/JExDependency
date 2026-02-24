@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.logging.Logger;
-import java.util.logging.Logger;
 
 /**
  * Utility class for serializing and deserializing {@link AbstractRequirement} objects to and from JSON.
@@ -53,9 +52,6 @@ public final class RequirementParser {
      */
     private static @NotNull ObjectMapper createObjectMapper() {
         Logger logger = Logger.getLogger(RequirementParser.class.getName());
-        logger.info("Creating new ObjectMapper for requirement serialization...");
-        
-        // Get the registry (should already be initialized by RPlatform)
         RequirementRegistry registry = RequirementRegistry.getInstance();
         
         if (registry.getRequirementTypes().isEmpty()) {
@@ -66,9 +62,6 @@ public final class RequirementParser {
                 "RequirementRegistry not initialized. Call RPlatform.initialize() first."
             );
         }
-        
-        logger.info("Registry has " + registry.getRequirementTypes().size() + " types: " + 
-                    registry.getRequirementTypes().keySet());
         
         final SimpleModule bukkitModule = new SimpleModule("BukkitModule");
         bukkitModule.addSerializer(ItemStack.class, new ItemStackJSONSerializer());
@@ -84,8 +77,6 @@ public final class RequirementParser {
             .build();
         
         registry.configureObjectMapper(mapper);
-        
-        logger.info("ObjectMapper created and configured successfully");
 
         return mapper;
     }

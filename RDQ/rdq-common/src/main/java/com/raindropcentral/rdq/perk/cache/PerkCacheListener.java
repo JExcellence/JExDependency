@@ -1,81 +1,59 @@
 package com.raindropcentral.rdq.perk.cache;
 
+import com.raindropcentral.rdq.RDQ;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Event listener for managing perk cache lifecycle.
- * Loads cache on player join and saves on player quit.
+ * Event listener for managing simple perk cache lifecycle.
+ * <p>
+ * Loads all player perks on join (async) and saves all changes on quit (blocking).
+ * </p>
  *
  * @author JExcellence
- * @version 1.0.0
+ * @version 2.0.0
  */
 public class PerkCacheListener implements Listener {
-    
-    private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
-    
-    private final PlayerPerkCache cache;
-    
-    /**
-     * Creates a new PerkCacheListener.
-     *
-     * @param cache the player perk cache
-     */
-    public PerkCacheListener(@NotNull final PlayerPerkCache cache) {
-        this.cache = cache;
-    }
-    
-    /**
-     * Handles player join event by loading their perk cache.
-     *
-     * @param event the player join event
-     */
-    @EventHandler(priority = EventPriority.LOW)
-    public void onPlayerJoin(@NotNull final PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        UUID playerId = player.getUniqueId();
-        
-        LOGGER.log(Level.INFO, "Loading perk cache for player {0}", player.getName());
-        
-        cache.loadPlayerCache(playerId)
-                .thenRun(() -> {
-                    LOGGER.log(Level.INFO, "Perk cache loaded for player {0}", player.getName());
-                })
-                .exceptionally(throwable -> {
-                    LOGGER.log(Level.SEVERE, "Failed to load perk cache for player " + player.getName(), throwable);
-                    return null;
-                });
-    }
-    
-    /**
-     * Handles player quit event by saving and unloading their perk cache.
-     *
-     * @param event the player quit event
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerQuit(@NotNull final PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        UUID playerId = player.getUniqueId();
-        
-        LOGGER.log(Level.INFO, "Saving and unloading perk cache for player {0}", player.getName());
-        
-        cache.saveAndUnloadPlayerCache(playerId)
-                .thenRun(() -> {
-                    LOGGER.log(Level.INFO, "Perk cache saved for player {0}", player.getName());
-                })
-                .exceptionally(throwable -> {
-                    LOGGER.log(Level.SEVERE, "Failed to save perk cache for player " + player.getName(), throwable);
-                    return null;
-                });
-    }
+	
+	private static final Logger LOGGER = CentralLogger.getLoggerByName("RDQ");
+
+	private final RDQ rdq;
+
+	public PerkCacheListener(@NotNull final RDQ rdq) {
+		this.rdq = rdq;
+	}
+	
+	/**
+	 * Handles player join event by loading their perks asynchronously.
+	 *
+	 * @param event the player join event
+	 */
+	@EventHandler(priority = EventPriority.LOW)
+	public void onPlayerJoin(@NotNull final AsyncPlayerPreLoginEvent event) {
+		rdq.getPlayerPerkCache().loadPlayerAsync(event.getUniqueId()).exceptionally(throwable -> {LOGGER.log(java.util.logging.Level.SEVERE, "Failed to load perks for player " + event.getUniqueId(), throwable);return null;});
+	}
+	
+	/**
+	 * Handles player quit event by saving their perks synchronously.
+	 * This blocks to ensure data is saved before player disconnects.
+	 *
+	 * @param event the player quit event
+	 */
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onPlayerQuit(@NotNull final PlayerQuitEvent event) {
+		Player player = event.getPlayer();
+		UUID playerId = player.getUniqueId();
+		
+		LOGGER.fine("Saving perks for player " + player.getName());
+		rdq.getPlayerPerkCache().savePlayer(playerId);
+	}
 }

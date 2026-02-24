@@ -510,3 +510,76 @@ rank_requirements_journey_ui:
     not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Diese Anforderung ist noch nicht bereit zum Abschließen.</gradient>"
     already_completed: "<gradient:#10b981:#34d399>✅ Diese Anforderung wurde bereits abgeschlossen.</gradient>"
     rank_claimed: "<gradient:#10b981:#34d399>🎉 Glückwunsch! Du hast den Rang %rank_name% erhalten!</gradient>"
+
+
+# ============================================
+# PERK SYSTEM
+# ============================================
+perk:
+  messages:
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ Perk freigeschaltet!</gradient> <gradient:#6b7280:#9ca3af>Du hast freigeschaltet:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Perk erfolgreich freigeschaltet und aktiviert:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Perk konnte nicht freigeschaltet werden. Bitte versuche es erneut.</gradient>"
+      error: "<gradient:#ef4444:#f87171>Ein Fehler ist beim Freischalten des Perks aufgetreten.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>Du erfüllst die Anforderungen für diesen Perk nicht!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>Perk aktiviert:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Perk konnte nicht aktiviert werden:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>Du hast die maximale Anzahl aktiver Perks erreicht (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>Perk deaktiviert:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Perk konnte nicht deaktiviert werden:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>Dieser Perk hat noch Abklingzeit für</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Perk ist einsatzbereit!</gradient>"
+    
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Trank verstärkt!</gradient> <gradient:#6b7280:#9ca3af>Effekte verstärkt</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Trankdauer verlängert!</gradient> <gradient:#6b7280:#9ca3af>Hält länger an</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 Trank gespeichert!</gradient> <gradient:#6b7280:#9ca3af>Ins Inventar zurückgelegt</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Schnelleres Angeln aktiv!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% Angel-EP!</gradient>"
+  
+  ui:
+    header:
+      type_label: "<gray>Typ: <white>%type%</white></gray>"
+      category_label: "<gray>Kategorie: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>Keine Anforderungen</green>"
+      no_requirements_lore: "<gray>Dieser Perk hat keine Freischaltanforderungen</gray>"
+    
+    rewards:
+      title: "<gold>Freischaltbelohnung</gold>"
+      no_rewards: "<gray>Keine Freischaltbelohnungen</gray>"
+      no_rewards_lore: "<gray>Dieser Perk hat keine Freischaltbelohnungen</gray>"
+      type_label: "<gray>Typ: <white>%type%</white></gray>"
+      value_label: "<gray>Wert: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>Perk-Status</white>"
+      locked: "<red>✖ Gesperrt</red>"
+      locked_hint: "<gray>Erfülle die Anforderungen zum Freischalten</gray>"
+      active: "<green>✓ Aktiv</green>"
+      enabled: "<yellow>○ Aktiviert</yellow>"
+      disabled: "<gray>○ Deaktiviert</gray>"
+      enabled_count: "<gray>Aktivierte Perks: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Abklingzeit: <gold>%time%</gold></gray>"
+      activations_label: "<gray>Aktivierungen: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>Perk freischalten</white>"
+        hint: "<green>Klicke, um diesen Perk freizuschalten!</green>"
+      enable:
+        title: "<white>Perk aktivieren</white>"
+        hint: "<green>Klicke, um diesen Perk zu aktivieren</green>"
+        limit_reached: "<red>Maximale Anzahl aktiver Perks erreicht</red>"
+      disable:
+        title: "<white>Perk deaktivieren</white>"
+        hint: "<yellow>Klicke, um diesen Perk zu deaktivieren</yellow>"
+
+reward:
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Du hast den Perk freigeschaltet:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"

@@ -122,7 +122,7 @@ public abstract class RDQ {
 	private PerkManagementService perkManagementService;
 	private PerkActivationService perkActivationService;
 	private PerkRequirementService perkRequirementService;
-	private com.raindropcentral.rdq.perk.cache.PlayerPerkCache playerPerkCache;
+	private com.raindropcentral.rdq.perk.cache.SimplePerkCache playerPerkCache;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -293,15 +293,10 @@ public abstract class RDQ {
 
 			PerkSystemSection systemConfig = perkSystemFactory.getPerkSystemSection();
 
-			// Initialize perk cache
-			playerPerkCache = new com.raindropcentral.rdq.perk.cache.PlayerPerkCache(
+			// Initialize simple perk cache
+			playerPerkCache = new com.raindropcentral.rdq.perk.cache.SimplePerkCache(
 					playerPerkRepository,
-					systemConfig.getCacheEnabled(),
-					systemConfig.getCacheMaxRetries(),
-					systemConfig.getCacheRetryDelayMs(),
-					systemConfig.getCacheSaveTimeoutSeconds(),
-					systemConfig.getCacheLogPerformance(),
-					systemConfig.getCachePerformanceThresholdMs()
+					systemConfig.getCacheLogPerformance()
 			);
 
 			perkManagementService = new PerkManagementService(
@@ -342,11 +337,11 @@ public abstract class RDQ {
 
 		if (playerPerkCache != null) {
 			try {
-				LOGGER.info("Saving all perk caches before shutdown...");
-				playerPerkCache.saveAllCaches().get(30, java.util.concurrent.TimeUnit.SECONDS);
-				LOGGER.info("All perk caches saved successfully");
+				LOGGER.info("Saving all dirty perk caches before shutdown...");
+				int savedCount = playerPerkCache.autoSaveAll();
+				LOGGER.info("Saved " + savedCount + " player perk caches successfully");
 			} catch (Exception e) {
-				LOGGER.log(Level.SEVERE, "Failed to save all perk caches during shutdown", e);
+				LOGGER.log(Level.SEVERE, "Failed to save perk caches during shutdown", e);
 			}
 		}
 

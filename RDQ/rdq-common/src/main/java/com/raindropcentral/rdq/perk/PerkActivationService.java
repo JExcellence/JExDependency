@@ -49,7 +49,7 @@ public class PerkActivationService {
     private final PlayerPerkRepository playerPerkRepository;
     private final PerkManagementService perkManagementService;
     private final double cooldownMultiplier;
-    private com.raindropcentral.rdq.perk.cache.PlayerPerkCache cache;
+    private com.raindropcentral.rdq.perk.cache.SimplePerkCache cache;
     
     // Effect handlers
     private final PotionPerkHandler potionPerkHandler;
@@ -59,8 +59,9 @@ public class PerkActivationService {
     // Cache for active perks by player UUID
     private final Map<java.util.UUID, List<PlayerPerk>> activePerksCache = new ConcurrentHashMap<>();
     
-    // Scheduled task for cleaning up expired cooldowns
+    // Scheduled tasks
     private org.bukkit.scheduler.BukkitTask cooldownCleanupTask;
+    private org.bukkit.scheduler.BukkitTask autoSaveTask;
     
     /**
      * Constructs a new PerkActivationService.
@@ -88,14 +89,14 @@ public class PerkActivationService {
     }
     
     /**
-     * Sets the player perk cache.
+     * Sets the simple perk cache.
      * Called after initialization to inject the cache.
      *
-     * @param cache the player perk cache
+     * @param cache the simple perk cache
      */
-    public void setCache(@NotNull final com.raindropcentral.rdq.perk.cache.PlayerPerkCache cache) {
+    public void setCache(@NotNull final com.raindropcentral.rdq.perk.cache.SimplePerkCache cache) {
         this.cache = cache;
-        LOGGER.log(Level.INFO, "PlayerPerkCache injected into PerkActivationService");
+        LOGGER.info("SimplePerkCache injected into PerkActivationService");
     }
     
     // ==================== Activation/Deactivation Methods ====================
@@ -155,8 +156,8 @@ public class PerkActivationService {
             playerPerk.recordActivation();
             
             // Update in cache (marks as dirty) or DB
-            if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
-                cache.updatePlayerPerk(player.getUniqueId(), playerPerk);
+            if (cache != null && cache.isLoaded(player.getUniqueId())) {
+                cache.updatePerk(player.getUniqueId(), playerPerk);
                 LOGGER.log(Level.INFO, "Activated perk {0} for player {1}",
                         new Object[]{perk.getIdentifier(), player.getName()});
                 invalidateCache(player.getUniqueId());
@@ -227,8 +228,8 @@ public class PerkActivationService {
             playerPerk.recordDeactivation();
             
             // Update in cache (marks as dirty) or DB
-            if (cache != null && cache.isCacheLoaded(player.getUniqueId())) {
-                cache.updatePlayerPerk(player.getUniqueId(), playerPerk);
+            if (cache != null && cache.isLoaded(player.getUniqueId())) {
+                cache.updatePerk(player.getUniqueId(), playerPerk);
                 LOGGER.log(Level.INFO, "Deactivated perk {0} for player {1}",
                         new Object[]{perk.getIdentifier(), player.getName()});
                 invalidateCache(player.getUniqueId());
@@ -549,7 +550,7 @@ public class PerkActivationService {
     ) {
         LOGGER.log(Level.INFO, "Activating all enabled perks for player {0}", player.getName());
         
-        return perkManagementService.getEnabledPerksAsync(rdqPlayer)
+        return CompletableFuture.supplyAsync(() -> perkManagementService.getEnabledPerks(rdqPlayer))
                 .thenCompose(enabledPerks -> {
                     if (enabledPerks.isEmpty()) {
                         LOGGER.log(Level.FINE, "No enabled perks found for player {0}", player.getName());
@@ -594,7 +595,7 @@ public class PerkActivationService {
     ) {
         LOGGER.log(Level.INFO, "Deactivating all active perks for player {0}", player.getName());
         
-        return perkManagementService.getActivePerksAsync(rdqPlayer)
+        return CompletableFuture.supplyAsync(() -> perkManagementService.getActivePerks(rdqPlayer))
                 .thenCompose(activePerks -> {
                     if (activePerks.isEmpty()) {
                         LOGGER.log(Level.FINE, "No active perks found for player {0}", player.getName());
@@ -693,12 +694,13 @@ public class PerkActivationService {
 
     /**
      * Starts the scheduled tasks for perk management.
-     * This includes the potion effect refresh task and cooldown cleanup task.
+     * This includes the potion effect refresh task, cooldown cleanup task, and auto-save task.
      */
     public void startScheduledTasks() {
         potionPerkHandler.startRefreshTask();
         startCooldownCleanupTask();
-        LOGGER.log(Level.INFO, "Started perk system scheduled tasks");
+        startAutoSaveTask();
+        LOGGER.info("Started perk system scheduled tasks");
     }
     
     /**
@@ -707,7 +709,55 @@ public class PerkActivationService {
     public void stopScheduledTasks() {
         potionPerkHandler.stopRefreshTask();
         stopCooldownCleanupTask();
-        LOGGER.log(Level.INFO, "Stopped perk system scheduled tasks");
+        stopAutoSaveTask();
+        LOGGER.info("Stopped perk system scheduled tasks");
+    }
+    
+    /**
+     * Starts the auto-save task that periodically saves dirty player perks.
+     * Runs every 5 minutes for crash protection.
+     */
+    private void startAutoSaveTask() {
+        if (autoSaveTask != null && !autoSaveTask.isCancelled()) {
+            LOGGER.warning("Auto-save task is already running");
+            return;
+        }
+        
+        if (cache == null) {
+            LOGGER.warning("Cannot start auto-save task: cache not initialized");
+            return;
+        }
+        
+        // Run every 5 minutes (6000 ticks)
+        autoSaveTask = org.bukkit.Bukkit.getScheduler().runTaskTimerAsynchronously(
+                plugin.getPlugin(),
+                () -> {
+                    try {
+                        LOGGER.fine("Running auto-save task...");
+                        int savedCount = cache.autoSaveAll();
+                        if (savedCount > 0) {
+                            LOGGER.info("Auto-save completed: " + savedCount + " players saved");
+                        }
+                    } catch (Exception e) {
+                        LOGGER.log(Level.SEVERE, "Error during auto-save task", e);
+                    }
+                },
+                6000L, // Initial delay: 5 minutes
+                6000L  // Period: 5 minutes
+        );
+        
+        LOGGER.info("Started auto-save task (runs every 5 minutes)");
+    }
+    
+    /**
+     * Stops the auto-save task.
+     */
+    private void stopAutoSaveTask() {
+        if (autoSaveTask != null && !autoSaveTask.isCancelled()) {
+            autoSaveTask.cancel();
+            autoSaveTask = null;
+            LOGGER.info("Stopped auto-save task");
+        }
     }
     
     /**
