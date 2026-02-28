@@ -18,7 +18,7 @@ val versionMajor: String by project.rootProject.extra { findProperty("rcore.vers
 val versionMinor: String by project.rootProject.extra { findProperty("rcore.version.minor")?.toString() ?: "0" }
 val versionPatch: String by project.rootProject.extra { findProperty("rcore.version.patch")?.toString() ?: "0" }
 val versionStage: String by project.rootProject.extra { findProperty("rcore.version.stage")?.toString() ?: "Alpha" }
-val versionBuild: String by project.rootProject.extra { findProperty("rcore.version.build")?.toString() ?: "2" }
+val versionBuild: String by project.rootProject.extra { findProperty("rcore.version.build")?.toString() ?: "3" }
 
 val rcoreVersion = "$versionMajor.$versionMinor.$versionPatch-$versionStage-Build-$versionBuild"
 
