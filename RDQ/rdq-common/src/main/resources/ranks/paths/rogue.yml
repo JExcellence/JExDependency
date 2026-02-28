@@ -49,7 +49,7 @@ ranks:
       starting_currency:
         type: "CURRENCY"
         amount: 50
-        currencyId: "coins"
+        currencyId: "raindrops"
 
   thief:
     tier: 2
@@ -66,7 +66,7 @@ ranks:
       thief_reward:
         type: "CURRENCY"
         amount: 150
-        currencyId: "coins"
+        currencyId: "raindrops"
       thief_gear:
         type: "ITEM"
         item:
@@ -118,7 +118,7 @@ ranks:
       assassin_reward:
         type: "CURRENCY"
         amount: 300
-        currencyId: "coins"
+        currencyId: "raindrops"
       assassin_tools:
         type: "COMPOSITE"
         rewards:
@@ -182,7 +182,7 @@ ranks:
       shadow_reward:
         type: "CURRENCY"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       shadow_equipment:
         type: "COMPOSITE"
         rewards:
@@ -250,7 +250,7 @@ ranks:
       phantom_reward:
         type: "CURRENCY"
         amount: 1000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_stealth:
         type: "COMPOSITE"
         rewards:

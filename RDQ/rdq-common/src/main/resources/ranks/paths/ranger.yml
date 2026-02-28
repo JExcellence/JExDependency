@@ -53,7 +53,7 @@ ranks:
       starting_currency:
         type: "CURRENCY"
         amount: 50
-        currencyId: "coins"
+        currencyId: "raindrops"
 
   hunter:
     tier: 2
@@ -70,7 +70,7 @@ ranks:
       hunter_reward:
         type: "CURRENCY"
         amount: 150
-        currencyId: "coins"
+        currencyId: "raindrops"
       hunter_gear:
         type: "COMPOSITE"
         rewards:
@@ -128,7 +128,7 @@ ranks:
       tracker_reward:
         type: "CURRENCY"
         amount: 300
-        currencyId: "coins"
+        currencyId: "raindrops"
       tracker_tools:
         type: "COMPOSITE"
         rewards:
@@ -192,7 +192,7 @@ ranks:
       warden_reward:
         type: "CURRENCY"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       warden_equipment:
         type: "COMPOSITE"
         rewards:
@@ -256,7 +256,7 @@ ranks:
       beastmaster_reward:
         type: "CURRENCY"
         amount: 1000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_ranger:
         type: "COMPOSITE"
         rewards:

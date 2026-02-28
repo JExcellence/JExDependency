@@ -53,7 +53,7 @@ ranks:
         icon:
           type: "GOLD_NUGGET"
         amount: 100
-        currencyId: "coins"
+        currencyId: "raindrops"
 
   trader:
     tier: 2
@@ -72,7 +72,7 @@ ranks:
         icon:
           type: "GOLD_INGOT"
         amount: 250
-        currencyId: "coins"
+        currencyId: "raindrops"
       trader_bonus:
         type: "ITEM"
         icon:
@@ -124,7 +124,7 @@ ranks:
         icon:
           type: "GOLD_BLOCK"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       broker_wealth:
         type: "COMPOSITE"
         icon:
@@ -191,7 +191,7 @@ ranks:
         icon:
           type: "EMERALD"
         amount: 750
-        currencyId: "coins"
+        currencyId: "raindrops"
       magnate_fortune:
         type: "COMPOSITE"
         icon:
@@ -258,7 +258,7 @@ ranks:
         icon:
           type: "EMERALD_BLOCK"
         amount: 2000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_wealth:
         type: "COMPOSITE"
         icon:

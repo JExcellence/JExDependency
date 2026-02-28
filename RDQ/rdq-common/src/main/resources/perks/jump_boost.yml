@@ -15,7 +15,7 @@ icon:
 requirements:
   currency_requirement:
     type: "CURRENCY"
-    currency: "coins"
+    currency: "raindrops"
     amount: 100.0
     consumable: true
     icon:

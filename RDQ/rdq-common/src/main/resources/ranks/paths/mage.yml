@@ -53,7 +53,7 @@ ranks:
         icon:
           type: "GOLD_NUGGET"
         amount: 50
-        currencyId: "coins"
+        currencyId: "raindrops"
 
   adept:
     tier: 2
@@ -70,7 +70,7 @@ ranks:
       adept_reward:
         type: "CURRENCY"
         amount: 150
-        currencyId: "coins"
+        currencyId: "raindrops"
       magic_bonus:
         type: "COMPOSITE"
         rewards:
@@ -125,7 +125,7 @@ ranks:
       wizard_reward:
         type: "CURRENCY"
         amount: 300
-        currencyId: "coins"
+        currencyId: "raindrops"
       wizard_power:
         type: "COMPOSITE"
         rewards:
@@ -186,7 +186,7 @@ ranks:
       sorcerer_reward:
         type: "CURRENCY"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       sorcerer_mastery:
         type: "COMPOSITE"
         rewards:
@@ -247,7 +247,7 @@ ranks:
       archmage_reward:
         type: "CURRENCY"
         amount: 1000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_magic:
         type: "COMPOSITE"
         rewards:

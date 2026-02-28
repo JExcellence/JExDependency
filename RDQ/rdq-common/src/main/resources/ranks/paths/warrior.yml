@@ -58,7 +58,7 @@ ranks:
         icon:
           type: "GOLD_NUGGET"
         amount: 50
-        currencyId: "coins"
+        currencyId: "raindrops"
 
   # ═══════════════════════════════════════════════════════════════
   # TIER 2 - Basic Warrior
@@ -80,7 +80,7 @@ ranks:
         icon:
           type: "GOLD_INGOT"
         amount: 150
-        currencyId: "coins"
+        currencyId: "raindrops"
       combat_experience:
         type: "EXPERIENCE"
         icon:
@@ -132,7 +132,7 @@ ranks:
         icon:
           type: "GOLD_BLOCK"
         amount: 300
-        currencyId: "coins"
+        currencyId: "raindrops"
       veteran_gear:
         type: "COMPOSITE"
         icon:
@@ -212,7 +212,7 @@ ranks:
         icon:
           type: "EMERALD"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       berserker_power:
         type: "COMPOSITE"
         icon:
@@ -276,7 +276,7 @@ ranks:
         icon:
           type: "EMERALD"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       guardian_defense:
         type: "COMPOSITE"
         icon:
@@ -343,7 +343,7 @@ ranks:
         icon:
           type: "EMERALD"
         amount: 500
-        currencyId: "coins"
+        currencyId: "raindrops"
       gladiator_gear:
         type: "COMPOSITE"
         icon:
@@ -407,7 +407,7 @@ ranks:
         icon:
           type: "EMERALD_BLOCK"
         amount: 1000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_fury:
         type: "COMPOSITE"
         icon:
@@ -479,7 +479,7 @@ ranks:
         icon:
           type: "EMERALD_BLOCK"
         amount: 1000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_defense:
         type: "COMPOSITE"
         icon:
@@ -557,7 +557,7 @@ ranks:
         icon:
           type: "EMERALD_BLOCK"
         amount: 1000
-        currencyId: "coins"
+        currencyId: "raindrops"
       ultimate_champion:
         type: "COMPOSITE"
         icon:
