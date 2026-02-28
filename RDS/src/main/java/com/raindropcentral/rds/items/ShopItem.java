@@ -1,61 +1,95 @@
 package com.raindropcentral.rds.items;
 
-import com.raindropcentral.rds.RDS;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.jspecify.annotations.NonNull;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
-public class ShopItem {
+@JsonTypeName("ITEM")
+public class ShopItem extends AbstractItem {
+	
+	@JsonProperty("item")
+	private final ItemStack item;
+	
+	@JsonProperty("amount")
+	private final int amount;
+	
+	@JsonCreator
+	public ShopItem(
+		@JsonProperty("item") @NotNull ItemStack item,
+		@JsonProperty("amount") int amount
+	) {
+		this.item = item.clone();
+		this.item.setAmount(1);
+		this.amount = Math.max(1, amount);
+	}
+	
+	/**
+	 * Convenience constructor that uses the ItemStack's amount
+	 */
+	public ShopItem(@NotNull ItemStack item) {
+		this(item, item.getAmount());
+	}
+	
+	@Override
+	public @NotNull String getTypeId() {
+		return "ITEM";
+	}
+	
+	@Override
+	public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
+		return CompletableFuture.supplyAsync(() -> {
+			int remaining = amount;
+			int maxStack = item.getMaxStackSize();
+			
+			while (remaining > 0) {
+				int stackAmount = Math.min(remaining, maxStack);
+				ItemStack stack = item.clone();
+				stack.setAmount(stackAmount);
+				
+				if (player.getInventory().firstEmpty() == -1) {
+					player.getWorld().dropItem(player.getLocation(), stack);
+				} else {
+					player.getInventory().addItem(stack);
+				}
+				
+				remaining -= stackAmount;
+			}
+			return true;
+		});
+	}
+	
+	@Override
+	public double getEstimatedValue() {
+		return amount * 1.0;
+	}
+	
+	/**
+	 * Gets the item template (always amount 1)
+	 */
+	public ItemStack getItem() {
+		return item.clone();
+	}
+	
+	/**
+	 * Gets the actual amount (can exceed max stack size)
+	 */
+	public int getAmount() {
+		return amount;
+	}
+	
+	@Override
+	public void validate() {
+		if (item == null || item.getType().isAir()) {
+			throw new IllegalArgumentException("Item reward must have a valid item");
+		}
+		if (amount < 1) {
+			throw new IllegalArgumentException("Item amount must be at least 1");
+		}
+	}
 
-    public static @NonNull ItemStack getShopItem(RDS plugin, @NonNull UUID owner) {
-        ItemStack shop = new ItemStack(Material.CHEST);
-        ItemMeta meta = shop.getItemMeta();
-        meta.displayName(Component.text("RaindropShop", NamedTextColor.BLUE));
-        List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Place to to set up shop", NamedTextColor.YELLOW));
-        meta.lore(lore);
-        PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-        persistentDataContainer.set(
-                new NamespacedKey(plugin, "owner"),
-                PersistentDataType.STRING,
-                owner.toString()
-        );
-        shop.setItemMeta(meta);
-        return shop;
-    }
-
-    public static boolean equals(RDS plugin, @NonNull ItemStack item){
-        ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-        return persistentDataContainer.has(
-                new NamespacedKey(plugin, "owner"),
-                PersistentDataType.STRING)
-                &&
-                persistentDataContainer.has(
-                        new NamespacedKey(plugin, "owner"),
-                        PersistentDataType.STRING
-                );
-    }
-
-    public static UUID getOwner(RDS plugin, ItemStack item) {
-        if (item == null) return null;
-
-        ItemMeta meta = item.getItemMeta();
-        String s = meta.getPersistentDataContainer().get(
-                new NamespacedKey(plugin, "owner"),
-                PersistentDataType.STRING
-        );
-        if (s == null) return null;
-        return UUID.fromString(s);
-    }
 }

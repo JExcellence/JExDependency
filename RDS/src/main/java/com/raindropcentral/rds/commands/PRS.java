@@ -3,7 +3,7 @@ package com.raindropcentral.rds.commands;
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rds.RDS;
-import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.items.ShopBlock;
 import de.jexcellence.evaluable.section.ACommandSection;
 import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
@@ -34,7 +34,7 @@ public class PRS extends PlayerCommand {
                 this.rds.getLogger().info("Main Command");
             }
             case DEV -> {
-                player.getInventory().addItem(ShopItem.getShopItem(this.rds, player.getUniqueId()));
+                player.getInventory().addItem(ShopBlock.getShopBlock(this.rds, player.getUniqueId()));
             }
             default -> {
                 this.rds.getLogger().info("Info Command");

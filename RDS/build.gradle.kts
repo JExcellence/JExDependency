@@ -28,6 +28,12 @@ dependencies {
     compileOnly(libs.adventure.platform.bukkit)
     compileOnly(libs.rplatform)
 
+    compileOnly(libs.caffeine)
+    compileOnly(libs.jackson.core)
+    compileOnly(libs.jackson.databind)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jackson.jsr310)
+
     implementation(libs.bundles.jexcellence) {
         isTransitive = false
         exclude(group = "de.jexcellence.hibernate")

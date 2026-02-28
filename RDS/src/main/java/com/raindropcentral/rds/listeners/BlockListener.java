@@ -3,7 +3,7 @@ package com.raindropcentral.rds.listeners;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
-import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.items.ShopBlock;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,8 +31,8 @@ public class BlockListener implements Listener {
     public void onBlockPlace(BlockPlaceEvent event){
         if (event ==  null) return;
         ItemStack item = event.getItemInHand();
-        if (ShopItem.equals(this.rds, item)) {
-            UUID uuid = ShopItem.getOwner(this.rds, item);
+        if (ShopBlock.equals(this.rds, item)) {
+            UUID uuid = ShopBlock.getOwner(this.rds, item);
             if (uuid == null) {
                 event.getPlayer().sendMessage("Unable to convert to uuid");
                 return;
