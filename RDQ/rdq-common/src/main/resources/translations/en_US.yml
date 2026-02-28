@@ -61,6 +61,14 @@ tree:
 # RANK DISPLAY NAMES & DESCRIPTIONS
 # ============================================
 rank:
+
+  # ============================================
+  # RANK MESSAGES
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 RANK UP!</gradient> <gradient:#6b7280:#9ca3af>You've completed all requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Use the rank menu to claim your rank upgrade!</gradient>"
+
   default:
     name: "<gradient:#6b7280:#9ca3af>Unranked</gradient>"
     lore:
@@ -479,17 +487,6 @@ rank_path_overview_ui:
     up: "<gradient:#3b82f6:#60a5fa>⬆ Navigate Up</gradient>"
     down: "<gradient:#3b82f6:#60a5fa>⬇ Navigate Down</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Navigate %direction%</gradient>"
-  rank:
-    owned: "<gradient:#10b981:#34d399>✅ Owned</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress</gradient>"
-    available: "<gradient:#3b82f6:#60a5fa>🔓 Available</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
-    click_to_view: "<gradient:#6b7280:#9ca3af>Click to view requirements</gradient>"
-    click_to_progress: "<gradient:#10b981:#34d399>Click to progress</gradient>"
-    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
-    fallback_description: "<gradient:#6b7280:#9ca3af>No description available for %rank_id%</gradient>"
-    tier: "<gradient:#6b7280:#9ca3af>Tier:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
-    weight: "<gradient:#6b7280:#9ca3af>Weight:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
   back:
     lore:
       - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
@@ -536,6 +533,16 @@ rank_path_overview_ui:
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress Connection</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Locked Connection</gradient>"
   rank:
+    owned: "<gradient:#10b981:#34d399>✅ Owned</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ In Progress</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Available</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Locked</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Click to view requirements</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Click to progress</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>No description available for %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Tier:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Weight:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
     ranger:
       hunter:
         name: "<gradient:#7c3aed:#a78bfa>🏹 Hunter</gradient>"
@@ -613,6 +620,35 @@ rank_path_overview_ui:
 # REQUIREMENT TRANSLATIONS
 # ============================================
 requirement:
+
+  # ============================================
+  # REQUIREMENT TYPES (Localized names)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 Item Collection</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 Currency</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨ Experience Level</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ Playtime</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 Permission</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍 Location</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ Kill Requirement</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 Crafting</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Unknown</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ Completed</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ Ready to Complete</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 In Progress</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ Not Started</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Error</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶ Left-click to complete!</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶ Right-click for details</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 Submit Items</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>Already completed</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>Tasks:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...and %count% more</gradient>"
+
   # Currency requirement descriptions
   currency:
     coins: "Coins"
@@ -624,6 +660,9 @@ requirement:
   
   # Task preview templates
   task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
     currency:
       need: "Need %amount% %currency%"
       have: "Have %current%/%required% %currency%"
@@ -1230,13 +1269,6 @@ admin_permissions_overview_ui:
   selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ All permissions assigned from</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
 
 # ============================================
-# PAGINATED PLAYER UI
-# ============================================
-paginated_player_ui:
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
-
-# ============================================
 # PAGINATION
 # ============================================
 page:
@@ -1354,44 +1386,44 @@ premium:
     lore:
       - "<gradient:#10b981:#34d399>All features unlocked!</gradient>"
 
+# ============================================
+# REQUIREMENT ITEM DETAIL VIEW (Simplified)
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 Item Requirements</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ You have this item</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ Missing item</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 Submit Items</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>All items ready!</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶ Click to submit</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 Submit Items</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>Missing required items</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Collect all items first</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← Back</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Return to requirements</gradient>"
+
 
 # ============================================
-# REQUIREMENT TYPES (Localized names)
-# ============================================
-requirement:
-  type:
-    item: "<gradient:#f59e0b:#fbbf24>📦 Item Collection</gradient>"
-    currency: "<gradient:#10b981:#34d399>💰 Currency</gradient>"
-    experience_level: "<gradient:#a855f7:#c084fc>✨ Experience Level</gradient>"
-    playtime: "<gradient:#3b82f6:#60a5fa>⏰ Playtime</gradient>"
-    permission: "<gradient:#6b7280:#9ca3af>📜 Permission</gradient>"
-    location: "<gradient:#ef4444:#f87171>📍 Location</gradient>"
-    kill: "<gradient:#ef4444:#f87171>⚔ Kill Requirement</gradient>"
-    craft: "<gradient:#f59e0b:#fbbf24>🔨 Crafting</gradient>"
-    unknown: "<gradient:#6b7280:#9ca3af>❓ Unknown</gradient>"
-  status:
-    completed: "<gradient:#10b981:#34d399>✅ Completed</gradient>"
-    ready: "<gradient:#f59e0b:#fbbf24>⭐ Ready to Complete</gradient>"
-    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 In Progress</gradient>"
-    not_started: "<gradient:#6b7280:#9ca3af>○ Not Started</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Error</gradient>"
-  action:
-    click_complete: "<gradient:#10b981:#34d399>▶ Left-click to complete!</gradient>"
-    view_details: "<gradient:#3b82f6:#60a5fa>▶ Right-click for details</gradient>"
-    submit_items: "<gradient:#10b981:#34d399>📥 Submit Items</gradient>"
-    already_completed: "<gradient:#6b7280:#9ca3af>Already completed</gradient>"
-  tasks:
-    progress: "<gradient:#6b7280:#9ca3af>Tasks:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
-    more: "<gradient:#6b7280:#9ca3af>...and %count% more</gradient>"
-  task:
-    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
-    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
-    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
-
-# ============================================
-# RANK REQUIREMENTS JOURNEY VIEW
+# REWARD TRANSLATIONS
 # ============================================
 rank_requirements_journey_ui:
+
+  # ============================================
+  # RANK REQUIREMENTS JOURNEY VIEW
+  # ============================================
   title: "<gradient:#a855f7:#c084fc>⚔ %rank_name% Requirements</gradient>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
@@ -1447,40 +1479,6 @@ rank_requirements_journey_ui:
     already_completed: "<gradient:#10b981:#34d399>✅ This requirement is already completed!</gradient>"
     preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Preview mode - interactions disabled</gradient>"
 
-# ============================================
-# REQUIREMENT ITEM DETAIL VIEW (Simplified)
-# ============================================
-rank_requirement_item_detail_ui:
-  title: "<gradient:#f59e0b:#fbbf24>📦 Item Requirements</gradient>"
-  item:
-    have: "<gradient:#10b981:#34d399>✓ You have this item</gradient>"
-    missing: "<gradient:#ef4444:#f87171>✗ Missing item</gradient>"
-    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
-  submit_button:
-    enabled:
-      name: "<gradient:#10b981:#34d399>📥 Submit Items</gradient>"
-      lore:
-        - ""
-        - "<gradient:#10b981:#34d399>All items ready!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Click to submit</gradient>"
-    disabled:
-      name: "<gradient:#6b7280:#9ca3af>📥 Submit Items</gradient>"
-      lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Missing required items</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Collect all items first</gradient>"
-  back:
-    name: "<gradient:#ef4444:#f87171>← Back</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Return to requirements</gradient>"
-
-
-# ============================================
-# REWARD TRANSLATIONS
-# ============================================
-rank_requirements_journey_ui:
   reward:
     card:
       name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
@@ -1598,16 +1596,6 @@ rank_rewards_detail_ui:
       - "<gradient:#6b7280:#9ca3af>This rank has %count% rewards</gradient>"
       - "<gradient:#6b7280:#9ca3af>Click on any reward for details</gradient>"
 
-
-# ============================================
-# PAGINATION (for APaginatedView)
-# ============================================
-page:
-  name: "<gradient:#f59e0b:#fbbf24>📄 Page %current_page%/%total_pages%</gradient>"
-  lore:
-    - "<gradient:#6b7280:#9ca3af>Showing items %first_item% - %last_item% of %items_count%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>Page %page%</gradient>"
-
 # ============================================
 # PERK OVERVIEW UI
 # ============================================
@@ -1619,59 +1607,6 @@ perk_overview_ui:
 # ============================================
 perk_detail_ui:
   title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
-
-# ============================================
-# PERK NAMES & DESCRIPTIONS
-# ============================================
-perk:
-  jump_boost:
-    name: "<gradient:#10b981:#34d399>🐰 Jump Boost</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Jump higher and reach new heights</gradient>"
-  night_vision:
-    name: "<gradient:#f59e0b:#fbbf24>👁 Night Vision</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>See clearly in the dark</gradient>"
-  speed:
-    name: "<gradient:#3b82f6:#60a5fa>⚡ Speed</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Move faster than ever before</gradient>"
-  strength:
-    name: "<gradient:#ef4444:#f87171>💪 Strength</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Deal more damage in combat</gradient>"
-  haste:
-    name: "<gradient:#f59e0b:#fbbf24>⛏ Haste</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Mine and break blocks faster</gradient>"
-  resistance:
-    name: "<gradient:#a855f7:#c084fc>🛡 Resistance</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Take less damage from attacks</gradient>"
-  fire_resistance:
-    name: "<gradient:#ef4444:#f87171>🔥 Fire Resistance</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Immunity to fire and lava damage</gradient>"
-  saturation:
-    name: "<gradient:#10b981:#34d399>🍖 Saturation</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Never go hungry again</gradient>"
-  glow:
-    name: "<gradient:#f59e0b:#fbbf24>✨ Glow</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Emit a glowing aura</gradient>"
-  fly:
-    name: "<gradient:#3b82f6:#60a5fa>🕊 Flight</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Soar through the skies</gradient>"
-  keep_inventory:
-    name: "<gradient:#a855f7:#c084fc>💼 Keep Inventory</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Keep your items on death</gradient>"
-  keep_experience:
-    name: "<gradient:#10b981:#34d399>⭐ Keep Experience</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Keep your XP on death</gradient>"
-  no_fall_damage:
-    name: "<gradient:#3b82f6:#60a5fa>🪂 No Fall Damage</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Never take fall damage</gradient>"
-  double_experience:
-    name: "<gradient:#f59e0b:#fbbf24>✨ Double XP</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Earn double experience</gradient>"
-  combat_heal:
-    name: "<gradient:#ef4444:#f87171>❤ Combat Heal</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Heal when damaging enemies</gradient>"
-  critical_strike:
-    name: "<gradient:#ef4444:#f87171>⚡ Critical Strike</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Chance for critical hits</gradient>"
 
 
 # ============================================
@@ -1815,11 +1750,3 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Heal when dealing damage to enemies</gradient>"
-
-# ============================================
-# RANK MESSAGES
-# ============================================
-rank:
-  messages:
-    requirements_complete: "<gradient:#10b981:#34d399>🎉 RANK UP!</gradient> <gradient:#6b7280:#9ca3af>You've completed all requirements for</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
-    claim_upgrade: "<gradient:#6b7280:#9ca3af>Use the rank menu to claim your rank upgrade!</gradient>"
