@@ -131,7 +131,7 @@ public class AdminOverviewView extends BaseView {
 						                                                                            groups.get(rank.getAssignedLuckPermsGroup()).add(
 							                                                                            new IRRank(
 								                                                                            rank.getIdentifier(),
-								                                                                            rank.getDisplayNameKey(),
+								                                                                            rank.getAssignedLuckPermsGroup(),
 								                                                                            rank.getWeight()
 							                                                                            )
 						                                                                            );
