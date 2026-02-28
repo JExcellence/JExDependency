@@ -430,7 +430,7 @@ public class PerkRequirementService {
             final String nameKey = perk.getIcon().getDisplayNameKey();
             
             // Send notification message
-            new I18n.Builder("perk.unlock.notification", player)
+            new I18n.Builder("reward.perk.unlocked", player)
                     .includePrefix()
                     .withPlaceholder("perk_name", nameKey != null ? nameKey : perk.getIdentifier())
                     .build()
