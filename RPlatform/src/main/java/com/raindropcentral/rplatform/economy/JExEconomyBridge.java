@@ -77,7 +77,7 @@ public class JExEconomyBridge {
 				return CompletableFuture.completedFuture(false);
 			}
 			
-			Method withdrawMethod = adapterClass.getMethod("withdrawCurrency", OfflinePlayer.class, currencyClass, double.class);
+			Method withdrawMethod = adapterClass.getMethod("withdraw", OfflinePlayer.class, currencyClass, double.class);
 			Object futureObj = withdrawMethod.invoke(adapter, player, currency, amount);
 			
 			@SuppressWarnings("unchecked")

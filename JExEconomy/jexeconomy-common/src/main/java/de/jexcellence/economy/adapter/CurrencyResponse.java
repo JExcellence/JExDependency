@@ -290,6 +290,10 @@ public record CurrencyResponse(
 		);
 	}
 	
+	public boolean isSuccess() {
+		return operationStatus == ResponseType.SUCCESS;
+	}
+	
 	/**
 	 * Enumeration defining the possible outcomes of currency operations.
 	 * <p>
