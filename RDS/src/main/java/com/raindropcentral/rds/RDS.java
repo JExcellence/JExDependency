@@ -6,11 +6,18 @@ import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.view.shop.ShopEditView;
+import com.raindropcentral.rds.view.shop.ShopCustomerView;
+import com.raindropcentral.rds.view.shop.ShopInputView;
+import com.raindropcentral.rds.view.shop.ShopItemEditView;
 import com.raindropcentral.rds.view.shop.ShopOverviewView;
+import com.raindropcentral.rds.view.shop.ShopStorageView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
-import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.evaluable.ConfigKeeper;
@@ -53,13 +60,13 @@ public class RDS extends JavaPlugin {
         this.rds = this;
         this.getLogger().info("Loading RPlatform for RDS");
         this.platform = new RPlatform(rds);
-        this.platform.initialize();
         this.executor = Executors.newFixedThreadPool(4);
     }
 
 
     @Override
     public void onEnable() {
+        this.platform.initialize();
         this.platformType = PlatformAPIFactory.detectPlatformType();
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
@@ -170,7 +177,15 @@ public class RDS extends JavaPlugin {
                 .create(this.rds)
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
-                    new ShopOverviewView()
+                    new ShopOverviewView(),
+                    new ShopCustomerView(),
+                    new ShopInputView(),
+                    new ShopStorageView(),
+                    new ShopEditView(),
+                    new ShopItemEditView(),
+                    new ShopItemCurrencyTypeAnvilView(),
+                    new ShopItemValueAnvilView(),
+                    new ShopPurchaseAmountAnvilView()
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();

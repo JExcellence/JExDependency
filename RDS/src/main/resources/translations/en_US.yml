@@ -4,6 +4,229 @@
 
 shop_overview_ui:
   title: "{owner} Shop - {location}"
+  summary:
+    name: "<gold>Shop Summary</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+  finance:
+    name: "<gold>Shop Ledger</gold>"
+    lore:
+      - "<gray>Bank:</gray> <white>{bank}</white>"
+      - "<gray>Income:</gray> <white>{income}</white>"
+  actions:
+    manage:
+      name: "<green>Add Shop Items</green>"
+      lore:
+        - "<gray>Store new items in this shop.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to open item input.</yellow>"
+    edit:
+      name: "<aqua>Edit Shop Items</aqua>"
+      lore:
+        - "<gray>Edit pricing for stored shop items.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to edit prices and currencies.</yellow>"
+    storage:
+      name: "<gold>View Stored Items</gold>"
+      lore:
+        - "<gray>Review items already stored in this shop.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to withdraw stored items.</yellow>"
+    locked:
+      name: "<red>Shop Locked</red>"
+      lore:
+        - "<gray>Only the owner can add items.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>You do not own this shop.</red>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+
+shop_input_ui:
+  title: "Add Items - {owner} @ {location}"
+  summary:
+    name: "<gold>Shop Storage</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Currently stored:</gray> <white>{stored_count}</white>"
+      - "<yellow>New items default to currency type vault and value 0.</yellow>"
+  input_slot:
+    name: "<green>Input Slot</green>"
+    lore:
+      - "<gray>Left click with an item on your cursor</gray>"
+      - "<gray>or shift-click an item from your inventory.</gray>"
+      - "<gray>Right click to remove an inserted stack.</gray>"
+  no_new_items_inserted: "<red>No new items were inserted.</red>"
+  saved: "<green>Stored {added_count} new entries. Shop now has {stored_count} entries.</green>"
+  save_failed: "<red>Failed to save shop items.</red>"
+  left_overs: "<yellow>Returned unsaved shop items to your inventory.</yellow>"
+
+shop_storage_ui:
+  title: "Stored Items - {location}"
+  summary:
+    name: "<gold>Stored Items</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Stored entries:</gray> <white>{stored_count}</white>"
+      - "<yellow>Click any item below to withdraw it.</yellow>"
+  entry:
+    lore:
+      - "<gray>Stored amount:</gray> <white>{amount}</white>"
+      - "<gray>Item type:</gray> <white>{item_type}</white>"
+      - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Click to extract this item from the shop.</yellow>"
+  feedback:
+    not_owner: "<red>You do not own this shop.</red>"
+    extracted: "<green>Extracted {amount}x {item_type}. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
+    item_missing: "<red>That stored item could not be found.</red>"
+    locked:
+      name: "<red>Owner Access Only</red>"
+      lore:
+        - "<gray>Only the shop owner can withdraw stored items.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_edit_ui:
+  title: "Edit Shop Items - {location}"
+  summary:
+    name: "<aqua>Shop Price Editor</aqua>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Stored entries:</gray> <white>{stored_count}</white>"
+      - "<yellow>Click an item below to edit its currency and value.</yellow>"
+  entry:
+    lore:
+      - "<gray>Stored amount:</gray> <white>{amount}</white>"
+      - "<gray>Item type:</gray> <white>{item_type}</white>"
+      - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Click to edit this shop item.</yellow>"
+  feedback:
+    locked:
+      name: "<red>Owner Access Only</red>"
+      lore:
+        - "<gray>Only the shop owner can edit item values.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+
+shop_item_edit_ui:
+  title: "Edit {item_type}"
+  summary:
+    lore:
+      - "<gray>Stored amount:</gray> <white>{amount}</white>"
+      - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Use the buttons below to edit this item.</yellow>"
+  currency_type:
+    name: "<green>Currency Type</green>"
+    lore:
+      - "<gray>Current type:</gray> <white>{currency_type}</white>"
+      - "<yellow>Click to edit the currency type.</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>Current type:</gray> <white>{currency_type}</white>"
+      - "<gray>Current value:</gray> <white>{value}</white>"
+      - "<yellow>Click to edit the numeric value.</yellow>"
+  confirm:
+    name: "<green>Save Item Pricing</green>"
+    lore:
+      - "<gray>Apply the current currency type and value</gray>"
+      - "<gray>to this shop item.</gray>"
+  feedback:
+    not_owner: "<red>You do not own this shop.</red>"
+    shop_missing: "<red>This shop could not be loaded from storage.</red>"
+    item_missing: "<red>That shop item could not be found.</red>"
+    saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
+
+shop_item_currency_type_anvil_ui:
+  title: "Currency Type: {currency_type}"
+  shop_item_currency_type_anvil_ui:
+    title: "Currency Type: {currency_type}"
+  input:
+    name: "<emerald>Currency Type</emerald>"
+    lore:
+      - "<gray>Enter the currency identifier for this item.</gray>"
+      - "<gray>Examples:</gray> <white>vault, tokens, gems</white>"
+  error:
+    empty: "<red>Currency type cannot be empty.</red>"
+    processing_failed: "<red>Failed to update the currency type. Input: {input}</red>"
+
+shop_item_value_anvil_ui:
+  title: "Value: {value} {currency_type}"
+  shop_item_value_anvil_ui:
+    title: "Value: {value} {currency_type}"
+  input:
+    name: "<gold>Item Value</gold>"
+    lore:
+      - "<gray>Enter a non-negative numeric value.</gray>"
+      - "<gray>Examples:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Enter a valid non-negative number. Input: {input}</red>"
+    processing_failed: "<red>Failed to update the item value. Input: {input}</red>"
+
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Customer View</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+      - "<yellow>Left click an item to buy one.</yellow>"
+      - "<yellow>Right click an item to choose an amount.</yellow>"
+  entry:
+    lore:
+      - "<gray>Stock:</gray> <white>{amount}</white>"
+      - "<gray>Item type:</gray> <white>{item_type}</white>"
+      - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+      - "<gray>Total stock value:</gray> <white>{total_price} {currency_name}</white>"
+      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+      - "<yellow>Left click to buy one.</yellow>"
+      - "<yellow>Right click to choose an amount.</yellow>"
+  feedback:
+    purchased: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining stock: {remaining_amount}.</green>"
+    insufficient_stock: "<red>This shop only has {available_amount}x {item_type} available.</red>"
+    insufficient_funds: "<red>You need {total_price} {currency_name} to buy {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"
+    invalid_amount: "<red>Enter a valid purchase amount.</red>"
+    item_missing: "<red>That shop item is no longer available.</red>"
+    empty_shop:
+      name: "<red>Shop Empty</red>"
+      lore:
+        - "<gray>There are no items available for purchase.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_purchase_amount_anvil_ui:
+  title: "Buy {item_type}"
+  shop_purchase_amount_anvil_ui:
+    title: "Buy {item_type}"
+  input:
+    name: "<gold>Purchase Amount</gold>"
+    lore:
+      - "<gray>Enter how many items you want to buy.</gray>"
+      - "<gray>Maximum available:</gray> <white>{max_amount}</white>"
+      - "<gray>Item:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Enter a whole number between 1 and {max_amount}. Input: {input}</red>"
+    processing_failed: "<red>Failed to process purchase amount. Input: {input}</red>"
 
 # ============================================
 # PAGINATION
@@ -23,3 +246,7 @@ head:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Confirm</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to confirm settings</gradient>"

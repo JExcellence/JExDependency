@@ -6,33 +6,67 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.UUID;
 
 @JsonTypeName("ITEM")
 public class ShopItem extends AbstractItem {
 	
+	@JsonProperty("entryId")
+	private final UUID entryId;
+
 	@JsonProperty("item")
 	private final ItemStack item;
 	
 	@JsonProperty("amount")
 	private final int amount;
+
+	@JsonProperty("currencyType")
+	private final String currencyType;
+
+	@JsonProperty("value")
+	private final double value;
 	
 	@JsonCreator
 	public ShopItem(
+		@JsonProperty("entryId") @Nullable UUID entryId,
 		@JsonProperty("item") @NotNull ItemStack item,
-		@JsonProperty("amount") int amount
+		@JsonProperty("amount") int amount,
+		@JsonProperty("currencyType") @Nullable String currencyType,
+		@JsonProperty("value") double value
 	) {
+		this.entryId = entryId == null ? UUID.randomUUID() : entryId;
 		this.item = item.clone();
 		this.item.setAmount(1);
 		this.amount = Math.max(1, amount);
+		this.currencyType = currencyType == null || currencyType.isBlank() ? "vault" : currencyType;
+		this.value = Math.max(0D, value);
 	}
 	
 	/**
 	 * Convenience constructor that uses the ItemStack's amount
 	 */
 	public ShopItem(@NotNull ItemStack item) {
-		this(item, item.getAmount());
+		this(null, item, item.getAmount(), "vault", 0D);
+	}
+
+	public ShopItem(
+		@Nullable UUID entryId,
+		@NotNull ItemStack item,
+		int amount
+	) {
+		this(entryId, item, amount, "vault", 0D);
+	}
+
+	public ShopItem(
+		@NotNull ItemStack item,
+		int amount,
+		@Nullable String currencyType,
+		double value
+	) {
+		this(null, item, amount, currencyType, value);
 	}
 	
 	@Override
@@ -65,7 +99,7 @@ public class ShopItem extends AbstractItem {
 	
 	@Override
 	public double getEstimatedValue() {
-		return amount * 1.0;
+		return amount * value;
 	}
 	
 	/**
@@ -81,6 +115,34 @@ public class ShopItem extends AbstractItem {
 	public int getAmount() {
 		return amount;
 	}
+
+	public @NotNull UUID getEntryId() {
+		return entryId;
+	}
+
+	public @NotNull String getCurrencyType() {
+		return currencyType;
+	}
+
+	public double getValue() {
+		return value;
+	}
+
+	public @NotNull ShopItem withAmount(int updatedAmount) {
+		return new ShopItem(this.entryId, this.item, updatedAmount, this.currencyType, this.value);
+	}
+
+	public @NotNull ShopItem withCurrencyType(@NotNull String updatedCurrencyType) {
+		return new ShopItem(this.entryId, this.item, this.amount, updatedCurrencyType, this.value);
+	}
+
+	public @NotNull ShopItem withValue(double updatedValue) {
+		return new ShopItem(this.entryId, this.item, this.amount, this.currencyType, updatedValue);
+	}
+
+	public @NotNull ShopItem withPricing(@NotNull String updatedCurrencyType, double updatedValue) {
+		return new ShopItem(this.entryId, this.item, this.amount, updatedCurrencyType, updatedValue);
+	}
 	
 	@Override
 	public void validate() {
@@ -89,6 +151,12 @@ public class ShopItem extends AbstractItem {
 		}
 		if (amount < 1) {
 			throw new IllegalArgumentException("Item amount must be at least 1");
+		}
+		if (currencyType.isBlank()) {
+			throw new IllegalArgumentException("Currency type must not be blank");
+		}
+		if (value < 0) {
+			throw new IllegalArgumentException("Item value must not be negative");
 		}
 	}
 
