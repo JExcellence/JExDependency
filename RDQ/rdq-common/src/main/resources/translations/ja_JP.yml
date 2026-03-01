@@ -1,277 +1,855 @@
-# RDQ 翻訳ファイル - 日本語
-# MiniMessageフォーマット（グラデーションとスタイル付き）
-# プレースホルダーは %placeholder% 形式を使用
+# RDQ 翻訳ファイル - 英語 (米国)
+# グラデーションとスタイルを備えた MiniMessage 形式
+# プレースホルダーは %placeholder% 形式を使用します
 
+# ============================================
+# グローバルプレフィックス
+# ============================================
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
+# ============================================
+# ROOT LEVEL KEYS (I18n.Builder の直接呼び出しで使用)
+# ============================================
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 報酬なし</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成</gradient>"
+    - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成する</gradient>"
 
 input_slot:
-  name: "<gradient:#10b981:#34d399>➕ アイテム追加</gradient>"
+  name: "<gradient:#10b981:#34d399>➕ アイテムの追加</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>ここにアイテムを置いて報酬として追加</gradient>"
+    - "<gradient:#6b7280:#9ca3af>報酬として追加するアイテムをここに配置します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>左クリックしてアイテムを配置します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>右クリックして項目を削除します</gradient>"
 
+# ============================================
+# ランクツリーの表示名と説明
+# ============================================
 tree:
   ranger:
-    name: "<gradient:#10b981:#34d399>🏹 レンジャー</gradient>"
+    name: "<gradient:#10b981:#34d399>🏹レンジャー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>弓術と追跡の技を極める</gradient>"
+      - "<gradient:#6b7280:#9ca3af>アーチェリーと追跡の技術をマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>自然と一体になる</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ 戦士</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>戦闘の技を極める</gradient>"
+      - "<gradient:#6b7280:#9ca3af>戦闘術をマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>伝説の戦士になろう</gradient>"
   mage:
-    name: "<gradient:#a855f7:#c084fc>✨ 魔法使い</gradient>"
+    name: "<gradient:#a855f7:#c084fc>✨メイジ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>魔法の力を操る</gradient>"
+      - "<gradient:#6b7280:#9ca3af>魔法の力を利用する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>秘術のマスターになろう</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 ローグ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>隠密と狡猾さを極める</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ステルスと狡猾さをマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>影からの攻撃</gradient>"
   cleric:
-    name: "<gradient:#f59e0b:#fbbf24>✝ 聖職者</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>✝クレリック</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>神聖な力を導く</gradient>"
+      - "<gradient:#6b7280:#9ca3af>神の力を伝える</gradient>"
+      - "<gradient:#6b7280:#9ca3af>味方を癒して守る</gradient>"
   merchant:
-    name: "<gradient:#10b981:#34d399>💰 商人</gradient>"
+    name: "<gradient:#10b981:#34d399>💰 販売者</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>商売の技を極める</gradient>"
+      - "<gradient:#6b7280:#9ca3af>貿易の技術をマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>財産を築く</gradient>"
 
+# ============================================
+# ランクの表示名と説明
+# ============================================
+rank:
+
+  # ============================================
+  # ランクメッセージ
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉ランクアップ！</gradient> <gradient:#6b7280:#9ca3af>すべての要件を満たしました</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>ランクメニューを使用してランクアップグレードを申請してください！</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>ランクなし</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>開始するランクパスを選択してください</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>ランクなし</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>デフォルトランク</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ランクが選択されていません</gradient>"
+  # レンジャーツリーのランク
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹ハンター</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>野生のやり方を学ぶ初心者トラッカー</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 アーチャー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>弓の扱いに優れ、遠距離では致命的</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 トラッカー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>獲物を見つけて追いかける専門家</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 射手</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>致命的な精度を備えた精密射撃者</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 パスファインダー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>未知の土地のマスター探検家</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 スナイパー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>エリート射手、一撃一殺</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 森の主</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>自然と一体となる荒野の主</gradient>"
+  # 戦士のツリーランク
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>リクルート</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>旅を始める新たな戦士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>戦闘の基本を学ぶ</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>兵士</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>戦闘術の訓練を受けた</gradient>"
+        - "<gradient:#6b7280:#9ca3af>戦闘準備完了</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>ベテラン</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>百戦錬磨の戦士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>専門分野のパスを選択してください</gradient>"
+    # 専門分野 1: バーサーカー (攻撃的)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>バーサーカー</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>怒りの道</gradient>"
+        - "<gradient:#6b7280:#9ca3af>破壊的な攻撃を繰り出す</gradient>"
+        - "<gradient:#6b7280:#9ca3af>防御を犠牲にして生の力を得る</gradient>"
+    # 専門分野 2: ガーディアン (防御)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>ガーディアン</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>保護の道</gradient>"
+        - "<gradient:#6b7280:#9ca3af>砕けない盾となれ</gradient>"
+        - "<gradient:#6b7280:#9ca3af>いかなる犠牲を払ってでも味方を守る</gradient>"
+    # 専門分野 3: グラディエーター (バランス型)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>剣闘士</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>栄光の道</gradient>"
+        - "<gradient:#6b7280:#9ca3af>アリーナ戦闘の達人</gradient>"
+        - "<gradient:#6b7280:#9ca3af>攻守のバランスを整える</gradient>"
+    # 最終順位
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>怒りの将軍</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>究極のバーサーカー</gradient>"
+        - "<gradient:#6b7280:#9ca3af>止まらない破壊力</gradient>"
+        - "<gradient:#6b7280:#9ca3af>戦場で具現化する恐怖</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>盾の戦士</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>アルティメットガーディアン</gradient>"
+        - "<gradient:#6b7280:#9ca3af>不動の物、永遠の守護者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>あなたが立っている間は誰も通りません</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>アリーナの将軍</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>究極の剣闘士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>チャンピオンの中のチャンピオン</gradient>"
+        - "<gradient:#6b7280:#9ca3af>闘技場の伝説</gradient>"
+    # レガシー ランク (下位互換性のため)
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>騎士</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>王国の名誉ある戦士</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>チャンピオン</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>誰もが恐れる伝説の戦士</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>将軍</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>戦争の達人、軍隊の指揮官</gradient>"
+  # メイジツリーのランク
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨見習い</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>魔法の基礎を学ぶ</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨達人</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>魔力の成長</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ウィザード</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>秘術の達人</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨アークメイジ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>あらゆる魔法の至高の達人</gradient>"
+  # ローグツリーのランク
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 スリ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡泥棒</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 スカウト</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>影の目と耳</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡暗殺者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 侵入者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 シャドウブレード</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>夜の致命的な戦士</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 スパイマスター</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>情報ネットワークのコントローラー</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>全ての影の至高の支配者</gradient>"
+  # クレリックのツリーランク
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ アコライト</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神の献身的な僕</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ 信者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神の道の忠実な信者</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ 司祭</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>信者の治癒者および保護者</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ ヒーラー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>修復芸術のマスター</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ビショップ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>信者のリーダー</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝オラクル</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神聖なビジョンの先見者</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝大祭司</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>至高の神の声</gradient>"
+  # マーチャントツリーのランク
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰行商人</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>路上で商品を販売する</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 トレーダー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>コネクションのある老舗商人</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 ベンダー</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>熟練した商品販売者</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 工匠</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>高級品の製作者</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰錬金術師</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ポーションとエリクサーの達人</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 販売者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>成功したビジネスオーナー</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 マスタークラフター</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>王国の最高の職人</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 商人の王子</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>商業ロイヤルティ</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 タイクーン</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>商業および貿易のマスター</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 ギルドマスター</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>商人ギルドのリーダー</gradient>"
+
+# ============================================
+# 報奨金リスナーのメッセージ
+# ============================================
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>あなたの頭に懸賞金がかかっています！</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 懸賞金額:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
-    expires: "<gradient:#f59e0b:#fbbf24>⏰ 期限:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
-    commissioner: "<gradient:#ef4444:#f87171>👤 依頼者:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>あなたにはアクティブな賞金がかかっています!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 懸賞金:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ 有効期限:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 委託者:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 懸賞金獲得！ 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc></gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の懸賞金を獲得しました！</gradient>"
-    share: "<gradient:#3b82f6:#60a5fa>あなたの分け前:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 報奨金を請求しました! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>無事に賞金を受け取りました</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>あなたのシェア:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>誰か</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>が</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の懸賞金を獲得しました！</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count%人のプレイヤー</gradient> <gradient:#a855f7:#c084fc>が</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>の懸賞金を獲得しました！</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>の賞金を請求​​しました</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% 選手</gradient> <gradient:#a855f7:#c084fc>～の賞金を請求​​しました</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
+# ============================================
+# 報奨金作成メッセージ
+# ============================================
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>への懸賞金を作成しました！</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 懸賞金の処理に失敗:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ 懸賞金を処理中...</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 報奨金が正常に作成されました</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 報奨金の処理に失敗しました:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ 報奨金を処理しています...</gradient>"
 
+# ============================================
+# ランク進行メッセージ
+# ============================================
 rank_progression:
-  started: "<gradient:#10b981:#34d399>✅ ランク</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>の進行を開始しました</gradient>"
-  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#3b82f6:#60a5fa>の要件を表示中</gradient>"
-  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>の要件が未完了</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% 完了)</gradient>"
-  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要件未完了:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
-  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>には要件がありません！</gradient>"
+  started: "<gradient:#10b981:#34d399>✅ ランクアップを開始しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 閲覧要件</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要件が不完全です</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%％ 完了）</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要件が不完全:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>要件はありません!</gradient>"
 
+# ============================================
+# ランククリックメッセージ
+# ============================================
 rank_click:
   preview_mode: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>を所有しています</gradient>"
-  locked: "<gradient:#ef4444:#f87171>🔒 ロック中:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 先に前提条件を完了してください</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ あなたが所有しています</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 ロックされています:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- まず前提条件を満たしてください</gradient>"
 
+# ============================================
+# RQコマンドメッセージ
+# ============================================
 rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPermsがインストールされていません！</gradient> <gradient:#6b7280:#9ca3af>この機能にはLuckPermsが必要です。</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests ヘルプ</gradient>\n<gradient:#6b7280:#9ca3af>/rq - メインメニューを開く</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - ランクを表示</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - 懸賞金を表示</gradient>"
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms がインストールされていません!</gradient> <gradient:#6b7280:#9ca3af>この機能には LuckPerms が必要です。</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests ヘルプ</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - メインメニューを開く</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ランク - ランクを表示</gradient>\\n<gradient:#6b7280:#9ca3af>/rq 報奨金 - 報奨金を表示</gradient>"
 
+# ============================================
+# メイン概要UI
+# ============================================
 main_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🎮 レインドロップクエスト</gradient>"
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ 管理パネル</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>管理ツールにアクセス</gradient>"
+      - "<gradient:#6b7280:#9ca3af>管理ツールにアクセスする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>および構成オプション</gradient>"
   bounty_overview:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 懸賞金</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 報奨金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>懸賞金を表示・管理</gradient>"
+      - "<gradient:#6b7280:#9ca3af>報奨金の表示と管理</gradient>"
+      - "<gradient:#6b7280:#9ca3af>報酬を求めてプレイヤーを狩りましょう！</gradient>"
   perk_overview:
-    name: "<gradient:#10b981:#34d399>✨ 特典</gradient>"
+    name: "<gradient:#10b981:#34d399>✨特典</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>利用可能な特典を表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>利用可能な特典を表示する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>そして特殊能力</gradient>"
   quest_overview:
-    name: "<gradient:#3b82f6:#60a5fa>📜 クエスト</gradient>"
+    name: "<gradient:#3b82f6:#60a5fa>📜クエスト</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>利用可能なクエストを表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>利用可能なクエストを表示する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>進捗状況を追跡します</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ ランク</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ランク進行を表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ランクの進行状況を表示する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>そして新たな能力を解き放つ</gradient>"
 
+# ============================================
+# ランクメインUI
+# ============================================
 rank_main_ui:
   title: "<gradient:#a855f7:#c084fc>⚔ ランクシステム</gradient>"
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 ランクツリー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>利用可能なランクツリーを閲覧</gradient>"
+      - "<gradient:#6b7280:#9ca3af>利用可能なランクツリーを参照する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>そして自分の道を選択してください</gradient>"
 
+
+# ============================================
+# ランクツリー概要UI
+# ============================================
 rank_tree_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🌳 ランクツリー</gradient>"
   tree:
     ranger:
-      name: "<gradient:#10b981:#34d399>🏹 レンジャー</gradient>"
+      name: "<gradient:#10b981:#34d399>🏹レンジャー</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>弓術と追跡の技を極める</gradient>"
+        - "<gradient:#6b7280:#9ca3af>アーチェリーと追跡の技術をマスターする</gradient>"
+        - "<gradient:#6b7280:#9ca3af>自然と一体になる</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ 戦士</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>戦闘の技を極める</gradient>"
+        - "<gradient:#6b7280:#9ca3af>戦闘術をマスターする</gradient>"
+        - "<gradient:#6b7280:#9ca3af>伝説の戦士になろう</gradient>"
     mage:
-      name: "<gradient:#a855f7:#c084fc>✨ 魔法使い</gradient>"
+      name: "<gradient:#a855f7:#c084fc>✨メイジ</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>魔法の力を操る</gradient>"
+        - "<gradient:#6b7280:#9ca3af>魔法の力を利用する</gradient>"
+        - "<gradient:#6b7280:#9ca3af>秘術のマスターになろう</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 ローグ</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>隠密と狡猾さを極める</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ステルスと狡猾さをマスターする</gradient>"
+        - "<gradient:#6b7280:#9ca3af>影からの攻撃</gradient>"
     cleric:
-      name: "<gradient:#f59e0b:#fbbf24>✝ 聖職者</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>✝クレリック</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>神聖な力を導く</gradient>"
+        - "<gradient:#6b7280:#9ca3af>神の力を伝える</gradient>"
+        - "<gradient:#6b7280:#9ca3af>味方を癒して守る</gradient>"
     merchant:
-      name: "<gradient:#10b981:#34d399>💰 商人</gradient>"
+      name: "<gradient:#10b981:#34d399>💰 販売者</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>商売の技を極める</gradient>"
+        - "<gradient:#6b7280:#9ca3af>貿易の技術をマスターする</gradient>"
+        - "<gradient:#6b7280:#9ca3af>財産を築く</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>左クリックでプレビュー</gradient>"
-      - "<gradient:#10b981:#34d399>右クリックで選択</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
+      - "<gradient:#10b981:#34d399>右クリックして選択します</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 このランクツリーはロックされています</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>先に %minimum_rank_paths_to_be_absolved_needed% 個のランクツリーを完了してください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>完了 %minimum_rank_paths_to_be_absolved_needed% 木を最初にランク付けする</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>前提条件:</gradient>"
-    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 このランクパスはロックされています！</gradient>"
-  currently_active: "<gradient:#10b981:#34d399>✅ 現在アクティブ</gradient>"
-  click_to_preview: "<gradient:#3b82f6:#60a5fa>左クリックでプレビュー</gradient>"
-  click_to_continue: "<gradient:#10b981:#34d399>右クリックで続行</gradient>"
-  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 以前選択済み</gradient>"
-  click_to_reactivate: "<gradient:#a855f7:#c084fc>右クリックで再アクティブ化</gradient>"
-  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ アクティブなランクパスの上限に達しました！</gradient> <gradient:#6b7280:#9ca3af>(最大: %maximum_rank_path_amount%)</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 このランクパスはロックされています!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ 現在活動中</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>右クリックして続行してください</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 以前に選択したもの</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>右クリックして再アクティブ化します</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ アクティブなランクパスの最大数に到達しました!</gradient> <gradient:#6b7280:#9ca3af>(最大: %maximum_rank_path_amount%)</gradient>"
   create_rank_tree:
-    name: "<gradient:#10b981:#34d399>➕ ランクツリー作成</gradient>"
+    name: "<gradient:#10b981:#34d399>➕ ランクツリーの作成</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>新しいランクツリーを作成</gradient>"
+      - "<gradient:#6b7280:#9ca3af>新しいランクツリーを作成する</gradient>"
       - "<gradient:#6b7280:#9ca3af>(管理者のみ)</gradient>"
   select:
-    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ このパスの開始ランクが見つかりません！</gradient>"
-    rank_path_selected: "<gradient:#10b981:#34d399>✅ ランクパスを選択:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(開始ランク: %rank%)</gradient>"
-    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ ランクパスの選択に失敗しました！</gradient>"
-    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ ランクパスを再アクティブ化:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
-    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ ランクパスの再アクティブ化に失敗しました！</gradient>"
-    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ ランクツリー作成は近日公開！</gradient>"
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ このパスの開始ランクが見つかりません!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ 選択されたランクパス:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(開始ランク: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ ランクパスの選択に失敗しました!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ 再アクティブ化されたランクパス:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ ランクパスを再アクティブ化できませんでした!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ ランクツリーの作成は近日開始予定です!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ 無料版 - プレビューのみ</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>このランク ツリーはプレビューのみ利用できます。</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プレミアムにアップグレードしてロックを解除しましょう!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ プレミアムが必要:</gradient> <gradient:#6b7280:#9ca3af>プレミアムにアップグレードして、追加のランク ツリーを選択してください!</gradient>"
 
+# ============================================
+# ランクパスの概要UI
+# ============================================
 rank_path_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
   preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 プレビュー: </gradient>"
-  unknown_tree: "<gradient:#6b7280:#9ca3af>不明なツリー</gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>未知の木</gradient>"
   nav:
-    left: "<gradient:#3b82f6:#60a5fa>⬅ 左へ移動</gradient>"
-    right: "<gradient:#3b82f6:#60a5fa>➡ 右へ移動</gradient>"
-    up: "<gradient:#3b82f6:#60a5fa>⬆ 上へ移動</gradient>"
-    down: "<gradient:#3b82f6:#60a5fa>⬇ 下へ移動</gradient>"
-    fallback: "<gradient:#6b7280:#9ca3af>%direction% へ移動</gradient>"
-  rank:
-    owned: "<gradient:#10b981:#34d399>✅ 所有済み</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
-    available: "<gradient:#3b82f6:#60a5fa>🔓 利用可能</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 ロック中</gradient>"
-    click_to_view: "<gradient:#6b7280:#9ca3af>クリックで要件を表示</gradient>"
-    click_to_progress: "<gradient:#10b981:#34d399>クリックで進行</gradient>"
-    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
-    fallback_description: "<gradient:#6b7280:#9ca3af>%rank_id% の説明はありません</gradient>"
-    tier: "<gradient:#6b7280:#9ca3af>ティア:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
-    weight: "<gradient:#6b7280:#9ca3af>重み:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    left: "<gradient:#3b82f6:#60a5fa>⬅ 左に移動</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ 右に移動</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ 上に移動</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ 下に移動</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>ナビゲート %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで戻る</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
   center_view:
-    name: "<gradient:#3b82f6:#60a5fa>🎯 ビューを中央に</gradient>"
+    name: "<gradient:#3b82f6:#60a5fa>🎯 センタービュー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックでビューを中央に</gradient>"
-    fallback: "<gradient:#6b7280:#9ca3af>ビューを中央に</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてビューを中央に配置します</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>センタービュー</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プレビューモードで表示中</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プレビューモードで表示しています</gradient>"
       - "<gradient:#6b7280:#9ca3af>変更は保存されません</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>プレビューモード</gradient>"
   background:
     name: " "
   error:
-    render_rank: "<gradient:#ef4444:#f87171>❌ ランクの描画エラー</gradient>"
+    render_rank: "<gradient:#ef4444:#f87171>❌ エラーレンダリングランク</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ ランクツリーなし</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>ランクツリーを読み込めません</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ランクツリーをロードできません</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ 重大なエラー</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>描画中にエラーが発生しました</gradient>"
+      - "<gradient:#6b7280:#9ca3af>レンダリング中にエラーが発生しました</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>描画中にエラーが発生しました</gradient>"
+      - "<gradient:#6b7280:#9ca3af>レンダリング中にエラーが発生しました</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ 要件を開くことができませんでした</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ エラーが発生しました。もう一度試してください。</gradient>"
   status:
-    owned: "<gradient:#10b981:#34d399>✅ 所有済み</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
-    pending: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ 所有</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
     available: "<gradient:#3b82f6:#60a5fa>🔓 利用可能</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 ロック中</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒ロックされています</gradient>"
     unknown: "<gradient:#6b7280:#9ca3af>❓ 不明</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐プレミアムが必要です</gradient>"
   connection:
-    from: "<gradient:#6b7280:#9ca3af>から:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    to: "<gradient:#6b7280:#9ca3af>へ:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    fallback: "<gradient:#6b7280:#9ca3af>接続</gradient>"
-    owned: "<gradient:#10b981:#34d399>✅ 所有済み接続</gradient>"
+    from: "<gradient:#6b7280:#9ca3af>から：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>に：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>繋がり</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ 所有接続</gradient>"
     available: "<gradient:#3b82f6:#60a5fa>🔓 利用可能な接続</gradient>"
-    pending: "<gradient:#f59e0b:#fbbf24>⏳ 進行中の接続</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中の接続</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 ロック中の接続</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ 接続中です</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 接続中です</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 ロックされた接続</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ 所有</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 利用可能</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒ロックされています</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>クリックして要件を表示します</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>クリックして先に進みます</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>説明がありません %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>階層:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>重さ：</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹ハンター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>野生のやり方を学ぶ初心者トラッカー</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 アーチャー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>弓の扱いに優れ、遠距離では致命的</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍 トラッカー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>獲物を見つけて追いかける専門家</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯 射手</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>致命的な精度を備えた精密射撃者</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 パスファインダー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>未知の土地のマスター探検家</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯 スナイパー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>エリート射手、一撃一殺</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 森の主</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>自然と一体となる荒野の主</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ 採用する</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>旅を始める新たな戦士</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ 兵士</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>戦闘術の訓練を受けた</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ ナイト</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>王国の名誉ある戦士</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ チャンピオン</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>誰もが恐れる伝説の戦士</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ ウォーロード</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>戦争の達人、軍隊の指揮官</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨見習い</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>魔法の基礎を学ぶ</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨達人</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>魔力の成長</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ウィザード</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>秘術の達人</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨アークメイジ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>あらゆる魔法の至高の達人</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 スリ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
+
+# ============================================
+# 要件の翻訳
+# ============================================
+requirement:
+
+  # ============================================
+  # 要件のタイプ (ローカライズされた名前)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 アイテムコレクション</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 通貨</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨経験レベル</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ 遊び時間</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜許可</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍 場所</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ 殺害要件</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 クラフト</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ 不明</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ 完了</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ 準備完了</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄進行中</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ 未開始</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶左クリックで完了！</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶右クリックで詳細を表示</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 アイテムを送信する</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>すでに完了しています</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>タスク:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...そして %count% もっと</gradient>"
+
+  # 通貨要件の説明
+  currency:
+    coins: "コイン"
+    gems: "宝石"
+    tokens: "トークン"
+    money: "お金"
+    dollars: "ドル"
+    credits: "クレジット"
+  
+  # タスクプレビューテンプレート
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "必要 %amount% %currency%"
+      have: "持っている %current%/%required% %currency%"
+    item:
+      need: "必要 %quantity%× %item%"
+    experience:
+      need: "到達レベル %level%"
+      points: "到着 %points% 経験値"
+    playtime:
+      need: "のためにプレーする %time%"
+    permission:
+      need: "許可が必要です: %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡泥棒</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡暗殺者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 侵入者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ アコライト</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神の献身的な僕</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ 信者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神の道の忠実な信者</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ 司祭</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>信者の治癒者および保護者</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ ヒーラー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>修復芸術のマスター</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ビショップ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>信者のリーダー</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝オラクル</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神聖なビジョンの先見者</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝大祭司</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>至高の神の声</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>�TPスリ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡泥棒</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 スカウト</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>影の目と耳</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡暗殺者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 侵入者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 シャドウブレード</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>夜の致命的な戦士</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 スパイマスター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>情報ネットワークのコントローラー</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>全ての影の至高の支配者</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰行商人</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>路上で商品を販売する</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰 トレーダー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>コネクションのある老舗商人</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰 ベンダー</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>熟練した商品販売者</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 工匠</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>高級品の製作者</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰錬金術師</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>ポーションとエリクサーの達人</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰 販売者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>成功したビジネスオーナー</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 マスタークラフター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>王国の最高の職人</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 商人の王子</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>商業ロイヤルティ</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 タイクーン</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>商業および貿易のマスター</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 ギルドマスター</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>商人ギルドのリーダー</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 プレビュー:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 プレビュー:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_owned: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>は既に所有しています</gradient>"
-    rank_owned_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>は既に所有しています</gradient>"
-    rank_locked: "<gradient:#ef4444:#f87171>🔒 ロック中:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 先に前提条件を完了してください</gradient>"
-    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 ロック中:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>には要件がありません！</gradient>"
-    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>には要件がありません！</gradient>"
-    rank_started: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>の進行を開始しました</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% 要件)</gradient>"
-    rank_started_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>の進行を開始しました</gradient>"
-    rank_start_error: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>の進行開始に失敗しました</gradient>"
-    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>の進行開始に失敗しました</gradient>"
-    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>の要件が未完了です</gradient>"
-    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>の要件が未完了です</gradient>"
-    rank_redeemed: "<gradient:#10b981:#34d399>🎉 おめでとうございます！</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>をアンロックしました！</gradient>"
-    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 おめでとうございます！</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>をアンロックしました！</gradient>"
-    rank_redemption_error: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>の引き換えに失敗しました</gradient>"
-    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>の引き換えに失敗しました</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ すでに所有しています</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ すでに所有しています</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 ロックされています:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- まず前提条件を満たしてください</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 ロックされています:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>要件はありません!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>要件はありません!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ の進行を開始しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% 要件）</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ の進行を開始しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ の進行を開始できませんでした</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ の進行を開始できませんでした</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ 要件が満たされていません</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ 要件が満たされていません</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 おめでとうございます！ロックを解除しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 おめでとうございます！ロックを解除しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ 引き換えに失敗しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ 引き換えに失敗しました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ プレミアムが必要:</gradient> <gradient:#6b7280:#9ca3af>ランク</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>ロックを解除するにはプレミアムが必要です。アップグレードしてすべてのランクにアクセスしましょう!</gradient>"
   click:
-    left_start: "<gradient:#10b981:#34d399>左クリックで進行開始</gradient>"
-    right_requirements: "<gradient:#6b7280:#9ca3af>右クリックで要件を表示</gradient>"
-    left_redeem: "<gradient:#10b981:#34d399>左クリックで引き換え</gradient>"
-    right_progress: "<gradient:#6b7280:#9ca3af>右クリックで進行を表示</gradient>"
+    left_start: "<gradient:#10b981:#34d399>左クリックして進行を開始します</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>右クリックして要件を表示します</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>左クリックして引き換えてください</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>右クリックして進行状況を表示します</gradient>"
   fallback:
     rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
 
+# ============================================
+# ランク要件の概要 UI
+# ============================================
 rank_requirements_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% の要件</gradient>"
+  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% 要件</gradient>"
   requirement:
-    fallback: "<gradient:#6b7280:#9ca3af>要件 #%index%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>要件 ＃%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>要件の詳細を読み込めません</gradient>"
-    type: "<gradient:#6b7280:#9ca3af>タイプ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>要件の詳細をロードできません</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>アイテム:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
-    progress: "<gradient:#3b82f6:#60a5fa>進行:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>進捗：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     preview_mode: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード</gradient>"
     click:
-      complete: "<gradient:#10b981:#34d399>クリックで完了！</gradient>"
-      details: "<gradient:#6b7280:#9ca3af>右クリックで詳細</gradient>"
-      already_completed: "<gradient:#10b981:#34d399>✅ 完了済み</gradient>"
-      for_details: "<gradient:#6b7280:#9ca3af>クリックで詳細</gradient>"
+      complete: "<gradient:#10b981:#34d399>クリックして完了です！</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>右クリックすると詳細が表示されます</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ すでに完成しています</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>クリックすると詳細が表示されます</gradient>"
     lore_error: "<gradient:#ef4444:#f87171>要件の読み込みエラー</gradient>"
     info:
       completed: "<gradient:#10b981:#34d399>✅ 完了</gradient>"
-      ready_to_complete: "<gradient:#10b981:#34d399>✅ 完了準備完了</gradient>"
-      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ 準備完了</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
       not_started: "<gradient:#6b7280:#9ca3af>未開始</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
     status:
@@ -282,118 +860,145 @@ rank_requirements_overview_ui:
       error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
   messages:
     preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 プレビュー:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
-    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>は既に完了しています！</gradient>"
-    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>はまだ完了準備ができていません！</gradient>"
-    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 おめでとうございます！</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>に進行しました！</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>すでに完成しています！</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>まだ完了する準備ができていません!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 おめでとうございます！あなたは次のステップに進みました</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     info:
       completed: "<gradient:#10b981:#34d399>✅ 完了</gradient>"
-      ready_to_complete: "<gradient:#10b981:#34d399>✅ 完了準備完了</gradient>"
-      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ 準備完了</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
       not_started: "<gradient:#6b7280:#9ca3af>未開始</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
   error:
-    click_failed: "<gradient:#ef4444:#f87171>❌ クリック処理に失敗しました！</gradient>"
-    rank_progression_failed: "<gradient:#ef4444:#f87171>❌</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>への進行に失敗しました</gradient>"
-    detail_view_failed: "<gradient:#ef4444:#f87171>❌ 要件詳細を開けませんでした！</gradient>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ この要件は現在利用できません！</gradient>"
+    click_failed: "<gradient:#ef4444:#f87171>❌ クリックの処理に失敗しました!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ 先に進めませんでした</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ 要件の詳細を開けませんでした。</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ この要件は現在利用できません。</gradient>"
   decoration:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで戻る</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>タイプ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>進行:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
-    click_to_view: "<gradient:#3b82f6:#60a5fa>クリックで詳細を表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>進捗：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>クリックして詳細を表示</gradient>"
 
+# ============================================
+# ランク要件の詳細UI
+# ============================================
 rank_requirement_detail_ui:
-  title: "<gradient:#a855f7:#c084fc>📋 要件詳細</gradient>"
+  title: "<gradient:#a855f7:#c084fc>📋 要件の詳細</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで戻る</gradient>"
-  progress_text: "<gradient:#3b82f6:#60a5fa>進行</gradient>"
-  current_progress: "<gradient:#6b7280:#9ca3af>現在:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
-  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>完了率:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
-  required_amount_left: "<gradient:#6b7280:#9ca3af>残り:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
-  progress_completed: "<gradient:#10b981:#34d399>✅ 完了！</gradient>"
-  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ 必要なアイテムがすべてありません!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ アイテムは正常に送信されました!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ アイテムの送信に失敗しました。もう一度試してください。</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ アイテムの送信中にエラーが発生しました。</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ この要件はすでに完了しています!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>あなたのレベル:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>必要なレベル:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>必要なレベル:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ レベル要件を満たしました!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>採掘したり、Mob を倒したりして XP を獲得します。</gradient>"
+      - "<gradient:#6b7280:#9ca3af>精錬アイテムなど！</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>あなたのプレイ時間:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%メートル</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>必要なプレイ時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%メートル</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>残り時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%メートル</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ プレイ時間要件を満たしました!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>サーバー上でプレイし続ける</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プレイタイムを貯めるために！</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>進捗</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>現在：</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>完了：</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>残り：</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅完成しました！</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
   progress_not_started: "<gradient:#6b7280:#9ca3af>未開始</gradient>"
   progress_details: "<gradient:#6b7280:#9ca3af>アイテム %item_number%</gradient>"
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ 完了</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>この要件は既に完了しています</gradient>"
-    complete_name: "<gradient:#10b981:#34d399>✅ 要件を完了</gradient>"
+      - "<gradient:#6b7280:#9ca3af>この要件はすでに完了しています</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ 要件を満たしている</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>クリックでこの要件を完了</gradient>"
-    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 進行を更新</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてこの要件を完了してください</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 進行状況を更新</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで進行を更新</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして進行状況を更新します</gradient>"
   summary:
-    items_completed: "<gradient:#10b981:#34d399>完了アイテム:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
-    requirement_type: "<gradient:#6b7280:#9ca3af>タイプ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>進行:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    items_completed: "<gradient:#10b981:#34d399>完了した項目:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>進捗：</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
     requirement_summary:
-      name: "<gradient:#a855f7:#c084fc>📊 要件サマリー</gradient>"
+      name: "<gradient:#a855f7:#c084fc>📊 要件の概要</gradient>"
     requirement_tip:
-      name: "<gradient:#f59e0b:#fbbf24>💡 ヒント</gradient>"
-  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 進行サマリー</gradient>"
-  current_progress_status: "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>💡ヒント</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 進捗状況の概要</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>必要なアイテムを集めて</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ここに戻って完了してください</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>必要なアイテムを集める</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ここに戻って完了します</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>必要な通貨を稼いでください</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>必要な通貨を獲得する</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>経験値レベルを獲得してください</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>経験レベルを獲得する</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>サーバーでプレイしてください</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>サーバー上でプレイする</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>要件を完了してください</gradient>"
-  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 サマリーを表示中...</gradient>"
-  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 ヒントを表示中...</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>要件を満たしてください</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 概要を表示中...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 閲覧のヒント...</gradient>"
   item_detail:
-    header: "<gradient:#a855f7:#c084fc>📦 アイテム %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
-    progress: "<gradient:#6b7280:#9ca3af>進行:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
-    missing: "<gradient:#ef4444:#f87171>不足:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+    header: "<gradient:#a855f7:#c084fc>📦アイテム %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>進捗：</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>ない：</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
   requirement_info:
-    requirement_type: "<gradient:#6b7280:#9ca3af>タイプ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>進行:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>進捗：</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
     missing_items:
-      item: "<gradient:#ef4444:#f87171>不足アイテム:</gradient>"
+      item: "<gradient:#ef4444:#f87171>不足しているアイテム:</gradient>"
       entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
-      more: "<gradient:#6b7280:#9ca3af>...他 %item_amount% 個</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...そして %item_amount% もっと</gradient>"
     detailed_information: "<gradient:#a855f7:#c084fc>詳細情報</gradient>"
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ 完了！</gradient>"
+      - "<gradient:#10b981:#34d399>✅完成しました！</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ 完了準備完了！</gradient>"
-      - "<gradient:#6b7280:#9ca3af>クリックで終了</gradient>"
+      - "<gradient:#10b981:#34d399>✅ 完成する準備ができました!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして終了</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ 進行中</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
     not_started:
       - "<gradient:#6b7280:#9ca3af>未開始</gradient>"
     error:
       - "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
-    status_name: "<gradient:#a855f7:#c084fc>ステータス: %requirement_status%</gradient>"
-  progress_item: "<gradient:#3b82f6:#60a5fa>進行</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>状態： %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>進捗</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
-  progress_item_status: "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
-  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>クリックで更新</gradient>"
-  progress_overview: "<gradient:#a855f7:#c084fc>📊 進行概要</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>クリックして更新</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 進捗状況の概要</gradient>"
   fallback:
     name: "<gradient:#6b7280:#9ca3af>不明な要件</gradient>"
     lore:
@@ -402,290 +1007,746 @@ rank_requirement_detail_ui:
     name: "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
     lore:
       - "<gradient:#ef4444:#f87171>要件の読み込みに失敗しました</gradient>"
-  progress_info: "<gradient:#3b82f6:#60a5fa>📊 進行:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 進捗状況:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
-  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>は既に完了しています！</gradient>"
-  progress_refreshed: "<gradient:#10b981:#34d399>✅ 進行を更新しました！</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>すでに完成しています！</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ 進捗がリフレッシュされました!</gradient>"
   detailed_info:
     header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
-    item_breakdown: "<gradient:#a855f7:#c084fc>📦 アイテム内訳:</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 アイテムの内訳:</gradient>"
     item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
 
-bounty_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 懸賞金システム</gradient>"
-  create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 懸賞金を作成</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで新しい懸賞金を作成</gradient>"
-      - "<gradient:#6b7280:#9ca3af>他のプレイヤーに</gradient>"
-  view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 懸賞金を表示</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>すべてのアクティブな懸賞金を表示</gradient>"
-  my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 自分の懸賞金</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>作成した懸賞金を表示</gradient>"
-  leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 リーダーボード</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>トップ懸賞金ハンター</gradient>"
-  bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#a855f7:#c084fc>への懸賞金</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>ターゲット:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>依頼者:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>作成日:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>クリックで詳細を表示</gradient>"
 
+# ============================================
+# 報奨金概要 UI
+# ============================================
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 報奨金システム</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 報奨金を作成する</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして新しい報奨金を作成します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>別のプレーヤーで</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 報奨金を表示</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>すべてのアクティブな報奨金を表示する</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 私の賞金</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>作成した報奨金を表示する</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆リーダーボード</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>トップバウンティハンター</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 報奨金</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>ターゲット：</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>コミッショナー：</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>作成:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>クリックして詳細を表示</gradient>"
+
+# ============================================
+# 報奨金作成 UI
+# ============================================
 bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 懸賞金を作成 - %target_name%</gradient>"
+  title: "<gradient:#a855f7:#c084fc>📝 報奨金を作成 - %target_name%</gradient>"
   select_target:
     title: "<gradient:#a855f7:#c084fc>🎯 ターゲットを選択</gradient>"
-    name: "<gradient:#f59e0b:#fbbf24>🎯 ターゲット: %target_name%</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯対象: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックでプレイヤーを選択</gradient>"
-      - "<gradient:#6b7280:#9ca3af>現在: %target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてプレーヤーを選択します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>現在： %target_name%</gradient>"
   create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 懸賞金を作成</gradient>"
+    name: "<gradient:#10b981:#34d399>📝 報奨金を作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで新しい懸賞金を作成</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして新しい報奨金を作成します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>別のプレーヤーで</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 アイテム報酬を追加</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 アイテム報酬を追加</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>クリックでアイテム報酬を追加</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてアイテム報酬を追加します</gradient>"
       - "<gradient:#6b7280:#9ca3af>現在のアイテム:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 先にターゲットを選択してください！</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>❌ 先にターゲットを選択してください！</gradient>"
+      - "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
   add_currency:
-    name: "<gradient:#f59e0b:#fbbf24>💎 通貨報酬を追加</gradient>"
-    name_disabled: "<gradient:#6b7280:#9ca3af>💎 通貨報酬を追加</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>💎 通貨特典を追加</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 通貨特典を追加</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>クリックで通貨報酬を追加</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして通貨特典を追加します</gradient>"
       - "<gradient:#6b7280:#9ca3af>現在の通貨:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 先にターゲットを選択してください！</gradient>"
+      - "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
   confirm_bounty:
-    name: "<gradient:#10b981:#34d399>✅ 懸賞金を作成</gradient>"
+    name: "<gradient:#10b981:#34d399>✅ 報奨金を作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックで懸賞金を作成</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして報奨金を作成します</gradient>"
       - "<gradient:#6b7280:#9ca3af>選択した報酬で</gradient>"
   confirm:
-    no_player_selected: "<gradient:#ef4444:#f87171>❌ プレイヤーが選択されていません！</gradient> <gradient:#6b7280:#9ca3af>先にターゲットを選択してください。</gradient>"
-    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 報酬が追加されていません！</gradient> <gradient:#6b7280:#9ca3af>先に報酬を追加してください。</gradient>"
-    confirmation: "<gradient:#f59e0b:#fbbf24>⏳</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient> <gradient:#f59e0b:#fbbf24>への懸賞金を作成中...</gradient>"
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ プレイヤーが選択されていません!</gradient> <gradient:#6b7280:#9ca3af>最初にターゲットを選択してください。</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 報酬は追加されません!</gradient> <gradient:#6b7280:#9ca3af>まずは報酬を追加してください。</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ 報奨金の作成</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ エラー:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-    success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>への懸賞金を作成しました！</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>📦 アイテムが返却されました！</gradient> <gradient:#6b7280:#9ca3af>一部のアイテムは地面に落ちました。</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 報奨金が正常に作成されました</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦商品が返品されました！</gradient> <gradient:#6b7280:#9ca3af>いくつかのアイテムが地面に落ちました。</gradient>"
+  # i18n("bounty_creation.confirm.success") 呼び出しのネストされた bounty_creation キー
   bounty_creation:
-    processing: "<gradient:#f59e0b:#fbbf24>⏳ 懸賞金を処理中...</gradient>"
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ 報奨金を処理しています...</gradient>"
     confirm:
-      success: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>への懸賞金を作成しました！</gradient>"
-      error: "<gradient:#ef4444:#f87171>❌ 懸賞金の処理に失敗:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+      success: "<gradient:#10b981:#34d399>✅ 報奨金が正常に作成されました</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 報奨金の処理に失敗しました:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
+# ============================================
+# 報奨金報酬UI
+# ============================================
 bounty_reward_ui:
-  title: "<gradient:#a855f7:#c084fc>💰 懸賞金報酬</gradient>"
+  title: "<gradient:#a855f7:#c084fc>💰 報奨金報酬</gradient>"
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 報酬なし</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成</gradient>"
+      - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成する</gradient>"
   input_slot:
-    name: "<gradient:#10b981:#34d399>➕ アイテム追加</gradient>"
+    name: "<gradient:#10b981:#34d399>➕ アイテムの追加</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ここにアイテムを置いて報酬として追加</gradient>"
+      - "<gradient:#6b7280:#9ca3af>報酬として追加するアイテムをここに配置します</gradient>"
   target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 ターゲット: %target_name%</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯対象: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>この懸賞金は</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#6b7280:#9ca3af>にかけられています</gradient>"
+      - "<gradient:#6b7280:#9ca3af>この賞金がかけられるのは、</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 懸賞金報酬</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このアイテムは懸賞金を</gradient>"
-      - "<gradient:#6b7280:#9ca3af>獲得した人に与えられます</gradient>"
-  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 新しいアイテムが追加されていません！</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ インベントリがいっぱいのため、一部のアイテムが落ちました！</gradient>"
+      - "<gradient:#a855f7:#c084fc>💰 報奨金報酬</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このアイテムは以下に贈られます</gradient>"
+      - "<gradient:#6b7280:#9ca3af>誰が賞金を請求​​しても</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 新しいアイテムは追加されませんでした。</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 在庫がいっぱいになったため、一部のアイテムがドロップされました。</gradient>"
 
+# ============================================
+# バウンティプレイヤー情報UI
+# ============================================
 bounty_player_info_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 %target_name% への懸賞金</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🎯 報奨金 %target_name%</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>この懸賞金のターゲット</gradient>"
+      - "<gradient:#6b7280:#9ca3af>この報奨金の対象者</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 詳細は近日公開予定...</gradient>"
   rewards:
-    name: "<gradient:#10b981:#34d399>💰 報酬を表示</gradient>"
+    name: "<gradient:#10b981:#34d399>💰 報酬を見る</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックですべての報酬を表示</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてすべての報酬を表示します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>合計報酬:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
-    name: "<gradient:#ef4444:#f87171>🗑 懸賞金を削除</gradient>"
+    name: "<gradient:#ef4444:#f87171>🗑 報奨金を削除</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ 警告: 元に戻せません！</gradient>"
-      - "<gradient:#6b7280:#9ca3af>クリックでこの懸賞金を削除</gradient>"
-  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>への懸賞金が削除されました！</gradient>"
+      - "<gradient:#ef4444:#f87171>⚠ 警告: 元に戻すことはできません。</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてこの報奨金を削除します</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ 報奨金あり</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>削除されました！</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>この報奨金を削除してもよろしいですか?</gradient>"
 
+# ============================================
+# 管理者概要 UI
+# ============================================
 admin_overview_ui:
   title: "<gradient:#ef4444:#f87171>⚙ 管理パネル</gradient>"
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 権限マネージャー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プラグイン権限を管理</gradient>"
-      - "<gradient:#6b7280:#9ca3af>プラグイン総数:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>権限総数:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 権限マネージャーを開けませんでした！</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグインの権限を管理する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>合計権限:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 権限マネージャーを開けませんでした!</gradient>"
   create_ranks:
-    name: "<gradient:#a855f7:#c084fc>⚔ LuckPermsグループを作成</gradient>"
+    name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms グループを作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ランクからLuckPermsグループを作成</gradient>"
-    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPermsがインストールされていません！</gradient>"
-    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ グループを作成するランクが見つかりません！</gradient>"
-    created: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>個のLuckPermsグループを作成しました！</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ランクから LuckPerms グループを作成する</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms がインストールされていません!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ グループを作成するためのランクが見つかりません!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ 作成されました</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>ラックパーマグループ！</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>新しいグループは作成されませんでした。</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ LuckPermsグループの作成に失敗しました！</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ LuckPerms グループの作成に失敗しました!</gradient>"
 
+# ============================================
+# 管理者権限の概要 UI
+# ============================================
 admin_permissions_overview_ui:
   title: "<gradient:#3b82f6:#60a5fa>🔑 権限マネージャー</gradient>"
   errors:
     plugin_not_found: "<gradient:#ef4444:#f87171>❌ プラグインが見つかりません:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPermsがインストールされていません！</gradient>"
-    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ このプラグインには利用可能な権限がありません！</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms がインストールされていません!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ このプラグインにはアクセス許可がありません!</gradient>"
   plugins:
     navigation:
-      previous: "<gradient:#3b82f6:#60a5fa>⬅ 前のプラグイン</gradient>"
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ 以前のプラグイン</gradient>"
       next: "<gradient:#3b82f6:#60a5fa>➡ 次のプラグイン</gradient>"
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
         - "<gradient:#6b7280:#9ca3af>権限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>左クリックで選択</gradient>"
-        - "<gradient:#10b981:#34d399>右クリックですべて割り当て</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>左クリックして選択します</gradient>"
+        - "<gradient:#10b981:#34d399>右クリックしてすべてを割り当てます</gradient>"
     empty_slot:
-      name: "<gradient:#6b7280:#9ca3af>空</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>空の</gradient>"
   permissions:
     navigation:
-      previous: "<gradient:#3b82f6:#60a5fa>⬅ 前の権限</gradient>"
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ 以前の権限</gradient>"
       next: "<gradient:#3b82f6:#60a5fa>➡ 次の権限</gradient>"
     entry:
       name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
       plugin: "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
-      node: "<gradient:#6b7280:#9ca3af>ノード:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>ノード：</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>クリックでこの権限を割り当て</gradient>"
+        - "<gradient:#10b981:#34d399>クリックしてこの権限を割り当てます</gradient>"
     no_selection:
-      name: "<gradient:#6b7280:#9ca3af>プラグイン未選択</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>プラグインが選択されていません</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>上でプラグインを選択して</gradient>"
-        - "<gradient:#6b7280:#9ca3af>権限を表示</gradient>"
+        - "<gradient:#6b7280:#9ca3af>上のプラグインを選択してください</gradient>"
+        - "<gradient:#6b7280:#9ca3af>その権限を表示するには</gradient>"
     empty_slot:
-      name: "<gradient:#6b7280:#9ca3af>空</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>空の</gradient>"
   actions:
     assign_selected:
-      name: "<gradient:#10b981:#34d399>✅ %plugin_name% の権限を割り当て</gradient>"
+      name: "<gradient:#10b981:#34d399>✅ 割り当てる %plugin_name% 権限</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>すべての権限を割り当て</gradient>"
+        - "<gradient:#6b7280:#9ca3af>すべての権限を次から割り当てます</gradient>"
         - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% 権限)</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% 許可)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>選択なし</gradient>"
   status:
     selected_plugin:
-      name: "<gradient:#a855f7:#c084fc>📊 選択中: %plugin_name%</gradient>"
+      name: "<gradient:#a855f7:#c084fc>📊 選択済み: %plugin_name%</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
         - "<gradient:#6b7280:#9ca3af>権限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>プラグイン総数:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 概要</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>プラグイン総数:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>プラグインを選択して権限を表示</gradient>"
+        - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>プラグインを選択して権限を表示します</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 データを更新</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>クリックで権限データを更新</gradient>"
-
+        - "<gradient:#6b7280:#9ca3af>クリックして権限データを更新します</gradient>"
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ 選択をクリア</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックしてプラグインの選択を解除します</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ 割り当てる %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>選択したプラグインからすべての権限を割り当てます</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ すべての権限を割り当てる</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>すべての権限を割り当てる</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>プラグイン</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ データが更新されました!</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ 割り当て済み</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>からの許可</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 選択済み:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ 割り当て済み</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>からの許可</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ 割り当て:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>から</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>選択がクリアされました</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ から割り当てられたすべての権限</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
 
 # ============================================
-# ランク要件詳細UI
+# PAGINATION
 # ============================================
-rank_requirement_detail_ui:
-  title: "<gradient:#a855f7:#c084fc>📋 要件の詳細</gradient>"
-  back:
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 ページ %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>現在のページ:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>総ページ数:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 ページ %direction%</gradient>"
+
+# ============================================
+# ヘッドアイテム
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙戻る</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
-  submit:
-    missing_items: "<gradient:#ef4444:#f87171>❌ 必要なアイテムが揃っていません！</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ アイテムの提出に成功しました！</gradient>"
-    failed: "<gradient:#ef4444:#f87171>❌ 提出に失敗しました。もう一度お試しください。</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 提出中にエラーが発生しました。</gradient>"
-    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ この要件は既に完了しています！</gradient>"
-  experience:
-    current_level: "<gradient:#6b7280:#9ca3af>現在のレベル:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
-    required_level: "<gradient:#6b7280:#9ca3af>必要レベル:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
-    levels_needed: "<gradient:#ef4444:#f87171>不足レベル:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
-    completed: "<gradient:#10b981:#34d399>✅ レベル要件達成！</gradient>"
-  playtime:
-    current: "<gradient:#6b7280:#9ca3af>プレイ時間:</gradient> <gradient:#10b981:#34d399>%hours%時間 %minutes%分</gradient>"
-    required: "<gradient:#6b7280:#9ca3af>必要プレイ時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%時間 %minutes%分</gradient>"
-    remaining: "<gradient:#ef4444:#f87171>残り時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%時間 %minutes%分</gradient>"
-    completed: "<gradient:#10b981:#34d399>✅ プレイ時間要件達成！</gradient>"
-  summary:
-    requirement_type: "<gradient:#6b7280:#9ca3af>タイプ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>進捗:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
-    requirement_summary:
-      name: "<gradient:#a855f7:#c084fc>📊 要件サマリー</gradient>"
-    requirement_tip:
-      name: "<gradient:#f59e0b:#fbbf24>💡 ヒント</gradient>"
-  requirement_tip:
-    currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>必要な通貨を獲得しましょう</gradient>"
-    experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>経験値レベルを上げましょう</gradient>"
-    playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>サーバーでプレイしましょう</gradient>"
-    other:
-      - "<gradient:#f59e0b:#fbbf24>💡 ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>要件を完了しましょう</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️続行</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして続行します</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️前へ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>前のページへ</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️次へ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>次のページ</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ 上へ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>上がる</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ダウン</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>下に行く</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ キャンセル</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>アクションをキャンセルする</gradient>"
+
+
 
 # ============================================
-# ランク要件ジャーニーUI
+# エラーメッセージ
+# ============================================
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ プレミアムが必要です!</gradient> <gradient:#6b7280:#9ca3af>特徴</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>にはプレミアムバージョンが必要です。</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ 処理が失敗しました:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# ページ分割されたプレーヤー UI
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 プレーヤーを選択</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# 抽象的なアンビルビュー
+# ============================================
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ 値を入力してください</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ 値を入力してください</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>上に入力を入力してください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして確認します</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ 入力の処理に失敗しました:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# 確認ビュー
+# ============================================
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ アクションの確認</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ 確認</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして確認します</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ キャンセル</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックしてキャンセルします</gradient>"
+
+# ============================================
+# 無料版の制限事項
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ 無料バージョンの制限:</gradient> <gradient:#6b7280:#9ca3af>完了することしかできません</gradient> <gradient:#f59e0b:#fbbf24>1ランクツリー</gradient><gradient:#6b7280:#9ca3af>。無制限にプレミアムにアップグレードしてください!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ 無料バージョンの制限:</gradient> <gradient:#6b7280:#9ca3af>進むことしかできません</gradient> <gradient:#f59e0b:#fbbf24>3ランク</gradient> <gradient:#6b7280:#9ca3af>木ごとに。プレミアムにアップグレードしてください！</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ 無料バージョンの制限:</gradient> <gradient:#6b7280:#9ca3af>あなただけが持つことができます</gradient> <gradient:#f59e0b:#fbbf24>1 つのアクティブなランク パス</gradient><gradient:#6b7280:#9ca3af>。プレミアムにアップグレードしてください！</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 プレビューのみ:</gradient> <gradient:#6b7280:#9ca3af>このランクツリーは無料版ではプレビューのみです。プレミアムにアップグレードしてロックを解除しましょう!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 プレミアムが必要:</gradient> <gradient:#6b7280:#9ca3af>このランクのロックを解除するにはプレミアムが必要です。</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ 無料版</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>無料版を使用しています</gradient>"
+      - "<gradient:#6b7280:#9ca3af>機能が制限されています。</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>プレミアムにアップグレードすると、次のことが可能になります。</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• 無制限のランクツリー</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• ツリーごとの無制限のランク</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• 複数のアクティブパス</gradient>"
+
+# ============================================
+# プレミアムバージョンのメッセージ
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ プレミアム:</gradient> <gradient:#6b7280:#9ca3af>制限は適用されません。</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐プレミアムバージョン</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>すべての機能がロック解除されました!</gradient>"
+
+# ============================================
+# 要件項目詳細図（簡略化）
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 アイテム要件</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ あなたはこのアイテムを持っています</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ 欠品</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 アイテムを送信する</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>全てのアイテムが準備完了！</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶クリックして送信</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 アイテムを送信する</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>必須項目が不足しています</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>まずはすべてのアイテムを集めましょう</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← 戻る</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>要件に戻る</gradient>"
+
+
+# ============================================
+# 報酬の翻訳
 # ============================================
 rank_requirements_journey_ui:
-  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% 要件</gradient>"
-  rank_info:
-    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>すべての要件を完了して</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このランクを解除しましょう</gradient>"
+
+  # ============================================
+  # ランク要件ジャーニービュー
+  # ============================================
+  title: "<gradient:#a855f7:#c084fc>⚔ %rank_name% 要件</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
   overall_progress:
-    name: "<gradient:#3b82f6:#60a5fa>📊 全体の進捗</gradient>"
+    name: "<gradient:#a855f7:#c084fc>📊 全体的な進捗状況</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>進捗:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>完了:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>完了：</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>要件：</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクを解除するには！</gradient>"
   claim_button:
-    name: "<gradient:#10b981:#34d399>✅ ランクを取得</gradient>"
+    name: "<gradient:#10b981:#34d399>🏆ランクを主張しましょう！</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてランクを取得！</gradient>"
-    locked:
-      name: "<gradient:#ef4444:#f87171>🔒 ロック中</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>すべての要件が完了しました!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ クリックしてランクを獲得してください</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒 ランクがロックされました</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>すべての要件を完了して</gradient>"
-        - "<gradient:#6b7280:#9ca3af>このランクを解除しましょう</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
+        - "<gradient:#6b7280:#9ca3af>このランクのロックを解除するには、</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒ロックされています</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
+        - "<gradient:#6b7280:#9ca3af>このランクのロックを解除するには、</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← 戻る</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>ランク概要に戻る</gradient>"
   messages:
-    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード - アクション無効</gradient>"
-    requirement_completed: "<gradient:#10b981:#34d399>✅ 要件完了！</gradient>"
-    all_completed: "<gradient:#10b981:#34d399>🎉 すべての要件が完了しました！ランクを取得できます！</gradient>"
-    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ この要件はまだ完了できません。</gradient>"
-    already_completed: "<gradient:#10b981:#34d399>✅ この要件は既に完了しています。</gradient>"
-    rank_claimed: "<gradient:#10b981:#34d399>🎉 おめでとうございます！ランク %rank_name% を取得しました！</gradient>"
+    requirement_completed: "<gradient:#10b981:#34d399>✅ 要件は完了しました!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 すべての要件が完了しました!請求ボタンをクリックしてランクを取得してください。</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆おめでとうございます！次のランクに到達しました:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌ この要件はまだ完了する準備ができていません。</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ この要件はすでに完了しています。</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 プレビュー モード - インタラクションは無効です</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>報酬なし</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
+      type_label: "<gray>タイプ：</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>価値：</gray> <gold>%value%</gold>"
+    
+    # 報酬タイプの説明
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>通貨特典を受け取る</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>アイテム報酬を受け取る</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>経験値を受け取る</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>特別なコマンドを実行する</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>複数の報酬を組み合わせたもの</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>複数の報酬から選択</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>特別な権限を取得する</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>ある場所にテレポートする</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>パーティクルエフェクトのロックを解除する</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>消えた宝箱を受け取る</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% さらに多くの報酬...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 すべての報酬を見る</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>クリックしてすべてを表示 %count% 報酬</gradient>"
+        - "<gradient:#6b7280:#9ca3af>このランクについて詳しく見る</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>報酬の詳細は近日公開予定です！</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 報酬なし</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>このランクには報酬はありません</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません。</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 ランク報酬</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>受け取ります %count% 報酬</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクを獲得すると</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>報酬なし</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
+    type_label: "<gray>タイプ：</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>価値：</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>特典のロックを解除しました:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # 報酬タイプの説明
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>通貨特典を受け取る</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>アイテム報酬を受け取る</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>経験値を受け取る</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>特別なコマンドを実行する</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>複数の報酬を組み合わせたもの</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>複数の報酬から選択</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>特別な権限を取得する</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>ある場所にテレポートする</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>パーティクルエフェクトのロックを解除する</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>消えた宝箱を受け取る</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% さらに多くの報酬...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 すべての報酬を見る</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックしてすべてを表示 %count% 報酬</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクについて詳しく見る</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>報酬の詳細は近日公開予定です！</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 報酬なし</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>このランクには報酬はありません</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません。</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 ランク報酬</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>受け取ります %count% 報酬</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このランクを獲得すると</gradient>"
+
+
+# ============================================
+# ランク報酬詳細ビュー
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>報酬: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>このランクには、 %count% 報酬</gradient>"
+      - "<gradient:#6b7280:#9ca3af>詳細については報酬をクリックしてください</gradient>"
+
+# ============================================
+# パーク概要UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨特典</gradient>"
+
+# ============================================
+# パーク詳細UI
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# パークの翻訳
+# ============================================
+perk:
+  # 釣り特典
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>より速い釣り</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>漁獲率が向上し、より速く魚を捕まえることができます</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>釣りXPブースト</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>魚を釣るとボーナス XP を獲得</gradient>"
+  
+  # ポーションの特典
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>ポーションアンプリファイアー</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>摂取するとポーションの効果が強化される可能性があります</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>ポーションの持続時間</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>消費時にポーションの持続時間を延長するチャンス</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>ポーションの払い戻し</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>ポーションを飲んだ後にポーションを取り戻すチャンス</gradient>"
+  
+  # 特典メッセージ
+  messages:
+    # /Enable/Disable のロックを解除する
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨特典がアンロックされました！</gradient> <gradient:#6b7280:#9ca3af>ロックを解除しました</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>正常にロックが解除され、特典が有効になりました:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>特典のロックを解除できませんでした。もう一度試してください。</gradient>"
+      error: "<gradient:#ef4444:#f87171>特典のロックを解除するときにエラーが発生しました。</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>この特典のロックを解除するための要件を満たしていません。</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>有効な特典:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>特典を有効にできませんでした:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>有効な特典の最大数に達しました (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>無効化特典:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>特典を無効にできませんでした:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # クールダウン
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>この特典はクールダウン中です</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>特典を使用する準備ができました。</gradient>"
+    
+    # エフェクトトリガー
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ポーション強化！</gradient> <gradient:#6b7280:#9ca3af>増幅された効果</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ ポーションの持続時間が延長されました!</gradient> <gradient:#6b7280:#9ca3af>長持ちする</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 ポーションを保存しました!</gradient> <gradient:#6b7280:#9ca3af>在庫に戻りました</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 より速く釣りをアクティブに！</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% 釣りXP！</gradient>"
+  
+  # UI要素
+  ui:
+    header:
+      type_label: "<gray>タイプ： <white>%type%</white></gray>"
+      category_label: "<gray>カテゴリ： <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>要件なし</green>"
+      no_requirements_lore: "<gray>この特典にはロック解除要件はありません</gray>"
+    
+    rewards:
+      title: "<gold>報酬のロックを解除する</gold>"
+      no_rewards: "<gray>ロック解除報酬なし</gray>"
+      no_rewards_lore: "<gray>この特典にはロック解除報酬はありません</gray>"
+      type_label: "<gray>タイプ： <white>%type%</white></gray>"
+      value_label: "<gray>価値： <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>パークステータス</white>"
+      locked: "<red>✖ ロック済み</red>"
+      locked_hint: "<gray>ロックを解除するための要件を完了する</gray>"
+      active: "<green>✓ アクティブ</green>"
+      enabled: "<yellow>○ 有効</yellow>"
+      disabled: "<gray>○ 障害者</gray>"
+      enabled_count: "<gray>有効な特典: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>クールダウン： <gold>%time%</gold></gray>"
+      activations_label: "<gray>アクティベーション: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>パークのロックを解除する</white>"
+        hint: "<green>クリックしてこの特典のロックを解除してください!</green>"
+      enable:
+        title: "<white>特典を有効にする</white>"
+        hint: "<green>クリックしてこの特典を有効にします</green>"
+        limit_reached: "<red>有効な特典の最大数に達しました</red>"
+      disable:
+        title: "<white>パークを無効にする</white>"
+        hint: "<yellow>クリックしてこの特典を無効にします</yellow>"
+  
+  # 既存の特典 (参考用 - 不足している場合は追加)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>フライト</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>飛行能力を獲得する</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>グロー</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>自分自身に輝くエフェクトを適用する</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>速攻</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>より速く採掘して掘る</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>ジャンプブースト</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>通常よりも高くジャンプする</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>経験を残す</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>死んでもXPを保持</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>在庫を保管する</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>死んでもアイテムを保管しておく</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>ナイトビジョン</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>暗闇でもはっきり見える</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>落下ダメージなし</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>落下によるダメージを受けない</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>抵抗</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>あらゆるソースから受けるダメージが軽減される</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>飽和</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>決してお腹が空かないように</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>スピード</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>通常よりも速く移動する</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>強さ</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>戦闘でより多くのダメージを与える</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>耐火性</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>火と溶岩のダメージに対する耐性</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>ダブルエクスペリエンス</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>すべてのソースから 2 倍の XP を獲得</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>クリティカルストライク</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>クリティカルダメージを与えるチャンス</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>戦闘ヒール</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>敵にダメージを与えると回復する</gradient>"

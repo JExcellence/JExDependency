@@ -1,0 +1,24 @@
+# Bản dịch tiếng Việt cho tích hợp RCore Central
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Cách dùng: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Đang kết nối tới RaindropCentral...</yellow>"
+  success: "<green>Đã kết nối thành công tới RaindropCentral!</green> <gray>Máy chủ hiện đang gửi tín hiệu heartbeat.</gray>"
+  error:
+    invalid_key: "<red>Định dạng khóa API không hợp lệ. Khóa API phải gồm 32-128 ký tự chữ và số.</red>"
+    uuid_mismatch: "<red>Khóa API này thuộc về một tài khoản Minecraft khác.</red>"
+    already_connected: "<yellow>Máy chủ đã được kết nối.</yellow> <gray>Hãy dùng /rcdisconnect trước.</gray>"
+    network: "<red>Lỗi mạng: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Đang ngắt kết nối khỏi RaindropCentral...</yellow>"
+  success: "<green>Đã ngắt kết nối khỏi RaindropCentral thành công.</green>"
+  error:
+    not_connected: "<red>Máy chủ chưa được kết nối tới RaindropCentral.</red>"
+    failed: "<red>Không thể ngắt kết nối. Vui lòng thử lại.</red>"
+    network: "<red>Lỗi mạng: %error%</red>"
+
+general:
+  no_permission: "<red>Bạn không có quyền sử dụng lệnh này.</red>"

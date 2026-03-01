@@ -1,0 +1,1752 @@
+# RDQ-oversettelsesfil – engelsk (USA)
+# MiniMessage-format med gradienter og styling
+# Plassholdere bruker %plassholder%-format
+
+# ============================================
+# GLOBAL PREFIKS
+# ============================================
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+# ============================================
+# ROTNIVÅTASTER (brukes av direkte I18n.Builder-anrop)
+# ============================================
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Ingen Belønninger</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Legg til gjenstander for å opprette belønninger</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Legg til Gjenstand</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Plasser gjenstander her som belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Venstreklikk for å plassere elementet</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Høyreklikk for å fjerne elementet</gradient>"
+
+# ============================================
+# RANK TREE DISPLAY NAVN OG BESKRIVELSER
+# ============================================
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mestre kunsten å skyte med bue og spore</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bli ett med naturen</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Kriger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mestre kampens kunst</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bli en legendarisk fighter</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Magiker</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Utnytt magiens kraft</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bli en mester i det mystiske</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Kjeltring</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mestre sniking og list</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Slå fra skyggene</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Klerk</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kanaliser guddommelig kraft</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Helbred og beskytt dine allierte</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Handelsmann</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mestre handelens kunst</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bygg formuen din</gradient>"
+
+# ============================================
+# RANK DISPLAY NAVN OG BESKRIVELSER
+# ============================================
+rank:
+
+  # ============================================
+  # RANK MELDINGER
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 RANK OPP!</gradient> <gradient:#6b7280:#9ca3af>Du har fullført alle krav til</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Bruk rangeringsmenyen for å kreve rangoppgraderingen din!</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>Ikke rangert</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Velg en rangeringsbane for å begynne</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>Ikke rangert</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>Standardrangering</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ingen rangering er valgt</gradient>"
+  # Ranger Tree Ranger
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹 Jeger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>En nybegynner som lærer naturens veier</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 Bueskytter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Dyktig med buen, dødelig på avstand</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 Tracker</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ekspert på å finne og følge byttedyr</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 Skytter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Presisjonsskytespill med dødelig nøyaktighet</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 Stifinner</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mesterforsker av ukjente land</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 Snikskytter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Eliteskytter, ett skudd ett drap</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 Skogsherre</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Villmarkens mester, ett med naturen</gradient>"
+  # Krigertre rangerer
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>Rekruttere</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>En ny kriger begynner sin reise</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Lær det grunnleggende om kamp</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>Soldat</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Opplært i kampkunsten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Klar for kamp</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>Veteran</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Kampherdet kriger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Velg din spesialiseringsvei</gradient>"
+    # Spesialisering gren 1: Berserker (offensiv)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Path of Fury</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Slipp løs ødeleggende angrep</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ofre forsvar for rå kraft</gradient>"
+    # Spesialisering gren 2: Guardian (defensiv)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>Verge</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Veien til beskyttelse</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bli et uknuselig skjold</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Beskytt dine allierte for enhver pris</gradient>"
+    # Spesialisering gren 3: Gladiator (balansert)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Path of Glory</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mester i arenakamp</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Balanser angrep og forsvar</gradient>"
+    # Endelige rangeringer
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>Warlord of Fury</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Ultimate Berserker</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ustoppelig ødeleggelseskraft</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Frykt inkarnerer på slagmarken</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>skjoldets krigsherre</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Ultimate Guardian</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ubevegelig gjenstand, evig beskytter</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ingen skal passere mens du står</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>Arenaens krigsherre</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Ultimate Gladiator</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mesternes mester</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Legenden om arenaen</gradient>"
+    # Eldre rangeringer (for bakoverkompatibilitet)
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>Ridder</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ærede kriger av riket</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>Champion</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Legendarisk jagerfly, fryktet av alle</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>Krigsherre</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Krigsmester, hærfører</gradient>"
+  # Mage Tree rangerer
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ Lærling</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Lære det grunnleggende om magi</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vokser i magisk kraft</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Veiviser</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mester i mystiske kunster</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨ Erkemageri</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Den øverste mester over all magi</gradient>"
+  # Rogue Tree rangerer
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Raske fingre, raskere flukt</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Tyv</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mester av sniking og tyveri</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 Speider</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Øyne og ører av skyggene</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 Assassin</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ekspert på å komme seg inn og ut uoppdaget</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Shadowblade</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nattens dødelige kriger</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Kontrollør av informasjonsnettverk</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 Skyggemester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ett med selve mørket</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 Shadowmaster</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Øverste hersker over alle skygger</gradient>"
+  # Geistlige tre rangerer
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Acolyte</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Hengiven tjener av det guddommelige</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Hengiven</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Trofast tilhenger av den guddommelige vei</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ Prest</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Healer og beskytter av de troende</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ Healer</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Master i restorative arts</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ Biskop</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Leder for de troende</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ Oracle</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Seer av guddommelige visjoner</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ Yppersteprest</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Det guddommeliges høyeste stemme</gradient>"
+  # Handelstre rangerer
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 Kjøpmann</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Selger varer på gaten</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 Trader</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Etablert kjøpmann med forbindelser</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 Leverandør</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Dyktig selger av varer</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Kunstner</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Håndverker av fine varer</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰 Alkymist</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mester av eliksirer og eliksirer</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Kjøpmann</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vellykket bedriftseier</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 Master Crafter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Rikets øverste håndverker</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 Handelsprins</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Handelskongelighet</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Master i handel og handel</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 Gildemester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Leder av handelslauget</gradient>"
+
+# ============================================
+# BOUNTY-LYTTERMELDINGER
+# ============================================
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du har en aktiv dusør på hodet ditt!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Dusørverdi:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Utløper:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Bestiller:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 DUSØR INNLØST! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Du har innløst dusøren på</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Din andel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Noen</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>har innløst dusøren på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spillere</gradient> <gradient:#a855f7:#c084fc>har innløst dusøren på</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+
+# ============================================
+# MELDINGER PÅ BUNTY-OPPRETTELSE
+# ============================================
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Dusør opprettet for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Feil ved behandling av dusør:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Behandler dusør...</gradient>"
+
+# ============================================
+# RANK PROGRESJONSMELDINGER
+# ============================================
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Progresjon startet for rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Viser krav for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Krav ufullstendige for</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% fullført)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Krav ufullstendig:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>har ingen krav!</gradient>"
+
+# ============================================
+# RANK KLIKK-MELDINGER
+# ============================================
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningsmodus:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Du eier</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Låst:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Fullfør forutsetningene først</gradient>"
+
+# ============================================
+# RQ KOMMANDOMELDINGER
+# ============================================
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installert!</gradient> <gradient:#6b7280:#9ca3af>Denne funksjonen krever LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjelp</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Åpne hovedmeny</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Vis ranger</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Vis dusører</gradient>"
+
+# ============================================
+# HOVEDOVERSIKT UI
+# ============================================
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Admin Panel</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tilgang til administrasjonsverktøy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og konfigurasjonsalternativer</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Dusører</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis og administrer dusører</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jakt på spillere for belønninger!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Fordeler</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis tilgjengelige fordeler</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og spesielle evner</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Oppdrag</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis tilgjengelige oppdrag</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og spor fremgangen din</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Ranger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vis rangprogresjon</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og lås opp nye evner</gradient>"
+
+# ============================================
+# RANK MAIN UI
+# ============================================
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Rangsystem</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Rangtrær</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bla gjennom tilgjengelige rangtrær</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og velg din vei</gradient>"
+
+
+# ============================================
+# RANK TREE OVERSIKT UI
+# ============================================
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 Ranger trær</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mestre kunsten å skyte og spore</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bli ett med naturen</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ Kriger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mestre kampkunsten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bli en legendarisk fighter</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ Mage</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Utnytt magiens kraft</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bli en mester i det mystiske</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Skurk</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mestre sniking og list</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Slå fra skyggene</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Geistlig</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Kanal guddommelig kraft</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Helbred og beskytt dine allierte</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 Kjøpmann</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Mestre kunsten å handle</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bygg formuen din</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>Venstreklikk for å forhåndsvise</gradient>"
+      - "<gradient:#10b981:#34d399>Høyreklikk for å velge</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Dette rangtreet er låst</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>Fullstendig %minimum_rank_paths_to_be_absolved_needed% ranger trær først</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>Forutsetninger:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Denne rangeringsbanen er låst!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ Aktiv for øyeblikket</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>Venstreklikk for å forhåndsvise</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>Høyreklikk for å fortsette</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 Tidligere valgt</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>Høyreklikk for å aktivere på nytt</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ Maksimal aktive rangeringsbaner nådd!</gradient> <gradient:#6b7280:#9ca3af>(Maks: %maximum_rank_path_amount%)</gradient>"
+  create_rank_tree:
+    name: "<gradient:#10b981:#34d399>➕ Opprett rangeringstre</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Opprett et nytt rangeringstre</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(Kun administrator)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Finner ikke startrangering for denne banen!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ Valgt rangeringsbane:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Startrangering: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke velge rangeringsbane!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Reaktivert rangeringsbane:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke aktivere rangeringsbanen på nytt!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Oppretting av rangeringstre kommer snart!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Gratis versjon - Kun forhåndsvisning</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>Dette rangeringstreet er kun tilgjengelig for forhåndsvisning.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oppgrader til Premium for å låse opp!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>Venstreklikk for å forhåndsvise</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium påkrevd:</gradient> <gradient:#6b7280:#9ca3af>Oppgrader til Premium for å velge flere rangerte trær!</gradient>"
+
+# ============================================
+# RANK PATH OVERSIKT UI
+# ============================================
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisning: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>Ukjent tre</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ Naviger til venstre</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ Naviger til høyre</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ Naviger opp</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ Naviger ned</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Navigere %direction%</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å gå tilbake</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 Sentrumsvisning</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å sentrere visningen</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Sentervisning</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningsmodus</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Du viser i forhåndsvisningsmodus</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Endringer vil ikke bli lagret</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Forhåndsvisningsmodus</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ Feil ved gjengivelse av rangering</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ Ingen rangeringstre</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>Kan ikke laste inn rangeringstreet</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ Kritisk feil</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>Det oppsto en feil under gjengivelsen</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>Det oppsto en feil under gjengivelsen</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne krav til</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ Det oppstod en feil. Vennligst prøv igjen.</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ Eid</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Tilgjengelig</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Låst</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Ukjent</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium påkrevd</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>Fra:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>Til:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Forbindelse</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ Eid tilkobling</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Tilgjengelig tilkobling</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Pågående tilkobling</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Pågående tilkobling</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Låst tilkobling</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ Eid</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Tilgjengelig</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Låst</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Klikk for å se krav</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Klikk for å gå videre</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Ingen beskrivelse tilgjengelig for %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Nivå:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Vekt:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹 Jeger</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>En nybegynner som lærer naturens veier</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 Bueskytter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Dyktig med buen, dødelig på avstand</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍 Tracker</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ekspert på å finne og følge byttedyr</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯 Skytter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Presisjonsskytespill med dødelig nøyaktighet</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 Stifinner</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Mesterforsker av ukjente land</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯 Snikskytter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Eliteskytter, ett skudd ett drap</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 Skogsherre</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Villmarkens mester, ett med naturen</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ Rekruttere</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>En ny kriger begynner sin reise</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ Soldat</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Opplært i kampkunsten</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Ridder</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ærede kriger av riket</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ Mester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Legendarisk jagerfly, fryktet av alle</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ Krigsherre</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Krigsmester, hærfører</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨ Lærling</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Lære det grunnleggende om magi</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Vokser i magisk kraft</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ Veiviser</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Mester i mystiske kunster</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨ Erkemageri</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Den øverste mester over all magi</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Raske fingre, raskere flukt</gradient>"
+
+# ============================================
+# KRAVOVERSETTELSER
+# ============================================
+requirement:
+
+  # ============================================
+  # KRAV TYPER (lokaliserte navn)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 Varesamling</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 Valuta</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨ Erfaringsnivå</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ Spilletid</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 Tillatelse</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍 Beliggenhet</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ Drapskrav</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 Håndverk</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Ukjent</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ Fullført</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ Klar til å fullføre</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 Pågår</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ Ikke startet</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Feil</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶ Venstreklikk for å fullføre!</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶ Høyreklikk for detaljer</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 Send inn varer</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>Allerede fullført</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>Oppgaver:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...og %count% flere</gradient>"
+
+  # Valutakravbeskrivelser
+  currency:
+    coins: "Mynter"
+    gems: "Edelstener"
+    tokens: "Tokens"
+    money: "Penger"
+    dollars: "dollar"
+    credits: "Studiepoeng"
+  
+  # Forhåndsvisningsmaler for oppgave
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "Behov %amount% %currency%"
+      have: "Ha %current%/%required% %currency%"
+    item:
+      need: "Behov %quantity%x %item%"
+    experience:
+      need: "Nå nivå %level%"
+      points: "Nå %points% erfaringspoeng"
+    playtime:
+      need: "Spill for %time%"
+    permission:
+      need: "Krever tillatelse: %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Tyv</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Mester av sniking og tyveri</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Assassin</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ekspert på å komme seg inn og ut uoppdaget</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Skyggemester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ett med selve mørket</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Acolyte</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Hengiven tjener av det guddommelige</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Hengiven</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Trofast tilhenger av den guddommelige vei</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ Prest</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Healer og beskytter av de troende</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ Healer</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Master i restorative arts</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ Biskop</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Leder for de troende</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝ Oracle</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Seer av guddommelige visjoner</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝ Yppersteprest</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Det guddommeliges høyeste stemme</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>� TPlomme</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Raske fingre, raskere flukt</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Tyv</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Mester av sniking og tyveri</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 Speider</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Øyne og ører av skyggene</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Assassin</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ekspert på å komme seg inn og ut uoppdaget</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Shadowblade</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Nattens dødelige kriger</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Kontrollør av informasjonsnettverk</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Skyggemester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ett med selve mørket</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 Shadowmaster</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Øverste hersker over alle skygger</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Kjøpmann</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Selger varer på gaten</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰 Trader</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Etablert kjøpmann med forbindelser</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰 Leverandør</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Dyktig selger av varer</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Kunstner</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Håndverker av fine varer</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰 Alkymist</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Mester av eliksirer og eliksirer</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Kjøpmann</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Vellykket bedriftseier</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 Master Crafter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Rikets øverste håndverker</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 Handelsprins</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Handelskongelighet</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Master i handel og handel</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 Gildemester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Leder av handelslauget</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisning:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisning:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ Du eier allerede</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ Du eier allerede</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 Låst:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Fullfør forutsetninger først</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 Låst:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>har ingen krav!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>har ingen krav!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ Startet progresjon for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% krav)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Startet progresjon for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ Kunne ikke starte progresjon for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Kunne ikke starte progresjon for</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Krav ikke fullført for</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Krav ikke fullført for</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 Gratulerer! Du har låst opp</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Gratulerer! Du har låst opp</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Kunne ikke løse inn</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Kunne ikke løse inn</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium påkrevd:</gradient> <gradient:#6b7280:#9ca3af>Rangeringen</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>krever Premium for å låse opp. Oppgrader for å få tilgang til alle rekkene!</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>Venstreklikk for å starte progresjon</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>Høyreklikk for å se kravene</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Venstreklikk for å løse inn</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>Høyreklikk for å se fremdriften</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+
+# ============================================
+# RANK KRAV OVERSIKT UI
+# ============================================
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% Krav</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>Krav #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>Kan ikke laste inn kravdetaljer</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>Varer:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>Framgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningsmodus</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>Klikk for å fullføre!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>Høyreklikk for detaljer</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ Allerede fullført</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>Klikk for detaljer</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>Feil ved innlastingskrav</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Fullført</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Klar til å fullføre</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Ikke startet</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Feil</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisning:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>er allerede fullført!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>er ikke klar til å fullføre ennå!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 Gratulerer! Du har kommet videre til</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Fullført</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Klar til å fullføre</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Ikke startet</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Feil</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke behandle klikk!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke gå videre til</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne kravdetaljer!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ Dette kravet er for øyeblikket utilgjengelig!</gradient>"
+  decoration:
+    name: " "
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å gå tilbake</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Framgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>Klikk for å se detaljer</gradient>"
+
+# ============================================
+# RANK KRAV DETALJER UI
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Kravdetaljer</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å gå tilbake</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Du har ikke alle nødvendige gjenstander!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Gjenstander sendt!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Sending mislyktes. Prøv igjen.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ En feil oppstod under sending.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Dette kravet er allerede fullført!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Ditt Nivå:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Påkrevd Nivå:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Manglende Nivåer:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Nivåkrav oppfylt!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Få XP ved å gruve, drepe mobber,</gradient>"
+      - "<gradient:#6b7280:#9ca3af>smeltegjenstander og mer!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Din Spilletid:</gradient> <gradient:#10b981:#34d399>%hours%t %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Påkrevd Spilletid:</gradient> <gradient:#f59e0b:#fbbf24>%hours%t %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Gjenværende Tid:</gradient> <gradient:#f59e0b:#fbbf24>%hours%t %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Spilletidskrav oppfylt!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Fortsett å spille på serveren</gradient>"
+      - "<gradient:#6b7280:#9ca3af>å samle spilletid!</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>Framgang</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>Nåværende:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Fullføring:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>Gjenværende:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ Fullført!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>Ikke startet</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>Punkt %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ Fullført</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>Dette kravet er allerede fullført</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ Fullstendig krav</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å fullføre dette kravet</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Oppdater fremdrift</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å oppdatere fremdriften</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>Gjenstander fullført:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Fremgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Kravsammendrag</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Tips</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 Fremdriftssammendrag</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Samle de nødvendige gjenstandene</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og gå tilbake hit for å fullføre</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tjen den nødvendige valutaen</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Få erfaringsnivåer</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Spill på serveren</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tips:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Fullfør kravet</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Viser sammendrag...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Se tips...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 Vare %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>Framgang:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>Savnet:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Framgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>Manglende elementer:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...og %item_amount% flere</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>Detaljert informasjon</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ Fullført!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ Klar til å fullføre!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klikk for å fullføre</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ Pågår</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>Ikke startet</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ Feil</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>Status: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>Framgang</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>Klikk for å oppdatere</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 Fremdriftsoversikt</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>Ukjent krav</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kan ikke laste inn detaljer</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ Feil</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>Kunne ikke laste inn kravet</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 Fremgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 Status:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>er allerede fullført!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ Fremdriften er oppdatert!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 Vareoppdeling:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+
+# ============================================
+# BUNTY OVERSIKT UI
+# ============================================
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Bounty System</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Lag Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å opprette en ny dusør</gradient>"
+      - "<gradient:#6b7280:#9ca3af>på en annen spiller</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Se dusører</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Se alle aktive dusører</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Mine dusører</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Se dusører du har opprettet</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Leaderboard</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Topp dusørjegere</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Dusør på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mål:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kommissær:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Opprettet:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Klikk for å se detaljer</gradient>"
+
+# ============================================
+# BUNTY CREATION UI
+# ============================================
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Lag dusør - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 Velg Mål</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Mål: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å velge en spiller</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nåværende: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Lag Bounty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å opprette en ny dusør</gradient>"
+      - "<gradient:#6b7280:#9ca3af>på en annen spiller</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Legg til varebelønninger</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Legg til varebelønninger</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å legge til varebelønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Aktuelle varer:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Velg et mål først!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Velg et mål først!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Legg til valutabelønninger</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Legg til valutabelønninger</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å legge til valutabelønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gjeldende valutaer:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Velg et mål først!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Lag dusør</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å opprette dusøren</gradient>"
+      - "<gradient:#6b7280:#9ca3af>med de valgte belønningene</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ Ingen spiller valgt!</gradient> <gradient:#6b7280:#9ca3af>Vennligst velg et mål først.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Ingen belønninger lagt til!</gradient> <gradient:#6b7280:#9ca3af>Legg til noen belønninger først.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Skaper dusør på</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Feil:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Bounty opprettet vellykket på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 Varer returnert!</gradient> <gradient:#6b7280:#9ca3af>Noen gjenstander ble sluppet på bakken.</gradient>"
+  # Nestet bounty_creation-nøkkel for i18n("bounty_creation.confirm.success")-kall
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ Behandler dusør...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅ Bounty vellykket opprettet for</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kunne ikke behandle dusøren:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+
+# ============================================
+# BOUNTY REWARD UI
+# ============================================
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Bounty-belønninger</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Ingen belønninger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Legg til elementer for å lage belønninger</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Legg til element</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plasser elementer her for å legge til som belønninger</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Mål: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Denne dusøren er plassert på</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Bounty-belønning</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Denne varen vil bli gitt til</gradient>"
+      - "<gradient:#6b7280:#9ca3af>den som krever dusøren</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Ingen nye varer ble lagt til!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Noen varer ble droppet da beholdningen din var full!</gradient>"
+
+# ============================================
+# BUNTY PLAYER INFO UI
+# ============================================
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Dusør på %target_name%</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Målet for denne dusøren</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Mer info kommer snart...</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Se belønninger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å se alle belønningene</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totale belønninger:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Slett Bounty</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Advarsel: Kan ikke angres!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klikk for å slette denne dusøren</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Bounty på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>har blitt slettet!</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>Er du sikker på at du vil slette denne dusøren?</gradient>"
+
+# ============================================
+# ADMIN OVERSIKT UI
+# ============================================
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ Administrasjonspanel</gradient>"
+  view_permissions:
+    name: "<gradient:#3b82f6:#60a5fa>🔑 Tillatelsesbehandling</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Administrer plugin-tillatelser</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totalt antall plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totale tillatelser:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne tillatelsesbehandling!</gradient>"
+  create_ranks:
+    name: "<gradient:#a855f7:#c084fc>⚔ Opprett LuckPerms-grupper</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Opprett LuckPerms-grupper fra rekker</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installert!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Ingen rekker funnet å opprette grupper for!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ Opprettet</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms-grupper!</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>Ingen nye grupper ble opprettet.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Kunne ikke opprette LuckPerms-grupper!</gradient>"
+
+# ============================================
+# ADMIN TILLATELSER OVERSIKT UI
+# ============================================
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 Tillatelsesbehandling</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ Plugin ikke funnet:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installert!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ Ingen tillatelser tilgjengelig for denne plugin!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Tidligere plugins</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Neste plugins</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tillatelser:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>Venstreklikk for å velge</gradient>"
+        - "<gradient:#10b981:#34d399>Høyreklikk for å tilordne alle</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Tømme</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Tidligere tillatelser</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Neste tillatelser</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>Node:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>Klikk for å tildele denne tillatelsen</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Ingen plugin valgt</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Velg en plugin ovenfor</gradient>"
+        - "<gradient:#6b7280:#9ca3af>for å se tillatelsene</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Tømme</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ Tilordne %plugin_name% Tillatelser</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tilordne alle tillatelser fra</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% tillatelser)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Ingen utvalg</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 Valgt: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tillatelser:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Totalt antall plugins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 Oversikt</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Totalt antall plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Velg en plugin for å se tillatelser</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 Oppdater data</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Klikk for å oppdatere tillatelsesdata</gradient>"
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ Fjern markering</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å velge bort plugin</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Tilordne %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tildel alle tillatelser fra valgt plugin</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Tildel alle tillatelser</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tildel tillatelser fra alle</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plugins</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ Data oppdatert!</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ Tildelt</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>tillatelser fra</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 Valgt:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ Tildelt</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>tillatelser fra</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ Tildelt:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>fra</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>Utvalget slettet</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ Alle tillatelser tildelt fra</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+
+# ============================================
+# PAGINATION
+# ============================================
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Side %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Nåværende side:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totalt sider:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Side %direction%</gradient>"
+
+# ============================================
+# HOVEDVARER
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Tilbake</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å gå tilbake</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Fortsett</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å fortsette</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Forrige</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Forrige side</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Neste</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Neste side</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Opp</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gå opp</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ Ned</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gå ned</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Avbryt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Avbryt handling</gradient>"
+
+
+
+# ============================================
+# FEILMELDINGER
+# ============================================
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Premium Påkrevd!</gradient> <gradient:#6b7280:#9ca3af>Funksjonen</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>krever premium-versjonen.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Behandling mislyktes:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# PAGINERT SPILLER UI
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Velg Spiller</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# ABSTRAKT AMVILE UTSIKT
+# ============================================
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Skriv inn Verdi</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Skriv inn Verdi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Skriv inn over</gradient>"
+      - "<gradient:#6b7280:#9ca3af>og klikk for å bekrefte</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke behandle input:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# BEKREFTELSESVISNING
+# ============================================
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Bekreft Handling</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Bekreft</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å bekrefte</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Avbryt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å avbryte</gradient>"
+
+# ============================================
+# GRATIS VERSJONSRESTRIKSJONER
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Gratis versjonsgrense:</gradient> <gradient:#6b7280:#9ca3af>Du kan bare fullføre</gradient> <gradient:#f59e0b:#fbbf24>1 rangertre</gradient><gradient:#6b7280:#9ca3af>. Oppgrader til Premium for ubegrenset!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Gratis versjonsgrense:</gradient> <gradient:#6b7280:#9ca3af>Du kan bare gå videre</gradient> <gradient:#f59e0b:#fbbf24>3 rekker</gradient> <gradient:#6b7280:#9ca3af>per tre. Oppgrader til Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ Gratis versjonsgrense:</gradient> <gradient:#6b7280:#9ca3af>Du kan bare ha</gradient> <gradient:#f59e0b:#fbbf24>1 aktiv rangeringsbane</gradient><gradient:#6b7280:#9ca3af>. Oppgrader til Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Kun forhåndsvisning:</gradient> <gradient:#6b7280:#9ca3af>Dette rangeringstreet er kun forhåndsvisning i gratisversjonen. Oppgrader til Premium for å låse opp!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Premium påkrevd:</gradient> <gradient:#6b7280:#9ca3af>Denne rangeringen krever Premium for å låse opp.</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Gratis versjon</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Du bruker gratisversjonen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>med begrensede funksjoner.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Oppgrader til Premium for:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Ubegrensede rangerte trær</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Ubegrensede rekker per tre</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Flere aktive stier</gradient>"
+
+# ============================================
+# MELDINGER PREMIUM VERSJON
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premium:</gradient> <gradient:#6b7280:#9ca3af>Ingen restriksjoner gjelder.</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ Premium-versjon</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>Alle funksjoner låst opp!</gradient>"
+
+# ============================================
+# DETALJVISNING AV KRAVVAREN (forenklet)
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 Varekrav</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ Du har denne varen</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ Manglende element</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 Send inn varer</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>Alle varer er klare!</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶ Klikk for å sende inn</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 Send inn varer</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>Mangler nødvendige elementer</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Samle alle gjenstandene først</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← Tilbake</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gå tilbake til krav</gradient>"
+
+
+# ============================================
+# OVERSETTELSE AV BElønninger
+# ============================================
+rank_requirements_journey_ui:
+
+  # ============================================
+  # RANK KRAV REISEVISNING
+  # ============================================
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% Krav</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  overall_progress:
+    name: "<gradient:#a855f7:#c084fc>📊 Samlet fremgang</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Fullføring:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Krav:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Fullfør alle krav</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for å låse opp denne rangeringen!</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>✅ Hent Rang</gradient>"
+    lore:
+      - ""
+      - "<gradient:#10b981:#34d399>Alle krav fullført!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Klikk for å kreve rangeringen din</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒 Rangering låst</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Fullfør alle krav</gradient>"
+        - "<gradient:#6b7280:#9ca3af>for å låse opp denne rangeringen.</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Låst</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Fullfør alle krav</gradient>"
+        - "<gradient:#6b7280:#9ca3af>for å låse opp denne rangeringen.</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← Tilbake</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gå tilbake til rangeringsoversikt</gradient>"
+  messages:
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Krav fullført!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Alle krav fullført! Du kan nå hente rangen!</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆 Gratulerer! Du har oppnådd rang:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌ Dette kravet er ikke klart til å fullføres ennå.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Dette kravet er allerede fullført.</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningsmodus - Handlinger deaktivert</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>Ingen belønninger</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønninger konfigurert</gradient>"
+      type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>Verdi:</gray> <gold>%value%</gold>"
+    
+    # Beskrivelser av belønningstype
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>Motta valutabelønninger</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>Motta varebelønninger</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>Motta erfaringspoeng</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>Utfør spesielle kommandoer</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>Flere belønninger kombinert</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>Velg mellom flere belønninger</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>Få spesielle tillatelser</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>Teleporter til et sted</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>Lås opp partikkeleffekter</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>Motta en forsvinnende kiste</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% flere belønninger...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 Se alle belønninger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Klikk for å se alle %count% belønninger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>for denne rangeringen i detalj</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>Detaljert belønningsvisning kommer snart!</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 Ingen belønninger</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønning</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønninger konfigurert.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 Ranger belønninger</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>Du vil motta %count% belønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>når du gjør krav på denne rangeringen</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>Ingen belønninger</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønninger konfigurert</gradient>"
+    type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>Verdi:</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Du låste opp fordelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # Beskrivelser av belønningstype
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>Motta valutabelønninger</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>Motta varebelønninger</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>Motta erfaringspoeng</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>Utfør spesielle kommandoer</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>Flere belønninger kombinert</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>Velg mellom flere belønninger</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>Få spesielle tillatelser</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>Teleporter til et sted</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>Lås opp partikkeleffekter</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>Motta en forsvinnende kiste</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% flere belønninger...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 Se alle belønninger</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å se alle %count% belønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for denne rangeringen i detalj</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>Detaljert belønningsvisning kommer snart!</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 Ingen belønninger</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønning</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>Denne rangeringen har ingen belønninger konfigurert.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 Ranger belønninger</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>Du vil motta %count% belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>når du gjør krav på denne rangeringen</gradient>"
+
+
+# ============================================
+# DETALJVISNING AV RANK REWARDS
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>Belønninger: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Denne rangeringen har %count% belønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klikk på en belønning for detaljer</gradient>"
+
+# ============================================
+# PERK OVERSIKT UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ Fordeler</gradient>"
+
+# ============================================
+# PERK DETALJER UI
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# PERK OVERSETTELSER
+# ============================================
+perk:
+  # Fiskefordeler
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>Raskere fiske</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Fang fisk raskere med forbedrede fiskerater</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>Fiske XP Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Få bonus XP når du fanger fisk</gradient>"
+  
+  # Potion Perks
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>Potion forsterker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mulighet for å forsterke potion-effekter når den konsumeres</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>Drikkvarighet</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mulighet for å forlenge varigheten av drikken når den konsumeres</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>Refusjon av potion</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Muligheten til å få drikkedrikken tilbake etter å ha drukket den</gradient>"
+  
+  # Fordel meldinger
+  messages:
+    # Lås opp/Enable/Disable
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ Fordel ulåst!</gradient> <gradient:#6b7280:#9ca3af>Du har låst opp</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Vellykket opplåst og aktivert fordel:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Kunne ikke låse opp fordelen. Vennligst prøv igjen.</gradient>"
+      error: "<gradient:#ef4444:#f87171>Det oppsto en feil under opplåsing av fordelen.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>Du oppfyller ikke kravene for å låse opp denne fordelen!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>Aktivert fordel:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Kunne ikke aktivere fordelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>Du har nådd det maksimale antallet aktiverte fordeler (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>Deaktivert fordel:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Kunne ikke deaktivere fordelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # Nedkjøling
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>Denne fordelen er på nedkjøling for</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Perk er klar til bruk!</gradient>"
+    
+    # Effektutløsere
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Potion Enhanced!</gradient> <gradient:#6b7280:#9ca3af>Effekter forsterket</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Drikkvarighet forlenget!</gradient> <gradient:#6b7280:#9ca3af>Holder lenger</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 Potion reddet!</gradient> <gradient:#6b7280:#9ca3af>Tilbake til inventar</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Raskere fiske aktivt!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% Fiske XP!</gradient>"
+  
+  # UI-elementer
+  ui:
+    header:
+      type_label: "<gray>Type: <white>%type%</white></gray>"
+      category_label: "<gray>Kategori: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>Ingen krav</green>"
+      no_requirements_lore: "<gray>Denne fordelen har ingen opplåsingskrav</gray>"
+    
+    rewards:
+      title: "<gold>Lås opp belønning</gold>"
+      no_rewards: "<gray>Ingen opplåsingsbelønninger</gray>"
+      no_rewards_lore: "<gray>Denne fordelen har ingen opplåsingsbelønninger</gray>"
+      type_label: "<gray>Type: <white>%type%</white></gray>"
+      value_label: "<gray>Verdi: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>Fordel Status</white>"
+      locked: "<red>✖ Låst</red>"
+      locked_hint: "<gray>Fullfør kravene for å låse opp</gray>"
+      active: "<green>✓ Aktiv</green>"
+      enabled: "<yellow>○ Aktivert</yellow>"
+      disabled: "<gray>○ Deaktivert</gray>"
+      enabled_count: "<gray>Aktiverte fordeler: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Nedkjøling: <gold>%time%</gold></gray>"
+      activations_label: "<gray>Aktiveringer: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>Lås opp Perk</white>"
+        hint: "<green>Klikk for å låse opp denne fordelen!</green>"
+      enable:
+        title: "<white>Aktiver fordel</white>"
+        hint: "<green>Klikk for å aktivere denne fordelen</green>"
+        limit_reached: "<red>Maksimalt antall aktiverte fordeler er nådd</red>"
+      disable:
+        title: "<white>Deaktiver Perk</white>"
+        hint: "<yellow>Klikk for å deaktivere denne fordelen</yellow>"
+  
+  # Eksisterende fordeler (for referanse - legg til hvis mangler)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>Flyvning</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Få evnen til å fly</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>Gløde</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Påfør en glødende effekt på deg selv</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>Hastverk</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mine og grave raskere</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>Jump Boost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Hopp høyere enn normalt</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>Behold erfaring</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Behold XP når du dør</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>Hold inventar</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Behold gjenstandene dine når du dør</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>Nattsyn</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Se klart i mørket</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>Ingen fallskader</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Ta ingen skade ved å falle</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>Motstand</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Ta mindre skade fra alle kilder</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>Metning</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Bli aldri sulten</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>Fart</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Beveg deg raskere enn normalt</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>Styrke</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Gjør mer skade i kamp</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>Brannmotstand</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Immunitet mot brann og lavaskader</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>Dobbel opplevelse</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Få dobbel XP fra alle kilder</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>Kritisk streik</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mulighet til å gjøre kritisk skade</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Helbred når du deler skade på fiender</gradient>"

@@ -1,0 +1,24 @@
+# Traduzioni italiane per l integrazione centrale di RCore
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Uso: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Connessione a RaindropCentral...</yellow>"
+  success: "<green>Connessione a RaindropCentral riuscita!</green> <gray>Il server sta ora inviando heartbeat.</gray>"
+  error:
+    invalid_key: "<red>Formato della chiave API non valido. Le chiavi API devono contenere 32-128 caratteri alfanumerici.</red>"
+    uuid_mismatch: "<red>Questa chiave API appartiene a un account Minecraft diverso.</red>"
+    already_connected: "<yellow>Il server e gia connesso.</yellow> <gray>Usa prima /rcdisconnect.</gray>"
+    network: "<red>Errore di rete: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Disconnessione da RaindropCentral...</yellow>"
+  success: "<green>Disconnessione da RaindropCentral completata con successo.</green>"
+  error:
+    not_connected: "<red>Il server non e connesso a RaindropCentral.</red>"
+    failed: "<red>Disconnessione non riuscita. Riprova.</red>"
+    network: "<red>Errore di rete: %error%</red>"
+
+general:
+  no_permission: "<red>Non hai il permesso di usare questo comando.</red>"

@@ -1,0 +1,24 @@
+# الترجمات المصرية العربية لتكامل RCore Central
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>الاستخدام: /rcconnect <api-key></gray>"
+  connecting: "<yellow>جاري الاتصال بـ RaindropCentral...</yellow>"
+  success: "<green>تم الاتصال بـ RaindropCentral بنجاح!</green> <gray>السيرفر بيبعت نبضات دلوقتي.</gray>"
+  error:
+    invalid_key: "<red>صيغة مفتاح الـ API غير صحيحة. لازم مفتاح الـ API يكون من 32 إلى 128 حرف أو رقم.</red>"
+    uuid_mismatch: "<red>مفتاح الـ API ده تابع لحساب Minecraft مختلف.</red>"
+    already_connected: "<yellow>السيرفر متصل بالفعل.</yellow> <gray>استخدم /rcdisconnect الأول.</gray>"
+    network: "<red>خطأ في الشبكة: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>جاري قطع الاتصال مع RaindropCentral...</yellow>"
+  success: "<green>تم قطع الاتصال مع RaindropCentral بنجاح.</green>"
+  error:
+    not_connected: "<red>السيرفر مش متصل بـ RaindropCentral.</red>"
+    failed: "<red>فشل قطع الاتصال. حاول تاني.</red>"
+    network: "<red>خطأ في الشبكة: %error%</red>"
+
+general:
+  no_permission: "<red>ما عندكش صلاحية تستخدم الأمر ده.</red>"

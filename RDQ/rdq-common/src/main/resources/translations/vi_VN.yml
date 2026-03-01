@@ -1,0 +1,1752 @@
+# Tệp bản dịch RDQ - Tiếng Việt
+# Định dạng MiniMessage với gradient và kiểu dáng
+# Trình giữ chỗ dùng định dạng %placeholder%
+
+# ============================================
+# TIỀN TỐ TOÀN CỤC
+# ============================================
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+# ============================================
+# CÁC KHÓA CẤP GỐC (dùng bởi các lệnh gọi I18n.Builder trực tiếp)
+# ============================================
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Không có phần thưởng</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Thêm vật phẩm để tạo phần thưởng</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Thêm vật phẩm</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Đặt vật phẩm vào đây để thêm làm phần thưởng</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nhấp trái để đặt vật phẩm</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nhấp phải để gỡ vật phẩm</gradient>"
+
+# ============================================
+# TÊN HIỂN THỊ VÀ MÔ TẢ CÂY CẤP BẬC
+# ============================================
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Kiểm lâm</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Làm chủ nghệ thuật bắn cung và truy dấu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Trở nên hòa làm một với thiên nhiên</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Chiến binh</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Làm chủ nghệ thuật chiến đấu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Trở thành chiến binh huyền thoại</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Pháp sư</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Vận dụng sức mạnh ma thuật</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Trở thành bậc thầy huyền thuật</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Đạo chích</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Làm chủ sự lén lút và mưu mẹo</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ra đòn từ trong bóng tối</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Giáo sĩ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Triệu hồi sức mạnh thần thánh</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Chữa lành và bảo vệ đồng minh</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Thương nhân</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Làm chủ nghệ thuật giao thương</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Xây dựng tài sản của bạn</gradient>"
+
+# ============================================
+# TÊN HIỂN THỊ VÀ MÔ TẢ CẤP BẬC
+# ============================================
+rank:
+
+  # ============================================
+  # THÔNG BÁO CẤP BẬC
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 THĂNG HẠNG!</gradient> <gradient:#6b7280:#9ca3af>Bạn đã hoàn thành mọi yêu cầu cho</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Hãy dùng menu cấp bậc để nhận nâng cấp cấp bậc của bạn!</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>Chưa có cấp bậc</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Chọn một nhánh cấp bậc để bắt đầu</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>Chưa có cấp bậc</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>Cấp bậc mặc định</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chưa chọn cấp bậc nào</gradient>"
+  # Các cấp bậc của cây Kiểm lâm
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹 Thợ săn</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Một người truy dấu mới học cách sinh tồn nơi hoang dã</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 Cung thủ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Thuần thục với cung, chí mạng ở tầm xa</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 Truy tung giả</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chuyên gia tìm kiếm và bám theo con mồi</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 Xạ thủ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Thiện xạ với độ chính xác chết người</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 Kẻ mở đường</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nhà thám hiểm bậc thầy của những miền đất chưa được khai phá</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 Tay bắn tỉa</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Xạ thủ tinh nhuệ, một phát một mạng</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 Chúa tể rừng xanh</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy nơi hoang dã, hòa làm một với thiên nhiên</gradient>"
+  # Các cấp bậc của cây Chiến binh
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>Tân binh</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Một chiến binh mới bắt đầu hành trình của mình</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Học những điều cơ bản của chiến đấu</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>Chiến sĩ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Được rèn luyện trong nghệ thuật chiến đấu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sẵn sàng ra trận</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>Cựu binh</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chiến binh dạn dày trận mạc</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Chọn con đường chuyên môn hóa của bạn</gradient>"
+    # Nhánh chuyên môn 1: Cuồng chiến sĩ (Tấn công)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>Cuồng chiến sĩ</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Con đường Cuồng Nộ</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tung ra những đòn tấn công tàn khốc</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Đánh đổi phòng thủ lấy sức mạnh thuần túy</gradient>"
+    # Nhánh chuyên môn 2: Hộ vệ (Phòng thủ)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>Hộ vệ</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Con đường Bảo Hộ</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trở thành lá chắn bất khả phá vỡ</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bảo vệ đồng minh bằng mọi giá</gradient>"
+    # Nhánh chuyên môn 3: Đấu sĩ (Cân bằng)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>Đấu sĩ</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Con đường Vinh Quang</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy chiến đấu đấu trường</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Cân bằng giữa tấn công và phòng thủ</gradient>"
+    # Các cấp bậc cuối
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>Chiến chúa Cuồng Nộ</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Cuồng chiến sĩ tối thượng</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sức mạnh hủy diệt không thể ngăn cản</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hiện thân của nỗi sợ trên chiến trường</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>Chiến chúa Khiên Thuẫn</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Hộ vệ tối thượng</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vật thể bất động, người bảo hộ vĩnh cửu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Không ai có thể vượt qua khi bạn còn đứng vững</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>Chiến chúa Đấu Trường</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Đấu sĩ tối thượng</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nhà vô địch của mọi nhà vô địch</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Huyền thoại của đấu trường</gradient>"
+    # Các cấp bậc cũ (để tương thích ngược)
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>Hiệp sĩ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chiến binh danh dự của vương quốc</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>Quán quân</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chiến binh huyền thoại, khiến tất cả khiếp sợ</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>Chiến chúa</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy chiến tranh, chỉ huy các đạo quân</gradient>"
+  # Các cấp bậc của cây Pháp sư
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ Học việc</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Học những kiến thức ma thuật cơ bản</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ Thành thạo</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Đang lớn mạnh về sức mạnh ma thuật</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Phù thủy</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy huyền thuật</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨ Đại pháp sư</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy tối cao của mọi loại ma thuật</gradient>"
+  # Các cấp bậc của cây Đạo chích
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Móc túi</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ngón tay nhanh, tẩu thoát còn nhanh hơn</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Trộm</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy lén lút và trộm cắp</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 Trinh sát</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Đôi mắt và đôi tai của bóng tối</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 Sát thủ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Kẻ giết người thầm lặng, cái chết từ bóng tối</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 Kẻ thâm nhập</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chuyên gia ra vào mà không bị phát hiện</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Kiếm ảnh</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chiến binh chết chóc của màn đêm</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Trùm gián điệp</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người điều hành các mạng lưới thông tin</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 Bậc thầy Bóng Tối</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Hòa làm một với chính bóng tối</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 Chúa tể Bóng Tối</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Đấng cai trị tối cao của mọi bóng tối</gradient>"
+  # Các cấp bậc của cây Giáo sĩ
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Tập sự</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người hầu tận tâm của thần linh</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Tín đồ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người theo đuổi trung thành con đường thần thánh</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ Linh mục</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người chữa lành và bảo hộ của tín hữu</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ Người chữa lành</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy nghệ thuật hồi phục</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ Giám mục</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người dẫn dắt tín hữu</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ Nhà tiên tri</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người nhìn thấy khải tượng thần thánh</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ Đại tư tế</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tiếng nói tối cao của thần linh</gradient>"
+  # Các cấp bậc của cây Thương nhân
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 Người bán dạo</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bán hàng hóa trên đường phố</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 Nhà buôn</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Thương nhân có chỗ đứng và nhiều mối quan hệ</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 Người bán hàng</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người bán hàng lão luyện</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Nghệ nhân</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người chế tác hàng hóa tinh xảo</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰 Nhà giả kim</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy về thuốc và linh dược</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Thương nhân</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chủ doanh nghiệp thành công</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 Đại nghệ nhân</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nghệ nhân tối cao của vương quốc</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 Ông hoàng thương mại</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Hoàng tộc của giới thương mại</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 Tài phiệt</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bậc thầy thương mại và giao dịch</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 Hội chủ Thương hội</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Người đứng đầu thương hội</gradient>"
+
+# ============================================
+# THÔNG BÁO CỦA TRÌNH LẮNG NGHE TIỀN TRUY NÃ
+# ============================================
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Bạn đang bị treo tiền truy nã!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Giá trị truy nã:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Hết hạn lúc:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Người treo thưởng:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 ĐÃ NHẬN TIỀN TRUY NÃ! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Bạn đã nhận thành công tiền truy nã của</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Phần của bạn:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Một ai đó</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>đã nhận tiền truy nã của</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% người chơi</gradient> <gradient:#a855f7:#c084fc>đã nhận tiền truy nã của</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+
+# ============================================
+# THÔNG BÁO TẠO TIỀN TRUY NÃ
+# ============================================
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Đã tạo tiền truy nã thành công cho</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Không thể xử lý tiền truy nã:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Đang xử lý tiền truy nã...</gradient>"
+
+# ============================================
+# THÔNG BÁO TIẾN TRÌNH CẤP BẬC
+# ============================================
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Đã bắt đầu tiến trình cho cấp bậc</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Đang xem yêu cầu của</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Yêu cầu của</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>chưa hoàn tất</gradient> <gradient:#6b7280:#9ca3af>(đã hoàn thành %completion_percent%%)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Yêu cầu chưa hoàn tất:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>không có yêu cầu nào!</gradient>"
+
+# ============================================
+# THÔNG BÁO KHI NHẤP VÀO CẤP BẬC
+# ============================================
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Chế độ xem trước:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Bạn sở hữu</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Bị khóa:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Hãy hoàn thành điều kiện tiên quyết trước</gradient>"
+
+# ============================================
+# THÔNG BÁO LỆNH RQ
+# ============================================
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms chưa được cài đặt!</gradient> <gradient:#6b7280:#9ca3af>Tính năng này yêu cầu LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Trợ giúp RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Mở menu chính</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Xem cấp bậc</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Xem tiền truy nã</gradient>"
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN CHÍNH
+# ============================================
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Bảng quản trị</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Truy cập công cụ quản trị</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và các tùy chọn cấu hình</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Tiền truy nã</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem và quản lý tiền truy nã</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Săn người chơi để nhận thưởng!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Đặc quyền</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem các đặc quyền hiện có</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và các kỹ năng đặc biệt</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Nhiệm vụ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem các nhiệm vụ hiện có</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và theo dõi tiến độ của bạn</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Cấp bậc</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem tiến trình cấp bậc</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và mở khóa kỹ năng mới</gradient>"
+
+# ============================================
+# GIAO DIỆN CHÍNH CỦA CẤP BẬC
+# ============================================
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Hệ thống cấp bậc</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Cây cấp bậc</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Duyệt các cây cấp bậc hiện có</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và chọn con đường của bạn</gradient>"
+
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN CÂY CẤP BẬC
+# ============================================
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 Cây cấp bậc</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 Kiểm lâm</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Làm chủ nghệ thuật bắn cung và truy dấu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trở nên hòa làm một với thiên nhiên</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ Chiến binh</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Làm chủ nghệ thuật chiến đấu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trở thành chiến binh huyền thoại</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ Pháp sư</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vận dụng sức mạnh ma thuật</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trở thành bậc thầy huyền thuật</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Đạo chích</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Làm chủ sự lén lút và mưu mẹo</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ra đòn từ trong bóng tối</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Giáo sĩ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Triệu hồi sức mạnh thần thánh</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Chữa lành và bảo vệ đồng minh</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 Thương nhân</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Làm chủ nghệ thuật giao thương</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Xây dựng tài sản của bạn</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>Nhấp trái để xem trước</gradient>"
+      - "<gradient:#10b981:#34d399>Nhấp phải để chọn</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Cây cấp bậc này đang bị khóa</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>Hãy hoàn thành %minimum_rank_paths_to_be_absolved_needed% cây cấp bậc trước</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>Điều kiện tiên quyết:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Nhánh cấp bậc này đang bị khóa!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ Đang hoạt động</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>Nhấp trái để xem trước</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>Nhấp phải để tiếp tục</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 Đã chọn trước đó</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>Nhấp phải để kích hoạt lại</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ Đã đạt số nhánh cấp bậc hoạt động tối đa!</gradient> <gradient:#6b7280:#9ca3af>(Tối đa: %maximum_rank_path_amount%)</gradient>"
+  create_rank_tree:
+    name: "<gradient:#10b981:#34d399>➕ Tạo cây cấp bậc</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tạo một cây cấp bậc mới</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(Chỉ dành cho quản trị viên)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Không tìm thấy cấp bậc khởi đầu cho nhánh này!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ Đã chọn nhánh cấp bậc:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Cấp bậc khởi đầu: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ Không thể chọn nhánh cấp bậc!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Đã kích hoạt lại nhánh cấp bậc:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ Không thể kích hoạt lại nhánh cấp bậc!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Tính năng tạo cây cấp bậc sẽ sớm ra mắt!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Bản miễn phí - Chỉ xem trước</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>Cây cấp bậc này chỉ khả dụng để xem trước.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nâng cấp lên Premium để mở khóa!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>Nhấp trái để xem trước</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Yêu cầu Premium:</gradient> <gradient:#6b7280:#9ca3af>Hãy nâng cấp lên Premium để chọn thêm cây cấp bậc!</gradient>"
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN NHÁNH CẤP BẬC
+# ============================================
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 Xem trước: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>Cây không rõ</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ Di chuyển sang trái</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ Di chuyển sang phải</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ Di chuyển lên</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ Di chuyển xuống</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Di chuyển %direction%</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để quay lại</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 Căn giữa khung nhìn</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để căn giữa khung nhìn</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Căn giữa khung nhìn</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Chế độ xem trước</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bạn đang xem ở chế độ xem trước</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Các thay đổi sẽ không được lưu</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Chế độ xem trước</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ Lỗi khi hiển thị cấp bậc</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ Không có cây cấp bậc</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>Không thể tải cây cấp bậc</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ Lỗi nghiêm trọng</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>Đã xảy ra lỗi khi hiển thị</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>Đã xảy ra lỗi khi hiển thị</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Không thể mở yêu cầu cho</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ Đã xảy ra lỗi. Vui lòng thử lại.</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ Đã sở hữu</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Khả dụng</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Bị khóa</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Không rõ</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Yêu cầu Premium</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>Từ:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>Đến:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Kết nối</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ Kết nối đã sở hữu</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Kết nối khả dụng</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Kết nối đang tiến hành</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Kết nối đang tiến hành</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Kết nối bị khóa</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ Đã sở hữu</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Khả dụng</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Bị khóa</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Nhấp để xem yêu cầu</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Nhấp để tiếp tục tiến trình</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Không có mô tả cho %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Bậc:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Trọng số:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹 Thợ săn</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Một người truy dấu mới học cách sinh tồn nơi hoang dã</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 Cung thủ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Thuần thục với cung, chí mạng ở tầm xa</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍 Truy tung giả</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chuyên gia tìm kiếm và bám theo con mồi</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯 Xạ thủ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Thiện xạ với độ chính xác chết người</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 Kẻ mở đường</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Nhà thám hiểm bậc thầy của những miền đất chưa được khai phá</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯 Tay bắn tỉa</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Xạ thủ tinh nhuệ, một phát một mạng</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 Chúa tể rừng xanh</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy nơi hoang dã, hòa làm một với thiên nhiên</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ Tân binh</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Một chiến binh mới bắt đầu hành trình của mình</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ Chiến sĩ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Được rèn luyện trong nghệ thuật chiến đấu</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Hiệp sĩ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chiến binh danh dự của vương quốc</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ Quán quân</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chiến binh huyền thoại, khiến tất cả khiếp sợ</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ Chiến chúa</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy chiến tranh, chỉ huy các đạo quân</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨ Học việc</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Học những kiến thức ma thuật cơ bản</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨ Thành thạo</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Đang lớn mạnh về sức mạnh ma thuật</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ Phù thủy</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy huyền thuật</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨ Đại pháp sư</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy tối cao của mọi loại ma thuật</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Móc túi</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ngón tay nhanh, tẩu thoát còn nhanh hơn</gradient>"
+
+# ============================================
+# BẢN DỊCH YÊU CẦU
+# ============================================
+requirement:
+
+  # ============================================
+  # CÁC LOẠI YÊU CẦU (Tên bản địa hóa)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 Thu thập vật phẩm</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 Tiền tệ</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨ Cấp kinh nghiệm</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ Thời gian chơi</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 Quyền hạn</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍 Vị trí</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ Yêu cầu tiêu diệt</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 Chế tạo</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Không rõ</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ Hoàn thành</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ Sẵn sàng hoàn thành</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 Đang tiến hành</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ Chưa bắt đầu</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Lỗi</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶ Nhấp trái để hoàn thành!</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶ Nhấp phải để xem chi tiết</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 Nộp vật phẩm</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>Đã hoàn thành</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>Nhiệm vụ:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...và còn %count% nữa</gradient>"
+
+  # Mô tả yêu cầu tiền tệ
+  currency:
+    coins: "Xu"
+    gems: "Ngọc"
+    tokens: "Token"
+    money: "Tiền"
+    dollars: "Đô la"
+    credits: "Tín dụng"
+  
+  # Mẫu xem trước nhiệm vụ
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "Cần %amount% %currency%"
+      have: "Đang có %current%/%required% %currency%"
+    item:
+      need: "Cần %quantity%x %item%"
+    experience:
+      need: "Đạt cấp %level%"
+      points: "Đạt %points% điểm kinh nghiệm"
+    playtime:
+      need: "Chơi trong %time%"
+    permission:
+      need: "Yêu cầu quyền: %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Trộm</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy lén lút và trộm cắp</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Sát thủ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Kẻ giết người thầm lặng, cái chết từ bóng tối</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 Kẻ thâm nhập</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chuyên gia ra vào mà không bị phát hiện</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Bậc thầy Bóng Tối</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Hòa làm một với chính bóng tối</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Tập sự</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người hầu tận tâm của thần linh</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Tín đồ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người theo đuổi trung thành con đường thần thánh</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ Linh mục</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người chữa lành và bảo hộ của tín hữu</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ Người chữa lành</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy nghệ thuật hồi phục</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ Giám mục</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người dẫn dắt tín hữu</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝ Nhà tiên tri</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người nhìn thấy khải tượng thần thánh</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝ Đại tư tế</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Tiếng nói tối cao của thần linh</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Móc túi</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ngón tay nhanh, tẩu thoát còn nhanh hơn</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Trộm</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy lén lút và trộm cắp</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 Trinh sát</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Đôi mắt và đôi tai của bóng tối</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Sát thủ</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Kẻ giết người thầm lặng, cái chết từ bóng tối</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 Kẻ thâm nhập</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chuyên gia ra vào mà không bị phát hiện</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Kiếm ảnh</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chiến binh chết chóc của màn đêm</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Trùm gián điệp</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người điều hành các mạng lưới thông tin</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Bậc thầy Bóng Tối</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Hòa làm một với chính bóng tối</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 Chúa tể Bóng Tối</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Đấng cai trị tối cao của mọi bóng tối</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Người bán dạo</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bán hàng hóa trên đường phố</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰 Nhà buôn</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Thương nhân có chỗ đứng và nhiều mối quan hệ</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰 Người bán hàng</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người bán hàng lão luyện</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Nghệ nhân</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người chế tác hàng hóa tinh xảo</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰 Nhà giả kim</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy về thuốc và linh dược</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Thương nhân</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Chủ doanh nghiệp thành công</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 Đại nghệ nhân</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Nghệ nhân tối cao của vương quốc</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 Ông hoàng thương mại</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Hoàng tộc của giới thương mại</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 Tài phiệt</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Bậc thầy thương mại và giao dịch</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 Hội chủ Thương hội</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Người đứng đầu thương hội</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Xem trước:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Xem trước:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ Bạn đã sở hữu</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ Bạn đã sở hữu</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 Bị khóa:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Hãy hoàn thành điều kiện tiên quyết trước</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 Bị khóa:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>không có yêu cầu nào!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>không có yêu cầu nào!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ Đã bắt đầu tiến trình cho</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% yêu cầu)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Đã bắt đầu tiến trình cho</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ Không thể bắt đầu tiến trình cho</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Không thể bắt đầu tiến trình cho</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Yêu cầu của</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>chưa hoàn thành</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Yêu cầu của</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>chưa hoàn thành</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 Chúc mừng! Bạn đã mở khóa</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Chúc mừng! Bạn đã mở khóa</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Không thể nhận</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Không thể nhận</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Yêu cầu Premium:</gradient> <gradient:#6b7280:#9ca3af>Cấp bậc</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>yêu cầu Premium để mở khóa. Hãy nâng cấp để truy cập tất cả cấp bậc!</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>Nhấp trái để bắt đầu tiến trình</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>Nhấp phải để xem yêu cầu</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Nhấp trái để nhận</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>Nhấp phải để xem tiến độ</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN YÊU CẦU CẤP BẬC
+# ============================================
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Yêu cầu của %rank_name%</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>Yêu cầu #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>Không thể tải chi tiết yêu cầu</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>Loại:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>Vật phẩm:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>Tiến độ:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Chế độ xem trước</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>Nhấp để hoàn thành!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>Nhấp phải để xem chi tiết</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ Đã hoàn thành</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>Nhấp để xem chi tiết</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>Lỗi khi tải yêu cầu</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Hoàn thành</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Sẵn sàng hoàn thành</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Chưa bắt đầu</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Lỗi</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 Xem trước:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>đã được hoàn thành!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>chưa sẵn sàng để hoàn thành!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 Chúc mừng! Bạn đã tiến tới</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Hoàn thành</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Sẵn sàng hoàn thành</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Chưa bắt đầu</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Lỗi</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌ Không thể xử lý lượt nhấp!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ Không thể tiến tới</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ Không thể mở chi tiết yêu cầu!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ Yêu cầu này hiện không khả dụng!</gradient>"
+  decoration:
+    name: " "
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để quay lại</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Loại:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tiến độ:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>Nhấp để xem chi tiết</gradient>"
+
+# ============================================
+# GIAO DIỆN CHI TIẾT YÊU CẦU CẤP BẬC
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Chi tiết yêu cầu</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để quay lại</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Bạn chưa có đủ vật phẩm cần thiết!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Đã nộp vật phẩm thành công!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Không thể nộp vật phẩm. Vui lòng thử lại.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Đã xảy ra lỗi khi nộp vật phẩm.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Yêu cầu này đã được hoàn thành!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Cấp của bạn:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Cấp yêu cầu:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Số cấp còn thiếu:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Đã đạt yêu cầu cấp độ!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kiếm XP bằng cách đào quặng, tiêu diệt quái,</gradient>"
+      - "<gradient:#6b7280:#9ca3af>nung chảy vật phẩm và nhiều cách khác!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Thời gian chơi của bạn:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Thời gian chơi yêu cầu:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Thời gian còn lại:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Đã đạt yêu cầu thời gian chơi!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tiếp tục chơi trên máy chủ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>để tích lũy thời gian chơi!</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>Tiến độ</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>Hiện tại:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Hoàn thành:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>Còn lại:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ Hoàn thành!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>Chưa bắt đầu</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>Vật phẩm %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ Hoàn thành</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>Yêu cầu này đã được hoàn thành</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ Hoàn thành yêu cầu</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để hoàn thành yêu cầu này</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Làm mới tiến độ</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để làm mới tiến độ của bạn</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>Vật phẩm đã hoàn thành:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>Loại:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Tiến độ:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Tóm tắt yêu cầu</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Mẹo</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 Tóm tắt tiến độ</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Thu thập các vật phẩm cần thiết</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và quay lại đây để hoàn thành</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kiếm đủ số tiền tệ cần thiết</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tăng cấp kinh nghiệm</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Chơi trên máy chủ</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Mẹo:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hoàn thành yêu cầu</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Đang xem tóm tắt...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Đang xem mẹo...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 Vật phẩm %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>Tiến độ:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>Còn thiếu:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Loại:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Tiến độ:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>Vật phẩm còn thiếu:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...và còn %item_amount% nữa</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>Thông tin chi tiết</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ Hoàn thành!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ Sẵn sàng hoàn thành!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nhấp để kết thúc</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ Đang tiến hành</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>Chưa bắt đầu</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ Lỗi</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>Trạng thái: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>Tiến độ</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>Nhấp để làm mới</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 Tổng quan tiến độ</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>Yêu cầu không rõ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Không thể tải chi tiết</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ Lỗi</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>Không thể tải yêu cầu</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 Tiến độ:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 Trạng thái:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>đã được hoàn thành!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ Đã làm mới tiến độ!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 Phân tích vật phẩm:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN TIỀN TRUY NÃ
+# ============================================
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Hệ thống truy nã</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Tạo tiền truy nã</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để tạo một tiền truy nã mới</gradient>"
+      - "<gradient:#6b7280:#9ca3af>cho người chơi khác</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Xem tiền truy nã</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem tất cả tiền truy nã đang hoạt động</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Tiền truy nã của tôi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem các tiền truy nã bạn đã tạo</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Bảng xếp hạng</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Những thợ săn tiền truy nã hàng đầu</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Truy nã</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mục tiêu:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Người treo thưởng:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Được tạo lúc:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Nhấp để xem chi tiết</gradient>"
+
+# ============================================
+# GIAO DIỆN TẠO TIỀN TRUY NÃ
+# ============================================
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Tạo tiền truy nã - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 Chọn mục tiêu</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Mục tiêu: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để chọn một người chơi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hiện tại: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Tạo tiền truy nã</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để tạo một tiền truy nã mới</gradient>"
+      - "<gradient:#6b7280:#9ca3af>cho người chơi khác</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Thêm phần thưởng vật phẩm</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Thêm phần thưởng vật phẩm</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để thêm phần thưởng vật phẩm</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vật phẩm hiện có:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Hãy chọn mục tiêu trước!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Hãy chọn mục tiêu trước!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Thêm phần thưởng tiền tệ</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Thêm phần thưởng tiền tệ</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để thêm phần thưởng tiền tệ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Loại tiền hiện có:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Hãy chọn mục tiêu trước!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Tạo tiền truy nã</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để tạo tiền truy nã</gradient>"
+      - "<gradient:#6b7280:#9ca3af>với các phần thưởng đã chọn</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ Chưa chọn người chơi!</gradient> <gradient:#6b7280:#9ca3af>Vui lòng chọn mục tiêu trước.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Chưa thêm phần thưởng!</gradient> <gradient:#6b7280:#9ca3af>Vui lòng thêm một số phần thưởng trước.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Đang tạo tiền truy nã cho</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Lỗi:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Đã tạo tiền truy nã thành công cho</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 Đã trả lại vật phẩm!</gradient> <gradient:#6b7280:#9ca3af>Một số vật phẩm đã bị rơi xuống đất.</gradient>"
+  # Khóa bounty_creation lồng nhau cho các lời gọi i18n("bounty_creation.confirm.success")
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ Đang xử lý tiền truy nã...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅ Đã tạo tiền truy nã thành công cho</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Không thể xử lý tiền truy nã:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+
+# ============================================
+# GIAO DIỆN PHẦN THƯỞNG TIỀN TRUY NÃ
+# ============================================
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Phần thưởng truy nã</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Không có phần thưởng</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Thêm vật phẩm để tạo phần thưởng</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Thêm vật phẩm</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Đặt vật phẩm vào đây để thêm làm phần thưởng</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Mục tiêu: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tiền truy nã này được đặt lên</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Phần thưởng truy nã</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vật phẩm này sẽ được trao cho</gradient>"
+      - "<gradient:#6b7280:#9ca3af>bất kỳ ai nhận tiền truy nã</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Không có vật phẩm mới nào được thêm!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Một số vật phẩm đã bị rơi vì túi đồ của bạn đầy!</gradient>"
+
+# ============================================
+# GIAO DIỆN THÔNG TIN NGƯỜI CHƠI BỊ TRUY NÃ
+# ============================================
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Truy nã %target_name%</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mục tiêu của tiền truy nã này</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Sắp có thêm thông tin...</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Xem phần thưởng</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để xem tất cả phần thưởng</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tổng phần thưởng:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Xóa tiền truy nã</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Cảnh báo: Không thể hoàn tác!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nhấp để xóa tiền truy nã này</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Tiền truy nã của</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>đã được xóa!</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>Bạn có chắc muốn xóa tiền truy nã này không?</gradient>"
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN QUẢN TRỊ
+# ============================================
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ Bảng quản trị</gradient>"
+  view_permissions:
+    name: "<gradient:#3b82f6:#60a5fa>🔑 Trình quản lý quyền</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Quản lý quyền của plugin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tổng plugin:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tổng quyền:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Không thể mở trình quản lý quyền!</gradient>"
+  create_ranks:
+    name: "<gradient:#a855f7:#c084fc>⚔ Tạo nhóm LuckPerms</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tạo nhóm LuckPerms từ các cấp bậc</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms chưa được cài đặt!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Không tìm thấy cấp bậc nào để tạo nhóm!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ Đã tạo</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>nhóm LuckPerms!</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>Không có nhóm mới nào được tạo.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Không thể tạo nhóm LuckPerms!</gradient>"
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN QUYỀN QUẢN TRỊ
+# ============================================
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 Trình quản lý quyền</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ Không tìm thấy plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms chưa được cài đặt!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ Không có quyền nào khả dụng cho plugin này!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Plugin trước</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Plugin tiếp theo</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Quyền:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>Nhấp trái để chọn</gradient>"
+        - "<gradient:#10b981:#34d399>Nhấp phải để gán tất cả</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Trống</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Quyền trước</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Quyền tiếp theo</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>Nút:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>Nhấp để gán quyền này</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Chưa chọn plugin</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chọn một plugin ở trên</gradient>"
+        - "<gradient:#6b7280:#9ca3af>để xem các quyền của nó</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Trống</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ Gán quyền của %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Gán tất cả quyền từ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% quyền)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Không có lựa chọn</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 Đã chọn: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Quyền:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tổng plugin:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 Tổng quan</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tổng plugin:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Chọn một plugin để xem quyền</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 Làm mới dữ liệu</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nhấp để làm mới dữ liệu quyền</gradient>"
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ Xóa lựa chọn</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để bỏ chọn plugin</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Gán %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gán tất cả quyền từ plugin đã chọn</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Gán tất cả quyền</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gán quyền từ tất cả</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plugin</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ Đã làm mới dữ liệu!</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ Đã gán</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>quyền từ</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 Đã chọn:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ Đã gán</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>quyền từ</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ Đã gán:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>từ</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>Đã xóa lựa chọn</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ Đã gán tất cả quyền từ</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+
+# ============================================
+# PHÂN TRANG
+# ============================================
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Trang %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Trang hiện tại:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tổng số trang:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Trang %direction%</gradient>"
+
+# ============================================
+# ĐẦU VẬT PHẨM
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Quay lại</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để quay lại</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Tiếp tục</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để tiếp tục</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Trước</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Trang trước</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Tiếp theo</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Trang tiếp theo</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Lên</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Đi lên</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ Xuống</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Đi xuống</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Hủy</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Hủy hành động</gradient>"
+
+
+
+# ============================================
+# THÔNG BÁO LỖI
+# ============================================
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Yêu cầu Premium!</gradient> <gradient:#6b7280:#9ca3af>Tính năng</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>yêu cầu bản premium.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Xử lý thất bại:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# GIAO DIỆN NGƯỜI CHƠI PHÂN TRANG
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Chọn người chơi</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# GIAO DIỆN ĐE TRỪU TƯỢNG
+# ============================================
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Nhập giá trị</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Nhập giá trị</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhập nội dung của bạn ở phía trên</gradient>"
+      - "<gradient:#6b7280:#9ca3af>và nhấp để xác nhận</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Không thể xử lý đầu vào:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# GIAO DIỆN XÁC NHẬN
+# ============================================
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Xác nhận hành động</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Xác nhận</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để xác nhận</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Hủy</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để hủy</gradient>"
+
+# ============================================
+# GIỚI HẠN BẢN MIỄN PHÍ
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Giới hạn bản miễn phí:</gradient> <gradient:#6b7280:#9ca3af>Bạn chỉ có thể hoàn thành</gradient> <gradient:#f59e0b:#fbbf24>1 cây cấp bậc</gradient><gradient:#6b7280:#9ca3af>. Hãy nâng cấp Premium để không giới hạn!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Giới hạn bản miễn phí:</gradient> <gradient:#6b7280:#9ca3af>Bạn chỉ có thể tiến qua</gradient> <gradient:#f59e0b:#fbbf24>3 cấp bậc</gradient> <gradient:#6b7280:#9ca3af>mỗi cây. Hãy nâng cấp lên Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ Giới hạn bản miễn phí:</gradient> <gradient:#6b7280:#9ca3af>Bạn chỉ có thể có</gradient> <gradient:#f59e0b:#fbbf24>1 nhánh cấp bậc hoạt động</gradient><gradient:#6b7280:#9ca3af>. Hãy nâng cấp lên Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Chỉ xem trước:</gradient> <gradient:#6b7280:#9ca3af>Cây cấp bậc này chỉ có thể xem trước ở bản miễn phí. Hãy nâng cấp lên Premium để mở khóa!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Yêu cầu Premium:</gradient> <gradient:#6b7280:#9ca3af>Cấp bậc này cần Premium để mở khóa.</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Bản miễn phí</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Bạn đang sử dụng bản miễn phí</gradient>"
+      - "<gradient:#6b7280:#9ca3af>với các tính năng bị giới hạn.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Nâng cấp lên Premium để có:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Cây cấp bậc không giới hạn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Cấp bậc không giới hạn trong mỗi cây</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Nhiều nhánh hoạt động</gradient>"
+
+# ============================================
+# THÔNG BÁO BẢN PREMIUM
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premium:</gradient> <gradient:#6b7280:#9ca3af>Không có giới hạn nào áp dụng.</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ Bản Premium</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>Tất cả tính năng đã được mở khóa!</gradient>"
+
+# ============================================
+# GIAO DIỆN CHI TIẾT VẬT PHẨM YÊU CẦU (Đơn giản hóa)
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 Yêu cầu vật phẩm</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ Bạn có vật phẩm này</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ Thiếu vật phẩm</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 Nộp vật phẩm</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>Tất cả vật phẩm đã sẵn sàng!</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶ Nhấp để nộp</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 Nộp vật phẩm</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>Thiếu vật phẩm cần thiết</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Hãy thu thập đủ vật phẩm trước</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← Quay lại</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Trở về phần yêu cầu</gradient>"
+
+
+# ============================================
+# BẢN DỊCH PHẦN THƯỞNG
+# ============================================
+rank_requirements_journey_ui:
+
+  # ============================================
+  # CHẾ ĐỘ HÀNH TRÌNH YÊU CẦU CẤP BẬC
+  # ============================================
+  title: "<gradient:#a855f7:#c084fc>⚔ Yêu cầu của %rank_name%</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  overall_progress:
+    name: "<gradient:#a855f7:#c084fc>📊 Tiến độ tổng thể</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Hoàn thành:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Yêu cầu:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Hoàn thành tất cả yêu cầu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>để mở khóa cấp bậc này!</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>🏆 Nhận cấp bậc!</gradient>"
+    lore:
+      - ""
+      - "<gradient:#10b981:#34d399>Tất cả yêu cầu đã hoàn thành!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Nhấp để nhận cấp bậc của bạn</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒 Cấp bậc bị khóa</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Hoàn thành tất cả yêu cầu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>để mở khóa cấp bậc này.</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Bị khóa</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Hoàn thành tất cả yêu cầu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>để mở khóa cấp bậc này.</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← Quay lại</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Trở về tổng quan cấp bậc</gradient>"
+  messages:
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Yêu cầu đã hoàn thành!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Tất cả yêu cầu đã hoàn thành! Hãy nhấp nút nhận để lấy cấp bậc của bạn!</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆 Chúc mừng! Bạn đã đạt được cấp bậc:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌ Yêu cầu này chưa sẵn sàng để hoàn thành.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Yêu cầu này đã được hoàn thành!</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Chế độ xem trước - đã tắt tương tác</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>Không có phần thưởng</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>Cấp bậc này chưa được cấu hình phần thưởng</gradient>"
+      type_label: "<gray>Loại:</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>Giá trị:</gray> <gold>%value%</gold>"
+    
+    # Mô tả loại phần thưởng
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>Nhận phần thưởng tiền tệ</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>Nhận phần thưởng vật phẩm</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>Nhận điểm kinh nghiệm</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>Thực thi lệnh đặc biệt</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>Nhiều phần thưởng kết hợp</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>Chọn từ nhiều phần thưởng</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>Nhận các quyền đặc biệt</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>Dịch chuyển tới một vị trí</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>Mở khóa hiệu ứng hạt</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>Nhận một rương biến mất</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% phần thưởng nữa...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 Xem tất cả phần thưởng</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nhấp để xem toàn bộ %count% phần thưởng</gradient>"
+        - "<gradient:#6b7280:#9ca3af>của cấp bậc này một cách chi tiết</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>Chế độ xem phần thưởng chi tiết sẽ sớm ra mắt!</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 Không có phần thưởng</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Cấp bậc này không có phần thưởng</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>Cấp bậc này chưa được cấu hình phần thưởng.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 Phần thưởng cấp bậc</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>Bạn sẽ nhận %count% phần thưởng</gradient>"
+      - "<gradient:#6b7280:#9ca3af>khi nhận cấp bậc này</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>Không có phần thưởng</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>Cấp bậc này chưa được cấu hình phần thưởng</gradient>"
+    type_label: "<gray>Loại:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>Giá trị:</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Bạn đã mở khóa đặc quyền:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # Mô tả loại phần thưởng
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>Nhận phần thưởng tiền tệ</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>Nhận phần thưởng vật phẩm</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>Nhận điểm kinh nghiệm</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>Thực thi lệnh đặc biệt</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>Nhiều phần thưởng kết hợp</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>Chọn từ nhiều phần thưởng</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>Nhận các quyền đặc biệt</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>Dịch chuyển tới một vị trí</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>Mở khóa hiệu ứng hạt</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>Nhận một rương biến mất</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% phần thưởng nữa...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 Xem tất cả phần thưởng</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để xem toàn bộ %count% phần thưởng</gradient>"
+      - "<gradient:#6b7280:#9ca3af>của cấp bậc này một cách chi tiết</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>Chế độ xem phần thưởng chi tiết sẽ sớm ra mắt!</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 Không có phần thưởng</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Cấp bậc này không có phần thưởng</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>Cấp bậc này chưa được cấu hình phần thưởng.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 Phần thưởng cấp bậc</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>Bạn sẽ nhận %count% phần thưởng</gradient>"
+    - "<gradient:#6b7280:#9ca3af>khi nhận cấp bậc này</gradient>"
+
+
+# ============================================
+# GIAO DIỆN CHI TIẾT PHẦN THƯỞNG CẤP BẬC
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>Phần thưởng: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Cấp bậc này có %count% phần thưởng</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nhấp vào bất kỳ phần thưởng nào để xem chi tiết</gradient>"
+
+# ============================================
+# GIAO DIỆN TỔNG QUAN ĐẶC QUYỀN
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ Đặc quyền</gradient>"
+
+# ============================================
+# GIAO DIỆN CHI TIẾT ĐẶC QUYỀN
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# BẢN DỊCH ĐẶC QUYỀN
+# ============================================
+perk:
+  # Đặc quyền câu cá
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>Câu cá nhanh hơn</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Câu cá nhanh hơn với tỉ lệ câu được cải thiện</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>Tăng XP câu cá</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nhận thêm XP khi câu cá</gradient>"
+  
+  # Đặc quyền thuốc
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>Khuếch đại thuốc</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Có cơ hội tăng cường hiệu ứng thuốc khi sử dụng</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>Thời lượng thuốc</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Có cơ hội kéo dài thời lượng thuốc khi sử dụng</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>Hoàn trả thuốc</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Có cơ hội nhận lại thuốc sau khi uống</gradient>"
+  
+  # Thông báo đặc quyền
+  messages:
+    # Mở khóa/Bật/Tắt
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ Đã mở khóa đặc quyền!</gradient> <gradient:#6b7280:#9ca3af>Bạn đã mở khóa</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Đã mở khóa và bật đặc quyền thành công:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Không thể mở khóa đặc quyền. Vui lòng thử lại.</gradient>"
+      error: "<gradient:#ef4444:#f87171>Đã xảy ra lỗi khi mở khóa đặc quyền.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>Bạn không đáp ứng đủ yêu cầu để mở khóa đặc quyền này!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>Đã bật đặc quyền:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Không thể bật đặc quyền:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>Bạn đã đạt số đặc quyền được bật tối đa (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>Đã tắt đặc quyền:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Không thể tắt đặc quyền:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # Hồi chiêu
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>Đặc quyền này đang hồi chiêu trong</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Đặc quyền đã sẵn sàng để dùng!</gradient>"
+    
+    # Kích hoạt hiệu ứng
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Thuốc đã được tăng cường!</gradient> <gradient:#6b7280:#9ca3af>Hiệu ứng được khuếch đại</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Thời lượng thuốc được kéo dài!</gradient> <gradient:#6b7280:#9ca3af>Kéo dài lâu hơn</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 Đã giữ lại thuốc!</gradient> <gradient:#6b7280:#9ca3af>Đã trả lại vào túi đồ</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Câu cá nhanh hơn đang hoạt động!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% XP câu cá!</gradient>"
+  
+  # Thành phần giao diện
+  ui:
+    header:
+      type_label: "<gray>Loại: <white>%type%</white></gray>"
+      category_label: "<gray>Danh mục: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>Không có yêu cầu</green>"
+      no_requirements_lore: "<gray>Đặc quyền này không có yêu cầu mở khóa</gray>"
+    
+    rewards:
+      title: "<gold>Phần thưởng mở khóa</gold>"
+      no_rewards: "<gray>Không có phần thưởng mở khóa</gray>"
+      no_rewards_lore: "<gray>Đặc quyền này không có phần thưởng mở khóa</gray>"
+      type_label: "<gray>Loại: <white>%type%</white></gray>"
+      value_label: "<gray>Giá trị: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>Trạng thái đặc quyền</white>"
+      locked: "<red>✖ Bị khóa</red>"
+      locked_hint: "<gray>Hoàn thành yêu cầu để mở khóa</gray>"
+      active: "<green>✓ Đang hoạt động</green>"
+      enabled: "<yellow>○ Đã bật</yellow>"
+      disabled: "<gray>○ Đã tắt</gray>"
+      enabled_count: "<gray>Đặc quyền đang bật: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Hồi chiêu: <gold>%time%</gold></gray>"
+      activations_label: "<gray>Số lần kích hoạt: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>Mở khóa đặc quyền</white>"
+        hint: "<green>Nhấp để mở khóa đặc quyền này!</green>"
+      enable:
+        title: "<white>Bật đặc quyền</white>"
+        hint: "<green>Nhấp để bật đặc quyền này</green>"
+        limit_reached: "<red>Đã đạt giới hạn đặc quyền đang bật</red>"
+      disable:
+        title: "<white>Tắt đặc quyền</white>"
+        hint: "<yellow>Nhấp để tắt đặc quyền này</yellow>"
+  
+  # Các đặc quyền hiện có (để tham khảo - thêm nếu thiếu)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>Bay lượn</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nhận khả năng bay</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>Phát sáng</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Áp dụng hiệu ứng phát sáng lên bản thân</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>Tăng tốc đào</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Đào và khai thác nhanh hơn</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>Tăng nhảy</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nhảy cao hơn bình thường</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>Giữ kinh nghiệm</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Giữ XP của bạn khi chết</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>Giữ túi đồ</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Giữ vật phẩm của bạn khi chết</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>Nhìn đêm</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nhìn rõ trong bóng tối</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>Không sát thương rơi</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Không nhận sát thương khi rơi</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>Kháng cự</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nhận ít sát thương hơn từ mọi nguồn</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>Bão hòa</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Không bao giờ bị đói</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>Tốc độ</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Di chuyển nhanh hơn bình thường</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>Sức mạnh</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Gây nhiều sát thương hơn trong chiến đấu</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>Kháng lửa</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Miễn nhiễm sát thương từ lửa và dung nham</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>Gấp đôi kinh nghiệm</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nhận gấp đôi XP từ mọi nguồn</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>Đòn chí mạng</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Có cơ hội gây sát thương chí mạng</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>Hồi máu chiến đấu</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Hồi máu khi gây sát thương lên kẻ địch</gradient>"

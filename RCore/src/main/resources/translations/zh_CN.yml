@@ -1,0 +1,24 @@
+# RCore Central Integration 简体中文翻译
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>用法: /rcconnect <api-key></gray>"
+  connecting: "<yellow>正在连接到 RaindropCentral...</yellow>"
+  success: "<green>已成功连接到 RaindropCentral！</green> <gray>服务器现在正在发送心跳。</gray>"
+  error:
+    invalid_key: "<red>API 密钥格式无效。API 密钥应为 32-128 个字母数字字符。</red>"
+    uuid_mismatch: "<red>此 API 密钥属于另一个 Minecraft 账号。</red>"
+    already_connected: "<yellow>服务器已连接。</yellow> <gray>请先使用 /rcdisconnect。</gray>"
+    network: "<red>网络错误: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>正在断开与 RaindropCentral 的连接...</yellow>"
+  success: "<green>已成功断开与 RaindropCentral 的连接。</green>"
+  error:
+    not_connected: "<red>服务器未连接到 RaindropCentral。</red>"
+    failed: "<red>断开连接失败。请重试。</red>"
+    network: "<red>网络错误: %error%</red>"
+
+general:
+  no_permission: "<red>你没有权限使用此命令。</red>"

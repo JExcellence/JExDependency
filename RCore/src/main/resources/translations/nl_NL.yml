@@ -1,0 +1,24 @@
+# Nederlandse vertalingen voor RCore Central Integration
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Gebruik: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Verbinding maken met RaindropCentral...</yellow>"
+  success: "<green>Succesvol verbonden met RaindropCentral!</green> <gray>Server verzendt nu heartbeats.</gray>"
+  error:
+    invalid_key: "<red>Ongeldig API-sleutelformaat. API-sleutels moeten 32-128 alfanumerieke tekens bevatten.</red>"
+    uuid_mismatch: "<red>Deze API-sleutel hoort bij een ander Minecraft-account.</red>"
+    already_connected: "<yellow>Server is al verbonden.</yellow> <gray>Gebruik eerst /rcdisconnect.</gray>"
+    network: "<red>Netwerkfout: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Verbinding met RaindropCentral verbreken...</yellow>"
+  success: "<green>Succesvol losgekoppeld van RaindropCentral.</green>"
+  error:
+    not_connected: "<red>Server is niet verbonden met RaindropCentral.</red>"
+    failed: "<red>Loskoppelen mislukt. Probeer het opnieuw.</red>"
+    network: "<red>Netwerkfout: %error%</red>"
+
+general:
+  no_permission: "<red>Je hebt geen toestemming om dit commando te gebruiken.</red>"

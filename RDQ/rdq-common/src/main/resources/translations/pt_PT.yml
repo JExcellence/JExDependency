@@ -1,6 +1,6 @@
-# Arquivo de tradução RDQ - Inglês (EUA)
+﻿# Ficheiro de tradução RDQ - Português (Portugal)
 # Formato MiniMessage com gradientes e estilos
-# Os espaços reservados usam o formato %placeholder%
+# Os marcadores usam o formato %placeholder%
 
 # ============================================
 # PREFIXO GLOBAL
@@ -8,7 +8,7 @@
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
 # ============================================
-# CHAVES DE NÍVEL ROOT (usadas por chamadas diretas I18n.Builder)
+# CHAVES DE NÍVEL RAIZ (utilizadas por chamadas diretas do I18n.Builder)
 # ============================================
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Sem Recompensas</gradient>"
@@ -63,24 +63,24 @@ tree:
 rank:
 
   # ============================================
-  # MENSAGENS DE CLASSIFICAÇÃO
+  # MENSAGENS DE RANK
   # ============================================
   messages:
-    requirements_complete: "<gradient:#10b981:#34d399>🎉 CLASSIFICAÇÃO!</gradient> <gradient:#6b7280:#9ca3af>Você completou todos os requisitos para</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
-    claim_upgrade: "<gradient:#6b7280:#9ca3af>Use o menu de classificação para reivindicar sua atualização de classificação!</gradient>"
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 SUBIDA DE RANK!</gradient> <gradient:#6b7280:#9ca3af>Concluiu todos os requisitos para</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Use o menu de ranks para receber a promoção!</gradient>"
 
   default:
-    name: "<gradient:#6b7280:#9ca3af>Sem classificação</gradient>"
+    name: "<gradient:#6b7280:#9ca3af>Sem rank</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Selecione um caminho de classificação para começar</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Selecione um caminho de rank para começar</gradient>"
     unselected:
-      name: "<gradient:#6b7280:#9ca3af>Sem classificação</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>Sem rank</gradient>"
   icon:
     default:
-      name: "<gradient:#6b7280:#9ca3af>Classificação padrão</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>Rank padrão</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nenhuma classificação selecionada</gradient>"
-  # Classificações da Árvore Ranger
+        - "<gradient:#6b7280:#9ca3af>Nenhum rank selecionado</gradient>"
+  # Ranks da Árvore Ranger
   ranger:
     hunter:
       name: "<gradient:#7c3aed:#a78bfa>🏹 Caçador</gradient>"
@@ -110,7 +110,7 @@ rank:
       name: "<gradient:#10b981:#34d399>🌲 Senhor da Floresta</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Mestre da natureza selvagem, um com a natureza</gradient>"
-  # Classificações da Árvore Guerreira
+  # Ranks da Árvore Guerreira
   warrior:
     recruit:
       name: "<gradient:#6b7280:#9ca3af>Recrutar</gradient>"
@@ -148,7 +148,7 @@ rank:
         - "<gradient:#a855f7:#c084fc>Caminho da Glória</gradient>"
         - "<gradient:#6b7280:#9ca3af>Mestre do combate de arena</gradient>"
         - "<gradient:#6b7280:#9ca3af>Equilibre ataque e defesa</gradient>"
-    # Classificações finais
+    # Ranks finais
     warlord_fury:
       name: "<gradient:#ef4444:#f87171>Senhor da Guerra da Fúria</gradient>"
       lore:
@@ -167,7 +167,7 @@ rank:
         - "<gradient:#a855f7:#c084fc>Gladiador Supremo</gradient>"
         - "<gradient:#6b7280:#9ca3af>Campeão dos campeões</gradient>"
         - "<gradient:#6b7280:#9ca3af>Lenda da arena</gradient>"
-    # Classificações legadas (para compatibilidade com versões anteriores)
+    # Ranks legadas (para compatibilidade com versões anteriores)
     knight:
       name: "<gradient:#f59e0b:#fbbf24>Cavaleiro</gradient>"
       lore:
@@ -180,7 +180,7 @@ rank:
       name: "<gradient:#ef4444:#f87171>Caudilho</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Mestre da guerra, comandante dos exércitos</gradient>"
-  # Classificações da Árvore Mágica
+  # Ranks da Árvore Mágica
   mage:
     apprentice:
       name: "<gradient:#a855f7:#c084fc>✨ Aprendiz</gradient>"
@@ -198,7 +198,7 @@ rank:
       name: "<gradient:#ef4444:#f87171>✨ Arquimago</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Mestre supremo de toda magia</gradient>"
-  # Classificações de árvores desonestas
+  # Ranks de árvores desonestas
   rogue:
     pickpocket:
       name: "<gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>"
@@ -236,7 +236,7 @@ rank:
       name: "<gradient:#1f2937:#374151>🗡 Mestre das Sombras</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Governante supremo de todas as sombras</gradient>"
-  # Classificações da árvore do clérigo
+  # Ranks da árvore do clérigo
   cleric:
     acolyte:
       name: "<gradient:#f59e0b:#fbbf24>✝ Acólito</gradient>"
@@ -266,7 +266,7 @@ rank:
       name: "<gradient:#ef4444:#f87171>✝ Sumo Sacerdote</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Voz suprema do divino</gradient>"
-  # Classificações da Árvore Mercante
+  # Ranks da Árvore Mercante
   merchant:
     peddler:
       name: "<gradient:#6b7280:#9ca3af>💰 Mascate</gradient>"
@@ -314,17 +314,17 @@ rank:
 # ============================================
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Você tem uma recompensa ativa na sua cabeça!</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Há uma recompensa ativa pela sua cabeça!</gradient>"
     value: "<gradient:#3b82f6:#60a5fa>💰 Valor da Recompensa:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
     expires: "<gradient:#f59e0b:#fbbf24>⏰ Expira em:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
-    commissioner: "<gradient:#ef4444:#f87171>👤 Comissionado por:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Mandante:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 RECOMPENSA REIVINDICADA! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>Você reivindicou com sucesso a recompensa de</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
-    share: "<gradient:#3b82f6:#60a5fa>Sua parte:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 RECOMPENSA RECEBIDA! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Recebeu com sucesso a recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>A sua parte:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
     someone: "<gradient:#6b7280:#9ca3af>Alguém</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>reivindicou a recompensa de</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% jogadores</gradient> <gradient:#a855f7:#c084fc>reivindicaram a recompensa de</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>recebeu a recompensa por</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% jogadores</gradient> <gradient:#a855f7:#c084fc>receberam a recompensa por</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
 # ============================================
 # MENSAGENS DE CRIAÇÃO DE RECOMPENSAS
@@ -336,7 +336,7 @@ bounty_creation:
   processing: "<gradient:#f59e0b:#fbbf24>⏳ Processando recompensa...</gradient>"
 
 # ============================================
-# MENSAGENS DE PROGRESSÃO DE CLASSIFICAÇÃO
+# MENSAGENS DE PROGRESSÃO DE RANK
 # ============================================
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Progressão iniciada para o rank</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -346,7 +346,7 @@ rank_progression:
   no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>não tem requisitos!</gradient>"
 
 # ============================================
-# CLASSIFICAÇÃO DE MENSAGENS DE CLIQUE
+# MENSAGENS DE CLIQUE DO RANK
 # ============================================
 rank_click:
   preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Modo de visualização:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -392,7 +392,7 @@ main_overview_ui:
       - "<gradient:#6b7280:#9ca3af>e desbloquear novas habilidades</gradient>"
 
 # ============================================
-# UI PRINCIPAL DE CLASSIFICAÇÃO
+# UI PRINCIPAL DE RANK
 # ============================================
 rank_main_ui:
   title: "<gradient:#a855f7:#c084fc>⚔ Sistema de Ranks</gradient>"
@@ -404,7 +404,7 @@ rank_main_ui:
 
 
 # ============================================
-# UI DE VISÃO GERAL DA ÁRVORE DE CLASSIFICAÇÃO
+# UI DE VISÃO GERAL DA ÁRVORE DE RANKS
 # ============================================
 rank_tree_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🌳 Árvores de Ranks</gradient>"
@@ -468,14 +468,14 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Criação de árvore de ranks em breve!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Versão gratuita - somente visualização</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Esta árvore de classificação está disponível apenas para visualização.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Esta árvore de ranks está disponível apenas para visualização.</gradient>"
     - "<gradient:#6b7280:#9ca3af>Atualize para Premium para desbloquear!</gradient>"
     - ""
     - "<gradient:#3b82f6:#60a5fa>Clique com o botão esquerdo para visualizar</gradient>"
-  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Prêmio necessário:</gradient> <gradient:#6b7280:#9ca3af>Atualize para Premium para selecionar árvores de classificação adicionais!</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium necessário:</gradient> <gradient:#6b7280:#9ca3af>Atualize para Premium para selecionar árvores de ranks adicionais!</gradient>"
 
 # ============================================
-# UI DE VISÃO GERAL DO CAMINHO DE CLASSIFICAÇÃO
+# UI DE VISÃO GERAL DO CAMINHO DE RANK
 # ============================================
 rank_path_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
@@ -522,7 +522,7 @@ rank_path_overview_ui:
     available: "<gradient:#3b82f6:#60a5fa>🔓 Disponível</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Bloqueado</gradient>"
     unknown: "<gradient:#6b7280:#9ca3af>❓ Desconhecido</gradient>"
-    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Prêmio obrigatório</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium necessário</gradient>"
   connection:
     from: "<gradient:#6b7280:#9ca3af>De:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     to: "<gradient:#6b7280:#9ca3af>Para:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -815,19 +815,19 @@ requirement:
     requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Requisitos não preenchidos para</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
     rank_redeemed: "<gradient:#10b981:#34d399>🎉 Parabéns! Você desbloqueou</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Parabéns! Você desbloqueou</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Falha ao resgatar</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Falha ao resgatar</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Prêmio necessário:</gradient> <gradient:#6b7280:#9ca3af>A classificação</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>requer Premium para desbloquear. Atualize para acessar todas as classificações!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Falha ao receber</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Falha ao receber</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium necessário:</gradient> <gradient:#6b7280:#9ca3af>O rank</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>requer Premium para ser desbloqueado. Atualize para ter acesso a todos os ranks!</gradient>"
   click:
     left_start: "<gradient:#10b981:#34d399>Clique com o botão esquerdo para iniciar a progressão</gradient>"
     right_requirements: "<gradient:#6b7280:#9ca3af>Clique com o botão direito para visualizar os requisitos</gradient>"
-    left_redeem: "<gradient:#10b981:#34d399>Clique com o botão esquerdo para resgatar</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Clique com o botão esquerdo para receber</gradient>"
     right_progress: "<gradient:#6b7280:#9ca3af>Clique com o botão direito para ver o progresso</gradient>"
   fallback:
     rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
 
 # ============================================
-# UI DE VISÃO GERAL DOS REQUISITOS DE CLASSIFICAÇÃO
+# UI DE VISÃO GERAL DOS REQUISITOS DE RANK
 # ============================================
 rank_requirements_overview_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Requisitos de %rank_name%</gradient>"
@@ -887,7 +887,7 @@ rank_requirements_overview_ui:
     click_to_view: "<gradient:#3b82f6:#60a5fa>Clique para ver detalhes</gradient>"
 
 # ============================================
-# IU DE DETALHES DO REQUISITO DE CLASSIFICAÇÃO
+# UI DE DETALHES DO REQUISITO DE RANK
 # ============================================
 rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Detalhes do Requisito</gradient>"
@@ -1019,15 +1019,15 @@ rank_requirement_detail_ui:
 
 
 # ============================================
-# UI DE VISÃO GERAL DA RECOMPENSA
+# UI DE VISÃO GERAL DAS RECOMPENSAS
 # ============================================
 bounty_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 Sistema de Recompensas</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🎯 Sistema de Recompensas por Cabeça</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Criar Recompensa</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Clique para criar uma nova recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>em outro jogador</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sobre outro jogador</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Ver Recompensas</gradient>"
     lore:
@@ -1035,17 +1035,17 @@ bounty_overview_ui:
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Minhas Recompensas</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver recompensas que você criou</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ver recompensas criadas por si</gradient>"
   leaderboard:
-    name: "<gradient:#ef4444:#f87171>🏆 Classificação</gradient>"
+    name: "<gradient:#ef4444:#f87171>🏆 Tabela Classificativa</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Melhores caçadores de recompensas</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Alvo:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Comissionado:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Criado:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Mandante:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Criada em:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
       - ""
       - "<gradient:#a855f7:#c084fc>Clique para ver detalhes</gradient>"
 
@@ -1064,21 +1064,21 @@ bounty_creation_ui:
     name: "<gradient:#10b981:#34d399>📝 Criar Recompensa</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Clique para criar uma nova recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>em outro jogador</gradient>"
+      - "<gradient:#6b7280:#9ca3af>sobre outro jogador</gradient>"
   add_items:
-    name: "<gradient:#10b981:#34d399>💰 Adicionar Prêmios de Itens</gradient>"
-    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Adicionar Prêmios de Itens</gradient>"
+    name: "<gradient:#10b981:#34d399>💰 Adicionar Recompensas de Itens</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Adicionar Recompensas de Itens</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Clique para adicionar prêmios de itens</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clique para adicionar recompensas de itens</gradient>"
       - "<gradient:#6b7280:#9ca3af>Itens atuais:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
       - "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
   add_currency:
-    name: "<gradient:#f59e0b:#fbbf24>💎 Adicionar Prêmios de Moeda</gradient>"
-    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Adicionar Prêmios de Moeda</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>💎 Adicionar Recompensas em Moeda</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Adicionar Recompensas em Moeda</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Clique para adicionar prêmios de moeda</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clique para adicionar recompensas em moeda</gradient>"
       - "<gradient:#6b7280:#9ca3af>Moedas atuais:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
       - "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
@@ -1086,14 +1086,14 @@ bounty_creation_ui:
     name: "<gradient:#10b981:#34d399>✅ Criar Recompensa</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Clique para criar a recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>com os prêmios selecionados</gradient>"
+      - "<gradient:#6b7280:#9ca3af>com as recompensas selecionadas</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Nenhum jogador selecionado!</gradient> <gradient:#6b7280:#9ca3af>Por favor, selecione um alvo primeiro.</gradient>"
-    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Nenhum prêmio adicionado!</gradient> <gradient:#6b7280:#9ca3af>Por favor, adicione alguns prêmios primeiro.</gradient>"
-    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Criando recompensa em</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Nenhuma recompensa adicionada!</gradient> <gradient:#6b7280:#9ca3af>Adicione primeiro algumas recompensas.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ A criar recompensa por</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Erro:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ Recompensa criada com sucesso em</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>📦 Itens devolvidos!</gradient> <gradient:#6b7280:#9ca3af>Alguns itens foram jogados no chão.</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Recompensa criada com sucesso para</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 Itens devolvidos!</gradient> <gradient:#6b7280:#9ca3af>Alguns itens foram largados no chão.</gradient>"
   # Chave bounty_creation aninhada para chamadas i18n("bounty_creation.confirm.success")
   bounty_creation:
     processing: "<gradient:#f59e0b:#fbbf24>⏳ Processando recompensa...</gradient>"
@@ -1102,30 +1102,30 @@ bounty_creation_ui:
       error: "<gradient:#ef4444:#f87171>❌ Falha ao processar recompensa:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
 # ============================================
-# UI de RECOMPENSA DE RECOMPENSA
+# UI DE PRÉMIOS DA RECOMPENSA
 # ============================================
 bounty_reward_ui:
-  title: "<gradient:#a855f7:#c084fc>💰 Prêmios da Recompensa</gradient>"
+  title: "<gradient:#a855f7:#c084fc>💰 Prémios da Recompensa</gradient>"
   pseudo:
-    name: "<gradient:#6b7280:#9ca3af>📦 Sem Prêmios</gradient>"
+    name: "<gradient:#6b7280:#9ca3af>📦 Sem Prémios</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Adicione itens para criar prêmios</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Adicione itens para criar prémios</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Adicionar Item</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Coloque itens aqui para adicionar como prêmios</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Coloque itens aqui para os adicionar como prémios</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Alvo: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Esta recompensa está colocada em</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Esta recompensa foi colocada sobre</gradient>"
       - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Prêmio da Recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Este item será dado a</gradient>"
-      - "<gradient:#6b7280:#9ca3af>quem reivindicar a recompensa</gradient>"
+      - "<gradient:#a855f7:#c084fc>💰 Prémio da Recompensa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Este item será atribuído a</gradient>"
+      - "<gradient:#6b7280:#9ca3af>quem receber a recompensa</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Nenhum novo item adicionado!</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Alguns itens foram jogados porque seu inventário estava cheio!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Alguns itens foram largados porque o inventário estava cheio!</gradient>"
 
 # ============================================
 # UI DE INFORMAÇÕES DO JOGADOR DE RECOMPENSA
@@ -1136,20 +1136,20 @@ bounty_player_info_ui:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Alvo desta recompensa</gradient>"
-    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳Mais informações em breve...</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Mais informações em breve...</gradient>"
   rewards:
-    name: "<gradient:#10b981:#34d399>💰 Ver Prêmios</gradient>"
+    name: "<gradient:#10b981:#34d399>💰 Ver Prémios</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para ver todos os prêmios</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clique para ver todos os prémios</gradient>"
       - "<gradient:#6b7280:#9ca3af>Recompensas totais:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Excluir Recompensa</gradient>"
     lore:
       - "<gradient:#ef4444:#f87171>⚠ Aviso: Não pode ser desfeito!</gradient>"
       - "<gradient:#6b7280:#9ca3af>Clique para excluir esta recompensa</gradient>"
-  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>foi excluída!</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ A recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>foi eliminada!</gradient>"
   confirm:
-    message: "<gradient:#f59e0b:#fbbf24>Tem certeza de que deseja excluir esta recompensa?</gradient>"
+    message: "<gradient:#f59e0b:#fbbf24>Tem a certeza de que quer eliminar esta recompensa?</gradient>"
 
 # ============================================
 # UI DE VISÃO GERAL DO ADMINISTRADOR
@@ -1317,7 +1317,7 @@ head:
 # MENSAGENS DE ERRO
 # ============================================
 error:
-  premium_required: "<gradient:#ef4444:#f87171>❌ Prémio obrigatório!</gradient> <gradient:#6b7280:#9ca3af>O recurso</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>requer a versão premium.</gradient>"
+  premium_required: "<gradient:#ef4444:#f87171>❌ Premium necessário!</gradient> <gradient:#6b7280:#9ca3af>O recurso</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>requer a versão Premium.</gradient>"
   processing_failed: "<gradient:#ef4444:#f87171>❌ Falha no processamento:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
 # ============================================
@@ -1360,11 +1360,11 @@ confirmation_ui:
 # ============================================
 free:
   restriction:
-    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Limite de versão gratuita:</gradient> <gradient:#6b7280:#9ca3af>Você só pode completar</gradient> <gradient:#f59e0b:#fbbf24>1 árvore de classificação</gradient><gradient:#6b7280:#9ca3af>. Atualize para Premium de forma ilimitada!</gradient>"
-    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Limite de versão gratuita:</gradient> <gradient:#6b7280:#9ca3af>Você só pode progredir através</gradient> <gradient:#f59e0b:#fbbf24>3 classificações</gradient> <gradient:#6b7280:#9ca3af>por árvore. Atualize para Premium!</gradient>"
-    max_active_paths: "<gradient:#ef4444:#f87171>❌ Limite de versão gratuita:</gradient> <gradient:#6b7280:#9ca3af>Você só pode ter</gradient> <gradient:#f59e0b:#fbbf24>1 caminho de classificação ativo</gradient><gradient:#6b7280:#9ca3af>. Atualize para Premium!</gradient>"
-    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Somente visualização:</gradient> <gradient:#6b7280:#9ca3af>Esta árvore de classificação é apenas para visualização na versão gratuita. Atualize para Premium para desbloquear!</gradient>"
-    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Prêmio necessário:</gradient> <gradient:#6b7280:#9ca3af>Esta classificação requer Premium para ser desbloqueada.</gradient>"
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Limite da versão gratuita:</gradient> <gradient:#6b7280:#9ca3af>Só pode concluir</gradient> <gradient:#f59e0b:#fbbf24>1 árvore de ranks</gradient><gradient:#6b7280:#9ca3af>. Atualize para Premium sem limites!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Limite da versão gratuita:</gradient> <gradient:#6b7280:#9ca3af>Só pode progredir por</gradient> <gradient:#f59e0b:#fbbf24>3 ranks</gradient> <gradient:#6b7280:#9ca3af>por árvore. Atualize para Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ Limite da versão gratuita:</gradient> <gradient:#6b7280:#9ca3af>Só pode ter</gradient> <gradient:#f59e0b:#fbbf24>1 caminho de rank ativo</gradient><gradient:#6b7280:#9ca3af>. Atualize para Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Somente visualização:</gradient> <gradient:#6b7280:#9ca3af>Esta árvore de ranks é apenas para visualização na versão gratuita. Atualize para Premium para desbloquear!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Premium necessário:</gradient> <gradient:#6b7280:#9ca3af>Este rank requer Premium para ser desbloqueado.</gradient>"
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Versão gratuita</gradient>"
     lore:
@@ -1372,15 +1372,15 @@ free:
       - "<gradient:#6b7280:#9ca3af>com recursos limitados.</gradient>"
       - ""
       - "<gradient:#10b981:#34d399>Atualize para Premium para:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Árvores de classificação ilimitadas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Classificações ilimitadas por árvore</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Árvores de Ranks ilimitadas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Ranks ilimitados por árvore</gradient>"
       - "<gradient:#6b7280:#9ca3af>• Vários caminhos ativos</gradient>"
 
 # ============================================
 # MENSAGENS DA VERSÃO PREMIUM
 # ============================================
 premium:
-  no_restrictions: "<gradient:#10b981:#34d399>✅Prêmio:</gradient> <gradient:#6b7280:#9ca3af>Não se aplicam restrições.</gradient>"
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premium:</gradient> <gradient:#6b7280:#9ca3af>Não se aplica qualquer restrição.</gradient>"
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Versão Premium</gradient>"
     lore:
@@ -1422,7 +1422,7 @@ rank_requirement_item_detail_ui:
 rank_requirements_journey_ui:
 
   # ============================================
-  # VISUALIZAÇÃO DA JORNADA DE REQUISITOS DE CLASSIFICAÇÃO
+  # VISUALIZAÇÃO DO PERCURSO DOS REQUISITOS DE RANK
   # ============================================
   title: "<gradient:#a855f7:#c084fc>🗺 Requisitos de %rank_name%</gradient>"
   progress_bar:
@@ -1441,26 +1441,26 @@ rank_requirements_journey_ui:
     lore:
       - ""
       - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
-      - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para desbloquear este rank!</gradient>"
   claim_button:
-    name: "<gradient:#10b981:#34d399>✅ Reivindicar Rank</gradient>"
+    name: "<gradient:#10b981:#34d399>✅ Receber Rank</gradient>"
     lore:
       - ""
       - "<gradient:#10b981:#34d399>Todos os requisitos concluídos!</gradient>"
       - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Clique para reivindicar sua classificação</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>▶ Clique para receber o seu rank</gradient>"
     hidden:
-      name: "<gradient:#6b7280:#9ca3af>🔒 Classificação bloqueada</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>🔒 Rank bloqueado</gradient>"
       lore:
         - ""
         - "<gradient:#6b7280:#9ca3af>Preencha todos os requisitos</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação.</gradient>"
+        - "<gradient:#6b7280:#9ca3af>para desbloquear este rank.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Bloqueado</gradient>"
       lore:
         - ""
         - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação.</gradient>"
+        - "<gradient:#6b7280:#9ca3af>para desbloquear este rank.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1470,10 +1470,10 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Voltar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Retornar à visão geral da classificação</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voltar à visão geral do rank</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Requisito completado!</gradient>"
-    all_completed: "<gradient:#10b981:#34d399>🎉 Todos os requisitos completados! Agora você pode reivindicar o rank!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Todos os requisitos completados! Agora você pode receber o rank!</gradient>"
     rank_claimed: "<gradient:#10b981:#34d399>🏆 Parabéns! Você alcançou o rank:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     not_ready: "<gradient:#ef4444:#f87171>❌ Este requisito ainda não está pronto para ser completado.</gradient>"
     already_completed: "<gradient:#10b981:#34d399>✅ Este requisito já foi completado.</gradient>"
@@ -1485,7 +1485,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Sem recompensas</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Este rank não tem recompensas configuradas</gradient>"
       type_label: "<gray>Tipo:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Valor:</gray> <gold>%value%</gold>"
     
@@ -1518,17 +1518,17 @@ rank_requirements_journey_ui:
       name: "<gradient:#a855f7:#c084fc>📋 Ver todas as recompensas</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Clique para ver tudo %count% recompensas</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para esta classificação em detalhes</gradient>"
-      coming_soon: "<gradient:#fbbf24:#fcd34d>Visualização detalhada das recompensas em breve!</gradient>"
+        - "<gradient:#6b7280:#9ca3af>para este rank em detalhe</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>Vista detalhada das recompensas em breve!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Sem recompensas</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas</gradient>"
-        message: "<gradient:#6b7280:#9ca3af>Esta classificação não possui recompensas configuradas.</gradient>"
-    label: "<gradient:#fbbf24:#fcd34d>🎁 Recompensas de classificação</gradient>"
+          - "<gradient:#6b7280:#9ca3af>Este rank não tem recompensas</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>Este rank não tem recompensas configuradas.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 Recompensas de rank</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Você receberá %count% recompensas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>quando você reivindica esta classificação</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Receberá %count% recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>quando receber este rank</gradient>"
 
 reward:
   card:
@@ -1536,12 +1536,12 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Sem recompensas</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Este rank não tem recompensas configuradas</gradient>"
     type_label: "<gray>Tipo:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Valor:</gray> <gold>%value%</gold>"
   
   perk:
-    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Você desbloqueou o benefício:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Desbloqueou a vantagem:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
   
   # Descrições dos tipos de recompensa
   currency:
@@ -1572,17 +1572,17 @@ rewards:
     name: "<gradient:#a855f7:#c084fc>📋 Ver todas as recompensas</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Clique para ver tudo %count% recompensas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>para esta classificação em detalhes</gradient>"
-    coming_soon: "<gradient:#fbbf24:#fcd34d>Visualização detalhada das recompensas em breve!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para este rank em detalhe</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>Vista detalhada das recompensas em breve!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Sem recompensas</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas</gradient>"
-      message: "<gradient:#6b7280:#9ca3af>Esta classificação não possui recompensas configuradas.</gradient>"
-  label: "<gradient:#fbbf24:#fcd34d>🎁 Recompensas de classificação</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Este rank não tem recompensas</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>Este rank não tem recompensas configuradas.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 Recompensas de rank</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Você receberá %count% recompensas</gradient>"
-    - "<gradient:#6b7280:#9ca3af>quando você reivindica esta classificação</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Receberá %count% recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>quando receber este rank</gradient>"
 
 
 # ============================================
@@ -1593,24 +1593,24 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Esta classificação tem %count% recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Este rank tem %count% recompensas</gradient>"
       - "<gradient:#6b7280:#9ca3af>Clique em qualquer recompensa para obter detalhes</gradient>"
 
 # ============================================
-# IU DE VISÃO GERAL DO BENEFÍCIO
+# UI DE VISÃO GERAL DA VANTAGEM
 # ============================================
 perk_overview_ui:
   title: "<gradient:#a855f7:#c084fc>✨ Vantagens</gradient>"
 
 # ============================================
-# IU DE DETALHES DO BENEFÍCIO
+# UI DE DETALHES DA VANTAGEM
 # ============================================
 perk_detail_ui:
   title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
 
 
 # ============================================
-# TRADUÇÕES DE PERK
+# TRADUÇÕES DE VANTAGENS
 # ============================================
 perk:
   # Vantagens de pesca
@@ -1632,27 +1632,27 @@ perk:
     name: "<gradient:#10b981:#34d399>Reembolso de Poção</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Chance de recuperar sua poção depois de bebê-la</gradient>"
   
-  # Mensagens de vantagens
+  # Mensagens das vantagens
   messages:
-    # Desbloquear/Enable/Disable
+    # Desbloquear/Ativar/Desativar
     unlock:
-      notification: "<gradient:#10b981:#34d399>✨ Vantagens desbloqueadas!</gradient> <gradient:#6b7280:#9ca3af>Você desbloqueou</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-      success: "<gradient:#10b981:#34d399>Benefício desbloqueado e ativado com sucesso:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-      failed: "<gradient:#ef4444:#f87171>Falha ao desbloquear o benefício. Por favor, tente novamente.</gradient>"
-      error: "<gradient:#ef4444:#f87171>Ocorreu um erro ao desbloquear o benefício.</gradient>"
-      requirements_not_met: "<gradient:#ef4444:#f87171>Você não atende aos requisitos para desbloquear esse benefício!</gradient>"
+      notification: "<gradient:#10b981:#34d399>✨ Vantagem desbloqueada!</gradient> <gradient:#6b7280:#9ca3af>Desbloqueou</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Vantagem desbloqueada e ativada com sucesso:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Falha ao desbloquear a vantagem. Tente novamente.</gradient>"
+      error: "<gradient:#ef4444:#f87171>Ocorreu um erro ao desbloquear a vantagem.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>Não cumpre os requisitos para desbloquear esta vantagem!</gradient>"
     enable:
-      success: "<gradient:#10b981:#34d399>Benefício ativado:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-      failed: "<gradient:#ef4444:#f87171>Falha ao ativar o benefício:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-      limit_reached: "<gradient:#ef4444:#f87171>Você atingiu o número máximo de benefícios ativados (%limit%)!</gradient>"
+      success: "<gradient:#10b981:#34d399>Vantagem ativada:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Falha ao ativar a vantagem:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>Atingiu o número máximo de vantagens ativadas (%limit%)!</gradient>"
     disable:
-      success: "<gradient:#f59e0b:#fbbf24>Benefício para deficientes:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
-      failed: "<gradient:#ef4444:#f87171>Falha ao desativar o benefício:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#f59e0b:#fbbf24>Vantagem desativada:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Falha ao desativar a vantagem:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
     
-    # Esfriar
+    # Recarga
     cooldown:
-      active: "<gradient:#ef4444:#f87171>Este benefício está em espera por</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
-      ready: "<gradient:#10b981:#34d399>O benefício está pronto para uso!</gradient>"
+      active: "<gradient:#ef4444:#f87171>Esta vantagem está em recarga durante</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>A vantagem está pronta a usar!</gradient>"
     
     # Gatilhos de efeitos
     potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Poção Aprimorada!</gradient> <gradient:#6b7280:#9ca3af>Efeitos amplificados</gradient>"
@@ -1669,45 +1669,45 @@ perk:
     
     requirements:
       no_requirements: "<green>Sem requisitos</green>"
-      no_requirements_lore: "<gray>Este benefício não tem requisitos de desbloqueio</gray>"
+      no_requirements_lore: "<gray>Esta vantagem não tem requisitos de desbloqueio</gray>"
     
     rewards:
-      title: "<gold>Desbloquear recompensa</gold>"
+      title: "<gold>Recompensa de desbloqueio</gold>"
       no_rewards: "<gray>Sem recompensas de desbloqueio</gray>"
-      no_rewards_lore: "<gray>Este benefício não tem recompensas de desbloqueio</gray>"
+      no_rewards_lore: "<gray>Esta vantagem não tem recompensas de desbloqueio</gray>"
       type_label: "<gray>Tipo: <white>%type%</white></gray>"
       value_label: "<gray>Valor: <gold>%value%</gold></gray>"
     
     status:
-      title: "<white>Status do benefício</white>"
+      title: "<white>Estado da vantagem</white>"
       locked: "<red>✖ Bloqueado</red>"
       locked_hint: "<gray>Requisitos completos para desbloquear</gray>"
       active: "<green>✓ Ativo</green>"
-      enabled: "<yellow>○ Habilitado</yellow>"
+      enabled: "<yellow>○ Ativado</yellow>"
       disabled: "<gray>○ Desativado</gray>"
-      enabled_count: "<gray>Vantagens habilitadas: <white>%count%/%max%</white></gray>"
-      cooldown_label: "<gray>Esfriar: <gold>%time%</gold></gray>"
+      enabled_count: "<gray>Vantagens ativadas: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Recarga: <gold>%time%</gold></gray>"
       activations_label: "<gray>Ativações: <white>%count%</white></gray>"
     
     buttons:
       unlock:
         title: "<white>Desbloquear vantagem</white>"
-        hint: "<green>Clique para desbloquear esse benefício!</green>"
+        hint: "<green>Clique para desbloquear esta vantagem!</green>"
       enable:
-        title: "<white>Ativar benefício</white>"
-        hint: "<green>Clique para ativar este benefício</green>"
-        limit_reached: "<red>Máximo de benefícios ativados alcançado</red>"
+        title: "<white>Ativar vantagem</white>"
+        hint: "<green>Clique para ativar esta vantagem</green>"
+        limit_reached: "<red>Máximo de vantagens ativadas alcançado</red>"
       disable:
-        title: "<white>Desativar benefício</white>"
-        hint: "<yellow>Clique para desativar este benefício</yellow>"
+        title: "<white>Desativar vantagem</white>"
+        hint: "<yellow>Clique para desativar esta vantagem</yellow>"
   
-  # Benefícios existentes (para referência - adicione se estiver faltando)
+  # Vantagens existentes (para referência - adicione se estiver faltando)
   fly:
     name: "<gradient:#3b82f6:#60a5fa>Voo</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Ganhe a habilidade de voar</gradient>"
   glow:
     name: "<gradient:#f59e0b:#fbbf24>Brilho</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Aplique um efeito brilhante em você mesmo</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Aplica um efeito brilhante em si mesmo</gradient>"
   haste:
     name: "<gradient:#10b981:#34d399>Pressa</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Minere e cave mais rápido</gradient>"
@@ -1716,10 +1716,10 @@ perk:
     description: "<gradient:#6b7280:#9ca3af>Salte mais alto que o normal</gradient>"
   keep_experience:
     name: "<gradient:#10b981:#34d399>Mantenha a experiência</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Mantenha seu XP quando você morrer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mantém o seu XP quando morre</gradient>"
   keep_inventory:
     name: "<gradient:#3b82f6:#60a5fa>Manter inventário</gradient>"
-    description: "<gradient:#6b7280:#9ca3af>Guarde seus itens quando você morrer</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Guarda os seus itens quando morre</gradient>"
   night_vision:
     name: "<gradient:#f59e0b:#fbbf24>Visão Noturna</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Veja claramente no escuro</gradient>"
@@ -1750,3 +1750,5 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Cura de Combate</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Cure ao causar dano aos inimigos</gradient>"
+
+

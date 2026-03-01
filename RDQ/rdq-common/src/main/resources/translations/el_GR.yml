@@ -1,0 +1,1752 @@
+# Αρχείο Μετάφρασης RDQ - Αγγλικά (ΗΠΑ)
+# Μορφή MiniMessage με διαβαθμίσεις και στυλ
+# Τα σύμβολα θέσης χρησιμοποιούν τη μορφή %placeholder%
+
+# ============================================
+# ΠΑΓΚΟΣΜΙΟ ΠΡΟΘΕΜΑ
+# ============================================
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+# ============================================
+# ΚΛΕΙΔΙΑ ΕΠΙΠΕΔΟΥ ROOT (χρησιμοποιούνται από απευθείας κλήσεις I18n.Builder)
+# ============================================
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 Χωρίς ανταμοιβές</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Προσθέστε αντικείμενα για να δημιουργήσετε ανταμοιβές</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ Προσθήκη Αντικειμένου</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Τοποθετήστε αντικείμενα εδώ για προσθήκη ως ανταμοιβή</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Κάντε αριστερό κλικ για να τοποθετήσετε το στοιχείο</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Κάντε δεξί κλικ για να αφαιρέσετε το στοιχείο</gradient>"
+
+# ============================================
+# ΟΝΟΜΑΤΑ ΕΜΦΑΝΙΣΗΣ & ΠΕΡΙΓΡΑΦΕΣ ΔΕΝΤΡΟΥ ΒΑΘΜΙΔΩΝ
+# ============================================
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 Δασοφύλακας</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κατακτήστε την τέχνη της τοξοβολίας και του εντοπισμού</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Γίνετε ένα με τη φύση</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ Πολεμιστής</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κατακτήστε την τέχνη της μάχης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Γίνετε ένας θρυλικός μαχητής</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ Μάγος</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Αξιοποιήστε τη δύναμη της μαγείας</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Γίνετε κύριος του απόκρυφου</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 Απατεώνας</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δάσκαλος κρυφά και πονηριά</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Χτύπημα από τις σκιές</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ Κληρικός</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Διοχέτευσε τη θεϊκή δύναμη</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Θεραπεύστε και προστατέψτε τους συμμάχους σας</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 Έμπορος</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κατακτήστε την τέχνη του εμπορίου</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Χτίστε την περιουσία σας</gradient>"
+
+# ============================================
+# ΟΝΟΜΑΤΑ ΕΜΦΑΝΙΣΗΣ & ΠΕΡΙΓΡΑΦΕΣ ΒΑΘΜΙΔΩΝ
+# ============================================
+rank:
+
+  # ============================================
+  # ΜΗΝΥΜΑΤΑ ΒΑΘΜΙΔΑΣ
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 ΑΝΟΔΟΣ ΒΑΘΜΙΔΑΣ!</gradient> <gradient:#6b7280:#9ca3af>Έχετε ολοκληρώσει όλες τις απαιτήσεις για</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Χρησιμοποιήστε το μενού κατάταξης για να διεκδικήσετε την αναβάθμιση της κατάταξής σας!</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>Χωρίς Βαθμίδα</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Επιλέξτε μια διαδρομή κατάταξης για να ξεκινήσετε</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>Χωρίς Βαθμίδα</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>Προεπιλεγμένη Βαθμίδα</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δεν έχει επιλεγεί κατάταξη</gradient>"
+  # Βαθμίδες Δέντρου Δασοφύλακα
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹 Κυνηγός</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ένας αρχάριος ιχνηλάτης που μαθαίνει τους τρόπους της άγριας φύσης</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 Τοξότης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Επιδέξιος στο τόξο, θανατηφόρος σε απόσταση</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 Ιχνηλάτης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ειδικός στην εύρεση και παρακολούθηση θηράματος</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 Σκοπευτής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Σκοπευτής ακριβείας με θανατηφόρα ακρίβεια</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 Ανιχνευτής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κύριος εξερευνητής αχαρτογράφητων εδαφών</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 Ελεύθερος Σκοπευτής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Επίλεκτος σκοπευτής, ένας πυροβολισμός ένας σκοτωμένος</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 Άρχοντας του Δάσους</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κύριος της ερημιάς, ένα με τη φύση</gradient>"
+  # Βαθμίδες Δέντρου Πολεμιστή
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>Νεοσύλλεκτος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ένας νέος πολεμιστής ξεκινά το ταξίδι του</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Μάθετε τα βασικά της μάχης</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>Στρατιώτης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Εκπαιδευμένος στην τέχνη της μάχης</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Έτοιμοι για μάχη</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>Βετεράνος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>σκληραγωγημένος στη μάχη πολεμιστής</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Επιλέξτε το μονοπάτι της εξειδίκευσής σας</gradient>"
+    # Κλάδος Εξειδίκευσης 1: Μαινόμενος (Επιθετικός)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>Μαινόμενος</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Διαδρομή της Οργής</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Εξαπολύστε καταστροφικές επιθέσεις</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Θυσία άμυνας για ακατέργαστη δύναμη</gradient>"
+    # Κλάδος Εξειδίκευσης 2: Φύλακας (Αμυντικός)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>Φύλακας</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Διαδρομή Προστασίας</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Γίνε άθραυστη ασπίδα</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Προστατέψτε τους συμμάχους σας με κάθε κόστος</gradient>"
+    # Κλάδος Εξειδίκευσης 3: Μονομάχος (Ισορροπημένος)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>Μονομάχος</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Διαδρομή της Δόξας</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Δάσκαλος της μάχης στην αρένα</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ισορροπεί επίθεση και άμυνα</gradient>"
+    # Τελικές Βαθμίδες
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>Πολέμαρχος της Οργής</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Απόλυτος Μαινόμενος</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ασταμάτητη δύναμη καταστροφής</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ο φόβος ενσαρκώνεται στο πεδίο της μάχης</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>Πολέμαρχος της Ασπίδας</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Απόλυτος Φύλακας</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ακίνητο αντικείμενο, αιώνιος προστάτης</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Κανένας δεν θα περάσει όσο στέκεσαι</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>Πολέμαρχος της Αρένας</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Απόλυτος Μονομάχος</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Πρωταθλητής πρωταθλητών</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Θρύλος της αρένας</gradient>"
+    # Παλιές βαθμίδες (για συμβατότητα προς τα πίσω)
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>Ιππότης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αξιότιμος πολεμιστής του βασιλείου</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>Πρωταθλητής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Θρυλικός μαχητής, που όλοι φοβούνται</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>Πολέμαρχος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αρχηγός πολέμου, αρχηγός στρατευμάτων</gradient>"
+  # Βαθμίδες Δέντρου Μάγου
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ Μαθητευόμενος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Μαθαίνοντας τα βασικά της μαγείας</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ Μυημένος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Μεγαλώνοντας σε μαγική δύναμη</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Μάγος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Μάστερ των μυστηριωδών τεχνών</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨ Αρχιμάγος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Υπέρτατος κύριος κάθε μαγείας</gradient>"
+  # Βαθμίδες Δέντρου Απατεώνα
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Πορτοφολάς</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Γρήγορα δάχτυλα, πιο γρήγορη απόδραση</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Κλέφτης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δάσκαλος της κρυψίνοιας και της κλοπής</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 Ανιχνευτής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Μάτια και αυτιά των σκιών</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 Δολοφόνος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Σιωπηλός δολοφόνος, θάνατος από σκιές</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 Διεισδυτής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ειδικός στο να μπαίνει και να βγαίνει απαρατήρητος</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Σκιόσπαθο</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Θανάσιμος πολεμιστής της νύχτας</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Αρχικατάσκοπος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ελεγκτής δικτύων πληροφοριών</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ένα με το ίδιο το σκοτάδι</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ανώτατος κυρίαρχος όλων των σκιών</gradient>"
+  # Βαθμίδες Δέντρου Κληρικού
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Ακόλουθος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αφοσιωμένος υπηρέτης του θείου</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Αφοσιωμένος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Πιστός συνεχιστής του θείου μονοπατιού</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ Ιερέας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Θεραπευτής και προστάτης των πιστών</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ Θεραπευτής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δάσκαλος των θεραπευτικών τεχνών</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ Επίσκοπος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αρχηγός των πιστών</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ Μάντης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Βλέπης θείων οραμάτων</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ Αρχιερέας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Υπέρτατη φωνή του θείου</gradient>"
+  # Βαθμίδες Δέντρου Εμπόρου
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 Πλανόδιος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Πώληση εμπορευμάτων στο δρόμο</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 Έμπορος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Καθιερωμένος έμπορος με συνδέσεις</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 Πωλητής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ειδικευμένος πωλητής αγαθών</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Τεχνίτης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κατασκευαστής εκλεκτών ειδών</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰 Αλχημιστής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δάσκαλος των φίλτρων και των ελιξιρίων</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Έμπορος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Επιτυχημένος ιδιοκτήτης επιχείρησης</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 Αρχιτεχνίτης</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ανώτατος τεχνίτης του βασιλείου</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 Πρίγκιπας του Εμπορίου</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Τα δικαιώματα του εμπορίου</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 Μεγιστάνας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δάσκαλος του εμπορίου και των συναλλαγών</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 Αρχηγός Συντεχνίας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αρχηγός της συντεχνίας των εμπόρων</gradient>"
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ ΑΚΡΟΑΤΗ ΕΠΙΚΗΡΥΞΕΩΝ
+# ============================================
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Έχετε ένα ενεργό μπόνους στο κεφάλι σας!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 Αξία Επικήρυξης:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ Λήγει στις:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 Ανάθεση από:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 ΔΙΚΑΙΟΛΟΓΗΤΙΚΟ ΔΙΚΑΙΩΜΑ! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>Διεκδικήσατε επιτυχώς το μπόνους</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>Το μερίδιό σας:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>Κάποιος</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>έχει διεκδικήσει το βραβείο για</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% παίκτες</gradient> <gradient:#a855f7:#c084fc>έχουν διεκδικήσει το βραβείο για</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ ΔΗΜΙΟΥΡΓΙΑΣ ΕΠΙΚΗΡΥΞΗΣ
+# ============================================
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ Η επικήρυξη δημιουργήθηκε με επιτυχία για</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Απέτυχε η επεξεργασία της επικήρυξης:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ Επεξεργασία επικήρυξης...</gradient>"
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ ΕΞΕΛΙΞΗΣ ΒΑΘΜΙΔΑΣ
+# ============================================
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ Ξεκίνησε την πρόοδο για την κατάταξη</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Προβολή απαιτήσεων για</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Απαιτήσεις ελλιπείς για</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% πλήρης)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Η απαίτηση ελλιπής:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>δεν έχει απαιτήσεις!</gradient>"
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ ΚΛΙΚ ΒΑΘΜΙΔΑΣ
+# ============================================
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Λειτουργία προεπισκόπησης:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ Είστε κάτοχος</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένο:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Συμπληρώστε πρώτα τα προαπαιτούμενα</gradient>"
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ ΕΝΤΟΛΩΝ RQ
+# ============================================
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ Το LuckPerms δεν έχει εγκατασταθεί!</gradient> <gradient:#6b7280:#9ca3af>Αυτή η δυνατότητα απαιτεί LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Βοήθεια RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Άνοιγμα κύριου μενού</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Προβολή βαθμίδων</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Προβολή επικηρύξεων</gradient>"
+
+# ============================================
+# ΚΥΡΙΑ ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ
+# ============================================
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ Πίνακας Διαχείρισης</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Πρόσβαση σε εργαλεία διαχείρισης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και επιλογές διαμόρφωσης</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Επικηρύξεις</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δείτε και διαχειριστείτε τις επικηρύξεις</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κυνηγήστε παίκτες για ανταμοιβές!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ Προνόμια</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δείτε τα διαθέσιμα προνόμια</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και ειδικές ικανότητες</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 Αποστολές</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δείτε τις διαθέσιμες αποστολές</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και παρακολουθήστε την πρόοδό σας</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ Βαθμίδες</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Προβολή προόδου κατάταξης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και ξεκλειδώστε νέες ικανότητες</gradient>"
+
+# ============================================
+# ΚΥΡΙΑ ΔΙΕΠΑΦΗ ΒΑΘΜΙΔΩΝ
+# ============================================
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ Σύστημα Βαθμίδων</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 Δέντρα Βαθμίδων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Περιηγηθείτε στα διαθέσιμα δέντρα κατάταξης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και διάλεξε τον δρόμο σου</gradient>"
+
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΔΕΝΤΡΟΥ ΒΑΘΜΙΔΩΝ
+# ============================================
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 Δέντρα Βαθμίδων</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 Δασοφύλακας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κατακτήστε την τέχνη της τοξοβολίας και του εντοπισμού</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Γίνετε ένα με τη φύση</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ Πολεμιστής</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κατακτήστε την τέχνη της μάχης</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Γίνετε ένας θρυλικός μαχητής</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ Μάγος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αξιοποιήστε τη δύναμη της μαγείας</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Γίνετε κύριος του απόκρυφου</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Απατεώνας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δάσκαλος κρυφά και πονηριά</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Χτύπημα από τις σκιές</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Κληρικός</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Διοχέτευσε τη θεϊκή δύναμη</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Θεραπεύστε και προστατέψτε τους συμμάχους σας</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 Έμπορος</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κατακτήστε την τέχνη του εμπορίου</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Χτίστε την περιουσία σας</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>Κάντε αριστερό κλικ για προεπισκόπηση</gradient>"
+      - "<gradient:#10b981:#34d399>Κάντε δεξί κλικ για να επιλέξετε</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Αυτό το δέντρο κατάταξης είναι κλειδωμένο</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>Πλήρης %minimum_rank_paths_to_be_absolved_needed% κατατάξτε πρώτα τα δέντρα</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>Προαπαιτούμενα:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Αυτή η διαδρομή κατάταξης είναι κλειδωμένη!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ Επί του παρόντος ενεργός</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>Κάντε αριστερό κλικ για προεπισκόπηση</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>Κάντε δεξί κλικ για να συνεχίσετε</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 Προηγουμένως επιλεγμένο</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>Κάντε δεξί κλικ για επανενεργοποίηση</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ Συμπληρώθηκαν οι μέγιστες ενεργές διαδρομές κατάταξης!</gradient> <gradient:#6b7280:#9ca3af>(Μέγ. %maximum_rank_path_amount%)</gradient>"
+  create_rank_tree:
+    name: "<gradient:#10b981:#34d399>➕ Δημιουργία Δέντρου Βαθμίδων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δημιουργήστε ένα νέο δέντρο κατάταξης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(Μόνο διαχειριστής)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Η αρχική κατάταξη δεν βρέθηκε για αυτήν τη διαδρομή!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ Επιλεγμένη διαδρομή κατάταξης:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Αρχική κατάταξη: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία επιλογής διαδρομής κατάταξης!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Επανενεργοποιημένη διαδρομή κατάταξης:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία επανενεργοποίησης της διαδρομής κατάταξης!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Σύντομα η δημιουργία δέντρων κατάταξης!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Δωρεάν Έκδοση - Μόνο Προεπισκόπηση</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>Αυτό το δέντρο κατάταξης είναι διαθέσιμο μόνο για προεπισκόπηση.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Κάντε αναβάθμιση σε Premium για ξεκλείδωμα!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>Κάντε αριστερό κλικ για προεπισκόπηση</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Απαιτείται Premium:</gradient> <gradient:#6b7280:#9ca3af>Κάντε αναβάθμιση σε Premium για να επιλέξετε επιπλέον δέντρα κατάταξης!</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΔΙΑΔΡΟΜΗΣ ΒΑΘΜΙΔΑΣ
+# ============================================
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 Προεπισκόπηση: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>Άγνωστο δέντρο</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ Πλοηγηθείτε αριστερά</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ Πλοηγηθείτε δεξιά</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ Πλοηγηθείτε επάνω</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ Πλοηγηθείτε προς τα κάτω</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Διαπλέω %direction%</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιστρέψετε</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 Κεντράρισμα Προβολής</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να κεντράρετε την προβολή</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Κεντράρισμα Προβολής</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Λειτουργία Προεπισκόπησης</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Προβάλλετε σε λειτουργία προεπισκόπησης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Οι αλλαγές δεν θα αποθηκευτούν</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Λειτουργία Προεπισκόπησης</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ Σφάλμα απόδοσης κατάταξης</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ Δεν υπάρχει δέντρο κατάταξης</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>Δεν είναι δυνατή η φόρτωση του δέντρου κατάταξης</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ Κρίσιμο σφάλμα</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>Παρουσιάστηκε σφάλμα κατά την απόδοση</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>Παρουσιάστηκε σφάλμα κατά την απόδοση</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία ανοίγματος απαιτήσεων για</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ Παρουσιάστηκε σφάλμα. Δοκιμάστε ξανά.</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ Στην Κατοχή Σας</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Διαθέσιμο</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένο</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Άγνωστο</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Απαιτείται Premium</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>Από:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>Να:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>Σύνδεση</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ Ιδιόκτητη σύνδεση</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Διαθέσιμη Σύνδεση</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ Σύνδεση σε εξέλιξη</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Σύνδεση σε εξέλιξη</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένη σύνδεση</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ Στην Κατοχή Σας</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Διαθέσιμο</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένο</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να δείτε τις απαιτήσεις</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Κάντε κλικ για να προχωρήσετε</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Δεν υπάρχει διαθέσιμη περιγραφή για %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Επίπεδο:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Βάρος:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹 Κυνηγός</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ένας αρχάριος ιχνηλάτης που μαθαίνει τους τρόπους της άγριας φύσης</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 Τοξότης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Επιδέξιος στο τόξο, θανατηφόρος σε απόσταση</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍 Ιχνηλάτης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ειδικός στην εύρεση και παρακολούθηση θηράματος</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯 Σκοπευτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Σκοπευτής ακριβείας με θανατηφόρα ακρίβεια</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 Ανιχνευτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Κύριος εξερευνητής αχαρτογράφητων εδαφών</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯 Ελεύθερος Σκοπευτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Επίλεκτος σκοπευτής, ένας πυροβολισμός ένας σκοτωμένος</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 Άρχοντας του Δάσους</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Κύριος της ερημιάς, ένα με τη φύση</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ Νεοσύλλεκτος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ένας νέος πολεμιστής ξεκινά το ταξίδι του</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ Στρατιώτης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Εκπαιδευμένος στην τέχνη της μάχης</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Ιππότης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Αξιότιμος πολεμιστής του βασιλείου</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ Πρωταθλητής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Θρυλικός μαχητής, που όλοι φοβούνται</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ Πολέμαρχος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Αρχηγός πολέμου, αρχηγός στρατευμάτων</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨ Μαθητευόμενος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Μαθαίνοντας τα βασικά της μαγείας</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨ Μυημένος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Μεγαλώνοντας σε μαγική δύναμη</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ Μάγος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Μάστερ των μυστηριωδών τεχνών</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨ Αρχιμάγος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Υπέρτατος κύριος κάθε μαγείας</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Πορτοφολάς</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Γρήγορα δάχτυλα, πιο γρήγορη απόδραση</gradient>"
+
+# ============================================
+# ΜΕΤΑΦΡΑΣΕΙΣ ΑΠΑΙΤΗΣΕΩΝ
+# ============================================
+requirement:
+
+  # ============================================
+  # ΤΥΠΟΙ ΑΠΑΙΤΗΣΕΩΝ (Τοπικοποιημένα ονόματα)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 Συλλογή Αντικειμένων</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 Νόμισμα</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨ Επίπεδο Εμπειρίας</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ Χρόνος Παιχνιδιού</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 Δικαίωμα</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍 Τοποθεσία</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ Απαίτηση Θανάτωσης</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 Κατασκευή</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Άγνωστο</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ Ολοκληρώθηκε</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ Έτοιμο για Ολοκλήρωση</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 Σε Εξέλιξη</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ Δεν Ξεκίνησε</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Σφάλμα</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶ Κάντε αριστερό κλικ για να ολοκληρώσετε!</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶ Δεξί κλικ για λεπτομέρειες</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 Υποβολή Αντικειμένων</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>Ήδη ολοκληρώθηκε</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>Καθήκοντα:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...και %count% περισσότερο</gradient>"
+
+  # Περιγραφές απαιτήσεων νομίσματος
+  currency:
+    coins: "Νομίσματα"
+    gems: "Πολύτιμοι λίθοι"
+    tokens: "Μάρκες"
+    money: "Χρήματα"
+    dollars: "Δολάρια"
+    credits: "Πιστώσεις"
+  
+  # Πρότυπα προεπισκόπησης εργασιών
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "Ανάγκη %amount% %currency%"
+      have: "Εχω %current%/%required% %currency%"
+    item:
+      need: "Ανάγκη %quantity%x %item%"
+    experience:
+      need: "Φτάστε το επίπεδο %level%"
+      points: "Εκταση %points% πόντοι εμπειρίας"
+    playtime:
+      need: "Παίξτε για %time%"
+    permission:
+      need: "Απαιτεί άδεια: %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Κλέφτης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Δάσκαλος της κρυψίνοιας και της κλοπής</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Δολοφόνος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Σιωπηλός δολοφόνος, θάνατος από σκιές</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 Διεισδυτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ειδικός στο να μπαίνει και να βγαίνει απαρατήρητος</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ένα με το ίδιο το σκοτάδι</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Ακόλουθος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Αφοσιωμένος υπηρέτης του θείου</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Αφοσιωμένος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Πιστός συνεχιστής του θείου μονοπατιού</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ Ιερέας</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Θεραπευτής και προστάτης των πιστών</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ Θεραπευτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Δάσκαλος των θεραπευτικών τεχνών</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ Επίσκοπος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Αρχηγός των πιστών</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝ Μάντης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Βλέπης θείων οραμάτων</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝ Αρχιερέας</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Υπέρτατη φωνή του θείου</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Πορτοφολάς</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Γρήγορα δάχτυλα, πιο γρήγορη απόδραση</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Κλέφτης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Δάσκαλος της κρυψίνοιας και της κλοπής</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 Ανιχνευτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Μάτια και αυτιά των σκιών</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Δολοφόνος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Σιωπηλός δολοφόνος, θάνατος από σκιές</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 Διεισδυτής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ειδικός στο να μπαίνει και να βγαίνει απαρατήρητος</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Σκιόσπαθο</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Θανάσιμος πολεμιστής της νύχτας</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Αρχικατάσκοπος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ελεγκτής δικτύων πληροφοριών</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ένα με το ίδιο το σκοτάδι</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 Άρχοντας των Σκιών</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ανώτατος κυρίαρχος όλων των σκιών</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Πλανόδιος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Πώληση εμπορευμάτων στο δρόμο</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰 Έμπορος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Καθιερωμένος έμπορος με συνδέσεις</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰 Πωλητής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ειδικευμένος πωλητής αγαθών</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Τεχνίτης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Κατασκευαστής εκλεκτών ειδών</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰 Αλχημιστής</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Δάσκαλος των φίλτρων και των ελιξιρίων</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Έμπορος</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Επιτυχημένος ιδιοκτήτης επιχείρησης</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 Αρχιτεχνίτης</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ανώτατος τεχνίτης του βασιλείου</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 Πρίγκιπας του Εμπορίου</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Τα δικαιώματα του εμπορίου</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 Μεγιστάνας</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Δάσκαλος του εμπορίου και των συναλλαγών</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 Αρχηγός Συντεχνίας</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Αρχηγός της συντεχνίας των εμπόρων</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Προεπισκόπηση:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Προεπισκόπηση:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ Είστε ήδη κάτοχος</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ Είστε ήδη κάτοχος</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένο:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Συμπληρώστε πρώτα τα προαπαιτούμενα</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένο:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>δεν έχει απαιτήσεις!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>δεν έχει απαιτήσεις!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ Ξεκίνησε η εξέλιξη για</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% απαιτήσεις)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Ξεκίνησε η εξέλιξη για</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ Απέτυχε η έναρξη της εξέλιξης για</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Απέτυχε η έναρξη της εξέλιξης για</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Οι απαιτήσεις δεν έχουν ολοκληρωθεί για</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Οι απαιτήσεις δεν έχουν ολοκληρωθεί για</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 Συγχαρητήρια! Ξεκλείδωσες</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Συγχαρητήρια! Ξεκλείδωσες</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Η εξαργύρωση απέτυχε</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Η εξαργύρωση απέτυχε</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Απαιτείται Premium:</gradient> <gradient:#6b7280:#9ca3af>Η βαθμίδα</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>απαιτεί Premium για ξεκλείδωμα. Αναβαθμίστε για πρόσβαση σε όλες τις βαθμίδες!</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>Κάντε αριστερό κλικ για να ξεκινήσει η εξέλιξη</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>Κάντε δεξί κλικ για να δείτε τις απαιτήσεις</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Κάντε αριστερό κλικ για εξαργύρωση</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>Κάντε δεξί κλικ για να δείτε την πρόοδο</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΑΠΑΙΤΗΣΕΩΝ ΒΑΘΜΙΔΑΣ
+# ============================================
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% Απαιτήσεις</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>Απαίτηση #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>Δεν είναι δυνατή η φόρτωση των λεπτομερειών απαίτησης</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>Τύπος:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>Στοιχεία:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>Πρόοδος:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Λειτουργία Προεπισκόπησης</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>Κάντε κλικ για ολοκλήρωση!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>Δεξί κλικ για λεπτομέρειες</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ Ήδη ολοκληρώθηκε</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>Κάντε κλικ για λεπτομέρειες</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>Σφάλμα απαίτησης φόρτωσης</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Ολοκληρώθηκε</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Έτοιμο για Ολοκλήρωση</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Δεν Ξεκίνησε</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Σφάλμα</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 Προεπισκόπηση:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>έχει ήδη ολοκληρωθεί!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>δεν είναι έτοιμο να ολοκληρωθεί ακόμα!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 Συγχαρητήρια! Έχετε προχωρήσει σε</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ Ολοκληρώθηκε</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ Έτοιμο για Ολοκλήρωση</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>Δεν Ξεκίνησε</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Σφάλμα</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία επεξεργασίας κλικ!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ Απέτυχε η πρόοδος στο</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα των λεπτομερειών απαίτησης!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ Αυτή η απαίτηση δεν είναι διαθέσιμη αυτήν τη στιγμή!</gradient>"
+  decoration:
+    name: " "
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιστρέψετε</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Τύπος:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Πρόοδος:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>Κάντε κλικ για να δείτε λεπτομέρειες</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΛΕΠΤΟΜΕΡΕΙΩΝ ΑΠΑΙΤΗΣΗΣ ΒΑΘΜΙΔΑΣ
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 Λεπτομέρειες Απαιτήσεων</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιστρέψετε</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Δεν έχετε όλα τα απαραίτητα!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Τα στοιχεία υποβλήθηκαν με επιτυχία!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία υποβολής στοιχείων. Δοκιμάστε ξανά.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Παρουσιάστηκε σφάλμα κατά την υποβολή στοιχείων.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Αυτή η απαίτηση έχει ήδη ολοκληρωθεί!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Το επίπεδό σας:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Απαιτούμενο Επίπεδο:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Απαιτούμενα Επίπεδα:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Η απαίτηση επιπέδου ικανοποιήθηκε!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κερδίστε XP με εξόρυξη, σκοτώνοντας όχλους,</gradient>"
+      - "<gradient:#6b7280:#9ca3af>είδη τήξης και πολλά άλλα!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Ο χρόνος παιχνιδιού σας:</gradient> <gradient:#10b981:#34d399>%hours%η %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Απαιτούμενος χρόνος παιχνιδιού:</gradient> <gradient:#f59e0b:#fbbf24>%hours%η %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Χρόνος που απομένει:</gradient> <gradient:#f59e0b:#fbbf24>%hours%η %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Η απαίτηση χρόνου παιχνιδιού ικανοποιήθηκε!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Συνεχίστε να παίζετε στον διακομιστή</gradient>"
+      - "<gradient:#6b7280:#9ca3af>για να συγκεντρώσετε χρόνο παιχνιδιού!</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>Πρόοδος</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>Τρέχον:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Ολοκλήρωση:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>Παραμένων:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ Ολοκληρώθηκε το!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>Δεν Ξεκίνησε</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>Είδος %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ Ολοκληρώθηκε</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>Αυτή η απαίτηση έχει ήδη ολοκληρωθεί</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ Πλήρης Απαίτηση</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να ολοκληρώσετε αυτήν την απαίτηση</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Ανανέωση της προόδου</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να ανανεώσετε την πρόοδό σας</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>Στοιχεία Ολοκληρωμένα:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>Τύπος:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Πρόοδος:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 Περίληψη Απαιτήσεων</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 Συμβουλές</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 Περίληψη προόδου</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Συλλέξτε τα απαιτούμενα αντικείμενα</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και επιστρέψτε εδώ για να ολοκληρώσετε</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κερδίστε το απαιτούμενο νόμισμα</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Αποκτήστε επίπεδα εμπειρίας</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Παίξτε στον διακομιστή</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 Ακρο:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Συμπληρώστε την απαίτηση</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Προβολή περίληψης...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Προβολή συμβουλών...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 Είδος %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>Πρόοδος:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>Απών:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>Τύπος:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>Πρόοδος:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>Στοιχεία που λείπουν:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...και %item_amount% περισσότερο</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>Αναλυτικές Πληροφορίες</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ Ολοκληρώθηκε το!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ Έτοιμοι για ολοκλήρωση!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να τελειώσετε</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ Σε Εξέλιξη</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>Δεν Ξεκίνησε</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ Σφάλμα</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>Κατάσταση: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>Πρόοδος</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>Κάντε κλικ για ανανέωση</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 Επισκόπηση προόδου</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>Άγνωστη απαίτηση</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δεν είναι δυνατή η φόρτωση λεπτομερειών</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ Σφάλμα</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>Απέτυχε η φόρτωση της απαίτησης</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 Πρόοδος:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 Κατάσταση:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>έχει ήδη ολοκληρωθεί!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ Η πρόοδος ανανεώθηκε!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 Ανάλυση στοιχείων:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΕΠΙΚΗΡΥΞΕΩΝ
+# ============================================
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Σύστημα Επικηρύξεων</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Δημιουργία Επικήρυξης</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να δημιουργήσετε μια νέα επικήρυξη</gradient>"
+      - "<gradient:#6b7280:#9ca3af>σε άλλον παίκτη</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 Προβολή Επικηρύξεων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δείτε όλες τις ενεργές επικηρύξεις</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 Οι Επικηρύξεις Μου</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δείτε τις επικηρύξεις που έχετε δημιουργήσει</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 Κατάταξη</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κορυφαίοι κυνηγοί επικηρυγμένων</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 Επικήρυξη στον</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Στόχος:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Επίτροπος:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Δημιουργήθηκε:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>Κάντε κλικ για να δείτε λεπτομέρειες</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΔΗΜΙΟΥΡΓΙΑΣ ΕΠΙΚΗΡΥΞΗΣ
+# ============================================
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 Δημιουργία Επικήρυξης - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 Επιλογή Στόχου</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Στόχος: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιλέξετε έναν παίκτη</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Τρέχον: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 Δημιουργία Επικήρυξης</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να δημιουργήσετε μια νέα επικήρυξη</gradient>"
+      - "<gradient:#6b7280:#9ca3af>σε άλλον παίκτη</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 Προσθήκη Αντικειμένων Ανταμοιβής</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 Προσθήκη Αντικειμένων Ανταμοιβής</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να προσθέσετε ανταμοιβές αντικειμένων</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Τρέχοντα στοιχεία:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Επιλέξτε πρώτα έναν στόχο!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ Επιλέξτε πρώτα έναν στόχο!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 Προσθήκη Νομισματικών Ανταμοιβών</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 Προσθήκη Νομισματικών Ανταμοιβών</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να προσθέσετε ανταμοιβές νομίσματος</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Τρέχοντα νομίσματα:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ Επιλέξτε πρώτα έναν στόχο!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ Δημιουργία Επικήρυξης</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να δημιουργήσετε την επικήρυξη</gradient>"
+      - "<gradient:#6b7280:#9ca3af>με τις επιλεγμένες ανταμοιβές</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ Δεν επιλέχθηκε παίκτης!</gradient> <gradient:#6b7280:#9ca3af>Επιλέξτε πρώτα έναν στόχο.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Δεν προστέθηκαν ανταμοιβές!</gradient> <gradient:#6b7280:#9ca3af>Προσθέστε πρώτα μερικές ανταμοιβές.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ Δημιουργία επικήρυξης για</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Σφάλμα:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Η επικήρυξη δημιουργήθηκε με επιτυχία για</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 Τα αντικείμενα επιστράφηκαν!</gradient> <gradient:#6b7280:#9ca3af>Κάποια αντικείμενα έπεσαν στο έδαφος.</gradient>"
+  # Ένθετο κλειδί bounty_creation για κλήσεις i18n("bounty_creation.confirm.success")
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ Επεξεργασία επικήρυξης...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅ Η επικήρυξη δημιουργήθηκε με επιτυχία για</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Απέτυχε η επεξεργασία της επικήρυξης:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΑΝΤΑΜΟΙΒΩΝ ΕΠΙΚΗΡΥΞΗΣ
+# ============================================
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 Ανταμοιβές Επικήρυξης</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 Χωρίς ανταμοιβές</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Προσθέστε αντικείμενα για να δημιουργήσετε ανταμοιβές</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ Προσθήκη Αντικειμένου</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Τοποθετήστε αντικείμενα εδώ για προσθήκη ως ανταμοιβή</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 Στόχος: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Αυτό το μπόνους τοποθετείται</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰 Ανταμοιβή Επικήρυξης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Αυτό το στοιχείο θα δοθεί σε</gradient>"
+      - "<gradient:#6b7280:#9ca3af>όποιος διεκδικήσει το κέρδος</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Δεν προστέθηκαν νέα στοιχεία!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Ορισμένα στοιχεία απορρίφθηκαν καθώς το απόθεμά σας ήταν γεμάτο!</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΠΛΗΡΟΦΟΡΙΩΝ ΠΑΙΚΤΗ ΕΠΙΚΗΡΥΞΗΣ
+# ============================================
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 Επικήρυξη στον %target_name%</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Στόχος αυτής της επικήρυξης</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Περισσότερες πληροφορίες προσεχώς...</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 Προβολή Ανταμοιβών</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να δείτε όλες τις ανταμοιβές</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Συνολικές ανταμοιβές:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 Διαγραφή Επικήρυξης</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ Προειδοποίηση: Δεν είναι δυνατή η αναίρεση!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να διαγράψετε αυτή την επικήρυξη</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Επικήρυξη στον</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>έχει διαγραφεί!</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή την επικήρυξη;</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΔΙΑΧΕΙΡΙΣΗΣ
+# ============================================
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ Πίνακας Διαχείρισης</gradient>"
+  view_permissions:
+    name: "<gradient:#3b82f6:#60a5fa>🔑 Διαχείριση Δικαιωμάτων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Διαχείριση δικαιωμάτων προσθήκης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Σύνολο προσθηκών:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Συνολικά δικαιώματα:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα του διαχειριστή αδειών!</gradient>"
+  create_ranks:
+    name: "<gradient:#a855f7:#c084fc>⚔ Δημιουργία Ομάδων LuckPerms</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δημιουργήστε ομάδες LuckPerms από βαθμίδες</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ Το LuckPerms δεν έχει εγκατασταθεί!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Δεν βρέθηκαν τάξεις για τη δημιουργία ομάδων!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ Δημιουργήθηκαν</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>ομάδες LuckPerms!</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>Δεν δημιουργήθηκαν νέες ομάδες.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Η δημιουργία ομάδων LuckPerms απέτυχε!</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΔΙΚΑΙΩΜΑΤΩΝ ΔΙΑΧΕΙΡΙΣΗΣ
+# ============================================
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 Διαχείριση Δικαιωμάτων</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ Το πρόσθετο δεν βρέθηκε:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ Το LuckPerms δεν έχει εγκατασταθεί!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ Δεν υπάρχουν διαθέσιμα δικαιώματα για αυτό το πρόσθετο!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Προηγούμενα Πρόσθετα</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Επόμενες προσθήκες</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Πρόσθετο:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Άδειες:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>Κάντε αριστερό κλικ για να επιλέξετε</gradient>"
+        - "<gradient:#10b981:#34d399>Κάντε δεξί κλικ για να εκχωρήσετε όλα</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Αδειάζω</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Προηγούμενες άδειες</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Επόμενα δικαιώματα</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>Πρόσθετο:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>Κόμβος:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>Κάντε κλικ για να εκχωρήσετε αυτήν την άδεια</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Δεν έχει επιλεγεί πρόσθετο</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Επιλέξτε μια προσθήκη παραπάνω</gradient>"
+        - "<gradient:#6b7280:#9ca3af>για να δείτε τις άδειές του</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Αδειάζω</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ Αναθέτω %plugin_name% Άδειες</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Εκχωρήστε όλα τα δικαιώματα από</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% άδειες)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Καμία επιλογή</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 Επιλεγμένα: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Πρόσθετο:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Άδειες:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Σύνολο προσθηκών:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 Επισκόπηση</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Σύνολο προσθηκών:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Επιλέξτε μια προσθήκη για να δείτε τα δικαιώματα</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 Ανανέωση δεδομένων</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για ανανέωση των δεδομένων δικαιωμάτων</gradient>"
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ Εκκαθάριση επιλογής</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να αποεπιλέξετε την προσθήκη</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Αναθέτω %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Εκχωρήστε όλα τα δικαιώματα από την επιλεγμένη προσθήκη</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Εκχώρηση όλων των δικαιωμάτων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Εκχωρήστε δικαιώματα από όλους</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>πρόσθετα</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ Τα δεδομένα ανανεώθηκαν!</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ Ανατέθηκε</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>άδειες από</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 Επιλεγμένα:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ Ανατέθηκε</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>άδειες από</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ Ανατέθηκε:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>από</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>Η επιλογή διαγράφηκε</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ Όλα τα δικαιώματα εκχωρήθηκαν από</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+
+# ============================================
+# ΣΕΛΙΔΟΠΟΙΗΣΗ
+# ============================================
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Σελίδα %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Τρέχουσα σελίδα:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Σύνολο σελίδων:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Σελίδα %direction%</gradient>"
+
+# ============================================
+# ΑΝΤΙΚΕΙΜΕΝΑ ΚΕΦΑΛΙΔΑΣ
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Επιστροφή</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιστρέψετε</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ Συνέχεια</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να συνεχίσετε</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ Προηγούμενο</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Προηγούμενη σελίδα</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ Επόμενο</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Επόμενη σελίδα</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ Πάνω</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ανεβαίνω</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ Κάτω</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Βουλιάζω</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Ακύρωση</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ακύρωση ενέργειας</gradient>"
+
+
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ ΣΦΑΛΜΑΤΟΣ
+# ============================================
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Απαιτείται Premium!</gradient> <gradient:#6b7280:#9ca3af>Το χαρακτηριστικό</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>απαιτεί την έκδοση premium.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ Η επεξεργασία απέτυχε:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΠΑΙΚΤΗ ΜΕ ΣΕΛΙΔΟΠΟΙΗΣΗ
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Επιλογή Παίκτη</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# ΑΦΗΡΗΜΕΝΗ ΠΡΟΒΟΛΗ ΑΜΟΝΙΟΥ
+# ============================================
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ Εισαγωγή Τιμής</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ Εισαγωγή Τιμής</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Πληκτρολογήστε την εισαγωγή σας παραπάνω</gradient>"
+      - "<gradient:#6b7280:#9ca3af>και κάντε κλικ για επιβεβαίωση</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία επεξεργασίας εισόδου:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# ΠΡΟΒΟΛΗ ΕΠΙΒΕΒΑΙΩΣΗΣ
+# ============================================
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ Επιβεβαίωση Ενέργειας</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ Επιβεβαιώνω</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για επιβεβαίωση</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ Ακύρωση</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για ακύρωση</gradient>"
+
+# ============================================
+# ΠΕΡΙΟΡΙΣΜΟΙ ΔΩΡΕΑΝ ΕΚΔΟΣΗΣ
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Όριο δωρεάν έκδοσης:</gradient> <gradient:#6b7280:#9ca3af>Μπορείτε μόνο να ολοκληρώσετε</gradient> <gradient:#f59e0b:#fbbf24>1 δέντρο κατάταξης</gradient><gradient:#6b7280:#9ca3af>. Αναβάθμιση σε Premium για απεριόριστο!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Όριο δωρεάν έκδοσης:</gradient> <gradient:#6b7280:#9ca3af>Μπορείτε μόνο να προχωρήσετε</gradient> <gradient:#f59e0b:#fbbf24>3 βαθμίδες</gradient> <gradient:#6b7280:#9ca3af>ανά δέντρο. Αναβάθμιση σε Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ Όριο δωρεάν έκδοσης:</gradient> <gradient:#6b7280:#9ca3af>Μπορείτε μόνο να έχετε</gradient> <gradient:#f59e0b:#fbbf24>1 ενεργή διαδρομή κατάταξης</gradient><gradient:#6b7280:#9ca3af>. Αναβάθμιση σε Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Μόνο Προεπισκόπηση:</gradient> <gradient:#6b7280:#9ca3af>Αυτό το δέντρο κατάταξης είναι μόνο για προεπισκόπηση στη δωρεάν έκδοση. Κάντε αναβάθμιση σε Premium για ξεκλείδωμα!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Απαιτείται Premium:</gradient> <gradient:#6b7280:#9ca3af>Αυτή η κατάταξη απαιτεί Premium για ξεκλείδωμα.</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Δωρεάν Έκδοση</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Χρησιμοποιείτε τη δωρεάν έκδοση</gradient>"
+      - "<gradient:#6b7280:#9ca3af>με περιορισμένα χαρακτηριστικά.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Αναβάθμιση σε Premium για:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Απεριόριστα δέντρα κατάταξης</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Απεριόριστες βαθμίδες ανά δέντρο</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Πολλαπλές ενεργές διαδρομές</gradient>"
+
+# ============================================
+# ΜΗΝΥΜΑΤΑ PREMIUM ΕΚΔΟΣΗΣ
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premium:</gradient> <gradient:#6b7280:#9ca3af>Δεν ισχύουν περιορισμοί.</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ Premium Έκδοση</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>Όλες οι λειτουργίες ξεκλειδώθηκαν!</gradient>"
+
+# ============================================
+# ΠΡΟΒΟΛΗ ΛΕΠΤΟΜΕΡΕΙΩΝ ΑΝΤΙΚΕΙΜΕΝΟΥ ΑΠΑΙΤΗΣΗΣ (Απλοποιημένη)
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 Απαιτήσεις Αντικειμένων</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ Έχετε αυτό το στοιχείο</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ Λείπει αντικείμενο</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 Υποβολή Αντικειμένων</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>Όλα τα είδη έτοιμα!</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶ Κάντε κλικ για υποβολή</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 Υποβολή Αντικειμένων</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>Λείπουν απαιτούμενα στοιχεία</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Συλλέξτε πρώτα όλα τα αντικείμενα</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← Πίσω</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Επιστροφή στις απαιτήσεις</gradient>"
+
+
+# ============================================
+# ΜΕΤΑΦΡΑΣΕΙΣ ΑΝΤΑΜΟΙΒΩΝ
+# ============================================
+rank_requirements_journey_ui:
+
+  # ============================================
+  # ΠΡΟΒΟΛΗ ΔΙΑΔΡΟΜΗΣ ΑΠΑΙΤΗΣΕΩΝ ΒΑΘΜΙΔΑΣ
+  # ============================================
+  title: "<gradient:#a855f7:#c084fc>⚔ %rank_name% Απαιτήσεις</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  overall_progress:
+    name: "<gradient:#a855f7:#c084fc>📊 Συνολική Πρόοδος</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Ολοκλήρωση:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Απαιτήσεις:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Συμπληρώστε όλες τις απαιτήσεις</gradient>"
+      - "<gradient:#6b7280:#9ca3af>για να ξεκλειδώσετε αυτή την κατάταξη!</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>🏆 Διεκδίκηση Βαθμίδας!</gradient>"
+    lore:
+      - ""
+      - "<gradient:#10b981:#34d399>Όλες οι απαιτήσεις ολοκληρώθηκαν!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Κάντε κλικ για να διεκδικήσετε την κατάταξή σας</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒 Βαθμίδα Κλειδωμένη</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Συμπληρώστε όλες τις απαιτήσεις</gradient>"
+        - "<gradient:#6b7280:#9ca3af>για να ξεκλειδώσετε αυτή την κατάταξη.</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒 Κλειδωμένο</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Συμπληρώστε όλες τις απαιτήσεις</gradient>"
+        - "<gradient:#6b7280:#9ca3af>για να ξεκλειδώσετε αυτή την κατάταξη.</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← Πίσω</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Επιστροφή στην επισκόπηση κατάταξης</gradient>"
+  messages:
+    requirement_completed: "<gradient:#10b981:#34d399>✅ Η απαίτηση ολοκληρώθηκε!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 Όλες οι απαιτήσεις ολοκληρώθηκαν! Κάντε κλικ στο κουμπί αξίωσης για να λάβετε την κατάταξή σας!</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆 Συγχαρητήρια! Έχετε κατακτήσει την κατάταξη:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌ Αυτή η απαίτηση δεν είναι ακόμη έτοιμη να ολοκληρωθεί.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ Αυτή η απαίτηση έχει ήδη ολοκληρωθεί!</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Λειτουργία προεπισκόπησης - οι αλληλεπιδράσεις είναι απενεργοποιημένες</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>Χωρίς ανταμοιβές</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει διαμορφώσει ανταμοιβές</gradient>"
+      type_label: "<gray>Τύπος:</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>Αξία:</gray> <gold>%value%</gold>"
+    
+    # Περιγραφές τύπων ανταμοιβής
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>Λάβετε νομισματικές ανταμοιβές</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>Λάβετε ανταμοιβές αντικειμένων</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>Λάβετε πόντους εμπειρίας</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>Εκτελέστε ειδικές εντολές</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>Πολλαπλές ανταμοιβές συνδυασμένες</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>Επιλέξτε από πολλαπλές ανταμοιβές</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>Αποκτήστε ειδικά δικαιώματα</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>Τηλεμεταφορά σε τοποθεσία</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>Ξεκλειδώστε εφέ σωματιδίων</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>Λάβετε ένα εξαφανιζόμενο σεντούκι</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% περισσότερες ανταμοιβές...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 Προβολή όλων των ανταμοιβών</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να τα δείτε όλα %count% ανταμοιβές</gradient>"
+        - "<gradient:#6b7280:#9ca3af>για αυτήν την κατάταξη αναλυτικά</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>Λεπτομερής προβολή ανταμοιβών σύντομα!</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 Χωρίς ανταμοιβές</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει ανταμοιβές</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει διαμορφώσει ανταμοιβές.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 Ανταμοιβές κατάταξης</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>θα λάβεις %count% ανταμοιβές</gradient>"
+      - "<gradient:#6b7280:#9ca3af>όταν διεκδικείς αυτόν τον βαθμό</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>Χωρίς ανταμοιβές</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει διαμορφώσει ανταμοιβές</gradient>"
+    type_label: "<gray>Τύπος:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>Αξία:</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Ξεκλειδώσατε το προνόμιο:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # Περιγραφές τύπων ανταμοιβής
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>Λάβετε νομισματικές ανταμοιβές</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>Λάβετε ανταμοιβές αντικειμένων</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>Λάβετε πόντους εμπειρίας</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>Εκτελέστε ειδικές εντολές</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>Πολλαπλές ανταμοιβές συνδυασμένες</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>Επιλέξτε από πολλαπλές ανταμοιβές</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>Αποκτήστε ειδικά δικαιώματα</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>Τηλεμεταφορά σε τοποθεσία</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>Ξεκλειδώστε εφέ σωματιδίων</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>Λάβετε ένα εξαφανιζόμενο σεντούκι</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% περισσότερες ανταμοιβές...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 Προβολή όλων των ανταμοιβών</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να τα δείτε όλα %count% ανταμοιβές</gradient>"
+      - "<gradient:#6b7280:#9ca3af>για αυτήν την κατάταξη αναλυτικά</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>Λεπτομερής προβολή ανταμοιβών σύντομα!</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 Χωρίς ανταμοιβές</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει ανταμοιβές</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη δεν έχει διαμορφώσει ανταμοιβές.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 Ανταμοιβές κατάταξης</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>θα λάβεις %count% ανταμοιβές</gradient>"
+    - "<gradient:#6b7280:#9ca3af>όταν διεκδικείς αυτόν τον βαθμό</gradient>"
+
+
+# ============================================
+# ΠΡΟΒΟΛΗ ΛΕΠΤΟΜΕΡΕΙΩΝ ΑΝΤΑΜΟΙΒΩΝ ΒΑΘΜΙΔΑΣ
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>Ανταμοιβές: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Αυτή η κατάταξη έχει %count% ανταμοιβές</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ σε οποιαδήποτε ανταμοιβή για λεπτομέρειες</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΠΡΟΝΟΜΙΩΝ
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ Προνόμια</gradient>"
+
+# ============================================
+# ΔΙΕΠΑΦΗ ΛΕΠΤΟΜΕΡΕΙΩΝ ΠΡΟΝΟΜΙΟΥ
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# ΜΕΤΑΦΡΑΣΕΙΣ ΠΡΟΝΟΜΙΩΝ
+# ============================================
+perk:
+  # Προνόμια Ψαρέματος
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>Ταχύτερο Ψάρεμα</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Πιάστε ψάρια πιο γρήγορα με βελτιωμένα ποσοστά ψαρέματος</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>Ενίσχυση Εμπειρίας Ψαρέματος</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Κερδίστε μπόνους XP όταν πιάνετε ψάρια</gradient>"
+  
+  # Προνόμια Φίλτρων
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>Ενίσχυση Φίλτρων</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Πιθανότητα να ενισχυθούν τα αποτελέσματα του φίλτρου όταν καταναλώνονται</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>Διάρκεια Φίλτρων</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Πιθανότητα παράτασης της διάρκειας του φίλτρου όταν καταναλώνεται</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>Επιστροφή Φίλτρου</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Ευκαιρία να πάρετε πίσω το φίλτρο σας αφού το πιείτε</gradient>"
+  
+  # Μηνύματα Προνομίων
+  messages:
+    # Ξεκλείδωμα/Ενεργοποίηση/Απενεργοποίηση
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ Το προνόμιο ξεκλειδώθηκε!</gradient> <gradient:#6b7280:#9ca3af>Ξεκλείδωσες</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Ξεκλειδώθηκε με επιτυχία και ενεργοποιήθηκε το προνόμιο:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Αποτυχία ξεκλειδώματος προνομίου. Δοκιμάστε ξανά.</gradient>"
+      error: "<gradient:#ef4444:#f87171>Παρουσιάστηκε σφάλμα κατά το ξεκλείδωμα του προνομίου.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>Δεν πληροίτε τις προϋποθέσεις για να ξεκλειδώσετε αυτό το προνόμιο!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>Το προνόμιο ενεργοποιήθηκε:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Αποτυχία ενεργοποίησης προνομίου:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>Έχετε συμπληρώσει τον μέγιστο αριθμό των ενεργοποιημένων προνομίων (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>Το προνόμιο απενεργοποιήθηκε:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Αποτυχία απενεργοποίησης προνομίου:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # Χρόνος Επαναφόρτισης
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>Αυτό το προνόμιο βρίσκεται σε χρόνο επαναφόρτισης για</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Το προνόμιο είναι έτοιμο για χρήση!</gradient>"
+    
+    # Ενεργοποιήσεις Εφέ
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Ενισχυμένο φίλτρο!</gradient> <gradient:#6b7280:#9ca3af>Τα εφέ ενισχύθηκαν</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Η διάρκεια του φίλτρου παρατάθηκε!</gradient> <gradient:#6b7280:#9ca3af>Διαρκεί περισσότερο</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 Το φίλτρο αποθηκεύτηκε!</gradient> <gradient:#6b7280:#9ca3af>Επιστράφηκε στο απόθεμα</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Το Ταχύτερο Ψάρεμα είναι ενεργό!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% Εμπειρία Ψαρέματος!</gradient>"
+  
+  # Στοιχεία Διεπαφής
+  ui:
+    header:
+      type_label: "<gray>Τύπος: <white>%type%</white></gray>"
+      category_label: "<gray>Κατηγορία: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>Χωρίς Απαιτήσεις</green>"
+      no_requirements_lore: "<gray>Αυτό το προνόμιο δεν έχει απαιτήσεις ξεκλειδώματος</gray>"
+    
+    rewards:
+      title: "<gold>Ξεκλείδωμα Ανταμοιβής</gold>"
+      no_rewards: "<gray>Χωρίς ανταμοιβές ξεκλειδώματος</gray>"
+      no_rewards_lore: "<gray>Αυτό το προνόμιο δεν έχει ανταμοιβές ξεκλειδώματος</gray>"
+      type_label: "<gray>Τύπος: <white>%type%</white></gray>"
+      value_label: "<gray>Αξία: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>Κατάσταση Προνομίου</white>"
+      locked: "<red>✖ Κλειδωμένο</red>"
+      locked_hint: "<gray>Ολοκληρώστε τις απαιτήσεις για ξεκλείδωμα</gray>"
+      active: "<green>✓ Ενεργός</green>"
+      enabled: "<yellow>○ Ενεργοποιημένο</yellow>"
+      disabled: "<gray>○ Απενεργοποιημένο</gray>"
+      enabled_count: "<gray>Ενεργοποιημένα προνόμια: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Επαναφόρτιση: <gold>%time%</gold></gray>"
+      activations_label: "<gray>Ενεργοποιήσεις: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>Ξεκλειδώστε το Προνόμιο</white>"
+        hint: "<green>Κάντε κλικ για να ξεκλειδώσετε αυτό το προνόμιο!</green>"
+      enable:
+        title: "<white>Ενεργοποιήστε το Προνόμιο</white>"
+        hint: "<green>Κάντε κλικ για να ενεργοποιήσετε αυτό το προνόμιο</green>"
+        limit_reached: "<red>Συμπληρώθηκαν τα μέγιστα ενεργοποιημένα προνόμια</red>"
+      disable:
+        title: "<white>Απενεργοποιήστε το Προνόμιο</white>"
+        hint: "<yellow>Κάντε κλικ για να απενεργοποιήσετε αυτό το προνόμιο</yellow>"
+  
+  # Υπάρχοντα προνόμια (για αναφορά - προσθέστε αν λείπουν)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>Πτήση</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Αποκτήστε την ικανότητα να πετάτε</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>Λάμψη</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Εφαρμόστε ένα λαμπερό εφέ στον εαυτό σας</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>Βιασύνη</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Το δικό μου και σκάβω πιο γρήγορα</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>Ενίσχυση Άλματος</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Πήδα ψηλότερα από το κανονικό</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>Διατήρηση Εμπειρίας</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Κρατήστε το XP σας όταν πεθάνετε</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>Διατήρηση Αποθέματος</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Κρατήστε τα αντικείμενά σας όταν πεθάνετε</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>Νυχτερινή Όραση</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Δείτε καθαρά στο σκοτάδι</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>Χωρίς Ζημιά από Πτώση</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Μην κάνετε ζημιά από πτώση</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>Αντοχή</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Πάρτε λιγότερη ζημιά από όλες τις πηγές</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>Κορεσμός</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Μην πεινάς ποτέ</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>Ταχύτητα</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Κινηθείτε πιο γρήγορα από το κανονικό</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>Δύναμη</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Προκαλέστε περισσότερη ζημιά στη μάχη</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>Αντοχή στη Φωτιά</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Ανοσία στη φωτιά και τη λάβα</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>Διπλή Εμπειρία</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Αποκτήστε διπλά XP από όλες τις πηγές</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>Κρίσιμο Χτύπημα</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Ευκαιρία να προκληθεί κρίσιμη ζημιά</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>Θεραπεία Μάχης</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Θεραπεύστε όταν προκαλείτε ζημιά σε εχθρούς</gradient>"

@@ -1,0 +1,24 @@
+# Danske oversaettelser for RCore Central Integration
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Brug: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Forbinder til RaindropCentral...</yellow>"
+  success: "<green>Forbundet til RaindropCentral!</green> <gray>Serveren sender nu heartbeats.</gray>"
+  error:
+    invalid_key: "<red>Ugyldigt API-noegleformat. API-noegler skal vaere 32-128 alfanumeriske tegn.</red>"
+    uuid_mismatch: "<red>Denne API-noegle tilhoerer en anden Minecraft-konto.</red>"
+    already_connected: "<yellow>Serveren er allerede forbundet.</yellow> <gray>Brug /rcdisconnect foerst.</gray>"
+    network: "<red>Netvaerksfejl: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Afbryder forbindelsen til RaindropCentral...</yellow>"
+  success: "<green>Forbindelsen til RaindropCentral er afbrudt.</green>"
+  error:
+    not_connected: "<red>Serveren er ikke forbundet til RaindropCentral.</red>"
+    failed: "<red>Kunne ikke afbryde forbindelsen. Proev igen.</red>"
+    network: "<red>Netvaerksfejl: %error%</red>"
+
+general:
+  no_permission: "<red>Du har ikke tilladelse til at bruge denne kommando.</red>"

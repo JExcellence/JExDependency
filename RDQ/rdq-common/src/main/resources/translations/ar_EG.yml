@@ -1,0 +1,1752 @@
+# ملف ترجمة RDQ - الإنجليزية (الولايات المتحدة)
+# تنسيق MiniMessage مع التدرجات والتصميم
+# تستخدم العناصر النائبة تنسيق %placeholder%
+
+# ============================================
+# البادئة العالمية
+# ============================================
+prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
+
+# ============================================
+# مفاتيح مستوى الجذر (المستخدمة من خلال مكالمات I18n.Builder المباشرة)
+# ============================================
+pseudo:
+  name: "<gradient:#6b7280:#9ca3af>📦 لا توجد مكافآت</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>إضافة عناصر لإنشاء المكافآت</gradient>"
+
+input_slot:
+  name: "<gradient:#10b981:#34d399>➕ إضافة عنصر</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>ضع العناصر هنا لإضافتها كمكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط كليك شمال لوضع العنصر</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط كليك يمين لإزالة العنصر</gradient>"
+
+# ============================================
+# شجرة الترتيب تعرض الأسماء والأوصاف
+# ============================================
+tree:
+  ranger:
+    name: "<gradient:#10b981:#34d399>🏹 كشّاف</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اتقن فن الرماية والتتبع</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابقى واحد مع الطبيعة</gradient>"
+  warrior:
+    name: "<gradient:#ef4444:#f87171>⚔ المحارب</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اتقن فن القتال</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابقى مقاتل أسطوري</gradient>"
+  mage:
+    name: "<gradient:#a855f7:#c084fc>✨ ساحر</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>سخّر قوة السحر</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابقى سيد الفنون الغامضة</gradient>"
+  rogue:
+    name: "<gradient:#6b7280:#9ca3af>🗡 مارق</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اتقن التخفي والمكر</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضرب من بين الظلال</gradient>"
+  cleric:
+    name: "<gradient:#f59e0b:#fbbf24>✝ كاهن</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>استمد القوة الإلهية</gradient>"
+      - "<gradient:#6b7280:#9ca3af>عالِج واحمِ حلفاءك</gradient>"
+  merchant:
+    name: "<gradient:#10b981:#34d399>💰 تاجر</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اتقن فن التجارة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابنِ ثروتك</gradient>"
+
+# ============================================
+# رتبة عرض الأسماء والأوصاف
+# ============================================
+rank:
+
+  # ============================================
+  # رسائل الترتيب
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 ترقية رتبة!</gradient> <gradient:#6b7280:#9ca3af>لقد أكملت جميع المتطلبات الخاصة بـ</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>استخدم قائمة الرتب علشان تستلم ترقية رتبتك!</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>بدون رتبة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اختار مسار رتبة علشان تبدأ</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>بدون رتبة</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>الرتبة الافتراضية</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>مافيش رتبة متحددة</gradient>"
+  # صفوف شجرة الحارس
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹 صياد</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>متتبع مبتدئ بيتعلم طرق البرية</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 رامي سهام</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ماهر بالقوس وقاتل من بعيد</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 المتتبع</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>خبير في إيجاد الفريسة وتتبعها</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 رامي محترف</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>رامي دقيق بإصابة قاتلة</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 مستكشف الدروب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>مستكشف بارع للأراضي المجهولة</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 قناص</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>قناص النخبة، طلقة واحدة تقتل</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 سيد الغابة</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>سيد البرية وواحد مع الطبيعة</gradient>"
+  # صفوف شجرة المحارب
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>مجند</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>محارب جديد لسه بادئ رحلته</gradient>"
+        - "<gradient:#6b7280:#9ca3af>اتعلم أساسيات القتال</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>جندي</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>تدرب على فن القتال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>جاهز للمعركة</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>محارب مخضرم</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>محارب مخضرم من المعارك</gradient>"
+        - "<gradient:#6b7280:#9ca3af>اختار مسار تخصصك</gradient>"
+    # فرع التخصص 1: الهائج (الهجوم)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>هائج</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>طريق الغضب</gradient>"
+        - "<gradient:#6b7280:#9ca3af>طلّع هجمات مدمرة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ضحّي بالدفاع علشان قوة خام</gradient>"
+    # فرع التخصص 2: الحارس (الدفاعي)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>حارس</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>طريق الحماية</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ابقى درع مايتكسرش</gradient>"
+        - "<gradient:#6b7280:#9ca3af>احمِ حلفاءك مهما كان الثمن</gradient>"
+    # فرع التخصص 3: المصارع (متوازن)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>مصارع</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>طريق المجد</gradient>"
+        - "<gradient:#6b7280:#9ca3af>سيد قتال الحلبة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>وازن بين الهجوم والدفاع</gradient>"
+    # الرتب النهائية
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>سيد حرب الغضب</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>الهائج النهائي</gradient>"
+        - "<gradient:#6b7280:#9ca3af>قوة تدمير مالهاش إيقاف</gradient>"
+        - "<gradient:#6b7280:#9ca3af>تجسيد الخوف في ساحة القتال</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>سيد حرب الدرع</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>الحارس النهائي</gradient>"
+        - "<gradient:#6b7280:#9ca3af>حصن ثابت وحامٍ أبدي</gradient>"
+        - "<gradient:#6b7280:#9ca3af>محدش هيعدّي طول ما إنت واقف</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>سيد حرب الحلبة</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>المصارع النهائي</gradient>"
+        - "<gradient:#6b7280:#9ca3af>بطل الأبطال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>أسطورة الحلبة</gradient>"
+    # الرتب القديمة (للتوافق مع الإصدارات السابقة)
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>فارس</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>محارب شريف من المملكة</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>بطل</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>مقاتل أسطوري الكل بيخاف منه</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>سيد حرب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>سيد الحرب وقائد الجيوش</gradient>"
+  # رتب شجرة الساحر
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ متدرب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>تعلم أساسيات السحر</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ ماهر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>تنمو في القوة السحرية</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ ساحر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ماجستير في الفنون الغامضة</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨ كبير السحرة</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>السيد الأعلى لكل السحر</gradient>"
+  # رتب شجرة المارق
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 النشال</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 لص</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 كشّاف</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>عيون وآذان الظلال</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 قاتل مأجور</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 متسلل</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 نصل الظل</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>محارب الليل القاتل</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 سيد الجواسيس</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>مراقب شبكات المعلومات</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 سيد الظل</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 سيد الظلال</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>الحاكم الأعلى لجميع الظلال</gradient>"
+  # رتب شجرة رجل الدين
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ مساعد</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>خادم مخلص للإله</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ المحب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>المتبع المخلص للطريق الإلهي</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ كاهن</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>شافي وحامي المؤمنين</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ معالج</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>خبير في فنون التعافي</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ الأسقف</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>زعيم المؤمنين</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ أوراكل</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>عراف الرؤى الإلهية</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ رئيس الكهنة</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>الصوت الإلهي الأعلى</gradient>"
+  # صفوف شجرة التاجر
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>بيع السلع في الشارع</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 تاجر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>تاجر مؤسس وله اتصالات</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 بائع</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>بائع ماهر للبضائع</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 صانع</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>صانع الأواني الجميلة</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰 الخيميائي</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>سيد الجرعات والإكسير</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 تاجر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>صاحب عمل ناجح</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 حرفي ماهر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>الحرفي الأعلى للمملكة</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 أمير التجار</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ملوكية التجارة</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 قطب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>سيد التجارة والأعمال</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 سيد النقابة</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>زعيم نقابة التجار</gradient>"
+
+# ============================================
+# رسائل مستمعي المكافآت
+# ============================================
+bounty_listener:
+  bounty_active:
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>لديك مكافأة نشطة على رأسك!</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰 قيمة المكافأة:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ تنتهي صلاحيته في:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 بتكليف من:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+  bounty_claimed:
+    title: "<gradient:#10b981:#34d399>🎉 تم استلام الباونتي! 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>لقد نجحت في استلام الباونتي على</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>حصتك:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>شخص ما</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>استلم الباونتي على</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% اللاعبين</gradient> <gradient:#a855f7:#c084fc>استلم الباونتي على</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+
+# ============================================
+# رسائل إنشاء المكافأة
+# ============================================
+bounty_creation:
+  confirm:
+    success: "<gradient:#10b981:#34d399>✅ تم إنشاء المكافأة بنجاح</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ فشل في معالجة المكافأة:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ جاري معالجة الباونتي...</gradient>"
+
+# ============================================
+# رسائل تقدم الترتيب
+# ============================================
+rank_progression:
+  started: "<gradient:#10b981:#34d399>✅ بدأ التقدم للرتبة</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 عرض متطلبات</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ المتطلبات غير مكتملة</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%٪ مكتمل)</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ المتطلبات غير مكتملة:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>ليس لديه متطلبات!</gradient>"
+
+# ============================================
+# ترتيب رسائل النقر
+# ============================================
+rank_click:
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 وضع المعاينة:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  owned: "<gradient:#10b981:#34d399>✅ تملك</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 مغلق:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- أكمل المتطلبات أولاً</gradient>"
+
+# ============================================
+# رسائل أوامر RQ
+# ============================================
+rq:
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms مش متثبت!</gradient> <gradient:#6b7280:#9ca3af>تتطلب هذه الميزة LuckPerms.</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 مساعدة RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - فتح القائمة الرئيسية</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - عرض الرتب</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - عرض المكافآت</gradient>"
+
+# ============================================
+# نظرة عامة رئيسية على واجهة المستخدم
+# ============================================
+main_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  admin_overview:
+    name: "<gradient:#ef4444:#f87171>⚙ لوحة الإدارة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>الوصول إلى الأدوات الإدارية</gradient>"
+      - "<gradient:#6b7280:#9ca3af>وخيارات التكوين</gradient>"
+  bounty_overview:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 باونتي</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عرض وإدارة المكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اصطياد اللاعبين للحصول على المكافآت!</gradient>"
+  perk_overview:
+    name: "<gradient:#10b981:#34d399>✨ الامتيازات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عرض الامتيازات المتاحة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>والقدرات الخاصة</gradient>"
+  quest_overview:
+    name: "<gradient:#3b82f6:#60a5fa>📜 أسئلة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عرض المهام المتاحة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>وتتبع التقدم المحرز الخاص بك</gradient>"
+  rank_overview:
+    name: "<gradient:#a855f7:#c084fc>⚔ الرتب</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عرض تقدم الرتبة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>وفتح قدرات جديدة</gradient>"
+
+# ============================================
+# ترتيب واجهة المستخدم الرئيسية
+# ============================================
+rank_main_ui:
+  title: "<gradient:#a855f7:#c084fc>⚔ نظام الرتب</gradient>"
+  rank_tree:
+    name: "<gradient:#f59e0b:#fbbf24>🌳 ترتيب الأشجار</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>تصفح أشجار الرتبة المتاحة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>واختر طريقك</gradient>"
+
+
+# ============================================
+# واجهة مستخدم نظرة عامة على شجرة الترتيب
+# ============================================
+rank_tree_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🌳 ترتيب الأشجار</gradient>"
+  tree:
+    ranger:
+      name: "<gradient:#10b981:#34d399>🏹 كشّاف</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اتقن فن الرماية والتتبع</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ابقى واحد مع الطبيعة</gradient>"
+    warrior:
+      name: "<gradient:#ef4444:#f87171>⚔ المحارب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اتقن فن القتال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ابقى مقاتل أسطوري</gradient>"
+    mage:
+      name: "<gradient:#a855f7:#c084fc>✨ ساحر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>سخّر قوة السحر</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ابقى سيد الفنون الغامضة</gradient>"
+    rogue:
+      name: "<gradient:#6b7280:#9ca3af>🗡 مارق</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اتقن التخفي والمكر</gradient>"
+        - "<gradient:#6b7280:#9ca3af>اضرب من بين الظلال</gradient>"
+    cleric:
+      name: "<gradient:#f59e0b:#fbbf24>✝ كاهن</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>استمد القوة الإلهية</gradient>"
+        - "<gradient:#6b7280:#9ca3af>عالِج واحمِ حلفاءك</gradient>"
+    merchant:
+      name: "<gradient:#10b981:#34d399>💰 تاجر</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اتقن فن التجارة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ابنِ ثروتك</gradient>"
+  click:
+    preview_rank_path:
+      - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
+      - "<gradient:#10b981:#34d399>اضغط كليك يمين للتحديد</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 شجرة الرتب هذه مقفلة</gradient>"
+    locked.required:
+      - "<gradient:#6b7280:#9ca3af>مكتمل %minimum_rank_paths_to_be_absolved_needed% رتبة الأشجار أولا</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>المتطلبات الأساسية:</gradient>"
+    rank_path_locked: "<gradient:#ef4444:#f87171>🔒 مسار الرتبة هذا مغلق!</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ نشط حاليا</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>اضغط كليك يمين للمتابعة</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 تم التحديد سابقاً</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>اضغط كليك يمين لإعادة التنشيط</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ تم الوصول إلى الحد الأقصى لمسارات الرتب النشطة!</gradient> <gradient:#6b7280:#9ca3af>(الأعلى: %maximum_rank_path_amount%)</gradient>"
+  create_rank_tree:
+    name: "<gradient:#10b981:#34d399>➕ إنشاء شجرة الرتب</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>إنشاء شجرة رتب جديدة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(المشرف فقط)</gradient>"
+  select:
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ لم يتم العثور على رتبة البداية لهذا المسار!</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ مسار الترتيب المحدد:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(رتبة البداية: %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ فشل في تحديد مسار الرتبة!</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ مسار الترتيب المُعاد تنشيطه:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ فشل إعادة تنشيط مسار الرتبة!</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ سيتم إنشاء شجرة الترتيب قريبًا!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ نسخة مجانية - للمعاينة فقط</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>شجرة الرتب هذه متاحة للمعاينة فقط.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>الترقية إلى Premium لفتح!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium مطلوب:</gradient> <gradient:#6b7280:#9ca3af>الترقية إلى Premium لتحديد أشجار رتبة إضافية!</gradient>"
+
+# ============================================
+# واجهة المستخدم نظرة عامة على مسار الترتيب
+# ============================================
+rank_path_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 المعاينة: </gradient>"
+  unknown_tree: "<gradient:#6b7280:#9ca3af>شجرة غير معروفة</gradient>"
+  nav:
+    left: "<gradient:#3b82f6:#60a5fa>⬅ انتقل إلى اليسار</gradient>"
+    right: "<gradient:#3b82f6:#60a5fa>➡ انتقل إلى اليمين</gradient>"
+    up: "<gradient:#3b82f6:#60a5fa>⬆ انتقل لأعلى</gradient>"
+    down: "<gradient:#3b82f6:#60a5fa>⬇ انتقل للأسفل</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>انتقل %direction%</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+  center_view:
+    name: "<gradient:#3b82f6:#60a5fa>🎯 إطلالة على المركز</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لتوسيط العرض</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>عرض المركز</gradient>"
+  preview_mode:
+    name: "<gradient:#3b82f6:#60a5fa>👁 وضع المعاينة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>أنت تشاهد في وضع المعاينة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لن يتم حفظ التغييرات</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>وضع المعاينة</gradient>"
+  background:
+    name: " "
+  error:
+    render_rank: "<gradient:#ef4444:#f87171>❌ خطأ في عرض الترتيب</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ لا توجد شجرة رتبة</gradient>"
+    no_rank_tree_lore:
+      - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل شجرة الترتيب</gradient>"
+    critical: "<gradient:#ef4444:#f87171>❌ خطأ فادح</gradient>"
+    critical_lore:
+      - "<gradient:#6b7280:#9ca3af>حدث خطأ أثناء العرض</gradient>"
+    critical.lore:
+      - "<gradient:#6b7280:#9ca3af>حدث خطأ أثناء العرض</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌فشل في فتح متطلبات</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ حدث خطأ. يرجى المحاولة مرة أخرى.</gradient>"
+  status:
+    owned: "<gradient:#10b981:#34d399>✅ مملوكة</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 متوفر</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒مقفل</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ غير معروف</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium مطلوب</gradient>"
+  connection:
+    from: "<gradient:#6b7280:#9ca3af>من:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>ل:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>اتصال</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ اتصال مملوك</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 الاتصال متاح</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 اتصال مغلق</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ مملوكة</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 متوفر</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒مقفل</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>اضغط لعرض المتطلبات</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>اضغط للتقدم</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>لا يوجد وصف متاح ل %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>الطبقة:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>وزن:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹 صياد</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>متتبع مبتدئ بيتعلم طرق البرية</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 رامي سهام</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>ماهر بالقوس وقاتل من بعيد</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍 المتتبع</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>خبير في إيجاد الفريسة وتتبعها</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯 رامي محترف</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>رامي دقيق بإصابة قاتلة</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 مستكشف الدروب</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>مستكشف بارع للأراضي المجهولة</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯 قناص</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>قناص النخبة، طلقة واحدة تقتل</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 سيد الغابة</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>سيد البرية وواحد مع الطبيعة</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ تجنيد</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>محارب جديد لسه بادئ رحلته</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ جندي</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>تدرب على فن القتال</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ فارس</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>محارب شريف من المملكة</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ بطل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>مقاتل أسطوري الكل بيخاف منه</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ أمير الحرب</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>سيد الحرب وقائد الجيوش</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨ متدرب</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>تعلم أساسيات السحر</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨ ماهر</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>تنمو في القوة السحرية</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ ساحر</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>ماجستير في الفنون الغامضة</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨ كبير السحرة</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>السيد الأعلى لكل السحر</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 النشال</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
+
+# ============================================
+# الترجمات المطلوبة
+# ============================================
+requirement:
+
+  # ============================================
+  # أنواع المتطلبات (الأسماء المترجمة)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 مجموعة العناصر</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 العملة</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨ مستوى الخبرة</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ وقت اللعب</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 إذن</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍الموقع</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ متطلبات القتل</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 صياغة</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ غير معروف</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ مكتمل</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ جاهز للإنجاز</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 قيد التقدم</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ لم يبدأ</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>◀ اضغط كليك شمال لإكمال!</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>◀ اضغط كليك يمين للحصول على التفاصيل</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 إرسال العناصر</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>اكتملت بالفعل</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>المهام:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...و %count% أكثر</gradient>"
+
+  # أوصاف متطلبات العملة
+  currency:
+    coins: "عملات معدنية"
+    gems: "الأحجار الكريمة"
+    tokens: "الرموز"
+    money: "مال"
+    dollars: "دولار"
+    credits: "الاعتمادات"
+  
+  # قوالب معاينة المهام
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "يحتاج %amount% %currency%"
+      have: "يملك %current%/%required% %currency%"
+    item:
+      need: "يحتاج %quantity%س %item%"
+    experience:
+      need: "الوصول إلى المستوى %level%"
+      points: "يصل %points% نقاط الخبرة"
+    playtime:
+      need: "العب من أجل %time%"
+    permission:
+      need: "يتطلب إذن: %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 لص</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 قاتل مأجور</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 متسلل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 سيد الظل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ مساعد</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>خادم مخلص للإله</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ المحب</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>المتبع المخلص للطريق الإلهي</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ كاهن</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>شافي وحامي المؤمنين</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ معالج</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>خبير في فنون التعافي</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ الأسقف</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>زعيم المؤمنين</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝ أوراكل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>عراف الرؤى الإلهية</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝ رئيس الكهنة</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>الصوت الإلهي الأعلى</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>� النشل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 لص</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 كشّاف</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>عيون وآذان الظلال</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 قاتل مأجور</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 متسلل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 نصل الظل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>محارب الليل القاتل</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 سيد الجواسيس</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>مراقب شبكات المعلومات</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 سيد الظل</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 سيد الظلال</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>الحاكم الأعلى لجميع الظلال</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>بيع السلع في الشارع</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰 تاجر</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>تاجر مؤسس وله اتصالات</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰 بائع</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>بائع ماهر للبضائع</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 صانع</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>صانع الأواني الجميلة</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰 الخيميائي</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>سيد الجرعات والإكسير</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰 تاجر</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>صاحب عمل ناجح</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 حرفي ماهر</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>الحرفي الأعلى للمملكة</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 أمير التجار</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>ملوكية التجارة</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 قطب</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>سيد التجارة والأعمال</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 سيد النقابة</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>زعيم نقابة التجار</gradient>"
+  messages:
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 المعاينة:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 المعاينة:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ أنت تملك بالفعل</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ أنت تملك بالفعل</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 مغلق:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- أكمل المتطلبات أولاً</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 مغلق:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>ليس لديه متطلبات!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>ليس لديه متطلبات!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ بدأ التقدم ل</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% متطلبات)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ بدأ التقدم ل</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ فشل في بدء التقدم لـ</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ فشل في بدء التقدم لـ</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ المتطلبات لم تكتمل</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ المتطلبات لم تكتمل</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉 تهانينا! فتحت</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 تهانينا! فتحت</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ فشل في الاسترداد</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ فشل في الاسترداد</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premium مطلوب:</gradient> <gradient:#6b7280:#9ca3af>الرتبة</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>يتطلب Premium لفتح. الترقية للوصول إلى جميع الرتب!</gradient>"
+  click:
+    left_start: "<gradient:#10b981:#34d399>اضغط كليك شمال لبدء التقدم</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>اضغط كليك يمين لعرض المتطلبات</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>اضغط كليك شمال للاسترداد</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>اضغط كليك يمين لعرض التقدم</gradient>"
+  fallback:
+    rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+
+# ============================================
+# نظرة عامة على متطلبات الرتبة واجهة المستخدم
+# ============================================
+rank_requirements_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 %rank_name% متطلبات</gradient>"
+  requirement:
+    fallback: "<gradient:#6b7280:#9ca3af>متطلبات #%index%</gradient>"
+    fallback_lore:
+      - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل تفاصيل المتطلبات</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>أغراض:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>تقدم:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 وضع المعاينة</gradient>"
+    click:
+      complete: "<gradient:#10b981:#34d399>اضغط لإكمال!</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>اضغط كليك يمين للحصول على التفاصيل</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ اكتملت بالفعل</gradient>"
+      for_details: "<gradient:#6b7280:#9ca3af>اضغط للحصول على التفاصيل</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>خطأ في متطلبات التحميل</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ مكتمل</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ جاهز للإنجاز</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>لم يبدأ</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
+    status:
+      completed: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ %requirement_name%</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ %requirement_name%</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
+  messages:
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 المعاينة:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>اكتمل بالفعل!</gradient>"
+    not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>ليست جاهزة للاكتمال بعد!</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 تهانينا! لقد تقدمت إلى</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    info:
+      completed: "<gradient:#10b981:#34d399>✅ مكتمل</gradient>"
+      ready_to_complete: "<gradient:#10b981:#34d399>✅ جاهز للإنجاز</gradient>"
+      in_progress: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+      not_started: "<gradient:#6b7280:#9ca3af>لم يبدأ</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
+  error:
+    click_failed: "<gradient:#ef4444:#f87171>❌فشلت معالجة النقرة!</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ فشل التقدم إلى</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ فشل في فتح تفاصيل المتطلبات!</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ هذا المطلب غير متوفر حاليًا!</gradient>"
+  decoration:
+    name: " "
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+  requirement_entry:
+    name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>تقدم:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    click_to_view: "<gradient:#3b82f6:#60a5fa>اضغط علشان تشوف التفاصيل</gradient>"
+
+# ============================================
+# واجهة المستخدم التفصيلية لمتطلبات الرتبة
+# ============================================
+rank_requirement_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>📋 تفاصيل المتطلبات</gradient>"
+  back:
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ ليس لديك كل العناصر المطلوبة!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ تم إرسال العناصر بنجاح!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ فشل إرسال العناصر. يرجى المحاولة مرة أخرى.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ حدث خطأ أثناء إرسال العناصر.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ تم بالفعل إكمال هذا المطلب!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>مستواك:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>المستوى المطلوب:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>المستويات المطلوبة:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ تم استيفاء متطلبات المستوى!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>يكسب XP عن طريق التعدين، وقتل الغوغاء،</gradient>"
+      - "<gradient:#6b7280:#9ca3af>صهر العناصر، وأكثر!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>وقت اللعب الخاص بك:</gradient> <gradient:#10b981:#34d399>%hours%ح %minutes%م</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>وقت اللعب المطلوب:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ح %minutes%م</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>الوقت المتبقي:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ح %minutes%م</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ تم استيفاء متطلبات وقت اللعب!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>استمر في اللعب على الخادم</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لتجميع وقت اللعب!</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>تقدم</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>حاضِر:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>انتهاء:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>متبقي:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ اكتمل!</gradient>"
+  in_progress: "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+  progress_not_started: "<gradient:#6b7280:#9ca3af>لم يبدأ</gradient>"
+  progress_details: "<gradient:#6b7280:#9ca3af>غرض %item_number%</gradient>"
+  action_button:
+    completed_name: "<gradient:#10b981:#34d399>✅ مكتمل</gradient>"
+    completed_lore:
+      - "<gradient:#6b7280:#9ca3af>لقد اكتمل هذا المطلب بالفعل</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅المتطلبات كاملة</gradient>"
+    complete_lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لإكمال هذا المطلب</gradient>"
+    refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 تحديث التقدم</gradient>"
+    refresh_lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لتحديث التقدم المحرز الخاص بك</gradient>"
+  summary:
+    items_completed: "<gradient:#10b981:#34d399>العناصر المكتملة:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>تقدم:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_summary:
+      name: "<gradient:#a855f7:#c084fc>📊 ملخص المتطلبات</gradient>"
+    requirement_tip:
+      name: "<gradient:#f59e0b:#fbbf24>💡 نصائح</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 ملخص التقدم</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+  item_requirement:
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>جمع العناصر المطلوبة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>والعودة هنا لإكمال</gradient>"
+  requirement_tip:
+    currency:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>كسب العملة المطلوبة</gradient>"
+    experience_level:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اكتساب مستويات الخبرة</gradient>"
+    playtime:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>العب على الخادم</gradient>"
+    other:
+      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>أكمل المتطلبات</gradient>"
+  summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 عرض الملخص...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡عرض النصائح...</gradient>"
+  item_detail:
+    header: "<gradient:#a855f7:#c084fc>📦 البند %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>تقدم:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>مفتقد:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+  requirement_info:
+    requirement_type: "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>تقدم:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    missing_items:
+      item: "<gradient:#ef4444:#f87171>العناصر المفقودة:</gradient>"
+      entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...و %item_amount% أكثر</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>معلومات تفصيلية</gradient>"
+    name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
+  requirement:
+    completed:
+      - "<gradient:#10b981:#34d399>✅ اكتمل!</gradient>"
+    ready_to_complete:
+      - "<gradient:#10b981:#34d399>✅ جاهز للاكتمال!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضغط للانتهاء</gradient>"
+    in_progress:
+      - "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    not_started:
+      - "<gradient:#6b7280:#9ca3af>لم يبدأ</gradient>"
+    error:
+      - "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>حالة: %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>تقدم</gradient>"
+  progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>اضغط للتحديث</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 نظرة عامة على التقدم</gradient>"
+  fallback:
+    name: "<gradient:#6b7280:#9ca3af>متطلبات غير معروفة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل التفاصيل</gradient>"
+  error:
+    name: "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>فشل تحميل المتطلبات</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 التقدم:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊 الحالة:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>اكتمل بالفعل!</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ التقدم منتعش!</gradient>"
+  detailed_info:
+    header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 تفصيل المادة:</gradient>"
+    item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+
+
+# ============================================
+# نظرة عامة على المكافأة
+# ============================================
+bounty_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 نظام المكافآت</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 إنشاء فضله</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان تنشئ باونتي جديدة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>على لاعب آخر</gradient>"
+  view_bounties:
+    name: "<gradient:#3b82f6:#60a5fa>👁 عرض الخيرات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عرض جميع المكافآت النشطة</gradient>"
+  my_bounties:
+    name: "<gradient:#f59e0b:#fbbf24>📋 خيراتي</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عرض المكافآت التي قمت بإنشائها</gradient>"
+  leaderboard:
+    name: "<gradient:#ef4444:#f87171>🏆 المتصدرين</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>كبار صائدي الجوائز</gradient>"
+  bounty:
+    name: "<gradient:#a855f7:#c084fc>🎯 مكافأة على</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>هدف:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>مفوض:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>مخلوق:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - ""
+      - "<gradient:#a855f7:#c084fc>اضغط علشان تشوف التفاصيل</gradient>"
+
+# ============================================
+# واجهة إنشاء المكافأة
+# ============================================
+bounty_creation_ui:
+  title: "<gradient:#a855f7:#c084fc>📝 إنشاء مكافأة - %target_name%</gradient>"
+  select_target:
+    title: "<gradient:#a855f7:#c084fc>🎯 حدد الهدف</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 الهدف: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لاختيار لاعب</gradient>"
+      - "<gradient:#6b7280:#9ca3af>حاضِر: %target_name%</gradient>"
+  create_bounty:
+    name: "<gradient:#10b981:#34d399>📝 إنشاء فضله</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان تنشئ باونتي جديدة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>على لاعب آخر</gradient>"
+  add_items:
+    name: "<gradient:#10b981:#34d399>💰 أضف مكافآت العناصر</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💰 أضف مكافآت العناصر</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>اضغط لإضافة مكافآت العنصر</gradient>"
+      - "<gradient:#6b7280:#9ca3af>العناصر الحالية:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
+  add_currency:
+    name: "<gradient:#f59e0b:#fbbf24>💎 إضافة مكافآت العملة</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 إضافة مكافآت العملة</gradient>"
+    description:
+      - "<gradient:#6b7280:#9ca3af>اضغط لإضافة مكافآت العملة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>العملات الحالية:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    description_disabled:
+      - "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
+  confirm_bounty:
+    name: "<gradient:#10b981:#34d399>✅ إنشاء مكافأة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لإنشاء المكافأة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>مع المكافآت المختارة</gradient>"
+  confirm:
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ لم يتم اختيار أي لاعب!</gradient> <gradient:#6b7280:#9ca3af>الرجاء تحديد الهدف أولاً.</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ لم تتم إضافة أي مكافآت!</gradient> <gradient:#6b7280:#9ca3af>يرجى إضافة بعض المكافآت أولا.</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ إنشاء مكافأة على</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ خطأ:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ تم إنشاء المكافأة بنجاح على</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 تم إرجاع العناصر!</gradient> <gradient:#6b7280:#9ca3af>تم إسقاط بعض العناصر على الأرض.</gradient>"
+  # مفتاح bounty_creation المتداخل لمكالمات i18n("bounty_creation.confirm.success")
+  bounty_creation:
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ جاري معالجة الباونتي...</gradient>"
+    confirm:
+      success: "<gradient:#10b981:#34d399>✅ تم إنشاء المكافأة بنجاح</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ فشل في معالجة المكافأة:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+
+# ============================================
+# واجهة المستخدم الخاصة بمكافأة المكافأة
+# ============================================
+bounty_reward_ui:
+  title: "<gradient:#a855f7:#c084fc>💰 مكافآت باونتي</gradient>"
+  pseudo:
+    name: "<gradient:#6b7280:#9ca3af>📦 لا توجد مكافآت</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>إضافة عناصر لإنشاء المكافآت</gradient>"
+  input_slot:
+    name: "<gradient:#10b981:#34d399>➕ إضافة عنصر</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>ضع العناصر هنا لإضافتها كمكافآت</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 الهدف: %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>يتم وضع هذه المكافأة على</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+  reward_item:
+    lore:
+      - "<gradient:#a855f7:#c084fc>💰مكافأة مكافأة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>سيتم إعطاء هذا البند ل</gradient>"
+      - "<gradient:#6b7280:#9ca3af>من يدعي المكافأة</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ لم تتم إضافة أي عناصر جديدة!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ تم إسقاط بعض العناصر نظرًا لامتلاء مخزونك!</gradient>"
+
+# ============================================
+# واجهة المستخدم الخاصة بمعلومات اللاعب
+# ============================================
+bounty_player_info_ui:
+  title: "<gradient:#a855f7:#c084fc>🎯 مكافأة على %target_name%</gradient>"
+  target:
+    name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>الهدف من هذه المكافأة</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ المزيد من المعلومات قريباً...</gradient>"
+  rewards:
+    name: "<gradient:#10b981:#34d399>💰 عرض المكافآت</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لرؤية جميع المكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إجمالي المكافآت:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+  delete:
+    name: "<gradient:#ef4444:#f87171>🗑 حذف المكافأة</gradient>"
+    lore:
+      - "<gradient:#ef4444:#f87171>⚠ تحذير: لا يمكن التراجع!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضغط لحذف هذه المكافأة</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ المكافأة على</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>تم حذفه!</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>هل أنت متأكد أنك تريد حذف هذه المكافأة؟</gradient>"
+
+# ============================================
+# نظرة عامة على المشرف واجهة المستخدم
+# ============================================
+admin_overview_ui:
+  title: "<gradient:#ef4444:#f87171>⚙ لوحة الإدارة</gradient>"
+  view_permissions:
+    name: "<gradient:#3b82f6:#60a5fa>🔑 مدير الأذونات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>إدارة أذونات البرنامج المساعد</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إجمالي الأذونات:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ فشل في فتح مدير الأذونات!</gradient>"
+  create_ranks:
+    name: "<gradient:#a855f7:#c084fc>⚔ إنشاء LuckPerms المجموعات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>يخلق LuckPerms مجموعات من الرتب</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms مش متثبت!</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ لم يتم العثور على رتب لإنشاء مجموعات لها!</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ تم إنشاؤها</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms مجموعات!</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>لم يتم إنشاء أي مجموعات جديدة.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ فشل في الإنشاء LuckPerms مجموعات!</gradient>"
+
+# ============================================
+# نظرة عامة على أذونات المسؤول
+# ============================================
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 مدير الأذونات</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ لم يتم العثور على البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms مش متثبت!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ لا توجد أذونات متاحة لهذا البرنامج المساعد!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ الإضافات السابقة</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ الإضافات التالية</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>الأذونات:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للتحديد</gradient>"
+        - "<gradient:#10b981:#34d399>اضغط كليك يمين لتعيين الكل</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>فارغ</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ الأذونات السابقة</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ الأذونات التالية</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>العقدة:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>اضغط لتعيين هذا الإذن</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>لم يتم تحديد البرنامج المساعد</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>حدد البرنامج المساعد أعلاه</gradient>"
+        - "<gradient:#6b7280:#9ca3af>لعرض أذوناتها</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>فارغ</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ تعيين %plugin_name% الأذونات</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>تعيين كافة الأذونات من</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% الأذونات)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>لا يوجد اختيار</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 مختارة: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>الأذونات:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 نظرة عامة</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>حدد مكونًا إضافيًا لعرض الأذونات</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 تحديث البيانات</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اضغط لتحديث بيانات الأذونات</gradient>"
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ مسح التحديد</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لإلغاء تحديد البرنامج المساعد</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ تعيين %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>تعيين كافة الأذونات من البرنامج المساعد المحدد</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ تعيين كافة الأذونات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>تعيين الأذونات من الجميع</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>الإضافات</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ تحديث البيانات!</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ المخصصة</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>الأذونات من</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 مختارة:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ المخصصة</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>الأذونات من</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ المخصصة:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>من</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>تم مسح التحديد</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ جميع الأذونات المعينة من</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+
+# ============================================
+# ترقيم الصفحات
+# ============================================
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 الصفحة %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>الصفحة الحالية:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إجمالي الصفحات:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 الصفحة %direction%</gradient>"
+
+# ============================================
+# عناصر الرأس
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 العودة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️ تابع</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط علشان تكمل</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ السابقة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>الصفحة السابقة</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️ التالي</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>الصفحة التالية</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ فوق</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اصعد</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️ للأسفل</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>النزول</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ إلغاء</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>إلغاء الإجراء</gradient>"
+
+
+
+# ============================================
+# رسائل الخطأ
+# ============================================
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ Premium مطلوب!</gradient> <gradient:#6b7280:#9ca3af>الميزة</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>يتطلب الإصدار المميز.</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌فشلت المعالجة:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# واجهة مستخدم مرقّمة
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 حدد اللاعب</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# عرض سندان مجردة
+# ============================================
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ أدخل القيمة</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ أدخل القيمة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اكتب مدخلاتك أعلاه</gradient>"
+      - "<gradient:#6b7280:#9ca3af>واضغط للتأكيد</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌فشلت معالجة الإدخال:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# عرض التأكيد
+# ============================================
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️ تأكيد الإجراء</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ تأكيد</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط للتأكيد</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ إلغاء</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط للإلغاء</gradient>"
+
+# ============================================
+# قيود النسخة المجانية
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ حدود الإصدار المجاني:</gradient> <gradient:#6b7280:#9ca3af>يمكنك إكمال فقط</gradient> <gradient:#f59e0b:#fbbf24>1 شجرة الرتبة</gradient><gradient:#6b7280:#9ca3af>. الترقية إلى Premium لعدد غير محدود!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ حدود الإصدار المجاني:</gradient> <gradient:#6b7280:#9ca3af>يمكنك التقدم فقط من خلال</gradient> <gradient:#f59e0b:#fbbf24>3 صفوف</gradient> <gradient:#6b7280:#9ca3af>لكل شجرة. الترقية إلى Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ حدود الإصدار المجاني:</gradient> <gradient:#6b7280:#9ca3af>يمكنك الحصول على فقط</gradient> <gradient:#f59e0b:#fbbf24>1 مسار رتبة نشط</gradient><gradient:#6b7280:#9ca3af>. الترقية إلى Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 للمعاينة فقط:</gradient> <gradient:#6b7280:#9ca3af>شجرة الرتب هذه للمعاينة فقط في الإصدار المجاني. الترقية إلى Premium لفتح!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Premium مطلوب:</gradient> <gradient:#6b7280:#9ca3af>تتطلب هذه الرتبة Premium لفتح.</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ نسخة مجانية</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>أنت تستخدم النسخة المجانية</gradient>"
+      - "<gradient:#6b7280:#9ca3af>مع ميزات محدودة.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>الترقية إلى Premium ل:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• أشجار رتبة غير محدودة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• صفوف غير محدودة لكل شجرة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• مسارات نشطة متعددة</gradient>"
+
+# ============================================
+# رسائل الإصدار المميز
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premium:</gradient> <gradient:#6b7280:#9ca3af>لا تنطبق أي قيود.</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ Premium إصدار</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>جميع الميزات مقفلة!</gradient>"
+
+# ============================================
+# عرض تفصيلي لعنصر المتطلبات (المبسطة)
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 متطلبات السلعة</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ لديك هذا العنصر</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ العنصر المفقود</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 إرسال العناصر</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>جميع العناصر جاهزة!</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>◀ اضغط للإرسال</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 إرسال العناصر</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>العناصر المطلوبة مفقودة</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>جمع كافة العناصر أولا</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← العودة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>العودة إلى المتطلبات</gradient>"
+
+
+# ============================================
+# ترجمات المكافآت
+# ============================================
+rank_requirements_journey_ui:
+
+  # ============================================
+  # عرض الرحلة لمتطلبات الرتبة
+  # ============================================
+  title: "<gradient:#a855f7:#c084fc>⚔ %rank_name% متطلبات</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  overall_progress:
+    name: "<gradient:#a855f7:#c084fc>📊 التقدم الشامل</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>انتهاء:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>متطلبات:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة!</gradient>"
+  claim_button:
+    name: "<gradient:#10b981:#34d399>🏆 استلام بالرتبة!</gradient>"
+    lore:
+      - ""
+      - "<gradient:#10b981:#34d399>تم الانتهاء من جميع المتطلبات!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>◀ اضغط للمطالبة برتبتك</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒الرتبة مقفلة</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
+        - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة.</gradient>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>🔒مقفل</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
+        - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة.</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← العودة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>العودة إلى نظرة عامة على الرتبة</gradient>"
+  messages:
+    requirement_completed: "<gradient:#10b981:#34d399>✅ اكتملت المتطلبات!</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 تم الانتهاء من جميع المتطلبات! اضغط فوق زر استلام للحصول على رتبتك!</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆 تهانينا! لقد وصلت إلى المرتبة:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌هذا المطلب ليس جاهزاً للإكتمال بعد.</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ هذا الشرط مكتمل بالفعل!</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 وضع المعاينة - تم تعطيل التفاعلات</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>لا توجد مكافآت</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
+      type_label: "<gray>النوع:</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>قيمة:</gray> <gold>%value%</gold>"
+    
+    # أوصاف نوع المكافأة
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>احصل على مكافآت العملة</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>الحصول على مكافآت البند</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>الحصول على نقاط الخبرة</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>تنفيذ الأوامر الخاصة</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>مكافآت متعددة مجتمعة</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>اختر من بين مكافآت متعددة</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>الحصول على أذونات خاصة</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>النقل الفوري إلى الموقع</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>فتح تأثيرات الجسيمات</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>احصل على صندوق يختفي</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% المزيد من المكافآت...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 عرض جميع المكافآت</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اضغط لرؤية الكل %count% المكافآت</gradient>"
+        - "<gradient:#6b7280:#9ca3af>لهذه المرتبة بالتفصيل</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>عرض المكافآت التفصيلية قريبا!</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 لا توجد مكافآت</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>هذه الرتبة ليس لها مكافآت</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 مكافآت الرتبة</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>سوف تتلقى %count% المكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>عندما تطالب بهذه المرتبة</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>لا توجد مكافآت</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
+    type_label: "<gray>النوع:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>قيمة:</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>لقد فتحت الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # أوصاف نوع المكافأة
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>احصل على مكافآت العملة</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>الحصول على مكافآت البند</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>الحصول على نقاط الخبرة</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>تنفيذ الأوامر الخاصة</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>مكافآت متعددة مجتمعة</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>اختر من بين مكافآت متعددة</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>الحصول على أذونات خاصة</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>النقل الفوري إلى الموقع</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>فتح تأثيرات الجسيمات</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>احصل على صندوق يختفي</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% المزيد من المكافآت...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 عرض جميع المكافآت</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>اضغط لرؤية الكل %count% المكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لهذه المرتبة بالتفصيل</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>عرض المكافآت التفصيلية قريبا!</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 لا توجد مكافآت</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>هذه الرتبة ليس لها مكافآت</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 مكافآت الرتبة</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>سوف تتلقى %count% المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عندما تطالب بهذه المرتبة</gradient>"
+
+
+# ============================================
+# عرض تفاصيل مكافآت الرتبة
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>المكافآت: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>هذه المرتبة لديها %count% المكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضغط على أي مكافأة للحصول على التفاصيل</gradient>"
+
+# ============================================
+# نظرة عامة على الامتيازات واجهة المستخدم
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ الامتيازات</gradient>"
+
+# ============================================
+# واجهة المستخدم التفصيلية PERK
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# ترجمات الامتيازات
+# ============================================
+perk:
+  # امتيازات الصيد
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>صيد أسرع</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>صيد الأسماك بشكل أسرع مع تحسين معدلات الصيد</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>تعزيز XP للصيد</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>احصل على مكافأة XP عند صيد الأسماك</gradient>"
+  
+  # امتيازات الجرعة
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>مضخم الجرعات</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>فرصة لتعزيز تأثيرات الجرعة عند تناولها</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>مدة الجرعة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>فرصة لتمديد مدة الجرعة عند تناولها</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>استرداد جرعة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>فرصة لاستعادة جرعتك بعد شربها</gradient>"
+  
+  # رسائل الامتياز
+  messages:
+    # فتح/تمكين/تعطيل
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ تم فتح الميزة!</gradient> <gradient:#6b7280:#9ca3af>فتحت</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>تم فتح الميزة وتمكينها بنجاح:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>فشل في فتح الميزة. يرجى المحاولة مرة أخرى.</gradient>"
+      error: "<gradient:#ef4444:#f87171>حدث خطأ أثناء فتح الميزة.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>أنت لا تستوفي المتطلبات اللازمة لفتح هذه الميزة!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>الميزة الممكّنة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>فشل في تمكين الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>لقد وصلت إلى الحد الأقصى لعدد الامتيازات الممكّنة (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>تم تعطيل الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>فشل في تعطيل الميزة:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # التهدئة
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>هذه الميزة في فترة التهدئة</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>الميزة جاهزة للاستخدام!</gradient>"
+    
+    # مشغلات التأثير
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ جرعة محسنة!</gradient> <gradient:#6b7280:#9ca3af>تضخمت التأثيرات</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ تم تمديد مدة الجرعة!</gradient> <gradient:#6b7280:#9ca3af>يدوم لفترة أطول</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 تم حفظ الجرعة!</gradient> <gradient:#6b7280:#9ca3af>عاد إلى المخزون</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 صيد أسرع نشط!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% صيد السمك XP!</gradient>"
+  
+  # عناصر واجهة المستخدم
+  ui:
+    header:
+      type_label: "<gray>النوع: <white>%type%</white></gray>"
+      category_label: "<gray>الفئة: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>لا متطلبات</green>"
+      no_requirements_lore: "<gray>هذه الميزة ليس لها متطلبات فتح</gray>"
+    
+    rewards:
+      title: "<gold>مكافأة الفتح</gold>"
+      no_rewards: "<gray>مافيش مكافآت فتح</gray>"
+      no_rewards_lore: "<gray>لا تحتوي هذه الميزة على مكافآت مفتوحة</gray>"
+      type_label: "<gray>النوع: <white>%type%</white></gray>"
+      value_label: "<gray>قيمة: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>حالة الميزة</white>"
+      locked: "<red>✖ مغلق</red>"
+      locked_hint: "<gray>متطلبات كاملة لفتح</gray>"
+      active: "<green>✓ نشط</green>"
+      enabled: "<yellow>○ ممكّن</yellow>"
+      disabled: "<gray>○ معطل</gray>"
+      enabled_count: "<gray>الامتيازات الممكّنة: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>التهدئة: <gold>%time%</gold></gray>"
+      activations_label: "<gray>التنشيط: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>فتح الميزة</white>"
+        hint: "<green>اضغط لفتح هذه الميزة!</green>"
+      enable:
+        title: "<white>تمكين الميزة</white>"
+        hint: "<green>اضغط لتمكين هذه الميزة</green>"
+        limit_reached: "<red>تم الوصول إلى الحد الأقصى من الامتيازات الممكّنة</red>"
+      disable:
+        title: "<white>تعطيل الميزة</white>"
+        hint: "<yellow>اضغط لتعطيل هذه الميزة</yellow>"
+  
+  # الامتيازات الحالية (كمرجع - أضف إذا كانت مفقودة)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>رحلة جوية</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>اكتساب القدرة على الطيران</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>يشع</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>تطبيق تأثير متوهجة على نفسك</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>تسرع</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>الألغام وحفر أسرع</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>دفعة القفز</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>القفز أعلى من المعتاد</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>احتفظ بالخبرة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>احتفظ بك XP عندما تموت</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>الاحتفاظ بالمخزون</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>احتفظ بأغراضك عندما تموت</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>الرؤية الليلية</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>انظر بوضوح في الظلام</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>لا ضرر السقوط</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>لا تأخذ أي ضرر من السقوط</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>مقاومة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>خذ ضررًا أقل من جميع المصادر</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>التشبع</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>لا تجوع أبدا</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>سرعة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>التحرك بشكل أسرع من المعتاد</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>قوة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>التعامل مع المزيد من الضرر في القتال</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>مقاومة الحريق</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>الحصانة ضد النار وأضرار الحمم البركانية</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>تجربة مزدوجة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>كسب ضعف XP من جميع المصادر</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>ضربة حاسمة</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>فرصة للتعامل مع أضرار جسيمة</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>مكافحة الشفاء</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>شفاء عند التعامل مع الضرر للأعداء</gradient>"

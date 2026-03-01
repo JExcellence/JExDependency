@@ -1,0 +1,24 @@
+# RCore Central Integration の日本語翻訳
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>使用方法: /rcconnect <api-key></gray>"
+  connecting: "<yellow>RaindropCentral に接続中...</yellow>"
+  success: "<green>RaindropCentral への接続に成功しました！</green> <gray>サーバーは現在ハートビートを送信しています。</gray>"
+  error:
+    invalid_key: "<red>API キーの形式が無効です。API キーは 32〜128 文字の英数字である必要があります。</red>"
+    uuid_mismatch: "<red>この API キーは別の Minecraft アカウントに紐づいています。</red>"
+    already_connected: "<yellow>サーバーはすでに接続されています。</yellow> <gray>先に /rcdisconnect を使用してください。</gray>"
+    network: "<red>ネットワークエラー: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>RaindropCentral から切断中...</yellow>"
+  success: "<green>RaindropCentral から正常に切断しました。</green>"
+  error:
+    not_connected: "<red>サーバーは RaindropCentral に接続されていません。</red>"
+    failed: "<red>切断に失敗しました。もう一度お試しください。</red>"
+    network: "<red>ネットワークエラー: %error%</red>"
+
+general:
+  no_permission: "<red>このコマンドを使用する権限がありません。</red>"

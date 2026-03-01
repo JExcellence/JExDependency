@@ -1,9 +1,15 @@
-# RDQ Vertaalbestand - Nederlands (Nederland)
-# MiniMessage formaat met gradiënten en styling
-# Placeholders gebruiken %placeholder% formaat
+# RDQ-vertaalbestand - Engels (VS)
+# MiniMessage-formaat met verlopen en styling
+# Tijdelijke aanduidingen gebruiken de indeling %placeholder%
 
+# ============================================
+# GLOBAAL VOORVOEGSEL
+# ============================================
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
+# ============================================
+# ROOT-NIVEAUTOETSEN (gebruikt door directe I18n.Builder-oproepen)
+# ============================================
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Geen Beloningen</gradient>"
   lore:
@@ -13,33 +19,299 @@ input_slot:
   name: "<gradient:#10b981:#34d399>➕ Item Toevoegen</gradient>"
   lore:
     - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik met de linkermuisknop om het item te plaatsen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik met de rechtermuisknop om het item te verwijderen</gradient>"
 
+# ============================================
+# RANG BOOM WEERGAVENAMEN & BESCHRIJVINGEN
+# ============================================
 tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Word één met de natuur</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Krijger</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Word een legendarische vechter</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Magiër</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Word een meester van het geheimzinnige</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Schurk</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sla toe vanuit de schaduw</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Geestelijke</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Genees en bescherm je bondgenoten</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Handelaar</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bouw uw fortuin op</gradient>"
 
+# ============================================
+# RANG WEERGAVENAMEN & BESCHRIJVINGEN
+# ============================================
+rank:
+
+  # ============================================
+  # Rangschik berichten
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 Rang omhoog!</gradient> <gradient:#6b7280:#9ca3af>Je hebt aan alle vereisten voldaan voor</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>Gebruik het rangmenu om je rangupgrade te claimen!</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>Niet gerangschikt</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Selecteer een rangschikkingspad om te beginnen</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>Niet gerangschikt</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>Standaardrang</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Geen rang geselecteerd</gradient>"
+  # Ranger Tree-rangen
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹Jager</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Een beginnende tracker die de wegen van het wild leert</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 Boogschutter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vaardig met de boog, dodelijk op afstand</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍Tracker</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Expert in het vinden en volgen van prooien</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯Schutter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Precisieschieter met dodelijke nauwkeurigheid</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 Pathfinder</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meesterverkenner van onbekende landen</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯Sluipschutter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Elite scherpschutter, één schot één moord</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 Bosheer</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meester van de wildernis, één met de natuur</gradient>"
+  # Krijgersboomrangen
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>Werven</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Een nieuwe krijger die aan hun reis begint</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Leer de basisprincipes van vechten</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>Soldaat</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Getraind in de kunst van het vechten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Klaar voor de strijd</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>Veteraan</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Door de strijd geharde krijger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kies uw specialisatiepad</gradient>"
+    # Specialisatie Tak 1: Berserker (offensief)
+    berserker:
+      name: "<gradient:#ef4444:#f87171>Berserker</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Pad van woede</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Voer verwoestende aanvallen uit</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Offer verdediging op voor brute kracht</gradient>"
+    # Specialisatie Tak 2: Guardian (Defensief)
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>Voogd</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Pad van bescherming</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Word een onbreekbaar schild</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bescherm je bondgenoten ten koste van alles</gradient>"
+    # Specialisatie Tak 3: Gladiator (Evenwichtig)
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>Gladiator</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Pad van glorie</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Meester van arenagevechten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Breng aanval en verdediging in balans</gradient>"
+    # Laatste rangen
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>Krijgsheer van woede</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>Ultieme Berserker</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Onstuitbare kracht van vernietiging</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Angst incarneert op het slagveld</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>Krijgsheer van het Schild</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>Ultieme bewaker</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Onroerend voorwerp, eeuwige beschermer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Niemand zal voorbijgaan terwijl je staat</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>Krijgsheer van de Arena</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>Ultieme gladiator</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kampioen der kampioenen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Legende van de arena</gradient>"
+    # Legacy-rangen (voor achterwaartse compatibiliteit)
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>Ridder</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Eervolle krijger van het rijk</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>Kampioen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Legendarische vechter, gevreesd door iedereen</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>Krijgsheer</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Oorlogsmeester, bevelhebber van legers</gradient>"
+  # Mage Tree-rangen
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ Leerling</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Het leren van de basisprincipes van magie</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Groeien in magische kracht</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ Tovenaar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meester van geheimzinnige kunsten</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨Archmagiër</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Oppermeester van alle magie</gradient>"
+  # Rogue Tree-rangen
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Dief</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 Verkenner</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ogen en oren van de schaduwen</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡Infiltrant</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 Schaduwblad</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Dodelijke krijger van de nacht</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Beheerder van informatienetwerken</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Opperheerser van alle schaduwen</gradient>"
+  # Cleric Tree-rangen
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Acoliet</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Toegewijde dienaar van het goddelijke</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ Liefhebber</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Trouwe volger van het goddelijke pad</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ Priester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Genezer en beschermer van de gelovigen</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ Genezer</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meester van restauratieve kunsten</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ Bisschop</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Leider van de gelovigen</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ Orakel</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ziener van goddelijke visioenen</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ Hogepriester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Allerhoogste stem van het goddelijke</gradient>"
+  # Handelaarsboomrangen
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 Venter</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Verkoop van waren op straat</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰Handelaar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Gevestigde handelaar met connecties</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰Verkoper</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ervaren verkoper van goederen</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 Kunstmaker</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ambachtsman van fijne waren</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰Alchemist</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meester van drankjes en elixers</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰Handelaar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Succesvolle ondernemer</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 Meesterknutselaar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>De hoogste ambachtsman van het rijk</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 Koopman Prins</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Royalty van handel</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Meester van handel en handel</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 Gildemeester</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Leider van het koopmansgilde</gradient>"
+
+# ============================================
+# BOUNTY LUISTERBERICHTEN
+# ============================================
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Er staat een premie op je hoofd!</gradient>"
@@ -54,12 +326,18 @@ bounty_listener:
     broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
     broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
 
+# ============================================
+# BOUNTY CREATIEBERICHTEN
+# ============================================
 bounty_creation:
   confirm:
     success: "<gradient:#10b981:#34d399>✅ Premie aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Fout bij verwerken premie:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
   processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie wordt verwerkt...</gradient>"
 
+# ============================================
+# RANG VOORTGANGSBERICHTEN
+# ============================================
 rank_progression:
   started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Vereisten bekijken voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -67,15 +345,24 @@ rank_progression:
   requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereiste onvolledig:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
   no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
 
+# ============================================
+# RANG KLIKBERICHTEN
+# ============================================
 rank_click:
   preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   owned: "<gradient:#10b981:#34d399>✅ Je bezit</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
 
+# ============================================
+# RQ-COMMANDOBERICHTEN
+# ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient> <gradient:#6b7280:#9ca3af>Deze functie vereist LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open hoofdmenu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Bekijk rangen</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Bekijk premies</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Open hoofdmenu</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Bekijk rangen</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Bekijk premies</gradient>"
 
+# ============================================
+# HOOFDOVERZICHT gebruikersinterface
+# ============================================
 main_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
   admin_overview:
@@ -104,6 +391,9 @@ main_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Bekijk rang voortgang</gradient>"
       - "<gradient:#6b7280:#9ca3af>en ontgrendel nieuwe vaardigheden</gradient>"
 
+# ============================================
+# RANG HOOFDUI
+# ============================================
 rank_main_ui:
   title: "<gradient:#a855f7:#c084fc>⚔ Rang Systeem</gradient>"
   rank_tree:
@@ -113,6 +403,9 @@ rank_main_ui:
       - "<gradient:#6b7280:#9ca3af>en kies je pad</gradient>"
 
 
+# ============================================
+# RANGBOOMOVERZICHT UI
+# ============================================
 rank_tree_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🌳 Rang Bomen</gradient>"
   tree:
@@ -120,26 +413,32 @@ rank_tree_overview_ui:
       name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Word één met de natuur</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Krijger</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Word een legendarische vechter</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Magiër</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Word een meester van het geheimzinnige</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Schurk</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sla toe vanuit de schaduw</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Geestelijke</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Genees en bescherm je bondgenoten</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Handelaar</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bouw uw fortuin op</gradient>"
   click:
     preview_rank_path:
       - "<gradient:#3b82f6:#60a5fa>Linksklik voor voorbeeld</gradient>"
@@ -167,7 +466,17 @@ rank_tree_overview_ui:
     rank_path_reactivated: "<gradient:#10b981:#34d399>✅ Rang pad geheractiveerd:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
     rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ Kon rang pad niet heractiveren!</gradient>"
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Rang boom creatie komt binnenkort!</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Gratis versie - alleen voorbeeld</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>Deze rangboom is alleen beschikbaar als voorbeeld.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Upgrade naar Premium om te ontgrendelen!</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>Klik met de linkermuisknop om een ​​voorbeeld te bekijken</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premie vereist:</gradient> <gradient:#6b7280:#9ca3af>Upgrade naar Premium om extra rangbomen te selecteren!</gradient>"
 
+# ============================================
+# RANK PATH OVERZICHT UI
+# ============================================
 rank_path_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
   preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld: </gradient>"
@@ -178,17 +487,6 @@ rank_path_overview_ui:
     up: "<gradient:#3b82f6:#60a5fa>⬆ Navigeer Omhoog</gradient>"
     down: "<gradient:#3b82f6:#60a5fa>⬇ Navigeer Omlaag</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Navigeer %direction%</gradient>"
-  rank:
-    owned: "<gradient:#10b981:#34d399>✅ In Bezit</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
-    available: "<gradient:#3b82f6:#60a5fa>🔓 Beschikbaar</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
-    click_to_view: "<gradient:#6b7280:#9ca3af>Klik om vereisten te bekijken</gradient>"
-    click_to_progress: "<gradient:#10b981:#34d399>Klik om voort te gaan</gradient>"
-    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
-    fallback_description: "<gradient:#6b7280:#9ca3af>Geen beschrijving beschikbaar voor %rank_id%</gradient>"
-    tier: "<gradient:#6b7280:#9ca3af>Niveau:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
-    weight: "<gradient:#6b7280:#9ca3af>Gewicht:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
   back:
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
@@ -215,6 +513,8 @@ rank_path_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
     critical.lore:
       - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Kan vereisten niet openen voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ Er is een fout opgetreden. Probeer het opnieuw.</gradient>"
   status:
     owned: "<gradient:#10b981:#34d399>✅ In Bezit</gradient>"
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
@@ -222,6 +522,7 @@ rank_path_overview_ui:
     available: "<gradient:#3b82f6:#60a5fa>🔓 Beschikbaar</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
     unknown: "<gradient:#6b7280:#9ca3af>❓ Onbekend</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premie vereist</gradient>"
   connection:
     from: "<gradient:#6b7280:#9ca3af>Van:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     to: "<gradient:#6b7280:#9ca3af>Naar:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -231,33 +532,303 @@ rank_path_overview_ui:
     pending: "<gradient:#f59e0b:#fbbf24>⏳ Bezig Verbinding</gradient>"
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig Verbinding</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Vergrendelde Verbinding</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ In Bezit</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 Beschikbaar</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>Klik om vereisten te bekijken</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>Klik om voort te gaan</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>Geen beschrijving beschikbaar voor %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>Niveau:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>Gewicht:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹Jager</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Een beginnende tracker die de wegen van het wild leert</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 Boogschutter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Vaardig met de boog, dodelijk op afstand</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍Tracker</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Expert in het vinden en volgen van prooien</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯Schutter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Precisieschieter met dodelijke nauwkeurigheid</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 Pathfinder</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meesterverkenner van onbekende landen</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯Sluipschutter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Elite scherpschutter, één schot één moord</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 Bosheer</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van de wildernis, één met de natuur</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ Rekruteer</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Een nieuwe krijger die aan hun reis begint</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ Soldaat</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Getraind in de kunst van het vechten</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ Ridder</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Eervolle krijger van het rijk</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ Kampioen</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Legendarische vechter, gevreesd door iedereen</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ Krijgsheer</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Oorlogsmeester, bevelhebber van legers</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨ Leerling</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Het leren van de basisprincipes van magie</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨ Adept</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Groeien in magische kracht</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ Tovenaar</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van geheimzinnige kunsten</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨Archmagiër</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Oppermeester van alle magie</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
+
+# ============================================
+# VERPLICHT VERTALINGEN
+# ============================================
+requirement:
+
+  # ============================================
+  # VEREISTETYPEN (gelokaliseerde namen)
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 Artikelverzameling</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 Valuta</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨Ervaringsniveau</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ Speeltijd</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 Toestemming</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍 Locatie</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ Doodvereiste</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 Knutselen</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ Onbekend</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ Voltooid</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ Klaar om te voltooien</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 In uitvoering</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ Niet gestart</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶ Klik met de linkermuisknop om te voltooien!</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶ Klik met de rechtermuisknop voor details</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 Artikelen indienen</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>Al voltooid</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>Taken:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...En %count% meer</gradient>"
+
+  # Beschrijvingen van valutavereisten
+  currency:
+    coins: "Munten"
+    gems: "Edelstenen"
+    tokens: "Tokens"
+    money: "Geld"
+    dollars: "Dollars"
+    credits: "Kredieten"
+  
+  # Sjablonen voor taakvoorbeelden
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "Behoefte %amount% %currency%"
+      have: "Hebben %current%/%required% %currency%"
+    item:
+      need: "Behoefte %quantity%X %item%"
+    experience:
+      need: "Bereik niveau %level%"
+      points: "Bereik %points% ervaring punten"
+    playtime:
+      need: "Speel voor %time%"
+    permission:
+      need: "Vereist toestemming: %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Dief</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡Infiltrant</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Acoliet</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Toegewijde dienaar van het goddelijke</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ Liefhebber</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Trouwe volger van het goddelijke pad</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ Priester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Genezer en beschermer van de gelovigen</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ Genezer</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van restauratieve kunsten</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ Bisschop</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Leider van de gelovigen</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝ Orakel</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ziener van goddelijke visioenen</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝ Hogepriester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Allerhoogste stem van het goddelijke</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>� Zakkenroller</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Dief</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 Verkenner</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ogen en oren van de schaduwen</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡Infiltrant</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 Schaduwblad</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Dodelijke krijger van de nacht</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Beheerder van informatienetwerken</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Opperheerser van alle schaduwen</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 Venter</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Verkoop van waren op straat</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰Handelaar</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Gevestigde handelaar met connecties</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰Verkoper</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ervaren verkoper van goederen</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 Kunstmaker</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Ambachtsman van fijne waren</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰Alchemist</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van drankjes en elixers</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰Handelaar</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Succesvolle ondernemer</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 Meesterknutselaar</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>De hoogste ambachtsman van het rijk</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 Koopman Prins</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Royalty van handel</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Meester van handel en handel</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 Gildemeester</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Leider van het koopmansgilde</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_owned: "<gradient:#10b981:#34d399>✅ Je bezit al</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ Je bezit al</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅Je bent al eigenaar</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅Je bent al eigenaar</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de vereisten</gradient>"
     rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
-    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
-    rank_started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% vereisten)</gradient>"
-    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_start_error: "<gradient:#ef4444:#f87171>❌ Kon voortgang niet starten voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Kon voortgang niet starten voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten niet voltooid voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
-    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten niet voltooid voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen eisen!</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen eisen!</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ Begonnen met progressie voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% vereisten)</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ Begonnen met progressie voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ Kan de voortgang niet starten voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ Kan de voortgang niet starten voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten niet ingevuld voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten niet ingevuld voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
     rank_redeemed: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je hebt ontgrendeld</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je hebt ontgrendeld</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Kon niet inwisselen</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Kon niet inwisselen</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ Kan niet inwisselen</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ Kan niet inwisselen</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ Premie vereist:</gradient> <gradient:#6b7280:#9ca3af>De rang</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>vereist Premium om te ontgrendelen. Upgrade om toegang te krijgen tot alle rangen!</gradient>"
   click:
-    left_start: "<gradient:#10b981:#34d399>Linksklik om voortgang te starten</gradient>"
-    right_requirements: "<gradient:#6b7280:#9ca3af>Rechtsklik om vereisten te bekijken</gradient>"
-    left_redeem: "<gradient:#10b981:#34d399>Linksklik om in te wisselen</gradient>"
-    right_progress: "<gradient:#6b7280:#9ca3af>Rechtsklik om voortgang te bekijken</gradient>"
+    left_start: "<gradient:#10b981:#34d399>Klik met de linkermuisknop om de voortgang te starten</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>Klik met de rechtermuisknop om de vereisten te bekijken</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>Klik met de linkermuisknop om in te wisselen</gradient>"
+    right_progress: "<gradient:#6b7280:#9ca3af>Klik met de rechtermuisknop om de voortgang te bekijken</gradient>"
   fallback:
     rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
 
+# ============================================
+# RANG VEREISTEN OVERZICHT UI
+# ============================================
 rank_requirements_overview_ui:
   title: "<gradient:#a855f7:#c084fc>📋 %rank_name% Vereisten</gradient>"
   requirement:
@@ -315,12 +886,38 @@ rank_requirements_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Klik om details te bekijken</gradient>"
 
-
+# ============================================
+# RANG VEREISTE DETAIL UI
+# ============================================
 rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Vereiste Details</gradient>"
   back:
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ Je hebt niet alle benodigde items!</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ Items succesvol ingediend!</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ Indienen mislukt. Probeer het opnieuw.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Er is een fout opgetreden bij het indienen.</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Deze vereiste is al voltooid!</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>Jouw Level:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>Vereist Level:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>Levels Nodig:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Level vereiste behaald!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Verdien XP door te minen, mobs te doden,</gradient>"
+      - "<gradient:#6b7280:#9ca3af>smeltartikelen en meer!</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>Jouw Speeltijd:</gradient> <gradient:#10b981:#34d399>%hours%u %minutes%m</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>Vereiste Speeltijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>Resterende Tijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ Speeltijd vereiste behaald!</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Blijf spelen op de server</gradient>"
+      - "<gradient:#6b7280:#9ca3af>om speeltijd te verzamelen!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Voortgang</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Huidig:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Voltooiing:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -420,6 +1017,10 @@ rank_requirement_detail_ui:
     item_breakdown: "<gradient:#a855f7:#c084fc>📦 Item Uitsplitsing:</gradient>"
     item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
 
+
+# ============================================
+# BOUNTY-OVERZICHT UI
+# ============================================
 bounty_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🎯 Premie Systeem</gradient>"
   create_bounty:
@@ -448,6 +1049,9 @@ bounty_overview_ui:
       - ""
       - "<gradient:#a855f7:#c084fc>Klik voor details</gradient>"
 
+# ============================================
+# BOUNTY CREATIE-UI
+# ============================================
 bounty_creation_ui:
   title: "<gradient:#a855f7:#c084fc>📝 Premie Maken - %target_name%</gradient>"
   select_target:
@@ -460,6 +1064,7 @@ bounty_creation_ui:
     name: "<gradient:#10b981:#34d399>📝 Premie Maken</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>op een andere speler</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Item Beloningen Toevoegen</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Item Beloningen Toevoegen</gradient>"
@@ -489,12 +1094,16 @@ bounty_creation_ui:
     error: "<gradient:#ef4444:#f87171>❌ Fout:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Premie gemaakt op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>📦 Items geretourneerd!</gradient> <gradient:#6b7280:#9ca3af>Sommige items zijn op de grond gevallen.</gradient>"
+  # Geneste bounty_creation sleutel voor i18n("bounty_creation.confirm.success") oproepen
   bounty_creation:
     processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie verwerken...</gradient>"
     confirm:
       success: "<gradient:#10b981:#34d399>✅ Premie gemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kon premie niet verwerken:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
+# ============================================
+# BOUNTY BELONING UI
+# ============================================
 bounty_reward_ui:
   title: "<gradient:#a855f7:#c084fc>💰 Premie Beloningen</gradient>"
   pseudo:
@@ -518,23 +1127,33 @@ bounty_reward_ui:
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Geen nieuwe items toegevoegd!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Sommige items zijn gevallen omdat je inventory vol was!</gradient>"
 
+# ============================================
+# BOUNTY SPELER INFO UI
+# ============================================
 bounty_player_info_ui:
   title: "<gradient:#a855f7:#c084fc>🎯 Premie op %target_name%</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Doelwit van deze premie</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Binnenkort meer informatie...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Beloningen Bekijken</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om alle beloningen te zien</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totale beloningen:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Premie Verwijderen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om deze premie te verwijderen</gradient>"
       - "<gradient:#ef4444:#f87171>⚠ Waarschuwing: Kan niet ongedaan worden!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik om deze premie te verwijderen</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Premie op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>is verwijderd!</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>Weet je zeker dat je deze premie wilt verwijderen?</gradient>"
 
+# ============================================
+# BEHEERDER OVERZICHT gebruikersinterface
+# ============================================
 admin_overview_ui:
   title: "<gradient:#ef4444:#f87171>⚙ Admin Paneel</gradient>"
   view_permissions:
@@ -554,11 +1173,104 @@ admin_overview_ui:
     no_changes: "<gradient:#6b7280:#9ca3af>Geen nieuwe groepen gemaakt.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kon LuckPerms groepen niet maken!</gradient>"
 
-paginated_player_ui:
-  title: "<gradient:#a855f7:#c084fc>👥 Speler Selecteren</gradient>"
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+# ============================================
+# BEHEERDERMACHTIGINGEN OVERZICHT UI
+# ============================================
+admin_permissions_overview_ui:
+  title: "<gradient:#3b82f6:#60a5fa>🔑 Machtigingenbeheer</gradient>"
+  errors:
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ Plug-in niet gevonden:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient>"
+    no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ Geen rechten beschikbaar voor deze plug-in!</gradient>"
+  plugins:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Vorige plug-ins</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Volgende plug-ins</gradient>"
+    entry:
+      name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Machtigingen:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      click_instructions:
+        - "<gradient:#3b82f6:#60a5fa>Klik met de linkermuisknop om te selecteren</gradient>"
+        - "<gradient:#10b981:#34d399>Klik met de rechtermuisknop om alles toe te wijzen</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Leeg</gradient>"
+  permissions:
+    navigation:
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ Eerdere machtigingen</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ Volgende machtigingen</gradient>"
+    entry:
+      name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>Knooppunt:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      click_instructions:
+        - "<gradient:#10b981:#34d399>Klik om deze toestemming toe te wijzen</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Geen plug-in geselecteerd</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Selecteer hierboven een plug-in</gradient>"
+        - "<gradient:#6b7280:#9ca3af>om de machtigingen te bekijken</gradient>"
+    empty_slot:
+      name: "<gradient:#6b7280:#9ca3af>Leeg</gradient>"
+  actions:
+    assign_selected:
+      name: "<gradient:#10b981:#34d399>✅ Toewijzen %plugin_name% Machtigingen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Wijs alle rechten toe van</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% rechten)</gradient>"
+    no_selection:
+      name: "<gradient:#6b7280:#9ca3af>Geen selectie</gradient>"
+  status:
+    selected_plugin:
+      name: "<gradient:#a855f7:#c084fc>📊 Geselecteerd: %plugin_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Machtigingen:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Totaal plug-ins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+    overview:
+      name: "<gradient:#a855f7:#c084fc>📊 Overzicht</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Totaal plug-ins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Selecteer een plug-in om machtigingen te bekijken</gradient>"
+  controls:
+    refresh:
+      name: "<gradient:#10b981:#34d399>🔄 Gegevens vernieuwen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Klik om de machtigingsgegevens te vernieuwen</gradient>"
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ Selectie wissen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om de plug-in te deselecteren</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Toewijzen %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Wijs alle machtigingen van de geselecteerde plug-in toe</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ Wijs alle machtigingen toe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Wijs machtigingen toe aan iedereen</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plug-ins</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ Gegevens vernieuwd!</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ Toegewezen</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>toestemmingen van</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 Geselecteerd:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ Toegewezen</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>toestemmingen van</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ Toegewezen:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>van</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>Selectie gewist</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ Alle rechten toegewezen vanaf</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
 
+# ============================================
+# PAGINATION
+# ============================================
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
   lore:
@@ -566,132 +1278,9 @@ page:
     - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
 
-head:
-  return:
-    name: "<gradient:#f59e0b:#fbbf24>🔙 Terug</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
-  proceed:
-    name: "<gradient:#10b981:#34d399>➡️ Doorgaan</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om door te gaan</gradient>"
-  previous:
-    name: "<gradient:#3b82f6:#60a5fa>⬅️ Vorige</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Vorige pagina</gradient>"
-  next:
-    name: "<gradient:#3b82f6:#60a5fa>➡️ Volgende</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Volgende pagina</gradient>"
-  up:
-    name: "<gradient:#a855f7:#c084fc>⬆️ Omhoog</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Ga omhoog</gradient>"
-  down:
-    name: "<gradient:#a855f7:#c084fc>⬇️ Omlaag</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Ga omlaag</gradient>"
-  cancel:
-    name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Actie annuleren</gradient>"
-  confirm:
-    name: "<gradient:#10b981:#34d399>✅ Bevestigen</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om te bevestigen</gradient>"
-
-confirmation_ui:
-  title: "<gradient:#a855f7:#c084fc>⚠️ Actie Bevestigen</gradient>"
-  confirm:
-    name: "<gradient:#10b981:#34d399>✅ Bevestigen</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om te bevestigen</gradient>"
-  cancel:
-    name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om te annuleren</gradient>"
-
-abstract_anvil_ui:
-  title: "<gradient:#a855f7:#c084fc>✏️ Waarde Invoeren</gradient>"
-  input:
-    name: "<gradient:#f59e0b:#fbbf24>✏️ Waarde Invoeren</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Typ je invoer hierboven</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en klik om te bevestigen</gradient>"
-  error:
-    processing_failed: "<gradient:#ef4444:#f87171>❌ Kon invoer niet verwerken:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
-
-error:
-  premium_required: "<gradient:#ef4444:#f87171>❌ Premium Vereist!</gradient> <gradient:#6b7280:#9ca3af>De functie</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>vereist de premium versie.</gradient>"
-  processing_failed: "<gradient:#ef4444:#f87171>❌ Verwerking mislukt:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
-
-bounty_listener:
-  bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 PREMIE GECLAIMD! 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>Je hebt de premie op</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>geclaimd!</gradient>"
-    share: "<gradient:#3b82f6:#60a5fa>Jouw deel:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
-    someone: "<gradient:#6b7280:#9ca3af>Iemand</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>heeft de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% spelers</gradient> <gradient:#a855f7:#c084fc>hebben de premie op</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc> geclaimd!</gradient>"
-
-bounty_creation:
-  confirm:
-    success: "<gradient:#10b981:#34d399>✅ Premie aangemaakt voor</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Fout bij verwerken premie:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ Premie wordt verwerkt...</gradient>"
-
-rank_progression:
-  started: "<gradient:#10b981:#34d399>✅ Voortgang gestart voor rang</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 Vereisten bekijken voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereisten onvolledig voor</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% voltooid)</gradient>"
-  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ Vereiste onvolledig:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
-  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>heeft geen vereisten!</gradient>"
-
-rank_click:
-  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  owned: "<gradient:#10b981:#34d399>✅ Je bezit</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  locked: "<gradient:#ef4444:#f87171>🔒 Vergrendeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- Voltooi eerst de voorwaarden</gradient>"
-
-rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient> <gradient:#6b7280:#9ca3af>Deze functie vereist LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Help</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Open hoofdmenu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Bekijk rangen</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Bekijk premies</gradient>"
-
-main_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
-  admin_overview:
-    name: "<gradient:#ef4444:#f87171>⚙ Admin Paneel</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Toegang tot beheertools</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en configuratie-opties</gradient>"
-  bounty_overview:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 Premies</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk en beheer premies</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Jaag op spelers voor beloningen!</gradient>"
-  perk_overview:
-    name: "<gradient:#10b981:#34d399>✨ Voordelen</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare voordelen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en speciale vaardigheden</gradient>"
-  quest_overview:
-    name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare quests</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en volg je voortgang</gradient>"
-  rank_overview:
-    name: "<gradient:#a855f7:#c084fc>⚔ Rangen</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk rang voortgang</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en ontgrendel nieuwe vaardigheden</gradient>"
-
-rank_main_ui:
-  title: "<gradient:#a855f7:#c084fc>⚔ Rang Systeem</gradient>"
-  rank_tree:
-    name: "<gradient:#f59e0b:#fbbf24>🌳 Rang Bomen</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Blader door beschikbare rang bomen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en kies je pad</gradient>"
-
+# ============================================
+# HOOFD ITEMS
+# ============================================
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Terug</gradient>"
@@ -722,10 +1311,26 @@ head:
     lore:
       - "<gradient:#6b7280:#9ca3af>Actie annuleren</gradient>"
 
+
+
+# ============================================
+# FOUTMELDINGEN
+# ============================================
 error:
   premium_required: "<gradient:#ef4444:#f87171>❌ Premium Vereist!</gradient> <gradient:#6b7280:#9ca3af>De functie</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>vereist de premium versie.</gradient>"
   processing_failed: "<gradient:#ef4444:#f87171>❌ Verwerking mislukt:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
+# ============================================
+# GEPAGINEERDE SPELERUI
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 Speler Selecteren</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# ABSTRACT AAMBEELD
+# ============================================
 abstract_anvil_ui:
   title: "<gradient:#a855f7:#c084fc>✏️ Waarde Invoeren</gradient>"
   input:
@@ -736,6 +1341,9 @@ abstract_anvil_ui:
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Kon invoer niet verwerken:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
+# ============================================
+# BEVESTIGING BEKIJKEN
+# ============================================
 confirmation_ui:
   title: "<gradient:#a855f7:#c084fc>⚠️ Actie Bevestigen</gradient>"
   confirm:
@@ -747,93 +1355,398 @@ confirmation_ui:
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om te annuleren</gradient>"
 
-paginated_player_ui:
-  title: "<gradient:#a855f7:#c084fc>👥 Speler Selecteren</gradient>"
-  player_entry:
-    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
-
-page:
-  name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
-  lore:
-    - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
-  fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
-
+# ============================================
+# BEPERKINGEN VOOR DE GRATIS VERSIE
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ Gratis versielimiet:</gradient> <gradient:#6b7280:#9ca3af>Je kunt alleen voltooien</gradient> <gradient:#f59e0b:#fbbf24>1 rangboom</gradient><gradient:#6b7280:#9ca3af>. Upgrade onbeperkt naar Premium!</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ Gratis versielimiet:</gradient> <gradient:#6b7280:#9ca3af>Je kunt alleen maar verder komen</gradient> <gradient:#f59e0b:#fbbf24>3 rangen</gradient> <gradient:#6b7280:#9ca3af>per boom. Upgrade naar Premium!</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ Gratis versielimiet:</gradient> <gradient:#6b7280:#9ca3af>Je kunt het alleen maar hebben</gradient> <gradient:#f59e0b:#fbbf24>1 actief rangpad</gradient><gradient:#6b7280:#9ca3af>. Upgrade naar Premium!</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 Alleen voorbeeld:</gradient> <gradient:#6b7280:#9ca3af>Deze rangboom is alleen als voorbeeld beschikbaar in de gratis versie. Upgrade naar Premium om te ontgrendelen!</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 Premie vereist:</gradient> <gradient:#6b7280:#9ca3af>Deze rang vereist Premium om te ontgrendelen.</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ Gratis versie</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Je gebruikt de gratis versie</gradient>"
+      - "<gradient:#6b7280:#9ca3af>met beperkte functies.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Upgrade naar Premium voor:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Onbeperkte rangbomen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Onbeperkt aantal rangen per boom</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• Meerdere actieve paden</gradient>"
 
 # ============================================
-# RANG VEREISTE DETAIL UI
+# PREMIUM VERSIE BERICHTEN
 # ============================================
-rank_requirement_detail_ui:
-  title: "<gradient:#a855f7:#c084fc>📋 Vereiste Details</gradient>"
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ Premie:</gradient> <gradient:#6b7280:#9ca3af>Er zijn geen beperkingen van toepassing.</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ Premium-versie</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>Alle functies ontgrendeld!</gradient>"
+
+# ============================================
+# VEREISTE ARTIKEL DETAILWEERGAVE (vereenvoudigd)
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 Artikelvereisten</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ Je hebt dit artikel</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ Ontbrekend item</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 Artikelen indienen</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>Alle artikelen klaar!</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶ Klik om te verzenden</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 Artikelen indienen</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>Er ontbreken vereiste items</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Verzamel eerst alle items</gradient>"
   back:
+    name: "<gradient:#ef4444:#f87171>← Terug</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
-  submit:
-    missing_items: "<gradient:#ef4444:#f87171>❌ Je hebt niet alle benodigde items!</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ Items succesvol ingediend!</gradient>"
-    failed: "<gradient:#ef4444:#f87171>❌ Indienen mislukt. Probeer het opnieuw.</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Er is een fout opgetreden bij het indienen.</gradient>"
-    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ Deze vereiste is al voltooid!</gradient>"
-  experience:
-    current_level: "<gradient:#6b7280:#9ca3af>Jouw Level:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
-    required_level: "<gradient:#6b7280:#9ca3af>Vereist Level:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
-    levels_needed: "<gradient:#ef4444:#f87171>Levels Nodig:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
-    completed: "<gradient:#10b981:#34d399>✅ Level vereiste behaald!</gradient>"
-  playtime:
-    current: "<gradient:#6b7280:#9ca3af>Jouw Speeltijd:</gradient> <gradient:#10b981:#34d399>%hours%u %minutes%m</gradient>"
-    required: "<gradient:#6b7280:#9ca3af>Vereiste Speeltijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
-    remaining: "<gradient:#ef4444:#f87171>Resterende Tijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
-    completed: "<gradient:#10b981:#34d399>✅ Speeltijd vereiste behaald!</gradient>"
-  summary:
-    requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>Voortgang:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
-    requirement_summary:
-      name: "<gradient:#a855f7:#c084fc>📊 Vereiste Samenvatting</gradient>"
-    requirement_tip:
-      name: "<gradient:#f59e0b:#fbbf24>💡 Tips</gradient>"
-  requirement_tip:
-    currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verdien de vereiste valuta</gradient>"
-    experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verdien ervaringsniveaus</gradient>"
-    playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Speel op de server</gradient>"
-    other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Voltooi de vereiste</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Keer terug naar de vereisten</gradient>"
+
 
 # ============================================
-# RANG VEREISTEN REIS UI
+# BELONINGSVERTALINGEN
 # ============================================
 rank_requirements_journey_ui:
+
+  # ============================================
+  # RANGVEREISTEN REISWEERGAVE
+  # ============================================
   title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% Vereisten</gradient>"
-  rank_info:
-    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
-      - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
   overall_progress:
-    name: "<gradient:#3b82f6:#60a5fa>📊 Totale Voortgang</gradient>"
+    name: "<gradient:#a855f7:#c084fc>📊 Totale voortgang</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Voltooid:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Voltooiing:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Vereisten:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>✅ Rang Claimen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om de rang te claimen!</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Alle vereisten voltooid!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Klik om je rang te claimen</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒 Rang vergrendeld</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
       lore:
+        - ""
         - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen.</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← Terug</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Keer terug naar het rangoverzicht</gradient>"
   messages:
-    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus - Acties uitgeschakeld</gradient>"
     requirement_completed: "<gradient:#10b981:#34d399>✅ Vereiste voltooid!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Alle vereisten voltooid! Je kunt nu de rang claimen!</gradient>"
-    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ Deze vereiste is nog niet klaar om te voltooien.</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆 Gefeliciteerd! Je hebt de rang bereikt:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌ Deze vereiste is nog niet klaar om te voltooien.</gradient>"
     already_completed: "<gradient:#10b981:#34d399>✅ Deze vereiste is al voltooid.</gradient>"
-    rank_claimed: "<gradient:#10b981:#34d399>🎉 Gefeliciteerd! Je hebt de rang %rank_name% verkregen!</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus - Acties uitgeschakeld</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>Geen beloningen</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
+      type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>Waarde:</gray> <gold>%value%</gold>"
+    
+    # Beschrijvingen van beloningstypen
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>Ontvang valutabeloningen</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>Ontvang itembeloningen</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>Ontvang ervaringspunten</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>Voer speciale opdrachten uit</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>Meerdere beloningen gecombineerd</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>Kies uit meerdere beloningen</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>Verkrijg speciale machtigingen</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>Teleporteer naar een locatie</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>Ontgrendel deeltjeseffecten</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>Ontvang een verdwijnende kist</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% meer beloningen...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 Bekijk alle beloningen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Klik om alles te zien %count% beloningen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>voor deze rang in detail</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>Gedetailleerde beloningenweergave volgt binnenkort!</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋 Geen beloningen</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>Deze rang kent geen beloningen</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd.</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 Rangbeloningen</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>Je zult ontvangen %count% beloningen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>wanneer je deze rang claimt</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>Geen beloningen</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
+    type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>Waarde:</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>Je hebt het voordeel ontgrendeld:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # Beschrijvingen van beloningstypen
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>Ontvang valutabeloningen</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>Ontvang itembeloningen</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>Ontvang ervaringspunten</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>Voer speciale opdrachten uit</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>Meerdere beloningen gecombineerd</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>Kies uit meerdere beloningen</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>Verkrijg speciale machtigingen</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>Teleporteer naar een locatie</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>Ontgrendel deeltjeseffecten</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>Ontvang een verdwijnende kist</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% meer beloningen...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 Bekijk alle beloningen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om alles te zien %count% beloningen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>voor deze rang in detail</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>Gedetailleerde beloningenweergave volgt binnenkort!</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋 Geen beloningen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Deze rang kent geen beloningen</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd.</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 Rangbeloningen</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>Je zult ontvangen %count% beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>wanneer je deze rang claimt</gradient>"
+
+
+# ============================================
+# RANG BELONINGEN DETAILWEERGAVE
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>Beloningen: %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Deze rang heeft %count% beloningen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik op een beloning voor meer informatie</gradient>"
+
+# ============================================
+# PERK OVERZICHT UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨Voordelen</gradient>"
+
+# ============================================
+# PERK DETAIL-UI
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# PERK-VERTALINGEN
+# ============================================
+perk:
+  # Visserijvoordelen
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>Sneller vissen</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Vang sneller vis met verbeterde vistarieven</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>XP-boost voor vissen</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Verdien bonus-XP bij het vangen van vis</gradient>"
+  
+  # Drankvoordelen
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>Drankversterker</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Kans om de effecten van drankjes te versterken wanneer ze worden geconsumeerd</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>Duur van het drankje</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Kans om de duur van het drankje te verlengen wanneer het wordt geconsumeerd</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>Terugbetaling van drankjes</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Kans om je drankje terug te krijgen nadat je het hebt gedronken</gradient>"
+  
+  # Perk-berichten
+  messages:
+    # Ontgrendelen/Enable/Disable
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ Voordeel ontgrendeld!</gradient> <gradient:#6b7280:#9ca3af>Je hebt ontgrendeld</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>Perk succesvol ontgrendeld en ingeschakeld:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Kan het voordeel niet ontgrendelen. Probeer het opnieuw.</gradient>"
+      error: "<gradient:#ef4444:#f87171>Er is een fout opgetreden bij het ontgrendelen van het voordeel.</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>Je voldoet niet aan de vereisten om dit voordeel te ontgrendelen!</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>Ingeschakeld voordeel:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Kan voordeel niet inschakelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>Je hebt het maximale aantal ingeschakelde speciale voordelen bereikt (%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>Voordeel voor gehandicapten:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>Kan voordeel niet uitschakelen:</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # Afkoelen
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>Dit voordeel heeft een cooldown-periode</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Perk is klaar voor gebruik!</gradient>"
+    
+    # Effecttriggers
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ Drankje verbeterd!</gradient> <gradient:#6b7280:#9ca3af>Effecten versterkt</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ Duur van de toverdrank verlengd!</gradient> <gradient:#6b7280:#9ca3af>Gaat langer mee</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 Drankje opgeslagen!</gradient> <gradient:#6b7280:#9ca3af>Terug naar de inventaris</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 Sneller vissen actief!</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% Vissen XP!</gradient>"
+  
+  # UI-elementen
+  ui:
+    header:
+      type_label: "<gray>Type: <white>%type%</white></gray>"
+      category_label: "<gray>Categorie: <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>Geen vereisten</green>"
+      no_requirements_lore: "<gray>Voor dit voordeel gelden geen ontgrendelingsvereisten</gray>"
+    
+    rewards:
+      title: "<gold>Ontgrendel beloning</gold>"
+      no_rewards: "<gray>Geen ontgrendelbeloningen</gray>"
+      no_rewards_lore: "<gray>Dit voordeel heeft geen ontgrendelingsbeloningen</gray>"
+      type_label: "<gray>Type: <white>%type%</white></gray>"
+      value_label: "<gray>Waarde: <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>Perk-status</white>"
+      locked: "<red>✖ Vergrendeld</red>"
+      locked_hint: "<gray>Voltooi de vereisten om te ontgrendelen</gray>"
+      active: "<green>✓ Actief</green>"
+      enabled: "<yellow>○ Ingeschakeld</yellow>"
+      disabled: "<gray>○ Uitgeschakeld</gray>"
+      enabled_count: "<gray>Ingeschakelde voordelen: <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>Afkoeling: <gold>%time%</gold></gray>"
+      activations_label: "<gray>Activeringen: <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>Ontgrendel Perk</white>"
+        hint: "<green>Klik om dit voordeel te ontgrendelen!</green>"
+      enable:
+        title: "<white>Schakel voordeel in</white>"
+        hint: "<green>Klik om dit voordeel in te schakelen</green>"
+        limit_reached: "<red>Maximaal ingeschakelde voordelen bereikt</red>"
+      disable:
+        title: "<white>Schakel voordeel uit</white>"
+        hint: "<yellow>Klik om dit voordeel uit te schakelen</yellow>"
+  
+  # Bestaande voordelen (ter referentie - voeg toe als deze ontbreken)
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>Vlucht</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Verkrijg het vermogen om te vliegen</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>Gloed</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Breng een stralend effect op jezelf aan</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>Haast</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Mijn en graaf sneller</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>Springboost</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Spring hoger dan normaal</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>Ervaring behouden</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Behoud je XP als je sterft</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>Houd voorraad bij</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Bewaar uw spullen als u overlijdt</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>Nachtzicht</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Zie duidelijk in het donker</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>Geen valschade</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Loop geen schade op door vallen</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>Weerstand</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Neem minder schade op uit alle bronnen</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>Verzadiging</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Nooit honger krijgen</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>Snelheid</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Beweeg sneller dan normaal</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>Kracht</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Richt meer schade aan tijdens gevechten</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>Brandwerendheid</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Immuniteit voor brand en lavaschade</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>Dubbele ervaring</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Verkrijg dubbele XP uit alle bronnen</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>Kritische aanval</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Kans om kritieke schade aan te richten</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>Gevecht genezen</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>Genees wanneer je schade toebrengt aan vijanden</gradient>"

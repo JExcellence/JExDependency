@@ -1,0 +1,24 @@
+# Polskie tlumaczenia dla RCore Central Integration
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Uzycie: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Laczenie z RaindropCentral...</yellow>"
+  success: "<green>Pomyslnie polaczono z RaindropCentral!</green> <gray>Serwer wysyla teraz heartbeaty.</gray>"
+  error:
+    invalid_key: "<red>Nieprawidlowy format klucza API. Klucze API powinny miec 32-128 znakow alfanumerycznych.</red>"
+    uuid_mismatch: "<red>Ten klucz API nalezy do innego konta Minecraft.</red>"
+    already_connected: "<yellow>Serwer jest juz polaczony.</yellow> <gray>Najpierw uzyj /rcdisconnect.</gray>"
+    network: "<red>Blad sieci: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Rozlaczanie z RaindropCentral...</yellow>"
+  success: "<green>Pomyslnie rozlaczono z RaindropCentral.</green>"
+  error:
+    not_connected: "<red>Serwer nie jest polaczony z RaindropCentral.</red>"
+    failed: "<red>Nie udalo sie rozlaczyc. Sprobuj ponownie.</red>"
+    network: "<red>Blad sieci: %error%</red>"
+
+general:
+  no_permission: "<red>Nie masz uprawnien do uzycia tej komendy.</red>"

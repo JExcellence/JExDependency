@@ -1,0 +1,24 @@
+# České překlady pro integraci RCore Central
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Použití: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Připojování k RaindropCentral...</yellow>"
+  success: "<green>Připojení k RaindropCentral bylo úspěšné!</green> <gray>Server nyní odesílá heartbeat signály.</gray>"
+  error:
+    invalid_key: "<red>Neplatný formát API klíče. API klíče musí mít 32-128 alfanumerických znaků.</red>"
+    uuid_mismatch: "<red>Tento API klíč patří k jinému účtu Minecraft.</red>"
+    already_connected: "<yellow>Server je již připojen.</yellow> <gray>Nejprve použijte /rcdisconnect.</gray>"
+    network: "<red>Chyba sítě: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Odpojování od RaindropCentral...</yellow>"
+  success: "<green>Odpojení od RaindropCentral proběhlo úspěšně.</green>"
+  error:
+    not_connected: "<red>Server není připojen k RaindropCentral.</red>"
+    failed: "<red>Odpojení se nezdařilo. Zkuste to prosím znovu.</red>"
+    network: "<red>Chyba sítě: %error%</red>"
+
+general:
+  no_permission: "<red>Nemáte oprávnění použít tento příkaz.</red>"

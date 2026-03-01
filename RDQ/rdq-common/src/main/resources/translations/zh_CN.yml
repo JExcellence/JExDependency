@@ -1,169 +1,485 @@
-# RDQ 翻译文件 - 简体中文
-# MiniMessage格式（带渐变和样式）
-# 占位符使用 %placeholder% 格式
+# RDQ 翻译文件 - 英语（美国）
+# 具有渐变和样式的 MiniMessage 格式
+# 占位符使用%placeholder%格式
 
+# ============================================
+# 全球前缀
+# ============================================
 prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 
+# ============================================
+# 根级密钥（由直接 I18n.Builder 调用使用）
+# ============================================
 pseudo:
-  name: "<gradient:#6b7280:#9ca3af>📦 无奖励</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>📦没有奖励</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>添加物品以创建奖励</gradient>"
+    - "<gradient:#6b7280:#9ca3af>添加项目以创建奖励</gradient>"
 
 input_slot:
-  name: "<gradient:#10b981:#34d399>➕ 添加物品</gradient>"
+  name: "<gradient:#10b981:#34d399>➕ 添加项目</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>将物品放在这里作为奖励添加</gradient>"
+    - "<gradient:#6b7280:#9ca3af>将项目放置在此处以添加为奖励</gradient>"
+    - "<gradient:#6b7280:#9ca3af>左键单击放置物品</gradient>"
+    - "<gradient:#6b7280:#9ca3af>右键单击以删除项目</gradient>"
 
+# ============================================
+# 排名树显示名称和描述
+# ============================================
 tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 游侠</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>掌握弓箭和追踪的艺术</gradient>"
+      - "<gradient:#6b7280:#9ca3af>掌握射箭和追踪的艺术</gradient>"
+      - "<gradient:#6b7280:#9ca3af>与自然合而为一</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ 战士</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>掌握战斗的艺术</gradient>"
+      - "<gradient:#6b7280:#9ca3af>掌握战斗艺术</gradient>"
+      - "<gradient:#6b7280:#9ca3af>成为传奇战士</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ 法师</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>驾驭魔法的力量</gradient>"
+      - "<gradient:#6b7280:#9ca3af>利用魔法的力量</gradient>"
+      - "<gradient:#6b7280:#9ca3af>成为奥术大师</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 盗贼</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>掌握隐匿和狡诈</gradient>"
+      - "<gradient:#6b7280:#9ca3af>精通隐秘和狡猾</gradient>"
+      - "<gradient:#6b7280:#9ca3af>从阴影中发起攻击</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ 牧师</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>引导神圣力量</gradient>"
+      - "<gradient:#6b7280:#9ca3af>引导神力</gradient>"
+      - "<gradient:#6b7280:#9ca3af>治愈并保护你的盟友</gradient>"
   merchant:
-    name: "<gradient:#10b981:#34d399>💰 商人</gradient>"
+    name: "<gradient:#10b981:#34d399>💰 商家</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>掌握贸易的艺术</gradient>"
+      - "<gradient:#6b7280:#9ca3af>掌握贸易艺术</gradient>"
+      - "<gradient:#6b7280:#9ca3af>建立你的财富</gradient>"
 
+# ============================================
+# 排名显示名称和说明
+# ============================================
+rank:
+
+  # ============================================
+  # 排名信息
+  # ============================================
+  messages:
+    requirements_complete: "<gradient:#10b981:#34d399>🎉 排名上升！</gradient> <gradient:#6b7280:#9ca3af>您已完成以下所有要求</gradient> <gradient:#f59e0b:#fbbf24>%rank%</gradient>"
+    claim_upgrade: "<gradient:#6b7280:#9ca3af>使用等级菜单来升级你的等级！</gradient>"
+
+  default:
+    name: "<gradient:#6b7280:#9ca3af>未排名</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>选择开始的排名路径</gradient>"
+    unselected:
+      name: "<gradient:#6b7280:#9ca3af>未排名</gradient>"
+  icon:
+    default:
+      name: "<gradient:#6b7280:#9ca3af>默认排名</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>未选择排名</gradient>"
+  # 游侠树等级
+  ranger:
+    hunter:
+      name: "<gradient:#7c3aed:#a78bfa>🏹 猎人</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>新手追踪者学习野外生存方式</gradient>"
+    archer:
+      name: "<gradient:#10b981:#34d399>🎯 弓箭手</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>擅长弓箭，射程致命</gradient>"
+    tracker:
+      name: "<gradient:#3b82f6:#60a5fa>🔍 追踪器</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>寻找和追踪猎物的专家</gradient>"
+    marksman:
+      name: "<gradient:#f59e0b:#fbbf24>🎯 射手</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>精准射手，具有致命的准确性</gradient>"
+    pathfinder:
+      name: "<gradient:#a855f7:#c084fc>🗺 探路者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>未知领域的探险大师</gradient>"
+    sniper:
+      name: "<gradient:#ef4444:#f87171>🎯 狙击手</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>精英射手，一枪一杀</gradient>"
+    forest_lord:
+      name: "<gradient:#10b981:#34d399>🌲 森林领主</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>荒野大师，与自然合一</gradient>"
+  # 战士树排名
+  warrior:
+    recruit:
+      name: "<gradient:#6b7280:#9ca3af>招募</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>新的战士开始他们的旅程</gradient>"
+        - "<gradient:#6b7280:#9ca3af>学习战斗基础知识</gradient>"
+    soldier:
+      name: "<gradient:#3b82f6:#60a5fa>士兵</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>受过格斗艺术训练</gradient>"
+        - "<gradient:#6b7280:#9ca3af>准备战斗</gradient>"
+    veteran:
+      name: "<gradient:#f59e0b:#fbbf24>老将</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>身经百战的战士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>选择您的专业化路径</gradient>"
+    # 专业分支1：狂战士（进攻）
+    berserker:
+      name: "<gradient:#ef4444:#f87171>狂战士</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>愤怒之路</gradient>"
+        - "<gradient:#6b7280:#9ca3af>发动毁灭性攻击</gradient>"
+        - "<gradient:#6b7280:#9ca3af>牺牲防御以获得原始力量</gradient>"
+    # 专业分支2：守护者（防御）
+    guardian:
+      name: "<gradient:#3b82f6:#60a5fa>监护人</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>保护之路</gradient>"
+        - "<gradient:#6b7280:#9ca3af>成为坚不可摧的盾牌</gradient>"
+        - "<gradient:#6b7280:#9ca3af>不惜一切代价保护你的盟友</gradient>"
+    # 专业分支 3：角斗士（平衡）
+    gladiator:
+      name: "<gradient:#a855f7:#c084fc>角斗士</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>荣耀之路</gradient>"
+        - "<gradient:#6b7280:#9ca3af>竞技场战斗大师</gradient>"
+        - "<gradient:#6b7280:#9ca3af>平衡进攻和防守</gradient>"
+    # 最终排名
+    warlord_fury:
+      name: "<gradient:#ef4444:#f87171>愤怒军阀</gradient>"
+      lore:
+        - "<gradient:#ef4444:#f87171>终极狂战士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>不可阻挡的破坏力</gradient>"
+        - "<gradient:#6b7280:#9ca3af>恐惧在战场上化身</gradient>"
+    warlord_shield:
+      name: "<gradient:#3b82f6:#60a5fa>盾之督军</gradient>"
+      lore:
+        - "<gradient:#3b82f6:#60a5fa>终极守护者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>不可移动的物体，永恒的保护者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>当你站立时，没有人会通过</gradient>"
+    warlord_arena:
+      name: "<gradient:#a855f7:#c084fc>竞技场督军</gradient>"
+      lore:
+        - "<gradient:#a855f7:#c084fc>终极角斗士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>冠军中的冠军</gradient>"
+        - "<gradient:#6b7280:#9ca3af>竞技场传奇</gradient>"
+    # 旧排名（为了向后兼容）
+    knight:
+      name: "<gradient:#f59e0b:#fbbf24>骑士</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>值得尊敬的王国战士</gradient>"
+    champion:
+      name: "<gradient:#a855f7:#c084fc>冠军</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>传奇战士，人人畏惧</gradient>"
+    warlord:
+      name: "<gradient:#ef4444:#f87171>军阀</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>战争大师、军队统帅</gradient>"
+  # 法师树等级
+  mage:
+    apprentice:
+      name: "<gradient:#a855f7:#c084fc>✨ 学徒</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>学习魔法的基础知识</gradient>"
+    adept:
+      name: "<gradient:#3b82f6:#60a5fa>✨ 熟练</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>魔法力量不断成长</gradient>"
+    wizard:
+      name: "<gradient:#f59e0b:#fbbf24>✨ 向导</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>奥术大师</gradient>"
+    archmage:
+      name: "<gradient:#ef4444:#f87171>✨ 大法师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>所有魔法的最高大师</gradient>"
+  # 盗贼树排名
+  rogue:
+    pickpocket:
+      name: "<gradient:#6b7280:#9ca3af>🗡 扒手</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>手指敏捷，逃脱更快</gradient>"
+    thief:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 小偷</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>潜行和盗窃大师</gradient>"
+    scout:
+      name: "<gradient:#10b981:#34d399>🗡 侦察兵</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>影子的眼睛和耳朵</gradient>"
+    assassin:
+      name: "<gradient:#ef4444:#f87171>🗡 刺客</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>无声杀手，阴影中的死亡</gradient>"
+    infiltrator:
+      name: "<gradient:#a855f7:#c084fc>🗡 渗透者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>进出不被发现的专家</gradient>"
+    shadowblade:
+      name: "<gradient:#6b7280:#9ca3af>🗡 暗影之刃</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>暗夜的致命战士</gradient>"
+    spymaster:
+      name: "<gradient:#3b82f6:#60a5fa>🗡 间谍大师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>信息网络控制器</gradient>"
+    shadow_master:
+      name: "<gradient:#1f2937:#374151>🗡 影子大师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>与黑暗本身合而为一</gradient>"
+    shadowmaster:
+      name: "<gradient:#1f2937:#374151>🗡 影子大师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>所有暗影的最高统治者</gradient>"
+  # 牧师树等级
+  cleric:
+    acolyte:
+      name: "<gradient:#f59e0b:#fbbf24>✝ 侍僧</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神圣的忠诚仆人</gradient>"
+    devotee:
+      name: "<gradient:#f59e0b:#fbbf24>✝ 奉献者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神圣道路的忠实追随者</gradient>"
+    priest:
+      name: "<gradient:#10b981:#34d399>✝ 牧师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>信徒的治愈者和保护者</gradient>"
+    healer:
+      name: "<gradient:#10b981:#34d399>✝ 治愈者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>修复艺术硕士</gradient>"
+    bishop:
+      name: "<gradient:#a855f7:#c084fc>✝ 主教</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>忠实的领袖</gradient>"
+    oracle:
+      name: "<gradient:#3b82f6:#60a5fa>✝ 甲骨文</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神圣异象的先知</gradient>"
+    high_priest:
+      name: "<gradient:#ef4444:#f87171>✝ 大祭司</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>神圣至高无上的声音</gradient>"
+  # 商家树排名
+  merchant:
+    peddler:
+      name: "<gradient:#6b7280:#9ca3af>💰 小贩</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>街头贩卖商品</gradient>"
+    trader:
+      name: "<gradient:#3b82f6:#60a5fa>💰 交易者</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>有关系的老牌商人</gradient>"
+    vendor:
+      name: "<gradient:#10b981:#34d399>💰 供应商</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>熟练的商品卖家</gradient>"
+    artificer:
+      name: "<gradient:#f59e0b:#fbbf24>💰 技师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>精美器皿工匠</gradient>"
+    alchemist:
+      name: "<gradient:#a855f7:#c084fc>💰 炼金术士</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>魔药和长生不老药大师</gradient>"
+    merchant:
+      name: "<gradient:#f59e0b:#fbbf24>💰 商家</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>成功的企业主</gradient>"
+    master_crafter:
+      name: "<gradient:#ef4444:#f87171>💰 工匠大师</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>王国的最高工匠</gradient>"
+    merchant_prince:
+      name: "<gradient:#a855f7:#c084fc>💰 商人王子</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>商业特许权使用费</gradient>"
+    tycoon:
+      name: "<gradient:#a855f7:#c084fc>💰 大亨</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>商业与贸易硕士</gradient>"
+    guild_master:
+      name: "<gradient:#ef4444:#f87171>💰 公会会长</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>商人行会的领袖</gradient>"
+
+# ============================================
+# 赏金听众消息
+# ============================================
 bounty_listener:
   bounty_active:
-    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>你的头上有悬赏！</gradient>"
-    value: "<gradient:#3b82f6:#60a5fa>💰 悬赏金额:</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
-    expires: "<gradient:#f59e0b:#fbbf24>⏰ 到期时间:</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
-    commissioner: "<gradient:#ef4444:#f87171>👤 委托人:</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
+    warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>你的头上有一个活跃的赏金！</gradient>"
+    value: "<gradient:#3b82f6:#60a5fa>💰赏金价值：</gradient> <gradient:#10b981:#34d399>$%bounty_value%</gradient>"
+    expires: "<gradient:#f59e0b:#fbbf24>⏰ 到期日：</gradient> <gradient:#6b7280:#9ca3af>%expires_at%</gradient>"
+    commissioner: "<gradient:#ef4444:#f87171>👤 委托：</gradient> <gradient:#6b7280:#9ca3af>%commissioner_uuid%</gradient>"
   bounty_claimed:
-    title: "<gradient:#10b981:#34d399>🎉 悬赏已领取！ 🎉</gradient>"
-    victim: "<gradient:#a855f7:#c084fc>你成功领取了</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的悬赏！</gradient>"
-    share: "<gradient:#3b82f6:#60a5fa>你的份额:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
-    someone: "<gradient:#6b7280:#9ca3af>某人</gradient>"
-    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>领取了</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的悬赏！</gradient>"
-    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count%名玩家</gradient> <gradient:#a855f7:#c084fc>领取了</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient> <gradient:#a855f7:#c084fc>的悬赏！</gradient>"
+    title: "<gradient:#10b981:#34d399>🎉 已领取赏金！ 🎉</gradient>"
+    victim: "<gradient:#a855f7:#c084fc>您已成功领取赏金</gradient> <gradient:#f59e0b:#fbbf24>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    share: "<gradient:#3b82f6:#60a5fa>您的分享：</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
+    someone: "<gradient:#6b7280:#9ca3af>有人</gradient>"
+    broadcast: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%claimer_name%</gradient> <gradient:#a855f7:#c084fc>已领取赏金</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
+    broadcast_multiple: "<gradient:#10b981:#34d399>🎯</gradient> <gradient:#f59e0b:#fbbf24>%winner_count% 玩家</gradient> <gradient:#a855f7:#c084fc>已领取赏金</gradient> <gradient:#ef4444:#f87171>%victim_name%</gradient><gradient:#a855f7:#c084fc>!</gradient>"
 
+# ============================================
+# 赏金创建消息
+# ============================================
 bounty_creation:
   confirm:
-    success: "<gradient:#10b981:#34d399>✅ 成功为</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>创建悬赏！</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 处理悬赏失败:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-  processing: "<gradient:#f59e0b:#fbbf24>⏳ 正在处理悬赏...</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 已成功创建赏金</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 未能处理赏金：</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+  processing: "<gradient:#f59e0b:#fbbf24>⏳ 正在处理赏金...</gradient>"
 
+# ============================================
+# 排名进展消息
+# ============================================
 rank_progression:
-  started: "<gradient:#10b981:#34d399>✅ 开始</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>等级进度</gradient>"
-  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋 查看</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#3b82f6:#60a5fa>的要求</gradient>"
-  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>要求未完成</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%% 完成)</gradient>"
-  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要求未完成:</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
-  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>没有要求！</gradient>"
+  started: "<gradient:#10b981:#34d399>✅ 开始等级提升</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_view_opened: "<gradient:#3b82f6:#60a5fa>📋观看要求</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  requirements_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要求不完整</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%completion_percent%％ 完全的）</gradient>"
+  requirement_incomplete: "<gradient:#f59e0b:#fbbf24>⚠ 要求不完整：</gradient> <gradient:#6b7280:#9ca3af>%requirement_name% (%progress_percent%%)</gradient>"
+  no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#10b981:#34d399>没有任何要求！</gradient>"
 
+# ============================================
+# 排名点击消息
+# ============================================
 rank_click:
-  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 预览模式:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+  preview_mode: "<gradient:#3b82f6:#60a5fa>👁 预览模式：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
   owned: "<gradient:#10b981:#34d399>✅ 你拥有</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-  locked: "<gradient:#ef4444:#f87171>🔒 已锁定:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 请先完成前置条件</gradient>"
+  locked: "<gradient:#ef4444:#f87171>🔒 锁定：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 首先完成先决条件</gradient>"
 
+# ============================================
+# RQ 命令消息
+# ============================================
 rq:
-  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms未安装！</gradient> <gradient:#6b7280:#9ca3af>此功能需要LuckPerms。</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests 帮助</gradient>\n<gradient:#6b7280:#9ca3af>/rq - 打开主菜单</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - 查看等级</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - 查看悬赏</gradient>"
+  no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms 未安装！</gradient> <gradient:#6b7280:#9ca3af>此功能需要 LuckPerms。</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 雨滴任务帮助</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - 打开主菜单</gradient>\\n<gradient:#6b7280:#9ca3af>/rq 排名 - 查看排名</gradient>\\n<gradient:#6b7280:#9ca3af>/rq 赏金 - 查看赏金</gradient>"
 
+# ============================================
+# 主要概览用户界面
+# ============================================
 main_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎮 RaindropQuests</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🎮 雨滴任务</gradient>"
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ 管理面板</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>访问管理工具</gradient>"
+      - "<gradient:#6b7280:#9ca3af>和配置选项</gradient>"
   bounty_overview:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 悬赏</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯 赏金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>查看和管理悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>查看和管理赏金</gradient>"
+      - "<gradient:#6b7280:#9ca3af>寻找玩家以获得奖励！</gradient>"
   perk_overview:
-    name: "<gradient:#10b981:#34d399>✨ 特权</gradient>"
+    name: "<gradient:#10b981:#34d399>✨ 福利</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>查看可用特权</gradient>"
+      - "<gradient:#6b7280:#9ca3af>查看可用的福利</gradient>"
+      - "<gradient:#6b7280:#9ca3af>和特殊能力</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 任务</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>查看可用任务</gradient>"
+      - "<gradient:#6b7280:#9ca3af>查看可用的任务</gradient>"
+      - "<gradient:#6b7280:#9ca3af>并跟踪您的进度</gradient>"
   rank_overview:
-    name: "<gradient:#a855f7:#c084fc>⚔ 等级</gradient>"
+    name: "<gradient:#a855f7:#c084fc>⚔ 排名</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>查看等级进度</gradient>"
+      - "<gradient:#6b7280:#9ca3af>查看排名进展</gradient>"
+      - "<gradient:#6b7280:#9ca3af>并解锁新能力</gradient>"
 
+# ============================================
+# 排名主界面
+# ============================================
 rank_main_ui:
-  title: "<gradient:#a855f7:#c084fc>⚔ 等级系统</gradient>"
+  title: "<gradient:#a855f7:#c084fc>⚔ 排名系统</gradient>"
   rank_tree:
-    name: "<gradient:#f59e0b:#fbbf24>🌳 等级树</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🌳 对树进行排名</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>浏览可用的等级树</gradient>"
+      - "<gradient:#6b7280:#9ca3af>浏览可用的排名树</gradient>"
+      - "<gradient:#6b7280:#9ca3af>并选择你的道路</gradient>"
 
+
+# ============================================
+# 排名树概览 UI
+# ============================================
 rank_tree_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🌳 等级树</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🌳 对树进行排名</gradient>"
   tree:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 游侠</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>掌握弓箭和追踪的艺术</gradient>"
+        - "<gradient:#6b7280:#9ca3af>掌握射箭和追踪的艺术</gradient>"
+        - "<gradient:#6b7280:#9ca3af>与自然合而为一</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ 战士</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>掌握战斗的艺术</gradient>"
+        - "<gradient:#6b7280:#9ca3af>掌握战斗艺术</gradient>"
+        - "<gradient:#6b7280:#9ca3af>成为传奇战士</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ 法师</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>驾驭魔法的力量</gradient>"
+        - "<gradient:#6b7280:#9ca3af>利用魔法的力量</gradient>"
+        - "<gradient:#6b7280:#9ca3af>成为奥术大师</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 盗贼</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>掌握隐匿和狡诈</gradient>"
+        - "<gradient:#6b7280:#9ca3af>精通隐秘和狡猾</gradient>"
+        - "<gradient:#6b7280:#9ca3af>从阴影中发起攻击</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ 牧师</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>引导神圣力量</gradient>"
+        - "<gradient:#6b7280:#9ca3af>引导神力</gradient>"
+        - "<gradient:#6b7280:#9ca3af>治愈并保护你的盟友</gradient>"
     merchant:
-      name: "<gradient:#10b981:#34d399>💰 商人</gradient>"
+      name: "<gradient:#10b981:#34d399>💰 商家</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>掌握贸易的艺术</gradient>"
+        - "<gradient:#6b7280:#9ca3af>掌握贸易艺术</gradient>"
+        - "<gradient:#6b7280:#9ca3af>建立你的财富</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>左键预览</gradient>"
-      - "<gradient:#10b981:#34d399>右键选择</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 此等级树已锁定</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>左键单击预览</gradient>"
+      - "<gradient:#10b981:#34d399>右键单击选择</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 该等级树已锁定</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>请先完成 %minimum_rank_paths_to_be_absolved_needed% 个等级树</gradient>"
-    pre_requisites: "<gradient:#f59e0b:#fbbf24>前置条件:</gradient>"
+      - "<gradient:#6b7280:#9ca3af>完全的 %minimum_rank_paths_to_be_absolved_needed% 将树排在第一位</gradient>"
+    pre_requisites: "<gradient:#f59e0b:#fbbf24>先决条件：</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 此等级路径已锁定！</gradient>"
-  currently_active: "<gradient:#10b981:#34d399>✅ 当前激活</gradient>"
-  click_to_preview: "<gradient:#3b82f6:#60a5fa>左键预览</gradient>"
-  click_to_continue: "<gradient:#10b981:#34d399>右键继续</gradient>"
-  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 之前选择</gradient>"
-  click_to_reactivate: "<gradient:#a855f7:#c084fc>右键重新激活</gradient>"
-  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ 已达到最大激活等级路径数！</gradient> <gradient:#6b7280:#9ca3af>(最大: %maximum_rank_path_amount%)</gradient>"
+  currently_active: "<gradient:#10b981:#34d399>✅ 目前活跃</gradient>"
+  click_to_preview: "<gradient:#3b82f6:#60a5fa>左键单击预览</gradient>"
+  click_to_continue: "<gradient:#10b981:#34d399>右键单击继续</gradient>"
+  previously_selected: "<gradient:#f59e0b:#fbbf24>📋 之前选择的</gradient>"
+  click_to_reactivate: "<gradient:#a855f7:#c084fc>右键单击重新激活</gradient>"
+  maximum_active_rank_paths_reached: "<gradient:#ef4444:#f87171>❌ 已达到最大活跃排名路径！</gradient> <gradient:#6b7280:#9ca3af>（最大限度： %maximum_rank_path_amount%)</gradient>"
   create_rank_tree:
-    name: "<gradient:#10b981:#34d399>➕ 创建等级树</gradient>"
+    name: "<gradient:#10b981:#34d399>➕ 创建排名树</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>创建新的等级树</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(仅管理员)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>创建新的排名树</gradient>"
+      - "<gradient:#6b7280:#9ca3af>（仅限管理员）</gradient>"
   select:
-    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ 找不到此路径的起始等级！</gradient>"
-    rank_path_selected: "<gradient:#10b981:#34d399>✅ 已选择等级路径:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(起始等级: %rank%)</gradient>"
-    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ 选择等级路径失败！</gradient>"
-    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ 已重新激活等级路径:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
-    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ 重新激活等级路径失败！</gradient>"
-    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 等级树创建即将推出！</gradient>"
+    rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ 找不到此路径的起始排名！</gradient>"
+    rank_path_selected: "<gradient:#10b981:#34d399>✅ 选择的排名路径：</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>（起始排名： %rank%)</gradient>"
+    rank_path_selection_failed: "<gradient:#ef4444:#f87171>❌ 排名路径选择失败！</gradient>"
+    rank_path_reactivated: "<gradient:#10b981:#34d399>✅ 重新激活的排名路径：</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient>"
+    rank_path_reactivation_failed: "<gradient:#ef4444:#f87171>❌ 重新激活排名路径失败！</gradient>"
+    rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 排名树创建即将推出！</gradient>"
+  free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ 免费版本 - 仅限预览</gradient>"
+  free_version_preview_only_lore:
+    - "<gradient:#6b7280:#9ca3af>该排名树仅供预览。</gradient>"
+    - "<gradient:#6b7280:#9ca3af>升级至高级即可解锁！</gradient>"
+    - ""
+    - "<gradient:#3b82f6:#60a5fa>左键单击预览</gradient>"
+  free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ 所需保费：</gradient> <gradient:#6b7280:#9ca3af>升级到高级可以选择额外的等级树！</gradient>"
 
+# ============================================
+# 排名路径概览 UI
+# ============================================
 rank_path_overview_ui:
   title: "<gradient:#a855f7:#c084fc>🗺 %rank_tree_name%</gradient>"
-  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 预览: </gradient>"
+  preview_prefix: "<gradient:#3b82f6:#60a5fa>👁 预览： </gradient>"
   unknown_tree: "<gradient:#6b7280:#9ca3af>未知树</gradient>"
   nav:
     left: "<gradient:#3b82f6:#60a5fa>⬅ 向左导航</gradient>"
@@ -171,103 +487,365 @@ rank_path_overview_ui:
     up: "<gradient:#3b82f6:#60a5fa>⬆ 向上导航</gradient>"
     down: "<gradient:#3b82f6:#60a5fa>⬇ 向下导航</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>导航 %direction%</gradient>"
-  rank:
-    owned: "<gradient:#10b981:#34d399>✅ 已拥有</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 进行中</gradient>"
-    available: "<gradient:#3b82f6:#60a5fa>🔓 可用</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 已锁定</gradient>"
-    click_to_view: "<gradient:#6b7280:#9ca3af>点击查看要求</gradient>"
-    click_to_progress: "<gradient:#10b981:#34d399>点击进行</gradient>"
-    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
-    fallback_description: "<gradient:#6b7280:#9ca3af>%rank_id% 没有描述</gradient>"
-    tier: "<gradient:#6b7280:#9ca3af>层级:</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
-    weight: "<gradient:#6b7280:#9ca3af>权重:</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
   back:
     lore:
       - "<gradient:#6b7280:#9ca3af>点击返回</gradient>"
   center_view:
-    name: "<gradient:#3b82f6:#60a5fa>🎯 居中视图</gradient>"
+    name: "<gradient:#3b82f6:#60a5fa>🎯 中心视图</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>点击居中视图</gradient>"
-    fallback: "<gradient:#6b7280:#9ca3af>居中视图</gradient>"
+      - "<gradient:#6b7280:#9ca3af>单击使视图居中</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>中心视图</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 预览模式</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>你正在预览模式下查看</gradient>"
-      - "<gradient:#6b7280:#9ca3af>更改不会被保存</gradient>"
+      - "<gradient:#6b7280:#9ca3af>您正在预览模式下查看</gradient>"
+      - "<gradient:#6b7280:#9ca3af>更改将不会被保存</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>预览模式</gradient>"
   background:
     name: " "
   error:
-    render_rank: "<gradient:#ef4444:#f87171>❌ 渲染等级错误</gradient>"
-    no_rank_tree: "<gradient:#ef4444:#f87171>❌ 没有等级树</gradient>"
+    render_rank: "<gradient:#ef4444:#f87171>❌ 渲染排名错误</gradient>"
+    no_rank_tree: "<gradient:#ef4444:#f87171>❌ 无等级树</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>无法加载等级树</gradient>"
+      - "<gradient:#6b7280:#9ca3af>无法加载排名树</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ 严重错误</gradient>"
     critical_lore:
       - "<gradient:#6b7280:#9ca3af>渲染时发生错误</gradient>"
     critical.lore:
       - "<gradient:#6b7280:#9ca3af>渲染时发生错误</gradient>"
+    requirements_view_failed: "<gradient:#ef4444:#f87171>❌ 无法打开需求</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    general: "<gradient:#ef4444:#f87171>❌ 发生错误。请再试一次。</gradient>"
   status:
-    owned: "<gradient:#10b981:#34d399>✅ 已拥有</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ 拥有</gradient>"
     in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 进行中</gradient>"
     pending: "<gradient:#f59e0b:#fbbf24>⏳ 进行中</gradient>"
     available: "<gradient:#3b82f6:#60a5fa>🔓 可用</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 已锁定</gradient>"
     unknown: "<gradient:#6b7280:#9ca3af>❓ 未知</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ 需要保费</gradient>"
   connection:
-    from: "<gradient:#6b7280:#9ca3af>从:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    to: "<gradient:#6b7280:#9ca3af>到:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    fallback: "<gradient:#6b7280:#9ca3af>连接</gradient>"
-    owned: "<gradient:#10b981:#34d399>✅ 已拥有连接</gradient>"
+    from: "<gradient:#6b7280:#9ca3af>从：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    to: "<gradient:#6b7280:#9ca3af>到：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>联系</gradient>"
+    owned: "<gradient:#10b981:#34d399>✅ 自有连接</gradient>"
     available: "<gradient:#3b82f6:#60a5fa>🔓 可用连接</gradient>"
-    pending: "<gradient:#f59e0b:#fbbf24>⏳ 进行中连接</gradient>"
-    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 进行中连接</gradient>"
-    locked: "<gradient:#ef4444:#f87171>🔒 已锁定连接</gradient>"
+    pending: "<gradient:#f59e0b:#fbbf24>⏳ 正在进行连接</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 正在进行连接</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 锁定连接</gradient>"
+  rank:
+    owned: "<gradient:#10b981:#34d399>✅ 拥有</gradient>"
+    in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 进行中</gradient>"
+    available: "<gradient:#3b82f6:#60a5fa>🔓 可用</gradient>"
+    locked: "<gradient:#ef4444:#f87171>🔒 已锁定</gradient>"
+    click_to_view: "<gradient:#6b7280:#9ca3af>点击查看需求</gradient>"
+    click_to_progress: "<gradient:#10b981:#34d399>点击进度</gradient>"
+    fallback_name: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
+    fallback_description: "<gradient:#6b7280:#9ca3af>没有可用的描述 %rank_id%</gradient>"
+    tier: "<gradient:#6b7280:#9ca3af>等级：</gradient> <gradient:#f59e0b:#fbbf24>%tier%</gradient>"
+    weight: "<gradient:#6b7280:#9ca3af>重量：</gradient> <gradient:#f59e0b:#fbbf24>%weight%</gradient>"
+    ranger:
+      hunter:
+        name: "<gradient:#7c3aed:#a78bfa>🏹 猎人</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>新手追踪者学习野外生存方式</gradient>"
+      archer:
+        name: "<gradient:#10b981:#34d399>🎯 弓箭手</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>擅长弓箭，射程致命</gradient>"
+      tracker:
+        name: "<gradient:#3b82f6:#60a5fa>🔍 追踪器</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>寻找和追踪猎物的专家</gradient>"
+      marksman:
+        name: "<gradient:#f59e0b:#fbbf24>🎯 射手</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>精准射手，具有致命的准确性</gradient>"
+      pathfinder:
+        name: "<gradient:#a855f7:#c084fc>🗺 探路者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>未知领域的探险大师</gradient>"
+      sniper:
+        name: "<gradient:#ef4444:#f87171>🎯 狙击手</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>精英射手，一枪一杀</gradient>"
+      forest_lord:
+        name: "<gradient:#10b981:#34d399>🌲 森林领主</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>荒野大师，与自然合一</gradient>"
+    warrior:
+      recruit:
+        name: "<gradient:#6b7280:#9ca3af>⚔ 招募</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>新的战士开始他们的旅程</gradient>"
+      soldier:
+        name: "<gradient:#3b82f6:#60a5fa>⚔ 士兵</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>受过格斗艺术训练</gradient>"
+      knight:
+        name: "<gradient:#f59e0b:#fbbf24>⚔ 骑士</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>值得尊敬的王国战士</gradient>"
+      champion:
+        name: "<gradient:#a855f7:#c084fc>⚔ 冠军</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>传奇战士，人人畏惧</gradient>"
+      warlord:
+        name: "<gradient:#ef4444:#f87171>⚔ 军阀</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>战争大师、军队统帅</gradient>"
+    mage:
+      apprentice:
+        name: "<gradient:#a855f7:#c084fc>✨ 学徒</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>学习魔法的基础知识</gradient>"
+      adept:
+        name: "<gradient:#3b82f6:#60a5fa>✨ 熟练</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>魔法力量不断成长</gradient>"
+      wizard:
+        name: "<gradient:#f59e0b:#fbbf24>✨ 向导</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>奥术大师</gradient>"
+      archmage:
+        name: "<gradient:#ef4444:#f87171>✨ 大法师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>所有魔法的最高大师</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>🗡 扒手</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>手指敏捷，逃脱更快</gradient>"
+
+# ============================================
+# 要求翻译
+# ============================================
+requirement:
+
+  # ============================================
+  # 要求类型（本地化名称）
+  # ============================================
+  type:
+    item: "<gradient:#f59e0b:#fbbf24>📦 物品收藏</gradient>"
+    currency: "<gradient:#10b981:#34d399>💰 货币</gradient>"
+    experience_level: "<gradient:#a855f7:#c084fc>✨ 经验等级</gradient>"
+    playtime: "<gradient:#3b82f6:#60a5fa>⏰ 游戏时间</gradient>"
+    permission: "<gradient:#6b7280:#9ca3af>📜 许可</gradient>"
+    location: "<gradient:#ef4444:#f87171>📍地点</gradient>"
+    kill: "<gradient:#ef4444:#f87171>⚔ 击杀要求</gradient>"
+    craft: "<gradient:#f59e0b:#fbbf24>🔨 制作</gradient>"
+    unknown: "<gradient:#6b7280:#9ca3af>❓ 未知</gradient>"
+  status:
+    completed: "<gradient:#10b981:#34d399>✅ 已完成</gradient>"
+    ready: "<gradient:#f59e0b:#fbbf24>⭐ 准备完成</gradient>"
+    in_progress: "<gradient:#3b82f6:#60a5fa>🔄 进行中</gradient>"
+    not_started: "<gradient:#6b7280:#9ca3af>○ 未开始</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 错误</gradient>"
+  action:
+    click_complete: "<gradient:#10b981:#34d399>▶ 左键点击完成！</gradient>"
+    view_details: "<gradient:#3b82f6:#60a5fa>▶ 右键查看详情</gradient>"
+    submit_items: "<gradient:#10b981:#34d399>📥 提交项目</gradient>"
+    already_completed: "<gradient:#6b7280:#9ca3af>已经完成</gradient>"
+  tasks:
+    progress: "<gradient:#6b7280:#9ca3af>任务：</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+    more: "<gradient:#6b7280:#9ca3af>...和 %count% 更多的</gradient>"
+
+  # 货币要求说明
+  currency:
+    coins: "硬币"
+    gems: "宝石"
+    tokens: "代币"
+    money: "钱"
+    dollars: "美元"
+    credits: "制作人员"
+  
+  # 任务预览模板
+  task:
+    entry: "<gradient:#6b7280:#9ca3af>%prefix% %task_name%</gradient>"
+    completed_prefix: "<gradient:#10b981:#34d399>✓</gradient>"
+    incomplete_prefix: "<gradient:#6b7280:#9ca3af>○</gradient>"
+    currency:
+      need: "需要 %amount% %currency%"
+      have: "有 %current%/%required% %currency%"
+    item:
+      need: "需要 %quantity%x %item%"
+    experience:
+      need: "达到等级 %level%"
+      points: "抵达 %points% 经验值"
+    playtime:
+      need: "为之效力 %time%"
+    permission:
+      need: "需要许可： %permission%"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 小偷</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>潜行和盗窃大师</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 刺客</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>无声杀手，阴影中的死亡</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 渗透者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>进出不被发现的专家</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 影子大师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>与黑暗本身合而为一</gradient>"
+    cleric:
+      acolyte:
+        name: "<gradient:#f59e0b:#fbbf24>✝ 侍僧</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神圣的忠诚仆人</gradient>"
+      devotee:
+        name: "<gradient:#f59e0b:#fbbf24>✝ 奉献者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神圣道路的忠实追随者</gradient>"
+      priest:
+        name: "<gradient:#10b981:#34d399>✝ 牧师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>信徒的治愈者和保护者</gradient>"
+      healer:
+        name: "<gradient:#10b981:#34d399>✝ 治愈者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>修复艺术硕士</gradient>"
+      bishop:
+        name: "<gradient:#a855f7:#c084fc>✝ 主教</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>忠实的领袖</gradient>"
+      oracle:
+        name: "<gradient:#3b82f6:#60a5fa>✝ 甲骨文</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神圣异象的先知</gradient>"
+      high_priest:
+        name: "<gradient:#ef4444:#f87171>✝ 大祭司</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>神圣至高无上的声音</gradient>"
+    rogue:
+      pickpocket:
+        name: "<gradient:#6b7280:#9ca3af>� TP 扒手</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>手指敏捷，逃脱更快</gradient>"
+      thief:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 小偷</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>潜行和盗窃大师</gradient>"
+      scout:
+        name: "<gradient:#10b981:#34d399>🗡 侦察兵</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>影子的眼睛和耳朵</gradient>"
+      assassin:
+        name: "<gradient:#ef4444:#f87171>🗡 刺客</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>无声杀手，阴影中的死亡</gradient>"
+      infiltrator:
+        name: "<gradient:#a855f7:#c084fc>🗡 渗透者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>进出不被发现的专家</gradient>"
+      shadowblade:
+        name: "<gradient:#6b7280:#9ca3af>🗡 暗影之刃</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>暗夜的致命战士</gradient>"
+      spymaster:
+        name: "<gradient:#3b82f6:#60a5fa>🗡 间谍大师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>信息网络控制器</gradient>"
+      shadow_master:
+        name: "<gradient:#1f2937:#374151>🗡 影子大师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>与黑暗本身合而为一</gradient>"
+      shadowmaster:
+        name: "<gradient:#1f2937:#374151>🗡 影子大师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>所有暗影的最高统治者</gradient>"
+    merchant:
+      peddler:
+        name: "<gradient:#6b7280:#9ca3af>💰 小贩</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>街头贩卖商品</gradient>"
+      trader:
+        name: "<gradient:#3b82f6:#60a5fa>💰 交易者</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>有关系的老牌商人</gradient>"
+      vendor:
+        name: "<gradient:#10b981:#34d399>💰 供应商</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>熟练的商品卖家</gradient>"
+      artificer:
+        name: "<gradient:#f59e0b:#fbbf24>💰 技师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>精美器皿工匠</gradient>"
+      alchemist:
+        name: "<gradient:#a855f7:#c084fc>💰 炼金术士</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>魔药和长生不老药大师</gradient>"
+      merchant:
+        name: "<gradient:#f59e0b:#fbbf24>💰 商家</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>成功的企业主</gradient>"
+      master_crafter:
+        name: "<gradient:#ef4444:#f87171>💰 工匠大师</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>王国的最高工匠</gradient>"
+      merchant_prince:
+        name: "<gradient:#a855f7:#c084fc>💰 商人王子</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>商业特许权使用费</gradient>"
+      tycoon:
+        name: "<gradient:#a855f7:#c084fc>💰 大亨</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>商业与贸易硕士</gradient>"
+      guild_master:
+        name: "<gradient:#ef4444:#f87171>💰 公会会长</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>商人行会的领袖</gradient>"
   messages:
-    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 预览:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 预览:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_owned: "<gradient:#10b981:#34d399>✅ 你已拥有</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ 你已拥有</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    rank_locked: "<gradient:#ef4444:#f87171>🔒 已锁定:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 请先完成前置条件</gradient>"
-    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 已锁定:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
-    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>没有要求！</gradient>"
-    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>没有要求！</gradient>"
-    rank_started: "<gradient:#10b981:#34d399>✅ 开始</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>进度</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% 个要求)</gradient>"
-    rank_started_fallback: "<gradient:#10b981:#34d399>✅ 开始</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>进度</gradient>"
-    rank_start_error: "<gradient:#ef4444:#f87171>❌ 开始</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>进度失败</gradient>"
-    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ 开始</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>进度失败</gradient>"
-    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>要求未完成</gradient>"
-    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#f59e0b:#fbbf24>要求未完成</gradient>"
-    rank_redeemed: "<gradient:#10b981:#34d399>🎉 恭喜！你已解锁</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>！</gradient>"
-    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉 恭喜！你已解锁</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>！</gradient>"
-    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ 兑换</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>失败</gradient>"
-    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ 兑换</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>失败</gradient>"
+    preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 预览：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 预览：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned: "<gradient:#10b981:#34d399>✅ 你已经拥有</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_owned_fallback: "<gradient:#10b981:#34d399>✅ 你已经拥有</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_locked: "<gradient:#ef4444:#f87171>🔒 锁定：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>- 首先完成先决条件</gradient>"
+    rank_locked_fallback: "<gradient:#ef4444:#f87171>🔒 锁定：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    no_requirements: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>没有任何要求！</gradient>"
+    no_requirements_fallback: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#10b981:#34d399>没有任何要求！</gradient>"
+    rank_started: "<gradient:#10b981:#34d399>✅ 开始进步</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>(%requirement_count% 要求）</gradient>"
+    rank_started_fallback: "<gradient:#10b981:#34d399>✅ 开始进步</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error: "<gradient:#ef4444:#f87171>❌ 无法开始进度</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_start_error_fallback: "<gradient:#ef4444:#f87171>❌ 无法开始进度</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    requirements_not_completed: "<gradient:#f59e0b:#fbbf24>⚠ 未完成的要求</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    requirements_not_completed_fallback: "<gradient:#f59e0b:#fbbf24>⚠ 未完成的要求</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient>"
+    rank_redeemed: "<gradient:#10b981:#34d399>🎉恭喜！你已经解锁了</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redeemed_fallback: "<gradient:#10b981:#34d399>🎉恭喜！你已经解锁了</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+    rank_redemption_error: "<gradient:#ef4444:#f87171>❌ 兑换失败</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    rank_redemption_error_fallback: "<gradient:#ef4444:#f87171>❌ 兑换失败</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    free_version_locked: "<gradient:#f59e0b:#fbbf24>⭐ 所需保费：</gradient> <gradient:#6b7280:#9ca3af>军衔</gradient> <gradient:#a855f7:#c084fc>%rank_name%</gradient> <gradient:#6b7280:#9ca3af>需要高级版才能解锁。升级即可访问所有等级！</gradient>"
   click:
-    left_start: "<gradient:#10b981:#34d399>左键开始进度</gradient>"
-    right_requirements: "<gradient:#6b7280:#9ca3af>右键查看要求</gradient>"
-    left_redeem: "<gradient:#10b981:#34d399>左键兑换</gradient>"
+    left_start: "<gradient:#10b981:#34d399>左键单击开始进度</gradient>"
+    right_requirements: "<gradient:#6b7280:#9ca3af>右键查看需求</gradient>"
+    left_redeem: "<gradient:#10b981:#34d399>左键点击即可兑换</gradient>"
     right_progress: "<gradient:#6b7280:#9ca3af>右键查看进度</gradient>"
   fallback:
     rank: "<gradient:#6b7280:#9ca3af>%rank_id%</gradient>"
 
+# ============================================
+# 排名要求概览 UI
+# ============================================
 rank_requirements_overview_ui:
   title: "<gradient:#a855f7:#c084fc>📋 %rank_name% 要求</gradient>"
   requirement:
-    fallback: "<gradient:#6b7280:#9ca3af>要求 #%index%</gradient>"
+    fallback: "<gradient:#6b7280:#9ca3af>要求 ＃%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>无法加载要求详情</gradient>"
-    type: "<gradient:#6b7280:#9ca3af>类型:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>无法加载需求详细信息</gradient>"
+    type: "<gradient:#6b7280:#9ca3af>类型：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
-    item_count: "<gradient:#6b7280:#9ca3af>物品:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
-    progress: "<gradient:#3b82f6:#60a5fa>进度:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    item_count: "<gradient:#6b7280:#9ca3af>项目：</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    progress: "<gradient:#3b82f6:#60a5fa>进步：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     preview_mode: "<gradient:#3b82f6:#60a5fa>👁 预览模式</gradient>"
     click:
       complete: "<gradient:#10b981:#34d399>点击完成！</gradient>"
-      details: "<gradient:#6b7280:#9ca3af>右键查看详情</gradient>"
-      already_completed: "<gradient:#10b981:#34d399>✅ 已完成</gradient>"
+      details: "<gradient:#6b7280:#9ca3af>右键单击查看详细信息</gradient>"
+      already_completed: "<gradient:#10b981:#34d399>✅ 已经完成</gradient>"
       for_details: "<gradient:#6b7280:#9ca3af>点击查看详情</gradient>"
-    lore_error: "<gradient:#ef4444:#f87171>加载要求错误</gradient>"
+    lore_error: "<gradient:#ef4444:#f87171>加载需求时出错</gradient>"
     info:
       completed: "<gradient:#10b981:#34d399>✅ 已完成</gradient>"
       ready_to_complete: "<gradient:#10b981:#34d399>✅ 准备完成</gradient>"
@@ -281,10 +859,10 @@ rank_requirements_overview_ui:
       not_started: "<gradient:#6b7280:#9ca3af>%requirement_name%</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ %requirement_name%</gradient>"
   messages:
-    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 预览:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
-    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>已完成！</gradient>"
+    preview_mode_click: "<gradient:#3b82f6:#60a5fa>👁 预览：</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>已经完成了！</gradient>"
     not_ready_to_complete: "<gradient:#f59e0b:#fbbf24>⚠</gradient> <gradient:#a855f7:#c084fc>%requirement_name%</gradient> <gradient:#f59e0b:#fbbf24>尚未准备好完成！</gradient>"
-    rank_progression_completed: "<gradient:#10b981:#34d399>🎉 恭喜！你已进阶到</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>！</gradient>"
+    rank_progression_completed: "<gradient:#10b981:#34d399>🎉恭喜！你已经进步到</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
     info:
       completed: "<gradient:#10b981:#34d399>✅ 已完成</gradient>"
       ready_to_complete: "<gradient:#10b981:#34d399>✅ 准备完成</gradient>"
@@ -293,9 +871,9 @@ rank_requirements_overview_ui:
       error: "<gradient:#ef4444:#f87171>❌ 错误</gradient>"
   error:
     click_failed: "<gradient:#ef4444:#f87171>❌ 处理点击失败！</gradient>"
-    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ 进阶到</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient> <gradient:#ef4444:#f87171>失败</gradient>"
-    detail_view_failed: "<gradient:#ef4444:#f87171>❌ 无法打开要求详情！</gradient>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ 此要求当前不可用！</gradient>"
+    rank_progression_failed: "<gradient:#ef4444:#f87171>❌ 未能进展到</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    detail_view_failed: "<gradient:#ef4444:#f87171>❌ 无法打开需求详情！</gradient>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>❌ 此要求目前不可用！</gradient>"
   decoration:
     name: " "
   back:
@@ -304,81 +882,108 @@ rank_requirements_overview_ui:
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>类型:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>进度:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>类型：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>进步：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>点击查看详情</gradient>"
 
+# ============================================
+# 等级要求详情 UI
+# ============================================
 rank_requirement_detail_ui:
-  title: "<gradient:#a855f7:#c084fc>📋 要求详情</gradient>"
+  title: "<gradient:#a855f7:#c084fc>📋 需求详情</gradient>"
   back:
     lore:
       - "<gradient:#6b7280:#9ca3af>点击返回</gradient>"
-  progress_text: "<gradient:#3b82f6:#60a5fa>进度</gradient>"
-  current_progress: "<gradient:#6b7280:#9ca3af>当前:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
-  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>完成率:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
-  required_amount_left: "<gradient:#6b7280:#9ca3af>剩余:</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
-  progress_completed: "<gradient:#10b981:#34d399>✅ 已完成！</gradient>"
+  submit:
+    missing_items: "<gradient:#ef4444:#f87171>❌ 您没有拥有所有必需的物品！</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 物品提交成功！</gradient>"
+    failed: "<gradient:#ef4444:#f87171>❌ 提交项目失败。请再试一次。</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 提交项目时发生错误。</gradient>"
+    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ 这个要求已经完成了！</gradient>"
+  experience:
+    current_level: "<gradient:#6b7280:#9ca3af>您的级别：</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
+    required_level: "<gradient:#6b7280:#9ca3af>所需级别：</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
+    levels_needed: "<gradient:#ef4444:#f87171>所需级别：</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ 达到等级要求！</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
+      - "<gradient:#6b7280:#9ca3af>通过采矿、杀死小怪获得经验值，</gradient>"
+      - "<gradient:#6b7280:#9ca3af>冶炼物品等等！</gradient>"
+  playtime:
+    current: "<gradient:#6b7280:#9ca3af>您的游戏时间：</gradient> <gradient:#10b981:#34d399>%hours%小时 %minutes%米</gradient>"
+    required: "<gradient:#6b7280:#9ca3af>所需游戏时间：</gradient> <gradient:#f59e0b:#fbbf24>%hours%小时 %minutes%米</gradient>"
+    remaining: "<gradient:#ef4444:#f87171>剩余时间：</gradient> <gradient:#f59e0b:#fbbf24>%hours%小时 %minutes%米</gradient>"
+    completed: "<gradient:#10b981:#34d399>✅ 满足游戏时间要求！</gradient>"
+    tip:
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
+      - "<gradient:#6b7280:#9ca3af>继续在服务器上玩</gradient>"
+      - "<gradient:#6b7280:#9ca3af>来积累游戏时间！</gradient>"
+  progress_text: "<gradient:#3b82f6:#60a5fa>进步</gradient>"
+  current_progress: "<gradient:#6b7280:#9ca3af>当前的：</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  current_progress_percentage: "<gradient:#3b82f6:#60a5fa>完成：</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
+  required_amount_left: "<gradient:#6b7280:#9ca3af>其余的：</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
+  progress_completed: "<gradient:#10b981:#34d399>✅ 完成了！</gradient>"
   in_progress: "<gradient:#f59e0b:#fbbf24>⏳ 进行中</gradient>"
   progress_not_started: "<gradient:#6b7280:#9ca3af>未开始</gradient>"
   progress_details: "<gradient:#6b7280:#9ca3af>物品 %item_number%</gradient>"
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ 已完成</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>此要求已完成</gradient>"
-    complete_name: "<gradient:#10b981:#34d399>✅ 完成要求</gradient>"
+      - "<gradient:#6b7280:#9ca3af>这个需求已经完成了</gradient>"
+    complete_name: "<gradient:#10b981:#34d399>✅ 完整的要求</gradient>"
     complete_lore:
       - "<gradient:#6b7280:#9ca3af>点击完成此要求</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 刷新进度</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>点击刷新你的进度</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击刷新您的进度</gradient>"
   summary:
-    items_completed: "<gradient:#10b981:#34d399>已完成物品:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
-    requirement_type: "<gradient:#6b7280:#9ca3af>类型:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>进度:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>状态:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    items_completed: "<gradient:#10b981:#34d399>已完成项目：</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>类型：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>进步：</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
     requirement_summary:
-      name: "<gradient:#a855f7:#c084fc>📊 要求摘要</gradient>"
+      name: "<gradient:#a855f7:#c084fc>📊 需求摘要</gradient>"
     requirement_tip:
-      name: "<gradient:#f59e0b:#fbbf24>💡 提示</gradient>"
-  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 进度摘要</gradient>"
-  current_progress_status: "<gradient:#6b7280:#9ca3af>状态:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>💡小贴士</gradient>"
+  current_progress_summary: "<gradient:#a855f7:#c084fc>📊 进展总结</gradient>"
+  current_progress_status: "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
       - "<gradient:#6b7280:#9ca3af>收集所需物品</gradient>"
-      - "<gradient:#6b7280:#9ca3af>然后返回这里完成</gradient>"
+      - "<gradient:#6b7280:#9ca3af>并返回此处完成</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
       - "<gradient:#6b7280:#9ca3af>赚取所需货币</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
       - "<gradient:#6b7280:#9ca3af>获得经验等级</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>在服务器上游玩</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
+      - "<gradient:#6b7280:#9ca3af>在服务器上玩</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>💡提示：</gradient>"
       - "<gradient:#6b7280:#9ca3af>完成要求</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 查看摘要...</gradient>"
-  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 查看提示...</gradient>"
+  tips_clicked: "<gradient:#f59e0b:#fbbf24>💡观看技巧...</gradient>"
   item_detail:
     header: "<gradient:#a855f7:#c084fc>📦 物品 %item_number%:</gradient> <gradient:#f59e0b:#fbbf24>%item_name%</gradient>"
-    progress: "<gradient:#6b7280:#9ca3af>进度:</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
-    missing: "<gradient:#ef4444:#f87171>缺少:</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>进步：</gradient> <gradient:#10b981:#34d399>%current%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
+    missing: "<gradient:#ef4444:#f87171>丢失的：</gradient> <gradient:#f59e0b:#fbbf24>%shortage%</gradient>"
   requirement_info:
-    requirement_type: "<gradient:#6b7280:#9ca3af>类型:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>进度:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>状态:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
+    requirement_type: "<gradient:#6b7280:#9ca3af>类型：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    progress_percentage: "<gradient:#3b82f6:#60a5fa>进步：</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
+    completion_status: "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
     missing_items:
-      item: "<gradient:#ef4444:#f87171>缺少物品:</gradient>"
+      item: "<gradient:#ef4444:#f87171>缺少物品：</gradient>"
       entry: "<gradient:#6b7280:#9ca3af>  %item_info%</gradient>"
-      more: "<gradient:#6b7280:#9ca3af>...还有 %item_amount% 个</gradient>"
-    detailed_information: "<gradient:#a855f7:#c084fc>详细信息</gradient>"
+      more: "<gradient:#6b7280:#9ca3af>...和 %item_amount% 更多的</gradient>"
+    detailed_information: "<gradient:#a855f7:#c084fc>详情</gradient>"
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ 已完成！</gradient>"
+      - "<gradient:#10b981:#34d399>✅ 完成了！</gradient>"
     ready_to_complete:
       - "<gradient:#10b981:#34d399>✅ 准备完成！</gradient>"
       - "<gradient:#6b7280:#9ca3af>点击完成</gradient>"
@@ -388,303 +993,760 @@ rank_requirement_detail_ui:
       - "<gradient:#6b7280:#9ca3af>未开始</gradient>"
     error:
       - "<gradient:#ef4444:#f87171>❌ 错误</gradient>"
-    status_name: "<gradient:#a855f7:#c084fc>状态: %requirement_status%</gradient>"
-  progress_item: "<gradient:#3b82f6:#60a5fa>进度</gradient>"
+    status_name: "<gradient:#a855f7:#c084fc>地位： %requirement_status%</gradient>"
+  progress_item: "<gradient:#3b82f6:#60a5fa>进步</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
-  progress_item_status: "<gradient:#6b7280:#9ca3af>状态:</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
+  progress_item_status: "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#f59e0b:#fbbf24>%progress_item_status%</gradient>"
   progress_click_to_refresh: "<gradient:#6b7280:#9ca3af>点击刷新</gradient>"
-  progress_overview: "<gradient:#a855f7:#c084fc>📊 进度概览</gradient>"
+  progress_overview: "<gradient:#a855f7:#c084fc>📊 进展概览</gradient>"
   fallback:
     name: "<gradient:#6b7280:#9ca3af>未知要求</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>无法加载详情</gradient>"
+      - "<gradient:#6b7280:#9ca3af>无法加载详细信息</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ 错误</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>加载要求失败</gradient>"
-  progress_info: "<gradient:#3b82f6:#60a5fa>📊 进度:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
-  status_update: "<gradient:#3b82f6:#60a5fa>📊 状态:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
-  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>已完成！</gradient>"
-  progress_refreshed: "<gradient:#10b981:#34d399>✅ 进度已刷新！</gradient>"
+      - "<gradient:#ef4444:#f87171>无法加载需求</gradient>"
+  progress_info: "<gradient:#3b82f6:#60a5fa>📊 进展：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%格式化进度%)</gradient>"
+  status_update: "<gradient:#3b82f6:#60a5fa>📊状态：</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
+  already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>已经完成了！</gradient>"
+  progress_refreshed: "<gradient:#10b981:#34d399>✅ 进度刷新！</gradient>"
   detailed_info:
     header: "<gradient:#a855f7:#c084fc>📋 %requirement_type%:</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
-    item_breakdown: "<gradient:#a855f7:#c084fc>📦 物品明细:</gradient>"
+    item_breakdown: "<gradient:#a855f7:#c084fc>📦 物品分类：</gradient>"
     item_entry: "<gradient:#6b7280:#9ca3af>  • %item_name%:</gradient> <gradient:#10b981:#34d399>%current%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%required%</gradient> <gradient:#3b82f6:#60a5fa>(%percentage%%)</gradient>"
 
+
+# ============================================
+# 赏金概览 UI
+# ============================================
 bounty_overview_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 悬赏系统</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🎯赏金系统</gradient>"
   create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 创建悬赏</gradient>"
+    name: "<gradient:#10b981:#34d399>📝 创建赏金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>点击创建新悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击创建新的赏金</gradient>"
+      - "<gradient:#6b7280:#9ca3af>在另一个玩家身上</gradient>"
   view_bounties:
-    name: "<gradient:#3b82f6:#60a5fa>👁 查看悬赏</gradient>"
+    name: "<gradient:#3b82f6:#60a5fa>👁 查看赏金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>查看所有活跃悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>查看所有活跃的赏金</gradient>"
   my_bounties:
-    name: "<gradient:#f59e0b:#fbbf24>📋 我的悬赏</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>📋我的赏金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>查看你创建的悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>查看您创建的赏金</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 排行榜</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>顶级悬赏猎人</gradient>"
+      - "<gradient:#6b7280:#9ca3af>顶级赏金猎人</gradient>"
   bounty:
-    name: "<gradient:#a855f7:#c084fc>🎯</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#a855f7:#c084fc>的悬赏</gradient>"
+    name: "<gradient:#a855f7:#c084fc>🎯 赏金开启</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>目标:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>委托人:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>创建时间:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>目标：</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>专员：</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>创建：</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
       - ""
       - "<gradient:#a855f7:#c084fc>点击查看详情</gradient>"
 
+# ============================================
+# 赏金创建 UI
+# ============================================
 bounty_creation_ui:
-  title: "<gradient:#a855f7:#c084fc>📝 创建悬赏 - %target_name%</gradient>"
+  title: "<gradient:#a855f7:#c084fc>📝 创造赏金 - %target_name%</gradient>"
   select_target:
-    title: "<gradient:#a855f7:#c084fc>🎯 选择目标</gradient>"
-    name: "<gradient:#f59e0b:#fbbf24>🎯 目标: %target_name%</gradient>"
+    title: "<gradient:#a855f7:#c084fc>🎯选择目标</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯目标： %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>点击选择玩家</gradient>"
-      - "<gradient:#6b7280:#9ca3af>当前: %target_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击选择一名玩家</gradient>"
+      - "<gradient:#6b7280:#9ca3af>当前的： %target_name%</gradient>"
   create_bounty:
-    name: "<gradient:#10b981:#34d399>📝 创建悬赏</gradient>"
+    name: "<gradient:#10b981:#34d399>📝 创建赏金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>点击创建新悬赏</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击创建新的赏金</gradient>"
+      - "<gradient:#6b7280:#9ca3af>在另一个玩家身上</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 添加物品奖励</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 添加物品奖励</gradient>"
     description:
       - "<gradient:#6b7280:#9ca3af>点击添加物品奖励</gradient>"
-      - "<gradient:#6b7280:#9ca3af>当前物品:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>当前项目：</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 请先选择目标！</gradient>"
-    disabled: "<gradient:#ef4444:#f87171>❌ 请先选择目标！</gradient>"
+      - "<gradient:#ef4444:#f87171>❌先选择目标！</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>❌先选择目标！</gradient>"
   add_currency:
-    name: "<gradient:#f59e0b:#fbbf24>💎 添加货币奖励</gradient>"
-    name_disabled: "<gradient:#6b7280:#9ca3af>💎 添加货币奖励</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>💎 新增货币奖励</gradient>"
+    name_disabled: "<gradient:#6b7280:#9ca3af>💎 新增货币奖励</gradient>"
     description:
       - "<gradient:#6b7280:#9ca3af>点击添加货币奖励</gradient>"
-      - "<gradient:#6b7280:#9ca3af>当前货币:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>当前货币：</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 请先选择目标！</gradient>"
+      - "<gradient:#ef4444:#f87171>❌先选择目标！</gradient>"
   confirm_bounty:
-    name: "<gradient:#10b981:#34d399>✅ 创建悬赏</gradient>"
+    name: "<gradient:#10b981:#34d399>✅ 创造赏金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>点击创建悬赏</gradient>"
-      - "<gradient:#6b7280:#9ca3af>使用选定的奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击创建赏金</gradient>"
+      - "<gradient:#6b7280:#9ca3af>与选定的奖励</gradient>"
   confirm:
-    no_player_selected: "<gradient:#ef4444:#f87171>❌ 未选择玩家！</gradient> <gradient:#6b7280:#9ca3af>请先选择目标。</gradient>"
-    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 未添加奖励！</gradient> <gradient:#6b7280:#9ca3af>请先添加一些奖励。</gradient>"
-    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ 正在为</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient> <gradient:#f59e0b:#fbbf24>创建悬赏...</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 错误:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ 成功为</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>创建悬赏！</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>📦 物品已返还！</gradient> <gradient:#6b7280:#9ca3af>一些物品掉落在地上。</gradient>"
+    no_player_selected: "<gradient:#ef4444:#f87171>❌ 未选择任何球员！</gradient> <gradient:#6b7280:#9ca3af>请先选择一个目标。</gradient>"
+    no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 没有奖励添加！</gradient> <gradient:#6b7280:#9ca3af>请先添加一些奖励。</gradient>"
+    confirmation: "<gradient:#f59e0b:#fbbf24>⏳ 创造赏金</gradient> <gradient:#a855f7:#c084fc>%target_name%</gradient><gradient:#f59e0b:#fbbf24>...</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 错误：</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+    success: "<gradient:#10b981:#34d399>✅ 赏金成功创建于</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>📦 物品已退回！</gradient> <gradient:#6b7280:#9ca3af>一些物品掉落在地上。</gradient>"
+  # i18n("bounty_creation.confirm.success") 调用的嵌套 bounty_creation 键
   bounty_creation:
-    processing: "<gradient:#f59e0b:#fbbf24>⏳ 正在处理悬赏...</gradient>"
+    processing: "<gradient:#f59e0b:#fbbf24>⏳ 正在处理赏金...</gradient>"
     confirm:
-      success: "<gradient:#10b981:#34d399>✅ 成功为</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>创建悬赏！</gradient>"
-      error: "<gradient:#ef4444:#f87171>❌ 处理悬赏失败:</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
+      success: "<gradient:#10b981:#34d399>✅ 已成功创建赏金</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient><gradient:#10b981:#34d399>!</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 未能处理赏金：</gradient> <gradient:#6b7280:#9ca3af>%error_message%</gradient>"
 
+# ============================================
+# 赏金奖励用户界面
+# ============================================
 bounty_reward_ui:
-  title: "<gradient:#a855f7:#c084fc>💰 悬赏奖励</gradient>"
+  title: "<gradient:#a855f7:#c084fc>💰赏金奖励</gradient>"
   pseudo:
-    name: "<gradient:#6b7280:#9ca3af>📦 无奖励</gradient>"
+    name: "<gradient:#6b7280:#9ca3af>📦没有奖励</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>添加物品以创建奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>添加项目以创建奖励</gradient>"
   input_slot:
-    name: "<gradient:#10b981:#34d399>➕ 添加物品</gradient>"
+    name: "<gradient:#10b981:#34d399>➕ 添加项目</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>将物品放在这里作为奖励添加</gradient>"
+      - "<gradient:#6b7280:#9ca3af>将项目放置在此处以添加为奖励</gradient>"
   target:
-    name: "<gradient:#f59e0b:#fbbf24>🎯 目标: %target_name%</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>🎯目标： %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>此悬赏针对</gradient>"
+      - "<gradient:#6b7280:#9ca3af>该赏金被放置在</gradient>"
       - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 悬赏奖励</gradient>"
-      - "<gradient:#6b7280:#9ca3af>此物品将给予</gradient>"
-      - "<gradient:#6b7280:#9ca3af>领取悬赏的人</gradient>"
-  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 未添加新物品！</gradient>"
-  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 由于背包已满，一些物品掉落了！</gradient>"
+      - "<gradient:#a855f7:#c084fc>💰赏金奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>该物品将被给予</gradient>"
+      - "<gradient:#6b7280:#9ca3af>谁领取赏金</gradient>"
+  no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 没有添加新物品！</gradient>"
+  left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 由于库存已满，一些物品被丢弃！</gradient>"
 
+# ============================================
+# 赏金玩家信息 UI
+# ============================================
 bounty_player_info_ui:
-  title: "<gradient:#a855f7:#c084fc>🎯 %target_name% 的悬赏</gradient>"
+  title: "<gradient:#a855f7:#c084fc>🎯 赏金开启 %target_name%</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>此悬赏的目标</gradient>"
+      - "<gradient:#6b7280:#9ca3af>本次赏金目标</gradient>"
+    coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 更多信息即将推出...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 查看奖励</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>点击查看所有奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>总奖励：</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
-    name: "<gradient:#ef4444:#f87171>🗑 删除悬赏</gradient>"
+    name: "<gradient:#ef4444:#f87171>🗑 删除赏金</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ 警告: 无法撤销！</gradient>"
-      - "<gradient:#6b7280:#9ca3af>点击删除此悬赏</gradient>"
-  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>的悬赏已删除！</gradient>"
+      - "<gradient:#ef4444:#f87171>⚠ 警告：无法撤消！</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击删除此赏金</gradient>"
+  deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ 赏金</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>已被删除！</gradient>"
+  confirm:
+    message: "<gradient:#f59e0b:#fbbf24>您确定要删除此赏金吗？</gradient>"
 
+# ============================================
+# 管理概览用户界面
+# ============================================
 admin_overview_ui:
   title: "<gradient:#ef4444:#f87171>⚙ 管理面板</gradient>"
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 权限管理器</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>管理插件权限</gradient>"
-      - "<gradient:#6b7280:#9ca3af>插件总数:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>权限总数:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>插件总数：</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>总权限：</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 无法打开权限管理器！</gradient>"
   create_ranks:
-    name: "<gradient:#a855f7:#c084fc>⚔ 创建LuckPerms组</gradient>"
+    name: "<gradient:#a855f7:#c084fc>⚔ 创建 LuckPerms 组</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>从等级创建LuckPerms组</gradient>"
-    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms未安装！</gradient>"
-    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ 找不到可创建组的等级！</gradient>"
-    created: "<gradient:#10b981:#34d399>✅ 已创建</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>个LuckPerms组！</gradient>"
-    no_changes: "<gradient:#6b7280:#9ca3af>未创建新组。</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 创建LuckPerms组失败！</gradient>"
+      - "<gradient:#6b7280:#9ca3af>从排名创建 LuckPerms 组</gradient>"
+    no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms 未安装！</gradient>"
+    no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ 未找到可为其创建群组的排名！</gradient>"
+    created: "<gradient:#10b981:#34d399>✅ 已创建</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>幸运Perms组！</gradient>"
+    no_changes: "<gradient:#6b7280:#9ca3af>没有创建新组。</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 创建 LuckPerms 组失败！</gradient>"
 
+# ============================================
+# 管理员权限概述 UI
+# ============================================
 admin_permissions_overview_ui:
   title: "<gradient:#3b82f6:#60a5fa>🔑 权限管理器</gradient>"
   errors:
-    plugin_not_found: "<gradient:#ef4444:#f87171>❌ 找不到插件:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms未安装！</gradient>"
+    plugin_not_found: "<gradient:#ef4444:#f87171>❌ 找不到插件：</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms 未安装！</gradient>"
     no_permissions_available: "<gradient:#f59e0b:#fbbf24>⚠ 此插件没有可用权限！</gradient>"
   plugins:
     navigation:
-      previous: "<gradient:#3b82f6:#60a5fa>⬅ 上一页插件</gradient>"
-      next: "<gradient:#3b82f6:#60a5fa>➡ 下一页插件</gradient>"
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ 以前的插件</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ 下一个插件</gradient>"
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>插件:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>权限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>状态:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>插件：</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>权限：</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>左键选择</gradient>"
-        - "<gradient:#10b981:#34d399>右键分配全部</gradient>"
+        - "<gradient:#3b82f6:#60a5fa>左键单击选择</gradient>"
+        - "<gradient:#10b981:#34d399>右键单击以分配全部</gradient>"
     empty_slot:
-      name: "<gradient:#6b7280:#9ca3af>空</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>空的</gradient>"
   permissions:
     navigation:
-      previous: "<gradient:#3b82f6:#60a5fa>⬅ 上一页权限</gradient>"
-      next: "<gradient:#3b82f6:#60a5fa>➡ 下一页权限</gradient>"
+      previous: "<gradient:#3b82f6:#60a5fa>⬅ 以前的权限</gradient>"
+      next: "<gradient:#3b82f6:#60a5fa>➡ 下一步权限</gradient>"
     entry:
       name: "<gradient:#f59e0b:#fbbf24>🔑 %permission%</gradient>"
-      plugin: "<gradient:#6b7280:#9ca3af>插件:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
-      node: "<gradient:#6b7280:#9ca3af>节点:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
+      plugin: "<gradient:#6b7280:#9ca3af>插件：</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+      node: "<gradient:#6b7280:#9ca3af>节点：</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>点击分配此权限</gradient>"
+        - "<gradient:#10b981:#34d399>单击以分配此权限</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>未选择插件</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>在上方选择一个插件</gradient>"
-        - "<gradient:#6b7280:#9ca3af>以查看其权限</gradient>"
+        - "<gradient:#6b7280:#9ca3af>选择上面的插件</gradient>"
+        - "<gradient:#6b7280:#9ca3af>查看其权限</gradient>"
     empty_slot:
-      name: "<gradient:#6b7280:#9ca3af>空</gradient>"
+      name: "<gradient:#6b7280:#9ca3af>空的</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ 分配 %plugin_name% 权限</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>分配所有权限来自</gradient>"
+        - "<gradient:#6b7280:#9ca3af>分配所有权限</gradient>"
         - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% 个权限)</gradient>"
+        - "<gradient:#6b7280:#9ca3af>(%permission_count% 权限）</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>无选择</gradient>"
   status:
     selected_plugin:
-      name: "<gradient:#a855f7:#c084fc>📊 已选择: %plugin_name%</gradient>"
+      name: "<gradient:#a855f7:#c084fc>📊 已选择： %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>插件:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>权限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>插件总数:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>插件：</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>权限：</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>插件总数：</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
-      name: "<gradient:#a855f7:#c084fc>📊 概览</gradient>"
+      name: "<gradient:#a855f7:#c084fc>📊 概述</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>插件总数:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>选择一个插件以查看权限</gradient>"
+        - "<gradient:#6b7280:#9ca3af>插件总数：</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>选择插件查看权限</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 刷新数据</gradient>"
       lore:
         - "<gradient:#6b7280:#9ca3af>点击刷新权限数据</gradient>"
-
+  decoration:
+    header:
+      name: " "
+    border:
+      name: " "
+  clear_selection:
+    name: "<gradient:#ef4444:#f87171>❌ 清除选择</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>单击取消选择插件</gradient>"
+  assign_selected_plugin_permissions:
+    name: "<gradient:#10b981:#34d399>✅ 分配 %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>分配所选插件的所有权限</gradient>"
+  assign_all_permissions:
+    name: "<gradient:#10b981:#34d399>✅ 分配所有权限</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>向所有人分配权限</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>插件</gradient>"
+  feedback:
+    data_refreshed: "<gradient:#10b981:#34d399>✅ 数据刷新！</gradient>"
+    permissions_assigned:
+      plugin_all: "<gradient:#10b981:#34d399>✅ 已分配</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>权限来自</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  plugin_selected: "<gradient:#3b82f6:#60a5fa>📦 已选择：</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+  plugin_permissions_assigned: "<gradient:#10b981:#34d399>✅ 已分配</gradient> <gradient:#f59e0b:#fbbf24>%permission_count%</gradient> <gradient:#10b981:#34d399>权限来自</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  single_permission_assigned: "<gradient:#10b981:#34d399>✅ 分配：</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient> <gradient:#6b7280:#9ca3af>从</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
+  selection_cleared: "<gradient:#6b7280:#9ca3af>已清除选择</gradient>"
+  selected_plugin_all_assigned: "<gradient:#10b981:#34d399>✅ 分配的所有权限</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
 
 # ============================================
-# 等级要求详情界面
+# PAGINATION
 # ============================================
-rank_requirement_detail_ui:
-  title: "<gradient:#a855f7:#c084fc>📋 要求详情</gradient>"
-  back:
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 页面 %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>当前页面：</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>总页数：</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 页面 %direction%</gradient>"
+
+# ============================================
+# 头部物品
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙返回</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>点击返回</gradient>"
-  submit:
-    missing_items: "<gradient:#ef4444:#f87171>❌ 你没有所有需要的物品！</gradient>"
-    success: "<gradient:#10b981:#34d399>✅ 物品提交成功！</gradient>"
-    failed: "<gradient:#ef4444:#f87171>❌ 提交失败，请重试。</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 提交时发生错误。</gradient>"
-    already_completed: "<gradient:#f59e0b:#fbbf24>⚠ 此要求已完成！</gradient>"
-  experience:
-    current_level: "<gradient:#6b7280:#9ca3af>当前等级:</gradient> <gradient:#10b981:#34d399>%current%</gradient>"
-    required_level: "<gradient:#6b7280:#9ca3af>需要等级:</gradient> <gradient:#f59e0b:#fbbf24>%required%</gradient>"
-    levels_needed: "<gradient:#ef4444:#f87171>缺少等级:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
-    completed: "<gradient:#10b981:#34d399>✅ 等级要求已达成！</gradient>"
-  playtime:
-    current: "<gradient:#6b7280:#9ca3af>游戏时间:</gradient> <gradient:#10b981:#34d399>%hours%小时 %minutes%分钟</gradient>"
-    required: "<gradient:#6b7280:#9ca3af>需要游戏时间:</gradient> <gradient:#f59e0b:#fbbf24>%hours%小时 %minutes%分钟</gradient>"
-    remaining: "<gradient:#ef4444:#f87171>剩余时间:</gradient> <gradient:#f59e0b:#fbbf24>%hours%小时 %minutes%分钟</gradient>"
-    completed: "<gradient:#10b981:#34d399>✅ 游戏时间要求已达成！</gradient>"
-  summary:
-    requirement_type: "<gradient:#6b7280:#9ca3af>类型:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-    progress_percentage: "<gradient:#3b82f6:#60a5fa>进度:</gradient> <gradient:#10b981:#34d399>%completion_progress_percentage%</gradient>"
-    completion_status: "<gradient:#6b7280:#9ca3af>状态:</gradient> <gradient:#f59e0b:#fbbf24>%completion_status%</gradient>"
-    requirement_summary:
-      name: "<gradient:#a855f7:#c084fc>📊 要求摘要</gradient>"
-    requirement_tip:
-      name: "<gradient:#f59e0b:#fbbf24>💡 提示</gradient>"
-  requirement_tip:
-    currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>赚取所需货币</gradient>"
-    experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>获得经验等级</gradient>"
-    playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>在服务器上游玩</gradient>"
-    other:
-      - "<gradient:#f59e0b:#fbbf24>💡 提示:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>完成要求</gradient>"
+  proceed:
+    name: "<gradient:#10b981:#34d399>➡️继续</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击继续</gradient>"
+  previous:
+    name: "<gradient:#3b82f6:#60a5fa>⬅️ 上一页</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>上一页</gradient>"
+  next:
+    name: "<gradient:#3b82f6:#60a5fa>➡️下一个</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>下一页</gradient>"
+  up:
+    name: "<gradient:#a855f7:#c084fc>⬆️ 向上</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>上</gradient>"
+  down:
+    name: "<gradient:#a855f7:#c084fc>⬇️向下</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>下去</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ 取消</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>取消操作</gradient>"
+
+
 
 # ============================================
-# 等级要求旅程界面
+# 错误信息
+# ============================================
+error:
+  premium_required: "<gradient:#ef4444:#f87171>❌ 需要付费！</gradient> <gradient:#6b7280:#9ca3af>特点</gradient> <gradient:#f59e0b:#fbbf24>%feature%</gradient> <gradient:#6b7280:#9ca3af>需要高级版本。</gradient>"
+  processing_failed: "<gradient:#ef4444:#f87171>❌ 处理失败：</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# 分页播放器 UI
+# ============================================
+paginated_player_ui:
+  title: "<gradient:#a855f7:#c084fc>👥 选择玩家</gradient>"
+  player_entry:
+    name: "<gradient:#a855f7:#c084fc>👤</gradient> <gradient:#f59e0b:#fbbf24>%player_name%</gradient>"
+
+# ============================================
+# 抽象砧视图
+# ============================================
+abstract_anvil_ui:
+  title: "<gradient:#a855f7:#c084fc>✏️ 输入值</gradient>"
+  input:
+    name: "<gradient:#f59e0b:#fbbf24>✏️ 输入值</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>在上面输入您的内容</gradient>"
+      - "<gradient:#6b7280:#9ca3af>并点击确认</gradient>"
+  error:
+    processing_failed: "<gradient:#ef4444:#f87171>❌ 处理输入失败：</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
+
+# ============================================
+# 确认视图
+# ============================================
+confirmation_ui:
+  title: "<gradient:#a855f7:#c084fc>⚠️确认行动</gradient>"
+  confirm:
+    name: "<gradient:#10b981:#34d399>✅ 确认</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击确认</gradient>"
+  cancel:
+    name: "<gradient:#ef4444:#f87171>❌ 取消</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击取消</gradient>"
+
+# ============================================
+# 免费版本限制
+# ============================================
+free:
+  restriction:
+    max_rank_trees: "<gradient:#ef4444:#f87171>❌ 免费版本限制：</gradient> <gradient:#6b7280:#9ca3af>你只能完成</gradient> <gradient:#f59e0b:#fbbf24>1 等级树</gradient><gradient:#6b7280:#9ca3af>。升级至高级版，无限制！</gradient>"
+    max_ranks_per_tree: "<gradient:#ef4444:#f87171>❌ 免费版本限制：</gradient> <gradient:#6b7280:#9ca3af>你只能通过</gradient> <gradient:#f59e0b:#fbbf24>3 级</gradient> <gradient:#6b7280:#9ca3af>每棵树。升级至高级版！</gradient>"
+    max_active_paths: "<gradient:#ef4444:#f87171>❌ 免费版本限制：</gradient> <gradient:#6b7280:#9ca3af>你只能有</gradient> <gradient:#f59e0b:#fbbf24>1 个活跃排名路径</gradient><gradient:#6b7280:#9ca3af>。升级至高级版！</gradient>"
+    preview_only: "<gradient:#3b82f6:#60a5fa>👁 仅预览：</gradient> <gradient:#6b7280:#9ca3af>此排名树在免费版本中仅供预览。升级至高级即可解锁！</gradient>"
+    rank_beyond_limit: "<gradient:#ef4444:#f87171>🔒 所需保费：</gradient> <gradient:#6b7280:#9ca3af>此等级需要高级才能解锁。</gradient>"
+  indicator:
+    name: "<gradient:#f59e0b:#fbbf24>⭐ 免费版</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>您使用的是免费版本</gradient>"
+      - "<gradient:#6b7280:#9ca3af>功能有限。</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>升级到高级版可用于：</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• 无限等级树</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• 每棵树的排名不受限制</gradient>"
+      - "<gradient:#6b7280:#9ca3af>• 多个活动路径</gradient>"
+
+# ============================================
+# 高级版消息
+# ============================================
+premium:
+  no_restrictions: "<gradient:#10b981:#34d399>✅ 高级：</gradient> <gradient:#6b7280:#9ca3af>没有任何限制。</gradient>"
+  indicator:
+    name: "<gradient:#a855f7:#c084fc>⭐ 高级版</gradient>"
+    lore:
+      - "<gradient:#10b981:#34d399>所有功能已解锁！</gradient>"
+
+# ============================================
+# 需求项目详细信息视图（简化）
+# ============================================
+rank_requirement_item_detail_ui:
+  title: "<gradient:#f59e0b:#fbbf24>📦 物品要求</gradient>"
+  item:
+    have: "<gradient:#10b981:#34d399>✓ 你有这个项目</gradient>"
+    missing: "<gradient:#ef4444:#f87171>✗ 缺少物品</gradient>"
+    progress: "<gradient:#6b7280:#9ca3af>%current%/%required%</gradient>"
+  submit_button:
+    enabled:
+      name: "<gradient:#10b981:#34d399>📥 提交项目</gradient>"
+      lore:
+        - ""
+        - "<gradient:#10b981:#34d399>所有物品准备好！</gradient>"
+        - ""
+        - "<gradient:#f59e0b:#fbbf24>▶ 点击提交</gradient>"
+    disabled:
+      name: "<gradient:#6b7280:#9ca3af>📥 提交项目</gradient>"
+      lore:
+        - ""
+        - "<gradient:#ef4444:#f87171>缺少必需的项目</gradient>"
+        - ""
+        - "<gradient:#6b7280:#9ca3af>首先收集所有物品</gradient>"
+  back:
+    name: "<gradient:#ef4444:#f87171>← 返回</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>返回要求</gradient>"
+
+
+# ============================================
+# 奖励翻译
 # ============================================
 rank_requirements_journey_ui:
-  title: "<gradient:#a855f7:#c084fc>🗺 %rank_name% 要求</gradient>"
-  rank_info:
-    name: "<gradient:#f59e0b:#fbbf24>⚔ %rank_name%</gradient>"
-    lore:
-      - "<gradient:#6b7280:#9ca3af>完成所有要求</gradient>"
-      - "<gradient:#6b7280:#9ca3af>以解锁此等级</gradient>"
+
+  # ============================================
+  # 等级要求 旅程视图
+  # ============================================
+  title: "<gradient:#a855f7:#c084fc>⚔ %rank_name% 要求</gradient>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
   overall_progress:
-    name: "<gradient:#3b82f6:#60a5fa>📊 总体进度</gradient>"
+    name: "<gradient:#a855f7:#c084fc>📊 整体进展</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>进度:</gradient> <gradient:#10b981:#34d399>%percentage%%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>已完成:</gradient> <gradient:#f59e0b:#fbbf24>%completed%/%total%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>完成：</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>要求：</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+  rank_info:
+    name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
+    lore:
+      - ""
+      - "<gradient:#6b7280:#9ca3af>完成所有要求</gradient>"
+      - "<gradient:#6b7280:#9ca3af>解锁此等级！</gradient>"
   claim_button:
-    name: "<gradient:#10b981:#34d399>✅ 领取等级</gradient>"
+    name: "<gradient:#10b981:#34d399>🏆 索取排名！</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>点击领取等级！</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>所有要求已完成！</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ 点击领取你的排名</gradient>"
+    hidden:
+      name: "<gradient:#6b7280:#9ca3af>🔒 排名锁定</gradient>"
+      lore:
+        - ""
+        - "<gradient:#6b7280:#9ca3af>完成所有要求</gradient>"
+        - "<gradient:#6b7280:#9ca3af>来解锁这个等级。</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 已锁定</gradient>"
       lore:
+        - ""
         - "<gradient:#6b7280:#9ca3af>完成所有要求</gradient>"
-        - "<gradient:#6b7280:#9ca3af>以解锁此等级</gradient>"
+        - "<gradient:#6b7280:#9ca3af>来解锁这个等级。</gradient>"
+  requirement_card:
+    name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
+    progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
+  connection:
+    incomplete: " "
+    complete: " "
+  back:
+    name: "<gradient:#ef4444:#f87171>← 返回</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>返回排名概览</gradient>"
   messages:
-    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 预览模式 - 操作已禁用</gradient>"
     requirement_completed: "<gradient:#10b981:#34d399>✅ 要求已完成！</gradient>"
-    all_completed: "<gradient:#10b981:#34d399>🎉 所有要求已完成！现在可以领取等级了！</gradient>"
-    not_ready: "<gradient:#f59e0b:#fbbf24>⚠ 此要求尚未准备好完成。</gradient>"
-    already_completed: "<gradient:#10b981:#34d399>✅ 此要求已完成。</gradient>"
-    rank_claimed: "<gradient:#10b981:#34d399>🎉 恭喜！你已获得 %rank_name% 等级！</gradient>"
+    all_completed: "<gradient:#10b981:#34d399>🎉 所有要求已完成！点击领取按钮即可获得您的排名！</gradient>"
+    rank_claimed: "<gradient:#10b981:#34d399>🏆恭喜！您已获得排名：</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
+    not_ready: "<gradient:#ef4444:#f87171>❌ 此要求尚未准备好完成。</gradient>"
+    already_completed: "<gradient:#10b981:#34d399>✅ 这个要求已经完成了！</gradient>"
+    preview_mode: "<gradient:#3b82f6:#60a5fa>👁 预览模式 - 禁用交互</gradient>"
+
+  reward:
+    card:
+      name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+      no_rewards: "<gradient:#6b7280:#9ca3af>无奖励</gradient>"
+      no_rewards_lore:
+        - "<gradient:#6b7280:#9ca3af>该等级没有奖励配置</gradient>"
+      type_label: "<gray>类型：</gray> <yellow>%type%</yellow>"
+      value_label: "<gray>价值：</gray> <gold>%value%</gold>"
+    
+    # 奖励类型说明
+    currency:
+      description: "<gradient:#fbbf24:#fcd34d>获得货币奖励</gradient>"
+    item:
+      description: "<gradient:#10b981:#34d399>获得物品奖励</gradient>"
+    experience:
+      description: "<gradient:#a855f7:#c084fc>获得经验值</gradient>"
+    command:
+      description: "<gradient:#ef4444:#f87171>执行特殊命令</gradient>"
+    composite:
+      description: "<gradient:#3b82f6:#60a5fa>多重奖励相结合</gradient>"
+    choice:
+      description: "<gradient:#ec4899:#f472b6>从多种奖励中选择</gradient>"
+    permission:
+      description: "<gradient:#8b5cf6:#a78bfa>获得特殊权限</gradient>"
+    teleport:
+      description: "<gradient:#06b6d4:#22d3ee>传送到某个位置</gradient>"
+    particle:
+      description: "<gradient:#f97316:#fb923c>解锁粒子效果</gradient>"
+    vanishing_chest:
+      description: "<gradient:#14b8a6:#2dd4bf>收到一个消失的宝箱</gradient>"
+    
+    more: "<gradient:#fbbf24:#fcd34d>+%count% 更多奖励...</gradient>"
+
+  rewards:
+    view_all:
+      name: "<gradient:#a855f7:#c084fc>📋 查看所有奖励</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>点击查看全部 %count% 奖励</gradient>"
+        - "<gradient:#6b7280:#9ca3af>对于这个排名的详细信息</gradient>"
+      coming_soon: "<gradient:#fbbf24:#fcd34d>详细奖励查看即将推出！</gradient>"
+      empty:
+        name: "<gradient:#6b7280:#9ca3af>📋没有奖励</gradient>"
+        lore:
+          - "<gradient:#6b7280:#9ca3af>此等级无奖励</gradient>"
+        message: "<gradient:#6b7280:#9ca3af>该等级没有配置奖励。</gradient>"
+    label: "<gradient:#fbbf24:#fcd34d>🎁 排名奖励</gradient>"
+    label_lore:
+      - "<gradient:#6b7280:#9ca3af>您将收到 %count% 奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>当您获得此排名时</gradient>"
+
+reward:
+  card:
+    name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
+    no_rewards: "<gradient:#6b7280:#9ca3af>无奖励</gradient>"
+    no_rewards_lore:
+      - "<gradient:#6b7280:#9ca3af>该等级没有奖励配置</gradient>"
+    type_label: "<gray>类型：</gray> <yellow>%type%</yellow>"
+    value_label: "<gray>价值：</gray> <gold>%value%</gold>"
+  
+  perk:
+    unlocked: "<gradient:#10b981:#34d399>✦</gradient> <gradient:#6b7280:#9ca3af>您解锁了福利：</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+  
+  # 奖励类型说明
+  currency:
+    description: "<gradient:#fbbf24:#fcd34d>获得货币奖励</gradient>"
+  item:
+    description: "<gradient:#10b981:#34d399>获得物品奖励</gradient>"
+  experience:
+    description: "<gradient:#a855f7:#c084fc>获得经验值</gradient>"
+  command:
+    description: "<gradient:#ef4444:#f87171>执行特殊命令</gradient>"
+  composite:
+    description: "<gradient:#3b82f6:#60a5fa>多重奖励相结合</gradient>"
+  choice:
+    description: "<gradient:#ec4899:#f472b6>从多种奖励中选择</gradient>"
+  permission:
+    description: "<gradient:#8b5cf6:#a78bfa>获得特殊权限</gradient>"
+  teleport:
+    description: "<gradient:#06b6d4:#22d3ee>传送到某个位置</gradient>"
+  particle:
+    description: "<gradient:#f97316:#fb923c>解锁粒子效果</gradient>"
+  vanishing_chest:
+    description: "<gradient:#14b8a6:#2dd4bf>收到一个消失的宝箱</gradient>"
+  
+  more: "<gradient:#fbbf24:#fcd34d>+%count% 更多奖励...</gradient>"
+
+rewards:
+  view_all:
+    name: "<gradient:#a855f7:#c084fc>📋 查看所有奖励</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>点击查看全部 %count% 奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>对于这个排名的详细信息</gradient>"
+    coming_soon: "<gradient:#fbbf24:#fcd34d>详细奖励查看即将推出！</gradient>"
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>📋没有奖励</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>此等级无奖励</gradient>"
+      message: "<gradient:#6b7280:#9ca3af>该等级没有配置奖励。</gradient>"
+  label: "<gradient:#fbbf24:#fcd34d>🎁 排名奖励</gradient>"
+  label_lore:
+    - "<gradient:#6b7280:#9ca3af>您将收到 %count% 奖励</gradient>"
+    - "<gradient:#6b7280:#9ca3af>当您获得此排名时</gradient>"
+
+
+# ============================================
+# 排名奖励详情查看
+# ============================================
+rank_rewards_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>奖励： %rank_name%</gradient>"
+  rank_info:
+    name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>这个排名有 %count% 奖励</gradient>"
+      - "<gradient:#6b7280:#9ca3af>点击任意奖励即可查看详情</gradient>"
+
+# ============================================
+# 福利概览 UI
+# ============================================
+perk_overview_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ 福利</gradient>"
+
+# ============================================
+# 福利详细信息用户界面
+# ============================================
+perk_detail_ui:
+  title: "<gradient:#a855f7:#c084fc>✨ %perk_name%</gradient>"
+
+
+# ============================================
+# 福利翻译
+# ============================================
+perk:
+  # 钓鱼福利
+  fish_rate:
+    name: "<gradient:#3b82f6:#60a5fa>更快的钓鱼</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>提高捕鱼率，更快地捕鱼</gradient>"
+  fish_xp:
+    name: "<gradient:#10b981:#34d399>钓鱼经验值提升</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>捕获鱼时获得奖励 XP</gradient>"
+  
+  # 药水福利
+  potion_enhance:
+    name: "<gradient:#a855f7:#c084fc>药水增幅器</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>服用后有几率增强药水效果</gradient>"
+  potion_extend:
+    name: "<gradient:#f59e0b:#fbbf24>药水持续时间</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>服用后有机会延长药水持续时间</gradient>"
+  potion_save:
+    name: "<gradient:#10b981:#34d399>药水退款</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>喝下药水后有机会取回药水</gradient>"
+  
+  # 福利消息
+  messages:
+    # 解锁/Enable/Disable
+    unlock:
+      notification: "<gradient:#10b981:#34d399>✨ 福利已解锁！</gradient> <gradient:#6b7280:#9ca3af>你已经解锁了</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      success: "<gradient:#10b981:#34d399>成功解锁并启用特权：</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>无法解锁特权。请再试一次。</gradient>"
+      error: "<gradient:#ef4444:#f87171>解锁特权时发生错误。</gradient>"
+      requirements_not_met: "<gradient:#ef4444:#f87171>您不符合解锁此福利的要求！</gradient>"
+    enable:
+      success: "<gradient:#10b981:#34d399>已启用的福利：</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>无法启用特权：</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      limit_reached: "<gradient:#ef4444:#f87171>您已达到启用福利的最大数量（%limit%)!</gradient>"
+    disable:
+      success: "<gradient:#f59e0b:#fbbf24>残疾人福利：</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>无法禁用特权：</gradient> <gradient:#a855f7:#c084fc>%perk%</gradient>"
+    
+    # 冷却
+    cooldown:
+      active: "<gradient:#ef4444:#f87171>此福利处于冷却状态</gradient> <gradient:#f59e0b:#fbbf24>%time%</gradient>"
+      ready: "<gradient:#10b981:#34d399>Perk 已准备好使用！</gradient>"
+    
+    # 效果触发器
+    potion_enhanced: "<gradient:#a855f7:#c084fc>✨ 药水强化！</gradient> <gradient:#6b7280:#9ca3af>效果放大</gradient>"
+    potion_extended: "<gradient:#f59e0b:#fbbf24>⏱ 药水持续时间延长！</gradient> <gradient:#6b7280:#9ca3af>持续时间更长</gradient>"
+    potion_saved: "<gradient:#10b981:#34d399>💾 药水已保存！</gradient> <gradient:#6b7280:#9ca3af>退回库存</gradient>"
+    fishing_active: "<gradient:#3b82f6:#60a5fa>🎣 更快的钓鱼活动！</gradient>"
+    fishing_xp: "<gradient:#10b981:#34d399>+%xp% 钓鱼经验值！</gradient>"
+  
+  # 用户界面元素
+  ui:
+    header:
+      type_label: "<gray>类型： <white>%type%</white></gray>"
+      category_label: "<gray>类别： <white>%category%</white></gray>"
+    
+    requirements:
+      no_requirements: "<green>无要求</green>"
+      no_requirements_lore: "<gray>此福利没有解锁要求</gray>"
+    
+    rewards:
+      title: "<gold>解锁奖励</gold>"
+      no_rewards: "<gray>无解锁奖励</gray>"
+      no_rewards_lore: "<gray>此福利没有解锁奖励</gray>"
+      type_label: "<gray>类型： <white>%type%</white></gray>"
+      value_label: "<gray>价值： <gold>%value%</gold></gray>"
+    
+    status:
+      title: "<white>福利状态</white>"
+      locked: "<red>✖ 已锁定</red>"
+      locked_hint: "<gray>完成解锁条件</gray>"
+      active: "<green>✓ 活跃</green>"
+      enabled: "<yellow>○ 启用</yellow>"
+      disabled: "<gray>○ 残疾人</gray>"
+      enabled_count: "<gray>已启用的福利： <white>%count%/%max%</white></gray>"
+      cooldown_label: "<gray>冷却： <gold>%time%</gold></gray>"
+      activations_label: "<gray>激活： <white>%count%</white></gray>"
+    
+    buttons:
+      unlock:
+        title: "<white>解锁额外福利</white>"
+        hint: "<green>点击解锁此福利！</green>"
+      enable:
+        title: "<white>启用额外津贴</white>"
+        hint: "<green>单击以启用此福利</green>"
+        limit_reached: "<red>已达到启用的最大福利</red>"
+      disable:
+        title: "<white>禁用额外津贴</white>"
+        hint: "<yellow>单击以禁用此特权</yellow>"
+  
+  # 现有福利（供参考 - 如果缺少则添加）
+  fly:
+    name: "<gradient:#3b82f6:#60a5fa>航班</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>获得飞行能力</gradient>"
+  glow:
+    name: "<gradient:#f59e0b:#fbbf24>辉光</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>为自己应用发光效果</gradient>"
+  haste:
+    name: "<gradient:#10b981:#34d399>急速</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>采矿和挖掘速度更快</gradient>"
+  jump_boost:
+    name: "<gradient:#a855f7:#c084fc>跳跃提升</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>比平常跳得更高</gradient>"
+  keep_experience:
+    name: "<gradient:#10b981:#34d399>保持经验</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>当你死后保留你的XP</gradient>"
+  keep_inventory:
+    name: "<gradient:#3b82f6:#60a5fa>保留库存</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>当你死后保留你的物品</gradient>"
+  night_vision:
+    name: "<gradient:#f59e0b:#fbbf24>夜视仪</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>在黑暗中看得清楚</gradient>"
+  no_fall_damage:
+    name: "<gradient:#10b981:#34d399>无坠落损坏</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>不会因跌落而受到伤害</gradient>"
+  resistance:
+    name: "<gradient:#ef4444:#f87171>反抗</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>减少所有来源的伤害</gradient>"
+  saturation:
+    name: "<gradient:#f59e0b:#fbbf24>饱和</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>永远不会饿</gradient>"
+  speed:
+    name: "<gradient:#3b82f6:#60a5fa>速度</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>移动速度比平常快</gradient>"
+  strength:
+    name: "<gradient:#ef4444:#f87171>力量</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>在战斗中造成更多伤害</gradient>"
+  fire_resistance:
+    name: "<gradient:#ef4444:#f87171>耐火性</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>免疫火焰和熔岩伤害</gradient>"
+  double_experience:
+    name: "<gradient:#a855f7:#c084fc>双倍经验</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>从所有来源获得双倍经验值</gradient>"
+  critical_strike:
+    name: "<gradient:#ef4444:#f87171>致命一击</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>有机会造成严重伤害</gradient>"
+  combat_heal:
+    name: "<gradient:#10b981:#34d399>战斗治疗</gradient>"
+    description: "<gradient:#6b7280:#9ca3af>对敌人造成伤害时治疗</gradient>"

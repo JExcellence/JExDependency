@@ -1,0 +1,24 @@
+# Svenska oversattningar for RCore Central Integration
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Anvandning: /rcconnect <api-key></gray>"
+  connecting: "<yellow>Ansluter till RaindropCentral...</yellow>"
+  success: "<green>Anslutning till RaindropCentral lyckades!</green> <gray>Servern skickar nu heartbeats.</gray>"
+  error:
+    invalid_key: "<red>Ogiltigt API-nyckelformat. API-nycklar ska vara 32-128 alfanumeriska tecken.</red>"
+    uuid_mismatch: "<red>Denna API-nyckel tillhor ett annat Minecraft-konto.</red>"
+    already_connected: "<yellow>Servern ar redan ansluten.</yellow> <gray>Anvand /rcdisconnect forst.</gray>"
+    network: "<red>Natverksfel: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>Kopplar fran RaindropCentral...</yellow>"
+  success: "<green>Frankopplad fran RaindropCentral.</green>"
+  error:
+    not_connected: "<red>Servern ar inte ansluten till RaindropCentral.</red>"
+    failed: "<red>Kunde inte koppla fran. Forsok igen.</red>"
+    network: "<red>Natverksfel: %error%</red>"
+
+general:
+  no_permission: "<red>Du har inte behorighet att anvanda detta kommando.</red>"

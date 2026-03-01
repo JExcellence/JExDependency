@@ -1,0 +1,24 @@
+# RCore Central Integration icin Turkce ceviriler
+
+prefix: "<dark_gray>[<aqua>RaindropCentral</aqua>]</dark_gray> "
+
+rcconnect:
+  usage: "<gray>Kullanim: /rcconnect <api-key></gray>"
+  connecting: "<yellow>RaindropCentral'a baglaniliyor...</yellow>"
+  success: "<green>RaindropCentral'a basariyla baglanildi!</green> <gray>Sunucu artik heartbeat gonderiyor.</gray>"
+  error:
+    invalid_key: "<red>Gecersiz API anahtari bicimi. API anahtarlari 32-128 alfanumerik karakter olmali.</red>"
+    uuid_mismatch: "<red>Bu API anahtari farkli bir Minecraft hesabina ait.</red>"
+    already_connected: "<yellow>Sunucu zaten bagli.</yellow> <gray>Once /rcdisconnect kullanin.</gray>"
+    network: "<red>Ag hatasi: %error%</red>"
+
+rcdisconnect:
+  disconnecting: "<yellow>RaindropCentral baglantisi kesiliyor...</yellow>"
+  success: "<green>RaindropCentral baglantisi basariyla kesildi.</green>"
+  error:
+    not_connected: "<red>Sunucu RaindropCentral'a bagli degil.</red>"
+    failed: "<red>Baglanti kesilemedi. Lutfen tekrar deneyin.</red>"
+    network: "<red>Ag hatasi: %error%</red>"
+
+general:
+  no_permission: "<red>Bu komutu kullanma izniniz yok.</red>"
