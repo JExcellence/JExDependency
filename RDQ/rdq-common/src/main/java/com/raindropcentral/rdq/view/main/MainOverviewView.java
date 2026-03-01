@@ -179,7 +179,7 @@ public class MainOverviewView extends BaseView {
                     BountyOverviewView.class,
                     Map.of(
                         "plugin",
-                        this.rdq
+                            this.rdq.get(clickContext)
                     )
                 );
             })
@@ -311,7 +311,7 @@ public class MainOverviewView extends BaseView {
                     RankMainView.class,
                     Map.of(
                         "plugin",
-                        this.rdq
+                        this.rdq.get(clickContext)
                     )
                 );
             })
