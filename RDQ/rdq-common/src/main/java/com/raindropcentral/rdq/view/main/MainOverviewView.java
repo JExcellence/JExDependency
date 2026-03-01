@@ -124,7 +124,11 @@ public class MainOverviewView extends BaseView {
                     )
                     .build()
             )
-            .displayIf(() -> player.hasPermission("raindropquests.command.admin") || player.isOp())
+            .displayIf(() ->
+                player.hasPermission("raindropquests.command.admin") ||
+                player.hasPermission("raindropquests.command") ||
+                player.isOp()
+            )
             .onClick(clickContext -> {
                 clickContext.openForPlayer(
                     AdminOverviewView.class,

@@ -1,5 +1,6 @@
 package com.raindropcentral.commands;
 
+import com.raindropcentral.commands.permission.PermissionParentProvider;
 import de.jexcellence.evaluable.error.CommandError;
 import de.jexcellence.evaluable.error.EErrorType;
 import de.jexcellence.evaluable.section.ACommandSection;
@@ -9,7 +10,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Base command implementation that restricts execution to player senders and provides
@@ -24,6 +30,8 @@ import java.util.List;
  * @version 1.0.1
  */
 public abstract class PlayerCommand extends BukkitCommand {
+
+        private static final String CONFIGURED_NODES_FIELD = "nodes";
 
         /**
          * Creates a player-restricted command bound to the provided configuration section.
@@ -139,7 +147,7 @@ public abstract class PlayerCommand extends BukkitCommand {
 		}
 		
 		if (
-			permissionsSection.hasPermission(
+			this.hasPermission(
 				player,
 				permissionNode
 			)
@@ -153,6 +161,196 @@ public abstract class PlayerCommand extends BukkitCommand {
 		);
 		return true;
 	}
+
+        /**
+         * Checks whether the player has the supplied permission node without sending feedback.
+         * Behaviour: uses the section-local permission mapping so command-specific aliases and parent registration
+         * remain consistent across execution, GUI visibility, and tab completion checks.
+         *
+         * @param player         player being evaluated
+         * @param permissionNode permission node defined by the command
+         * @return {@code true} when the player has the permission or no section is configured
+         */
+        protected boolean hasPermission(
+                final @NotNull Player player,
+                final @NotNull IPermissionNode permissionNode
+        ) {
+
+		final PermissionsSection permissionsSection = this.commandSection.getPermissions();
+		if (
+			permissionsSection == null
+		) {
+			return true;
+		}
+
+		if (
+			permissionsSection.hasPermission(
+				player,
+				permissionNode
+			)
+		) {
+			return true;
+		}
+
+		if (! (this.commandSection instanceof PermissionParentProvider permissionParentProvider)) {
+			return false;
+		}
+
+		final Map<String, List<String>> permissionParents = permissionParentProvider.getPermissionParents();
+		if (permissionParents.isEmpty()) {
+			return false;
+		}
+
+		final Map<String, String> configuredNodes = this.extractConfiguredNodes(permissionsSection);
+		final String targetNode = this.resolveNode(
+			configuredNodes,
+			permissionNode.getInternalName(),
+			permissionNode.getFallbackNode()
+		);
+
+		if (
+			targetNode == null
+		) {
+			return false;
+		}
+
+		return this.hasInheritedPermission(
+			player,
+			targetNode,
+			configuredNodes,
+			permissionParents,
+			new HashSet<>()
+		);
+        }
+
+        private boolean hasInheritedPermission(
+                final @NotNull Player player,
+                final @NotNull String targetNode,
+                final @NotNull Map<String, String> configuredNodes,
+                final @NotNull Map<String, List<String>> permissionParents,
+                final @NotNull Set<String> visitedNodes
+        ) {
+
+		if (! visitedNodes.add(targetNode)) {
+			return false;
+		}
+
+		for (Map.Entry<String, List<String>> entry : permissionParents.entrySet()) {
+			final String parentNode = this.resolveNode(
+				configuredNodes,
+				entry.getKey(),
+				null
+			);
+
+			if (
+				parentNode == null
+			) {
+				continue;
+			}
+
+			final List<String> children = entry.getValue();
+			if (
+				children == null ||
+				children.isEmpty()
+			) {
+				continue;
+			}
+
+			for (String childReference : children) {
+				final String childNode = this.resolveNode(
+					configuredNodes,
+					childReference,
+					null
+				);
+
+				if (! targetNode.equals(childNode)) {
+					continue;
+				}
+
+				if (
+					player.hasPermission(parentNode) ||
+					this.hasInheritedPermission(
+						player,
+						parentNode,
+						configuredNodes,
+						permissionParents,
+						visitedNodes
+					)
+				) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+        }
+
+        private Map<String, String> extractConfiguredNodes(
+                final @NotNull PermissionsSection permissionsSection
+        ) {
+
+		final Map<String, String> configuredNodes = new HashMap<>();
+
+		try {
+			final Field nodesField = PermissionsSection.class.getDeclaredField(CONFIGURED_NODES_FIELD);
+			nodesField.setAccessible(true);
+
+			final Object rawNodes = nodesField.get(permissionsSection);
+			if (! (rawNodes instanceof Map<?, ?> nodesMap)) {
+				return Map.of();
+			}
+
+			for (Map.Entry<?, ?> entry : nodesMap.entrySet()) {
+				if (
+					entry.getKey() instanceof String internalName &&
+					entry.getValue() instanceof String permissionNode
+				) {
+					configuredNodes.put(
+						internalName,
+						permissionNode
+					);
+				}
+			}
+		} catch (final ReflectiveOperationException ignored) {
+			return Map.of();
+		}
+
+		return configuredNodes;
+        }
+
+        private String resolveNode(
+                final @NotNull Map<String, String> configuredNodes,
+                final String permissionReference,
+                final String fallbackNode
+        ) {
+
+		if (permissionReference != null) {
+			final String trimmedReference = permissionReference.trim();
+
+			if (! trimmedReference.isEmpty()) {
+				final String configuredNode = configuredNodes.get(trimmedReference);
+				if (
+					configuredNode != null &&
+					! configuredNode.isBlank()
+				) {
+					return configuredNode;
+				}
+
+				if (trimmedReference.contains(".")) {
+					return trimmedReference;
+				}
+			}
+		}
+
+		if (
+			fallbackNode == null ||
+			fallbackNode.isBlank()
+		) {
+			return null;
+		}
+
+		return fallbackNode;
+        }
 	
         /**
          * Generates tab completion suggestions for validated {@link Player} senders.

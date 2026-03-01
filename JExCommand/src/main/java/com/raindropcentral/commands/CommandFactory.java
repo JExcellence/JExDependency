@@ -1,6 +1,8 @@
 package com.raindropcentral.commands;
 
 import com.google.common.reflect.ClassPath;
+import com.raindropcentral.commands.permission.PermissionHierarchyRegistrar;
+import com.raindropcentral.commands.permission.PermissionParentProvider;
 import com.raindropcentral.commands.utility.Command;
 import de.jexcellence.configmapper.ConfigMapper;
 import de.jexcellence.evaluable.CommandUpdater;
@@ -173,6 +175,22 @@ public class CommandFactory {
             Class<? extends ACommandSection> sectionClass = (Class<? extends ACommandSection>) Class.forName(packageName + "." + sectionClassName);
 
             final ACommandSection mapSection = getACommandSection(configFileName, sectionClass, className);
+
+            if (mapSection instanceof PermissionParentProvider permissionParentProvider) {
+                try {
+                    PermissionHierarchyRegistrar.register(
+                        this.loadedPlugin,
+                        mapSection.getPermissions(),
+                        permissionParentProvider.getPermissionParents()
+                    );
+                } catch (final Exception exception) {
+                    this.loadedPlugin.getLogger().log(
+                        Level.WARNING,
+                        "Could not register permission hierarchy for command: " + commandClass.getName(),
+                        exception
+                    );
+                }
+            }
 
             BukkitCommand command = null;
 

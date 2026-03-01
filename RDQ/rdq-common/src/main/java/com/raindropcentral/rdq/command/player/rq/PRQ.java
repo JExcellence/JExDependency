@@ -57,14 +57,7 @@ public class PRQ extends PlayerCommand {
         final @NotNull String label,
         final @NotNull String[] args
     ) {
-        
-        if (this.hasNoPermission(
-            player,
-            EPRQPermission.COMMAND
-        )) {
-            return;
-        }
-        
+
         EPRQAction action = enumParameterOrElse(
             args,
             0,
@@ -192,6 +185,13 @@ public class PRQ extends PlayerCommand {
                 );
             }
             default -> {
+                if (! this.canAccessAnyAction(player)) {
+                    this.hasNoPermission(
+                        player,
+                        EPRQPermission.COMMAND
+                    );
+                    return;
+                }
                 new I18n.Builder("rq.help", player).includePrefix().build().sendMessage();
             }
         }
@@ -215,20 +215,20 @@ public class PRQ extends PlayerCommand {
         final @NotNull String label,
         final @NotNull String[] args
     ) {
-        
-        if (
-            this.hasNoPermission(
-                player,
-                EPRQPermission.COMMAND
-            )
-        ) {
-            return new ArrayList<>();
-        }
-        
+
         if (
             args.length == 1
         ) {
-            List<String> suggestions = new ArrayList<>(Arrays.stream(EPRQAction.values()).map(Enum::name).toList());
+            List<String> suggestions = new ArrayList<>(
+                Arrays.stream(EPRQAction.values())
+                    .filter(action -> action != EPRQAction.HELP)
+                    .filter(action -> this.canAccessAction(
+                        player,
+                        action
+                    ))
+                    .map(Enum::name)
+                    .toList()
+            );
             return StringUtil.copyPartialMatches(
                 args[0].toLowerCase(),
                 suggestions,
@@ -236,5 +236,51 @@ public class PRQ extends PlayerCommand {
             );
         }
         return new ArrayList<>();
+    }
+
+    private boolean canAccessAnyAction(
+        final @NotNull Player player
+    ) {
+
+        return Arrays.stream(EPRQAction.values())
+            .filter(action -> action != EPRQAction.HELP)
+            .anyMatch(action -> this.canAccessAction(
+                player,
+                action
+            ));
+    }
+
+    private boolean canAccessAction(
+        final @NotNull Player player,
+        final @NotNull EPRQAction action
+    ) {
+
+        return switch (action) {
+            case ADMIN -> this.hasPermission(
+                player,
+                EPRQPermission.ADMIN
+            );
+            case BOUNTY -> this.hasPermission(
+                player,
+                EPRQPermission.BOUNTY
+            );
+            case MAIN -> this.hasPermission(
+                player,
+                EPRQPermission.MAIN
+            );
+            case QUESTS -> this.hasPermission(
+                player,
+                EPRQPermission.QUESTS
+            );
+            case RANKS -> this.hasPermission(
+                player,
+                EPRQPermission.RANKS
+            );
+            case PERKS -> this.hasPermission(
+                player,
+                EPRQPermission.PERKS
+            );
+            case HELP -> this.canAccessAnyAction(player);
+        };
     }
 }

@@ -24,12 +24,28 @@ commands:
     permissions:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
+        player: 'raindropquests.player'
         command: 'raindropquests.command'
         commandAdmin: 'raindropquests.command.admin'
         commandBounty: 'raindropquests.command.bounty'
         commandMain: 'raindropquests.command.main'
         commandQuests: 'raindropquests.command.quests'
         commandRanks: 'raindropquests.command.ranks'
+        commandPerks: 'raindropquests.command.perks'
+    permissionParents:
+      player:
+        - commandBounty
+        - commandMain
+        - commandPerks
+        - commandQuests
+        - commandRanks
+      command:
+        - commandAdmin
+        - commandBounty
+        - commandMain
+        - commandPerks
+        - commandQuests
+        - commandRanks
 
 lut:
   prefix: '&8[&1Admin&8] &7'
