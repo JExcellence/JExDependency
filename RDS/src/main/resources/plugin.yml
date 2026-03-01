@@ -7,4 +7,5 @@ author: RaindropCentral
 website: https://raindropcentral.com
 softdepend:
   - Vault
+  - JExEconomy
   - TheNewEconomy
