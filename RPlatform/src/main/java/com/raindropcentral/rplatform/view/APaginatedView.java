@@ -5,7 +5,6 @@ import com.raindropcentral.rplatform.utility.heads.view.Next;
 import com.raindropcentral.rplatform.utility.heads.view.Previous;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import de.jexcellence.jextranslate.i18n.I18n;
-import net.kyori.adventure.text.Component;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.component.Pagination;

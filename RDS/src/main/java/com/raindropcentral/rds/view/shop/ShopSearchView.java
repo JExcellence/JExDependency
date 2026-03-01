@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -120,24 +121,15 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
             final @NotNull RenderContext render,
             final @NotNull Player player
     ) {
-        final Pagination pagination = this.getPagination(render);
-        final List<ShopSearchEntry> entries = new ArrayList<>();
-        if (pagination.source() != null) {
-            for (final Object sourceEntry : pagination.source()) {
-                if (sourceEntry instanceof ShopSearchEntry shopSearchEntry) {
-                    entries.add(shopSearchEntry);
-                }
-            }
+        final State<Pagination> paginationState = this.findPaginationState();
+        if (paginationState == null) {
+            render.slot(4).renderWith(() -> this.createHeaderItem(render, player));
+            return;
         }
 
-        render.layoutSlot(
-                's',
-                this.createSummaryItem(player, entries)
-        );
-
-        if (entries.isEmpty()) {
-            render.slot(4).renderWith(() -> this.createEmptyItem(player));
-        }
+        render.slot(4)
+                .renderWith(() -> this.createHeaderItem(render, player))
+                .updateOnStateChange(paginationState);
     }
 
     @Override
@@ -217,6 +209,20 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
                 .build();
     }
 
+    private @NotNull ItemStack createHeaderItem(
+            final @NotNull RenderContext render,
+            final @NotNull Player player
+    ) {
+        final Pagination pagination = this.getPagination(render);
+        final List<ShopSearchEntry> entries = this.getEntries(pagination);
+
+        if (pagination.source() != null && entries.isEmpty()) {
+            return this.createEmptyItem(player);
+        }
+
+        return this.createSummaryItem(player, entries);
+    }
+
     private @NotNull ItemStack createEmptyItem(
             final @NotNull Player player
     ) {
@@ -239,6 +245,38 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
                 + location.getBlockX() + ", "
                 + location.getBlockY() + ", "
                 + location.getBlockZ() + ")";
+    }
+
+    private @NotNull List<ShopSearchEntry> getEntries(
+            final @NotNull Pagination pagination
+    ) {
+        final List<ShopSearchEntry> entries = new ArrayList<>();
+        if (pagination.source() == null) {
+            return entries;
+        }
+
+        for (final Object sourceEntry : pagination.source()) {
+            if (sourceEntry instanceof ShopSearchEntry shopSearchEntry) {
+                entries.add(shopSearchEntry);
+            }
+        }
+
+        return entries;
+    }
+
+    @SuppressWarnings("unchecked")
+    private @Nullable State<Pagination> findPaginationState() {
+        try {
+            final Field paginationField = APaginatedView.class.getDeclaredField("pagination");
+            paginationField.setAccessible(true);
+
+            final Object paginationState = paginationField.get(this);
+            return paginationState instanceof State<?> state
+                    ? (State<Pagination>) state
+                    : null;
+        } catch (ReflectiveOperationException ignored) {
+            return null;
+        }
     }
 
     private @NotNull String getOwnerName(
