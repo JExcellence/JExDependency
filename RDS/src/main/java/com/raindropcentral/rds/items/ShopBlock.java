@@ -1,34 +1,30 @@
 package com.raindropcentral.rds.items;
 
 import com.raindropcentral.rds.RDS;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jspecify.annotations.NonNull;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class ShopBlock {
 
-    public static @NonNull ItemStack getShopBlock(RDS plugin, @NonNull UUID owner) {
+    public static @NonNull ItemStack getShopBlock(RDS plugin, @NonNull Player player) {
         ItemStack shop = new ItemStack(Material.CHEST);
         ItemMeta meta = shop.getItemMeta();
-        meta.displayName(Component.text("RaindropShop", NamedTextColor.BLUE));
-        List<Component> lore = new ArrayList<>();
-        lore.add(Component.text("Place to to set up shop", NamedTextColor.YELLOW));
-        meta.lore(lore);
+        meta.displayName(new I18n.Builder("shop_block.name", player).build().component());
+        meta.lore(new I18n.Builder("shop_block.lore", player).build().children());
         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
         persistentDataContainer.set(
                 new NamespacedKey(plugin, "owner"),
                 PersistentDataType.STRING,
-                owner.toString()
+                player.getUniqueId().toString()
         );
         shop.setItemMeta(meta);
         return shop;

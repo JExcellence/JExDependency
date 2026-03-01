@@ -34,7 +34,7 @@ public class PRS extends PlayerCommand {
                 this.rds.getLogger().info("Main Command");
             }
             case DEV -> {
-                player.getInventory().addItem(ShopBlock.getShopBlock(this.rds, player.getUniqueId()));
+                player.getInventory().addItem(ShopBlock.getShopBlock(this.rds, player));
             }
             default -> {
                 this.rds.getLogger().info("Info Command");

@@ -2,6 +2,15 @@
 # GUI Buttons
 # ============================================
 
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Place this block to set up your shop.</yellow>"
+
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
+
 shop_overview_ui:
   title: "{owner} Shop - {location}"
   summary:
