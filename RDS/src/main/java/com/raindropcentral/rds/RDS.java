@@ -7,10 +7,12 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
 import com.raindropcentral.rds.view.shop.ShopEditView;
+import com.raindropcentral.rds.view.shop.ShopBankView;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
 import com.raindropcentral.rds.view.shop.ShopInputView;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
 import com.raindropcentral.rds.view.shop.ShopOverviewView;
+import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.view.shop.ShopStorageView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
@@ -151,7 +153,7 @@ public class RDS extends JavaPlugin {
                 Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
         }
-
+        
         this.entityManagerFactory =
                 new JEHibernate(file.getAbsolutePath())
                         .getEntityManagerFactory();
@@ -178,6 +180,8 @@ public class RDS extends JavaPlugin {
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
                     new ShopOverviewView(),
+                    new ShopBankView(),
+                    new ShopSearchView(),
                     new ShopCustomerView(),
                     new ShopInputView(),
                     new ShopStorageView(),

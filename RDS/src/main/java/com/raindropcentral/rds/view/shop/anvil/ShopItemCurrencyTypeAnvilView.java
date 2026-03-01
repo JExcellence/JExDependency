@@ -3,6 +3,7 @@ package com.raindropcentral.rds.view.shop.anvil;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
+import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.context.Context;
@@ -17,6 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Method;
 import java.util.Map;
 
 public class ShopItemCurrencyTypeAnvilView extends AbstractAnvilView {
@@ -39,7 +41,8 @@ public class ShopItemCurrencyTypeAnvilView extends AbstractAnvilView {
             final @NotNull String input,
             final @NotNull Context context
     ) {
-        return this.targetItem.get(context).withCurrencyType(input.trim());
+        final String normalizedCurrencyType = input.trim();
+        return this.targetItem.get(context).withCurrencyType(normalizedCurrencyType);
     }
 
     @Override
@@ -65,7 +68,7 @@ public class ShopItemCurrencyTypeAnvilView extends AbstractAnvilView {
             final @NotNull String input,
             final @NotNull Context context
     ) {
-        return !input.trim().isEmpty();
+        return this.isAvailableCurrencyType(input, context);
     }
 
     @Override
@@ -87,8 +90,17 @@ public class ShopItemCurrencyTypeAnvilView extends AbstractAnvilView {
             final @Nullable String input,
             final @NotNull Context context
     ) {
-        this.i18n("error.empty", context.getPlayer())
+        final String normalizedInput = input == null ? "" : input.trim();
+        final String errorKey = normalizedInput.isEmpty()
+                ? "error.empty"
+                : "error.invalid_currency";
+
+        this.i18n(errorKey, context.getPlayer())
                 .includePrefix()
+                .withPlaceholders(Map.of(
+                        "input", normalizedInput,
+                        "currency_type", normalizedInput
+                ))
                 .build()
                 .sendMessage();
     }
@@ -104,5 +116,37 @@ public class ShopItemCurrencyTypeAnvilView extends AbstractAnvilView {
         result.put("shopLocation", this.shopLocation.get(context));
         result.put("shopItem", processingResult);
         return result;
+    }
+
+    private boolean isAvailableCurrencyType(
+            final @NotNull String input,
+            final @NotNull Context context
+    ) {
+        final String normalizedInput = input.trim();
+        if (normalizedInput.isEmpty()) {
+            return false;
+        }
+
+        if ("vault".equalsIgnoreCase(normalizedInput)) {
+            return true;
+        }
+
+        final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
+        return bridge != null && this.hasCustomCurrency(bridge, normalizedInput, context);
+    }
+
+    private boolean hasCustomCurrency(
+            final @NotNull JExEconomyBridge bridge,
+            final @NotNull String currencyType,
+            final @NotNull Context context
+    ) {
+        try {
+            final Method findCurrencyMethod = JExEconomyBridge.class.getDeclaredMethod("findCurrency", String.class);
+            findCurrencyMethod.setAccessible(true);
+            return findCurrencyMethod.invoke(bridge, currencyType) != null;
+        } catch (ReflectiveOperationException exception) {
+            this.rds.get(context).getLogger().fine("Failed to validate currency type through JExEconomyBridge: " + currencyType);
+            return false;
+        }
     }
 }

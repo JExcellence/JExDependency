@@ -16,7 +16,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Locale;
 import java.util.Map;
 
 public class ShopOverviewView extends BaseView {
@@ -65,7 +64,30 @@ public class ShopOverviewView extends BaseView {
         }
 
         render.slot(2).renderWith(() -> createSummaryItem(shop, player));
-        render.slot(4).renderWith(() -> createFinanceItem(shop, player));
+        render.slot(4)
+                .renderWith(() -> createFinanceItem(shop, player))
+                .onClick(clickContext -> {
+                    final Shop currentShop = this.getCurrentShop(clickContext);
+                    if (currentShop == null) {
+                        return;
+                    }
+
+                    if (!currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
+                        this.i18n("feedback.not_owner", clickContext.getPlayer())
+                                .includePrefix()
+                                .build()
+                                .sendMessage();
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopBankView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", currentShop.getShopLocation()
+                            )
+                    );
+                });
         render.slot(6)
                 .renderWith(() -> createManageItem(shop, player))
                 .onClick(clickContext -> {
@@ -141,8 +163,7 @@ public class ShopOverviewView extends BaseView {
                 .setName(this.i18n("finance.name", player).build().component())
                 .setLore(this.i18n("finance.lore", player)
                         .withPlaceholders(Map.of(
-                                "bank", String.format(Locale.US, "%.2f", shop.getBank()),
-                                "income", String.format(Locale.US, "%.2f", shop.getIncome())
+                                "bank_currency_count", shop.getBankCurrencyCount()
                         ))
                         .build()
                         .children())

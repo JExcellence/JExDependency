@@ -97,6 +97,43 @@ public class JExEconomyBridge {
 			return CompletableFuture.completedFuture(false);
 		}
 	}
+
+	/**
+	 * Deposits currency to a player.
+	 *
+	 * @param player the player
+	 * @param currencyId the currency identifier
+	 * @param amount the amount to deposit
+	 * @return a future with the response
+	 */
+	@NotNull
+	public CompletableFuture<Boolean> deposit(@NotNull OfflinePlayer player, @NotNull String currencyId, double amount) {
+		try {
+			Object currency = findCurrency(currencyId);
+			if (currency == null) {
+				return CompletableFuture.completedFuture(false);
+			}
+
+			Method depositMethod = adapterClass.getMethod("deposit", OfflinePlayer.class, currencyClass, double.class);
+			Object futureObj = depositMethod.invoke(adapter, player, currency, amount);
+
+			@SuppressWarnings("unchecked")
+			CompletableFuture<Object> future = (CompletableFuture<Object>) futureObj;
+
+			return future.thenApply(response -> {
+				try {
+					Method isSuccessMethod = responseClass.getMethod("isSuccess");
+					return (Boolean) isSuccessMethod.invoke(response);
+				} catch (Exception e) {
+					LOGGER.log(Level.WARNING, "Error checking response", e);
+					return false;
+				}
+			});
+		} catch (Exception e) {
+			LOGGER.log(Level.WARNING, "Error depositing currency", e);
+			return CompletableFuture.completedFuture(false);
+		}
+	}
 	
 	/**
 	 * Gets the balance of a currency for a player.
@@ -175,6 +212,25 @@ public class JExEconomyBridge {
 		} catch (Exception e) {
 			LOGGER.log(Level.FINE, "Error getting currency display name", e);
 			return currencyId;
+		}
+	}
+
+	/**
+	 * Checks whether a currency identifier is available through JExEconomy.
+	 *
+	 * @param currencyId the currency identifier
+	 * @return true if the currency exists
+	 */
+	public boolean hasCurrency(@NotNull String currencyId) {
+		if (currencyId.isBlank()) {
+			return false;
+		}
+
+		try {
+			return findCurrency(currencyId.trim()) != null;
+		} catch (Exception e) {
+			LOGGER.log(Level.FINE, "Error checking currency availability", e);
+			return false;
 		}
 	}
 	

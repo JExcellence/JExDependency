@@ -4,9 +4,9 @@ commands:
     description: 'RDSImpl Commands'
     aliases:
       - rs
-    usage: 'rs <info | main>'
+    usage: 'rs <info | search | main>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<rs <info | main>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<rs <info | search | main>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -25,8 +25,8 @@ commands:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
         command: 'raindropshops.command'
-        commandCreate: 'raindropshops.command.create'
-        commandHelp: 'raindropshops.command.help'
-
+        commandInfo: 'raindropshops.command.info'
+        commandMain: 'raindropshops.command.main'
+        commandSearch: 'raindropshops.command.search'
 lut:
   prefix: '&8[&1Admin&8] &7'

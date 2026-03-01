@@ -20,10 +20,10 @@ shop_overview_ui:
       - "<gray>Location:</gray> <white>{location}</white>"
       - "<gray>Stored entries:</gray> <white>{item_count}</white>"
   finance:
-    name: "<gold>Shop Ledger</gold>"
+    name: "<gold>Shop Bank</gold>"
     lore:
-      - "<gray>Bank:</gray> <white>{bank}</white>"
-      - "<gray>Income:</gray> <white>{income}</white>"
+      - "<gray>Tracked currencies:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Click to review and withdraw funds.</yellow>"
   actions:
     manage:
       name: "<green>Add Shop Items</green>"
@@ -163,21 +163,18 @@ shop_item_edit_ui:
 
 shop_item_currency_type_anvil_ui:
   title: "Currency Type: {currency_type}"
-  shop_item_currency_type_anvil_ui:
-    title: "Currency Type: {currency_type}"
   input:
-    name: "<emerald>Currency Type</emerald>"
+    name: "<green>Currency Type</green>"
     lore:
       - "<gray>Enter the currency identifier for this item.</gray>"
       - "<gray>Examples:</gray> <white>vault, tokens, gems</white>"
   error:
     empty: "<red>Currency type cannot be empty.</red>"
+    invalid_currency: "<red>Currency type {currency_type} is not available. Use vault or a registered custom currency.</red>"
     processing_failed: "<red>Failed to update the currency type. Input: {input}</red>"
 
 shop_item_value_anvil_ui:
   title: "Value: {value} {currency_type}"
-  shop_item_value_anvil_ui:
-    title: "Value: {value} {currency_type}"
   input:
     name: "<gold>Item Value</gold>"
     lore:
@@ -186,6 +183,41 @@ shop_item_value_anvil_ui:
   error:
     invalid_number: "<red>Enter a valid non-negative number. Input: {input}</red>"
     processing_failed: "<red>Failed to update the item value. Input: {input}</red>"
+
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>Bank Balances</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Tracked currencies:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Click a balance below to withdraw its full amount.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+      - "<gray>Available balance:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Click to withdraw this full balance.</yellow>"
+  feedback:
+    not_owner: "<red>You do not own this shop.</red>"
+    entry_missing: "<red>That bank balance is no longer available.</red>"
+    withdrawn: "<green>Withdrew {amount} {currency_name}. Remaining {currency_name}: {remaining_amount}. Tracked currencies: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>Failed to withdraw {amount} {currency_name} from the shop bank.</red>"
+    currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"
+    empty:
+      name: "<red>Bank Empty</red>"
+      lore:
+        - "<gray>This shop has no banked balances to withdraw.</gray>"
+    locked:
+      name: "<red>Owner Access Only</red>"
+      lore:
+        - "<gray>Only the shop owner can withdraw shop funds.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
 
 shop_customer_ui:
   title: "Shop - {location}"
@@ -225,8 +257,6 @@ shop_customer_ui:
 
 shop_purchase_amount_anvil_ui:
   title: "Buy {item_type}"
-  shop_purchase_amount_anvil_ui:
-    title: "Buy {item_type}"
   input:
     name: "<gold>Purchase Amount</gold>"
     lore:
@@ -236,6 +266,32 @@ shop_purchase_amount_anvil_ui:
   error:
     invalid_number: "<red>Enter a whole number between 1 and {max_amount}. Input: {input}</red>"
     processing_failed: "<red>Failed to process purchase amount. Input: {input}</red>"
+
+shop_search_ui:
+  title: "Browse Shops"
+  summary:
+    name: "<gold>Shop Directory</gold>"
+    lore:
+      - "<gray>Tracked shops:</gray> <white>{shop_count}</white>"
+      - "<gray>Total available stock:</gray> <white>{available_count}</white>"
+      - "<yellow>Click any shop below to open it.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Available stock:</gray> <white>{available_count}</white>"
+      - "<yellow>Click to open this shop.</yellow>"
+  feedback:
+    empty:
+      name: "<red>No Shops Found</red>"
+      lore:
+        - "<gray>There are no shops registered yet.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
 
 # ============================================
 # PAGINATION

@@ -251,11 +251,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             items.remove(matchingIndex);
         }
 
-        if (this.usesVaultCurrency(currentItem.getCurrencyType())) {
-            shop.addBank(totalPrice);
-            shop.addIncome(totalPrice);
-        }
-
+        shop.addBank(currentItem.getCurrencyType(), totalPrice);
         shop.setItems(items);
         this.rds.get(context).getShopRepository().update(shop);
         this.grantPurchasedItems(context.getPlayer(), currentItem, desiredAmount);

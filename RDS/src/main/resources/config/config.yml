@@ -1,2 +1,5 @@
 initial_cost: 1000
 growth_rate: 1.125
+default_currency_type: vault
+blacklisted_currencies:
+  - raindrops

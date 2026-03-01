@@ -3,6 +3,7 @@ package com.raindropcentral.rds.commands;
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.items.ShopBlock;
 import de.jexcellence.evaluable.section.ACommandSection;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import org.jspecify.annotations.NonNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 @Command
@@ -35,6 +37,13 @@ public class PRS extends PlayerCommand {
             }
             case DEV -> {
                 player.getInventory().addItem(ShopBlock.getShopBlock(this.rds, player));
+            }
+            case SEARCH -> {
+                this.rds.getViewFrame().open(
+                    ShopSearchView.class,
+                    player,
+                    Map.of("plugin", this.rds)
+                );
             }
             default -> {
                 this.rds.getLogger().info("Info Command");

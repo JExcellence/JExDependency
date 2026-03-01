@@ -5,9 +5,12 @@ import com.raindropcentral.rds.items.json.ItemParser;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
 import de.jexcellence.hibernate.entity.BaseEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import org.bukkit.Location;
@@ -18,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @Entity
 @Table(name = "shops")
@@ -38,11 +43,13 @@ public class Shop extends BaseEntity {
     @Convert(converter = LocationConverter.class)
     private Location shop_location;
 
-    @Column(name = "bank", unique = false, nullable = false)
-    private double bank;
-
-    @Column(name = "income", unique = false, nullable = false)
-    private double income;
+    @OneToMany(
+            mappedBy = "shop",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    private List<Bank> bankEntries = new ArrayList<>();
 
     @Column(name = "shop_items", unique = false, nullable = false, columnDefinition = "LONGTEXT")
     private String itemsJson = "[]";
@@ -56,8 +63,7 @@ public class Shop extends BaseEntity {
     public Shop(UUID owner_uuid, Location shop_location) {
         this.owner_uuid = owner_uuid;
         this.shop_location = shop_location;
-        this.bank = 0;
-        this.income = 0;
+        this.bankEntries = new ArrayList<>();
         setItems(List.of());
     }
 
@@ -70,21 +76,63 @@ public class Shop extends BaseEntity {
     }
 
     public double getBank() {
-        return this.bank;
-    }
-
-    public double getIncome() {
-        return this.income;
+        return this.getBankAmount("vault");
     }
 
     public double addBank(double bank) {
-        this.bank += bank;
-        return this.bank;
+        return this.addBank("vault", bank);
+    }
+    
+    public @NotNull List<Bank> getBankEntries() {
+        return List.copyOf(this.bankEntries);
     }
 
-    public double addIncome(double income) {
-        this.income += income;
-        return this.income;
+    public int getBankCurrencyCount() {
+        return this.bankEntries.size();
+    }
+
+    public double getBankAmount(
+            final @NotNull String currencyType
+    ) {
+        final Bank bankEntry = this.findBankEntry(currencyType);
+        return bankEntry == null ? 0D : bankEntry.getAmount();
+    }
+
+    public double addBank(
+            final @NotNull String currencyType,
+            final double amount
+    ) {
+        if (amount <= 0D) {
+            return this.getBankAmount(currencyType);
+        }
+
+        Bank bankEntry = this.findBankEntry(currencyType);
+        if (bankEntry == null) {
+            bankEntry = new Bank(this, currencyType, 0D);
+            this.bankEntries.add(bankEntry);
+        }
+        return bankEntry.deposit(amount);
+    }
+
+    public boolean withdrawBank(
+            final @NotNull String currencyType,
+            final double amount
+    ) {
+        if (amount <= 0D) {
+            return true;
+        }
+
+        final Bank bankEntry = this.findBankEntry(currencyType);
+        if (bankEntry == null || bankEntry.getAmount() + 1.0E-6D < amount) {
+            return false;
+        }
+
+        bankEntry.withdraw(amount);
+        if (bankEntry.getAmount() <= 1.0E-6D) {
+            this.bankEntries.remove(bankEntry);
+        }
+
+        return true;
     }
 
     public List<AbstractItem> getItems() {
@@ -135,5 +183,21 @@ public class Shop extends BaseEntity {
 
     public boolean isOwner(final UUID playerId) {
         return Objects.equals(this.owner_uuid, playerId);
+    }
+
+    private @Nullable Bank findBankEntry(
+            final @NotNull String currencyType
+    ) {
+        if (this.bankEntries == null) {
+            this.bankEntries = new ArrayList<>();
+        }
+
+        for (final Bank bankEntry : this.bankEntries) {
+            if (bankEntry != null && bankEntry.matchesCurrencyType(currencyType)) {
+                return bankEntry;
+            }
+        }
+
+        return null;
     }
 }
