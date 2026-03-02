@@ -43,9 +43,6 @@ public class PRS extends PlayerCommand {
         final EPRSAction action = this.resolveAction(args);
         switch (action) {
             case GIVE -> this.handleGiveCommand(player, args);
-            case MAIN -> {
-                this.rds.getLogger().info("Main Command");
-            }
             case SEARCH -> {
                 this.rds.getViewFrame().open(
                     ShopSearchView.class,

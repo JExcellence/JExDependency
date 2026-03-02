@@ -4,9 +4,9 @@ commands:
     description: 'RDSImpl Commands'
     aliases:
       - rs
-    usage: 'rs <info | give | search | store | main>'
+    usage: 'rs <info | give | search | store>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c <info | give | search | store | main>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c <info | give | search | store>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
