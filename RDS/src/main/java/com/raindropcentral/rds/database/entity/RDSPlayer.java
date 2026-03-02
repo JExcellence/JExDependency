@@ -25,9 +25,13 @@ public class RDSPlayer extends BaseEntity {
     @Column(name = "shops", unique = false, nullable = false)
     private int shops;
 
+    @Column(name = "shop_bar_enabled", unique = false, nullable = false)
+    private boolean shop_bar_enabled;
+
     public RDSPlayer(UUID player_uuid) {
         this.player_uuid = player_uuid;
         this.shops = 0;
+        this.shop_bar_enabled = false;
     }
 
     public RDSPlayer() {}
@@ -38,6 +42,19 @@ public class RDSPlayer extends BaseEntity {
 
     public int getShops() {
         return this.shops;
+    }
+
+    public boolean isShopBarEnabled() {
+        return this.shop_bar_enabled;
+    }
+
+    public boolean toggleShopBar() {
+        this.shop_bar_enabled = !this.shop_bar_enabled;
+        return this.shop_bar_enabled;
+    }
+
+    public void setShopBarEnabled(final boolean enabled) {
+        this.shop_bar_enabled = enabled;
     }
 
     public void addShop(int amount) {

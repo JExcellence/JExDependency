@@ -12,6 +12,7 @@ import de.jexcellence.evaluable.section.IPermissionNode;
 
 public enum EPRSPermission implements IPermissionNode{
     COMMAND("command","raindropshops.command"),
+    BAR("commandBar","raindropshops.command.bar"),
     INFO("commandInfo","raindropshops.command.info"),
     GIVE("commandGive","raindropshops.command.give"),
     SEARCH("commandSearch","raindropshops.command.search"),

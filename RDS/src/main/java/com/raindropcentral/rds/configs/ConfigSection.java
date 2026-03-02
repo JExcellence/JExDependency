@@ -22,6 +22,7 @@ public class ConfigSection extends AConfigSection {
     private List<String> blacklisted_currencies;
     private Integer max_shops;
     private TaxSection taxes;
+    private BossBarSection boss_bar;
 
     public ConfigSection(EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
@@ -76,6 +77,12 @@ public class ConfigSection extends AConfigSection {
         return this.taxes == null
                 ? TaxSection.createDefault(this.getDefaultCurrencyType())
                 : this.taxes;
+    }
+
+    public @NotNull BossBarSection getBossBar() {
+        return this.boss_bar == null
+                ? new BossBarSection(new EvaluationEnvironmentBuilder())
+                : this.boss_bar;
     }
 
     public double getTaxInitialCost() {

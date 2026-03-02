@@ -13,8 +13,22 @@ player_join:
   tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
 
 prs:
+  bar:
+    enabled: "<green>Shop boss bar enabled while looking at a shop.</green>"
+    disabled: "<yellow>Shop boss bar disabled.</yellow>"
   give:
     syntax: "<red>Usage: /rs give <target_player> <amount></red>"
+
+shop_boss_bar:
+  title: "<gold>{shop_type} Shop</gold> <gray>|</gray> <yellow>Owner:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Items:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Location:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    infinite: "Infinite ({listing_count} listings)"
 
 # ============================================
 # GUI Buttons

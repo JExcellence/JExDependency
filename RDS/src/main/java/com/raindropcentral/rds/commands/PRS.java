@@ -43,6 +43,7 @@ public class PRS extends PlayerCommand {
     protected void onPlayerInvocation(@NotNull Player player, @NotNull String alias, @NonNull @NotNull String[] args) {
         final EPRSAction action = this.resolveAction(args);
         switch (action) {
+            case BAR -> this.handleBarCommand(player);
             case GIVE -> this.handleGiveCommand(player, args);
             case SEARCH -> {
                 this.rds.getViewFrame().open(
@@ -93,6 +94,24 @@ public class PRS extends PlayerCommand {
                         .sendMessage();
             }
         }
+    }
+
+    private void handleBarCommand(
+            final @NotNull Player player
+    ) {
+        if (this.hasNoPermission(player, EPRSPermission.BAR)) {
+            return;
+        }
+
+        final boolean enabled = this.rds.getShopBossBarService().toggleFor(player);
+        final String key = enabled
+                ? "prs.bar.enabled"
+                : "prs.bar.disabled";
+
+        new I18n.Builder(key, player)
+                .includePrefix()
+                .build()
+                .sendMessage();
     }
 
     private void handleGiveCommand(

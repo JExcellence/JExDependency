@@ -30,6 +30,12 @@ taxes:
   time_zone: system
   # Send a reminder on join showing the player's next scheduled shop tax.
   join_notification: true
+# Player shop boss bar settings for /rs bar.
+boss_bar:
+  # Bukkit ticks between boss bar refreshes.
+  update_period_ticks: 10
+  # Maximum block distance a player can look at and still see shop details.
+  view_distance: 12
 # Default currency when items are added to shops - players can change to any currencies not blacklisted
 default_currency_type: vault
 # Blacklisted currencies - players cannot set shops to listed currency

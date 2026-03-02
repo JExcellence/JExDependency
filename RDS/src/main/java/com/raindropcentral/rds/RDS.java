@@ -7,6 +7,7 @@ import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rds.view.shop.*;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
@@ -59,6 +60,7 @@ public class RDS extends JavaPlugin {
     private Object economyInstance;
     private ViewFrame viewFrame;
     private ShopTaxScheduler shopTaxScheduler;
+    private ShopBossBarService shopBossBarService;
 
     //Repositories
     private RRDSPlayer playerRepository;
@@ -96,6 +98,7 @@ public class RDS extends JavaPlugin {
         initializeCommands();
         initializeViews();
         initializeTaxes();
+        initializeShopBossBar();
 
         if (!this.hasValidEconomyAndCurrency()) {
             this.getLogger().warning(
@@ -111,6 +114,10 @@ public class RDS extends JavaPlugin {
 
         if (this.executor != null) {
             this.executor.shutdownNow();
+        }
+
+        if (this.shopBossBarService != null) {
+            this.shopBossBarService.shutdown();
         }
 
         if (entityManagerFactory != null) {
@@ -262,6 +269,11 @@ public class RDS extends JavaPlugin {
     private void initializeTaxes() {
         this.shopTaxScheduler = new ShopTaxScheduler(this);
         this.shopTaxScheduler.start();
+    }
+
+    private void initializeShopBossBar() {
+        this.shopBossBarService = new ShopBossBarService(this);
+        this.shopBossBarService.start();
     }
 
     private boolean hasValidEconomyAndCurrency() {
@@ -484,6 +496,10 @@ public class RDS extends JavaPlugin {
 
     public ShopTaxScheduler getShopTaxScheduler() {
         return this.shopTaxScheduler;
+    }
+
+    public ShopBossBarService getShopBossBarService() {
+        return this.shopBossBarService;
     }
 
     public ISchedulerAdapter getScheduler() {
