@@ -167,6 +167,7 @@ public class ShopInputView extends BaseView {
                 this.mergeStoredItem(storedItems, template, amount);
             }
 
+            this.normalizeStoredDisplayAmounts(storedItems);
             shop.setItems(storedItems);
             this.rds.get(clickContext).getShopRepository().update(shop);
             this.saving.set(true, clickContext);
@@ -317,6 +318,28 @@ public class ShopInputView extends BaseView {
         }
 
         storedItems.add(new ShopItem(template, amount, "vault", 0D));
+    }
+
+    private void normalizeStoredDisplayAmounts(
+            final @NotNull List<AbstractItem> storedItems
+    ) {
+        for (int index = 0; index < storedItems.size(); index++) {
+            final AbstractItem storedItem = storedItems.get(index);
+            if (!(storedItem instanceof ShopItem shopItem)) {
+                continue;
+            }
+
+            storedItems.set(
+                    index,
+                    new ShopItem(
+                            shopItem.getEntryId(),
+                            shopItem.getItem(),
+                            shopItem.getAmount(),
+                            shopItem.getCurrencyType(),
+                            shopItem.getValue()
+                    )
+            );
+        }
     }
 
     private @NotNull ItemStack buildPane(

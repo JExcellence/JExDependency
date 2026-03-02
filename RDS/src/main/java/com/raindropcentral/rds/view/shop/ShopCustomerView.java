@@ -438,8 +438,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull ShopItem item
     ) {
         final ItemStack displayItem = item.getItem().clone();
-        final int displayAmount = Math.max(1, Math.min(item.getAmount(), displayItem.getMaxStackSize()));
-        displayItem.setAmount(displayAmount);
+        displayItem.setAmount(1);
         return displayItem;
     }
 

@@ -264,7 +264,7 @@ public class ShopItemEditView extends BaseView {
             final @NotNull ShopItem item
     ) {
         final ItemStack displayItem = item.getItem();
-        displayItem.setAmount(Math.min(item.getAmount(), displayItem.getMaxStackSize()));
+        displayItem.setAmount(1);
 
         final List<Component> lore = new ArrayList<>(this.i18n("summary.lore", player)
                 .withPlaceholders(Map.of(

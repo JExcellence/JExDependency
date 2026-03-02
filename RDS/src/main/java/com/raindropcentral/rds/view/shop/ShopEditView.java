@@ -139,7 +139,7 @@ public class ShopEditView extends APaginatedView<ShopItem> {
             final @NotNull ShopItem item
     ) {
         final ItemStack displayItem = item.getItem();
-        displayItem.setAmount(Math.min(item.getAmount(), displayItem.getMaxStackSize()));
+        displayItem.setAmount(1);
         return displayItem;
     }
 
