@@ -31,6 +31,7 @@ public class PlayerClickListener implements Listener {
         if (shop == null) return;
         if (event.getAction().isRightClick()) {
             event.setCancelled(true);
+            /*
             //TODO COMMENT OUT TESTING ONLY
             this.rds.getViewFrame().open(
                 ShopCustomerView.class,
@@ -42,6 +43,7 @@ public class PlayerClickListener implements Listener {
                     shop.getShopLocation()
                 )
             );
+             */
             return;
         }
         final Class<? extends View> viewClass = shop.isOwner(player.getUniqueId())
