@@ -1,6 +1,7 @@
 package com.raindropcentral.rds.view.shop.anvil;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -48,8 +49,7 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
     ) {
         final ShopItem item = this.targetItem.get(context);
         return Map.of(
-                "item_type", item.getItem().getType().name(),
-                "max_amount", item.getAmount()
+                "item_type", item.getItem().getType().name()
         );
     }
 
@@ -67,7 +67,7 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
     ) {
         try {
             final int amount = Integer.parseInt(input.trim());
-            return amount > 0 && amount <= this.targetItem.get(context).getAmount();
+            return amount > 0 && (this.isAdminShop(context) || amount <= this.targetItem.get(context).getAmount());
         } catch (NumberFormatException ignored) {
             return false;
         }
@@ -78,9 +78,12 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
             final @NotNull RenderContext render,
             final @NotNull Player player
     ) {
+        final String loreKey = this.isAdminShop(render)
+                ? "input.admin.lore"
+                : "input.player.lore";
         final ItemStack inputSlotItem = UnifiedBuilderFactory.item(Material.PAPER)
                 .setName(Component.text("1"))
-                .setLore(this.i18n("input.lore", player)
+                .setLore(this.i18n(loreKey, player)
                         .withPlaceholders(Map.of(
                                 "max_amount", this.targetItem.get(render).getAmount(),
                                 "item_type", this.targetItem.get(render).getItem().getType().name()
@@ -97,7 +100,10 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
             final @Nullable String input,
             final @NotNull Context context
     ) {
-        this.i18n("error.invalid_number", context.getPlayer())
+        final String errorKey = this.isAdminShop(context)
+                ? "error.invalid_number_admin"
+                : "error.invalid_number";
+        this.i18n(errorKey, context.getPlayer())
                 .withPlaceholders(Map.of(
                         "input", input == null ? "" : input,
                         "max_amount", this.targetItem.get(context).getAmount()
@@ -119,5 +125,12 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
         result.put("shopItem", this.targetItem.get(context));
         result.put("purchaseAmount", processingResult);
         return result;
+    }
+
+    private boolean isAdminShop(
+            final @NotNull Context context
+    ) {
+        final Shop shop = this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+        return shop != null && shop.isAdminShop();
     }
 }

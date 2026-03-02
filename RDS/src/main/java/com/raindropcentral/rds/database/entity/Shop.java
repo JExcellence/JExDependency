@@ -54,6 +54,9 @@ public class Shop extends BaseEntity {
     @Column(name = "shop_items", unique = false, nullable = false, columnDefinition = "LONGTEXT")
     private String itemsJson = "[]";
 
+    @Column(name = "admin_shop", unique = false, nullable = false)
+    private boolean admin_shop = false;
+
     @Transient
     private List<AbstractItem> cachedItems = new ArrayList<>();
 
@@ -175,6 +178,14 @@ public class Shop extends BaseEntity {
             LOGGER.error("Failed to serialize shop items", e);
             throw new RuntimeException("Failed to serialize shop items", e);
         }
+    }
+
+    public boolean isAdminShop() {
+        return this.admin_shop;
+    }
+
+    public void setAdminShop(final boolean adminShop) {
+        this.admin_shop = adminShop;
     }
 
     public int getStoredItemCount() {

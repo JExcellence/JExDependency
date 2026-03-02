@@ -102,7 +102,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         final List<AbstractItem> items = shop.getItems();
         for (int index = 0; index < items.size(); index++) {
             final AbstractItem item = items.get(index);
-            if (item instanceof ShopItem shopItem && shopItem.getAmount() > 0) {
+            if (item instanceof ShopItem shopItem && (shop.isAdminShop() || shopItem.getAmount() > 0)) {
                 entries.add(new CustomerShopEntry(index, shopItem, shopItem.getEntryId()));
             }
         }
@@ -118,11 +118,15 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull CustomerShopEntry entry
     ) {
         final Player player = context.getPlayer();
+        final Shop shop = this.getCurrentShop(context);
+        if (shop == null) {
+            return;
+        }
         final ItemStack displayItem = this.createDisplayItem(entry.item());
 
         builder.withItem(
                 UnifiedBuilderFactory.item(displayItem)
-                        .setLore(this.buildEntryLore(player, entry.item(), displayItem))
+                        .setLore(this.buildEntryLore(player, shop, entry.item(), displayItem))
                         .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                         .build()
         ).onClick(clickContext -> {
@@ -161,7 +165,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                 this.createSummaryItem(player, shop)
         );
 
-        if (shop.getStoredItemCount() == 0) {
+        if (!this.hasVisibleEntries(shop)) {
             render.slot(4).renderWith(() -> this.createEmptyShopItem(player));
         }
     }
@@ -206,7 +210,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             return;
         }
 
-        if (desiredAmount > currentItem.getAmount()) {
+        if (!shop.isAdminShop() && desiredAmount > currentItem.getAmount()) {
             this.i18n("feedback.insufficient_stock", context.getPlayer())
                     .withPlaceholders(Map.of(
                             "amount", desiredAmount,
@@ -242,19 +246,28 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             return;
         }
 
-        final int remainingAmount = currentItem.getAmount() - desiredAmount;
-        if (remainingAmount > 0) {
-            items.set(matchingIndex, currentItem.withAmount(remainingAmount));
-        } else {
-            items.remove(matchingIndex);
+        final boolean adminShop = shop.isAdminShop();
+        final int remainingAmount = adminShop
+                ? currentItem.getAmount()
+                : currentItem.getAmount() - desiredAmount;
+        if (!adminShop) {
+            if (remainingAmount > 0) {
+                items.set(matchingIndex, currentItem.withAmount(remainingAmount));
+            } else {
+                items.remove(matchingIndex);
+            }
+
+            shop.setItems(items);
         }
 
         shop.addBank(currentItem.getCurrencyType(), totalPrice);
-        shop.setItems(items);
         this.rds.get(context).getShopRepository().update(shop);
         this.grantPurchasedItems(context.getPlayer(), currentItem, desiredAmount);
 
-        this.i18n("feedback.purchased", context.getPlayer())
+        final String feedbackKey = adminShop
+                ? "feedback.purchased_admin"
+                : "feedback.purchased_player";
+        this.i18n(feedbackKey, context.getPlayer())
                 .withPlaceholders(Map.of(
                         "amount", desiredAmount,
                         "remaining_amount", Math.max(remainingAmount, 0),
@@ -424,26 +437,39 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
     private @NotNull ItemStack createDisplayItem(
             final @NotNull ShopItem item
     ) {
-        final ItemStack displayItem = item.getItem();
-        displayItem.setAmount(Math.min(item.getAmount(), displayItem.getMaxStackSize()));
+        final ItemStack displayItem = item.getItem().clone();
+        final int displayAmount = Math.max(1, Math.min(item.getAmount(), displayItem.getMaxStackSize()));
+        displayItem.setAmount(displayAmount);
         return displayItem;
     }
 
     private @NotNull List<Component> buildEntryLore(
             final @NotNull Player player,
+            final @NotNull Shop shop,
             final @NotNull ShopItem item,
             final @NotNull ItemStack displayItem
     ) {
         final double totalPrice = item.getValue() * item.getAmount();
-        final List<Component> lore = new ArrayList<>(this.i18n("entry.lore", player)
-                .withPlaceholders(Map.of(
+        final String loreKey = shop.isAdminShop()
+                ? "entry.admin.lore"
+                : "entry.player.lore";
+        final Map<String, Object> placeholders = shop.isAdminShop()
+                ? Map.of(
+                        "item_type", displayItem.getType().name(),
+                        "currency_type", item.getCurrencyType(),
+                        "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
+                        "price_each", this.formatAmount(item.getValue())
+                )
+                : Map.of(
                         "amount", item.getAmount(),
                         "item_type", displayItem.getType().name(),
                         "currency_type", item.getCurrencyType(),
                         "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
                         "price_each", this.formatAmount(item.getValue()),
                         "total_price", this.formatAmount(totalPrice)
-                ))
+                );
+        final List<Component> lore = new ArrayList<>(this.i18n(loreKey, player)
+                .withPlaceholders(placeholders)
                 .build()
                 .children());
 
@@ -460,9 +486,12 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull Player player,
             final @NotNull Shop shop
     ) {
+        final String loreKey = shop.isAdminShop()
+                ? "summary.admin.lore"
+                : "summary.player.lore";
         return UnifiedBuilderFactory.item(Material.CHEST)
                 .setName(this.i18n("summary.name", player).build().component())
-                .setLore(this.i18n("summary.lore", player)
+                .setLore(this.i18n(loreKey, player)
                         .withPlaceholders(Map.of(
                                 "owner", this.getOwnerName(shop),
                                 "location", this.formatLocation(shop.getShopLocation()),
@@ -472,6 +501,22 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                         .children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
+    }
+
+    private boolean hasVisibleEntries(
+            final @NotNull Shop shop
+    ) {
+        for (final AbstractItem item : shop.getItems()) {
+            if (!(item instanceof ShopItem shopItem)) {
+                continue;
+            }
+
+            if (shop.isAdminShop() || shopItem.getAmount() > 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private @NotNull ItemStack createEmptyShopItem(

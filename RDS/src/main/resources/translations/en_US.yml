@@ -78,16 +78,41 @@ shop_overview_ui:
   title: "{owner} Shop - {location}"
   summary:
     name: "<gold>Shop Summary</gold>"
-    lore:
-      - "<gray>Owner:</gray> <white>{owner}</white>"
-      - "<gray>Location:</gray> <white>{location}</white>"
-      - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+    player:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Inventory:</gray> <white>Finite</white>"
+    admin:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Admin Shop</white>"
+        - "<gray>Inventory:</gray> <white>Infinite</white>"
   finance:
     name: "<gold>Shop Bank</gold>"
     lore:
       - "<gray>Tracked currencies:</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Click to review and withdraw funds.</yellow>"
   actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop Enabled</red>"
+        lore:
+          - "<gray>This shop is currently an admin shop.</gray>"
+          - "<gray>Inventory is infinite for customers.</gray>"
+          - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+          - "<yellow>Click to switch back to a player shop.</yellow>"
+      disabled:
+        name: "<green>Admin Shop Disabled</green>"
+        lore:
+          - "<gray>This shop currently uses normal stock.</gray>"
+          - "<gray>Customers can only buy stored amounts.</gray>"
+          - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+          - "<yellow>Click to enable admin shop mode.</yellow>"
     manage:
       name: "<green>Add Shop Items</green>"
       lore:
@@ -113,10 +138,14 @@ shop_overview_ui:
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
   feedback:
     not_owner: "<red>You do not own this shop.</red>"
+    no_admin_permission: "<red>You do not have permission to toggle admin shops.</red>"
+    admin_enabled: "<green>This shop is now an admin shop with infinite customer inventory.</green>"
+    admin_disabled: "<yellow>This shop is now a normal player shop with finite customer inventory.</yellow>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:
         - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
 
 shop_input_ui:
   title: "Add Items - {owner} @ {location}"
@@ -286,23 +315,46 @@ shop_customer_ui:
   title: "Shop - {location}"
   summary:
     name: "<gold>Customer View</gold>"
-    lore:
-      - "<gray>Owner:</gray> <white>{owner}</white>"
-      - "<gray>Location:</gray> <white>{location}</white>"
-      - "<gray>Available entries:</gray> <white>{stored_count}</white>"
-      - "<yellow>Left click an item to buy one.</yellow>"
-      - "<yellow>Right click an item to choose an amount.</yellow>"
+    player:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Inventory:</gray> <white>Finite</white>"
+        - "<yellow>Left click an item to buy one.</yellow>"
+        - "<yellow>Right click an item to choose an amount.</yellow>"
+    admin:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop type:</gray> <white>Admin Shop</white>"
+        - "<gray>Inventory:</gray> <white>Infinite</white>"
+        - "<yellow>Left click an item to buy one.</yellow>"
+        - "<yellow>Right click an item to choose an amount.</yellow>"
   entry:
-    lore:
-      - "<gray>Stock:</gray> <white>{amount}</white>"
-      - "<gray>Item type:</gray> <white>{item_type}</white>"
-      - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
-      - "<gray>Total stock value:</gray> <white>{total_price} {currency_name}</white>"
-      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
-      - "<yellow>Left click to buy one.</yellow>"
-      - "<yellow>Right click to choose an amount.</yellow>"
+    player:
+      lore:
+        - "<gray>Stock:</gray> <white>{amount}</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Total stock value:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<yellow>Left click to buy one.</yellow>"
+        - "<yellow>Right click to choose an amount.</yellow>"
+    admin:
+      lore:
+        - "<gray>Inventory:</gray> <white>Infinite</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Shop type:</gray> <white>Admin Shop</white>"
+        - "<yellow>Left click to buy one.</yellow>"
+        - "<yellow>Right click to choose an amount.</yellow>"
   feedback:
-    purchased: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining stock: {remaining_amount}.</green>"
+    purchased_player: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining stock: {remaining_amount}.</green>"
+    purchased_admin: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. This admin shop has infinite inventory.</green>"
     insufficient_stock: "<red>This shop only has {available_amount}x {item_type} available.</red>"
     insufficient_funds: "<red>You need {total_price} {currency_name} to buy {amount}x {item_type}.</red>"
     currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"
@@ -322,12 +374,19 @@ shop_purchase_amount_anvil_ui:
   title: "Buy {item_type}"
   input:
     name: "<gold>Purchase Amount</gold>"
-    lore:
-      - "<gray>Enter how many items you want to buy.</gray>"
-      - "<gray>Maximum available:</gray> <white>{max_amount}</white>"
-      - "<gray>Item:</gray> <white>{item_type}</white>"
+    player:
+      lore:
+        - "<gray>Enter how many items you want to buy.</gray>"
+        - "<gray>Maximum available:</gray> <white>{max_amount}</white>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Enter how many items you want to buy.</gray>"
+        - "<gray>This admin shop has infinite inventory.</gray>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
   error:
     invalid_number: "<red>Enter a whole number between 1 and {max_amount}. Input: {input}</red>"
+    invalid_number_admin: "<red>Enter a whole number greater than 0. Input: {input}</red>"
     processing_failed: "<red>Failed to process purchase amount. Input: {input}</red>"
 
 shop_search_ui:

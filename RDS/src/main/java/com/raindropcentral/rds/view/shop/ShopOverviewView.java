@@ -20,6 +20,8 @@ import java.util.Map;
 
 public class ShopOverviewView extends BaseView {
 
+    private static final String ADMIN_SHOPS_PERMISSION = "raindropshops.admin.shops";
+
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
 
@@ -64,6 +66,55 @@ public class ShopOverviewView extends BaseView {
         }
 
         render.slot(2).renderWith(() -> createSummaryItem(shop, player));
+        if (shop.isOwner(player.getUniqueId()) && player.hasPermission(ADMIN_SHOPS_PERMISSION)) {
+            render.slot(0)
+                    .renderWith(() -> createAdminToggleItem(shop, player))
+                    .onClick(clickContext -> {
+                        final Shop currentShop = this.getCurrentShop(clickContext);
+                        if (currentShop == null) {
+                            this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
+                                    .includePrefix()
+                                    .build()
+                                    .sendMessage();
+                            return;
+                        }
+
+                        if (!currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
+                            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                                    .includePrefix()
+                                    .build()
+                                    .sendMessage();
+                            return;
+                        }
+
+                        if (!clickContext.getPlayer().hasPermission(ADMIN_SHOPS_PERMISSION)) {
+                            this.i18n("feedback.no_admin_permission", clickContext.getPlayer())
+                                    .includePrefix()
+                                    .build()
+                                    .sendMessage();
+                            return;
+                        }
+
+                        currentShop.setAdminShop(!currentShop.isAdminShop());
+                        this.rds.get(clickContext).getShopRepository().update(currentShop);
+
+                        final String feedbackKey = currentShop.isAdminShop()
+                                ? "feedback.admin_enabled"
+                                : "feedback.admin_disabled";
+                        this.i18n(feedbackKey, clickContext.getPlayer())
+                                .includePrefix()
+                                .build()
+                                .sendMessage();
+
+                        clickContext.openForPlayer(
+                                ShopOverviewView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shopLocation", currentShop.getShopLocation()
+                                )
+                        );
+                    });
+        }
         render.slot(4)
                 .renderWith(() -> createFinanceItem(shop, player))
                 .onClick(clickContext -> {
@@ -143,12 +194,33 @@ public class ShopOverviewView extends BaseView {
     ) {
         return UnifiedBuilderFactory.item(Material.CHEST)
                 .setName(this.i18n("summary.name", player).build().component())
-                .setLore(this.i18n("summary.lore", player)
+                .setLore(this.i18n(this.getSummaryLoreSuffix(shop), player)
                         .withPlaceholders(Map.of(
                                 "owner", getOwnerName(shop),
                                 "location", formatLocation(shop.getShopLocation()),
                                 "item_count", shop.getStoredItemCount()
                         ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createAdminToggleItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player
+    ) {
+        final String suffix = shop.isAdminShop()
+                ? "actions.admin_toggle.enabled"
+                : "actions.admin_toggle.disabled";
+        final Material material = shop.isAdminShop()
+                ? Material.COMMAND_BLOCK
+                : Material.LEVER;
+
+        return UnifiedBuilderFactory.item(material)
+                .setName(this.i18n(suffix + ".name", player).build().component())
+                .setLore(this.i18n(suffix + ".lore", player)
+                        .withPlaceholder("item_count", shop.getStoredItemCount())
                         .build()
                         .children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
@@ -225,6 +297,14 @@ public class ShopOverviewView extends BaseView {
                 .setLore(this.i18n("feedback.shop_missing.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
+    }
+
+    private @NotNull String getSummaryLoreSuffix(
+            final @NotNull Shop shop
+    ) {
+        return shop.isAdminShop()
+                ? "summary.admin.lore"
+                : "summary.player.lore";
     }
 
     private @NotNull String formatLocation(final @NotNull Location location) {
