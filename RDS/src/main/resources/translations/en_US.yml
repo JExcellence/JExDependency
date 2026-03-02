@@ -7,6 +7,10 @@ info:
   total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
   bank: "<green>Tracked Balances ({currency_count}):</green> <white>{currencies}</white>"
 
+prs:
+  give:
+    syntax: "<red>Usage: /rs give <target_player> <amount></red>"
+
 # ============================================
 # GUI Buttons
 # ============================================
@@ -139,8 +143,9 @@ shop_overview_ui:
   feedback:
     not_owner: "<red>You do not own this shop.</red>"
     no_admin_permission: "<red>You do not have permission to toggle admin shops.</red>"
-    admin_enabled: "<green>This shop is now an admin shop with infinite customer inventory.</green>"
-    admin_disabled: "<yellow>This shop is now a normal player shop with finite customer inventory.</yellow>"
+    admin_enabled: "<green>This shop is now an admin shop with infinite customer inventory. Counted shops: {owned_shops}.</green>"
+    admin_disabled: "<yellow>This shop is now a normal player shop with finite customer inventory. Counted shops: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>You cannot switch this admin shop back to a player shop because your shop limit of {max_shops} is already reached. Counted shops: {owned_shops}.</red>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:

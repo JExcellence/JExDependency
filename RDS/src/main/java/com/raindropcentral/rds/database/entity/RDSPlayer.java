@@ -41,6 +41,18 @@ public class RDSPlayer extends BaseEntity {
     }
 
     public void addShop(int amount) {
+        if (amount <= 0) {
+            return;
+        }
+
         this.shops += amount;
+    }
+
+    public void removeShop(int amount) {
+        if (amount <= 0) {
+            return;
+        }
+
+        this.shops = Math.max(0, this.shops - amount);
     }
 }

@@ -1,6 +1,7 @@
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -95,13 +96,38 @@ public class ShopOverviewView extends BaseView {
                             return;
                         }
 
-                        currentShop.setAdminShop(!currentShop.isAdminShop());
-                        this.rds.get(clickContext).getShopRepository().update(currentShop);
+                        final RDS plugin = this.rds.get(clickContext);
+                        final RDSPlayer playerData = this.getOrCreatePlayer(plugin, currentShop.getOwner());
+                        final boolean enablingAdmin = !currentShop.isAdminShop();
+
+                        if (!enablingAdmin) {
+                            final int maxShops = plugin.getDefaultConfig().getMaxShops();
+                            if (maxShops > 0 && playerData.getShops() >= maxShops) {
+                                this.i18n("feedback.admin_disable_limit_reached", clickContext.getPlayer())
+                                        .withPlaceholders(Map.of(
+                                                "owned_shops", playerData.getShops(),
+                                                "max_shops", maxShops
+                                        ))
+                                        .includePrefix()
+                                        .build()
+                                        .sendMessage();
+                                return;
+                            }
+
+                            playerData.addShop(1);
+                        } else {
+                            playerData.removeShop(1);
+                        }
+
+                        currentShop.setAdminShop(enablingAdmin);
+                        plugin.getShopRepository().update(currentShop);
+                        plugin.getPlayerRepository().update(playerData);
 
                         final String feedbackKey = currentShop.isAdminShop()
                                 ? "feedback.admin_enabled"
                                 : "feedback.admin_disabled";
                         this.i18n(feedbackKey, clickContext.getPlayer())
+                                .withPlaceholder("owned_shops", playerData.getShops())
                                 .includePrefix()
                                 .build()
                                 .sendMessage();
@@ -186,6 +212,20 @@ public class ShopOverviewView extends BaseView {
 
     private Shop getCurrentShop(final @NotNull Context context) {
         return this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+    }
+
+    private @NotNull RDSPlayer getOrCreatePlayer(
+            final @NotNull RDS plugin,
+            final @NotNull java.util.UUID playerId
+    ) {
+        final RDSPlayer existingPlayer = plugin.getPlayerRepository().findByPlayer(playerId);
+        if (existingPlayer != null) {
+            return existingPlayer;
+        }
+
+        final RDSPlayer newPlayer = new RDSPlayer(playerId);
+        plugin.getPlayerRepository().create(newPlayer);
+        return newPlayer;
     }
 
     private @NotNull ItemStack createSummaryItem(

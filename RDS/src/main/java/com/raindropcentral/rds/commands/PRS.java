@@ -12,7 +12,9 @@ import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import de.jexcellence.evaluable.section.ACommandSection;
 import de.jexcellence.jextranslate.i18n.I18n;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -40,11 +42,9 @@ public class PRS extends PlayerCommand {
     protected void onPlayerInvocation(@NotNull Player player, @NotNull String alias, @NonNull @NotNull String[] args) {
         final EPRSAction action = this.resolveAction(args);
         switch (action) {
+            case GIVE -> this.handleGiveCommand(player, args);
             case MAIN -> {
                 this.rds.getLogger().info("Main Command");
-            }
-            case DEV -> {
-                player.getInventory().addItem(ShopBlock.getShopBlock(this.rds, player));
             }
             case SEARCH -> {
                 this.rds.getViewFrame().open(
@@ -76,6 +76,29 @@ public class PRS extends PlayerCommand {
                     .sendMessage();
             }
         }
+    }
+
+    private void handleGiveCommand(
+            final @NotNull Player sender,
+            final @NotNull String[] args
+    ) {
+        if (this.hasNoPermission(sender, EPRSPermission.GIVE)) {
+            return;
+        }
+
+        if (args.length != 3) {
+            this.sendGiveSyntax(sender);
+            return;
+        }
+
+        final Player target = Bukkit.getPlayerExact(args[1]);
+        final int amount = this.parsePositiveAmount(args[2]);
+        if (target == null || amount < 1) {
+            this.sendGiveSyntax(sender);
+            return;
+        }
+
+        this.giveShopBlocks(target, amount);
     }
 
     private int countOwnedShops(
@@ -166,6 +189,48 @@ public class PRS extends PlayerCommand {
         return String.format(Locale.US, "%.2f", amount);
     }
 
+    private int parsePositiveAmount(
+            final @NotNull String rawAmount
+    ) {
+        try {
+            final int amount = Integer.parseInt(rawAmount.trim());
+            return amount > 0 ? amount : -1;
+        } catch (NumberFormatException ignored) {
+            return -1;
+        }
+    }
+
+    private void sendGiveSyntax(
+            final @NotNull Player player
+    ) {
+        new I18n.Builder("prs.give.syntax", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+    }
+
+    private void giveShopBlocks(
+            final @NotNull Player target,
+            final int amount
+    ) {
+        int remaining = amount;
+        final List<ItemStack> stacks = new ArrayList<>();
+
+        while (remaining > 0) {
+            final ItemStack stack = ShopBlock.getShopBlock(this.rds, target);
+            final int stackAmount = Math.min(remaining, stack.getMaxStackSize());
+            stack.setAmount(stackAmount);
+            stacks.add(stack);
+            remaining -= stackAmount;
+        }
+
+        target.getInventory().addItem(stacks.toArray(new ItemStack[0]))
+                .forEach((slot, item) -> target.getWorld().dropItem(
+                        target.getLocation().clone().add(0, 0.5, 0),
+                        item
+                ));
+    }
+
     /**
      * Provide tab completion for the first argument with available {@link EPRSAction} values.
      * Requires {@link EPRSPermission#COMMAND}.
@@ -192,6 +257,15 @@ public class PRS extends PlayerCommand {
             }
             return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<>());
 
+        }
+        if (args.length == 2 && "give".equalsIgnoreCase(args[0]) && this.hasPermission(player, EPRSPermission.GIVE)) {
+            final List<String> suggestions = Bukkit.getOnlinePlayers().stream()
+                    .map(Player::getName)
+                    .toList();
+            return StringUtil.copyPartialMatches(args[1], suggestions, new ArrayList<>());
+        }
+        if (args.length == 3 && "give".equalsIgnoreCase(args[0]) && this.hasPermission(player, EPRSPermission.GIVE)) {
+            return StringUtil.copyPartialMatches(args[2], List.of("1", "16", "64"), new ArrayList<>());
         }
         return List.of();
     }

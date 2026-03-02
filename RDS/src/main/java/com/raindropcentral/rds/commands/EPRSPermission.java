@@ -11,12 +11,13 @@ import de.jexcellence.evaluable.section.IPermissionNode;
  */
 
 public enum EPRSPermission implements IPermissionNode{
-    COMMAND("command","raindroptowns.comamnd"),
-    INFO("infoCommand","raindropshops.command.info"),
-    MAIN("mainCommand","raindropshops.command.main"),
-    SEARCH("mainSearch","raindropshops.command.search"),
-    STORE("mainStore","raindropshops.command.store"),
-    DEV("devCommand", "raindropshops.command.dev");
+    COMMAND("command","raindropshops.command"),
+    INFO("commandInfo","raindropshops.command.info"),
+    GIVE("commandGive","raindropshops.command.give"),
+    MAIN("commandMain","raindropshops.command.main"),
+    SEARCH("commandSearch","raindropshops.command.search"),
+    STORE("commandStore","raindropshops.command.store")
+    ;
 
     /** Internal key used by the configuration system to resolve permissions. */
     private final String internalName;
