@@ -87,18 +87,18 @@ public class PCurrencies extends PlayerCommand {
 	 *   <li>Configures permission integration and validation</li>
 	 * </ul>
 	 *
-	 * @param commandSectionConfiguration the command section configuration containing command metadata and settings, must not be null
+	 * @param commandSection the command section configuration containing command metadata and settings, must not be null
 	 * @param jexEconomy the main JExEconomy plugin instance providing access to services and repositories, must not be null
 	 * @throws IllegalArgumentException if either parameter is null
 	 */
 	public PCurrencies(
-		final @NotNull PCurrenciesSection commandSectionConfiguration,
+		final @NotNull PCurrenciesSection commandSection,
 		final @NotNull JExEconomy jexEconomy
 	) {
-		super(commandSectionConfiguration);
-                this.jexEconomyImpl = jexEconomy;
-                this.currencyCommandHandler = new CurrencyCommandHandler(this.jexEconomyImpl);
-        }
+		super(commandSection);
+        this.jexEconomyImpl = jexEconomy;
+        this.currencyCommandHandler = new CurrencyCommandHandler(this.jexEconomyImpl);
+    }
 	
 	/**
 	 * Handles the execution of currency commands initiated by players.
@@ -122,19 +122,19 @@ public class PCurrencies extends PlayerCommand {
 	 * checks as needed.
 	 * </p>
 	 *
-	 * @param commandExecutingPlayer the player executing the currency command, must not be null
+	 * @param player the player executing the currency command, must not be null
 	 * @param commandLabel the command label used to invoke this command, must not be null
 	 * @param commandArguments the arguments provided with the command, must not be null
 	 */
 	@Override
 	protected void onPlayerInvocation(
-		final @NotNull Player commandExecutingPlayer,
+		final @NotNull Player player,
 		final @NotNull String commandLabel,
 		final @NotNull String[] commandArguments
 	) {
                 if (
                         this.hasNoPermission(
-                                commandExecutingPlayer,
+                                player,
                                 ECurrenciesPermission.CURRENCIES
                         )
                 ) {
@@ -142,7 +142,7 @@ public class PCurrencies extends PlayerCommand {
                 }
 
                 if (commandArguments.length == 0) {
-                        this.openOverviewInterface(commandExecutingPlayer);
+                        this.openOverviewInterface(player);
                         return;
                 }
 
@@ -150,27 +150,27 @@ public class PCurrencies extends PlayerCommand {
 
                 switch (actionContext.action()) {
                         case CREATE -> {
-                                if (this.hasNoPermission(commandExecutingPlayer, ECurrenciesPermission.CREATE)) {
+                                if (this.hasNoPermission(player, ECurrenciesPermission.CREATE)) {
                                         return;
                                 }
-                                this.currencyCommandHandler.createCurrency(commandExecutingPlayer, commandArguments);
+                                this.currencyCommandHandler.createCurrency(player, commandArguments);
                         }
                         case DELETE -> {
-                                if (this.hasNoPermission(commandExecutingPlayer, ECurrenciesPermission.DELETE)) {
+                                if (this.hasNoPermission(player, ECurrenciesPermission.DELETE)) {
                                         return;
                                 }
-                                this.currencyCommandHandler.deleteCurrency(commandExecutingPlayer, commandArguments);
+                                this.currencyCommandHandler.deleteCurrency(player, commandArguments);
                         }
                         case EDIT -> {
-                                if (this.hasNoPermission(commandExecutingPlayer, ECurrenciesPermission.EDIT)) {
+                                if (this.hasNoPermission(player, ECurrenciesPermission.EDIT)) {
                                         return;
                                 }
-                                this.currencyCommandHandler.editCurrency(commandExecutingPlayer, commandArguments);
+                                this.currencyCommandHandler.editCurrency(player, commandArguments);
                         }
-                        case INFO -> this.currencyCommandHandler.showCurrencyInfo(commandExecutingPlayer, commandArguments);
-                        case HELP -> this.openOverviewInterface(commandExecutingPlayer);
-                        case OVERVIEW -> this.handleOverviewAction(commandExecutingPlayer, actionContext.parameters());
-                        default -> this.handleOverviewAction(commandExecutingPlayer, actionContext.parameters());
+                        case INFO -> this.currencyCommandHandler.showCurrencyInfo(player, commandArguments);
+                        case HELP -> this.openOverviewInterface(player);
+                        case OVERVIEW -> this.handleOverviewAction(player, actionContext.parameters());
+                        default -> this.handleOverviewAction(player, actionContext.parameters());
                 }
         }
 

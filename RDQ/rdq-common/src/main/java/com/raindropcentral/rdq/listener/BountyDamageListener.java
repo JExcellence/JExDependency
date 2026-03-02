@@ -30,18 +30,12 @@ public class BountyDamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = false)  // Changed to catch cancelled events too
     public void onEntityDamageByEntity(@NotNull EntityDamageByEntityEvent event) {
-        // Log ALL damage events for debugging
-        LOGGER.info("Damage event detected: " + event.getDamager().getType() + " -> " + event.getEntity().getType() + 
-                   " (damage: " + event.getFinalDamage() + ", cancelled: " + event.isCancelled() + ")");
-        
         // Only track player-on-player damage
         if (!(event.getEntity() instanceof Player victim)) {
-            LOGGER.info("Not a player victim, skipping");
             return;
         }
         
         if (!(event.getDamager() instanceof Player attacker)) {
-            LOGGER.info("Not a player attacker, skipping");
             return;
         }
 
@@ -53,7 +47,5 @@ public class BountyDamageListener implements Listener {
             attacker.getUniqueId(),
             damage
         );
-
-        LOGGER.info("Recorded " + damage + " PvP damage from " + attacker.getName() + " to " + victim.getName());
     }
 }

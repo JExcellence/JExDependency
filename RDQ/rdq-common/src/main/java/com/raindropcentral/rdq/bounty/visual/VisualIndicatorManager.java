@@ -85,8 +85,6 @@ public class VisualIndicatorManager {
         }
 
         startPeriodicRefreshTask();
-
-        LOGGER.info("VisualIndicatorManager initialized with particles: " + particlesEnabled);
     }
 
     /**
@@ -199,8 +197,6 @@ public class VisualIndicatorManager {
                 particleIntervalTicks,
                 particleIntervalTicks
         );
-
-        LOGGER.info("Started particle task with interval " + particleIntervalTicks + " ticks");
     }
 
     /**
@@ -213,8 +209,6 @@ public class VisualIndicatorManager {
                 600L,
                 600L
         );
-
-        LOGGER.info("Started periodic refresh task with 30 second interval");
     }
 
     /**
