@@ -87,6 +87,14 @@ public class ShopInputView extends BaseView {
         this.insertedItems.set(new HashMap<>(), render);
         this.saving.set(false, render);
 
+        if (!shop.canSupply(player.getUniqueId())) {
+            render.layoutSlot(
+                    's',
+                    this.createLockedItem(player)
+            );
+            return;
+        }
+
         render.layoutSlot(
                 's',
                 createSummaryItem(player, shop)
@@ -112,6 +120,11 @@ public class ShopInputView extends BaseView {
     public void onClick(
             final @NotNull SlotClickContext click
     ) {
+        if (!this.getCurrentShop(click).canSupply(click.getPlayer().getUniqueId())) {
+            click.setCancelled(true);
+            return;
+        }
+
         if (!click.getClickedContainer().isEntityContainer()) {
             click.setCancelled(true);
         }
@@ -144,6 +157,14 @@ public class ShopInputView extends BaseView {
     private void handleConfirmClick(
             final @NotNull SlotClickContext clickContext
     ) {
+        if (!this.getCurrentShop(clickContext).canSupply(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.no_permission", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
         final Map<Integer, ItemStack> playerItems = this.getVisibleInsertedItems(clickContext.getPlayer());
         this.insertedItems.get(clickContext).clear();
         this.insertedItems.get(clickContext).putAll(playerItems);
@@ -297,6 +318,16 @@ public class ShopInputView extends BaseView {
                         ))
                         .build()
                         .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createLockedItem(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+                .setName(this.i18n("feedback.locked.name", player).build().component())
+                .setLore(this.i18n("feedback.locked.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     }

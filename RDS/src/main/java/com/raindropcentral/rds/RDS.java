@@ -6,16 +6,7 @@ import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
-import com.raindropcentral.rds.view.shop.ShopEditView;
-import com.raindropcentral.rds.view.shop.ShopBankView;
-import com.raindropcentral.rds.view.shop.ShopCustomerView;
-import com.raindropcentral.rds.view.shop.ShopInputView;
-import com.raindropcentral.rds.view.shop.ShopItemEditView;
-import com.raindropcentral.rds.view.shop.ShopOverviewView;
-import com.raindropcentral.rds.view.shop.ShopSearchView;
-import com.raindropcentral.rds.view.shop.ShopStoreCostView;
-import com.raindropcentral.rds.view.shop.ShopStoreView;
-import com.raindropcentral.rds.view.shop.ShopStorageView;
+import com.raindropcentral.rds.view.shop.*;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
@@ -245,7 +236,8 @@ public class RDS extends JavaPlugin {
                     new ShopItemEditView(),
                     new ShopItemCurrencyTypeAnvilView(),
                     new ShopItemValueAnvilView(),
-                    new ShopPurchaseAmountAnvilView()
+                    new ShopPurchaseAmountAnvilView(),
+                    new ShopTrustedView()
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();

@@ -137,6 +137,12 @@ shop_overview_ui:
         - "<gray>Preview this shop as customers see it.</gray>"
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
         - "<yellow>Click to browse this shop as a customer.</yellow>"
+    trusted:
+      name: "<gold>Trusted Players</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Trusted players:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Click to manage shop trust levels.</yellow>"
     edit:
       name: "<aqua>Edit Shop Items</aqua>"
       lore:
@@ -155,7 +161,7 @@ shop_overview_ui:
         - "<gray>Only the owner can add items.</gray>"
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
   feedback:
-    not_owner: "<red>You do not own this shop.</red>"
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
     no_admin_permission: "<red>You do not have permission to toggle admin shops.</red>"
     admin_enabled: "<green>This shop is now an admin shop with infinite customer inventory. Counted shops: {owned_shops}.</green>"
     admin_disabled: "<yellow>This shop is now a normal player shop with finite customer inventory. Counted shops: {owned_shops}.</yellow>"
@@ -188,6 +194,12 @@ shop_input_ui:
   saved: "<green>Stored {added_count} new entries. Shop now has {stored_count} entries.</green>"
   save_failed: "<red>Failed to save shop items.</red>"
   left_overs: "<yellow>Returned unsaved shop items to your inventory.</yellow>"
+  feedback:
+    no_permission: "<red>You do not have permission to add items to this shop.</red>"
+    locked:
+      name: "<red>Supply Access Required</red>"
+      lore:
+        - "<gray>Only associates and trusted players can add items here.</gray>"
 
 shop_storage_ui:
   title: "Stored Items - {location}"
@@ -206,13 +218,13 @@ shop_storage_ui:
       - "<gray>Value:</gray> <white>{value}</white>"
       - "<yellow>Click to extract this item from the shop.</yellow>"
   feedback:
-    not_owner: "<red>You do not own this shop.</red>"
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
     extracted: "<green>Extracted {amount}x {item_type}. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
     item_missing: "<red>That stored item could not be found.</red>"
     locked:
-      name: "<red>Owner Access Only</red>"
+      name: "<red>Full Access Required</red>"
       lore:
-        - "<gray>Only the shop owner can withdraw stored items.</gray>"
+        - "<gray>Only trusted players with full access can withdraw stored items.</gray>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:
@@ -238,13 +250,13 @@ shop_edit_ui:
       - "<yellow>Left click to edit this shop item.</yellow>"
       - "<yellow>Right click to remove it from the shop.</yellow>"
   feedback:
-    not_owner: "<red>You do not own this shop.</red>"
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
     removed: "<green>Removed {amount}x {item_type} from the shop. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
     item_missing: "<red>That shop item could not be found.</red>"
     locked:
-      name: "<red>Owner Access Only</red>"
+      name: "<red>Full Access Required</red>"
       lore:
-        - "<gray>Only the shop owner can edit item values.</gray>"
+        - "<gray>Only trusted players with full access can edit item values.</gray>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:
@@ -276,7 +288,7 @@ shop_item_edit_ui:
       - "<gray>Apply the current currency type and value</gray>"
       - "<gray>to this shop item.</gray>"
   feedback:
-    not_owner: "<red>You do not own this shop.</red>"
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
     shop_missing: "<red>This shop could not be loaded from storage.</red>"
     item_missing: "<red>That shop item could not be found.</red>"
     saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
@@ -320,7 +332,7 @@ shop_bank_ui:
       - "<gray>Available balance:</gray> <white>{amount} {currency_name}</white>"
       - "<yellow>Click to withdraw this full balance.</yellow>"
   feedback:
-    not_owner: "<red>You do not own this shop.</red>"
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
     entry_missing: "<red>That bank balance is no longer available.</red>"
     withdrawn: "<green>Withdrew {amount} {currency_name}. Remaining {currency_name}: {remaining_amount}. Tracked currencies: {bank_currency_count}.</green>"
     withdraw_failed: "<red>Failed to withdraw {amount} {currency_name} from the shop bank.</red>"
@@ -330,9 +342,58 @@ shop_bank_ui:
       lore:
         - "<gray>This shop has no banked balances to withdraw.</gray>"
     locked:
+      name: "<red>Full Access Required</red>"
+      lore:
+        - "<gray>Only trusted players with full access can withdraw shop funds.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_trusted_ui:
+  title: "Trusted Players - {location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted players:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Click a player to cycle their trust status.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Status:</gray> <white>Public</white>"
+        - "<gray>No management permissions.</gray>"
+        - "<yellow>Click to change to Associate.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Can add items to the shop.</gray>"
+        - "<yellow>Click to change to Trusted.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Status:</gray> <white>Trusted</white>"
+        - "<gray>Can fully manage the shop.</gray>"
+        - "<yellow>Click to change to Public.</yellow>"
+  feedback:
+    not_owner: "<red>Only the shop owner can manage trusted players.</red>"
+    updated:
+      public: "<yellow>Set {player} to Public.</yellow>"
+      associate: "<green>Set {player} to Associate.</green>"
+      trusted: "<green>Set {player} to Trusted.</green>"
+    empty:
+      name: "<red>No Players Found</red>"
+      lore:
+        - "<gray>No other known players are available to trust.</gray>"
+    locked:
       name: "<red>Owner Access Only</red>"
       lore:
-        - "<gray>Only the shop owner can withdraw shop funds.</gray>"
+        - "<gray>Only the shop owner can manage trusted players.</gray>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:

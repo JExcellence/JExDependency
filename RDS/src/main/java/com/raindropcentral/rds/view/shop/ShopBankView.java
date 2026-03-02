@@ -75,7 +75,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             final @NotNull Context context
     ) {
         final Shop shop = this.getCurrentShop(context);
-        if (shop == null || !shop.isOwner(context.getPlayer().getUniqueId())) {
+        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId())) {
             return CompletableFuture.completedFuture(List.of());
         }
 
@@ -117,7 +117,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             return;
         }
 
-        if (!shop.isOwner(player.getUniqueId())) {
+        if (!shop.canManage(player.getUniqueId())) {
             render.slot(4).renderWith(() -> this.createLockedItem(player));
             return;
         }
@@ -153,7 +153,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             return;
         }
 
-        if (!shop.isOwner(clickContext.getPlayer().getUniqueId())) {
+        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()

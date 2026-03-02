@@ -46,7 +46,7 @@ public class PlayerClickListener implements Listener {
              */
             return;
         }
-        final Class<? extends View> viewClass = shop.isOwner(player.getUniqueId())
+        final Class<? extends View> viewClass = shop.canAccessOverview(player.getUniqueId())
                 ? ShopOverviewView.class
                 : ShopCustomerView.class;
         this.rds.getViewFrame().open(

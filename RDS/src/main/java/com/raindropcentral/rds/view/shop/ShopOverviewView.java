@@ -35,7 +35,7 @@ public class ShopOverviewView extends BaseView {
 
     @Override
     protected int getSize() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -62,6 +62,9 @@ public class ShopOverviewView extends BaseView {
             final @NotNull Player player
     ) {
         final Shop shop = this.getCurrentShop(render);
+        final boolean owner = shop != null && shop.isOwner(player.getUniqueId());
+        final boolean canSupply = shop != null && shop.canSupply(player.getUniqueId());
+        final boolean canManage = shop != null && shop.canManage(player.getUniqueId());
 
         if (shop == null) {
             render.slot(4).renderWith(() -> createMissingShopItem(player));
@@ -89,12 +92,22 @@ public class ShopOverviewView extends BaseView {
                             )
                     );
                 });
-        if (shop.isOwner(player.getUniqueId())) {
+        if (owner) {
             render.slot(1)
                     .renderWith(() -> createCloseShopItem(shop, player))
                     .onClick(this::handleCloseShopClick);
+
+            render.slot(13)
+                    .renderWith(() -> createTrustedPlayersItem(shop, player))
+                    .onClick(clickContext -> clickContext.openForPlayer(
+                            ShopTrustedView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", shop.getShopLocation()
+                            )
+                    ));
         }
-        if (shop.isOwner(player.getUniqueId()) && player.hasPermission(ADMIN_SHOPS_PERMISSION)) {
+        if (owner && player.hasPermission(ADMIN_SHOPS_PERMISSION)) {
             render.slot(0)
                     .renderWith(() -> createAdminToggleItem(shop, player))
                     .onClick(clickContext -> {
@@ -168,53 +181,57 @@ public class ShopOverviewView extends BaseView {
                         );
                     });
         }
-        render.slot(4)
-                .renderWith(() -> createFinanceItem(shop, player))
-                .onClick(clickContext -> {
-                    final Shop currentShop = this.getCurrentShop(clickContext);
-                    if (currentShop == null) {
-                        return;
-                    }
+        if (canManage) {
+            render.slot(4)
+                    .renderWith(() -> createFinanceItem(shop, player))
+                    .onClick(clickContext -> {
+                        final Shop currentShop = this.getCurrentShop(clickContext);
+                        if (currentShop == null) {
+                            return;
+                        }
 
-                    if (!currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
-                        this.i18n("feedback.not_owner", clickContext.getPlayer())
-                                .includePrefix()
-                                .build()
-                                .sendMessage();
-                        return;
-                    }
+                        if (!currentShop.canManage(clickContext.getPlayer().getUniqueId())) {
+                            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                                    .includePrefix()
+                                    .build()
+                                    .sendMessage();
+                            return;
+                        }
 
-                    clickContext.openForPlayer(
-                            ShopBankView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", currentShop.getShopLocation()
-                            )
-                    );
-                });
-        render.slot(6)
-                .renderWith(() -> createManageItem(shop, player))
-                .onClick(clickContext -> {
-                    final Shop currentShop = this.getCurrentShop(clickContext);
-                    if (currentShop == null || !currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
-                        this.i18n("feedback.not_owner", clickContext.getPlayer())
-                                .includePrefix()
-                                .build()
-                                .sendMessage();
-                        return;
-                    }
+                        clickContext.openForPlayer(
+                                ShopBankView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shopLocation", currentShop.getShopLocation()
+                                )
+                        );
+                    });
+        }
+        if (canSupply) {
+            render.slot(6)
+                    .renderWith(() -> createManageItem(shop, player))
+                    .onClick(clickContext -> {
+                        final Shop currentShop = this.getCurrentShop(clickContext);
+                        if (currentShop == null || !currentShop.canSupply(clickContext.getPlayer().getUniqueId())) {
+                            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                                    .includePrefix()
+                                    .build()
+                                    .sendMessage();
+                            return;
+                        }
 
-                    clickContext.openForPlayer(
-                            ShopInputView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shop", currentShop,
-                                    "shopLocation", currentShop.getShopLocation()
-                            )
-                    );
-                });
+                        clickContext.openForPlayer(
+                                ShopInputView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shop", currentShop,
+                                        "shopLocation", currentShop.getShopLocation()
+                                )
+                        );
+                    });
+        }
 
-        if (shop.isOwner(player.getUniqueId())) {
+        if (canManage) {
             render.slot(7)
                     .renderWith(() -> createEditItem(shop, player))
                     .onClick(clickContext -> clickContext.openForPlayer(
@@ -315,6 +332,23 @@ public class ShopOverviewView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createTrustedPlayersItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.PLAYER_HEAD)
+                .setName(this.i18n("actions.trusted.name", player).build().component())
+                .setLore(this.i18n("actions.trusted.lore", player)
+                        .withPlaceholders(Map.of(
+                                "associate_count", shop.getTrustedPlayerCount(com.raindropcentral.rds.database.entity.ShopTrustStatus.ASSOCIATE),
+                                "trusted_count", shop.getTrustedPlayerCount(com.raindropcentral.rds.database.entity.ShopTrustStatus.TRUSTED)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private void handleCloseShopClick(
             final @NotNull SlotClickContext clickContext
     ) {
@@ -400,13 +434,9 @@ public class ShopOverviewView extends BaseView {
             final @NotNull Shop shop,
             final @NotNull Player player
     ) {
-        final boolean owner = shop.isOwner(player.getUniqueId());
-        final Material material = owner ? Material.HOPPER : Material.BARRIER;
-        final String suffix = owner ? "manage" : "locked";
-
-        return UnifiedBuilderFactory.item(material)
-                .setName(this.i18n("actions." + suffix + ".name", player).build().component())
-                .setLore(this.i18n("actions." + suffix + ".lore", player)
+        return UnifiedBuilderFactory.item(Material.HOPPER)
+                .setName(this.i18n("actions.manage.name", player).build().component())
+                .setLore(this.i18n("actions.manage.lore", player)
                         .withPlaceholder("item_count", shop.getStoredItemCount())
                         .build()
                         .children())

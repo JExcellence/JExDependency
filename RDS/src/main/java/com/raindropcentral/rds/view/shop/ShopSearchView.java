@@ -53,13 +53,6 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
     }
 
     @Override
-    protected Map<String, Object> getTitlePlaceholders(
-            final @NotNull OpenContext context
-    ) {
-        return Map.of();
-    }
-
-    @Override
     protected CompletableFuture<List<ShopSearchEntry>> getAsyncPaginationSource(
             final @NotNull Context context
     ) {
@@ -182,7 +175,7 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
             final @NotNull Shop shop,
             final @NotNull Player player
     ) {
-        return shop.isOwner(player.getUniqueId())
+        return shop.canAccessOverview(player.getUniqueId())
                 ? ShopOverviewView.class
                 : ShopCustomerView.class;
     }

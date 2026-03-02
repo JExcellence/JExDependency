@@ -1,5 +1,6 @@
 package com.raindropcentral.rds.database.entity;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.json.ItemParser;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
@@ -18,7 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
@@ -57,8 +60,14 @@ public class Shop extends BaseEntity {
     @Column(name = "admin_shop", unique = false, nullable = false)
     private boolean admin_shop = false;
 
+    @Column(name = "trusted_players", unique = false, nullable = false, columnDefinition = "LONGTEXT")
+    private String trustedPlayersJson = "{}";
+
     @Transient
     private List<AbstractItem> cachedItems = new ArrayList<>();
+
+    @Transient
+    private Map<UUID, ShopTrustStatus> cachedTrustedPlayers;
 
     public Shop() {
     }
@@ -192,8 +201,119 @@ public class Shop extends BaseEntity {
         return getItems().size();
     }
 
+    public @NotNull Map<UUID, ShopTrustStatus> getTrustedPlayers() {
+        if (this.cachedTrustedPlayers == null) {
+            this.cachedTrustedPlayers = this.parseTrustedPlayers();
+        }
+
+        return new HashMap<>(this.cachedTrustedPlayers);
+    }
+
+    public void setTrustedPlayers(
+            final @Nullable Map<UUID, ShopTrustStatus> trustedPlayers
+    ) {
+        final Map<UUID, ShopTrustStatus> safeTrustedPlayers = new HashMap<>();
+        if (trustedPlayers != null) {
+            for (final Map.Entry<UUID, ShopTrustStatus> entry : trustedPlayers.entrySet()) {
+                final UUID playerId = entry.getKey();
+                final ShopTrustStatus status = entry.getValue();
+                if (playerId == null || status == null || status == ShopTrustStatus.PUBLIC || this.isOwner(playerId)) {
+                    continue;
+                }
+
+                safeTrustedPlayers.put(playerId, status);
+            }
+        }
+
+        this.cachedTrustedPlayers = safeTrustedPlayers;
+
+        try {
+            this.trustedPlayersJson = ItemParser.getObjectMapper().writeValueAsString(safeTrustedPlayers);
+        } catch (Exception e) {
+            LOGGER.error("Failed to serialize trusted players", e);
+            throw new RuntimeException("Failed to serialize trusted players", e);
+        }
+    }
+
+    public @NotNull ShopTrustStatus getTrustStatus(
+            final @NotNull UUID playerId
+    ) {
+        if (this.isOwner(playerId)) {
+            return ShopTrustStatus.TRUSTED;
+        }
+
+        return this.getTrustedPlayers().getOrDefault(playerId, ShopTrustStatus.PUBLIC);
+    }
+
+    public void setTrustStatus(
+            final @NotNull UUID playerId,
+            final @NotNull ShopTrustStatus status
+    ) {
+        if (this.isOwner(playerId)) {
+            return;
+        }
+
+        final Map<UUID, ShopTrustStatus> trustedPlayers = this.getTrustedPlayers();
+        if (status == ShopTrustStatus.PUBLIC) {
+            trustedPlayers.remove(playerId);
+        } else {
+            trustedPlayers.put(playerId, status);
+        }
+
+        this.setTrustedPlayers(trustedPlayers);
+    }
+
+    public int getTrustedPlayerCount(
+            final @NotNull ShopTrustStatus status
+    ) {
+        int count = 0;
+        for (final ShopTrustStatus trustedStatus : this.getTrustedPlayers().values()) {
+            if (trustedStatus == status) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public boolean canAccessOverview(
+            final @NotNull UUID playerId
+    ) {
+        return this.isOwner(playerId) || this.getTrustStatus(playerId) != ShopTrustStatus.PUBLIC;
+    }
+
+    public boolean canSupply(
+            final @NotNull UUID playerId
+    ) {
+        return this.isOwner(playerId) || this.getTrustStatus(playerId).hasSupplyAccess();
+    }
+
+    public boolean canManage(
+            final @NotNull UUID playerId
+    ) {
+        return this.isOwner(playerId) || this.getTrustStatus(playerId).hasFullAccess();
+    }
+
     public boolean isOwner(final UUID playerId) {
         return Objects.equals(this.owner_uuid, playerId);
+    }
+
+    private @NotNull Map<UUID, ShopTrustStatus> parseTrustedPlayers() {
+        if (this.trustedPlayersJson == null || this.trustedPlayersJson.isBlank()) {
+            return new HashMap<>();
+        }
+
+        try {
+            final Map<UUID, ShopTrustStatus> parsed = ItemParser.getObjectMapper().readValue(
+                    this.trustedPlayersJson,
+                    new TypeReference<Map<UUID, ShopTrustStatus>>() {
+                    }
+            );
+            return parsed == null ? new HashMap<>() : new HashMap<>(parsed);
+        } catch (Exception e) {
+            LOGGER.error("Failed to parse trusted players JSON", e);
+            throw new RuntimeException("Failed to parse trusted players", e);
+        }
     }
 
     private @Nullable Bank findBankEntry(

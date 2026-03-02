@@ -151,7 +151,7 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
-        if (!shop.isOwner(clickContext.getPlayer().getUniqueId())) {
+        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
