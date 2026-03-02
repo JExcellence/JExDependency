@@ -2,10 +2,12 @@ package com.raindropcentral.rds;
 
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rds.configs.ConfigSection;
+import com.raindropcentral.rds.configs.TaxSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rds.view.shop.*;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
@@ -56,6 +58,7 @@ public class RDS extends JavaPlugin {
     private PlatformType platformType;
     private Object economyInstance;
     private ViewFrame viewFrame;
+    private ShopTaxScheduler shopTaxScheduler;
 
     //Repositories
     private RRDSPlayer playerRepository;
@@ -92,6 +95,7 @@ public class RDS extends JavaPlugin {
         initializePlugins();
         initializeCommands();
         initializeViews();
+        initializeTaxes();
 
         if (!this.hasValidEconomyAndCurrency()) {
             this.getLogger().warning(
@@ -121,10 +125,21 @@ public class RDS extends JavaPlugin {
         try {
             var cfgManager = new ConfigManager(this, "config");
             var cfgKeeper = new ConfigKeeper<>(cfgManager, "config.yml", ConfigSection.class);
-            return cfgKeeper.rootSection;
+            final ConfigSection config = cfgKeeper.rootSection;
+            config.setTaxes(
+                    TaxSection.fromFile(
+                            this.getDefaultConfigFile(),
+                            config.getDefaultCurrencyType()
+                    )
+            );
+            return config;
         } catch (Exception e) {
             return new ConfigSection(new EvaluationEnvironmentBuilder());
         }
+    }
+
+    private @NotNull File getDefaultConfigFile() {
+        return new File(new File(this.getDataFolder(), FOLDER_PATH), FILE_NAME);
     }
 
     private void ensureDefaultConfigFile() {
@@ -233,6 +248,7 @@ public class RDS extends JavaPlugin {
                     new ShopInputView(),
                     new ShopStorageView(),
                     new ShopEditView(),
+                    new ShopLedgerView(),
                     new ShopItemEditView(),
                     new ShopItemCurrencyTypeAnvilView(),
                     new ShopItemValueAnvilView(),
@@ -241,6 +257,11 @@ public class RDS extends JavaPlugin {
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();
+    }
+
+    private void initializeTaxes() {
+        this.shopTaxScheduler = new ShopTaxScheduler(this);
+        this.shopTaxScheduler.start();
     }
 
     private boolean hasValidEconomyAndCurrency() {
@@ -459,6 +480,10 @@ public class RDS extends JavaPlugin {
 
     public ViewFrame getViewFrame() {
         return this.viewFrame;
+    }
+
+    public ShopTaxScheduler getShopTaxScheduler() {
+        return this.shopTaxScheduler;
     }
 
     public ISchedulerAdapter getScheduler() {

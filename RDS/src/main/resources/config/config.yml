@@ -10,6 +10,26 @@ store:
     growth_rate: 1.075
 # -1 for no limit
 max_shops: -1
+# Scheduled taxes for counted player shops.
+taxes:
+  vault:
+    initial_cost: 100.0
+    growth_rate: 1.125
+    # -1 for no cap
+    maximum_tax: -1
+  coins:
+    initial_cost: 5.0
+    growth_rate: 1.075
+    maximum_tax: 50000
+  # Bukkit ticks between tax runs. Default is 24 hours.
+  duration: 1728000
+  # Examples: noon, midnight, 6pm, 18:00, 06:30
+  start_time: noon
+  # Time zone used when aligning the configured start_time. Examples:
+  # system, UTC, America/New_York, Europe/London
+  time_zone: system
+  # Send a reminder on join showing the player's next scheduled shop tax.
+  join_notification: true
 # Default currency when items are added to shops - players can change to any currencies not blacklisted
 default_currency_type: vault
 # Blacklisted currencies - players cannot set shops to listed currency

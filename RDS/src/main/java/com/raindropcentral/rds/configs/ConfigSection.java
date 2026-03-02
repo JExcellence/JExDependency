@@ -21,6 +21,7 @@ public class ConfigSection extends AConfigSection {
     private String default_currency_type;
     private List<String> blacklisted_currencies;
     private Integer max_shops;
+    private TaxSection taxes;
 
     public ConfigSection(EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
@@ -69,6 +70,34 @@ public class ConfigSection extends AConfigSection {
 
     public boolean hasShopLimit() {
         return this.getMaxShops() > 0;
+    }
+
+    public @NotNull TaxSection getTaxes() {
+        return this.taxes == null
+                ? TaxSection.createDefault(this.getDefaultCurrencyType())
+                : this.taxes;
+    }
+
+    public double getTaxInitialCost() {
+        return this.getDefaultTaxCurrency().getInitialCost();
+    }
+
+    public double getTaxGrowthRate() {
+        return this.getDefaultTaxCurrency().getGrowthRate();
+    }
+
+    public double getMaximumTax() {
+        return this.getDefaultTaxCurrency().getMaximumTax();
+    }
+
+    public @NotNull TaxCurrencySection getDefaultTaxCurrency() {
+        return this.getTaxes().getTaxCurrency(this.getDefaultCurrencyType());
+    }
+
+    public void setTaxes(
+            final @NotNull TaxSection taxes
+    ) {
+        this.taxes = taxes;
     }
 
     public @NotNull StoreCurrencySection getDefaultStoreCurrency() {

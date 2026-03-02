@@ -1,0 +1,169 @@
+package com.raindropcentral.rds.database.entity;
+
+import com.raindropcentral.rplatform.database.converter.UUIDConverter;
+import de.jexcellence.hibernate.entity.BaseEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
+
+@Entity
+@Table(name = "shop_ledger_entries")
+@SuppressWarnings({
+        "FieldCanBeLocal",
+        "unused",
+        "JpaDataSourceORMInspection"
+})
+public class ShopLedgerEntry extends BaseEntity {
+
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "shop_id", nullable = false)
+    private Shop shop;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "entry_type", nullable = false)
+    private ShopLedgerType entry_type;
+
+    @Column(name = "currency_type", nullable = false)
+    private String currency_type;
+
+    @Column(name = "amount", nullable = false)
+    private double amount;
+
+    @Column(name = "actor_name", nullable = false)
+    private String actor_name;
+
+    @Column(name = "actor_uuid")
+    @Convert(converter = UUIDConverter.class)
+    private UUID actor_uuid;
+
+    @Column(name = "item_type")
+    private String item_type;
+
+    @Column(name = "item_amount")
+    private Integer item_amount;
+
+    @Column(name = "counted_shops")
+    private Integer counted_shops;
+
+    protected ShopLedgerEntry() {
+    }
+
+    public ShopLedgerEntry(
+            final @NotNull Shop shop,
+            final @NotNull ShopLedgerType entryType,
+            final @NotNull String currencyType,
+            final double amount,
+            final @Nullable UUID actorId,
+            final @NotNull String actorName,
+            final @Nullable String itemType,
+            final @Nullable Integer itemAmount,
+            final @Nullable Integer countedShops
+    ) {
+        this.shop = shop;
+        this.entry_type = entryType;
+        this.currency_type = currencyType.trim();
+        this.amount = Math.max(0D, amount);
+        this.actor_uuid = actorId;
+        this.actor_name = actorName.isBlank()
+                ? (actorId == null ? "Unknown" : actorId.toString())
+                : actorName;
+        this.item_type = itemType;
+        this.item_amount = itemAmount;
+        this.counted_shops = countedShops;
+    }
+
+    public static @NotNull ShopLedgerEntry purchase(
+            final @NotNull Shop shop,
+            final @Nullable UUID actorId,
+            final @NotNull String actorName,
+            final @NotNull String currencyType,
+            final double amount,
+            final @NotNull String itemType,
+            final int itemAmount
+    ) {
+        return new ShopLedgerEntry(
+                shop,
+                ShopLedgerType.PURCHASE,
+                currencyType,
+                amount,
+                actorId,
+                actorName,
+                itemType,
+                Math.max(1, itemAmount),
+                null
+        );
+    }
+
+    public static @NotNull ShopLedgerEntry taxation(
+            final @NotNull Shop shop,
+            final @Nullable UUID actorId,
+            final @NotNull String actorName,
+            final @NotNull String currencyType,
+            final double amount,
+            final int countedShops
+    ) {
+        return new ShopLedgerEntry(
+                shop,
+                ShopLedgerType.TAXATION,
+                currencyType,
+                amount,
+                actorId,
+                actorName,
+                null,
+                null,
+                Math.max(1, countedShops)
+        );
+    }
+
+    public @NotNull Shop getShop() {
+        return this.shop;
+    }
+
+    public void setShop(
+            final @NotNull Shop shop
+    ) {
+        this.shop = shop;
+    }
+
+    public @NotNull ShopLedgerType getEntryType() {
+        return this.entry_type;
+    }
+
+    public @NotNull String getCurrencyType() {
+        return this.currency_type;
+    }
+
+    public double getAmount() {
+        return this.amount;
+    }
+
+    public @NotNull String getActorName() {
+        return this.actor_name;
+    }
+
+    public @Nullable UUID getActorId() {
+        return this.actor_uuid;
+    }
+
+    public @Nullable String getItemType() {
+        return this.item_type;
+    }
+
+    public @Nullable Integer getItemAmount() {
+        return this.item_amount;
+    }
+
+    public @Nullable Integer getCountedShops() {
+        return this.counted_shops;
+    }
+}

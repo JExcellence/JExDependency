@@ -6,6 +6,11 @@ prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
 info:
   total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
   bank: "<green>Tracked Balances ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Scheduled Tax ({taxed_shops} taxable shops):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Next Tax:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
 
 prs:
   give:
@@ -79,6 +84,11 @@ block_listener:
     max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
     shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
 
+tax_scheduler:
+  paid: "<yellow>Collected scheduled shop tax of {amount}. Counted shops: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>You could not pay the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
+  charge_failed: "<red>Failed to collect the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
+
 shop_overview_ui:
   title: "{owner} Shop - {location}"
   summary:
@@ -143,6 +153,13 @@ shop_overview_ui:
         - "<gray>Associates:</gray> <white>{associate_count}</white>"
         - "<gray>Trusted players:</gray> <white>{trusted_count}</white>"
         - "<yellow>Click to manage shop trust levels.</yellow>"
+    ledger:
+      name: "<gold>Shop Ledger</gold>"
+      lore:
+        - "<gray>Total entries:</gray> <white>{ledger_count}</white>"
+        - "<gray>Purchases:</gray> <white>{purchase_count}</white>"
+        - "<gray>Taxes:</gray> <white>{tax_count}</white>"
+        - "<yellow>Click to review shop transaction history.</yellow>"
     edit:
       name: "<aqua>Edit Shop Items</aqua>"
       lore:
@@ -394,6 +411,49 @@ shop_trusted_ui:
       name: "<red>Owner Access Only</red>"
       lore:
         - "<gray>Only the shop owner can manage trusted players.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_ledger_ui:
+  title: "Shop Ledger - {location}"
+  summary:
+    name: "<gold>Shop Transaction Ledger</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Total entries:</gray> <white>{ledger_count}</white>"
+      - "<gray>Purchases:</gray> <white>{purchase_count}</white>"
+      - "<gray>Taxes:</gray> <white>{tax_count}</white>"
+      - "<yellow>Newest transactions appear first.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Purchase: {item_type}</green>"
+      lore:
+        - "<gray>Buyer:</gray> <white>{actor}</white>"
+        - "<gray>Amount:</gray> <white>{item_amount}</white>"
+        - "<gray>Total paid:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Recorded:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Tax Charge</gold>"
+      lore:
+        - "<gray>Charged to:</gray> <white>{actor}</white>"
+        - "<gray>Tax share:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Counted shops:</gray> <white>{counted_shops}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Recorded:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>No Ledger Entries</red>"
+      lore:
+        - "<gray>This shop has no recorded purchases or taxes yet.</gray>"
+    locked:
+      name: "<red>Full Access Required</red>"
+      lore:
+        - "<gray>Only trusted players with full access can view the ledger.</gray>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:

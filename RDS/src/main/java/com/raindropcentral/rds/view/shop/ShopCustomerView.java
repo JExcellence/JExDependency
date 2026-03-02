@@ -2,6 +2,7 @@ package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.entity.ShopLedgerEntry;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
@@ -261,6 +262,17 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         }
 
         shop.addBank(currentItem.getCurrencyType(), totalPrice);
+        shop.addLedgerEntry(
+                ShopLedgerEntry.purchase(
+                        shop,
+                        context.getPlayer().getUniqueId(),
+                        context.getPlayer().getName(),
+                        currentItem.getCurrencyType(),
+                        totalPrice,
+                        currentItem.getItem().getType().name(),
+                        desiredAmount
+                )
+        );
         this.rds.get(context).getShopRepository().update(shop);
         this.grantPurchasedItems(context.getPlayer(), currentItem, desiredAmount);
 

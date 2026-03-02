@@ -3,6 +3,7 @@ package com.raindropcentral.rds.view.shop;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.entity.ShopLedgerType;
 import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -200,6 +201,31 @@ public class ShopOverviewView extends BaseView {
 
                         clickContext.openForPlayer(
                                 ShopBankView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shopLocation", currentShop.getShopLocation()
+                                )
+                        );
+                    });
+
+            render.slot(5)
+                    .renderWith(() -> createLedgerItem(shop, player))
+                    .onClick(clickContext -> {
+                        final Shop currentShop = this.getCurrentShop(clickContext);
+                        if (currentShop == null) {
+                            return;
+                        }
+
+                        if (!currentShop.canManage(clickContext.getPlayer().getUniqueId())) {
+                            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                                    .includePrefix()
+                                    .build()
+                                    .sendMessage();
+                            return;
+                        }
+
+                        clickContext.openForPlayer(
+                                ShopLedgerView.class,
                                 Map.of(
                                         "plugin", this.rds.get(clickContext),
                                         "shopLocation", currentShop.getShopLocation()
@@ -423,6 +449,24 @@ public class ShopOverviewView extends BaseView {
                 .setLore(this.i18n("finance.lore", player)
                         .withPlaceholders(Map.of(
                                 "bank_currency_count", shop.getBankCurrencyCount()
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createLedgerItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
+                .setName(this.i18n("actions.ledger.name", player).build().component())
+                .setLore(this.i18n("actions.ledger.lore", player)
+                        .withPlaceholders(Map.of(
+                                "ledger_count", shop.getLedgerEntryCount(),
+                                "purchase_count", shop.getLedgerEntryCount(ShopLedgerType.PURCHASE),
+                                "tax_count", shop.getLedgerEntryCount(ShopLedgerType.TAXATION)
                         ))
                         .build()
                         .children())

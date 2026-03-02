@@ -6,6 +6,7 @@ import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.tax.ShopTaxSummarySupport;
 import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.items.ShopBlock;
@@ -58,10 +59,14 @@ public class PRS extends PlayerCommand {
                 );
             }
             default -> {
-                final int ownedShops = this.countOwnedShops(player);
-                final Map<String, Double> trackedCurrencies = this.collectTrackedCurrencies(player);
+                final List<Shop> ownedShops = this.getOwnedShops(player);
+                final Map<String, Double> trackedCurrencies = this.collectTrackedCurrencies(ownedShops);
+                final ShopTaxSummarySupport.ShopTaxSummary taxSummary = ShopTaxSummarySupport.summarize(
+                        this.rds,
+                        player.getUniqueId()
+                );
                 new I18n.Builder("info.total", player)
-                    .withPlaceholder("owned_shops", ownedShops)
+                    .withPlaceholder("owned_shops", ownedShops.size())
                     .build()
                     .sendMessage();
                 new I18n.Builder("info.bank", player)
@@ -71,6 +76,21 @@ public class PRS extends PlayerCommand {
                     ))
                     .build()
                     .sendMessage();
+                new I18n.Builder("info.tax_amount", player)
+                        .withPlaceholders(Map.of(
+                                "taxed_shops", taxSummary.taxedShops(),
+                                "taxes", taxSummary.amountSummary()
+                        ))
+                        .build()
+                        .sendMessage();
+                new I18n.Builder("info.tax_schedule", player)
+                        .withPlaceholders(Map.of(
+                                "next_tax_at", taxSummary.nextTaxDisplay(),
+                                "time_until", taxSummary.timeUntilDisplay(),
+                                "tax_time_zone", taxSummary.timeZone().getId()
+                        ))
+                        .build()
+                        .sendMessage();
             }
         }
     }
@@ -98,28 +118,24 @@ public class PRS extends PlayerCommand {
         this.giveShopBlocks(target, amount);
     }
 
-    private int countOwnedShops(
+    private @NotNull List<Shop> getOwnedShops(
             final @NotNull Player player
     ) {
-        int ownedShops = 0;
+        final List<Shop> ownedShops = new ArrayList<>();
         for (final Shop shop : this.rds.getShopRepository().findAllShops()) {
             if (shop.isOwner(player.getUniqueId())) {
-                ownedShops++;
+                ownedShops.add(shop);
             }
         }
         return ownedShops;
     }
 
     private @NotNull Map<String, Double> collectTrackedCurrencies(
-            final @NotNull Player player
+            final @NotNull List<Shop> ownedShops
     ) {
         final Map<String, Double> trackedCurrencies = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-        for (final Shop shop : this.rds.getShopRepository().findAllShops()) {
-            if (!shop.isOwner(player.getUniqueId())) {
-                continue;
-            }
-
+        for (final Shop shop : ownedShops) {
             for (final var bankEntry : shop.getBankEntries()) {
                 trackedCurrencies.merge(
                         bankEntry.getCurrencyType(),

@@ -12,6 +12,7 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import org.bukkit.Location;
@@ -63,6 +64,15 @@ public class Shop extends BaseEntity {
     @Column(name = "trusted_players", unique = false, nullable = false, columnDefinition = "LONGTEXT")
     private String trustedPlayersJson = "{}";
 
+    @OneToMany(
+            mappedBy = "shop",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
+    )
+    @OrderBy("createdAt DESC, id DESC")
+    private List<ShopLedgerEntry> ledgerEntries = new ArrayList<>();
+
     @Transient
     private List<AbstractItem> cachedItems = new ArrayList<>();
 
@@ -76,6 +86,7 @@ public class Shop extends BaseEntity {
         this.owner_uuid = owner_uuid;
         this.shop_location = shop_location;
         this.bankEntries = new ArrayList<>();
+        this.ledgerEntries = new ArrayList<>();
         setItems(List.of());
     }
 
@@ -207,6 +218,46 @@ public class Shop extends BaseEntity {
         }
 
         return new HashMap<>(this.cachedTrustedPlayers);
+    }
+
+    public @NotNull List<ShopLedgerEntry> getLedgerEntries() {
+        if (this.ledgerEntries == null) {
+            this.ledgerEntries = new ArrayList<>();
+        }
+
+        return List.copyOf(this.ledgerEntries);
+    }
+
+    public void addLedgerEntry(
+            final @NotNull ShopLedgerEntry ledgerEntry
+    ) {
+        if (this.ledgerEntries == null) {
+            this.ledgerEntries = new ArrayList<>();
+        }
+
+        ledgerEntry.setShop(this);
+        this.ledgerEntries.add(0, ledgerEntry);
+    }
+
+    public int getLedgerEntryCount() {
+        return this.ledgerEntries == null ? 0 : this.ledgerEntries.size();
+    }
+
+    public int getLedgerEntryCount(
+            final @NotNull ShopLedgerType ledgerType
+    ) {
+        if (this.ledgerEntries == null || this.ledgerEntries.isEmpty()) {
+            return 0;
+        }
+
+        int count = 0;
+        for (final ShopLedgerEntry ledgerEntry : this.ledgerEntries) {
+            if (ledgerEntry != null && ledgerEntry.getEntryType() == ledgerType) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     public void setTrustedPlayers(
