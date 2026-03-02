@@ -15,6 +15,7 @@ public enum EPRSPermission implements IPermissionNode{
     INFO("infoCommand","raindropshops.command.info"),
     MAIN("mainCommand","raindropshops.command.main"),
     SEARCH("mainSearch","raindropshops.command.search"),
+    STORE("mainStore","raindropshops.command.store"),
     DEV("devCommand", "raindropshops.command.dev");
 
     /** Internal key used by the configuration system to resolve permissions. */

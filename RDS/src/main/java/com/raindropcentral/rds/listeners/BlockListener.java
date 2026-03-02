@@ -42,6 +42,19 @@ public class BlockListener implements Listener {
                 return;
             }
             var rPlayer = this.rds.getPlayerRepository().findByPlayer(event.getPlayer().getUniqueId());
+            final int maxShops = this.rds.getDefaultConfig().getMaxShops();
+            if (rPlayer != null && maxShops > 0 && rPlayer.getShops() >= maxShops) {
+                event.setCancelled(true);
+                new I18n.Builder("block_listener.error.max_shops_reached", event.getPlayer())
+                        .withPlaceholders(java.util.Map.of(
+                                "owned_shops", rPlayer.getShops(),
+                                "max_shops", maxShops
+                        ))
+                        .includePrefix()
+                        .build()
+                        .sendMessage();
+                return;
+            }
             placeShopItem(
                     event.getPlayer(),
                     rPlayer,

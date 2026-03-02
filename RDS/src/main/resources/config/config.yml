@@ -1,5 +1,17 @@
-initial_cost: 1000
-growth_rate: 1.125
+# Cost associated to player shop purchases
+store:
+  # Vault support economy
+  vault:
+    initial_cost: 1000.0
+    growth_rate: 1.125
+  # Custom currencies - Currently supports JExEconomy
+  coins:
+    initial_cost: 50.0
+    growth_rate: 1.075
+# -1 for no limit
+max_shops: -1
+# Default currency when items are added to shops - players can change to any currencies not blacklisted
 default_currency_type: vault
+# Blacklisted currencies - players cannot set shops to listed currency
 blacklisted_currencies:
   - raindrops

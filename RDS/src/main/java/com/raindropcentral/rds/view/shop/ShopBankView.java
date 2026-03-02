@@ -12,8 +12,6 @@ import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -251,13 +249,12 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
 
         final Player player = context.getPlayer();
         if (this.usesVaultCurrency(currencyType)) {
-            final Economy eco = this.rds.get(context).getEco();
-            if (eco == null) {
+            final RDS plugin = this.rds.get(context);
+            if (!plugin.hasVaultEconomy()) {
                 return WithdrawalResult.failure("feedback.currency_unavailable");
             }
 
-            final EconomyResponse response = eco.depositPlayer(player, amount);
-            return response != null && response.transactionSuccess()
+            return plugin.depositVault(player, amount)
                     ? WithdrawalResult.successful()
                     : WithdrawalResult.failure("feedback.withdraw_failed");
         }

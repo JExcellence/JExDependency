@@ -3,6 +3,10 @@
 # ============================================
 prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
 
+info:
+  total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Tracked Balances ({currency_count}):</green> <white>{currencies}</white>"
+
 # ============================================
 # GUI Buttons
 # ============================================
@@ -12,9 +16,63 @@ shop_block:
   lore:
     - "<yellow>Place this block to set up your shop.</yellow>"
 
+shop_store_ui:
+  title: "Shop Store"
+  owned_shops:
+    name: "<blue>Total Owned Shops</blue>"
+    lore:
+      - "<gray>Owned shops:</gray> <white>{owned_shops}</white>"
+      - "<gray>Placed shops currently registered</gray>"
+      - "<gray>to your account.</gray>"
+  max_shops:
+    name: "<green>Shop Limit</green>"
+    lore:
+      - "<gray>Owned shops:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum shops:</gray> <white>{max_shops}</white>"
+      - "<gray>This limit controls how many shops</gray>"
+      - "<gray>you may place.</gray>"
+  costs:
+    name: "<gold>Store Costs</gold>"
+    lore:
+      - "<gray>Available currencies:</gray> <white>{currency_count}</white>"
+      - "<gray>Review every required currency</gray>"
+      - "<gray>before purchasing a new shop.</gray>"
+      - "<yellow>Click to open the cost list.</yellow>"
+
+shop_store_cost_ui:
+  title: "Shop Costs"
+  summary:
+    name: "<gold>Purchase Shop Block</gold>"
+    lore:
+      - "<gray>The following currencies are required</gray>"
+      - "<gray>to purchase a new shop block.</gray>"
+      - "<gray>Owned shops:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum shops:</gray> <white>{max_shops}</white>"
+      - "<gray>Required currencies:</gray> <white>{currency_count}</white>"
+      - "<yellow>Click to purchase using all listed currencies.</yellow>"
+  empty:
+    name: "<red>No Store Currencies Available</red>"
+    lore:
+      - "<gray>No configured store currencies are</gray>"
+      - "<gray>currently available on this server.</gray>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+      - "<gray>Initial cost:</gray> <white>{initial_cost}</white>"
+      - "<gray>Growth rate:</gray> <white>{growth_rate}</white>"
+      - "<gray>Current cost:</gray> <white>{current_cost}</white>"
+  feedback:
+    purchased: "<green>Purchased a shop block. Required currencies: {costs}. Current placed shops: {owned_shops}.</green>"
+    insufficient_funds: "<red>You need {cost} from {currency_name} to buy a shop block.</red>"
+    purchase_failed: "<red>Failed to charge {cost} from {currency_name}. Any partial charges were rolled back.</red>"
+    no_currencies: "<red>No configured store currencies are available right now.</red>"
+    limit_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
+
 block_listener:
   error:
     invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
+    max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
 
 shop_overview_ui:
   title: "{owner} Shop - {location}"

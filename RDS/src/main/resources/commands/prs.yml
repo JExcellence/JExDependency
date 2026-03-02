@@ -28,5 +28,6 @@ commands:
         commandInfo: 'raindropshops.command.info'
         commandMain: 'raindropshops.command.main'
         commandSearch: 'raindropshops.command.search'
+        commandStore: 'raindropshops.command.store'
 lut:
   prefix: '&8[&1Admin&8] &7'

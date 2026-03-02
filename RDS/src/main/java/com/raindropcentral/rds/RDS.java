@@ -13,6 +13,8 @@ import com.raindropcentral.rds.view.shop.ShopInputView;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
 import com.raindropcentral.rds.view.shop.ShopOverviewView;
 import com.raindropcentral.rds.view.shop.ShopSearchView;
+import com.raindropcentral.rds.view.shop.ShopStoreCostView;
+import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.view.shop.ShopStorageView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
@@ -20,6 +22,7 @@ import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.evaluable.ConfigKeeper;
@@ -29,20 +32,30 @@ import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.jspecify.annotations.NonNull;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @SuppressWarnings("unused")
 public class RDS extends JavaPlugin {
+
+    private static final String VAULT_ECONOMY_CLASS = "net.milkbowl.vault.economy.Economy";
 
     private JavaPlugin rds;
     private ExecutorService executor;
@@ -56,6 +69,9 @@ public class RDS extends JavaPlugin {
     //Repositories
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
+    
+    private final static String FOLDER_PATH = "config";
+    private final static String FILE_NAME   = "config.yml";
 
     @Override
     public void onLoad() {
@@ -72,6 +88,7 @@ public class RDS extends JavaPlugin {
         this.platformType = PlatformAPIFactory.detectPlatformType();
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
+        this.ensureDefaultConfigFile();
 
         try {
             initializeHibernate();
@@ -84,11 +101,22 @@ public class RDS extends JavaPlugin {
         initializePlugins();
         initializeCommands();
         initializeViews();
+
+        if (!this.hasValidEconomyAndCurrency()) {
+            this.getLogger().warning(
+                    "No Vault provider or registered JExEconomy currencies are currently available. " +
+                    "RDS will remain enabled and currency-backed features will become available when a provider registers."
+            );
+        }
     }
 
     @Override
     public void onDisable() {
         this.getLogger().info("Disabling RDS: closing Hibernate");
+
+        if (this.executor != null) {
+            this.executor.shutdownNow();
+        }
 
         if (entityManagerFactory != null) {
             try {
@@ -98,12 +126,38 @@ public class RDS extends JavaPlugin {
     }
 
     public ConfigSection getDefaultConfig() {
+        this.ensureDefaultConfigFile();
         try {
             var cfgManager = new ConfigManager(this, "config");
             var cfgKeeper = new ConfigKeeper<>(cfgManager, "config.yml", ConfigSection.class);
             return cfgKeeper.rootSection;
         } catch (Exception e) {
             return new ConfigSection(new EvaluationEnvironmentBuilder());
+        }
+    }
+
+    private void ensureDefaultConfigFile() {
+        final File dataFolder = this.getDataFolder();
+        if (!dataFolder.exists() && !dataFolder.mkdirs()) {
+            this.getLogger().warning("Could not create plugin data folder for config extraction.");
+            return;
+        }
+
+        final File configFolder = new File(dataFolder, FOLDER_PATH);
+        if (!configFolder.exists() && !configFolder.mkdirs()) {
+            this.getLogger().warning("Could not create config folder for default config extraction.");
+            return;
+        }
+
+        final File configFile = new File(configFolder, FILE_NAME);
+        if (configFile.exists()) {
+            return;
+        }
+
+        try {
+            this.saveResource(FOLDER_PATH + "/" + FILE_NAME, false);
+        } catch (IllegalArgumentException exception) {
+            this.getLogger().warning("Bundled default config could not be extracted: " + exception.getMessage());
         }
     }
 
@@ -115,8 +169,8 @@ public class RDS extends JavaPlugin {
         ).optional().maxAttempts(30).retryDelay(1000).onSuccess(economy -> {
             this.getLogger().info("Vault service initialized");
             this.economyInstance = economy;
-        }).onFailure(() -> this.getLogger().warning(
-                "Vault service not present; initialization failed")
+        }).onFailure(() -> this.getLogger().info(
+                "Vault service not present; continuing without Vault integration")
         ).load();
     }
 
@@ -182,6 +236,8 @@ public class RDS extends JavaPlugin {
                     new ShopOverviewView(),
                     new ShopBankView(),
                     new ShopSearchView(),
+                    new ShopStoreView(),
+                    new ShopStoreCostView(),
                     new ShopCustomerView(),
                     new ShopInputView(),
                     new ShopStorageView(),
@@ -195,9 +251,198 @@ public class RDS extends JavaPlugin {
         this.viewFrame = frame.register();
     }
 
-    public net.milkbowl.vault.economy.Economy getEco() {
-        if (this.economyInstance == null) return null;
-        return (net.milkbowl.vault.economy.Economy) this.economyInstance;
+    private boolean hasValidEconomyAndCurrency() {
+        final Object vaultEconomy = this.resolveVaultEconomy();
+        final boolean vaultAvailable = vaultEconomy != null;
+        final boolean customCurrencyAvailable = this.hasRegisteredCustomCurrency();
+
+        if (vaultAvailable || customCurrencyAvailable) {
+            if (vaultAvailable) {
+                this.economyInstance = vaultEconomy;
+            }
+            return true;
+        }
+
+        this.getLogger().warning("RDS requires a valid Vault economy provider or at least one registered JExEconomy currency. Disabling plugin.");
+        return false;
+    }
+
+    private @Nullable Object resolveVaultEconomy() {
+        if (this.isVaultEconomyInstance(this.economyInstance)) {
+            return this.economyInstance;
+        }
+
+        try {
+            final Class<?> economyClass = Class.forName(VAULT_ECONOMY_CLASS);
+            final Object registration = Bukkit.getServicesManager().getRegistration(economyClass);
+            if (registration == null) {
+                return null;
+            }
+
+            final Method getProviderMethod = registration.getClass().getMethod("getProvider");
+            final Object provider = getProviderMethod.invoke(registration);
+            if (this.isVaultEconomyInstance(provider)) {
+                this.economyInstance = provider;
+                return provider;
+            }
+            return null;
+        } catch (Throwable ignored) {
+            return null;
+        }
+    }
+
+    private boolean hasRegisteredCustomCurrency() {
+        final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
+        if (bridge == null) {
+            return false;
+        }
+
+        try {
+            final Field adapterField = JExEconomyBridge.class.getDeclaredField("adapter");
+            final Field adapterClassField = JExEconomyBridge.class.getDeclaredField("adapterClass");
+            adapterField.setAccessible(true);
+            adapterClassField.setAccessible(true);
+
+            final Object adapter = adapterField.get(bridge);
+            final Class<?> adapterClass = (Class<?>) adapterClassField.get(bridge);
+            final Method getAllCurrenciesMethod = adapterClass.getMethod("getAllCurrencies");
+            final Object currenciesObject = getAllCurrenciesMethod.invoke(adapter);
+
+            return currenciesObject instanceof Map<?, ?> currencies && !currencies.isEmpty();
+        } catch (ReflectiveOperationException exception) {
+            this.getLogger().fine("Failed to validate JExEconomy currencies during startup.");
+            return false;
+        }
+    }
+
+    public boolean hasVaultEconomy() {
+        return this.resolveVaultEconomy() != null;
+    }
+
+    public boolean hasVaultFunds(
+            final @NotNull OfflinePlayer player,
+            final double amount
+    ) {
+        if (amount <= 0D) {
+            return true;
+        }
+
+        final Object vaultEconomy = this.resolveVaultEconomy();
+        if (vaultEconomy == null) {
+            return false;
+        }
+
+        final Object result = this.invokeVaultMethod(
+                vaultEconomy,
+                "has",
+                new Class<?>[]{OfflinePlayer.class, double.class},
+                player,
+                amount
+        );
+        return Boolean.TRUE.equals(result);
+    }
+
+    public boolean withdrawVault(
+            final @NotNull OfflinePlayer player,
+            final double amount
+    ) {
+        if (amount <= 0D) {
+            return true;
+        }
+
+        final Object vaultEconomy = this.resolveVaultEconomy();
+        return vaultEconomy != null
+                && this.invokeVaultTransaction(vaultEconomy, "withdrawPlayer", player, amount);
+    }
+
+    public boolean depositVault(
+            final @NotNull OfflinePlayer player,
+            final double amount
+    ) {
+        if (amount <= 0D) {
+            return true;
+        }
+
+        final Object vaultEconomy = this.resolveVaultEconomy();
+        return vaultEconomy != null
+                && this.invokeVaultTransaction(vaultEconomy, "depositPlayer", player, amount);
+    }
+
+    public @NotNull String formatVaultCurrency(
+            final double amount
+    ) {
+        final Object vaultEconomy = this.resolveVaultEconomy();
+        if (vaultEconomy == null) {
+            return this.formatAmount(amount);
+        }
+
+        final Object formatted = this.invokeVaultMethod(
+                vaultEconomy,
+                "format",
+                new Class<?>[]{double.class},
+                amount
+        );
+        return formatted instanceof String value ? value : this.formatAmount(amount);
+    }
+
+    private boolean isVaultEconomyInstance(
+            final @Nullable Object candidate
+    ) {
+        if (candidate == null) {
+            return false;
+        }
+
+        try {
+            return Class.forName(VAULT_ECONOMY_CLASS).isInstance(candidate);
+        } catch (Throwable ignored) {
+            return false;
+        }
+    }
+
+    private @Nullable Object invokeVaultMethod(
+            final @NotNull Object vaultEconomy,
+            final @NotNull String methodName,
+            final @NotNull Class<?>[] parameterTypes,
+            final Object... arguments
+    ) {
+        try {
+            return vaultEconomy.getClass()
+                    .getMethod(methodName, parameterTypes)
+                    .invoke(vaultEconomy, arguments);
+        } catch (ReflectiveOperationException exception) {
+            return null;
+        }
+    }
+
+    private boolean invokeVaultTransaction(
+            final @NotNull Object vaultEconomy,
+            final @NotNull String methodName,
+            final @NotNull OfflinePlayer player,
+            final double amount
+    ) {
+        final Object response = this.invokeVaultMethod(
+                vaultEconomy,
+                methodName,
+                new Class<?>[]{OfflinePlayer.class, double.class},
+                player,
+                amount
+        );
+        if (response == null) {
+            return false;
+        }
+
+        try {
+            final Method successMethod = response.getClass().getMethod("transactionSuccess");
+            return Boolean.TRUE.equals(successMethod.invoke(response));
+        } catch (ReflectiveOperationException exception) {
+            return false;
+        }
+    }
+
+    private @NotNull String formatAmount(
+            final double amount
+    ) {
+        return String.format(Locale.US, "%.2f", amount);
     }
 
     public JavaPlugin getPlugin() {

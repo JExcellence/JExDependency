@@ -15,8 +15,6 @@ import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -341,17 +339,16 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         }
 
         if (this.usesVaultCurrency(currencyType)) {
-            final Economy eco = this.rds.get(context).getEco();
-            if (eco == null) {
+            final RDS plugin = this.rds.get(context);
+            if (!plugin.hasVaultEconomy()) {
                 return PaymentResult.failure("feedback.currency_unavailable");
             }
 
-            if (!eco.has(context.getPlayer(), amount)) {
+            if (!plugin.hasVaultFunds(context.getPlayer(), amount)) {
                 return PaymentResult.failure("feedback.insufficient_funds");
             }
 
-            final EconomyResponse response = eco.withdrawPlayer(context.getPlayer(), amount);
-            return response != null && response.transactionSuccess()
+            return plugin.withdrawVault(context.getPlayer(), amount)
                     ? PaymentResult.successful()
                     : PaymentResult.failure("feedback.insufficient_funds");
         }
