@@ -29,7 +29,7 @@ include(":JExTranslate")
 include(":RPlatform")
 
 // Simple plugin modules
-include(":JExGlow")
+//include(":JExGlow")
 
 // JExEconomy with submodules
 include(":JExEconomy")
@@ -67,6 +67,8 @@ include(":JExOneblock:jexoneblock-common")
 include(":JExOneblock:jexoneblock-free")
 include(":JExOneblock:jexoneblock-premium")
 include("RDT")
-
- */
+*/
 include("RDS")
+
+// JExWorkbench with submodules
+include(":JExWorkbench")

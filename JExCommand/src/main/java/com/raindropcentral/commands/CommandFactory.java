@@ -242,10 +242,6 @@ public class CommandFactory {
 
                 if (selectedConstructor != null) {
                     command = (BukkitCommand) selectedConstructor.newInstance(mapSection, secondArg);
-                    this.loadedPlugin.getLogger().info(
-                            "Registered command: " + commandClass.getSimpleName()
-                                    + " with " + secondArg.getClass().getSimpleName()
-                    );
                 } else {
                     this.loadedPlugin.getLogger().log(
                             Level.WARNING,
@@ -333,7 +329,7 @@ public class CommandFactory {
     }
 
     /**
-     * Instantiates a listener class and registers it with Bukkit's {@link org.bukkit.event.PluginManager}.
+     * Instantiates a listener class and registers it with Bukkit's {@link org.bukkit.plugin.PluginManager}.
      * Constructor precedence mirrors command registration but for single-argument constructors:
      * <ol>
      *     <li>Exact match with the context object's class.</li>
@@ -395,10 +391,6 @@ public class CommandFactory {
                 this.loadedPlugin.getServer().getPluginManager().registerEvents(
                         listener,
                         this.loadedPlugin
-                );
-                this.loadedPlugin.getLogger().info(
-                        "Registered listener: " + listenerClass.getSimpleName()
-                                + " with " + constructorArg.getClass().getSimpleName()
                 );
             } else {
                 this.loadedPlugin.getLogger().log(
