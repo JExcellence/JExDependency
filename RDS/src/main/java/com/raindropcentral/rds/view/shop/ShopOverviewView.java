@@ -3,11 +3,13 @@ package com.raindropcentral.rds.view.shop;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -67,6 +69,31 @@ public class ShopOverviewView extends BaseView {
         }
 
         render.slot(2).renderWith(() -> createSummaryItem(shop, player));
+        render.slot(3)
+                .renderWith(() -> createCustomerViewItem(shop, player))
+                .onClick(clickContext -> {
+                    final Shop currentShop = this.getCurrentShop(clickContext);
+                    if (currentShop == null) {
+                        this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
+                                .includePrefix()
+                                .build()
+                                .sendMessage();
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopCustomerView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", currentShop.getShopLocation()
+                            )
+                    );
+                });
+        if (shop.isOwner(player.getUniqueId())) {
+            render.slot(1)
+                    .renderWith(() -> createCloseShopItem(shop, player))
+                    .onClick(this::handleCloseShopClick);
+        }
         if (shop.isOwner(player.getUniqueId()) && player.hasPermission(ADMIN_SHOPS_PERMISSION)) {
             render.slot(0)
                     .renderWith(() -> createAdminToggleItem(shop, player))
@@ -210,6 +237,13 @@ public class ShopOverviewView extends BaseView {
         }
     }
 
+    @Override
+    public void onClick(
+            final @NotNull SlotClickContext click
+    ) {
+        click.setCancelled(true);
+    }
+
     private Shop getCurrentShop(final @NotNull Context context) {
         return this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
     }
@@ -267,6 +301,85 @@ public class ShopOverviewView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createCustomerViewItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.SPYGLASS)
+                .setName(this.i18n("actions.customer_view.name", player).build().component())
+                .setLore(this.i18n("actions.customer_view.lore", player)
+                        .withPlaceholder("item_count", shop.getStoredItemCount())
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private void handleCloseShopClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        final Shop currentShop = this.getCurrentShop(clickContext);
+        if (currentShop == null) {
+            this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!currentShop.isOwner(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (currentShop.getStoredItemCount() > 0) {
+            this.i18n("feedback.close_not_empty", clickContext.getPlayer())
+                    .withPlaceholder("item_count", currentShop.getStoredItemCount())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (currentShop.getBankCurrencyCount() > 0) {
+            this.i18n("feedback.close_bank_not_empty", clickContext.getPlayer())
+                    .withPlaceholder("bank_currency_count", currentShop.getBankCurrencyCount())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        final RDS plugin = this.rds.get(clickContext);
+        final RDSPlayer playerData = this.getOrCreatePlayer(plugin, currentShop.getOwner());
+        if (!currentShop.isAdminShop()) {
+            playerData.removeShop(1);
+            plugin.getPlayerRepository().update(playerData);
+        }
+
+        plugin.getShopRepository().deleteEntity(currentShop);
+        final Location location = currentShop.getShopLocation();
+        if (location.getWorld() != null) {
+            location.getBlock().setType(Material.AIR);
+        }
+
+        clickContext.getPlayer().getInventory().addItem(ShopBlock.getShopBlock(plugin, clickContext.getPlayer()))
+                .forEach((slot, item) -> clickContext.getPlayer().getWorld().dropItem(
+                        clickContext.getPlayer().getLocation().clone().add(0, 0.5, 0),
+                        item
+                ));
+
+        this.i18n("feedback.closed", clickContext.getPlayer())
+                .withPlaceholder("owned_shops", playerData.getShops())
+                .includePrefix()
+                .build()
+                .sendMessage();
+        clickContext.getPlayer().closeInventory();
+    }
+
     private @NotNull ItemStack createFinanceItem(
             final @NotNull Shop shop,
             final @NotNull Player player
@@ -295,6 +408,23 @@ public class ShopOverviewView extends BaseView {
                 .setName(this.i18n("actions." + suffix + ".name", player).build().component())
                 .setLore(this.i18n("actions." + suffix + ".lore", player)
                         .withPlaceholder("item_count", shop.getStoredItemCount())
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createCloseShopItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+                .setName(this.i18n("actions.close.name", player).build().component())
+                .setLore(this.i18n("actions.close.lore", player)
+                        .withPlaceholders(Map.of(
+                                "item_count", shop.getStoredItemCount(),
+                                "bank_currency_count", shop.getBankCurrencyCount()
+                        ))
                         .build()
                         .children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

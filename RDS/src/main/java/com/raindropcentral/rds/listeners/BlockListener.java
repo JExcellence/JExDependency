@@ -25,7 +25,20 @@ public class BlockListener implements Listener {
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
+        if (event == null) {
+            return;
+        }
 
+        final Shop shop = this.rds.getShopRepository().findByLocation(event.getBlock().getLocation());
+        if (shop == null) {
+            return;
+        }
+
+        event.setCancelled(true);
+        new I18n.Builder("block_listener.error.shop_protected", event.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
     }
 
     @EventHandler

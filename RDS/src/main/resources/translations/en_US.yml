@@ -77,6 +77,7 @@ block_listener:
   error:
     invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
     max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
+    shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
 
 shop_overview_ui:
   title: "{owner} Shop - {location}"
@@ -117,12 +118,25 @@ shop_overview_ui:
           - "<gray>Customers can only buy stored amounts.</gray>"
           - "<gray>Stored entries:</gray> <white>{item_count}</white>"
           - "<yellow>Click to enable admin shop mode.</yellow>"
+    close:
+      name: "<red>Close Shop</red>"
+      lore:
+        - "<gray>Remove this shop and return the shop block.</gray>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Tracked bank currencies:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Shop stock must be empty before closing.</yellow>"
     manage:
       name: "<green>Add Shop Items</green>"
       lore:
         - "<gray>Store new items in this shop.</gray>"
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
         - "<yellow>Click to open item input.</yellow>"
+    customer_view:
+      name: "<gold>Open Customer View</gold>"
+      lore:
+        - "<gray>Preview this shop as customers see it.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to browse this shop as a customer.</yellow>"
     edit:
       name: "<aqua>Edit Shop Items</aqua>"
       lore:
@@ -146,6 +160,9 @@ shop_overview_ui:
     admin_enabled: "<green>This shop is now an admin shop with infinite customer inventory. Counted shops: {owned_shops}.</green>"
     admin_disabled: "<yellow>This shop is now a normal player shop with finite customer inventory. Counted shops: {owned_shops}.</yellow>"
     admin_disable_limit_reached: "<red>You cannot switch this admin shop back to a player shop because your shop limit of {max_shops} is already reached. Counted shops: {owned_shops}.</red>"
+    close_not_empty: "<red>You can only close a shop after removing all stored items. Remaining entries: {item_count}.</red>"
+    close_bank_not_empty: "<red>Withdraw your shop bank before closing this shop. Remaining tracked currencies: {bank_currency_count}.</red>"
+    closed: "<green>Closed the shop and returned the shop block. Counted shops: {owned_shops}.</green>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:
@@ -210,15 +227,20 @@ shop_edit_ui:
       - "<gray>Owner:</gray> <white>{owner}</white>"
       - "<gray>Location:</gray> <white>{location}</white>"
       - "<gray>Stored entries:</gray> <white>{stored_count}</white>"
-      - "<yellow>Click an item below to edit its currency and value.</yellow>"
+      - "<yellow>Left click an item to edit pricing.</yellow>"
+      - "<yellow>Right click an item to remove it from the shop.</yellow>"
   entry:
     lore:
       - "<gray>Stored amount:</gray> <white>{amount}</white>"
       - "<gray>Item type:</gray> <white>{item_type}</white>"
       - "<gray>Currency type:</gray> <white>{currency_type}</white>"
       - "<gray>Value:</gray> <white>{value}</white>"
-      - "<yellow>Click to edit this shop item.</yellow>"
+      - "<yellow>Left click to edit this shop item.</yellow>"
+      - "<yellow>Right click to remove it from the shop.</yellow>"
   feedback:
+    not_owner: "<red>You do not own this shop.</red>"
+    removed: "<green>Removed {amount}x {item_type} from the shop. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
+    item_missing: "<red>That shop item could not be found.</red>"
     locked:
       name: "<red>Owner Access Only</red>"
       lore:
@@ -227,6 +249,7 @@ shop_edit_ui:
       name: "<red>Shop Not Found</red>"
       lore:
         - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
 
 shop_item_edit_ui:
   title: "Edit {item_type}"

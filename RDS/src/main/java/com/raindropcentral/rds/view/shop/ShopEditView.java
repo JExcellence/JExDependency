@@ -10,6 +10,7 @@ import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
@@ -21,11 +22,13 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
-public class ShopEditView extends APaginatedView<ShopItem> {
+public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry> {
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
@@ -65,7 +68,7 @@ public class ShopEditView extends APaginatedView<ShopItem> {
     }
 
     @Override
-    protected CompletableFuture<List<ShopItem>> getAsyncPaginationSource(
+    protected CompletableFuture<List<EditableShopEntry>> getAsyncPaginationSource(
             final @NotNull Context context
     ) {
         final Shop shop = this.getCurrentShop(context);
@@ -73,10 +76,12 @@ public class ShopEditView extends APaginatedView<ShopItem> {
             return CompletableFuture.completedFuture(List.of());
         }
 
-        final List<ShopItem> items = new ArrayList<>();
-        for (AbstractItem item : shop.getItems()) {
+        final List<EditableShopEntry> items = new ArrayList<>();
+        final List<AbstractItem> shopItems = shop.getItems();
+        for (int index = 0; index < shopItems.size(); index++) {
+            final AbstractItem item = shopItems.get(index);
             if (item instanceof ShopItem shopItem) {
-                items.add(shopItem);
+                items.add(new EditableShopEntry(index, shopItem, shopItem.getEntryId()));
             }
         }
 
@@ -88,24 +93,17 @@ public class ShopEditView extends APaginatedView<ShopItem> {
             final @NotNull Context context,
             final @NotNull BukkitItemComponentBuilder builder,
             final int index,
-            final @NotNull ShopItem entry
+            final @NotNull EditableShopEntry entry
     ) {
         final Player player = context.getPlayer();
-        final ItemStack displayItem = this.createDisplayItem(entry);
+        final ItemStack displayItem = this.createDisplayItem(entry.item());
 
         builder.withItem(
                 UnifiedBuilderFactory.item(displayItem)
-                        .setLore(this.buildEntryLore(player, entry, displayItem))
+                        .setLore(this.buildEntryLore(player, entry.item(), displayItem))
                         .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                         .build()
-        ).onClick(clickContext -> clickContext.openForPlayer(
-                ShopItemEditView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext),
-                        "shopItem", entry
-                )
-        ));
+        ).onClick(clickContext -> this.handleEntryClick(clickContext, entry));
     }
 
     @Override
@@ -133,6 +131,100 @@ public class ShopEditView extends APaginatedView<ShopItem> {
 
     private Shop getCurrentShop(final @NotNull Context context) {
         return this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+    }
+
+    private void handleEntryClick(
+            final @NotNull SlotClickContext clickContext,
+            final @NotNull EditableShopEntry entry
+    ) {
+        if (clickContext.isRightClick()) {
+            this.handleRemoveClick(clickContext, entry);
+            return;
+        }
+
+        clickContext.openForPlayer(
+                ShopItemEditView.class,
+                Map.of(
+                        "plugin", this.rds.get(clickContext),
+                        "shopLocation", this.shopLocation.get(clickContext),
+                        "shopItem", entry.item()
+                )
+        );
+    }
+
+    private void handleRemoveClick(
+            final @NotNull SlotClickContext clickContext,
+            final @NotNull EditableShopEntry entry
+    ) {
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            this.openFreshView(clickContext);
+            return;
+        }
+
+        if (!shop.isOwner(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            this.openFreshView(clickContext);
+            return;
+        }
+
+        final List<AbstractItem> items = new ArrayList<>(shop.getItems());
+        final int removalIndex = this.findRemovalIndex(items, entry);
+        if (removalIndex < 0 || removalIndex >= items.size() || !(items.get(removalIndex) instanceof ShopItem removedItem)) {
+            this.i18n("feedback.item_missing", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            this.openFreshView(clickContext);
+            return;
+        }
+
+        items.remove(removalIndex);
+        shop.setItems(items);
+        this.rds.get(clickContext).getShopRepository().update(shop);
+        this.grantItem(clickContext.getPlayer(), removedItem);
+
+        this.i18n("feedback.removed", clickContext.getPlayer())
+                .withPlaceholders(Map.of(
+                        "amount", removedItem.getAmount(),
+                        "item_type", removedItem.getItem().getType().name(),
+                        "currency_type", removedItem.getCurrencyType(),
+                        "value", removedItem.getValue(),
+                        "stored_count", shop.getStoredItemCount()
+                ))
+                .includePrefix()
+                .build()
+                .sendMessage();
+
+        this.openFreshView(clickContext);
+    }
+
+    private int findRemovalIndex(
+            final @NotNull List<AbstractItem> items,
+            final @NotNull EditableShopEntry entry
+    ) {
+        if (entry.originalIndex() >= 0 && entry.originalIndex() < items.size()) {
+            final AbstractItem indexed = items.get(entry.originalIndex());
+            if (indexed instanceof ShopItem shopItem && shopItem.getEntryId().equals(entry.entryId())) {
+                return entry.originalIndex();
+            }
+        }
+
+        for (int index = 0; index < items.size(); index++) {
+            final AbstractItem candidate = items.get(index);
+            if (candidate instanceof ShopItem shopItem && shopItem.getEntryId().equals(entry.entryId())) {
+                return index;
+            }
+        }
+
+        return -1;
     }
 
     private @NotNull ItemStack createDisplayItem(
@@ -165,6 +257,49 @@ public class ShopEditView extends APaginatedView<ShopItem> {
         }
 
         return lore;
+    }
+
+    private void grantItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        int remaining = item.getAmount();
+        final ItemStack template = item.getItem();
+        final int maxStack = template.getMaxStackSize();
+        final List<ItemStack> stacks = new ArrayList<>();
+
+        while (remaining > 0) {
+            final int stackAmount = Math.min(remaining, maxStack);
+            final ItemStack stack = template.clone();
+            stack.setAmount(stackAmount);
+            stacks.add(stack);
+            remaining -= stackAmount;
+        }
+
+        this.giveOrDrop(player, stacks);
+    }
+
+    private void giveOrDrop(
+            final @NotNull Player player,
+            final @NotNull Collection<ItemStack> stacks
+    ) {
+        player.getInventory().addItem(stacks.toArray(new ItemStack[0]))
+                .forEach((slot, item) -> player.getWorld().dropItem(
+                        player.getLocation().clone().add(0, 0.5, 0),
+                        item
+                ));
+    }
+
+    private void openFreshView(
+            final @NotNull Context context
+    ) {
+        context.openForPlayer(
+                ShopEditView.class,
+                Map.of(
+                        "plugin", this.rds.get(context),
+                        "shopLocation", this.shopLocation.get(context)
+                )
+        );
     }
 
     private @NotNull ItemStack createSummaryItem(
@@ -215,5 +350,12 @@ public class ShopEditView extends APaginatedView<ShopItem> {
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
         final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
         return ownerName == null ? shop.getOwner().toString() : ownerName;
+    }
+
+    public record EditableShopEntry(
+            int originalIndex,
+            @NotNull ShopItem item,
+            @NotNull UUID entryId
+    ) {
     }
 }
