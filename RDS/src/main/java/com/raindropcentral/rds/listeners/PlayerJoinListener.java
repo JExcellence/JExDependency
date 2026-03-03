@@ -12,15 +12,35 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Map;
 
+/**
+ * Player join listener that provisions persistent RDS player rows and restores join-time UI state.
+ *
+ * <p>When a player already has a persisted profile, the listener restores the saved shop sidebar
+ * scoreboard type and optionally sends the configured tax reminder.</p>
+ *
+ * @author RaindropCentral
+ * @since 5.0.0
+ * @version 5.0.0
+ */
 @SuppressWarnings("unused")
 public class PlayerJoinListener implements Listener {
 
     private final RDS rds;
 
+    /**
+     * Creates a listener bound to the active plugin instance.
+     *
+     * @param rds active plugin instance
+     */
     public PlayerJoinListener(RDS rds) {
         this.rds = rds;
     }
 
+    /**
+     * Creates a new persisted player row when needed and restores saved sidebar state on join.
+     *
+     * @param event Bukkit player join event
+     */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         if (event == null) return;
@@ -31,6 +51,16 @@ public class PlayerJoinListener implements Listener {
         if (rPlayer == null) {
             var newPlayer = new RDSPlayer(player.getUniqueId());
             this.rds.getPlayerRepository().createAsync(newPlayer);
+        } else {
+            rPlayer.getShopSidebarScoreboardType().ifPresent(scoreboardType -> {
+                if ("ledger".equalsIgnoreCase(scoreboardType)) {
+                    this.rds.getShopSidebarScoreboardService().enableLedger(player);
+                    return;
+                }
+                if ("stock".equalsIgnoreCase(scoreboardType)) {
+                    this.rds.getShopSidebarScoreboardService().enableStock(player);
+                }
+            });
         }
 
         if (!this.rds.getDefaultConfig().getTaxes().shouldNotifyOnJoin()) {
@@ -56,6 +86,11 @@ public class PlayerJoinListener implements Listener {
                 .sendMessage();
     }
 
+    /**
+     * Clears runtime-only player UI state when a player disconnects.
+     *
+     * @param event Bukkit player quit event
+     */
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (event == null) return;

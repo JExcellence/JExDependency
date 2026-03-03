@@ -29,15 +29,15 @@ prs:
 
 scoreboard_sidebar:
   ledger:
-    title: "<gradient:#f59e0b:#fbbf24>◆ Ledger ◆</gradient>"
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Ledger ◆</gradient>"
     transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
     bank_header: "<gold>$ Bank Totals</gold>"
     bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
     bank_empty: "<red>No banked funds</red>"
   stock:
-    title: "<gradient:#38bdf8:#60a5fa>◆ Stock ◆</gradient>"
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Stock ◆</gradient>"
     location: "<white>{location}</white>"
-    amount: "<gray>Stock:</gray> <white>{stock_amount}</white>"
+    amount: "<gray>Stock:</gray> <white>{current_stock}/{total_stock}</white>"
     empty: "<red>No player shops</red>"
 
 shop_boss_bar:

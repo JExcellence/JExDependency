@@ -112,6 +112,7 @@ public class PlayerJoinListener implements Listener {
         final Player player = event.getPlayer();
         final RDRPlayer existingPlayer = repository.findByPlayer(player.getUniqueId());
         if (existingPlayer != null) {
+            this.restoreSidebarScoreboard(player, existingPlayer);
             return;
         }
 
@@ -142,6 +143,21 @@ public class PlayerJoinListener implements Listener {
             return;
         }
         scoreboardService.disable(event.getPlayer());
+    }
+
+    private void restoreSidebarScoreboard(
+        final @NotNull Player player,
+        final @NotNull RDRPlayer playerData
+    ) {
+        if (!playerData.isSidebarScoreboardEnabled()) {
+            return;
+        }
+
+        final StorageSidebarScoreboardService scoreboardService = this.scoreboardServiceSupplier.get();
+        if (scoreboardService == null) {
+            return;
+        }
+        scoreboardService.enable(player);
     }
 
     private @NotNull String buildDefaultStorageKey(final int index) {

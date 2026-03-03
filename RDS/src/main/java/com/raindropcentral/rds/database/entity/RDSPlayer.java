@@ -10,6 +10,7 @@ package com.raindropcentral.rds.database.entity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,7 +35,8 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
  * Persistent player extension for RDS shop-block ownership and shop-store progress.
  *
  * <p>Each player row tracks owned shop-block progression, whether the boss bar is enabled, and
- * normalized progress rows used for partial shop-store requirement completion.</p>
+ * which sidebar scoreboard type should be restored on join. It also stores normalized progress rows
+ * used for partial shop-store requirement completion.</p>
  *
  * @author RaindropCentral
  * @since 5.0.0
@@ -59,6 +61,9 @@ public class RDSPlayer extends BaseEntity {
     @Column(name = "shop_bar_enabled", nullable = false)
     private boolean shop_bar_enabled;
 
+    @Column(name = "shop_sidebar_scoreboard_type")
+    private String shop_sidebar_scoreboard_type;
+
     @OneToMany(
         mappedBy = "player",
         fetch = FetchType.EAGER,
@@ -77,6 +82,7 @@ public class RDSPlayer extends BaseEntity {
         this.player_uuid = Objects.requireNonNull(player_uuid, "player_uuid cannot be null");
         this.shops = 0;
         this.shop_bar_enabled = false;
+        this.shop_sidebar_scoreboard_type = null;
     }
 
     /**
@@ -112,6 +118,28 @@ public class RDSPlayer extends BaseEntity {
     }
 
     /**
+     * Returns the saved sidebar scoreboard type for the player.
+     *
+     * <p>Legacy rows created before scoreboard persistence may not have a stored value.</p>
+     *
+     * @return saved scoreboard type, or an empty optional when no scoreboard should be restored
+     */
+    public @NotNull Optional<String> getShopSidebarScoreboardType() {
+        return Optional.ofNullable(this.shop_sidebar_scoreboard_type)
+            .map(String::trim)
+            .filter(value -> !value.isEmpty());
+    }
+
+    /**
+     * Returns whether the player has a sidebar scoreboard preference saved.
+     *
+     * @return {@code true} when a scoreboard type should be restored on join
+     */
+    public boolean hasShopSidebarScoreboard() {
+        return this.getShopSidebarScoreboardType().isPresent();
+    }
+
+    /**
      * Toggles the shop boss bar state.
      *
      * @return the new enabled state
@@ -128,6 +156,22 @@ public class RDSPlayer extends BaseEntity {
      */
     public void setShopBarEnabled(final boolean enabled) {
         this.shop_bar_enabled = enabled;
+    }
+
+    /**
+     * Replaces the saved sidebar scoreboard type.
+     *
+     * @param scoreboardType replacement scoreboard type, or {@code null} to clear the preference
+     */
+    public void setShopSidebarScoreboardType(final @Nullable String scoreboardType) {
+        this.shop_sidebar_scoreboard_type = normalizeScoreboardType(scoreboardType);
+    }
+
+    /**
+     * Clears the saved sidebar scoreboard preference.
+     */
+    public void clearShopSidebarScoreboardType() {
+        this.shop_sidebar_scoreboard_type = null;
     }
 
     /**
@@ -330,5 +374,14 @@ public class RDSPlayer extends BaseEntity {
             throw new IllegalArgumentException("progressKey cannot be blank");
         }
         return normalizedProgressKey;
+    }
+
+    private static @Nullable String normalizeScoreboardType(final @Nullable String scoreboardType) {
+        if (scoreboardType == null) {
+            return null;
+        }
+
+        final String normalizedScoreboardType = scoreboardType.trim().toLowerCase(Locale.ROOT);
+        return normalizedScoreboardType.isEmpty() ? null : normalizedScoreboardType;
     }
 }

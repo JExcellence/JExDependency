@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
+import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -25,6 +26,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 class PlayerJoinListenerTest {
 
@@ -64,6 +66,25 @@ class PlayerJoinListenerTest {
         new PlayerJoinListener(() -> repository, () -> config, TEST_LOGGER).onPlayerJoin(event);
 
         assertNull(repository.createdPlayer);
+        assertEquals(0, repository.createCalls);
+    }
+
+    @Test
+    void restoresSidebarScoreboardWhenExistingProfileHasPreferenceEnabled() {
+        final UUID uniqueId = UUID.randomUUID();
+        final TrackingPlayerProfileRepository repository = new TrackingPlayerProfileRepository();
+        final RDRPlayer existingPlayer = new RDRPlayer(uniqueId);
+        existingPlayer.setSidebarScoreboardEnabled(true);
+        repository.existingPlayer = existingPlayer;
+
+        final ConfigSection config = this.createConfig(2);
+        final Player player = this.createPlayer(uniqueId);
+        final PlayerJoinEvent event = new PlayerJoinEvent(player, Component.empty());
+        final TrackingStorageSidebarScoreboardService scoreboardService = new TrackingStorageSidebarScoreboardService();
+
+        new PlayerJoinListener(() -> repository, () -> config, () -> scoreboardService, TEST_LOGGER).onPlayerJoin(event);
+
+        assertSame(player, scoreboardService.enabledPlayer);
         assertEquals(0, repository.createCalls);
     }
 
@@ -149,6 +170,20 @@ class PlayerJoinListenerTest {
             this.createdPlayer = player;
             this.createCalls++;
             return CompletableFuture.completedFuture(player);
+        }
+    }
+
+    private static final class TrackingStorageSidebarScoreboardService extends StorageSidebarScoreboardService {
+
+        private Player enabledPlayer;
+
+        private TrackingStorageSidebarScoreboardService() {
+            super(null);
+        }
+
+        @Override
+        public void enable(final Player player) {
+            this.enabledPlayer = player;
         }
     }
 }

@@ -16,6 +16,7 @@ import java.util.Map;
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StorageViewLauncher;
@@ -177,19 +178,27 @@ public class PRR extends PlayerCommand {
             return;
         }
 
+        if (this.rdr.getPlayerRepository() == null) {
+            return;
+        }
+
         final var scoreboardService = this.rdr.getStorageSidebarScoreboardService();
         if (scoreboardService == null) {
             return;
         }
 
+        final RDRPlayer playerData = this.getOrCreatePlayerData(player);
         final String messageKey;
         if (scoreboardService.isActive(player)) {
             scoreboardService.disable(player);
+            playerData.setSidebarScoreboardEnabled(false);
             messageKey = "storage.message.scoreboard_disabled";
         } else {
             scoreboardService.enable(player);
+            playerData.setSidebarScoreboardEnabled(true);
             messageKey = "storage.message.scoreboard_enabled";
         }
+        this.rdr.getPlayerRepository().update(playerData);
 
         new I18n.Builder(messageKey, player)
             .build()
@@ -272,6 +281,19 @@ public class PRR extends PlayerCommand {
         new I18n.Builder("storage.message.scoreboard_syntax", player)
             .build()
             .sendMessage();
+    }
+
+    private @NotNull RDRPlayer getOrCreatePlayerData(
+        final @NotNull Player player
+    ) {
+        final RDRPlayer existingPlayer = this.rdr.getPlayerRepository().findByPlayer(player.getUniqueId());
+        if (existingPlayer != null) {
+            return existingPlayer;
+        }
+
+        final RDRPlayer newPlayer = new RDRPlayer(player.getUniqueId());
+        this.rdr.getPlayerRepository().create(newPlayer);
+        return newPlayer;
     }
 
     private int resolveMaxHotkeys() {

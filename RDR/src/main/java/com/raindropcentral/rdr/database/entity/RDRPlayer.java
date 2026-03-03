@@ -35,8 +35,9 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
  *
  * <p>Each player row owns zero or more {@link RStorage} records representing individual vaults or
  * other inventory-backed containers, plus normalized {@link RStoreRequirementProgress} rows used to
- * persist partial progress for storage-store purchases. The relationships cascade persistence
- * operations so player-level updates keep child rows in sync.</p>
+ * persist partial progress for storage-store purchases. The entity also stores whether the player
+ * wants the storage sidebar scoreboard restored automatically on login. The relationships cascade
+ * persistence operations so player-level updates keep child rows in sync.</p>
  *
  * @author RaindropCentral
  * @since 5.0.0
@@ -49,6 +50,9 @@ public class RDRPlayer extends BaseEntity {
     @Column(name = "player_uuid", unique = true, nullable = false)
     @Convert(converter = UUIDConverter.class)
     private UUID playerUuid;
+
+    @Column(name = "sidebar_scoreboard_enabled")
+    private Boolean sidebarScoreboardEnabled;
 
     @OneToMany(
         mappedBy = "player",
@@ -76,6 +80,7 @@ public class RDRPlayer extends BaseEntity {
      */
     public RDRPlayer(final @NotNull UUID playerUuid) {
         this.playerUuid = Objects.requireNonNull(playerUuid, "playerUuid cannot be null");
+        this.sidebarScoreboardEnabled = false;
     }
 
     /**
@@ -90,6 +95,37 @@ public class RDRPlayer extends BaseEntity {
      */
     public @NotNull UUID getIdentifier() {
         return this.playerUuid;
+    }
+
+    /**
+     * Returns whether the player has the storage sidebar scoreboard enabled.
+     *
+     * <p>The value may be {@code null} for legacy rows created before the preference existed.</p>
+     *
+     * @return {@code true} when the scoreboard should be restored automatically
+     */
+    public boolean isSidebarScoreboardEnabled() {
+        return Boolean.TRUE.equals(this.sidebarScoreboardEnabled);
+    }
+
+    /**
+     * Toggles the persisted storage sidebar scoreboard preference.
+     *
+     * @return the new enabled state after toggling
+     */
+    public boolean toggleSidebarScoreboard() {
+        final boolean enabled = !this.isSidebarScoreboardEnabled();
+        this.sidebarScoreboardEnabled = enabled;
+        return enabled;
+    }
+
+    /**
+     * Replaces the persisted storage sidebar scoreboard preference.
+     *
+     * @param enabled replacement enabled state
+     */
+    public void setSidebarScoreboardEnabled(final boolean enabled) {
+        this.sidebarScoreboardEnabled = enabled;
     }
 
     /**

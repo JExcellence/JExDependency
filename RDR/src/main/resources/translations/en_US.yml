@@ -1,7 +1,7 @@
 prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
-  title: "<gradient:#f59e0b:#fbbf24>[#] Storage Stats</gradient>"
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Storage Stats</gradient>"
   items: "<gray>Total items:</gray> <white>{total_items}</white>"
   available_slots: "<gray>Available slots:</gray> <white>{available_slots}</white>"
   storages_obtained: "<gray>Storages obtained:</gray> <white>{owned_storages}</white>"

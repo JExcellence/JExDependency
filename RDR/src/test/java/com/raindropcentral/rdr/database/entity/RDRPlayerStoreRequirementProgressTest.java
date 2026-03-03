@@ -12,6 +12,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RDRPlayerStoreRequirementProgressTest {
@@ -38,5 +39,18 @@ class RDRPlayerStoreRequirementProgressTest {
         assertEquals(0.0D, player.getStoreCurrencyProgress("2:coins_purchase"));
         assertEquals(10.0D, player.getStoreCurrencyProgress("3:vault_purchase"));
         assertTrue(player.getStoreCurrencyProgress().containsKey("3:vault_purchase"));
+    }
+
+    @Test
+    void togglesSidebarScoreboardPreference() {
+        final RDRPlayer player = new RDRPlayer(UUID.randomUUID());
+
+        assertFalse(player.isSidebarScoreboardEnabled());
+        assertTrue(player.toggleSidebarScoreboard());
+        assertTrue(player.isSidebarScoreboardEnabled());
+
+        player.setSidebarScoreboardEnabled(false);
+
+        assertFalse(player.isSidebarScoreboardEnabled());
     }
 }

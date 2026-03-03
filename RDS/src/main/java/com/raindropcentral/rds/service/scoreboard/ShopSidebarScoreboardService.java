@@ -10,10 +10,13 @@ package com.raindropcentral.rds.service.scoreboard;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Bank;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.entity.ShopLedgerEntry;
+import com.raindropcentral.rds.database.entity.ShopLedgerType;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import de.jexcellence.jextranslate.i18n.I18n;
+import io.papermc.paper.scoreboard.numbers.NumberFormat;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
@@ -22,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
@@ -279,14 +283,19 @@ public class ShopSidebarScoreboardService {
                 continue;
             }
 
+            final int currentStock = this.countCurrentStock(shop);
+            final int totalStock = currentStock + this.countSoldStock(shop);
             stockEntries.add(new ShopStockEntry(
                     location,
-                    this.countCurrentStock(shop)
+                    currentStock,
+                    totalStock
             ));
         }
 
         stockEntries.sort(Comparator
-                .comparingInt(ShopStockEntry::stockAmount)
+                .comparingInt(ShopStockEntry::missingStockAmount)
+                .reversed()
+                .thenComparingInt(ShopStockEntry::currentStockAmount)
                 .thenComparing(entry -> this.formatLocation(entry.location()), String.CASE_INSENSITIVE_ORDER));
 
         final List<String> lines = new ArrayList<>();
@@ -307,7 +316,10 @@ public class ShopSidebarScoreboardService {
             lines.add(this.i18nLine(
                     "scoreboard_sidebar.stock.amount",
                     player,
-                    Map.of("stock_amount", entry.stockAmount())
+                    Map.of(
+                            "current_stock", entry.currentStockAmount(),
+                            "total_stock", entry.totalStockAmount()
+                    )
             ));
         }
 
@@ -344,6 +356,25 @@ public class ShopSidebarScoreboardService {
         return totalStock;
     }
 
+    private int countSoldStock(
+            final @NotNull Shop shop
+    ) {
+        int soldStock = 0;
+        for (final ShopLedgerEntry ledgerEntry : shop.getLedgerEntries()) {
+            if (ledgerEntry.getEntryType() != ShopLedgerType.PURCHASE) {
+                continue;
+            }
+
+            final Integer itemAmount = ledgerEntry.getItemAmount();
+            if (itemAmount == null || itemAmount <= 0) {
+                continue;
+            }
+
+            soldStock += itemAmount;
+        }
+        return soldStock;
+    }
+
     private @NotNull Scoreboard createSidebarScoreboard() {
         final ScoreboardManager scoreboardManager = Bukkit.getScoreboardManager();
         if (scoreboardManager == null) {
@@ -353,6 +384,7 @@ public class ShopSidebarScoreboardService {
         final Scoreboard scoreboard = scoreboardManager.getNewScoreboard();
         final Objective objective = scoreboard.registerNewObjective(OBJECTIVE_NAME, Criteria.DUMMY, Component.empty());
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective.numberFormat(NumberFormat.blank());
 
         for (int index = 0; index < LINE_ENTRIES.size(); index++) {
             final Team team = scoreboard.registerNewTeam(this.getTeamName(index));
@@ -374,6 +406,7 @@ public class ShopSidebarScoreboardService {
         }
 
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective.numberFormat(NumberFormat.blank());
         objective.displayName(
                 new I18n.Builder(titleKey, player)
                         .build()
@@ -389,7 +422,9 @@ public class ShopSidebarScoreboardService {
             final Team team = this.getOrCreateTeam(scoreboard, index, entry);
             if (index < lines.size()) {
                 this.applyLine(team, lines.get(index));
-                objective.getScore(entry).setScore(lines.size() - index);
+                final Score score = objective.getScore(entry);
+                score.numberFormat(NumberFormat.blank());
+                score.setScore(lines.size() - index);
                 continue;
             }
 
@@ -564,8 +599,12 @@ public class ShopSidebarScoreboardService {
 
     private record ShopStockEntry(
             @NotNull Location location,
-            int stockAmount
+            int currentStockAmount,
+            int totalStockAmount
     ) {
+        private int missingStockAmount() {
+            return Math.max(0, this.totalStockAmount - this.currentStockAmount);
+        }
     }
 
     private enum SidebarType {

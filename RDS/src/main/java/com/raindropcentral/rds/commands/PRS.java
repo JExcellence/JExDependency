@@ -28,7 +28,16 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-
+/**
+ * Primary player command for the RDS shop plugin.
+ *
+ * <p>The command exposes shop overview information, shop-bar and scoreboard toggles,
+ * shop-block grants, and player-facing shop search/store entry points.</p>
+ *
+ * @author RaindropCentral
+ * @since 5.0.0
+ * @version 5.0.0
+ */
 @Command
 @SuppressWarnings("unused")
 public class PRS extends PlayerCommand {
@@ -38,6 +47,12 @@ public class PRS extends PlayerCommand {
 
     private final RDS rds;
 
+    /**
+     * Creates the player command handler.
+     *
+     * @param commandSection configured command section for {@code /prs}
+     * @param rds active plugin instance
+     */
     public PRS(ACommandSection commandSection, RDS rds){
         super(commandSection);
         this.rds = rds;
@@ -163,9 +178,12 @@ public class PRS extends PlayerCommand {
 
         final String activeType = this.rds.getShopSidebarScoreboardService().getActiveTypeName(player);
         final String scoreboardTypeLabel = this.getScoreboardTypeLabel(player, scoreboardType);
+        final RDSPlayer playerData = this.getOrCreatePlayer(player);
 
         if (scoreboardType.equalsIgnoreCase(activeType)) {
             this.rds.getShopSidebarScoreboardService().disable(player);
+            playerData.clearShopSidebarScoreboardType();
+            this.rds.getPlayerRepository().update(playerData);
             new I18n.Builder("prs.scoreboard.disabled", player)
                     .withPlaceholder("scoreboard_type", scoreboardTypeLabel)
                     .includePrefix()
@@ -179,6 +197,8 @@ public class PRS extends PlayerCommand {
         } else {
             this.rds.getShopSidebarScoreboardService().enableStock(player);
         }
+        playerData.setShopSidebarScoreboardType(scoreboardType);
+        this.rds.getPlayerRepository().update(playerData);
 
         final String messageKey = activeType == null
                 ? "prs.scoreboard.enabled"
