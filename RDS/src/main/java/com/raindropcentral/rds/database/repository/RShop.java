@@ -35,8 +35,25 @@ public class RShop extends CachedRepository<Shop, Long, Location> {
         this.emf = entityManagerFactory;
     }
 
-    public Shop findByLocation(Location location) {
-        return findByAttributes(Map.of("shop_location", location)).orElse(null);
+    /**
+     * Resolves a shop by either chest block location.
+     *
+     * @param location block location to search for
+     * @return the matching shop, or {@code null} when no shop occupies that location
+     */
+    public Shop findByLocation(
+            final Location location
+    ) {
+        if (location == null) {
+            return null;
+        }
+
+        final Shop primaryShop = findByAttributes(Map.of("shop_location", location)).orElse(null);
+        if (primaryShop != null) {
+            return primaryShop;
+        }
+
+        return findByAttributes(Map.of("secondary_shop_location", location)).orElse(null);
     }
 
     public @NotNull List<Shop> findAllShops() {

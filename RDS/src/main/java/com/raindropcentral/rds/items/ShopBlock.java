@@ -31,23 +31,31 @@ public class ShopBlock {
     }
 
     public static boolean equals(RDS plugin, @NonNull ItemStack item){
-        ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
+        if (item == null || item.getType() != Material.CHEST) {
+            return false;
+        }
+
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return false;
+        }
+
+        final PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
         return persistentDataContainer.has(
                 new NamespacedKey(plugin, "owner"),
-                PersistentDataType.STRING)
-                &&
-                persistentDataContainer.has(
-                        new NamespacedKey(plugin, "owner"),
-                        PersistentDataType.STRING
-                );
+                PersistentDataType.STRING
+        );
     }
 
     public static UUID getOwner(RDS plugin, ItemStack item) {
         if (item == null) return null;
 
-        ItemMeta meta = item.getItemMeta();
-        String s = meta.getPersistentDataContainer().get(
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) {
+            return null;
+        }
+
+        final String s = meta.getPersistentDataContainer().get(
                 new NamespacedKey(plugin, "owner"),
                 PersistentDataType.STRING
         );

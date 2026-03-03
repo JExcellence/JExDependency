@@ -28,6 +28,12 @@ import java.util.UUID;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Persists a single logical shop and its chest anchor locations.
+ *
+ * <p>A shop may occupy one chest block or two adjacent chest blocks when upgraded to a
+ * double chest. Both blocks still represent the same logical shop entity.</p>
+ */
 @Entity
 @Table(name = "shops")
 @SuppressWarnings({
@@ -46,6 +52,10 @@ public class Shop extends BaseEntity {
     @Column(name = "shop_location", unique = false, nullable = true)
     @Convert(converter = LocationConverter.class)
     private Location shop_location;
+
+    @Column(name = "secondary_shop_location", unique = false, nullable = true)
+    @Convert(converter = LocationConverter.class)
+    private Location secondary_shop_location;
 
     @OneToMany(
             mappedBy = "shop",
@@ -85,6 +95,7 @@ public class Shop extends BaseEntity {
     public Shop(UUID owner_uuid, Location shop_location) {
         this.owner_uuid = owner_uuid;
         this.shop_location = shop_location;
+        this.secondary_shop_location = null;
         this.bankEntries = new ArrayList<>();
         this.ledgerEntries = new ArrayList<>();
         setItems(List.of());
@@ -96,6 +107,57 @@ public class Shop extends BaseEntity {
 
     public Location getShopLocation() {
         return this.shop_location;
+    }
+
+    /**
+     * Returns the optional second chest location used when this shop is a double chest.
+     *
+     * @return the second chest block location, or {@code null} when this shop is still single-wide
+     */
+    public @Nullable Location getSecondaryShopLocation() {
+        return this.secondary_shop_location;
+    }
+
+    /**
+     * Updates the optional second chest location for this shop.
+     *
+     * @param secondaryShopLocation the second chest block location, or {@code null} to clear it
+     */
+    public void setSecondaryShopLocation(
+            final @Nullable Location secondaryShopLocation
+    ) {
+        this.secondary_shop_location = secondaryShopLocation;
+    }
+
+    /**
+     * Indicates whether this shop currently spans two chest blocks.
+     *
+     * @return {@code true} when a secondary chest location is present
+     */
+    public boolean isDoubleChest() {
+        return this.secondary_shop_location != null;
+    }
+
+    /**
+     * Checks whether the provided block location belongs to this shop.
+     *
+     * @param location block location to test
+     * @return {@code true} when the location matches either chest half of this shop
+     */
+    public boolean occupiesLocation(
+            final @Nullable Location location
+    ) {
+        return Objects.equals(this.shop_location, location)
+                || Objects.equals(this.secondary_shop_location, location);
+    }
+
+    /**
+     * Returns the number of placed shop blocks represented by this shop.
+     *
+     * @return {@code 2} for a double chest shop, otherwise {@code 1}
+     */
+    public int getShopBlockCount() {
+        return this.isDoubleChest() ? 2 : 1;
     }
 
     public double getBank() {

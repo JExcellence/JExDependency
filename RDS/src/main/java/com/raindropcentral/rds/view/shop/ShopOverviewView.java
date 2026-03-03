@@ -421,23 +421,38 @@ public class ShopOverviewView extends BaseView {
         }
 
         plugin.getShopRepository().deleteEntity(currentShop);
-        final Location location = currentShop.getShopLocation();
-        if (location.getWorld() != null) {
-            location.getBlock().setType(Material.AIR);
+        this.clearShopBlock(currentShop.getShopLocation());
+        this.clearShopBlock(currentShop.getSecondaryShopLocation());
+
+        final int returnedBlocks = currentShop.getShopBlockCount();
+        final ItemStack[] returnedItems = new ItemStack[returnedBlocks];
+        for (int index = 0; index < returnedBlocks; index++) {
+            returnedItems[index] = ShopBlock.getShopBlock(plugin, clickContext.getPlayer());
         }
 
-        clickContext.getPlayer().getInventory().addItem(ShopBlock.getShopBlock(plugin, clickContext.getPlayer()))
+        clickContext.getPlayer().getInventory().addItem(returnedItems)
                 .forEach((slot, item) -> clickContext.getPlayer().getWorld().dropItem(
                         clickContext.getPlayer().getLocation().clone().add(0, 0.5, 0),
                         item
                 ));
 
         this.i18n("feedback.closed", clickContext.getPlayer())
-                .withPlaceholder("owned_shops", playerData.getShops())
+                .withPlaceholders(Map.of(
+                        "owned_shops", playerData.getShops(),
+                        "returned_blocks", returnedBlocks
+                ))
                 .includePrefix()
                 .build()
                 .sendMessage();
         clickContext.getPlayer().closeInventory();
+    }
+
+    private void clearShopBlock(
+            final Location location
+    ) {
+        if (location != null && location.getWorld() != null) {
+            location.getBlock().setType(Material.AIR);
+        }
     }
 
     private @NotNull ItemStack createFinanceItem(

@@ -99,6 +99,10 @@ block_listener:
     invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
     max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
     shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
+    double_chest_requires_shop_block: "<red>Double-chest shops require a second <blue>ShopBlock</blue><red>. Normal chests cannot merge with shop chests.</red>"
+    double_chest_owner_mismatch: "<red>This ShopBlock belongs to a different owner, so it cannot extend this shop.</red>"
+    shop_already_double_chest: "<red>This shop is already using both chest halves.</red>"
+    double_chest_ambiguous: "<red>This ShopBlock touches multiple shop chests. Place it next to only one shop.</red>"
 
 tax_scheduler:
   paid: "<yellow>Collected scheduled shop tax of {amount}. Counted shops: {owned_shops}.</yellow>"
@@ -201,7 +205,7 @@ shop_overview_ui:
     admin_disable_limit_reached: "<red>You cannot switch this admin shop back to a player shop because your shop limit of {max_shops} is already reached. Counted shops: {owned_shops}.</red>"
     close_not_empty: "<red>You can only close a shop after removing all stored items. Remaining entries: {item_count}.</red>"
     close_bank_not_empty: "<red>Withdraw your shop bank before closing this shop. Remaining tracked currencies: {bank_currency_count}.</red>"
-    closed: "<green>Closed the shop and returned the shop block. Counted shops: {owned_shops}.</green>"
+    closed: "<green>Closed the shop and returned {returned_blocks} ShopBlock(s). Counted shops: {owned_shops}.</green>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:
