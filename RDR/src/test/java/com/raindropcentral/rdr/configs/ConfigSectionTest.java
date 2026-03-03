@@ -51,4 +51,28 @@ class ConfigSectionTest {
 
         assertEquals(10, section.getMaxStorages());
     }
+
+    @Test
+    void readsMultipleStoreCurrenciesFromYamlFile(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 10
+            max_hotkeys: 9
+            store:
+              vault:
+                initial_cost: 1000.0
+                growth_rate: 1.125
+              coins:
+                initial_cost: 50.0
+                growth_rate: 1.075
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertEquals(2, section.getStore().size());
+        assertTrue(section.getStore().containsKey("vault"));
+        assertTrue(section.getStore().containsKey("coins"));
+        assertEquals(50.0D, section.getStoreCurrency("coins").getInitialCost());
+    }
 }

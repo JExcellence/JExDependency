@@ -7,7 +7,6 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,7 +27,7 @@ final class StorageStorePricingSupport {
     private StorageStorePricingSupport() {
     }
 
-    static @NotNull List<StorageCurrencyCost> getAvailableStoreCosts(
+    static @NotNull List<StorageCurrencyCost> getConfiguredStoreCosts(
         final @NotNull RDR plugin,
         final @NotNull ConfigSection config,
         final int ownedStorages
@@ -36,10 +35,6 @@ final class StorageStorePricingSupport {
         final List<StorageCurrencyCost> costs = new ArrayList<>();
         for (final Map.Entry<String, StoreCurrencySection> entry : config.getStore().entrySet()) {
             final String currencyType = entry.getKey();
-            if (!isCurrencyAvailable(plugin, currencyType)) {
-                continue;
-            }
-
             final StoreCurrencySection section = entry.getValue();
             costs.add(new StorageCurrencyCost(
                 currencyType,
@@ -59,12 +54,22 @@ final class StorageStorePricingSupport {
         final @NotNull RDRPlayer playerData,
         final @NotNull ConfigSection config
     ) {
-        final List<StorageCurrencyCost> costs = getAvailableStoreCosts(plugin, config, playerData.getStorages().size());
+        final List<StorageCurrencyCost> costs = getConfiguredStoreCosts(plugin, config, playerData.getStorages().size());
         if (costs.isEmpty()) {
             return PurchaseResult.failure("feedback.no_currencies", "", "", "", "");
         }
 
         for (final StorageCurrencyCost cost : costs) {
+            if (!isCurrencyOperational(plugin, cost.currencyType())) {
+                return PurchaseResult.failure(
+                    "feedback.currency_unavailable",
+                    cost.currencyType(),
+                    cost.currencyName(),
+                    formatCurrency(plugin, cost.currencyType(), cost.currentCost()),
+                    formatCostSummary(plugin, costs)
+                );
+            }
+
             if (!hasFunds(context.getPlayer(), plugin, cost)) {
                 return PurchaseResult.failure(
                     "feedback.insufficient_funds",
@@ -129,7 +134,7 @@ final class StorageStorePricingSupport {
         return bridge == null ? currencyType : bridge.getCurrencyDisplayName(currencyType);
     }
 
-    static boolean isCurrencyAvailable(
+    static boolean isCurrencyOperational(
         final @NotNull RDR plugin,
         final @NotNull String currencyType
     ) {
@@ -137,8 +142,7 @@ final class StorageStorePricingSupport {
             return plugin.hasVaultEconomy();
         }
 
-        final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
-        return bridge != null && hasCustomCurrency(bridge, currencyType);
+        return JExEconomyBridge.getBridge() != null;
     }
 
     static @NotNull String formatCostSummary(
@@ -170,9 +174,7 @@ final class StorageStorePricingSupport {
         }
 
         final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
-        return bridge != null
-            && hasCustomCurrency(bridge, cost.currencyType())
-            && bridge.has(player, cost.currencyType(), cost.currentCost());
+        return bridge != null && bridge.has(player, cost.currencyType(), cost.currentCost());
     }
 
     private static boolean withdraw(
@@ -189,9 +191,7 @@ final class StorageStorePricingSupport {
         }
 
         final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
-        return bridge != null
-            && hasCustomCurrency(bridge, cost.currencyType())
-            && bridge.withdraw(player, cost.currencyType(), cost.currentCost()).join();
+        return bridge != null && bridge.withdraw(player, cost.currencyType(), cost.currentCost()).join();
     }
 
     private static void rollback(
@@ -212,51 +212,10 @@ final class StorageStorePricingSupport {
             }
 
             final JExEconomyBridge bridge = JExEconomyBridge.getBridge();
-            if (bridge != null && hasCustomCurrency(bridge, cost.currencyType())) {
-                depositCustomCurrency(bridge, player, cost.currencyType(), cost.currentCost());
+            if (bridge != null) {
+                bridge.deposit(player, cost.currencyType(), cost.currentCost()).join();
             }
         }
-    }
-
-    private static boolean hasCustomCurrency(
-        final @NotNull JExEconomyBridge bridge,
-        final @NotNull String currencyType
-    ) {
-        try {
-            final Method hasCurrencyMethod = JExEconomyBridge.class.getMethod("hasCurrency", String.class);
-            return Boolean.TRUE.equals(hasCurrencyMethod.invoke(bridge, currencyType));
-        } catch (ReflectiveOperationException ignored) {
-            try {
-                final Method findCurrencyMethod = JExEconomyBridge.class.getDeclaredMethod("findCurrency", String.class);
-                findCurrencyMethod.setAccessible(true);
-                return findCurrencyMethod.invoke(bridge, currencyType) != null;
-            } catch (ReflectiveOperationException exception) {
-                return false;
-            }
-        }
-    }
-
-    private static boolean depositCustomCurrency(
-        final @NotNull JExEconomyBridge bridge,
-        final @NotNull OfflinePlayer player,
-        final @NotNull String currencyType,
-        final double amount
-    ) {
-        try {
-            final Method depositMethod = JExEconomyBridge.class.getMethod(
-                "deposit",
-                OfflinePlayer.class,
-                String.class,
-                double.class
-            );
-            final Object result = depositMethod.invoke(bridge, player, currencyType, amount);
-            if (result instanceof java.util.concurrent.CompletableFuture<?> future) {
-                return Boolean.TRUE.equals(future.join());
-            }
-        } catch (ReflectiveOperationException ignored) {
-        }
-
-        return false;
     }
 
     private static boolean usesVaultCurrency(final @NotNull String currencyType) {

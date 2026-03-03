@@ -101,9 +101,11 @@ public class StorageStoreView extends BaseView {
         final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
         final int maxStorages = config.getMaxStorages();
         final List<StorageStorePricingSupport.StorageCurrencyCost> costs =
-            StorageStorePricingSupport.getAvailableStoreCosts(plugin, config, ownedStorages);
+            StorageStorePricingSupport.getConfiguredStoreCosts(plugin, config, ownedStorages);
         final String costSummary = this.resolveCostSummary(player, plugin, costs);
         final boolean limitReached = StorageStoreSupport.hasReachedStorageLimit(ownedStorages, maxStorages);
+        final boolean currenciesOperational = costs.stream()
+            .allMatch(cost -> StorageStorePricingSupport.isCurrencyOperational(plugin, cost.currencyType()));
 
         render.layoutSlot('s')
             .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStorages));
@@ -119,7 +121,7 @@ public class StorageStoreView extends BaseView {
                 ownedStorages,
                 maxStorages,
                 rdrPlayer != null,
-                !costs.isEmpty(),
+                currenciesOperational && !costs.isEmpty(),
                 limitReached
             ))
             .onClick(clickContext -> this.handlePurchaseClick(clickContext, plugin));

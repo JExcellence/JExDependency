@@ -15,6 +15,6 @@ store:
     initial_cost: 1000.0
     growth_rate: 1.125
   # Custom currencies - JExEconomy identifiers are supported when available.
-  # coins:
-  #   initial_cost: 50.0
-  #   growth_rate: 1.075
+  coins:
+    initial_cost: 50.0
+    growth_rate: 1.075

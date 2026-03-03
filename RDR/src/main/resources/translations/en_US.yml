@@ -68,6 +68,7 @@ storage_store_ui:
   feedback:
     purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased <white>{storage_key}</white><gray>. Required currencies:</gray> <white>{costs}</white><gray>. Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
     insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You need <white>{cost}</white><gray> from <white>{currency_name}</white><gray> to buy another storage. Required currencies:</gray> <white>{costs}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>The required currency <white>{currency_name}</white><gray> is not available on this server right now.</gray>"
     purchase_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to charge <white>{cost}</white><gray> from <white>{currency_name}</white><gray>. Any partial charges were rolled back.</gray>"
     no_currencies: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>No configured store currencies are available for storage purchases right now.</gray>"
     limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You have reached the storage limit of <white>{max_storages}</white><gray>. Owned storages:</gray> <white>{owned_storages}</white>"
