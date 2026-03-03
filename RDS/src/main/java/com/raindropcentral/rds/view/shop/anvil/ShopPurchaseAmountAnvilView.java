@@ -3,6 +3,7 @@ package com.raindropcentral.rds.view.shop.anvil;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.AbstractAnvilView;
@@ -67,7 +68,7 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
     ) {
         try {
             final int amount = Integer.parseInt(input.trim());
-            return amount > 0 && (this.isAdminShop(context) || amount <= this.targetItem.get(context).getAmount());
+            return amount > 0 && (this.isUnlimitedAdminStock(context) || amount <= this.getMaxPurchasableAmount(context));
         } catch (NumberFormatException ignored) {
             return false;
         }
@@ -79,13 +80,15 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
             final @NotNull Player player
     ) {
         final String loreKey = this.isAdminShop(render)
-                ? "input.admin.lore"
+                ? this.isUnlimitedAdminStock(render)
+                    ? "input.admin.lore"
+                    : "input.admin_limited.lore"
                 : "input.player.lore";
         final ItemStack inputSlotItem = UnifiedBuilderFactory.item(Material.PAPER)
                 .setName(Component.text("1"))
                 .setLore(this.i18n(loreKey, player)
                         .withPlaceholders(Map.of(
-                                "max_amount", this.targetItem.get(render).getAmount(),
+                                "max_amount", this.getMaxPurchasableAmount(render),
                                 "item_type", this.targetItem.get(render).getItem().getType().name()
                         ))
                         .build()
@@ -101,12 +104,14 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
             final @NotNull Context context
     ) {
         final String errorKey = this.isAdminShop(context)
-                ? "error.invalid_number_admin"
+                ? this.isUnlimitedAdminStock(context)
+                    ? "error.invalid_number_admin"
+                    : "error.invalid_number"
                 : "error.invalid_number";
         this.i18n(errorKey, context.getPlayer())
                 .withPlaceholders(Map.of(
                         "input", input == null ? "" : input,
-                        "max_amount", this.targetItem.get(context).getAmount()
+                        "max_amount", this.getMaxPurchasableAmount(context)
                 ))
                 .includePrefix()
                 .build()
@@ -130,7 +135,56 @@ public class ShopPurchaseAmountAnvilView extends AbstractAnvilView {
     private boolean isAdminShop(
             final @NotNull Context context
     ) {
-        final Shop shop = this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+        final Shop shop = this.getCurrentShop(context);
         return shop != null && shop.isAdminShop();
+    }
+
+    private boolean isUnlimitedAdminStock(
+            final @NotNull Context context
+    ) {
+        final Shop shop = this.getCurrentShop(context);
+        final ShopItem item = this.getCurrentTargetItem(context);
+        return shop != null
+                && item != null
+                && AdminShopStockSupport.isUnlimitedAdminStock(shop, item);
+    }
+
+    private int getMaxPurchasableAmount(
+            final @NotNull Context context
+    ) {
+        final ShopItem item = this.getCurrentTargetItem(context);
+        return item == null ? this.targetItem.get(context).getAmount() : Math.max(0, item.getAmount());
+    }
+
+    private Shop getCurrentShop(
+            final @NotNull Context context
+    ) {
+        final RDS plugin = this.rds.get(context);
+        final Shop shop = plugin.getShopRepository().findByLocation(this.shopLocation.get(context));
+        if (shop != null && shop.isAdminShop()) {
+            plugin.getAdminShopRestockScheduler().restockShop(shop);
+        }
+        return shop;
+    }
+
+    private ShopItem getCurrentTargetItem(
+            final @NotNull Context context
+    ) {
+        final Shop shop = this.getCurrentShop(context);
+        if (shop == null) {
+            return this.targetItem.get(context);
+        }
+
+        for (final var item : shop.getItems()) {
+            if (!(item instanceof ShopItem shopItem)) {
+                continue;
+            }
+
+            if (shopItem.getEntryId().equals(this.targetItem.get(context).getEntryId())) {
+                return shopItem;
+            }
+        }
+
+        return this.targetItem.get(context);
     }
 }

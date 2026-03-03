@@ -116,6 +116,10 @@ public class ShopBossBarService {
             return;
         }
 
+        if (shop.isAdminShop()) {
+            this.plugin.getAdminShopRestockScheduler().restockShop(shop);
+        }
+
         this.showBossBar(player, shop);
     }
 
@@ -205,11 +209,26 @@ public class ShopBossBarService {
             final @NotNull Shop shop
     ) {
         if (shop.isAdminShop()) {
-            return this.toPlainString(
-                    "shop_boss_bar.available_items.infinite",
-                    viewer,
-                    Map.of("listing_count", this.countVisibleListings(shop))
-            );
+            return switch (this.resolveAdminAvailableItemsMode(shop)) {
+                case LIMITED -> this.toPlainString(
+                        "shop_boss_bar.available_items.limited",
+                        viewer,
+                        Map.of("item_count", AdminShopStockSupport.countVisibleStock(shop))
+                );
+                case INFINITE -> this.toPlainString(
+                        "shop_boss_bar.available_items.infinite",
+                        viewer,
+                        Map.of("listing_count", this.countVisibleListings(shop))
+                );
+                case VARIOUS -> this.toPlainString(
+                        "shop_boss_bar.available_items.various",
+                        viewer,
+                        Map.of(
+                                "limited_listing_count", this.countLimitedAdminListings(shop),
+                                "infinite_listing_count", this.countUnlimitedAdminListings(shop)
+                        )
+                );
+            };
         }
 
         return this.toPlainString(
@@ -247,6 +266,49 @@ public class ShopBossBarService {
         return listingCount;
     }
 
+    private @NotNull AdminAvailableItemsMode resolveAdminAvailableItemsMode(
+            final @NotNull Shop shop
+    ) {
+        final int unlimitedListingCount = this.countUnlimitedAdminListings(shop);
+        if (unlimitedListingCount == 0) {
+            return AdminAvailableItemsMode.LIMITED;
+        }
+
+        if (this.countLimitedAdminListings(shop) == 0) {
+            return AdminAvailableItemsMode.INFINITE;
+        }
+
+        return AdminAvailableItemsMode.VARIOUS;
+    }
+
+    private int countUnlimitedAdminListings(
+            final @NotNull Shop shop
+    ) {
+        int listingCount = 0;
+
+        for (final AbstractItem item : shop.getItems()) {
+            if (item instanceof ShopItem shopItem && AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
+                listingCount++;
+            }
+        }
+
+        return listingCount;
+    }
+
+    private int countLimitedAdminListings(
+            final @NotNull Shop shop
+    ) {
+        int listingCount = 0;
+
+        for (final AbstractItem item : shop.getItems()) {
+            if (item instanceof ShopItem shopItem && AdminShopStockSupport.usesLimitedAdminStock(shop, shopItem)) {
+                listingCount++;
+            }
+        }
+
+        return listingCount;
+    }
+
     private @NotNull String formatLocation(
             final @Nullable Location location
     ) {
@@ -275,5 +337,11 @@ public class ShopBossBarService {
                 .build()
                 .getI18nVersionWrapper()
                 .asPlaceholder();
+    }
+
+    private enum AdminAvailableItemsMode {
+        LIMITED,
+        INFINITE,
+        VARIOUS
     }
 }

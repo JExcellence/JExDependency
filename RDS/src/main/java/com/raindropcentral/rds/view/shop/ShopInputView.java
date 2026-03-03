@@ -340,9 +340,12 @@ public class ShopInputView extends BaseView {
         for (int index = 0; index < storedItems.size(); index++) {
             final AbstractItem existing = storedItems.get(index);
             if (existing instanceof ShopItem shopItem && shopItem.getItem().isSimilar(template)) {
+                final int updatedAmount = shopItem.hasAdminStockLimit()
+                        ? Math.min(shopItem.getAdminStockLimit(), shopItem.getAmount() + amount)
+                        : shopItem.getAmount() + amount;
                 storedItems.set(
                         index,
-                        shopItem.withAmount(shopItem.getAmount() + amount)
+                        shopItem.withAmount(updatedAmount)
                 );
                 return;
             }
@@ -367,7 +370,10 @@ public class ShopInputView extends BaseView {
                             shopItem.getItem(),
                             shopItem.getAmount(),
                             shopItem.getCurrencyType(),
-                            shopItem.getValue()
+                            shopItem.getValue(),
+                            shopItem.hasAdminStockLimit() ? shopItem.getAdminStockLimit() : null,
+                            shopItem.getAdminRestockIntervalTicks() > 0L ? shopItem.getAdminRestockIntervalTicks() : null,
+                            shopItem.getAdminStockReferenceTime() >= 0L ? shopItem.getAdminStockReferenceTime() : null
                     )
             );
         }

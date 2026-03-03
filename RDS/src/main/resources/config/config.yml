@@ -10,6 +10,19 @@ store:
     growth_rate: 1.075
 # -1 for no limit
 max_shops: -1
+# Admin shop stock behavior.
+admin_shops:
+  # gradual = restore limited admin stock one item at a time using each item's reset timer.
+  # full_at_time = refill every limited admin item to full stock at the configured time.
+  restock_mode: gradual
+  # How often the admin shop restock scheduler checks shops.
+  restock_check_period_ticks: 20
+  # Default per-item reset timer used when a stock limit is first configured.
+  default_reset_timer_ticks: 1200
+  # Used when restock_mode is full_at_time.
+  full_restock_time: midnight
+  # Time zone used for full_at_time restocks.
+  time_zone: system
 # Scheduled taxes for counted player shops.
 taxes:
   vault:

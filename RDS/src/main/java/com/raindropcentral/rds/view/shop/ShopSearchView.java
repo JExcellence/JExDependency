@@ -4,12 +4,12 @@ import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
 import me.devnatan.inventoryframework.View;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
 import me.devnatan.inventoryframework.context.Context;
-import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.component.Pagination;
@@ -65,6 +65,10 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
                 final Location shopLocation = shop.getShopLocation();
                 if (shopLocation == null) {
                     continue;
+                }
+
+                if (shop.isAdminShop()) {
+                    plugin.getAdminShopRestockScheduler().restockShop(shop);
                 }
 
                 entries.add(new ShopSearchEntry(
@@ -160,6 +164,16 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
     private int countAvailableItems(
             final @NotNull Shop shop
     ) {
+        if (shop.isAdminShop()) {
+            for (final AbstractItem item : shop.getItems()) {
+                if (item instanceof ShopItem shopItem && AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
+                    return shop.getStoredItemCount();
+                }
+            }
+
+            return AdminShopStockSupport.countVisibleStock(shop);
+        }
+
         int availableCount = 0;
 
         for (final AbstractItem item : shop.getItems()) {

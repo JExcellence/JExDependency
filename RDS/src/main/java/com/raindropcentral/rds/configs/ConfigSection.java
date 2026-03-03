@@ -23,6 +23,7 @@ public class ConfigSection extends AConfigSection {
     private Integer max_shops;
     private TaxSection taxes;
     private BossBarSection boss_bar;
+    private AdminShopSection admin_shops;
 
     public ConfigSection(EvaluationEnvironmentBuilder baseEnvironment) {
         super(baseEnvironment);
@@ -83,6 +84,12 @@ public class ConfigSection extends AConfigSection {
         return this.boss_bar == null
                 ? new BossBarSection(new EvaluationEnvironmentBuilder())
                 : this.boss_bar;
+    }
+
+    public @NotNull AdminShopSection getAdminShops() {
+        return this.admin_shops == null
+                ? new AdminShopSection(new EvaluationEnvironmentBuilder())
+                : this.admin_shops;
     }
 
     public double getTaxInitialCost() {

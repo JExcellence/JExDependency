@@ -7,10 +7,13 @@ import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rds.view.shop.*;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.RPlatform;
@@ -61,6 +64,7 @@ public class RDS extends JavaPlugin {
     private ViewFrame viewFrame;
     private ShopTaxScheduler shopTaxScheduler;
     private ShopBossBarService shopBossBarService;
+    private AdminShopRestockScheduler adminShopRestockScheduler;
 
     //Repositories
     private RRDSPlayer playerRepository;
@@ -98,6 +102,7 @@ public class RDS extends JavaPlugin {
         initializeCommands();
         initializeViews();
         initializeTaxes();
+        initializeAdminShopRestocking();
         initializeShopBossBar();
 
         if (!this.hasValidEconomyAndCurrency()) {
@@ -257,6 +262,8 @@ public class RDS extends JavaPlugin {
                     new ShopEditView(),
                     new ShopLedgerView(),
                     new ShopItemEditView(),
+                    new ShopItemAdminStockLimitAnvilView(),
+                    new ShopItemAdminResetTimerAnvilView(),
                     new ShopItemCurrencyTypeAnvilView(),
                     new ShopItemValueAnvilView(),
                     new ShopPurchaseAmountAnvilView(),
@@ -274,6 +281,11 @@ public class RDS extends JavaPlugin {
     private void initializeShopBossBar() {
         this.shopBossBarService = new ShopBossBarService(this);
         this.shopBossBarService.start();
+    }
+
+    private void initializeAdminShopRestocking() {
+        this.adminShopRestockScheduler = new AdminShopRestockScheduler(this);
+        this.adminShopRestockScheduler.start();
     }
 
     private boolean hasValidEconomyAndCurrency() {
@@ -500,6 +512,10 @@ public class RDS extends JavaPlugin {
 
     public ShopBossBarService getShopBossBarService() {
         return this.shopBossBarService;
+    }
+
+    public AdminShopRestockScheduler getAdminShopRestockScheduler() {
+        return this.adminShopRestockScheduler;
     }
 
     public ISchedulerAdapter getScheduler() {

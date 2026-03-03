@@ -1,10 +1,12 @@
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.configs.AdminShopRestockMode;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.entity.ShopLedgerEntry;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -22,6 +24,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +35,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.time.format.DateTimeFormatter;
 
 public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerShopEntry> {
+
+    private static final DateTimeFormatter RESTOCK_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
@@ -211,7 +217,8 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             return;
         }
 
-        if (!shop.isAdminShop() && desiredAmount > currentItem.getAmount()) {
+        final boolean limitedAdminStock = AdminShopStockSupport.usesLimitedAdminStock(shop, currentItem);
+        if ((!shop.isAdminShop() || limitedAdminStock) && desiredAmount > currentItem.getAmount()) {
             this.i18n("feedback.insufficient_stock", context.getPlayer())
                     .withPlaceholders(Map.of(
                             "amount", desiredAmount,
@@ -248,7 +255,8 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         }
 
         final boolean adminShop = shop.isAdminShop();
-        final int remainingAmount = adminShop
+        final boolean unlimitedAdminStock = AdminShopStockSupport.isUnlimitedAdminStock(shop, currentItem);
+        final int remainingAmount = (adminShop && unlimitedAdminStock)
                 ? currentItem.getAmount()
                 : currentItem.getAmount() - desiredAmount;
         if (!adminShop) {
@@ -258,6 +266,16 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                 items.remove(matchingIndex);
             }
 
+            shop.setItems(items);
+        } else if (limitedAdminStock) {
+            items.set(
+                    matchingIndex,
+                    AdminShopStockSupport.consumeLimitedStock(
+                            this.rds.get(context),
+                            currentItem,
+                            remainingAmount
+                    )
+            );
             shop.setItems(items);
         }
 
@@ -276,9 +294,14 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         this.rds.get(context).getShopRepository().update(shop);
         this.grantPurchasedItems(context.getPlayer(), currentItem, desiredAmount);
 
-        final String feedbackKey = adminShop
-                ? "feedback.purchased_admin"
-                : "feedback.purchased_player";
+        final String feedbackKey;
+        if (!adminShop) {
+            feedbackKey = "feedback.purchased_player";
+        } else if (limitedAdminStock) {
+            feedbackKey = "feedback.purchased_admin_limited";
+        } else {
+            feedbackKey = "feedback.purchased_admin";
+        }
         this.i18n(feedbackKey, context.getPlayer())
                 .withPlaceholders(Map.of(
                         "amount", desiredAmount,
@@ -443,7 +466,12 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
     }
 
     private Shop getCurrentShop(final @NotNull Context context) {
-        return this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+        final RDS plugin = this.rds.get(context);
+        final Shop shop = plugin.getShopRepository().findByLocation(this.shopLocation.get(context));
+        if (shop != null && shop.isAdminShop()) {
+            plugin.getAdminShopRestockScheduler().restockShop(shop);
+        }
+        return shop;
     }
 
     private @NotNull ItemStack createDisplayItem(
@@ -461,24 +489,39 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull ItemStack displayItem
     ) {
         final double totalPrice = item.getValue() * item.getAmount();
-        final String loreKey = shop.isAdminShop()
-                ? "entry.admin.lore"
-                : "entry.player.lore";
-        final Map<String, Object> placeholders = shop.isAdminShop()
-                ? Map.of(
-                        "item_type", displayItem.getType().name(),
-                        "currency_type", item.getCurrencyType(),
-                        "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
-                        "price_each", this.formatAmount(item.getValue())
-                )
-                : Map.of(
-                        "amount", item.getAmount(),
-                        "item_type", displayItem.getType().name(),
-                        "currency_type", item.getCurrencyType(),
-                        "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
-                        "price_each", this.formatAmount(item.getValue()),
-                        "total_price", this.formatAmount(totalPrice)
-                );
+        final String loreKey;
+        final Map<String, Object> placeholders;
+        if (!shop.isAdminShop()) {
+            loreKey = "entry.player.lore";
+            placeholders = Map.of(
+                    "amount", item.getAmount(),
+                    "item_type", displayItem.getType().name(),
+                    "currency_type", item.getCurrencyType(),
+                    "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
+                    "price_each", this.formatAmount(item.getValue()),
+                    "total_price", this.formatAmount(totalPrice)
+            );
+        } else if (AdminShopStockSupport.usesLimitedAdminStock(shop, item)) {
+            loreKey = "entry.admin_limited.lore";
+            placeholders = Map.of(
+                    "amount", item.getAmount(),
+                    "stock_limit", item.getAdminStockLimit(),
+                    "item_type", displayItem.getType().name(),
+                    "currency_type", item.getCurrencyType(),
+                    "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
+                    "price_each", this.formatAmount(item.getValue()),
+                    "restock_mode", this.getAdminRestockModeLabel(player),
+                    "restock_schedule", this.getAdminRestockSchedule(player, item)
+            );
+        } else {
+            loreKey = "entry.admin.lore";
+            placeholders = Map.of(
+                    "item_type", displayItem.getType().name(),
+                    "currency_type", item.getCurrencyType(),
+                    "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
+                    "price_each", this.formatAmount(item.getValue())
+            );
+        }
         final List<Component> lore = new ArrayList<>(this.i18n(loreKey, player)
                 .withPlaceholders(placeholders)
                 .build()
@@ -575,6 +618,39 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
 
     private @NotNull String formatAmount(final double amount) {
         return String.format(Locale.US, "%.2f", amount);
+    }
+
+    private @NotNull String getAdminRestockModeLabel(
+            final @NotNull Player player
+    ) {
+        final String key = JavaPlugin.getPlugin(RDS.class).getDefaultConfig().getAdminShops().getRestockMode() == AdminShopRestockMode.FULL_AT_TIME
+                ? "entry.admin_mode.full"
+                : "entry.admin_mode.gradual";
+        return this.i18n(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getAdminRestockSchedule(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        final var adminShopConfig = JavaPlugin.getPlugin(RDS.class).getDefaultConfig().getAdminShops();
+        final String key = adminShopConfig.getRestockMode() == AdminShopRestockMode.FULL_AT_TIME
+                ? "entry.restock_schedule.full"
+                : "entry.restock_schedule.gradual";
+        return this.i18n(key, player)
+                .withPlaceholders(Map.of(
+                        "reset_timer_ticks", item.getAdminRestockIntervalTicks() > 0L
+                                ? item.getAdminRestockIntervalTicks()
+                                : adminShopConfig.getDefaultResetTimerTicks(),
+                        "restock_time", adminShopConfig.getFullRestockTime().format(RESTOCK_TIME_FORMAT),
+                        "time_zone", adminShopConfig.getTimeZoneId().getId()
+                ))
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
     }
 
     public record CustomerShopEntry(

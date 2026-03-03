@@ -1,9 +1,13 @@
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.configs.AdminShopRestockMode;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
@@ -18,16 +22,24 @@ import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ShopItemEditView extends BaseView {
+
+    private static final DateTimeFormatter RESTOCK_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
@@ -48,7 +60,7 @@ public class ShopItemEditView extends BaseView {
         return new String[]{
                 "    s    ",
                 "  t v c  ",
-                "         "
+                "  l r m  "
         };
     }
 
@@ -87,6 +99,7 @@ public class ShopItemEditView extends BaseView {
             final @NotNull RenderContext render,
             final @NotNull Player player
     ) {
+        final Shop currentShop = this.getCurrentShop(render);
         if (this.editedItem.get(render) == null) {
             this.restoreEditedItem(render);
         }
@@ -95,7 +108,7 @@ public class ShopItemEditView extends BaseView {
         }
 
         render.layoutSlot('s')
-                .renderWith(() -> this.createSummaryItem(player, this.getEditedItem(render)))
+                .renderWith(() -> this.createSummaryItem(player, currentShop, this.getEditedItem(render)))
                 .updateOnStateChange(this.editedItem);
 
         render.layoutSlot('t')
@@ -129,6 +142,37 @@ public class ShopItemEditView extends BaseView {
                         .setLore(this.i18n("confirm.lore", player).build().children())
                         .build()
         ).onClick(clickContext -> this.handleConfirm(clickContext));
+
+        if (currentShop != null && currentShop.isAdminShop()) {
+            render.layoutSlot('l')
+                    .renderWith(() -> this.createStockLimitItem(player, this.getEditedItem(render)))
+                    .updateOnStateChange(this.editedItem)
+                    .onClick(clickContext -> clickContext.openForPlayer(
+                            ShopItemAdminStockLimitAnvilView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", this.shopLocation.get(clickContext),
+                                    "shopItem", this.getEditedItem(clickContext)
+                            )
+                    ));
+
+            render.layoutSlot('r')
+                    .renderWith(() -> this.createResetTimerItem(player, this.getEditedItem(render)))
+                    .updateOnStateChange(this.editedItem)
+                    .onClick(clickContext -> clickContext.openForPlayer(
+                            ShopItemAdminResetTimerAnvilView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", this.shopLocation.get(clickContext),
+                                    "shopItem", this.getEditedItem(clickContext)
+                            )
+                    ));
+
+            render.layoutSlot('m')
+                    .renderWith(() -> this.createRestockModeItem(player))
+                    .updateOnStateChange(this.editedItem)
+                    .onClick(this::handleRestockModeClick);
+        }
     }
 
     @Override
@@ -166,7 +210,7 @@ public class ShopItemEditView extends BaseView {
 
         if (matchingIndex >= 0) {
             final ShopItem matchingItem = (ShopItem) items.get(matchingIndex);
-            items.set(matchingIndex, matchingItem.withPricing(edited.getCurrencyType(), edited.getValue()));
+            items.set(matchingIndex, this.mergeEditedItem(matchingItem, edited));
             shop.setItems(items);
             this.rds.get(clickContext).getShopRepository().update(shop);
 
@@ -193,8 +237,149 @@ public class ShopItemEditView extends BaseView {
                 .sendMessage();
     }
 
+    private void handleRestockModeClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        clickContext.setCancelled(true);
+
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        final RDS plugin = this.rds.get(clickContext);
+        final AdminShopRestockMode updatedMode = this.toggleAdminRestockMode(plugin);
+        if (updatedMode == null) {
+            this.i18n("feedback.restock_mode_save_failed", clickContext.getPlayer())
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        final long updatedReferenceTime = AdminShopStockSupport.resolveReferenceTimeForMode(
+                plugin.getDefaultConfig().getAdminShops(),
+                updatedMode
+        );
+        this.rebaseAllAdminShopReferenceTimes(plugin, updatedReferenceTime);
+        this.editedItem.set(
+                this.rebaseEditedItemReferenceTime(this.getEditedItem(clickContext), updatedReferenceTime),
+                clickContext
+        );
+
+        clickContext.update();
+
+        this.i18n("feedback.restock_mode_updated", clickContext.getPlayer())
+                .withPlaceholder("restock_mode", this.getAdminRestockModeLabel(clickContext.getPlayer()))
+                .build()
+                .sendMessage();
+    }
+
     private Shop getCurrentShop(final @NotNull Context context) {
-        return this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+        final RDS plugin = this.rds.get(context);
+        final Shop shop = plugin.getShopRepository().findByLocation(this.shopLocation.get(context));
+        if (shop != null && shop.isAdminShop()) {
+            plugin.getAdminShopRestockScheduler().restockShop(shop);
+        }
+        return shop;
+    }
+
+    private @Nullable AdminShopRestockMode toggleAdminRestockMode(
+            final @NotNull RDS plugin
+    ) {
+        this.syncAllAdminShops(plugin);
+
+        final AdminShopRestockMode currentMode = plugin.getDefaultConfig().getAdminShops().getRestockMode();
+        final AdminShopRestockMode updatedMode = currentMode == AdminShopRestockMode.FULL_AT_TIME
+                ? AdminShopRestockMode.GRADUAL
+                : AdminShopRestockMode.FULL_AT_TIME;
+        final File configFile = new File(new File(plugin.getDataFolder(), "config"), "config.yml");
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(configFile);
+        configuration.set(
+                "admin_shops.restock_mode",
+                updatedMode == AdminShopRestockMode.FULL_AT_TIME ? "full_at_time" : "gradual"
+        );
+
+        try {
+            configuration.save(configFile);
+            return updatedMode;
+        } catch (IOException exception) {
+            plugin.getLogger().warning("Failed to save admin restock mode toggle: " + exception.getMessage());
+            return null;
+        }
+    }
+
+    private void syncAllAdminShops(
+            final @NotNull RDS plugin
+    ) {
+        for (final Shop adminShop : plugin.getShopRepository().findAllShops()) {
+            if (adminShop.isAdminShop()) {
+                plugin.getAdminShopRestockScheduler().restockShop(adminShop);
+            }
+        }
+    }
+
+    private void rebaseAllAdminShopReferenceTimes(
+            final @NotNull RDS plugin,
+            final long updatedReferenceTime
+    ) {
+        for (final Shop adminShop : plugin.getShopRepository().findAllShops()) {
+            if (!adminShop.isAdminShop()) {
+                continue;
+            }
+
+            boolean changed = false;
+            final List<AbstractItem> updatedItems = new ArrayList<>(adminShop.getItems().size());
+            for (final AbstractItem item : adminShop.getItems()) {
+                if (item instanceof ShopItem shopItem && shopItem.hasAdminStockLimit()) {
+                    final ShopItem updatedItem = this.rebaseItemReferenceTime(shopItem, updatedReferenceTime);
+                    if (updatedItem.getAdminStockReferenceTime() != shopItem.getAdminStockReferenceTime()) {
+                        changed = true;
+                    }
+                    updatedItems.add(updatedItem);
+                    continue;
+                }
+
+                updatedItems.add(item);
+            }
+
+            if (changed) {
+                adminShop.setItems(updatedItems);
+                plugin.getShopRepository().update(adminShop);
+            }
+        }
+    }
+
+    private @NotNull ShopItem rebaseEditedItemReferenceTime(
+            final @NotNull ShopItem item,
+            final long updatedReferenceTime
+    ) {
+        if (!item.hasAdminStockLimit()) {
+            return item;
+        }
+        return this.rebaseItemReferenceTime(item, updatedReferenceTime);
+    }
+
+    private @NotNull ShopItem rebaseItemReferenceTime(
+            final @NotNull ShopItem item,
+            final long updatedReferenceTime
+    ) {
+        return item.withAdminStockSettings(
+                item.hasAdminStockLimit() ? item.getAdminStockLimit() : null,
+                this.getStoredRestockInterval(item),
+                updatedReferenceTime
+        );
     }
 
     private @NotNull ShopItem getEditedItem(final @NotNull Context context) {
@@ -261,17 +446,43 @@ public class ShopItemEditView extends BaseView {
 
     private @NotNull ItemStack createSummaryItem(
             final @NotNull Player player,
+            final Shop currentShop,
             final @NotNull ShopItem item
     ) {
         final ItemStack displayItem = item.getItem();
         displayItem.setAmount(1);
 
-        final List<Component> lore = new ArrayList<>(this.i18n("summary.lore", player)
-                .withPlaceholders(Map.of(
-                        "amount", item.getAmount(),
-                        "currency_type", item.getCurrencyType(),
-                        "value", item.getValue()
-                ))
+        final String loreKey;
+        final Map<String, Object> placeholders;
+        if (currentShop != null && currentShop.isAdminShop() && item.hasAdminStockLimit()) {
+            loreKey = "summary.admin_limited.lore";
+            placeholders = Map.of(
+                    "amount", item.getAmount(),
+                    "stock_limit", item.getAdminStockLimit(),
+                    "currency_type", item.getCurrencyType(),
+                    "value", item.getValue(),
+                    "restock_mode", this.getAdminRestockModeLabel(player),
+                    "restock_schedule", this.getAdminRestockSchedule(player, item)
+            );
+        } else if (currentShop != null && currentShop.isAdminShop()) {
+            loreKey = "summary.admin_unlimited.lore";
+            placeholders = Map.of(
+                    "amount", item.getAmount(),
+                    "currency_type", item.getCurrencyType(),
+                    "value", item.getValue(),
+                    "restock_mode", this.getAdminRestockModeLabel(player)
+            );
+        } else {
+            loreKey = "summary.player.lore";
+            placeholders = Map.of(
+                    "amount", item.getAmount(),
+                    "currency_type", item.getCurrencyType(),
+                    "value", item.getValue()
+            );
+        }
+
+        final List<Component> lore = new ArrayList<>(this.i18n(loreKey, player)
+                .withPlaceholders(placeholders)
                 .build()
                 .children());
 
@@ -316,5 +527,146 @@ public class ShopItemEditView extends BaseView {
                         .children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
+    }
+
+    private @NotNull ItemStack createStockLimitItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        final String stockLimit = item.hasAdminStockLimit()
+                ? String.valueOf(item.getAdminStockLimit())
+                : this.i18n("stock_limit.unlimited", player)
+                        .build()
+                        .getI18nVersionWrapper()
+                        .asPlaceholder();
+        return UnifiedBuilderFactory.item(Material.CHEST)
+                .setName(this.i18n("stock_limit.name", player).build().component())
+                .setLore(this.i18n("stock_limit.lore", player)
+                        .withPlaceholders(Map.of(
+                                "stock_limit", stockLimit,
+                                "current_stock", item.getAmount()
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createResetTimerItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        final long resetTimerTicks = item.getAdminRestockIntervalTicks() > 0L
+                ? item.getAdminRestockIntervalTicks()
+                : JavaPlugin.getPlugin(RDS.class).getDefaultConfig().getAdminShops().getDefaultResetTimerTicks();
+        return UnifiedBuilderFactory.item(Material.CLOCK)
+                .setName(this.i18n("reset_timer.name", player).build().component())
+                .setLore(this.i18n("reset_timer.lore", player)
+                        .withPlaceholder("reset_timer_ticks", resetTimerTicks)
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createRestockModeItem(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.REPEATER)
+                .setName(this.i18n("restock_mode.name", player).build().component())
+                .setLore(this.i18n("restock_mode.lore", player)
+                        .withPlaceholders(Map.of(
+                                "restock_mode", this.getAdminRestockModeLabel(player),
+                                "restock_schedule", this.getAdminSummaryRestockSchedule(player)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ShopItem mergeEditedItem(
+            final @NotNull ShopItem liveItem,
+            final @NotNull ShopItem edited
+    ) {
+        final Integer stockLimit = edited.hasAdminStockLimit() ? edited.getAdminStockLimit() : null;
+        final Long restockInterval = this.getStoredRestockInterval(edited);
+        final Long referenceTime = edited.getAdminStockReferenceTime() >= 0L
+                ? edited.getAdminStockReferenceTime()
+                : null;
+        final int mergedAmount = stockLimit == null
+                ? liveItem.getAmount()
+                : Math.min(stockLimit, Math.max(0, edited.getAmount()));
+
+        return new ShopItem(
+                liveItem.getEntryId(),
+                liveItem.getItem(),
+                mergedAmount,
+                edited.getCurrencyType(),
+                edited.getValue(),
+                stockLimit,
+                restockInterval,
+                referenceTime
+        );
+    }
+
+    private Long getStoredRestockInterval(
+            final @NotNull ShopItem item
+    ) {
+        return item.getAdminRestockIntervalTicks() > 0L
+                ? item.getAdminRestockIntervalTicks()
+                : null;
+    }
+
+    private @NotNull String getAdminRestockModeLabel(
+            final @NotNull Player player
+    ) {
+        final var adminConfig = JavaPlugin.getPlugin(RDS.class).getDefaultConfig().getAdminShops();
+        final String key = adminConfig.getRestockMode() == AdminShopRestockMode.FULL_AT_TIME
+                ? "restock_mode.full"
+                : "restock_mode.gradual";
+        return this.i18n(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getAdminRestockSchedule(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        final var adminConfig = JavaPlugin.getPlugin(RDS.class).getDefaultConfig().getAdminShops();
+        final String key = adminConfig.getRestockMode() == AdminShopRestockMode.FULL_AT_TIME
+                ? "restock_schedule.full"
+                : "restock_schedule.gradual";
+        return this.i18n(key, player)
+                .withPlaceholders(Map.of(
+                        "reset_timer_ticks", item.getAdminRestockIntervalTicks() > 0L
+                                ? item.getAdminRestockIntervalTicks()
+                                : adminConfig.getDefaultResetTimerTicks(),
+                        "restock_time", adminConfig.getFullRestockTime().format(RESTOCK_TIME_FORMAT),
+                        "time_zone", adminConfig.getTimeZoneId().getId()
+                ))
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getAdminSummaryRestockSchedule(
+            final @NotNull Player player
+    ) {
+        final var adminConfig = JavaPlugin.getPlugin(RDS.class).getDefaultConfig().getAdminShops();
+        final String key = adminConfig.getRestockMode() == AdminShopRestockMode.FULL_AT_TIME
+                ? "restock_schedule.full"
+                : "restock_schedule.gradual";
+        return this.i18n(key, player)
+                .withPlaceholders(Map.of(
+                        "reset_timer_ticks", adminConfig.getDefaultResetTimerTicks(),
+                        "restock_time", adminConfig.getFullRestockTime().format(RESTOCK_TIME_FORMAT),
+                        "time_zone", adminConfig.getTimeZoneId().getId()
+                ))
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
     }
 }
