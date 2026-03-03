@@ -60,5 +60,6 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         if (event == null) return;
         this.rds.getShopBossBarService().clearPlayer(event.getPlayer());
+        this.rds.getShopSidebarScoreboardService().disable(event.getPlayer());
     }
 }

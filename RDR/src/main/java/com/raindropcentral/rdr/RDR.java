@@ -18,6 +18,7 @@ import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRStorage;
 import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
+import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import com.raindropcentral.rdr.view.StorageHotkeyAnvilView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StoragePlayerView;
@@ -69,6 +70,7 @@ public class RDR extends JavaPlugin {
 
     private Object economyInstance;
     private ViewFrame viewFrame;
+    private StorageSidebarScoreboardService storageSidebarScoreboardService;
     
     //Repositories
     private RRDRPlayer playerRepository;
@@ -109,6 +111,7 @@ public class RDR extends JavaPlugin {
         initializePlugins();
         initializeCommands();
         initializeViews();
+        initializeStorageSidebarScoreboards();
     }
 
     /**
@@ -120,6 +123,10 @@ public class RDR extends JavaPlugin {
 
         if (this.executor != null) {
             this.executor.shutdownNow();
+        }
+
+        if (this.storageSidebarScoreboardService != null) {
+            this.storageSidebarScoreboardService.shutdown();
         }
 
         if (entityManagerFactory != null) {
@@ -255,6 +262,11 @@ public class RDR extends JavaPlugin {
                 )
                 .disableMetrics();
         this.viewFrame = frame.register();
+    }
+
+    private void initializeStorageSidebarScoreboards() {
+        this.storageSidebarScoreboardService = new StorageSidebarScoreboardService(this);
+        this.storageSidebarScoreboardService.start();
     }
 
     private @NotNull UUID loadOrCreateServerUuid() {
@@ -468,6 +480,15 @@ public class RDR extends JavaPlugin {
      */
     public ViewFrame getViewFrame() {
         return this.viewFrame;
+    }
+
+    /**
+     * Returns the service that manages the optional storage sidebar scoreboard.
+     *
+     * @return storage sidebar scoreboard service
+     */
+    public @Nullable StorageSidebarScoreboardService getStorageSidebarScoreboardService() {
+        return this.storageSidebarScoreboardService;
     }
 
     /**

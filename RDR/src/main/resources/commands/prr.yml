@@ -4,9 +4,9 @@ commands:
     description: 'RDR Commands'
     aliases:
       - rr
-    usage: 'rr [storage]'
+    usage: 'rr [storage|scoreboard]'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<storage>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<storage | scoreboard>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -26,6 +26,7 @@ commands:
       nodes:
         command: 'raindroprdr.command'
         commandInfo: 'raindroprdr.command.info'
+        commandScoreboard: 'raindroprdr.command.scoreboard'
         commandStorage: 'raindroprdr.command.storage'
 
 lut:

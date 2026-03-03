@@ -4,9 +4,10 @@ commands:
     description: 'RDSImpl Commands'
     aliases:
       - rs
-    usage: 'rs <info | give | search | store>'
+    usage: 'rs <info | give | scoreboard | search | store>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c <info | give | search | store>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c <info | give | scoreboard | search | store>"'
+      2$: 'lut["prefix"] & "&7/" & alias & " scoreboard &c<ledger | stock>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -28,6 +29,7 @@ commands:
         commandInfo: 'raindropshops.command.info'
         commandGive: 'raindropshops.command.give'
         commandMain: 'raindropshops.command.main'
+        commandScoreboard: 'raindropshops.command.scoreboard'
         commandSearch: 'raindropshops.command.search'
         commandStore: 'raindropshops.command.store'
 lut:

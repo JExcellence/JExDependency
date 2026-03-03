@@ -18,10 +18,12 @@ import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
+import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -39,6 +41,7 @@ public class PlayerJoinListener implements Listener {
 
     private final Supplier<PlayerProfileRepository> repositorySupplier;
     private final Supplier<ConfigSection> configSupplier;
+    private final Supplier<StorageSidebarScoreboardService> scoreboardServiceSupplier;
     private final Logger logger;
 
     /**
@@ -48,7 +51,12 @@ public class PlayerJoinListener implements Listener {
      * @throws NullPointerException if {@code rdr} is {@code null}
      */
     public PlayerJoinListener(final @NotNull RDR rdr) {
-        this(() -> RepositoryBackedPlayerProfileRepository.from(rdr.getPlayerRepository()), rdr::getDefaultConfig, rdr.getLogger());
+        this(
+            () -> RepositoryBackedPlayerProfileRepository.from(rdr.getPlayerRepository()),
+            rdr::getDefaultConfig,
+            rdr::getStorageSidebarScoreboardService,
+            rdr.getLogger()
+        );
     }
 
     /**
@@ -64,8 +72,27 @@ public class PlayerJoinListener implements Listener {
         final @NotNull Supplier<ConfigSection> configSupplier,
         final @NotNull Logger logger
     ) {
+        this(repositorySupplier, configSupplier, () -> null, logger);
+    }
+
+    /**
+     * Creates a listener with explicit collaborators.
+     *
+     * @param repositorySupplier repository supplier used to resolve persistent player profiles
+     * @param configSupplier configuration supplier used to resolve storage defaults
+     * @param scoreboardServiceSupplier supplier used to resolve the optional storage scoreboard service
+     * @param logger logger used for provisioning failures
+     * @throws NullPointerException if any non-null collaborator is {@code null}
+     */
+    PlayerJoinListener(
+        final @NotNull Supplier<PlayerProfileRepository> repositorySupplier,
+        final @NotNull Supplier<ConfigSection> configSupplier,
+        final @NotNull Supplier<StorageSidebarScoreboardService> scoreboardServiceSupplier,
+        final @NotNull Logger logger
+    ) {
         this.repositorySupplier = Objects.requireNonNull(repositorySupplier, "repositorySupplier");
         this.configSupplier = Objects.requireNonNull(configSupplier, "configSupplier");
+        this.scoreboardServiceSupplier = Objects.requireNonNull(scoreboardServiceSupplier, "scoreboardServiceSupplier");
         this.logger = Objects.requireNonNull(logger, "logger");
     }
 
@@ -101,6 +128,20 @@ public class PlayerJoinListener implements Listener {
             );
             return null;
         });
+    }
+
+    /**
+     * Clears any active sidebar scoreboard for players leaving the server.
+     *
+     * @param event Bukkit player quit event
+     */
+    @EventHandler
+    public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
+        final StorageSidebarScoreboardService scoreboardService = this.scoreboardServiceSupplier.get();
+        if (scoreboardService == null) {
+            return;
+        }
+        scoreboardService.disable(event.getPlayer());
     }
 
     private @NotNull String buildDefaultStorageKey(final int index) {

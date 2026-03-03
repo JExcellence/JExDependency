@@ -6,6 +6,7 @@ import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
 import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
@@ -61,6 +62,7 @@ public class RDS extends JavaPlugin {
     private ShopTaxScheduler shopTaxScheduler;
     private ShopBossBarService shopBossBarService;
     private AdminShopRestockScheduler adminShopRestockScheduler;
+    private ShopSidebarScoreboardService shopSidebarScoreboardService;
 
     //Repositories
     private RRDSPlayer playerRepository;
@@ -101,6 +103,7 @@ public class RDS extends JavaPlugin {
         initializeTaxes();
         initializeAdminShopRestocking();
         initializeShopBossBar();
+        initializeShopSidebarScoreboards();
 
         if (!this.hasValidEconomyAndCurrency()) {
             this.getLogger().warning(
@@ -120,6 +123,10 @@ public class RDS extends JavaPlugin {
 
         if (this.shopBossBarService != null) {
             this.shopBossBarService.shutdown();
+        }
+
+        if (this.shopSidebarScoreboardService != null) {
+            this.shopSidebarScoreboardService.shutdown();
         }
 
         if (entityManagerFactory != null) {
@@ -270,6 +277,11 @@ public class RDS extends JavaPlugin {
     private void initializeShopBossBar() {
         this.shopBossBarService = new ShopBossBarService(this);
         this.shopBossBarService.start();
+    }
+
+    private void initializeShopSidebarScoreboards() {
+        this.shopSidebarScoreboardService = new ShopSidebarScoreboardService(this);
+        this.shopSidebarScoreboardService.start();
     }
 
     private void initializeAdminShopRestocking() {
@@ -505,6 +517,10 @@ public class RDS extends JavaPlugin {
 
     public AdminShopRestockScheduler getAdminShopRestockScheduler() {
         return this.adminShopRestockScheduler;
+    }
+
+    public ShopSidebarScoreboardService getShopSidebarScoreboardService() {
+        return this.shopSidebarScoreboardService;
     }
 
     public ISchedulerAdapter getScheduler() {

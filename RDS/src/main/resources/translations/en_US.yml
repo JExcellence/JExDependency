@@ -18,6 +18,27 @@ prs:
     disabled: "<yellow>Shop boss bar disabled.</yellow>"
   give:
     syntax: "<red>Usage: /rs give <target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usage:</gray> <white>/rs scoreboard &lt;ledger|stock&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Enabled the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Disabled the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Switched to the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
+    type:
+      ledger: "<gold>ledger</gold>"
+      stock: "<aqua>stock</aqua>"
+
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ Ledger ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Bank Totals</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>No banked funds</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ Stock ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Stock:</gray> <white>{stock_amount}</white>"
+    empty: "<red>No player shops</red>"
 
 shop_boss_bar:
   title: "<gold>{shop_type} Shop</gold> <gray>|</gray> <yellow>Owner:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Items:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Location:</yellow> <white>{location}</white>"

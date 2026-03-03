@@ -1,5 +1,12 @@
 prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[#] Storage Stats</gradient>"
+  items: "<gray>Total items:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>Available slots:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>Storages obtained:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>Max storages:</gray> <white>{max_storages}</white>"
+
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
   summary:
@@ -281,6 +288,9 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} is now bound to <white>/rr {hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No storage is bound to <white>/rr {hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hotkeys must be between <white>1</white> and <white>{max_hotkeys}</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Enabled the <white>/rr scoreboard</white><gray> sidebar.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Disabled the <white>/rr scoreboard</white><gray> sidebar.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usage:</gray> <white>/rr scoreboard</white>"
 
 page:
   name: "<gradient:#6b7280:#9ca3af>[Page] %current_page%</gradient>"

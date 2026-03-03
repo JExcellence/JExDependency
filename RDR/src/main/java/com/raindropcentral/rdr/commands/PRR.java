@@ -76,6 +76,7 @@ public class PRR extends PlayerCommand {
 
         final EPRRAction action = this.resolveAction(args);
         switch (action) {
+            case SCOREBOARD -> this.handleScoreboardToggle(player, args);
             case STORAGE -> this.openStorageOverview(player);
             default -> {
                 if (this.hasNoPermission(player, EPRRPermission.INFO)) {
@@ -163,8 +164,43 @@ public class PRR extends PlayerCommand {
         );
     }
 
+    private void handleScoreboardToggle(
+        final @NotNull Player player,
+        final @NotNull String[] args
+    ) {
+        if (this.hasNoPermission(player, EPRRPermission.SCOREBOARD) || this.rdr == null) {
+            return;
+        }
+
+        if (args.length != 1) {
+            this.sendScoreboardSyntax(player);
+            return;
+        }
+
+        final var scoreboardService = this.rdr.getStorageSidebarScoreboardService();
+        if (scoreboardService == null) {
+            return;
+        }
+
+        final String messageKey;
+        if (scoreboardService.isActive(player)) {
+            scoreboardService.disable(player);
+            messageKey = "storage.message.scoreboard_disabled";
+        } else {
+            scoreboardService.enable(player);
+            messageKey = "storage.message.scoreboard_enabled";
+        }
+
+        new I18n.Builder(messageKey, player)
+            .build()
+            .sendMessage();
+    }
+
     private @NotNull List<String> getAvailableActions(final @NotNull Player player) {
         final List<String> actions = new ArrayList<>();
+        if (this.hasPermission(player, EPRRPermission.SCOREBOARD)) {
+            actions.add(EPRRAction.SCOREBOARD.name().toLowerCase(Locale.ROOT));
+        }
         if (this.hasPermission(player, EPRRPermission.STORAGE)) {
             actions.add(EPRRAction.STORAGE.name().toLowerCase(Locale.ROOT));
         }
@@ -226,6 +262,14 @@ public class PRR extends PlayerCommand {
     ) {
         new I18n.Builder("storage.message.hotkey_invalid", player)
             .withPlaceholder("max_hotkeys", maxHotkeys)
+            .build()
+            .sendMessage();
+    }
+
+    private void sendScoreboardSyntax(
+        final @NotNull Player player
+    ) {
+        new I18n.Builder("storage.message.scoreboard_syntax", player)
             .build()
             .sendMessage();
     }

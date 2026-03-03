@@ -19,6 +19,7 @@ import de.jexcellence.evaluable.section.IPermissionNode;
 public enum EPRRPermission implements IPermissionNode{
     COMMAND("command","raindroprdr.command"),
     INFO("commandInfo","raindroprdr.command.info"),
+    SCOREBOARD("commandScoreboard","raindroprdr.command.scoreboard"),
     STORAGE("commandStorage","raindroprdr.command.storage")
     ;
 

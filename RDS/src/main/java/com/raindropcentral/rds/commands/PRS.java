@@ -33,6 +33,9 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public class PRS extends PlayerCommand {
 
+    private static final String LEDGER_SCOREBOARD_TYPE = "ledger";
+    private static final String STOCK_SCOREBOARD_TYPE = "stock";
+
     private final RDS rds;
 
     public PRS(ACommandSection commandSection, RDS rds){
@@ -46,6 +49,7 @@ public class PRS extends PlayerCommand {
         switch (action) {
             case BAR -> this.handleBarCommand(player);
             case GIVE -> this.handleGiveCommand(player, args);
+            case SCOREBOARD -> this.handleScoreboardCommand(player, args);
             case SEARCH -> {
                 this.rds.getViewFrame().open(
                     ShopSearchView.class,
@@ -136,6 +140,54 @@ public class PRS extends PlayerCommand {
         }
 
         this.giveShopBlocks(target, amount);
+    }
+
+    private void handleScoreboardCommand(
+            final @NotNull Player player,
+            final @NotNull String[] args
+    ) {
+        if (this.hasNoPermission(player, EPRSPermission.SCOREBOARD)) {
+            return;
+        }
+
+        if (args.length < 2) {
+            this.sendScoreboardSyntax(player);
+            return;
+        }
+
+        final String scoreboardType = args[1].trim().toLowerCase(Locale.ROOT);
+        if (!LEDGER_SCOREBOARD_TYPE.equals(scoreboardType) && !STOCK_SCOREBOARD_TYPE.equals(scoreboardType)) {
+            this.sendScoreboardSyntax(player);
+            return;
+        }
+
+        final String activeType = this.rds.getShopSidebarScoreboardService().getActiveTypeName(player);
+        final String scoreboardTypeLabel = this.getScoreboardTypeLabel(player, scoreboardType);
+
+        if (scoreboardType.equalsIgnoreCase(activeType)) {
+            this.rds.getShopSidebarScoreboardService().disable(player);
+            new I18n.Builder("prs.scoreboard.disabled", player)
+                    .withPlaceholder("scoreboard_type", scoreboardTypeLabel)
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (LEDGER_SCOREBOARD_TYPE.equals(scoreboardType)) {
+            this.rds.getShopSidebarScoreboardService().enableLedger(player);
+        } else {
+            this.rds.getShopSidebarScoreboardService().enableStock(player);
+        }
+
+        final String messageKey = activeType == null
+                ? "prs.scoreboard.enabled"
+                : "prs.scoreboard.switched";
+        new I18n.Builder(messageKey, player)
+                .withPlaceholder("scoreboard_type", scoreboardTypeLabel)
+                .includePrefix()
+                .build()
+                .sendMessage();
     }
 
     private @NotNull List<Shop> getOwnedShops(
@@ -242,6 +294,15 @@ public class PRS extends PlayerCommand {
                 .sendMessage();
     }
 
+    private void sendScoreboardSyntax(
+            final @NotNull Player player
+    ) {
+        new I18n.Builder("prs.scoreboard.syntax", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+    }
+
     private void giveShopBlocks(
             final @NotNull Player target,
             final int amount
@@ -312,6 +373,13 @@ public class PRS extends PlayerCommand {
                     .toList();
             return StringUtil.copyPartialMatches(args[1], suggestions, new ArrayList<>());
         }
+        if (args.length == 2 && "scoreboard".equalsIgnoreCase(args[0]) && this.hasPermission(player, EPRSPermission.SCOREBOARD)) {
+            return StringUtil.copyPartialMatches(
+                    args[1],
+                    List.of(LEDGER_SCOREBOARD_TYPE, STOCK_SCOREBOARD_TYPE),
+                    new ArrayList<>()
+            );
+        }
         if (args.length == 3 && "give".equalsIgnoreCase(args[0]) && this.hasPermission(player, EPRSPermission.GIVE)) {
             return StringUtil.copyPartialMatches(args[2], List.of("1", "16", "64"), new ArrayList<>());
         }
@@ -330,5 +398,18 @@ public class PRS extends PlayerCommand {
         } catch (IllegalArgumentException ignored) {
             return EPRSAction.INFO;
         }
+    }
+
+    private @NotNull String getScoreboardTypeLabel(
+            final @NotNull Player player,
+            final @NotNull String scoreboardType
+    ) {
+        final String key = LEDGER_SCOREBOARD_TYPE.equalsIgnoreCase(scoreboardType)
+                ? "prs.scoreboard.type.ledger"
+                : "prs.scoreboard.type.stock";
+        return new I18n.Builder(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
     }
 }
