@@ -8,10 +8,12 @@
 package com.raindropcentral.rdr.view;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
 import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.repository.RRStorage;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -170,6 +172,13 @@ public class StorageView extends BaseView {
      */
     @Override
     public void onClick(final @NotNull me.devnatan.inventoryframework.context.SlotClickContext click) {
+        final ItemStack blockedDepositItem = this.resolveBlockedDepositItem(click);
+        if (!this.isAir(blockedDepositItem)) {
+            click.setCancelled(true);
+            this.sendBlacklistedItemMessage(click.getPlayer(), blockedDepositItem);
+            return;
+        }
+
         if (!Boolean.TRUE.equals(this.storageCanDeposit.get(click))) {
             click.setCancelled(true);
             return;
@@ -376,5 +385,74 @@ public class StorageView extends BaseView {
 
     private boolean isAir(final @Nullable ItemStack itemStack) {
         return itemStack == null || itemStack.isEmpty() || itemStack.getType().isAir();
+    }
+
+    private @Nullable ItemStack resolveBlockedDepositItem(
+        final @NotNull me.devnatan.inventoryframework.context.SlotClickContext click
+    ) {
+        final ConfigSection config = this.rdr.get(click).getDefaultConfig();
+        if (click.isOutsideClick()) {
+            return null;
+        }
+
+        if (click.getClickedContainer().isEntityContainer()) {
+            final ItemStack shiftedItem = click.isShiftClick() ? click.getClickOrigin().getCurrentItem() : null;
+            return this.isGloballyBlacklisted(config, shiftedItem) ? shiftedItem : null;
+        }
+
+        final ItemStack cursorItem = click.getClickOrigin().getCursor();
+        if (this.isGloballyBlacklisted(config, cursorItem)) {
+            return cursorItem;
+        }
+
+        if (click.isKeyboardClick()) {
+            final int hotbarButton = click.getClickOrigin().getHotbarButton();
+            if (hotbarButton >= 0) {
+                final ItemStack hotbarItem = click.getPlayer().getInventory().getItem(hotbarButton);
+                if (this.isGloballyBlacklisted(config, hotbarItem)) {
+                    return hotbarItem;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private boolean isGloballyBlacklisted(
+        final @NotNull ConfigSection config,
+        final @Nullable ItemStack itemStack
+    ) {
+        return !this.isAir(itemStack) && config.isGloballyBlacklisted(itemStack.getType().name());
+    }
+
+    private void sendBlacklistedItemMessage(
+        final @NotNull Player player,
+        final @NotNull ItemStack itemStack
+    ) {
+        new I18n.Builder("storage.message.blacklisted_item", player)
+            .withPlaceholder("item", this.formatMaterialName(itemStack.getType().name()))
+            .build()
+            .sendMessage();
+    }
+
+    private @NotNull String formatMaterialName(final @NotNull String materialName) {
+        final String normalized = materialName.replace('_', ' ').toLowerCase(Locale.ROOT);
+        final String[] words = normalized.split("\\s+");
+        final StringBuilder builder = new StringBuilder();
+
+        for (final String word : words) {
+            if (word.isBlank()) {
+                continue;
+            }
+            if (builder.length() > 0) {
+                builder.append(' ');
+            }
+            builder.append(Character.toUpperCase(word.charAt(0)));
+            if (word.length() > 1) {
+                builder.append(word.substring(1));
+            }
+        }
+
+        return builder.length() == 0 ? materialName : builder.toString();
     }
 }

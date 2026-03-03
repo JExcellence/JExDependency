@@ -8,7 +8,7 @@
 /**
  * Configuration section types for RDR.
  *
- * <p>These classes expose storage provisioning defaults and other plugin-level settings parsed from
- * {@code config/config.yml}.</p>
+ * <p>These classes expose storage provisioning defaults, requirement-backed store settings, and other
+ * plugin-level settings parsed from {@code config/config.yml}.</p>
  */
 package com.raindropcentral.rdr.configs;

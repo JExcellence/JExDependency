@@ -8,13 +8,165 @@ max_storages: 10
 # Highest numeric hotkey players may bind to a storage for `/rr <hotkey>` access.
 max_hotkeys: 9
 
-# Cost associated to storage purchases.
-store:
-  # Vault support economy.
-  vault:
-    initial_cost: 1000.0
-    growth_rate: 1.125
-  # Custom currencies - JExEconomy identifiers are supported when available.
-  coins:
-    initial_cost: 50.0
-    growth_rate: 1.075
+# Items that may never be deposited into any RDR storage.
+global_blacklist:
+  - NETHER_STAR
+
+# Log a startup warning listing required storage shop purchases that do not have configured requirements.
+# Missing purchases are treated as having no requirements.
+warn_missing_requirements: true
+
+# RPlatform-powered requirements consumed for each one-based storage shop purchase tier.
+# Only the tiers required to move from `starting_storages` to `max_storages` are needed.
+# The bundled config defines the first 10 purchase tiers so higher storage caps can reuse the same pattern.
+requirements:
+  1:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1125
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 53
+      consumable: true
+      icon:
+        type: "EMERALD"
+  2:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1265
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 57
+      consumable: true
+      icon:
+        type: "EMERALD"
+  3:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1423
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 62
+      consumable: true
+      icon:
+        type: "EMERALD"
+  4:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1601
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 66
+      consumable: true
+      icon:
+        type: "EMERALD"
+  5:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1802
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 71
+      consumable: true
+      icon:
+        type: "EMERALD"
+  6:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2027
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 77
+      consumable: true
+      icon:
+        type: "EMERALD"
+  7:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2280
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 82
+      consumable: true
+      icon:
+        type: "EMERALD"
+  8:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2565
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 89
+      consumable: true
+      icon:
+        type: "EMERALD"
+  9:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2886
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 95
+      consumable: true
+      icon:
+        type: "EMERALD"
+  10:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 3247
+      consumable: true
+      icon:
+        type: "DIAMOND"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 103
+      consumable: true
+      icon:
+        type: "EMERALD"

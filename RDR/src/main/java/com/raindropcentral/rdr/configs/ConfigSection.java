@@ -3,17 +3,21 @@ package com.raindropcentral.rdr.configs;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.StringJoiner;
+import java.util.logging.Logger;
+
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Root configuration section for the RDR plugin.
@@ -32,7 +36,9 @@ public class ConfigSection extends AConfigSection {
     private Integer starting_storages;
     private Integer max_storages;
     private Integer max_hotkeys;
-    private Map<String, StoreCurrencySection> store;
+    private Boolean warn_missing_requirements;
+    private List<String> global_blacklist;
+    private Map<Integer, Map<String, StoreRequirementSection>> requirements;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -72,73 +78,131 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
-     * Returns the configured storage purchase currencies.
+     * Returns whether missing purchase requirement sets should be logged at startup.
      *
-     * <p>When the configuration does not define a store section, a fallback Vault entry is returned so the
-     * storage store remains usable with default pricing.</p>
-     *
-     * @return ordered map of normalized currency identifiers to pricing sections
+     * @return {@code true} when startup warnings should be emitted
      */
-    public @NotNull Map<String, StoreCurrencySection> getStore() {
-        if (this.store == null || this.store.isEmpty()) {
-            final StoreCurrencySection fallback = this.createFallbackStoreCurrency("vault");
-            return new LinkedHashMap<>(Map.of(fallback.getType(), fallback));
+    public boolean shouldWarnMissingRequirements() {
+        return this.warn_missing_requirements == null || this.warn_missing_requirements;
+    }
+
+    /**
+     * Returns the globally blacklisted item material keys that may not be stored in any RDR storage.
+     *
+     * @return normalized blacklist entries as uppercase material names
+     */
+    public @NotNull List<String> getGlobalBlacklist() {
+        final List<String> blacklist = new ArrayList<>();
+        if (this.global_blacklist == null) {
+            blacklist.add("NETHER_STAR");
+            return blacklist;
         }
 
-        return new LinkedHashMap<>(this.store);
+        for (final String entry : this.global_blacklist) {
+            if (entry == null || entry.isBlank()) {
+                continue;
+            }
+            blacklist.add(entry.trim().toUpperCase(Locale.ROOT));
+        }
+        return blacklist;
     }
 
     /**
-     * Returns the configured storage purchase currencies.
+     * Returns whether the supplied material name is blocked from every RDR storage.
      *
-     * @return ordered map of normalized currency identifiers to pricing sections
+     * @param materialName material name to evaluate
+     * @return {@code true} when the material is globally blacklisted
      */
-    public @NotNull Map<String, StoreCurrencySection> getStoreCosts() {
-        return this.getStore();
-    }
-
-    /**
-     * Returns the default storage purchase currency type.
-     *
-     * @return first configured store currency, or {@code "vault"} when no store currencies are configured
-     */
-    public @NotNull String getDefaultCurrencyType() {
-        return this.getStore().keySet().iterator().next();
-    }
-
-    /**
-     * Returns the default storage purchase pricing section.
-     *
-     * @return pricing section for the default storage purchase currency
-     */
-    public @NotNull StoreCurrencySection getDefaultStoreCurrency() {
-        return this.getStoreCurrency(this.getDefaultCurrencyType());
-    }
-
-    /**
-     * Returns the pricing section for the requested storage purchase currency.
-     *
-     * @param currencyType currency identifier to resolve, or {@code null} to use the default entry
-     * @return matching pricing section, falling back to the first configured currency when necessary
-     */
-    public @NotNull StoreCurrencySection getStoreCurrency(final @Nullable String currencyType) {
-        final String normalizedType = currencyType == null || currencyType.isBlank()
-            ? this.getDefaultCurrencyType()
-            : currencyType.trim().toLowerCase(Locale.ROOT);
-
-        final Map<String, StoreCurrencySection> storeCurrencies = this.getStore();
-        final StoreCurrencySection directMatch = storeCurrencies.get(normalizedType);
-        if (directMatch != null) {
-            return directMatch;
+    public boolean isGloballyBlacklisted(final @Nullable String materialName) {
+        if (materialName == null || materialName.isBlank()) {
+            return false;
         }
 
-        for (final Map.Entry<String, StoreCurrencySection> entry : storeCurrencies.entrySet()) {
-            if (entry.getKey().equalsIgnoreCase(normalizedType)) {
-                return entry.getValue();
+        final String normalizedMaterialName = materialName.trim().toUpperCase(Locale.ROOT);
+        for (final String entry : this.getGlobalBlacklist()) {
+            if (entry.equals(normalizedMaterialName)) {
+                return true;
             }
         }
+        return false;
+    }
 
-        return storeCurrencies.values().iterator().next();
+    /**
+     * Returns all configured purchase-indexed storage requirements.
+     *
+     * <p>The outer key is the one-based shop purchase number and the inner map contains the
+     * requirement entries for that purchase.</p>
+     *
+     * @return defensive copy of the configured purchase requirement map
+     */
+    public @NotNull Map<Integer, Map<String, StoreRequirementSection>> getRequirements() {
+        final Map<Integer, Map<String, StoreRequirementSection>> copy = new LinkedHashMap<>();
+        if (this.requirements == null) {
+            return copy;
+        }
+
+        for (final Map.Entry<Integer, Map<String, StoreRequirementSection>> entry : this.requirements.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null) {
+                continue;
+            }
+            copy.put(entry.getKey(), new LinkedHashMap<>(entry.getValue()));
+        }
+        return copy;
+    }
+
+    /**
+     * Returns the requirement entries for the requested shop purchase number.
+     *
+     * @param purchaseNumber one-based shop purchase number
+     * @return requirement map for the requested purchase, or an empty map when none is configured
+     */
+    public @NotNull Map<String, StoreRequirementSection> getRequirementsForPurchase(final int purchaseNumber) {
+        final Map<String, StoreRequirementSection> purchaseRequirements = this.getRequirements().get(purchaseNumber);
+        return purchaseRequirements == null ? new LinkedHashMap<>() : new LinkedHashMap<>(purchaseRequirements);
+    }
+
+    /**
+     * Returns the shop purchase numbers required by the current storage limits that have no requirement entries.
+     *
+     * @return ordered list of missing purchase numbers
+     */
+    public @NotNull List<Integer> getMissingRequirementPurchases() {
+        final List<Integer> missing = new ArrayList<>();
+        final Map<Integer, Map<String, StoreRequirementSection>> configuredRequirements = this.getRequirements();
+        for (int purchaseNumber = 1; purchaseNumber <= this.getRequiredPurchaseCount(); purchaseNumber++) {
+            final Map<String, StoreRequirementSection> purchaseRequirements = configuredRequirements.get(purchaseNumber);
+            if (purchaseRequirements == null || purchaseRequirements.isEmpty()) {
+                missing.add(purchaseNumber);
+            }
+        }
+        return missing;
+    }
+
+    /**
+     * Logs a startup warning for any storage purchases that do not have explicit requirements.
+     *
+     * @param logger logger that should receive the warning
+     * @throws NullPointerException if {@code logger} is {@code null}
+     */
+    public void logMissingRequirementWarnings(final @NotNull Logger logger) {
+        if (!this.shouldWarnMissingRequirements()) {
+            return;
+        }
+
+        final List<Integer> missingPurchases = this.getMissingRequirementPurchases();
+        if (missingPurchases.isEmpty()) {
+            return;
+        }
+
+        final StringJoiner joiner = new StringJoiner(", ");
+        for (final Integer purchaseNumber : missingPurchases) {
+            joiner.add(String.valueOf(purchaseNumber));
+        }
+
+        logger.warning(
+            "Storage shop purchase tiers without configured requirements: " + joiner
+                + ". These purchases will be available with no requirements."
+        );
     }
 
     /**
@@ -173,7 +237,13 @@ public class ConfigSection extends AConfigSection {
         section.max_hotkeys = configuration.contains("max_hotkeys")
             ? configuration.getInt("max_hotkeys")
             : section.max_hotkeys;
-        section.store = parseStore(configuration.getConfigurationSection("store"));
+        section.warn_missing_requirements = configuration.contains("warn_missing_requirements")
+            ? configuration.getBoolean("warn_missing_requirements")
+            : section.warn_missing_requirements;
+        section.global_blacklist = configuration.contains("global_blacklist")
+            ? new ArrayList<>(configuration.getStringList("global_blacklist"))
+            : section.global_blacklist;
+        section.requirements = parseRequirements(configuration.getConfigurationSection("requirements"));
         return section;
     }
 
@@ -187,12 +257,14 @@ public class ConfigSection extends AConfigSection {
         section.starting_storages = 1;
         section.max_storages = 1;
         section.max_hotkeys = 9;
-        section.store = createFallbackStore();
+        section.warn_missing_requirements = true;
+        section.global_blacklist = new ArrayList<>(List.of("NETHER_STAR"));
+        section.requirements = createEmptyRequirements();
         return section;
     }
 
     /**
-     * Normalizes configured store currencies after config parsing completes.
+     * Normalizes configured storage requirements after config parsing completes.
      *
      * @param fields mapped config fields
      * @throws Exception if the underlying config mapper fails while finishing parse processing
@@ -201,27 +273,35 @@ public class ConfigSection extends AConfigSection {
     public void afterParsing(final @NotNull List<Field> fields) throws Exception {
         super.afterParsing(fields);
 
-        if (this.store == null || this.store.isEmpty()) {
+        if (this.requirements == null || this.requirements.isEmpty()) {
+            this.global_blacklist = this.getGlobalBlacklist();
             return;
         }
 
-        final Map<String, StoreCurrencySection> normalizedStore = new LinkedHashMap<>();
-        for (final Map.Entry<String, StoreCurrencySection> entry : this.store.entrySet()) {
-            if (entry.getKey() == null || entry.getValue() == null) {
+        this.global_blacklist = this.getGlobalBlacklist();
+
+        final Map<Integer, Map<String, StoreRequirementSection>> normalizedRequirements = new LinkedHashMap<>();
+        for (final Map.Entry<Integer, Map<String, StoreRequirementSection>> purchaseEntry : this.requirements.entrySet()) {
+            if (purchaseEntry.getKey() == null || purchaseEntry.getValue() == null || purchaseEntry.getKey() < 1) {
                 continue;
             }
 
-            final String normalizedKey = entry.getKey().trim().toLowerCase(Locale.ROOT);
-            final StoreCurrencySection section = entry.getValue();
-            section.setContext(
-                normalizedKey,
-                section.getInitialCost(),
-                section.getGrowthRate()
-            );
-            normalizedStore.put(normalizedKey, section);
+            final Map<String, StoreRequirementSection> normalizedPurchaseRequirements = new LinkedHashMap<>();
+            for (final Map.Entry<String, StoreRequirementSection> requirementEntry : purchaseEntry.getValue().entrySet()) {
+                if (requirementEntry.getKey() == null || requirementEntry.getValue() == null) {
+                    continue;
+                }
+
+                normalizedPurchaseRequirements.put(
+                    normalizeRequirementKey(requirementEntry.getKey()),
+                    requirementEntry.getValue()
+                );
+            }
+
+            normalizedRequirements.put(purchaseEntry.getKey(), normalizedPurchaseRequirements);
         }
 
-        this.store = normalizedStore;
+        this.requirements = normalizedRequirements;
     }
 
     private int normalizePositive(
@@ -234,56 +314,81 @@ public class ConfigSection extends AConfigSection {
         return value;
     }
 
-    private @NotNull StoreCurrencySection createFallbackStoreCurrency(final @NotNull String currencyType) {
-        final StoreCurrencySection fallback = new StoreCurrencySection(new EvaluationEnvironmentBuilder());
-        fallback.setContext(currencyType, 1000.0D, 1.125D);
-        return fallback;
-    }
-
-    private static @NotNull Map<String, StoreCurrencySection> parseStore(
-        final @Nullable ConfigurationSection storeSection
+    private static @NotNull Map<Integer, Map<String, StoreRequirementSection>> parseRequirements(
+        final @Nullable ConfigurationSection requirementsSection
     ) {
-        if (storeSection == null) {
-            return createFallbackStore();
+        if (requirementsSection == null) {
+            return createEmptyRequirements();
         }
 
-        final Map<String, StoreCurrencySection> storeCurrencies = new LinkedHashMap<>();
-        for (final String key : storeSection.getKeys(false)) {
-            if (key == null || key.isBlank() || !storeSection.isConfigurationSection(key)) {
+        final Map<Integer, Map<String, StoreRequirementSection>> parsedRequirements = new LinkedHashMap<>();
+        for (final String purchaseKey : requirementsSection.getKeys(false)) {
+            final Integer purchaseNumber = parsePurchaseNumber(purchaseKey);
+            if (purchaseNumber == null || purchaseNumber < 1) {
                 continue;
             }
 
-            final ConfigurationSection currencySection = storeSection.getConfigurationSection(key);
-            if (currencySection == null) {
+            final ConfigurationSection purchaseSection = requirementsSection.getConfigurationSection(purchaseKey);
+            if (purchaseSection == null) {
                 continue;
             }
 
-            final String normalizedType = normalizeCurrencyType(key);
-            final StoreCurrencySection section = new StoreCurrencySection(new EvaluationEnvironmentBuilder());
-            section.setContext(
-                normalizedType,
-                currencySection.getDouble("initial_cost", 1000.0D),
-                currencySection.getDouble("growth_rate", 1.125D)
+            final Map<String, StoreRequirementSection> purchaseRequirements = parsePurchaseRequirementSet(purchaseSection);
+            if (!purchaseRequirements.isEmpty()) {
+                parsedRequirements.put(purchaseNumber, purchaseRequirements);
+            }
+        }
+
+        return parsedRequirements;
+    }
+
+    private static @NotNull Map<String, StoreRequirementSection> parsePurchaseRequirementSet(
+        final @NotNull ConfigurationSection purchaseSection
+    ) {
+        final Map<String, StoreRequirementSection> purchaseRequirements = new LinkedHashMap<>();
+        for (final String key : purchaseSection.getKeys(false)) {
+            if (key == null || key.isBlank() || !purchaseSection.isConfigurationSection(key)) {
+                continue;
+            }
+
+            final ConfigurationSection requirementSection = purchaseSection.getConfigurationSection(key);
+            if (requirementSection == null) {
+                continue;
+            }
+
+            purchaseRequirements.put(
+                normalizeRequirementKey(key),
+                StoreRequirementSection.fromConfigurationSection(key, requirementSection)
             );
-            storeCurrencies.put(normalizedType, section);
         }
-
-        return storeCurrencies.isEmpty() ? createFallbackStore() : storeCurrencies;
+        return purchaseRequirements;
     }
 
-    private static @NotNull Map<String, StoreCurrencySection> createFallbackStore() {
-        final Map<String, StoreCurrencySection> fallback = new LinkedHashMap<>();
-        final StoreCurrencySection fallbackSection = new StoreCurrencySection(new EvaluationEnvironmentBuilder());
-        fallbackSection.setContext("vault", 1000.0D, 1.125D);
-        fallback.put("vault", fallbackSection);
-        return fallback;
+    private static @NotNull Map<Integer, Map<String, StoreRequirementSection>> createEmptyRequirements() {
+        return new LinkedHashMap<>();
     }
 
-    private static @NotNull String normalizeCurrencyType(final @Nullable String currencyType) {
-        if (currencyType == null || currencyType.isBlank()) {
-            return "vault";
+    private int getRequiredPurchaseCount() {
+        return Math.max(this.getMaxStorages() - this.getStartingStorages(), 0);
+    }
+
+    private static @Nullable Integer parsePurchaseNumber(final @Nullable String purchaseKey) {
+        if (purchaseKey == null || purchaseKey.isBlank()) {
+            return null;
         }
 
-        return currencyType.trim().toLowerCase(Locale.ROOT);
+        try {
+            return Integer.parseInt(purchaseKey.trim());
+        } catch (NumberFormatException ignored) {
+            return null;
+        }
+    }
+
+    private static @NotNull String normalizeRequirementKey(final @Nullable String requirementKey) {
+        if (requirementKey == null || requirementKey.isBlank()) {
+            return "requirement";
+        }
+
+        return requirementKey.trim().toLowerCase(Locale.ROOT);
     }
 }

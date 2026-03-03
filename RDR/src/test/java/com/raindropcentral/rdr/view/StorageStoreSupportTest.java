@@ -7,31 +7,23 @@
 
 package com.raindropcentral.rdr.view;
 
-import java.util.UUID;
-
-import com.raindropcentral.rdr.database.entity.RDRPlayer;
-import com.raindropcentral.rdr.database.entity.RStorage;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class StorageStoreSupportTest {
 
     @Test
-    void buildsNextStorageKeyUsingFirstAvailableSequenceGap() {
-        final RDRPlayer player = new RDRPlayer(UUID.randomUUID());
-        new RStorage(player, "storage-1", 54);
-        new RStorage(player, "storage-2", 54);
-        new RStorage(player, "storage-4", 54);
-
-        assertEquals("storage-3", StorageStoreSupport.buildNextStorageKey(player));
+    void calculatesPurchaseNumberRelativeToStartingStorages() {
+        assertEquals(1, StorageStoreSupport.getNextPurchaseNumber(1, 1));
+        assertEquals(2, StorageStoreSupport.getNextPurchaseNumber(2, 1));
+        assertEquals(3, StorageStoreSupport.getNextPurchaseNumber(5, 3));
     }
 
     @Test
-    void detectsWhenStorageLimitIsReached() {
-        assertTrue(StorageStoreSupport.hasReachedStorageLimit(5, 5));
-        assertFalse(StorageStoreSupport.hasReachedStorageLimit(4, 5));
+    void clampsPurchaseNumberToOneWhenValuesAreInvalid() {
+        assertEquals(1, StorageStoreSupport.getNextPurchaseNumber(0, 1));
+        assertEquals(1, StorageStoreSupport.getNextPurchaseNumber(-2, 1));
+        assertEquals(1, StorageStoreSupport.getNextPurchaseNumber(2, 5));
     }
 }

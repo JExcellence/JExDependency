@@ -30,8 +30,8 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Store view used to purchase additional persistent storages.
  *
- * <p>The purchase flow charges every configured store currency that is currently available, supporting
- * Vault-backed balances and custom JExEconomy currencies through {@link StorageStorePricingSupport}.</p>
+ * <p>The purchase flow evaluates and consumes the configured RPlatform requirements for each storage
+ * purchase.</p>
  *
  * @author RaindropCentral
  * @since 5.0.0
@@ -100,28 +100,33 @@ public class StorageStoreView extends BaseView {
         final RDRPlayer rdrPlayer = this.findPlayer(render);
         final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
         final int maxStorages = config.getMaxStorages();
-        final List<StorageStorePricingSupport.StorageCurrencyCost> costs =
-            StorageStorePricingSupport.getConfiguredStoreCosts(plugin, config, ownedStorages);
-        final String costSummary = this.resolveCostSummary(player, plugin, costs);
+        final int purchaseNumber = StorageStoreSupport.getNextPurchaseNumber(
+            ownedStorages,
+            config.getStartingStorages()
+        );
+        final List<StorageStorePricingSupport.ResolvedStoreRequirement> requirements =
+            StorageStorePricingSupport.getConfiguredStoreRequirements(plugin, config, player, purchaseNumber);
+        final String costSummary = this.resolveCostSummary(player, requirements);
         final boolean limitReached = StorageStoreSupport.hasReachedStorageLimit(ownedStorages, maxStorages);
-        final boolean currenciesOperational = costs.stream()
-            .allMatch(cost -> StorageStorePricingSupport.isCurrencyOperational(plugin, cost.currencyType()));
+        final StorageStorePricingSupport.RequirementAvailability requirementAvailability =
+            StorageStorePricingSupport.resolveAvailability(player, requirements, rdrPlayer);
 
         render.layoutSlot('s')
             .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStorages));
 
         render.layoutSlot('c')
-            .renderWith(() -> this.createCostItem(player, costSummary, costs.size(), !costs.isEmpty()));
+            .withItem(this.createCostItem(player, requirements.size(), requirementAvailability))
+            .onClick(clickContext -> this.openRequirementBrowser(clickContext, plugin, purchaseNumber));
 
         render.layoutSlot('p')
             .withItem(this.createPurchaseItem(
                 player,
                 costSummary,
-                costs.size(),
+                requirements.size(),
                 ownedStorages,
                 maxStorages,
                 rdrPlayer != null,
-                currenciesOperational && !costs.isEmpty(),
+                requirementAvailability,
                 limitReached
             ))
             .onClick(clickContext -> this.handlePurchaseClick(clickContext, plugin));
@@ -146,6 +151,10 @@ public class StorageStoreView extends BaseView {
         final RDRPlayer rdrPlayer = this.findPlayer(clickContext);
         final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
         final int maxStorages = config.getMaxStorages();
+        final int purchaseNumber = StorageStoreSupport.getNextPurchaseNumber(
+            ownedStorages,
+            config.getStartingStorages()
+        );
 
         if (plugin.getPlayerRepository() == null || rdrPlayer == null) {
             this.i18n("feedback.profile_missing", player)
@@ -170,16 +179,15 @@ public class StorageStoreView extends BaseView {
         final StorageStorePricingSupport.PurchaseResult purchaseResult = StorageStorePricingSupport.purchaseStorage(
             clickContext,
             plugin,
-            rdrPlayer,
-            config
+            config,
+            purchaseNumber,
+            rdrPlayer
         );
         if (!purchaseResult.success()) {
             this.i18n(purchaseResult.failureKey(), player)
                 .withPlaceholders(Map.of(
-                    "cost", purchaseResult.formattedCost(),
-                    "costs", purchaseResult.costSummary(),
-                    "currency_type", purchaseResult.currencyType(),
-                    "currency_name", purchaseResult.currencyName(),
+                    "requirement", purchaseResult.failedRequirement(),
+                    "requirements", purchaseResult.requirementSummary(),
                     "owned_storages", ownedStorages,
                     "max_storages", maxStorages
                 ))
@@ -192,11 +200,14 @@ public class StorageStoreView extends BaseView {
         final String storageKey = StorageStoreSupport.buildNextStorageKey(rdrPlayer);
         new RStorage(rdrPlayer, storageKey, STORAGE_SIZE);
         plugin.getPlayerRepository().update(rdrPlayer);
+        final String requirementSummary = purchaseResult.requirementSummary().isBlank()
+            ? this.i18n("cost.none", player).build().getI18nVersionWrapper().asPlaceholder()
+            : purchaseResult.requirementSummary();
 
         this.i18n("feedback.purchased", player)
             .withPlaceholders(Map.of(
                 "storage_key", storageKey,
-                "costs", purchaseResult.costSummary(),
+                "requirements", requirementSummary,
                 "owned_storages", rdrPlayer.getStorages().size(),
                 "max_storages", maxStorages
             ))
@@ -212,6 +223,20 @@ public class StorageStoreView extends BaseView {
         );
     }
 
+    private void openRequirementBrowser(
+        final @NotNull Context context,
+        final @NotNull RDR plugin,
+        final int purchaseNumber
+    ) {
+        context.openForPlayer(
+            StorageStoreRequirementsView.class,
+            Map.of(
+                "plugin", plugin,
+                "purchase_number", purchaseNumber
+            )
+        );
+    }
+
     private @Nullable RDRPlayer findPlayer(final @NotNull Context context) {
         final RDR plugin = this.rdr.get(context);
         return plugin.getPlayerRepository() == null
@@ -221,17 +246,16 @@ public class StorageStoreView extends BaseView {
 
     private @NotNull String resolveCostSummary(
         final @NotNull Player player,
-        final @NotNull RDR plugin,
-        final @NotNull List<StorageStorePricingSupport.StorageCurrencyCost> costs
+        final @NotNull List<StorageStorePricingSupport.ResolvedStoreRequirement> requirements
     ) {
-        if (costs.isEmpty()) {
+        if (requirements.isEmpty()) {
             return this.i18n("cost.none", player)
                 .build()
                 .getI18nVersionWrapper()
                 .asPlaceholder();
         }
 
-        return StorageStorePricingSupport.formatCostSummary(plugin, costs);
+        return StorageStorePricingSupport.formatRequirementSummary(requirements);
     }
 
     private @NotNull ItemStack createSummaryItem(
@@ -254,21 +278,37 @@ public class StorageStoreView extends BaseView {
 
     private @NotNull ItemStack createCostItem(
         final @NotNull Player player,
-        final @NotNull String costSummary,
-        final int currencyCount,
-        final boolean currenciesAvailable
+        final int requirementCount,
+        final @NotNull StorageStorePricingSupport.RequirementAvailability availability
     ) {
-        final String availability = currenciesAvailable
-            ? this.i18n("cost.availability.available", player).build().getI18nVersionWrapper().asPlaceholder()
-            : this.i18n("cost.availability.unavailable", player).build().getI18nVersionWrapper().asPlaceholder();
+        final String availabilityPlaceholder = switch (availability) {
+            case READY -> this.i18n("cost.availability.available", player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+            case PENDING -> this.i18n("cost.availability.pending", player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+            case UNAVAILABLE -> this.i18n("cost.availability.unavailable", player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+        };
 
-        return UnifiedBuilderFactory.item(currenciesAvailable ? Material.GOLD_INGOT : Material.REDSTONE)
+        final Material material = switch (availability) {
+            case READY -> Material.GOLD_INGOT;
+            case PENDING -> Material.CLOCK;
+            case UNAVAILABLE -> Material.REDSTONE;
+        };
+
+        return UnifiedBuilderFactory.item(material)
             .setName(this.i18n("cost.name", player).build().component())
             .setLore(this.i18n("cost.lore", player)
                 .withPlaceholders(Map.of(
-                    "currency_count", currencyCount,
-                    "costs", costSummary,
-                    "availability", availability
+                    "requirement_count", requirementCount,
+                    "requirements", requirementCount,
+                    "availability", availabilityPlaceholder
                 ))
                 .build()
                 .children())
@@ -279,11 +319,11 @@ public class StorageStoreView extends BaseView {
     private @NotNull ItemStack createPurchaseItem(
         final @NotNull Player player,
         final @NotNull String costSummary,
-        final int currencyCount,
+        final int requirementCount,
         final int ownedStorages,
         final int maxStorages,
         final boolean profileLoaded,
-        final boolean currenciesAvailable,
+        final @NotNull StorageStorePricingSupport.RequirementAvailability requirementAvailability,
         final boolean limitReached
     ) {
         final Material material;
@@ -294,9 +334,12 @@ public class StorageStoreView extends BaseView {
         } else if (limitReached) {
             material = Material.BARRIER;
             key = "purchase.limit_reached";
-        } else if (!currenciesAvailable) {
+        } else if (requirementAvailability == StorageStorePricingSupport.RequirementAvailability.UNAVAILABLE) {
             material = Material.REDSTONE_BLOCK;
-            key = "purchase.no_currencies";
+            key = "purchase.no_requirements";
+        } else if (requirementAvailability == StorageStorePricingSupport.RequirementAvailability.PENDING) {
+            material = Material.CLOCK;
+            key = "purchase.pending";
         } else {
             material = Material.EMERALD;
             key = "purchase.available";
@@ -306,8 +349,8 @@ public class StorageStoreView extends BaseView {
             .setName(this.i18n(key + ".name", player).build().component())
             .setLore(this.i18n(key + ".lore", player)
                 .withPlaceholders(Map.of(
-                    "costs", costSummary,
-                    "currency_count", currencyCount,
+                    "requirements", costSummary,
+                    "requirement_count", requirementCount,
                     "owned_storages", ownedStorages,
                     "max_storages", maxStorages
                 ))

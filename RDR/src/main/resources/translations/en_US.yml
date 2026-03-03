@@ -32,47 +32,91 @@ storage_store_ui:
       - "<gray>Buy additional vault space until</gray>"
       - "<gray>you reach the configured cap.</gray>"
   cost:
-    name: "<gradient:#f59e0b:#fbbf24>[$] Required Costs</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Store Requirements</gradient>"
     lore:
-      - "<gray>Available currencies:</gray> <white>{currency_count}</white>"
-      - "<gray>Required costs:</gray> <white>{costs}</white>"
+      - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Current requirement count:</gray> <white>{requirements}</white>"
       - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Click to inspect each requirement tier in detail.</yellow>"
     none: "<gradient:#ef4444:#f87171>[None]</gradient>"
     availability:
       available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
   purchase:
     available:
       name: "<gradient:#10b981:#34d399>[+] Buy Storage</gradient>"
       lore:
-        - "<gray>Available currencies:</gray> <white>{currency_count}</white>"
-        - "<gray>Required costs:</gray> <white>{costs}</white>"
+        - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Current requirements:</gray> <white>{requirements}</white>"
         - "<gray>Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>Click to purchase using all listed currencies.</yellow>"
+        - "<yellow>Click to purchase when every requirement is met.</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] Requirements Pending</gradient>"
+      lore:
+        - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+        - "<gray>Current requirements:</gray> <white>{requirements}</white>"
+        - "<gray>Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Meet the remaining requirements before purchasing.</yellow>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Storage Limit Reached</gradient>"
       lore:
         - "<gray>Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
         - "<gray>You cannot purchase more storages</gray>"
         - "<gray>until the global cap is raised.</gray>"
-    no_currencies:
-      name: "<gradient:#ef4444:#f87171>[!] No Store Currencies</gradient>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] Requirements Offline</gradient>"
       lore:
-        - "<gray>No configured store currencies are</gray>"
-        - "<gray>currently available on this server.</gray>"
+        - "<gray>One or more configured store requirements</gray>"
+        - "<gray>cannot be resolved on this server.</gray>"
     profile_missing:
       name: "<gradient:#ef4444:#f87171>[!] Profile Missing</gradient>"
       lore:
         - "<gray>Your RDR profile could not be loaded,</gray>"
         - "<gray>so purchases are temporarily blocked.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased <white>{storage_key}</white><gray>. Required currencies:</gray> <white>{costs}</white><gray>. Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
-    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You need <white>{cost}</white><gray> from <white>{currency_name}</white><gray> to buy another storage. Required currencies:</gray> <white>{costs}</white>"
-    currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>The required currency <white>{currency_name}</white><gray> is not available on this server right now.</gray>"
-    purchase_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to charge <white>{cost}</white><gray> from <white>{currency_name}</white><gray>. Any partial charges were rolled back.</gray>"
-    no_currencies: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>No configured store currencies are available for storage purchases right now.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased <white>{storage_key}</white><gray>. Requirements consumed:</gray> <white>{requirements}</white><gray>. Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not currently meet <white>{requirement}</white><gray>. Store requirements:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>The store requirement <white>{requirement}</white><gray> is unavailable or invalid right now.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>No configured store requirements are available for storage purchases right now.</gray>"
     limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You have reached the storage limit of <white>{max_storages}</white><gray>. Owned storages:</gray> <white>{owned_storages}</white>"
     profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDR profile could not be loaded, so storage purchases are unavailable.</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Purchase {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] Requirement Browser</gradient>"
+    lore:
+      - "<gray>Purchase tier:</gray> <white>{purchase_number}</white>"
+      - "<gray>Unlocks storage:</gray> <white>{storage_number}</white>"
+      - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Currently met:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Free] No Requirements</gradient>"
+    lore:
+      - "<gray>This purchase tier has no configured requirements.</gray>"
+      - "<yellow>You can buy this storage without extra checks.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Key:</gray> <white>{requirement_key}</white>"
+      - "<gray>Type:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Progress:</gray> <white>{progress_bar} {progress}</white>"
+      - "<gray>Summary:</gray> <white>{summary}</white>"
+      - "<yellow>Right-click item or currency requirements to bank progress.</yellow>"
+    details: "<gradient:#38bdf8:#60a5fa>[>] Detailed Checks</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{requirement}</white><gray> is now ready.</gray> <white>{progress_bar} {progress}</white>"
+    progress_saved: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Stored progress for <white>{requirement}</white><gray>.</gray> <white>{progress_bar} {progress}</white>"
+    no_progress: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>No matching items or currency were available for <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> does not support banked progress.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is unavailable right now.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDR profile could not be loaded, so progress could not be saved.</gray>"
 
 storage_player_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Vault] Your Storages</gradient>"
@@ -231,6 +275,7 @@ storage:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} is already open in another session.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be opened right now.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have access to <white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> is globally blacklisted from RDR storage.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your edit session for {storage_key} expired or moved elsewhere. Changes were not saved.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be saved. Check the console for details.</gray>"
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} is now bound to <white>/rr {hotkey}</white><gray>.</gray>"

@@ -6,9 +6,10 @@
  */
 
 /**
- * Persistence entities for the RDR player and storage domain.
+ * Persistence entities for the RDR player, storage, and store-progress domain.
  *
  * <p>This package defines the player extension record used by the plugin as well as the slot-based
- * storage entities backing player vaults and similar inventory containers.</p>
+ * storage entities backing player vaults, plus normalized progress rows used for partial store
+ * requirement completion.</p>
  */
 package com.raindropcentral.rdr.database.entity;

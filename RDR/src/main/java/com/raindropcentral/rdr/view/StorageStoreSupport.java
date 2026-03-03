@@ -21,6 +21,15 @@ final class StorageStoreSupport {
         return ownedStorages >= maxStorages;
     }
 
+    static int getNextPurchaseNumber(
+        final int ownedStorages,
+        final int startingStorages
+    ) {
+        final int normalizedOwnedStorages = Math.max(ownedStorages, 0);
+        final int normalizedStartingStorages = Math.max(startingStorages, 0);
+        return Math.max(normalizedOwnedStorages - normalizedStartingStorages + 1, 1);
+    }
+
     static @NotNull String buildNextStorageKey(final @NotNull RDRPlayer player) {
         int index = 1;
         while (player.findStorage("storage-" + index).isPresent()) {

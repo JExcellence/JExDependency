@@ -17,11 +17,13 @@ import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRStorage;
+import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
 import com.raindropcentral.rdr.view.StorageHotkeyAnvilView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StoragePlayerView;
 import com.raindropcentral.rdr.view.StorageSettingsView;
 import com.raindropcentral.rdr.view.StorageStoreView;
+import com.raindropcentral.rdr.view.StorageStoreRequirementsView;
 import com.raindropcentral.rdr.view.StorageTrustedView;
 import com.raindropcentral.rdr.view.StorageView;
 import com.raindropcentral.rplatform.RPlatform;
@@ -93,6 +95,8 @@ public class RDR extends JavaPlugin {
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
         this.ensureDefaultConfigFile();
+        this.getDefaultConfig().logMissingRequirementWarnings(this.getLogger());
+        RDRRequirementSetup.initialize(this);
         this.serverUuid = this.loadOrCreateServerUuid();
 
         try {
@@ -123,6 +127,8 @@ public class RDR extends JavaPlugin {
                 entityManagerFactory.close();
             } catch (Exception ignored) {}
         }
+
+        RDRRequirementSetup.shutdown();
     }
 
     /**
@@ -243,6 +249,7 @@ public class RDR extends JavaPlugin {
                     new StorageSettingsView(),
                     new StorageTrustedView(),
                     new StorageStoreView(),
+                    new StorageStoreRequirementsView(),
                     new StorageHotkeyAnvilView(),
                     new StorageView()
                 )
