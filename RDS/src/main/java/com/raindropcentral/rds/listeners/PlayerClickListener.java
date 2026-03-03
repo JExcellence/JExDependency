@@ -29,23 +29,7 @@ public class PlayerClickListener implements Listener {
         final var location = block.getLocation();
         final Shop shop = this.rds.getShopRepository().findByLocation(location);
         if (shop == null) return;
-        if (event.getAction().isRightClick()) {
-            event.setCancelled(true);
-            /*
-            //TODO COMMENT OUT TESTING ONLY
-            this.rds.getViewFrame().open(
-                ShopCustomerView.class,
-                player,
-                Map.of(
-                    "plugin",
-                    this.rds,
-                    "shopLocation",
-                    shop.getShopLocation()
-                )
-            );
-             */
-            return;
-        }
+        if (event.getAction().isRightClick()) event.setCancelled(true);
         final Class<? extends View> viewClass = shop.canAccessOverview(player.getUniqueId())
                 ? ShopOverviewView.class
                 : ShopCustomerView.class;
