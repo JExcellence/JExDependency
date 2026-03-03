@@ -3,6 +3,7 @@ package com.raindropcentral.rds.commands;
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
@@ -245,6 +246,10 @@ public class PRS extends PlayerCommand {
             final @NotNull Player target,
             final int amount
     ) {
+        final RDSPlayer targetPlayer = this.getOrCreatePlayer(target);
+        targetPlayer.addShop(amount);
+        this.rds.getPlayerRepository().update(targetPlayer);
+
         int remaining = amount;
         final List<ItemStack> stacks = new ArrayList<>();
 
@@ -261,6 +266,17 @@ public class PRS extends PlayerCommand {
                         target.getLocation().clone().add(0, 0.5, 0),
                         item
                 ));
+    }
+
+    private @NotNull RDSPlayer getOrCreatePlayer(final @NotNull Player player) {
+        final RDSPlayer existingPlayer = this.rds.getPlayerRepository().findByPlayer(player.getUniqueId());
+        if (existingPlayer != null) {
+            return existingPlayer;
+        }
+
+        final RDSPlayer newPlayer = new RDSPlayer(player.getUniqueId());
+        this.rds.getPlayerRepository().create(newPlayer);
+        return newPlayer;
     }
 
     /**

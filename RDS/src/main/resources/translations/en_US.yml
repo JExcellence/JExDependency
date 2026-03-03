@@ -42,61 +42,84 @@ shop_block:
     - "<yellow>Place this block to set up your shop.</yellow>"
 
 shop_store_ui:
-  title: "Shop Store"
+  title: "<gradient:#38bdf8:#60a5fa>[$] Shop Store</gradient>"
   owned_shops:
-    name: "<blue>Total Owned Shops</blue>"
+    name: "<gradient:#10b981:#34d399>[#] Owned Shop Blocks</gradient>"
     lore:
-      - "<gray>Owned shops:</gray> <white>{owned_shops}</white>"
-      - "<gray>Placed shops currently registered</gray>"
-      - "<gray>to your account.</gray>"
+      - "<gray>Owned shop blocks:</gray> <white>{owned_shops}</white>"
+      - "<gray>This tracks purchased or granted</gray>"
+      - "<gray>ShopBlock ownership.</gray>"
   max_shops:
-    name: "<green>Shop Limit</green>"
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Shop Block Limit</gradient>"
     lore:
-      - "<gray>Owned shops:</gray> <white>{owned_shops}</white>"
-      - "<gray>Maximum shops:</gray> <white>{max_shops}</white>"
-      - "<gray>This limit controls how many shops</gray>"
-      - "<gray>you may place.</gray>"
+      - "<gray>Owned shop blocks:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum shop blocks:</gray> <white>{max_shops}</white>"
+      - "<gray>This limit controls how many shop</gray>"
+      - "<gray>blocks you can unlock.</gray>"
   costs:
-    name: "<gold>Store Costs</gold>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Store Requirements</gradient>"
     lore:
-      - "<gray>Available currencies:</gray> <white>{currency_count}</white>"
-      - "<gray>Review every required currency</gray>"
-      - "<gray>before purchasing a new shop.</gray>"
-      - "<yellow>Click to open the cost list.</yellow>"
+      - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Current requirement count:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Click to inspect the next shop tier.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
 
 shop_store_cost_ui:
-  title: "Shop Costs"
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Shop Tier {purchase_number}</gradient>"
   summary:
-    name: "<gold>Purchase Shop Block</gold>"
+    name: "<gradient:#10b981:#34d399>[+] Purchase Shop Block</gradient>"
     lore:
-      - "<gray>The following currencies are required</gray>"
-      - "<gray>to purchase a new shop block.</gray>"
-      - "<gray>Owned shops:</gray> <white>{owned_shops}</white>"
-      - "<gray>Maximum shops:</gray> <white>{max_shops}</white>"
-      - "<gray>Required currencies:</gray> <white>{currency_count}</white>"
-      - "<yellow>Click to purchase using all listed currencies.</yellow>"
+      - "<gray>Purchase tier:</gray> <white>{purchase_number}</white>"
+      - "<gray>Owned shop blocks:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum shop blocks:</gray> <white>{max_shops}</white>"
+      - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Currently met:</gray> <white>{met_count}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Click to purchase when this tier is ready.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Free]</gradient>"
   empty:
-    name: "<red>No Store Currencies Available</red>"
+    name: "<gradient:#10b981:#34d399>[Free] No Requirements</gradient>"
     lore:
-      - "<gray>No configured store currencies are</gray>"
-      - "<gray>currently available on this server.</gray>"
+      - "<gray>This purchase tier has no configured requirements.</gray>"
+      - "<yellow>You can purchase this shop block without extra checks.</yellow>"
   entry:
-    name: "<gold>{currency_name}</gold>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
     lore:
-      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
-      - "<gray>Initial cost:</gray> <white>{initial_cost}</white>"
-      - "<gray>Growth rate:</gray> <white>{growth_rate}</white>"
-      - "<gray>Current cost:</gray> <white>{current_cost}</white>"
+      - "<gray>Key:</gray> <white>{requirement_key}</white>"
+      - "<gray>Type:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Progress:</gray> <white>{progress_bar} {progress}</white>"
+      - "<gray>Summary:</gray> <white>{summary}</white>"
+      - "<yellow>Right-click compatible requirements to bank progress.</yellow>"
+    details: "<gradient:#38bdf8:#60a5fa>[>] Detailed Checks</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
   feedback:
-    purchased: "<green>Purchased a shop block. Required currencies: {costs}. Current placed shops: {owned_shops}.</green>"
-    insufficient_funds: "<red>You need {cost} from {currency_name} to buy a shop block.</red>"
-    purchase_failed: "<red>Failed to charge {cost} from {currency_name}. Any partial charges were rolled back.</red>"
-    no_currencies: "<red>No configured store currencies are available right now.</red>"
-    limit_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased a shop block. Requirements consumed:</gray> <white>{requirements}</white><gray>. Owned shop blocks:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not currently meet <white>{requirement}</white><gray>. Store requirements:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>The store requirement <white>{requirement}</white><gray> is unavailable or invalid right now.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You have reached the shop block limit of <white>{max_shops}</white><gray>. Owned shop blocks:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{requirement}</white><gray> is now ready.</gray> <white>{progress_bar} {progress}</white>"
+    progress_saved: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Stored progress for <white>{requirement}</white><gray>.</gray> <white>{progress_bar} {progress}</white>"
+    no_progress: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>No matching items or currency were available for <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> does not support banked progress.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is unavailable right now.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDS profile could not be loaded, so progress could not be saved.</gray>"
 
 block_listener:
   error:
     invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
+    not_owner: "<red>This ShopBlock belongs to another player and cannot be placed by you.</red>"
     max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
     shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
     double_chest_requires_shop_block: "<red>Double-chest shops require a second <blue>ShopBlock</blue><red>. Normal chests cannot merge with shop chests.</red>"

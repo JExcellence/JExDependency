@@ -1,15 +1,163 @@
-# Cost associated to player shop purchases
-store:
-  # Vault support economy
-  vault:
-    initial_cost: 1000.0
-    growth_rate: 1.125
-  # Custom currencies - Currently supports JExEconomy
-  coins:
-    initial_cost: 50.0
-    growth_rate: 1.075
-# -1 for no limit
-max_shops: -1
+# Log a startup warning for shop purchase tiers that do not have configured requirements.
+warn_missing_requirements: true
+
+# Default limit for placed player shops. Set to -1 for no limit.
+max_shops: 10
+
+# RPlatform-powered requirements consumed for each one-based shop purchase tier.
+# The bundled config defines the first 10 purchase tiers. If `max_shops` is unlimited,
+# purchases above the highest defined tier will have no requirements unless you add more tiers.
+requirements:
+  1:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1000.0
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 50.0
+      consumable: true
+      icon:
+        type: "EMERALD"
+  2:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1125.0
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 53.75
+      consumable: true
+      icon:
+        type: "EMERALD"
+  3:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1265.63
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 57.78
+      consumable: true
+      icon:
+        type: "EMERALD"
+  4:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1423.83
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 62.11
+      consumable: true
+      icon:
+        type: "EMERALD"
+  5:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1601.81
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 66.77
+      consumable: true
+      icon:
+        type: "EMERALD"
+  6:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 1802.03
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 71.78
+      consumable: true
+      icon:
+        type: "EMERALD"
+  7:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2027.29
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 77.16
+      consumable: true
+      icon:
+        type: "EMERALD"
+  8:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2280.70
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 82.95
+      consumable: true
+      icon:
+        type: "EMERALD"
+  9:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2565.78
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 89.17
+      consumable: true
+      icon:
+        type: "EMERALD"
+  10:
+    vault_purchase:
+      type: "CURRENCY"
+      currency: vault
+      amount: 2886.51
+      consumable: true
+      icon:
+        type: "GOLD_INGOT"
+    coins_purchase:
+      type: "CURRENCY"
+      currency: coins
+      amount: 95.86
+      consumable: true
+      icon:
+        type: "EMERALD"
 # Admin shop stock behavior.
 admin_shops:
   # gradual = restore limited admin stock one item at a time using each item's reset timer.

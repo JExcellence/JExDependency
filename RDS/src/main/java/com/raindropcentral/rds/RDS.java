@@ -2,7 +2,6 @@ package com.raindropcentral.rds;
 
 import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rds.configs.ConfigSection;
-import com.raindropcentral.rds.configs.TaxSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
@@ -22,9 +21,6 @@ import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
-import de.jexcellence.evaluable.ConfigKeeper;
-import de.jexcellence.evaluable.ConfigManager;
-import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import de.jexcellence.hibernate.JEHibernate;
 import jakarta.persistence.EntityManagerFactory;
 import me.devnatan.inventoryframework.AnvilInputFeature;
@@ -89,6 +85,7 @@ public class RDS extends JavaPlugin {
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
         this.ensureDefaultConfigFile();
+        this.getDefaultConfig().logMissingRequirementWarnings(this.getLogger());
 
         try {
             initializeHibernate();
@@ -135,18 +132,10 @@ public class RDS extends JavaPlugin {
     public ConfigSection getDefaultConfig() {
         this.ensureDefaultConfigFile();
         try {
-            var cfgManager = new ConfigManager(this, "config");
-            var cfgKeeper = new ConfigKeeper<>(cfgManager, "config.yml", ConfigSection.class);
-            final ConfigSection config = cfgKeeper.rootSection;
-            config.setTaxes(
-                    TaxSection.fromFile(
-                            this.getDefaultConfigFile(),
-                            config.getDefaultCurrencyType()
-                    )
-            );
-            return config;
+            return ConfigSection.fromFile(this.getDefaultConfigFile());
         } catch (Exception e) {
-            return new ConfigSection(new EvaluationEnvironmentBuilder());
+            this.getLogger().warning("Failed to parse RDS config.yml directly. Falling back to defaults: " + e.getMessage());
+            return ConfigSection.fromFile(this.getDefaultConfigFile());
         }
     }
 

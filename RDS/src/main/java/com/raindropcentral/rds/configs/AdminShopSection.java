@@ -1,8 +1,11 @@
 package com.raindropcentral.rds.configs;
 
+import java.io.File;
 import de.jexcellence.configmapper.sections.AConfigSection;
 import de.jexcellence.configmapper.sections.CSAlways;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +35,32 @@ public class AdminShopSection extends AConfigSection {
             final EvaluationEnvironmentBuilder baseEnvironment
     ) {
         super(baseEnvironment);
+    }
+
+    /**
+     * Loads the admin-shop restock configuration from the plugin config file.
+     *
+     * @param configFile plugin config file
+     * @return parsed admin-shop section
+     */
+    public static @NotNull AdminShopSection fromFile(final @NotNull File configFile) {
+        final AdminShopSection section = new AdminShopSection(new EvaluationEnvironmentBuilder());
+        final ConfigurationSection adminShopSection = YamlConfiguration.loadConfiguration(configFile)
+            .getConfigurationSection("admin_shops");
+        if (adminShopSection == null) {
+            return section;
+        }
+
+        section.restock_mode = adminShopSection.getString("restock_mode");
+        section.restock_check_period_ticks = adminShopSection.contains("restock_check_period_ticks")
+            ? adminShopSection.getLong("restock_check_period_ticks")
+            : null;
+        section.default_reset_timer_ticks = adminShopSection.contains("default_reset_timer_ticks")
+            ? adminShopSection.getLong("default_reset_timer_ticks")
+            : null;
+        section.full_restock_time = adminShopSection.getString("full_restock_time");
+        section.time_zone = adminShopSection.getString("time_zone");
+        return section;
     }
 
     public @NotNull AdminShopRestockMode getRestockMode() {

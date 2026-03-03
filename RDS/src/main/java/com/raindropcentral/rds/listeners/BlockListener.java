@@ -4,6 +4,7 @@ import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.ShopBlock;
+import com.raindropcentral.rds.service.shop.ShopOwnershipSupport;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -97,6 +98,12 @@ public class BlockListener implements Listener {
             return;
         }
 
+        if (!event.getPlayer().getUniqueId().equals(ownerId)) {
+            event.setCancelled(true);
+            this.sendMessage(event.getPlayer(), "block_listener.error.not_owner");
+            return;
+        }
+
         if (mergedPartner != null) {
             this.upgradeShopToDoubleChest(event, ownerId, placedBlock.getLocation(), mergedPartner);
             return;
@@ -127,18 +134,15 @@ public class BlockListener implements Listener {
             final @NotNull UUID ownerId,
             final @NotNull Location shopLocation
     ) {
-        RDSPlayer playerData = this.rds.getPlayerRepository().findByPlayer(ownerId);
-        final boolean existingPlayerRecord = playerData != null;
-        if (playerData == null) {
-            playerData = new RDSPlayer(ownerId);
-        }
+        final RDSPlayer playerData = this.getOrCreatePlayer(ownerId);
 
         final int maxShops = this.rds.getDefaultConfig().getMaxShops();
-        if (maxShops > 0 && playerData.getShops() >= maxShops) {
+        final int activeOwnedShops = ShopOwnershipSupport.countOwnedPlayerShops(this.rds, ownerId);
+        if (maxShops > 0 && activeOwnedShops >= maxShops) {
             event.setCancelled(true);
             new I18n.Builder("block_listener.error.max_shops_reached", event.getPlayer())
                     .withPlaceholders(Map.of(
-                            "owned_shops", playerData.getShops(),
+                            "owned_shops", activeOwnedShops,
                             "max_shops", maxShops
                     ))
                     .includePrefix()
@@ -147,7 +151,7 @@ public class BlockListener implements Listener {
             return;
         }
 
-        this.placeShopItem(ownerId, playerData, existingPlayerRecord, shopLocation);
+        this.placeShopItem(ownerId, playerData, shopLocation);
     }
 
     private void upgradeShopToDoubleChest(
@@ -182,19 +186,11 @@ public class BlockListener implements Listener {
     private void placeShopItem(
             final @NotNull UUID ownerId,
             final @NotNull RDSPlayer playerData,
-            final boolean existingPlayerRecord,
             final @NotNull Location shopLocation
     ) {
         final Shop shop = new Shop(ownerId, shopLocation);
         this.rds.getShopRepository().create(shop);
-        playerData.addShop(1);
-
-        if (existingPlayerRecord) {
-            this.rds.getPlayerRepository().update(playerData);
-            return;
-        }
-
-        this.rds.getPlayerRepository().create(playerData);
+        this.rds.getPlayerRepository().update(playerData);
     }
 
     private @Nullable Block getMergedChestPartner(
@@ -257,5 +253,16 @@ public class BlockListener implements Listener {
                 .includePrefix()
                 .build()
                 .sendMessage();
+    }
+
+    private @NotNull RDSPlayer getOrCreatePlayer(final @NotNull UUID ownerId) {
+        final RDSPlayer existingPlayer = this.rds.getPlayerRepository().findByPlayer(ownerId);
+        if (existingPlayer != null) {
+            return existingPlayer;
+        }
+
+        final RDSPlayer newPlayer = new RDSPlayer(ownerId);
+        this.rds.getPlayerRepository().create(newPlayer);
+        return newPlayer;
     }
 }
