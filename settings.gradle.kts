@@ -67,8 +67,9 @@ include(":JExOneblock:jexoneblock-common")
 include(":JExOneblock:jexoneblock-free")
 include(":JExOneblock:jexoneblock-premium")
 include("RDT")
-*/
 include("RDS")
+include("RDR")
 
 // JExWorkbench with submodules
 include(":JExWorkbench")
+*/
