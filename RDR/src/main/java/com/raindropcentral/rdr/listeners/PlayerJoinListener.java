@@ -1,0 +1,139 @@
+/*
+ * PlayerJoinListener.java
+ *
+ * @author RaindropCentral
+ * @version 5.0.0
+ */
+
+package com.raindropcentral.rdr.listeners;
+
+import java.util.Objects;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
+import java.util.logging.Logger;
+
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.configs.ConfigSection;
+import com.raindropcentral.rdr.database.entity.RDRPlayer;
+import com.raindropcentral.rdr.database.entity.RStorage;
+import com.raindropcentral.rdr.database.repository.RRDRPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Player join listener that provisions persistent RDR storage profiles.
+ *
+ * <p>When a player joins for the first time, the listener creates the backing {@link RDRPlayer} entity and
+ * provisions the configured number of initial {@link RStorage} rows.</p>
+ *
+ * @author RaindropCentral
+ * @since 5.0.0
+ * @version 5.0.0
+ */
+@SuppressWarnings("unused")
+public class PlayerJoinListener implements Listener {
+
+    private final Supplier<PlayerProfileRepository> repositorySupplier;
+    private final Supplier<ConfigSection> configSupplier;
+    private final Logger logger;
+
+    /**
+     * Creates a listener bound to the active plugin instance.
+     *
+     * @param rdr plugin instance used to resolve configuration and repositories
+     * @throws NullPointerException if {@code rdr} is {@code null}
+     */
+    public PlayerJoinListener(final @NotNull RDR rdr) {
+        this(() -> RepositoryBackedPlayerProfileRepository.from(rdr.getPlayerRepository()), rdr::getDefaultConfig, rdr.getLogger());
+    }
+
+    /**
+     * Creates a listener with explicit collaborators.
+     *
+     * @param repositorySupplier repository supplier used to resolve persistent player profiles
+     * @param configSupplier configuration supplier used to resolve storage defaults
+     * @param logger logger used for provisioning failures
+     * @throws NullPointerException if any non-null collaborator is {@code null}
+     */
+    PlayerJoinListener(
+        final @NotNull Supplier<PlayerProfileRepository> repositorySupplier,
+        final @NotNull Supplier<ConfigSection> configSupplier,
+        final @NotNull Logger logger
+    ) {
+        this.repositorySupplier = Objects.requireNonNull(repositorySupplier, "repositorySupplier");
+        this.configSupplier = Objects.requireNonNull(configSupplier, "configSupplier");
+        this.logger = Objects.requireNonNull(logger, "logger");
+    }
+
+    /**
+     * Creates a new storage profile for first-time players when no persisted profile exists yet.
+     *
+     * @param event Bukkit player join event
+     */
+    @EventHandler
+    public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
+        final PlayerProfileRepository repository = this.repositorySupplier.get();
+        if (repository == null) {
+            this.logger.warning("Player repository was unavailable during join handling.");
+            return;
+        }
+
+        final Player player = event.getPlayer();
+        final RDRPlayer existingPlayer = repository.findByPlayer(player.getUniqueId());
+        if (existingPlayer != null) {
+            return;
+        }
+
+        final ConfigSection config = this.configSupplier.get();
+        final RDRPlayer newPlayer = new RDRPlayer(player.getUniqueId());
+        final int initialStorages = config.getInitialProvisionedStorages();
+        for (int index = 1; index <= initialStorages; index++) {
+            new RStorage(newPlayer, this.buildDefaultStorageKey(index), 54);
+        }
+
+        repository.createAsync(newPlayer).exceptionally(throwable -> {
+            this.logger.warning(
+                "Failed to create RDR player profile for " + player.getUniqueId() + ": " + throwable.getMessage()
+            );
+            return null;
+        });
+    }
+
+    private @NotNull String buildDefaultStorageKey(final int index) {
+        return "storage-" + index;
+    }
+}
+
+interface PlayerProfileRepository {
+
+    RDRPlayer findByPlayer(@NotNull UUID playerUuid);
+
+    CompletableFuture<RDRPlayer> createAsync(@NotNull RDRPlayer player);
+}
+
+final class RepositoryBackedPlayerProfileRepository implements PlayerProfileRepository {
+
+    private final RRDRPlayer repository;
+
+    private RepositoryBackedPlayerProfileRepository(final @NotNull RRDRPlayer repository) {
+        this.repository = Objects.requireNonNull(repository, "repository");
+    }
+
+    static PlayerProfileRepository from(final RRDRPlayer repository) {
+        return repository == null ? null : new RepositoryBackedPlayerProfileRepository(repository);
+    }
+
+    @Override
+    public RDRPlayer findByPlayer(final @NotNull UUID playerUuid) {
+        return this.repository.findByPlayer(playerUuid);
+    }
+
+    @Override
+    public CompletableFuture<RDRPlayer> createAsync(final @NotNull RDRPlayer player) {
+        return this.repository.createAsync(player);
+    }
+}

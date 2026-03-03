@@ -1,0 +1,200 @@
+/*
+ * StorageOverviewView.java
+ *
+ * @author RaindropCentral
+ * @version 5.0.0
+ */
+
+package com.raindropcentral.rdr.view;
+
+import java.util.Map;
+
+import com.raindropcentral.rdr.RDR;
+import com.raindropcentral.rdr.configs.ConfigSection;
+import com.raindropcentral.rdr.database.entity.RDRPlayer;
+import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
+import com.raindropcentral.rplatform.view.BaseView;
+import me.devnatan.inventoryframework.context.Context;
+import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
+import me.devnatan.inventoryframework.state.State;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Root storage menu for RDR players.
+ *
+ * <p>This view summarizes the player's current storage ownership and exposes a button to open the
+ * paginated per-storage list.</p>
+ *
+ * @author RaindropCentral
+ * @since 5.0.0
+ * @version 5.0.0
+ */
+public class StorageOverviewView extends BaseView {
+
+    private final State<RDR> rdr = initialState("plugin");
+
+    /**
+     * Returns the translation namespace used by this view.
+     *
+     * @return storage overview translation key prefix
+     */
+    @Override
+    protected String getKey() {
+        return "storage_overview_ui";
+    }
+
+    /**
+     * Returns the inventory layout used by this overview.
+     *
+     * @return three-row layout for the overview menu
+     */
+    @Override
+    protected String[] getLayout() {
+        return new String[]{
+            "    s    ",
+            "   o t   ",
+            "         "
+        };
+    }
+
+    /**
+     * Disables automatic filler item placement for this compact menu.
+     *
+     * @return {@code false} so only explicit controls render
+     */
+    @Override
+    protected boolean shouldAutoFill() {
+        return false;
+    }
+
+    /**
+     * Suppresses the automatic back button because this is a root menu.
+     *
+     * @param render render context
+     * @param player player viewing the menu
+     */
+    @Override
+    public void renderNavigationButtons(
+        final @NotNull RenderContext render,
+        final @NotNull Player player
+    ) {
+        // Root menu; no back button.
+    }
+
+    /**
+     * Renders the storage summary, list-navigation button, and storage store button.
+     *
+     * @param render render context for slot registration
+     * @param player player viewing the menu
+     */
+    @Override
+    public void onFirstRender(
+        final @NotNull RenderContext render,
+        final @NotNull Player player
+    ) {
+        final RDR plugin = this.rdr.get(render);
+        final RDRPlayer rdrPlayer = this.findPlayer(render);
+        final ConfigSection config = plugin.getDefaultConfig();
+        final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
+        final int maxStorages = config.getMaxStorages();
+
+        render.layoutSlot('s')
+            .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStorages));
+
+        render.layoutSlot('o')
+            .withItem(this.createOpenListItem(player, ownedStorages, maxStorages))
+            .onClick(clickContext -> clickContext.openForPlayer(
+                StoragePlayerView.class,
+                Map.of(
+                    "plugin",
+                    this.rdr.get(clickContext)
+                )
+            ));
+
+        render.layoutSlot('t')
+            .withItem(this.createStoreItem(player, ownedStorages, maxStorages))
+            .onClick(clickContext -> clickContext.openForPlayer(
+                StorageStoreView.class,
+                Map.of(
+                    "plugin",
+                    this.rdr.get(clickContext)
+                )
+            ));
+    }
+
+    /**
+     * Cancels item interaction so GUI items cannot be moved.
+     *
+     * @param click slot click context
+     */
+    @Override
+    public void onClick(final @NotNull SlotClickContext click) {
+        click.setCancelled(true);
+    }
+
+    private RDRPlayer findPlayer(final @NotNull Context context) {
+        final RDR plugin = this.rdr.get(context);
+        return plugin.getPlayerRepository() == null
+            ? null
+            : plugin.getPlayerRepository().findByPlayer(context.getPlayer().getUniqueId());
+    }
+
+    private @NotNull ItemStack createSummaryItem(
+        final @NotNull Player player,
+        final int ownedStorages,
+        final int maxStorages
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARREL)
+            .setName(this.i18n("summary.name", player).build().component())
+            .setLore(this.i18n("summary.lore", player)
+                .withPlaceholders(Map.of(
+                    "owned_storages", ownedStorages,
+                    "max_storages", maxStorages
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createOpenListItem(
+        final @NotNull Player player,
+        final int ownedStorages,
+        final int maxStorages
+    ) {
+        return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
+            .setName(this.i18n("open.name", player).build().component())
+            .setLore(this.i18n("open.lore", player)
+                .withPlaceholders(Map.of(
+                    "owned_storages", ownedStorages,
+                    "max_storages", maxStorages
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createStoreItem(
+        final @NotNull Player player,
+        final int ownedStorages,
+        final int maxStorages
+    ) {
+        return UnifiedBuilderFactory.item(Material.GOLD_INGOT)
+            .setName(this.i18n("store.name", player).build().component())
+            .setLore(this.i18n("store.lore", player)
+                .withPlaceholders(Map.of(
+                    "owned_storages", ownedStorages,
+                    "max_storages", maxStorages
+                ))
+                .build()
+                .children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+}

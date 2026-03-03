@@ -2,7 +2,7 @@ package com.raindropcentral.core.database.entity.inventory;
 
 import com.raindropcentral.core.database.entity.central.RCentralServer;
 import com.raindropcentral.core.database.entity.player.RPlayer;
-import com.raindropcentral.rplatform.database.converter.ItemStackMapConverter;
+import com.raindropcentral.rplatform.database.converter.ItemStackSlotMapConverter;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import de.jexcellence.hibernate.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * in the {@code r_player_inventory} table. Each row references both the owning
  * {@link RPlayer} and the {@link RCentralServer} that produced the snapshot, enabling
  * server-scoped inventory restores and auditing. Item stacks are converted via
- * {@link ItemStackMapConverter} to support Hibernate persistence.
+ * {@link ItemStackSlotMapConverter} to support Hibernate persistence.
  *
  * <p>Construction should occur on synchronous threads interacting with Bukkit
  * APIs, while persistence and retrieval are delegated to repository executors to
@@ -69,10 +69,10 @@ public class RPlayerInventory extends BaseEntity {
 
     /**
      * Serialized hotbar and main inventory contents stored as a slot-indexed map in
-     * {@code inventory}. The {@link ItemStackMapConverter} handles byte-array encoding
+     * {@code inventory}. The {@link ItemStackSlotMapConverter} handles byte-array encoding
      * for database storage.
      */
-    @Convert(converter = ItemStackMapConverter.class)
+    @Convert(converter = ItemStackSlotMapConverter.class)
     @Column(name = "inventory", columnDefinition = "LONGTEXT")
     private Map<Integer, ItemStack> inventory = new HashMap<>();
 
@@ -80,7 +80,7 @@ public class RPlayerInventory extends BaseEntity {
      * Serialized armor slots persisted to the {@code armor_contents} column. Empty maps
      * are stored instead of {@code null} values to simplify merge semantics.
      */
-    @Convert(converter = ItemStackMapConverter.class)
+    @Convert(converter = ItemStackSlotMapConverter.class)
     @Column(name = "armor_contents", columnDefinition = "LONGTEXT")
     private Map<Integer, ItemStack> armor = new HashMap<>();
 
@@ -88,7 +88,7 @@ public class RPlayerInventory extends BaseEntity {
      * Serialized ender chest contents mapped to the {@code enderchest} column. Values are
      * lazily copied to prevent shared mutable state when applied back to Bukkit players.
      */
-    @Convert(converter = ItemStackMapConverter.class)
+    @Convert(converter = ItemStackSlotMapConverter.class)
     @Column(name = "enderchest", columnDefinition = "LONGTEXT")
     private Map<Integer, ItemStack> enderchest = new HashMap<>();
 

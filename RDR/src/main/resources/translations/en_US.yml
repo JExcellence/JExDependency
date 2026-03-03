@@ -1,0 +1,250 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] Storage Summary</gradient>"
+    lore:
+      - "<gray>Owned storages:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
+      - "<gray>Your vault network is persisted</gray>"
+      - "<gray>and ready for cross-server use.</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] View Storages</gradient>"
+    lore:
+      - "<gray>Owned storages:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
+      - "<yellow>Click to browse your storage list.</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] Storage Store</gradient>"
+    lore:
+      - "<gray>Owned storages:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
+      - "<yellow>Click to purchase another storage.</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Storage Store</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] Storage Capacity</gradient>"
+    lore:
+      - "<gray>Owned storages:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
+      - "<gray>Buy additional vault space until</gray>"
+      - "<gray>you reach the configured cap.</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[$] Required Costs</gradient>"
+    lore:
+      - "<gray>Available currencies:</gray> <white>{currency_count}</white>"
+      - "<gray>Required costs:</gray> <white>{costs}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+    none: "<gradient:#ef4444:#f87171>[None]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] Buy Storage</gradient>"
+      lore:
+        - "<gray>Available currencies:</gray> <white>{currency_count}</white>"
+        - "<gray>Required costs:</gray> <white>{costs}</white>"
+        - "<gray>Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Click to purchase using all listed currencies.</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] Storage Limit Reached</gradient>"
+      lore:
+        - "<gray>Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>You cannot purchase more storages</gray>"
+        - "<gray>until the global cap is raised.</gray>"
+    no_currencies:
+      name: "<gradient:#ef4444:#f87171>[!] No Store Currencies</gradient>"
+      lore:
+        - "<gray>No configured store currencies are</gray>"
+        - "<gray>currently available on this server.</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] Profile Missing</gradient>"
+      lore:
+        - "<gray>Your RDR profile could not be loaded,</gray>"
+        - "<gray>so purchases are temporarily blocked.</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased <white>{storage_key}</white><gray>. Required currencies:</gray> <white>{costs}</white><gray>. Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You need <white>{cost}</white><gray> from <white>{currency_name}</white><gray> to buy another storage. Required currencies:</gray> <white>{costs}</white>"
+    purchase_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to charge <white>{cost}</white><gray> from <white>{currency_name}</white><gray>. Any partial charges were rolled back.</gray>"
+    no_currencies: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>No configured store currencies are available for storage purchases right now.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You have reached the storage limit of <white>{max_storages}</white><gray>. Owned storages:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDR profile could not be loaded, so storage purchases are unavailable.</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Vault] Your Storages</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Capacity</gradient>"
+    lore:
+      - "<gray>Owned storages:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
+      - "<gray>Use this list to review your</gray>"
+      - "<gray>persisted storage containers.</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
+    lore:
+      - "<gray>Storage key:</gray> <white>{storage_key}</white>"
+      - "<gray>Owner:</gray> <white>{owner_name}</white>"
+      - "<gray>Access:</gray> <white>{access_level}</white>"
+      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Used slots:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Available slots:</gray> <white>{available_slots}</white>"
+      - "<yellow>This storage is ready for item persistence.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Left-click to open this storage.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Right-click to open storage settings.</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] No Storages Found</gradient>"
+    lore:
+      - "<gray>No storages are currently attached</gray>"
+      - "<gray>to your RDR profile.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] Profile Missing</gradient>"
+    lore:
+      - "<gray>Your RDR player profile could not</gray>"
+      - "<gray>be loaded from persistent storage.</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Settings</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Settings</gradient>"
+    lore:
+      - "<gray>Storage key:</gray> <white>{storage_key}</white>"
+      - "<gray>Owner:</gray> <white>{owner_name}</white>"
+      - "<gray>Your access:</gray> <white>{access_level}</white>"
+      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[Group] Trusted Access</gradient>"
+    lore:
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Click to manage who can deposit</yellow>"
+      - "<yellow>or fully access this storage.</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] Storage Hotkey</gradient>"
+    lore:
+      - "<gray>Current hotkey:</gray> <white>{hotkey_display}</white>"
+      - "<yellow>Click to bind quick access for</yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Trusted Locked</gradient>"
+    lore:
+      - "<gray>Only the storage owner can manage</gray>"
+      - "<gray>trusted access for this storage.</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Hotkey Locked</gradient>"
+    lore:
+      - "<gray>Only the storage owner can change</gray>"
+      - "<gray>storage hotkeys.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Storage Missing</gradient>"
+    lore:
+      - "<gray>This storage could not be loaded</gray>"
+      - "<gray>for the settings view.</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Group] {storage_key} Access</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Shared Access</gradient>"
+    lore:
+      - "<gray>Storage key:</gray> <white>{storage_key}</white>"
+      - "<gray>Owner:</gray> <white>{owner_name}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Click a player to cycle access.</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[Public] {player}</gradient>"
+      lore:
+        - "<gray>Status:</gray> <white>Public</white>"
+        - "<gray>No deposit or withdraw access.</gray>"
+        - "<yellow>Click to promote to Associate.</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Can deposit but cannot withdraw.</gray>"
+        - "<yellow>Click to promote to Trusted.</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[Trusted] {player}</gradient>"
+      lore:
+        - "<gray>Status:</gray> <white>Trusted</white>"
+        - "<gray>Can deposit and withdraw items.</gray>"
+        - "<yellow>Click to reset to Public.</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient> <gray>{player} no longer has storage access.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} can now deposit into this storage.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} can now deposit and withdraw from this storage.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Only the storage owner can change trusted access.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Owner Only</gradient>"
+      lore:
+        - "<gray>You can view this storage, but only</gray>"
+        - "<gray>the owner can change trusted access.</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Storage Missing</gradient>"
+      lore:
+        - "<gray>This storage could not be loaded</gray>"
+        - "<gray>for trusted access management.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>This storage could not be loaded for trusted access management.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] No Players Found</gradient>"
+      lore:
+        - "<gray>No other known players are available</gray>"
+        - "<gray>to assign trusted access.</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[Box] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Storage Missing</gradient>"
+    lore:
+      - "<gray>This storage entry could not be found</gray>"
+      - "<gray>for your persisted RDR profile.</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] Bind {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>Enter a number between</gray>"
+      - "<white>1</white><gray> and </gray><white>{max_hotkeys}</white><gray> for quick access.</gray>"
+      - "<yellow>Click the result slot to save the hotkey.</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Use a number between <white>1</white> and <white>{max_hotkeys}</white><gray>. Input:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} is already open in another session.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be opened right now.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have access to <white>{storage_key}</white><gray>.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your edit session for {storage_key} expired or moved elsewhere. Changes were not saved.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be saved. Check the console for details.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} is now bound to <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No storage is bound to <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hotkeys must be between <white>1</white> and <white>{max_hotkeys}</white><gray>.</gray>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[Page] %current_page%</gradient>"
+  lore:
+    - "<gray>Current page:</gray> <white>%current_page%</white>"
+    - "<gray>Total pages:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Page] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"

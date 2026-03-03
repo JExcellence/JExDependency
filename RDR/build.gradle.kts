@@ -21,6 +21,7 @@ dependencies {
     compileOnly(libs.slf4j.api)
     compileOnly(libs.slf4j.jdk14)
     compileOnly(libs.jboss.logging)
+    implementation(libs.jackson.databind)
 
     compileOnly(platform(libs.hibernate.platform))
     compileOnly(libs.bundles.hibernate)
@@ -36,6 +37,15 @@ dependencies {
     compileOnly(libs.bundles.inventory)
     compileOnly(libs.vault.api) { isTransitive = false }
     compileOnly(libs.placeholderapi)
+
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter.api)
+    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
+    testImplementation(libs.paper.api)
+    testImplementation(platform(libs.hibernate.platform))
+    testImplementation(libs.bundles.hibernate)
+    testImplementation(libs.bundles.inventory)
 }
 
 tasks.processResources {
@@ -70,6 +80,10 @@ tasks.named<ShadowJar>("shadowJar") {
 
 tasks.named("build") {
     dependsOn(tasks.named("shadowJar"))
+}
+
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 tasks.named<Jar>("jar") {

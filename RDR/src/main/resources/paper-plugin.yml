@@ -13,6 +13,10 @@ dependencies:
       load: BEFORE
       required: false
       join-classpath: true
+    JExEconomy:
+      load: BEFORE
+      required: false
+      join-classpath: true
     TheNewEconomy:
       load: BEFORE
       required: false

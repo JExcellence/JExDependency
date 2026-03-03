@@ -1,0 +1,20 @@
+# Number of storages every new player receives when their profile is first created.
+starting_storages: 1
+
+# Global maximum number of storages a player may own.
+# Starting storages are clamped to this value when a new profile is created.
+max_storages: 10
+
+# Highest numeric hotkey players may bind to a storage for `/rr <hotkey>` access.
+max_hotkeys: 9
+
+# Cost associated to storage purchases.
+store:
+  # Vault support economy.
+  vault:
+    initial_cost: 1000.0
+    growth_rate: 1.125
+  # Custom currencies - JExEconomy identifiers are supported when available.
+  # coins:
+  #   initial_cost: 50.0
+  #   growth_rate: 1.075

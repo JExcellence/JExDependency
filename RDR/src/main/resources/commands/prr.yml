@@ -1,12 +1,12 @@
 commands:
   prr:
     name: 'prr'
-    description: 'RDRImpl Commands'
+    description: 'RDR Commands'
     aliases:
       - rr
-    usage: 'rr <main | help>'
+    usage: 'rr [storage]'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<rr <main | help>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<storage>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -24,9 +24,9 @@ commands:
     permissions:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
-        command: 'raindropreserve.command'
-        commandCreate: 'raindropreserve.command.main'
-        commandHelp: 'raindropreserve.command.help'
+        command: 'raindroprdr.command'
+        commandInfo: 'raindroprdr.command.info'
+        commandStorage: 'raindroprdr.command.storage'
 
 lut:
   prefix: '&8[&1Admin&8] &7'
