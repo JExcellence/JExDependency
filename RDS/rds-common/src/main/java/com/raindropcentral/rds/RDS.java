@@ -20,6 +20,7 @@ import com.raindropcentral.rds.view.shop.ShopEditView;
 import com.raindropcentral.rds.view.shop.ShopInputView;
 import com.raindropcentral.rds.view.shop.ServerBankView;
 import com.raindropcentral.rds.view.shop.ShopAdminView;
+import com.raindropcentral.rds.view.shop.ShopItemAdminCommandView;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
 import com.raindropcentral.rds.view.shop.ShopLedgerView;
 import com.raindropcentral.rds.view.shop.ShopListView;
@@ -32,6 +33,8 @@ import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.view.shop.ShopTrustedView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminCommandAnvilView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminCommandDelayAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemValueAnvilView;
@@ -451,7 +454,10 @@ public class RDS {
                     new ShopEditView(),
                     new ShopLedgerView(),
                     new ShopItemEditView(),
+                    new ShopItemAdminCommandView(),
                     new ShopItemAvailabilityMinutesAnvilView(),
+                    new ShopItemAdminCommandDelayAnvilView(),
+                    new ShopItemAdminCommandAnvilView(),
                     new ShopItemAdminStockLimitAnvilView(),
                     new ShopItemAdminResetTimerAnvilView(),
                     new ShopItemCurrencyTypeAnvilView(),

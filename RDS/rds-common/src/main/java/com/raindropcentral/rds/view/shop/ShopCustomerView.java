@@ -6,6 +6,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.entity.ShopLedgerEntry;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.shop.AdminShopPurchaseCommandSupport;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
 import com.raindropcentral.rds.view.shop.anvil.ShopPurchaseAmountAnvilView;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
@@ -304,6 +305,16 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         );
         this.rds.get(context).getShopRepository().update(shop);
         this.grantPurchasedItems(context.getPlayer(), currentItem, desiredAmount);
+        if (adminShop) {
+            AdminShopPurchaseCommandSupport.executePurchaseCommands(
+                    this.rds.get(context),
+                    context.getPlayer(),
+                    shop,
+                    currentItem,
+                    desiredAmount,
+                    totalPrice
+            );
+        }
 
         final String feedbackKey;
         if (!adminShop) {

@@ -64,9 +64,9 @@ public class ShopItemEditView extends BaseView {
     @Override
     protected String[] getLayout() {
         return new String[]{
-                "    s    ",
-                "a t v c n",
-                "  l r m  "
+                "lrm s    ",
+                "an tv   k",
+                "        c"
         };
     }
 
@@ -168,6 +168,11 @@ public class ShopItemEditView extends BaseView {
         ).onClick(clickContext -> this.handleConfirm(clickContext));
 
         if (currentShop != null && currentShop.isAdminShop()) {
+            render.layoutSlot('k')
+                    .renderWith(() -> this.createAdminCommandsItem(player, this.getEditedItem(render)))
+                    .updateOnStateChange(this.editedItem)
+                    .onClick(this::handleAdminCommandClick);
+
             render.layoutSlot('l')
                     .renderWith(() -> this.createStockLimitItem(player, this.getEditedItem(render)))
                     .updateOnStateChange(this.editedItem)
@@ -292,6 +297,38 @@ public class ShopItemEditView extends BaseView {
                 .withPlaceholder("availability_mode", this.getAvailabilityModeLabel(clickContext.getPlayer(), updatedMode))
                 .build()
                 .sendMessage();
+    }
+
+    private void handleAdminCommandClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        clickContext.setCancelled(true);
+
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        clickContext.openForPlayer(
+                ShopItemAdminCommandView.class,
+                Map.of(
+                        "plugin", this.rds.get(clickContext),
+                        "shopLocation", this.shopLocation.get(clickContext),
+                        "shopItem", this.getEditedItem(clickContext)
+                )
+        );
     }
 
     private void handleRestockModeClick(
@@ -471,6 +508,7 @@ public class ShopItemEditView extends BaseView {
         }
     }
 
+
     private int findMatchingItemIndex(
             final @NotNull List<AbstractItem> items,
             final @NotNull ShopItem original,
@@ -531,7 +569,8 @@ public class ShopItemEditView extends BaseView {
                     "restock_schedule", this.getAdminRestockSchedule(player, item, plugin),
                     "availability_mode", this.getAvailabilityModeLabel(player, item),
                     "availability_state", this.getAvailabilityStateLabel(player, item),
-                    "rotation_minutes", item.getAvailabilityRotationMinutes()
+                    "rotation_minutes", item.getAvailabilityRotationMinutes(),
+                    "command_count", item.getAdminPurchaseCommands().size()
             );
         } else if (currentShop != null && currentShop.isAdminShop()) {
             loreKey = "summary.admin_unlimited.lore";
@@ -542,7 +581,8 @@ public class ShopItemEditView extends BaseView {
                     "restock_mode", this.getAdminRestockModeLabel(player, plugin),
                     "availability_mode", this.getAvailabilityModeLabel(player, item),
                     "availability_state", this.getAvailabilityStateLabel(player, item),
-                    "rotation_minutes", item.getAvailabilityRotationMinutes()
+                    "rotation_minutes", item.getAvailabilityRotationMinutes(),
+                    "command_count", item.getAdminPurchaseCommands().size()
             );
         } else {
             loreKey = "summary.player.lore";
@@ -645,6 +685,23 @@ public class ShopItemEditView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createAdminCommandsItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        return UnifiedBuilderFactory.item(Material.COMMAND_BLOCK)
+                .setName(this.i18n("admin_commands.name", player).build().component())
+                .setLore(this.i18n("admin_commands.lore", player)
+                        .withPlaceholders(Map.of(
+                                "command_count", item.getAdminPurchaseCommands().size(),
+                                "latest_command", this.getLatestCommandPreview(player, item)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private @NotNull ItemStack createStockLimitItem(
             final @NotNull Player player,
             final @NotNull ShopItem item
@@ -726,7 +783,8 @@ public class ShopItemEditView extends BaseView {
                 restockInterval,
                 referenceTime,
                 edited.getAvailabilityMode(),
-                edited.getAvailabilityRotationMinutes()
+                edited.getAvailabilityRotationMinutes(),
+                edited.getAdminPurchaseCommands()
         );
     }
 
@@ -771,6 +829,22 @@ public class ShopItemEditView extends BaseView {
                 .build()
                 .getI18nVersionWrapper()
                 .asPlaceholder();
+    }
+
+    private @NotNull String getLatestCommandPreview(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        if (!item.hasAdminPurchaseCommands()) {
+            return this.i18n("admin_commands.none", player)
+                    .build()
+                    .getI18nVersionWrapper()
+                    .asPlaceholder();
+        }
+
+        final ShopItem.AdminPurchaseCommand latest = item.getAdminPurchaseCommands()
+                .get(item.getAdminPurchaseCommands().size() - 1);
+        return latest.command();
     }
 
     private @NotNull String getAdminRestockModeLabel(

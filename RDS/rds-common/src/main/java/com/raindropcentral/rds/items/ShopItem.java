@@ -1,6 +1,8 @@
 package com.raindropcentral.rds.items;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import org.bukkit.entity.Player;
@@ -8,6 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.UUID;
@@ -16,6 +20,10 @@ import java.util.UUID;
  * Represents shop item.
  */
 @JsonTypeName("ITEM")
+@JsonIgnoreProperties(
+		value = {"availableNow", "estimatedValue", "typeId", "descriptionKey"},
+		ignoreUnknown = true
+)
 public class ShopItem extends AbstractItem {
 
 	public static final int DEFAULT_ROTATION_MINUTES = 60;
@@ -40,6 +48,102 @@ public class ShopItem extends AbstractItem {
 				case ROTATE -> NEVER;
 				case NEVER -> ALWAYS;
 			};
+		}
+	}
+
+	/**
+	 * Defines who executes configured admin-purchase commands.
+	 */
+	public enum CommandExecutionMode {
+		SERVER,
+		PLAYER;
+
+		/**
+		 * Returns the next execution mode in cycle order.
+		 *
+		 * @return next execution mode
+		 */
+		public @NotNull CommandExecutionMode next() {
+			return switch (this) {
+				case SERVER -> PLAYER;
+				case PLAYER -> SERVER;
+			};
+		}
+	}
+
+	/**
+	 * Represents a single command action to run after an admin-shop purchase.
+	 *
+	 * @param command command text to execute
+	 * @param executionMode execution source
+	 * @param delayTicks delay in ticks before execution
+	 */
+	public record AdminPurchaseCommand(
+			@NotNull String command,
+			@NotNull CommandExecutionMode executionMode,
+			long delayTicks
+	) {
+		/**
+		 * Creates a new normalized admin purchase command.
+		 *
+		 * @param command command text to execute
+		 * @param executionMode execution source
+		 * @param delayTicks delay in ticks before execution
+		 */
+		public AdminPurchaseCommand {
+			command = normalizeCommand(command);
+			executionMode = executionMode == null ? CommandExecutionMode.SERVER : executionMode;
+			delayTicks = Math.max(0L, delayTicks);
+		}
+
+		/**
+		 * Parses admin command input from the item editor anvil prompt.
+		 *
+		 * <p>Supported formats:</p>
+		 * <p>{@code command}</p>
+		 * <p>{@code delayTicks | command}</p>
+		 *
+		 * @param input raw anvil input
+		 * @param executionMode selected execution mode
+		 * @return parsed command action
+		 * @throws IllegalArgumentException when input is empty or malformed
+		 */
+		public static @NotNull AdminPurchaseCommand fromInput(
+				final @NotNull String input,
+				final @NotNull CommandExecutionMode executionMode
+		) {
+			final String trimmedInput = input.trim();
+			if (trimmedInput.isEmpty()) {
+				throw new IllegalArgumentException("Admin command input cannot be empty");
+			}
+
+			long parsedDelay = 0L;
+			String parsedCommand = trimmedInput;
+			final int delimiterIndex = trimmedInput.indexOf('|');
+			if (delimiterIndex > -1) {
+				final String left = trimmedInput.substring(0, delimiterIndex).trim();
+				final String right = trimmedInput.substring(delimiterIndex + 1).trim();
+				if (!left.isEmpty()) {
+					try {
+						parsedDelay = Math.max(0L, Long.parseLong(left));
+					} catch (NumberFormatException exception) {
+						throw new IllegalArgumentException("Delay must be a whole number of ticks", exception);
+					}
+				}
+				parsedCommand = right;
+			}
+
+			return new AdminPurchaseCommand(parsedCommand, executionMode, parsedDelay);
+		}
+
+		private static @NotNull String normalizeCommand(
+				final @Nullable String command
+		) {
+			if (command == null || command.trim().isEmpty()) {
+				throw new IllegalArgumentException("Admin purchase command cannot be empty");
+			}
+
+			return command.trim();
 		}
 	}
 	
@@ -72,6 +176,9 @@ public class ShopItem extends AbstractItem {
 
 	@JsonProperty("availabilityRotationMinutes")
 	private final Integer availabilityRotationMinutes;
+
+	@JsonProperty("adminPurchaseCommands")
+	private final List<AdminPurchaseCommand> adminPurchaseCommands;
 	
 	/**
 	 * Creates a new shop item.
@@ -98,7 +205,8 @@ public class ShopItem extends AbstractItem {
 		@JsonProperty("adminRestockIntervalTicks") @Nullable Long adminRestockIntervalTicks,
 		@JsonProperty("adminStockReferenceTime") @Nullable Long adminStockReferenceTime,
 		@JsonProperty("availabilityMode") @Nullable AvailabilityMode availabilityMode,
-		@JsonProperty("availabilityRotationMinutes") @Nullable Integer availabilityRotationMinutes
+		@JsonProperty("availabilityRotationMinutes") @Nullable Integer availabilityRotationMinutes,
+		@JsonProperty("adminPurchaseCommands") @Nullable List<AdminPurchaseCommand> adminPurchaseCommands
 	) {
 		this.entryId = entryId == null ? UUID.randomUUID() : entryId;
 		this.item = item.clone();
@@ -117,6 +225,7 @@ public class ShopItem extends AbstractItem {
 		this.availabilityRotationMinutes = availabilityRotationMinutes == null || availabilityRotationMinutes < 1
 				? DEFAULT_ROTATION_MINUTES
 				: availabilityRotationMinutes;
+		this.adminPurchaseCommands = this.normalizeAdminPurchaseCommands(adminPurchaseCommands);
 	}
 
 	/**
@@ -151,7 +260,8 @@ public class ShopItem extends AbstractItem {
 			adminRestockIntervalTicks,
 			adminStockReferenceTime,
 			AvailabilityMode.ALWAYS,
-			DEFAULT_ROTATION_MINUTES
+			DEFAULT_ROTATION_MINUTES,
+			List.of()
 		);
 	}
 	
@@ -360,10 +470,29 @@ public class ShopItem extends AbstractItem {
 	}
 
 	/**
+	 * Returns configured admin-purchase commands for this item.
+	 *
+	 * @return immutable command list
+	 */
+	public @NotNull List<AdminPurchaseCommand> getAdminPurchaseCommands() {
+		return this.adminPurchaseCommands;
+	}
+
+	/**
+	 * Indicates whether this item has configured admin-purchase commands.
+	 *
+	 * @return {@code true} when at least one command exists
+	 */
+	public boolean hasAdminPurchaseCommands() {
+		return !this.adminPurchaseCommands.isEmpty();
+	}
+
+	/**
 	 * Indicates whether this item should be visible and purchasable right now.
 	 *
 	 * @return {@code true} when currently available; otherwise {@code false}
 	 */
+	@JsonIgnore
 	public boolean isAvailableNow() {
 		return this.isAvailableAt(System.currentTimeMillis());
 	}
@@ -391,6 +520,68 @@ public class ShopItem extends AbstractItem {
 			}
 		};
 	}
+
+	/**
+	 * Returns a copy with updated admin-purchase commands.
+	 *
+	 * @param updatedCommands updated command list
+	 * @return copied shop item with updated commands
+	 */
+	public @NotNull ShopItem withAdminPurchaseCommands(
+			final @Nullable List<AdminPurchaseCommand> updatedCommands
+	) {
+		return new ShopItem(
+				this.entryId,
+				this.item,
+				this.amount,
+				this.currencyType,
+				this.value,
+				this.adminStockLimit,
+				this.adminRestockIntervalTicks,
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes,
+				updatedCommands
+		);
+	}
+
+	/**
+	 * Returns a copy with one additional admin-purchase command appended.
+	 *
+	 * @param command command to append
+	 * @return copied shop item with appended command
+	 */
+	public @NotNull ShopItem withAddedAdminPurchaseCommand(
+			final @NotNull AdminPurchaseCommand command
+	) {
+		final List<AdminPurchaseCommand> updatedCommands = new ArrayList<>(this.adminPurchaseCommands);
+		updatedCommands.add(command);
+		return this.withAdminPurchaseCommands(updatedCommands);
+	}
+
+	/**
+	 * Returns a copy with the last admin-purchase command removed.
+	 *
+	 * @return copied shop item with last command removed
+	 */
+	public @NotNull ShopItem withoutLastAdminPurchaseCommand() {
+		if (this.adminPurchaseCommands.isEmpty()) {
+			return this;
+		}
+
+		final List<AdminPurchaseCommand> updatedCommands = new ArrayList<>(this.adminPurchaseCommands);
+		updatedCommands.remove(updatedCommands.size() - 1);
+		return this.withAdminPurchaseCommands(updatedCommands);
+	}
+
+	/**
+	 * Returns a copy without any admin-purchase commands.
+	 *
+	 * @return copied shop item with no commands
+	 */
+	public @NotNull ShopItem clearAdminPurchaseCommands() {
+		return this.withAdminPurchaseCommands(List.of());
+	}
 	
 	/**
 	 * Returns a copy with updated amount.
@@ -409,7 +600,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -430,7 +622,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -451,7 +644,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -473,7 +667,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -492,7 +687,8 @@ public class ShopItem extends AbstractItem {
 				updatedRestockIntervalTicks,
 				updatedReferenceTime,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -512,7 +708,8 @@ public class ShopItem extends AbstractItem {
 				updatedRestockIntervalTicks,
 				updatedReferenceTime,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -535,7 +732,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				updatedMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -558,7 +756,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				this.availabilityMode,
-				updatedRotationMinutes
+				updatedRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -583,7 +782,8 @@ public class ShopItem extends AbstractItem {
 				this.adminRestockIntervalTicks,
 				this.adminStockReferenceTime,
 				updatedMode,
-				updatedRotationMinutes
+				updatedRotationMinutes,
+				this.adminPurchaseCommands
 		);
 	}
 
@@ -603,8 +803,27 @@ public class ShopItem extends AbstractItem {
 				null,
 				null,
 				this.availabilityMode,
-				this.availabilityRotationMinutes
+				this.availabilityRotationMinutes,
+				this.adminPurchaseCommands
 		);
+	}
+
+	private @NotNull List<AdminPurchaseCommand> normalizeAdminPurchaseCommands(
+			final @Nullable List<AdminPurchaseCommand> commands
+	) {
+		if (commands == null || commands.isEmpty()) {
+			return List.of();
+		}
+
+		final List<AdminPurchaseCommand> normalized = new ArrayList<>();
+		for (final AdminPurchaseCommand command : commands) {
+			if (command == null) {
+				continue;
+			}
+			normalized.add(command);
+		}
+
+		return normalized.isEmpty() ? List.of() : List.copyOf(normalized);
 	}
 	
 	/**
@@ -634,6 +853,14 @@ public class ShopItem extends AbstractItem {
 		}
 		if (this.availabilityRotationMinutes != null && this.availabilityRotationMinutes < 1) {
 			throw new IllegalArgumentException("Availability rotation minutes must be at least 1 when set");
+		}
+		for (final AdminPurchaseCommand command : this.adminPurchaseCommands) {
+			if (command == null || command.command().isBlank()) {
+				throw new IllegalArgumentException("Admin purchase command cannot be blank");
+			}
+			if (command.delayTicks() < 0L) {
+				throw new IllegalArgumentException("Admin purchase command delay must not be negative");
+			}
 		}
 	}
 

@@ -475,6 +475,7 @@ shop_item_edit_ui:
         - "<gray>Currency type:</gray> <white>{currency_type}</white>"
         - "<gray>Value:</gray> <white>{value}</white>"
         - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<gray>Purchase commands:</gray> <white>{command_count}</white>"
         - "<gray>Availability mode:</gray> <white>{availability_mode}</white>"
         - "<gray>Availability now:</gray> <white>{availability_state}</white>"
         - "<gray>Rotate window:</gray> <white>{rotation_minutes} minute(s)</white>"
@@ -486,6 +487,7 @@ shop_item_edit_ui:
         - "<gray>Value:</gray> <white>{value}</white>"
         - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
         - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Purchase commands:</gray> <white>{command_count}</white>"
         - "<gray>Availability mode:</gray> <white>{availability_mode}</white>"
         - "<gray>Availability now:</gray> <white>{availability_state}</white>"
         - "<gray>Rotate window:</gray> <white>{rotation_minutes} minute(s)</white>"
@@ -521,6 +523,21 @@ shop_item_edit_ui:
       - "<gray>Current mode:</gray> <white>{availability_mode}</white>"
       - "<gray>Rotate mode label:</gray> <white>{rotate_mode}</white>"
       - "<yellow>Click to set rotate minutes in an anvil.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Command Executor</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Player]</gradient>"
+    lore:
+      - "<gray>Current mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Next mode:</gray> <white>{next_mode}</white>"
+      - "<yellow>Click to toggle who executes newly added commands.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Purchase Commands</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>None</gradient>"
+    lore:
+      - "<gray>Configured commands:</gray> <white>{command_count}</white>"
+      - "<gray>Latest command:</gray> <white>{latest_command}</white>"
+      - "<yellow>Click to open command settings and add commands.</yellow>"
   confirm:
     name: "<green>Save Item Pricing</green>"
     lore:
@@ -556,9 +573,91 @@ shop_item_edit_ui:
     item_missing: "<red>That shop item could not be found.</red>"
     saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Availability mode set to <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>New command execution mode set to <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Removed the latest command. Remaining commands:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Cleared all admin purchase commands.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>No admin purchase commands are configured.</gray>"
     config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Plugin config changes are locked in <white>RDS Free</white><gray>. Upgrade to premium for full access.</gray>"
     restock_mode_updated: "<green>Admin restock mode set to {restock_mode}.</green>"
     restock_mode_save_failed: "<red>Failed to save the admin restock mode.</red>"
+
+shop_item_admin_command_anvil_ui:
+  title: "Add Command {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Enter a command to run when this admin item is purchased.</gray>"
+      - "<gray>Command text only. Delay is configured in the command settings view.</gray>"
+      - "<gray>Examples:</gray>"
+      - "<white>broadcast %player_name% bought {amount}x {item_type}</white>"
+      - "<white>eco give %player_name% 50</white>"
+      - "<gray>Configured commands:</gray> <white>{command_count}</white>"
+      - "<gray>Execution mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Delay:</gray> <white>{command_delay_ticks} ticks</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Player]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Command text cannot be empty. Input:</gray> <white>{input}</white>"
+
+shop_item_admin_command_ui:
+  title: "Command Settings - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Purchase Command Settings</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>None</gradient>"
+    lore:
+      - "<gray>Configured commands:</gray> <white>{command_count}</white>"
+      - "<gray>Latest command:</gray> <white>{latest_command}</white>"
+      - "<gray>Next command mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Next command delay:</gray> <white>{command_delay_ticks} ticks ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Next Command Executor</gradient>"
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Player]</green>"
+    lore:
+      - "<gray>Current mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Next mode:</gray> <white>{next_mode}</white>"
+      - "<yellow>Click to toggle executor for the next command.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Delay] Next Command Delay</gradient>"
+    lore:
+      - "<gray>Current delay:</gray> <white>{command_delay_ticks} ticks ({command_delay_seconds}s)</white>"
+      - "<yellow>Click to set delay in ticks for the next command.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Add Command</gradient>"
+    lore:
+      - "<gray>Mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Delay:</gray> <white>{command_delay_ticks} ticks ({command_delay_seconds}s)</white>"
+      - "<yellow>Click to open command input.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Remove Command</gradient>"
+    lore:
+      - "<gray>Configured commands:</gray> <white>{command_count}</white>"
+      - "<yellow>Click to remove the latest command.</yellow>"
+      - "<yellow>Shift + click to clear all commands.</yellow>"
+  confirm:
+    name: "<green>Save Command Settings</green>"
+    lore:
+      - "<gray>Return to the item editor and keep these command changes.</gray>"
+  feedback:
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
+    shop_missing: "<red>This shop could not be loaded from storage.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Next command mode set to <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Removed the latest command. Remaining commands:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Cleared all admin purchase commands.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>No admin purchase commands are configured.</gray>"
+
+shop_item_admin_command_delay_anvil_ui:
+  title: "Set Delay - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Enter a whole number of ticks for the next command delay.</gray>"
+      - "<gray>Execution mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Examples:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Player]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Enter a whole number greater than or equal to 0. Input:</gray> <white>{input}</white>"
 
 shop_item_availability_minutes_anvil_ui:
   title: "Rotate Minutes: {rotation_minutes}"
