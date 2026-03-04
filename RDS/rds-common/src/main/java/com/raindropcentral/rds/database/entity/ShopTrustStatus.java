@@ -1,16 +1,16 @@
-/*
- * ShopTrustStatus.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.database.entity;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the available shop trust states.
+ * Trust levels for shared shop management.
+ *
+ * <p>{@link #PUBLIC} grants no delegated access, {@link #ASSOCIATE} allows stocking access, and
+ * {@link #TRUSTED} allows both stocking and full-management actions.</p>
+ *
+ * @author ItsRainingHP
+ * @since 5.0.0
+ * @version 5.0.0
  */
 public enum ShopTrustStatus {
 
@@ -30,27 +30,27 @@ public enum ShopTrustStatus {
     }
 
     /**
-     * Indicates whether supply access is available.
+     * Returns whether this trust level allows stocking items into the shop.
      *
-     * @return {@code true} if supply access; otherwise {@code false}
+     * @return {@code true} when stocking access is granted
      */
     public boolean hasSupplyAccess() {
         return this.supplyAccess;
     }
 
     /**
-     * Indicates whether full access is available.
+     * Returns whether this trust level allows full shop-management access.
      *
-     * @return {@code true} if full access; otherwise {@code false}
+     * @return {@code true} when full access is granted
      */
     public boolean hasFullAccess() {
         return this.fullAccess;
     }
 
     /**
-     * Executes next.
+     * Returns the next trust level in the owner management cycle.
      *
-     * @return the next result
+     * @return next trust level in PUBLIC -> ASSOCIATE -> TRUSTED -> PUBLIC order
      */
     public @NotNull ShopTrustStatus next() {
         return switch (this) {

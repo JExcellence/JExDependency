@@ -1,10 +1,3 @@
-/*
- * RDS.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -195,11 +188,11 @@ public class RDS {
     }
 
     /**
-     * Returns the default config.
+     * Loads the plugin configuration from disk.
      *
-     * @return the default config
+     * @return parsed plugin configuration
      */
-    public ConfigSection getDefaultConfig() {
+    public @NotNull ConfigSection getDefaultConfig() {
         this.ensureDefaultConfigFile();
         try {
             return ConfigSection.fromFile(this.getDefaultConfigFile());
@@ -478,7 +471,10 @@ public class RDS {
             return true;
         }
 
-        this.getLogger().warning("RDS requires a valid Vault economy provider or at least one registered JExEconomy currency. Disabling plugin.");
+        this.getLogger().warning(
+            "RDS requires a valid Vault economy provider or at least one registered JExEconomy currency. "
+                + "Currency-backed features will remain unavailable until a provider registers."
+        );
         return false;
     }
 
@@ -540,9 +536,17 @@ public class RDS {
         return this.resolveVaultEconomy() != null;
     }
 
+    /**
+     * Returns whether the player currently has at least the requested Vault balance.
+     *
+     * @param player player to check
+     * @param amount required balance
+     * @return {@code true} when the player has sufficient Vault funds
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
     public boolean hasVaultFunds(
-            final @NotNull OfflinePlayer player,
-            final double amount
+        final @NotNull OfflinePlayer player,
+        final double amount
     ) {
         if (amount <= 0D) {
             return true;
@@ -563,9 +567,17 @@ public class RDS {
         return Boolean.TRUE.equals(result);
     }
 
+    /**
+     * Withdraws Vault currency from the supplied player.
+     *
+     * @param player player to charge
+     * @param amount amount to withdraw
+     * @return {@code true} when the Vault transaction succeeded
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
     public boolean withdrawVault(
-            final @NotNull OfflinePlayer player,
-            final double amount
+        final @NotNull OfflinePlayer player,
+        final double amount
     ) {
         if (amount <= 0D) {
             return true;
@@ -573,12 +585,20 @@ public class RDS {
 
         final Object vaultEconomy = this.resolveVaultEconomy();
         return vaultEconomy != null
-                && this.invokeVaultTransaction(vaultEconomy, "withdrawPlayer", player, amount);
+            && this.invokeVaultTransaction(vaultEconomy, "withdrawPlayer", player, amount);
     }
 
+    /**
+     * Deposits Vault currency to the supplied player.
+     *
+     * @param player player to credit
+     * @param amount amount to deposit
+     * @return {@code true} when the Vault transaction succeeded
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
     public boolean depositVault(
-            final @NotNull OfflinePlayer player,
-            final double amount
+        final @NotNull OfflinePlayer player,
+        final double amount
     ) {
         if (amount <= 0D) {
             return true;
@@ -586,12 +606,16 @@ public class RDS {
 
         final Object vaultEconomy = this.resolveVaultEconomy();
         return vaultEconomy != null
-                && this.invokeVaultTransaction(vaultEconomy, "depositPlayer", player, amount);
+            && this.invokeVaultTransaction(vaultEconomy, "depositPlayer", player, amount);
     }
 
-    public @NotNull String formatVaultCurrency(
-            final double amount
-    ) {
+    /**
+     * Formats a Vault currency amount using the active provider when one is available.
+     *
+     * @param amount amount to format
+     * @return formatted Vault amount string
+     */
+    public @NotNull String formatVaultCurrency(final double amount) {
         final Object vaultEconomy = this.resolveVaultEconomy();
         if (vaultEconomy == null) {
             return this.formatAmount(amount);
@@ -606,9 +630,7 @@ public class RDS {
         return formatted instanceof String value ? value : this.formatAmount(amount);
     }
 
-    private boolean isVaultEconomyInstance(
-            final @Nullable Object candidate
-    ) {
+    private boolean isVaultEconomyInstance(final @Nullable Object candidate) {
         if (candidate == null) {
             return false;
         }
@@ -621,32 +643,32 @@ public class RDS {
     }
 
     private @Nullable Object invokeVaultMethod(
-            final @NotNull Object vaultEconomy,
-            final @NotNull String methodName,
-            final @NotNull Class<?>[] parameterTypes,
-            final Object... arguments
+        final @NotNull Object vaultEconomy,
+        final @NotNull String methodName,
+        final @NotNull Class<?>[] parameterTypes,
+        final Object... arguments
     ) {
         try {
             return vaultEconomy.getClass()
-                    .getMethod(methodName, parameterTypes)
-                    .invoke(vaultEconomy, arguments);
+                .getMethod(methodName, parameterTypes)
+                .invoke(vaultEconomy, arguments);
         } catch (ReflectiveOperationException exception) {
             return null;
         }
     }
 
     private boolean invokeVaultTransaction(
-            final @NotNull Object vaultEconomy,
-            final @NotNull String methodName,
-            final @NotNull OfflinePlayer player,
-            final double amount
+        final @NotNull Object vaultEconomy,
+        final @NotNull String methodName,
+        final @NotNull OfflinePlayer player,
+        final double amount
     ) {
         final Object response = this.invokeVaultMethod(
-                vaultEconomy,
-                methodName,
-                new Class<?>[]{OfflinePlayer.class, double.class},
-                player,
-                amount
+            vaultEconomy,
+            methodName,
+            new Class<?>[]{OfflinePlayer.class, double.class},
+            player,
+            amount
         );
         if (response == null) {
             return false;
@@ -660,119 +682,124 @@ public class RDS {
         }
     }
 
-    private @NotNull String formatAmount(
-            final double amount
-    ) {
+    private @NotNull String formatAmount(final double amount) {
         return String.format(Locale.US, "%.2f", amount);
     }
 
     /**
-     * Returns the executor.
+     * Returns the shared executor used for asynchronous persistence operations.
      *
-     * @return the executor
+     * @return plugin executor service, or {@code null} before load completes
      */
-    public ExecutorService getExecutor() {
+    public @Nullable ExecutorService getExecutor() {
         return this.executor;
     }
 
     /**
-     * Returns the platform.
+     * Returns the shared platform abstraction instance.
      *
-     * @return the platform
+     * @return active platform facade, or {@code null} before load completes
      */
-    public RPlatform getPlatform() {
+    public @Nullable RPlatform getPlatform() {
         return this.platform;
     }
 
     /**
-     * Returns the entity manager factory.
+     * Returns the JPA entity manager factory used by repositories.
      *
-     * @return the entity manager factory
+     * @return entity manager factory, or {@code null} before initialization completes
      */
-    public EntityManagerFactory getEntityManagerFactory() {
+    public @Nullable EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
 
     /**
-     * Returns the economy instance.
+     * Returns the raw economy service instance registered by the service registry.
      *
-     * @return the economy instance
+     * @return raw service instance, or {@code null} when no provider was resolved
      */
-    public Object getEconomyInstance() {
+    public @Nullable Object getEconomyInstance() {
         return this.economyInstance;
     }
 
     /**
-     * Returns the view frame.
+     * Returns the registered Inventory Framework view frame.
      *
-     * @return the view frame
+     * @return registered view frame, or {@code null} before views are initialized
      */
-    public ViewFrame getViewFrame() {
+    public @Nullable ViewFrame getViewFrame() {
         return this.viewFrame;
     }
 
     /**
-     * Returns the shop tax scheduler.
+     * Returns the service that schedules recurring shop tax processing.
      *
-     * @return the shop tax scheduler
+     * @return shop tax scheduler, or {@code null} before enable completes
      */
-    public ShopTaxScheduler getShopTaxScheduler() {
+    public @Nullable ShopTaxScheduler getShopTaxScheduler() {
         return this.shopTaxScheduler;
     }
 
     /**
-     * Returns the shop boss bar service.
+     * Returns the service that manages the optional shop boss bar overlay.
      *
-     * @return the shop boss bar service
+     * @return shop boss bar service, or {@code null} before enable completes
      */
-    public ShopBossBarService getShopBossBarService() {
+    public @Nullable ShopBossBarService getShopBossBarService() {
         return this.shopBossBarService;
     }
 
     /**
-     * Returns the admin shop restock scheduler.
+     * Returns the scheduler that restocks admin shops automatically.
      *
-     * @return the admin shop restock scheduler
+     * @return admin shop restock scheduler, or {@code null} before enable completes
      */
-    public AdminShopRestockScheduler getAdminShopRestockScheduler() {
+    public @Nullable AdminShopRestockScheduler getAdminShopRestockScheduler() {
         return this.adminShopRestockScheduler;
     }
 
     /**
-     * Returns the shop sidebar scoreboard service.
+     * Returns the service that manages the optional shop sidebar scoreboard.
      *
-     * @return the shop sidebar scoreboard service
+     * @return shop sidebar scoreboard service, or {@code null} before enable completes
      */
-    public ShopSidebarScoreboardService getShopSidebarScoreboardService() {
+    public @Nullable ShopSidebarScoreboardService getShopSidebarScoreboardService() {
         return this.shopSidebarScoreboardService;
     }
 
     /**
-     * Returns the scheduler.
+     * Returns the scheduler adapter detected for the current server platform.
      *
-     * @return the scheduler
+     * @return scheduler adapter, or {@code null} before enable completes
      */
-    public ISchedulerAdapter getScheduler() {
+    public @Nullable ISchedulerAdapter getScheduler() {
         return this.scheduler;
     }
 
     /**
-     * Returns the platform type.
+     * Returns the detected platform type.
      *
-     * @return the platform type
+     * @return current platform type, or {@code null} before enable completes
      */
-    public PlatformType getPlatformType() {
+    public @Nullable PlatformType getPlatformType() {
         return this.platformType;
     }
 
     /**
-     * Returns the player repository.
+     * Returns the repository used for persisted player shop profiles.
      *
-     * @return the player repository
+     * @return player repository, or {@code null} before repository initialization completes
      */
-    public RRDSPlayer getPlayerRepository() {
+    public @Nullable RRDSPlayer getPlayerRepository() {
         return this.playerRepository;
     }
 
-    public RShop getShopRepository() { return this.shopRepository; }
+    /**
+     * Returns the repository used for placed-shop persistence and lookups.
+     *
+     * @return shop repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RShop getShopRepository() {
+        return this.shopRepository;
+    }
 }
