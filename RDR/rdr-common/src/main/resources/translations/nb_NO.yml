@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Lagringsstatistikk</gradient>"
+  items: "<gray>Totalt antall varer:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>Tilgjengelige spor:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>Oppnådd lagringsplass:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>Maksimal lagringsplass:</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] Lagringssammendrag</gradient>"
+    lore:
+      - "<gray>Eide lager:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimal lagringsplass:</gray> <white>{max_storages}</white>"
+      - "<gray>Hvelvnettverket ditt er vedvarende</gray>"
+      - "<gray>og klar for bruk på tvers av servere.</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] Se lagringer</gradient>"
+    lore:
+      - "<gray>Eide lager:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimal lagringsplass:</gray> <white>{max_storages}</white>"
+      - "<yellow>Klikk for å bla gjennom lagringslisten din.</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] Lagringsbutikk</gradient>"
+    lore:
+      - "<gray>Eide lager:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimal lagringsplass:</gray> <white>{max_storages}</white>"
+      - "<yellow>Klikk for å kjøpe en annen lagringsplass.</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Lagringsbutikk</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] lagringskapasitet</gradient>"
+    lore:
+      - "<gray>Eide lager:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimal lagringsplass:</gray> <white>{max_storages}</white>"
+      - "<gray>Kjøp ekstra hvelvplass til</gray>"
+      - "<gray>du når den konfigurerte toppen.</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Butikkkrav</gradient>"
+    lore:
+      - "<gray>Konfigurerte krav:</gray> <white>{requirement_count}</white>"
+      - "<gray>Gjeldende kravtelling:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klikk for å inspisere hvert kravnivå i detalj.</yellow>"
+    none: "<gradient:#ef4444:#f87171>[Ingen]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Klar]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Venter]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Frakoblet]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] Kjøp lagringsplass</gradient>"
+      lore:
+        - "<gray>Konfigurerte krav:</gray> <white>{requirement_count}</white>"
+        - "<gray>Gjeldende krav:</gray> <white>{requirements}</white>"
+        - "<gray>Eide lager:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Klikk for å kjøpe når alle krav er oppfylt.</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] Krav venter</gradient>"
+      lore:
+        - "<gray>Konfigurerte krav:</gray> <white>{requirement_count}</white>"
+        - "<gray>Gjeldende krav:</gray> <white>{requirements}</white>"
+        - "<gray>Eide lager:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Oppfyll de gjenværende kravene før du kjøper.</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] lagringsgrense nådd</gradient>"
+      lore:
+        - "<gray>Eide lager:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Du kan ikke kjøpe flere lagringsplasser</gray>"
+        - "<gray>til den globale grensen er hevet.</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] Krav frakoblet</gradient>"
+      lore:
+        - "<gray>Ett eller flere konfigurerte butikkkrav</gray>"
+        - "<gray>kan ikke løses på denne serveren.</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] Profil mangler</gradient>"
+      lore:
+        - "<gray>Din RDR-profil kunne ikke lastes,</gray>"
+        - "<gray>så kjøp er midlertidig blokkert.</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Kjøpt <white>{storage_key}</white><gray>. Forbrukte krav:</gray> <white>{requirements}</white><gray>. Eide lager:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du møter for øyeblikket ikke <white>{requirement}</white><gray>. Butikkkrav:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Butikkkravet <white>{requirement}</white><gray> er utilgjengelig eller ugyldig akkurat nå.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ingen konfigurerte butikkkrav er tilgjengelige for lagringskjøp akkurat nå.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har nådd lagringsgrensen på <white>{max_storages}</white><gray>. Eide lager:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Din RDR-profil kunne ikke lastes, så lagringskjøp er utilgjengelige.</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Kjøp {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] Kravnettleser</gradient>"
+    lore:
+      - "<gray>Kjøpsnivå:</gray> <white>{purchase_number}</white>"
+      - "<gray>Låser opp lagringsplass:</gray> <white>{storage_number}</white>"
+      - "<gray>Konfigurerte krav:</gray> <white>{requirement_count}</white>"
+      - "<gray>For øyeblikket møtt:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Gratis] Ingen krav</gradient>"
+    lore:
+      - "<gray>Dette kjøpsnivået har ingen konfigurerte krav.</gray>"
+      - "<yellow>Du kan kjøpe denne lagringen uten ekstra sjekker.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Nøkkel:</gray> <white>{requirement_key}</white>"
+      - "<gray>Type:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>fremdrift:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Sammendrag:</gray> <white>{summary}</white>"
+      - "<yellow>Høyreklikk element- eller valutakrav for bankfremgang.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Detaljerte kontroller</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Møtte]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Venter]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Utilgjengelig]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> er nå klar.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Lagret fremdrift for <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Ingen samsvarende varer eller valuta var tilgjengelig for <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> støtter ikke bankfremgang.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> er utilgjengelig akkurat nå.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Din RDR-profil kunne ikke lastes, så fremdriften kunne ikke lagres.</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Vault] Lagringene dine</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] lagringskapasitet</gradient>"
+    lore:
+      - "<gray>Eide lager:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimal lagringsplass:</gray> <white>{max_storages}</white>"
+      - "<gray>Bruk denne listen til å vurdere din</gray>"
+      - "<gray>vedvarende lagringsbeholdere.</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
+    lore:
+      - "<gray>Lagringsnøkkel:</gray> <white>{storage_key}</white>"
+      - "<gray>Eier:</gray> <white>{owner_name}</white>"
+      - "<gray>Tilgang:</gray> <white>{access_level}</white>"
+      - "<gray>hurtigtast:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Brukte spor:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Tilgjengelige spor:</gray> <white>{available_slots}</white>"
+      - "<yellow>Denne lagringen er klar for gjenstand.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Venstreklikk for å åpne denne lagringen.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Høyreklikk for å åpne lagringsinnstillingene.</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Eier]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Offentlig]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Ingen lagringsplass funnet</gradient>"
+    lore:
+      - "<gray>Ingen lagringsplasser er tilkoblet for øyeblikket</gray>"
+      - "<gray>til RDR-profilen din.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] Profil mangler</gradient>"
+    lore:
+      - "<gray>Din RDR spillerprofil kunne ikke</gray>"
+      - "<gray>lastes fra vedvarende lagring.</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Innstillinger</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Lagringsinnstillinger</gradient>"
+    lore:
+      - "<gray>Lagringsnøkkel:</gray> <white>{storage_key}</white>"
+      - "<gray>Eier:</gray> <white>{owner_name}</white>"
+      - "<gray>Din tilgang:</gray> <white>{access_level}</white>"
+      - "<gray>hurtigtast:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Medarbeidere:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Eier]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Offentlig]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[Gruppe] Trusted Access</gradient>"
+    lore:
+      - "<gray>Medarbeidere:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Klikk for å administrere hvem som kan sette inn</yellow>"
+      - "<yellow>eller få full tilgang til denne lagringen.</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] Hurtigtast for lagring</gradient>"
+    lore:
+      - "<gray>Gjeldende hurtigtast:</gray> <white>{hotkey_display}</white>"
+      - "<yellow>Klikk for å binde rask tilgang for</yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Trusted Locked</gradient>"
+    lore:
+      - "<gray>Bare lagringseieren kan administrere</gray>"
+      - "<gray>betrodd tilgang for denne lagringen.</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Hurtigtast låst</gradient>"
+    lore:
+      - "<gray>Bare lagringseieren kan endre</gray>"
+      - "<gray>hurtigtaster for lagring.</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[Gratis] Innstillinger låst</gradient>"
+    lore:
+      - "<gray>Endringer av lagringsinnstillinger er deaktivert</gray>"
+      - "<gray>i <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>Oppgrader til Premium for å redigere innstillinger.</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] lagring mangler</gradient>"
+    lore:
+      - "<gray>Denne lagringen kunne ikke lastes</gray>"
+      - "<gray>for innstillingsvisningen.</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Gruppe] {storage_key} Tilgang</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Delt tilgang</gradient>"
+    lore:
+      - "<gray>Lagringsnøkkel:</gray> <white>{storage_key}</white>"
+      - "<gray>Eier:</gray> <white>{owner_name}</white>"
+      - "<gray>Medarbeidere:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Klikk på en spiller for å sykle tilgang.</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[Offentlig] {player}</gradient>"
+      lore:
+        - "<gray>Status:</gray> <white>Offentlig</white>"
+        - "<gray>Ingen innskudd eller uttakstilgang.</gray>"
+        - "<yellow>Klikk for å oppgradere til partner.</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Kan sette inn, men kan ikke ta ut.</gray>"
+        - "<yellow>Klikk for å oppgradere til Trusted.</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[Trusted] {player}</gradient>"
+      lore:
+        - "<gray>Status:</gray> <white>Trusted</white>"
+        - "<gray>Kan sette inn og ta ut varer.</gray>"
+        - "<yellow>Klikk for å tilbakestille til offentlig.</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[Offentlig]</gradient> <gray>{player} har ikke lenger lagringstilgang.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} kan nå sette inn på denne lagringen.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} kan nå sette inn og ta ut fra denne lagringen.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bare lagringseieren kan endre klarert tilgang.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Kun eier</gradient>"
+      lore:
+        - "<gray>Du kan se denne lagringen, men bare</gray>"
+        - "<gray>eieren kan endre klarert tilgang.</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] lagring mangler</gradient>"
+      lore:
+        - "<gray>Denne lagringen kunne ikke lastes</gray>"
+        - "<gray>for klarert tilgangsadministrasjon.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Denne lagringen kunne ikke lastes for klarert tilgangsadministrasjon.</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[Gratis] Innstillinger låst</gradient>"
+      lore:
+        - "<gray>Endringer med klarert tilgang er deaktivert</gray>"
+        - "<gray>i <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Ingen spillere funnet</gradient>"
+      lore:
+        - "<gray>Ingen andre kjente spillere er tilgjengelige</gray>"
+        - "<gray>for å tildele klarert tilgang.</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[Box] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] lagring mangler</gradient>"
+    lore:
+      - "<gray>Denne lagringsoppføringen ble ikke funnet</gray>"
+      - "<gray>for den vedvarende RDR-profilen din.</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] Bind {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>Skriv inn et tall mellom</gray>"
+      - "<white>1</white><gray> og </gray><white>{max_hotkeys}</white><gray> for rask tilgang.</gray>"
+      - "<yellow>Klikk resultatsporet for å lagre hurtigtasten.</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bruk et tall mellom <white>1</white> og <white>{max_hotkeys}</white><gray>. Inndata:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} er allerede åpen i en annen økt.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kunne ikke åpnes akkurat nå.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilgang til <white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> er globalt svartelistet fra RDR lagring.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Redigeringsøkten din for {storage_key} har utløpt eller flyttet et annet sted. Endringene ble ikke lagret.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kunne ikke lagres. Sjekk konsollen for detaljer.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} er nå bundet til <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ingen lagring er bundet til <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hurtigtaster må være mellom <white>1</white> og <white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Redigeringer av lagringsinnstillinger er deaktivert i <white>RDR Free</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktiverte <white>/rr scoreboard</white><gray> sidefelt.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Deaktiverte <white>/rr scoreboard</white><gray> sidefeltet.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bruk:</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[Side] %current_page%</gradient>"
+  lore:
+    - "<gray>Gjeldende side:</gray> <white>%current_page%</white>"
+    - "<gray>Totalt antall sider:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Side] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Retur</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikk for å gå tilbake</gradient>"

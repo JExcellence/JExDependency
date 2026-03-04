@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] 儲存統計</gradient>"
+  items: "<gray>總項目：</gray> <white>{total_items}</white>"
+  available_slots: "<gray>可用插槽：</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>獲得的儲存量：</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>最大儲存量：</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] 儲存中心</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] 儲存摘要</gradient>"
+    lore:
+      - "<gray>自有倉庫：</gray> <white>{owned_storages}</white>"
+      - "<gray>最大儲存量：</gray> <white>{max_storages}</white>"
+      - "<gray>您的保管庫網路已保留</gray>"
+      - "<gray>並準備好跨伺服器使用。</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] 查看儲存</gradient>"
+    lore:
+      - "<gray>自有倉庫：</gray> <white>{owned_storages}</white>"
+      - "<gray>最大儲存量：</gray> <white>{max_storages}</white>"
+      - "<yellow>按一下可瀏覽您的儲存空間清單。</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] 儲存儲存</gradient>"
+    lore:
+      - "<gray>自有倉庫：</gray> <white>{owned_storages}</white>"
+      - "<gray>最大儲存量：</gray> <white>{max_storages}</white>"
+      - "<yellow>按一下可購買另一個儲存空間。</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 儲存儲存</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[資訊] 儲存容量</gradient>"
+    lore:
+      - "<gray>自有倉庫：</gray> <white>{owned_storages}</white>"
+      - "<gray>最大儲存量：</gray> <white>{max_storages}</white>"
+      - "<gray>購買額外的金庫空間，直到</gray>"
+      - "<gray>您達到了配置的上限。</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[需求] 店家要求</gradient>"
+    lore:
+      - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
+      - "<gray>當前需求數量：</gray> <white>{requirements}</white>"
+      - "<gray>地位：</gray> <white>{availability}</white>"
+      - "<yellow>按一下可詳細檢查每個需求層。</yellow>"
+    none: "<gradient:#ef4444:#f87171>[沒有任何]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[準備好]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待辦的]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[離線]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] 購買儲存空間</gradient>"
+      lore:
+        - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
+        - "<gray>目前的要求：</gray> <white>{requirements}</white>"
+        - "<gray>自有倉庫：</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>滿足所有要求後點擊購買。</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] 要求待定</gradient>"
+      lore:
+        - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
+        - "<gray>目前的要求：</gray> <white>{requirements}</white>"
+        - "<gray>自有倉庫：</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>購買前滿足其餘要求。</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] 已達到儲存限制</gradient>"
+      lore:
+        - "<gray>自有倉庫：</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>您無法購買更多儲存空間</gray>"
+        - "<gray>直到全球上限提高。</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] 離線需求</gradient>"
+      lore:
+        - "<gray>一項或多項配置的商店要求</gray>"
+        - "<gray>無法在此伺服器上解析。</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] 個人資料缺失</gradient>"
+      lore:
+        - "<gray>你的 RDR 無法載入設定文件，</gray>"
+        - "<gray>因此購買暫時被阻止。</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已購買 <white>{storage_key}</white><gray>。消耗要求：</gray> <white>{requirements}</white><gray>。自有倉庫：</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你們目前沒有見面 <white>{requirement}</white><gray>。店舖要求：</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>店家要求 <white>{requirement}</white><gray> 現在不可用或無效。</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>目前沒有可用於儲存購買的已配置商店要求。</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您已達到儲存限制 <white>{max_storages}</white><gray>。自有倉庫：</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>你的 RDR 無法載入設定文件，因此無法購買儲存空間。</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[需求] 購買 {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[資訊] 需求瀏覽器</gradient>"
+    lore:
+      - "<gray>購買等級：</gray> <white>{purchase_number}</white>"
+      - "<gray>解鎖儲存：</gray> <white>{storage_number}</white>"
+      - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
+      - "<gray>目前遇到：</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[免費] 無要求</gradient>"
+    lore:
+      - "<gray>此購買層沒有配置要求。</gray>"
+      - "<yellow>您無需額外檢查即可購買此儲存空間。</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[請求] {requirement_name}</gradient>"
+    lore:
+      - "<gray>鑰匙：</gray> <white>{requirement_key}</white>"
+      - "<gray>類型：</gray> <white>{requirement_type}</white>"
+      - "<gray>地位：</gray> <white>{status}</white>"
+      - "<gray>進步：</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>概括：</gray> <white>{summary}</white>"
+      - "<yellow>右鍵單擊項目或貨幣要求以儲存進度。</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ 詳細檢查</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[遇見]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待辦的]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[不可用]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> 現在已經準備好了。</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>儲存的進度 <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>沒有相符的物品或貨幣可供使用 <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> 不支援儲存進度。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> 現在不可用。</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>你的 RDR 無法載入設定文件，因此無法儲存進度。</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[保管庫] 您的儲存空間</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 儲存容量</gradient>"
+    lore:
+      - "<gray>自有倉庫：</gray> <white>{owned_storages}</white>"
+      - "<gray>最大儲存量：</gray> <white>{max_storages}</white>"
+      - "<gray>使用此列表來檢查您的</gray>"
+      - "<gray>持久性存儲容器。</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[盒子] {storage_key}</gradient>"
+    lore:
+      - "<gray>儲存鍵：</gray> <white>{storage_key}</white>"
+      - "<gray>所有者：</gray> <white>{owner_name}</white>"
+      - "<gray>使用權：</gray> <white>{access_level}</white>"
+      - "<gray>熱鍵：</gray> <white>{hotkey_display}</white>"
+      - "<gray>使用的插槽：</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>可用插槽：</gray> <white>{available_slots}</white>"
+      - "<yellow>該儲存已準備好進行專案持久化。</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] 左鍵點選開啟此儲存。</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] 右鍵單擊開啟儲存設定。</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[所有者]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[民眾]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[聯繫]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[值得信賴]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] 未找到存儲</gradient>"
+    lore:
+      - "<gray>目前沒有附加任何存儲</gray>"
+      - "<gray>給你的 RDR 輪廓。</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] 個人資料缺失</gradient>"
+    lore:
+      - "<gray>你的 RDR 玩家檔案無法</gray>"
+      - "<gray>從持久性儲存中載入。</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} 設定</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 儲存設定</gradient>"
+    lore:
+      - "<gray>儲存鍵：</gray> <white>{storage_key}</white>"
+      - "<gray>所有者：</gray> <white>{owner_name}</white>"
+      - "<gray>您的存取權限：</gray> <white>{access_level}</white>"
+      - "<gray>熱鍵：</gray> <white>{hotkey_display}</white>"
+      - "<gray>聯營公司：</gray> <white>{associate_count}</white>"
+      - "<gray>值得信賴：</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[所有者]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[民眾]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[聯繫]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[值得信賴]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[群組]可信任訪問</gradient>"
+    lore:
+      - "<gray>聯營公司：</gray> <white>{associate_count}</white>"
+      - "<gray>值得信賴：</gray> <white>{trusted_count}</white>"
+      - "<yellow>點選管理誰可以存款</yellow>"
+      - "<yellow>或完全存取此存儲。</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] 儲存熱鍵</gradient>"
+    lore:
+      - "<gray>當前熱鍵：</gray> <white>{hotkey_display}</white>"
+      - "<yellow>點擊綁定快速訪問</yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] 可信鎖定</gradient>"
+    lore:
+      - "<gray>只有儲存擁有者可以管理</gray>"
+      - "<gray>對此儲存的可信任存取。</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] 熱鍵已鎖定</gradient>"
+    lore:
+      - "<gray>只有儲存擁有者可以更改</gray>"
+      - "<gray>儲存熱鍵。</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[免費] 設定已鎖定</gradient>"
+    lore:
+      - "<gray>儲存設定變更已停用</gray>"
+      - "<gray>在 <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>升級到高級版以編輯設定。</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 儲存遺失</gradient>"
+    lore:
+      - "<gray>無法加載此存儲</gray>"
+      - "<gray>對於設定視圖。</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[團體] {storage_key} 使用權</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 共享訪問</gradient>"
+    lore:
+      - "<gray>儲存鍵：</gray> <white>{storage_key}</white>"
+      - "<gray>所有者：</gray> <white>{owner_name}</white>"
+      - "<gray>聯營公司：</gray> <white>{associate_count}</white>"
+      - "<gray>值得信賴：</gray> <white>{trusted_count}</white>"
+      - "<yellow>點擊播放器即可循環存取。</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[民眾] {player}</gradient>"
+      lore:
+        - "<gray>地位：</gray> <white>民眾</white>"
+        - "<gray>沒有存款或提款權限。</gray>"
+        - "<yellow>點擊即可晉升為助理。</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[聯繫] {player}</gradient>"
+      lore:
+        - "<gray>地位：</gray> <white>聯繫</white>"
+        - "<gray>可以存款但不能提款。</gray>"
+        - "<yellow>點擊即可升級為「可信」。</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[值得信賴] {player}</gradient>"
+      lore:
+        - "<gray>地位：</gray> <white>值得信賴</white>"
+        - "<gray>可以存入和取出物品。</gray>"
+        - "<yellow>點擊以重置為公開。</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[民眾]</gradient> <gray>{player} 不再具有儲存存取權限。</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[聯繫]</gradient> <gray>{player} 現在可以存入此儲存空間。</gray>"
+      trusted: "<gradient:#10b981:#34d399>[值得信賴]</gradient> <gray>{player} 現在可以從該存儲中存入和取出。</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>只有儲存擁有者才能更改可信任存取。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 僅限所有者</gradient>"
+      lore:
+        - "<gray>您可以查看此存儲，但只能</gray>"
+        - "<gray>所有者可以更改可信訪問。</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] 儲存遺失</gradient>"
+      lore:
+        - "<gray>無法加載此存儲</gray>"
+        - "<gray>用於可信任存取管理。</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>無法載入此儲存體以進行可信任存取管理。</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[免費] 設定已鎖定</gradient>"
+      lore:
+        - "<gray>禁用可信任存取更改</gray>"
+        - "<gray>在 <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] 未找到玩家</gradient>"
+      lore:
+        - "<gray>沒有其他已知的球員可用</gray>"
+        - "<gray>分配可信任存取權限。</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[盒子] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] 儲存遺失</gradient>"
+    lore:
+      - "<gray>找不到該儲存條目</gray>"
+      - "<gray>為了你的堅持 RDR 輪廓。</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] 綁定 {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>輸入一個介於</gray>"
+      - "<white>1</white><gray> 和 </gray><white>{max_hotkeys}</white><gray> 以便快速存取。</gray>"
+      - "<yellow>按一下結果槽以儲存熱鍵。</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>使用介於之間的數字 <white>1</white> 和 <white>{max_hotkeys}</white><gray>。輸入：</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} 已在另一個會話中開啟。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} 現在無法打開。</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權訪問 <white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> 被列入全球黑名單 RDR 貯存。</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>您的編輯會話 {storage_key} 過期或移至其他地方。更改未儲存。</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} 無法保存。檢查控制台以了解詳細資訊。</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} 現在綁定到 <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>沒有儲存綁定 <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>熱鍵必須介於 <white>1</white> 和 <white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>儲存設定編輯已停用 <white>RDR Free</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>啟用了 <white>/rr scoreboard</white><gray> 側邊欄。</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>禁用了 <white>/rr scoreboard</white><gray> 側邊欄。</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>用法：</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[頁] %current_page%</gradient>"
+  lore:
+    - "<gray>目前頁面：</gray> <white>%current_page%</white>"
+    - "<gray>總頁數：</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[頁] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] 返回</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊返回</gradient>"

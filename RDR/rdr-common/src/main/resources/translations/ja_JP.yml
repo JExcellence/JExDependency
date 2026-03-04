@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] ストレージ統計</gradient>"
+  items: "<gray>合計アイテム数:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>利用可能なスロット:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>取得したストレージ:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>最大ストレージ数:</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] ストレージ ハブ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] ストレージの概要</gradient>"
+    lore:
+      - "<gray>所有ストレージ:</gray> <white>{owned_storages}</white>"
+      - "<gray>最大ストレージ:</gray> <white>{max_storages}</white>"
+      - "<gray>コンテナー ネットワークは永続化されます</gray>"
+      - "<gray>そしてクロスサーバー使用の準備が整いました。</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] ストレージを表示</gradient>"
+    lore:
+      - "<gray>所有ストレージ:</gray> <white>{owned_storages}</white>"
+      - "<gray>最大ストレージ:</gray> <white>{max_storages}</white>"
+      - "<yellow>クリックしてストレージ リストを参照してください。</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] ストレージ ストア</gradient>"
+    lore:
+      - "<gray>所有ストレージ:</gray> <white>{owned_storages}</white>"
+      - "<gray>最大ストレージ:</gray> <white>{max_storages}</white>"
+      - "<yellow>クリックして別のストレージを購入します。</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] ストレージ ストア</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[情報] ストレージ容量</gradient>"
+    lore:
+      - "<gray>所有ストレージ:</gray> <white>{owned_storages}</white>"
+      - "<gray>最大ストレージ:</gray> <white>{max_storages}</white>"
+      - "<gray></gray> まで追加のボールト スペースを購入してください"
+      - "<gray>設定された上限に達しました。</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[必須] ストア要件</gradient>"
+    lore:
+      - "<gray>構成された要件:</gray> <white>{requirement_count}</white>"
+      - "<gray>現在の要件数:</gray> <white>{requirements}</white>"
+      - "<gray>ステータス:</gray> <white>{availability}</white>"
+      - "<yellow>クリックして各要件層を詳しく調べます。</yellow>"
+    none: "<gradient:#ef4444:#f87171>[なし]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[準備完了]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[保留中]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[オフライン]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] ストレージを購入</gradient>"
+      lore:
+        - "<gray>構成された要件:</gray> <white>{requirement_count}</white>"
+        - "<gray>現在の要件:</gray> <white>{requirements}</white>"
+        - "<gray>所有ストレージ:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>すべての要件が満たされたら、クリックして購入します。</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] 要件保留中</gradient>"
+      lore:
+        - "<gray>構成された要件:</gray> <white>{requirement_count}</white>"
+        - "<gray>現在の要件:</gray> <white>{requirements}</white>"
+        - "<gray>所有ストレージ:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>購入する前に残りの要件を満たしてください。</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] ストレージ制限に達しました</gradient>"
+      lore:
+        - "<gray>所有ストレージ:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>ストレージを追加購入することはできません</gray>"
+        - "<gray>グローバル上限が引き上げられるまで。</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] オフライン要件</gradient>"
+      lore:
+        - "<gray>1 つ以上の構成済みストア要件</gray>"
+        - "<gray>はこのサーバーでは解決できません。</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] プロフィールがありません</gradient>"
+      lore:
+        - "<gray>RDR プロフィールをロードできませんでした。</gray>"
+        - "<gray>そのため、購入は一時的にブロックされています。</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{storage_key}</white><gray> を購入しました。消費された要件:</gray> <white>{requirements}</white><gray>。所有ストレージ:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>現在、<white>{requirement}</white><gray> には該当しません。ストア要件:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>ストア要件 <white>{requirement}</white><gray> は現在利用できないか無効です。</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>現在、ストレージの購入に使用できる構成済みのストア要件はありません。</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ストレージ制限 <white>{max_storages}</white><gray> に達しました。所有ストレージ:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDR プロファイルを読み込めなかったため、ストレージを購入できません。</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[必須] {purchase_number}</gradient> を購入する"
+  summary:
+    name: "<gradient:#10b981:#34d399>[情報] 要件ブラウザ</gradient>"
+    lore:
+      - "<gray>購入層:</gray> <white>{purchase_number}</white>"
+      - "<gray>ストレージのロックを解除します:</gray> <white>{storage_number}</white>"
+      - "<gray>構成された要件:</gray> <white>{requirement_count}</white>"
+      - "<gray>現在会っている人:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[無料] 要件なし</gradient>"
+    lore:
+      - "<gray>この購入層には構成された要件がありません。</gray>"
+      - "<yellow>このストレージは追加の小切手なしで購入できます。</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[必須] {requirement_name}</gradient>"
+    lore:
+      - "<gray>キー:</gray> <white>{requirement_key}</white>"
+      - "<gray>タイプ:</gray> <white>{requirement_type}</white>"
+      - "<gray>ステータス:</gray> <white>{status}</white>"
+      - "<gray>進捗状況:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>概要:</gray> <white>{summary}</white>"
+      - "<yellow>銀行の進行状況を確認するには、アイテムまたは通貨要件を右クリックします。</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ 詳細なチェック</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[会った]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[保留中]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[利用不可]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> の準備が完了しました。</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray><white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient> の進行状況の保存"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray><white>{requirement}</white><gray>.</gray> に一致するアイテムまたは通貨がありませんでした。"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> はバンクされた進行状況をサポートしません。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> は現在利用できません。</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDR プロファイルを読み込めなかったため、進行状況を保存できませんでした。</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[保管庫] ストレージ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] ストレージ容量</gradient>"
+    lore:
+      - "<gray>所有ストレージ:</gray> <white>{owned_storages}</white>"
+      - "<gray>最大ストレージ:</gray> <white>{max_storages}</white>"
+      - "<gray>このリストを使用して</gray>を確認してください"
+      - "<gray>永続化ストレージ コンテナー。</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[ボックス] {storage_key}</gradient>"
+    lore:
+      - "<gray>ストレージキー:</gray> <white>{storage_key}</white>"
+      - "<gray>所有者:</gray> <white>{owner_name}</white>"
+      - "<gray>アクセス:</gray> <white>{access_level}</white>"
+      - "<gray>ホットキー:</gray> <white>{hotkey_display}</white>"
+      - "<gray>使用スロット:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>利用可能なスロット:</gray> <white>{available_slots}</white>"
+      - "<yellow>このストレージはアイテムを永続化する準備ができています。</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] 左クリックしてこのストレージを開きます。</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] 右クリックしてストレージ設定を開きます。</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[オーナー]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[公開]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[アソシエイト]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[信頼できる]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] ストレージが見つかりません</gradient>"
+    lore:
+      - "<gray>現在接続されているストレージはありません</gray>"
+      - "<gray>をあなたのRDRプロフィールに追加します。</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] プロフィールがありません</gradient>"
+    lore:
+      - "<gray>あなたのRDRプレーヤープロフィールは</gray>できませんでした"
+      - "<gray>永続ストレージからロードされます。</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} 設定</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] ストレージ設定</gradient>"
+    lore:
+      - "<gray>ストレージキー:</gray> <white>{storage_key}</white>"
+      - "<gray>所有者:</gray> <white>{owner_name}</white>"
+      - "<gray>あなたのアクセス権:</gray> <white>{access_level}</white>"
+      - "<gray>ホットキー:</gray> <white>{hotkey_display}</white>"
+      - "<gray>アソシエイト:</gray> <white>{associate_count}</white>"
+      - "<gray>信頼できる:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[オーナー]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[公開]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[アソシエイト]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[信頼できる]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[グループ] 信頼されたアクセス</gradient>"
+    lore:
+      - "<gray>アソシエイト:</gray> <white>{associate_count}</white>"
+      - "<gray>信頼できる:</gray> <white>{trusted_count}</white>"
+      - "<yellow>クリックして入金できる人を管理</yellow>"
+      - "<yellow>またはこのストレージに完全にアクセスします。</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] ストレージ ホットキー</gradient>"
+    lore:
+      - "<gray>現在のホットキー:</gray> <white>{hotkey_display}</white>"
+      - "<yellow>クリックして</yellow> のクイック アクセスをバインドします"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] 信頼できるロック済み</gradient>"
+    lore:
+      - "<gray>ストレージ所有者のみが管理できます</gray>"
+      - "<gray>このストレージに対する信頼されたアクセス。</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] ホットキーがロックされました</gradient>"
+    lore:
+      - "<gray>ストレージ所有者のみが変更できます</gray>"
+      - "<gray>ストレージ ホットキー。</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[無料] 設定がロックされました</gradient>"
+    lore:
+      - "<gray>ストレージ設定の変更は無効になっています</gray>"
+      - "<gray> <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>設定を編集するにはプレミアムにアップグレードしてください。</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] ストレージがありません</gradient>"
+    lore:
+      - "<gray>このストレージをロードできませんでした</gray>"
+      - "<gray>設定ビュー用。</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[グループ] {storage_key} アクセス</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 共有アクセス</gradient>"
+    lore:
+      - "<gray>ストレージキー:</gray> <white>{storage_key}</white>"
+      - "<gray>所有者:</gray> <white>{owner_name}</white>"
+      - "<gray>アソシエイト:</gray> <white>{associate_count}</white>"
+      - "<gray>信頼できる:</gray> <white>{trusted_count}</white>"
+      - "<yellow>プレイヤーをクリックしてアクセスを切り替えます。</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[公開] {player}</gradient>"
+      lore:
+        - "<gray>ステータス:</gray> <white>パブリック</white>"
+        - "<gray>入金または出金にはアクセスできません。</gray>"
+        - "<yellow>クリックしてアソシエイトに昇格します。</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[アソシエイト] {player}</gradient>"
+      lore:
+        - "<gray>ステータス:</gray> <white>アソシエイト</white>"
+        - "<gray>入金はできますが、出金はできません。</gray>"
+        - "<yellow>クリックして信頼済みに昇格します。</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[信頼できる] {player}</gradient>"
+      lore:
+        - "<gray>ステータス:</gray> <white>信頼できる</white>"
+        - "<gray>アイテムの預け入れと引き出しが可能です。</gray>"
+        - "<yellow>クリックして公開にリセットします。</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[パブリック]</gradient> <gray>{player} はストレージにアクセスできなくなりました。</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[アソシエイト]</gradient> <gray>{player} がこのストレージに入金できるようになりました。</gray>"
+      trusted: "<gradient:#10b981:#34d399>[信頼できる]</gradient> <gray>{player} は、このストレージに入金および引き出しできるようになりました。</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>信頼できるアクセスを変更できるのはストレージ所有者のみです。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 所有者のみ</gradient>"
+      lore:
+        - "<gray>このストレージは表示できますが、</gray> のみです"
+        - "<gray>所有者は信頼できるアクセスを変更できます。</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] ストレージがありません</gradient>"
+      lore:
+        - "<gray>このストレージをロードできませんでした</gray>"
+        - "<gray>信頼できるアクセス管理用。</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>このストレージは信頼できるアクセス管理のためにロードできませんでした。</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[無料] 設定がロックされました</gradient>"
+      lore:
+        - "<gray>信頼できるアクセスの変更は無効になっています</gray>"
+        - "<gray> <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] プレーヤーが見つかりません</gradient>"
+      lore:
+        - "<gray>他に利用可能な既知のプレーヤーはありません</gray>"
+        - "<gray>は信頼できるアクセスを割り当てます。</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[ボックス] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] ストレージがありません</gradient>"
+    lore:
+      - "<gray>このストレージ エントリが見つかりません</gray>"
+      - "<gray> 永続化された RDR プロファイル用。</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key}</gradient> をバインドする"
+  input:
+    lore:
+      - "<gray></gray>の間に数字を入力してください"
+      - "<white>1</white><gray> および </gray><white>{max_hotkeys}</white><gray> にすばやくアクセスできます。</gray>"
+      - "<yellow>結果スロットをクリックしてホットキーを保存します。</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>1</white> から <white>{max_hotkeys}</white><gray> までの数値を使用してください。入力:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} は別のセッションですでに開かれています。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} は現在開けませんでした。</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray>.</gray> へのアクセス権がありません。"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> は、RDR ストレージからグローバルにブラックリストに登録されています。</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} の編集セッションが期限切れになったか、別の場所に移動されました。変更は保存されませんでした。</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} を保存できませんでした。詳細については、コンソールを確認してください。</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} は <white>/rr {hotkey}</white><gray>.</gray> にバインドされました"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>/rr {hotkey}</white><gray>.</gray> にバインドされているストレージはありません"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>ホットキーは <white>1</white> と <white>{max_hotkeys}</white><gray>.</gray> の間にある必要があります。"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>RDR Free</white><gray>.</gray> ではストレージ設定の編集が無効になっています"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>/rr scoreboard</white><gray> サイドバーを有効にしました。</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray><white>/rr scoreboard</white><gray> サイドバーを無効にしました。</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>使用法:</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[ページ] %current_page%</gradient>"
+  lore:
+    - "<gray>現在のページ:</gray> <white>%current_page%</white>"
+    - "<gray>総ページ数:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[ページ] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] 戻る</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"

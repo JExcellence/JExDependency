@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] سترات التخزين</gradient>"
+  items: "<gray>مجموع البنود:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>المتاح:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>المخزونات التي تم الحصول عليها:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>(ماكس)</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] مخزن(ب)</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] موجز التخزين</gradient>"
+    lore:
+      - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}</white>"
+      - "<gray>المخازن القصوى:</gray> <white>{max_storages}</white>"
+      - "<gray>شبكة الخزنة الخاصة بك مستمرة</gray>"
+      - "<gray>وجاهز لاستخدام الخادم</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] مخازن فيو</gradient>"
+    lore:
+      - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}</white>"
+      - "<gray>المخازن القصوى:</gray> <white>{max_storages}</white>"
+      - "<yellow>اضغط على قائمة تخزينك</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] تخزين</gradient>"
+    lore:
+      - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}</white>"
+      - "<gray>المخازن القصوى:</gray> <white>{max_storages}</white>"
+      - "<yellow>نقر لشراء مخزن آخر</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] تخزين</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] القدرة على التخزين</gradient>"
+    lore:
+      - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}</white>"
+      - "<gray>المخازن القصوى:</gray> <white>{max_storages}</white>"
+      - "<gray>شراء حيز إضافي للخزنة حتى</gray>"
+      - "<gray>ستصلين إلى القبعة المزوّدة</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] الاحتياجات من المخزون</gradient>"
+    lore:
+      - "<gray>الشروط الأساسية:</gray> <white>{requirement_count}</white>"
+      - "<gray>العدد الحالي للاحتياجات:</gray> <white>{requirements}</white>"
+      - "<gray>الحالة:</gray> <white>{availability}</white>"
+      - "<yellow>انقر لتفتيش كل درجة من الاحتياجات بالتفصيل</yellow>"
+    none: "<gradient:#ef4444:#f87171>[None]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] شراء المخزن</gradient>"
+      lore:
+        - "<gray>الشروط الأساسية:</gray> <white>{requirement_count}</white>"
+        - "<gray>الاحتياجات الحالية:</gray> <white>{requirements}</white>"
+        - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>انقروا للشراء عندما يستوفى كل شرط</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] الاحتياجات</gradient>"
+      lore:
+        - "<gray>الشروط الأساسية:</gray> <white>{requirement_count}</white>"
+        - "<gray>الاحتياجات الحالية:</gray> <white>{requirements}</white>"
+        - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>تلبية الاحتياجات المتبقية قبل الشراء.</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] Li Storage Reached</gradient>"
+      lore:
+        - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>لا يمكنك شراء المزيد من المخازن</gray>"
+        - "<gray>حتى يتم رفع الغطاء العالمي</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] الاحتياجات</gradient>"
+      lore:
+        - "<gray>احتياجات واحدة أو أكثر من المخازن</gray>"
+        - "<gray>لا يمكن حلها على هذا الخادم</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] عدد المفقودين</gradient>"
+      lore:
+        - "<gray>أنت RDR لا يمكن تحميل الملف</gray>"
+        - "<gray>لذا فإن المشتريات مُغلقة مؤقتاً</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased <white>{storage_key}</white><gray>. الاحتياجات المستهلكة:</gray> <white>{requirements}</white><gray>. التخزين المأهولة:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>أنت لا تلتقي الآن <white>{requirement}</white><gray>. الاحتياجات من المخزون:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>احتياجات المتجر <white>{requirement}</white><gray> غير متاح أو غير صحيح الآن</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>لا توجد متطلبات مخزنية مجهزة لمشتريات التخزين الآن</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لقد وصلت إلى حد التخزين <white>{max_storages}</white><gray>. التخزين المأهولة:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>أنت RDR لا يمكن تحميل الملف، لذا لا توجد مشتريات تخزين.</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] الشراء {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] بروز</gradient>"
+    lore:
+      - "<gray>نظام الشراء:</gray> <white>{purchase_number}</white>"
+      - "<gray>مخزن مفتوح:</gray> <white>{storage_number}</white>"
+      - "<gray>الشروط الأساسية:</gray> <white>{requirement_count}</white>"
+      - "<gray>وقد اجتمعت في الوقت الراهن:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Free] لا توجد احتياجات</gradient>"
+    lore:
+      - "<gray>ولا يوجد في إطار الشراء هذا أي متطلبات مهيأة.</gray>"
+      - "<yellow>يمكنك شراء هذا المخزن بدون شيكات إضافية</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>?</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>?</gradient>"
+    filled: "<gradient:#10b981:#34d399>○</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    lore:
+      - "<gray>المفتاح:</gray> <white>{requirement_key}</white>"
+      - "<gray>النوع:</gray> <white>{requirement_type}</white>"
+      - "<gray>الحالة:</gray> <white>{status}</white>"
+      - "<gray>التقدم:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>موجز:</gray> <white>{summary}</white>"
+      - "<yellow>البند المناسب أو متطلبات العملة للتقدم المصرفي.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Detailed checks</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>○</gradient> <gray><white>{requirement}</white><gray> جاهز الآن</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>?</gradient> <gray>التقدم المحرز <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>?</gradient> <gray>لا توجد أصناف أو عملات متطابقة <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> لا يدعم التقدم المصرفي.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> غير متاح الآن</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>أنت RDR ولا يمكن تحميل الملف، وبالتالي لا يمكن إنقاذ التقدم.</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Vault] سرقتك</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] القدرة على التخزين</gradient>"
+    lore:
+      - "<gray>التخزين المأهولة:</gray> <white>{owned_storages}</white>"
+      - "<gray>المخازن القصوى:</gray> <white>{max_storages}</white>"
+      - "<gray>إستخدم هذه القائمة لاستعراضك</gray>"
+      - "<gray>حاويات تخزين ثابتة.</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
+    lore:
+      - "<gray>مفتاح التخزين:</gray> <white>{storage_key}</white>"
+      - "<gray>مالك:</gray> <white>{owner_name}</white>"
+      - "<gray>الوصول:</gray> <white>{access_level}</white>"
+      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
+      - "<gray>الطوابق المستعملة:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>المتاح:</gray> <white>{available_slots}</white>"
+      - "<yellow>هذا المخزن جاهز للثبات</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] لفتح هذا المخزن</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] حسناً، إلى أماكن التخزين المفتوحة</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] لا توجد مستودعات</gradient>"
+    lore:
+      - "<gray>No storages are currently attached</gray>"
+      - "<gray>لك RDR ملف</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] عدد المفقودين</gradient>"
+    lore:
+      - "<gray>أنت RDR اللاعبين لا يستطيعون</gray>"
+      - "<gray>يتم تحميلها من التخزين المستمر</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} الترتيبات</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] التخزين</gradient>"
+    lore:
+      - "<gray>مفتاح التخزين:</gray> <white>{storage_key}</white>"
+      - "<gray>مالك:</gray> <white>{owner_name}</white>"
+      - "<gray>دخولك:</gray> <white>{access_level}</white>"
+      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>الثقة:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[Group] الثقة</gradient>"
+    lore:
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>الثقة:</gray> <white>{trusted_count}</white>"
+      - "<yellow>إضغط على من يستطيع أن يودع</yellow>"
+      - "<yellow>أو الوصول الكامل إلى هذا التخزين.</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] Hotkey</gradient>"
+    lore:
+      - "<gray>الهوكي الحالي:</gray> <white>{hotkey_display}</white>"
+      - "<yellow>إربطْ سرعة الوصول إلى</yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] مؤمن عليه</gradient>"
+    lore:
+      - "<gray>فقط مالك المخزن يستطيع أن يدير</gray>"
+      - "<gray>الدخول الموثوق به لهذا المخزن</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Hotkey Locked</gradient>"
+    lore:
+      - "<gray>فقط مالك المخزن يستطيع أن يغير</gray>"
+      - "<gray>مخزن الهوكي</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[Free] أماكن مغلقة</gradient>"
+    lore:
+      - "<gray>تغيرات التخزين معوقة</gray>"
+      - "<gray>في <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>تصعد إلى \"بريميوم\" لتحرره</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] سرقة</gradient>"
+    lore:
+      - "<gray>هذا المخزن لا يمكن تحميله</gray>"
+      - "<gray>من أجل المنظر</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Group] {storage_key} الوصول</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] الوصول المشترك</gradient>"
+    lore:
+      - "<gray>مفتاح التخزين:</gray> <white>{storage_key}</white>"
+      - "<gray>مالك:</gray> <white>{owner_name}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>الثقة:</gray> <white>{trusted_count}</white>"
+      - "<yellow>اضغط على اللاعب للوصول إلى دورة.</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[Public] {player}</gradient>"
+      lore:
+        - "<gray>الحالة:</gray> <white>الجمهور</white>"
+        - "<gray>لا إيداع أو سحب الوصول.</gray>"
+        - "<yellow>انقروا للترويج لشركائهم</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      lore:
+        - "<gray>الحالة:</gray> <white>Associate</white>"
+        - "<gray>يمكن إيداعه ولكن لا يمكن سحبه.</gray>"
+        - "<yellow>قم بالترويج للثقة</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[Trusted] {player}</gradient>"
+      lore:
+        - "<gray>الحالة:</gray> <white>الثقة</white>"
+        - "<gray>يمكن إيداع وسحب الأشياء.</gray>"
+        - "<yellow>اضغط على الناس</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient> <gray>{player} لم يعد لديه مخزن</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} الآن يمكن إيداعه في هذا المخزن.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} يمكن الآن إيداع وسحب من هذا التخزين.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فقط مالك المخزن يمكنه تغيير الدخول الموثوق به</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] المالك فقط</gradient>"
+      lore:
+        - "<gray>يمكنك مشاهدة هذا التخزين، ولكن فقط</gray>"
+        - "<gray>يمكن للمالك أن يغير الدخول الموثوق به</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] سرقة</gradient>"
+      lore:
+        - "<gray>هذا المخزن لا يمكن تحميله</gray>"
+        - "<gray>لإدارة الدخول الموثوقة</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>ولا يمكن تحميل هذا التخزين لإدارة الدخول الموثوقة.</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[Free] أماكن مغلقة</gradient>"
+      lore:
+        - "<gray>تغيرات الوصول المثق بها معوقة</gray>"
+        - "<gray>في <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] لا مؤسسات لللاعبين</gradient>"
+      lore:
+        - "<gray>لا يوجد لاعبون معروفون آخرون</gray>"
+        - "<gray>لإسناد وصول موثوق.</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[Box] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] سرقة</gradient>"
+    lore:
+      - "<gray>هذا المخزن لا يمكن العثور عليه</gray>"
+      - "<gray>من أجل استمرارك RDR ملف</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] Bind {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>أدخل رقم</gray>"
+      - "<white>1</white><gray> و </gray><white>{max_hotkeys}</white><gray> للوصول السريع.</gray>"
+      - "<yellow>اضغطي على مكان النتائج لإنقاذ الهوكي</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>استخدام رقم بين <white>1</white> و <white>{max_hotkeys}</white><gray>. Input:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} مفتوح بالفعل في دورة أخرى.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} لا يمكن فتحه الآن</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إمكانية الوصول <white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> قائمة سوداء على الصعيد العالمي RDR مخزن</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>جلسة تحريرك {storage_key} انتهت أو انتقلت إلى مكان آخر. لم يتم إنقاذ التغييرات</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} لا يمكن إنقاذه تحققوا من الضمادات للتفاصيل</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} الآن ملزم <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لا يوجد مخزن <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>يجب أن يكون الهوكي بين <white>1</white> و <white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تم تعطيل المتاجر <white>RDR Free</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>تمكين <white>/rr scoreboard</white><gray> جانبي</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>المعاقون <white>/rr scoreboard</white><gray> جانبي</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usage:</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[Page] %current_page%</gradient>"
+  lore:
+    - "<gray>الصفحة الحالية:</gray> <white>%current_page%</white>"
+    - "<gray>مجموع الصفحات:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Page] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] العودة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>عُد</gradient>"

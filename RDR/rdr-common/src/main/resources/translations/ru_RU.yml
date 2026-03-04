@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Статистика хранилища</gradient>"
+  items: "<gray>Всего элементов:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>Доступные слоты:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>Получено хранилище:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>Максимальное количество памяти:</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] Концентратор хранения</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Хранилище] Сводная информация о хранилище</gradient>"
+    lore:
+      - "<gray>Собственные склады:</gray> <white>{owned_storages}</white>"
+      - "<gray>Максимальный объем памяти:</gray> <white>{max_storages}</white>"
+      - "<gray>Ваша сеть хранилищ сохраняется</gray>"
+      - "<gray>и готов к межсерверному использованию.</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] Просмотреть хранилища</gradient>"
+    lore:
+      - "<gray>Собственные склады:</gray> <white>{owned_storages}</white>"
+      - "<gray>Максимальный объем памяти:</gray> <white>{max_storages}</white>"
+      - "<yellow>Нажмите, чтобы просмотреть список хранилища.</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] Хранилище</gradient>"
+    lore:
+      - "<gray>Собственные склады:</gray> <white>{owned_storages}</white>"
+      - "<gray>Максимальный объем памяти:</gray> <white>{max_storages}</white>"
+      - "<yellow>Нажмите, чтобы приобрести другое хранилище.</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Хранилище</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Информация] Емкость хранилища</gradient>"
+    lore:
+      - "<gray>Собственные склады:</gray> <white>{owned_storages}</white>"
+      - "<gray>Максимальный объем памяти:</gray> <white>{max_storages}</white>"
+      - "<gray>Купите дополнительное место в хранилище до</gray>"
+      - "<gray>вы достигли настроенного ограничения.</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Требования к магазину</gradient>"
+    lore:
+      - "<gray>Настроенные требования:</gray> <white>{requirement_count}</white>"
+      - "<gray>Текущее количество требований:</gray> <white>{requirements}</white>"
+      - "<gray>Статус:</gray> <white>{availability}</white>"
+      - "<yellow>Нажмите, чтобы подробно изучить каждый уровень требований.</yellow>"
+    none: "<gradient:#ef4444:#f87171>[Нет]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Готово]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Ожидание]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Не в сети]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] Купить хранилище</gradient>"
+      lore:
+        - "<gray>Настроенные требования:</gray> <white>{requirement_count}</white>"
+        - "<gray>Текущие требования:</gray> <white>{requirements}</white>"
+        - "<gray>Собственные хранилища:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Нажмите, чтобы купить, когда все требования будут выполнены.</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] Ожидаемые требования</gradient>"
+      lore:
+        - "<gray>Настроенные требования:</gray> <white>{requirement_count}</white>"
+        - "<gray>Текущие требования:</gray> <white>{requirements}</white>"
+        - "<gray>Собственные хранилища:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Перед покупкой выполните остальные требования.</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] Достигнут предел хранилища</gradient>"
+      lore:
+        - "<gray>Собственные хранилища:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Вы не можете приобрести больше хранилищ</gray>"
+        - "<gray>пока не будет повышен глобальный лимит.</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] Требования в автономном режиме</gradient>"
+      lore:
+        - "<gray>Одно или несколько настроенных требований к магазину</gray>"
+        - "<gray>невозможно разрешить на этом сервере.</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] Профиль отсутствует</gradient>"
+      lore:
+        - "<gray>Не удалось загрузить ваш профиль RDR,</gray>"
+        - "<gray>поэтому покупки временно заблокированы.</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Приобретено <white>{storage_key}</white><gray>. Израсходованные требования: </gray> <white>{requirements}</white><gray>. Собственные хранилища:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>В настоящее время вы не встречаетесь с <white>{requirement}</white><gray>. Требования к магазину:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Требование магазина <white>{requirement}</white><gray> сейчас недоступно или недействительно.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>На данный момент для покупки хранилища недоступны настроенные требования к магазину.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Вы достигли предела хранения <white>{max_storages}</white><gray>. Собственные хранилища:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ваш профиль RDR не удалось загрузить, поэтому покупка хранилища недоступна.</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Требование] Покупка {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Информация] Браузер требований</gradient>"
+    lore:
+      - "<gray>Уровень покупки:</gray> <white>{purchase_number}</white>"
+      - "<gray>Разблокирует хранилище:</gray> <white>{storage_number}</white>"
+      - "<gray>Настроенные требования:</gray> <white>{requirement_count}</white>"
+      - "<gray>В настоящее время встречается:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Бесплатно] Нет требований</gradient>"
+    lore:
+      - "<gray>Этот уровень покупки не имеет настроенных требований.</gray>"
+      - "<yellow>Это хранилище можно купить без дополнительных чеков.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Треб.] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Ключ:</gray> <white>{requirement_key}</white>"
+      - "<gray>Тип:</gray> <white>{requirement_type}</white>"
+      - "<gray>Статус:</gray> <white>{status}</white>"
+      - "<gray>Прогресс:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Сводка:</gray> <white>{summary}</white>"
+      - "<yellow>Нажмите правой кнопкой мыши на предмет или требования к валюте, чтобы просмотреть прогресс банка.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Подробные проверки</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Встретил]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Ожидание]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Недоступно]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>__</gradient> <gray><white>{requirement}</white><gray> теперь готов.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Сохраненный прогресс для <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Нет соответствующих товаров или валюты для <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> не поддерживает накопленный прогресс.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> сейчас недоступен.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ваш профиль RDR не удалось загрузить, поэтому прогресс не удалось сохранить.</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Хранилище] Ваши хранилища</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Емкость хранилища</gradient>"
+    lore:
+      - "<gray>Собственные склады:</gray> <white>{owned_storages}</white>"
+      - "<gray>Максимальный объем памяти:</gray> <white>{max_storages}</white>"
+      - "<gray>Используйте этот список, чтобы просмотреть свой</gray>"
+      - "<gray>контейнеры постоянного хранения.</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[Коробка] {storage_key}</gradient>"
+    lore:
+      - "<gray>Ключ хранения:</gray> <white>{storage_key}</white>"
+      - "<gray>Владелец:</gray> <white>{owner_name}</white>"
+      - "<gray>Доступ:</gray> <white>{access_level}</white>"
+      - "<gray>Горячая клавиша:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Использованные слоты:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Доступные слоты:</gray> <white>{available_slots}</white>"
+      - "<yellow>Это хранилище готово к сохранению элементов.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Щелкните левой кнопкой мыши, чтобы открыть это хранилище.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Щелкните правой кнопкой мыши, чтобы открыть настройки хранилища.</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Владелец]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Общедоступный]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Сотрудник]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Доверенное]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Хранилища не найдены</gradient>"
+    lore:
+      - "<gray>На данный момент ни одно хранилище не подключено</gray>"
+      - "<gray>в ваш профиль RDR.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] Профиль отсутствует</gradient>"
+    lore:
+      - "<gray>Ваш профиль игрока RDR не смог</gray>"
+      - "<gray>загружается из постоянного хранилища.</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Настройки</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Настройки хранилища</gradient>"
+    lore:
+      - "<gray>Ключ хранения:</gray> <white>{storage_key}</white>"
+      - "<gray>Владелец:</gray> <white>{owner_name}</white>"
+      - "<gray>Ваш доступ:</gray> <white>{access_level}</white>"
+      - "<gray>Горячая клавиша:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Ассоциированные партнеры:</gray> <white>{associate_count}</white>"
+      - "<gray>Доверенное:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Владелец]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Общедоступный]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Сотрудник]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Доверенное]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[Группа] Доверенный доступ</gradient>"
+    lore:
+      - "<gray>Ассоциированные партнеры:</gray> <white>{associate_count}</white>"
+      - "<gray>Доверенное:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Нажмите, чтобы указать, кто может внести депозит</yellow>"
+      - "<yellow>или получить полный доступ к этому хранилищу.</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] Горячая клавиша хранилища</gradient>"
+    lore:
+      - "<gray>Текущая горячая клавиша: </gray> <white>{hotkey_display}</white>"
+      - "<yellow>Нажмите, чтобы привязать быстрый доступ для </yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Доверенная блокировка</gradient>"
+    lore:
+      - "<gray>Управлять может только владелец хранилища</gray>."
+      - "<gray>доверенный доступ к этому хранилищу.</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Горячая клавиша заблокирована</gradient>"
+    lore:
+      - "<gray>Изменить может только владелец хранилища</gray>."
+      - "<gray>горячие клавиши хранилища.</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[Бесплатные] Настройки заблокированы</gradient>"
+    lore:
+      - "<gray>Изменение настроек хранилища отключено</gray>"
+      - "<gray>в <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>Перейдите на Премиум, чтобы редактировать настройки.</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Отсутствует хранилище</gradient>"
+    lore:
+      - "<gray>Это хранилище не может быть загружено</gray>"
+      - "<gray>для просмотра настроек.</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Группа] {storage_key} Доступ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Общий доступ</gradient>"
+    lore:
+      - "<gray>Ключ хранения:</gray> <white>{storage_key}</white>"
+      - "<gray>Владелец:</gray> <white>{owner_name}</white>"
+      - "<gray>Ассоциированные партнеры:</gray> <white>{associate_count}</white>"
+      - "<gray>Доверенное:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Нажмите на игрока, чтобы циклически переключать доступ.</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[Общедоступный] {player}</gradient>"
+      lore:
+        - "<gray>Статус:</gray> <white>Public</white>"
+        - "<gray>Нет доступа к депозиту и снятию средств.</gray>"
+        - "<yellow>Нажмите, чтобы стать ассоциированным.</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[Сотрудник] {player}</gradient>"
+      lore:
+        - "<gray>Статус:</gray> <white>Ассоциированный</white>"
+        - "<gray>Может внести депозит, но не может снять деньги.</gray>"
+        - "<yellow>Нажмите, чтобы повысить статус доверенного.</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[Доверенное] {player}</gradient>"
+      lore:
+        - "<gray>Статус:</gray> <white>Доверенный</white>"
+        - "<gray>Может вносить и снимать предметы.</gray>"
+        - "<yellow>Нажмите, чтобы вернуться к общедоступному состоянию.</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient> <gray>{player} больше не имеет доступа к хранилищу.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Ассоциированный партнер]</gradient> <gray>{player} теперь может вноситься в это хранилище.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} теперь может вносить и снимать средства из этого хранилища.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Изменить доверенный доступ может только владелец хранилища.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Только владелец</gradient>"
+      lore:
+        - "<gray>Вы можете просматривать это хранилище, но только</gray>"
+        - "<gray>владелец может изменить доверенный доступ.</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Отсутствует хранилище</gradient>"
+      lore:
+        - "<gray>Это хранилище не может быть загружено</gray>"
+        - "<gray>для управления доверенным доступом.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Не удалось загрузить это хранилище для управления доверенным доступом.</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[Бесплатные] Настройки заблокированы</gradient>"
+      lore:
+        - "<gray>Изменения доверенного доступа отключены</gray>"
+        - "<gray>в <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Игроки не найдены</gradient>"
+      lore:
+        - "<gray>Других известных игроков нет</gray>"
+        - "<gray>, чтобы назначить доверенный доступ.</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[Коробка] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Отсутствует хранилище</gradient>"
+    lore:
+      - "<gray>Эта запись хранилища не найдена</gray>"
+      - "<gray>для вашего постоянного профиля RDR.</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] Привязать {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>Введите число между </gray>"
+      - "<white>1</white><gray> и </gray><white>{max_hotkeys}</white><gray> для быстрого доступа.</gray>"
+      - "<yellow>Нажмите на область результата, чтобы сохранить горячую клавишу.</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Используйте число от <white>1</white> до <white>{max_hotkeys}</white><gray>. Ввод:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} уже открыт в другом сеансе.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} сейчас невозможно открыть.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас нет доступа к <white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> занесен в глобальный черный список хранилища RDR.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ваш сеанс редактирования для {storage_key} истек или перенесен в другое место. Изменения не сохранены.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} не удалось сохранить. Подробности проверьте в консоли.</gray>."
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} теперь привязан к <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Нет хранилища, привязанного к <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Горячие клавиши должны находиться в диапазоне от <white>1</white> до <white>{max_hotkeys}</white><gray>.</gray>."
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Редактирование настроек хранилища отключено в <white>RDR Free</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Включена боковая панель <white>/rr scoreboard</white><gray>.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Отключена боковая панель <white>/rr scoreboard</white><gray>.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Использование:</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[Страница] %current_page%</gradient>"
+  lore:
+    - "<gray>Текущая страница:</gray> <white>%current_page%</white>"
+    - "<gray>Всего страниц:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Страница] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Возврат</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы вернуться</gradient>"

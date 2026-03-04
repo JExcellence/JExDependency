@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Varastointitilastot</gradient>"
+  items: "<gray>Erät yhteensä:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>Käytettävissä olevat lähtö- ja saapumisajat:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>Saadut varastot:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>Enimmäisvarastot:</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] Varastohuvila</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Holvi] Varaston yhteenveto</gradient>"
+    lore:
+      - "<gray>Omistetut varastot:</gray> <white>{owned_storages}</white>"
+      - "<gray>Enimmäisvarastot:</gray> <white>{max_storages}</white>"
+      - "<gray>Holviverkkosi on säilynyt.</gray>"
+      - "<gray>ja valmis ristipalvelijoihin.</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] Näytä muistit</gradient>"
+    lore:
+      - "<gray>Omistetut varastot:</gray> <white>{owned_storages}</white>"
+      - "<gray>Enimmäisvarastot:</gray> <white>{max_storages}</white>"
+      - "<yellow>Klikkaa selataksesi tallennuslistaasi.</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] Varasto</gradient>"
+    lore:
+      - "<gray>Omistetut varastot:</gray> <white>{owned_storages}</white>"
+      - "<gray>Enimmäisvarastot:</gray> <white>{max_storages}</white>"
+      - "<yellow>Klikkaa ostaa toinen varastointi.</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Varasto</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] Varastokapasiteetti</gradient>"
+    lore:
+      - "<gray>Omistetut varastot:</gray> <white>{owned_storages}</white>"
+      - "<gray>Enimmäisvarastot:</gray> <white>{max_storages}</white>"
+      - "<gray>Osta lisää holvitilaa kunnes</gray>"
+      - "<gray>Pääset asetettuun korkkiin.</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Varastovaatimukset</gradient>"
+    lore:
+      - "<gray>Asetetut vaatimukset:</gray> <white>{requirement_count}</white>"
+      - "<gray>Tämänhetkinen vaatimusluku:</gray> <white>{requirements}</white>"
+      - "<gray>Tila:</gray> <white>{availability}</white>"
+      - "<yellow>Napsauta tarkastaaksesi kaikki vaatimukset.</yellow>"
+    none: "<gradient:#ef4444:#f87171>[Ei mitään]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Valmiina]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>-Ei.</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] Osta tallennus</gradient>"
+      lore:
+        - "<gray>Asetetut vaatimukset:</gray> <white>{requirement_count}</white>"
+        - "<gray>Nykyiset vaatimukset:</gray> <white>{requirements}</white>"
+        - "<gray>Omistetut varastot:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Klikkaa ostaa kun jokainen vaatimus täyttyy.</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] Vaatimukset</gradient>"
+      lore:
+        - "<gray>Asetetut vaatimukset:</gray> <white>{requirement_count}</white>"
+        - "<gray>Nykyiset vaatimukset:</gray> <white>{requirements}</white>"
+        - "<gray>Omistetut varastot:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Täytä loput vaatimukset ennen ostamista.</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] Tallennusraja saavutettu</gradient>"
+      lore:
+        - "<gray>Omistetut varastot:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Et voi ostaa lisää varastoja</gray>"
+        - "<gray>kunnes yleinen yläraja nostetaan.</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] Offline-vaatimukset</gradient>"
+      lore:
+        - "<gray>Yksi tai useampi määritetty varastovaatimus</gray>"
+        - "<gray>ei voida ratkaista tällä palvelimella.</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] Profiili puuttuu</gradient>"
+      lore:
+        - "<gray>Sinun RDR profiilia ei voitu ladata,</gray>"
+        - "<gray>joten ostot ovat tilapäisesti estetty.</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Ostettu <white>{storage_key}</white><gray>. Kulutetut vaatimukset:</gray> <white>{requirements}</white><gray>. Omistetut varastot:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Et tapaa tällä hetkellä <white>{requirement}</white><gray>. Varastointivaatimukset:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Varaston vaatimus <white>{requirement}</white><gray> Se ei ole käytettävissä tai virheellinen juuri nyt.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Varaston ostoihin ei ole asetettu vaatimuksia juuri nyt.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Olet saavuttanut säilytysrajan <white>{max_storages}</white><gray>. Omistetut varastot:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Sinun RDR profiilia ei voitu ladata, joten varastointiostoksia ei ole saatavilla.</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Osto {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Info] vaatimusselain</gradient>"
+    lore:
+      - "<gray>Hankintataso:</gray> <white>{purchase_number}</white>"
+      - "<gray>Avaa tallennus:</gray> <white>{storage_number}</white>"
+      - "<gray>Asetetut vaatimukset:</gray> <white>{requirement_count}</white>"
+      - "<gray>Nykyinen kokous:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Vapaa] Ei vaatimuksia</gradient>"
+    lore:
+      - "<gray>Tällä ostotasolla ei ole konfiguroituja vaatimuksia.</gray>"
+      - "<yellow>Voit ostaa tämän varaston ilman ylimääräisiä tarkastuksia.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>...</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>...</gradient>"
+    filled: "<gradient:#10b981:#34d399></gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Avain:</gray> <white>{requirement_key}</white>"
+      - "<gray>Tyyppi:</gray> <white>{requirement_type}</white>"
+      - "<gray>Tila:</gray> <white>{status}</white>"
+      - "<gray>Edistyminen:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Yhteenveto:</gray> <white>{summary}</white>"
+      - "<yellow>Oikean napsautuksen kohde tai valuuttavaatimukset pankin edistymistä.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>Yksityiskohtaiset tarkastukset</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>-Ei.</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ei saatavilla]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399></gradient> <gray><white>{requirement}</white><gray> Se on nyt valmis.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>...</gradient> <gray>Tallennettu edistyminen <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>...</gradient> <gray>Vastaavaa erää tai valuuttaa ei ollut saatavilla <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> ei tue pankin edistymistä.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> Hän ei ole käytettävissä juuri nyt.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Sinun RDR profiilia ei voitu ladata, joten edistystä ei voitu tallentaa.</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>Varastot</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Varastokapasiteetti</gradient>"
+    lore:
+      - "<gray>Omistetut varastot:</gray> <white>{owned_storages}</white>"
+      - "<gray>Enimmäisvarastot:</gray> <white>{max_storages}</white>"
+      - "<gray>Käytä tätä luetteloa tarkistaaksesi</gray>"
+      - "<gray>säilyneet säilytysastiat.</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
+    lore:
+      - "<gray>Säilytysavain:</gray> <white>{storage_key}</white>"
+      - "<gray>Omistaja:</gray> <white>{owner_name}</white>"
+      - "<gray>Pääsy:</gray> <white>{access_level}</white>"
+      - "<gray>Lätkä:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Käytetyt lähtö- ja saapumisajat:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Käytettävissä olevat lähtö- ja saapumisajat:</gray> <white>{available_slots}</white>"
+      - "<yellow>Varasto on valmis esineiden pysyvyyttä varten.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Klikkaa vasenta nappia avataksesi tämän varaston.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Napsauta hiiren oikealla painikkeella avataksesi tallennusasetukset.</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Outner]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Julkinen]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Assosiaatio]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Luotettu]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Ei varastoja</gradient>"
+    lore:
+      - "<gray>Tällä hetkellä ei ole liitettyjä varastoja</gray>"
+      - "<gray>ja RDR profiili.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] Profiili puuttuu</gradient>"
+    lore:
+      - "<gray>Sinun RDR pelaajaprofiili ei voinut</gray>"
+      - "<gray>ne on lastattava pysyvästä säilytyksestä.</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Asetukset</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Tallennusasetukset</gradient>"
+    lore:
+      - "<gray>Säilytysavain:</gray> <white>{storage_key}</white>"
+      - "<gray>Omistaja:</gray> <white>{owner_name}</white>"
+      - "<gray>Pääsysi:</gray> <white>{access_level}</white>"
+      - "<gray>Lätkä:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Kumppanit:</gray> <white>{associate_count}</white>"
+      - "<gray>Luotettu:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Outner]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Julkinen]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Assosiaatio]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Luotettu]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[ryhmä] Luotettu pääsy</gradient>"
+    lore:
+      - "<gray>Kumppanit:</gray> <white>{associate_count}</white>"
+      - "<gray>Luotettu:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Klikkaa hallita kuka voi tallettaa</yellow>"
+      - "<yellow>tai täysin käyttää tätä tallennustilaa.</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] Varastointi</gradient>"
+    lore:
+      - "<gray>Nykyinen pikanäppäin:</gray> <white>{hotkey_display}</white>"
+      - "<yellow>Napsauta sitoaksesi nopean pääsyn</yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Luotettu lukittu</gradient>"
+    lore:
+      - "<gray>Vain varaston omistaja voi hallita</gray>"
+      - "<gray>Tämän varaston luotettava pääsy.</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Hotkey Locked</gradient>"
+    lore:
+      - "<gray>Vain varaston omistaja voi muuttaa</gray>"
+      - "<gray>varastointia varten.</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[Vapaa] Asetukset lukittu</gradient>"
+    lore:
+      - "<gray>Tallennusasetusmuutokset eivät ole käytössä</gray>"
+      - "<gray>in <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>Päivitä Premium muokkaukseen.</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Varasto puuttuu</gradient>"
+    lore:
+      - "<gray>Tätä varastointia ei voitu ladata</gray>"
+      - "<gray>asetusnäkymää varten.</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[ryhmä] {storage_key} Pääsy</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Jaettu pääsy</gradient>"
+    lore:
+      - "<gray>Säilytysavain:</gray> <white>{storage_key}</white>"
+      - "<gray>Omistaja:</gray> <white>{owner_name}</white>"
+      - "<gray>Kumppanit:</gray> <white>{associate_count}</white>"
+      - "<gray>Luotettu:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Napsauta pelaajaa sykli pääsy.</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[Julkinen] {player}</gradient>"
+      lore:
+        - "<gray>Tila:</gray> <white>Julkinen</white>"
+        - "<gray>Ei talletusta tai peruutusta.</gray>"
+        - "<yellow>Klikkaa mainostaa Associate.</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[Assosiaatio] {player}</gradient>"
+      lore:
+        - "<gray>Tila:</gray> <white>Associate</white>"
+        - "<gray>Voit tallettaa, mutta et voi vetäytyä.</gray>"
+        - "<yellow>Klikkaa edistää luotettava.</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[Luotettu] {player}</gradient>"
+      lore:
+        - "<gray>Tila:</gray> <white>Luotettu</white>"
+        - "<gray>Voit tallettaa ja peruuttaa kohteita.</gray>"
+        - "<yellow>Klikkaa nollata julkisesti.</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[Julkinen]</gradient> <gray>{player} Ei enää varastoa.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Assosiaatio]</gradient> <gray>{player} voi nyt tallettaa tähän varastoon.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Luotettu]</gradient> <gray>{player} voi nyt tallettaa ja vetäytyä tästä varastosta.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vain varaston omistaja voi vaihtaa luotettavan pääsyn.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Vain omistaja</gradient>"
+      lore:
+        - "<gray>Voit nähdä tämän varaston, mutta vain</gray>"
+        - "<gray>omistaja voi vaihtaa luotettavan pääsyn.</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Varasto puuttuu</gradient>"
+      lore:
+        - "<gray>Tätä varastointia ei voitu ladata</gray>"
+        - "<gray>Luotettu pääsy hallinta.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Tätä tallennustilaa ei voitu ladata luotettavan kulunhallintaan.</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[Vapaa] Asetukset lukittu</gradient>"
+      lore:
+        - "<gray>Luotettavat muutokset eivät ole käytössä</gray>"
+        - "<gray>in <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Ei pelaajia</gradient>"
+      lore:
+        - "<gray>Muita tunnettuja pelaajia ei ole saatavilla</gray>"
+        - "<gray>Määrittää luotettavan pääsyn.</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[Box] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Varasto puuttuu</gradient>"
+    lore:
+      - "<gray>Tätä tallennusmerkintää ei löytynyt</gray>"
+      - "<gray>-Ei. RDR profiili.</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] Sido {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>Anna numero välillä</gray>"
+      - "<white>1</white><gray> sekä </gray><white>{max_hotkeys}</white><gray> Nopea pääsy.</gray>"
+      - "<yellow>Napsauta tulosta slot tallentaa kuumana.</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Käytä numeroa välillä <white>1</white> sekä <white>{max_hotkeys}</white><gray>. Syöte:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} on jo avattu toisessa istunnossa.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} Sitä ei voitu avata juuri nyt.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole pääsyä <white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> on maailmanlaajuisesti mustalla listalla RDR varastointi.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Muokkaa istuntoa {storage_key} Vanhentunut tai muuttanut muualle. Muutoksia ei tallennettu.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} Sitä ei voitu pelastaa. Tarkista konsolista yksityiskohtia.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} on nyt <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ei varastoa <white>/rr {hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Jääkiekkojen on oltava välillä <white>1</white> sekä <white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tallennusasetusmuokkaukset eivät ole käytössä <white>RDR Free</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Käytössä <white>/rr scoreboard</white><gray> sivupalkki.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Ei käytössä <white>/rr scoreboard</white><gray> sivupalkki.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Käyttö:</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[Sivu] %current_page%</gradient>"
+  lore:
+    - "<gray>Nykyinen sivu:</gray> <white>%current_page%</white>"
+    - "<gray>Sivuja yhteensä:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Sivu] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Palauttaminen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klikkaa palataksesi</gradient>"

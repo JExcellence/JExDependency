@@ -1,0 +1,322 @@
+prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
+
+scoreboard_sidebar:
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Depolama İstatistikleri</gradient>"
+  items: "<gray>Toplam öğe sayısı:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>Kullanılabilir yuvalar:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>Elde edilen depolar:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>Maksimum depolama alanı:</gray> <white>{max_storages}</white>"
+
+storage_overview_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[*] Depolama Merkezi</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Kasa] Depolama Özeti</gradient>"
+    lore:
+      - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimum depolama alanı:</gray> <white>{max_storages}</white>"
+      - "<gray>Kasa ağınız kalıcı</gray>"
+      - "<gray>ve sunucular arası kullanıma hazır.</gray>"
+  open:
+    name: "<gradient:#10b981:#34d399>[>>] Depolama Alanlarını Görüntüle</gradient>"
+    lore:
+      - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimum depolama alanı:</gray> <white>{max_storages}</white>"
+      - "<yellow>Depolama listenize göz atmak için tıklayın.</yellow>"
+  store:
+    name: "<gradient:#f59e0b:#fbbf24>[$] Depolama Mağazası</gradient>"
+    lore:
+      - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimum depolama alanı:</gray> <white>{max_storages}</white>"
+      - "<yellow>Başka bir depolama alanı satın almak için tıklayın.</yellow>"
+
+storage_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Depolama Mağazası</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Bilgi] Depolama Kapasitesi</gradient>"
+    lore:
+      - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimum depolama alanı:</gray> <white>{max_storages}</white>"
+      - "<gray></gray> tarihine kadar ek kasa alanı satın alın"
+      - "<gray>yapılandırılan sınıra ulaştınız.</gray>"
+  cost:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Mağaza Gereksinimleri</gradient>"
+    lore:
+      - "<gray>Yapılandırılan gereksinimler:</gray> <white>{requirement_count}</white>"
+      - "<gray>Mevcut gereksinim sayısı:</gray> <white>{requirements}</white>"
+      - "<gray>Durum:</gray> <white>{availability}</white>"
+      - "<yellow>Her gereksinim katmanını ayrıntılı olarak incelemek için tıklayın.</yellow>"
+    none: "<gradient:#ef4444:#f87171>[Yok]</gradient>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Hazır]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Beklemede]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Çevrimdışı]</gradient>"
+  purchase:
+    available:
+      name: "<gradient:#10b981:#34d399>[+] Depolama Alanı Satın Alın</gradient>"
+      lore:
+        - "<gray>Yapılandırılan gereksinimler:</gray> <white>{requirement_count}</white>"
+        - "<gray>Mevcut gereksinimler:</gray> <white>{requirements}</white>"
+        - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Tüm gereksinimler karşılandığında satın almak için tıklayın.</yellow>"
+    pending:
+      name: "<gradient:#f59e0b:#fbbf24>[...] Gereksinimler Bekleniyor</gradient>"
+      lore:
+        - "<gray>Yapılandırılan gereksinimler:</gray> <white>{requirement_count}</white>"
+        - "<gray>Mevcut gereksinimler:</gray> <white>{requirements}</white>"
+        - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Satın almadan önce kalan gereksinimleri karşılayın.</yellow>"
+    limit_reached:
+      name: "<gradient:#ef4444:#f87171>[X] Depolama Sınırına Ulaşıldı</gradient>"
+      lore:
+        - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Daha fazla depolama alanı satın alamazsınız</gray>"
+        - "<gray>küresel sınır yükseltilinceye kadar.</gray>"
+    no_requirements:
+      name: "<gradient:#ef4444:#f87171>[!] Çevrimdışı Gereksinimler</gradient>"
+      lore:
+        - "<gray>Bir veya daha fazla yapılandırılmış mağaza gereksinimi</gray>"
+        - "<gray>bu sunucuda çözümlenemiyor.</gray>"
+    profile_missing:
+      name: "<gradient:#ef4444:#f87171>[!] Profil Eksik</gradient>"
+      lore:
+        - "<gray>RDR profiliniz yüklenemedi,</gray>"
+        - "<gray>so satın alma işlemleri geçici olarak engellendi.</gray>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Satın Alındı ​​<white>{storage_key}</white><gray>. Tüketilen gereksinimler:</gray> <white>{requirements}</white><gray>. Sahip olunan depolar:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Şu anda <white>{requirement}</white><gray> ile tanışmıyorsunuz. Mağaza gereksinimleri:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Mağaza gereksinimi <white>{requirement}</white><gray> şu anda kullanılamıyor veya geçersiz.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Şu anda depolama satın alımları için yapılandırılmış mağaza gereksinimi yok.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{max_storages}</white><gray> depolama sınırına ulaştınız. Sahip olunan depolar:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDR profiliniz yüklenemedi, bu nedenle depolama alanı satın alınamıyor.</gray>"
+
+storage_store_requirements_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Satın Al {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[Bilgi] Gereksinim Tarayıcısı</gradient>"
+    lore:
+      - "<gray>Satın alma katmanı:</gray> <white>{purchase_number}</white>"
+      - "<gray>Depolama kilidini açar:</gray> <white>{storage_number}</white>"
+      - "<gray>Yapılandırılan gereksinimler:</gray> <white>{requirement_count}</white>"
+      - "<gray>Şu anda karşılaşıldığı yer:</gray> <white>{met_count}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Ücretsiz] Gereksinim Yok</gradient>"
+    lore:
+      - "<gray>Bu satın alma katmanının yapılandırılmış gereksinimleri yok.</gray>"
+      - "<yellow>Bu depolama alanını ekstra çekler olmadan satın alabilirsiniz.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Gereksinim] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Anahtar:</gray> <white>{requirement_key}</white>"
+      - "<gray>Tür:</gray> <white>{requirement_type}</white>"
+      - "<gray>Durum:</gray> <white>{status}</white>"
+      - "<gray>İlerleme:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Özet:</gray> <white>{summary}</white>"
+      - "<yellow>Banka ilerlemesine ilişkin öğe veya para birimi gereksinimlerine sağ tıklayın.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Ayrıntılı Kontroller</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Beklemede]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Mevcut değil]</gradient>"
+  feedback:
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> artık hazır.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray><white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient> için depolanan ilerleme"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray><white>{requirement}</white><gray>.</gray> için eşleşen öğe veya para birimi mevcut değildi"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> bankalı ilerlemeyi desteklemez.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> şu anda kullanılamıyor.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDR profiliniz yüklenemedi, dolayısıyla ilerleme durumu kaydedilemedi.</gray>"
+
+storage_player_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Kasa] Depolama Alanlarınız</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Depolama Kapasitesi</gradient>"
+    lore:
+      - "<gray>Sahip olunan depolar:</gray> <white>{owned_storages}</white>"
+      - "<gray>Maksimum depolama alanı:</gray> <white>{max_storages}</white>"
+      - "<gray></gray>'nizi incelemek için bu listeyi kullanın"
+      - "<gray>kalıcı depolama kapları.</gray>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[Kutu] {storage_key}</gradient>"
+    lore:
+      - "<gray>Depolama anahtarı:</gray> <white>{storage_key}</white>"
+      - "<gray>Sahibi:</gray> <white>{owner_name}</white>"
+      - "<gray>Erişim:</gray> <white>{access_level}</white>"
+      - "<gray>Kısayol tuşu:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Kullanılan alanlar:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Kullanılabilir yuvalar:</gray> <white>{available_slots}</white>"
+      - "<yellow>Bu depolama, öğe kalıcılığı için hazır.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Bu depolama alanını açmak için sol tıklayın.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Depolama ayarlarını açmak için sağ tıklayın.</gradient>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Sahip]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Herkese açık]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[İlişkilendir]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Güvenilir]</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>[X] Depolama Bulunamadı</gradient>"
+    lore:
+      - "<gray>Şu anda eklenmiş depolama alanı yok</gray>"
+      - "<gray>RDR profilinize.</gray>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[!] Profil Eksik</gradient>"
+    lore:
+      - "<gray>RDR oyuncu profiliniz yapılamıyor</gray>"
+      - "<gray>kalıcı depolamadan yüklenebilir.</gray>"
+
+storage_settings_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Ayarlar</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Depolama Ayarları</gradient>"
+    lore:
+      - "<gray>Depolama anahtarı:</gray> <white>{storage_key}</white>"
+      - "<gray>Sahibi:</gray> <white>{owner_name}</white>"
+      - "<gray>Erişiminiz:</gray> <white>{access_level}</white>"
+      - "<gray>Kısayol tuşu:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Ortaklar:</gray> <white>{associate_count}</white>"
+      - "<gray>Güvenilen:</gray> <white>{trusted_count}</white>"
+    access:
+      owner: "<gradient:#10b981:#34d399>[Sahip]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Herkese açık]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[İlişkilendir]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Güvenilir]</gradient>"
+  trusted:
+    name: "<gradient:#10b981:#34d399>[Grup] Güvenilir Erişim</gradient>"
+    lore:
+      - "<gray>Ortaklar:</gray> <white>{associate_count}</white>"
+      - "<gray>Güvenilen:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Kimin para yatırabileceğini yönetmek için tıklayın</yellow>"
+      - "<yellow>veya bu depolama alanına tam erişim sağlayın.</yellow>"
+  hotkey:
+    name: "<gradient:#f59e0b:#fbbf24>[#] Depolama Kısayol Tuşu</gradient>"
+    lore:
+      - "<gray>Mevcut kısayol tuşu:</gray> <white>{hotkey_display}</white>"
+      - "<yellow>Hızlı erişimi bağlamak için tıklayın</yellow>"
+      - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
+  trusted_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Güvenilir Kilitli</gradient>"
+    lore:
+      - "<gray>Yalnızca depolama alanı sahibi yönetebilir</gray>"
+      - "<gray>bu depolama alanı için güvenilir erişim.</gray>"
+  hotkey_locked:
+    name: "<gradient:#ef4444:#f87171>[X] Kısayol Tuşu Kilitli</gradient>"
+    lore:
+      - "<gray>Yalnızca depolama alanı sahibi değiştirebilir</gray>"
+      - "<gray>depolama kısayol tuşları.</gray>"
+  edition_locked:
+    name: "<gradient:#ef4444:#f87171>[Ücretsiz] Ayarlar Kilitli</gradient>"
+    lore:
+      - "<gray>Depolama ayarı değişiklikleri devre dışı</gray>"
+      - "<gray>in <white>RDR Free</white><gray>.</gray>"
+      - "<yellow>Ayarları düzenlemek için Premium'a yükseltin.</yellow>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Depolama Eksik</gradient>"
+    lore:
+      - "<gray>Bu depolama alanı yüklenemedi</gray>"
+      - "<gray>ayarlar görünümü için.</gray>"
+
+storage_trusted_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Grup] {storage_key} Erişim</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Paylaşılan Erişim</gradient>"
+    lore:
+      - "<gray>Depolama anahtarı:</gray> <white>{storage_key}</white>"
+      - "<gray>Sahibi:</gray> <white>{owner_name}</white>"
+      - "<gray>Ortaklar:</gray> <white>{associate_count}</white>"
+      - "<gray>Güvenilen:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Dönüşümlü erişim için bir oynatıcıyı tıklayın.</yellow>"
+  entry:
+    public:
+      name: "<gradient:#9ca3af:#d1d5db>[Herkese Açık] {player}</gradient>"
+      lore:
+        - "<gray>Durum:</gray> <white>Herkese Açık</white>"
+        - "<gray>Para yatırma veya çekme erişimi yok.</gray>"
+        - "<yellow>İştirakçiliğe terfi etmek için tıklayın.</yellow>"
+    associate:
+      name: "<gradient:#f59e0b:#fbbf24>[İlişkilendir] {player}</gradient>"
+      lore:
+        - "<gray>Durum:</gray> <white>İlişkilendir</white>"
+        - "<gray>Para yatırabilir ancak çekemez.</gray>"
+        - "<yellow>Güvenilir kategorisine geçmek için tıklayın.</yellow>"
+    trusted:
+      name: "<gradient:#10b981:#34d399>[Güvenilir] {player}</gradient>"
+      lore:
+        - "<gray>Durum:</gray> <white>Güvenilen</white>"
+        - "<gray>Öğe yatırabilir ve çekebilir.</gray>"
+        - "<yellow>Genel olarak sıfırlamak için tıklayın.</yellow>"
+  feedback:
+    updated:
+      public: "<gradient:#9ca3af:#d1d5db>[Herkese Açık]</gradient> <gray>{player} artık depolama erişimine sahip değil.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[İlişkilendir]</gradient> <gray>{player} artık bu depoya para yatırabilir.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Güvenilir]</gradient> <gray>{player} artık bu depoya para yatırabilir ve buradan para çekebilir.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Güvenilen erişimi yalnızca depolama alanı sahibi değiştirebilir.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yalnızca Sahip</gradient>"
+      lore:
+        - "<gray>Bu depolama alanını görüntüleyebilirsiniz, ancak yalnızca</gray>"
+        - "<gray>sahibi güvenilir erişimi değiştirebilir.</gray>"
+    storage_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Depolama Eksik</gradient>"
+      lore:
+        - "<gray>Bu depolama alanı yüklenemedi</gray>"
+        - "<gray>güvenilir erişim yönetimi için.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Bu depolama alanı güvenilir erişim yönetimi için yüklenemedi.</gray>"
+    edition_locked:
+      name: "<gradient:#ef4444:#f87171>[Ücretsiz] Ayarlar Kilitli</gradient>"
+      lore:
+        - "<gray>Güvenilen erişim değişiklikleri devre dışı bırakıldı</gray>"
+        - "<gray>in <white>RDR Free</white><gray>.</gray>"
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Oyuncu Bulunamadı</gradient>"
+      lore:
+        - "<gray>Bilinen başka oyuncu yok</gray>"
+        - "<gray>güvenilir erişim atamak için.</gray>"
+
+storage_view:
+  title: "<gradient:#38bdf8:#60a5fa>[Kutu] {storage_key}</gradient>"
+  missing:
+    name: "<gradient:#ef4444:#f87171>[X] Depolama Eksik</gradient>"
+    lore:
+      - "<gray>Bu depolama girişi bulunamadı</gray>"
+      - "<gray>kalıcı RDR profiliniz için.</gray>"
+
+storage_hotkey_anvil_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[#] Bağlama {storage_key}</gradient>"
+  input:
+    lore:
+      - "<gray>Arasında bir sayı girin</gray>"
+      - "Hızlı erişim için <white>1</white><gray> ve </gray><white>{max_hotkeys}</white><gray>.</gray>"
+      - "<yellow>Kısayol tuşunu kaydetmek için sonuç alanını tıklayın.</yellow>"
+  error:
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>1</white> ile <white>{max_hotkeys}</white><gray> arasında bir sayı kullanın. Giriş:</gray> <white>{input}</white>"
+
+storage:
+  message:
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} zaten başka bir oturumda açık.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} şu anda açılamıyor.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray>.</gray> erişiminiz yok"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray>, RDR depolama alanında küresel olarak kara listeye alındı.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} için düzenleme oturumunuzun süresi doldu veya başka bir yere taşındı. Değişiklikler kaydedilmedi.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kaydedilemedi. Ayrıntılar için konsolu kontrol edin.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} artık <white>/rr {hotkey}</white><gray>.</gray> öğesine bağlı"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hiçbir depolama alanı <white>/rr {hotkey}</white><gray>.</gray>'ye bağlı değil"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kısayol tuşları <white>1</white> ile <white>{max_hotkeys}</white><gray>.</gray> arasında olmalıdır"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Depolama ayarı düzenlemeleri <white>RDR Free</white><gray>.</gray> içinde devre dışı bırakıldı"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>/rr scoreboard</white><gray> kenar çubuğunu etkinleştirdi.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray><white>/rr scoreboard</white><gray> kenar çubuğunu devre dışı bıraktı.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kullanım:</gray> <white>/rr scoreboard</white>"
+
+page:
+  name: "<gradient:#6b7280:#9ca3af>[Sayfa] %current_page%</gradient>"
+  lore:
+    - "<gray>Geçerli sayfa:</gray> <white>%current_page%</white>"
+    - "<gray>Toplam sayfa:</gray> <white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Sayfa] %page%</gradient>"
+
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Geri Dön</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Geri dönmek için tıklayın</gradient>"
