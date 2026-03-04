@@ -36,6 +36,9 @@ import com.raindropcentral.rplatform.requirement.impl.TimedRequirement;
 final class StorageStorePricingSupport {
 
     private static final double EPSILON = 1.0E-6D;
+    private static final String EMPTY_PROGRESS_SEGMENT = "<gradient:#6b7280:#9ca3af>░</gradient>";
+    private static final String PARTIAL_PROGRESS_SEGMENT = "<gradient:#f59e0b:#fbbf24>▓</gradient>";
+    private static final String FILLED_PROGRESS_SEGMENT = "<gradient:#10b981:#34d399>█</gradient>";
 
     private StorageStorePricingSupport() {
     }
@@ -207,16 +210,27 @@ final class StorageStorePricingSupport {
         return calculateProgress(player, requirement, findProgressPlayer(plugin, player));
     }
 
-    static @NotNull String buildProgressBar(final int percentage) {
+    static @NotNull String buildProgressBar(
+        final int percentage,
+        final @NotNull String emptySegment,
+        final @NotNull String partialSegment,
+        final @NotNull String filledSegment
+    ) {
         final int normalizedPercentage = Math.max(0, Math.min(100, percentage));
         final int totalSegments = 10;
-        final int filledSegments = Math.min(totalSegments, (int) Math.round(normalizedPercentage / 10.0D));
-        final StringBuilder builder = new StringBuilder(totalSegments + 2);
-        builder.append('[');
+        final double progress = normalizedPercentage / 100.0D;
+        final int filledSegments = Math.min(totalSegments, (int) Math.floor(progress * totalSegments));
+        final double remainder = (progress * totalSegments) - filledSegments;
+        final StringBuilder builder = new StringBuilder(totalSegments * filledSegment.length());
         for (int index = 0; index < totalSegments; index++) {
-            builder.append(index < filledSegments ? '#' : '-');
+            if (index < filledSegments) {
+                builder.append(filledSegment);
+            } else if (index == filledSegments && remainder > 0.3D && filledSegments < totalSegments) {
+                builder.append(partialSegment);
+            } else {
+                builder.append(emptySegment);
+            }
         }
-        builder.append(']');
         return builder.toString();
     }
 

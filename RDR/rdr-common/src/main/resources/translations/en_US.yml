@@ -103,24 +103,28 @@ storage_store_requirements_ui:
     lore:
       - "<gray>This purchase tier has no configured requirements.</gray>"
       - "<yellow>You can buy this storage without extra checks.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
     name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
     lore:
       - "<gray>Key:</gray> <white>{requirement_key}</white>"
       - "<gray>Type:</gray> <white>{requirement_type}</white>"
       - "<gray>Status:</gray> <white>{status}</white>"
-      - "<gray>Progress:</gray> <white>{progress_bar} {progress}</white>"
+      - "<gray>Progress:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
       - "<gray>Summary:</gray> <white>{summary}</white>"
       - "<yellow>Right-click item or currency requirements to bank progress.</yellow>"
-    details: "<gradient:#38bdf8:#60a5fa>[>] Detailed Checks</gradient>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Detailed Checks</gradient>"
     status:
       met: "<gradient:#10b981:#34d399>[Met]</gradient>"
       pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{requirement}</white><gray> is now ready.</gray> <white>{progress_bar} {progress}</white>"
-    progress_saved: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Stored progress for <white>{requirement}</white><gray>.</gray> <white>{progress_bar} {progress}</white>"
-    no_progress: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>No matching items or currency were available for <white>{requirement}</white><gray>.</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> is now ready.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Stored progress for <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>No matching items or currency were available for <white>{requirement}</white><gray>.</gray>"
     unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> does not support banked progress.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is unavailable right now.</gray>"
     profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDR profile could not be loaded, so progress could not be saved.</gray>"

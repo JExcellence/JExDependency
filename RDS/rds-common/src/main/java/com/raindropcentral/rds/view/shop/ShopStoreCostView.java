@@ -266,7 +266,7 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
     ) {
         final boolean met = ShopStoreRequirementBrowserSupport.isRequirementMet(plugin, player, requirement);
         final int progress = ShopStoreRequirementBrowserSupport.getProgressPercentage(plugin, player, requirement);
-        final String progressBar = ShopStorePricingSupport.buildProgressBar(progress);
+        final String progressBar = this.buildProgressBar(player, progress);
         final String status = this.resolveStatusPlaceholder(player, requirement, met);
         final List<Component> lore = new ArrayList<>(this.i18n("entry.lore", player)
             .withPlaceholders(Map.of(
@@ -344,7 +344,7 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
         this.i18n(key, clickContext.getPlayer())
             .withPlaceholders(Map.of(
                 "requirement", ShopStoreRequirementBrowserSupport.resolveDisplayName(requirement),
-                "progress_bar", ShopStorePricingSupport.buildProgressBar(result.progressPercentage()),
+                "progress_bar", this.buildProgressBar(clickContext.getPlayer(), result.progressPercentage()),
                 "progress", result.progressPercentage() + "%"
             ))
             .includePrefix()
@@ -357,6 +357,19 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
         return plugin.getPlayerRepository() == null
             ? null
             : plugin.getPlayerRepository().findByPlayer(context.getPlayer().getUniqueId());
+    }
+
+    private @NotNull String buildProgressBar(final @NotNull Player player, final int percentage) {
+        return ShopStorePricingSupport.buildProgressBar(
+            percentage,
+            this.resolvePlaceholder("progress_bar.empty", player),
+            this.resolvePlaceholder("progress_bar.partial", player),
+            this.resolvePlaceholder("progress_bar.filled", player)
+        );
+    }
+
+    private @NotNull String resolvePlaceholder(final @NotNull String key, final @NotNull Player player) {
+        return this.i18n(key, player).build().getI18nVersionWrapper().asPlaceholder();
     }
 
     private @NotNull RDSPlayer getOrCreatePlayer(final @NotNull Context context) {
