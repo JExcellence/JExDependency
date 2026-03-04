@@ -1,0 +1,11 @@
+name: ${name}
+version: ${version}
+main: de.jexcellence.workbench.JExWorkbench
+api-version: ${apiVersion}
+description: ${description}
+author: JExcellence
+website: https://www.jexcellence.de
+
+softdepend:
+  - Vault
+  - PlaceholderAPI

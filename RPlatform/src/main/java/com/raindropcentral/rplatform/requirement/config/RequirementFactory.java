@@ -85,6 +85,9 @@ public final class RequirementFactory {
      * Section adapters allow plugins to convert their custom config section types
      * directly to AbstractRequirement instances.
      * </p>
+     * 
+     * <p><b>Note:</b> Duplicate registrations are ignored to prevent infinite loops
+     * and CPU spikes during initialization.</p>
      *
      * @param sectionClass the config section class
      * @param adapter the adapter that converts sections to requirements
@@ -94,6 +97,12 @@ public final class RequirementFactory {
             @NotNull Class<T> sectionClass,
             @NotNull RequirementSectionAdapter<T> adapter
     ) {
+        // Prevent duplicate registration to avoid infinite loops and CPU spikes
+        if (sectionAdapters.containsKey(sectionClass)) {
+            LOGGER.fine("Section adapter already registered for: " + sectionClass.getSimpleName());
+            return;
+        }
+        
         sectionAdapters.put(sectionClass, adapter);
         LOGGER.info("Registered section adapter for: " + sectionClass.getSimpleName());
     }

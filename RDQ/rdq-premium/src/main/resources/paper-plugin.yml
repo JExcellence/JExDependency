@@ -9,6 +9,9 @@ folia-supported: true
 website: https://raindropcentral.com
 dependencies:
   server:
+    RCore:
+      load: AFTER
+      required: true
     Vault:
       load: BEFORE
       required: false
@@ -19,5 +22,5 @@ dependencies:
       load: BEFORE
       required: false
     JExEconomy:
-      load: BEFORE
+      load: AFTER
       required: false

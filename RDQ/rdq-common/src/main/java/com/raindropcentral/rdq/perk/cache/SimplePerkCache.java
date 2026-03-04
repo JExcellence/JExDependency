@@ -71,15 +71,22 @@ public class SimplePerkCache {
 	
 	/**
 	 * Loads all perks for a player from the database into memory.
-	 * Uses the repository's built-in cache for efficient querying.
-	 * This is an async operation that doesn't block.
+	 * Uses a custom query with JOIN FETCH to eagerly load Perk data.
+	 * This prevents LazyInitializationException when accessing perks from cache.
+	 * 
+	 * <p><b>Thread Safety:</b> The loaded list is wrapped in a synchronized list
+	 * to prevent ConcurrentModificationException when perks are modified while
+	 * auto-save is running.</p>
 	 *
 	 * @param playerId the player's UUID
 	 * @return CompletableFuture that completes when loading is done
 	 */
 	public CompletableFuture<Void> loadPlayerAsync(@NotNull final UUID playerId) {
-		return repository.findAllByAttributesAsync(Map.of("player.uniqueId", playerId)).thenAcceptAsync(playerPerks -> {
-			cache.put(playerId, playerPerks);
+		return repository.findAllByPlayerIdWithPerk(playerId).thenAcceptAsync(playerPerks -> {
+			// Wrap in synchronized list to prevent ConcurrentModificationException
+			// This allows safe concurrent reads/writes from GUI and auto-save
+			List<PlayerPerk> synchronizedList = Collections.synchronizedList(new ArrayList<>(playerPerks));
+			cache.put(playerId, synchronizedList);
 		});
 	}
 	
@@ -122,12 +129,18 @@ public class SimplePerkCache {
 				return;
 			}
 			
-			// Batch update to database
+			// Batch update to database using the cascade-safe method
 			int savedCount = 0;
 			for (PlayerPerk perk : perks) {
 				try {
-					repository.update(perk);
+					// CRITICAL: Use updatePlayerPerkOnly to avoid cascade to Perk entity
+					// This prevents OptimisticLockException on the Perk entity
+					repository.updatePlayerPerkOnly(perk).join();
 					savedCount++;
+				} catch (jakarta.persistence.OptimisticLockException e) {
+					// Log but continue - this perk was modified elsewhere
+					LOGGER.fine("Optimistic lock on perk " + perk.getPerk().getIdentifier() + 
+							" for player " + playerId + " - entity was updated elsewhere, skipping");
 				} catch (Exception e) {
 					LOGGER.log(Level.WARNING, "Failed to save perk " + perk.getPerk().getIdentifier() + 
 							" for player " + playerId, e);
@@ -188,6 +201,9 @@ public class SimplePerkCache {
 	/**
 	 * Updates a perk in the cache.
 	 * If the perk doesn't exist in cache, it will be added.
+	 * 
+	 * <p><b>Thread Safety:</b> Synchronizes on the perk list to prevent
+	 * concurrent modification during auto-save.</p>
 	 *
 	 * @param playerId the player's UUID
 	 * @param perk the player perk to update
@@ -202,11 +218,14 @@ public class SimplePerkCache {
 			perks = cache.get(playerId);
 		}
 		
-		// Remove old version if exists
-		perks.removeIf(p -> p.getPerk().getId().equals(perk.getPerk().getId()));
-		
-		// Add updated version
-		perks.add(perk);
+		// Synchronize on the list to prevent concurrent modification
+		synchronized (perks) {
+			// Remove old version if exists
+			perks.removeIf(p -> p.getPerk().getId().equals(perk.getPerk().getId()));
+			
+			// Add updated version
+			perks.add(perk);
+		}
 		
 		// Mark as dirty
 		markDirty(playerId);
@@ -247,6 +266,9 @@ public class SimplePerkCache {
 	/**
 	 * Auto-saves all players with unsaved changes.
 	 * This should be called periodically for crash protection.
+	 * 
+	 * <p><b>Thread Safety:</b> Synchronizes on the perk list to prevent
+	 * ConcurrentModificationException when perks are being modified in GUI.</p>
 	 *
 	 * @return number of players saved
 	 */
@@ -271,21 +293,24 @@ public class SimplePerkCache {
 					continue;
 				}
 				
-				// Save to database without removing from cache
-				for (PlayerPerk perk : perks) {
-					try {
-						// Only update if the PlayerPerk itself has changes
-						// Don't cascade to the Perk entity
-						repository.update(perk);
-					} catch (OptimisticLockException e) {
-						// Log but don't fail - this can happen if the perk was updated elsewhere
-						LOGGER.fine("Optimistic lock exception for perk " + 
-								perk.getPerk().getIdentifier() + " for player " + playerId + 
-								" - entity was updated elsewhere");
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Auto-save failed for perk " + 
-								perk.getPerk().getIdentifier() + " for player " + playerId, e);
-						errorCount++;
+				// Synchronize on the list to prevent concurrent modification
+				// The list is a synchronized list, so we need to sync when iterating
+				synchronized (perks) {
+					// Save to database without removing from cache
+					for (PlayerPerk perk : perks) {
+						try {
+							// CRITICAL: Use updatePlayerPerkOnly to avoid cascade to Perk entity
+							repository.updatePlayerPerkOnly(perk).join();
+						} catch (OptimisticLockException e) {
+							// Log but don't fail - this can happen if the perk was updated elsewhere
+							LOGGER.fine("Optimistic lock exception for perk " + 
+									perk.getPerk().getIdentifier() + " for player " + playerId + 
+									" - entity was updated elsewhere");
+						} catch (Exception e) {
+							LOGGER.log(Level.WARNING, "Auto-save failed for perk " + 
+									perk.getPerk().getIdentifier() + " for player " + playerId, e);
+							errorCount++;
+						}
 					}
 				}
 				
