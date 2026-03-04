@@ -731,9 +731,28 @@ shop_purchase_amount_anvil_ui:
     processing_failed: "<red>Failed to process purchase amount. Input: {input}</red>"
 
 shop_search_ui:
-  title: "Browse Shops"
+  title: "<gradient:#38bdf8:#22c55e>Shop Browser</gradient>"
   summary:
-    name: "<gold>Shop Directory</gold>"
+    name: "<gradient:#f59e0b:#f97316>Shop Browser</gradient>"
+    lore:
+      - "<gray>Browse every tracked shop or filter by a specific material.</gray>"
+      - "<yellow>Select one of the actions below to continue.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Browse All Shops</gradient>"
+    lore:
+      - "<gray>Open the full paginated shop directory.</gray>"
+      - "<yellow>Click to view every tracked shop.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Search By Material</gradient>"
+    lore:
+      - "<gray>Open an anvil prompt and enter a material name.</gray>"
+      - "<gray>Example:</gray> <white>diamond_block</white>"
+      - "<yellow>Click to search by item type.</yellow>"
+
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>All Shops</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Directory</gradient>"
     lore:
       - "<gray>Tracked shops:</gray> <white>{shop_count}</white>"
       - "<gray>Total available stock:</gray> <white>{available_count}</white>"
@@ -755,6 +774,45 @@ shop_search_ui:
       lore:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Results For {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Results For {material}</gradient>"
+    lore:
+      - "<gray>Material:</gray> <white>{material}</white>"
+      - "<gray>Matching shops:</gray> <white>{shop_count}</white>"
+      - "<gray>Matching offers:</gray> <white>{matching_count}</white>"
+      - "<yellow>Click any matching shop below to open it.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Matching {material} offers:</gray> <white>{matching_count}</white>"
+      - "<gray>Total visible stock:</gray> <white>{available_count}</white>"
+      - "<yellow>Click to open this shop.</yellow>"
+  feedback:
+    empty:
+      name: "<red>No Shops Sell {material}</red>"
+      lore:
+        - "<gray>No tracked shops currently offer this material.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Search Material</gradient>"
+  input:
+    lore:
+      - "<gray>Enter a Bukkit material name to search tracked shops.</gray>"
+      - "<gray>Examples:</gray> <white>diamond</white><gray>,</gray> <white>diamond_block</white>"
+      - "<yellow>Click the result slot to open matching shops.</yellow>"
+  error:
+    invalid_material: "<red>Enter a valid material such as diamond_block. Input: {input}</red>"
+    processing_failed: "<red>Failed to search for material. Input: {input}</red>"
 
 # ============================================
 # PAGINATION

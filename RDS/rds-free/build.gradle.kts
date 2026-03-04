@@ -10,7 +10,7 @@ dependenciesYml {
 }
 
 group = "com.raindropcentral.rds"
-version = "5.0.0"
+version = "1.0.0"
 description = "RDS Free - Free edition of Raindrop Shops"
 
 dependencies {

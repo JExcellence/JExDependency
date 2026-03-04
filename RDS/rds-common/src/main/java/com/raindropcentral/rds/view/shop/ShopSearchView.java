@@ -1,21 +1,20 @@
+/*
+ * ShopSearchView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
-import com.raindropcentral.rds.database.entity.Shop;
-import com.raindropcentral.rds.items.AbstractItem;
-import com.raindropcentral.rds.items.ShopItem;
-import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
+import com.raindropcentral.rds.view.shop.anvil.ShopMaterialSearchAnvilView;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
-import com.raindropcentral.rplatform.view.APaginatedView;
-import me.devnatan.inventoryframework.View;
-import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
+import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
-import me.devnatan.inventoryframework.component.Pagination;
 import me.devnatan.inventoryframework.state.State;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -23,115 +22,98 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 
 /**
- * Renders the shop search inventory view.
+ * Renders the shop search landing page with actions for browsing every shop or searching by material.
  */
-public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntry> {
+public class ShopSearchView extends BaseView {
 
     private final State<RDS> rds = initialState("plugin");
 
+    /**
+     * Creates the shop search landing view.
+     */
+    public ShopSearchView() {
+        super();
+    }
+
     @Override
-    protected String getKey() {
+    protected @NotNull String getKey() {
         return "shop_search_ui";
     }
 
     @Override
     protected String[] getLayout() {
         return new String[]{
+                "         ",
+                "   l a   ",
                 "    s    ",
-                " OOOOOOO ",
-                " OOOOOOO ",
-                " OOOOOOO ",
-                " OOOOOOO ",
-                "  < p >  "
+                "         ",
+                "         ",
+                "         "
         };
     }
 
+    /**
+     * Re-opens the material search results after the player submits a valid anvil query.
+     *
+     * @param origin context the player returned from
+     * @param target active context for this landing view
+     */
     @Override
-    protected CompletableFuture<List<ShopSearchEntry>> getAsyncPaginationSource(
-            final @NotNull Context context
+    public void onResume(
+            final @NotNull Context origin,
+            final @NotNull Context target
     ) {
-        final RDS plugin = this.rds.get(context);
-
-        return CompletableFuture.supplyAsync(() -> {
-            final List<ShopSearchEntry> entries = new ArrayList<>();
-
-            for (final Shop shop : plugin.getShopRepository().findAllShops()) {
-                final Location shopLocation = shop.getShopLocation();
-                if (shopLocation == null) {
-                    continue;
-                }
-
-                if (shop.isAdminShop()) {
-                    plugin.getAdminShopRestockScheduler().restockShop(shop);
-                }
-
-                entries.add(new ShopSearchEntry(
-                        shopLocation,
-                        shop.getOwner(),
-                        this.countAvailableItems(shop)
-                ));
-            }
-
-            entries.sort(Comparator.comparing(entry -> this.formatLocation(entry.shopLocation())));
-            return entries;
-        }, plugin.getExecutor());
-    }
-
-    @Override
-    protected void renderEntry(
-            final @NotNull Context context,
-            final @NotNull BukkitItemComponentBuilder builder,
-            final int index,
-            final @NotNull ShopSearchEntry entry
-    ) {
-        final Player player = context.getPlayer();
-
-        builder.withItem(
-                UnifiedBuilderFactory.item(Material.CHEST)
-                        .setName(this.i18n("entry.name", player)
-                                .withPlaceholders(Map.of(
-                                        "owner", this.getOwnerName(entry.ownerId())
-                                ))
-                                .build()
-                                .component())
-                        .setLore(this.i18n("entry.lore", player)
-                                .withPlaceholders(Map.of(
-                                        "owner", this.getOwnerName(entry.ownerId()),
-                                        "location", this.formatLocation(entry.shopLocation()),
-                                        "available_count", entry.availableItemCount()
-                                ))
-                                .build()
-                                .children())
-                        .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
-                        .build()
-        ).onClick(clickContext -> this.handleShopClick(clickContext, entry));
-    }
-
-    @Override
-    protected void onPaginatedRender(
-            final @NotNull RenderContext render,
-            final @NotNull Player player
-    ) {
-        final State<Pagination> paginationState = this.findPaginationState();
-        if (paginationState == null) {
-            render.slot(4).renderWith(() -> this.createHeaderItem(render, player));
+        final SearchRequest request = this.extractSearchRequest(target) != null
+                ? this.extractSearchRequest(target)
+                : this.extractSearchRequest(origin);
+        if (request == null) {
+            target.update();
             return;
         }
 
-        render.slot(4)
-                .renderWith(() -> this.createHeaderItem(render, player))
-                .updateOnStateChange(paginationState);
+        target.openForPlayer(
+                ShopResultsView.class,
+                Map.of(
+                        "plugin", this.rds.get(target),
+                        "searchMaterial", request.material()
+                )
+        );
     }
 
+    /**
+     * Draws the landing-page action buttons for browsing and material search.
+     *
+     * @param render render context for the current inventory
+     * @param player player viewing the landing page
+     */
+    @Override
+    public void onFirstRender(
+            final @NotNull RenderContext render,
+            final @NotNull Player player
+    ) {
+        render.layoutSlot('s', this.createSummaryItem(player));
+
+        render.layoutSlot('l', this.createBrowseButton(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        ShopListView.class,
+                        Map.of("plugin", this.rds.get(clickContext))
+                ));
+
+        render.layoutSlot('a', this.createSearchButton(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        ShopMaterialSearchAnvilView.class,
+                        Map.of("plugin", this.rds.get(clickContext))
+                ));
+    }
+
+    /**
+     * Cancels vanilla inventory interaction so the landing page behaves like a menu.
+     *
+     * @param click click context for the active inventory interaction
+     */
     @Override
     public void onClick(
             final @NotNull SlotClickContext click
@@ -139,174 +121,54 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
         click.setCancelled(true);
     }
 
-    private void handleShopClick(
-            final @NotNull SlotClickContext clickContext,
-            final @NotNull ShopSearchEntry entry
+    private @Nullable SearchRequest extractSearchRequest(
+            final @NotNull Context context
     ) {
-        final Shop shop = this.rds.get(clickContext).getShopRepository().findByLocation(entry.shopLocation());
-        if (shop == null) {
-            this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
-                    .build()
-                    .sendMessage();
-            clickContext.openForPlayer(
-                    ShopSearchView.class,
-                    Map.of("plugin", this.rds.get(clickContext))
-            );
-            return;
+        final Object initialData = context.getInitialData();
+        if (!(initialData instanceof Map<?, ?> data)) {
+            return null;
         }
 
-        clickContext.openForPlayer(
-                this.getTargetView(shop, clickContext.getPlayer()),
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", shop.getShopLocation()
-                )
-        );
-    }
-
-    private int countAvailableItems(
-            final @NotNull Shop shop
-    ) {
-        if (shop.isAdminShop()) {
-            for (final AbstractItem item : shop.getItems()) {
-                if (item instanceof ShopItem shopItem && AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
-                    return shop.getStoredItemCount();
-                }
-            }
-
-            return AdminShopStockSupport.countVisibleStock(shop);
+        final Object materialObject = data.get("searchMaterial");
+        if (!(materialObject instanceof Material material)) {
+            return null;
         }
 
-        int availableCount = 0;
-
-        for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && shopItem.getAmount() > 0) {
-                availableCount += shopItem.getAmount();
-            }
-        }
-
-        return availableCount;
-    }
-
-    private @NotNull Class<? extends View> getTargetView(
-            final @NotNull Shop shop,
-            final @NotNull Player player
-    ) {
-        return shop.canAccessOverview(player.getUniqueId())
-                ? ShopOverviewView.class
-                : ShopCustomerView.class;
+        return new SearchRequest(material);
     }
 
     private @NotNull ItemStack createSummaryItem(
-            final @NotNull Player player,
-            final @NotNull List<ShopSearchEntry> entries
+            final @NotNull Player player
     ) {
-        int totalAvailableItems = 0;
-        for (final ShopSearchEntry entry : entries) {
-            totalAvailableItems += entry.availableItemCount();
-        }
-
         return UnifiedBuilderFactory.item(Material.COMPASS)
                 .setName(this.i18n("summary.name", player).build().component())
-                .setLore(this.i18n("summary.lore", player)
-                        .withPlaceholders(Map.of(
-                                "shop_count", entries.size(),
-                                "available_count", totalAvailableItems
-                        ))
-                        .build()
-                        .children())
+                .setLore(this.i18n("summary.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     }
 
-    private @NotNull ItemStack createHeaderItem(
-            final @NotNull RenderContext render,
+    private @NotNull ItemStack createBrowseButton(
             final @NotNull Player player
     ) {
-        final Pagination pagination = this.getPagination(render);
-        final List<ShopSearchEntry> entries = this.getEntries(pagination);
-
-        if (pagination.source() != null && entries.isEmpty()) {
-            return this.createEmptyItem(player);
-        }
-
-        return this.createSummaryItem(player, entries);
-    }
-
-    private @NotNull ItemStack createEmptyItem(
-            final @NotNull Player player
-    ) {
-        return UnifiedBuilderFactory.item(Material.BARRIER)
-                .setName(this.i18n("feedback.empty.name", player).build().component())
-                .setLore(this.i18n("feedback.empty.lore", player).build().children())
+        return UnifiedBuilderFactory.item(Material.CHEST)
+                .setName(this.i18n("browse.name", player).build().component())
+                .setLore(this.i18n("browse.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     }
 
-    private @NotNull String formatLocation(
-            final @NotNull Location location
+    private @NotNull ItemStack createSearchButton(
+            final @NotNull Player player
     ) {
-        final @Nullable String worldName = location.getWorld() == null
-                ? null
-                : location.getWorld().getName();
-
-        return (worldName == null ? "unknown_world" : worldName)
-                + " ("
-                + location.getBlockX() + ", "
-                + location.getBlockY() + ", "
-                + location.getBlockZ() + ")";
+        return UnifiedBuilderFactory.item(Material.ANVIL)
+                .setName(this.i18n("search.name", player).build().component())
+                .setLore(this.i18n("search.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
     }
 
-    private @NotNull List<ShopSearchEntry> getEntries(
-            final @NotNull Pagination pagination
-    ) {
-        final List<ShopSearchEntry> entries = new ArrayList<>();
-        if (pagination.source() == null) {
-            return entries;
-        }
-
-        for (final Object sourceEntry : pagination.source()) {
-            if (sourceEntry instanceof ShopSearchEntry shopSearchEntry) {
-                entries.add(shopSearchEntry);
-            }
-        }
-
-        return entries;
-    }
-
-    @SuppressWarnings("unchecked")
-    private @Nullable State<Pagination> findPaginationState() {
-        try {
-            final Field paginationField = APaginatedView.class.getDeclaredField("pagination");
-            paginationField.setAccessible(true);
-
-            final Object paginationState = paginationField.get(this);
-            return paginationState instanceof State<?> state
-                    ? (State<Pagination>) state
-                    : null;
-        } catch (ReflectiveOperationException ignored) {
-            return null;
-        }
-    }
-
-    private @NotNull String getOwnerName(
-            final @NotNull UUID ownerId
-    ) {
-        final String ownerName = Bukkit.getOfflinePlayer(ownerId).getName();
-        return ownerName == null ? ownerId.toString() : ownerName;
-    }
-
-    /**
-     * Represents shop search entry.
-     *
-     * @param shopLocation shop location
-     * @param ownerId owner id
-     * @param availableItemCount available item count
-     */
-    public record ShopSearchEntry(
-            @NotNull Location shopLocation,
-            @NotNull UUID ownerId,
-            int availableItemCount
+    private record SearchRequest(
+            @NotNull Material material
     ) {
     }
 }

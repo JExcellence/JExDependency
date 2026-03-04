@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.raindropcentral.rds"
-version = "5.0.0"
+version = "1.0.0"
 description = "RDS - Raindrop Shops"
 
 tasks.register("publishLocal") {
