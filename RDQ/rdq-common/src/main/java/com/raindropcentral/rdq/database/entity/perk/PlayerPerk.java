@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -176,18 +175,17 @@ public class PlayerPerk extends BaseEntity {
     }
 
     /**
-     * Records an activation of this perk.
+     * Marks this perk as currently active without incrementing its trigger count.
      */
-    public void recordActivation() {
-        this.activationCount++;
+    public void markActivated() {
         this.lastActivated = LocalDateTime.now();
         this.active = true;
     }
 
     /**
-     * Records a deactivation of this perk.
+     * Marks this perk as no longer active and updates tracked usage time.
      */
-    public void recordDeactivation() {
+    public void markDeactivated() {
         this.lastDeactivated = LocalDateTime.now();
         this.active = false;
 
@@ -198,6 +196,13 @@ public class PlayerPerk extends BaseEntity {
                 this.totalUsageTimeMillis += usageMillis;
             }
         }
+    }
+
+    /**
+     * Records a successful in-game trigger of this perk's effect.
+     */
+    public void recordTrigger() {
+        this.activationCount++;
     }
 
     @Override

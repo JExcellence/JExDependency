@@ -6,6 +6,7 @@ public enum EPRQAction {
     MAIN,
     QUESTS,
     RANKS,
+    SCOREBOARD,
     PERKS,
     HELP
 }

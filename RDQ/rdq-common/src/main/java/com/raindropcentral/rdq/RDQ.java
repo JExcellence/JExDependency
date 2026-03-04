@@ -23,6 +23,7 @@ import com.raindropcentral.rdq.permissions.PermissionsService;
 import com.raindropcentral.rdq.rank.IRankSystemService;
 import com.raindropcentral.rdq.rank.RankSystemFactory;
 import com.raindropcentral.rdq.service.RankPathService;
+import com.raindropcentral.rdq.service.scoreboard.PerkSidebarScoreboardService;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
 import com.raindropcentral.rdq.view.bounty.*;
@@ -123,6 +124,7 @@ public abstract class RDQ {
 	private PerkActivationService perkActivationService;
 	private PerkRequirementService perkRequirementService;
 	private com.raindropcentral.rdq.perk.cache.SimplePerkCache playerPerkCache;
+    private PerkSidebarScoreboardService perkSidebarScoreboardService;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -167,6 +169,8 @@ public abstract class RDQ {
 					this.rankSystemFactory.initialize();
 
 					initializePerkSystem();
+					perkSidebarScoreboardService = new PerkSidebarScoreboardService(this);
+					perkSidebarScoreboardService.start();
 
 					initializeComponents();
 
@@ -354,6 +358,10 @@ public abstract class RDQ {
 				LOGGER.log(Level.WARNING, "Error shutting down perk system", e);
 			}
 		}
+
+        if (perkSidebarScoreboardService != null) {
+            perkSidebarScoreboardService.shutdown();
+        }
 		
 		if (visualIndicatorManager != null) {
 			visualIndicatorManager.shutdown();

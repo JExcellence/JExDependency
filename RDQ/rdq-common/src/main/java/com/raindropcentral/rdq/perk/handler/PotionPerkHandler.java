@@ -125,6 +125,8 @@ public class PotionPerkHandler {
 		activePlayerPerks
 				.computeIfAbsent(player.getUniqueId(), k -> new ConcurrentHashMap<>())
 				.put(playerPerk.getId(), playerPerk);
+
+		plugin.getPerkActivationService().recordEffectTrigger(player, playerPerk);
 		
 		LOGGER.info("Applied potion effect " + effectType.getName() + " (amplifier " + amplifier + 
 				") to player " + player.getName() + " from perk " + playerPerk.getPerk().getIdentifier());

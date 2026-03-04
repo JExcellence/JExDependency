@@ -36,6 +36,12 @@ public class RDQPlayer extends BaseEntity {
     private String playerName;
 
     /**
+     * Whether the player wants the RDQ perks sidebar scoreboard restored automatically.
+     */
+    @Column(name = "perk_sidebar_scoreboard_enabled", nullable = false)
+    private boolean perkSidebarScoreboardEnabled;
+
+    /**
      * The player's rank associations across multiple rank trees.
      * <p>
      * This field establishes a one-to-many relationship with the {@link com.raindropcentral.rdq.database.entity.rank.RPlayerRank} entity,
@@ -125,6 +131,24 @@ public class RDQPlayer extends BaseEntity {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    /**
+     * Returns whether the player has the RDQ perks sidebar scoreboard persisted as enabled.
+     *
+     * @return {@code true} when the perks sidebar should be restored on login
+     */
+    public boolean isPerkSidebarScoreboardEnabled() {
+        return this.perkSidebarScoreboardEnabled;
+    }
+
+    /**
+     * Updates whether the RDQ perks sidebar scoreboard should be restored on login.
+     *
+     * @param perkSidebarScoreboardEnabled {@code true} to restore the perks sidebar automatically
+     */
+    public void setPerkSidebarScoreboardEnabled(final boolean perkSidebarScoreboardEnabled) {
+        this.perkSidebarScoreboardEnabled = perkSidebarScoreboardEnabled;
     }
 
     /**

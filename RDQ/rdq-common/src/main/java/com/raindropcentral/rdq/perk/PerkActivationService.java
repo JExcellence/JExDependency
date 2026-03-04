@@ -152,8 +152,9 @@ public class PerkActivationService {
                 return CompletableFuture.completedFuture(false);
             }
             
-            // Update state
-            playerPerk.recordActivation();
+            // Mark the perk as active for this session. Trigger counts are tracked separately
+            // when the perk effect actually procs.
+            playerPerk.markActivated();
             
             // Update in cache (marks as dirty) or DB
             if (cache != null && cache.isLoaded(player.getUniqueId())) {
@@ -165,7 +166,7 @@ public class PerkActivationService {
             } else {
                 // Fallback to DB update with fetchAndUpdate
                 return playerPerkRepository.fetchAndUpdate(perkId, freshPerk -> {
-                    freshPerk.recordActivation();
+                    freshPerk.markActivated();
                 })
                     .thenApply(updatedPerk -> {
                         if (updatedPerk != null) {
@@ -224,8 +225,8 @@ public class PerkActivationService {
                 // Continue anyway to update state
             }
             
-            // Update state
-            playerPerk.recordDeactivation();
+            // Mark the perk as inactive for this session. Trigger counts remain intact.
+            playerPerk.markDeactivated();
             
             // Update in cache (marks as dirty) or DB
             if (cache != null && cache.isLoaded(player.getUniqueId())) {
@@ -237,7 +238,7 @@ public class PerkActivationService {
             } else {
                 // Fallback to DB update with fetchAndUpdate
                 return playerPerkRepository.fetchAndUpdate(perkId, freshPerk -> {
-                    freshPerk.recordDeactivation();
+                    freshPerk.markDeactivated();
                 })
                     .thenApply(updatedPerk -> {
                         if (updatedPerk != null) {
@@ -690,6 +691,36 @@ public class PerkActivationService {
      */
     private void invalidateCache(@NotNull final java.util.UUID playerUuid) {
         activePerksCache.remove(playerUuid);
+    }
+
+    /**
+     * Records a successful effect trigger for a player's perk.
+     *
+     * @param player the player whose perk triggered
+     * @param playerPerk the perk whose effect successfully triggered
+     */
+    public void recordEffectTrigger(
+            @NotNull final Player player,
+            @NotNull final PlayerPerk playerPerk
+    ) {
+        playerPerk.recordTrigger();
+
+        if (cache != null && cache.isLoaded(player.getUniqueId())) {
+            cache.updatePerk(player.getUniqueId(), playerPerk);
+            return;
+        }
+
+        playerPerkRepository.fetchAndUpdate(
+                playerPerk.getId(),
+                PlayerPerk::recordTrigger
+        ).exceptionally(throwable -> {
+            LOGGER.log(
+                    Level.SEVERE,
+                    "Failed to record perk trigger for " + playerPerk.getPerk().getIdentifier() + " on " + player.getName(),
+                    throwable
+            );
+            return null;
+        });
     }
 
     /**

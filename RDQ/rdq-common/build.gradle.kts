@@ -77,6 +77,8 @@ dependencies {
     testImplementation(libs.caffeine)
     testImplementation(platform(libs.hibernate.platform))
     testImplementation(libs.bundles.hibernate)
+    testImplementation(libs.jehibernate)
+    testImplementation(libs.bundles.jeconfig) { isTransitive = false }
 }
 
 tasks.withType<Test>().configureEach {

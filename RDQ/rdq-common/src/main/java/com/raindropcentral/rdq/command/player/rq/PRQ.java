@@ -3,6 +3,7 @@ package com.raindropcentral.rdq.command.player.rq;
 import com.raindropcentral.commands.PlayerCommand;
 import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdq.RDQ;
+import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.bounty.BountyMainView;
 import com.raindropcentral.rdq.view.main.MainOverviewView;
@@ -15,11 +16,14 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Command
 @SuppressWarnings("unused")
 public class PRQ extends PlayerCommand {
+
+    private static final String PERKS_SCOREBOARD_TYPE = "perks";
     
     /**
      * The main plugin instance.
@@ -155,6 +159,7 @@ public class PRQ extends PlayerCommand {
                     )
                 );
             }
+            case SCOREBOARD -> this.handleScoreboardCommand(player, args);
             case PERKS -> {
                 if (this.hasNoPermission(
                     player,
@@ -227,11 +232,23 @@ public class PRQ extends PlayerCommand {
                         action
                     ))
                     .map(Enum::name)
+                    .map(name -> name.toLowerCase(Locale.ROOT))
                     .toList()
             );
             return StringUtil.copyPartialMatches(
                 args[0].toLowerCase(),
                 suggestions,
+                new ArrayList<>()
+            );
+        }
+        if (
+            args.length == 2
+                && "scoreboard".equalsIgnoreCase(args[0])
+                && this.hasPermission(player, EPRQPermission.SCOREBOARD)
+        ) {
+            return StringUtil.copyPartialMatches(
+                args[1].toLowerCase(),
+                List.of(PERKS_SCOREBOARD_TYPE),
                 new ArrayList<>()
             );
         }
@@ -276,11 +293,72 @@ public class PRQ extends PlayerCommand {
                 player,
                 EPRQPermission.RANKS
             );
+            case SCOREBOARD -> this.hasPermission(
+                player,
+                EPRQPermission.SCOREBOARD
+            );
             case PERKS -> this.hasPermission(
                 player,
                 EPRQPermission.PERKS
             );
             case HELP -> this.canAccessAnyAction(player);
         };
+    }
+
+    private void handleScoreboardCommand(
+        final @NotNull Player player,
+        final @NotNull String[] args
+    ) {
+        if (this.hasNoPermission(player, EPRQPermission.SCOREBOARD)) {
+            return;
+        }
+
+        if (args.length != 2 || !PERKS_SCOREBOARD_TYPE.equalsIgnoreCase(args[1])) {
+            new I18n.Builder("rq.scoreboard.syntax", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+            return;
+        }
+
+        if (
+            this.rdq.getPerkSidebarScoreboardService() == null
+                || this.rdq.getPlayerRepository() == null
+        ) {
+            return;
+        }
+
+        final RDQPlayer playerData = this.getOrCreatePlayerData(player);
+        final String messageKey;
+        if (this.rdq.getPerkSidebarScoreboardService().isActive(player)) {
+            this.rdq.getPerkSidebarScoreboardService().disable(player);
+            playerData.setPerkSidebarScoreboardEnabled(false);
+            messageKey = "rq.scoreboard.disabled";
+        } else {
+            this.rdq.getPerkSidebarScoreboardService().enable(player);
+            playerData.setPerkSidebarScoreboardEnabled(true);
+            messageKey = "rq.scoreboard.enabled";
+        }
+
+        this.rdq.getPlayerRepository().update(playerData);
+        new I18n.Builder(messageKey, player)
+            .includePrefix()
+            .build()
+            .sendMessage();
+    }
+
+    private @NotNull RDQPlayer getOrCreatePlayerData(
+        final @NotNull Player player
+    ) {
+        final var existingPlayer = this.rdq.getPlayerRepository().findByAttributes(
+            Map.of("uniqueId", player.getUniqueId())
+        );
+        if (existingPlayer.isPresent()) {
+            return existingPlayer.get();
+        }
+
+        final RDQPlayer newPlayer = new RDQPlayer(player);
+        this.rdq.getPlayerRepository().create(newPlayer);
+        return newPlayer;
     }
 }

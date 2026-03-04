@@ -4,9 +4,9 @@ commands:
     description: 'RDQImpl Commands'
     aliases:
       - rq
-    usage: 'rq <admin | bounty | main | perks | quests | ranks>'
+    usage: 'rq <admin | bounty | main | perks | quests | ranks | scoreboard>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | bounty | main | perks | quests | ranks>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | bounty | main | perks | quests | ranks | scoreboard>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -31,6 +31,7 @@ commands:
         commandMain: 'raindropquests.command.main'
         commandQuests: 'raindropquests.command.quests'
         commandRanks: 'raindropquests.command.ranks'
+        commandScoreboard: 'raindropquests.command.scoreboard'
         commandPerks: 'raindropquests.command.perks'
     permissionParents:
       player:
@@ -39,6 +40,7 @@ commands:
         - commandPerks
         - commandQuests
         - commandRanks
+        - commandScoreboard
       command:
         - commandAdmin
         - commandBounty
@@ -46,6 +48,7 @@ commands:
         - commandPerks
         - commandQuests
         - commandRanks
+        - commandScoreboard
 
 lut:
   prefix: '&8[&1Admin&8] &7'

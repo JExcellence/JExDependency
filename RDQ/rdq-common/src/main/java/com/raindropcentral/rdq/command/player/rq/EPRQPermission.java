@@ -30,6 +30,10 @@ public enum EPRQPermission implements IPermissionNode {
         "commandRanks",
         "raindropquests.command.ranks"
     ),
+    SCOREBOARD(
+        "commandScoreboard",
+        "raindropquests.command.scoreboard"
+    ),
     PERKS(
         "commandPerks",
         "raindropquests.command.perks"

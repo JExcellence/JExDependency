@@ -66,10 +66,12 @@ include(":JExOneblock")
 include(":JExOneblock:jexoneblock-common")
 include(":JExOneblock:jexoneblock-free")
 include(":JExOneblock:jexoneblock-premium")
+
+// Other RaindropCentral plugins - pending free/premium update and implementation in build script
 include("RDT")
+include("RDS")
+include("RDR")
 
 // JExWorkbench with submodules
 include(":JExWorkbench")
 */
-include("RDS")
-include("RDR")

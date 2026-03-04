@@ -181,6 +181,7 @@ public class EventPerkHandler {
 		boolean effectApplied = applyEventEffect(player, perkSection.getEffect(), args);
 		
 		if (effectApplied) {
+			plugin.getPerkActivationService().recordEffectTrigger(player, playerPerk);
 			long cooldown = perkSection.getEffect().getCooldownMillis();
 			if (cooldown > 0) {
 				playerPerk.startCooldown(cooldown);

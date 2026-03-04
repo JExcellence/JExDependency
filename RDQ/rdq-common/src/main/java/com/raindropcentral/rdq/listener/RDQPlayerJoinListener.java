@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
@@ -46,6 +47,7 @@ public class RDQPlayerJoinListener implements Listener {
                     );
                     
                     rdq.getPlayerRepository().create(rdqPlayer);
+                    this.restorePerkSidebarIfEnabled(player, rdqPlayer);
                     LOGGER.info("Created RDQPlayer for " + player.getName());
                 } else {
                     // Update player name if it changed
@@ -55,10 +57,37 @@ public class RDQPlayerJoinListener implements Listener {
                         rdq.getPlayerRepository().update(rdqPlayer);
                         LOGGER.fine("Updated player name for " + player.getName());
                     }
+                    this.restorePerkSidebarIfEnabled(player, rdqPlayer);
                 }
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Failed to create/update RDQPlayer for " + player.getName(), e);
             }
         });
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onPlayerQuit(@NotNull final PlayerQuitEvent event) {
+        if (this.rdq.getPerkSidebarScoreboardService() == null) {
+            return;
+        }
+
+        this.rdq.getPerkSidebarScoreboardService().disable(event.getPlayer());
+    }
+
+    private void restorePerkSidebarIfEnabled(
+        final @NotNull Player player,
+        final @NotNull RDQPlayer rdqPlayer
+    ) {
+        if (!rdqPlayer.isPerkSidebarScoreboardEnabled() || this.rdq.getPerkSidebarScoreboardService() == null) {
+            return;
+        }
+
+        this.rdq.getPlatform().getScheduler().runDelayed(() -> {
+            if (!player.isOnline()) {
+                return;
+            }
+
+            this.rdq.getPerkSidebarScoreboardService().enable(player);
+        }, 20L);
     }
 }
