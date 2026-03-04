@@ -47,6 +47,18 @@ include(":RDQ:rdq-common")
 include(":RDQ:rdq-free")
 include(":RDQ:rdq-premium")
 
+//RDR with submodules
+include(":RDR")
+include(":RDR:rdr-common")
+include(":RDR:rdr-free")
+include(":RDR:rdr-premium")
+
+//RDS with submodules
+include(":RDS")
+include(":RDS:rds-common")
+include(":RDS:rds-free")
+include(":RDS:rds-premium")
+
 /*
 
 // JExHome with submodules
@@ -69,8 +81,6 @@ include(":JExOneblock:jexoneblock-premium")
 
 // Other RaindropCentral plugins - pending free/premium update and implementation in build script
 include("RDT")
-include("RDS")
-include("RDR")
 
 // JExWorkbench with submodules
 include(":JExWorkbench")

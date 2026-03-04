@@ -1,0 +1,23 @@
+name: "RDS"
+version: ${version}
+main: com.raindropcentral.rds.RDSPremium
+loader: de.jexcellence.dependency.loader.PaperPluginLoader
+api-version: '1.19'
+description: ${description}
+author: RaindropCentral
+website: https://raindropcentral.com
+folia-supported: true
+dependencies:
+  server:
+    Vault:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    JExEconomy:
+      load: BEFORE
+      required: false
+      join-classpath: true
+    TheNewEconomy:
+      load: BEFORE
+      required: false
+      join-classpath: true

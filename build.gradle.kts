@@ -57,10 +57,14 @@ tasks.register("buildAll") {
     dependsOn(
         ":publishDependencies",
         ":RDQ:buildAll",
+        ":RDR:buildAll",
+        ":RDS:buildAll",
     )
     
     // Enforce build order
     tasks.findByPath(":RDQ:buildAll")?.mustRunAfter(":publishDependencies")
+    tasks.findByPath(":RDR:buildAll")?.mustRunAfter(":publishDependencies")
+    tasks.findByPath(":RDS:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
         val major = findProperty("rdq.version.major") ?: "6"
@@ -81,11 +85,27 @@ tasks.register("buildAll") {
         // Find RDQ jars dynamically
         val rdqFreeDir = file("RDQ/rdq-free/build/libs")
         val rdqPremiumDir = file("RDQ/rdq-premium/build/libs")
+        val rdrFreeDir = file("RDR/rdr-free/build/libs")
+        val rdrPremiumDir = file("RDR/rdr-premium/build/libs")
+        val rdsFreeDir = file("RDS/rds-free/build/libs")
+        val rdsPremiumDir = file("RDS/rds-premium/build/libs")
         
         rdqFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
             println("  - ${it.absolutePath}")
         }
         rdqPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdrFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdrPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdsFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdsPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
             println("  - ${it.absolutePath}")
         }
         println("========================================================================")
@@ -107,6 +127,8 @@ tasks.register("cleanAll") {
         ":RPlatform:clean",
         ":RCore:clean",
         ":RDQ:clean",
+        ":RDR:clean",
+        ":RDS:clean",
     )
 }
 
@@ -272,6 +294,8 @@ tasks.register("deployPremium") {
         // Find and deploy premium JARs dynamically
         val rcorePremiumDir = file("RCore/rcore-premium/build/libs")
         val rdqPremiumDir = file("RDQ/rdq-premium/build/libs")
+        val rdrPremiumDir = file("RDR/rdr-premium/build/libs")
+        val rdsPremiumDir = file("RDS/rds-premium/build/libs")
         
         val jarsToDeploy = mutableListOf<File>()
         
@@ -283,6 +307,16 @@ tasks.register("deployPremium") {
         rdqPremiumDir.listFiles()?.filter { 
             it.name.endsWith(".jar") && it.name.contains("Premium") && 
             !it.name.contains("sources") && !it.name.contains("javadoc") 
+        }?.forEach { jarsToDeploy.add(it) }
+
+        rdrPremiumDir.listFiles()?.filter {
+            it.name.endsWith(".jar") && it.name.contains("Premium") &&
+            !it.name.contains("sources") && !it.name.contains("javadoc")
+        }?.forEach { jarsToDeploy.add(it) }
+
+        rdsPremiumDir.listFiles()?.filter {
+            it.name.endsWith(".jar") && it.name.contains("Premium") &&
+            !it.name.contains("sources") && !it.name.contains("javadoc")
         }?.forEach { jarsToDeploy.add(it) }
         
         jarsToDeploy.forEach { jar ->

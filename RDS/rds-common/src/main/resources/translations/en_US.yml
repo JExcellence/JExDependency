@@ -1,0 +1,776 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+info:
+  total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Tracked Balances ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Scheduled Tax ({taxed_shops} taxable shops):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Next Tax:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+prs:
+  bar:
+    enabled: "<green>Shop boss bar enabled while looking at a shop.</green>"
+    disabled: "<yellow>Shop boss bar disabled.</yellow>"
+  give:
+    syntax: "<red>Usage: /rs give <target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usage:</gray> <white>/rs scoreboard &lt;ledger|stock&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Enabled the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Disabled the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Switched to the <white>{scoreboard_type}</white><gray> sidebar.</gray>"
+    type:
+      ledger: "<gold>ledger</gold>"
+      stock: "<aqua>stock</aqua>"
+
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Ledger ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Bank Totals</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>No banked funds</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Stock ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Stock:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>No player shops</red>"
+
+shop_boss_bar:
+  title: "<gold>{shop_type} Shop</gold> <gray>|</gray> <yellow>Owner:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Items:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Location:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Limited Stock"
+    infinite: "Infinite"
+    various: "Various"
+
+# ============================================
+# GUI Buttons
+# ============================================
+
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Place this block to set up your shop.</yellow>"
+
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Shop Store</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Owned Shop Blocks</gradient>"
+    lore:
+      - "<gray>Owned shop blocks:</gray> <white>{owned_shops}</white>"
+      - "<gray>This tracks purchased or granted</gray>"
+      - "<gray>ShopBlock ownership.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Shop Block Limit</gradient>"
+    lore:
+      - "<gray>Owned shop blocks:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum shop blocks:</gray> <white>{max_shops}</white>"
+      - "<gray>This limit controls how many shop</gray>"
+      - "<gray>blocks you can unlock.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Store Requirements</gradient>"
+    lore:
+      - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Current requirement count:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Click to inspect the next shop tier.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Shop Tier {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Purchase Shop Block</gradient>"
+    lore:
+      - "<gray>Purchase tier:</gray> <white>{purchase_number}</white>"
+      - "<gray>Owned shop blocks:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum shop blocks:</gray> <white>{max_shops}</white>"
+      - "<gray>Configured requirements:</gray> <white>{requirement_count}</white>"
+      - "<gray>Currently met:</gray> <white>{met_count}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Click to purchase when this tier is ready.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Ready]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Free]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Free] No Requirements</gradient>"
+    lore:
+      - "<gray>This purchase tier has no configured requirements.</gray>"
+      - "<yellow>You can purchase this shop block without extra checks.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Key:</gray> <white>{requirement_key}</white>"
+      - "<gray>Type:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Progress:</gray> <white>{progress_bar} {progress}</white>"
+      - "<gray>Summary:</gray> <white>{summary}</white>"
+      - "<yellow>Right-click compatible requirements to bank progress.</yellow>"
+    details: "<gradient:#38bdf8:#60a5fa>[>] Detailed Checks</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Purchased a shop block. Requirements consumed:</gray> <white>{requirements}</white><gray>. Owned shop blocks:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not currently meet <white>{requirement}</white><gray>. Store requirements:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>The store requirement <white>{requirement}</white><gray> is unavailable or invalid right now.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You have reached the shop block limit of <white>{max_shops}</white><gray>. Owned shop blocks:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{requirement}</white><gray> is now ready.</gray> <white>{progress_bar} {progress}</white>"
+    progress_saved: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Stored progress for <white>{requirement}</white><gray>.</gray> <white>{progress_bar} {progress}</white>"
+    no_progress: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>No matching items or currency were available for <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> does not support banked progress.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is unavailable right now.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDS profile could not be loaded, so progress could not be saved.</gray>"
+
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
+    not_owner: "<red>This ShopBlock belongs to another player and cannot be placed by you.</red>"
+    max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
+    shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
+    double_chest_requires_shop_block: "<red>Double-chest shops require a second <blue>ShopBlock</blue><red>. Normal chests cannot merge with shop chests.</red>"
+    double_chest_owner_mismatch: "<red>This ShopBlock belongs to a different owner, so it cannot extend this shop.</red>"
+    shop_already_double_chest: "<red>This shop is already using both chest halves.</red>"
+    double_chest_ambiguous: "<red>This ShopBlock touches multiple shop chests. Place it next to only one shop.</red>"
+
+tax_scheduler:
+  paid: "<yellow>Collected scheduled shop tax of {amount}. Counted shops: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>You could not pay the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
+  charge_failed: "<red>Failed to collect the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
+
+shop_overview_ui:
+  title: "{owner} Shop - {location}"
+  summary:
+    name: "<gold>Shop Summary</gold>"
+    player:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Inventory:</gray> <white>Finite</white>"
+    admin:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Admin Shop</white>"
+        - "<gray>Inventory:</gray> <white>Infinite</white>"
+  finance:
+    name: "<gold>Shop Bank</gold>"
+    lore:
+      - "<gray>Tracked currencies:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Click to review and withdraw funds.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop Enabled</red>"
+        lore:
+          - "<gray>This shop is currently an admin shop.</gray>"
+          - "<gray>Inventory is infinite for customers.</gray>"
+          - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+          - "<yellow>Click to switch back to a player shop.</yellow>"
+      disabled:
+        name: "<green>Admin Shop Disabled</green>"
+        lore:
+          - "<gray>This shop currently uses normal stock.</gray>"
+          - "<gray>Customers can only buy stored amounts.</gray>"
+          - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+          - "<yellow>Click to enable admin shop mode.</yellow>"
+    close:
+      name: "<red>Close Shop</red>"
+      lore:
+        - "<gray>Remove this shop and return the shop block.</gray>"
+        - "<gray>Stored entries:</gray> <white>{item_count}</white>"
+        - "<gray>Tracked bank currencies:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Shop stock must be empty before closing.</yellow>"
+    manage:
+      name: "<green>Add Shop Items</green>"
+      lore:
+        - "<gray>Store new items in this shop.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to open item input.</yellow>"
+    customer_view:
+      name: "<gold>Open Customer View</gold>"
+      lore:
+        - "<gray>Preview this shop as customers see it.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to browse this shop as a customer.</yellow>"
+    trusted:
+      name: "<gold>Trusted Players</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Trusted players:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Click to manage shop trust levels.</yellow>"
+    ledger:
+      name: "<gold>Shop Ledger</gold>"
+      lore:
+        - "<gray>Total entries:</gray> <white>{ledger_count}</white>"
+        - "<gray>Purchases:</gray> <white>{purchase_count}</white>"
+        - "<gray>Taxes:</gray> <white>{tax_count}</white>"
+        - "<yellow>Click to review shop transaction history.</yellow>"
+    edit:
+      name: "<aqua>Edit Shop Items</aqua>"
+      lore:
+        - "<gray>Edit pricing for stored shop items.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to edit prices and currencies.</yellow>"
+    storage:
+      name: "<gold>View Stored Items</gold>"
+      lore:
+        - "<gray>Review items already stored in this shop.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+        - "<yellow>Click to withdraw stored items.</yellow>"
+    locked:
+      name: "<red>Shop Locked</red>"
+      lore:
+        - "<gray>Only the owner can add items.</gray>"
+        - "<gray>Current entries:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
+    no_admin_permission: "<red>You do not have permission to toggle admin shops.</red>"
+    admin_limit_reached: "<red>The server already has {admin_shops} admin shops. Free edition allows only {max_admin_shops} admin shops.</red>"
+    admin_enabled: "<green>This shop is now an admin shop with infinite customer inventory. Counted shops: {owned_shops}.</green>"
+    admin_disabled: "<yellow>This shop is now a normal player shop with finite customer inventory. Counted shops: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>You cannot switch this admin shop back to a player shop because your shop limit of {max_shops} is already reached. Counted shops: {owned_shops}.</red>"
+    close_not_empty: "<red>You can only close a shop after removing all stored items. Remaining entries: {item_count}.</red>"
+    close_bank_not_empty: "<red>Withdraw your shop bank before closing this shop. Remaining tracked currencies: {bank_currency_count}.</red>"
+    closed: "<green>Closed the shop and returned {returned_blocks} ShopBlock(s). Counted shops: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_input_ui:
+  title: "Add Items - {owner} @ {location}"
+  summary:
+    name: "<gold>Shop Storage</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Currently stored:</gray> <white>{stored_count}</white>"
+      - "<yellow>New items default to currency type vault and value 0.</yellow>"
+  input_slot:
+    name: "<green>Input Slot</green>"
+    lore:
+      - "<gray>Left click with an item on your cursor</gray>"
+      - "<gray>or shift-click an item from your inventory.</gray>"
+      - "<gray>Right click to remove an inserted stack.</gray>"
+  no_new_items_inserted: "<red>No new items were inserted.</red>"
+  saved: "<green>Stored {added_count} new entries. Shop now has {stored_count} entries.</green>"
+  save_failed: "<red>Failed to save shop items.</red>"
+  left_overs: "<yellow>Returned unsaved shop items to your inventory.</yellow>"
+  feedback:
+    no_permission: "<red>You do not have permission to add items to this shop.</red>"
+    locked:
+      name: "<red>Supply Access Required</red>"
+      lore:
+        - "<gray>Only associates and trusted players can add items here.</gray>"
+
+shop_storage_ui:
+  title: "Stored Items - {location}"
+  summary:
+    name: "<gold>Stored Items</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Stored entries:</gray> <white>{stored_count}</white>"
+      - "<yellow>Click any item below to withdraw it.</yellow>"
+  entry:
+    lore:
+      - "<gray>Stored amount:</gray> <white>{amount}</white>"
+      - "<gray>Item type:</gray> <white>{item_type}</white>"
+      - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Click to extract this item from the shop.</yellow>"
+  feedback:
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
+    extracted: "<green>Extracted {amount}x {item_type}. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
+    item_missing: "<red>That stored item could not be found.</red>"
+    locked:
+      name: "<red>Full Access Required</red>"
+      lore:
+        - "<gray>Only trusted players with full access can withdraw stored items.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_edit_ui:
+  title: "Edit Shop Items - {location}"
+  summary:
+    name: "<aqua>Shop Price Editor</aqua>"
+    player:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{stored_count}</white>"
+        - "<yellow>Left click an item to edit pricing.</yellow>"
+        - "<yellow>Right click an item to remove it from the shop.</yellow>"
+    admin:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Stored entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Admin restock mode:</gray> <white>{restock_mode}</white>"
+        - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Left click an item to edit pricing or stock.</yellow>"
+        - "<yellow>Right click an item to remove it from the shop.</yellow>"
+    restock_schedule:
+      gradual: "Default timer: {reset_timer_ticks} ticks per item"
+  entry:
+    player:
+      lore:
+        - "<gray>Stored amount:</gray> <white>{amount}</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<yellow>Left click to edit this shop item.</yellow>"
+        - "<yellow>Right click to remove it from the shop.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Stock:</gray> <white>Infinite</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Left click to edit this admin shop item.</yellow>"
+        - "<yellow>Right click to remove it from the shop.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Current stock:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Left click to edit this admin shop item.</yellow>"
+        - "<yellow>Right click to remove it from the shop.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "Full Reset"
+    restock_schedule:
+      gradual: "1 item every {reset_timer_ticks} ticks"
+      full: "Fully restocks at {restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
+    removed: "<green>Removed {amount}x {item_type} from the shop. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
+    item_missing: "<red>That shop item could not be found.</red>"
+    locked:
+      name: "<red>Full Access Required</red>"
+      lore:
+        - "<gray>Only trusted players with full access can edit item values.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_item_edit_ui:
+  title: "Edit {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Stored amount:</gray> <white>{amount}</white>"
+        - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<yellow>Use the buttons below to edit this item.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Stock:</gray> <white>Infinite</white>"
+        - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Use the buttons below to edit this admin item.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Current stock:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Currency type:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Use the buttons below to edit this admin item.</yellow>"
+  currency_type:
+    name: "<green>Currency Type</green>"
+    lore:
+      - "<gray>Current type:</gray> <white>{currency_type}</white>"
+      - "<yellow>Click to edit the currency type.</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>Current type:</gray> <white>{currency_type}</white>"
+      - "<gray>Current value:</gray> <white>{value}</white>"
+      - "<yellow>Click to edit the numeric value.</yellow>"
+  confirm:
+    name: "<green>Save Item Pricing</green>"
+    lore:
+      - "<gray>Apply the current currency type and value</gray>"
+      - "<gray>to this shop item.</gray>"
+  stock_limit:
+    name: "<gold>Stock Limit</gold>"
+    unlimited: "Infinite"
+    lore:
+      - "<gray>Current limit:</gray> <white>{stock_limit}</white>"
+      - "<gray>Current stock:</gray> <white>{current_stock}</white>"
+      - "<yellow>Click to set a stock limit.</yellow>"
+      - "<gray>Use -1 to return this item to infinite stock.</gray>"
+  reset_timer:
+    name: "<aqua>Reset Timer</aqua>"
+    lore:
+      - "<gray>Current timer:</gray> <white>{reset_timer_ticks} ticks</white>"
+      - "<yellow>Click to set the restock timer.</yellow>"
+  restock_mode:
+    name: "<yellow>Admin Restock Mode</yellow>"
+    gradual: "Gradual"
+    full: "Full Reset"
+    lore:
+      - "<gray>Configured mode:</gray> <white>{restock_mode}</white>"
+      - "<gray>Configured schedule:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Click to toggle the global admin restock mode.</yellow>"
+  restock_schedule:
+    gradual: "1 item every {reset_timer_ticks} ticks"
+    full: "Fully restocks at {restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
+    shop_missing: "<red>This shop could not be loaded from storage.</red>"
+    item_missing: "<red>That shop item could not be found.</red>"
+    saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Plugin config changes are locked in <white>RDS Free</white><gray>. Upgrade to premium for full access.</gray>"
+    restock_mode_updated: "<green>Admin restock mode set to {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Failed to save the admin restock mode.</red>"
+
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Stock Limit: {stock_limit}"
+  input:
+    name: "<gold>Stock Limit</gold>"
+    lore:
+      - "<gray>Enter a positive stock limit in items.</gray>"
+      - "<gray>Use -1 to restore infinite admin stock.</gray>"
+  error:
+    invalid_number: "<red>Enter -1 or a whole number greater than 0. Input: {input}</red>"
+
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Reset Timer: {reset_timer_ticks}"
+  input:
+    name: "<aqua>Reset Timer</aqua>"
+    lore:
+      - "<gray>Enter a whole number of Bukkit ticks.</gray>"
+      - "<gray>Gradual mode restores one item per timer.</gray>"
+  error:
+    invalid_number: "<red>Enter a whole number greater than 0. Input: {input}</red>"
+
+shop_item_currency_type_anvil_ui:
+  title: "Currency Type: {currency_type}"
+  input:
+    name: "<green>Currency Type</green>"
+    lore:
+      - "<gray>Enter the currency identifier for this item.</gray>"
+      - "<gray>Examples:</gray> <white>vault, tokens, gems</white>"
+  error:
+    empty: "<red>Currency type cannot be empty.</red>"
+    invalid_currency: "<red>Currency type {currency_type} is not available. Use vault or a registered custom currency.</red>"
+    processing_failed: "<red>Failed to update the currency type. Input: {input}</red>"
+
+shop_item_value_anvil_ui:
+  title: "Value: {value} {currency_type}"
+  input:
+    name: "<gold>Item Value</gold>"
+    lore:
+      - "<gray>Enter a non-negative numeric value.</gray>"
+      - "<gray>Examples:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Enter a valid non-negative number. Input: {input}</red>"
+    processing_failed: "<red>Failed to update the item value. Input: {input}</red>"
+
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>Bank Balances</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Tracked currencies:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Click a balance below to withdraw its full amount.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+      - "<gray>Available balance:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Click to withdraw this full balance.</yellow>"
+  feedback:
+    not_owner: "<red>You do not have permission to manage this shop.</red>"
+    entry_missing: "<red>That bank balance is no longer available.</red>"
+    withdrawn: "<green>Withdrew {amount} {currency_name}. Remaining {currency_name}: {remaining_amount}. Tracked currencies: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>Failed to withdraw {amount} {currency_name} from the shop bank.</red>"
+    currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"
+    empty:
+      name: "<red>Bank Empty</red>"
+      lore:
+        - "<gray>This shop has no banked balances to withdraw.</gray>"
+    locked:
+      name: "<red>Full Access Required</red>"
+      lore:
+        - "<gray>Only trusted players with full access can withdraw shop funds.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_trusted_ui:
+  title: "Trusted Players - {location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted players:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Click a player to cycle their trust status.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Status:</gray> <white>Public</white>"
+        - "<gray>No management permissions.</gray>"
+        - "<yellow>Click to change to Associate.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Can add items to the shop.</gray>"
+        - "<yellow>Click to change to Trusted.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Status:</gray> <white>Trusted</white>"
+        - "<gray>Can fully manage the shop.</gray>"
+        - "<yellow>Click to change to Public.</yellow>"
+  feedback:
+    not_owner: "<red>Only the shop owner can manage trusted players.</red>"
+    updated:
+      public: "<yellow>Set {player} to Public.</yellow>"
+      associate: "<green>Set {player} to Associate.</green>"
+      trusted: "<green>Set {player} to Trusted.</green>"
+    empty:
+      name: "<red>No Players Found</red>"
+      lore:
+        - "<gray>No other known players are available to trust.</gray>"
+    locked:
+      name: "<red>Owner Access Only</red>"
+      lore:
+        - "<gray>Only the shop owner can manage trusted players.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_ledger_ui:
+  title: "Shop Ledger - {location}"
+  summary:
+    name: "<gold>Shop Transaction Ledger</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Total entries:</gray> <white>{ledger_count}</white>"
+      - "<gray>Purchases:</gray> <white>{purchase_count}</white>"
+      - "<gray>Taxes:</gray> <white>{tax_count}</white>"
+      - "<yellow>Newest transactions appear first.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Purchase: {item_type}</green>"
+      lore:
+        - "<gray>Buyer:</gray> <white>{actor}</white>"
+        - "<gray>Amount:</gray> <white>{item_amount}</white>"
+        - "<gray>Total paid:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Recorded:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Tax Charge</gold>"
+      lore:
+        - "<gray>Charged to:</gray> <white>{actor}</white>"
+        - "<gray>Tax share:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Counted shops:</gray> <white>{counted_shops}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Recorded:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>No Ledger Entries</red>"
+      lore:
+        - "<gray>This shop has no recorded purchases or taxes yet.</gray>"
+    locked:
+      name: "<red>Full Access Required</red>"
+      lore:
+        - "<gray>Only trusted players with full access can view the ledger.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Customer View</gold>"
+    player:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Inventory:</gray> <white>Finite</white>"
+        - "<yellow>Left click an item to buy one.</yellow>"
+        - "<yellow>Right click an item to choose an amount.</yellow>"
+    admin:
+      lore:
+        - "<gray>Owner:</gray> <white>{owner}</white>"
+        - "<gray>Location:</gray> <white>{location}</white>"
+        - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop type:</gray> <white>Admin Shop</white>"
+        - "<gray>Inventory:</gray> <white>Infinite</white>"
+        - "<yellow>Left click an item to buy one.</yellow>"
+        - "<yellow>Right click an item to choose an amount.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Stock:</gray> <white>{amount}</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Total stock value:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<yellow>Left click to buy one.</yellow>"
+        - "<yellow>Right click to choose an amount.</yellow>"
+    admin:
+      lore:
+        - "<gray>Inventory:</gray> <white>Infinite</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Shop type:</gray> <white>Admin Shop</white>"
+        - "<yellow>Left click to buy one.</yellow>"
+        - "<yellow>Right click to choose an amount.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Stock:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Item type:</gray> <white>{item_type}</white>"
+        - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+        - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Left click to buy one.</yellow>"
+        - "<yellow>Right click to choose an amount.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "Full Reset"
+    restock_schedule:
+      gradual: "1 item every {reset_timer_ticks} ticks"
+      full: "Fully restocks at {restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining stock: {remaining_amount}.</green>"
+    purchased_admin: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. This admin shop has infinite inventory.</green>"
+    purchased_admin_limited: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining admin stock: {remaining_amount}.</green>"
+    insufficient_stock: "<red>This shop only has {available_amount}x {item_type} available.</red>"
+    insufficient_funds: "<red>You need {total_price} {currency_name} to buy {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"
+    invalid_amount: "<red>Enter a valid purchase amount.</red>"
+    item_missing: "<red>That shop item is no longer available.</red>"
+    empty_shop:
+      name: "<red>Shop Empty</red>"
+      lore:
+        - "<gray>There are no items available for purchase.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+shop_purchase_amount_anvil_ui:
+  title: "Buy {item_type}"
+  input:
+    name: "<gold>Purchase Amount</gold>"
+    player:
+      lore:
+        - "<gray>Enter how many items you want to buy.</gray>"
+        - "<gray>Maximum available:</gray> <white>{max_amount}</white>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Enter how many items you want to buy.</gray>"
+        - "<gray>This admin shop has infinite inventory.</gray>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Enter how many items you want to buy.</gray>"
+        - "<gray>Maximum available:</gray> <white>{max_amount}</white>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Enter a whole number between 1 and {max_amount}. Input: {input}</red>"
+    invalid_number_admin: "<red>Enter a whole number greater than 0. Input: {input}</red>"
+    processing_failed: "<red>Failed to process purchase amount. Input: {input}</red>"
+
+shop_search_ui:
+  title: "Browse Shops"
+  summary:
+    name: "<gold>Shop Directory</gold>"
+    lore:
+      - "<gray>Tracked shops:</gray> <white>{shop_count}</white>"
+      - "<gray>Total available stock:</gray> <white>{available_count}</white>"
+      - "<yellow>Click any shop below to open it.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Available stock:</gray> <white>{available_count}</white>"
+      - "<yellow>Click to open this shop.</yellow>"
+  feedback:
+    empty:
+      name: "<red>No Shops Found</red>"
+      lore:
+        - "<gray>There are no shops registered yet.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>This shop could not be loaded from storage.</gray>"
+      message: "<red>This shop could not be loaded from storage.</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Current page:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Total pages:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Page %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to go back</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Confirm</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Click to confirm settings</gradient>"
