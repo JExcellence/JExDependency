@@ -125,22 +125,18 @@ public class RLogFormatter extends Formatter {
     /**
      * Gets the thread name from the log record.
      * 
+     * <p><b>FIXED:</b> Uses Thread.currentThread() instead of getAllStackTraces()
+     * to avoid recursion when logging triggers more logging.</p>
+     * 
      * @param record the log record
      * @return the thread name, or null if not available
      */
     private String getThreadName(@NotNull LogRecord record) {
-        // Try to get thread ID and resolve to name
-        long threadId = record.getLongThreadID();
-        
-        // Find thread by ID
-        for (Thread thread : Thread.getAllStackTraces().keySet()) {
-            if (thread.threadId() == threadId) {
-                return thread.getName();
-            }
-        }
-        
-        // Fallback: return thread ID as string
-        return "Thread-" + threadId;
+        // FIXED: Simply use current thread name to avoid recursion
+        // The previous implementation called Thread.getAllStackTraces() which
+        // could trigger logging, creating an infinite recursion loop
+        Thread currentThread = Thread.currentThread();
+        return currentThread.getName();
     }
     
     /**

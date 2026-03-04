@@ -40,9 +40,13 @@ public class PlayerPerk extends BaseEntity {
 
     /**
      * The perk that is owned.
+     * 
+     * <p><b>IMPORTANT:</b> No cascade operations to prevent OptimisticLockException.
+     * The Perk entity should NEVER be modified through PlayerPerk updates.
+     * Using LAZY fetch to reduce unnecessary loading and prevent cascade issues.</p>
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "perk_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {})
+    @JoinColumn(name = "perk_id", nullable = false, updatable = false)
     private Perk perk;
 
     /**

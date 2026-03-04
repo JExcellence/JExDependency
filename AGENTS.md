@@ -1,9 +1,3 @@
-## Service Guides (Open Before Editing)
-
-| Service | Agent Guide                    | README                         |
-|---------|--------------------------------|--------------------------------|
-| RDR     | [RDR/AGENTS.md](RDR/AGENTS.md) | [RDR/README.md](RDR/README.md) |
-
 ## Tooling & Shell Usage
 - Prefer the bundled bash helpers (`bash -lc`) when invoking shell commands; always set the `workdir` parameter.
 - Use `rg`/`rg --files` for searches; fall back only if unavailable.
@@ -19,7 +13,7 @@
 This repository follows strict Java coding and documentation standards. Any AI agent contributing code MUST comply with the rules below.
 
 ## 1) Language + Tooling
-- Java version: **Java 21**
+- Java version: **Java 24**
 - Build tool: **Gradle (Kotlin DSL)** unless otherwise stated by the repo.
 - Prefer modern Java features where appropriate (records, switch expressions, `var` where readable, sealed types when useful).
 

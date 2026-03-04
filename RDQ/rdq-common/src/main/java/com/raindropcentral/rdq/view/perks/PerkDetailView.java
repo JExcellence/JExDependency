@@ -399,7 +399,7 @@ public class PerkDetailView extends BaseView {
 								.withPlaceholder("perk", perk.getIdentifier())
 								.build()
 								.sendMessage();
-						clickContext.update();
+						clickContext.closeForPlayer();
 					});
 				} else {
 					LOGGER.log(Level.WARNING, "Perk {0} unlocked but not properly enabled", perk.getIdentifier());
