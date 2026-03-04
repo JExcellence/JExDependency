@@ -187,7 +187,7 @@ public class StorageStoreRequirementsView extends APaginatedView<StorageStorePri
         final boolean met = StorageStoreRequirementBrowserSupport.isRequirementMet(plugin, player, requirement);
         final String status = this.resolveStatusPlaceholder(player, requirement, met);
         final int progress = StorageStoreRequirementBrowserSupport.getProgressPercentage(plugin, player, requirement);
-        final String progressBar = StorageStorePricingSupport.buildProgressBar(progress);
+        final String progressBar = this.buildProgressBar(player, progress);
         final List<Component> lore = new ArrayList<>(this.i18n("entry.lore", player)
             .withPlaceholders(Map.of(
                 "requirement_key", requirement.key(),
@@ -281,7 +281,7 @@ public class StorageStoreRequirementsView extends APaginatedView<StorageStorePri
         this.i18n(key, clickContext.getPlayer())
             .withPlaceholders(Map.of(
                 "requirement", StorageStoreRequirementBrowserSupport.resolveDisplayName(requirement),
-                "progress_bar", StorageStorePricingSupport.buildProgressBar(result.progressPercentage()),
+                "progress_bar", this.buildProgressBar(clickContext.getPlayer(), result.progressPercentage()),
                 "progress", result.progressPercentage() + "%"
             ))
             .includePrefix()
@@ -294,6 +294,19 @@ public class StorageStoreRequirementsView extends APaginatedView<StorageStorePri
         return plugin.getPlayerRepository() == null
             ? null
             : plugin.getPlayerRepository().findByPlayer(context.getPlayer().getUniqueId());
+    }
+
+    private @NotNull String buildProgressBar(final @NotNull Player player, final int percentage) {
+        return StorageStorePricingSupport.buildProgressBar(
+            percentage,
+            this.resolvePlaceholder("progress_bar.empty", player),
+            this.resolvePlaceholder("progress_bar.partial", player),
+            this.resolvePlaceholder("progress_bar.filled", player)
+        );
+    }
+
+    private @NotNull String resolvePlaceholder(final @NotNull String key, final @NotNull Player player) {
+        return this.i18n(key, player).build().getI18nVersionWrapper().asPlaceholder();
     }
 
     private void reopenRequirementBrowser(final @NotNull Context context) {
