@@ -258,7 +258,9 @@ public class ShopBossBarService {
         int availableItems = 0;
 
         for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && shopItem.getAmount() > 0) {
+            if (item instanceof ShopItem shopItem
+                    && shopItem.isAvailableNow()
+                    && shopItem.getAmount() > 0) {
                 availableItems += shopItem.getAmount();
             }
         }
@@ -272,7 +274,7 @@ public class ShopBossBarService {
         int listingCount = 0;
 
         for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem) {
+            if (item instanceof ShopItem shopItem && shopItem.isAvailableNow()) {
                 listingCount++;
             }
         }
@@ -301,7 +303,9 @@ public class ShopBossBarService {
         int listingCount = 0;
 
         for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
+            if (item instanceof ShopItem shopItem
+                    && shopItem.isAvailableNow()
+                    && AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
                 listingCount++;
             }
         }
@@ -315,7 +319,9 @@ public class ShopBossBarService {
         int listingCount = 0;
 
         for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && AdminShopStockSupport.usesLimitedAdminStock(shop, shopItem)) {
+            if (item instanceof ShopItem shopItem
+                    && shopItem.isAvailableNow()
+                    && AdminShopStockSupport.usesLimitedAdminStock(shop, shopItem)) {
                 listingCount++;
             }
         }

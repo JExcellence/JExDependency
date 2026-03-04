@@ -13,6 +13,8 @@ player_join:
   tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
 
 prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Opened the <white>RDS Admin</white><gray> panel.</gray>"
   bar:
     enabled: "<green>Shop boss bar enabled while looking at a shop.</green>"
     disabled: "<yellow>Shop boss bar disabled.</yellow>"
@@ -261,6 +263,74 @@ shop_overview_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
+    lore:
+      - "<gray>Manage global admin-shop systems from one place.</gray>"
+      - "<gray>Use the button below to open the shared server bank.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Server Bank</gradient>"
+      lore:
+        - "<gray>Review admin-shop income pulled into the server bank.</gray>"
+        - "<gray>Check next pull timing and withdraw balances.</gray>"
+        - "<yellow>Click to open server bank controls.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this admin panel.</gray>"
+
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Server Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Income & Transfer Status</white>"
+    lore:
+      - "<gray>Tracked currencies:</gray> <white>{currency_count}</white>"
+      - "<gray>Income:</gray> <white>{income_summary}</white>"
+      - "<gray>Next pull:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Time until next pull:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Admin-shop balances are transferred here on schedule.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>None</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Disabled</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Pending...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Disabled</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Pending...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Withdraw]</gradient> <white>Withdraw All</white>"
+    lore:
+      - "<gray>Attempt to withdraw every positive balance.</gray>"
+      - "<gray>Unavailable currencies will be skipped.</gray>"
+      - "<yellow>Click to withdraw all funds to your account.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Currency id:</gray> <white>{currency_type}</white>"
+      - "<gray>Available balance:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Click to withdraw this full currency balance.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Server Bank Empty</white>"
+      lore:
+        - "<gray>No positive balances are available to withdraw.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to manage the server bank.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage the server bank.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>That server-bank balance is no longer available.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Withdrew <white>{amount} {currency_name}</white><gray>. Remaining {currency_name}:</gray> <white>{remaining_amount}</white><gray>. Active currencies:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Withdrew <white>{withdrawn_currency_count}</white><gray> currency balance(s). Failed:</gray> <white>{failed_currency_count}</white><gray>. Remaining active currencies:</gray> <white>{remaining_currency_count}</white><gray>. Details:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No balances could be withdrawn. Failed currency count:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Currency <white>{currency_name}</white><gray> is currently unavailable.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to withdraw <white>{amount} {currency_name}</white><gray> from the server bank.</gray>"
+
 shop_input_ui:
   title: "Add Items - {owner} @ {location}"
   summary:
@@ -395,6 +465,9 @@ shop_item_edit_ui:
         - "<gray>Stored amount:</gray> <white>{amount}</white>"
         - "<gray>Currency type:</gray> <white>{currency_type}</white>"
         - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Availability mode:</gray> <white>{availability_mode}</white>"
+        - "<gray>Availability now:</gray> <white>{availability_state}</white>"
+        - "<gray>Rotate window:</gray> <white>{rotation_minutes} minute(s)</white>"
         - "<yellow>Use the buttons below to edit this item.</yellow>"
     admin_unlimited:
       lore:
@@ -402,6 +475,9 @@ shop_item_edit_ui:
         - "<gray>Currency type:</gray> <white>{currency_type}</white>"
         - "<gray>Value:</gray> <white>{value}</white>"
         - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
+        - "<gray>Availability mode:</gray> <white>{availability_mode}</white>"
+        - "<gray>Availability now:</gray> <white>{availability_state}</white>"
+        - "<gray>Rotate window:</gray> <white>{rotation_minutes} minute(s)</white>"
         - "<yellow>Use the buttons below to edit this admin item.</yellow>"
     admin_limited:
       lore:
@@ -410,6 +486,9 @@ shop_item_edit_ui:
         - "<gray>Value:</gray> <white>{value}</white>"
         - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
         - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Availability mode:</gray> <white>{availability_mode}</white>"
+        - "<gray>Availability now:</gray> <white>{availability_state}</white>"
+        - "<gray>Rotate window:</gray> <white>{rotation_minutes} minute(s)</white>"
         - "<yellow>Use the buttons below to edit this admin item.</yellow>"
   currency_type:
     name: "<green>Currency Type</green>"
@@ -422,6 +501,26 @@ shop_item_edit_ui:
       - "<gray>Current type:</gray> <white>{currency_type}</white>"
       - "<gray>Current value:</gray> <white>{value}</white>"
       - "<yellow>Click to edit the numeric value.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Mode] Item Availability</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Always]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Rotate]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Never]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Open]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Closed]</gradient>"
+    lore:
+      - "<gray>Current mode:</gray> <white>{availability_mode}</white>"
+      - "<gray>Current state:</gray> <white>{availability_state}</white>"
+      - "<gray>Rotate window:</gray> <white>{rotation_minutes} minute(s)</white>"
+      - "<yellow>Click to cycle: Always -> Rotate -> Never.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Rotate Minutes</gradient>"
+    lore:
+      - "<gray>Current window:</gray> <white>{rotation_minutes} minute(s)</white>"
+      - "<gray>Current mode:</gray> <white>{availability_mode}</white>"
+      - "<gray>Rotate mode label:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Click to set rotate minutes in an anvil.</yellow>"
   confirm:
     name: "<green>Save Item Pricing</green>"
     lore:
@@ -456,9 +555,20 @@ shop_item_edit_ui:
     shop_missing: "<red>This shop could not be loaded from storage.</red>"
     item_missing: "<red>That shop item could not be found.</red>"
     saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Availability mode set to <white>{availability_mode}</white><gray>.</gray>"
     config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Plugin config changes are locked in <white>RDS Free</white><gray>. Upgrade to premium for full access.</gray>"
     restock_mode_updated: "<green>Admin restock mode set to {restock_mode}.</green>"
     restock_mode_save_failed: "<red>Failed to save the admin restock mode.</red>"
+
+shop_item_availability_minutes_anvil_ui:
+  title: "Rotate Minutes: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Rotate Minutes</gradient>"
+    lore:
+      - "<gray>Enter a whole number of minutes.</gray>"
+      - "<gray>Rotate mode alternates available/unavailable each window.</gray>"
+  error:
+    invalid_number: "<red>Enter a whole number greater than 0. Input: {input}</red>"
 
 shop_item_admin_stock_limit_anvil_ui:
   title: "Stock Limit: {stock_limit}"
@@ -691,6 +801,7 @@ shop_customer_ui:
     purchased_player: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining stock: {remaining_amount}.</green>"
     purchased_admin: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. This admin shop has infinite inventory.</green>"
     purchased_admin_limited: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining admin stock: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} is currently not available for purchase.</gray>"
     insufficient_stock: "<red>This shop only has {available_amount}x {item_type} available.</red>"
     insufficient_funds: "<red>You need {total_price} {currency_name} to buy {amount}x {item_type}.</red>"
     currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"

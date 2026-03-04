@@ -8,6 +8,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.tax.ShopTaxSummarySupport;
+import com.raindropcentral.rds.view.shop.ShopAdminView;
 import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.items.ShopBlock;
@@ -31,8 +32,8 @@ import java.util.stream.Collectors;
 /**
  * Primary player command for the RDS shop plugin.
  *
- * <p>The command exposes shop overview information, shop-bar and scoreboard toggles,
- * shop-block grants, and player-facing shop search/store entry points.</p>
+ * <p>The command exposes shop overview information, admin controls, shop-bar and scoreboard
+ * toggles, shop-block grants, and player-facing shop search/store entry points.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
@@ -63,6 +64,7 @@ public class PRS extends PlayerCommand {
         final EPRSAction action = this.resolveAction(args);
         switch (action) {
             case BAR -> this.handleBarCommand(player);
+            case ADMIN -> this.handleAdminCommand(player);
             case GIVE -> this.handleGiveCommand(player, args);
             case SCOREBOARD -> this.handleScoreboardCommand(player, args);
             case SEARCH -> {
@@ -132,6 +134,24 @@ public class PRS extends PlayerCommand {
                 .includePrefix()
                 .build()
                 .sendMessage();
+    }
+
+    private void handleAdminCommand(
+            final @NotNull Player player
+    ) {
+        if (this.hasNoPermission(player, EPRSPermission.ADMIN)) {
+            return;
+        }
+
+        new I18n.Builder("prs.admin.opened", player)
+                .includePrefix()
+                .build()
+                .sendMessage();
+        this.rds.getViewFrame().open(
+                ShopAdminView.class,
+                player,
+                Map.of("plugin", this.rds)
+        );
     }
 
     private void handleGiveCommand(
@@ -382,6 +402,9 @@ public class PRS extends PlayerCommand {
         if (args.length == 1){
             final List<String> suggestions = new ArrayList<>();
             for (final EPRSAction action : EPRSAction.values()) {
+                if (!this.canTabCompleteAction(player, action)) {
+                    continue;
+                }
                 suggestions.add(action.name());
             }
             return StringUtil.copyPartialMatches(args[0], suggestions, new ArrayList<>());
@@ -404,6 +427,21 @@ public class PRS extends PlayerCommand {
             return StringUtil.copyPartialMatches(args[2], List.of("1", "16", "64"), new ArrayList<>());
         }
         return List.of();
+    }
+
+    private boolean canTabCompleteAction(
+            final @NotNull Player player,
+            final @NotNull EPRSAction action
+    ) {
+        return switch (action) {
+            case ADMIN -> this.hasPermission(player, EPRSPermission.ADMIN);
+            case BAR -> this.hasPermission(player, EPRSPermission.BAR);
+            case GIVE -> this.hasPermission(player, EPRSPermission.GIVE);
+            case SCOREBOARD -> this.hasPermission(player, EPRSPermission.SCOREBOARD);
+            case SEARCH -> this.hasPermission(player, EPRSPermission.SEARCH);
+            case STORE -> this.hasPermission(player, EPRSPermission.STORE);
+            case INFO -> this.hasPermission(player, EPRSPermission.INFO);
+        };
     }
 
     private @NotNull EPRSAction resolveAction(

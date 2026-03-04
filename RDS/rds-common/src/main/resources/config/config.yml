@@ -171,6 +171,12 @@ admin_shops:
   full_restock_time: midnight
   # Time zone used for full_at_time restocks.
   time_zone: system
+# Central server bank settings for admin shop income.
+server_bank:
+  # Enable automatic transfer from admin shop banks into the global server bank.
+  enabled: true
+  # Bukkit ticks between transfer sweeps (20 ticks = 1 second).
+  transfer_interval_ticks: 1200
 # Scheduled taxes for counted player shops.
 taxes:
   vault:
@@ -191,6 +197,9 @@ taxes:
   time_zone: system
   # Send a reminder on join showing the player's next scheduled shop tax.
   join_notification: true
+  # Extra tax multiplier per shop item marked with availability mode NEVER.
+  # Example: 0.25 means +25% tax for each NEVER item across your player shops.
+  never_item_penalty_rate: 0.25
 # Player shop boss bar settings for /rs bar.
 boss_bar:
   # Bukkit ticks between boss bar refreshes.

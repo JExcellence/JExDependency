@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Root configuration section for the RDS plugin.
  *
- * <p>This section keeps the existing tax, admin-shop, and currency defaults while exposing the new
+ * <p>This section keeps the existing tax, admin-shop, server-bank, and currency defaults while exposing the new
  * purchase-tier requirement model used by the shop store.</p>
  *
  * @author ItsRainingHP
@@ -44,6 +44,7 @@ public class ConfigSection extends AConfigSection {
     private TaxSection taxes;
     private BossBarSection boss_bar;
     private AdminShopSection admin_shops;
+    private ServerBankSection server_bank;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -296,6 +297,17 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns the configured server bank section.
+     *
+     * @return server bank configuration
+     */
+    public @NotNull ServerBankSection getServerBank() {
+        return this.server_bank == null
+                ? new ServerBankSection(new EvaluationEnvironmentBuilder())
+                : this.server_bank;
+    }
+
+    /**
      * Returns the initial tax amount for the default tax currency.
      *
      * @return initial tax amount
@@ -426,6 +438,7 @@ public class ConfigSection extends AConfigSection {
         section.setTaxes(TaxSection.fromFile(configFile, section.getDefaultCurrencyType()));
         section.boss_bar = BossBarSection.fromFile(configFile);
         section.admin_shops = AdminShopSection.fromFile(configFile);
+        section.server_bank = ServerBankSection.fromFile(configFile);
         return section;
     }
 
@@ -436,9 +449,9 @@ public class ConfigSection extends AConfigSection {
      */
     public void loadStoreConfiguration(final @NotNull File configFile) {
         final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(configFile);
-        this.warn_missing_requirements = configuration.contains("warn_missing_requirements")
-            ? configuration.getBoolean("warn_missing_requirements")
-            : this.warn_missing_requirements;
+        if (configuration.contains("warn_missing_requirements")) {
+            this.warn_missing_requirements = configuration.getBoolean("warn_missing_requirements");
+        }
 
         Map<Integer, Map<String, StoreRequirementSection>> parsedRequirements =
             parseRequirements(configuration.getConfigurationSection("requirements"));

@@ -3,6 +3,9 @@ package com.raindropcentral.rds.service.tax;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.configs.TaxCurrencySection;
 import com.raindropcentral.rds.configs.TaxSection;
+import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.items.AbstractItem;
+import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +14,9 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 /**
  * Provides support utilities for shop tax.
@@ -41,6 +46,54 @@ final class ShopTaxSupport {
         return config.hasTaxCap()
                 ? Math.min(normalizedTax, Math.max(0D, config.getMaximumTax()))
                 : normalizedTax;
+    }
+
+    static double applyNeverItemPenalty(
+            final double baseTax,
+            final double neverItemPenaltyRate,
+            final int neverItemCount
+    ) {
+        if (baseTax <= 0D || neverItemCount <= 0) {
+            return Math.max(0D, baseTax);
+        }
+
+        final double normalizedPenaltyRate = Math.max(0D, neverItemPenaltyRate);
+        if (normalizedPenaltyRate <= 0D) {
+            return Math.max(0D, baseTax);
+        }
+
+        final double multiplier = 1D + (normalizedPenaltyRate * neverItemCount);
+        final double penalizedTax = baseTax * multiplier;
+        return Double.isFinite(penalizedTax) ? Math.max(0D, penalizedTax) : Math.max(0D, baseTax);
+    }
+
+    static int countNeverAvailabilityItems(
+            final @NotNull List<Shop> shops
+    ) {
+        int neverItems = 0;
+        for (final Shop shop : shops) {
+            for (final AbstractItem item : shop.getItems()) {
+                if (item instanceof ShopItem shopItem
+                        && shopItem.getAmount() > 0
+                        && shopItem.getAvailabilityMode() == ShopItem.AvailabilityMode.NEVER) {
+                    neverItems++;
+                }
+            }
+        }
+        return neverItems;
+    }
+
+    static boolean isTaxableShop(
+            final @NotNull Shop shop
+    ) {
+        return !shop.isAdminShop();
+    }
+
+    static boolean isTaxableShopForOwner(
+            final @NotNull Shop shop,
+            final @NotNull UUID ownerId
+    ) {
+        return isTaxableShop(shop) && shop.isOwner(ownerId);
     }
 
     static long calculateInitialDelayTicks(

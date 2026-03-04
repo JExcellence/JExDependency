@@ -111,14 +111,30 @@ public class ShopTaxScheduler {
             final @NotNull OfflinePlayer owner,
             final @NotNull List<Shop> ownedShops
     ) {
-        final int ownedShopCount = ownedShops.size();
+        final List<Shop> taxableOwnedShops = new ArrayList<>();
+        for (final Shop shop : ownedShops) {
+            if (ShopTaxSupport.isTaxableShop(shop)) {
+                taxableOwnedShops.add(shop);
+            }
+        }
+        if (taxableOwnedShops.isEmpty()) {
+            return;
+        }
+
+        final int ownedShopCount = taxableOwnedShops.size();
+        final int neverAvailabilityItems = ShopTaxSupport.countNeverAvailabilityItems(taxableOwnedShops);
         for (final Map.Entry<String, TaxCurrencySection> taxEntry : taxes.getCurrencies().entrySet()) {
             final String currencyType = taxEntry.getKey();
             if (!ShopTaxSupport.isCurrencyAvailable(this.plugin, currencyType)) {
                 continue;
             }
 
-            final double taxAmount = ShopTaxSupport.calculateTax(taxEntry.getValue(), ownedShopCount);
+            final double baseTax = ShopTaxSupport.calculateTax(taxEntry.getValue(), ownedShopCount);
+            final double taxAmount = ShopTaxSupport.applyNeverItemPenalty(
+                    baseTax,
+                    taxes.getNeverItemPenaltyRate(),
+                    neverAvailabilityItems
+            );
             if (taxAmount <= 0D) {
                 continue;
             }
@@ -128,6 +144,7 @@ public class ShopTaxScheduler {
             final Map<String, Object> placeholders = Map.of(
                     "amount", formattedTax,
                     "owned_shops", ownedShopCount,
+                    "never_item_count", neverAvailabilityItems,
                     "currency_type", currencyType,
                     "currency_name", currencyName
             );
@@ -142,7 +159,7 @@ public class ShopTaxScheduler {
                 continue;
             }
 
-            this.recordTaxLedgerEntries(ownedShops, owner, currencyType, taxAmount, ownedShopCount);
+            this.recordTaxLedgerEntries(taxableOwnedShops, owner, currencyType, taxAmount, ownedShopCount);
             this.notifyOwner(owner, "tax_scheduler.paid", placeholders);
         }
     }
@@ -186,7 +203,7 @@ public class ShopTaxScheduler {
     private @NotNull Map<UUID, List<Shop>> groupTaxableShopsByOwner() {
         final Map<UUID, List<Shop>> groupedShops = new HashMap<>();
         for (final Shop shop : this.plugin.getShopRepository().findAllShops()) {
-            if (shop.isAdminShop()) {
+            if (!ShopTaxSupport.isTaxableShop(shop)) {
                 continue;
             }
 

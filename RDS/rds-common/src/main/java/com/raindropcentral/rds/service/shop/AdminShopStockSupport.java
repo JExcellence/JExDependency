@@ -163,7 +163,9 @@ public final class AdminShopStockSupport {
     ) {
         int total = 0;
         for (final var item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && getVisibleStockAmount(shop, shopItem) > 0) {
+            if (item instanceof ShopItem shopItem
+                    && shopItem.isAvailableNow()
+                    && getVisibleStockAmount(shop, shopItem) > 0) {
                 total += getVisibleStockAmount(shop, shopItem);
             }
         }

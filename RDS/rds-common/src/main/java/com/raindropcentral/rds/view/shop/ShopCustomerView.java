@@ -111,7 +111,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         final List<AbstractItem> items = shop.getItems();
         for (int index = 0; index < items.size(); index++) {
             final AbstractItem item = items.get(index);
-            if (item instanceof ShopItem shopItem && (shop.isAdminShop() || shopItem.getAmount() > 0)) {
+            if (item instanceof ShopItem shopItem && this.isVisibleForCustomers(shop, shopItem)) {
                 entries.add(new CustomerShopEntry(index, shopItem, shopItem.getEntryId()));
             }
         }
@@ -213,6 +213,15 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
         final int matchingIndex = this.findMatchingItemIndex(items, entry, referenceItem);
         if (matchingIndex < 0 || !(items.get(matchingIndex) instanceof ShopItem currentItem)) {
             this.i18n("feedback.item_missing", context.getPlayer())
+                    .build()
+                    .sendMessage();
+            this.openFreshView(context);
+            return;
+        }
+
+        if (!currentItem.isAvailableNow()) {
+            this.i18n("feedback.unavailable", context.getPlayer())
+                    .withPlaceholder("item_type", currentItem.getItem().getType().name())
                     .build()
                     .sendMessage();
             this.openFreshView(context);
@@ -568,12 +577,22 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                 continue;
             }
 
-            if (shop.isAdminShop() || shopItem.getAmount() > 0) {
+            if (this.isVisibleForCustomers(shop, shopItem)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    private boolean isVisibleForCustomers(
+            final @NotNull Shop shop,
+            final @NotNull ShopItem item
+    ) {
+        if (!item.isAvailableNow()) {
+            return false;
+        }
+        return shop.isAdminShop() || item.getAmount() > 0;
     }
 
     private @NotNull ItemStack createEmptyShopItem(

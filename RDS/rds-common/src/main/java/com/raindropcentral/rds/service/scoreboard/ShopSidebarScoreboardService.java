@@ -342,7 +342,9 @@ public class ShopSidebarScoreboardService {
     ) {
         int totalStock = 0;
         for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && shopItem.getAmount() > 0) {
+            if (item instanceof ShopItem shopItem
+                    && shopItem.isAvailableNow()
+                    && shopItem.getAmount() > 0) {
                 totalStock += shopItem.getAmount();
             }
         }

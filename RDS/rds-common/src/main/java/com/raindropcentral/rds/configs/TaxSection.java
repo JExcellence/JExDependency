@@ -34,6 +34,7 @@ public class TaxSection extends AConfigSection {
     private String start_time;
     private String time_zone;
     private Boolean join_notification;
+    private Double never_item_penalty_rate;
 
     /**
      * Creates a new tax section.
@@ -122,6 +123,17 @@ public class TaxSection extends AConfigSection {
         return this.join_notification == null || this.join_notification;
     }
 
+    /**
+     * Returns the configured per-item tax penalty rate for listings marked as never available.
+     *
+     * @return non-negative penalty rate multiplier applied per never-available item
+     */
+    public double getNeverItemPenaltyRate() {
+        return this.never_item_penalty_rate == null
+                ? 0.25D
+                : Math.max(0D, this.never_item_penalty_rate);
+    }
+
     private @NotNull LocalTime parseStartTime(
             final @Nullable String rawValue
     ) {
@@ -193,13 +205,15 @@ public class TaxSection extends AConfigSection {
             final long duration,
             final @Nullable String startTime,
             final @Nullable String timeZone,
-            final boolean joinNotification
+            final boolean joinNotification,
+            final double neverItemPenaltyRate
     ) {
         this.currencies = new LinkedHashMap<>(currencies);
         this.duration = duration;
         this.start_time = startTime;
         this.time_zone = timeZone;
         this.join_notification = joinNotification;
+        this.never_item_penalty_rate = Math.max(0D, neverItemPenaltyRate);
     }
 
     public static @NotNull TaxSection fromFile(
@@ -220,7 +234,8 @@ public class TaxSection extends AConfigSection {
                 Math.max(1L, taxesSection.getLong("duration", DEFAULT_DURATION_TICKS)),
                 taxesSection.getString("start_time", "noon"),
                 taxesSection.getString("time_zone", ZoneId.systemDefault().getId()),
-                taxesSection.getBoolean("join_notification", true)
+                taxesSection.getBoolean("join_notification", true),
+                Math.max(0D, taxesSection.getDouble("never_item_penalty_rate", 0.25D))
         );
         return section;
     }
@@ -234,7 +249,8 @@ public class TaxSection extends AConfigSection {
                 DEFAULT_DURATION_TICKS,
                 "noon",
                 ZoneId.systemDefault().getId(),
-                true
+                true,
+                0.25D
         );
         return section;
     }
@@ -252,7 +268,8 @@ public class TaxSection extends AConfigSection {
             if ("duration".equalsIgnoreCase(key)
                     || "start_time".equalsIgnoreCase(key)
                     || "time_zone".equalsIgnoreCase(key)
-                    || "join_notification".equalsIgnoreCase(key)) {
+                    || "join_notification".equalsIgnoreCase(key)
+                    || "never_item_penalty_rate".equalsIgnoreCase(key)) {
                 continue;
             }
 

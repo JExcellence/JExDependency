@@ -1,0 +1,25 @@
+/*
+ * ShopItemAvailabilityModeTest.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
+package com.raindropcentral.rds.items;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/**
+ * Tests shop-item availability mode behavior.
+ */
+class ShopItemAvailabilityModeTest {
+
+    @Test
+    void cyclesAvailabilityModesInExpectedOrder() {
+        assertEquals(ShopItem.AvailabilityMode.ROTATE, ShopItem.AvailabilityMode.ALWAYS.next());
+        assertEquals(ShopItem.AvailabilityMode.NEVER, ShopItem.AvailabilityMode.ROTATE.next());
+        assertEquals(ShopItem.AvailabilityMode.ALWAYS, ShopItem.AvailabilityMode.NEVER.next());
+    }
+}

@@ -140,11 +140,20 @@ public final class ShopBrowserSupport {
             final @NotNull Shop shop
     ) {
         if (shop.isAdminShop()) {
+            int availableListings = 0;
+            boolean hasUnlimitedListing = false;
             for (final AbstractItem item : shop.getItems()) {
-                if (item instanceof ShopItem shopItem
-                        && AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
-                    return shop.getStoredItemCount();
+                if (!(item instanceof ShopItem shopItem) || !shopItem.isAvailableNow()) {
+                    continue;
                 }
+
+                availableListings++;
+                if (AdminShopStockSupport.isUnlimitedAdminStock(shop, shopItem)) {
+                    hasUnlimitedListing = true;
+                }
+            }
+            if (hasUnlimitedListing) {
+                return availableListings;
             }
 
             return AdminShopStockSupport.countVisibleStock(shop);
@@ -152,7 +161,9 @@ public final class ShopBrowserSupport {
 
         int availableCount = 0;
         for (final AbstractItem item : shop.getItems()) {
-            if (item instanceof ShopItem shopItem && shopItem.getAmount() > 0) {
+            if (item instanceof ShopItem shopItem
+                    && shopItem.isAvailableNow()
+                    && shopItem.getAmount() > 0) {
                 availableCount += shopItem.getAmount();
             }
         }
@@ -172,6 +183,10 @@ public final class ShopBrowserSupport {
             }
 
             if (shopItem.getItem().getType() != material) {
+                continue;
+            }
+
+            if (!shopItem.isAvailableNow()) {
                 continue;
             }
 

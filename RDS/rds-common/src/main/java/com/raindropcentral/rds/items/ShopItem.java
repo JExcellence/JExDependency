@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 import java.util.UUID;
 
 /**
@@ -16,6 +17,31 @@ import java.util.UUID;
  */
 @JsonTypeName("ITEM")
 public class ShopItem extends AbstractItem {
+
+	public static final int DEFAULT_ROTATION_MINUTES = 60;
+	private static final long ROTATION_MINUTE_MILLIS = TimeUnit.MINUTES.toMillis(1L);
+
+	/**
+	 * Defines the item availability policies for customer views.
+	 */
+	public enum AvailabilityMode {
+		ALWAYS,
+		ROTATE,
+		NEVER;
+
+		/**
+		 * Returns the next availability mode in cycle order.
+		 *
+		 * @return next availability mode
+		 */
+		public @NotNull AvailabilityMode next() {
+			return switch (this) {
+				case ALWAYS -> ROTATE;
+				case ROTATE -> NEVER;
+				case NEVER -> ALWAYS;
+			};
+		}
+	}
 	
 	@JsonProperty("entryId")
 	private final UUID entryId;
@@ -40,6 +66,12 @@ public class ShopItem extends AbstractItem {
 
 	@JsonProperty("adminStockReferenceTime")
 	private final Long adminStockReferenceTime;
+
+	@JsonProperty("availabilityMode")
+	private final AvailabilityMode availabilityMode;
+
+	@JsonProperty("availabilityRotationMinutes")
+	private final Integer availabilityRotationMinutes;
 	
 	/**
 	 * Creates a new shop item.
@@ -52,6 +84,8 @@ public class ShopItem extends AbstractItem {
 	 * @param adminStockLimit admin stock limit
 	 * @param adminRestockIntervalTicks admin restock interval ticks
 	 * @param adminStockReferenceTime admin stock reference time
+	 * @param availabilityMode availability mode
+	 * @param availabilityRotationMinutes rotation window in minutes
 	 */
 	@JsonCreator
 	public ShopItem(
@@ -62,7 +96,9 @@ public class ShopItem extends AbstractItem {
 		@JsonProperty("value") double value,
 		@JsonProperty("adminStockLimit") @Nullable Integer adminStockLimit,
 		@JsonProperty("adminRestockIntervalTicks") @Nullable Long adminRestockIntervalTicks,
-		@JsonProperty("adminStockReferenceTime") @Nullable Long adminStockReferenceTime
+		@JsonProperty("adminStockReferenceTime") @Nullable Long adminStockReferenceTime,
+		@JsonProperty("availabilityMode") @Nullable AvailabilityMode availabilityMode,
+		@JsonProperty("availabilityRotationMinutes") @Nullable Integer availabilityRotationMinutes
 	) {
 		this.entryId = entryId == null ? UUID.randomUUID() : entryId;
 		this.item = item.clone();
@@ -77,6 +113,46 @@ public class ShopItem extends AbstractItem {
 		this.adminStockReferenceTime = adminStockReferenceTime == null || adminStockReferenceTime < 0L
 				? null
 				: adminStockReferenceTime;
+		this.availabilityMode = availabilityMode == null ? AvailabilityMode.ALWAYS : availabilityMode;
+		this.availabilityRotationMinutes = availabilityRotationMinutes == null || availabilityRotationMinutes < 1
+				? DEFAULT_ROTATION_MINUTES
+				: availabilityRotationMinutes;
+	}
+
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param entryId entry id
+	 * @param item target item payload
+	 * @param amount amount
+	 * @param currencyType currency type
+	 * @param value value
+	 * @param adminStockLimit admin stock limit
+	 * @param adminRestockIntervalTicks admin restock interval ticks
+	 * @param adminStockReferenceTime admin stock reference time
+	 */
+	public ShopItem(
+		@Nullable UUID entryId,
+		@NotNull ItemStack item,
+		int amount,
+		@Nullable String currencyType,
+		double value,
+		@Nullable Integer adminStockLimit,
+		@Nullable Long adminRestockIntervalTicks,
+		@Nullable Long adminStockReferenceTime
+	) {
+		this(
+			entryId,
+			item,
+			amount,
+			currencyType,
+			value,
+			adminStockLimit,
+			adminRestockIntervalTicks,
+			adminStockReferenceTime,
+			AvailabilityMode.ALWAYS,
+			DEFAULT_ROTATION_MINUTES
+		);
 	}
 	
 	/**
@@ -264,6 +340,59 @@ public class ShopItem extends AbstractItem {
 	}
 
 	/**
+	 * Returns the availability mode.
+	 *
+	 * @return the availability mode
+	 */
+	public @NotNull AvailabilityMode getAvailabilityMode() {
+		return this.availabilityMode;
+	}
+
+	/**
+	 * Returns the configured rotation window in minutes.
+	 *
+	 * @return rotation window in minutes
+	 */
+	public int getAvailabilityRotationMinutes() {
+		return this.availabilityRotationMinutes == null
+				? DEFAULT_ROTATION_MINUTES
+				: Math.max(1, this.availabilityRotationMinutes);
+	}
+
+	/**
+	 * Indicates whether this item should be visible and purchasable right now.
+	 *
+	 * @return {@code true} when currently available; otherwise {@code false}
+	 */
+	public boolean isAvailableNow() {
+		return this.isAvailableAt(System.currentTimeMillis());
+	}
+
+	/**
+	 * Indicates whether this item is available at the provided epoch timestamp.
+	 *
+	 * @param timestampMillis epoch timestamp in milliseconds
+	 * @return {@code true} when available; otherwise {@code false}
+	 */
+	public boolean isAvailableAt(final long timestampMillis) {
+		return switch (this.getAvailabilityMode()) {
+			case ALWAYS -> true;
+			case NEVER -> false;
+			case ROTATE -> {
+				final long rotationWindowMillis = Math.max(1L, this.getAvailabilityRotationMinutes())
+						* ROTATION_MINUTE_MILLIS;
+				final long cycleMillis = Math.max(1L, rotationWindowMillis * 2L);
+				final long rotationOffset = Math.floorMod(
+						this.entryId.getMostSignificantBits() ^ this.entryId.getLeastSignificantBits(),
+						cycleMillis
+				);
+				final long cyclePosition = Math.floorMod(timestampMillis + rotationOffset, cycleMillis);
+				yield cyclePosition < rotationWindowMillis;
+			}
+		};
+	}
+	
+	/**
 	 * Returns a copy with updated amount.
 	 *
 	 * @param updatedAmount updated item amount
@@ -278,7 +407,9 @@ public class ShopItem extends AbstractItem {
 				this.value,
 				this.adminStockLimit,
 				this.adminRestockIntervalTicks,
-				this.adminStockReferenceTime
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
 		);
 	}
 
@@ -297,7 +428,9 @@ public class ShopItem extends AbstractItem {
 				this.value,
 				this.adminStockLimit,
 				this.adminRestockIntervalTicks,
-				this.adminStockReferenceTime
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
 		);
 	}
 
@@ -316,7 +449,9 @@ public class ShopItem extends AbstractItem {
 				updatedValue,
 				this.adminStockLimit,
 				this.adminRestockIntervalTicks,
-				this.adminStockReferenceTime
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
 		);
 	}
 
@@ -336,7 +471,9 @@ public class ShopItem extends AbstractItem {
 				updatedValue,
 				this.adminStockLimit,
 				this.adminRestockIntervalTicks,
-				this.adminStockReferenceTime
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
 		);
 	}
 
@@ -353,7 +490,9 @@ public class ShopItem extends AbstractItem {
 				this.value,
 				updatedStockLimit,
 				updatedRestockIntervalTicks,
-				updatedReferenceTime
+				updatedReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
 		);
 	}
 
@@ -371,7 +510,80 @@ public class ShopItem extends AbstractItem {
 				this.value,
 				updatedStockLimit,
 				updatedRestockIntervalTicks,
-				updatedReferenceTime
+				updatedReferenceTime,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
+		);
+	}
+
+	/**
+	 * Returns a copy with updated availability mode.
+	 *
+	 * @param updatedMode updated availability mode
+	 * @return a copy with updated availability mode
+	 */
+	public @NotNull ShopItem withAvailabilityMode(
+		final @NotNull AvailabilityMode updatedMode
+	) {
+		return new ShopItem(
+				this.entryId,
+				this.item,
+				this.amount,
+				this.currencyType,
+				this.value,
+				this.adminStockLimit,
+				this.adminRestockIntervalTicks,
+				this.adminStockReferenceTime,
+				updatedMode,
+				this.availabilityRotationMinutes
+		);
+	}
+
+	/**
+	 * Returns a copy with updated availability rotation window.
+	 *
+	 * @param updatedRotationMinutes updated rotation window in minutes
+	 * @return a copy with updated availability rotation window
+	 */
+	public @NotNull ShopItem withAvailabilityRotationMinutes(
+		final int updatedRotationMinutes
+	) {
+		return new ShopItem(
+				this.entryId,
+				this.item,
+				this.amount,
+				this.currencyType,
+				this.value,
+				this.adminStockLimit,
+				this.adminRestockIntervalTicks,
+				this.adminStockReferenceTime,
+				this.availabilityMode,
+				updatedRotationMinutes
+		);
+	}
+
+	/**
+	 * Returns a copy with updated availability settings.
+	 *
+	 * @param updatedMode updated availability mode
+	 * @param updatedRotationMinutes updated rotation window in minutes
+	 * @return a copy with updated availability settings
+	 */
+	public @NotNull ShopItem withAvailabilitySettings(
+		final @NotNull AvailabilityMode updatedMode,
+		final int updatedRotationMinutes
+	) {
+		return new ShopItem(
+				this.entryId,
+				this.item,
+				this.amount,
+				this.currencyType,
+				this.value,
+				this.adminStockLimit,
+				this.adminRestockIntervalTicks,
+				this.adminStockReferenceTime,
+				updatedMode,
+				updatedRotationMinutes
 		);
 	}
 
@@ -389,7 +601,9 @@ public class ShopItem extends AbstractItem {
 				this.value,
 				null,
 				null,
-				null
+				null,
+				this.availabilityMode,
+				this.availabilityRotationMinutes
 		);
 	}
 	
@@ -417,6 +631,9 @@ public class ShopItem extends AbstractItem {
 		}
 		if (this.adminRestockIntervalTicks != null && this.adminRestockIntervalTicks < 1L) {
 			throw new IllegalArgumentException("Admin restock interval must be at least 1 tick when set");
+		}
+		if (this.availabilityRotationMinutes != null && this.availabilityRotationMinutes < 1) {
+			throw new IllegalArgumentException("Availability rotation minutes must be at least 1 when set");
 		}
 	}
 

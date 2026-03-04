@@ -41,6 +41,7 @@ public final class ShopTaxSummarySupport {
         final TaxSection taxes = plugin.getDefaultConfig().getTaxes();
         final List<Shop> taxableShops = getTaxableShops(plugin, ownerId);
         final int taxedShops = taxableShops.size();
+        final int neverAvailabilityItems = ShopTaxSupport.countNeverAvailabilityItems(taxableShops);
         final Instant nextTaxAt = ShopTaxSupport.calculateNextRun(taxes, now);
         final ZoneId zoneId = taxes.getTimeZoneId();
 
@@ -52,7 +53,12 @@ public final class ShopTaxSummarySupport {
                     continue;
                 }
 
-                final double amount = ShopTaxSupport.calculateTax(entry.getValue(), taxedShops);
+                final double baseAmount = ShopTaxSupport.calculateTax(entry.getValue(), taxedShops);
+                final double amount = ShopTaxSupport.applyNeverItemPenalty(
+                        baseAmount,
+                        taxes.getNeverItemPenaltyRate(),
+                        neverAvailabilityItems
+                );
                 if (amount <= 0D) {
                     continue;
                 }
@@ -86,7 +92,7 @@ public final class ShopTaxSummarySupport {
     ) {
         final List<Shop> taxableShops = new ArrayList<>();
         for (final Shop shop : plugin.getShopRepository().findAllShops()) {
-            if (shop.isAdminShop() || !shop.isOwner(ownerId)) {
+            if (!ShopTaxSupport.isTaxableShopForOwner(shop, ownerId)) {
                 continue;
             }
 

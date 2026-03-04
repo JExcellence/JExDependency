@@ -132,6 +132,20 @@ class ConfigSectionTest {
         assertTrue(handler.messages.getFirst().contains("Purchases above that tier"));
     }
 
+    @Test
+    void loadsServerBankConfiguration(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            server_bank:
+              enabled: false
+              transfer_interval_ticks: 3600
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+        assertFalse(section.getServerBank().isEnabled());
+        assertEquals(3600L, section.getServerBank().getTransferIntervalTicks());
+    }
+
     private static double getDouble(final Map<String, Object> definition, final String key) {
         return ((Number) definition.get(key)).doubleValue();
     }

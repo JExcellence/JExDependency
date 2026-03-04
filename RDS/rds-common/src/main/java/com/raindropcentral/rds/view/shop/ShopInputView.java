@@ -379,7 +379,9 @@ public class ShopInputView extends BaseView {
                             shopItem.getValue(),
                             shopItem.hasAdminStockLimit() ? shopItem.getAdminStockLimit() : null,
                             shopItem.getAdminRestockIntervalTicks() > 0L ? shopItem.getAdminRestockIntervalTicks() : null,
-                            shopItem.getAdminStockReferenceTime() >= 0L ? shopItem.getAdminStockReferenceTime() : null
+                            shopItem.getAdminStockReferenceTime() >= 0L ? shopItem.getAdminStockReferenceTime() : null,
+                            shopItem.getAvailabilityMode(),
+                            shopItem.getAvailabilityRotationMinutes()
                     )
             );
         }

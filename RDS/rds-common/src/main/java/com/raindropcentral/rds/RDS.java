@@ -4,10 +4,13 @@ import com.raindropcentral.commands.CommandFactory;
 import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
+import com.raindropcentral.rds.database.entity.ServerBank;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
+import com.raindropcentral.rds.database.repository.RServerBank;
 import com.raindropcentral.rds.database.repository.RShop;
 import com.raindropcentral.rds.service.ShopService;
 import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
+import com.raindropcentral.rds.service.bank.AdminShopServerBankScheduler;
 import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
@@ -15,6 +18,8 @@ import com.raindropcentral.rds.view.shop.ShopBankView;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
 import com.raindropcentral.rds.view.shop.ShopEditView;
 import com.raindropcentral.rds.view.shop.ShopInputView;
+import com.raindropcentral.rds.view.shop.ServerBankView;
+import com.raindropcentral.rds.view.shop.ShopAdminView;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
 import com.raindropcentral.rds.view.shop.ShopLedgerView;
 import com.raindropcentral.rds.view.shop.ShopListView;
@@ -25,6 +30,7 @@ import com.raindropcentral.rds.view.shop.ShopStorageView;
 import com.raindropcentral.rds.view.shop.ShopStoreCostView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.view.shop.ShopTrustedView;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
@@ -94,9 +100,11 @@ public class RDS {
     private ShopTaxScheduler shopTaxScheduler;
     private ShopBossBarService shopBossBarService;
     private AdminShopRestockScheduler adminShopRestockScheduler;
+    private AdminShopServerBankScheduler adminShopServerBankScheduler;
     private ShopSidebarScoreboardService shopSidebarScoreboardService;
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
+    private RServerBank serverBankRepository;
 
     /**
      * Creates a new shared RDS runtime.
@@ -153,6 +161,7 @@ public class RDS {
         this.initializeViews();
         this.initializeTaxes();
         this.initializeAdminShopRestocking();
+        this.initializeAdminShopServerBankTransfers();
         this.initializeShopBossBar();
         this.initializeShopSidebarScoreboards();
 
@@ -380,6 +389,13 @@ public class RDS {
                 Shop.class,
                 Shop::getShopLocation
         );
+
+        this.serverBankRepository = new RServerBank(
+                this.executor,
+                this.entityManagerFactory,
+                ServerBank.class,
+                ServerBank::getCurrencyType
+        );
     }
 
     @SuppressWarnings("resource")
@@ -421,7 +437,9 @@ public class RDS {
                 .install(AnvilInputFeature.AnvilInput)
                 .with(
                     new ShopOverviewView(),
+                    new ShopAdminView(),
                     new ShopBankView(),
+                    new ServerBankView(),
                     new ShopSearchView(),
                     new ShopListView(),
                     new ShopResultsView(),
@@ -433,6 +451,7 @@ public class RDS {
                     new ShopEditView(),
                     new ShopLedgerView(),
                     new ShopItemEditView(),
+                    new ShopItemAvailabilityMinutesAnvilView(),
                     new ShopItemAdminStockLimitAnvilView(),
                     new ShopItemAdminResetTimerAnvilView(),
                     new ShopItemCurrencyTypeAnvilView(),
@@ -463,6 +482,11 @@ public class RDS {
     private void initializeAdminShopRestocking() {
         this.adminShopRestockScheduler = new AdminShopRestockScheduler(this);
         this.adminShopRestockScheduler.start();
+    }
+
+    private void initializeAdminShopServerBankTransfers() {
+        this.adminShopServerBankScheduler = new AdminShopServerBankScheduler(this);
+        this.adminShopServerBankScheduler.start();
     }
 
     private boolean hasValidEconomyAndCurrency() {
@@ -765,6 +789,15 @@ public class RDS {
     }
 
     /**
+     * Returns the scheduler that periodically transfers admin shop bank balances into the server bank.
+     *
+     * @return admin-shop server bank scheduler, or {@code null} before enable completes
+     */
+    public @Nullable AdminShopServerBankScheduler getAdminShopServerBankScheduler() {
+        return this.adminShopServerBankScheduler;
+    }
+
+    /**
      * Returns the service that manages the optional shop sidebar scoreboard.
      *
      * @return shop sidebar scoreboard service, or {@code null} before enable completes
@@ -807,5 +840,14 @@ public class RDS {
      */
     public @Nullable RShop getShopRepository() {
         return this.shopRepository;
+    }
+
+    /**
+     * Returns the repository used for server-bank balances.
+     *
+     * @return server-bank repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RServerBank getServerBankRepository() {
+        return this.serverBankRepository;
     }
 }

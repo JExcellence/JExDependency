@@ -6,6 +6,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
+import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemCurrencyTypeAnvilView;
@@ -64,7 +65,7 @@ public class ShopItemEditView extends BaseView {
     protected String[] getLayout() {
         return new String[]{
                 "    s    ",
-                "  t v c  ",
+                "a t v c n",
                 "  l r m  "
         };
     }
@@ -134,6 +135,23 @@ public class ShopItemEditView extends BaseView {
                 .updateOnStateChange(this.editedItem)
                 .onClick(clickContext -> clickContext.openForPlayer(
                         ShopItemValueAnvilView.class,
+                        Map.of(
+                                "plugin", this.rds.get(clickContext),
+                                "shopLocation", this.shopLocation.get(clickContext),
+                                "shopItem", this.getEditedItem(clickContext)
+                        )
+                ));
+
+        render.layoutSlot('a')
+                .renderWith(() -> this.createAvailabilityModeItem(player, this.getEditedItem(render)))
+                .updateOnStateChange(this.editedItem)
+                .onClick(this::handleAvailabilityModeClick);
+
+        render.layoutSlot('n')
+                .renderWith(() -> this.createAvailabilityWindowItem(player, this.getEditedItem(render)))
+                .updateOnStateChange(this.editedItem)
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        ShopItemAvailabilityMinutesAnvilView.class,
                         Map.of(
                                 "plugin", this.rds.get(clickContext),
                                 "shopLocation", this.shopLocation.get(clickContext),
@@ -239,6 +257,39 @@ public class ShopItemEditView extends BaseView {
         }
 
         this.i18n("feedback.item_missing", clickContext.getPlayer())
+                .build()
+                .sendMessage();
+    }
+
+    private void handleAvailabilityModeClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        clickContext.setCancelled(true);
+
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        final ShopItem current = this.getEditedItem(clickContext);
+        final ShopItem.AvailabilityMode updatedMode = current.getAvailabilityMode().next();
+        this.editedItem.set(current.withAvailabilityMode(updatedMode), clickContext);
+        clickContext.update();
+
+        this.i18n("feedback.availability_mode_updated", clickContext.getPlayer())
+                .withPlaceholder("availability_mode", this.getAvailabilityModeLabel(clickContext.getPlayer(), updatedMode))
                 .build()
                 .sendMessage();
     }
@@ -477,7 +528,10 @@ public class ShopItemEditView extends BaseView {
                     "currency_type", item.getCurrencyType(),
                     "value", item.getValue(),
                     "restock_mode", this.getAdminRestockModeLabel(player, plugin),
-                    "restock_schedule", this.getAdminRestockSchedule(player, item, plugin)
+                    "restock_schedule", this.getAdminRestockSchedule(player, item, plugin),
+                    "availability_mode", this.getAvailabilityModeLabel(player, item),
+                    "availability_state", this.getAvailabilityStateLabel(player, item),
+                    "rotation_minutes", item.getAvailabilityRotationMinutes()
             );
         } else if (currentShop != null && currentShop.isAdminShop()) {
             loreKey = "summary.admin_unlimited.lore";
@@ -485,14 +539,20 @@ public class ShopItemEditView extends BaseView {
                     "amount", item.getAmount(),
                     "currency_type", item.getCurrencyType(),
                     "value", item.getValue(),
-                    "restock_mode", this.getAdminRestockModeLabel(player, plugin)
+                    "restock_mode", this.getAdminRestockModeLabel(player, plugin),
+                    "availability_mode", this.getAvailabilityModeLabel(player, item),
+                    "availability_state", this.getAvailabilityStateLabel(player, item),
+                    "rotation_minutes", item.getAvailabilityRotationMinutes()
             );
         } else {
             loreKey = "summary.player.lore";
             placeholders = Map.of(
                     "amount", item.getAmount(),
                     "currency_type", item.getCurrencyType(),
-                    "value", item.getValue()
+                    "value", item.getValue(),
+                    "availability_mode", this.getAvailabilityModeLabel(player, item),
+                    "availability_state", this.getAvailabilityStateLabel(player, item),
+                    "rotation_minutes", item.getAvailabilityRotationMinutes()
             );
         }
 
@@ -537,6 +597,47 @@ public class ShopItemEditView extends BaseView {
                         .withPlaceholders(Map.of(
                                 "currency_type", item.getCurrencyType(),
                                 "value", item.getValue()
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createAvailabilityModeItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        final Material material = switch (item.getAvailabilityMode()) {
+            case ALWAYS -> Material.LIME_DYE;
+            case ROTATE -> Material.CLOCK;
+            case NEVER -> Material.BARRIER;
+        };
+        return UnifiedBuilderFactory.item(material)
+                .setName(this.i18n("availability_mode.name", player).build().component())
+                .setLore(this.i18n("availability_mode.lore", player)
+                        .withPlaceholders(Map.of(
+                                "availability_mode", this.getAvailabilityModeLabel(player, item),
+                                "availability_state", this.getAvailabilityStateLabel(player, item),
+                                "rotation_minutes", item.getAvailabilityRotationMinutes()
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createAvailabilityWindowItem(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        return UnifiedBuilderFactory.item(Material.CLOCK)
+                .setName(this.i18n("availability_window.name", player).build().component())
+                .setLore(this.i18n("availability_window.lore", player)
+                        .withPlaceholders(Map.of(
+                                "rotation_minutes", item.getAvailabilityRotationMinutes(),
+                                "availability_mode", this.getAvailabilityModeLabel(player, item),
+                                "rotate_mode", this.getAvailabilityModeLabel(player, ShopItem.AvailabilityMode.ROTATE)
                         ))
                         .build()
                         .children())
@@ -623,7 +724,9 @@ public class ShopItemEditView extends BaseView {
                 edited.getValue(),
                 stockLimit,
                 restockInterval,
-                referenceTime
+                referenceTime,
+                edited.getAvailabilityMode(),
+                edited.getAvailabilityRotationMinutes()
         );
     }
 
@@ -633,6 +736,41 @@ public class ShopItemEditView extends BaseView {
         return item.getAdminRestockIntervalTicks() > 0L
                 ? item.getAdminRestockIntervalTicks()
                 : null;
+    }
+
+    private @NotNull String getAvailabilityModeLabel(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        return this.getAvailabilityModeLabel(player, item.getAvailabilityMode());
+    }
+
+    private @NotNull String getAvailabilityModeLabel(
+            final @NotNull Player player,
+            final @NotNull ShopItem.AvailabilityMode mode
+    ) {
+        final String key = switch (mode) {
+            case ALWAYS -> "availability_mode.always";
+            case ROTATE -> "availability_mode.rotate";
+            case NEVER -> "availability_mode.never";
+        };
+        return this.i18n(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
+    }
+
+    private @NotNull String getAvailabilityStateLabel(
+            final @NotNull Player player,
+            final @NotNull ShopItem item
+    ) {
+        final String key = item.isAvailableNow()
+                ? "availability_mode.state.available"
+                : "availability_mode.state.unavailable";
+        return this.i18n(key, player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder();
     }
 
     private @NotNull String getAdminRestockModeLabel(
