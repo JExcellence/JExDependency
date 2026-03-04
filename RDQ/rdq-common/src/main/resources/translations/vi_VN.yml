@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms chưa được cài đặt!</gradient> <gradient:#6b7280:#9ca3af>Tính năng này yêu cầu LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 Trợ giúp RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Mở menu chính</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Xem cấp bậc</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Xem tiền truy nã</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Trợ giúp RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Mở menu chính</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Xem cấp bậc</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Xem tiền truy nã</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Bật/tắt thanh bên đặc quyền</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Cách dùng:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Đã bật thanh bên đặc quyền.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Đã tắt thanh bên đặc quyền.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Đặc quyền</white>"
+    active_summary: "<gray>Đang bật:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Sở hữu:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Không có đặc quyền nào đang bật</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% nữa</gray>"
 
 # ============================================
 # GIAO DIỆN TỔNG QUAN CHÍNH

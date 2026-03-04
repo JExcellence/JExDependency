@@ -1,4 +1,4 @@
-﻿# Ficheiro de tradução RDQ - Português (Portugal)
+# Ficheiro de tradução RDQ - Português (Portugal)
 # Formato MiniMessage com gradientes e estilos
 # Os marcadores usam o formato %placeholder%
 
@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms não está instalado!</gradient> <gradient:#6b7280:#9ca3af>Este recurso requer LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 Ajuda RaindropQuests</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Abrir menu principal</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Ver ranks</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Ver recompensas</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Ajuda RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Abrir menu principal</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Ver ranks</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Ver recompensas</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Alternar a barra lateral de perks</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Utilização:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Barra lateral de perks ativada.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Barra lateral de perks desativada.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Perks</white>"
+    active_summary: "<gray>Ativos:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Obtidos:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Nenhum perk ativo</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% a mais</gray>"
 
 # ============================================
 # UI DE VISÃO GERAL PRINCIPAL
@@ -1750,5 +1763,3 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Cura de Combate</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Cure ao causar dano aos inimigos</gradient>"
-
-

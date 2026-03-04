@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installert!</gradient> <gradient:#6b7280:#9ca3af>Denne funksjonen krever LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjelp</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Åpne hovedmeny</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Vis ranger</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Vis dusører</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjelp</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Åpne hovedmeny</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Vis ranger</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Vis dusører</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Bytt fordels-sidefelt</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Bruk:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Fordels-sidefelt aktivert.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Fordels-sidefelt deaktivert.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Fordeler</white>"
+    active_summary: "<gray>Aktive:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Eide:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Ingen fordeler aktive</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% til</gray>"
 
 # ============================================
 # HOVEDOVERSIKT UI

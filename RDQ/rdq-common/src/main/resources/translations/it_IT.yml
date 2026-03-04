@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms non è installato!</gradient> <gradient:#6b7280:#9ca3af>Questa funzione richiede LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 Aiuto RaindropQuests</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Apri menu principale</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Visualizza gradi</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Visualizza taglie</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Aiuto RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Apri menu principale</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Visualizza gradi</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Visualizza taglie</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Attiva/disattiva la barra laterale dei vantaggi</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Uso:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Barra laterale dei vantaggi abilitata.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Barra laterale dei vantaggi disabilitata.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Vantaggi</white>"
+    active_summary: "<gray>Attivi:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Posseduti:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Nessun vantaggio attivo</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% in più</gray>"
 
 # ============================================
 # PANORAMICA PRINCIPALE UI

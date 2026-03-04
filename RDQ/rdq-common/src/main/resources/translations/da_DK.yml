@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installeret!</gradient> <gradient:#6b7280:#9ca3af>Denne funktion kræver LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjælp</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Åbn hovedmenu</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Vis ranger</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Vis dusører</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests Hjælp</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Åbn hovedmenu</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Vis rangeringer</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Vis dusører</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Skift frynsegode-sidepanelet</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Brug:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Frynsegode-sidepanel aktiveret.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Frynsegode-sidepanel deaktiveret.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Fordele</white>"
+    active_summary: "<gray>Aktive:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Ejede:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Ingen fordele aktive</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% flere</gray>"
 
 # ============================================
 # HOVEDOVERSIGT UI

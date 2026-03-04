@@ -1,4 +1,4 @@
-﻿# RDQ-käännöstiedosto - englanti (Yhdysvallat)
+# RDQ-käännöstiedosto - englanti (Yhdysvallat)
 # MiniMessage-muoto liukuväreillä ja tyyleillä
 # Paikkamerkit käyttävät muotoa %placeholder%
 
@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms ei ole asennettu!</gradient> <gradient:#6b7280:#9ca3af>Tämä ominaisuus vaatii LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests-ohje</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Avaa päävalikko</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Näytä arvot</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Näytä palkkiot</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests-ohje</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Avaa päävalikko</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Näytä arvot</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Näytä palkkiot</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Vaihda etujen sivupalkki</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Käyttö:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Etujen sivupalkki otettu käyttöön.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Etujen sivupalkki poistettu käytöstä.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Edut</white>"
+    active_summary: "<gray>Aktiiviset:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Omistetut:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Ei aktiivisia etuja</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% lisää</gray>"
 
 # ============================================
 # PÄÄYHTEENVETONÄKYMÄ
@@ -1750,4 +1763,3 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Taisteluparannus</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Parantua tehdessään vahinkoa vihollisille</gradient>"
-

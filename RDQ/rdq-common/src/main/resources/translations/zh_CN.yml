@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms 未安装！</gradient> <gradient:#6b7280:#9ca3af>此功能需要 LuckPerms。</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 雨滴任务帮助</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - 打开主菜单</gradient>\\n<gradient:#6b7280:#9ca3af>/rq 排名 - 查看排名</gradient>\\n<gradient:#6b7280:#9ca3af>/rq 赏金 - 查看赏金</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 RaindropQuests 帮助</gradient>\n<gradient:#6b7280:#9ca3af>/rq - 打开主菜单</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - 查看等级</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - 查看悬赏</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - 切换特权侧边栏</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ 用法：</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ 特权侧边栏已启用。</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ 特权侧边栏已禁用。</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>特权</white>"
+    active_summary: "<gray>已激活：</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>已拥有：</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>没有已激活的特权</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+另有%remaining_perks%个</gray>"
 
 # ============================================
 # 主要概览用户界面

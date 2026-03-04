@@ -358,7 +358,20 @@ rank_click:
 # ============================================
 rq:
   no_luckperms_installed: "<gradient:#ef4444:#f87171>❌ LuckPerms nie jest zainstalowany!</gradient> <gradient:#6b7280:#9ca3af>Ta funkcja wymaga LuckPerms.</gradient>"
-  help: "<gradient:#a855f7:#c084fc>📖 Pomoc RaindropQuests</gradient>\\n<gradient:#6b7280:#9ca3af>/rq - Otwórz menu główne</gradient>\\n<gradient:#6b7280:#9ca3af>/rq ranks - Zobacz rangi</gradient>\\n<gradient:#6b7280:#9ca3af>/rq bounty - Zobacz nagrody</gradient>"
+  help: "<gradient:#a855f7:#c084fc>📖 Pomoc RaindropQuests</gradient>\n<gradient:#6b7280:#9ca3af>/rq - Otwórz menu główne</gradient>\n<gradient:#6b7280:#9ca3af>/rq ranks - Zobacz rangi</gradient>\n<gradient:#6b7280:#9ca3af>/rq bounty - Zobacz nagrody</gradient>\n<gradient:#6b7280:#9ca3af>/rq scoreboard perks - Przełącz pasek boczny perków</gradient>"
+  scoreboard:
+    syntax: "<gradient:#f59e0b:#fbbf24>⚠ Użycie:</gradient> <gradient:#6b7280:#9ca3af>/rq scoreboard perks</gradient>"
+    enabled: "<gradient:#10b981:#34d399>✦ Pasek boczny perków włączony.</gradient>"
+    disabled: "<gradient:#ef4444:#f87171>✦ Pasek boczny perków wyłączony.</gradient>"
+
+scoreboard_sidebar:
+  perks:
+    title: "<dark_aqua>[RDQ]</dark_aqua> <white>Perki</white>"
+    active_summary: "<gray>Aktywne:</gray> <aqua>%active_perks%/%max_active_perks%</aqua>"
+    owned_summary: "<gray>Posiadane:</gray> <gold>%acquired_perks%</gold><gray>/</gray><light_purple>%total_perks%</light_purple>"
+    no_active: "<red>Brak aktywnych perków</red>"
+    active_entry: "<white>%perk_name%</white> <gray>(%usage_count%)</gray>"
+    more_active: "<gray>+%remaining_perks% więcej</gray>"
 
 # ============================================
 # GŁÓWNY PRZEGLĄD Interfejs użytkownika
