@@ -1,7 +1,7 @@
 /*
  * RStorage.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -42,7 +42,7 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
  * gameplay systems to distinguish multiple vaults for the same player, and persists contents as a sparse
  * slot map so empty slots do not consume database space.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

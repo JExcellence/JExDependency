@@ -1,7 +1,7 @@
 /*
  * StorageStorePricingSupportTest.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -16,6 +16,9 @@ import org.bukkit.entity.Player;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests storage store pricing support behavior.
+ */
 class StorageStorePricingSupportTest {
 
     @Test

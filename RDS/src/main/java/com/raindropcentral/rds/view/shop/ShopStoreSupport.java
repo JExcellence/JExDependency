@@ -1,12 +1,15 @@
 /*
  * ShopStoreSupport.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
 package com.raindropcentral.rds.view.shop;
 
+/**
+ * Provides support utilities for shop store.
+ */
 final class ShopStoreSupport {
 
     private ShopStoreSupport() {}

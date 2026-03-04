@@ -1,3 +1,10 @@
+/*
+ * ShopLedgerView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -30,6 +37,9 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Renders the shop ledger inventory view.
+ */
 public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -37,6 +47,9 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
 
+    /**
+     * Creates a new shop ledger view.
+     */
     public ShopLedgerView() {
         super(ShopOverviewView.class);
     }

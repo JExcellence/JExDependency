@@ -1,7 +1,7 @@
 /*
  * StorageOverviewView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>This view summarizes the player's current storage ownership and exposes a button to open the
  * paginated per-storage list.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

@@ -1,7 +1,7 @@
 /*
  * PlayerJoinListenerTest.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -28,6 +28,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
+/**
+ * Tests player join listener behavior.
+ */
 class PlayerJoinListenerTest {
 
     private static final Logger TEST_LOGGER = Logger.getLogger("RDR-Test");

@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>This section exposes storage-related defaults used when a player first joins the server and when
  * gameplay systems decide whether the player may unlock more storage containers.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

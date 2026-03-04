@@ -1,7 +1,7 @@
 /*
  * RDRRequirementSetup.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>This setup registers the config-section adapter used to convert RDR store requirement sections
  * into standard RPlatform requirements.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

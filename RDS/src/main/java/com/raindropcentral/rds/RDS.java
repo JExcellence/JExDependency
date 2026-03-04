@@ -1,3 +1,10 @@
+/*
+ * RDS.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds;
 
 import com.raindropcentral.commands.CommandFactory;
@@ -46,6 +53,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Main plugin entry point for RDS.
+ */
 @SuppressWarnings("unused")
 public class RDS extends JavaPlugin {
 
@@ -71,6 +81,9 @@ public class RDS extends JavaPlugin {
     private final static String FOLDER_PATH = "config";
     private final static String FILE_NAME   = "config.yml";
 
+    /**
+     * Bootstraps shared platform services before enable.
+     */
     @Override
     public void onLoad() {
         this.rds = this;
@@ -80,6 +93,9 @@ public class RDS extends JavaPlugin {
     }
 
 
+    /**
+     * Initializes repositories, views, and runtime services.
+     */
     @Override
     public void onEnable() {
         this.platform.initialize();
@@ -113,6 +129,9 @@ public class RDS extends JavaPlugin {
         }
     }
 
+    /**
+     * Shuts down runtime services and releases resources.
+     */
     @Override
     public void onDisable() {
         this.getLogger().info("Disabling RDS: closing Hibernate");
@@ -136,6 +155,11 @@ public class RDS extends JavaPlugin {
         }
     }
 
+    /**
+     * Returns the default config.
+     *
+     * @return the default config
+     */
     public ConfigSection getDefaultConfig() {
         this.ensureDefaultConfigFile();
         try {
@@ -353,6 +377,11 @@ public class RDS extends JavaPlugin {
         }
     }
 
+    /**
+     * Indicates whether vault economy is available.
+     *
+     * @return {@code true} if vault economy; otherwise {@code false}
+     */
     public boolean hasVaultEconomy() {
         return this.resolveVaultEconomy() != null;
     }
@@ -483,54 +512,119 @@ public class RDS extends JavaPlugin {
         return String.format(Locale.US, "%.2f", amount);
     }
 
+    /**
+     * Returns the plugin.
+     *
+     * @return the plugin
+     */
     public JavaPlugin getPlugin() {
         return this.rds;
     }
 
+    /**
+     * Returns the executor.
+     *
+     * @return the executor
+     */
     public ExecutorService getExecutor() {
         return this.executor;
     }
 
+    /**
+     * Returns the platform.
+     *
+     * @return the platform
+     */
     public RPlatform getPlatform() {
         return this.platform;
     }
 
+    /**
+     * Returns the entity manager factory.
+     *
+     * @return the entity manager factory
+     */
     public EntityManagerFactory getEntityManagerFactory() {
         return this.entityManagerFactory;
     }
 
+    /**
+     * Returns the economy instance.
+     *
+     * @return the economy instance
+     */
     public Object getEconomyInstance() {
         return this.economyInstance;
     }
 
+    /**
+     * Returns the view frame.
+     *
+     * @return the view frame
+     */
     public ViewFrame getViewFrame() {
         return this.viewFrame;
     }
 
+    /**
+     * Returns the shop tax scheduler.
+     *
+     * @return the shop tax scheduler
+     */
     public ShopTaxScheduler getShopTaxScheduler() {
         return this.shopTaxScheduler;
     }
 
+    /**
+     * Returns the shop boss bar service.
+     *
+     * @return the shop boss bar service
+     */
     public ShopBossBarService getShopBossBarService() {
         return this.shopBossBarService;
     }
 
+    /**
+     * Returns the admin shop restock scheduler.
+     *
+     * @return the admin shop restock scheduler
+     */
     public AdminShopRestockScheduler getAdminShopRestockScheduler() {
         return this.adminShopRestockScheduler;
     }
 
+    /**
+     * Returns the shop sidebar scoreboard service.
+     *
+     * @return the shop sidebar scoreboard service
+     */
     public ShopSidebarScoreboardService getShopSidebarScoreboardService() {
         return this.shopSidebarScoreboardService;
     }
 
+    /**
+     * Returns the scheduler.
+     *
+     * @return the scheduler
+     */
     public ISchedulerAdapter getScheduler() {
         return this.scheduler;
     }
 
+    /**
+     * Returns the platform type.
+     *
+     * @return the platform type
+     */
     public PlatformType getPlatformType() {
         return this.platformType;
     }
 
+    /**
+     * Returns the player repository.
+     *
+     * @return the player repository
+     */
     public RRDSPlayer getPlayerRepository() {
         return this.playerRepository;
     }

@@ -1,7 +1,7 @@
 /*
  * PRR.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -34,7 +34,7 @@ import org.jspecify.annotations.NonNull;
  * <p>The command exposes the storage overview entry point, quick hotkey opens via
  * {@code /rr <hotkey>}, and first-argument tab completion for supported actions and bound hotkeys.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

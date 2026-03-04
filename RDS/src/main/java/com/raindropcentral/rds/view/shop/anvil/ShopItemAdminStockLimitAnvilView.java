@@ -1,3 +1,10 @@
+/*
+ * ShopItemAdminStockLimitAnvilView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop.anvil;
 
 import com.raindropcentral.rds.RDS;
@@ -20,12 +27,18 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
+/**
+ * Renders the shop item admin stock limit anvil inventory view.
+ */
 public class ShopItemAdminStockLimitAnvilView extends AbstractAnvilView {
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
     private final State<ShopItem> targetItem = initialState("shopItem");
 
+    /**
+     * Creates a new shop item admin stock limit anvil view.
+     */
     public ShopItemAdminStockLimitAnvilView() {
         super(ShopItemEditView.class);
     }

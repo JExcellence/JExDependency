@@ -1,3 +1,10 @@
+/*
+ * ShopItemEditView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -37,6 +44,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Renders the shop item edit inventory view.
+ */
 public class ShopItemEditView extends BaseView {
 
     private static final DateTimeFormatter RESTOCK_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
@@ -46,6 +56,9 @@ public class ShopItemEditView extends BaseView {
     private final State<ShopItem> sourceItem = initialState("shopItem");
     private final MutableState<ShopItem> editedItem = mutableState((ShopItem) null);
 
+    /**
+     * Creates a new shop item edit view.
+     */
     public ShopItemEditView() {
         super(ShopEditView.class);
     }

@@ -1,3 +1,10 @@
+/*
+ * ShopBossBarService.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.service.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -20,6 +27,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Represents shop boss bar service.
+ */
 public class ShopBossBarService {
 
     private final RDS plugin;
@@ -28,6 +38,11 @@ public class ShopBossBarService {
     private final Map<UUID, BossBar> activeBars = new ConcurrentHashMap<>();
     private final Map<UUID, Boolean> enabledStates = new ConcurrentHashMap<>();
 
+    /**
+     * Creates a new shop boss bar service.
+     *
+     * @param plugin plugin instance
+     */
     public ShopBossBarService(
             final @NotNull RDS plugin
     ) {
@@ -37,6 +52,9 @@ public class ShopBossBarService {
         this.maxViewDistance = bossBarSection.getViewDistance();
     }
 
+    /**
+     * Starts shop boss bar service processing.
+     */
     public void start() {
         this.plugin.getScheduler().runRepeating(
                 this::refreshOnlinePlayers,
@@ -45,6 +63,9 @@ public class ShopBossBarService {
         );
     }
 
+    /**
+     * Shuts down shop boss bar service processing.
+     */
     public void shutdown() {
         for (final Player player : Bukkit.getOnlinePlayers()) {
             this.clearPlayer(player);

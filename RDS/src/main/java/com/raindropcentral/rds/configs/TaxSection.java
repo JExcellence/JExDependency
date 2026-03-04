@@ -1,3 +1,10 @@
+/*
+ * TaxSection.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.configs;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -18,6 +25,9 @@ import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Represents the tax configuration section.
+ */
 @CSAlways
 @SuppressWarnings("unused")
 public class TaxSection extends AConfigSection {
@@ -32,12 +42,22 @@ public class TaxSection extends AConfigSection {
     private String time_zone;
     private Boolean join_notification;
 
+    /**
+     * Creates a new tax section.
+     *
+     * @param baseEnvironment evaluation environment used for config expressions
+     */
     public TaxSection(
             final EvaluationEnvironmentBuilder baseEnvironment
     ) {
         super(baseEnvironment);
     }
 
+    /**
+     * Returns the currencies.
+     *
+     * @return the currencies
+     */
     public @NotNull Map<String, TaxCurrencySection> getCurrencies() {
         return this.currencies == null
                 ? new LinkedHashMap<>()
@@ -69,6 +89,11 @@ public class TaxSection extends AConfigSection {
         return createFallbackCurrency(normalizedType);
     }
 
+    /**
+     * Returns the duration ticks.
+     *
+     * @return the duration ticks
+     */
     public long getDurationTicks() {
         if (this.duration == null) {
             return DEFAULT_DURATION_TICKS;
@@ -77,14 +102,29 @@ public class TaxSection extends AConfigSection {
         return Math.max(1L, this.duration);
     }
 
+    /**
+     * Returns the start time.
+     *
+     * @return the start time
+     */
     public @NotNull LocalTime getStartTime() {
         return this.parseStartTime(this.start_time);
     }
 
+    /**
+     * Returns the time zone id.
+     *
+     * @return the time zone id
+     */
     public @NotNull ZoneId getTimeZoneId() {
         return this.parseTimeZone(this.time_zone);
     }
 
+    /**
+     * Executes should notify on join.
+     *
+     * @return {@code true} if notify on join; otherwise {@code false}
+     */
     public boolean shouldNotifyOnJoin() {
         return this.join_notification == null || this.join_notification;
     }

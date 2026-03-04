@@ -1,3 +1,10 @@
+/*
+ * ShopBlock.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.items;
 
 import com.raindropcentral.rds.RDS;
@@ -13,8 +20,18 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.UUID;
 
+/**
+ * Represents shop block.
+ */
 public class ShopBlock {
 
+    /**
+     * Returns the shop block.
+     *
+     * @param plugin plugin instance
+     * @param player target player
+     * @return the shop block
+     */
     public static @NonNull ItemStack getShopBlock(RDS plugin, @NonNull Player player) {
         ItemStack shop = new ItemStack(Material.CHEST);
         ItemMeta meta = shop.getItemMeta();
@@ -30,6 +47,13 @@ public class ShopBlock {
         return shop;
     }
 
+    /**
+     * Executes equals.
+     *
+     * @param plugin plugin instance
+     * @param item target item payload
+     * @return {@code true} if the operation succeeds; otherwise {@code false}
+     */
     public static boolean equals(RDS plugin, @NonNull ItemStack item){
         if (item == null || item.getType() != Material.CHEST) {
             return false;
@@ -47,6 +71,13 @@ public class ShopBlock {
         );
     }
 
+    /**
+     * Returns the owner.
+     *
+     * @param plugin plugin instance
+     * @param item target item payload
+     * @return the owner
+     */
     public static UUID getOwner(RDS plugin, ItemStack item) {
         if (item == null) return null;
 

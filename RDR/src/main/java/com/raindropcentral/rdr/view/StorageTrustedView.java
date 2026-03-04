@@ -1,7 +1,7 @@
 /*
  * StorageTrustedView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -43,7 +43,7 @@ import com.raindropcentral.rplatform.view.APaginatedView;
  * {@link StorageTrustStatus#ASSOCIATE}, and {@link StorageTrustStatus#TRUSTED}. Associates may deposit
  * into the storage, while trusted players may both deposit and withdraw.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

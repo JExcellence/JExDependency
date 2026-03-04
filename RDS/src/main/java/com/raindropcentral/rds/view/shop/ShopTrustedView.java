@@ -1,3 +1,10 @@
+/*
+ * ShopTrustedView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -28,11 +35,17 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Renders the shop trusted inventory view.
+ */
 public class ShopTrustedView extends APaginatedView<ShopTrustedView.TrustedPlayerEntry> {
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
 
+    /**
+     * Creates a new shop trusted view.
+     */
     public ShopTrustedView() {
         super(ShopOverviewView.class);
     }
@@ -297,6 +310,13 @@ public class ShopTrustedView extends APaginatedView<ShopTrustedView.TrustedPlaye
         return ownerName == null ? shop.getOwner().toString() : ownerName;
     }
 
+    /**
+     * Represents trusted player entry.
+     *
+     * @param playerId player identifier to evaluate
+     * @param playerName player name
+     * @param status status
+     */
     public record TrustedPlayerEntry(
             @NotNull UUID playerId,
             @NotNull String playerName,

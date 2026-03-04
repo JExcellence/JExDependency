@@ -1,7 +1,7 @@
 /*
  * StorageStoreView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>The purchase flow evaluates and consumes the configured RPlatform requirements for each storage
  * purchase.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

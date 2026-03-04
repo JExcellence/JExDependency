@@ -1,7 +1,7 @@
 /*
  * package-info.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 

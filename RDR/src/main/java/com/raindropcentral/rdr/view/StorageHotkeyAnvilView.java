@@ -1,7 +1,7 @@
 /*
  * StorageHotkeyAnvilView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>Players open this view from {@link StoragePlayerView} with a right click, enter a numeric value,
  * and persist a per-player hotkey that can later be used through {@code /rr <hotkey>}.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

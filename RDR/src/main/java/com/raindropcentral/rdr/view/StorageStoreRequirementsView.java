@@ -1,7 +1,7 @@
 /*
  * StorageStoreRequirementsView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -40,7 +40,7 @@ import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
  * <p>This view lets players inspect each configured requirement with its configured icon, current
  * progress, and type-specific details before attempting a purchase from the storage store.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

@@ -1,3 +1,10 @@
+/*
+ * ShopTaxScheduler.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.service.tax;
 
 import com.raindropcentral.rds.RDS;
@@ -22,6 +29,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * Schedules shop tax operations.
+ */
 public class ShopTaxScheduler {
 
     private static final Logger LOGGER = Logger.getLogger("RDS");
@@ -30,12 +40,20 @@ public class ShopTaxScheduler {
     private final RDS plugin;
     private boolean running = false;
 
+    /**
+     * Creates a new shop tax scheduler.
+     *
+     * @param plugin plugin instance
+     */
     public ShopTaxScheduler(
             final @NotNull RDS plugin
     ) {
         this.plugin = plugin;
     }
 
+    /**
+     * Starts shop tax scheduler processing.
+     */
     public void start() {
         if (this.running) {
             return;

@@ -1,3 +1,10 @@
+/*
+ * ShopLedgerEntry.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.database.entity;
 
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
@@ -16,6 +23,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
+/**
+ * Represents shop ledger entry.
+ */
 @Entity
 @Table(name = "shop_ledger_entries")
 @SuppressWarnings({
@@ -58,6 +68,19 @@ public class ShopLedgerEntry extends BaseEntity {
     protected ShopLedgerEntry() {
     }
 
+    /**
+     * Creates a new shop ledger entry.
+     *
+     * @param shop target shop
+     * @param entryType entry type
+     * @param currencyType currency type
+     * @param amount amount
+     * @param actorId actor id
+     * @param actorName actor name
+     * @param itemType item type
+     * @param itemAmount item amount
+     * @param countedShops counted shops
+     */
     public ShopLedgerEntry(
             final @NotNull Shop shop,
             final @NotNull ShopLedgerType entryType,
@@ -125,6 +148,11 @@ public class ShopLedgerEntry extends BaseEntity {
         );
     }
 
+    /**
+     * Returns the shop.
+     *
+     * @return the shop
+     */
     public @NotNull Shop getShop() {
         return this.shop;
     }
@@ -135,34 +163,74 @@ public class ShopLedgerEntry extends BaseEntity {
         this.shop = shop;
     }
 
+    /**
+     * Returns the entry type.
+     *
+     * @return the entry type
+     */
     public @NotNull ShopLedgerType getEntryType() {
         return this.entry_type;
     }
 
+    /**
+     * Returns the currency type.
+     *
+     * @return the currency type
+     */
     public @NotNull String getCurrencyType() {
         return this.currency_type;
     }
 
+    /**
+     * Returns the amount.
+     *
+     * @return the amount
+     */
     public double getAmount() {
         return this.amount;
     }
 
+    /**
+     * Returns the actor name.
+     *
+     * @return the actor name
+     */
     public @NotNull String getActorName() {
         return this.actor_name;
     }
 
+    /**
+     * Returns the actor id.
+     *
+     * @return the actor id
+     */
     public @Nullable UUID getActorId() {
         return this.actor_uuid;
     }
 
+    /**
+     * Returns the item type.
+     *
+     * @return the item type
+     */
     public @Nullable String getItemType() {
         return this.item_type;
     }
 
+    /**
+     * Returns the item amount.
+     *
+     * @return the item amount
+     */
     public @Nullable Integer getItemAmount() {
         return this.item_amount;
     }
 
+    /**
+     * Returns the counted shops.
+     *
+     * @return the counted shops
+     */
     public @Nullable Integer getCountedShops() {
         return this.counted_shops;
     }

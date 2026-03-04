@@ -1,7 +1,7 @@
 /*
  * StorageSettingsView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>This view exposes the trusted-player configuration screen and the hotkey binding entry point for a
  * specific storage. Non-owners may view the storage summary but cannot modify settings.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

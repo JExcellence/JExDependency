@@ -18,7 +18,7 @@ import java.util.Map;
  * <p>When a player already has a persisted profile, the listener restores the saved shop sidebar
  * scoreboard type and optionally sends the configured tax reminder.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

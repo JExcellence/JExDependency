@@ -1,7 +1,7 @@
 /*
  * StoreRequirementSectionTest.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -18,6 +18,9 @@ import com.raindropcentral.rplatform.requirement.config.RequirementFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
+/**
+ * Tests store requirement section behavior.
+ */
 class StoreRequirementSectionTest {
 
     @Test

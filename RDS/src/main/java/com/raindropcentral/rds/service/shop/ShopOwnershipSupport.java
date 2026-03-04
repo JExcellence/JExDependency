@@ -1,7 +1,7 @@
 /*
  * ShopOwnershipSupport.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -20,7 +20,7 @@ import com.raindropcentral.rds.database.entity.Shop;
  * <p>These counts are used for placement and admin-toggle limits. Purchased shop-block progress is
  * tracked separately on the player profile.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

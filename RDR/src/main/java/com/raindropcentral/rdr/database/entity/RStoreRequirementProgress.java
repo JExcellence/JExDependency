@@ -1,7 +1,7 @@
 /*
  * RStoreRequirementProgress.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -32,7 +32,7 @@ import com.raindropcentral.rplatform.database.converter.ItemStackConverter;
  * purchases normalized in their own table rather than embedding serialized progress maps on the
  * player record.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

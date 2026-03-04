@@ -1,3 +1,10 @@
+/*
+ * StoreCurrencySection.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.configs;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -6,6 +13,9 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 import java.util.Locale;
 
+/**
+ * Represents the store currency configuration section.
+ */
 @CSAlways
 @SuppressWarnings("unused")
 public class StoreCurrencySection extends AConfigSection {
@@ -16,20 +26,40 @@ public class StoreCurrencySection extends AConfigSection {
 	
 	private Double growth_rate;
 	
+	/**
+	 * Creates a new store currency section.
+	 *
+	 * @param baseEnvironment evaluation environment used for config expressions
+	 */
 	public StoreCurrencySection(EvaluationEnvironmentBuilder baseEnvironment) {
 		super(baseEnvironment);
 	}
 	
+	/**
+	 * Returns the type.
+	 *
+	 * @return the type
+	 */
 	public String getType() {
 		return type == null || type.isBlank()
 				? "vault"
 				: type.trim().toLowerCase(Locale.ROOT);
 	}
 	
+	/**
+	 * Returns the initial cost.
+	 *
+	 * @return the initial cost
+	 */
 	public double getInitialCost() {
 		return initial_cost == null ? 1000.0 : initial_cost;
 	}
 	
+	/**
+	 * Returns the growth rate.
+	 *
+	 * @return the growth rate
+	 */
 	public double getGrowthRate() {
 		return growth_rate == null ? 1.125 : growth_rate;
 	}

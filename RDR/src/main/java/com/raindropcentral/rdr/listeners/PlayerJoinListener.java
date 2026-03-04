@@ -1,7 +1,7 @@
 /*
  * PlayerJoinListener.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -32,7 +32,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>When a player joins for the first time, the listener creates the backing {@link RDRPlayer} entity and
  * provisions the configured number of initial {@link RStorage} rows.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */
@@ -165,13 +165,31 @@ public class PlayerJoinListener implements Listener {
     }
 }
 
+/**
+ * Represents player profile repository.
+ */
 interface PlayerProfileRepository {
 
+    /**
+     * Finds by player.
+     *
+     * @param playerUuid player identifier to look up
+     * @return the matched by player, or {@code null} when none exists
+     */
     RDRPlayer findByPlayer(@NotNull UUID playerUuid);
 
+    /**
+     * Creates async.
+     *
+     * @param player target player
+     * @return the create async result
+     */
     CompletableFuture<RDRPlayer> createAsync(@NotNull RDRPlayer player);
 }
 
+/**
+ * Represents repository backed player profile repository.
+ */
 final class RepositoryBackedPlayerProfileRepository implements PlayerProfileRepository {
 
     private final RRDRPlayer repository;
@@ -184,11 +202,23 @@ final class RepositoryBackedPlayerProfileRepository implements PlayerProfileRepo
         return repository == null ? null : new RepositoryBackedPlayerProfileRepository(repository);
     }
 
+    /**
+     * Finds by player.
+     *
+     * @param playerUuid player identifier to look up
+     * @return the matched by player, or {@code null} when none exists
+     */
     @Override
     public RDRPlayer findByPlayer(final @NotNull UUID playerUuid) {
         return this.repository.findByPlayer(playerUuid);
     }
 
+    /**
+     * Creates async.
+     *
+     * @param player target player
+     * @return the create async result
+     */
     @Override
     public CompletableFuture<RDRPlayer> createAsync(final @NotNull RDRPlayer player) {
         return this.repository.createAsync(player);

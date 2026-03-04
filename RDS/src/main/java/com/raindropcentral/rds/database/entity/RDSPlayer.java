@@ -1,7 +1,7 @@
 /*
  * RDSPlayer.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -38,7 +38,7 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
  * which sidebar scoreboard type should be restored on join. It also stores normalized progress rows
  * used for partial shop-store requirement completion.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

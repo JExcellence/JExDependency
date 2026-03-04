@@ -1,3 +1,10 @@
+/*
+ * AdminShopStockSupport.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.service.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -11,6 +18,9 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * Provides support utilities for admin shop stock.
+ */
 public final class AdminShopStockSupport {
 
     private static final long TICK_DURATION_MILLIS = 50L;

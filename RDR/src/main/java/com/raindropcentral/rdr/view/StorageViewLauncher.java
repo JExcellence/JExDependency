@@ -1,7 +1,7 @@
 /*
  * StorageViewLauncher.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -24,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>This helper centralizes storage lease acquisition, delayed view transitions, and user feedback
  * so commands and inventory buttons open storages through the same cross-server-safe path.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

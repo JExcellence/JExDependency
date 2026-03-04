@@ -1,3 +1,10 @@
+/*
+ * ShopCustomerView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -37,6 +44,9 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Renders the shop customer inventory view.
+ */
 public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerShopEntry> {
 
     private static final DateTimeFormatter RESTOCK_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
@@ -653,6 +663,13 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                 .asPlaceholder();
     }
 
+    /**
+     * Represents customer shop entry.
+     *
+     * @param originalIndex original index
+     * @param item target item payload
+     * @param entryId entry id
+     */
     public record CustomerShopEntry(
             int originalIndex,
             @NotNull ShopItem item,

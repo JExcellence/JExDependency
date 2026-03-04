@@ -49,7 +49,7 @@ import org.jspecify.annotations.NonNull;
  * <p>The plugin bootstraps shared platform services, persistence, command/listener discovery, and the
  * storage-related inventory views used by players.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

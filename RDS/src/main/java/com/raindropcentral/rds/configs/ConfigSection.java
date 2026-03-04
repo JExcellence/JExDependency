@@ -1,7 +1,7 @@
 /*
  * ConfigSection.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>This section keeps the existing tax, admin-shop, and currency defaults while exposing the new
  * purchase-tier requirement model used by the shop store.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */
@@ -466,6 +466,12 @@ public class ConfigSection extends AConfigSection {
         this.requirements = parsedRequirements;
     }
 
+    /**
+     * Executes after parsing.
+     *
+     * @param fields parsed fields to post-process
+     * @throws Exception if the operation fails
+     */
     @Override
     public void afterParsing(final @NotNull List<Field> fields) throws Exception {
         super.afterParsing(fields);

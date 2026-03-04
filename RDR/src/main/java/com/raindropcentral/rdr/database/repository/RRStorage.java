@@ -1,7 +1,7 @@
 /*
  * RRStorage.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>This repository performs atomic lease acquisition, renewal, and save-release operations so a
  * storage can only be edited by one active session across all servers at a time.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

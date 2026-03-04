@@ -1,7 +1,7 @@
 /*
  * ShopSidebarScoreboardService.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -48,7 +48,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * values while it remains enabled, and restores the player's previous scoreboard when the sidebar
  * is disabled.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

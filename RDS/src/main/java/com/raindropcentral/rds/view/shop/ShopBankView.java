@@ -1,3 +1,10 @@
+/*
+ * ShopBankView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -31,11 +38,17 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Renders the shop bank inventory view.
+ */
 public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
 
+    /**
+     * Creates a new shop bank view.
+     */
     public ShopBankView() {
         super(ShopOverviewView.class);
     }
@@ -493,6 +506,13 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
         return ownerName == null ? shop.getOwner().toString() : ownerName;
     }
 
+    /**
+     * Represents bank view entry.
+     *
+     * @param entryId entry id
+     * @param currencyType currency type
+     * @param amount amount
+     */
     public record BankViewEntry(
             @Nullable Long entryId,
             @NotNull String currencyType,

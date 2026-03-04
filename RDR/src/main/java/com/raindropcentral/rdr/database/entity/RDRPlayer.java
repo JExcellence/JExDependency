@@ -1,7 +1,7 @@
 /*
  * RDRPlayer.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -39,7 +39,7 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
  * wants the storage sidebar scoreboard restored automatically on login. The relationships cascade
  * persistence operations so player-level updates keep child rows in sync.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

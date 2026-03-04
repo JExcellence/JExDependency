@@ -1,7 +1,7 @@
 /*
  * ShopStoreCostView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -41,7 +41,7 @@ import com.raindropcentral.rplatform.view.APaginatedView;
  * <p>Players can inspect each requirement, bank partial item or currency progress with right-click,
  * and purchase a new shop block from the summary item when the current tier is ready.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */
@@ -143,6 +143,11 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
         }
     }
 
+    /**
+     * Cancels direct inventory clicks while this view is open.
+     *
+     * @param click slot click context
+     */
     @Override
     public void onClick(final @NotNull SlotClickContext click) {
         click.setCancelled(true);

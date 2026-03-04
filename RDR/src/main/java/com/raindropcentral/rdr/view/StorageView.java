@@ -1,7 +1,7 @@
 /*
  * StorageView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -38,7 +38,7 @@ import org.jetbrains.annotations.Nullable;
  * {@link com.raindropcentral.rdr.database.entity.RStorage}, allows the player to move items freely,
  * and persists the updated sparse slot map when the inventory closes.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

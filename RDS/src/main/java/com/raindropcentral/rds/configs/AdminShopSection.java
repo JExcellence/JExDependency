@@ -1,3 +1,10 @@
+/*
+ * AdminShopSection.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.configs;
 
 import java.io.File;
@@ -16,6 +23,9 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Locale;
 
+/**
+ * Represents the admin shop configuration section.
+ */
 @CSAlways
 @SuppressWarnings("unused")
 public class AdminShopSection extends AConfigSection {
@@ -31,6 +41,11 @@ public class AdminShopSection extends AConfigSection {
     private String full_restock_time;
     private String time_zone;
 
+    /**
+     * Creates a new admin shop section.
+     *
+     * @param baseEnvironment evaluation environment used for config expressions
+     */
     public AdminShopSection(
             final EvaluationEnvironmentBuilder baseEnvironment
     ) {
@@ -63,6 +78,11 @@ public class AdminShopSection extends AConfigSection {
         return section;
     }
 
+    /**
+     * Returns the restock mode.
+     *
+     * @return the restock mode
+     */
     public @NotNull AdminShopRestockMode getRestockMode() {
         if (this.restock_mode == null || this.restock_mode.isBlank()) {
             return AdminShopRestockMode.GRADUAL;
@@ -74,6 +94,11 @@ public class AdminShopSection extends AConfigSection {
         };
     }
 
+    /**
+     * Returns the restock check period ticks.
+     *
+     * @return the restock check period ticks
+     */
     public long getRestockCheckPeriodTicks() {
         if (this.restock_check_period_ticks == null) {
             return DEFAULT_RESTOCK_CHECK_PERIOD_TICKS;
@@ -82,6 +107,11 @@ public class AdminShopSection extends AConfigSection {
         return Math.max(1L, this.restock_check_period_ticks);
     }
 
+    /**
+     * Returns the default reset timer ticks.
+     *
+     * @return the default reset timer ticks
+     */
     public long getDefaultResetTimerTicks() {
         if (this.default_reset_timer_ticks == null) {
             return DEFAULT_RESET_TIMER_TICKS;
@@ -90,10 +120,20 @@ public class AdminShopSection extends AConfigSection {
         return Math.max(1L, this.default_reset_timer_ticks);
     }
 
+    /**
+     * Returns the full restock time.
+     *
+     * @return the full restock time
+     */
     public @NotNull LocalTime getFullRestockTime() {
         return this.parseTime(this.full_restock_time);
     }
 
+    /**
+     * Returns the time zone id.
+     *
+     * @return the time zone id
+     */
     public @NotNull ZoneId getTimeZoneId() {
         return this.parseTimeZone(this.time_zone);
     }

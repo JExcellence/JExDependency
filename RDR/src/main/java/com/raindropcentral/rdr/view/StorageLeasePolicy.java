@@ -1,7 +1,7 @@
 /*
  * StorageLeasePolicy.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -10,6 +10,9 @@ package com.raindropcentral.rdr.view;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+/**
+ * Encapsulates policy decisions for storage lease.
+ */
 final class StorageLeasePolicy {
 
     static final long LEASE_RENEW_INTERVAL_TICKS = 20L * 30L;

@@ -1,20 +1,38 @@
+/*
+ * AdminShopRestockScheduler.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.service.shop;
 
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Schedules admin shop restock operations.
+ */
 public class AdminShopRestockScheduler {
 
     private final RDS plugin;
     private boolean running = false;
 
+    /**
+     * Creates a new admin shop restock scheduler.
+     *
+     * @param plugin plugin instance
+     */
     public AdminShopRestockScheduler(
             final @NotNull RDS plugin
     ) {
         this.plugin = plugin;
     }
 
+    /**
+     * Starts admin shop restock scheduler processing.
+     */
     public void start() {
         if (this.running) {
             return;

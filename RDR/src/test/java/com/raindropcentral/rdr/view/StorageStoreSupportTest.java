@@ -1,7 +1,7 @@
 /*
  * StorageStoreSupportTest.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests storage store support behavior.
+ */
 class StorageStoreSupportTest {
 
     @Test

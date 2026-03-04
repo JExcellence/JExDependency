@@ -1,3 +1,10 @@
+/*
+ * Bank.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.database.entity;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -10,6 +17,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents bank.
+ */
 @Entity
 @Table(
         name = "shop_bank_entries",
@@ -40,6 +50,13 @@ public class Bank extends BaseEntity {
     protected Bank() {
     }
 
+    /**
+     * Creates a new bank.
+     *
+     * @param shop target shop
+     * @param currencyType currency type
+     * @param amount amount
+     */
     public Bank(
             final @NotNull Shop shop,
             final @NotNull String currencyType,
@@ -50,6 +67,11 @@ public class Bank extends BaseEntity {
         this.amount = Math.max(amount, 0D);
     }
 
+    /**
+     * Returns the shop.
+     *
+     * @return the shop
+     */
     public @NotNull Shop getShop() {
         return this.shop;
     }
@@ -60,10 +82,20 @@ public class Bank extends BaseEntity {
         this.shop = shop;
     }
 
+    /**
+     * Returns the currency type.
+     *
+     * @return the currency type
+     */
     public @NotNull String getCurrencyType() {
         return this.currency_type;
     }
 
+    /**
+     * Returns the amount.
+     *
+     * @return the amount
+     */
     public double getAmount() {
         return this.amount;
     }

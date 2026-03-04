@@ -1,7 +1,7 @@
 /*
  * StoreRequirementSection.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -25,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
  * RDR keeps the original definition intact so store requirements can use any valid RPlatform
  * requirement type while still exposing the local config key and icon metadata.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

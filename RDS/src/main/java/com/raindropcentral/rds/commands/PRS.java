@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
  * <p>The command exposes shop overview information, shop-bar and scoreboard toggles,
  * shop-block grants, and player-facing shop search/store entry points.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

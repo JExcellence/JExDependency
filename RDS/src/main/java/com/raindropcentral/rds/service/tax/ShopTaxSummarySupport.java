@@ -1,3 +1,10 @@
+/*
+ * ShopTaxSummarySupport.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.service.tax;
 
 import com.raindropcentral.rds.RDS;
@@ -16,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Provides support utilities for shop tax summary.
+ */
 public final class ShopTaxSummarySupport {
 
     private static final DateTimeFormatter NEXT_TAX_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm z");
@@ -121,6 +131,16 @@ public final class ShopTaxSummarySupport {
         return String.join(" ", parts.subList(0, limit));
     }
 
+    /**
+     * Represents shop tax summary.
+     *
+     * @param taxedShops taxed shops
+     * @param amountSummary amount summary
+     * @param nextTaxAt next tax at
+     * @param timeZone time zone
+     * @param nextTaxDisplay next tax display
+     * @param timeUntilDisplay time until display
+     */
     public record ShopTaxSummary(
             int taxedShops,
             @NotNull String amountSummary,
@@ -129,10 +149,20 @@ public final class ShopTaxSummarySupport {
             @NotNull String nextTaxDisplay,
             @NotNull String timeUntilDisplay
     ) {
+        /**
+         * Indicates whether the summary contains any taxable shops.
+         *
+         * @return {@code true} if taxable shops are present; otherwise {@code false}
+         */
         public boolean hasTaxableShops() {
             return this.taxedShops > 0;
         }
 
+        /**
+         * Indicates whether configured charges is available.
+         *
+         * @return {@code true} if configured charges; otherwise {@code false}
+         */
         public boolean hasConfiguredCharges() {
             return !"None".equalsIgnoreCase(this.amountSummary);
         }

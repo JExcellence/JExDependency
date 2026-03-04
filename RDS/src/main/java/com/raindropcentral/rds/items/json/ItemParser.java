@@ -1,3 +1,10 @@
+/*
+ * ItemParser.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.items.json;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -15,6 +22,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents item parser.
+ */
 public final class ItemParser {
 
     private static ObjectMapper objectMapper;
@@ -23,6 +33,11 @@ public final class ItemParser {
     private ItemParser() {
     }
 
+    /**
+     * Returns the object mapper.
+     *
+     * @return the object mapper
+     */
     public static ObjectMapper getObjectMapper() {
         if (objectMapper == null) {
             synchronized (MAPPER_LOCK) {
@@ -47,6 +62,13 @@ public final class ItemParser {
         return mapper;
     }
 
+    /**
+     * Executes parse.
+     *
+     * @param json serialized JSON payload
+     * @return the parse result
+     * @throws RuntimeException if the payload cannot be parsed
+     */
     public static AbstractItem parse(@NotNull final String json) {
         try {
             return getObjectMapper().readValue(json, AbstractItem.class);
@@ -55,6 +77,13 @@ public final class ItemParser {
         }
     }
 
+    /**
+     * Executes serialize.
+     *
+     * @param item target item payload
+     * @return the serialize result
+     * @throws RuntimeException if the payload cannot be serialized
+     */
     public static String serialize(@NotNull final AbstractItem item) {
         try {
             return getObjectMapper().writeValueAsString(item);
@@ -63,6 +92,13 @@ public final class ItemParser {
         }
     }
 
+    /**
+     * Parses list.
+     *
+     * @param json serialized JSON payload
+     * @return the parsed list
+     * @throws RuntimeException if the payload cannot be parsed
+     */
     public static @NotNull List<AbstractItem> parseList(final String json) {
         if (json == null || json.isBlank()) {
             return new ArrayList<>();
@@ -102,6 +138,13 @@ public final class ItemParser {
         }
     }
 
+    /**
+     * Serializes list.
+     *
+     * @param items item payloads to serialize or assign
+     * @return the serialized list
+     * @throws RuntimeException if the payload cannot be serialized
+     */
     public static String serializeList(final List<? extends AbstractItem> items) {
         try {
             final List<AbstractItem> safeItems = new ArrayList<>();
@@ -134,6 +177,9 @@ public final class ItemParser {
         }
     }
 
+    /**
+     * Executes reset mapper.
+     */
     public static void resetMapper() {
         objectMapper = null;
     }

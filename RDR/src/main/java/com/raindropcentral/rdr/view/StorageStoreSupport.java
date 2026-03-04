@@ -1,7 +1,7 @@
 /*
  * StorageStoreSupport.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -10,6 +10,9 @@ package com.raindropcentral.rdr.view;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Provides support utilities for storage store.
+ */
 final class StorageStoreSupport {
 
     private StorageStoreSupport() {}

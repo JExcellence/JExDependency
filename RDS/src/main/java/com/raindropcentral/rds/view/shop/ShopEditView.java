@@ -1,3 +1,10 @@
+/*
+ * ShopEditView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -32,6 +39,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Renders the shop edit inventory view.
+ */
 public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry> {
 
     private static final DateTimeFormatter RESTOCK_TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
@@ -39,6 +49,9 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
 
+    /**
+     * Creates a new shop edit view.
+     */
     public ShopEditView() {
         super(ShopOverviewView.class);
     }
@@ -448,6 +461,13 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
                 .asPlaceholder();
     }
 
+    /**
+     * Represents editable shop entry.
+     *
+     * @param originalIndex original index
+     * @param item target item payload
+     * @param entryId entry id
+     */
     public record EditableShopEntry(
             int originalIndex,
             @NotNull ShopItem item,

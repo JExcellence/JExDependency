@@ -1,3 +1,10 @@
+/*
+ * ShopInputView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -33,6 +40,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+/**
+ * Renders the shop input inventory view.
+ */
 public class ShopInputView extends BaseView {
 
     private final State<RDS> rds = initialState("plugin");
@@ -41,6 +51,9 @@ public class ShopInputView extends BaseView {
     private final MutableState<Map<Integer, ItemStack>> insertedItems = mutableState(new HashMap<>());
     private final MutableState<Boolean> saving = mutableState(false);
 
+    /**
+     * Creates a new shop input view.
+     */
     public ShopInputView() {
         super(ShopOverviewView.class);
     }

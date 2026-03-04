@@ -1,7 +1,7 @@
 /*
  * StorageStoreRequirementBrowserSupport.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -30,6 +30,9 @@ import com.raindropcentral.rplatform.requirement.impl.PlaytimeRequirement;
 import com.raindropcentral.rplatform.requirement.impl.PluginRequirement;
 import com.raindropcentral.rplatform.requirement.impl.TimedRequirement;
 
+/**
+ * Provides support utilities for storage store requirement browser.
+ */
 final class StorageStoreRequirementBrowserSupport {
 
     private static final int MAX_ITEM_LINES = 4;

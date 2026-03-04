@@ -1,3 +1,10 @@
+/*
+ * ShopSearchView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -31,6 +38,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Renders the shop search inventory view.
+ */
 public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntry> {
 
     private final State<RDS> rds = initialState("plugin");
@@ -293,6 +303,13 @@ public class ShopSearchView extends APaginatedView<ShopSearchView.ShopSearchEntr
         return ownerName == null ? ownerId.toString() : ownerName;
     }
 
+    /**
+     * Represents shop search entry.
+     *
+     * @param shopLocation shop location
+     * @param ownerId owner id
+     * @param availableItemCount available item count
+     */
     public record ShopSearchEntry(
             @NotNull Location shopLocation,
             @NotNull UUID ownerId,

@@ -1,7 +1,7 @@
 /*
  * EPRRPermission.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -40,11 +40,21 @@ public enum EPRRPermission implements IPermissionNode{
         this.fallbackNode = fallbackNode;
     }
 
+    /**
+     * Returns the internal name.
+     *
+     * @return the internal name
+     */
     @Override
     public String getInternalName() {
         return this.internalName;
     }
 
+    /**
+     * Returns the fallback node.
+     *
+     * @return the fallback node
+     */
     @Override
     public String getFallbackNode() {
         return this.fallbackNode;

@@ -1,7 +1,7 @@
 /*
  * RDSPlayerStoreRequirementProgressTest.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -15,6 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Tests r d s player store requirement progress behavior.
+ */
 class RDSPlayerStoreRequirementProgressTest {
 
     @Test

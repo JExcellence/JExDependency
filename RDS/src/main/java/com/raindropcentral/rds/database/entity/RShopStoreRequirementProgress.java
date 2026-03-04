@@ -1,7 +1,7 @@
 /*
  * RShopStoreRequirementProgress.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -30,7 +30,7 @@ import com.raindropcentral.rplatform.database.converter.ItemStackConverter;
  * <p>Each row belongs to exactly one {@link RDSPlayer} and stores either a banked currency amount,
  * a banked item stack, or both for a single requirement progress key.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

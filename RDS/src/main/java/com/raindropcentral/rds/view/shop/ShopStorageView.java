@@ -1,3 +1,10 @@
+/*
+ * ShopStorageView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -28,11 +35,17 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * Renders the shop storage inventory view.
+ */
 public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEntry> {
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
 
+    /**
+     * Creates a new shop storage view.
+     */
     public ShopStorageView() {
         super(ShopOverviewView.class);
     }
@@ -337,6 +350,13 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
         return ownerName == null ? shop.getOwner().toString() : ownerName;
     }
 
+    /**
+     * Represents stored shop entry.
+     *
+     * @param originalIndex original index
+     * @param item target item payload
+     * @param entryId entry id
+     */
     public record StoredShopEntry(
             int originalIndex,
             @NotNull ShopItem item,

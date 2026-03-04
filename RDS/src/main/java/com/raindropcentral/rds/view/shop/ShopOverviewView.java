@@ -1,3 +1,10 @@
+/*
+ * ShopOverviewView.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -23,6 +30,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
+/**
+ * Renders the shop overview inventory view.
+ */
 public class ShopOverviewView extends BaseView {
 
     private static final String ADMIN_SHOPS_PERMISSION = "raindropshops.admin.shops";

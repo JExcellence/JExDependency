@@ -1,3 +1,10 @@
+/*
+ * RShop.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.database.repository;
 
 import com.raindropcentral.rds.database.entity.Shop;
@@ -15,6 +22,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Function;
 
+/**
+ * Represents r shop.
+ */
 @SuppressWarnings({
         "unused",
         "FieldCanBeLocal"
@@ -25,6 +35,14 @@ public class RShop extends CachedRepository<Shop, Long, Location> {
 
     private final EntityManagerFactory emf;
 
+    /**
+     * Creates a new r shop.
+     *
+     * @param executorService executor used for repository work
+     * @param entityManagerFactory entity manager factory backing the repository
+     * @param entityClass entity type managed by the repository
+     * @param keyExtractor cache key extractor for loaded entities
+     */
     public RShop(
             @NotNull ExecutorService executorService,
             @NotNull EntityManagerFactory entityManagerFactory,
@@ -56,6 +74,11 @@ public class RShop extends CachedRepository<Shop, Long, Location> {
         return findByAttributes(Map.of("secondary_shop_location", location)).orElse(null);
     }
 
+    /**
+     * Finds all shops.
+     *
+     * @return the matched all shops, or {@code null} when none exists
+     */
     public @NotNull List<Shop> findAllShops() {
         try (var entityManager = this.emf.createEntityManager()) {
             final List<?> shopIds = entityManager.createNativeQuery(

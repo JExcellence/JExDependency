@@ -1,7 +1,7 @@
 /*
  * StoreRequirementIconSection.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
  * <p>This mirrors the lightweight icon subsection shape used by other Raindrop configs, allowing
  * entries such as {@code icon.type: "DIAMOND"}.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

@@ -1,7 +1,7 @@
 /*
  * StoragePlayerView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
  * currently visible storage count relative to the configured maximum, and supports right-click storage
  * settings alongside normal left-click storage opens.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

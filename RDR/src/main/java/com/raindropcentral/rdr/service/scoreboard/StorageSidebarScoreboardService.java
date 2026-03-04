@@ -1,7 +1,7 @@
 /*
  * StorageSidebarScoreboardService.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -34,7 +34,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>The service keeps at most one active sidebar per player, refreshes aggregate storage totals on a
  * repeating schedule, and restores the player's previous scoreboard when the sidebar is disabled.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

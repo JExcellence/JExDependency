@@ -1,3 +1,10 @@
+/*
+ * PlayerClickListener.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.listeners;
 
 import com.raindropcentral.rds.RDS;
@@ -11,15 +18,28 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.Map;
 
+/**
+ * Handles player click events.
+ */
 @SuppressWarnings("unused")
 public class PlayerClickListener implements Listener {
 
     private final RDS rds;
 
+    /**
+     * Creates a new player click listener.
+     *
+     * @param rds plugin instance
+     */
     public PlayerClickListener(RDS rds) {
         this.rds = rds;
     }
 
+    /**
+     * Handles the player click callback.
+     *
+     * @param event triggering event
+     */
     @EventHandler
     public void onPlayerClick(PlayerInteractEvent event) {
         if (event == null) return;

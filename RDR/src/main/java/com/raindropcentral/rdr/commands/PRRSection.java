@@ -1,7 +1,7 @@
 /*
  * PRRSection.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Command section definition for the primary RDR player command.
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

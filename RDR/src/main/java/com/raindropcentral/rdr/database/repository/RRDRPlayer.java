@@ -18,7 +18,7 @@ import com.raindropcentral.rdr.database.entity.RDRPlayer;
  * <p>This repository exposes player-centric lookup helpers while retaining the cached repository behavior
  * supplied by JEHibernate.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */

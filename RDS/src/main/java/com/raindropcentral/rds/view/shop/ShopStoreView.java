@@ -1,7 +1,7 @@
 /*
  * ShopStoreView.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -31,7 +31,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>This view shows the player's current placed-shop count, configured cap, and the availability
  * of the next purchase's requirement set before opening the detailed browser.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */
@@ -97,6 +97,11 @@ public class ShopStoreView extends BaseView {
             ));
     }
 
+    /**
+     * Cancels direct inventory clicks while this view is open.
+     *
+     * @param click slot click context
+     */
     @Override
     public void onClick(final @NotNull SlotClickContext click) {
         click.setCancelled(true);

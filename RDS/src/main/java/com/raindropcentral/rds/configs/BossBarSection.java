@@ -1,3 +1,10 @@
+/*
+ * BossBarSection.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.configs;
 
 import java.io.File;
@@ -9,6 +16,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents the boss bar configuration section.
+ */
 @CSAlways
 @SuppressWarnings("unused")
 public class BossBarSection extends AConfigSection {
@@ -16,6 +26,11 @@ public class BossBarSection extends AConfigSection {
     private Integer update_period_ticks;
     private Integer view_distance;
 
+    /**
+     * Creates a new boss bar section.
+     *
+     * @param baseEnvironment evaluation environment used for config expressions
+     */
     public BossBarSection(
             final EvaluationEnvironmentBuilder baseEnvironment
     ) {
@@ -45,6 +60,11 @@ public class BossBarSection extends AConfigSection {
         return section;
     }
 
+    /**
+     * Returns the update period ticks.
+     *
+     * @return the update period ticks
+     */
     public long getUpdatePeriodTicks() {
         if (this.update_period_ticks == null) {
             return 10L;
@@ -53,6 +73,11 @@ public class BossBarSection extends AConfigSection {
         return Math.max(1L, this.update_period_ticks.longValue());
     }
 
+    /**
+     * Returns the view distance.
+     *
+     * @return the view distance
+     */
     public int getViewDistance() {
         if (this.view_distance == null) {
             return 12;

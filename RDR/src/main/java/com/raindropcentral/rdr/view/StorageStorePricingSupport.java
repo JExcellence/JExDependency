@@ -1,7 +1,7 @@
 /*
  * StorageStorePricingSupport.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -37,6 +37,9 @@ import com.raindropcentral.rplatform.requirement.impl.PlaytimeRequirement;
 import com.raindropcentral.rplatform.requirement.impl.PluginRequirement;
 import com.raindropcentral.rplatform.requirement.impl.TimedRequirement;
 
+/**
+ * Provides support utilities for storage store pricing.
+ */
 final class StorageStorePricingSupport {
 
     private static final double EPSILON = 1.0E-6D;

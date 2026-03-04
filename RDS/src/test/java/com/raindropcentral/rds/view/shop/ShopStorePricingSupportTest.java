@@ -1,7 +1,7 @@
 /*
  * ShopStorePricingSupportTest.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -18,6 +18,9 @@ import com.raindropcentral.rplatform.requirement.AbstractRequirement;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Tests shop store pricing support behavior.
+ */
 class ShopStorePricingSupportTest {
 
     @Test

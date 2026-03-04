@@ -1,3 +1,10 @@
+/*
+ * ShopItem.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.items;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -11,6 +18,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.CompletableFuture;
 import java.util.UUID;
 
+/**
+ * Represents shop item.
+ */
 @JsonTypeName("ITEM")
 public class ShopItem extends AbstractItem {
 	
@@ -38,6 +48,18 @@ public class ShopItem extends AbstractItem {
 	@JsonProperty("adminStockReferenceTime")
 	private final Long adminStockReferenceTime;
 	
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param entryId entry id
+	 * @param item target item payload
+	 * @param amount amount
+	 * @param currencyType currency type
+	 * @param value value
+	 * @param adminStockLimit admin stock limit
+	 * @param adminRestockIntervalTicks admin restock interval ticks
+	 * @param adminStockReferenceTime admin stock reference time
+	 */
 	@JsonCreator
 	public ShopItem(
 		@JsonProperty("entryId") @Nullable UUID entryId,
@@ -71,6 +93,13 @@ public class ShopItem extends AbstractItem {
 		this(null, item, item.getAmount(), "vault", 0D, null, null, null);
 	}
 
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param entryId entry id
+	 * @param item target item payload
+	 * @param amount amount
+	 */
 	public ShopItem(
 		@Nullable UUID entryId,
 		@NotNull ItemStack item,
@@ -79,6 +108,14 @@ public class ShopItem extends AbstractItem {
 		this(entryId, item, amount, "vault", 0D, null, null, null);
 	}
 
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param item target item payload
+	 * @param amount amount
+	 * @param currencyType currency type
+	 * @param value value
+	 */
 	public ShopItem(
 		@NotNull ItemStack item,
 		int amount,
@@ -88,6 +125,15 @@ public class ShopItem extends AbstractItem {
 		this(null, item, amount, currencyType, value, null, null, null);
 	}
 
+	/**
+	 * Creates a new shop item.
+	 *
+	 * @param entryId entry id
+	 * @param item target item payload
+	 * @param amount amount
+	 * @param currencyType currency type
+	 * @param value value
+	 */
 	public ShopItem(
 		@Nullable UUID entryId,
 		@NotNull ItemStack item,
@@ -98,11 +144,22 @@ public class ShopItem extends AbstractItem {
 		this(entryId, item, amount, currencyType, value, null, null, null);
 	}
 	
+	/**
+	 * Returns the type id.
+	 *
+	 * @return the type id
+	 */
 	@Override
 	public @NotNull String getTypeId() {
 		return "ITEM";
 	}
 	
+	/**
+	 * Grants this item payload to the supplied player.
+	 *
+	 * @param player target player
+	 * @return the grant result
+	 */
 	@Override
 	public @NotNull CompletableFuture<Boolean> grant(@NotNull Player player) {
 		return CompletableFuture.supplyAsync(() -> {
@@ -126,6 +183,11 @@ public class ShopItem extends AbstractItem {
 		});
 	}
 	
+	/**
+	 * Returns the estimated value.
+	 *
+	 * @return the estimated value
+	 */
 	@Override
 	public double getEstimatedValue() {
 		return amount * value;
@@ -145,34 +207,75 @@ public class ShopItem extends AbstractItem {
 		return amount;
 	}
 
+	/**
+	 * Returns the entry id.
+	 *
+	 * @return the entry id
+	 */
 	public @NotNull UUID getEntryId() {
 		return entryId;
 	}
 
+	/**
+	 * Returns the currency type.
+	 *
+	 * @return the currency type
+	 */
 	public @NotNull String getCurrencyType() {
 		return currencyType;
 	}
 
+	/**
+	 * Returns the value.
+	 *
+	 * @return the value
+	 */
 	public double getValue() {
 		return value;
 	}
 
+	/**
+	 * Indicates whether admin stock limit is available.
+	 *
+	 * @return {@code true} if admin stock limit; otherwise {@code false}
+	 */
 	public boolean hasAdminStockLimit() {
 		return this.adminStockLimit != null && this.adminStockLimit > 0;
 	}
 
+	/**
+	 * Returns the admin stock limit.
+	 *
+	 * @return the admin stock limit
+	 */
 	public int getAdminStockLimit() {
 		return this.adminStockLimit == null ? -1 : this.adminStockLimit;
 	}
 
+	/**
+	 * Returns the admin restock interval ticks.
+	 *
+	 * @return the admin restock interval ticks
+	 */
 	public long getAdminRestockIntervalTicks() {
 		return this.adminRestockIntervalTicks == null ? -1L : this.adminRestockIntervalTicks;
 	}
 
+	/**
+	 * Returns the admin stock reference time.
+	 *
+	 * @return the admin stock reference time
+	 */
 	public long getAdminStockReferenceTime() {
 		return this.adminStockReferenceTime == null ? -1L : this.adminStockReferenceTime;
 	}
 
+	/**
+	 * Returns a copy with updated amount.
+	 *
+	 * @param updatedAmount updated item amount
+	 * @return a copy with updated amount
+	 */
 	public @NotNull ShopItem withAmount(int updatedAmount) {
 		return new ShopItem(
 				this.entryId,
@@ -186,6 +289,12 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 
+	/**
+	 * Returns a copy with updated currency type.
+	 *
+	 * @param updatedCurrencyType updated currency type
+	 * @return a copy with updated currency type
+	 */
 	public @NotNull ShopItem withCurrencyType(@NotNull String updatedCurrencyType) {
 		return new ShopItem(
 				this.entryId,
@@ -199,6 +308,12 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 
+	/**
+	 * Returns a copy with updated value.
+	 *
+	 * @param updatedValue updated price value
+	 * @return a copy with updated value
+	 */
 	public @NotNull ShopItem withValue(double updatedValue) {
 		return new ShopItem(
 				this.entryId,
@@ -212,6 +327,13 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 
+	/**
+	 * Returns a copy with updated pricing.
+	 *
+	 * @param updatedCurrencyType updated currency type
+	 * @param updatedValue updated price value
+	 * @return a copy with updated pricing
+	 */
 	public @NotNull ShopItem withPricing(@NotNull String updatedCurrencyType, double updatedValue) {
 		return new ShopItem(
 				this.entryId,
@@ -260,6 +382,11 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 
+	/**
+	 * Clears the admin stock settings.
+	 *
+	 * @return the clear admin stock settings result
+	 */
 	public @NotNull ShopItem clearAdminStockSettings() {
 		return new ShopItem(
 				this.entryId,
@@ -273,6 +400,11 @@ public class ShopItem extends AbstractItem {
 		);
 	}
 	
+	/**
+	 * Validates the current shop item.
+	 *
+	 * @throws IllegalArgumentException if the current value set is invalid
+	 */
 	@Override
 	public void validate() {
 		if (item == null || item.getType().isAir()) {

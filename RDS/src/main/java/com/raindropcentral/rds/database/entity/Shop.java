@@ -1,3 +1,10 @@
+/*
+ * Shop.java
+ *
+ * @author ItsRainingHP
+ * @version 5.0.0
+ */
+
 package com.raindropcentral.rds.database.entity;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -89,9 +96,18 @@ public class Shop extends BaseEntity {
     @Transient
     private Map<UUID, ShopTrustStatus> cachedTrustedPlayers;
 
+    /**
+     * Creates a new shop.
+     */
     public Shop() {
     }
 
+    /**
+     * Creates a new shop.
+     *
+     * @param owner_uuid owner identifier for the new shop
+     * @param shop_location primary chest location for the new shop
+     */
     public Shop(UUID owner_uuid, Location shop_location) {
         this.owner_uuid = owner_uuid;
         this.shop_location = shop_location;
@@ -101,10 +117,20 @@ public class Shop extends BaseEntity {
         setItems(List.of());
     }
 
+    /**
+     * Returns the owner.
+     *
+     * @return the owner
+     */
     public UUID getOwner() {
         return this.owner_uuid;
     }
 
+    /**
+     * Returns the shop location.
+     *
+     * @return the shop location
+     */
     public Location getShopLocation() {
         return this.shop_location;
     }
@@ -160,18 +186,39 @@ public class Shop extends BaseEntity {
         return this.isDoubleChest() ? 2 : 1;
     }
 
+    /**
+     * Returns the bank.
+     *
+     * @return the bank
+     */
     public double getBank() {
         return this.getBankAmount("vault");
     }
 
+    /**
+     * Adds bank.
+     *
+     * @param bank Vault amount to deposit
+     * @return the add bank result
+     */
     public double addBank(double bank) {
         return this.addBank("vault", bank);
     }
     
+    /**
+     * Returns the bank entries.
+     *
+     * @return the bank entries
+     */
     public @NotNull List<Bank> getBankEntries() {
         return List.copyOf(this.bankEntries);
     }
 
+    /**
+     * Returns the bank currency count.
+     *
+     * @return the bank currency count
+     */
     public int getBankCurrencyCount() {
         return this.bankEntries.size();
     }
@@ -220,6 +267,11 @@ public class Shop extends BaseEntity {
         return true;
     }
 
+    /**
+     * Returns the items.
+     *
+     * @return the items
+     */
     public List<AbstractItem> getItems() {
         if (this.cachedItems == null) {
             this.cachedItems = new ArrayList<>();
@@ -242,6 +294,11 @@ public class Shop extends BaseEntity {
         return new ArrayList<>(this.cachedItems);
     }
 
+    /**
+     * Updates the items.
+     *
+     * @param items item payloads to serialize or assign
+     */
     public void setItems(final List<? extends AbstractItem> items) {
         final List<AbstractItem> safeItems = new ArrayList<>();
         if (items != null) {
@@ -262,18 +319,38 @@ public class Shop extends BaseEntity {
         }
     }
 
+    /**
+     * Indicates whether admin shop.
+     *
+     * @return {@code true} if admin shop; otherwise {@code false}
+     */
     public boolean isAdminShop() {
         return this.admin_shop;
     }
 
+    /**
+     * Updates the admin shop.
+     *
+     * @param adminShop whether the shop should be treated as an admin shop
+     */
     public void setAdminShop(final boolean adminShop) {
         this.admin_shop = adminShop;
     }
 
+    /**
+     * Returns the stored item count.
+     *
+     * @return the stored item count
+     */
     public int getStoredItemCount() {
         return getItems().size();
     }
 
+    /**
+     * Returns the trusted players.
+     *
+     * @return the trusted players
+     */
     public @NotNull Map<UUID, ShopTrustStatus> getTrustedPlayers() {
         if (this.cachedTrustedPlayers == null) {
             this.cachedTrustedPlayers = this.parseTrustedPlayers();
@@ -282,6 +359,11 @@ public class Shop extends BaseEntity {
         return new HashMap<>(this.cachedTrustedPlayers);
     }
 
+    /**
+     * Returns the ledger entries.
+     *
+     * @return the ledger entries
+     */
     public @NotNull List<ShopLedgerEntry> getLedgerEntries() {
         if (this.ledgerEntries == null) {
             this.ledgerEntries = new ArrayList<>();
@@ -301,6 +383,11 @@ public class Shop extends BaseEntity {
         this.ledgerEntries.add(0, ledgerEntry);
     }
 
+    /**
+     * Returns the ledger entry count.
+     *
+     * @return the ledger entry count
+     */
     public int getLedgerEntryCount() {
         return this.ledgerEntries == null ? 0 : this.ledgerEntries.size();
     }
@@ -407,6 +494,12 @@ public class Shop extends BaseEntity {
         return this.isOwner(playerId) || this.getTrustStatus(playerId).hasFullAccess();
     }
 
+    /**
+     * Indicates whether owner.
+     *
+     * @param playerId player identifier to evaluate
+     * @return {@code true} if owner; otherwise {@code false}
+     */
     public boolean isOwner(final UUID playerId) {
         return Objects.equals(this.owner_uuid, playerId);
     }

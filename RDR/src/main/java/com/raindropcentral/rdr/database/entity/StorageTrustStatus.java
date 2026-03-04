@@ -1,7 +1,7 @@
 /*
  * StorageTrustStatus.java
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @version 5.0.0
  */
 
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * <p>{@link #PUBLIC} grants no access, {@link #ASSOCIATE} allows deposits only, and
  * {@link #TRUSTED} allows both deposits and withdrawals.</p>
  *
- * @author RaindropCentral
+ * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */
