@@ -59,12 +59,14 @@ tasks.register("buildAll") {
         ":RDQ:buildAll",
         ":RDR:buildAll",
         ":RDS:buildAll",
+        ":RDT:buildAll",
     )
     
     // Enforce build order
     tasks.findByPath(":RDQ:buildAll")?.mustRunAfter(":publishDependencies")
     tasks.findByPath(":RDR:buildAll")?.mustRunAfter(":publishDependencies")
     tasks.findByPath(":RDS:buildAll")?.mustRunAfter(":publishDependencies")
+    tasks.findByPath(":RDT:buildAll")?.mustRunAfter(":publishDependencies")
     
     doLast {
         val major = findProperty("rdq.version.major") ?: "6"
@@ -89,6 +91,8 @@ tasks.register("buildAll") {
         val rdrPremiumDir = file("RDR/rdr-premium/build/libs")
         val rdsFreeDir = file("RDS/rds-free/build/libs")
         val rdsPremiumDir = file("RDS/rds-premium/build/libs")
+        val rdtFreeDir = file("RDT/rdt-free/build/libs")
+        val rdtPremiumDir = file("RDT/rdt-premium/build/libs")
         
         rdqFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
             println("  - ${it.absolutePath}")
@@ -106,6 +110,12 @@ tasks.register("buildAll") {
             println("  - ${it.absolutePath}")
         }
         rdsPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdtFreeDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
+            println("  - ${it.absolutePath}")
+        }
+        rdtPremiumDir.listFiles()?.filter { it.name.endsWith(".jar") && !it.name.contains("sources") && !it.name.contains("javadoc") }?.forEach {
             println("  - ${it.absolutePath}")
         }
         println("========================================================================")
@@ -129,6 +139,7 @@ tasks.register("cleanAll") {
         ":RDQ:clean",
         ":RDR:clean",
         ":RDS:clean",
+        ":RDT:clean",
     )
 }
 

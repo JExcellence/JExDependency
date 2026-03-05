@@ -1,0 +1,10 @@
+name: "RDT"
+version: ${version}
+main: com.raindropcentral.rdt.RDTPremium
+api-version: '1.19'
+description: ${description}
+author: RaindropCentral
+website: https://raindropcentral.com
+softdepend:
+  - Vault
+  - TheNewEconomy

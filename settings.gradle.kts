@@ -59,6 +59,12 @@ include(":RDS:rds-common")
 include(":RDS:rds-free")
 include(":RDS:rds-premium")
 
+//RDT with submodules
+include(":RDT")
+include(":RDT:rdt-common")
+include(":RDT:rdt-free")
+include(":RDT:rdt-premium")
+
 /*
 
 // JExHome with submodules
@@ -78,9 +84,6 @@ include(":JExOneblock")
 include(":JExOneblock:jexoneblock-common")
 include(":JExOneblock:jexoneblock-free")
 include(":JExOneblock:jexoneblock-premium")
-
-// Other RaindropCentral plugins - pending free/premium update and implementation in build script
-include("RDT")
 
 // JExWorkbench with submodules
 include(":JExWorkbench")
