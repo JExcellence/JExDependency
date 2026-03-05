@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Tallennustilojen enimmäismäärä:</gray><white>{max_storages}</white>"
       - "<yellow>Osta toinen tallennustila napsauttamalla.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Tallennuksen järjestelmänvalvoja</gradient>"
+    lore:
+      - "<gray>Avaa etuoikeutetut RDR järjestelmänvalvojan ohjaimet.</gray>"
+      - "<gray>Hallitse valuutantarjoajia ja oletusasetuksia.</gray>"
+      - "<yellow>Vaatii:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Varastoinnin ohjaus</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Hallintapaneeli</gradient>"
+    lore:
+      - "<gray>Hallitse etuoikeutettuja tallennusjärjestelmiä yhdestä paikasta.</gray>"
+      - "<gray>Tämän paneelin avulla voit määrittää valuuttatuen.</gray>"
+      - "<yellow>Vaatii:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valuuttapäällikkö</gradient>"
+      lore:
+        - "<gray>Tarkista havaitut valuutat kaupoista Vault ja JExEconomy.</gray>"
+        - "<gray>Luo oletusarvo</gray> <white>raindrops</white> <gray>valuuttaa tarvittaessa.</gray>"
+        - "<yellow>Napsauta avataksesi valuuttasäätimet.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä hallintapaneelia.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Valuuttapäällikkö</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Valuutantarjoajat</gradient>"
+    lore:
+      - "<gray>Havaitut valuutat:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault saatavilla:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy saatavilla:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Käytä kristallipainiketta luodaksesi oletusvaluutta.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Palveluntarjoaja:</gray> <white>{provider}</white>"
+      - "<gray>Symboli:</gray> <white>{symbol}</white>"
+      - "<gray>Etuliite:</gray> <white>{prefix}</white>"
+      - "<gray>Suffiksi:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Luoda {currency_id}</gradient>"
+      lore:
+        - "<gray>Luo oletusvaluutta RDR valuuttana JExEconomy.</gray>"
+        - "<yellow>Luo {currency_id} klikkaamalla.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Pakollinen</gradient>"
+      lore:
+        - "<gray>Et voi luoda oletusvaluuttaa ilman JExEconomy.</gray>"
+        - "<gray>Asenna ja ota käyttöön JExEconomy ensin.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Valmis</gradient>"
+      lore:
+        - "<gray>Oletusvaluutta on jo olemassa.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Luotu oletusvaluutta:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Valuutan luominen epäonnistui:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuutta on jo olemassa:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Et voi käyttää tätä painiketta, ellei JExEconomy ole käytettävissä.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Valuuttoja ei havaittu</gradient>"
+      lore:
+        - "<gray>Valuuttoja Vault tai JExEconomy ei havaittu.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä valuuttanäkymää.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta hallita valuuttoja.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Tallennusmyymälä</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}on nyt sidottu<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Tallennustilaa ei ole sidottu<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Pikanäppäinten on oltava välillä <white>1</white> ja <white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Avasi RDR järjestelmänvalvojan ohjauspaneelin.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Tallennusasetusten muokkaukset on poistettu käytöstä<white>RDRFree</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Otti käyttöön<white>/rr-tulostaulun</white><gray>-sivupalkin.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>poistettu<white>/rrtulostaulu</white><gray>sivupalkki.</gray>"

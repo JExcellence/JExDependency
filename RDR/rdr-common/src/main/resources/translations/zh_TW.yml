@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>最大儲存量：</gray><white>{max_storages}</white>"
       - "<yellow>點擊購買另一個儲存。</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] 儲存管理員</gradient>"
+    lore:
+      - "<gray>開啟特權 RDR 管理控制項。</gray>"
+      - "<gray>管理貨幣提供者和預設值。</gray>"
+      - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] 儲存控制</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 管理面板</gradient>"
+    lore:
+      - "<gray>從一處管理特權儲存系統。</gray>"
+      - "<gray>使用此面板配置貨幣支援。</gray>"
+      - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] 貨幣經理</gradient>"
+      lore:
+        - "<gray>檢查從 Vault 和 JExEconomy 偵測到的貨幣。</gray>"
+        - "<gray>建立預設值</gray> <white>raindrops</white> <gray>需要時使用貨幣。</gray>"
+        - "<yellow>點選可開啟貨幣控制。</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用此管理面板。</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] 貨幣經理</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] 貨幣供應商</gradient>"
+    lore:
+      - "<gray>偵測到的貨幣：</gray> <white>{currency_count}</white>"
+      - "<gray>Vault 可用：</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy 可用：</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>使用水晶按鈕創建預設貨幣。</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>提供者：</gray> <white>{provider}</white>"
+      - "<gray>象徵：</gray> <white>{symbol}</white>"
+      - "<gray>前綴：</gray> <white>{prefix}</white>"
+      - "<gray>後綴：</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] 創造 {currency_id}</gradient>"
+      lore:
+        - "<gray>在 JExEconomy 中建立預設的 RDR 貨幣。</gray>"
+        - "<yellow>按一下以建立 {currency_id}。</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy 必需</gradient>"
+      lore:
+        - "<gray>如果沒有 JExEconomy 則無法建立預設貨幣。</gray>"
+        - "<gray>首先安裝並啟用 JExEconomy。</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} 準備好</gradient>"
+      lore:
+        - "<gray>預設貨幣已存在。</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>創建預設貨幣：</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>創造貨幣失敗：</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>貨幣已存在：</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>除非 JExEconomy 可用，否則您無法使用此按鈕。</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] 未偵測到貨幣</gradient>"
+      lore:
+        - "<gray>未偵測到 Vault 或 JExEconomy 貨幣。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用此貨幣視圖。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您沒有管理貨幣的權限。</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] 儲存儲存</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}現在綁定到<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>沒有儲存綁定到<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>熱鍵必須介於<white>1</white>與<white>{max_hotkeys}</white><gray>.</gray>之間"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>開啟 RDR 管理控制面板。</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>在<white>RDRFree</white><gray>.</gray>中停用儲存設定編輯"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>啟用<white>/rr記分板</white><gray>側邊欄.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>停用<white>/rr記分板</white><gray>側邊欄.</gray>"

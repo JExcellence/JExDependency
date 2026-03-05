@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Maksimal lagerplads:</gray><white>{max_storages}</white>"
       - "<yellow>Klik for at købe en anden lagerplads.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Lageradmin</gradient>"
+    lore:
+      - "<gray>Åbn privilegerede RDR-administratorkontroller.</gray>"
+      - "<gray>Administrer valutaudbydere og standardindstillinger.</gray>"
+      - "<yellow>Kræver:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Opbevaringskontrol</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin Panel</gradient>"
+    lore:
+      - "<gray>Administrer privilegerede lagersystemer fra ét sted.</gray>"
+      - "<gray>Brug dette panel til at konfigurere valutaunderstøttelse.</gray>"
+      - "<yellow>Kræver:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutaadministrator</gradient>"
+      lore:
+        - "<gray>Gennemgå registrerede valutaer fra Vault og JExEconomy.</gray>"
+        - "<gray>Opret standarden</gray> <white>raindrops</white> <gray>valuta efter behov.</gray>"
+        - "<yellow>Klik for at åbne valutakontrol.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Adgang påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge dette administratorpanel.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Valutaadministrator</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Valutaudbydere</gradient>"
+    lore:
+      - "<gray>Registrerede valutaer:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault tilgængelig:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy tilgængelig:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Brug krystalknappen til at oprette standardvalutaen.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Udbyder:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Præfiks:</gray> <white>{prefix}</white>"
+      - "<gray>Suffiks:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Skabe {currency_id}</gradient>"
+      lore:
+        - "<gray>Opret standardvalutaen RDR i JExEconomy.</gray>"
+        - "<yellow>Klik for at oprette {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Påkrævet</gradient>"
+      lore:
+        - "<gray>Du kan ikke oprette standardvaluta uden JExEconomy.</gray>"
+        - "<gray>Installer og aktiver JExEconomy først.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Parat</gradient>"
+      lore:
+        - "<gray>Standardvalutaen findes allerede.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Oprettet standardvaluta:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke oprette valuta:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuta eksisterer allerede:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du kan ikke bruge denne knap, medmindre JExEconomy er tilgængelig.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Ingen valutaer fundet</gradient>"
+      lore:
+        - "<gray>Der blev ikke fundet nogen Vault eller JExEconomy valutaer.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Adgang påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne valutavisning.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at administrere valutaer.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Lagerbutik</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}er nu bundet til<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Ingen lager er bundet til<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Genvejstaster skal være mellem<white>1</white>og<white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Åbnede RDR admin kontrolpanelet.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Redigeringer af lagerindstillinger er deaktiveret i<white>RDRFree</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Aktiverede<white>/rrresultattavlen</white><gray>sidebjælke.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Deaktiverede<white>/rrresultattavlen</white><gray>sidebjælke.</gray>"

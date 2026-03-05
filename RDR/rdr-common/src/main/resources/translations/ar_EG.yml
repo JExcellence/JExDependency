@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>الحد الأقصى للسعة التخزينية:</gray><white>{max_storages}</white>"
       - "<yellow>انقر لشراء مساحة تخزين أخرى.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] مسؤول التخزين</gradient>"
+    lore:
+      - "<gray>افتح عناصر تحكم المشرف RDR المميزة.</gray>"
+      - "<gray>إدارة موفري العملات والافتراضيات.</gray>"
+      - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] التحكم في التخزين</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR لوحة الإدارة</gradient>"
+    lore:
+      - "<gray>إدارة أنظمة التخزين المميزة من مكان واحد.</gray>"
+      - "<gray>استخدم هذه اللوحة لتكوين دعم العملة.</gray>"
+      - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] مدير العملة</gradient>"
+      lore:
+        - "<gray>راجع العملات المكتشفة من Vault وJExEconomy.</gray>"
+        - "<gray>قم بإنشاء الافتراضي</gray> <white>raindrops</white> <gray>العملة عند الحاجة.</gray>"
+        - "<yellow>انقر لفتح ضوابط العملة.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام لوحة الإدارة هذه.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] مدير العملة</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] مزودي العملة</gradient>"
+    lore:
+      - "<gray>العملات المكتشفة:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault متاح:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy متاح:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>استخدم الزر البلوري لإنشاء العملة الافتراضية.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>مزود:</gray> <white>{provider}</white>"
+      - "<gray>رمز:</gray> <white>{symbol}</white>"
+      - "<gray>بادئة:</gray> <white>{prefix}</white>"
+      - "<gray>لاحقة:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] يخلق {currency_id}</gradient>"
+      lore:
+        - "<gray>قم بإنشاء العملة الافتراضية RDR في JExEconomy.</gray>"
+        - "<yellow>انقر لإنشاء {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy مطلوب</gradient>"
+      lore:
+        - "<gray>لا يمكنك إنشاء عملة افتراضية بدون JExEconomy.</gray>"
+        - "<gray>قم بتثبيت وتمكين JExEconomy أولاً.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} مستعد</gradient>"
+      lore:
+        - "<gray>العملة الافتراضية موجودة بالفعل.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>العملة الافتراضية التي تم إنشاؤها:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل في إنشاء العملة:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>العملة موجودة بالفعل:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لا يمكنك استخدام هذا الزر إلا إذا كان JExEconomy متاحًا.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] لم يتم اكتشاف أي عملات</gradient>"
+      lore:
+        - "<gray>لم يتم اكتشاف أي عملات Vault أو JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام طريقة عرض العملة هذه.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة العملات.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] مخزن التخزين</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}مرتبط الآن بـ<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>لا يوجد تخزين مرتبط بـ<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>يجب أن تكون مفاتيح التشغيل السريع بين<white>1</white>و<white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>تم فتح لوحة تحكم المشرف RDR.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>تم تعطيل تعديلات إعدادات التخزين في<white>RDRFree</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>تمكين<white>/rrلوحة النتائج</white><gray>الشريط الجانبي.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>تعطيل لوحة النتائج<white>/rr</white><gray>الشريط الجانبي.</gray>"

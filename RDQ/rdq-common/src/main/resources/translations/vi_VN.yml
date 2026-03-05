@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Tổng plugin:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Tổng quyền:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Không thể mở trình quản lý quyền!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Quản lý tiền tệ</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Xem lại các loại tiền tệ được phát hiện RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bao gồm các mục Vault và JExEconomy</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Không thể mở trình quản lý tiền tệ!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Tạo nhóm LuckPerms</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Đã tạo</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>nhóm LuckPerms!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Không có nhóm mới nào được tạo.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Không thể tạo nhóm LuckPerms!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Quản lý tiền tệ</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhà cung cấp:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Biểu tượng:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tiền tố:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hậu tố:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ Tạo %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tạo loại tiền mặc định cho RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>Nhấp để tạo %currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy Bắt buộc</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Hành động này yêu cầu JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Cài đặt nó trước khi tạo mặc định</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Sẵn sàng</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Đơn vị tiền tệ mặc định đã tồn tại</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Không cần thiết lập thêm</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Đã tạo loại tiền tệ mặc định:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Không thể tạo tiền tệ:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ Tiền tệ đã tồn tại:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Bạn không thể sử dụng nút này nếu không có JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Không phát hiện thấy loại tiền tệ nào</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ không thể phát hiện các loại tiền tệ Vault hoặc JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Trước tiên hãy cài đặt hoặc kích hoạt nhà cung cấp nền kinh tế</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # GIAO DIỆN TỔNG QUAN QUYỀN QUẢN TRỊ

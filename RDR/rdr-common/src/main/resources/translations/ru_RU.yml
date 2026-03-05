@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Максимальный объем памяти:</gray><white>{max_storages}</white>"
       - "<yellow>Нажмите, чтобы приобрести другое хранилище.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Администратор хранилища</gradient>"
+    lore:
+      - "<gray>Откройте привилегированные элементы управления администратора RDR.</gray>"
+      - "<gray>Управляйте поставщиками валют и значениями по умолчанию.</gray>"
+      - "<yellow>Требует:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Контроль хранения</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Панель администратора</gradient>"
+    lore:
+      - "<gray>Управляйте привилегированными системами хранения из одного места.</gray>"
+      - "<gray>Используйте эту панель для настройки поддержки валюты.</gray>"
+      - "<yellow>Требует:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Валютный менеджер</gradient>"
+      lore:
+        - "<gray>Просмотрите обнаруженные валюты из Vault и JExEconomy.</gray>"
+        - "<gray>Создайте значение по умолчанию</gray> <white>raindrops</white> <gray>валюту при необходимости.</gray>"
+        - "<yellow>Нажмите, чтобы открыть валютный контроль.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этой панели администратора.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Валютный менеджер</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Поставщики валюты</gradient>"
+    lore:
+      - "<gray>Обнаруженные валюты:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault доступно:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy доступен:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Используйте кнопку кристалла, чтобы создать валюту по умолчанию.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Провайдер:</gray> <white>{provider}</white>"
+      - "<gray>Символ:</gray> <white>{symbol}</white>"
+      - "<gray>Префикс:</gray> <white>{prefix}</white>"
+      - "<gray>Суффикс:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Создавать {currency_id}</gradient>"
+      lore:
+        - "<gray>Создайте валюту RDR по умолчанию в JExEconomy.</gray>"
+        - "<yellow>Нажмите, чтобы создать {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Обязательно</gradient>"
+      lore:
+        - "<gray>Вы не можете создать валюту по умолчанию без JExEconomy.</gray>"
+        - "<gray>Сначала установите и включите JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Готовый</gradient>"
+      lore:
+        - "<gray>Валюта по умолчанию уже существует.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Созданная валюта по умолчанию:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Не удалось создать валюту:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Валюта уже существует:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Вы не можете использовать эту кнопку, если JExEconomy не доступен.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Валюты не обнаружены</gradient>"
+      lore:
+        - "<gray>Валюты Vault или JExEconomy не обнаружены.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого представления валюты.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас нет разрешения на управление валютами.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Хранилище хранения</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}теперь привязан к<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Нет хранилища, привязанного к<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Горячие клавиши должны находиться в диапазоне от<white>1</white>до<white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Открыта панель управления администратора RDR.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Редактирование параметров хранилища отключено в<white>RDRБесплатно</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Включена боковая панель<white>/rrтабло</white><gray>.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Отключена боковая панель<white>/rrтабло</white><gray>.</gray>"

@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Toplam izinler:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ İzin yöneticisi açılamadı!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Döviz Yöneticisi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ ile algılanan para birimlerini inceleyin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault ve JExEconomy girişlerini içerir</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Para birimi yöneticisi açılamadı!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms Grupları oluşturun</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅Oluşturuldu</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms grupları!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Yeni grup oluşturulmadı.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms grupları oluşturulamadı!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Döviz Yöneticisi</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Sağlayıcı:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sembol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Önek:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sonek:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ %currency_id% oluşturun</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ için varsayılan para birimini oluşturun</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%currency_id% oluşturmak için tıklayın</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy Gerekli</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bu işlem JExEconomy gerektirir</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Varsayılanları oluşturmadan önce yükleyin</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Hazır</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Varsayılan para birimi zaten mevcut</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Başka kuruluma gerek yok</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Varsayılan para birimi oluşturuldu:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Para birimi oluşturulamadı:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ Para birimi zaten mevcut:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Bu düğmeyi JExEconomy olmadan kullanamazsınız.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Hiçbir Para Birimi Algılanmadı</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ, Vault veya JExEconomy para birimlerini tespit edemedi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Önce bir ekonomi sağlayıcısı yükleyin veya etkinleştirin</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # YÖNETİCİ İZİNLERİNE GENEL BAKIŞ UI

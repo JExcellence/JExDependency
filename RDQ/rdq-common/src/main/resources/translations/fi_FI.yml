@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Käyttöoikeuksien hallinnan avaaminen epäonnistui!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Valuuttapäällikkö</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tarkista RDQ-tunnistetut valuutat</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sisältää Vault ja JExEconomy merkinnät</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Valuuttahallinnan avaaminen epäonnistui!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Luo LuckPerms-ryhmät</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Luotu</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms ryhmät!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Uusia ryhmiä ei luotu.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms-ryhmien luominen epäonnistui!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Valuuttapäällikkö</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Palveluntarjoaja:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Symboli:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Etuliite:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Suffiksi:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ Luo %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Luo oletusvaluutta kohteelle RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>Luo %currency_id% napsauttamalla</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy Pakollinen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tämä toiminto vaatii JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Asenna se ennen oletusarvojen luomista</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Valmis</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Oletusvaluutta on jo olemassa</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Lisäasetuksia ei tarvita</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Luotu oletusvaluutta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Valuutan luominen epäonnistui:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ Valuutta on jo olemassa:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Et voi käyttää tätä painiketta ilman JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Valuuttoja ei havaittu</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ ei voinut havaita Vault tai JExEconomy valuuttoja</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Asenna tai ota käyttöön taloudellinen palveluntarjoaja ensin</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # YLLÄPIDON OIKEUKSIEN YLEISNÄKYMÄ

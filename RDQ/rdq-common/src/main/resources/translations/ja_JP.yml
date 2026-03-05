@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>合計権限:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 権限マネージャーを開けませんでした!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 通貨マネージャー</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ で検出された通貨を確認する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault および JExEconomy エントリが含まれます</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 通貨マネージャーを開けませんでした!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms グループを作成する</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ 作成されました</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>ラックパーマグループ！</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>新しいグループは作成されませんでした。</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms グループの作成に失敗しました!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 通貨マネージャー</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>プロバイダー:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>シンボル：</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プレフィックス:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>サフィックス：</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ %currency_id% を作成します</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ のデフォルト通貨を作成する</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>クリックして %currency_id% を作成します</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy 必須</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>このアクションには JExEconomy が必要です</gradient>"
+        - "<gradient:#6b7280:#9ca3af>デフォルトを作成する前にインストールしてください</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% 準備完了</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>デフォルトの通貨はすでに存在します</gradient>"
+        - "<gradient:#6b7280:#9ca3af>それ以上の設定は必要ありません</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ 作成されたデフォルト通貨:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ 通貨の作成に失敗しました:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ 通貨はすでに存在します:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ JExEconomy がないとこのボタンは使用できません。</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ 通貨が検出されませんでした</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ は Vault または JExEconomy 通貨を検出できませんでした</gradient>"
+      - "<gradient:#6b7280:#9ca3af>最初にエコノミープロバイダーをインストールまたは有効化します</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # 管理者権限の概要 UI

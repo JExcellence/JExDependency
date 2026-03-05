@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<yellow>Nhấp để mua bộ nhớ khác.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Quản trị viên lưu trữ</gradient>"
+    lore:
+      - "<gray>Mở điều khiển quản trị viên RDR đặc quyền.</gray>"
+      - "<gray>Quản lý nhà cung cấp tiền tệ và mặc định.</gray>"
+      - "<yellow>Yêu cầu:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Kiểm soát lưu trữ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Bảng quản trị</gradient>"
+    lore:
+      - "<gray>Quản lý hệ thống lưu trữ đặc quyền từ một nơi.</gray>"
+      - "<gray>Sử dụng bảng này để định cấu hình hỗ trợ tiền tệ.</gray>"
+      - "<yellow>Yêu cầu:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Quản lý tiền tệ</gradient>"
+      lore:
+        - "<gray>Xem lại các loại tiền tệ được phát hiện từ Vault và JExEconomy.</gray>"
+        - "<gray>Tạo mặc định</gray> <white>raindrops</white> <gray>ngoại tệ khi cần thiết.</gray>"
+        - "<yellow>Bấm để mở kiểm soát tiền tệ.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng bảng quản trị này.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Quản lý tiền tệ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Nhà cung cấp tiền tệ</gradient>"
+    lore:
+      - "<gray>Tiền tệ được phát hiện:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault có sẵn:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy có sẵn:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Sử dụng nút pha lê để tạo loại tiền mặc định.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Nhà cung cấp:</gray> <white>{provider}</white>"
+      - "<gray>Biểu tượng:</gray> <white>{symbol}</white>"
+      - "<gray>Tiền tố:</gray> <white>{prefix}</white>"
+      - "<gray>Hậu tố:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Tạo nên {currency_id}</gradient>"
+      lore:
+        - "<gray>Tạo loại tiền tệ RDR mặc định bằng JExEconomy.</gray>"
+        - "<yellow>Nhấp để tạo {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Bắt buộc</gradient>"
+      lore:
+        - "<gray>Bạn không thể tạo loại tiền mặc định mà không có JExEconomy.</gray>"
+        - "<gray>Trước tiên hãy cài đặt và kích hoạt JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Sẵn sàng</gradient>"
+      lore:
+        - "<gray>Đơn vị tiền tệ mặc định đã tồn tại.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã tạo loại tiền tệ mặc định:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không thể tạo tiền tệ:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Tiền tệ đã tồn tại:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không thể sử dụng nút này trừ khi có JExEconomy.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Không phát hiện thấy loại tiền tệ nào</gradient>"
+      lore:
+        - "<gray>Không phát hiện thấy loại tiền tệ Vault hoặc JExEconomy nào.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không được phép sử dụng chế độ xem tiền tệ này.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền quản lý tiền tệ.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Kho lưu trữ</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} bây giờ được liên kết với <white>/rr {hotkey}</white><gray>?.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không có bộ nhớ nào bị ràng buộc với <white>/rr {hotkey}</white><gray>?.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Phím nóng phải nằm trong khoảng <white>1</white> và <white>{max_hotkeys}</white><gray>?.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Đã mở bảng điều khiển quản trị viên RDR.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Việc chỉnh sửa cài đặt bộ nhớ bị tắt trong <white>RDR Miễn phí</white><gray>?.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã bật <white>/rr bảng điểm</white><gray> thanh bên.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Đã tắt <white>/rr bảng điểm</white><gray> thanh bên.</gray>"

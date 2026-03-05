@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
       - "<yellow>다른 스토리지를 구입하려면 클릭하세요.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] 스토리지 관리자</gradient>"
+    lore:
+      - "<gray>권한 있는 RDR 관리자 제어를 엽니다.</gray>"
+      - "<gray>통화 공급자 및 기본값을 관리합니다.</gray>"
+      - "<yellow>요구사항:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] 스토리지 제어</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 관리자 패널</gradient>"
+    lore:
+      - "<gray>한 곳에서 권한 있는 스토리지 시스템을 관리하세요.</gray>"
+      - "<gray>이 패널을 사용하여 통화 지원을 구성합니다.</gray>"
+      - "<yellow>요구사항:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] 통화 관리자</gradient>"
+      lore:
+        - "<gray>Vault 및 JExEconomy에서 감지된 통화를 검토합니다.</gray>"
+        - "<gray>기본값 만들기</gray> <white>raindrops</white> <gray>필요할 때 통화.</gray>"
+        - "<yellow>통화 제어를 열려면 클릭하세요.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 액세스가 필요합니다</gradient>"
+      lore:
+        - "<gray>이 관리자 패널을 사용할 권한이 없습니다.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] 통화 관리자</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] 통화 제공업체</gradient>"
+    lore:
+      - "<gray>감지된 통화:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault 사용 가능:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy 사용 가능:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>크리스탈 버튼을 사용하여 기본 통화를 생성하세요.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>공급자:</gray> <white>{provider}</white>"
+      - "<gray>상징:</gray> <white>{symbol}</white>"
+      - "<gray>접두사:</gray> <white>{prefix}</white>"
+      - "<gray>접미사:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] 만들다 {currency_id}</gradient>"
+      lore:
+        - "<gray>JExEconomy에 기본 RDR 통화를 생성합니다.</gray>"
+        - "<yellow>{currency_id}을(를) 생성하려면 클릭하세요.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy 필수</gradient>"
+      lore:
+        - "<gray>JExEconomy 없이는 기본 통화를 생성할 수 없습니다.</gray>"
+        - "<gray>먼저 JExEconomy를 설치하고 활성화하세요.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} 준비가 된</gradient>"
+      lore:
+        - "<gray>기본 통화가 이미 존재합니다.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>생성된 기본 통화:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>통화 생성 실패:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>통화가 이미 존재합니다:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>JExEconomy를 사용할 수 없으면 이 버튼을 사용할 수 없습니다.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] 감지된 통화가 없습니다.</gradient>"
+      lore:
+        - "<gray>Vault 또는 JExEconomy 통화가 감지되지 않았습니다.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 액세스가 필요합니다</gradient>"
+      lore:
+        - "<gray>이 통화 보기를 사용할 권한이 없습니다.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>통화를 관리할 권한이 없습니다.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] 저장소 저장소</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}은 이제<white>/rr{hotkey}</white><gray>.</gray>에 바인딩됩니다."
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>스토리지는<white>/rr{hotkey}</white><gray>.</gray>에 바인딩되지 않습니다."
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>핫키는<white>1</white>및<white>{max_hotkeys}</white><gray>.</gray>사이에 있어야 합니다."
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>RDR 관리자 제어판을 열었습니다.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>스토리지 설정 편집은<white>RDRFree</white><gray>.</gray>에서 비활성화됩니다."
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray><white>/rr점수판</white><gray>사이드바를 활성화했습니다.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray><white>/rr점수판</white><gray>사이드바를 비활성화했습니다.</gray>"

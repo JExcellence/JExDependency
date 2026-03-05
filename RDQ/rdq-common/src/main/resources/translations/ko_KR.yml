@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>총 권한:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 권한 관리자를 열 수 없습니다!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 통화 관리자</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ 감지 통화 검토</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault 및 JExEconomy 항목을 포함합니다.</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 통화 관리자를 열지 못했습니다!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms 그룹 생성</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>개의 LuckPerms 그룹이 생성되었습니다!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>새 그룹이 생성되지 않았습니다.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms 그룹 생성 실패!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 통화 관리자</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>공급자:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>상징:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>접두사:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>접미사:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ %currency_id% 생성</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>RDQ에 대한 기본 통화를 생성합니다.</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>%currency_id%을(를) 생성하려면 클릭하세요.</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy 필수</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>이 작업에는 JExEconomy이 필요합니다.</gradient>"
+        - "<gradient:#6b7280:#9ca3af>기본값을 만들기 전에 설치하세요.</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% 준비됨</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>기본 통화가 이미 존재합니다.</gradient>"
+        - "<gradient:#6b7280:#9ca3af>추가 설정이 필요하지 않습니다.</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ 생성된 기본 통화:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ 통화 생성 실패:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ 통화가 이미 존재합니다:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ JExEconomy 없이는 이 버튼을 사용할 수 없습니다.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ 감지된 통화가 없습니다.</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ는 Vault 또는 JExEconomy 통화를 감지할 수 없습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>경제적인 공급자를 먼저 설치하거나 활성화하십시오.</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # 관리자 권한 개요 UI

@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Σύνολο προσθηκών:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Συνολικά δικαιώματα:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα του διαχειριστή αδειών!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Υπεύθυνος νομισμάτων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ελέγξτε RDQ-εντοπισμένα νομίσματα</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Περιλαμβάνει καταχωρήσεις Vault και JExEconomy</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα της διαχείρισης νομισμάτων!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Δημιουργία Ομάδων LuckPerms</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Δημιουργήθηκαν</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>ομάδες LuckPerms!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Δεν δημιουργήθηκαν νέες ομάδες.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Η δημιουργία ομάδων LuckPerms απέτυχε!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Υπεύθυνος νομισμάτων</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Προμηθευτής:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Σύμβολο:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Πρόθεμα:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κατάληξη:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ Δημιουργία %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δημιουργήστε το προεπιλεγμένο νόμισμα για RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>Κάντε κλικ για να δημιουργήσετε %currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy Απαιτείται</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αυτή η ενέργεια απαιτεί JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Εγκαταστήστε το πριν δημιουργήσετε προεπιλογές</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Έτοιμο</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Το προεπιλεγμένο νόμισμα υπάρχει ήδη</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Δεν χρειάζεται περαιτέρω ρύθμιση</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Δημιουργήθηκε προεπιλεγμένο νόμισμα:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Αποτυχία δημιουργίας νομίσματος:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ Το νόμισμα υπάρχει ήδη:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Δεν μπορείτε να χρησιμοποιήσετε αυτό το κουμπί χωρίς JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Δεν εντοπίστηκαν νομίσματα</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Το RDQ δεν μπόρεσε να εντοπίσει νομίσματα Vault ή JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Εγκαταστήστε ή ενεργοποιήστε πρώτα έναν οικονομικό πάροχο</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # ΔΙΕΠΑΦΗ ΕΠΙΣΚΟΠΗΣΗΣ ΔΙΚΑΙΩΜΑΤΩΝ ΔΙΑΧΕΙΡΙΣΗΣ

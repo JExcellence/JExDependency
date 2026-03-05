@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Almacenamiento máximo:</gray><white>{max_storages}</white>"
       - "<yellow>Haga clic para comprar otro almacenamiento.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Administrador de almacenamiento</gradient>"
+    lore:
+      - "<gray>Abra controles de administración privilegiados RDR.</gray>"
+      - "<gray>Administrar proveedores de divisas y valores predeterminados.</gray>"
+      - "<yellow>Requiere:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Control de almacenamiento</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Panel de administración</gradient>"
+    lore:
+      - "<gray>Administre sistemas de almacenamiento privilegiados desde un solo lugar.</gray>"
+      - "<gray>Utilice este panel para configurar el soporte de moneda.</gray>"
+      - "<yellow>Requiere:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Administrador de divisas</gradient>"
+      lore:
+        - "<gray>Revise las monedas detectadas de Vault y JExEconomy.</gray>"
+        - "<gray>Crear el predeterminado</gray> <white>raindrops</white> <gray>moneda cuando sea necesario.</gray>"
+        - "<yellow>Haga clic para abrir los controles de divisas.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
+      lore:
+        - "<gray>No tienes permiso para utilizar este panel de administración.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Administrador de divisas</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Proveedores de divisas</gradient>"
+    lore:
+      - "<gray>Monedas detectadas:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault disponible:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy disponible:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Utilice el botón de cristal para crear la moneda predeterminada.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Proveedor:</gray> <white>{provider}</white>"
+      - "<gray>Símbolo:</gray> <white>{symbol}</white>"
+      - "<gray>Prefijo:</gray> <white>{prefix}</white>"
+      - "<gray>Sufijo:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Crear {currency_id}</gradient>"
+      lore:
+        - "<gray>Cree la moneda RDR predeterminada en JExEconomy.</gray>"
+        - "<yellow>Haga clic para crear {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Requerido</gradient>"
+      lore:
+        - "<gray>No puedes crear una moneda predeterminada sin JExEconomy.</gray>"
+        - "<gray>Instale y habilite JExEconomy primero.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Listo</gradient>"
+      lore:
+        - "<gray>La moneda predeterminada ya existe.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Moneda predeterminada creada:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No se pudo crear la moneda:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>La moneda ya existe:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No puede utilizar este botón a menos que JExEconomy esté disponible.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] No se detectaron monedas</gradient>"
+      lore:
+        - "<gray>No se detectaron monedas Vault o JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
+      lore:
+        - "<gray>No tienes permiso para utilizar esta vista de moneda.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tienes permiso para gestionar divisas.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Almacén de almacenamiento</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}ahora está vinculado a<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>No hay almacenamiento vinculado a<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Las teclas de acceso rápido deben estar entre<white>1</white>y<white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Abrió el panel de control de administración RDR.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Las ediciones de la configuración de almacenamiento están deshabilitadas en<white>RDRGratis</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Habilitó la barra lateral<white>/rrmarcador</white><gray>.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Deshabilitó la barra lateral<white>/rr</white><gray>.</gray>"

@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>إجمالي الأذونات:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ فشل في فتح مدير الأذونات!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 مدير العملة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>قم بمراجعة العملات التي تم اكتشافها بواسطة RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>يتضمن إدخالات Vault وJExEconomy</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ فشل في فتح مدير العملة!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ إنشاء LuckPerms المجموعات</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ تم إنشاؤها</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms مجموعات!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>لم يتم إنشاء أي مجموعات جديدة.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ فشل في الإنشاء LuckPerms مجموعات!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 مدير العملة</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>مزود:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>رمز:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>بادئة:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لاحقة:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ إنشاء %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>قم بإنشاء العملة الافتراضية لـ RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>انقر لإنشاء %currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy مطلوب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>يتطلب هذا الإجراء JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>قم بتثبيته قبل إنشاء الإعدادات الافتراضية</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% جاهز</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>العملة الافتراضية موجودة بالفعل</gradient>"
+        - "<gradient:#6b7280:#9ca3af>لا حاجة لمزيد من الإعداد</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ العملة الافتراضية التي تم إنشاؤها:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ فشل في إنشاء العملة:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ العملة موجودة بالفعل:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ لا يمكنك استخدام هذا الزر بدون JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ لم يتم اكتشاف أي عملات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>تعذر على RDQ اكتشاف عملات Vault أو JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>قم بتثبيت أو تمكين موفر الاقتصاد أولاً</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # نظرة عامة على أذونات المسؤول

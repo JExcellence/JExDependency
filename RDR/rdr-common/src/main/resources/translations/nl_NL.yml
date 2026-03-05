@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Maximale opslagruimte:</gray><white>{max_storages}</white>"
       - "<yellow>Klik om nog een opslagruimte aan te schaffen.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Opslagbeheerder</gradient>"
+    lore:
+      - "<gray>Open bevoorrechte RDR beheerdersopties.</gray>"
+      - "<gray>Beheer valutaproviders en standaardinstellingen.</gray>"
+      - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Opslagcontrole</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Beheerderspaneel</gradient>"
+    lore:
+      - "<gray>Beheer geprivilegieerde opslagsystemen vanaf één plek.</gray>"
+      - "<gray>Gebruik dit paneel om valutaondersteuning te configureren.</gray>"
+      - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
+      lore:
+        - "<gray>Controleer gedetecteerde valuta's van Vault en JExEconomy.</gray>"
+        - "<gray>Maak de standaard</gray> <white>raindrops</white> <gray>munt wanneer dat nodig is.</gray>"
+        - "<yellow>Klik om valutacontroles te openen.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gray>U heeft geen toestemming om dit beheerdersdashboard te gebruiken.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Valutaaanbieders</gradient>"
+    lore:
+      - "<gray>Gedetecteerde valuta:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault beschikbaar:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy beschikbaar:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Gebruik de kristallen knop om de standaardvaluta te creëren.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Aanbieder:</gray> <white>{provider}</white>"
+      - "<gray>Symbool:</gray> <white>{symbol}</white>"
+      - "<gray>Voorvoegsel:</gray> <white>{prefix}</white>"
+      - "<gray>Achtervoegsel:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Creëren {currency_id}</gradient>"
+      lore:
+        - "<gray>Creëer de standaardvaluta RDR in JExEconomy.</gray>"
+        - "<yellow>Klik om {currency_id} aan te maken.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Vereist</gradient>"
+      lore:
+        - "<gray>U kunt geen standaardvaluta maken zonder JExEconomy.</gray>"
+        - "<gray>Installeer en schakel eerst JExEconomy in.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Klaar</gradient>"
+      lore:
+        - "<gray>De standaardvaluta bestaat al.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Standaardvaluta gemaakt:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kan valuta niet maken:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuta bestaat al:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>U kunt deze knop niet gebruiken tenzij JExEconomy beschikbaar is.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Geen valuta gedetecteerd</gradient>"
+      lore:
+        - "<gray>Er zijn geen Vault- of JExEconomy-valuta's gedetecteerd.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gray>U heeft geen toestemming om deze valutaweergave te gebruiken.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>U heeft geen toestemming om valuta's te beheren.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Opslagruimte</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}is nu gebonden aan<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Er is geen opslag gebonden aan<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Sneltoetsen moeten tussen<white>1</white>en<white>{max_hotkeys}</white><gray>.</gray>liggen"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Het beheerdersdashboard RDR geopend.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Bewerkingen van opslaginstellingen zijn uitgeschakeld in<white>RDRGratis</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Het<white>/rrscorebord</white><gray>zijbalk is ingeschakeld.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Het<white>/rrscorebord</white><gray>zijbalk uitgeschakeld.</gray>"

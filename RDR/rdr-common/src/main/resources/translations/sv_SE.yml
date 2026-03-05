@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<yellow>Klicka för att köpa ett annat lagringsutrymme.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Lagringsadministratör</gradient>"
+    lore:
+      - "<gray>Öppna privilegierade RDR administratörskontroller.</gray>"
+      - "<gray>Hantera valutaleverantörer och standardinställningar.</gray>"
+      - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Lagringskontroll</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Adminpanel</gradient>"
+    lore:
+      - "<gray>Hantera privilegierade lagringssystem från ett ställe.</gray>"
+      - "<gray>Använd den här panelen för att konfigurera valutastöd.</gray>"
+      - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutahanterare</gradient>"
+      lore:
+        - "<gray>Granska upptäckta valutor från Vault och JExEconomy.</gray>"
+        - "<gray>Skapa standard</gray> <white>raindrops</white> <gray>valuta när det behövs.</gray>"
+        - "<yellow>Klicka för att öppna valutakontroller.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda denna adminpanel.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Valutahanterare</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Valutaleverantörer</gradient>"
+    lore:
+      - "<gray>Upptäckta valutor:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault tillgängligt:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy tillgängligt:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Använd kristallknappen för att skapa standardvalutan.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Leverantör:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Prefix:</gray> <white>{prefix}</white>"
+      - "<gray>Ändelse:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Skapa {currency_id}</gradient>"
+      lore:
+        - "<gray>Skapa standardvalutan RDR i JExEconomy.</gray>"
+        - "<yellow>Klicka för att skapa {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy krävs</gradient>"
+      lore:
+        - "<gray>Du kan inte skapa standardvaluta utan JExEconomy.</gray>"
+        - "<gray>Installera och aktivera JExEconomy först.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Redo</gradient>"
+      lore:
+        - "<gray>Standardvalutan finns redan.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Skapat standardvaluta:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Det gick inte att skapa valuta:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuta finns redan:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du kan inte använda den här knappen om inte JExEconomy är tillgänglig.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Inga valutor upptäckts</gradient>"
+      lore:
+        - "<gray>Inga Vault eller JExEconomy valutor upptäcktes.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda denna valutavy.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att hantera valutor.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Lagringsbutik</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}är nu bunden till<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Inget lagringsutrymme är bundet till<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Snabbtangenter måste vara mellan<white>1</white>och<white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Öppnade RDR administratörskontrollpanelen.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Redigering av lagringsinställningar är inaktiverade i<white>RDRFree</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Aktiverade<white>/rrresultattavlan</white><gray>sidofältet.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Inaktiverade<white>/rrresultattavlan</white><gray>sidofältet.</gray>"

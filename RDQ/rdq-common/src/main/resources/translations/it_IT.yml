@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Plugin totali:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Permessi totali:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Apertura gestore permessi fallita!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Gestore valutario</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Esamina le valute rilevate da RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Include voci Vault e JExEconomy</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Impossibile aprire il gestore valuta!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Crea Gruppi LuckPerms</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Creati</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>gruppi LuckPerms!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Nessun nuovo gruppo creato.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Creazione gruppi LuckPerms fallita!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Gestore valutario</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Fornitore:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Simbolo:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Prefisso:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Suffisso:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ Crea %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Crea la valuta predefinita per RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>Fai clic per creare %currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy Obbligatorio</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Questa azione richiede JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Installalo prima di creare le impostazioni predefinite</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Pronto</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>La valuta predefinita esiste già</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Non sono necessarie ulteriori configurazioni</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Valuta predefinita creata:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Impossibile creare la valuta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ La valuta esiste già:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Non puoi utilizzare questo pulsante senza JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Nessuna valuta rilevata</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ non è riuscito a rilevare le valute Vault o JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installa o abilita prima un fornitore economico</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # PANORAMICA DELLE AUTORIZZAZIONI AMMINISTRATIVE UI

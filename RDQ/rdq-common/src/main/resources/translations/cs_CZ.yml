@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Celková oprávnění:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít správce oprávnění!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Měnový manažer</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Zkontrolujte RDQ-zjištěné měny</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zahrnuje položky Vault a JExEconomy</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít správce měn!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Vytvořte skupiny LuckPerms</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Vytvořeno</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms skupiny!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Nebyly vytvořeny žádné nové skupiny.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se vytvořit skupiny LuckPerms!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Měnový manažer</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Poskytovatel:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Symbol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Předpona:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Přípona:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ Vytvořit %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Vytvořit výchozí měnu pro RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>Kliknutím vytvoříte %currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy Povinné</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tato akce vyžaduje JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nainstalujte jej před vytvořením výchozích nastavení</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Připraveno</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Výchozí měna již existuje</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Není potřeba žádné další nastavení</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Vytvořená výchozí měna:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Nepodařilo se vytvořit měnu:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ Měna již existuje:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Toto tlačítko nemůžete použít bez JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Nebyly zjištěny žádné měny</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ nedokázal detekovat měny Vault nebo JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nejprve nainstalujte nebo povolte ekonomického poskytovatele</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # UŽIVATELE PŘEHLED OPRÁVNĚNÍ SPRÁVCE

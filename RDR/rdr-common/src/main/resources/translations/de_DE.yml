@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Maximale Speicherkapazität:</gray><white>{max_storages}</white>"
       - "<yellow>Klicken Sie hier, um einen weiteren Speicher zu erwerben.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Speicheradministrator</gradient>"
+    lore:
+      - "<gray>Öffnen Sie privilegierte RDR-Administratorsteuerelemente.</gray>"
+      - "<gray>Verwalten Sie Währungsanbieter und -standards.</gray>"
+      - "<yellow>Erfordert:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Speicherkontrolle</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin-Panel</gradient>"
+    lore:
+      - "<gray>Verwalten Sie privilegierte Speichersysteme von einem Ort aus.</gray>"
+      - "<gray>Verwenden Sie dieses Panel, um die Währungsunterstützung zu konfigurieren.</gray>"
+      - "<yellow>Erfordert:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Währungsmanager</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie die erkannten Währungen von Vault und JExEconomy.</gray>"
+        - "<gray>Erstellen Sie die Standardeinstellung</gray> <white>raindrops</white> <gray>Währung bei Bedarf.</gray>"
+        - "<yellow>Klicken Sie hier, um die Währungskontrolle zu öffnen.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, dieses Admin-Panel zu verwenden.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Währungsmanager</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Währungsanbieter</gradient>"
+    lore:
+      - "<gray>Erkannte Währungen:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault verfügbar:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy verfügbar:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Verwenden Sie die Kristallschaltfläche, um die Standardwährung zu erstellen.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Anbieter:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Präfix:</gray> <white>{prefix}</white>"
+      - "<gray>Suffix:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Erstellen {currency_id}</gradient>"
+      lore:
+        - "<gray>Erstellen Sie die Standardwährung RDR in JExEconomy.</gray>"
+        - "<yellow>Klicken Sie, um {currency_id} zu erstellen.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Erforderlich</gradient>"
+      lore:
+        - "<gray>Ohne JExEconomy können Sie keine Standardwährung erstellen.</gray>"
+        - "<gray>Installieren und aktivieren Sie zuerst JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Bereit</gradient>"
+      lore:
+        - "<gray>Die Standardwährung existiert bereits.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Standardwährung erstellt:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Währung konnte nicht erstellt werden:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Währung existiert bereits:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie können diese Schaltfläche nur verwenden, wenn JExEconomy verfügbar ist.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Keine Währungen erkannt</gradient>"
+      lore:
+        - "<gray>Es wurden keine Vault- oder JExEconomy-Währungen erkannt.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie sind nicht berechtigt, diese Währungsansicht zu verwenden.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben keine Berechtigung zum Verwalten von Währungen.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Speicherspeicher</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}ist jetzt an<white>/rr{hotkey}</white><gray>.</gray>gebunden"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Kein Speicher ist an<white>/rrgebunden{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Hotkeys müssen zwischen<white>1</white>und<white>{max_hotkeys}</white><gray>.</gray>liegen"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Das Admin-Kontrollfeld RDR geöffnet.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Änderungen der Speichereinstellungen sind in<white>RDRFree</white><gray>.</gray>deaktiviert."
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Aktiviert die<white>/rrAnzeigetafel</white><gray>Seitenleiste.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Die<white>/rrAnzeigetafel</white><gray>Seitenleiste wurde deaktiviert.</gray>"

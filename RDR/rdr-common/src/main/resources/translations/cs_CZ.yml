@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
       - "<yellow>Kliknutím zakoupíte další úložiště.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Správce úložiště</gradient>"
+    lore:
+      - "<gray>Otevřete privilegované ovládací prvky správce RDR.</gray>"
+      - "<gray>Spravujte poskytovatele měn a výchozí hodnoty.</gray>"
+      - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Řízení úložiště</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR panel administrátora</gradient>"
+    lore:
+      - "<gray>Spravujte privilegované úložné systémy z jednoho místa.</gray>"
+      - "<gray>Tento panel použijte ke konfiguraci podpory měn.</gray>"
+      - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
+      lore:
+        - "<gray>Zkontrolujte zjištěné měny z Vault a JExEconomy.</gray>"
+        - "<gray>Vytvořte výchozí</gray> <white>raindrops</white> <gray>měny v případě potřeby.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky měny.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění používat tento panel administrátora.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Poskytovatelé měn</gradient>"
+    lore:
+      - "<gray>Zjištěné měny:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault k dispozici:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy k dispozici:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Pomocí krystalového tlačítka vytvořte výchozí měnu.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Poskytovatel:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Předpona:</gray> <white>{prefix}</white>"
+      - "<gray>Přípona:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Vytvořit {currency_id}</gradient>"
+      lore:
+        - "<gray>Vytvořte výchozí měnu RDR v JExEconomy.</gray>"
+        - "<yellow>Kliknutím vytvoříte {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Povinné</gradient>"
+      lore:
+        - "<gray>Výchozí měnu nelze vytvořit bez JExEconomy.</gray>"
+        - "<gray>Nejprve nainstalujte a povolte JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Připraveno</gradient>"
+      lore:
+        - "<gray>Výchozí měna již existuje.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Vytvořená výchozí měna:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se vytvořit měnu:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Měna již existuje:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Toto tlačítko nemůžete použít, pokud není k dispozici JExEconomy.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Nebyly zjištěny žádné měny</gradient>"
+      lore:
+        - "<gray>Nebyly zjištěny žádné měny Vault nebo JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>K použití tohoto zobrazení měny nemáte oprávnění.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ke správě měn.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] úložiště</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}je nyní vázáno na<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Žádné úložiště není vázáno na<white>/rr{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Klávesové zkratky musí být mezi<white>1</white>a<white>{max_hotkeys}</white><gray>.</gray>"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>Otevřel ovládací panel správce RDR.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Úpravy nastavení úložiště jsou zakázány v<white>RDRFree</white><gray>.</gray>"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Povolil postranní panel<white>/rr_</white><gray>.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Deaktivoval postranní panel<white>/rr</white><gray>.</gray>"

@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>最大ストレージ数:</gray><white>{max_storages}</white>"
       - "<yellow>クリックして別のストレージを購入します。</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] ストレージ管理者</gradient>"
+    lore:
+      - "<gray>特権付き RDR 管理コントロールを開きます。</gray>"
+      - "<gray>通貨プロバイダーとデフォルトを管理します。</gray>"
+      - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] ストレージ制御</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 管理パネル</gradient>"
+    lore:
+      - "<gray>特権ストレージ システムを 1 か所から管理します。</gray>"
+      - "<gray>このパネルを使用して、通貨サポートを構成します。</gray>"
+      - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
+      lore:
+        - "<gray>Vault および JExEconomy から検出された通貨を確認します。</gray>"
+        - "<gray>デフォルトを作成する</gray> <white>raindrops</white> <gray>必要なときに通貨を使用します。</gray>"
+        - "<yellow>クリックして通貨コントロールを開きます。</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>この管理パネルを使用する権限がありません。</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] 通貨プロバイダー</gradient>"
+    lore:
+      - "<gray>検出された通貨:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault が利用可能:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy が利用可能:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>クリスタル ボタンを使用してデフォルトの通貨を作成します。</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>プロバイダー:</gray> <white>{provider}</white>"
+      - "<gray>シンボル：</gray> <white>{symbol}</white>"
+      - "<gray>プレフィックス:</gray> <white>{prefix}</white>"
+      - "<gray>サフィックス：</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] 作成する {currency_id}</gradient>"
+      lore:
+        - "<gray>JExEconomy にデフォルトの RDR 通貨を作成します。</gray>"
+        - "<yellow>クリックして {currency_id} を作成します。</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy 必須</gradient>"
+      lore:
+        - "<gray>JExEconomy がないとデフォルト通貨を作成できません。</gray>"
+        - "<gray>まず JExEconomy をインストールして有効にします。</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} 準備ができて</gradient>"
+      lore:
+        - "<gray>デフォルトの通貨はすでに存在します。</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>作成されたデフォルト通貨:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>通貨の作成に失敗しました:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>通貨はすでに存在します:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>JExEconomy が使用できない場合、このボタンは使用できません。</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] 通貨が検出されませんでした</gradient>"
+      lore:
+        - "<gray>Vault または JExEconomy 通貨は検出されませんでした。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>この通貨ビューを使用する権限がありません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>通貨を管理する権限がありません。</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] ストレージ ストア</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}は<white>/rrにバインドされました{hotkey}</white><gray>.</gray>"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>/rr{hotkey}</white><gray>.</gray>にバインドされているストレージはありません"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>ホットキーは<white>1</white>と<white>{max_hotkeys}</white><gray>.</gray>の間にある必要があります"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>RDR 管理コントロール パネルを開きました。</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>ストレージ設定の編集は<white>RDRFree</white><gray>.</gray>では無効になっています"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray><white>/rrスコアボード</white><gray>サイドバーを有効にしました。</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray><white>/rrスコアボード</white><gray>サイドバーを無効にしました。</gray>"

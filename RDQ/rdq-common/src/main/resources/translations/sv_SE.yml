@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Totalt antal plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Totala behörigheter:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Det gick inte att öppna behörighetshanteraren!</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 Valutahanterare</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Granska RDQ-upptäckta valutor</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Inkluderar Vault och JExEconomy poster</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Det gick inte att öppna valutahanteraren!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Skapa LuckPerms-grupper</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Skapad</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms-grupper!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Inga nya grupper skapades.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Det gick inte att skapa LuckPerms-grupper!</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 Valutahanterare</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Leverantör:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Symbol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Prefix:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ändelse:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ Skapa %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Skapa standardvalutan för RDQ</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>Klicka för att skapa %currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy krävs</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Denna åtgärd kräver JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Installera det innan du skapar standardinställningar</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% Klar</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Standardvalutan finns redan</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Inga ytterligare inställningar behövs</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ Skapat standardvaluta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ Det gick inte att skapa valuta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ Valuta finns redan:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ Du kan inte använda den här knappen utan JExEconomy.</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ Inga valutor upptäckts</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ kunde inte upptäcka Vault eller JExEconomy valutor</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installera eller aktivera en ekonomileverantör först</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # ADMINISTRATÖRBEHÖRINGAR ÖVERSIKT UI

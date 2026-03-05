@@ -29,6 +29,84 @@ storage_overview_ui:
       - "<gray>Maksimum depolama:</gray><white>{max_storages}</white>"
       - "<yellow>Başka bir depolama alanı satın almak için tıklayın.</yellow>"
 
+  admin:
+    name: "<gradient:#a78bfa:#c4b5fd>[Admin] Depolama Yöneticisi</gradient>"
+    lore:
+      - "<gray>Ayrıcalıklı RDR yönetici kontrollerini açın.</gray>"
+      - "<gray>Para birimi sağlayıcılarını ve varsayılanları yönetin.</gray>"
+      - "<yellow>Gereklilikler:</yellow> <white>raindroprdr.command.admin</white>"
+
+storage_admin_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Depolama Kontrolü</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Yönetici Paneli</gradient>"
+    lore:
+      - "<gray>Ayrıcalıklı depolama sistemlerini tek yerden yönetin.</gray>"
+      - "<gray>Para birimi desteğini yapılandırmak için bu paneli kullanın.</gray>"
+      - "<yellow>Gereklilikler:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Döviz Yöneticisi</gradient>"
+      lore:
+        - "<gray>Vault ve JExEconomy'den tespit edilen para birimlerini inceleyin.</gray>"
+        - "<gray>Varsayılanı oluştur</gray> <white>raindrops</white> <gray>gerektiğinde para birimi.</gray>"
+        - "<yellow>Para birimi kontrollerini açmak için tıklayın.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu yönetici panelini kullanma izniniz yok.</gray>"
+
+storage_admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>[Cur] Döviz Yöneticisi</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Döviz Sağlayıcıları</gradient>"
+    lore:
+      - "<gray>Algılanan para birimleri:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault mevcut:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy mevcut:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Varsayılan para birimini oluşturmak için kristal düğmeyi kullanın.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur] {currency_id}</gradient>"
+    lore:
+      - "<gray>Sağlayıcı:</gray> <white>{provider}</white>"
+      - "<gray>Sembol:</gray> <white>{symbol}</white>"
+      - "<gray>Önek:</gray> <white>{prefix}</white>"
+      - "<gray>Sonek:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+] Yaratmak {currency_id}</gradient>"
+      lore:
+        - "<gray>JExEconomy içinde varsayılan RDR para birimini oluşturun.</gray>"
+        - "<yellow>{currency_id} oluşturmak için tıklayın.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] JExEconomy Gerekli</gradient>"
+      lore:
+        - "<gray>JExEconomy olmadan varsayılan para birimi oluşturamazsınız.</gray>"
+        - "<gray>Önce JExEconomy'i kurun ve etkinleştirin.</gray>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>[OK] {currency_id} Hazır</gradient>"
+      lore:
+        - "<gray>Varsayılan para birimi zaten mevcut.</gray>"
+    messages:
+      created: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Varsayılan para birimi oluşturuldu:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Para birimi oluşturulamadı:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Para birimi zaten mevcut:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>JExEconomy mevcut olmadığı sürece bu düğmeyi kullanamazsınız.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Hiçbir Para Birimi Algılanmadı</gradient>"
+      lore:
+        - "<gray>Hiçbir Vault veya JExEconomy para birimi algılanmadı.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu para birimi görünümünü kullanma izniniz yok.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Para birimlerini yönetme izniniz yok.</gray>"
+  decoration:
+    border:
+      name: " "
+
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Depolama Mağazası</gradient>"
   summary:
@@ -303,6 +381,7 @@ storage:
     hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}artık<white>/rr{hotkey}</white><gray>.</gray>öğesine bağlandı"
     hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Hiçbir depolama alanı<white>/rr'ye bağlı değil{hotkey}</white><gray>.</gray>"
     hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Kısayol tuşları<white>1</white>ile<white>{max_hotkeys}</white><gray>.</gray>arasında olmalıdır"
+    admin_opened: "<gradient:#a78bfa:#c4b5fd>[Admin]</gradient> <gray>RDR yönetici kontrol panelini açtı.</gray>"
     config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Depolama ayarı düzenlemeleri<white>RDRFree</white><gray>.</gray>'de devre dışı bırakıldı"
     scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray><white>/rrpuan tablosunu etkinleştirdi</white><gray>kenar çubuğu.</gray>"
     scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray><white>/rrpuan tablosu</white><gray>kenar çubuğu devre dışı bırakıldı.</gray>"

@@ -1176,6 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>插件總數：</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>總權限：</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 無法開啟權限管理員！</gradient>"
+  view_currencies:
+    name: "<gradient:#10b981:#34d399>💱 貨幣經理</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>檢查 RDQ 偵測到的貨幣</gradient>"
+      - "<gradient:#6b7280:#9ca3af>包括 Vault 和 JExEconomy 條目</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 無法開啟貨幣管理器！</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ 建立 LuckPerms 群組</gradient>"
     lore:
@@ -1185,6 +1191,48 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ 已創建</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>幸運Perms組！</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>沒有建立新群組。</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 建立 LuckPerms 群組失敗！</gradient>"
+
+# ============================================
+# ADMIN CURRENCY OVERVIEW UI
+# ============================================
+admin_currency_ui:
+  title: "<gradient:#10b981:#34d399>💱 貨幣經理</gradient>"
+  currency_entry:
+    name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>提供者：</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>象徵：</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>前綴：</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>後綴：</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>✨ 建立 %currency_id%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>為 RDQ 建立預設貨幣</gradient>"
+        - "<gradient:#f59e0b:#fbbf24>點選建立%currency_id%</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>❌ JExEconomy 必需</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>此操作需要 JExEconomy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>在創建預設值之前安裝它</gradient>"
+    already_exists:
+      name: "<gradient:#10b981:#34d399>✅ %currency_id% 準備就緒</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>預設貨幣已存在</gradient>"
+        - "<gradient:#6b7280:#9ca3af>無需進一步設置</gradient>"
+    messages:
+      created: "<gradient:#10b981:#34d399>✅ 創建預設貨幣：</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      failed: "<gradient:#ef4444:#f87171>❌ 創造貨幣失敗：</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      already_exists: "<gradient:#3b82f6:#60a5fa>ℹ 貨幣已存在：</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>❌ 如果沒有 JExEconomy，則無法使用此按鈕。</gradient>"
+  empty:
+    name: "<gradient:#f59e0b:#fbbf24>⚠ 未偵測到貨幣</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ 無法偵測 Vault 或 JExEconomy 貨幣</gradient>"
+      - "<gradient:#6b7280:#9ca3af>首先安裝或啟用經濟提供者</gradient>"
+  decoration:
+    border:
+      name: " "
 
 # ============================================
 # 管理員權限概述 UI
