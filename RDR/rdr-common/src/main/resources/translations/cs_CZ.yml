@@ -1,322 +1,322 @@
 prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
-  title: "<gradient:#f59e0b:#fbbf24>[RDR] Storage Stats</gradient>"
-  items: "<gray>Celkové položky:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>Dostupné sloty:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>Získané zásoby:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>Maximální sklad:</gray> <white>{max_storages}</white>"
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Statistiky úložiště</gradient>"
+  items: "<gray>Položky celkem:</gray><white>{total_items}</white>"
+  available_slots: "<gray>Dostupné sloty:</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>Získaná úložiště:</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>Max úložiště:</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[*] Skladovací nádoba</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Vault] Souhrn úložiště</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] Přehled úložiště</gradient>"
     lore:
-      - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximální sklady:</gray> <white>{max_storages}</white>"
-      - "<gray>Vaše síť trezoru je zachována.</gray>"
-      - "<gray>a připraven k použití cross-server.</gray>"
+      - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
+      - "<gray>Vaše síť trezoru je trvalá</gray>"
+      - "<gray>a připraven k použití mezi servery.</gray>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Zobrazit úložiště</gradient>"
     lore:
-      - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximální sklady:</gray> <white>{max_storages}</white>"
-      - "<yellow>Klikněte pro procházení seznamu úložišť.</yellow>"
+      - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
+      - "<yellow>Kliknutím můžete procházet seznam úložiště.</yellow>"
   store:
-    name: "<gradient:#f59e0b:#fbbf24>[$] Storage Store</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[$] úložiště</gradient>"
     lore:
-      - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximální sklady:</gray> <white>{max_storages}</white>"
-      - "<yellow>Klikněte pro nákup jiného úložiště.</yellow>"
+      - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
+      - "<yellow>Kliknutím zakoupíte další úložiště.</yellow>"
 
 storage_store_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[$] Storage Store</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[$] úložiště</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[Info] Skladovací kapacita</gradient>"
+    name: "<gradient:#10b981:#34d399>[Info] Kapacita úložiště</gradient>"
     lore:
-      - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximální sklady:</gray> <white>{max_storages}</white>"
-      - "<gray>Koupit další trezor prostor do</gray>"
-      - "<gray>dosáhnete nastaveného uzávěru.</gray>"
+      - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
+      - "<gray>Kupte si další úložný prostor do</gray>"
+      - "<gray>dosáhnete nastaveného limitu.</gray>"
   cost:
-    name: "<gradient:#f59e0b:#fbbf24>[Req] Požadavky na skladování</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Požadavky na obchod</gradient>"
     lore:
-      - "<gray>Konfigurované požadavky:</gray> <white>{requirement_count}</white>"
-      - "<gray>Počet aktuálních požadavků:</gray> <white>{requirements}</white>"
-      - "<gray>Stav:</gray> <white>{availability}</white>"
-      - "<yellow>Klikněte pro podrobnou kontrolu každého požadavku úrovně.</yellow>"
-    none: "<gradient:#ef4444:#f87171>[None]</gradient>"
+      - "<gray>Konfigurované požadavky:</gray><white>{requirement_count}</white>"
+      - "<gray>Aktuální počet požadavků:</gray><white>{requirements}</white>"
+      - "<gray>Status:</gray><white>{availability}</white>"
+      - "<yellow>Kliknutím si podrobně prohlédnete každou úroveň požadavků.</yellow>"
+    none: "<gradient:#ef4444:#f87171>[Žádné]</gradient>"
     availability:
-      available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
+      available: "<gradient:#10b981:#34d399>[Připraveno]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Čeká]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
   purchase:
     available:
       name: "<gradient:#10b981:#34d399>[+] Koupit úložiště</gradient>"
       lore:
-        - "<gray>Konfigurované požadavky:</gray> <white>{requirement_count}</white>"
-        - "<gray>Aktuální požadavky:</gray> <white>{requirements}</white>"
-        - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>Klikněte na nákup při splnění každého požadavku.</yellow>"
+        - "<gray>Konfigurované požadavky:</gray><white>{requirement_count}</white>"
+        - "<gray>Aktuální požadavky:</gray><white>{requirements}</white>"
+        - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Klikněte pro nákup, když jsou splněny všechny požadavky.</yellow>"
     pending:
-      name: "<gradient:#f59e0b:#fbbf24>[...] Předložené požadavky</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[...] Nevyřízené požadavky</gradient>"
       lore:
-        - "<gray>Konfigurované požadavky:</gray> <white>{requirement_count}</white>"
-        - "<gray>Aktuální požadavky:</gray> <white>{requirements}</white>"
-        - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Konfigurované požadavky:</gray><white>{requirement_count}</white>"
+        - "<gray>Aktuální požadavky:</gray><white>{requirements}</white>"
+        - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Před nákupem splňte zbývající požadavky.</yellow>"
     limit_reached:
-      name: "<gradient:#ef4444:#f87171>[X] Mezní hodnota skladování Dosažena</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Dosažen limit úložiště</gradient>"
       lore:
-        - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<gray>Nemůžete si koupit více skladů</gray>"
-        - "<gray>dokud se nezvýší globální strop.</gray>"
+        - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Nemůžete zakoupit další úložiště</gray>"
+        - "<gray>dokud nebude zvýšen globální strop.</gray>"
     no_requirements:
-      name: "<gradient:#ef4444:#f87171>[!] Požadavky Offline</gradient>"
+      name: "<gradient:#ef4444:#f87171>[!] Požadavky offline</gradient>"
       lore:
-        - "<gray>Jeden nebo více nakonfigurovaných požadavků na sklad</gray>"
-        - "<gray>nelze vyřešit na tomto serveru.</gray>"
+        - "<gray>Jeden nebo více nakonfigurovaných požadavků na obchod</gray>"
+        - "<gray>nelze na tomto serveru vyřešit.</gray>"
     profile_missing:
-      name: "<gradient:#ef4444:#f87171>[!] Chybějící profil</gradient>"
+      name: "<gradient:#ef4444:#f87171>[!] Chybí profil</gradient>"
       lore:
-        - "<gray>Vaše RDR nelze načíst profil,</gray>"
-        - "<gray>takže nákupy jsou dočasně zablokovány.</gray>"
+        - "<gray>Váš profilRDRnelze načíst,</gray>"
+        - "<gray>takže nákupy jsou dočasně blokovány.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zakoupené <white>{storage_key}</white><gray>. Zkonzumované požadavky:</gray> <white>{requirements}</white><gray>. Vlastněné sklady:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>V současné době se nesetkáváte. <white>{requirement}</white><gray>. Požadavky na uchovávání:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Požadavky na skladování <white>{requirement}</white><gray> je momentálně nedostupná nebo neplatná.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Pro nákup úložiště nejsou momentálně k dispozici žádné nastavené požadavky.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dosáhli jste limitu skladování <white>{max_storages}</white><gray>. Vlastněné sklady:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Vaše RDR Profil nelze načíst, takže skladovací nákupy nejsou k dispozici.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>Zakoupeno<white>{storage_key}</white><gray>. Spotřebované požadavky:</gray><white>{requirements}</white><gray>. Vlastní úložiště:</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>V současné době nesplňujete<white>{requirement}</white><gray>. Požadavky na obchod:</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Požadavek obchodu<white>{requirement}</white><gray>je momentálně nedostupný nebo neplatný.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Pro nákupy úložiště nejsou momentálně k dispozici žádné nakonfigurované požadavky na úložiště.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Dosáhli jste limitu úložiště<white>{max_storages}</white><gray>. Vlastní úložiště:</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Váš profilRDRnelze načíst, takže nákupy úložiště nejsou dostupné.</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Req] Nákup {purchase_number}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Požadavek] Koupit{purchase_number}</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[Info] Prohlížeč požadavků</gradient>"
+    name: "<gradient:#10b981:#34d399>[Info] Prohlížeč požadavku</gradient>"
     lore:
-      - "<gray>Nákupní úroveň:</gray> <white>{purchase_number}</white>"
-      - "<gray>Odemknout úložiště:</gray> <white>{storage_number}</white>"
-      - "<gray>Konfigurované požadavky:</gray> <white>{requirement_count}</white>"
-      - "<gray>V současné době splněny:</gray> <white>{met_count}</white>"
+      - "<gray>Úroveň nákupu:</gray><white>{purchase_number}</white>"
+      - "<gray>Odemkne úložiště:</gray><white>{storage_number}</white>"
+      - "<gray>Konfigurované požadavky:</gray><white>{requirement_count}</white>"
+      - "<gray>Aktuálně splněno:</gray><white>{met_count}</white>"
   empty:
-    name: "<gradient:#10b981:#34d399>[Free] Žádné požadavky</gradient>"
+    name: "<gradient:#10b981:#34d399>[Zdarma] Žádné požadavky</gradient>"
     lore:
-      - "<gray>Tato nákupní úroveň nemá nakonfigurované požadavky.</gray>"
-      - "<yellow>Můžete si koupit tento sklad bez dodatečných šeků.</yellow>"
+      - "<gray>Tato úroveň nákupu nemá žádné nakonfigurované požadavky.</gray>"
+      - "<yellow>Toto úložiště můžete zakoupit bez dalších kontrol.</yellow>"
   progress_bar:
-    empty: "<gradient:#6b7280:#9ca3af>{\\ cHFFFFFF}</gradient>"
-    partial: "<gradient:#f59e0b:#fbbf24>Př</gradient>"
-    filled: "<gradient:#10b981:#34d399>{\\ cHFFFFFF}</gradient>"
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Požadavek]{requirement_name}</gradient>"
     lore:
-      - "<gray>Klíč:</gray> <white>{requirement_key}</white>"
-      - "<gray>Typ:</gray> <white>{requirement_type}</white>"
-      - "<gray>Stav:</gray> <white>{status}</white>"
-      - "<gray>Pokrok:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>Shrnutí:</gray> <white>{summary}</white>"
-      - "<yellow>Pravým tlačítkem myši položku nebo měnové požadavky na bankovní pokrok.</yellow>"
-    details: "<gradient:#f59e0b:#fbbf24>Podrobné kontroly</gradient>"
+      - "<gray>Klíč:</gray><white>{requirement_key}</white>"
+      - "<gray>Typ:</gray><white>{requirement_type}</white>"
+      - "<gray>Status:</gray><white>{status}</white>"
+      - "<gray>Pokrok:</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Shrnutí:</gray><white>{summary}</white>"
+      - "<yellow>Klikněte pravým tlačítkem na požadavky na položku nebo měnu, abyste mohli postupovat v bance.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Podrobné kontroly</gradient>"
     status:
-      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
+      met: "<gradient:#10b981:#34d399>[Splněno]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Čeká]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nedostupné]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>{\\ cHFFFFFF}</gradient> <gray><white>{requirement}</white><gray> je připraven.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>Př</gradient> <gray>Uložený pokrok pro <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>{\\ cHFFFFFF}</gradient> <gray>Nebyly k dispozici žádné odpovídající položky nebo měna <white>{requirement}</white><gray>.</gray>"
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> nepodporuje omezený pokrok.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> teď není k dispozici.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Vaše RDR Profil nelze načíst, takže pokrok nelze uložit.</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> je nyní připraveno.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Uložen postup pro <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Pro <white>{requirement}</white><gray> nebyly dostupné žádné odpovídající položky ani měna.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>nepodporuje ukládaný postup.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>je právě nedostupné.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Váš profilRDRnelze načíst, takže nelze uložit postup.</gray>"
 
 storage_player_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Vault] Your Storages</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Vault] Vaše úložiště</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] Skladovací kapacita</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Kapacita úložiště</gradient>"
     lore:
-      - "<gray>Vlastněné sklady:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximální sklady:</gray> <white>{max_storages}</white>"
-      - "<gray>Použijte tento seznam k přezkoumání</gray>"
-      - "<gray>přetrvávající skladovací nádoby.</gray>"
+      - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
+      - "<gray>Použijte tento seznam ke kontrole svého</gray>"
+      - "<gray>trvalé skladovací kontejnery.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[Box]{storage_key}</gradient>"
     lore:
-      - "<gray>Skladovací klíč:</gray> <white>{storage_key}</white>"
-      - "<gray>Majitel:</gray> <white>{owner_name}</white>"
-      - "<gray>Přístup:</gray> <white>{access_level}</white>"
-      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Použité sloty:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>Dostupné sloty:</gray> <white>{available_slots}</white>"
-      - "<yellow>Toto úložiště je připraveno k vytrvalosti.</yellow>"
-      - "<gradient:#38bdf8:#60a5fa>[>>] Levým tlačítkem myši otevřete toto úložiště.</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>[#] Pravým tlačítkem myši otevřete nastavení úložiště.</gradient>"
+      - "<gray>Klíč úložiště:</gray><white>{storage_key}</white>"
+      - "<gray>Vlastník:</gray><white>{owner_name}</white>"
+      - "<gray>Přístup:</gray><white>{access_level}</white>"
+      - "<gray>Hotkey:</gray><white>{hotkey_display}</white>"
+      - "<gray>Použité sloty:</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Dostupné sloty:</gray><white>{available_slots}</white>"
+      - "<yellow>Toto úložiště je připraveno k uložení položek.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Kliknutím levým tlačítkem otevřete toto úložiště.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Kliknutím pravým tlačítkem otevřete nastavení úložiště.</gradient>"
     access:
-      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+      owner: "<gradient:#10b981:#34d399>[Vlastník]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Veřejné]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Společník]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Důvěryhodný]</gradient>"
   empty:
-    name: "<gradient:#ef4444:#f87171>[X] Nebyly nalezeny žádné skladby</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Nebyla nalezena žádná úložiště</gradient>"
     lore:
-      - "<gray>V současné době nejsou připojeny žádné sklady</gray>"
-      - "<gray>na vaši RDR Profil.</gray>"
+      - "<gray>Aktuálně nejsou připojena žádná úložiště</gray>"
+      - "<gray>do vašeho profiluRDR.</gray>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[!] Chybějící profil</gradient>"
+    name: "<gradient:#ef4444:#f87171>[!] Chybí profil</gradient>"
     lore:
-      - "<gray>Vaše RDR Profil hráče nemohl</gray>"
-      - "<gray>být naloženo z perzistentního skladování.</gray>"
+      - "<gray>Váš hráčský profilRDRnemohl</gray>"
+      - "<gray>být načten z trvalého úložiště.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Nastavení</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}Nastavení</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] Nastavení úložiště</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Informace] Nastavení úložiště</gradient>"
     lore:
-      - "<gray>Skladovací klíč:</gray> <white>{storage_key}</white>"
-      - "<gray>Majitel:</gray> <white>{owner_name}</white>"
-      - "<gray>Váš přístup:</gray> <white>{access_level}</white>"
-      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Přidružené osoby:</gray> <white>{associate_count}</white>"
-      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<gray>Klíč úložiště:</gray><white>{storage_key}</white>"
+      - "<gray>Vlastník:</gray><white>{owner_name}</white>"
+      - "<gray>Váš přístup:</gray><white>{access_level}</white>"
+      - "<gray>Hotkey:</gray><white>{hotkey_display}</white>"
+      - "<gray>Spolupracovníci:</gray><white>{associate_count}</white>"
+      - "<gray>Důvěryhodný:</gray><white>{trusted_count}</white>"
     access:
-      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+      owner: "<gradient:#10b981:#34d399>[Vlastník]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Veřejné]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Společník]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Důvěryhodný]</gradient>"
   trusted:
-    name: "<gradient:#10b981:#34d399>[Group] Důvěryhodný přístup</gradient>"
+    name: "<gradient:#10b981:#34d399>[Skupinový] důvěryhodný přístup</gradient>"
     lore:
-      - "<gray>Přidružené osoby:</gray> <white>{associate_count}</white>"
-      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
-      - "<yellow>Klikněte pro správu, kdo může uložit</yellow>"
-      - "<yellow>nebo plně přístup k tomuto úložiště.</yellow>"
+      - "<gray>Spolupracovníci:</gray><white>{associate_count}</white>"
+      - "<gray>Důvěryhodný:</gray><white>{trusted_count}</white>"
+      - "<yellow>Kliknutím můžete spravovat, kdo může vkládat</yellow>"
+      - "<yellow>nebo plný přístup k tomuto úložišti.</yellow>"
   hotkey:
-    name: "<gradient:#f59e0b:#fbbf24>[#] Skladování Hotkey</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[#] Klávesová zkratka úložiště</gradient>"
     lore:
-      - "<gray>Současný klíč:</gray> <white>{hotkey_display}</white>"
-      - "<yellow>Kliknutím navážete rychlý přístup pro</yellow>"
+      - "<gray>Aktuální klávesová zkratka:</gray><white>{hotkey_display}</white>"
+      - "<yellow>Kliknutím svážete rychlý přístup pro</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
     name: "<gradient:#ef4444:#f87171>[X] Trusted Locked</gradient>"
     lore:
-      - "<gray>Pouze majitel skladu může spravovat</gray>"
-      - "<gray>důvěryhodný přístup k tomuto skladu.</gray>"
+      - "<gray>Spravovat může pouze vlastník úložiště</gray>"
+      - "<gray>důvěryhodný přístup pro toto úložiště.</gray>"
   hotkey_locked:
-    name: "<gradient:#ef4444:#f87171>[X] Hotkey zamčeno</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Klávesová zkratka uzamčena</gradient>"
     lore:
-      - "<gray>Pouze majitel skladu může změnit</gray>"
-      - "<gray>Úložné klíče.</gray>"
+      - "<gray>Změnit může pouze vlastník úložiště</gray>"
+      - "<gray>klávesové zkratky úložiště.</gray>"
   edition_locked:
-    name: "<gradient:#ef4444:#f87171>[Free] Nastavení zamčeno</gradient>"
+    name: "<gradient:#ef4444:#f87171>[Free] Nastavení uzamčeno</gradient>"
     lore:
       - "<gray>Změny nastavení úložiště jsou zakázány</gray>"
-      - "<gray>n <white>RDR Free</white><gray>.</gray>"
-      - "<yellow>Aktualizovat na Premium pro úpravu nastavení.</yellow>"
+      - "<gray>v<white>RDRZdarma</white><gray>.</gray>"
+      - "<yellow>Upgradujte na Premium a upravte nastavení.</yellow>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] Uložení chybí</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Chybí úložiště</gradient>"
     lore:
-      - "<gray>Tento sklad nelze načíst</gray>"
+      - "<gray>Toto úložiště nelze načíst</gray>"
       - "<gray>pro zobrazení nastavení.</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Group] {storage_key} Přístup</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Skupina]{storage_key}Přístup</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Sdílený přístup</gradient>"
     lore:
-      - "<gray>Skladovací klíč:</gray> <white>{storage_key}</white>"
-      - "<gray>Majitel:</gray> <white>{owner_name}</white>"
-      - "<gray>Přidružené osoby:</gray> <white>{associate_count}</white>"
-      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
-      - "<yellow>Klikněte na přehrávač pro cyklistický přístup.</yellow>"
+      - "<gray>Klíč úložiště:</gray><white>{storage_key}</white>"
+      - "<gray>Vlastník:</gray><white>{owner_name}</white>"
+      - "<gray>Spolupracovníci:</gray><white>{associate_count}</white>"
+      - "<gray>Důvěryhodný:</gray><white>{trusted_count}</white>"
+      - "<yellow>Kliknutím na přehrávač přejdete na cyklus.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[Public] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[Veřejné]{player}</gradient>"
       lore:
-        - "<gray>Stav:</gray> <white>Veřejná</white>"
-        - "<gray>Žádný vklad nebo výběr přístupu.</gray>"
-        - "<yellow>Klikněte pro podporu do Associate.</yellow>"
+        - "<gray>Status:</gray><white>Veřejné</white>"
+        - "<gray>Žádný přístup k vkladu nebo výběru.</gray>"
+        - "<yellow>Kliknutím povýšíte na partnera.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[Společník]{player}</gradient>"
       lore:
-        - "<gray>Stav:</gray> <white>Přidružený</white>"
-        - "<gray>Může uložit, ale nemůže stáhnout.</gray>"
-        - "<yellow>Klikněte na podporu Trusted.</yellow>"
+        - "<gray>Status:</gray><white>Partner</white>"
+        - "<gray>Může vkládat, ale nelze vybírat.</gray>"
+        - "<yellow>Kliknutím povýšíte na Důvěryhodné.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[Trusted] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[Důvěryhodný]{player}</gradient>"
       lore:
-        - "<gray>Stav:</gray> <white>Trusted</white>"
-        - "<gray>Můžete uložit a vybrat položky.</gray>"
-        - "<yellow>Klikněte pro resetování na Public.</yellow>"
+        - "<gray>Status:</gray><white>Trusted</white>"
+        - "<gray>Lze vkládat a vybírat položky.</gray>"
+        - "<yellow>Kliknutím obnovíte veřejné nastavení.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient> <gray>{player} Už nemá přístup ke skladu.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} Nyní může uložit do tohoto skladu.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} nyní mohou uložit a stáhnout z tohoto úložiště.</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Pouze majitel skladu může změnit důvěryhodný přístup.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[Veřejné]</gradient><gray>{player}již nemá přístup k úložišti.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Partner]</gradient><gray>{player}nyní může vkládat do tohoto úložiště.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Důvěryhodný]</gradient><gray>{player}nyní může vkládat a vybírat z tohoto úložiště.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Důvěryhodný přístup může změnit pouze vlastník úložiště.</gray>"
     locked:
-      name: "<gradient:#ef4444:#f87171>[X] Pouze pro majitele</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Pouze vlastník</gradient>"
       lore:
-        - "<gray>Můžete se podívat na tento sklad, ale pouze</gray>"
-        - "<gray>majitel může změnit důvěryhodný přístup.</gray>"
+        - "<gray>Toto úložiště můžete zobrazit, ale pouze</gray>"
+        - "<gray>vlastník může změnit důvěryhodný přístup.</gray>"
     storage_missing:
-      name: "<gradient:#ef4444:#f87171>[X] Uložení chybí</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Chybí úložiště</gradient>"
       lore:
-        - "<gray>Tento sklad nelze načíst</gray>"
+        - "<gray>Toto úložiště nelze načíst</gray>"
         - "<gray>pro správu důvěryhodného přístupu.</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Toto úložiště nebylo možné načíst pro důvěryhodnou správu přístupu.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Toto úložiště nelze načíst pro správu důvěryhodného přístupu.</gray>"
     edition_locked:
-      name: "<gradient:#ef4444:#f87171>[Free] Nastavení zamčeno</gradient>"
+      name: "<gradient:#ef4444:#f87171>[Free] Nastavení uzamčeno</gradient>"
       lore:
-        - "<gray>Trusted- access changes are disapped</gray>"
-        - "<gray>n <white>RDR Free</white><gray>.</gray>"
+        - "<gray>Změny důvěryhodného přístupu jsou zakázány</gray>"
+        - "<gray>v<white>RDRZdarma</white><gray>.</gray>"
     empty:
-      name: "<gradient:#ef4444:#f87171>[X] Nenalezen žádný hráč</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Nenalezeni žádní hráči</gradient>"
       lore:
         - "<gray>Žádní další známí hráči nejsou k dispozici</gray>"
-        - "<gray>Přidělit důvěryhodný přístup.</gray>"
+        - "<gray>pro přiřazení důvěryhodného přístupu.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[Box] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Box]{storage_key}</gradient>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] Uložení chybí</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Chybí úložiště</gradient>"
     lore:
-      - "<gray>Tento sklad nelze nalézt</gray>"
-      - "<gray>na to, jak vytrvale jste byli RDR Profil.</gray>"
+      - "<gray>Tento záznam úložiště nebyl nalezen</gray>"
+      - "<gray>pro váš trvalý profilRDR.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] Vazba {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] Vazba{storage_key}</gradient>"
   input:
     lore:
       - "<gray>Zadejte číslo mezi</gray>"
-      - "<white>1</white><gray> a </gray><white>{max_hotkeys}</white><gray> pro rychlý přístup.</gray>"
-      - "<yellow>Kliknutím na slotu výsledků uložíte klíč.</yellow>"
+      - "<white>1</white><gray>a</gray><white>{max_hotkeys}</white><gray>pro rychlý přístup.</gray>"
+      - "<yellow>Kliknutím na pozici výsledků uložíte klávesovou zkratku.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Použít číslo mezi <white>1</white> a <white>{max_hotkeys}</white><gray>. Vstup:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Použijte číslo mezi<white>1</white>a<white>{max_hotkeys}</white><gray>. Vstup:</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} je již otevřena v jiném zasedání.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} Teď to nejde otevřít.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte přístup k <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> je celosvětově na černé listině RDR skladování.</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Vaše editace relace pro {storage_key} vypršela nebo se přesunula jinam. Změny nebyly zachráněny.</gray>"
-    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} nemohl být zachráněn. Zkontrolujte detaily konzole.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} je nyní vázán na <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Žádné uchovávání není vázáno na <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hotkeys musí být mezi <white>1</white> a <white>{max_hotkeys}</white><gray>.</gray>"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edity nastavení úložiště jsou zakázány <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Povoleno <white>/rr scoreboard</white><gray> Sidebar.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Zakázáno <white>/rr scoreboard</white><gray> Sidebar.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Použití:</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}je již otevřeno v jiné relaci.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}právě teď nelze otevřít.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Nemáte přístup k<white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>je celosvětově na černé listině z úložištěRDR.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Vaše relace úprav pro{storage_key}vypršela nebo byla přesunuta jinam. Změny nebyly uloženy.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}nelze uložit. Podrobnosti najdete v konzole.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}je nyní vázáno na<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Žádné úložiště není vázáno na<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Klávesové zkratky musí být mezi<white>1</white>a<white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Úpravy nastavení úložiště jsou zakázány v<white>RDRFree</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Povolil postranní panel<white>/rr_</white><gray>.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Deaktivoval postranní panel<white>/rr</white><gray>.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Použití:</gray><white>/rrvýsledková tabulka</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[Page] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[Stránka]%current_page%</gradient>"
   lore:
-    - "<gray>Aktuální stránka:</gray> <white>%current_page%</white>"
-    - "<gray>Celkem stránek:</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[Page] %page%</gradient>"
+    - "<gray>Aktuální stránka:</gray><white>%current_page%</white>"
+    - "<gray>Celkový počet stran:</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Stránka]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] Návrat</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"

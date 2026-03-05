@@ -2,321 +2,321 @@ prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
   title: "<gradient:#f59e0b:#fbbf24>[RDR] 存储统计</gradient>"
-  items: "<gray>总项目：</gray> <white>{total_items}</white>"
-  available_slots: "<gray>可用插槽：</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>获得的存储量：</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>最大存储量：</gray> <white>{max_storages}</white>"
+  items: "<gray>总项目：</gray><white>{total_items}</white>"
+  available_slots: "<gray>可用插槽：</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>获得的存储：</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>最大存储：</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[*] 存储中心</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[*] 存储集线器</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Vault] 存储摘要</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[保管库] 存储摘要</gradient>"
     lore:
-      - "<gray>自有仓库：</gray> <white>{owned_storages}</white>"
-      - "<gray>最大存储量：</gray> <white>{max_storages}</white>"
+      - "<gray>拥有的存储：</gray><white>{owned_storages}</white>"
+      - "<gray>最大存储量：</gray><white>{max_storages}</white>"
       - "<gray>您的保管库网络已保留</gray>"
-      - "<gray>并准备好跨服务器使用。</gray>"
+      - "<gray>并准备好跨服务器使用.</gray>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] 查看存储</gradient>"
     lore:
-      - "<gray>自有仓库：</gray> <white>{owned_storages}</white>"
-      - "<gray>最大存储量：</gray> <white>{max_storages}</white>"
-      - "<yellow>单击可浏览您的存储列表。</yellow>"
+      - "<gray>拥有的存储：</gray><white>{owned_storages}</white>"
+      - "<gray>最大存储量：</gray><white>{max_storages}</white>"
+      - "<yellow>单击以浏览您的存储列表。</yellow>"
   store:
     name: "<gradient:#f59e0b:#fbbf24>[$] 存储存储</gradient>"
     lore:
-      - "<gray>自有仓库：</gray> <white>{owned_storages}</white>"
-      - "<gray>最大存储量：</gray> <white>{max_storages}</white>"
-      - "<yellow>单击可购买另一个存储空间。</yellow>"
+      - "<gray>拥有的存储：</gray><white>{owned_storages}</white>"
+      - "<gray>最大存储量：</gray><white>{max_storages}</white>"
+      - "<yellow>点击购买另一个存储。</yellow>"
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] 存储存储</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[信息] 存储容量</gradient>"
     lore:
-      - "<gray>自有仓库：</gray> <white>{owned_storages}</white>"
-      - "<gray>最大存储量：</gray> <white>{max_storages}</white>"
-      - "<gray>购买额外的金库空间，直到</gray>"
-      - "<gray>您达到了配置的上限。</gray>"
+      - "<gray>拥有的存储：</gray><white>{owned_storages}</white>"
+      - "<gray>最大存储量：</gray><white>{max_storages}</white>"
+      - "<gray>购买额外的保管库空间，直到</gray>"
+      - "<gray>您达到配置的上限。</gray>"
   cost:
-    name: "<gradient:#f59e0b:#fbbf24>[需求] 店铺要求</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[要求] 存储要求</gradient>"
     lore:
-      - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
-      - "<gray>当前需求数量：</gray> <white>{requirements}</white>"
-      - "<gray>地位：</gray> <white>{availability}</white>"
+      - "<gray>配置要求：</gray><white>{requirement_count}</white>"
+      - "<gray>当前要求计数：</gray><white>{requirements}</white>"
+      - "<gray>状态：</gray><white>{availability}</white>"
       - "<yellow>单击可详细检查每个需求层。</yellow>"
-    none: "<gradient:#ef4444:#f87171>[没有任何]</gradient>"
+    none: "<gradient:#ef4444:#f87171>[无]</gradient>"
     availability:
-      available: "<gradient:#10b981:#34d399>[准备好]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[待办的]</gradient>"
+      available: "<gradient:#10b981:#34d399>[就绪]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待处理]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[离线]</gradient>"
   purchase:
     available:
-      name: "<gradient:#10b981:#34d399>[+] 购买存储空间</gradient>"
+      name: "<gradient:#10b981:#34d399>[+] 购买存储</gradient>"
       lore:
-        - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
-        - "<gray>目前的要求：</gray> <white>{requirements}</white>"
-        - "<gray>自有仓库：</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>配置要求：</gray><white>{requirement_count}</white>"
+        - "<gray>当前要求：</gray><white>{requirements}</white>"
+        - "<gray>拥有的存储：</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>满足所有要求后点击购买。</yellow>"
     pending:
       name: "<gradient:#f59e0b:#fbbf24>[...] 要求待定</gradient>"
       lore:
-        - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
-        - "<gray>目前的要求：</gray> <white>{requirements}</white>"
-        - "<gray>自有仓库：</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>配置要求：</gray><white>{requirement_count}</white>"
+        - "<gray>当前要求：</gray><white>{requirements}</white>"
+        - "<gray>拥有的存储：</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>购买前满足其余要求。</yellow>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] 已达到存储限制</gradient>"
       lore:
-        - "<gray>自有仓库：</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>拥有的存储：</gray><white>{owned_storages}/{max_storages}</white>"
         - "<gray>您无法购买更多存储空间</gray>"
         - "<gray>直到全球上限提高。</gray>"
     no_requirements:
-      name: "<gradient:#ef4444:#f87171>[!] 离线需求</gradient>"
+      name: "<gradient:#ef4444:#f87171>[!] 离线要求</gradient>"
       lore:
-        - "<gray>一项或多项配置的商店要求</gray>"
+        - "<gray>一个或多个配置的存储要求</gray>"
         - "<gray>无法在此服务器上解析。</gray>"
     profile_missing:
-      name: "<gradient:#ef4444:#f87171>[!] 个人资料缺失</gradient>"
+      name: "<gradient:#ef4444:#f87171>[!] 配置文件丢失</gradient>"
       lore:
-        - "<gray>你的 RDR 无法加载配置文件，</gray>"
+        - "<gray>您的RDR配置文件无法加载，</gray>"
         - "<gray>因此购买暂时被阻止。</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已购买 <white>{storage_key}</white><gray>。消耗要求：</gray> <white>{requirements}</white><gray>。自有仓库：</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你们目前没有见面 <white>{requirement}</white><gray>。店铺要求：</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>店铺要求 <white>{requirement}</white><gray> 现在不可用或无效。</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>目前没有可用于存储购买的已配置商店要求。</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您已达到存储限制 <white>{max_storages}</white><gray>。自有仓库：</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>你的 RDR 无法加载配置文件，因此无法购买存储空间。</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>已购买<white>{storage_key}</white><gray>。消耗的要求：</gray><white>{requirements}</white><gray>。拥有的存储：</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>您当前不符合<white>{requirement}</white><gray>。存储要求：</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>存储要求<white>{requirement}</white><gray>目前不可用或无效。</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>目前没有可用于存储购买的已配置商店要求。</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>您已达到<white>{max_storages}</white><gray>的存储限制。拥有的存储：</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>您的RDR配置文件无法加载，因此无法购买存储空间。</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[需求] 购买 {purchase_number}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[需求] 购买{purchase_number}</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[信息] 需求浏览器</gradient>"
+    name: "<gradient:#10b981:#34d399>[信息] 要求浏览器</gradient>"
     lore:
-      - "<gray>购买等级：</gray> <white>{purchase_number}</white>"
-      - "<gray>解锁存储：</gray> <white>{storage_number}</white>"
-      - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
-      - "<gray>目前遇到：</gray> <white>{met_count}</white>"
+      - "<gray>购买等级：</gray><white>{purchase_number}</white>"
+      - "<gray>解锁存储：</gray><white>{storage_number}</white>"
+      - "<gray>配置要求：</gray><white>{requirement_count}</white>"
+      - "<gray>当前满足：</gray><white>{met_count}</white>"
   empty:
     name: "<gradient:#10b981:#34d399>[免费] 无要求</gradient>"
     lore:
       - "<gray>此购买层没有配置要求。</gray>"
-      - "<yellow>您无需额外检查即可购买此存储空间。</yellow>"
+      - "<yellow>您无需额外检查即可购买此存储。</yellow>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
     partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
     filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[请求] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[要求]{requirement_name}</gradient>"
     lore:
-      - "<gray>钥匙：</gray> <white>{requirement_key}</white>"
-      - "<gray>类型：</gray> <white>{requirement_type}</white>"
-      - "<gray>地位：</gray> <white>{status}</white>"
-      - "<gray>进步：</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>概括：</gray> <white>{summary}</white>"
+      - "<gray>键：</gray><white>{requirement_key}</white>"
+      - "<gray>类型：</gray><white>{requirement_type}</white>"
+      - "<gray>状态：</gray><white>{status}</white>"
+      - "<gray>进度：</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>摘要：</gray><white>{summary}</white>"
       - "<yellow>右键单击项目或货币要求以保存进度。</yellow>"
     details: "<gradient:#f59e0b:#fbbf24>▓ 详细检查</gradient>"
     status:
       met: "<gradient:#10b981:#34d399>[遇见]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[待办的]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待处理]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[不可用]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> 现在已经准备好了。</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>存储的进度 <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>没有匹配的物品或货币可供使用 <white>{requirement}</white><gray>.</gray>"
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> 不支持存储进度。</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> 现在不可用。</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>你的 RDR 无法加载配置文件，因此无法保存进度。</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient><gray><white>{requirement}</white><gray>现已准备就绪。</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient><gray>存储<white>{requirement}</white><gray>.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>的进度"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient><gray>没有可用于<white>{requirement}</white><gray>.</gray>的匹配物品或货币"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>不支持存储进度。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>目前不可用。</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>您的RDR配置文件无法加载，因此无法保存进度。</gray>"
 
 storage_player_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[保管库] 您的存储空间</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[保管库] 您的存储</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[信息] 存储容量</gradient>"
     lore:
-      - "<gray>自有仓库：</gray> <white>{owned_storages}</white>"
-      - "<gray>最大存储量：</gray> <white>{max_storages}</white>"
-      - "<gray>使用此列表来检查您的</gray>"
-      - "<gray>持久存储容器。</gray>"
+      - "<gray>拥有的存储：</gray><white>{owned_storages}</white>"
+      - "<gray>最大存储量：</gray><white>{max_storages}</white>"
+      - "<gray>使用此列表查看您的</gray>"
+      - "<gray>持久存储容器.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[盒子] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[框]{storage_key}</gradient>"
     lore:
-      - "<gray>存储键：</gray> <white>{storage_key}</white>"
-      - "<gray>所有者：</gray> <white>{owner_name}</white>"
-      - "<gray>使用权：</gray> <white>{access_level}</white>"
-      - "<gray>热键：</gray> <white>{hotkey_display}</white>"
-      - "<gray>使用的插槽：</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>可用插槽：</gray> <white>{available_slots}</white>"
-      - "<yellow>该存储已准备好进行项目持久化。</yellow>"
+      - "<gray>存储密钥：</gray><white>{storage_key}</white>"
+      - "<gray>所有者：</gray><white>{owner_name}</white>"
+      - "<gray>访问：</gray><white>{access_level}</white>"
+      - "<gray>热键：</gray><white>{hotkey_display}</white>"
+      - "<gray>使用的插槽：</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>可用插槽：</gray><white>{available_slots}</white>"
+      - "<yellow>此存储已准备好进行项目持久化。</yellow>"
       - "<gradient:#38bdf8:#60a5fa>[>>] 左键单击打开此存储。</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>[#] 右键单击打开存储设置。</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] 右键单击​​打开存储设置.</gradient>"
     access:
       owner: "<gradient:#10b981:#34d399>[所有者]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[民众]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[联系]</gradient>"
-      trusted: "<gradient:#10b981:#34d399>[值得信赖]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[公共]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[同事]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[受信任]</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>[X] 未找到存储</gradient>"
     lore:
-      - "<gray>目前没有附加任何存储</gray>"
-      - "<gray>给你的 RDR 轮廓。</gray>"
+      - "<gray>当前未附加任何存储</gray>"
+      - "<gray>到您的RDR个人资料.</gray>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[!] 个人资料缺失</gradient>"
+    name: "<gradient:#ef4444:#f87171>[!] 配置文件丢失</gradient>"
     lore:
-      - "<gray>你的 RDR 玩家档案无法</gray>"
-      - "<gray>从持久存储中加载。</gray>"
+      - "<gray>您的RDR玩家个人资料无法</gray>"
+      - "<gray>从持久存储加载.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} 设置</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}设置</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[信息] 存储设置</gradient>"
     lore:
-      - "<gray>存储键：</gray> <white>{storage_key}</white>"
-      - "<gray>所有者：</gray> <white>{owner_name}</white>"
-      - "<gray>您的访问权限：</gray> <white>{access_level}</white>"
-      - "<gray>热键：</gray> <white>{hotkey_display}</white>"
-      - "<gray>联营公司：</gray> <white>{associate_count}</white>"
-      - "<gray>值得信赖：</gray> <white>{trusted_count}</white>"
+      - "<gray>存储密钥：</gray><white>{storage_key}</white>"
+      - "<gray>所有者：</gray><white>{owner_name}</white>"
+      - "<gray>您的访问权限：</gray><white>{access_level}</white>"
+      - "<gray>热键：</gray><white>{hotkey_display}</white>"
+      - "<gray>关联：</gray><white>{associate_count}</white>"
+      - "<gray>受信任：</gray><white>{trusted_count}</white>"
     access:
       owner: "<gradient:#10b981:#34d399>[所有者]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[民众]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[联系]</gradient>"
-      trusted: "<gradient:#10b981:#34d399>[值得信赖]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[公共]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[同事]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[受信任]</gradient>"
   trusted:
-    name: "<gradient:#10b981:#34d399>[组]可信访问</gradient>"
+    name: "<gradient:#10b981:#34d399>[组] 可信访问</gradient>"
     lore:
-      - "<gray>联营公司：</gray> <white>{associate_count}</white>"
-      - "<gray>值得信赖：</gray> <white>{trusted_count}</white>"
-      - "<yellow>点击管理谁可以存款</yellow>"
-      - "<yellow>或完全访问此存储。</yellow>"
+      - "<gray>关联：</gray><white>{associate_count}</white>"
+      - "<gray>受信任：</gray><white>{trusted_count}</white>"
+      - "<yellow>点击管理谁可以充值</yellow>"
+      - "<yellow>或完全访问此存储.</yellow>"
   hotkey:
     name: "<gradient:#f59e0b:#fbbf24>[#] 存储热键</gradient>"
     lore:
-      - "<gray>当前热键：</gray> <white>{hotkey_display}</white>"
+      - "<gray>当前热键：</gray><white>{hotkey_display}</white>"
       - "<yellow>点击绑定快速访问</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
     name: "<gradient:#ef4444:#f87171>[X] 可信锁定</gradient>"
     lore:
       - "<gray>只有存储所有者可以管理</gray>"
-      - "<gray>对此存储的可信访问。</gray>"
+      - "<gray>对此存储的可信访问.</gray>"
   hotkey_locked:
     name: "<gradient:#ef4444:#f87171>[X] 热键已锁定</gradient>"
     lore:
       - "<gray>只有存储所有者可以更改</gray>"
-      - "<gray>存储热键。</gray>"
+      - "<gray>存储热键.</gray>"
   edition_locked:
     name: "<gradient:#ef4444:#f87171>[免费] 设置已锁定</gradient>"
     lore:
       - "<gray>存储设置更改已禁用</gray>"
-      - "<gray>在 <white>RDR Free</white><gray>.</gray>"
+      - "<gray>中<white>RDR自由</white><gray>.</gray>"
       - "<yellow>升级到高级版以编辑设置。</yellow>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] 存储丢失</gradient>"
     lore:
       - "<gray>无法加载此存储</gray>"
-      - "<gray>对于设置视图。</gray>"
+      - "<gray>用于设置视图。</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[团体] {storage_key} 使用权</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[组]{storage_key}访问</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[信息] 共享访问</gradient>"
     lore:
-      - "<gray>存储键：</gray> <white>{storage_key}</white>"
-      - "<gray>所有者：</gray> <white>{owner_name}</white>"
-      - "<gray>联营公司：</gray> <white>{associate_count}</white>"
-      - "<gray>值得信赖：</gray> <white>{trusted_count}</white>"
-      - "<yellow>单击播放器即可循环访问。</yellow>"
+      - "<gray>存储密钥：</gray><white>{storage_key}</white>"
+      - "<gray>所有者：</gray><white>{owner_name}</white>"
+      - "<gray>关联：</gray><white>{associate_count}</white>"
+      - "<gray>受信任：</gray><white>{trusted_count}</white>"
+      - "<yellow>点击播放器循环访问.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[民众] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[公共]{player}</gradient>"
       lore:
-        - "<gray>地位：</gray> <white>民众</white>"
-        - "<gray>没有存款或取款权限。</gray>"
-        - "<yellow>单击即可晋升为助理。</yellow>"
+        - "<gray>状态：</gray><white>公共</white>"
+        - "<gray>无存款或取款权限。</gray>"
+        - "<yellow>点击晋升为准会员.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[联系] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[同事]{player}</gradient>"
       lore:
-        - "<gray>地位：</gray> <white>联系</white>"
-        - "<gray>可以存款但不能取款。</gray>"
-        - "<yellow>单击即可升级为“可信”。</yellow>"
+        - "<gray>状态：</gray><white>同事</white>"
+        - "<gray>可以充值但不能提现.</gray>"
+        - "<yellow>点击升级为可信.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[值得信赖] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[受信任]{player}</gradient>"
       lore:
-        - "<gray>地位：</gray> <white>值得信赖</white>"
-        - "<gray>可以存入和取出物品。</gray>"
-        - "<yellow>单击以重置为公开。</yellow>"
+        - "<gray>状态：</gray><white>受信任</white>"
+        - "<gray>可以存取款.</gray>"
+        - "<yellow>单击重置为公共.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[民众]</gradient> <gray>{player} 不再具有存储访问权限。</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[联系]</gradient> <gray>{player} 现在可以存入此存储。</gray>"
-      trusted: "<gradient:#10b981:#34d399>[值得信赖]</gradient> <gray>{player} 现在可以从该存储中存入和取出。</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>只有存储所有者才能更改可信访问。</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[公共]</gradient><gray>{player}不再具有存储访问权限。</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient><gray>{player}现在可以存入此存储。</gray>"
+      trusted: "<gradient:#10b981:#34d399>[可信]</gradient><gray>{player}现在可以从此存储中存款和取款。</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>只有存储所有者才能更改受信任的访问权限。</gray>"
     locked:
       name: "<gradient:#ef4444:#f87171>[X] 仅限所有者</gradient>"
       lore:
-        - "<gray>您可以查看此存储，但只能</gray>"
-        - "<gray>所有者可以更改可信访问。</gray>"
+        - "<gray>可以查看此存储，但只能查看</gray>"
+        - "<gray>所有者可以更改受信任的访问权限。</gray>"
     storage_missing:
       name: "<gradient:#ef4444:#f87171>[X] 存储丢失</gradient>"
       lore:
         - "<gray>无法加载此存储</gray>"
         - "<gray>用于可信访问管理。</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>无法加载此存储以进行可信访问管理。</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>无法加载此存储以进行可信访问管理。</gray>"
     edition_locked:
       name: "<gradient:#ef4444:#f87171>[免费] 设置已锁定</gradient>"
       lore:
-        - "<gray>禁用可信访问更改</gray>"
-        - "<gray>在 <white>RDR Free</white><gray>.</gray>"
+        - "<gray>受信任访问更改已禁用</gray>"
+        - "<gray>中<white>RDR自由</white><gray>.</gray>"
     empty:
       name: "<gradient:#ef4444:#f87171>[X] 未找到玩家</gradient>"
       lore:
-        - "<gray>没有其他已知的球员可用</gray>"
-        - "<gray>分配可信访问权限。</gray>"
+        - "<gray>没有其他已知玩家可用</gray>"
+        - "<gray>分配可信访问权限.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[盒子] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[框]{storage_key}</gradient>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] 存储丢失</gradient>"
     lore:
-      - "<gray>找不到该存储条目</gray>"
-      - "<gray>为了你的坚持 RDR 轮廓。</gray>"
+      - "<gray>找不到此存储条目</gray>"
+      - "<gray>用于您持久保存的RDR配置文件。</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] 绑定 {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] 绑定{storage_key}</gradient>"
   input:
     lore:
-      - "<gray>输入一个介于</gray>"
-      - "<white>1</white><gray> 和 </gray><white>{max_hotkeys}</white><gray> 以便快速访问。</gray>"
-      - "<yellow>单击结果槽以保存热键。</yellow>"
+      - "<gray>输入一个介于</gray>之间的数字"
+      - "<white>1</white><gray>和</gray><white>{max_hotkeys}</white><gray>用于快速访问。</gray>"
+      - "<yellow>单击结果槽保存热键.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>使用介于之间的数字 <white>1</white> 和 <white>{max_hotkeys}</white><gray>。输入：</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>使用<white>1</white>和<white>{max_hotkeys}</white><gray>之间的数字。输入：</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} 已在另一个会话中打开。</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} 现在无法打开。</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您无权访问 <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> 被列入全球黑名单 RDR 贮存。</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>您的编辑会话 {storage_key} 过期或移至其他地方。更改未保存。</gray>"
-    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} 无法保存。检查控制台了解详细信息。</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} 现在绑定到 <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>没有存储绑定 <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>热键必须介于 <white>1</white> 和 <white>{max_hotkeys}</white><gray>.</gray>"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>存储设置编辑被禁用 <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>启用了 <white>/rr scoreboard</white><gray> 侧边栏。</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>禁用了 <white>/rr scoreboard</white><gray> 侧边栏。</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>用法：</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}已在另一个会话中打开。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}现在无法打开.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>您无权访问<white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>已从RDR存储全局列入黑名单。</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>您对{storage_key}的编辑会话已过期或移至其他地方。更改未保存。</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}无法保存。检查控制台了解详细信息。</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}现在绑定到<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>没有存储绑定到<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>热键必须介于<white>1</white>和<white>{max_hotkeys}</white><gray>.</gray>之间"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>在<white>RDRFree</white><gray>.</gray>中禁用存储设置编辑"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>启用<white>/rr记分板</white><gray>侧边栏.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>禁用<white>/rr记分板</white><gray>侧边栏.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>用法：</gray><white>/rr记分板</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[页] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[页]%current_page%</gradient>"
   lore:
-    - "<gray>当前页面：</gray> <white>%current_page%</white>"
-    - "<gray>总页数：</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[页] %page%</gradient>"
+    - "<gray>当前页：</gray><white>%current_page%</white>"
+    - "<gray>总页数：</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[页]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] 返回</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>点击返回</gradient>"

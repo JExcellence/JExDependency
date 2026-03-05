@@ -1,17 +1,21 @@
 # ============================================
 # GLOBAL PREFIX
 # ============================================
+# Prefix prepended to general plugin chat output.
 prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
 
+# Quick player-facing summary lines for shop, bank, and tax status.
 info:
   total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
   bank: "<green>Tracked Balances ({currency_count}):</green> <white>{currencies}</white>"
   tax_amount: "<gold>Scheduled Tax ({taxed_shops} taxable shops):</gold> <white>{taxes}</white>"
   tax_schedule: "<yellow>Next Tax:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
 
+# Join-time messages shown when players enter the server.
 player_join:
   tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
 
+# Command response strings for `/rs` features and toggles.
 prs:
   admin:
     opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Opened the <white>RDS Admin</white><gray> panel.</gray>"
@@ -29,6 +33,7 @@ prs:
       ledger: "<gold>ledger</gold>"
       stock: "<aqua>stock</aqua>"
 
+# Sidebar scoreboard labels and value formatting.
 scoreboard_sidebar:
   ledger:
     title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Ledger ◆</gradient>"
@@ -42,6 +47,7 @@ scoreboard_sidebar:
     amount: "<gray>Stock:</gray> <white>{current_stock}/{total_stock}</white>"
     empty: "<red>No player shops</red>"
 
+# Boss bar text shown while targeting a shop.
 shop_boss_bar:
   title: "<gold>{shop_type} Shop</gold> <gray>|</gray> <yellow>Owner:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Items:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Location:</yellow> <white>{location}</white>"
   type:
@@ -59,11 +65,13 @@ shop_boss_bar:
 # GUI Buttons
 # ============================================
 
+# Shop block item name and lore metadata.
 shop_block:
   name: "<blue>RaindropShop</blue>"
   lore:
     - "<yellow>Place this block to set up your shop.</yellow>"
 
+# Shop store overview UI labels, lore, and availability states.
 shop_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Shop Store</gradient>"
   owned_shops:
@@ -91,6 +99,7 @@ shop_store_ui:
       pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
 
+# Shop tier requirement UI, progress display, and purchase feedback.
 shop_store_cost_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Req] Shop Tier {purchase_number}</gradient>"
   summary:
@@ -143,6 +152,7 @@ shop_store_cost_ui:
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is unavailable right now.</gray>"
     profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your RDS profile could not be loaded, so progress could not be saved.</gray>"
 
+# Block interaction validation errors and protection notices.
 block_listener:
   error:
     invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
@@ -154,11 +164,13 @@ block_listener:
     shop_already_double_chest: "<red>This shop is already using both chest halves.</red>"
     double_chest_ambiguous: "<red>This ShopBlock touches multiple shop chests. Place it next to only one shop.</red>"
 
+# Scheduled tax processing outcome messages.
 tax_scheduler:
   paid: "<yellow>Collected scheduled shop tax of {amount}. Counted shops: {owned_shops}.</yellow>"
   insufficient_funds: "<red>You could not pay the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
   charge_failed: "<red>Failed to collect the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
 
+# Main shop overview interface for owner/admin management actions.
 shop_overview_ui:
   title: "{owner} Shop - {location}"
   summary:
@@ -263,6 +275,7 @@ shop_overview_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Global admin control panel for RDS management.
 shop_admin_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
   summary:
@@ -290,6 +303,7 @@ shop_admin_ui:
       lore:
         - "<gray>You do not have permission to use this admin panel.</gray>"
 
+# Config browser UI for editable settings and update feedback.
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
   summary:
@@ -329,6 +343,7 @@ shop_config_ui:
     config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config editing is locked in this edition.</gray>"
     updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Updated <white>{config_path}</white><gray> to <white>{updated_value}</white><gray>.</gray>"
 
+# Anvil prompt text for editing config values.
 shop_config_value_anvil_ui:
   title: "Edit {config_path}"
   input:
@@ -340,6 +355,7 @@ shop_config_value_anvil_ui:
   error:
     invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Invalid input for type <white>{value_type}</white><gray>. Input:</gray> <white>{input}</white>"
 
+# Server bank overview, currency entries, and withdrawal feedback.
 server_bank_ui:
   title: "<gradient:#10b981:#34d399>[$] Server Bank</gradient>"
   summary:
@@ -387,6 +403,7 @@ server_bank_ui:
     currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Currency <white>{currency_name}</white><gray> is currently unavailable.</gray>"
     withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to withdraw <white>{amount} {currency_name}</white><gray> from the server bank.</gray>"
 
+# Shop item input UI used when adding new stock entries.
 shop_input_ui:
   title: "Add Items - {owner} @ {location}"
   summary:
@@ -413,6 +430,7 @@ shop_input_ui:
       lore:
         - "<gray>Only associates and trusted players can add items here.</gray>"
 
+# Shop storage browser UI for viewing and withdrawing stored items.
 shop_storage_ui:
   title: "Stored Items - {location}"
   summary:
@@ -443,6 +461,7 @@ shop_storage_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Shop edit selection UI for choosing entries to modify.
 shop_edit_ui:
   title: "Edit Shop Items - {location}"
   summary:
@@ -513,6 +532,7 @@ shop_edit_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Detailed editor UI for individual shop item behavior and pricing.
 shop_item_edit_ui:
   title: "Edit {item_type}"
   summary:
@@ -637,6 +657,7 @@ shop_item_edit_ui:
     restock_mode_updated: "<green>Admin restock mode set to {restock_mode}.</green>"
     restock_mode_save_failed: "<red>Failed to save the admin restock mode.</red>"
 
+# Anvil prompt for adding a new admin purchase command.
 shop_item_admin_command_anvil_ui:
   title: "Add Command {command_mode} ({command_delay_ticks}t)"
   input:
@@ -655,6 +676,7 @@ shop_item_admin_command_anvil_ui:
   error:
     invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Command text cannot be empty. Input:</gray> <white>{input}</white>"
 
+# Admin purchase command manager UI for mode, delay, and command list.
 shop_item_admin_command_ui:
   title: "Command Settings - {item_type}"
   summary:
@@ -702,6 +724,7 @@ shop_item_admin_command_ui:
     commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Cleared all admin purchase commands.</gray>"
     commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>No admin purchase commands are configured.</gray>"
 
+# Anvil prompt for setting admin command delay ticks.
 shop_item_admin_command_delay_anvil_ui:
   title: "Set Delay - {command_delay_ticks}t"
   input:
@@ -715,6 +738,7 @@ shop_item_admin_command_delay_anvil_ui:
   error:
     invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Enter a whole number greater than or equal to 0. Input:</gray> <white>{input}</white>"
 
+# Anvil prompt for rotate-mode availability window in minutes.
 shop_item_availability_minutes_anvil_ui:
   title: "Rotate Minutes: {rotation_minutes}"
   input:
@@ -725,6 +749,7 @@ shop_item_availability_minutes_anvil_ui:
   error:
     invalid_number: "<red>Enter a whole number greater than 0. Input: {input}</red>"
 
+# Anvil prompt for setting limited admin stock capacity.
 shop_item_admin_stock_limit_anvil_ui:
   title: "Stock Limit: {stock_limit}"
   input:
@@ -735,6 +760,7 @@ shop_item_admin_stock_limit_anvil_ui:
   error:
     invalid_number: "<red>Enter -1 or a whole number greater than 0. Input: {input}</red>"
 
+# Anvil prompt for configuring admin restock/reset timer ticks.
 shop_item_admin_reset_timer_anvil_ui:
   title: "Reset Timer: {reset_timer_ticks}"
   input:
@@ -745,6 +771,7 @@ shop_item_admin_reset_timer_anvil_ui:
   error:
     invalid_number: "<red>Enter a whole number greater than 0. Input: {input}</red>"
 
+# Anvil prompt for selecting the currency type used by an item.
 shop_item_currency_type_anvil_ui:
   title: "Currency Type: {currency_type}"
   input:
@@ -757,6 +784,7 @@ shop_item_currency_type_anvil_ui:
     invalid_currency: "<red>Currency type {currency_type} is not available. Use vault or a registered custom currency.</red>"
     processing_failed: "<red>Failed to update the currency type. Input: {input}</red>"
 
+# Anvil prompt for setting per-item price/value.
 shop_item_value_anvil_ui:
   title: "Value: {value} {currency_type}"
   input:
@@ -768,6 +796,7 @@ shop_item_value_anvil_ui:
     invalid_number: "<red>Enter a valid non-negative number. Input: {input}</red>"
     processing_failed: "<red>Failed to update the item value. Input: {input}</red>"
 
+# Shop bank UI for per-shop currency balances and withdrawals.
 shop_bank_ui:
   title: "Shop Bank - {location}"
   summary:
@@ -803,6 +832,7 @@ shop_bank_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Trusted player management UI for shop access roles.
 shop_trusted_ui:
   title: "Trusted Players - {location}"
   summary:
@@ -852,6 +882,7 @@ shop_trusted_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Transaction ledger UI for purchases and tax history.
 shop_ledger_ui:
   title: "Shop Ledger - {location}"
   summary:
@@ -895,6 +926,7 @@ shop_ledger_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Customer-facing shop UI for browsing and buying items.
 shop_customer_ui:
   title: "Shop - {location}"
   summary:
@@ -972,6 +1004,7 @@ shop_customer_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Anvil prompt for custom purchase quantity input.
 shop_purchase_amount_anvil_ui:
   title: "Buy {item_type}"
   input:
@@ -996,6 +1029,7 @@ shop_purchase_amount_anvil_ui:
     invalid_number_admin: "<red>Enter a whole number greater than 0. Input: {input}</red>"
     processing_failed: "<red>Failed to process purchase amount. Input: {input}</red>"
 
+# Shop discovery landing UI for browse-all and material search.
 shop_search_ui:
   title: "<gradient:#38bdf8:#22c55e>Shop Browser</gradient>"
   summary:
@@ -1015,6 +1049,7 @@ shop_search_ui:
       - "<gray>Example:</gray> <white>diamond_block</white>"
       - "<yellow>Click to search by item type.</yellow>"
 
+# Paginated directory UI listing all tracked shops.
 shop_list_ui:
   title: "<gradient:#f59e0b:#f97316>All Shops</gradient>"
   summary:
@@ -1041,6 +1076,7 @@ shop_list_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Material-filtered shop results UI.
 shop_results_ui:
   title: "<gradient:#22c55e:#14b8a6>Results For {material}</gradient>"
   summary:
@@ -1069,6 +1105,7 @@ shop_results_ui:
         - "<gray>This shop could not be loaded from storage.</gray>"
       message: "<red>This shop could not be loaded from storage.</red>"
 
+# Anvil prompt for entering a material filter search.
 shop_material_search_anvil_ui:
   title: "<gradient:#22c55e:#14b8a6>Search Material</gradient>"
   input:
@@ -1083,6 +1120,7 @@ shop_material_search_anvil_ui:
 # ============================================
 # PAGINATION
 # ============================================
+# Shared pagination item labels used across list UIs.
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Page %current_page%</gradient>"
   lore:
@@ -1093,6 +1131,7 @@ page:
 # ============================================
 # HEAD ITEMS
 # ============================================
+# Shared head/navigation button labels (return/confirm/next).
 head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Return</gradient>"

@@ -2,48 +2,48 @@ prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
   title: "<gradient:#f59e0b:#fbbf24>[RDR] Statystyki przechowywania</gradient>"
-  items: "<gray>Łączna liczba elementów:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>Dostępne sloty:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>Zdobyte magazyny:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>Maksymalna pojemność:</gray> <white>{max_storages}</white>"
+  items: "<gray>Łączna liczba pozycji:</gray><white>{total_items}</white>"
+  available_slots: "<gray>Dostępne sloty:</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>Uzyskane magazyny:</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>Maksymalna pojemność:</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[*] Koncentrator pamięci </gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[*] Koncentrator pamięci masowej</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Sejf] Podsumowanie przechowywania</gradient>"
     lore:
-      - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maksymalna pojemność:</gray> <white>{max_storages}</white>"
+      - "<gray>Posiadane magazyny:</gray><white>{owned_storages}</white>"
+      - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
       - "<gray>Twoja sieć skarbca jest utrwalona</gray>"
       - "<gray>i gotowy do użytku na wielu serwerach.</gray>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Wyświetl magazyny</gradient>"
     lore:
-      - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maksymalna pojemność:</gray> <white>{max_storages}</white>"
+      - "<gray>Posiadane magazyny:</gray><white>{owned_storages}</white>"
+      - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
       - "<yellow>Kliknij, aby przeglądać listę magazynów.</yellow>"
   store:
     name: "<gradient:#f59e0b:#fbbf24>[$] Magazyn</gradient>"
     lore:
-      - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maksymalna pojemność:</gray> <white>{max_storages}</white>"
-      - "<yellow>Kliknij, aby kupić kolejne miejsce.</yellow>"
+      - "<gray>Posiadane magazyny:</gray><white>{owned_storages}</white>"
+      - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
+      - "<yellow>Kliknij, aby kupić kolejną pamięć.</yellow>"
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Magazyn</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[Informacje] Pojemność pamięci</gradient>"
     lore:
-      - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maksymalna pojemność:</gray> <white>{max_storages}</white>"
-      - "<gray>Kup dodatkową przestrzeń w skarbcu do </gray>"
+      - "<gray>Posiadane magazyny:</gray><white>{owned_storages}</white>"
+      - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
+      - "<gray>Kup dodatkowe miejsce w skarbcu do</gray>"
       - "<gray>osiągasz skonfigurowany limit.</gray>"
   cost:
-    name: "<gradient:#f59e0b:#fbbf24>[Wymaganie] Wymagania sklepu</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Wymagania dotyczące sklepu</gradient>"
     lore:
-      - "<gray>Skonfigurowane wymagania:</gray> <white>{requirement_count}</white>"
-      - "<gray>Bieżąca liczba wymagań:</gray> <white>{requirements}</white>"
-      - "<gray>Stan:</gray> <white>{availability}</white>"
+      - "<gray>Skonfigurowane wymagania:</gray><white>{requirement_count}</white>"
+      - "<gray>Bieżąca liczba wymagań:</gray><white>{requirements}</white>"
+      - "<gray>Stan:</gray><white>{availability}</white>"
       - "<yellow>Kliknij, aby szczegółowo sprawdzić każdy poziom wymagań.</yellow>"
     none: "<gradient:#ef4444:#f87171>[Brak]</gradient>"
     availability:
@@ -54,22 +54,22 @@ storage_store_ui:
     available:
       name: "<gradient:#10b981:#34d399>[+] Kup pamięć masową</gradient>"
       lore:
-        - "<gray>Skonfigurowane wymagania:</gray> <white>{requirement_count}</white>"
-        - "<gray>Aktualne wymagania:</gray> <white>{requirements}</white>"
-        - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>Kliknij, aby kupić, gdy wszystkie wymagania zostaną spełnione.</yellow>"
+        - "<gray>Skonfigurowane wymagania:</gray><white>{requirement_count}</white>"
+        - "<gray>Aktualne wymagania:</gray><white>{requirements}</white>"
+        - "<gray>Posiadane magazyny:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Kliknij, aby kupić, gdy spełnione zostaną wszystkie wymagania.</yellow>"
     pending:
       name: "<gradient:#f59e0b:#fbbf24>[...] Oczekujące wymagania</gradient>"
       lore:
-        - "<gray>Skonfigurowane wymagania:</gray> <white>{requirement_count}</white>"
-        - "<gray>Aktualne wymagania:</gray> <white>{requirements}</white>"
-        - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Skonfigurowane wymagania:</gray><white>{requirement_count}</white>"
+        - "<gray>Aktualne wymagania:</gray><white>{requirements}</white>"
+        - "<gray>Posiadane magazyny:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Spełnij pozostałe wymagania przed zakupem.</yellow>"
     limit_reached:
-      name: "<gradient:#ef4444:#f87171>[X] Osiągnięto limit miejsca </gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Osiągnięto limit przechowywania</gradient>"
       lore:
-        - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<gray>Nie możesz kupić więcej miejsca na dane</gray>"
+        - "<gray>Posiadane magazyny:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Nie możesz kupić więcej miejsca</gray>"
         - "<gray>do momentu podniesienia globalnego limitu.</gray>"
     no_requirements:
       name: "<gradient:#ef4444:#f87171>[!] Wymagania Offline</gradient>"
@@ -79,121 +79,121 @@ storage_store_ui:
     profile_missing:
       name: "<gradient:#ef4444:#f87171>[!] Brak profilu</gradient>"
       lore:
-        - "<gray>Nie można załadować Twojego profilu RDR,</gray>"
+        - "<gray>Twój profilRDRnie mógł zostać załadowany,</gray>"
         - "<gray>więc zakupy są tymczasowo zablokowane.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zakupiony <white>{storage_key}</white><gray>. Zużyte wymagania:</gray> <white>{requirements}</white><gray>. Posiadane magazyny:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Obecnie nie spotykasz <white>{requirement}</white><gray>. Wymagania sklepu:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Wymagania dotyczące sklepu <white>{requirement}</white><gray> są obecnie niedostępne lub nieprawidłowe.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>W tej chwili nie są dostępne żadne skonfigurowane wymagania sklepu dotyczące zakupów przestrzeni dyskowej.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Osiągnąłeś limit miejsca <white>{max_storages}</white><gray>. Posiadane magazyny:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Twój profil RDR nie mógł zostać załadowany, więc zakupy przestrzeni dyskowej są niedostępne.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>Zakupiono<white>{storage_key}</white><gray>. Zużyte wymagania:</gray><white>{requirements}</white><gray>. Posiadane magazyny:</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Nie spotykasz się obecnie z<white>{requirement}</white><gray>. Wymagania sklepu:</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Wymagania dotyczące sklepu<white>{requirement}</white><gray>są obecnie niedostępne lub nieprawidłowe.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>W tej chwili nie są dostępne żadne skonfigurowane wymagania sklepu dotyczące zakupów przestrzeni dyskowej.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Osiągnąłeś limit miejsca<white>{max_storages}</white><gray>. Posiadane magazyny:</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Twój profilRDRnie mógł zostać załadowany, więc zakupy przestrzeni dyskowej są niedostępne.</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Wymaganie] Zakup {purchase_number}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Wymaganie] Zakup{purchase_number}</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[Informacje] Przeglądarka wymagań</gradient>"
     lore:
-      - "<gray>Poziom zakupów:</gray> <white>{purchase_number}</white>"
-      - "<gray>Odblokowuje pamięć:</gray> <white>{storage_number}</white>"
-      - "<gray>Skonfigurowane wymagania:</gray> <white>{requirement_count}</white>"
-      - "<gray>Aktualnie spełnione:</gray> <white>{met_count}</white>"
+      - "<gray>Poziom zakupów:</gray><white>{purchase_number}</white>"
+      - "<gray>Odblokowuje pamięć:</gray><white>{storage_number}</white>"
+      - "<gray>Skonfigurowane wymagania:</gray><white>{requirement_count}</white>"
+      - "<gray>Aktualnie spełnione:</gray><white>{met_count}</white>"
   empty:
     name: "<gradient:#10b981:#34d399>[Bezpłatny] Brak wymagań</gradient>"
     lore:
-      - "<gray>Ten poziom zakupów nie ma skonfigurowanych wymagań.</gray>"
+      - "<gray>Na tym poziomie zakupów nie ma skonfigurowanych wymagań.</gray>"
       - "<yellow>Możesz kupić to miejsce bez dodatkowych kontroli.</yellow>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
     partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
     filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[Wymaganie] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Wymaganie]{requirement_name}</gradient>"
     lore:
-      - "<gray>Klucz:</gray> <white>{requirement_key}</white>"
-      - "<gray>Typ:</gray> <white>{requirement_type}</white>"
-      - "<gray>Stan:</gray> <white>{status}</white>"
-      - "<gray>Postęp:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>Podsumowanie:</gray> <white>{summary}</white>"
+      - "<gray>Klucz:</gray><white>{requirement_key}</white>"
+      - "<gray>Typ:</gray><white>{requirement_type}</white>"
+      - "<gray>Stan:</gray><white>{status}</white>"
+      - "<gray>Postęp:</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Podsumowanie:</gray><white>{summary}</white>"
       - "<yellow>Kliknij prawym przyciskiem myszy wymagania dotyczące przedmiotu lub waluty, aby wyświetlić postęp banku.</yellow>"
     details: "<gradient:#f59e0b:#fbbf24>▓ Szczegółowe kontrole</gradient>"
     status:
-      met: "<gradient:#10b981:#34d399>[Spotkane]</gradient>"
+      met: "<gradient:#10b981:#34d399>[Spełnione]</gradient>"
       pending: "<gradient:#f59e0b:#fbbf24>[Oczekuje]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Niedostępne]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> jest teraz gotowy.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Przechowywany postęp dla <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Brak pasujących elementów lub waluty dla <white>{requirement}</white><gray>.</gray>"
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> nie obsługuje zapisanego postępu.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> jest teraz niedostępny.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Twój profil RDR nie mógł zostać załadowany, więc nie można było zapisać postępu.</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient><gray><white>{requirement}</white><gray>jest teraz gotowy.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient><gray>Przechowywany postęp dla<white>{requirement}</white><gray>.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient><gray>Brak pasujących pozycji lub waluty dla<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>nie obsługuje postępu w banku.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>jest teraz niedostępny.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Twój profilRDRnie mógł zostać załadowany, więc nie można było zapisać postępu.</gray>"
 
 storage_player_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Sejf] Twoje magazyny</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Informacje] Pojemność pamięci</gradient>"
     lore:
-      - "<gray>Posiadane magazyny:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maksymalna pojemność:</gray> <white>{max_storages}</white>"
+      - "<gray>Posiadane magazyny:</gray><white>{owned_storages}</white>"
+      - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
       - "<gray>Użyj tej listy, aby sprawdzić swoje</gray>"
       - "<gray>pojemniki do trwałego przechowywania.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[Pole] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[Pole]{storage_key}</gradient>"
     lore:
-      - "<gray>Klucz do przechowywania:</gray> <white>{storage_key}</white>"
-      - "<gray>Właściciel:</gray> <white>{owner_name}</white>"
-      - "<gray>Dostęp:</gray> <white>{access_level}</white>"
-      - "<gray>Skrót klawiszowy:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Wykorzystane sloty:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>Dostępne sloty:</gray> <white>{available_slots}</white>"
-      - "<yellow>To miejsce jest gotowe do przechowywania elementów.</yellow>"
+      - "<gray>Klucz magazynu:</gray><white>{storage_key}</white>"
+      - "<gray>Właściciel:</gray><white>{owner_name}</white>"
+      - "<gray>Dostęp:</gray><white>{access_level}</white>"
+      - "<gray>Skrót klawiszowy:</gray><white>{hotkey_display}</white>"
+      - "<gray>Wykorzystane sloty:</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Dostępne sloty:</gray><white>{available_slots}</white>"
+      - "<yellow>Ten magazyn jest gotowy do przechowywania elementów.</yellow>"
       - "<gradient:#38bdf8:#60a5fa>[>>] Kliknij lewym przyciskiem myszy, aby otworzyć ten magazyn.</gradient>"
       - "<gradient:#f59e0b:#fbbf24>[#] Kliknij prawym przyciskiem myszy, aby otworzyć ustawienia przechowywania.</gradient>"
     access:
       owner: "<gradient:#10b981:#34d399>[Właściciel]</gradient>"
       public: "<gradient:#6b7280:#9ca3af>[Publiczne]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Współpracownik]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Powiązany]</gradient>"
       trusted: "<gradient:#10b981:#34d399>[Zaufane]</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>[X] Nie znaleziono żadnych magazynów</gradient>"
     lore:
-      - "<gray>Żadne magazyny nie są aktualnie podłączone</gray>"
-      - "<gray>do Twojego profilu RDR.</gray>"
+      - "<gray>Brak aktualnie podłączonych magazynów</gray>"
+      - "<gray>do Twojego profiluRDR.</gray>"
   missing:
     name: "<gradient:#ef4444:#f87171>[!] Brak profilu</gradient>"
     lore:
-      - "<gray>Twój profil gracza RDR nie może</gray>"
+      - "<gray>Twój profil graczaRDRnie może</gray>"
       - "<gray>załaduj z pamięci trwałej.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Ustawienia</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}Ustawienia</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Informacje] Ustawienia przechowywania</gradient>"
     lore:
-      - "<gray>Klucz do przechowywania:</gray> <white>{storage_key}</white>"
-      - "<gray>Właściciel:</gray> <white>{owner_name}</white>"
-      - "<gray>Twój dostęp:</gray> <white>{access_level}</white>"
-      - "<gray>Skrót klawiszowy:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Współpracownicy:</gray> <white>{associate_count}</white>"
-      - "<gray>Zaufany:</gray> <white>{trusted_count}</white>"
+      - "<gray>Klucz magazynu:</gray><white>{storage_key}</white>"
+      - "<gray>Właściciel:</gray><white>{owner_name}</white>"
+      - "<gray>Twój dostęp:</gray><white>{access_level}</white>"
+      - "<gray>Skrót klawiszowy:</gray><white>{hotkey_display}</white>"
+      - "<gray>Współpracownicy:</gray><white>{associate_count}</white>"
+      - "<gray>Zaufany:</gray><white>{trusted_count}</white>"
     access:
       owner: "<gradient:#10b981:#34d399>[Właściciel]</gradient>"
       public: "<gradient:#6b7280:#9ca3af>[Publiczne]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Współpracownik]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Powiązany]</gradient>"
       trusted: "<gradient:#10b981:#34d399>[Zaufane]</gradient>"
   trusted:
     name: "<gradient:#10b981:#34d399>[Grupa] Zaufany dostęp</gradient>"
     lore:
-      - "<gray>Współpracownicy:</gray> <white>{associate_count}</white>"
-      - "<gray>Zaufany:</gray> <white>{trusted_count}</white>"
-      - "<yellow>Kliknij, aby określić, kto może wpłacać depozyt</yellow>"
-      - "<yellow>lub uzyskaj pełny dostęp do tego magazynu.</yellow>"
+      - "<gray>Współpracownicy:</gray><white>{associate_count}</white>"
+      - "<gray>Zaufany:</gray><white>{trusted_count}</white>"
+      - "<yellow>Kliknij, aby zarządzać tym, kto może wpłacać depozyt</yellow>"
+      - "<yellow>lub pełny dostęp do tego magazynu.</yellow>"
   hotkey:
-    name: "<gradient:#f59e0b:#fbbf24>[#] Klawisz skrótu do przechowywania </gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[#] Klawisz skrótu do przechowywania</gradient>"
     lore:
-      - "<gray>Bieżący skrót klawiszowy:</gray> <white>{hotkey_display}</white>"
-      - "<yellow>Kliknij, aby powiązać szybki dostęp do </yellow>"
+      - "<gray>Bieżący skrót klawiszowy:</gray><white>{hotkey_display}</white>"
+      - "<yellow>Kliknij, aby powiązać szybki dostęp do</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
     name: "<gradient:#ef4444:#f87171>[X] Zaufany Zablokowany</gradient>"
@@ -204,70 +204,70 @@ storage_settings_ui:
     name: "<gradient:#ef4444:#f87171>[X] Klawisz skrótu zablokowany</gradient>"
     lore:
       - "<gray>Tylko właściciel magazynu może zmienić</gray>"
-      - "<gray>skróty klawiszowe dotyczące przechowywania.</gray>"
+      - "<gray>skróty klawiszowe pamięci.</gray>"
   edition_locked:
-    name: "<gradient:#ef4444:#f87171>[Bezpłatne] Ustawienia zablokowane</gradient>"
+    name: "<gradient:#ef4444:#f87171>[Bezpłatny] Ustawienia zablokowane</gradient>"
     lore:
       - "<gray>Zmiany ustawień przechowywania są wyłączone</gray>"
-      - "<gray>w <white>RDR Free</white><gray>.</gray>"
+      - "<gray>w<white>RDRBezpłatny</white><gray>.</gray>"
       - "<yellow>Uaktualnij do wersji Premium, aby edytować ustawienia.</yellow>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] Brak pamięci </gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Brak pamięci</gradient>"
     lore:
       - "<gray>Nie można załadować tego magazynu</gray>"
       - "<gray>dla widoku ustawień.</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Grupa] {storage_key} Dostęp</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Grupa]{storage_key}Dostęp</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Informacje] Dostęp współdzielony</gradient>"
     lore:
-      - "<gray>Klucz do przechowywania:</gray> <white>{storage_key}</white>"
-      - "<gray>Właściciel:</gray> <white>{owner_name}</white>"
-      - "<gray>Współpracownicy:</gray> <white>{associate_count}</white>"
-      - "<gray>Zaufany:</gray> <white>{trusted_count}</white>"
-      - "<yellow>Kliknij gracza, aby włączyć dostęp.</yellow>"
+      - "<gray>Klucz magazynu:</gray><white>{storage_key}</white>"
+      - "<gray>Właściciel:</gray><white>{owner_name}</white>"
+      - "<gray>Współpracownicy:</gray><white>{associate_count}</white>"
+      - "<gray>Zaufany:</gray><white>{trusted_count}</white>"
+      - "<yellow>Kliknij gracza, aby zmienić dostęp.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[Publiczne] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[Publiczne]{player}</gradient>"
       lore:
-        - "<gray>Stan:</gray> <white>Publiczny</white>"
+        - "<gray>Stan:</gray><white>Publiczny</white>"
         - "<gray>Brak dostępu do wpłat i wypłat.</gray>"
         - "<yellow>Kliknij, aby awansować na stanowisko Associate.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[Współpracownik] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[Powiązany]{player}</gradient>"
       lore:
-        - "<gray>Stan:</gray> <white>Powiązany</white>"
+        - "<gray>Stan:</gray><white>Powiązany</white>"
         - "<gray>Może wpłacać pieniądze, ale nie może wypłacać.</gray>"
         - "<yellow>Kliknij, aby awansować do poziomu Zaufane.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[Zaufani] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[Zaufane]{player}</gradient>"
       lore:
-        - "<gray>Stan:</gray> <white>Zaufany</white>"
+        - "<gray>Stan:</gray><white>Zaufany</white>"
         - "<gray>Może wpłacać i wypłacać przedmioty.</gray>"
         - "<yellow>Kliknij, aby zresetować do ustawień publicznych.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[Publiczny]</gradient> <gray>{player} nie ma już dostępu do pamięci.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Powiązany]</gradient> <gray>{player} może teraz dokonywać wpłat w tym magazynie.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[Zaufane]</gradient> <gray>{player} może teraz dokonywać wpłat i wypłat z tego magazynu.</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tylko właściciel magazynu może zmienić zaufany dostęp.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[Publiczny]</gradient><gray>{player}nie ma już dostępu do pamięci.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Powiązany]</gradient><gray>{player}może teraz dokonywać wpłat w tym magazynie.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Zaufane]</gradient><gray>{player}może teraz wpłacać i wypłacać z tego magazynu.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Tylko właściciel magazynu może zmienić zaufany dostęp.</gray>"
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Tylko właściciel</gradient>"
       lore:
         - "<gray>Możesz przeglądać tę pamięć, ale tylko</gray>"
         - "<gray>właściciel może zmienić zaufany dostęp.</gray>"
     storage_missing:
-      name: "<gradient:#ef4444:#f87171>[X] Brak pamięci </gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Brak pamięci</gradient>"
       lore:
         - "<gray>Nie można załadować tego magazynu</gray>"
         - "<gray>do zarządzania zaufanym dostępem.</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nie można załadować tego magazynu w celu zarządzania zaufanym dostępem.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Nie można załadować tego magazynu w celu zarządzania zaufanym dostępem.</gray>"
     edition_locked:
-      name: "<gradient:#ef4444:#f87171>[Bezpłatne] Ustawienia zablokowane</gradient>"
+      name: "<gradient:#ef4444:#f87171>[Bezpłatny] Ustawienia zablokowane</gradient>"
       lore:
         - "<gray>Zmiany dostępu zaufanego są wyłączone</gray>"
-        - "<gray>w <white>RDR Free</white><gray>.</gray>"
+        - "<gray>w<white>RDRBezpłatny</white><gray>.</gray>"
     empty:
       name: "<gradient:#ef4444:#f87171>[X] Nie znaleziono graczy</gradient>"
       lore:
@@ -275,48 +275,48 @@ storage_trusted_ui:
         - "<gray>aby przypisać zaufany dostęp.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[Pole] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Pole]{storage_key}</gradient>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] Brak pamięci </gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Brak pamięci</gradient>"
     lore:
       - "<gray>Nie można znaleźć tego wpisu w pamięci</gray>"
-      - "<gray>dla Twojego trwałego profilu RDR.</gray>"
+      - "<gray>dla Twojego utrwalonego profiluRDR.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] Powiązanie {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] Powiązanie{storage_key}</gradient>"
   input:
     lore:
-      - "<gray>Wprowadź liczbę pomiędzy </gray>"
-      - "<white>1</white><gray> i </gray><white>{max_hotkeys}</white><gray> dla szybkiego dostępu.</gray>"
+      - "<gray>Wprowadź liczbę z zakresu</gray>"
+      - "<white>1</white><gray>i</gray><white>{max_hotkeys}</white><gray>dla szybkiego dostępu.</gray>"
       - "<yellow>Kliknij miejsce z wynikami, aby zapisać skrót.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Użyj liczby od <white>1</white> do <white>{max_hotkeys}</white><gray>. Wejście:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Użyj liczby z zakresu od<white>1</white>do<white>{max_hotkeys}</white><gray>. Wejście:</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} jest już otwarty w innej sesji.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} nie można teraz otworzyć.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz dostępu do <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> znajduje się na globalnej czarnej liście z RDR magazynu.</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Twoja sesja edycji dla {storage_key} wygasła lub została przeniesiona gdzie indziej. Zmiany nie zostały zapisane.</gray>"
-    save_failed: "Nie można zapisać <gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key}. Sprawdź szczegóły w konsoli.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} jest teraz powiązany z <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Żadna pamięć nie jest powiązana z <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Skróty klawiszowe muszą należeć do zakresu od <white>1</white> do <white>{max_hotkeys}</white><gray>.</gray>"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edycja ustawień przechowywania jest wyłączona w <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Włączono pasek boczny <white>/rr scoreboard</white><gray>.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Wyłączono pasek boczny <white>/rr scoreboard</white><gray>.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Użycie:</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}jest już otwarty w innej sesji.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}nie można teraz otworzyć.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Nie masz dostępu do<white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>znajduje się na globalnej czarnej liście zRDRmagazynu.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Twoja sesja edycji dla{storage_key}wygasła lub została przeniesiona gdzie indziej. Zmiany nie zostały zapisane.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}nie można zapisać. Sprawdź szczegóły w konsoli.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}jest teraz powiązany z<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Żadna pamięć nie jest powiązana z<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Skróty klawiszowe muszą należeć do zakresu od<white>1</white>do<white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Edycja ustawień pamięci masowej jest wyłączona w<white>RDRBezpłatna</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Włączono tablicę wyników<white>/rr</white><gray>pasek boczny.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Wyłączono tablicę wyników<white>/rr</white><gray>pasek boczny.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Użycie:</gray><white>/rrtablica wyników</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[Strona] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[Strona]%current_page%</gradient>"
   lore:
-    - "<gray>Bieżąca strona:</gray> <white>%current_page%</white>"
-    - "<gray>Wszystkie strony:</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[Strona] %page%</gradient>"
+    - "<gray>Bieżąca strona:</gray><white>%current_page%</white>"
+    - "<gray>Wszystkie strony:</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Strona]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] Powrót</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Kliknij, aby wrócić</gradient>"

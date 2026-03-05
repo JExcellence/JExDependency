@@ -2,321 +2,321 @@ prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
   title: "<gradient:#f59e0b:#fbbf24>[RDR] Στατιστικά αποθήκευσης</gradient>"
-  items: "<gray>Σύνολο στοιχείων:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>Διαθέσιμες υποδοχές:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>Αποθήκευση:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>Μέγ. αποθήκες:</gray> <white>{max_storages}</white>"
+  items: "<gray>Σύνολο στοιχείων:</gray><white>{total_items}</white>"
+  available_slots: "<gray>Διαθέσιμες υποδοχές:</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>Αποθηκευτικοί χώροι που ελήφθησαν:</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[*] Παράθυρο αποθήκευσης</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Vault] Περίληψη αποθήκευσης</gradient>"
     lore:
-      - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}</white>"
-      - "<gray>Μέγιστες αποθήκες:</gray> <white>{max_storages}</white>"
-      - "<gray>Το δίκτυο του χρηματοκιβωτίου σας είναι συνεχές.</gray>"
-      - "<gray>και έτοιμος για χρήση σε διακομιστές.</gray>"
+      - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}</white>"
+      - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
+      - "<gray>Το δίκτυό σας στο θησαυροφυλάκιο παραμένει</gray>"
+      - "<gray>και έτοιμο για χρήση μεταξύ διακομιστών.</gray>"
   open:
-    name: "<gradient:#10b981:#34d399>[>>] Προβολή αποθηκών</gradient>"
+    name: "<gradient:#10b981:#34d399>[>>] Προβολή αποθηκευτικών χώρων</gradient>"
     lore:
-      - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}</white>"
-      - "<gray>Μέγιστες αποθήκες:</gray> <white>{max_storages}</white>"
-      - "<yellow>Κάντε κλικ για να περιηγηθείτε στη λίστα αποθήκευσης σας.</yellow>"
+      - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}</white>"
+      - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
+      - "<yellow>Κάντε κλικ για να περιηγηθείτε στη λίστα αποθηκευτικού χώρου σας.</yellow>"
   store:
-    name: "<gradient:#f59e0b:#fbbf24>[$] Αποθήκευση</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[$] Κατάστημα αποθήκευσης</gradient>"
     lore:
-      - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}</white>"
-      - "<gray>Μέγιστες αποθήκες:</gray> <white>{max_storages}</white>"
-      - "<yellow>Κάντε κλικ για να αγοράσετε μια άλλη αποθήκη.</yellow>"
+      - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}</white>"
+      - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
+      - "<yellow>Κάντε κλικ για να αγοράσετε άλλο χώρο αποθήκευσης.</yellow>"
 
 storage_store_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[$] Αποθήκευση</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[$] Κατάστημα αποθήκευσης</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[Info] Χωρητικότητα αποθήκευσης</gradient>"
+    name: "<gradient:#10b981:#34d399>[Πληροφορίες] Χωρητικότητα αποθήκευσης</gradient>"
     lore:
-      - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}</white>"
-      - "<gray>Μέγιστες αποθήκες:</gray> <white>{max_storages}</white>"
-      - "<gray>Αγοράστε επιπλέον χώρο θησαυροφυλακίου μέχρι</gray>"
-      - "<gray>φτάνετε στο ρυθμισμένο καπάκι.</gray>"
+      - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}</white>"
+      - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
+      - "<gray>Αγοράστε επιπλέον χώρο στο θησαυροφυλάκιο μέχρι</gray>"
+      - "<gray>φτάνετε στο διαμορφωμένο όριο.</gray>"
   cost:
-    name: "<gradient:#f59e0b:#fbbf24>[Req] Απαιτήσεις αποθήκευσης</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Απαιτήσεις καταστήματος</gradient>"
     lore:
-      - "<gray>Configure απαιτήσεων:</gray> <white>{requirement_count}</white>"
-      - "<gray>Μέτρηση τρέχουσας απαίτησης:</gray> <white>{requirements}</white>"
-      - "<gray>Κατάσταση:</gray> <white>{availability}</white>"
-      - "<yellow>Κάντε κλικ για να επιθεωρήσετε κάθε κατηγορία απαιτήσεων λεπτομερώς.</yellow>"
-    none: "<gradient:#ef4444:#f87171>[None]</gradient>"
+      - "<gray>Διαμορφωμένες απαιτήσεις:</gray><white>{requirement_count}</white>"
+      - "<gray>Αριθμός τρεχουσών απαιτήσεων:</gray><white>{requirements}</white>"
+      - "<gray>Κατάσταση:</gray><white>{availability}</white>"
+      - "<yellow>Κάντε κλικ για να επιθεωρήσετε λεπτομερώς κάθε επίπεδο απαίτησης.</yellow>"
+    none: "<gradient:#ef4444:#f87171>[Κανένα]</gradient>"
     availability:
-      available: "<gradient:#10b981:#34d399>[Ready]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+      available: "<gradient:#10b981:#34d399>[Έτοιμος]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Σε εκκρεμότητα]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Εκτός σύνδεσης]</gradient>"
   purchase:
     available:
-      name: "<gradient:#10b981:#34d399>[+] Αγορά αποθήκευσης</gradient>"
+      name: "<gradient:#10b981:#34d399>[+] Αγορά αποθηκευτικού χώρου</gradient>"
       lore:
-        - "<gray>Configure απαιτήσεων:</gray> <white>{requirement_count}</white>"
-        - "<gray>Τρέχουσες απαιτήσεις:</gray> <white>{requirements}</white>"
-        - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>Κάντε κλικ για να αγοράσετε όταν ικανοποιείται κάθε απαίτηση.</yellow>"
+        - "<gray>Διαμορφωμένες απαιτήσεις:</gray><white>{requirement_count}</white>"
+        - "<gray>Τρέχουσες απαιτήσεις:</gray><white>{requirements}</white>"
+        - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Κάντε κλικ για αγορά όταν πληρούνται όλες οι απαιτήσεις.</yellow>"
     pending:
-      name: "<gradient:#f59e0b:#fbbf24>[...] Απαιτήσεις Εν αναμονή</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[...] Απαιτήσεις σε εκκρεμότητα</gradient>"
       lore:
-        - "<gray>Configure απαιτήσεων:</gray> <white>{requirement_count}</white>"
-        - "<gray>Τρέχουσες απαιτήσεις:</gray> <white>{requirements}</white>"
-        - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>Να πληρούν τις υπόλοιπες απαιτήσεις πριν από την αγορά.</yellow>"
+        - "<gray>Διαμορφωμένες απαιτήσεις:</gray><white>{requirement_count}</white>"
+        - "<gray>Τρέχουσες απαιτήσεις:</gray><white>{requirements}</white>"
+        - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Ικανοποιήστε τις υπόλοιπες απαιτήσεις πριν από την αγορά.</yellow>"
     limit_reached:
-      name: "<gradient:#ef4444:#f87171>[X] Όριο αποθήκευσης έφτασε</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Συμπληρώθηκε το όριο αποθήκευσης</gradient>"
       lore:
-        - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<gray>Δεν μπορείτε να αγοράσετε περισσότερες αποθήκες</gray>"
+        - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Δεν μπορείτε να αγοράσετε περισσότερους αποθηκευτικούς χώρους</gray>"
         - "<gray>μέχρι να αυξηθεί το παγκόσμιο ανώτατο όριο.</gray>"
     no_requirements:
       name: "<gradient:#ef4444:#f87171>[!] Απαιτήσεις εκτός σύνδεσης</gradient>"
       lore:
-        - "<gray>Μία ή περισσότερες ρυθμισμένες απαιτήσεις αποθήκευσης</gray>"
-        - "<gray>Δεν μπορεί να επιλυθεί σε αυτόν τον εξυπηρετητή.</gray>"
+        - "<gray>Μία ή περισσότερες διαμορφωμένες απαιτήσεις καταστήματος</gray>"
+        - "<gray>δεν μπορεί να επιλυθεί σε αυτόν τον διακομιστή.</gray>"
     profile_missing:
-      name: "<gradient:#ef4444:#f87171>[!] Λείπει προφίλ</gradient>"
+      name: "<gradient:#ef4444:#f87171>[!] Λείπει το προφίλ</gradient>"
       lore:
-        - "<gray>Το δικό σου RDR το προφίλ δεν ήταν δυνατό να φορτωθεί,</gray>"
-        - "<gray>Έτσι οι αγορές μπλοκάρονται προσωρινά.</gray>"
+        - "<gray>Δεν ήταν δυνατή η φόρτωση του προφίλ σαςRDR,</gray>"
+        - "<gray>άρα οι αγορές είναι προσωρινά αποκλεισμένες.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Αγορά <white>{storage_key}</white><gray>. Απαιτήσεις που καταναλώνονται:</gray> <white>{requirements}</white><gray>. Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν συναντιέστε αυτή τη στιγμή. <white>{requirement}</white><gray>. Απαιτήσεις διατήρησης:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Η απαίτηση αποθήκευσης <white>{requirement}</white><gray> δεν είναι διαθέσιμη ή άκυρη αυτή τη στιγμή.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Δεν υπάρχουν ρυθμισμένες απαιτήσεις αποθήκευσης για αγορές αποθήκευσης αυτή τη στιγμή.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Έχετε φτάσει στο όριο αποθήκευσης του <white>{max_storages}</white><gray>. Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Το δικό σου RDR το προφίλ δεν μπορεί να φορτωθεί, οπότε οι αγορές αποθήκευσης δεν είναι διαθέσιμες.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>Αγόρασε<white>{storage_key}</white><gray>. Απαιτήσεις που καταναλώθηκαν:</gray><white>{requirements}</white><gray>. Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Δεν συναντάτε αυτήν τη στιγμή<white>{requirement}</white><gray>. Απαιτήσεις καταστήματος:</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Η απαίτηση καταστήματος<white>{requirement}</white><gray>δεν είναι διαθέσιμη ή δεν είναι έγκυρη αυτήν τη στιγμή.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Δεν υπάρχουν διαμορφωμένες απαιτήσεις καταστήματος διαθέσιμες για αγορές αποθηκευτικού χώρου αυτήν τη στιγμή.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Έχετε συμπληρώσει το όριο αποθήκευσης των<white>{max_storages}</white><gray>. Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Δεν ήταν δυνατή η φόρτωση του προφίλ σαςRDR, επομένως οι αγορές αποθηκευτικού χώρου δεν είναι διαθέσιμες.</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Req] Αγορά {purchase_number}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Αγορά{purchase_number}</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[Info] Περιηγητής απαιτήσεων</gradient>"
+    name: "<gradient:#10b981:#34d399>[Πληροφορίες] Απαιτήσεις Πρόγραμμα περιήγησης</gradient>"
     lore:
-      - "<gray>Βαθμίδα αγοράς:</gray> <white>{purchase_number}</white>"
-      - "<gray>Ξεκλείδωμα αποθήκευσης:</gray> <white>{storage_number}</white>"
-      - "<gray>Configure απαιτήσεων:</gray> <white>{requirement_count}</white>"
-      - "<gray>Αυτή τη στιγμή συναντήθηκαν:</gray> <white>{met_count}</white>"
+      - "<gray>Purchase level:</gray><white>{purchase_number}</white>"
+      - "<gray>Ξεκλειδώνει τον χώρο αποθήκευσης:</gray><white>{storage_number}</white>"
+      - "<gray>Διαμορφωμένες απαιτήσεις:</gray><white>{requirement_count}</white>"
+      - "<gray>Επί του παρόντος συναντήθηκε:</gray><white>{met_count}</white>"
   empty:
-    name: "<gradient:#10b981:#34d399>[Free] Καμία απαίτηση</gradient>"
+    name: "<gradient:#10b981:#34d399>[Δωρεάν] Χωρίς Απαιτήσεις</gradient>"
     lore:
-      - "<gray>Αυτή η βαθμίδα αγοράς δεν έχει ρυθμισμένες απαιτήσεις.</gray>"
-      - "<yellow>Μπορείτε να αγοράσετε αυτό το κατάστημα χωρίς επιπλέον ελέγχους.</yellow>"
+      - "<gray>Αυτό το επίπεδο αγοράς δεν έχει διαμορφωμένες απαιτήσεις.</gray>"
+      - "<yellow>Μπορείτε να αγοράσετε αυτόν τον αποθηκευτικό χώρο χωρίς επιπλέον ελέγχους.</yellow>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
     partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
     filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req]{requirement_name}</gradient>"
     lore:
-      - "<gray>Κλειδί:</gray> <white>{requirement_key}</white>"
-      - "<gray>Τύπος:</gray> <white>{requirement_type}</white>"
-      - "<gray>Κατάσταση:</gray> <white>{status}</white>"
-      - "<gray>Πρόοδος</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>Περίληψη:</gray> <white>{summary}</white>"
-      - "<yellow>Δεξιό κλικ στο στοιχείο ή τις απαιτήσεις νομίσματος για την πρόοδο της τράπεζας.</yellow>"
-    details: "<gradient:#f59e0b:#fbbf24>▓ Αναλυτικοί έλεγχοι</gradient>"
+      - "<gray>Key:</gray><white>{requirement_key}</white>"
+      - "<gray>Τύπος:</gray><white>{requirement_type}</white>"
+      - "<gray>Κατάσταση:</gray><white>{status}</white>"
+      - "<gray>Πρόοδος:</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Σύνοψη:</gray><white>{summary}</white>"
+      - "<yellow>Κάντε δεξί κλικ στο στοιχείο ή στις απαιτήσεις νομίσματος για την πρόοδο της τράπεζας.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Λεπτομερείς Έλεγχοι</gradient>"
     status:
       met: "<gradient:#10b981:#34d399>[Met]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[Pending]</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>[Unavailable]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Σε εκκρεμότητα]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Μη διαθέσιμο]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> είναι έτοιμη τώρα.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Αποθήκευση προόδου για <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Δεν υπήρχαν διαθέσιμα στοιχεία ή νόμισμα που να ταιριάζουν <white>{requirement}</white><gray>.</gray>"
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> δεν υποστηρίζει την τραπεζική πρόοδο.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> δεν είναι διαθέσιμο αυτή τη στιγμή.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Το δικό σου RDR Το προφίλ δεν ήταν δυνατό να φορτωθεί, οπότε η πρόοδος δεν μπόρεσε να αποθηκευτεί.</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> είναι τώρα έτοιμο.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Αποθηκεύτηκε πρόοδος για <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient><gray>Δεν υπήρχαν διαθέσιμα στοιχεία ή νόμισμα που να ταιριάζουν για<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>δεν υποστηρίζει τραπεζική πρόοδο.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>δεν είναι διαθέσιμο αυτή τη στιγμή.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Δεν ήταν δυνατή η φόρτωση του προφίλ σαςRDR, επομένως δεν ήταν δυνατή η αποθήκευση της προόδου.</gray>"
 
 storage_player_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Vault] Οι Αποθήκες Σας</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Vault] Οι αποθηκευτικοί σας χώροι</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] Χωρητικότητα αποθήκευσης</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Χωρητικότητα αποθήκευσης</gradient>"
     lore:
-      - "<gray>Ιδιοκτήτες αποθήκες:</gray> <white>{owned_storages}</white>"
-      - "<gray>Μέγιστες αποθήκες:</gray> <white>{max_storages}</white>"
-      - "<gray>Χρησιμοποιήστε αυτή τη λίστα για να επανεξετάσετε σας</gray>"
-      - "<gray>επιμένουν τα δοχεία αποθήκευσης.</gray>"
+      - "<gray>Ιδιόκτητοι χώροι αποθήκευσης:</gray><white>{owned_storages}</white>"
+      - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
+      - "<gray>Χρησιμοποιήστε αυτήν τη λίστα για να ελέγξετε</gray>"
+      - "<gray>επέμεινε δοχεία αποθήκευσης.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[Πλαίσιο]{storage_key}</gradient>"
     lore:
-      - "<gray>Κλειδί αποθήκευσης:</gray> <white>{storage_key}</white>"
-      - "<gray>Ιδιοκτήτης:</gray> <white>{owner_name}</white>"
-      - "<gray>Πρόσβαση:</gray> <white>{access_level}</white>"
-      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Χρησιμοποιημένες υποδοχές:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>Διαθέσιμες υποδοχές:</gray> <white>{available_slots}</white>"
-      - "<yellow>Αυτή η αποθήκη είναι έτοιμη για την επιμονή του αντικειμένου.</yellow>"
-      - "<gradient:#38bdf8:#60a5fa>[>>] Αριστερό κλικ για να ανοίξετε αυτή την αποθήκη.</gradient>"
+      - "<gray>Κλειδί αποθήκευσης:</gray><white>{storage_key}</white>"
+      - "<gray>Ιδιοκτήτης:</gray><white>{owner_name}</white>"
+      - "<gray>Πρόσβαση:</gray><white>{access_level}</white>"
+      - "<gray>Hotkey:</gray><white>{hotkey_display}</white>"
+      - "<gray>Χρησιμοποιημένες υποδοχές:</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Διαθέσιμες υποδοχές:</gray><white>{available_slots}</white>"
+      - "<yellow>Αυτός ο χώρος αποθήκευσης είναι έτοιμος για διατήρηση του στοιχείου.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Κάντε αριστερό κλικ για να ανοίξετε αυτόν τον χώρο αποθήκευσης.</gradient>"
       - "<gradient:#f59e0b:#fbbf24>[#] Κάντε δεξί κλικ για να ανοίξετε τις ρυθμίσεις αποθήκευσης.</gradient>"
     access:
-      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+      owner: "<gradient:#10b981:#34d399>[Ιδιοκτήτης]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Δημόσιο]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Συνεργάτης]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Αξιόπιστο]</gradient>"
   empty:
-    name: "<gradient:#ef4444:#f87171>[X] Δε βρέθηκαν αποθήκες</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Δεν βρέθηκαν αποθηκευτικοί χώροι</gradient>"
     lore:
-      - "<gray>Δεν επισυνάπτονται σήμερα αποθήκες</gray>"
-      - "<gray>στο δικό σας RDR προφίλ.</gray>"
+      - "<gray>Δεν υπάρχουν συνδεδεμένοι χώροι αποθήκευσης</gray>"
+      - "<gray>στο προφίλ σαςRDR.</gray>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[!] Λείπει προφίλ</gradient>"
+    name: "<gradient:#ef4444:#f87171>[!] Λείπει το προφίλ</gradient>"
     lore:
-      - "<gray>Το δικό σου RDR Το προφίλ του παίκτη δεν ήταν δυνατό</gray>"
-      - "<gray>να είναι φορτωμένο από μόνιμη αποθήκευση.</gray>"
+      - "<gray>Το προφίλ παίκτη σαςRDRδεν μπόρεσε</gray>"
+      - "<gray>να φορτωθεί από μόνιμη αποθήκευση.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Settings</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}Ρυθμίσεις</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] Settings αποθήκευσης</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Ρυθμίσεις αποθήκευσης</gradient>"
     lore:
-      - "<gray>Κλειδί αποθήκευσης:</gray> <white>{storage_key}</white>"
-      - "<gray>Ιδιοκτήτης:</gray> <white>{owner_name}</white>"
-      - "<gray>Η πρόσβασή σου:</gray> <white>{access_level}</white>"
-      - "<gray>Hotkey:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Συνεργάτες:</gray> <white>{associate_count}</white>"
-      - "<gray>Εμπιστευμένη:</gray> <white>{trusted_count}</white>"
+      - "<gray>Κλειδί αποθήκευσης:</gray><white>{storage_key}</white>"
+      - "<gray>Ιδιοκτήτης:</gray><white>{owner_name}</white>"
+      - "<gray>Η πρόσβασή σας:</gray><white>{access_level}</white>"
+      - "<gray>Hotkey:</gray><white>{hotkey_display}</white>"
+      - "<gray>Συνεργάτες:</gray><white>{associate_count}</white>"
+      - "<gray>Trusted:</gray><white>{trusted_count}</white>"
     access:
-      owner: "<gradient:#10b981:#34d399>[Owner]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
+      owner: "<gradient:#10b981:#34d399>[Ιδιοκτήτης]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Δημόσιο]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Συνεργάτης]</gradient>"
+      trusted: "<gradient:#10b981:#34d399>[Αξιόπιστο]</gradient>"
   trusted:
-    name: "<gradient:#10b981:#34d399>[Group] Εμπιστευμένη Πρόσβαση</gradient>"
+    name: "<gradient:#10b981:#34d399>[Ομάδα] Αξιόπιστη πρόσβαση</gradient>"
     lore:
-      - "<gray>Συνεργάτες:</gray> <white>{associate_count}</white>"
-      - "<gray>Εμπιστευμένη:</gray> <white>{trusted_count}</white>"
+      - "<gray>Συνεργάτες:</gray><white>{associate_count}</white>"
+      - "<gray>Trusted:</gray><white>{trusted_count}</white>"
       - "<yellow>Κάντε κλικ για να διαχειριστείτε ποιος μπορεί να καταθέσει</yellow>"
-      - "<yellow>ή να έχουν πλήρη πρόσβαση σε αυτή την αποθήκη.</yellow>"
+      - "<yellow>ή πλήρη πρόσβαση σε αυτόν τον χώρο αποθήκευσης.</yellow>"
   hotkey:
-    name: "<gradient:#f59e0b:#fbbf24>[#] Κλειδί αποθήκευσης</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[#] Πλήκτρο πρόσβασης αποθήκευσης</gradient>"
     lore:
-      - "<gray>Τρέχον πλήκτρο πρόσβασης:</gray> <white>{hotkey_display}</white>"
-      - "<yellow>Κάντε κλικ για να συνδέσετε γρήγορη πρόσβαση για</yellow>"
+      - "<gray>Τρέχον πλήκτρο πρόσβασης:</gray><white>{hotkey_display}</white>"
+      - "<yellow>Κάντε κλικ για σύνδεση γρήγορης πρόσβασης για</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
-    name: "<gradient:#ef4444:#f87171>[X] Εμπιστευμένη κλειδωμένη</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Trusted Locked</gradient>"
     lore:
-      - "<gray>Μόνο ο ιδιοκτήτης αποθήκευσης μπορεί να διαχειριστεί</gray>"
-      - "<gray>αξιόπιστη πρόσβαση για αυτή την αποθήκη.</gray>"
+      - "<gray>Μόνο ο κάτοχος χώρου αποθήκευσης μπορεί να διαχειριστεί</gray>"
+      - "<gray>αξιόπιστη πρόσβαση για αυτόν τον χώρο αποθήκευσης.</gray>"
   hotkey_locked:
-    name: "<gradient:#ef4444:#f87171>[X] Κλειδωμένο πλήκτρο Hotkey</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Κλειδωμένο πλήκτρο πρόσβασης</gradient>"
     lore:
-      - "<gray>Μόνο ο ιδιοκτήτης αποθήκευσης μπορεί να αλλάξει</gray>"
-      - "<gray>τις κλειδαριές αποθήκευσης.</gray>"
+      - "<gray>Μόνο ο κάτοχος αποθηκευτικού χώρου μπορεί να αλλάξει</gray>"
+      - "<gray>πλήκτρα πρόσβασης αποθήκευσης.</gray>"
   edition_locked:
-    name: "<gradient:#ef4444:#f87171>[Free] Κλειδωμένες ρυθμίσεις</gradient>"
+    name: "<gradient:#ef4444:#f87171>[Δωρεάν] Οι ρυθμίσεις είναι κλειδωμένες</gradient>"
     lore:
-      - "<gray>Οι αλλαγές ρύθμισης αποθήκευσης είναι απενεργοποιημένες</gray>"
-      - "<gray>μέσα <white>RDR Free</white><gray>.</gray>"
-      - "<yellow>Αναβάθμιση σε Premium για την επεξεργασία ρυθμίσεων.</yellow>"
+      - "<gray>Οι αλλαγές στις ρυθμίσεις αποθήκευσης είναι απενεργοποιημένες</gray>"
+      - "<gray>σε<white>RDRΔωρεάν</white><gray>.</gray>"
+      - "<yellow>Αναβάθμιση σε Premium για να επεξεργαστείτε τις ρυθμίσεις.</yellow>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] Λείπει η αποθήκευση</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Αποθηκευτικός χώρος Λείπει</gradient>"
     lore:
-      - "<gray>Αδύνατη η φόρτωση αυτής της αποθήκευσης</gray>"
+      - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του χώρου αποθήκευσης</gray>"
       - "<gray>για την προβολή ρυθμίσεων.</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Group] {storage_key} Πρόσβαση</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Ομάδα]{storage_key}Πρόσβαση</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] Κοινή πρόσβαση</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Κοινόχρηστη πρόσβαση</gradient>"
     lore:
-      - "<gray>Κλειδί αποθήκευσης:</gray> <white>{storage_key}</white>"
-      - "<gray>Ιδιοκτήτης:</gray> <white>{owner_name}</white>"
-      - "<gray>Συνεργάτες:</gray> <white>{associate_count}</white>"
-      - "<gray>Εμπιστευμένη:</gray> <white>{trusted_count}</white>"
-      - "<yellow>Κάντε κλικ σε έναν παίκτη για πρόσβαση στον κύκλο.</yellow>"
+      - "<gray>Κλειδί αποθήκευσης:</gray><white>{storage_key}</white>"
+      - "<gray>Ιδιοκτήτης:</gray><white>{owner_name}</white>"
+      - "<gray>Συνεργάτες:</gray><white>{associate_count}</white>"
+      - "<gray>Trusted:</gray><white>{trusted_count}</white>"
+      - "<yellow>Κάντε κλικ σε ένα πρόγραμμα αναπαραγωγής για πρόσβαση σε κύκλο.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[Public] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[Δημόσιο]{player}</gradient>"
       lore:
-        - "<gray>Κατάσταση:</gray> <white>Δημόσιο</white>"
-        - "<gray>Καμία κατάθεση ή ανάληψη πρόσβασης.</gray>"
-        - "<yellow>Κλικ για προώθηση σε Συνεργάτη.</yellow>"
+        - "<gray>Κατάσταση:</gray><white>Public</white>"
+        - "<gray>Χωρίς πρόσβαση κατάθεσης ή ανάληψης.</gray>"
+        - "<yellow>Κάντε κλικ για προώθηση σε Συνεργάτη.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[Συνεργάτης]{player}</gradient>"
       lore:
-        - "<gray>Κατάσταση:</gray> <white>Συνεργάτης</white>"
-        - "<gray>Μπορεί να καταθέσει αλλά δεν μπορεί να αποσυρθεί.</gray>"
-        - "<yellow>Κλικ για προώθηση σε Trusted.</yellow>"
+        - "<gray>Κατάσταση:</gray><white>Associate</white>"
+        - "<gray>Μπορεί να καταθέσει αλλά δεν μπορεί να κάνει ανάληψη.</gray>"
+        - "<yellow>Κάντε κλικ για προώθηση σε Αξιόπιστο.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[Trusted] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[Αξιόπιστο]{player}</gradient>"
       lore:
-        - "<gray>Κατάσταση:</gray> <white>Εμπιστευμένη</white>"
-        - "<gray>Μπορεί να καταθέσει και να αποσύρει στοιχεία.</gray>"
+        - "<gray>Κατάσταση:</gray><white>Trusted</white>"
+        - "<gray>Μπορεί να καταθέσει και να αποσύρει αντικείμενα.</gray>"
         - "<yellow>Κάντε κλικ για επαναφορά στο Public.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient> <gray>{player} δεν έχει πλέον πρόσβαση αποθήκευσης.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} μπορούν τώρα να καταθέσουν σε αυτή την αποθήκη.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} μπορούν τώρα να καταθέσουν και να αποσυρθούν από αυτή την αποθήκη.</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Μόνο ο ιδιοκτήτης αποθήκευσης μπορεί να αλλάξει αξιόπιστη πρόσβαση.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[Δημόσιο]</gradient><gray>{player}δεν έχει πλέον πρόσβαση στο χώρο αποθήκευσης.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Συνεργάτης]</gradient><gray>{player}μπορεί τώρα να καταθέσει σε αυτόν τον αποθηκευτικό χώρο.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient><gray>{player}μπορεί τώρα να κάνει κατάθεση και ανάληψη από αυτόν τον χώρο αποθήκευσης.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Μόνο ο κάτοχος χώρου αποθήκευσης μπορεί να αλλάξει την αξιόπιστη πρόσβαση.</gray>"
     locked:
-      name: "<gradient:#ef4444:#f87171>[X] Μόνο ιδιοκτήτης</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Μόνο κάτοχος</gradient>"
       lore:
-        - "<gray>Μπορείτε να δείτε αυτή την αποθήκευση, αλλά μόνο</gray>"
-        - "<gray>ο ιδιοκτήτης μπορεί να αλλάξει αξιόπιστη πρόσβαση.</gray>"
+        - "<gray>Μπορείτε να δείτε αυτόν τον χώρο αποθήκευσης, αλλά μόνο</gray>"
+        - "<gray>ο κάτοχος μπορεί να αλλάξει την αξιόπιστη πρόσβαση.</gray>"
     storage_missing:
-      name: "<gradient:#ef4444:#f87171>[X] Λείπει η αποθήκευση</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Αποθηκευτικός χώρος Λείπει</gradient>"
       lore:
-        - "<gray>Αδύνατη η φόρτωση αυτής της αποθήκευσης</gray>"
-        - "<gray>για την αξιόπιστη διαχείριση πρόσβασης.</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Αυτή η αποθήκευση δεν μπορεί να φορτωθεί για αξιόπιστη διαχείριση πρόσβασης.</gray>"
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του χώρου αποθήκευσης</gray>"
+        - "<gray>για διαχείριση αξιόπιστης πρόσβασης.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Δεν ήταν δυνατή η φόρτωση αυτού του χώρου αποθήκευσης για διαχείριση αξιόπιστης πρόσβασης.</gray>"
     edition_locked:
-      name: "<gradient:#ef4444:#f87171>[Free] Κλειδωμένες ρυθμίσεις</gradient>"
+      name: "<gradient:#ef4444:#f87171>[Δωρεάν] Οι ρυθμίσεις είναι κλειδωμένες</gradient>"
       lore:
         - "<gray>Οι αλλαγές αξιόπιστης πρόσβασης είναι απενεργοποιημένες</gray>"
-        - "<gray>μέσα <white>RDR Free</white><gray>.</gray>"
+        - "<gray>σε<white>RDRΔωρεάν</white><gray>.</gray>"
     empty:
-      name: "<gradient:#ef4444:#f87171>[X] Δε βρέθηκαν παίκτες</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Δεν βρέθηκαν παίκτες</gradient>"
       lore:
         - "<gray>Δεν υπάρχουν άλλοι γνωστοί παίκτες διαθέσιμοι</gray>"
-        - "<gray>για να δώσει αξιόπιστη πρόσβαση.</gray>"
+        - "<gray>για να εκχωρήσετε αξιόπιστη πρόσβαση.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[Box] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Πλαίσιο]{storage_key}</gradient>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] Λείπει η αποθήκευση</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Αποθηκευτικός χώρος Λείπει</gradient>"
     lore:
-      - "<gray>Αυτή η καταχώρηση αποθήκευσης δεν βρέθηκε</gray>"
-      - "<gray>για την επιμονή σας RDR προφίλ.</gray>"
+      - "<gray>Δεν ήταν δυνατή η εύρεση αυτής της καταχώρισης αποθήκευσης</gray>"
+      - "<gray>για το επίμονο προφίλRDRσας.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] Δέσιμο {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] Bind{storage_key}</gradient>"
   input:
     lore:
-      - "<gray>Εισάγετε έναν αριθμό μεταξύ</gray>"
-      - "<white>1</white><gray> και </gray><white>{max_hotkeys}</white><gray> για γρήγορη πρόσβαση.</gray>"
-      - "<yellow>Κάντε κλικ στην υποδοχή του αποτελέσματος για να αποθηκεύσετε το πλήκτρο πρόσβασης.</yellow>"
+      - "<gray>Εισαγάγετε έναν αριθμό μεταξύ</gray>"
+      - "<white>1</white><gray>και</gray><white>{max_hotkeys}</white><gray>για γρήγορη πρόσβαση.</gray>"
+      - "<yellow>Κάντε κλικ στην υποδοχή αποτελεσμάτων για να αποθηκεύσετε το πλήκτρο πρόσβασης.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Χρήση ενός αριθμού μεταξύ <white>1</white> και <white>{max_hotkeys}</white><gray>. Εισαγωγή:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Χρησιμοποιήστε έναν αριθμό μεταξύ<white>1</white>και<white>{max_hotkeys}</white><gray>. Είσοδος:</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} είναι ήδη ανοικτή σε μια άλλη συνεδρία.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} Δεν μπορούσε να ανοιχτεί τώρα.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε πρόσβαση σε <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> είναι παγκοσμίως μαύρη λίστα από RDR αποθήκευση.</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Η συνεδρία επεξεργασίας σας για {storage_key} έχει λήξει ή έχει μεταφερθεί αλλού. Οι αλλαγές δεν σώθηκαν.</gray>"
-    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} δεν μπόρεσε να σωθεί. Ελέγξτε την κονσόλα για λεπτομέρειες.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} Τώρα είναι βέβαιο ότι <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Καμία αποθήκευση δεν δεσμεύεται να <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Οι συντομεύσεις πρέπει να είναι μεταξύ <white>1</white> και <white>{max_hotkeys}</white><gray>.</gray>"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Οι επεξεργασίες ρύθμισης αποθήκευσης είναι απενεργοποιημένες <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Ενεργοποίηση του <white>/rr scoreboard</white><gray> Πλευρική μπάρα.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Απενεργοποίηση <white>/rr scoreboard</white><gray> Πλευρική μπάρα.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Χρήση:</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}είναι ήδη ανοιχτό σε άλλη περίοδο λειτουργίας.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}δεν ήταν δυνατό να ανοίξει αυτήν τη στιγμή.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Δεν έχετε πρόσβαση στο<white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>είναι παγκοσμίως μαύρη λίστα απόRDRχώρο αποθήκευσης.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Η συνεδρία επεξεργασίας για{storage_key}έληξε ή μετακινήθηκε αλλού. Οι αλλαγές δεν αποθηκεύτηκαν.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}δεν ήταν δυνατή η αποθήκευση. Ελέγξτε την κονσόλα για λεπτομέρειες.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}είναι πλέον δεσμευμένη σε<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Κανένας χώρος αποθήκευσης δεν δεσμεύεται σε<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Τα πλήκτρα πρόσβασης πρέπει να είναι μεταξύ<white>1</white>και<white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Οι τροποποιήσεις των ρυθμίσεων αποθήκευσης είναι απενεργοποιημένες στο<white>RDRFree</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Ενεργοποίησε την<white>/rrπίνακα αποτελεσμάτων</white><gray>sidebar.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Απενεργοποίησε την<white>/rrπίνακα αποτελεσμάτων</white><gray>sidebar.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Usage:</gray><white>/rrscoreboard</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[Page] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[Σελίδα]%current_page%</gradient>"
   lore:
-    - "<gray>Τρέχουσα σελίδα:</gray> <white>%current_page%</white>"
-    - "<gray>Σύνολο σελίδων:</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[Page] %page%</gradient>"
+    - "<gray>Τρέχουσα σελίδα:</gray><white>%current_page%</white>"
+    - "<gray>Σύνολο σελίδων:</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Σελίδα]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] Επιστροφή</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Κλικ για επιστροφή</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για επιστροφή</gradient>"

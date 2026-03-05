@@ -2,31 +2,31 @@ prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
   title: "<gradient:#f59e0b:#fbbf24>[RDR] Lagringsstatistik</gradient>"
-  items: "<gray>Totalt antal artiklar:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>Tillgängliga platser:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>Erhållna lagringsutrymmen:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>Max lagringsutrymme:</gray> <white>{max_storages}</white>"
+  items: "<gray>Totala poster:</gray><white>{total_items}</white>"
+  available_slots: "<gray>Tillgängliga platser:</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>Erhållna lagringsutrymmen:</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>Max lagringsutrymme:</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Vault] Lagringssammanfattning</gradient>"
     lore:
-      - "<gray>Ägda lagringar:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximala lagringsutrymmen:</gray> <white>{max_storages}</white>"
+      - "<gray>Ägda lagringar:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<gray>Ditt valvnätverk är beständigt</gray>"
-      - "<gray>och redo för användning över servrar.</gray>"
+      - "<gray>och redo för gränsöverskridande användning.</gray>"
   open:
-    name: "<gradient:#10b981:#34d399>[>>] Visa lagringsutrymmen</gradient>"
+    name: "<gradient:#10b981:#34d399>[>>] Visa lagringar</gradient>"
     lore:
-      - "<gray>Ägda lagringar:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximala lagringsutrymmen:</gray> <white>{max_storages}</white>"
+      - "<gray>Ägda lagringar:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<yellow>Klicka för att bläddra i din lagringslista.</yellow>"
   store:
     name: "<gradient:#f59e0b:#fbbf24>[$] Lagringsbutik</gradient>"
     lore:
-      - "<gray>Ägda lagringar:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximala lagringsutrymmen:</gray> <white>{max_storages}</white>"
+      - "<gray>Ägda lagringar:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<yellow>Klicka för att köpa ett annat lagringsutrymme.</yellow>"
 
 storage_store_ui:
@@ -34,16 +34,16 @@ storage_store_ui:
   summary:
     name: "<gradient:#10b981:#34d399>[Info] Lagringskapacitet</gradient>"
     lore:
-      - "<gray>Ägda lagringar:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximala lagringsutrymmen:</gray> <white>{max_storages}</white>"
+      - "<gray>Ägda lagringar:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<gray>Köp ytterligare valvutrymme tills</gray>"
       - "<gray>du når det konfigurerade locket.</gray>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Butikskrav</gradient>"
     lore:
-      - "<gray>Konfigurerade krav:</gray> <white>{requirement_count}</white>"
-      - "<gray>Aktuellt antal krav:</gray> <white>{requirements}</white>"
-      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<gray>Konfigurerade krav:</gray><white>{requirement_count}</white>"
+      - "<gray>Aktuellt antal krav:</gray><white>{requirements}</white>"
+      - "<gray>Status:</gray><white>{availability}</white>"
       - "<yellow>Klicka för att inspektera varje kravnivå i detalj.</yellow>"
     none: "<gradient:#ef4444:#f87171>[Ingen]</gradient>"
     availability:
@@ -54,21 +54,21 @@ storage_store_ui:
     available:
       name: "<gradient:#10b981:#34d399>[+] Köp lagring</gradient>"
       lore:
-        - "<gray>Konfigurerade krav:</gray> <white>{requirement_count}</white>"
-        - "<gray>Nuvarande krav:</gray> <white>{requirements}</white>"
-        - "<gray>Ägda lagringar:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Konfigurerade krav:</gray><white>{requirement_count}</white>"
+        - "<gray>Nuvarande krav:</gray><white>{requirements}</white>"
+        - "<gray>Ägda lagringar:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Klicka för att köpa när alla krav är uppfyllda.</yellow>"
     pending:
       name: "<gradient:#f59e0b:#fbbf24>[...] Krav väntar</gradient>"
       lore:
-        - "<gray>Konfigurerade krav:</gray> <white>{requirement_count}</white>"
-        - "<gray>Nuvarande krav:</gray> <white>{requirements}</white>"
-        - "<gray>Ägda lagringar:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Konfigurerade krav:</gray><white>{requirement_count}</white>"
+        - "<gray>Nuvarande krav:</gray><white>{requirements}</white>"
+        - "<gray>Ägda lagringar:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Uppfyll de återstående kraven innan du köper.</yellow>"
     limit_reached:
-      name: "<gradient:#ef4444:#f87171>[X] Lagringsgräns uppnådd</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Lagringsgräns nådd</gradient>"
       lore:
-        - "<gray>Ägda lagringar:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Ägda lagringar:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<gray>Du kan inte köpa fler lagringsutrymmen</gray>"
         - "<gray>tills det globala taket höjs.</gray>"
     no_requirements:
@@ -79,120 +79,120 @@ storage_store_ui:
     profile_missing:
       name: "<gradient:#ef4444:#f87171>[!] Profil saknas</gradient>"
       lore:
-        - "<gray>Din RDR-profil kunde inte laddas,</gray>"
-        - "<gray>så att köp blockeras tillfälligt.</gray>"
+        - "<gray>DinRDR-profil kunde inte laddas,</gray>"
+        - "<gray>så köp blockeras tillfälligt.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Köpt <white>{storage_key}</white><gray>. Förbrukade krav:</gray> <white>{requirements}</white><gray>. Ägda lager:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du möter för närvarande inte <white>{requirement}</white><gray>. Butikskrav:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Butikskravet <white>{requirement}</white><gray> är inte tillgängligt eller ogiltigt just nu.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Inga konfigurerade butikskrav är tillgängliga för lagringsköp just nu.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har nått lagringsgränsen på <white>{max_storages}</white><gray>. Ägda lager:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Din RDR-profil kunde inte laddas, så lagringsköp är inte tillgängliga.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>Köpt<white>{storage_key}</white><gray>. Förbrukade krav:</gray><white>{requirements}</white><gray>. Ägda lagringar:</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Du möter för närvarande inte<white>{requirement}</white><gray>. Butikskrav:</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Butikskravet<white>{requirement}</white><gray>är inte tillgängligt eller ogiltigt just nu.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Inga konfigurerade butikskrav är tillgängliga för lagringsköp just nu.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Du har nått lagringsgränsen<white>{max_storages}</white><gray>. Ägda lagringar:</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>DinRDR-profil kunde inte laddas, så lagringsköp är inte tillgängliga.</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Req] Köp {purchase_number}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Köp{purchase_number}</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[Information] Krav webbläsare</gradient>"
+    name: "<gradient:#10b981:#34d399>[Info] Krav webbläsare</gradient>"
     lore:
-      - "<gray>Köpnivå:</gray> <white>{purchase_number}</white>"
-      - "<gray>Låser upp lagring:</gray> <white>{storage_number}</white>"
-      - "<gray>Konfigurerade krav:</gray> <white>{requirement_count}</white>"
-      - "<gray>För närvarande träffad:</gray> <white>{met_count}</white>"
+      - "<gray>Köpnivå:</gray><white>{purchase_number}</white>"
+      - "<gray>Låser upp lagring:</gray><white>{storage_number}</white>"
+      - "<gray>Konfigurerade krav:</gray><white>{requirement_count}</white>"
+      - "<gray>För närvarande uppfylld:</gray><white>{met_count}</white>"
   empty:
     name: "<gradient:#10b981:#34d399>[Gratis] Inga krav</gradient>"
     lore:
       - "<gray>Denna köpnivå har inga konfigurerade krav.</gray>"
-      - "<yellow>Du kan köpa det här lagringsutrymmet utan extra kontroller.</yellow>"
+      - "<yellow>Du kan köpa denna lagring utan extra kontroller.</yellow>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
     partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
     filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[Req] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Req]{requirement_name}</gradient>"
     lore:
-      - "<gray>Nyckel:</gray> <white>{requirement_key}</white>"
-      - "<gray>Typ:</gray> <white>{requirement_type}</white>"
-      - "<gray>Status:</gray> <white>{status}</white>"
-      - "<gray>Framsteg:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>Sammanfattning:</gray> <white>{summary}</white>"
-      - "<yellow>Högerklicka på objekt eller valutakrav för att banken ska gå vidare.</yellow>"
+      - "<gray>Key:</gray><white>{requirement_key}</white>"
+      - "<gray>Typ:</gray><white>{requirement_type}</white>"
+      - "<gray>Status:</gray><white>{status}</white>"
+      - "<gray>Framsteg:</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Sammanfattning:</gray><white>{summary}</white>"
+      - "<yellow>Högerklicka på objekt- eller valutakrav för att gå vidare med banken.</yellow>"
     details: "<gradient:#f59e0b:#fbbf24>▓ Detaljerade kontroller</gradient>"
     status:
-      met: "<gradient:#10b981:#34d399>[Mött]</gradient>"
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
       pending: "<gradient:#f59e0b:#fbbf24>[Väntar]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Ej tillgänglig]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> är nu klar.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Lagrade framsteg för <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Inga matchande föremål eller valuta var tillgängliga för <white>{requirement}</white><gray>.</gray>"
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> stöder inte bankförlopp.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> är inte tillgänglig just nu.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Din RDR-profil kunde inte laddas, så framsteg kunde inte sparas.</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient><gray><white>{requirement}</white><gray>är nu klar.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient><gray>Lagrade förlopp för<white>{requirement}</white><gray>.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient><gray>Inga matchande objekt eller valuta var tillgängliga för<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>stöder inte bankförlopp.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>är inte tillgänglig just nu.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>DinRDR-profil kunde inte laddas, så framsteg kunde inte sparas.</gray>"
 
 storage_player_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Vault] Dina lagringar</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Lagringskapacitet</gradient>"
     lore:
-      - "<gray>Ägda lagringar:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximala lagringsutrymmen:</gray> <white>{max_storages}</white>"
+      - "<gray>Ägda lagringar:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<gray>Använd den här listan för att granska din</gray>"
-      - "<gray>behållna förvaringsbehållare.</gray>"
+      - "<gray>beständiga lagringsbehållare.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[Låda] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[Box]{storage_key}</gradient>"
     lore:
-      - "<gray>Lagringsnyckel:</gray> <white>{storage_key}</white>"
-      - "<gray>Ägare:</gray> <white>{owner_name}</white>"
-      - "<gray>Åtkomst:</gray> <white>{access_level}</white>"
-      - "<gray>Snabbknapp:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Använda platser:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>Tillgängliga platser:</gray> <white>{available_slots}</white>"
-      - "<yellow>Det här lagringsutrymmet är redo för objektbeständighet.</yellow>"
+      - "<gray>Lagringsnyckel:</gray><white>{storage_key}</white>"
+      - "<gray>Ägare:</gray><white>{owner_name}</white>"
+      - "<gray>Åtkomst:</gray><white>{access_level}</white>"
+      - "<gray>Snabbknapp:</gray><white>{hotkey_display}</white>"
+      - "<gray>Använda platser:</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Tillgängliga platser:</gray><white>{available_slots}</white>"
+      - "<yellow>Denna lagring är redo för objektbeständighet.</yellow>"
       - "<gradient:#38bdf8:#60a5fa>[>>] Vänsterklicka för att öppna denna lagring.</gradient>"
       - "<gradient:#f59e0b:#fbbf24>[#] Högerklicka för att öppna lagringsinställningarna.</gradient>"
     access:
       owner: "<gradient:#10b981:#34d399>[Ägare]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Offentlig]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
       associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
       trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
   empty:
-    name: "<gradient:#ef4444:#f87171>[X] Inga lagringsplatser hittades</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Inga lagringar hittades</gradient>"
     lore:
-      - "<gray>Inga lagringsutrymmen är för närvarande bifogade</gray>"
-      - "<gray>till din RDR profil.</gray>"
+      - "<gray>Inga lagringar är för närvarande bifogade</gray>"
+      - "<gray>till dinRDR-profil.</gray>"
   missing:
     name: "<gradient:#ef4444:#f87171>[!] Profil saknas</gradient>"
     lore:
-      - "<gray>Din RDR spelarprofil kunde inte</gray>"
+      - "<gray>DinRDRspelarprofil kunde inte</gray>"
       - "<gray>laddas från beständig lagring.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Inställningar</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}Inställningar</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Information] Lagringsinställningar</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Lagringsinställningar</gradient>"
     lore:
-      - "<gray>Lagringsnyckel:</gray> <white>{storage_key}</white>"
-      - "<gray>Ägare:</gray> <white>{owner_name}</white>"
-      - "<gray>Din åtkomst:</gray> <white>{access_level}</white>"
-      - "<gray>Snabbknapp:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Associates:</gray> <white>{associate_count}</white>"
-      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<gray>Lagringsnyckel:</gray><white>{storage_key}</white>"
+      - "<gray>Ägare:</gray><white>{owner_name}</white>"
+      - "<gray>Din åtkomst:</gray><white>{access_level}</white>"
+      - "<gray>Snabbknapp:</gray><white>{hotkey_display}</white>"
+      - "<gray>Associates:</gray><white>{associate_count}</white>"
+      - "<gray>Trusted:</gray><white>{trusted_count}</white>"
     access:
       owner: "<gradient:#10b981:#34d399>[Ägare]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Offentlig]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Public]</gradient>"
       associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient>"
       trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient>"
   trusted:
     name: "<gradient:#10b981:#34d399>[Grupp] Betrodd åtkomst</gradient>"
     lore:
-      - "<gray>Associates:</gray> <white>{associate_count}</white>"
-      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<gray>Associates:</gray><white>{associate_count}</white>"
+      - "<gray>Trusted:</gray><white>{trusted_count}</white>"
       - "<yellow>Klicka för att hantera vem som kan sätta in</yellow>"
-      - "<yellow>eller få full tillgång till detta lagringsutrymme.</yellow>"
+      - "<yellow>eller få fullständig tillgång till denna lagring.</yellow>"
   hotkey:
-    name: "<gradient:#f59e0b:#fbbf24>[#] Snabbtangent för lagring</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[#] Lagring Hotkey</gradient>"
     lore:
-      - "<gray>Aktuell snabbtangent:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Aktuell snabbtangent:</gray><white>{hotkey_display}</white>"
       - "<yellow>Klicka för att binda snabbåtkomst för</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
@@ -209,65 +209,65 @@ storage_settings_ui:
     name: "<gradient:#ef4444:#f87171>[Gratis] Inställningar låsta</gradient>"
     lore:
       - "<gray>Ändringar av lagringsinställningar är inaktiverade</gray>"
-      - "<gray>i <white>RDR Free</white><gray>.</gray>"
+      - "<gray>i<white>RDRGratis</white><gray>.</gray>"
       - "<yellow>Uppgradera till Premium för att redigera inställningar.</yellow>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] Lagring saknas</gradient>"
     lore:
-      - "<gray>Det här lagringsutrymmet kunde inte laddas</gray>"
+      - "<gray>Det här minnet kunde inte laddas</gray>"
       - "<gray>för inställningsvyn.</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Grupp] {storage_key} Åtkomst</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Grupp]{storage_key}Access</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Information] Delad åtkomst</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Delad åtkomst</gradient>"
     lore:
-      - "<gray>Lagringsnyckel:</gray> <white>{storage_key}</white>"
-      - "<gray>Ägare:</gray> <white>{owner_name}</white>"
-      - "<gray>Associates:</gray> <white>{associate_count}</white>"
-      - "<gray>Trusted:</gray> <white>{trusted_count}</white>"
+      - "<gray>Lagringsnyckel:</gray><white>{storage_key}</white>"
+      - "<gray>Ägare:</gray><white>{owner_name}</white>"
+      - "<gray>Associates:</gray><white>{associate_count}</white>"
+      - "<gray>Trusted:</gray><white>{trusted_count}</white>"
       - "<yellow>Klicka på en spelare för att cykla åtkomst.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[Offentlig] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[Public]{player}</gradient>"
       lore:
-        - "<gray>Status:</gray> <white>Offentlig</white>"
+        - "<gray>Status:</gray><white>Public</white>"
         - "<gray>Ingen insättning eller uttagsåtkomst.</gray>"
         - "<yellow>Klicka för att främja till Associate.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[Associate]{player}</gradient>"
       lore:
-        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Status:</gray><white>Associate</white>"
         - "<gray>Kan sätta in men kan inte ta ut.</gray>"
         - "<yellow>Klicka för att främja till Trusted.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[Trusted] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[Trusted]{player}</gradient>"
       lore:
-        - "<gray>Status:</gray> <white>Trusted</white>"
+        - "<gray>Status:</gray><white>Trusted</white>"
         - "<gray>Kan sätta in och ta ut föremål.</gray>"
-        - "<yellow>Klicka för att återställa till offentligt.</yellow>"
+        - "<yellow>Klicka för att återställa till Public.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient> <gray>{player} har inte längre lagringsåtkomst.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} kan nu sätta in i detta lagringsutrymme.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient> <gray>{player} kan nu sätta in och ta ut från denna lagring.</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Endast lagringsägaren kan ändra betrodd åtkomst.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[Public]</gradient><gray>{player}har inte längre lagringsåtkomst.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient><gray>{player}kan nu sätta in i denna lagring.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Trusted]</gradient><gray>{player}kan nu sätta in och ta ut från detta lager.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Endast lagringsägaren kan ändra betrodd åtkomst.</gray>"
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Endast ägare</gradient>"
       lore:
-        - "<gray>Du kan se detta lagringsutrymme, men bara</gray>"
+        - "<gray>Du kan se denna lagring, men bara</gray>"
         - "<gray>ägaren kan ändra betrodd åtkomst.</gray>"
     storage_missing:
       name: "<gradient:#ef4444:#f87171>[X] Lagring saknas</gradient>"
       lore:
-        - "<gray>Det här lagringsutrymmet kunde inte laddas</gray>"
+        - "<gray>Det här minnet kunde inte laddas</gray>"
         - "<gray>för betrodd åtkomsthantering.</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Denna lagring kunde inte laddas för betrodd åtkomsthantering.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Det här minnet kunde inte laddas för betrodd åtkomsthantering.</gray>"
     edition_locked:
       name: "<gradient:#ef4444:#f87171>[Gratis] Inställningar låsta</gradient>"
       lore:
         - "<gray>Ändringar av betrodd åtkomst är inaktiverade</gray>"
-        - "<gray>i <white>RDR Free</white><gray>.</gray>"
+        - "<gray>i<white>RDRGratis</white><gray>.</gray>"
     empty:
       name: "<gradient:#ef4444:#f87171>[X] Inga spelare hittades</gradient>"
       lore:
@@ -275,48 +275,48 @@ storage_trusted_ui:
         - "<gray>för att tilldela betrodd åtkomst.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[Låda] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Box]{storage_key}</gradient>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] Lagring saknas</gradient>"
     lore:
       - "<gray>Denna lagringspost kunde inte hittas</gray>"
-      - "<gray>för din bestående RDR-profil.</gray>"
+      - "<gray>för din beståendeRDR-profil.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] Bind {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] Bind{storage_key}</gradient>"
   input:
     lore:
       - "<gray>Ange ett nummer mellan</gray>"
-      - "<white>1</white><gray> och </gray><white>{max_hotkeys}</white><gray> för snabb åtkomst.</gray>"
-      - "<yellow>Klicka på resultatfacket för att spara snabbtangenten.</yellow>"
+      - "<white>1</white><gray>och</gray><white>{max_hotkeys}</white><gray>för snabb åtkomst.</gray>"
+      - "<yellow>Klicka på resultatluckan för att spara snabbtangenten.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Använd ett tal mellan <white>1</white> och <white>{max_hotkeys}</white><gray>. Ingång:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Använd ett nummer mellan<white>1</white>och<white>{max_hotkeys}</white><gray>. Ingång:</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} är redan öppen i en annan session.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kunde inte öppnas just nu.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte tillgång till <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> är globalt svartlistad från RDR lagring.</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Din redigeringssession för {storage_key} har löpt ut eller flyttats någon annanstans. Ändringarna sparades inte.</gray>"
-    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kunde inte sparas. Kontrollera konsolen för mer information.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} är nu bunden till <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Inget lagringsutrymme är bundet till <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Snabbtangenter måste vara mellan <white>1</white> och <white>{max_hotkeys}</white><gray>.</gray>"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Redigering av lagringsinställningar är inaktiverade i <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktiverade sidofältet <white>/rr scoreboard</white><gray>.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Inaktiverade sidofältet <white>/rr scoreboard</white><gray>.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Användning:</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}är redan öppen i en annan session.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kunde inte öppnas just nu.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Du har inte tillgång till<white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>är globalt svartlistad frånRDRlagring.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Din redigeringssession för{storage_key}löpte ut eller flyttades någon annanstans. Ändringarna sparades inte.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kunde inte sparas. Kontrollera konsolen för detaljer.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}är nu bunden till<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Inget lagringsutrymme är bundet till<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Snabbtangenter måste vara mellan<white>1</white>och<white>{max_hotkeys}</white><gray>.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Redigering av lagringsinställningar är inaktiverade i<white>RDRFree</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Aktiverade<white>/rrresultattavlan</white><gray>sidofältet.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Inaktiverade<white>/rrresultattavlan</white><gray>sidofältet.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Användning:</gray><white>/rrresultattavla</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[Sida] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[Sida]%current_page%</gradient>"
   lore:
-    - "<gray>Aktuell sida:</gray> <white>%current_page%</white>"
-    - "<gray>Totalt antal sidor:</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[Sida] %page%</gradient>"
+    - "<gray>Aktuell sida:</gray><white>%current_page%</white>"
+    - "<gray>Totalt antal sidor:</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Sida]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] Retur</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klicka för att gå tillbaka</gradient>"

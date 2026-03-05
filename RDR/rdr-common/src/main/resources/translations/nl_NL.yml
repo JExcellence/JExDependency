@@ -2,48 +2,48 @@ prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
   title: "<gradient:#f59e0b:#fbbf24>[RDR] Opslagstatistieken</gradient>"
-  items: "<gray>Totaal aantal artikelen:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>Beschikbare slots:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>Verkregen opslagruimte:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>Max. opslagruimte:</gray> <white>{max_storages}</white>"
+  items: "<gray>Totaal aantal artikelen:</gray><white>{total_items}</white>"
+  available_slots: "<gray>Beschikbare slots:</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>Verkregen opslagcapaciteit:</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>Max. opslagruimte:</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Opslaghub</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Vault] Opslagoverzicht</gradient>"
     lore:
-      - "<gray>Eigen opslag:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximale opslagruimte:</gray> <white>{max_storages}</white>"
+      - "<gray>Eigen opslag:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximale opslagruimte:</gray><white>{max_storages}</white>"
       - "<gray>Uw kluisnetwerk blijft bestaan</gray>"
       - "<gray>en klaar voor gebruik op meerdere servers.</gray>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Opslagruimten bekijken</gradient>"
     lore:
-      - "<gray>Eigen opslag:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximale opslagruimte:</gray> <white>{max_storages}</white>"
+      - "<gray>Eigen opslag:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximale opslagruimte:</gray><white>{max_storages}</white>"
       - "<yellow>Klik om door uw opslaglijst te bladeren.</yellow>"
   store:
     name: "<gradient:#f59e0b:#fbbf24>[$] Opslagruimte</gradient>"
     lore:
-      - "<gray>Eigen opslag:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximale opslagruimte:</gray> <white>{max_storages}</white>"
-      - "<yellow>Klik om nog een opslagruimte te kopen.</yellow>"
+      - "<gray>Eigen opslag:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximale opslagruimte:</gray><white>{max_storages}</white>"
+      - "<yellow>Klik om nog een opslagruimte aan te schaffen.</yellow>"
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Opslagruimte</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[Info] Opslagcapaciteit</gradient>"
     lore:
-      - "<gray>Eigen opslag:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximale opslagruimte:</gray> <white>{max_storages}</white>"
+      - "<gray>Eigen opslag:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximale opslagruimte:</gray><white>{max_storages}</white>"
       - "<gray>Koop extra kluisruimte tot</gray>"
       - "<gray>u bereikt de geconfigureerde limiet.</gray>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Vraag] Winkelvereisten</gradient>"
     lore:
-      - "<gray>Geconfigureerde vereisten:</gray> <white>{requirement_count}</white>"
-      - "<gray>Huidige aantal vereisten:</gray> <white>{requirements}</white>"
-      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<gray>Geconfigureerde vereisten:</gray><white>{requirement_count}</white>"
+      - "<gray>Huidige aantal vereisten:</gray><white>{requirements}</white>"
+      - "<gray>Status:</gray><white>{availability}</white>"
       - "<yellow>Klik om elk vereisteniveau in detail te bekijken.</yellow>"
     none: "<gradient:#ef4444:#f87171>[Geen]</gradient>"
     availability:
@@ -54,50 +54,50 @@ storage_store_ui:
     available:
       name: "<gradient:#10b981:#34d399>[+] Opslagruimte kopen</gradient>"
       lore:
-        - "<gray>Geconfigureerde vereisten:</gray> <white>{requirement_count}</white>"
-        - "<gray>Huidige vereisten:</gray> <white>{requirements}</white>"
-        - "<gray>Eigen opslag:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Geconfigureerde vereisten:</gray><white>{requirement_count}</white>"
+        - "<gray>Huidige vereisten:</gray><white>{requirements}</white>"
+        - "<gray>Eigen opslag:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Klik om te kopen wanneer aan alle vereisten is voldaan.</yellow>"
     pending:
       name: "<gradient:#f59e0b:#fbbf24>[...] Vereisten in behandeling</gradient>"
       lore:
-        - "<gray>Geconfigureerde vereisten:</gray> <white>{requirement_count}</white>"
-        - "<gray>Huidige vereisten:</gray> <white>{requirements}</white>"
-        - "<gray>Eigen opslag:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Geconfigureerde vereisten:</gray><white>{requirement_count}</white>"
+        - "<gray>Huidige vereisten:</gray><white>{requirements}</white>"
+        - "<gray>Eigen opslag:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Voldoe aan de overige vereisten voordat u aanschaft.</yellow>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Opslaglimiet bereikt</gradient>"
       lore:
-        - "<gray>Eigen opslag:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Eigen opslag:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<gray>Je kunt niet meer opslagruimte kopen</gray>"
         - "<gray>totdat de mondiale limiet wordt verhoogd.</gray>"
     no_requirements:
       name: "<gradient:#ef4444:#f87171>[!] Vereisten offline</gradient>"
       lore:
         - "<gray>Een of meer geconfigureerde winkelvereisten</gray>"
-        - "<gray>kan niet worden omgezet op deze server.</gray>"
+        - "<gray>kan niet worden opgelost op deze server.</gray>"
     profile_missing:
       name: "<gradient:#ef4444:#f87171>[!] Profiel ontbreekt</gradient>"
       lore:
-        - "<gray>Je RDR profiel kon niet worden geladen,</gray>"
+        - "<gray>UwRDRprofiel kon niet worden geladen,</gray>"
         - "<gray>dus aankopen worden tijdelijk geblokkeerd.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Gekocht <white>{storage_key}</white><gray>. Verbruikte vereisten:</gray> <white>{requirements}</white><gray>. Eigen opslagplaatsen:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je voldoet momenteel niet aan <white>{requirement}</white><gray>. Winkelvereisten:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>De winkelvereiste <white>{requirement}</white><gray> is momenteel niet beschikbaar of ongeldig.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Er zijn momenteel geen geconfigureerde winkelvereisten beschikbaar voor opslagaankopen.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt de opslaglimiet van <white>{max_storages}</white><gray> bereikt. Eigen opslagplaatsen:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Uw RDR-profiel kan niet worden geladen, dus opslagaankopen zijn niet beschikbaar.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>Gekocht<white>{storage_key}</white><gray>. Verbruikte vereisten:</gray><white>{requirements}</white><gray>. Eigen opslag:</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Je voldoet momenteel niet aan<white>{requirement}</white><gray>. Winkelvereisten:</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>De winkelvereiste<white>{requirement}</white><gray>is momenteel niet beschikbaar of ongeldig.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Er zijn momenteel geen geconfigureerde winkelvereisten beschikbaar voor opslagaankopen.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Je hebt de opslaglimiet van<white>{max_storages}</white><gray>bereikt. Eigen opslag:</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>UwRDRprofiel kan niet worden geladen, dus opslagaankopen zijn niet beschikbaar.</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Vraag] Aankoop {purchase_number}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Vraag] Aankoop{purchase_number}</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[Info] Vereiste Browser</gradient>"
     lore:
-      - "<gray>Aankoopniveau:</gray> <white>{purchase_number}</white>"
-      - "<gray>Ontgrendelt opslag:</gray> <white>{storage_number}</white>"
-      - "<gray>Geconfigureerde vereisten:</gray> <white>{requirement_count}</white>"
-      - "<gray>Momenteel voldaan:</gray> <white>{met_count}</white>"
+      - "<gray>Aankoopniveau:</gray><white>{purchase_number}</white>"
+      - "<gray>Ontgrendelt opslag:</gray><white>{storage_number}</white>"
+      - "<gray>Geconfigureerde vereisten:</gray><white>{requirement_count}</white>"
+      - "<gray>Momenteel voldaan:</gray><white>{met_count}</white>"
   empty:
     name: "<gradient:#10b981:#34d399>[Gratis] Geen vereisten</gradient>"
     lore:
@@ -108,46 +108,46 @@ storage_store_requirements_ui:
     partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
     filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[Vraag] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Vraag]{requirement_name}</gradient>"
     lore:
-      - "<gray>Sleutel:</gray> <white>{requirement_key}</white>"
-      - "<gray>Type:</gray> <white>{requirement_type}</white>"
-      - "<gray>Status:</gray> <white>{status}</white>"
-      - "<gray>Voortgang:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>Samenvatting:</gray> <white>{summary}</white>"
-      - "<yellow>Klik met de rechtermuisknop op item- of valutavereisten om voortgang te boeken.</yellow>"
+      - "<gray>Sleutel:</gray><white>{requirement_key}</white>"
+      - "<gray>Type:</gray><white>{requirement_type}</white>"
+      - "<gray>Status:</gray><white>{status}</white>"
+      - "<gray>Voortgang:</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Samenvatting:</gray><white>{summary}</white>"
+      - "<yellow>Rechtsklik op item- of valutavereisten om voortgang te boeken.</yellow>"
     details: "<gradient:#f59e0b:#fbbf24>▓ Gedetailleerde controles</gradient>"
     status:
       met: "<gradient:#10b981:#34d399>[Met]</gradient>"
       pending: "<gradient:#f59e0b:#fbbf24>[In behandeling]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Niet beschikbaar]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> is nu klaar.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Opgeslagen voortgang voor <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Er waren geen overeenkomende items of valuta beschikbaar voor <white>{requirement}</white><gray>.</gray>"
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> ondersteunt geen opgeslagen voortgang.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is momenteel niet beschikbaar.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Uw RDR profiel kon niet worden geladen, dus de voortgang kon niet worden opgeslagen.</gray>"
+    complete: "<gradient:#10b981:#34d399>█</gradient><gray><white>{requirement}</white><gray>is nu gereed.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient><gray>Opgeslagen voortgang voor<white>{requirement}</white><gray>.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient><gray>Er waren geen overeenkomende items of valuta beschikbaar voor<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>ondersteunt geen opgeslagen voortgang.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>is momenteel niet beschikbaar.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>UwRDRprofiel kon niet worden geladen, dus de voortgang kon niet worden opgeslagen.</gray>"
 
 storage_player_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Vault] Uw opslag</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Opslagcapaciteit</gradient>"
     lore:
-      - "<gray>Eigen opslag:</gray> <white>{owned_storages}</white>"
-      - "<gray>Maximale opslagruimte:</gray> <white>{max_storages}</white>"
-      - "<gray>Gebruik deze lijst om uw</gray> te bekijken"
+      - "<gray>Eigen opslag:</gray><white>{owned_storages}</white>"
+      - "<gray>Maximale opslagruimte:</gray><white>{max_storages}</white>"
+      - "<gray>Gebruik deze lijst om uw</gray>te bekijken"
       - "<gray>containers voor permanente opslag.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[Doos] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[Box]{storage_key}</gradient>"
     lore:
-      - "<gray>Opslagsleutel:</gray> <white>{storage_key}</white>"
-      - "<gray>Eigenaar:</gray> <white>{owner_name}</white>"
-      - "<gray>Toegang:</gray> <white>{access_level}</white>"
-      - "<gray>Sneltoets:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Gebruikte slots:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>Beschikbare slots:</gray> <white>{available_slots}</white>"
-      - "<yellow>Deze opslag is klaar voor itempersistentie.</yellow>"
+      - "<gray>Opslagsleutel:</gray><white>{storage_key}</white>"
+      - "<gray>Eigenaar:</gray><white>{owner_name}</white>"
+      - "<gray>Toegang:</gray><white>{access_level}</white>"
+      - "<gray>Sneltoets:</gray><white>{hotkey_display}</white>"
+      - "<gray>Gebruikte slots:</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Beschikbare slots:</gray><white>{available_slots}</white>"
+      - "<yellow>Deze opslag is gereed voor itempersistentie.</yellow>"
       - "<gradient:#38bdf8:#60a5fa>[>>] Klik met de linkermuisknop om deze opslag te openen.</gradient>"
       - "<gradient:#f59e0b:#fbbf24>[#] Klik met de rechtermuisknop om de opslaginstellingen te openen.</gradient>"
     access:
@@ -158,25 +158,25 @@ storage_player_ui:
   empty:
     name: "<gradient:#ef4444:#f87171>[X] Geen opslag gevonden</gradient>"
     lore:
-      - "<gray>Er zijn momenteel geen opslagplaatsen aangesloten</gray>"
-      - "<gray>naar uw RDR profiel.</gray>"
+      - "<gray>Er zijn momenteel geen opslagruimtes gekoppeld</gray>"
+      - "<gray>naar uwRDRprofiel.</gray>"
   missing:
     name: "<gradient:#ef4444:#f87171>[!] Profiel ontbreekt</gradient>"
     lore:
-      - "<gray>Je RDR spelersprofiel kan niet</gray>"
+      - "<gray>JeRDRspelersprofiel kan niet</gray>"
       - "<gray>worden geladen vanuit permanente opslag.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} Instellingen</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}Instellingen</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Opslaginstellingen</gradient>"
     lore:
-      - "<gray>Opslagsleutel:</gray> <white>{storage_key}</white>"
-      - "<gray>Eigenaar:</gray> <white>{owner_name}</white>"
-      - "<gray>Uw toegang:</gray> <white>{access_level}</white>"
-      - "<gray>Sneltoets:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Medewerkers:</gray> <white>{associate_count}</white>"
-      - "<gray>Vertrouwd:</gray> <white>{trusted_count}</white>"
+      - "<gray>Opslagsleutel:</gray><white>{storage_key}</white>"
+      - "<gray>Eigenaar:</gray><white>{owner_name}</white>"
+      - "<gray>Uw toegang:</gray><white>{access_level}</white>"
+      - "<gray>Sneltoets:</gray><white>{hotkey_display}</white>"
+      - "<gray>Medewerkers:</gray><white>{associate_count}</white>"
+      - "<gray>Vertrouwd:</gray><white>{trusted_count}</white>"
     access:
       owner: "<gradient:#10b981:#34d399>[Eigenaar]</gradient>"
       public: "<gradient:#6b7280:#9ca3af>[Openbaar]</gradient>"
@@ -185,20 +185,20 @@ storage_settings_ui:
   trusted:
     name: "<gradient:#10b981:#34d399>[Groep] Vertrouwde toegang</gradient>"
     lore:
-      - "<gray>Medewerkers:</gray> <white>{associate_count}</white>"
-      - "<gray>Vertrouwd:</gray> <white>{trusted_count}</white>"
+      - "<gray>Medewerkers:</gray><white>{associate_count}</white>"
+      - "<gray>Vertrouwd:</gray><white>{trusted_count}</white>"
       - "<yellow>Klik om te beheren wie kan storten</yellow>"
       - "<yellow>of volledige toegang tot deze opslag.</yellow>"
   hotkey:
-    name: "<gradient:#f59e0b:#fbbf24>[#] Sneltoets voor opslag</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[#] Opslagsneltoets</gradient>"
     lore:
-      - "<gray>Huidige sneltoets:</gray> <white>{hotkey_display}</white>"
+      - "<gray>Huidige sneltoets:</gray><white>{hotkey_display}</white>"
       - "<yellow>Klik om snelle toegang te binden voor</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
     name: "<gradient:#ef4444:#f87171>[X] Vertrouwd Vergrendeld</gradient>"
     lore:
-      - "<gray>Alleen de eigenaar van de opslag kan beheren</gray>"
+      - "<gray>Alleen de eigenaar van de opslag kan</gray>beheren"
       - "<gray>vertrouwde toegang voor deze opslag.</gray>"
   hotkey_locked:
     name: "<gradient:#ef4444:#f87171>[X] Sneltoets vergrendeld</gradient>"
@@ -209,65 +209,65 @@ storage_settings_ui:
     name: "<gradient:#ef4444:#f87171>[Gratis] Instellingen vergrendeld</gradient>"
     lore:
       - "<gray>Wijzigingen in opslaginstellingen zijn uitgeschakeld</gray>"
-      - "<gray>in <white>RDR Free</white><gray>.</gray>"
+      - "<gray>in<white>RDRGratis</white><gray>.</gray>"
       - "<yellow>Upgrade naar Premium om instellingen te bewerken.</yellow>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] Opslag ontbreekt</gradient>"
     lore:
-      - "<gray>Deze opslag kon niet worden geladen</gray>"
+      - "<gray>Deze opslag kan niet worden geladen</gray>"
       - "<gray>voor de instellingenweergave.</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Groep] {storage_key} Toegang</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Groep]{storage_key}Toegang</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Gedeelde toegang</gradient>"
     lore:
-      - "<gray>Opslagsleutel:</gray> <white>{storage_key}</white>"
-      - "<gray>Eigenaar:</gray> <white>{owner_name}</white>"
-      - "<gray>Medewerkers:</gray> <white>{associate_count}</white>"
-      - "<gray>Vertrouwd:</gray> <white>{trusted_count}</white>"
+      - "<gray>Opslagsleutel:</gray><white>{storage_key}</white>"
+      - "<gray>Eigenaar:</gray><white>{owner_name}</white>"
+      - "<gray>Medewerkers:</gray><white>{associate_count}</white>"
+      - "<gray>Vertrouwd:</gray><white>{trusted_count}</white>"
       - "<yellow>Klik op een speler om toegang te krijgen tot de cyclus.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[Openbaar] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[Openbaar]{player}</gradient>"
       lore:
-        - "<gray>Status:</gray> <white>Openbaar</white>"
-        - "<gray>Geen aanbetaling of toegang intrekken.</gray>"
+        - "<gray>Status:</gray><white>Openbaar</white>"
+        - "<gray>Geen storting of toegang intrekken.</gray>"
         - "<yellow>Klik om te promoveren tot Associate.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[Associate] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[Associate]{player}</gradient>"
       lore:
-        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Status:</gray><white>Associate</white>"
         - "<gray>Kan storten, maar kan niet opnemen.</gray>"
         - "<yellow>Klik om te promoveren naar Trusted.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[Vertrouwd] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[Vertrouwd]{player}</gradient>"
       lore:
-        - "<gray>Status:</gray> <white>Vertrouwd</white>"
+        - "<gray>Status:</gray><white>Vertrouwd</white>"
         - "<gray>Kan items storten en opnemen.</gray>"
         - "<yellow>Klik om te resetten naar Openbaar.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[Openbaar]</gradient> <gray>{player} heeft geen opslagtoegang meer.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient> <gray>{player} kan nu geld in deze opslag storten.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[Vertrouwd]</gradient> <gray>{player} kan nu geld storten en opnemen uit deze opslag.</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alleen de eigenaar van de opslag kan vertrouwde toegang wijzigen.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[Openbaar]</gradient><gray>{player}heeft geen opslagtoegang meer.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient><gray>{player}kan nu geld in deze opslag storten.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Vertrouwd]</gradient><gray>{player}kan nu storten en opnemen uit deze opslag.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Alleen de eigenaar van de opslag kan vertrouwde toegang wijzigen.</gray>"
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Alleen eigenaar</gradient>"
       lore:
-        - "<gray>Je kunt deze opslagruimte bekijken, maar alleen</gray>"
+        - "<gray>Je kunt deze opslag bekijken, maar alleen</gray>"
         - "<gray>de eigenaar kan vertrouwde toegang wijzigen.</gray>"
     storage_missing:
       name: "<gradient:#ef4444:#f87171>[X] Opslag ontbreekt</gradient>"
       lore:
-        - "<gray>Deze opslag kon niet worden geladen</gray>"
+        - "<gray>Deze opslag kan niet worden geladen</gray>"
         - "<gray>voor vertrouwd toegangsbeheer.</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Deze opslag kan niet worden geladen voor vertrouwd toegangsbeheer.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Deze opslag kan niet worden geladen voor vertrouwd toegangsbeheer.</gray>"
     edition_locked:
       name: "<gradient:#ef4444:#f87171>[Gratis] Instellingen vergrendeld</gradient>"
       lore:
         - "<gray>Wijzigingen in vertrouwde toegang zijn uitgeschakeld</gray>"
-        - "<gray>in <white>RDR Free</white><gray>.</gray>"
+        - "<gray>in<white>RDRGratis</white><gray>.</gray>"
     empty:
       name: "<gradient:#ef4444:#f87171>[X] Geen spelers gevonden</gradient>"
       lore:
@@ -275,48 +275,48 @@ storage_trusted_ui:
         - "<gray>om vertrouwde toegang toe te wijzen.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[Doos] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Box]{storage_key}</gradient>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] Opslag ontbreekt</gradient>"
     lore:
-      - "<gray>Deze opslaginvoer kon niet worden gevonden</gray>"
-      - "<gray>voor uw bestaande RDR profiel.</gray>"
+      - "<gray>Deze opslagvermelding kon niet worden gevonden</gray>"
+      - "<gray>voor uw bestaandeRDRprofiel.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] Binden {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] Binden{storage_key}</gradient>"
   input:
     lore:
       - "<gray>Voer een getal in tussen</gray>"
-      - "<white>1</white><gray> en </gray><white>{max_hotkeys}</white><gray> voor snelle toegang.</gray>"
+      - "<white>1</white><gray>en</gray><white>{max_hotkeys}</white><gray>voor snelle toegang.</gray>"
       - "<yellow>Klik op het resultaatvak om de sneltoets op te slaan.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gebruik een nummer tussen <white>1</white> en <white>{max_hotkeys}</white><gray>. Invoer:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Gebruik een nummer tussen<white>1</white>en<white>{max_hotkeys}</white><gray>. Invoer:</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} is al geopend in een andere sessie.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kan momenteel niet worden geopend.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt geen toegang tot <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> staat wereldwijd op de zwarte lijst van RDR opslag.</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Je bewerkingssessie voor {storage_key} is verlopen of ergens anders naartoe verplaatst. Wijzigingen zijn niet opgeslagen.</gray>"
-    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} kan niet worden opgeslagen. Controleer de console voor details.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} is nu gebonden aan <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Er is geen opslag gebonden aan <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray> Sneltoetsen moeten tussen <white>1</white> en <white>{max_hotkeys}</white><gray>.</gray> liggen"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bewerkingen van opslaginstellingen zijn uitgeschakeld in <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>De zijbalk <white>/rr scoreboard</white><gray> is ingeschakeld.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>De zijbalk <white>/rr scoreboard</white><gray> is uitgeschakeld.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gebruik:</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}is al geopend in een andere sessie.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kan momenteel niet worden geopend.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Je hebt geen toegang tot<white>{storage_key}</white><gray>.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>staat wereldwijd op de zwarte lijst vanRDRopslag.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Je bewerkingssessie voor{storage_key}is verlopen of verplaatst. Wijzigingen zijn niet opgeslagen.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kan niet worden opgeslagen. Controleer de console voor details.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}is nu gebonden aan<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Er is geen opslag gebonden aan<white>/rr{hotkey}</white><gray>.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Sneltoetsen moeten tussen<white>1</white>en<white>{max_hotkeys}</white><gray>.</gray>liggen"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Bewerkingen van opslaginstellingen zijn uitgeschakeld in<white>RDRGratis</white><gray>.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray>Het<white>/rrscorebord</white><gray>zijbalk is ingeschakeld.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray>Het<white>/rrscorebord</white><gray>zijbalk uitgeschakeld.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Gebruik:</gray><white>/rrscorebord</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[Pagina] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[Pagina]%current_page%</gradient>"
   lore:
-    - "<gray>Huidige pagina:</gray> <white>%current_page%</white>"
-    - "<gray>Totaal aantal pagina's:</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[Pagina] %page%</gradient>"
+    - "<gray>Huidige pagina:</gray><white>%current_page%</white>"
+    - "<gray>Totaal aantal pagina's:</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[Pagina]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] Retour</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"

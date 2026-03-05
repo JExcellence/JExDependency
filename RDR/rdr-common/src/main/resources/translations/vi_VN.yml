@@ -1,107 +1,107 @@
 prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
-  title: "<gradient:#f59e0b:#fbbf24>[RDR] Thống kê lưu trữ</gradient>"
-  items: "<gray>Tổng số mặt hàng:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>Khe cắm có sẵn:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>Kho thu được:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] Số liệu thống kê lưu trữ</gradient>"
+  items: "<gray>Tổng số mục:</gray> <white>{total_items}</white>"
+  available_slots: "<gray>Các vị trí có sẵn:</gray> <white>{available_slots}</white>"
+  storages_obtained: "<gray>Bộ nhớ thu được:</gray> <white>{owned_storages}</white>"
+  max_storages: "<gray>Bộ nhớ tối đa:</gray> <white>{max_storages}</white>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Trung tâm lưu trữ</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Vault] Tóm tắt bộ nhớ</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] Tóm tắt lưu trữ</gradient>"
     lore:
-      - "<gray>Kho sở hữu:</gray> <white>{owned_storages}</white>"
+      - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}</white>"
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<gray>Mạng vault của bạn vẫn tồn tại</gray>"
       - "<gray>và sẵn sàng để sử dụng trên nhiều máy chủ.</gray>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Xem kho lưu trữ</gradient>"
     lore:
-      - "<gray>Kho sở hữu:</gray> <white>{owned_storages}</white>"
+      - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}</white>"
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
-      - "<yellow>Bấm để duyệt danh sách lưu trữ của bạn.</yellow>"
+      - "<yellow>Nhấp để duyệt danh sách lưu trữ của bạn.</yellow>"
   store:
-    name: "<gradient:#f59e0b:#fbbf24>[$] Cửa hàng lưu trữ</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[$] Kho lưu trữ</gradient>"
     lore:
-      - "<gray>Kho sở hữu:</gray> <white>{owned_storages}</white>"
+      - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}</white>"
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<yellow>Nhấp để mua bộ nhớ khác.</yellow>"
 
 storage_store_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[$] Cửa hàng lưu trữ</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[$] Kho lưu trữ</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[Thông tin] Dung lượng lưu trữ</gradient>"
     lore:
-      - "<gray>Kho sở hữu:</gray> <white>{owned_storages}</white>"
+      - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}</white>"
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
-      - "<gray>Mua thêm không gian kho tiền cho đến khi</gray>"
+      - "<gray>Mua thêm dung lượng vault cho đến</gray>"
       - "<gray>bạn đạt đến giới hạn được định cấu hình.</gray>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Yêu cầu] Yêu cầu về cửa hàng</gradient>"
     lore:
-      - "<gray>Yêu cầu cấu hình:</gray> <white>{requirement_count}</white>"
+      - "<gray>Yêu cầu được cấu hình:</gray> <white>{requirement_count}</white>"
       - "<gray>Số lượng yêu cầu hiện tại:</gray> <white>{requirements}</white>"
       - "<gray>Trạng thái:</gray> <white>{availability}</white>"
       - "<yellow>Nhấp để kiểm tra chi tiết từng cấp yêu cầu.</yellow>"
     none: "<gradient:#ef4444:#f87171>[Không có]</gradient>"
     availability:
       available: "<gradient:#10b981:#34d399>[Sẵn sàng]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[Chưa giải quyết]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Đang chờ xử lý]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[Ngoại tuyến]</gradient>"
   purchase:
     available:
       name: "<gradient:#10b981:#34d399>[+] Mua dung lượng</gradient>"
       lore:
-        - "<gray>Yêu cầu cấu hình:</gray> <white>{requirement_count}</white>"
+        - "<gray>Yêu cầu được cấu hình:</gray> <white>{requirement_count}</white>"
         - "<gray>Yêu cầu hiện tại:</gray> <white>{requirements}</white>"
-        - "<gray>Kho sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>Bấm để mua khi mọi yêu cầu được đáp ứng.</yellow>"
+        - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>Nhấp để mua khi mọi yêu cầu được đáp ứng.</yellow>"
     pending:
       name: "<gradient:#f59e0b:#fbbf24>[...] Yêu cầu đang chờ xử lý</gradient>"
       lore:
-        - "<gray>Yêu cầu cấu hình:</gray> <white>{requirement_count}</white>"
+        - "<gray>Yêu cầu được cấu hình:</gray> <white>{requirement_count}</white>"
         - "<gray>Yêu cầu hiện tại:</gray> <white>{requirements}</white>"
-        - "<gray>Kho sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Đáp ứng các yêu cầu còn lại trước khi mua.</yellow>"
     limit_reached:
-      name: "<gradient:#ef4444:#f87171>[X] Đã đạt đến giới hạn dung lượng</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Đã đạt đến giới hạn bộ nhớ</gradient>"
       lore:
-        - "<gray>Kho sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<gray>Bạn không thể mua thêm dung lượng</gray>"
+        - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
+        - "<gray>Bạn không thể mua thêm kho</gray>"
         - "<gray>cho đến khi giới hạn toàn cầu được nâng lên.</gray>"
     no_requirements:
       name: "<gradient:#ef4444:#f87171>[!] Yêu cầu ngoại tuyến</gradient>"
       lore:
-        - "<gray>Một hoặc nhiều yêu cầu về cửa hàng đã được định cấu hình</gray>"
+        - "<gray>Một hoặc nhiều yêu cầu về cửa hàng được định cấu hình</gray>"
         - "<gray>không thể được giải quyết trên máy chủ này.</gray>"
     profile_missing:
       name: "<gradient:#ef4444:#f87171>[!] Thiếu hồ sơ</gradient>"
       lore:
-        - "<gray>Của bạn RDR không thể tải hồ sơ,</gray>"
+        - "<gray>Không thể tải hồ sơ RDR của bạn,</gray>"
         - "<gray>vì vậy việc mua hàng tạm thời bị chặn.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã mua <white>{storage_key}</white><gray>. Yêu cầu tiêu thụ:</gray> <white>{requirements}</white><gray>. Kho sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hiện tại bạn không gặp <white>{requirement}</white><gray>. Yêu cầu của cửa hàng:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Yêu cầu cửa hàng <white>{requirement}</white><gray> hiện không có sẵn hoặc không hợp lệ.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hiện không có yêu cầu nào về cửa hàng đã được định cấu hình để mua dung lượng lưu trữ.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn đã đạt đến giới hạn lưu trữ là <white>{max_storages}</white><gray>. Kho sở hữu:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Của bạn RDR không thể tải hồ sơ nên không thể mua dung lượng lưu trữ.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã mua <white>{storage_key}</white><gray>. Yêu cầu tiêu thụ:</gray> <white>{requirements}</white><gray>. Kho lưu trữ thuộc sở hữu:</gray> <white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn hiện không gặp <white>{requirement}</white><gray>. Yêu cầu của cửa hàng:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Yêu cầu của cửa hàng <white>{requirement}</white><gray> hiện không có sẵn hoặc không hợp lệ.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hiện tại không có yêu cầu về cửa hàng đã được định cấu hình để mua dung lượng lưu trữ.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn đã đạt đến giới hạn lưu trữ của <white>{max_storages}</white><gray>. Kho lưu trữ thuộc sở hữu:</gray> <white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể tải hồ sơ RDR của bạn nên không thể mua dung lượng lưu trữ.</gray>"
 
 storage_store_requirements_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Yêu cầu] Mua hàng {purchase_number}</gradient>"
   summary:
-    name: "<gradient:#10b981:#34d399>[Thông tin] Trình duyệt yêu cầu</gradient>"
+    name: "<gradient:#10b981:#34d399>[Thông tin] Yêu cầu trình duyệt</gradient>"
     lore:
       - "<gray>Cấp mua hàng:</gray> <white>{purchase_number}</white>"
-      - "<gray>Mở khóa lưu trữ:</gray> <white>{storage_number}</white>"
-      - "<gray>Yêu cầu cấu hình:</gray> <white>{requirement_count}</white>"
+      - "<gray>Mở khóa bộ nhớ:</gray> <white>{storage_number}</white>"
+      - "<gray>Yêu cầu được cấu hình:</gray> <white>{requirement_count}</white>"
       - "<gray>Hiện đã đáp ứng:</gray> <white>{met_count}</white>"
   empty:
-    name: "<gradient:#10b981:#34d399>[Miễn phí] Không yêu cầu</gradient>"
+    name: "<gradient:#10b981:#34d399>[Miễn phí] Không có yêu cầu</gradient>"
     lore:
-      - "<gray>Cấp mua hàng này không có yêu cầu cấu hình.</gray>"
+      - "<gray>Bậc mua hàng này không có yêu cầu cấu hình.</gray>"
       - "<yellow>Bạn có thể mua bộ nhớ này mà không cần kiểm tra thêm.</yellow>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
@@ -110,60 +110,60 @@ storage_store_requirements_ui:
   entry:
     name: "<gradient:#f59e0b:#fbbf24>[Yêu cầu] {requirement_name}</gradient>"
     lore:
-      - "<gray>Chìa khóa:</gray> <white>{requirement_key}</white>"
-      - "<gray>Kiểu:</gray> <white>{requirement_type}</white>"
+      - "<gray>Khóa:</gray> <white>{requirement_key}</white>"
+      - "<gray>Loại:</gray> <white>{requirement_type}</white>"
       - "<gray>Trạng thái:</gray> <white>{status}</white>"
-      - "<gray>Tiến triển:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>Bản tóm tắt:</gray> <white>{summary}</white>"
+      - "<gray>Tiến trình:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Tóm tắt:</gray> <white>{summary}</white>"
       - "<yellow>Nhấp chuột phải vào mục hoặc yêu cầu tiền tệ để tiến hành ngân hàng.</yellow>"
     details: "<gradient:#f59e0b:#fbbf24>▓ Kiểm tra chi tiết</gradient>"
     status:
       met: "<gradient:#10b981:#34d399>[Đã gặp]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[Chưa giải quyết]</gradient>"
-      unavailable: "<gradient:#ef4444:#f87171>[Không có sẵn]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Đang chờ xử lý]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Không khả dụng]</gradient>"
   feedback:
     complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> bây giờ đã sẵn sàng.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Tiến trình được lưu trữ cho <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Không có mặt hàng hoặc đơn vị tiền tệ phù hợp nào có sẵn cho <white>{requirement}</white><gray>.</gray>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Tiến trình được lưu trữ cho <white>{requirement}</white><gray>?.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Không có mặt hàng hoặc đơn vị tiền tệ phù hợp nào có sẵn cho <white>{requirement}</white><gray>?.</gray>"
     unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> không hỗ trợ tiến độ ngân hàng.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> hiện không có sẵn.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Của bạn RDR không thể tải hồ sơ nên không thể lưu tiến trình.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể tải hồ sơ RDR của bạn nên không thể lưu tiến trình.</gray>"
 
 storage_player_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Vault] Kho lưu trữ của bạn</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Dung lượng lưu trữ</gradient>"
     lore:
-      - "<gray>Kho sở hữu:</gray> <white>{owned_storages}</white>"
+      - "<gray>Kho lưu trữ sở hữu:</gray> <white>{owned_storages}</white>"
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<gray>Sử dụng danh sách này để xem xét</gray>"
-      - "<gray>container lưu trữ bền vững.</gray>"
+      - "<gray>hộp lưu trữ liên tục.</gray>"
   entry:
     name: "<gradient:#10b981:#34d399>[Hộp] {storage_key}</gradient>"
     lore:
       - "<gray>Khóa lưu trữ:</gray> <white>{storage_key}</white>"
-      - "<gray>Người sở hữu:</gray> <white>{owner_name}</white>"
+      - "<gray>Chủ sở hữu:</gray> <white>{owner_name}</white>"
       - "<gray>Truy cập:</gray> <white>{access_level}</white>"
       - "<gray>Phím nóng:</gray> <white>{hotkey_display}</white>"
-      - "<gray>Khe cắm đã qua sử dụng:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>Khe cắm có sẵn:</gray> <white>{available_slots}</white>"
-      - "<yellow>Bộ lưu trữ này đã sẵn sàng cho sự tồn tại của vật phẩm.</yellow>"
-      - "<gradient:#38bdf8:#60a5fa>[>>] Nhấp chuột trái để mở kho lưu trữ này.</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>[#] Nhấp chuột phải để mở cài đặt lưu trữ.</gradient>"
+      - "<gray>Các khe đã sử dụng:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Các vị trí có sẵn:</gray> <white>{available_slots}</white>"
+      - "<yellow>Bộ lưu trữ này đã sẵn sàng để lưu trữ vật phẩm.</yellow>"
+      - "<gradient:#38bdf8:#60a5fa>[>>] Nhấp chuột trái để mở bộ lưu trữ này.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>[#] Nhấp chuột phải để mở cài đặt bộ nhớ.</gradient>"
     access:
-      owner: "<gradient:#10b981:#34d399>[Người sở hữu]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Công cộng]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Kết hợp]</gradient>"
+      owner: "<gradient:#10b981:#34d399>[Chủ sở hữu]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Công khai]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Liên kết]</gradient>"
       trusted: "<gradient:#10b981:#34d399>[Đáng tin cậy]</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>[X] Không tìm thấy kho lưu trữ nào</gradient>"
     lore:
       - "<gray>Hiện tại không có kho lưu trữ nào được đính kèm</gray>"
-      - "<gray>đến của bạn RDR hồ sơ.</gray>"
+      - "<gray>vào hồ sơ RDR của bạn.</gray>"
   missing:
     name: "<gradient:#ef4444:#f87171>[!] Thiếu hồ sơ</gradient>"
     lore:
-      - "<gray>Của bạn RDR hồ sơ người chơi không thể</gray>"
+      - "<gray>Không thể tải hồ sơ người chơi RDR của bạn</gray>"
       - "<gray>được tải từ bộ lưu trữ liên tục.</gray>"
 
 storage_settings_ui:
@@ -172,44 +172,44 @@ storage_settings_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Cài đặt bộ nhớ</gradient>"
     lore:
       - "<gray>Khóa lưu trữ:</gray> <white>{storage_key}</white>"
-      - "<gray>Người sở hữu:</gray> <white>{owner_name}</white>"
+      - "<gray>Chủ sở hữu:</gray> <white>{owner_name}</white>"
       - "<gray>Quyền truy cập của bạn:</gray> <white>{access_level}</white>"
       - "<gray>Phím nóng:</gray> <white>{hotkey_display}</white>"
       - "<gray>Cộng sự:</gray> <white>{associate_count}</white>"
-      - "<gray>đáng tin cậy:</gray> <white>{trusted_count}</white>"
+      - "<gray>Đáng tin cậy:</gray> <white>{trusted_count}</white>"
     access:
-      owner: "<gradient:#10b981:#34d399>[Người sở hữu]</gradient>"
-      public: "<gradient:#6b7280:#9ca3af>[Công cộng]</gradient>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Kết hợp]</gradient>"
+      owner: "<gradient:#10b981:#34d399>[Chủ sở hữu]</gradient>"
+      public: "<gradient:#6b7280:#9ca3af>[Công khai]</gradient>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Liên kết]</gradient>"
       trusted: "<gradient:#10b981:#34d399>[Đáng tin cậy]</gradient>"
   trusted:
     name: "<gradient:#10b981:#34d399>[Nhóm] Truy cập đáng tin cậy</gradient>"
     lore:
       - "<gray>Cộng sự:</gray> <white>{associate_count}</white>"
-      - "<gray>đáng tin cậy:</gray> <white>{trusted_count}</white>"
+      - "<gray>Đáng tin cậy:</gray> <white>{trusted_count}</white>"
       - "<yellow>Nhấp để quản lý ai có thể gửi tiền</yellow>"
       - "<yellow>hoặc truy cập đầy đủ vào bộ lưu trữ này.</yellow>"
   hotkey:
     name: "<gradient:#f59e0b:#fbbf24>[#] Phím nóng lưu trữ</gradient>"
     lore:
       - "<gray>Phím nóng hiện tại:</gray> <white>{hotkey_display}</white>"
-      - "<yellow>Nhấn vào đây để liên kết truy cập nhanh cho</yellow>"
+      - "<yellow>Nhấp để liên kết truy cập nhanh cho</yellow>"
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
-    name: "<gradient:#ef4444:#f87171>[X] Đã khóa đáng tin cậy</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Đã khóa tin cậy</gradient>"
     lore:
       - "<gray>Chỉ chủ sở hữu bộ nhớ mới có thể quản lý</gray>"
       - "<gray>quyền truy cập đáng tin cậy cho bộ lưu trữ này.</gray>"
   hotkey_locked:
-    name: "<gradient:#ef4444:#f87171>[X] Đã khóa phím nóng</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] Phím nóng đã bị khóa</gradient>"
     lore:
       - "<gray>Chỉ chủ sở hữu bộ nhớ mới có thể thay đổi</gray>"
       - "<gray>phím nóng lưu trữ.</gray>"
   edition_locked:
-    name: "<gradient:#ef4444:#f87171>[Miễn phí] Đã khóa cài đặt</gradient>"
+    name: "<gradient:#ef4444:#f87171>[Miễn phí] Cài đặt đã bị khóa</gradient>"
     lore:
       - "<gray>Thay đổi cài đặt bộ nhớ bị tắt</gray>"
-      - "<gray>TRONG <white>RDR Free</white><gray>.</gray>"
+      - "<gray>trong <white>RDR Miễn phí</white><gray>?.</gray>"
       - "<yellow>Nâng cấp lên Premium để chỉnh sửa cài đặt.</yellow>"
   missing:
     name: "<gradient:#ef4444:#f87171>[X] Thiếu bộ nhớ</gradient>"
@@ -223,37 +223,37 @@ storage_trusted_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Quyền truy cập được chia sẻ</gradient>"
     lore:
       - "<gray>Khóa lưu trữ:</gray> <white>{storage_key}</white>"
-      - "<gray>Người sở hữu:</gray> <white>{owner_name}</white>"
+      - "<gray>Chủ sở hữu:</gray> <white>{owner_name}</white>"
       - "<gray>Cộng sự:</gray> <white>{associate_count}</white>"
-      - "<gray>đáng tin cậy:</gray> <white>{trusted_count}</white>"
-      - "<yellow>Nhấp vào một người chơi để truy cập theo chu kỳ.</yellow>"
+      - "<gray>Đáng tin cậy:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Nhấp vào người chơi để truy cập theo chu kỳ.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[Công cộng] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[Công khai] {player}</gradient>"
       lore:
-        - "<gray>Trạng thái:</gray> <white>Công cộng</white>"
+        - "<gray>Trạng thái:</gray> <white>Công khai</white>"
         - "<gray>Không có quyền gửi tiền hoặc rút tiền.</gray>"
-        - "<yellow>Nhấp để thăng cấp lên Cộng tác viên.</yellow>"
+        - "<yellow>Nhấp để thăng cấp lên Liên kết.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[Kết hợp] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[Liên kết] {player}</gradient>"
       lore:
-        - "<gray>Trạng thái:</gray> <white>Kết hợp</white>"
-        - "<gray>Có thể gửi tiền nhưng không thể rút tiền.</gray>"
-        - "<yellow>Nhấp để quảng bá lên Tin cậy.</yellow>"
+        - "<gray>Trạng thái:</gray> <white>Liên kết</white>"
+        - "<gray>Có thể gửi nhưng không thể rút.</gray>"
+        - "<yellow>Nhấp để thăng hạng lên Đáng tin cậy.</yellow>"
     trusted:
       name: "<gradient:#10b981:#34d399>[Đáng tin cậy] {player}</gradient>"
       lore:
-        - "<gray>Trạng thái:</gray> <white>đáng tin cậy</white>"
-        - "<gray>Có thể gửi và rút các mặt hàng.</gray>"
+        - "<gray>Trạng thái:</gray> <white>Đáng tin cậy</white>"
+        - "<gray>Có thể gửi và rút vật phẩm.</gray>"
         - "<yellow>Nhấp để đặt lại về Công khai.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[Công cộng]</gradient> <gray>{player} không còn quyền truy cập vào bộ nhớ.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[Kết hợp]</gradient> <gray>{player} bây giờ có thể gửi vào kho lưu trữ này.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[Đáng tin cậy]</gradient> <gray>{player} bây giờ có thể gửi và rút tiền từ kho lưu trữ này.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[Công khai]</gradient> <gray>{player} không còn quyền truy cập bộ nhớ nữa.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Liên kết]</gradient> <gray>{player} bây giờ có thể gửi vào bộ lưu trữ này.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[Đáng tin cậy]</gradient> <gray>{player} bây giờ có thể gửi và rút tiền từ bộ lưu trữ này.</gray>"
     not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Chỉ chủ sở hữu bộ nhớ mới có thể thay đổi quyền truy cập đáng tin cậy.</gray>"
     locked:
-      name: "<gradient:#ef4444:#f87171>[X] Chỉ dành cho chủ sở hữu</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Chỉ chủ sở hữu</gradient>"
       lore:
         - "<gray>Bạn có thể xem bộ nhớ này, nhưng chỉ</gray>"
         - "<gray>chủ sở hữu có thể thay đổi quyền truy cập đáng tin cậy.</gray>"
@@ -261,17 +261,17 @@ storage_trusted_ui:
       name: "<gradient:#ef4444:#f87171>[X] Thiếu bộ nhớ</gradient>"
       lore:
         - "<gray>Không thể tải bộ nhớ này</gray>"
-        - "<gray>để quản lý truy cập đáng tin cậy.</gray>"
+        - "<gray>để quản lý quyền truy cập đáng tin cậy.</gray>"
       message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể tải bộ lưu trữ này để quản lý quyền truy cập đáng tin cậy.</gray>"
     edition_locked:
-      name: "<gradient:#ef4444:#f87171>[Miễn phí] Đã khóa cài đặt</gradient>"
+      name: "<gradient:#ef4444:#f87171>[Miễn phí] Cài đặt đã bị khóa</gradient>"
       lore:
-        - "<gray>Các thay đổi về quyền truy cập đáng tin cậy đã bị vô hiệu hóa</gray>"
-        - "<gray>TRONG <white>RDR Free</white><gray>.</gray>"
+        - "<gray>Các thay đổi về quyền truy cập đáng tin cậy bị vô hiệu hóa</gray>"
+        - "<gray>trong <white>RDR Miễn phí</white><gray>?.</gray>"
     empty:
       name: "<gradient:#ef4444:#f87171>[X] Không tìm thấy người chơi</gradient>"
       lore:
-        - "<gray>Không có người chơi được biết đến khác có sẵn</gray>"
+        - "<gray>Không có người chơi nào khác được biết đến</gray>"
         - "<gray>để chỉ định quyền truy cập đáng tin cậy.</gray>"
 
 storage_view:
@@ -280,33 +280,33 @@ storage_view:
     name: "<gradient:#ef4444:#f87171>[X] Thiếu bộ nhớ</gradient>"
     lore:
       - "<gray>Không thể tìm thấy mục lưu trữ này</gray>"
-      - "<gray>vì sự kiên trì của bạn RDR hồ sơ.</gray>"
+      - "<gray>cho hồ sơ RDR đã lưu của bạn.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] Ràng buộc {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] Liên kết {storage_key}</gradient>"
   input:
     lore:
       - "<gray>Nhập một số giữa</gray>"
-      - "<white>1</white><gray> Và </gray><white>{max_hotkeys}</white><gray> để truy cập nhanh.</gray>"
-      - "<yellow>Bấm vào ô kết quả để lưu phím nóng.</yellow>"
+      - "<white>1</white><gray> và </gray><white>{max_hotkeys}</white><gray> để truy cập nhanh.</gray>"
+      - "<yellow>Nhấp vào ô kết quả để lưu phím nóng.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sử dụng một số giữa <white>1</white> Và <white>{max_hotkeys}</white><gray>. đầu vào:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sử dụng một số giữa <white>1</white> và <white>{max_hotkeys}</white><gray>. Đầu vào:</gray> <white>{input}</white>"
 
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} đã được mở trong một phiên khác.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} không thể mở được ngay bây giờ.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền truy cập vào <white>{storage_key}</white><gray>.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> bị đưa vào danh sách đen toàn cầu từ RDR kho.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền truy cập vào <white>{storage_key}</white><gray>?.</gray>"
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> bị đưa vào danh sách đen toàn cục của kho lưu trữ RDR.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Phiên chỉnh sửa của bạn cho {storage_key} hết hạn hoặc chuyển đi nơi khác. Các thay đổi chưa được lưu.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} không thể cứu được. Kiểm tra bảng điều khiển để biết chi tiết.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} bây giờ bị ràng buộc với <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không có bộ nhớ nào bị ràng buộc <white>/rr {hotkey}</white><gray>.</gray>"
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Phím nóng phải ở giữa <white>1</white> Và <white>{max_hotkeys}</white><gray>.</gray>"
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Chỉnh sửa cài đặt bộ nhớ bị tắt trong <white>RDR Free</white><gray>.</gray>"
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã bật <white>/rr scoreboard</white><gray> thanh bên.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Vô hiệu hóa <white>/rr scoreboard</white><gray> thanh bên.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Cách sử dụng:</gray> <white>/rr scoreboard</white>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key} bây giờ được liên kết với <white>/rr {hotkey}</white><gray>?.</gray>"
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không có bộ nhớ nào bị ràng buộc với <white>/rr {hotkey}</white><gray>?.</gray>"
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Phím nóng phải nằm trong khoảng <white>1</white> và <white>{max_hotkeys}</white><gray>?.</gray>"
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Việc chỉnh sửa cài đặt bộ nhớ bị tắt trong <white>RDR Miễn phí</white><gray>?.</gray>"
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã bật <white>/rr bảng điểm</white><gray> thanh bên.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Đã tắt <white>/rr bảng điểm</white><gray> thanh bên.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Cách sử dụng:</gray> <white>/rr bảng điểm</white>"
 
 page:
   name: "<gradient:#6b7280:#9ca3af>[Trang] %current_page%</gradient>"
@@ -317,6 +317,6 @@ page:
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] Trở lại</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bấm để quay lại</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nhấp để quay lại</gradient>"

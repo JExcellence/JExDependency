@@ -1,153 +1,153 @@
 prefix: "<gradient:#38bdf8:#60a5fa>[RDR]</gradient> "
 
 scoreboard_sidebar:
-  title: "<gradient:#f59e0b:#fbbf24>[RDR] 저장소 통계</gradient>"
-  items: "<gray>총 항목:</gray> <white>{total_items}</white>"
-  available_slots: "<gray>사용 가능한 슬롯:</gray> <white>{available_slots}</white>"
-  storages_obtained: "<gray>얻은 저장용량:</gray> <white>{owned_storages}</white>"
-  max_storages: "<gray>최대 저장용량:</gray> <white>{max_storages}</white>"
+  title: "<gradient:#f59e0b:#fbbf24>[RDR] 스토리지 통계</gradient>"
+  items: "<gray>총 항목:</gray><white>{total_items}</white>"
+  available_slots: "<gray>사용 가능한 슬롯:</gray><white>{available_slots}</white>"
+  storages_obtained: "<gray>획득한 스토리지:</gray><white>{owned_storages}</white>"
+  max_storages: "<gray>최대 저장 용량:</gray><white>{max_storages}</white>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] 스토리지 허브</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Vault] 저장소 요약</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Vault] 스토리지 요약</gradient>"
     lore:
-      - "<gray>소유 저장소:</gray> <white>{owned_storages}</white>"
-      - "<gray>최대 저장용량:</gray> <white>{max_storages}</white>"
-      - "<gray>Vault 네트워크는 지속됩니다</gray>"
-      - "<gray>서버 간 사용이 가능합니다.</gray>"
+      - "<gray>소유 스토리지:</gray><white>{owned_storages}</white>"
+      - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
+      - "<gray>Vault 네트워크가 지속됩니다</gray>"
+      - "<gray>서버 간 사용이 준비되었습니다.</gray>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] 저장소 보기</gradient>"
     lore:
-      - "<gray>소유 저장소:</gray> <white>{owned_storages}</white>"
-      - "<gray>최대 저장용량:</gray> <white>{max_storages}</white>"
+      - "<gray>소유 스토리지:</gray><white>{owned_storages}</white>"
+      - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
       - "<yellow>저장소 목록을 찾아보려면 클릭하세요.</yellow>"
   store:
     name: "<gradient:#f59e0b:#fbbf24>[$] 저장소 저장소</gradient>"
     lore:
-      - "<gray>소유 저장소:</gray> <white>{owned_storages}</white>"
-      - "<gray>최대 저장용량:</gray> <white>{max_storages}</white>"
-      - "<yellow>다른 저장용량을 구입하려면 클릭하세요.</yellow>"
+      - "<gray>소유 스토리지:</gray><white>{owned_storages}</white>"
+      - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
+      - "<yellow>다른 스토리지를 구입하려면 클릭하세요.</yellow>"
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] 저장소 저장소</gradient>"
   summary:
     name: "<gradient:#10b981:#34d399>[정보] 저장 용량</gradient>"
     lore:
-      - "<gray>소유 저장소:</gray> <white>{owned_storages}</white>"
-      - "<gray>최대 저장용량:</gray> <white>{max_storages}</white>"
-      - "<gray></gray>까지 추가 저장소 공간을 구매하세요."
+      - "<gray>소유 스토리지:</gray><white>{owned_storages}</white>"
+      - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
+      - "<gray></gray>까지 추가 저장소 공간 구입"
       - "<gray>구성된 한도에 도달했습니다.</gray>"
   cost:
-    name: "<gradient:#f59e0b:#fbbf24>[요구] 매장 요구사항</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[요구] 저장소 요구 사항</gradient>"
     lore:
-      - "<gray>구성된 요구 사항:</gray> <white>{requirement_count}</white>"
-      - "<gray>현재 요구 사항 수:</gray> <white>{requirements}</white>"
-      - "<gray>상태:</gray> <white>{availability}</white>"
-      - "<yellow>각 요구사항 계층을 자세히 검사하려면 클릭하세요.</yellow>"
+      - "<gray>구성된 요구 사항:</gray><white>{requirement_count}</white>"
+      - "<gray>현재 요구 사항 수:</gray><white>{requirements}</white>"
+      - "<gray>상태:</gray><white>{availability}</white>"
+      - "<yellow>각 요구 사항 계층을 자세히 검사하려면 클릭하세요.</yellow>"
     none: "<gradient:#ef4444:#f87171>[없음]</gradient>"
     availability:
       available: "<gradient:#10b981:#34d399>[준비]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[대기중]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[보류 중]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[오프라인]</gradient>"
   purchase:
     available:
       name: "<gradient:#10b981:#34d399>[+] 스토리지 구매</gradient>"
       lore:
-        - "<gray>구성된 요구 사항:</gray> <white>{requirement_count}</white>"
-        - "<gray>현재 요구사항:</gray> <white>{requirements}</white>"
-        - "<gray>소유 저장소:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>모든 요구 사항이 충족되면 클릭하여 구매하세요.</yellow>"
+        - "<gray>구성된 요구 사항:</gray><white>{requirement_count}</white>"
+        - "<gray>현재 요구 사항:</gray><white>{requirements}</white>"
+        - "<gray>소유 스토리지:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>모든 요구사항이 충족되면 구매하려면 클릭하세요.</yellow>"
     pending:
       name: "<gradient:#f59e0b:#fbbf24>[...] 요구 사항 보류 중</gradient>"
       lore:
-        - "<gray>구성된 요구 사항:</gray> <white>{requirement_count}</white>"
-        - "<gray>현재 요구사항:</gray> <white>{requirements}</white>"
-        - "<gray>소유 저장소:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<yellow>구매하기 전에 나머지 요구사항을 충족하세요.</yellow>"
+        - "<gray>구성된 요구 사항:</gray><white>{requirement_count}</white>"
+        - "<gray>현재 요구 사항:</gray><white>{requirements}</white>"
+        - "<gray>소유 스토리지:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<yellow>구매하기 전에 나머지 요구 사항을 충족하십시오.</yellow>"
     limit_reached:
-      name: "<gradient:#ef4444:#f87171>[X] 저장용량 한도 도달</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] 저장 용량 한도 도달</gradient>"
       lore:
-        - "<gray>소유 저장소:</gray> <white>{owned_storages}/{max_storages}</white>"
-        - "<gray>추가 저장용량을 구매할 수 없습니다</gray>"
-        - "<gray>글로벌 상한액이 인상될 때까지.</gray>"
+        - "<gray>소유 스토리지:</gray><white>{owned_storages}/{max_storages}</white>"
+        - "<gray>추가 스토리지를 구매할 수 없습니다</gray>"
+        - "<gray>글로벌 한도가 높아질 때까지.</gray>"
     no_requirements:
       name: "<gradient:#ef4444:#f87171>[!] 오프라인 요구 사항</gradient>"
       lore:
-        - "<gray>하나 이상의 구성된 매장 요구사항</gray>"
-        - "<gray>이 서버에서는 해결할 수 없습니다.</gray>"
+        - "<gray>하나 이상의 구성된 저장소 요구 사항</gray>"
+        - "<gray>은(는) 이 서버에서 확인할 수 없습니다.</gray>"
     profile_missing:
       name: "<gradient:#ef4444:#f87171>[!] 프로필 누락</gradient>"
       lore:
-        - "<gray>귀하의 RDR 프로필을 로드할 수 없습니다.</gray>"
+        - "<gray>귀하의RDR프로필을 로드할 수 없습니다.</gray>"
         - "<gray>그래서 구매가 일시적으로 차단되었습니다.</gray>"
   feedback:
-    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{storage_key}</white><gray>을(를) 구매했습니다. 소비된 요구 사항:</gray> <white>{requirements}</white><gray>. 소유 저장소:</gray> <white>{owned_storages}/{max_storages}</white>"
-    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>귀하는 현재 <white>{requirement}</white><gray>을(를) 만나지 않습니다. 매장 요구 사항:</gray> <white>{requirements}</white>"
-    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>스토어 요구사항 <white>{requirement}</white><gray>은 현재 사용할 수 없거나 유효하지 않습니다.</gray>"
-    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>지금은 저장용량 구매에 사용할 수 있는 구성된 매장 요구사항이 없습니다.</gray>"
-    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>저장 한도인 <white>{max_storages}</white><gray>에 도달했습니다. 소유 저장소:</gray> <white>{owned_storages}</white>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDR 프로필을 로드할 수 없어 저장용량을 구매할 수 없습니다.</gray>"
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient><gray>구매됨<white>{storage_key}</white><gray>. 사용된 요구 사항:</gray><white>{requirements}</white><gray>. 소유 스토리지:</gray><white>{owned_storages}/{max_storages}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient><gray>귀하는 현재<white>{requirement}</white><gray>을 충족하지 않습니다. 매장 요구 사항:</gray><white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>스토어 요구 사항<white>{requirement}</white><gray>은 현재 사용할 수 없거나 유효하지 않습니다.</gray>"
+    no_requirements: "<gradient:#ef4444:#f87171>[!]</gradient><gray>지금은 스토리지 구매에 사용할 수 있는 구성된 스토어 요구 사항이 없습니다.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient><gray>저장 용량 한도인<white>{max_storages}</white><gray>에 도달했습니다. 소유 스토리지:</gray><white>{owned_storages}</white>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>귀하의RDR프로필을 로드할 수 없어 스토리지 구매를 사용할 수 없습니다.</gray>"
 
 storage_store_requirements_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[요청] {purchase_number}</gradient> 구매"
+  title: "<gradient:#38bdf8:#60a5fa>[요청]{purchase_number}</gradient>구매"
   summary:
-    name: "<gradient:#10b981:#34d399>[정보] 요구사항 브라우저</gradient>"
+    name: "<gradient:#10b981:#34d399>[정보] 요구 사항 브라우저</gradient>"
     lore:
-      - "<gray>구매 등급:</gray> <white>{purchase_number}</white>"
-      - "<gray>저장소 잠금 해제:</gray> <white>{storage_number}</white>"
-      - "<gray>구성된 요구 사항:</gray> <white>{requirement_count}</white>"
-      - "<gray>현재 만난 사람:</gray> <white>{met_count}</white>"
+      - "<gray>구매 등급:</gray><white>{purchase_number}</white>"
+      - "<gray>스토리지 잠금 해제:</gray><white>{storage_number}</white>"
+      - "<gray>구성된 요구 사항:</gray><white>{requirement_count}</white>"
+      - "<gray>현재 만남:</gray><white>{met_count}</white>"
   empty:
     name: "<gradient:#10b981:#34d399>[무료] 요구 사항 없음</gradient>"
     lore:
       - "<gray>이 구매 계층에는 구성된 요구 사항이 없습니다.</gray>"
-      - "<yellow>추가 확인 없이 이 저장용량을 구입할 수 있습니다.</yellow>"
+      - "<yellow>추가 확인 없이 이 스토리지를 구입할 수 있습니다.</yellow>"
   progress_bar:
     empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
     partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
-    filled: "<gradient:#10b981:#34d399>__</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
   entry:
-    name: "<gradient:#f59e0b:#fbbf24>[요구사항] {requirement_name}</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[요구]{requirement_name}</gradient>"
     lore:
-      - "<gray>키:</gray> <white>{requirement_key}</white>"
-      - "<gray>유형:</gray> <white>{requirement_type}</white>"
-      - "<gray>상태:</gray> <white>{status}</white>"
-      - "<gray>진행 상황:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-      - "<gray>요약:</gray> <white>{summary}</white>"
+      - "<gray>키:</gray><white>{requirement_key}</white>"
+      - "<gray>유형:</gray><white>{requirement_type}</white>"
+      - "<gray>상태:</gray><white>{status}</white>"
+      - "<gray>진행:</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>요약:</gray><white>{summary}</white>"
       - "<yellow>은행 진행을 위해 항목 또는 통화 요건을 마우스 오른쪽 버튼으로 클릭하세요.</yellow>"
-    details: "<gradient:#f59e0b:#fbbf24>▓ 상세 확인</gradient>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ 세부 확인</gradient>"
     status:
       met: "<gradient:#10b981:#34d399>[만났음]</gradient>"
-      pending: "<gradient:#f59e0b:#fbbf24>[대기중]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[보류 중]</gradient>"
       unavailable: "<gradient:#ef4444:#f87171>[사용할 수 없음]</gradient>"
   feedback:
-    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>이(가) 이제 준비되었습니다.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
-    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray><white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>에 대한 저장된 진행 상황"
-    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray><white>{requirement}</white><gray>.</gray>에 대해 일치하는 항목이나 통화를 사용할 수 없습니다."
-    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>는 뱅크 진행을 지원하지 않습니다.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>은(는) 현재 사용할 수 없습니다.</gray>"
-    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>귀하의 RDR 프로필을 로드할 수 없어 진행 상황을 저장할 수 없습니다.</gray>"
+    complete: "<gradient:#10b981:#34d399>██</gradient><gray><white>{requirement}</white><gray>이 이제 준비되었습니다.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient><gray><white>{requirement}</white><gray>.</gray>{progress_bar}<gradient:#6b7280:#9ca3af>{progress}</gradient>에 대해 저장된 진행률"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient><gray><white>{requirement}</white><gray>.</gray>에 대해 사용 가능한 일치 항목 또는 통화가 없습니다."
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>은 뱅크 진행을 지원하지 않습니다.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{requirement}</white><gray>은(는) 현재 사용할 수 없습니다.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient><gray>귀하의RDR프로필을 로드할 수 없어 진행 상황을 저장할 수 없습니다.</gray>"
 
 storage_player_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Vault] 저장소</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[정보] 저장 용량</gradient>"
     lore:
-      - "<gray>소유 저장소:</gray> <white>{owned_storages}</white>"
-      - "<gray>최대 저장용량:</gray> <white>{max_storages}</white>"
-      - "<gray>이 목록을 사용하여 </gray>을 검토하세요."
+      - "<gray>소유 스토리지:</gray><white>{owned_storages}</white>"
+      - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
+      - "<gray>이 목록을 사용하여 귀하의</gray>을 검토하세요."
       - "<gray>지속형 스토리지 컨테이너.</gray>"
   entry:
-    name: "<gradient:#10b981:#34d399>[박스] {storage_key}</gradient>"
+    name: "<gradient:#10b981:#34d399>[박스]{storage_key}</gradient>"
     lore:
-      - "<gray>저장 키:</gray> <white>{storage_key}</white>"
-      - "<gray>소유자:</gray> <white>{owner_name}</white>"
-      - "<gray>액세스:</gray> <white>{access_level}</white>"
-      - "<gray>핫키:</gray> <white>{hotkey_display}</white>"
-      - "<gray>사용된 슬롯:</gray> <white>{stored_slots}/{inventory_size}</white>"
-      - "<gray>사용 가능한 슬롯:</gray> <white>{available_slots}</white>"
-      - "<yellow>이 저장소는 항목 지속성을 위해 준비되었습니다.</yellow>"
+      - "<gray>스토리지 키:</gray><white>{storage_key}</white>"
+      - "<gray>소유자:</gray><white>{owner_name}</white>"
+      - "<gray>액세스:</gray><white>{access_level}</white>"
+      - "<gray>핫키:</gray><white>{hotkey_display}</white>"
+      - "<gray>사용된 슬롯:</gray><white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>사용 가능한 슬롯:</gray><white>{available_slots}</white>"
+      - "<yellow>이 저장소는 항목 지속성을 위한 준비가 되었습니다.</yellow>"
       - "<gradient:#38bdf8:#60a5fa>[>>] 이 저장소를 열려면 마우스 왼쪽 버튼을 클릭하세요.</gradient>"
       - "<gradient:#f59e0b:#fbbf24>[#] 저장소 설정을 열려면 마우스 오른쪽 버튼을 클릭하세요.</gradient>"
     access:
@@ -158,25 +158,25 @@ storage_player_ui:
   empty:
     name: "<gradient:#ef4444:#f87171>[X] 저장소를 찾을 수 없음</gradient>"
     lore:
-      - "<gray>현재 연결된 저장소가 없습니다</gray>"
-      - "<gray>을(를) RDR 프로필에 추가하세요.</gray>"
+      - "<gray>현재 연결된 스토리지가 없습니다</gray>"
+      - "<gray>을(를)RDR프로필에 추가하세요.</gray>"
   missing:
     name: "<gradient:#ef4444:#f87171>[!] 프로필 누락</gradient>"
     lore:
-      - "<gray>귀하의 RDR 플레이어 프로필은 </gray>할 수 없습니다."
-      - "<gray>영구 저장소에서 로드됩니다.</gray>"
+      - "<gray>귀하의RDR플레이어 프로필은</gray>할 수 없습니다."
+      - "<gray>은 영구 저장소에서 로드됩니다.</gray>"
 
 storage_settings_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] {storage_key} 설정</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#]{storage_key}설정</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[정보] 저장소 설정</gradient>"
     lore:
-      - "<gray>저장 키:</gray> <white>{storage_key}</white>"
-      - "<gray>소유자:</gray> <white>{owner_name}</white>"
-      - "<gray>귀하의 액세스 권한:</gray> <white>{access_level}</white>"
-      - "<gray>핫키:</gray> <white>{hotkey_display}</white>"
-      - "<gray>직원:</gray> <white>{associate_count}</white>"
-      - "<gray>신뢰할 수 있는 항목:</gray> <white>{trusted_count}</white>"
+      - "<gray>스토리지 키:</gray><white>{storage_key}</white>"
+      - "<gray>소유자:</gray><white>{owner_name}</white>"
+      - "<gray>귀하의 액세스 권한:</gray><white>{access_level}</white>"
+      - "<gray>핫키:</gray><white>{hotkey_display}</white>"
+      - "<gray>어소시에이트:</gray><white>{associate_count}</white>"
+      - "<gray>신뢰할 수 있는 항목:</gray><white>{trusted_count}</white>"
     access:
       owner: "<gradient:#10b981:#34d399>[소유자]</gradient>"
       public: "<gradient:#6b7280:#9ca3af>[공개]</gradient>"
@@ -185,89 +185,89 @@ storage_settings_ui:
   trusted:
     name: "<gradient:#10b981:#34d399>[그룹] 신뢰할 수 있는 액세스</gradient>"
     lore:
-      - "<gray>직원:</gray> <white>{associate_count}</white>"
-      - "<gray>신뢰할 수 있는 항목:</gray> <white>{trusted_count}</white>"
+      - "<gray>어소시에이트:</gray><white>{associate_count}</white>"
+      - "<gray>신뢰할 수 있는 항목:</gray><white>{trusted_count}</white>"
       - "<yellow>입금할 수 있는 사람을 관리하려면 클릭하세요</yellow>"
-      - "<yellow>또는 이 저장소에 완전히 액세스할 수 있습니다.</yellow>"
+      - "<yellow>또는 이 저장소에 완전히 액세스합니다.</yellow>"
   hotkey:
     name: "<gradient:#f59e0b:#fbbf24>[#] 저장소 단축키</gradient>"
     lore:
-      - "<gray>현재 단축키:</gray> <white>{hotkey_display}</white>"
-      - "<yellow></yellow>에 대한 빠른 액세스를 연결하려면 클릭하세요."
+      - "<gray>현재 단축키:</gray><white>{hotkey_display}</white>"
+      - "<yellow></yellow>에 대한 빠른 액세스를 바인딩하려면 클릭하세요."
       - "<yellow><white>/rr &lt;hotkey&gt;</white><yellow>.</yellow>"
   trusted_locked:
     name: "<gradient:#ef4444:#f87171>[X] 신뢰할 수 있음 잠김</gradient>"
     lore:
-      - "<gray>저장소 소유자만 관리할 수 있습니다</gray>"
+      - "<gray>스토리지 소유자만 관리할 수 있습니다</gray>"
       - "<gray>이 저장소에 대한 신뢰할 수 있는 액세스입니다.</gray>"
   hotkey_locked:
     name: "<gradient:#ef4444:#f87171>[X] 단축키 잠김</gradient>"
     lore:
-      - "<gray>저장소 소유자만 변경할 수 있습니다</gray>"
+      - "<gray>스토리지 소유자만 변경할 수 있습니다</gray>"
       - "<gray>저장소 단축키.</gray>"
   edition_locked:
     name: "<gradient:#ef4444:#f87171>[무료] 설정이 잠겼습니다</gradient>"
     lore:
-      - "<gray>저장소 설정 변경이 비활성화되었습니다</gray>"
-      - "<gray>in <white>RDR Free</white><gray>.</gray>"
-      - "<yellow>설정을 수정하려면 프리미엄으로 업그레이드하세요.</yellow>"
+      - "<gray>스토리지 설정 변경이 비활성화되었습니다.</gray>"
+      - "<gray>in<white>RDR무료</white><gray>.</gray>"
+      - "<yellow>프리미엄으로 업그레이드하여 설정을 편집하세요.</yellow>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] 저장용량 없음</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] 스토리지 누락</gradient>"
     lore:
       - "<gray>이 저장소를 로드할 수 없습니다</gray>"
-      - "<gray>설정 보기의 경우</gray>"
+      - "설정 보기의 경우<gray>입니다.</gray>"
 
 storage_trusted_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[그룹] {storage_key} 액세스</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[그룹]{storage_key}액세스</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[정보] 공유 액세스</gradient>"
     lore:
-      - "<gray>저장 키:</gray> <white>{storage_key}</white>"
-      - "<gray>소유자:</gray> <white>{owner_name}</white>"
-      - "<gray>직원:</gray> <white>{associate_count}</white>"
-      - "<gray>신뢰할 수 있는 항목:</gray> <white>{trusted_count}</white>"
+      - "<gray>스토리지 키:</gray><white>{storage_key}</white>"
+      - "<gray>소유자:</gray><white>{owner_name}</white>"
+      - "<gray>어소시에이트:</gray><white>{associate_count}</white>"
+      - "<gray>신뢰할 수 있는 항목:</gray><white>{trusted_count}</white>"
       - "<yellow>액세스를 순환하려면 플레이어를 클릭하세요.</yellow>"
   entry:
     public:
-      name: "<gradient:#9ca3af:#d1d5db>[공개] {player}</gradient>"
+      name: "<gradient:#9ca3af:#d1d5db>[공개]{player}</gradient>"
       lore:
-        - "<gray>상태:</gray> <white>공개</white>"
-        - "<gray>입금이나 출금이 불가능합니다.</gray>"
+        - "<gray>상태:</gray><white>공개</white>"
+        - "<gray>예금 또는 출금 액세스가 없습니다.</gray>"
         - "<yellow>어소시에이트로 승격하려면 클릭하세요.</yellow>"
     associate:
-      name: "<gradient:#f59e0b:#fbbf24>[직원] {player}</gradient>"
+      name: "<gradient:#f59e0b:#fbbf24>[어소시에이트]{player}</gradient>"
       lore:
-        - "<gray>상태:</gray> <white>어소시에이트</white>"
+        - "<gray>상태:</gray><white>어소시에이트</white>"
         - "<gray>입금은 가능하지만 출금은 불가능합니다.</gray>"
         - "<yellow>신뢰할 수 있음으로 승격하려면 클릭하세요.</yellow>"
     trusted:
-      name: "<gradient:#10b981:#34d399>[신뢰할 수 있음] {player}</gradient>"
+      name: "<gradient:#10b981:#34d399>[신뢰됨]{player}</gradient>"
       lore:
-        - "<gray>상태:</gray> <white>신뢰할 수 있음</white>"
+        - "<gray>상태:</gray><white>신뢰할 수 있는</white>"
         - "<gray>아이템 입출금이 가능합니다.</gray>"
         - "<yellow>공개로 재설정하려면 클릭하세요.</yellow>"
   feedback:
     updated:
-      public: "<gradient:#9ca3af:#d1d5db>[공개]</gradient> <gray>{player}은(는) 더 이상 저장소에 액세스할 수 없습니다.</gray>"
-      associate: "<gradient:#f59e0b:#fbbf24>[어소시에이트]</gradient> <gray>{player}은(는) 이제 이 저장소에 입금할 수 있습니다.</gray>"
-      trusted: "<gradient:#10b981:#34d399>[신뢰할 수 있음]</gradient> <gray>{player}은(는) 이제 이 저장소에 입출금할 수 있습니다.</gray>"
-    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>스토리지 소유자만 신뢰할 수 있는 액세스를 변경할 수 있습니다.</gray>"
+      public: "<gradient:#9ca3af:#d1d5db>[공개]</gradient><gray>{player}에는 더 이상 스토리지 액세스 권한이 없습니다.</gray>"
+      associate: "<gradient:#f59e0b:#fbbf24>[Associate]</gradient><gray>{player}은(는) 이제 이 저장소에 입금할 수 있습니다.</gray>"
+      trusted: "<gradient:#10b981:#34d399>[신뢰할 수 있음]</gradient><gray>{player}은 이제 이 저장소에서 입금 및 출금을 할 수 있습니다.</gray>"
+    not_owner: "<gradient:#ef4444:#f87171>[X]</gradient><gray>스토리지 소유자만이 신뢰할 수 있는 액세스를 변경할 수 있습니다.</gray>"
     locked:
       name: "<gradient:#ef4444:#f87171>[X] 소유자 전용</gradient>"
       lore:
-        - "<gray>이 저장용량을 볼 수 있지만 </gray>만 볼 수 있습니다."
+        - "<gray>이 저장소를 볼 수 있지만</gray>만 볼 수 있습니다."
         - "<gray>소유자는 신뢰할 수 있는 액세스를 변경할 수 있습니다.</gray>"
     storage_missing:
-      name: "<gradient:#ef4444:#f87171>[X] 저장용량 없음</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] 스토리지 누락</gradient>"
       lore:
         - "<gray>이 저장소를 로드할 수 없습니다</gray>"
         - "<gray>신뢰할 수 있는 액세스 관리용.</gray>"
-      message: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>신뢰할 수 있는 액세스 관리를 위해 이 저장소를 로드할 수 없습니다.</gray>"
+      message: "<gradient:#ef4444:#f87171>[!]</gradient><gray>신뢰할 수 있는 액세스 관리를 위해 이 저장소를 로드할 수 없습니다.</gray>"
     edition_locked:
       name: "<gradient:#ef4444:#f87171>[무료] 설정이 잠겼습니다</gradient>"
       lore:
-        - "<gray>신뢰할 수 있는 액세스 변경이 비활성화되었습니다</gray>"
-        - "<gray>in <white>RDR Free</white><gray>.</gray>"
+        - "<gray>신뢰할 수 있는 액세스 변경이 비활성화되었습니다.</gray>"
+        - "<gray>in<white>RDR무료</white><gray>.</gray>"
     empty:
       name: "<gradient:#ef4444:#f87171>[X] 플레이어를 찾을 수 없습니다</gradient>"
       lore:
@@ -275,48 +275,48 @@ storage_trusted_ui:
         - "<gray>신뢰할 수 있는 액세스를 할당합니다.</gray>"
 
 storage_view:
-  title: "<gradient:#38bdf8:#60a5fa>[박스] {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[박스]{storage_key}</gradient>"
   missing:
-    name: "<gradient:#ef4444:#f87171>[X] 저장용량 없음</gradient>"
+    name: "<gradient:#ef4444:#f87171>[X] 스토리지 누락</gradient>"
     lore:
       - "<gray>이 저장소 항목을 찾을 수 없습니다</gray>"
-      - "<gray>귀하의 지속적인 RDR 프로필에 대한 것입니다.</gray>"
+      - "지속되는RDR프로필의 경우<gray>.</gray>"
 
 storage_hotkey_anvil_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[#] 바인딩 {storage_key}</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[#] 바인드{storage_key}</gradient>"
   input:
     lore:
-      - "<gray></gray> 사이의 숫자를 입력하세요."
-      - "빠른 액세스를 위한 <white>1</white><gray> 및 </gray><white>{max_hotkeys}</white><gray>.</gray>"
+      - "<gray></gray>사이의 숫자를 입력하세요."
+      - "빠른 액세스를 위한<white>1</white><gray>및</gray><white>{max_hotkeys}</white><gray>.</gray>"
       - "<yellow>단축키를 저장하려면 결과 슬롯을 클릭하세요.</yellow>"
   error:
-    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>1</white>에서 <white>{max_hotkeys}</white><gray> 사이의 숫자를 사용하세요. 입력:</gray> <white>{input}</white>"
+    invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>1</white>에서<white>{max_hotkeys}</white><gray>사이의 숫자를 사용합니다. 입력:</gray><white>{input}</white>"
 
 storage:
   message:
-    locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key}은(는) 이미 다른 세션에 열려 있습니다.</gray>"
-    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key}을(를) 지금 열 수 없습니다.</gray>"
-    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray>에 액세스할 수 없습니다.</gray>"
-    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray>은(는) RDR 저장소에서 전체적으로 블랙리스트에 등록되었습니다.</gray>"
-    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key}의 편집 세션이 만료되었거나 다른 곳으로 이동되었습니다. 변경사항이 저장되지 않았습니다.</gray>"
-    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key}을(를) 저장할 수 없습니다. 자세한 내용은 콘솔을 확인하세요.</gray>"
-    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient> <gray>{storage_key}은(는) 이제 <white>/rr {hotkey}</white><gray>.</gray>에 바인딩됩니다."
-    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>/rr {hotkey}</white><gray>.</gray>에 바인딩된 저장소가 없습니다."
-    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>단축키는 <white>1</white>과 <white>{max_hotkeys}</white><gray>.</gray> 사이에 있어야 합니다."
-    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>저장소 설정 수정은 <white>RDR Free</white><gray>.</gray>에서 비활성화됩니다."
-    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>/rr scoreboard</white><gray> 사이드바를 활성화했습니다.</gray>"
-    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray><white>/rr scoreboard</white><gray> 사이드바를 비활성화했습니다.</gray>"
-    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>사용법:</gray> <white>/rr scoreboard</white>"
+    locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}은(는) 이미 다른 세션에서 열려 있습니다.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}을(를) 지금 열 수 없습니다.</gray>"
+    access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{storage_key}</white><gray>.</gray>에 대한 액세스 권한이 없습니다."
+    blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>은(는)RDR저장소에서 전역적으로 블랙리스트에 추가되었습니다.</gray>"
+    lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}에 대한 편집 세션이 만료되었거나 다른 곳으로 이동되었습니다. 변경 사항이 저장되지 않았습니다.</gray>"
+    save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}을(를) 저장할 수 없습니다. 자세한 내용은 콘솔을 확인하세요.</gray>"
+    hotkey_saved: "<gradient:#10b981:#34d399>[#]</gradient><gray>{storage_key}은 이제<white>/rr{hotkey}</white><gray>.</gray>에 바인딩됩니다."
+    hotkey_missing: "<gradient:#ef4444:#f87171>[X]</gradient><gray>스토리지는<white>/rr{hotkey}</white><gray>.</gray>에 바인딩되지 않습니다."
+    hotkey_invalid: "<gradient:#ef4444:#f87171>[!]</gradient><gray>핫키는<white>1</white>및<white>{max_hotkeys}</white><gray>.</gray>사이에 있어야 합니다."
+    config_edit_disabled: "<gradient:#ef4444:#f87171>[X]</gradient><gray>스토리지 설정 편집은<white>RDRFree</white><gray>.</gray>에서 비활성화됩니다."
+    scoreboard_enabled: "<gradient:#10b981:#34d399>[+]</gradient><gray><white>/rr점수판</white><gray>사이드바를 활성화했습니다.</gray>"
+    scoreboard_disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient><gray><white>/rr점수판</white><gray>사이드바를 비활성화했습니다.</gray>"
+    scoreboard_syntax: "<gradient:#ef4444:#f87171>[X]</gradient><gray>사용법:</gray><white>/rr점수판</white>"
 
 page:
-  name: "<gradient:#6b7280:#9ca3af>[페이지] %current_page%</gradient>"
+  name: "<gradient:#6b7280:#9ca3af>[페이지]%current_page%</gradient>"
   lore:
-    - "<gray>현재 페이지:</gray> <white>%current_page%</white>"
-    - "<gray>총 페이지 수:</gray> <white>%total_pages%</white>"
-  fallback: "<gradient:#6b7280:#9ca3af>[페이지] %page%</gradient>"
+    - "<gray>현재 페이지:</gray><white>%current_page%</white>"
+    - "<gray>총 페이지 수:</gray><white>%total_pages%</white>"
+  fallback: "<gradient:#6b7280:#9ca3af>[페이지]%page%</gradient>"
 
 head:
   return:
-    name: "<gradient:#f59e0b:#fbbf24>[<-] 반품</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[<-] Return</gradient>"
     lore:
       - "<gradient:#6b7280:#9ca3af>뒤로 돌아가려면 클릭하세요</gradient>"
