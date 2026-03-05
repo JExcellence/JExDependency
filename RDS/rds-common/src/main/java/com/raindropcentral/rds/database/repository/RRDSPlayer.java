@@ -12,6 +12,10 @@ import java.util.function.Function;
 
 /**
  * Represents r r d s player.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings({
         "unused",

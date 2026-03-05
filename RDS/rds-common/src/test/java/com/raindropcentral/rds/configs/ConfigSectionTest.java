@@ -21,6 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests config section behavior.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ConfigSectionTest {
 

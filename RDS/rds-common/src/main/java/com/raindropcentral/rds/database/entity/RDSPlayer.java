@@ -32,8 +32,8 @@ import com.raindropcentral.rplatform.database.converter.UUIDConverter;
  * used for partial shop-store requirement completion.</p>
  *
  * @author ItsRainingHP
- * @since 5.0.0
- * @version 5.0.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Entity
 @Table(name = "rds_players")

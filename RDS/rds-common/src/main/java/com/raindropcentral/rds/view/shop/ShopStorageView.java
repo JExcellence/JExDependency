@@ -30,6 +30,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders the shop storage inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEntry> {
 

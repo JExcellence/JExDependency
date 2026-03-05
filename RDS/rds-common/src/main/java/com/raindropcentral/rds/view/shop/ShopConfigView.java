@@ -1,10 +1,3 @@
-/*
- * ShopConfigView.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -36,6 +29,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders a paginated editor for configurable values in {@code config/config.yml}.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopConfigView extends APaginatedView<ShopConfigView.ConfigEntry> {
 

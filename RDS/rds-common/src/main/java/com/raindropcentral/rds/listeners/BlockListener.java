@@ -26,6 +26,10 @@ import java.util.UUID;
 
 /**
  * Handles shop chest placement and protection rules.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings("unused")
 public class BlockListener implements Listener {

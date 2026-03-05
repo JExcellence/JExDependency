@@ -24,8 +24,8 @@ import com.raindropcentral.rplatform.database.converter.ItemStackConverter;
  * a banked item stack, or both for a single requirement progress key.</p>
  *
  * @author ItsRainingHP
- * @since 5.0.0
- * @version 5.0.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Entity
 @Table(

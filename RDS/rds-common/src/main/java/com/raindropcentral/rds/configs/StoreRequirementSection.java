@@ -19,8 +19,8 @@ import org.jetbrains.annotations.Nullable;
  * requirement type while still exposing the local config key and icon metadata.</p>
  *
  * @author ItsRainingHP
- * @since 5.0.0
- * @version 5.0.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class StoreRequirementSection {
 

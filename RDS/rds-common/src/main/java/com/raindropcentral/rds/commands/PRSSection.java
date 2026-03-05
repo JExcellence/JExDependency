@@ -5,6 +5,10 @@ import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 
 /**
  * Represents the p r s configuration section.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings("unused")
 public class PRSSection extends ACommandSection{

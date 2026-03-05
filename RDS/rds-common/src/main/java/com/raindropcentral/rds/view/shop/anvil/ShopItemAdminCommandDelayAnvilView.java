@@ -1,10 +1,3 @@
-/*
- * ShopItemAdminCommandDelayAnvilView.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop.anvil;
 
 import com.raindropcentral.rds.RDS;
@@ -28,6 +21,10 @@ import java.util.Map;
 
 /**
  * Renders the command-delay anvil editor for admin-shop item purchase commands.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopItemAdminCommandDelayAnvilView extends AbstractAnvilView {
 

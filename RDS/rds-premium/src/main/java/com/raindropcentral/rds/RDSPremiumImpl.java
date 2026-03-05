@@ -15,8 +15,8 @@ import org.jetbrains.annotations.Nullable;
  * {@link RDS} runtime with the premium-edition shop service.</p>
  *
  * @author ItsRainingHP
- * @since 5.0.0
- * @version 5.0.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class RDSPremiumImpl extends AbstractPluginDelegate<RDSPremium> {
 

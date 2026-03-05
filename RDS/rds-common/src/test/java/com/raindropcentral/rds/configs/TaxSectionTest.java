@@ -18,6 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests tax section parsing and defaults.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class TaxSectionTest {
 

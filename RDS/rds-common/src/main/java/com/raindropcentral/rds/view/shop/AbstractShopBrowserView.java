@@ -1,10 +1,3 @@
-/*
- * AbstractShopBrowserView.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -33,6 +26,10 @@ import java.util.Map;
 
 /**
  * Shared paginated shop-browser implementation for the directory and filtered search results.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 abstract class AbstractShopBrowserView extends APaginatedView<ShopBrowserSupport.ShopBrowserEntry> {
 

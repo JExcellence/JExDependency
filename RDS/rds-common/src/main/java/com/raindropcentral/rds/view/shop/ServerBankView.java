@@ -1,10 +1,3 @@
-/*
- * ServerBankView.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -43,6 +36,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders the global server-bank admin view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ServerBankView extends APaginatedView<ServerBankView.ServerBankEntry> {
 

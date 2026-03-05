@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
  * {@link #TRUSTED} allows both stocking and full-management actions.</p>
  *
  * @author ItsRainingHP
- * @since 5.0.0
- * @version 5.0.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public enum ShopTrustStatus {
 

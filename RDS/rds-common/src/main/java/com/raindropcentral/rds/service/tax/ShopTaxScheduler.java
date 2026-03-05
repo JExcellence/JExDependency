@@ -24,6 +24,10 @@ import java.util.logging.Logger;
 
 /**
  * Schedules shop tax operations.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopTaxScheduler {
 

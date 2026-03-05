@@ -19,6 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Verifies JSON compatibility safeguards on {@link ShopItem}.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ShopItemJsonCompatibilityTest {
 

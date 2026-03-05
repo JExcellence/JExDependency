@@ -1,10 +1,3 @@
-/*
- * ShopSearchView.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -26,6 +19,10 @@ import java.util.Map;
 
 /**
  * Renders the shop search landing page with actions for browsing every shop or searching by material.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopSearchView extends BaseView {
 

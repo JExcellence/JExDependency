@@ -1,10 +1,3 @@
-/*
- * ShopItemAvailabilityMinutesAnvilView.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop.anvil;
 
 import com.raindropcentral.rds.RDS;
@@ -28,6 +21,10 @@ import java.util.Map;
 
 /**
  * Renders the shop item availability-minutes anvil inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopItemAvailabilityMinutesAnvilView extends AbstractAnvilView {
 

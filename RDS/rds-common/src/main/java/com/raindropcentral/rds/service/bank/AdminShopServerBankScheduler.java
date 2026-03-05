@@ -1,10 +1,3 @@
-/*
- * AdminShopServerBankScheduler.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.service.bank;
 
 import com.raindropcentral.rds.RDS;
@@ -20,6 +13,10 @@ import java.util.Map;
 
 /**
  * Schedules periodic transfers from admin-shop banks into the shared server bank.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class AdminShopServerBankScheduler {
 

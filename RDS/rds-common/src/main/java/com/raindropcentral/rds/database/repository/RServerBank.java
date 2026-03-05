@@ -1,10 +1,3 @@
-/*
- * RServerBank.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.database.repository;
 
 import com.raindropcentral.rds.database.entity.ServerBank;
@@ -23,6 +16,10 @@ import java.util.function.Function;
 
 /**
  * Repository for server bank balances.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings({
         "unused",

@@ -1,10 +1,3 @@
-/*
- * ShopConfigValueAnvilView.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop.anvil;
 
 import com.raindropcentral.rds.RDS;
@@ -30,6 +23,10 @@ import java.util.Map;
 
 /**
  * Renders the config value editor anvil for a selected config path.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopConfigValueAnvilView extends AbstractAnvilView {
 

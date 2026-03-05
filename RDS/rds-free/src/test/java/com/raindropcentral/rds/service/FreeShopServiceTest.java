@@ -11,6 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Tests free-edition shop service limits.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class FreeShopServiceTest {
 

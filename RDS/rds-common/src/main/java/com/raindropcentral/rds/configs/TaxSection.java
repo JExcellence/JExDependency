@@ -20,6 +20,10 @@ import java.util.Map;
 
 /**
  * Represents the tax configuration section.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @CSAlways
 @SuppressWarnings("unused")

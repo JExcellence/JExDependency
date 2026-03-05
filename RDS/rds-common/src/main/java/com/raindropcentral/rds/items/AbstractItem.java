@@ -1,5 +1,4 @@
 package com.raindropcentral.rds.items;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -10,6 +9,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Represents abstract item.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @JsonTypeInfo(
 	use = JsonTypeInfo.Id.NAME,

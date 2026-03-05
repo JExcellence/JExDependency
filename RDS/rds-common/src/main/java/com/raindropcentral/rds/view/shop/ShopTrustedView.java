@@ -30,6 +30,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders the shop trusted inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopTrustedView extends APaginatedView<ShopTrustedView.TrustedPlayerEntry> {
 

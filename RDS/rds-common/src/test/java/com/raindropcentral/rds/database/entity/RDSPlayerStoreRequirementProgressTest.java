@@ -10,6 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests r d s player store requirement progress behavior.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class RDSPlayerStoreRequirementProgressTest {
 

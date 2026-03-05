@@ -8,6 +8,10 @@ import java.util.Locale;
 
 /**
  * Represents the store currency configuration section.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @CSAlways
 @SuppressWarnings("unused")

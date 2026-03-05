@@ -14,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Tests admin purchase-command behavior on shop items.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ShopItemAdminPurchaseCommandTest {
 

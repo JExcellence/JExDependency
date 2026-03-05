@@ -1,10 +1,3 @@
-/*
- * ShopAdminView.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -21,6 +14,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Renders the RDS admin landing view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopAdminView extends BaseView {
 

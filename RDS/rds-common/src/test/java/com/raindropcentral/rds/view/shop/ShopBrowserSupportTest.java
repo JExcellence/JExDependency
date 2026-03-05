@@ -15,6 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
  * Tests shared shop browser helpers used by the directory and material search views.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ShopBrowserSupportTest {
 

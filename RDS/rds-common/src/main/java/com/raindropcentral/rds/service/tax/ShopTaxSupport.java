@@ -20,6 +20,10 @@ import java.util.UUID;
 
 /**
  * Provides support utilities for shop tax.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 final class ShopTaxSupport {
 

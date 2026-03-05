@@ -1,10 +1,3 @@
-/*
- * ShopBrowserSupport.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -28,6 +21,10 @@ import java.util.UUID;
 
 /**
  * Shared shop-browser helpers used by the public directory and material search views.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class ShopBrowserSupport {
 

@@ -1,10 +1,3 @@
-/*
- * ShopMaterialSearchAnvilView.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop.anvil;
 
 import com.raindropcentral.rds.RDS;
@@ -27,6 +20,10 @@ import java.util.Map;
 
 /**
  * Renders the anvil-based material search workflow for the public shop browser.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopMaterialSearchAnvilView extends AbstractAnvilView {
 

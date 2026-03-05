@@ -11,6 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests premium-edition shop service behaviour.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class PremiumShopServiceTest {
 

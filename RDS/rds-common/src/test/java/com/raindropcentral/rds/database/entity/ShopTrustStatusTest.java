@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests shop trust status behaviour.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ShopTrustStatusTest {
 

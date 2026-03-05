@@ -18,6 +18,10 @@ import java.util.UUID;
 
 /**
  * Represents shop ledger entry.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Entity
 @Table(name = "shop_ledger_entries")

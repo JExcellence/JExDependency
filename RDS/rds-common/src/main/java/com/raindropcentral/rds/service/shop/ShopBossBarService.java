@@ -22,6 +22,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Represents shop boss bar service.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopBossBarService {
 

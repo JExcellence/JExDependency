@@ -17,6 +17,10 @@ import java.util.function.Function;
 
 /**
  * Represents r shop.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings({
         "unused",

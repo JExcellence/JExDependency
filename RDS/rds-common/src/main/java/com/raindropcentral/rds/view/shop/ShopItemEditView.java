@@ -39,6 +39,10 @@ import java.util.Map;
 
 /**
  * Renders the shop item edit inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopItemEditView extends BaseView {
 

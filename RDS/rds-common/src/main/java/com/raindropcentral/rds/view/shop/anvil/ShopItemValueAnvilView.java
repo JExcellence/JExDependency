@@ -22,6 +22,10 @@ import java.util.Map;
 
 /**
  * Renders the shop item value anvil inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopItemValueAnvilView extends AbstractAnvilView {
 

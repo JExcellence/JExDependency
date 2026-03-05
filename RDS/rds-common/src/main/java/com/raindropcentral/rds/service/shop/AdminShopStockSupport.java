@@ -13,6 +13,10 @@ import java.time.ZonedDateTime;
 
 /**
  * Provides support utilities for admin shop stock.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class AdminShopStockSupport {
 

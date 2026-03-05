@@ -8,6 +8,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Defines the serialized contract implemented by RDS shop item payloads.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public interface Item {
 

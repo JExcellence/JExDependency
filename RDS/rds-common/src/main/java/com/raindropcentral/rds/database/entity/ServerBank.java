@@ -1,10 +1,3 @@
-/*
- * ServerBank.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.database.entity;
 
 import de.jexcellence.hibernate.entity.BaseEntity;
@@ -19,6 +12,10 @@ import java.util.Locale;
 
 /**
  * Represents a server-owned bank balance for a specific currency.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Entity
 @Table(

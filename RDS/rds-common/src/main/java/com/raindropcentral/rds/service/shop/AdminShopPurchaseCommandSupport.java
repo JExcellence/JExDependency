@@ -1,10 +1,3 @@
-/*
- * AdminShopPurchaseCommandSupport.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.service.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -25,6 +18,10 @@ import java.util.logging.Logger;
 
 /**
  * Executes configured admin-shop purchase commands for {@link ShopItem} entries.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class AdminShopPurchaseCommandSupport {
 

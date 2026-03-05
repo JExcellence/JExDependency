@@ -1,10 +1,3 @@
-/*
- * ServerBankSection.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.configs;
 
 import de.jexcellence.configmapper.sections.AConfigSection;
@@ -18,6 +11,10 @@ import java.io.File;
 
 /**
  * Represents the server bank configuration section.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @CSAlways
 @SuppressWarnings("unused")

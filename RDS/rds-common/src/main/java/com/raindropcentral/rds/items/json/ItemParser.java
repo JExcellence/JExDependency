@@ -18,6 +18,10 @@ import java.util.List;
 
 /**
  * Represents item parser.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class ItemParser {
 

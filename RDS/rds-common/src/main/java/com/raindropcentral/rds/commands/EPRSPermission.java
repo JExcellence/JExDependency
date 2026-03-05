@@ -8,6 +8,10 @@ import de.jexcellence.evaluable.section.IPermissionNode;
  * Each enum value provides an {@code internalName} used by the configuration system
  * and a {@code fallbackNode} string that represents the default Bukkit permission
  * when no explicit mapping is provided.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 
 public enum EPRSPermission implements IPermissionNode{

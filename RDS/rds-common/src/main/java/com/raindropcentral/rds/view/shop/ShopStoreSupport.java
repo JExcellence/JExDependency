@@ -2,6 +2,10 @@ package com.raindropcentral.rds.view.shop;
 
 /**
  * Provides support utilities for shop store.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 final class ShopStoreSupport {
 

@@ -33,6 +33,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders the shop bank inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
 

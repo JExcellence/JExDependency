@@ -28,16 +28,6 @@ This repository follows strict Java coding and documentation standards. Any AI a
     - Include `@throws` for each thrown exception (checked or intentionally propagated runtime exceptions)
 - If a member is intentionally undocumented (rare), it must be `private` and self-explanatory.
 
-### 2.2 File header block (required for new files)
-When creating a new Java file, include a header block at the top of the file **above the package statement**:
-
-/*
-* <FileName>.java
-*
-* @author <YourNameOrTeam>
-* @version <SemVer or repo version>
-  */
-
 Rules:
 - `@author` MUST be present.
 - `@version` MUST be present.

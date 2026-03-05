@@ -1,10 +1,3 @@
-/*
- * ShopResultsView.java
- *
- * @author ItsRainingHP
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
@@ -29,6 +22,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * Renders a paginated directory of shops offering a searched material.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopResultsView extends AbstractShopBrowserView {
 

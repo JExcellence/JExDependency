@@ -1,10 +1,3 @@
-/*
- * ShopItemAdminCommandView.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.view.shop;
 
 import com.raindropcentral.rds.RDS;
@@ -32,6 +25,10 @@ import java.util.Map;
 
 /**
  * Renders command-management controls for an admin shop item.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopItemAdminCommandView extends BaseView {
 

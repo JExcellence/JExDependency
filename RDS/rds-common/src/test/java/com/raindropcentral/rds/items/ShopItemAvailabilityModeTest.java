@@ -13,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests shop-item availability mode behavior.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ShopItemAvailabilityModeTest {
 

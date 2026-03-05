@@ -32,6 +32,10 @@ import com.raindropcentral.rplatform.requirement.impl.TimedRequirement;
 
 /**
  * Provides support utilities for shop store pricing.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 final class ShopStorePricingSupport {
 

@@ -12,6 +12,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents bank.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Entity
 @Table(

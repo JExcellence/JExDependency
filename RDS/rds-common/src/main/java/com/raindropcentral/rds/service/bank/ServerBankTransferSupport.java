@@ -1,10 +1,3 @@
-/*
- * ServerBankTransferSupport.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.service.bank;
 
 import com.raindropcentral.rds.database.entity.Bank;
@@ -16,6 +9,10 @@ import java.util.Map;
 
 /**
  * Support helpers for transferring admin-shop balances into the server bank.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 final class ServerBankTransferSupport {
 

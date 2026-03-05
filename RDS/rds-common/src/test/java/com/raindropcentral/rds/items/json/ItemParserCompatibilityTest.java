@@ -14,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Verifies compatibility-focused ObjectMapper settings for item payload parsing.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ItemParserCompatibilityTest {
 

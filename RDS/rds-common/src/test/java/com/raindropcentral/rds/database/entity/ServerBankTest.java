@@ -15,6 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests server bank entity behavior.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ServerBankTest {
 

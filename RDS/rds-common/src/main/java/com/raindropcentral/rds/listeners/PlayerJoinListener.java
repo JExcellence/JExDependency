@@ -19,8 +19,8 @@ import java.util.Map;
  * scoreboard type and optionally sends the configured tax reminder.</p>
  *
  * @author ItsRainingHP
- * @since 5.0.0
- * @version 5.0.0
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @SuppressWarnings("unused")
 public class PlayerJoinListener implements Listener {

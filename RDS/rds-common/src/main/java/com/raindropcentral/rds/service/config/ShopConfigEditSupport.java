@@ -1,10 +1,3 @@
-/*
- * ShopConfigEditSupport.java
- *
- * @author RaindropCentral
- * @version 5.0.0
- */
-
 package com.raindropcentral.rds.service.config;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +9,10 @@ import java.util.Locale;
 
 /**
  * Provides type detection and parsing helpers for editable config values.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public final class ShopConfigEditSupport {
 

@@ -39,6 +39,10 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Renders the shop customer inventory view.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerShopEntry> {
 

@@ -33,6 +33,10 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p>A shop may occupy one chest block or two adjacent chest blocks when upgraded to a
  * double chest. Both blocks still represent the same logical shop entity.</p>
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @Entity
 @Table(name = "shops")

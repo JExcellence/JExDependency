@@ -18,6 +18,10 @@ import java.util.UUID;
 
 /**
  * Represents shop item.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @JsonTypeName("ITEM")
 @JsonIgnoreProperties(

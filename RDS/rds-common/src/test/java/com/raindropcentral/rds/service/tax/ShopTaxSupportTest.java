@@ -17,6 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests tax support shop taxability rules.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 class ShopTaxSupportTest {
 

@@ -11,6 +11,10 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents the boss bar configuration section.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 @CSAlways
 @SuppressWarnings("unused")

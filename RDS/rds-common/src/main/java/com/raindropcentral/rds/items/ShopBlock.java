@@ -15,6 +15,10 @@ import java.util.UUID;
 
 /**
  * Represents shop block.
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
  */
 public class ShopBlock {
 
