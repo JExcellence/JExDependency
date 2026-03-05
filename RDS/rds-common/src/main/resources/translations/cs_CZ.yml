@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBÁLNÍ PŘEDPONA
+# ============================================
+# Předpona předřazená obecnému výstupu chatu pluginu.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Rychlé souhrnné řádky pro hráče pro obchod, banku a daňový status.
+info:
+  total: "<blue>Obchody:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Sledované zůstatky ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Plánovaná daň ({taxed_shops}zdanitelné obchody):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Další daň:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Zprávy o připojení se zobrazují, když hráči vstoupí na server.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops}zdanitelné obchody\n[<blue>Množství<yellow>]\n{taxes}\n<red>Splatné:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Řetězce odezvy na příkaz pro funkce a přepínače `/rs`.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Otevřel<white>Správce RDS</white><gray>panel.</gray>"
+  bar:
+    enabled: "<green>Při pohledu na obchod byl aktivován panel šéfa obchodu.</green>"
+    disabled: "<yellow>Panel šéfa obchodu je zakázán.</yellow>"
+  give:
+    syntax: "<red>Použití: /rs give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Používání:</gray> <white>/rs výsledková tabulka&lt;účetní kniha|zásob&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Povoleno<white>{scoreboard_type}</white><gray>postranní panel.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Deaktivováno<white>{scoreboard_type}</white><gray>postranní panel.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Přepnuto na<white>{scoreboard_type}</white><gray>postranní panel.</gray>"
+    type:
+      ledger: "<gold>účetní kniha</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# Štítky postranního panelu a formátování hodnot.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Hlavní kniha ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Bankovní součet</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Žádné bankovní prostředky</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Sklad ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Sklad:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Žádné obchody s hráči</red>"
+
+# Text na liště šéfa se zobrazuje při cílení na obchod.
+shop_boss_bar:
+  title: "<gold>{shop_type}Nakupovat</gold> <gray>|</gray> <yellow>Majitel:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>položky:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Umístění:</yellow> <white>{location}</white>"
+  type:
+    player: "Hráč"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Omezené zásoby"
+    infinite: "Nekonečný"
+    various: "Různé"
+
+# ============================================
+# GUI tlačítka
+# ============================================
+
+# Název položky bloku obchodu a metadata tradice.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Umístěte tento blok k nastavení vašeho obchodu.</yellow>"
+
+# Popisky uživatelského rozhraní, tradice a stavy dostupnosti v přehledu obchodu.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Obchod Obchod</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Bloky vlastněných obchodů</gradient>"
+    lore:
+      - "<gray>Vlastní bloky prodejen:</gray> <white>{owned_shops}</white>"
+      - "<gray>Toto sleduje zakoupené nebo udělené</gray>"
+      - "<gray>Vlastnictví ShopBlock.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Limit obchodu</gradient>"
+    lore:
+      - "<gray>Vlastní bloky prodejen:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximální počet bloků prodejen:</gray> <white>{max_shops}</white>"
+      - "<gray>Tento limit určuje, kolik nakupuje</gray>"
+      - "<gray>bloky, které můžete odemknout.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Požadavek] Požadavky na obchod</gradient>"
+    lore:
+      - "<gray>Nakonfigurované požadavky:</gray> <white>{requirement_count}</white>"
+      - "<gray>Aktuální počet požadavků:</gray> <white>{requirements}</white>"
+      - "<gray>Postavení:</gray> <white>{availability}</white>"
+      - "<yellow>Kliknutím zobrazíte další úroveň obchodu.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Připraveno]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Čeká]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+
+# Uživatelské rozhraní požadavků na úrovni obchodu, zobrazení průběhu a zpětná vazba k nákupu.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Požadavek] Úroveň obchodů{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Nákupní blok obchodu</gradient>"
+    lore:
+      - "<gray>Úroveň nákupu:</gray> <white>{purchase_number}</white>"
+      - "<gray>Vlastní bloky prodejen:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximální počet bloků prodejen:</gray> <white>{max_shops}</white>"
+      - "<gray>Nakonfigurované požadavky:</gray> <white>{requirement_count}</white>"
+      - "<gray>Aktuálně splněno:</gray> <white>{met_count}</white>"
+      - "<gray>Postavení:</gray> <white>{availability}</white>"
+      - "<yellow>Až bude tato úroveň připravena, klikněte pro nákup.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Připraveno]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Čeká]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Uvolnit]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Zdarma] Žádné požadavky</gradient>"
+    lore:
+      - "<gray>Tato úroveň nákupu nemá žádné nakonfigurované požadavky.</gray>"
+      - "<yellow>Tento blok obchodu můžete zakoupit bez dalších kontrol.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Požadavek]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Klíč:</gray> <white>{requirement_key}</white>"
+      - "<gray>Typ:</gray> <white>{requirement_type}</white>"
+      - "<gray>Postavení:</gray> <white>{status}</white>"
+      - "<gray>Pokrok:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Shrnutí:</gray> <white>{summary}</white>"
+      - "<yellow>Kliknutím pravým tlačítkem myši na kompatibilní požadavky zobrazíte pokrok.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Podrobné kontroly</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Splněno]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Čeká]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nedostupné]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Koupil blok obchodu. Spotřebované požadavky:</gray> <white>{requirements}</white><gray>. Vlastní bloky prodejen:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Aktuálně se nesetkáváte<white>{requirement}</white><gray>. Požadavky na prodejnu:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Požadavek obchodu<white>{requirement}</white><gray>je momentálně nedostupná nebo neplatná.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dosáhli jste limitu blokování prodejen<white>{max_shops}</white><gray>. Vlastní bloky prodejen:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>je nyní připraven.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Uložený průběh pro<white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Pro nebyly k dispozici žádné odpovídající položky ani měna<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>nepodporuje řízený pokrok.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>je momentálně nedostupná.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Váš profil RDS se nepodařilo načíst, takže postup nelze uložit.</gray>"
+
+# Blokovat chyby ověření interakce a upozornění na ochranu.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Z této položky nelze přečíst vlastníka obchodu.</red>"
+    not_owner: "<red>Tento ShopBlock patří jinému hráči a vy ho nemůžete umístit.</red>"
+    max_shops_reached: "<red>Dosáhli jste limitu obchodu{max_shops}. Aktuálně umístěné obchody:{owned_shops}.</red>"
+    shop_protected: "<red>Obchody nelze rozbít přímo. K uzavření obchodu použijte nabídku obchodu.</red>"
+    double_chest_requires_shop_block: "<red>Obchody s dvojitým hrudníkem vyžadují sekundu<blue>ShopBlock</blue><red>. Normální truhly se nemohou sloučit s truhlami obchodů.</red>"
+    double_chest_owner_mismatch: "<red>Tento ShopBlock patří jinému majiteli, takže nemůže rozšířit tento obchod.</red>"
+    shop_already_double_chest: "<red>Tento obchod již používá obě poloviny hrudníku.</red>"
+    double_chest_ambiguous: "<red>Tento ShopBlock se dotýká několika truhlic obchodů. Umístěte jej pouze vedle jednoho obchodu.</red>"
+
+# Zprávy o výsledku plánovaného zpracování daní.
+tax_scheduler:
+  paid: "<yellow>Vybraná plánovaná obchodní daň ve výši{amount}. Počítané obchody:{owned_shops}.</yellow>"
+  insufficient_funds: "<red>Nemohli jste zaplatit plánovanou obchodní daň ve výši{amount}. Počítané obchody:{owned_shops}.</red>"
+  charge_failed: "<red>Nepodařilo se vybrat plánovanou daň z obchodu{amount}. Počítané obchody:{owned_shops}.</red>"
+
+# Hlavní rozhraní přehledu obchodu pro akce správy vlastníka/administrátora.
+shop_overview_ui:
+  title: "{owner}Obchod -{location}"
+  summary:
+    name: "<gold>Souhrn obchodu</gold>"
+    player:
+      lore:
+        - "<gray>Majitel:</gray> <white>{owner}</white>"
+        - "<gray>Umístění:</gray> <white>{location}</white>"
+        - "<gray>Uložené záznamy:</gray> <white>{item_count}</white>"
+        - "<gray>Typ obchodu:</gray> <white>Obchod pro hráče</white>"
+        - "<gray>Inventář:</gray> <white>Konečný</white>"
+    admin:
+      lore:
+        - "<gray>Majitel:</gray> <white>{owner}</white>"
+        - "<gray>Umístění:</gray> <white>{location}</white>"
+        - "<gray>Uložené záznamy:</gray> <white>{item_count}</white>"
+        - "<gray>Typ obchodu:</gray> <white>Admin Shop</white>"
+        - "<gray>Inventář:</gray> <white>Nekonečný</white>"
+  finance:
+    name: "<gold>Obchod Banka</gold>"
+    lore:
+      - "<gray>Sledované měny:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klikněte pro kontrolu a výběr prostředků.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop povolen</red>"
+        lore:
+          - "<gray>Tento obchod je momentálně administračním obchodem.</gray>"
+          - "<gray>Zásoby jsou pro zákazníky nekonečné.</gray>"
+          - "<gray>Uložené záznamy:</gray> <white>{item_count}</white>"
+          - "<yellow>Kliknutím přepnete zpět do obchodu pro hráče.</yellow>"
+      disabled:
+        name: "<green>Admin Shop zakázán</green>"
+        lore:
+          - "<gray>Tento obchod aktuálně používá běžné zásoby.</gray>"
+          - "<gray>Zákazníci mohou nakupovat pouze uložené částky.</gray>"
+          - "<gray>Uložené záznamy:</gray> <white>{item_count}</white>"
+          - "<yellow>Kliknutím povolíte režim správce obchodu.</yellow>"
+    close:
+      name: "<red>Zavřít obchod</red>"
+      lore:
+        - "<gray>Odstraňte tento obchod a vraťte blok obchodu.</gray>"
+        - "<gray>Uložené záznamy:</gray> <white>{item_count}</white>"
+        - "<gray>Sledované bankovní měny:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Zásoby obchodu musí být před uzavřením prázdné.</yellow>"
+    manage:
+      name: "<green>Přidat položky obchodu</green>"
+      lore:
+        - "<gray>Skladujte nové zboží v tomto obchodě.</gray>"
+        - "<gray>Aktuální záznamy:</gray> <white>{item_count}</white>"
+        - "<yellow>Kliknutím otevřete zadávání položky.</yellow>"
+    customer_view:
+      name: "<gold>Otevřete zobrazení zákazníka</gold>"
+      lore:
+        - "<gray>Prohlédněte si tento obchod, jak jej vidí zákazníci.</gray>"
+        - "<gray>Aktuální záznamy:</gray> <white>{item_count}</white>"
+        - "<yellow>Klikněte pro procházení tohoto obchodu jako zákazník.</yellow>"
+    trusted:
+      name: "<gold>Důvěryhodní hráči</gold>"
+      lore:
+        - "<gray>Spolupracovníci:</gray> <white>{associate_count}</white>"
+        - "<gray>Důvěryhodní hráči:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Kliknutím můžete spravovat úrovně důvěryhodnosti obchodu.</yellow>"
+    ledger:
+      name: "<gold>Obchodní kniha</gold>"
+      lore:
+        - "<gray>Celkový počet záznamů:</gray> <white>{ledger_count}</white>"
+        - "<gray>Nákupy:</gray> <white>{purchase_count}</white>"
+        - "<gray>Daně:</gray> <white>{tax_count}</white>"
+        - "<yellow>Kliknutím zobrazíte historii transakcí obchodu.</yellow>"
+    edit:
+      name: "<aqua>Upravit položky obchodu</aqua>"
+      lore:
+        - "<gray>Upravit ceny pro uložené položky obchodu.</gray>"
+        - "<gray>Aktuální záznamy:</gray> <white>{item_count}</white>"
+        - "<yellow>Kliknutím upravíte ceny a měny.</yellow>"
+    storage:
+      name: "<gold>Zobrazit uložené položky</gold>"
+      lore:
+        - "<gray>Zkontrolujte položky již uložené v tomto obchodě.</gray>"
+        - "<gray>Aktuální záznamy:</gray> <white>{item_count}</white>"
+        - "<yellow>Kliknutím odeberete uložené položky.</yellow>"
+    locked:
+      name: "<red>Obchod uzamčen</red>"
+      lore:
+        - "<gray>Položky může přidávat pouze vlastník.</gray>"
+        - "<gray>Aktuální záznamy:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Nemáte oprávnění ke správě tohoto obchodu.</red>"
+    no_admin_permission: "<red>Nemáte oprávnění přepínat obchody pro správu.</red>"
+    admin_limit_reached: "<red>Server již má{admin_shops}admin obchody. Volné vydání umožňuje pouze{max_admin_shops}admin obchody.</red>"
+    admin_enabled: "<green>Tento obchod je nyní administrátorským obchodem s nekonečným inventářem zákazníků. Počítané obchody:{owned_shops}.</green>"
+    admin_disabled: "<yellow>Tento obchod je nyní běžným obchodem pro hráče s omezeným inventářem zákazníků. Počítané obchody:{owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Tento administrátorský obchod nemůžete přepnout zpět na hráčský obchod, protože váš obchod je limitován{max_shops}je již dosaženo. Počítané obchody:{owned_shops}.</red>"
+    close_not_empty: "<red>Obchod můžete zavřít až po odstranění všech uložených věcí. Zbývající položky:{item_count}.</red>"
+    close_bank_not_empty: "<red>Před uzavřením tohoto obchodu vyberte svou banku obchodu. Zbývající sledované měny:{bank_currency_count}.</red>"
+    closed: "<green>Zavřel obchod a vrátil se{returned_blocks}ShopBlock(y). Počítané obchody:{owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Globální ovládací panel pro správu RDS.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] Ovládání RDS</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Panel administrátora RDS</white>"
+    lore:
+      - "<gray>Spravujte globální admin-shop systémy z jednoho místa.</gray>"
+      - "<gray>Otevřete banku serverů nebo upravte nastavení konfigurace níže.</gray>"
+      - "<yellow>Vyžaduje:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Serverová banka</gradient>"
+      lore:
+        - "<gray>Zkontrolujte příjmy admin-shopu stažené do banky serveru.</gray>"
+        - "<gray>Zkontrolujte načasování dalšího tahu a vyjměte zůstatky.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky banky serveru.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace obchodu</gradient>"
+      lore:
+        - "<gray>Upravit hodnoty z</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Každé upravitelné nastavení lze změnit pomocí výzvy kovadliny.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky konfigurace.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Měnový manažer</gradient>"
+      lore:
+        - "<gray>Zkontrolujte zjištěné měny ze služby Vault a JExEconomy.</gray>"
+        - "<gray>Vytvořte výchozí</gray> <white>dešťové kapky</white> <gray>měny v případě potřeby.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky měny.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Je vyžadován přístup správce</white>"
+      lore:
+        - "<gray>Nemáte oprávnění používat tento panel administrátora.</gray>"
+
+# Zobrazení měny správce pro zjištěné poskytovatele a vytvoření výchozí měny.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Měnový manažer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informace]</gradient> <white>Poskytovatelé měn</white>"
+    lore:
+      - "<gray>Zjištěné měny:</gray> <white>{currency_count}</white>"
+      - "<gray>K dispozici trezor:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy k dispozici:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Pomocí krystalového tlačítka vytvořte výchozí měnu.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Voříšek]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Poskytovatel:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Předpona:</gray> <white>{prefix}</white>"
+      - "<gray>Přípona:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Vytvořit{currency_id}</white>"
+      lore:
+        - "<gray>Vytvořte výchozí měnu RDS v JExEconomy.</gray>"
+        - "<yellow>Klikněte pro vytvoření{currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Je vyžadována JExEconomy</white>"
+      lore:
+        - "<gray>Bez JExEconomy nelze vytvořit výchozí měnu.</gray>"
+        - "<gray>Nejprve nainstalujte a povolte JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>{currency_id}Připraveno</white>"
+      lore:
+        - "<gray>Výchozí měna již existuje.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Vytvořená výchozí měna:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se vytvořit měnu:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Měna již existuje:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Toto tlačítko nemůžete použít, pokud není k dispozici JExEconomy.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Nebyly zjištěny žádné měny</white>"
+      lore:
+        - "<gray>Nebyly zjištěny žádné měny Vault nebo JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Je vyžadován přístup správce</white>"
+      lore:
+        - "<gray>K použití tohoto zobrazení měny nemáte oprávnění.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ke správě měn.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Nakonfigurujte uživatelské rozhraní prohlížeče pro upravitelná nastavení a zpětnou vazbu k aktualizaci.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace obchodu</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informace]</gradient> <white>Nastavení konfigurace</white>"
+    lore:
+      - "<gray>Zjištěna upravitelná nastavení:</gray> <white>{setting_count}</white>"
+      - "<gray>Kliknutím na libovolnou položku níže upravíte její hodnotu v kovadlině.</gray>"
+      - "<yellow>Změny se zapisují přímo do config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Soubor]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Cesta:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktuální hodnota:</gray> <white>{current_value}</white>"
+      - "<yellow>Kliknutím upravíte toto nastavení.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Celé číslo]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Dlouho]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dvojnásobek]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Seznam]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[řetězec]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Žádná upravitelná nastavení</white>"
+      lore:
+        - "<gray>Nebyla nalezena žádná upravitelná nastavení skalární/seznamové konfigurace.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Je vyžadován přístup správce</white>"
+      lore:
+        - "<gray>K použití tohoto konfiguračního zobrazení nemáte oprávnění.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Úprava konfigurace uzamčena</white>"
+      lore:
+        - "<gray>Tato edice neumožňuje úpravy konfigurace za běhu.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění upravovat nastavení konfigurace.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Úpravy konfigurací jsou v tomto vydání uzamčeny.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aktualizováno<white>{config_path}</white><gray>na<white>{updated_value}</white><gray>.</gray>"
+
+# Text výzvy kovadliny pro úpravu hodnot konfigurace.
+shop_config_value_anvil_ui:
+  title: "Upravit{config_path}"
+  input:
+    lore:
+      - "<gray>Cesta:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktuální hodnota:</gray> <white>{current_value}</white>"
+      - "<yellow>Zadejte novou hodnotu a potvrďte.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Neplatný vstup pro typ<white>{value_type}</white><gray>. Vstup:</gray> <white>{input}</white>"
+
+# Přehled banky serveru, měnové vstupy a zpětná vazba k výběru.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Serverová banka</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informace]</gradient> <white>Stav příjmu a převodu</white>"
+    lore:
+      - "<gray>Sledované měny:</gray> <white>{currency_count}</white>"
+      - "<gray>Příjem:</gray> <white>{income_summary}</white>"
+      - "<gray>Další tah:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Čas do dalšího tahu:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Zůstatky Admin-shop se sem převádějí podle plánu.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Žádný</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Zakázáno</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Čeká na...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Zakázáno</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Čeká na...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Stáhnout]</gradient> <white>Stáhnout vše</white>"
+    lore:
+      - "<gray>Pokuste se vybrat každý kladný zůstatek.</gray>"
+      - "<gray>Nedostupné měny budou přeskočeny.</gray>"
+      - "<yellow>Kliknutím vyberete všechny prostředky na svůj účet.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+      - "<gray>Disponibilní zůstatek:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Kliknutím vyberete celý zůstatek v měně.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Serverová banka je prázdná</white>"
+      lore:
+        - "<gray>Nejsou k dispozici žádné kladné zůstatky k výběru.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Je vyžadován přístup správce</white>"
+      lore:
+        - "<gray>Nemáte oprávnění ke správě banky serverů.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ke správě banky serverů.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tento zůstatek mezi serverem a bankou již není k dispozici.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Stáhl se<white>{amount} {currency_name}</white><gray>. Zbývající{currency_name}:</gray> <white>{remaining_amount}</white><gray>. Aktivní měny:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Stáhl se<white>{withdrawn_currency_count}</white><gray>měnový zůstatek(y). Selhalo:</gray> <white>{failed_currency_count}</white><gray>. Zbývající aktivní měny:</gray> <white>{remaining_currency_count}</white><gray>. Podrobnosti:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Žádné zůstatky nebylo možné vybrat. Neúspěšný počítání měny:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Měna<white>{currency_name}</white><gray>je momentálně nedostupný.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se stáhnout<white>{amount} {currency_name}</white><gray>z banky serveru.</gray>"
+
+# Uživatelské rozhraní vstupu položky obchodu používané při přidávání nových položek skladu.
+shop_input_ui:
+  title: "Přidat položky -{owner} @ {location}"
+  summary:
+    name: "<gold>Obchod Skladování</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Aktuálně uloženo:</gray> <white>{stored_count}</white>"
+      - "<yellow>Nové položky mají jako výchozí typ měny trezor a hodnotu 0.</yellow>"
+  input_slot:
+    name: "<green>Vstupní slot</green>"
+    lore:
+      - "<gray>Klikněte levým tlačítkem myši na položku na kurzoru</gray>"
+      - "<gray>nebo Shift-klikněte na položku z vašeho inventáře.</gray>"
+      - "<gray>Kliknutím pravým tlačítkem odstraníte vloženou sadu.</gray>"
+  no_new_items_inserted: "<red>Nebyly vloženy žádné nové položky.</red>"
+  saved: "<green>Uloženo{added_count}nové záznamy. Obchod nyní má{stored_count}záznamy.</green>"
+  save_failed: "<red>Nepodařilo se uložit položky obchodu.</red>"
+  left_overs: "<yellow>Neuložené položky obchodu byly vráceny do vašeho inventáře.</yellow>"
+  feedback:
+    no_permission: "<red>Nemáte oprávnění přidávat položky do tohoto obchodu.</red>"
+    locked:
+      name: "<red>Je vyžadován přístup k zásobování</red>"
+      lore:
+        - "<gray>Předměty sem mohou přidávat pouze partneři a důvěryhodní hráči.</gray>"
+
+# Uživatelské rozhraní prohlížeče úložiště pro prohlížení a výběr uložených položek.
+shop_storage_ui:
+  title: "Uložené položky -{location}"
+  summary:
+    name: "<gold>Uložené položky</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Uložené záznamy:</gray> <white>{stored_count}</white>"
+      - "<yellow>Kliknutím na libovolnou položku níže ji odeberete.</yellow>"
+  entry:
+    lore:
+      - "<gray>Uložené množství:</gray> <white>{amount}</white>"
+      - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+      - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+      - "<gray>Hodnota:</gray> <white>{value}</white>"
+      - "<yellow>Klikněte pro extrahování této položky z obchodu.</yellow>"
+  feedback:
+    not_owner: "<red>Nemáte oprávnění ke správě tohoto obchodu.</red>"
+    extracted: "<green>Extrahováno{amount}x {item_type}. Cena byla{value} {currency_type}. Zbývající uložené záznamy:{stored_count}.</green>"
+    item_missing: "<red>Uložená položka nebyla nalezena.</red>"
+    locked:
+      name: "<red>Je vyžadován úplný přístup</red>"
+      lore:
+        - "<gray>Odebírat uložené položky mohou pouze důvěryhodní hráči s plným přístupem.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Uživatelské rozhraní pro úpravy výběru pro výběr položek, které chcete upravit.
+shop_edit_ui:
+  title: "Upravit položky obchodu -{location}"
+  summary:
+    name: "<aqua>Editor cen obchodu</aqua>"
+    player:
+      lore:
+        - "<gray>Majitel:</gray> <white>{owner}</white>"
+        - "<gray>Umístění:</gray> <white>{location}</white>"
+        - "<gray>Uložené záznamy:</gray> <white>{stored_count}</white>"
+        - "<yellow>Chcete-li upravit cenu, klikněte na položku levým tlačítkem.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem na položku ji odstraníte z obchodu.</yellow>"
+    admin:
+      lore:
+        - "<gray>Majitel:</gray> <white>{owner}</white>"
+        - "<gray>Umístění:</gray> <white>{location}</white>"
+        - "<gray>Uložené záznamy:</gray> <white>{stored_count}</white>"
+        - "<gray>Režim obnovení zásob správce:</gray> <white>{restock_mode}</white>"
+        - "<gray>Harmonogram zásob:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Kliknutím levým tlačítkem na položku upravíte cenu nebo sklad.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem na položku ji odstraníte z obchodu.</yellow>"
+    restock_schedule:
+      gradual: "Výchozí časovač:{reset_timer_ticks}zaškrtnutí na položku"
+  entry:
+    player:
+      lore:
+        - "<gray>Uložené množství:</gray> <white>{amount}</white>"
+        - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+        - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Hodnota:</gray> <white>{value}</white>"
+        - "<yellow>Kliknutím levým tlačítkem upravíte tuto položku obchodu.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem jej odstraníte z obchodu.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Sklad:</gray> <white>Nekonečný</white>"
+        - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+        - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Hodnota:</gray> <white>{value}</white>"
+        - "<gray>Režim doplnění zásob:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Kliknutím levým tlačítkem upravíte tuto položku obchodu pro správce.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem jej odstraníte z obchodu.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Aktuální sklad:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+        - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Hodnota:</gray> <white>{value}</white>"
+        - "<gray>Režim doplnění zásob:</gray> <white>{restock_mode}</white>"
+        - "<gray>Harmonogram zásob:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Kliknutím levým tlačítkem upravíte tuto položku obchodu pro správce.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem jej odstraníte z obchodu.</yellow>"
+    admin_mode:
+      gradual: "Postupný"
+      full: "Úplný reset"
+    restock_schedule:
+      gradual: "1 položka každý{reset_timer_ticks}klíšťata"
+      full: "Plně doskladňuje na{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Nemáte oprávnění ke správě tohoto obchodu.</red>"
+    removed: "<green>Odebráno{amount}x {item_type}z obchodu. Cena byla{value} {currency_type}. Zbývající uložené záznamy:{stored_count}.</green>"
+    item_missing: "<red>Položku z obchodu se nepodařilo najít.</red>"
+    locked:
+      name: "<red>Je vyžadován úplný přístup</red>"
+      lore:
+        - "<gray>Hodnoty položek mohou upravovat pouze důvěryhodní hráči s plným přístupem.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Podrobné uživatelské rozhraní editoru pro chování a ceny jednotlivých položek obchodu.
+shop_item_edit_ui:
+  title: "Upravit{item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Uložené množství:</gray> <white>{amount}</white>"
+        - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Hodnota:</gray> <white>{value}</white>"
+        - "<gray>Režim dostupnosti:</gray> <white>{availability_mode}</white>"
+        - "<gray>Dostupnost nyní:</gray> <white>{availability_state}</white>"
+        - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+        - "<yellow>Pro úpravu této položky použijte tlačítka níže.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Sklad:</gray> <white>Nekonečný</white>"
+        - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Hodnota:</gray> <white>{value}</white>"
+        - "<gray>Režim doplnění zásob:</gray> <white>{restock_mode}</white>"
+        - "<gray>Nákupní příkazy:</gray> <white>{command_count}</white>"
+        - "<gray>Režim dostupnosti:</gray> <white>{availability_mode}</white>"
+        - "<gray>Dostupnost nyní:</gray> <white>{availability_state}</white>"
+        - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+        - "<yellow>K úpravě této položky správce použijte tlačítka níže.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Aktuální sklad:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Typ měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Hodnota:</gray> <white>{value}</white>"
+        - "<gray>Režim doplnění zásob:</gray> <white>{restock_mode}</white>"
+        - "<gray>Harmonogram zásob:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Nákupní příkazy:</gray> <white>{command_count}</white>"
+        - "<gray>Režim dostupnosti:</gray> <white>{availability_mode}</white>"
+        - "<gray>Dostupnost nyní:</gray> <white>{availability_state}</white>"
+        - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+        - "<yellow>K úpravě této položky správce použijte tlačítka níže.</yellow>"
+  currency_type:
+    name: "<green>Typ měny</green>"
+    lore:
+      - "<gray>Aktuální typ:</gray> <white>{currency_type}</white>"
+      - "<yellow>Kliknutím upravíte typ měny.</yellow>"
+  value:
+    name: "<gold>Hodnota</gold>"
+    lore:
+      - "<gray>Aktuální typ:</gray> <white>{currency_type}</white>"
+      - "<gray>Aktuální hodnota:</gray> <white>{value}</white>"
+      - "<yellow>Klepnutím upravte číselnou hodnotu.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Režim] Dostupnost položky</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Vždy]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Střídat]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Nikdy]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[OTEVŘENO]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[ZAVŘENO]</gradient>"
+    lore:
+      - "<gray>Aktuální režim:</gray> <white>{availability_mode}</white>"
+      - "<gray>Aktuální stav:</gray> <white>{availability_state}</white>"
+      - "<gray>Otočit okno:</gray> <white>{rotation_minutes}zápis)</white>"
+      - "<yellow>Klikněte pro cyklování: Vždy -> Otočit -> Nikdy.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Časovač] Otočit minuty</gradient>"
+    lore:
+      - "<gray>Aktuální okno:</gray> <white>{rotation_minutes}zápis)</white>"
+      - "<gray>Aktuální režim:</gray> <white>{availability_mode}</white>"
+      - "<gray>Štítek režimu otáčení:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Kliknutím nastavíte minuty otáčení v kovadlině.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Vykonavatel příkazů</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Hráč]</gradient>"
+    lore:
+      - "<gray>Aktuální režim:</gray> <white>{command_mode}</white>"
+      - "<gray>Další režim:</gray> <white>{next_mode}</white>"
+      - "<yellow>Kliknutím přepnete, kdo provádí nově přidané příkazy.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Nákupní příkazy</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Žádný</gradient>"
+    lore:
+      - "<gray>Nakonfigurované příkazy:</gray> <white>{command_count}</white>"
+      - "<gray>Nejnovější příkaz:</gray> <white>{latest_command}</white>"
+      - "<yellow>Klepnutím otevřete nastavení příkazů a přidejte příkazy.</yellow>"
+  confirm:
+    name: "<green>Uložit cenu položky</green>"
+    lore:
+      - "<gray>Použijte aktuální typ a hodnotu měny</gray>"
+      - "<gray>k této položce obchodu.</gray>"
+  stock_limit:
+    name: "<gold>Skladový limit</gold>"
+    unlimited: "Nekonečný"
+    lore:
+      - "<gray>Aktuální limit:</gray> <white>{stock_limit}</white>"
+      - "<gray>Aktuální sklad:</gray> <white>{current_stock}</white>"
+      - "<yellow>Kliknutím nastavíte limit zásob.</yellow>"
+      - "<gray>Použijte -1 pro vrácení této položky do nekonečné zásoby.</gray>"
+  reset_timer:
+    name: "<aqua>Resetovat časovač</aqua>"
+    lore:
+      - "<gray>Aktuální časovač:</gray> <white>{reset_timer_ticks}klíšťata</white>"
+      - "<yellow>Kliknutím nastavíte časovač doplnění.</yellow>"
+  restock_mode:
+    name: "<yellow>Režim obnovení zásob správce</yellow>"
+    gradual: "Postupný"
+    full: "Úplný reset"
+    lore:
+      - "<gray>Konfigurovaný režim:</gray> <white>{restock_mode}</white>"
+      - "<gray>Nakonfigurovaný rozvrh:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Kliknutím přepnete režim globálního správce zásob.</yellow>"
+  restock_schedule:
+    gradual: "1 položka každý{reset_timer_ticks}klíšťata"
+    full: "Plně doskladňuje na{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Nemáte oprávnění ke správě tohoto obchodu.</red>"
+    shop_missing: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+    item_missing: "<red>Položku z obchodu se nepodařilo najít.</red>"
+    saved: "<green>Uložená cena položky jako{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Režim dostupnosti nastaven na<white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nový režim provádění příkazů nastaven na<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Odebrán nejnovější příkaz. Zbývající příkazy:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vymazány všechny příkazy správce k nákupu.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Nejsou nakonfigurovány žádné nákupní příkazy správce.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Změny konfigurace pluginu jsou uzamčeny<white>RDS zdarma</white><gray>. Pro plný přístup upgradujte na prémiovou verzi.</gray>"
+    restock_mode_updated: "<green>Režim obnovení zásob správce nastaven na{restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Nepodařilo se uložit režim obnovení zásob správce.</red>"
+
+# Výzva kovadliny pro přidání nového příkazu k nákupu správce.
+shop_item_admin_command_anvil_ui:
+  title: "Přidat příkaz{command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Zadejte příkaz, který se má spustit při zakoupení této položky správce.</gray>"
+      - "<gray>Pouze text příkazu. Zpoždění se konfiguruje v zobrazení nastavení příkazu.</gray>"
+      - "<gray>Příklady:</gray>"
+      - "<white>přenos%player_name%koupil{amount}x {item_type}</white>"
+      - "<white>eko dát%player_name% 50</white>"
+      - "<gray>Nakonfigurované příkazy:</gray> <white>{command_count}</white>"
+      - "<gray>Režim provedení:</gray> <white>{command_mode}</white>"
+      - "<gray>Zpoždění:</gray> <white>{command_delay_ticks}klíšťata</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Hráč]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Text příkazu nemůže být prázdný. Vstup:</gray> <white>{input}</white>"
+
+# Správce zakoupí uživatelské rozhraní správce příkazů pro režim, zpoždění a seznam příkazů.
+shop_item_admin_command_ui:
+  title: "Nastavení příkazů -{item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Nastavení příkazu nákupu</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Žádný</gradient>"
+    lore:
+      - "<gray>Nakonfigurované příkazy:</gray> <white>{command_count}</white>"
+      - "<gray>Nejnovější příkaz:</gray> <white>{latest_command}</white>"
+      - "<gray>Další příkazový režim:</gray> <white>{command_mode}</white>"
+      - "<gray>Zpoždění dalšího příkazu:</gray> <white>{command_delay_ticks}klíšťata ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Další příkazový vykonavatel</gradient>"
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Hráč]</green>"
+    lore:
+      - "<gray>Aktuální režim:</gray> <white>{command_mode}</white>"
+      - "<gray>Další režim:</gray> <white>{next_mode}</white>"
+      - "<yellow>Kliknutím přepnete exekutor na další příkaz.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Zpoždění] Zpoždění dalšího příkazu</gradient>"
+    lore:
+      - "<gray>Aktuální zpoždění:</gray> <white>{command_delay_ticks}klíšťata ({command_delay_seconds}s)</white>"
+      - "<yellow>Kliknutím nastavíte zpoždění v tikání pro další příkaz.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Přidat příkaz</gradient>"
+    lore:
+      - "<gray>režim:</gray> <white>{command_mode}</white>"
+      - "<gray>Zpoždění:</gray> <white>{command_delay_ticks}klíšťata ({command_delay_seconds}s)</white>"
+      - "<yellow>Klepnutím otevřete zadávání příkazů.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Odebrat příkaz</gradient>"
+    lore:
+      - "<gray>Nakonfigurované příkazy:</gray> <white>{command_count}</white>"
+      - "<yellow>Klepnutím odeberete nejnovější příkaz.</yellow>"
+      - "<yellow>Shift + kliknutí vymaže všechny příkazy.</yellow>"
+  confirm:
+    name: "<green>Uložit nastavení příkazů</green>"
+    lore:
+      - "<gray>Vraťte se do editoru položek a ponechte si tyto změny příkazů.</gray>"
+  feedback:
+    not_owner: "<red>Nemáte oprávnění ke správě tohoto obchodu.</red>"
+    shop_missing: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Další příkazový režim nastaven na<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Odebrán nejnovější příkaz. Zbývající příkazy:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vymazány všechny příkazy správce k nákupu.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Nejsou nakonfigurovány žádné nákupní příkazy správce.</gray>"
+
+# Výzva na kovadlinu pro nastavení tiků zpoždění příkazu správce.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Nastavit zpoždění -{command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Zadejte celý počet značek pro zpoždění dalšího příkazu.</gray>"
+      - "<gray>Režim provedení:</gray> <white>{command_mode}</white>"
+      - "<gray>Příklady:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Hráč]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Zadejte celé číslo větší nebo rovné 0. Vstup:</gray> <white>{input}</white>"
+
+# Výzva kovadliny pro okno dostupnosti režimu otáčení během několika minut.
+shop_item_availability_minutes_anvil_ui:
+  title: "Otočit minuty:{rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Časovač] Otočit minuty</gradient>"
+    lore:
+      - "<gray>Zadejte celý počet minut.</gray>"
+      - "<gray>Režim otočení střídavě je dostupný/nedostupný v každém okně.</gray>"
+  error:
+    invalid_number: "<red>Zadejte celé číslo větší než 0. Zadejte:{input}</red>"
+
+# Výzva kovadliny pro nastavení omezené skladové kapacity správce.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Skladový limit:{stock_limit}"
+  input:
+    name: "<gold>Skladový limit</gold>"
+    lore:
+      - "<gray>Zadejte kladný skladový limit v položkách.</gray>"
+      - "<gray>Použijte -1 k obnovení nekonečného počtu administrátorů.</gray>"
+  error:
+    invalid_number: "<red>Zadejte -1 nebo celé číslo větší než 0. Zadejte:{input}</red>"
+
+# Výzva na kovadlinu pro konfiguraci admin restock/reset timer ticks.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Resetovat časovač:{reset_timer_ticks}"
+  input:
+    name: "<aqua>Resetovat časovač</aqua>"
+    lore:
+      - "<gray>Zadejte celý počet klíšťat Bukkit.</gray>"
+      - "<gray>Postupný režim obnoví jednu položku na časovač.</gray>"
+  error:
+    invalid_number: "<red>Zadejte celé číslo větší než 0. Zadejte:{input}</red>"
+
+# Výzva kovadliny pro výběr typu měny používané položkou.
+shop_item_currency_type_anvil_ui:
+  title: "Typ měny:{currency_type}"
+  input:
+    name: "<green>Typ měny</green>"
+    lore:
+      - "<gray>Zadejte identifikátor měny pro tuto položku.</gray>"
+      - "<gray>Příklady:</gray> <white>vault drahokamy</white>"
+  error:
+    empty: "<red>Typ měny nemůže být prázdný.</red>"
+    invalid_currency: "<red>Typ měny{currency_type}není k dispozici. Použijte trezor nebo registrovanou vlastní měnu.</red>"
+    processing_failed: "<red>Aktualizace typu měny se nezdařila. Vstup:{input}</red>"
+
+# Výzva kovadliny pro nastavení ceny/hodnoty za položku.
+shop_item_value_anvil_ui:
+  title: "Hodnota:{value} {currency_type}"
+  input:
+    name: "<gold>Hodnota položky</gold>"
+    lore:
+      - "<gray>Zadejte nezápornou číselnou hodnotu.</gray>"
+      - "<gray>Příklady:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Zadejte platné nezáporné číslo. Vstup:{input}</red>"
+    processing_failed: "<red>Aktualizace hodnoty položky se nezdařila. Vstup:{input}</red>"
+
+# Uživatelské rozhraní nákupní banky pro zůstatky a výběry měn v jednotlivých obchodech.
+shop_bank_ui:
+  title: "Obchodní banka -{location}"
+  summary:
+    name: "<gold>Bankovní zůstatky</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Sledované měny:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Kliknutím na zůstatek níže vyberete jeho plnou částku.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+      - "<gray>Disponibilní zůstatek:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klikněte pro výběr celého zůstatku.</yellow>"
+  feedback:
+    not_owner: "<red>Nemáte oprávnění ke správě tohoto obchodu.</red>"
+    entry_missing: "<red>Tento bankovní zůstatek již není k dispozici.</red>"
+    withdrawn: "<green>Stáhl se{amount} {currency_name}. Zbývající{currency_name}: {remaining_amount}. Sledované měny:{bank_currency_count}.</green>"
+    withdraw_failed: "<red>Nepodařilo se stáhnout{amount} {currency_name}z obchodní banky.</red>"
+    currency_unavailable: "<red>Měna{currency_name}není momentálně k dispozici.</red>"
+    empty:
+      name: "<red>Banka je prázdná</red>"
+      lore:
+        - "<gray>Tento obchod nemá žádné bankovní zůstatky k výběru.</gray>"
+    locked:
+      name: "<red>Je vyžadován úplný přístup</red>"
+      lore:
+        - "<gray>Finanční prostředky z obchodu mohou vybírat pouze důvěryhodní hráči s plným přístupem.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Důvěryhodné uživatelské rozhraní pro správu hráčů pro role přístupu k obchodu.
+shop_trusted_ui:
+  title: "Důvěryhodní hráči -{location}"
+  summary:
+    name: "<gold>Obchod Trust Manager</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Spolupracovníci:</gray> <white>{associate_count}</white>"
+      - "<gray>Důvěryhodní hráči:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Kliknutím na hráče můžete zacyklit jeho stav důvěryhodnosti.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Postavení:</gray> <white>Veřejnost</white>"
+        - "<gray>Žádná oprávnění ke správě.</gray>"
+        - "<yellow>Klikněte pro změnu na Associate.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Postavení:</gray> <white>Přidružený</white>"
+        - "<gray>Lze přidat položky do obchodu.</gray>"
+        - "<yellow>Kliknutím změníte na Důvěryhodný.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Postavení:</gray> <white>Důvěryhodný</white>"
+        - "<gray>Dokáže plně řídit obchod.</gray>"
+        - "<yellow>Klikněte pro změnu na Veřejné.</yellow>"
+  feedback:
+    not_owner: "<red>Důvěryhodné hráče může spravovat pouze majitel obchodu.</red>"
+    updated:
+      public: "<yellow>Soubor{player}na Veřejnost.</yellow>"
+      associate: "<green>Soubor{player}na společníka.</green>"
+      trusted: "<green>Soubor{player}na Důvěryhodný.</green>"
+    empty:
+      name: "<red>Nebyli nalezeni žádní hráči</red>"
+      lore:
+        - "<gray>Žádní další známí hráči nemohou věřit.</gray>"
+    locked:
+      name: "<red>Přístup pouze pro vlastníka</red>"
+      lore:
+        - "<gray>Důvěryhodné hráče může spravovat pouze majitel obchodu.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Uživatelské rozhraní knihy transakcí pro nákupy a daňovou historii.
+shop_ledger_ui:
+  title: "Kniha obchodu -{location}"
+  summary:
+    name: "<gold>Kniha transakcí obchodu</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Celkový počet záznamů:</gray> <white>{ledger_count}</white>"
+      - "<gray>Nákupy:</gray> <white>{purchase_count}</white>"
+      - "<gray>Daně:</gray> <white>{tax_count}</white>"
+      - "<yellow>Nejnovější transakce se zobrazí jako první.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Nákup:{item_type}</green>"
+      lore:
+        - "<gray>Kupující:</gray> <white>{actor}</white>"
+        - "<gray>Množství:</gray> <white>{item_amount}</white>"
+        - "<gray>Celkem zaplaceno:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Nahráno:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Daňový poplatek</gold>"
+      lore:
+        - "<gray>Účtováno na:</gray> <white>{actor}</white>"
+        - "<gray>Podíl na dani:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Počítané obchody:</gray> <white>{counted_shops}</white>"
+        - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Nahráno:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Žádné položky hlavní knihy</red>"
+      lore:
+        - "<gray>Tento obchod zatím nemá žádné zaznamenané nákupy ani daně.</gray>"
+    locked:
+      name: "<red>Je vyžadován úplný přístup</red>"
+      lore:
+        - "<gray>Knihu mohou zobrazit pouze důvěryhodní hráči s plným přístupem.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Uživatelské rozhraní obchodu orientované na zákazníka pro procházení a nákup položek.
+shop_customer_ui:
+  title: "Obchod -{location}"
+  summary:
+    name: "<gold>Pohled zákazníka</gold>"
+    player:
+      lore:
+        - "<gray>Majitel:</gray> <white>{owner}</white>"
+        - "<gray>Umístění:</gray> <white>{location}</white>"
+        - "<gray>Dostupné položky:</gray> <white>{stored_count}</white>"
+        - "<gray>Typ obchodu:</gray> <white>Obchod pro hráče</white>"
+        - "<gray>Inventář:</gray> <white>Konečný</white>"
+        - "<yellow>Kliknutím levým tlačítkem na položku ji zakoupíte.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem na položku vyberte částku.</yellow>"
+    admin:
+      lore:
+        - "<gray>Majitel:</gray> <white>{owner}</white>"
+        - "<gray>Umístění:</gray> <white>{location}</white>"
+        - "<gray>Dostupné položky:</gray> <white>{stored_count}</white>"
+        - "<gray>Typ obchodu:</gray> <white>Admin Shop</white>"
+        - "<gray>Inventář:</gray> <white>Nekonečný</white>"
+        - "<yellow>Kliknutím levým tlačítkem na položku ji zakoupíte.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem na položku vyberte částku.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Sklad:</gray> <white>{amount}</white>"
+        - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+        - "<gray>Cena za každý:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Celková hodnota akcií:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+        - "<yellow>Kliknutím levým tlačítkem si jednu koupíte.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem vyberte částku.</yellow>"
+    admin:
+      lore:
+        - "<gray>Inventář:</gray> <white>Nekonečný</white>"
+        - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+        - "<gray>Cena za každý:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Typ obchodu:</gray> <white>Admin Shop</white>"
+        - "<yellow>Kliknutím levým tlačítkem si jednu koupíte.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem vyberte částku.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Sklad:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Typ položky:</gray> <white>{item_type}</white>"
+        - "<gray>Cena za každý:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>ID měny:</gray> <white>{currency_type}</white>"
+        - "<gray>Režim doplnění zásob:</gray> <white>{restock_mode}</white>"
+        - "<gray>Harmonogram zásob:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Kliknutím levým tlačítkem si jednu koupíte.</yellow>"
+        - "<yellow>Kliknutím pravým tlačítkem vyberte částku.</yellow>"
+    admin_mode:
+      gradual: "Postupný"
+      full: "Úplný reset"
+    restock_schedule:
+      gradual: "1 položka každý{reset_timer_ticks}klíšťata"
+      full: "Plně doskladňuje na{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Zakoupeno{amount}x {item_type}pro{total_price} {currency_name}. Zbývající zásoby:{remaining_amount}.</green>"
+    purchased_admin: "<green>Zakoupeno{amount}x {item_type}pro{total_price} {currency_name}. Tento administrátorský obchod má nekonečný inventář.</green>"
+    purchased_admin_limited: "<green>Zakoupeno{amount}x {item_type}pro{total_price} {currency_name}. Zbývající zásoby správce:{remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}momentálně není možné zakoupit.</gray>"
+    insufficient_stock: "<red>Tento obchod má pouze{available_amount}x {item_type}k dispozici.</red>"
+    insufficient_funds: "<red>potřebuješ{total_price} {currency_name}koupit{amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Měna{currency_name}není momentálně k dispozici.</red>"
+    invalid_amount: "<red>Zadejte platnou částku nákupu.</red>"
+    item_missing: "<red>Tato položka obchodu již není dostupná.</red>"
+    empty_shop:
+      name: "<red>Obchod prázdný</red>"
+      lore:
+        - "<gray>Nejsou k dispozici žádné položky k zakoupení.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Výzva kovadliny pro zadání vlastního množství nákupu.
+shop_purchase_amount_anvil_ui:
+  title: "Nakoupit{item_type}"
+  input:
+    name: "<gold>Částka nákupu</gold>"
+    player:
+      lore:
+        - "<gray>Zadejte, kolik položek chcete koupit.</gray>"
+        - "<gray>Maximum k dispozici:</gray> <white>{max_amount}</white>"
+        - "<gray>Položka:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Zadejte, kolik položek chcete koupit.</gray>"
+        - "<gray>Tento administrátorský obchod má nekonečný inventář.</gray>"
+        - "<gray>Položka:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Zadejte, kolik položek chcete koupit.</gray>"
+        - "<gray>Maximum k dispozici:</gray> <white>{max_amount}</white>"
+        - "<gray>Položka:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Zadejte celé číslo mezi 1 a{max_amount}. Vstup:{input}</red>"
+    invalid_number_admin: "<red>Zadejte celé číslo větší než 0. Zadejte:{input}</red>"
+    processing_failed: "<red>Částku nákupu se nepodařilo zpracovat. Vstup:{input}</red>"
+
+# Uživatelské rozhraní pro vyhledávání v obchodě pro procházení všeho a vyhledávání materiálů.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Prohlížeč obchodu</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Prohlížeč obchodu</gradient>"
+    lore:
+      - "<gray>Procházejte každý sledovaný obchod nebo filtrujte podle konkrétního materiálu.</gray>"
+      - "<yellow>Pokračujte výběrem jedné z níže uvedených akcí.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Procházet všechny obchody</gradient>"
+    lore:
+      - "<gray>Otevřete celý stránkovaný adresář obchodu.</gray>"
+      - "<yellow>Kliknutím zobrazíte každý sledovaný obchod.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Hledat podle materiálu</gradient>"
+    lore:
+      - "<gray>Otevřete výzvu kovadliny a zadejte název materiálu.</gray>"
+      - "<gray>Příklad:</gray> <white>diamantový_blok</white>"
+      - "<yellow>Kliknutím vyhledáte podle typu položky.</yellow>"
+
+# Uživatelské rozhraní stránkovaného adresáře se seznamem všech sledovaných obchodů.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Všechny obchody</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Adresář obchodu</gradient>"
+    lore:
+      - "<gray>Sledované obchody:</gray> <white>{shop_count}</white>"
+      - "<gray>Celkové dostupné zásoby:</gray> <white>{available_count}</white>"
+      - "<yellow>Kliknutím na kterýkoli obchod níže jej otevřete.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Dostupné zásoby:</gray> <white>{available_count}</white>"
+      - "<yellow>Kliknutím otevřete tento obchod.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Nebyly nalezeny žádné obchody</red>"
+      lore:
+        - "<gray>Zatím nejsou registrovány žádné obchody.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Uživatelské rozhraní výsledků obchodu s filtrovanými materiály.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Výsledky pro{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Výsledky pro{material}</gradient>"
+    lore:
+      - "<gray>Materiál:</gray> <white>{material}</white>"
+      - "<gray>Odpovídající obchody:</gray> <white>{shop_count}</white>"
+      - "<gray>Odpovídající nabídky:</gray> <white>{matching_count}</white>"
+      - "<yellow>Kliknutím na odpovídající obchod níže jej otevřete.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Majitel:</gray> <white>{owner}</white>"
+      - "<gray>Umístění:</gray> <white>{location}</white>"
+      - "<gray>Vhodný{material}nabízí:</gray> <white>{matching_count}</white>"
+      - "<gray>Celkové viditelné zásoby:</gray> <white>{available_count}</white>"
+      - "<yellow>Kliknutím otevřete tento obchod.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Žádné obchody neprodávají{material}</red>"
+      lore:
+        - "<gray>Tento materiál v současnosti nenabízejí žádné sledované obchody.</gray>"
+    shop_missing:
+      name: "<red>Obchod nenalezen</red>"
+      lore:
+        - "<gray>Tento obchod se nepodařilo načíst z úložiště.</gray>"
+      message: "<red>Tento obchod se nepodařilo načíst z úložiště.</red>"
+
+# Výzva kovadliny pro zadání vyhledávání materiálového filtru.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Vyhledat materiál</gradient>"
+  input:
+    lore:
+      - "<gray>Zadejte název materiálu Bukkit pro vyhledávání sledovaných obchodů.</gray>"
+      - "<gray>Příklady:</gray> <white>diamant</white><gray>,</gray> <white>diamantový_blok</white>"
+      - "<yellow>Kliknutím na výsledek otevřete odpovídající obchody.</yellow>"
+  error:
+    invalid_material: "<red>Zadejte platný materiál, například diamantový_blok. Vstup:{input}</red>"
+    processing_failed: "<red>Hledání materiálu se nezdařilo. Vstup:{input}</red>"
+
+# ============================================
+# STRÁNKOVÁNÍ
+# ============================================
+# Sdílené štítky položek stránkování používané napříč uživatelskými rozhraními seznamu.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Stránka %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Aktuální stránka:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Celkem stran:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Stránka %direction%</gradient>"
+
+# ============================================
+# POLOŽKY HEAD
+# ============================================
+# Sdílené popisky hlavových/navigačních tlačítek (návrat/potvrzení/další).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Zpět</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24> Potvrdit</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknutím potvrdíte nastavení</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24> Potvrdit</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Kliknutím potvrdíte nastavení</gradient>"

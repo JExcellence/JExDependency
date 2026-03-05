@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# بادئة معلقة مسبقًا إلى مخرجات الدردشة العامة للمكونات الإضافية.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# خطوط ملخصة سريعة تواجه اللاعب للمتجر والبنك والحالة الضريبية.
+info:
+  total: "<blue>المتاجر:</blue> <white>{owned_shops}</white>"
+  bank: "<green>الأرصدة المتعقبة ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>الضريبة المجدولة ({taxed_shops} متاجر خاضعة للضريبة):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>الضريبة التالية:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# رسائل وقت الانضمام التي تظهر عند دخول اللاعبين إلى الخادم.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} متاجر خاضعة للضريبة\n[<blue>Amount<yellow>]\n{taxes}\n<red>مستحقة:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# سلاسل استجابة الأمر لميزات `/rs` والتبديلات.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>تم فتح <white>مسؤول RDS</white><gray> لوحة.</gray>"
+  bar:
+    enabled: "<green>تم تمكين شريط رئيس المتجر أثناء البحث في المتجر.</green>"
+    disabled: "<yellow>تم تعطيل شريط رئيس المتجر.</yellow>"
+  give:
+    syntax: "<red>الاستخدام: /rs Give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>الاستخدام:</gray> <white>/rs لوحة النتائج &lt;دفتر الأستاذ|المخزون&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>تمكين <white>{scoreboard_type}</white><gray> شريط جانبي.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>تعطيل <white>{scoreboard_type}</white><gray> شريط جانبي.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>تم التبديل إلى <white>{scoreboard_type}</white><gray> شريط جانبي.</gray>"
+    type:
+      ledger: "<gold>دفتر الأستاذ</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# تسميات لوحة النتائج على الشريط الجانبي وتنسيق القيمة.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ دفتر الأستاذ [RDS] ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ إجماليات البنك</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>لم يتم العثور على أموال مصرفية</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ المخزون [RDS] ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>المخزون:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>لا توجد متاجر للاعبين</red>"
+
+# شريط الرئيس يظهر النص أثناء استهداف متجر.
+shop_boss_bar:
+  title: "<gold>{shop_type} متجر</gold> <gray>|</gray> <yellow>المالك:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>العناصر:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>الموقع:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "المسؤول"
+  owner:
+    admin: "المسؤول"
+  available_items:
+    finite: "{item_count}"
+    limited: "مخزون محدود"
+    infinite: "لانهائي"
+    various: "مختلف"
+
+# ============================================
+# أزرار واجهة المستخدم الرسومية
+# ============================================
+
+# اسم عنصر كتلة المتجر والبيانات التعريفية التقليدية.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>ضع هذه الكتلة لإعداد متجرك.</yellow>"
+
+# نظرة عامة على المتجر، تسميات واجهة المستخدم والتقاليد وحالات التوفر.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] متجر المتجر</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] كتل المتجر المملوكة</gradient>"
+    lore:
+      - "<gray>مجموعات المتاجر المملوكة:</gray> <white>{owned_shops}</white>"
+      - "<gray>هذه المسارات التي تم شراؤها أو منحها</gray>"
+      - "<gray>ShopBlock ملكية.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] حد كتلة المتجر</gradient>"
+    lore:
+      - "<gray>مجموعات المتاجر المملوكة:</gray> <white>{owned_shops}</white>"
+      - "<gray>الحد الأقصى لكتل المتاجر:</gray> <white>{max_shops}</white>"
+      - "<gray>يتحكم هذا الحد في عدد المتاجر</gray>"
+      - "<gray>الكتل التي يمكنك فتحها.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[الطلب] متطلبات المتجر</gradient>"
+    lore:
+      - "<gray>المتطلبات التي تم تكوينها:</gray> <white>{requirement_count}</white>"
+      - "<gray>عدد المتطلبات الحالية:</gray> <white>{requirements}</white>"
+      - "<gray>الحالة:</gray> <white>{availability}</white>"
+      - "<yellow>انقر لتفقد طبقة المتجر التالية.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[مستعد]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[قيد الانتظار]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[غير متصل]</gradient>"
+
+# واجهة مستخدم متطلبات طبقة المتجر، وعرض التقدم، وتعليقات الشراء.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[الطلب] متجر الطبقة{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] شراء كتلة المتجر</gradient>"
+    lore:
+      - "<gray>مستوى الشراء:</gray> <white>{purchase_number}</white>"
+      - "<gray>مجموعات المتاجر المملوكة:</gray> <white>{owned_shops}</white>"
+      - "<gray>الحد الأقصى لكتل المتاجر:</gray> <white>{max_shops}</white>"
+      - "<gray>المتطلبات التي تم تكوينها:</gray> <white>{requirement_count}</white>"
+      - "<gray>الموجودة حاليًا:</gray> <white>{met_count}</white>"
+      - "<gray>الحالة:</gray> <white>{availability}</white>"
+      - "<yellow>انقر للشراء عندما يكون هذا المستوى جاهزًا.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[مستعد]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[قيد الانتظار]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[غير متصل]</gradient>"
+    none: "<gradient:#10b981:#34d399>[حر]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[مجاني] لا توجد متطلبات</gradient>"
+    lore:
+      - "<gray>لا تحتوي طبقة الشراء هذه على متطلبات مهيأة.</gray>"
+      - "<yellow>يمكنك شراء كتلة المتجر هذه بدون شيكات إضافية.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[الطلب]{requirement_name}</gradient>"
+    lore:
+      - "<gray>المفتاح:</gray> <white>{requirement_key}</white>"
+      - "<gray>النوع:</gray> <white>{requirement_type}</white>"
+      - "<gray>الحالة:</gray> <white>{status}</white>"
+      - "<gray>التقدم:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>الملخص:</gray> <white>{summary}</white>"
+      - "<yellow>انقر بزر الماوس الأيمن فوق المتطلبات المتوافقة لتقدم البنك.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ الشيكات التفصيلية</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[اجتمع]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[قيد الانتظار]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[غير متاح]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>تم شراء مبنى متجر. المتطلبات المستهلكة:</gray> <white>{requirements}</white><gray>. كتل المتاجر المملوكة:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>أنت لا تستوفي حاليًا <white>{requirement}</white><gray>. متطلبات المتجر:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>متطلبات المتجر <white>{requirement}</white><gray> غير متاح أو غير صالح الآن.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لقد وصلت إلى حد كتلة المتجر وهو <white>{max_shops}</white><gray>. كتل المتاجر المملوكة:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> جاهز الآن.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>التقدم المخزن لـ <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>لم تكن هناك عناصر أو عملة مطابقة متاحة لـ <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> لا يدعم التقدم البنكي.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> غير متاح الآن.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>لا يمكن تحميل ملف تعريف RDS الخاص بك، لذا لا يمكن متابعة التقدم تم الحفظ.</gray>"
+
+# حظر أخطاء التحقق من صحة التفاعل وإشعارات الحماية.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>غير قادر على قراءة مالك المتجر من هذا العنصر.</red>"
+    not_owner: "<red>يمتلك ShopBlock هذا لاعب آخر ولا يمكنك وضعه.</red>"
+    max_shops_reached: "<red>لقد وصلت إلى حد المتجر وهو {max_shops}. المحلات التجارية الحالية: {owned_shops}.</red>"
+    shop_protected: "<red>لا يمكن كسر المتاجر مباشرة. استخدم قائمة المتجر لإغلاق المتجر.</red>"
+    double_chest_requires_shop_block: "<red>تتطلب المتاجر ذات الصندوق المزدوج <blue>ShopBlock</blue><red>. لا يمكن دمج الصناديق العادية مع صناديق المتجر.</red>"
+    double_chest_owner_mismatch: "<red>ينتمي ShopBlock هذا إلى مالك مختلف، لذا لا يمكنه توسيع هذا المتجر.</red>"
+    shop_already_double_chest: "<red>يستخدم هذا المتجر كلا نصفي الصندوق بالفعل.</red>"
+    double_chest_ambiguous: "<red>يلمس ShopBlock هذا العديد من صناديق المتاجر. ضعه بجوار متجر واحد فقط.</red>"
+
+# رسائل نتائج معالجة الضريبة المجدولة.
+tax_scheduler:
+  paid: "<yellow>تم جمع ضريبة المتجر المجدولة بنسبة {amount}. المحلات التجارية المعدودة: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>لا يمكنك الدفع للمتجر المجدول ضريبة {amount}. المحلات التجارية المعدودة: {owned_shops}.</red>"
+  charge_failed: "<red>فشل في تحصيل ضريبة المتجر المجدولة لـ {amount}. المحلات التجارية المعدودة: {owned_shops}.</red>"
+
+# واجهة نظرة عامة على المتجر الرئيسي لإجراءات إدارة المالك/المشرف.
+shop_overview_ui:
+  title: "{owner} متجر - {location}"
+  summary:
+    name: "<gold>ملخص المتجر</gold>"
+    player:
+      lore:
+        - "<gray>المالك:</gray> <white>{owner}</white>"
+        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
+        - "<gray>Shop النوع:</gray> <white>متجر المشغل</white>"
+        - "<gray>المخزون:</gray> <white>محدود</white>"
+    admin:
+      lore:
+        - "<gray>المالك:</gray> <white>{owner}</white>"
+        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
+        - "<gray>Shop النوع:</gray> <white>متجر الإدارة</white>"
+        - "<gray>المخزون:</gray> <white>لانهائي</white>"
+  finance:
+    name: "<gold>Shop Bank</gold>"
+    lore:
+      - "<gray>العملات المتتبعة:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>انقر للمراجعة وسحب الأموال.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>متجر الإدارة ممكن</red>"
+        lore:
+          - "<gray>هذا المتجر هو حاليًا متجر إداري.</gray>"
+          - "<gray>المخزون لا نهائي لـ العملاء.</gray>"
+          - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
+          - "<yellow>انقر للتبديل مرة أخرى إلى متجر المشغلات.</yellow>"
+      disabled:
+        name: "<green>متجر الإدارة معطل</green>"
+        lore:
+          - "<gray>يستخدم هذا المتجر حاليًا المخزون العادي.</gray>"
+          - "<gray>يمكن للعملاء شراء الكميات المخزنة فقط.</gray>"
+          - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
+          - "<yellow>انقر لتمكين وضع المتجر الإداري.</yellow>"
+    close:
+      name: "<red>إغلاق المتجر</red>"
+      lore:
+        - "<gray>قم بإزالة هذا المتجر وأعد كتلة المتجر.</gray>"
+        - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
+        - "<gray>عملات البنك المتتبعة:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>يجب أن يكون مخزون المتجر فارغًا قبل الإغلاق.</yellow>"
+    manage:
+      name: "<green>إضافة عناصر المتجر</green>"
+      lore:
+        - "<gray>قم بتخزين عناصر جديدة في هذا shop.</gray>"
+        - "<gray>الإدخالات الحالية:</gray> <white>{item_count}</white>"
+        - "<yellow>انقر لفتح إدخال العنصر.</yellow>"
+    customer_view:
+      name: "<gold>فتح عرض العميل</gold>"
+      lore:
+        - "<gray>معاينة هذا المتجر كما يراه العملاء.</gray>"
+        - "<gray>الإدخالات الحالية:</gray> <white>{item_count}</white>"
+        - "<yellow>انقر للتصفح هذا المحل كعميل.</yellow>"
+    trusted:
+      name: "<gold>اللاعبون الموثوقون</gold>"
+      lore:
+        - "<gray>الشركاء:</gray> <white>{associate_count}</white>"
+        - "<gray>موثوق اللاعبين:</gray> <white>{trusted_count}</white>"
+        - "<yellow>انقر لإدارة مستويات ثقة المتجر.</yellow>"
+    ledger:
+      name: "<gold>دفتر الأستاذ للمتجر</gold>"
+      lore:
+        - "<gray>إجمالي الإدخالات:</gray> <white>{ledger_count}</white>"
+        - "<gray>المشتريات:</gray> <white>{purchase_count}</white>"
+        - "<gray>الضرائب:</gray> <white>{tax_count}</white>"
+        - "<yellow>انقر لمراجعة سجل معاملات المتجر.</yellow>"
+    edit:
+      name: "<aqua>تحرير عناصر المتجر</aqua>"
+      lore:
+        - "<gray>تحرير أسعار عناصر المتجر المخزنة.</gray>"
+        - "<gray>الإدخالات الحالية:</gray> <white>{item_count}</white>"
+        - "<yellow>انقر لتعديل الأسعار و العملات.</yellow>"
+    storage:
+      name: "<gold>عرض العناصر المخزنة</gold>"
+      lore:
+        - "<gray>مراجعة العناصر المخزنة بالفعل في هذا المتجر.</gray>"
+        - "<gray>الإدخالات الحالية:</gray> <white>{item_count}</white>"
+        - "<yellow>انقر لسحب العناصر المخزنة.</yellow>"
+    locked:
+      name: "<red>المتجر مغلق</red>"
+      lore:
+        - "<gray>فقط المالك يمكنه إضافة عناصر.</gray>"
+        - "<gray>الإدخالات الحالية:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>ليس لديك إذن لإدارة هذا المتجر.</red>"
+    no_admin_permission: "<red>ليس لديك إذن لتبديل متاجر الإدارة.</red>"
+    admin_limit_reached: "<red>يحتوي الخادم بالفعل على {admin_shops} متاجر إدارية. الإصدار المجاني يسمح فقط بـ {max_admin_shops} متاجر إدارية.</red>"
+    admin_enabled: "<green>أصبح هذا المتجر الآن متجرًا إداريًا بمخزون عملاء لا نهائي. المتاجر المعدودة: {owned_shops}.</green>"
+    admin_disabled: "<yellow>هذا المتجر هو الآن متجر لاعبين عادي بمخزون محدود من العملاء. المتاجر المعدودة: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>لا يمكنك تبديل متجر الإدارة هذا مرة أخرى إلى متجر اللاعبين لأن حد متجرك هو {max_shops} بالفعل. المحلات التجارية المعدودة: {owned_shops}.</red>"
+    close_not_empty: "<red>لا يمكنك إغلاق متجر إلا بعد إزالة جميع العناصر المخزنة. الإدخالات المتبقية: {item_count}.</red>"
+    close_bank_not_empty: "<red>اسحب من بنك متجرك قبل إغلاق هذا المتجر. العملات المتعقبة المتبقية: {bank_currency_count}.</red>"
+    closed: "<green>أغلق المتجر وعاد {returned_blocks} متجر (مجموعات). المتاجر المعدودة: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# لوحة تحكم المشرف العامة لإدارة RDS.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[المسؤول] التحكم في RDS</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>لوحة إدارة RDS</white>"
+    lore:
+      - "<gray>إدارة أنظمة متجر الإدارة العالمية من مكان واحد.</gray>"
+      - "<gray>افتح بنك الخادم أو قم بتحرير إعدادات التكوين أدناه.</gray>"
+      - "<yellow>يتطلب:</yellow> <white>Raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] بنك الخادم</gradient>"
+      lore:
+        - "<gray>مراجعة دخل متجر المسؤول الذي تم سحبه إلى بنك الخادم.</gray>"
+        - "<gray>التحقق من توقيت السحب التالي وسحب الأرصدة.</gray>"
+        - "<yellow>انقر لفتح ضوابط بنك الخادم.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] المتجر التكوين</gradient>"
+      lore:
+        - "<gray>تحرير القيم من</gray> <white>التكوين/config.yml</white><gray>.</gray>"
+        - "<gray>يمكن تغيير كل إعداد قابل للتحرير من خلال مطالبة السندان.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في التكوين.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[الكير] مدير العملة</gradient>"
+      lore:
+        - "<gray>مراجعة العملات المكتشفة من Vault و JExEconomy.</gray>"
+        - "<gray>إنشاء العملة الافتراضية</gray> <white>قطرات المطر</white> <gray>العملة عند الحاجة.</gray>"
+        - "<yellow>انقر لفتح العملة الضوابط.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>يلزم وصول المسؤول</white>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام هذا المسؤول لوحة.</gray>"
+
+# عرض عملة المسؤول للموفرين الذين تم اكتشافهم وإنشاء العملة الافتراضية.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[الكير] مدير العملة</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات]</gradient> <white>العملة الموفرون</white>"
+    lore:
+      - "<gray>تم الكشف عنها العملات:</gray> <white>{currency_count}</white>"
+      - "<gray>المخزن المتاح:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy المتاحة:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>استخدم الزر البلوري لإنشاء الإعداد الافتراضي العملة.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[الكير]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>الموفر:</gray> <white>{provider}</white>"
+      - "<gray>الرمز:</gray> <white>{symbol}</white>"
+      - "<gray>البادئة:</gray> <white>{prefix}</white>"
+      - "<gray>اللاحقة:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>إنشاء {currency_id}</white>"
+      lore:
+        - "<gray>إنشاء عملة RDS الافتراضية في JExEconomy.</gray>"
+        - "<yellow>انقر لإنشاء {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExالاقتصاد مطلوب</white>"
+      lore:
+        - "<gray>لا يمكنك إنشاء عملة افتراضية بدون JExEconomy.</gray>"
+        - "<gray>قم بتثبيت وتمكين JExEconomy أولاً.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[نعم]</gradient> <white>{currency_id}جاهز</white>"
+      lore:
+        - "<gray>العملة الافتراضية موجودة بالفعل.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>إنشاء العملة الافتراضية:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل في إنشاء العملة:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>العملة موجودة بالفعل:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لا يمكنك استخدام هذا الزر ما لم يكن JExEconomy متاحًا.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>بدون عملات تم اكتشاف</white>"
+      lore:
+        - "<gray>لم يتم اكتشاف عملات Vault أو JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>يلزم وصول المسؤول</white>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام عرض العملة هذا.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة العملات.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# تكوين واجهة مستخدم المتصفح للإعدادات القابلة للتحرير وتعليقات التحديث.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] المتجر التكوين</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات]</gradient> <white>إعدادات التكوين</white>"
+    lore:
+      - "<gray>تم اكتشاف إعدادات التحرير:</gray> <white>{setting_count}</white>"
+      - "<gray>انقر فوق أي إدخال أدناه لتحرير قيمته في سندان.</gray>"
+      - "<yellow>التغييرات تتم كتابتها مباشرة إلى config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[تعيين]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>المسار:</gray> <white>{config_path}</white>"
+      - "<gray>النوع:</gray> <white>{value_type}</white>"
+      - "<gray>القيمة الحالية:</gray> <white>{current_value}</white>"
+      - "<yellow>انقر لتحرير هذا الإعداد.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[عدد صحيح]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[طويل]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[مزدوج]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[قائمة]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[خيط]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>لم يتم العثور على إعدادات قابلة للتحرير</white>"
+      lore:
+        - "<gray>لم يتم العثور على إعدادات تكوين الحجم/القائمة القابلة للتحرير.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>يلزم وصول المسؤول</white>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام عرض التكوين هذا.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>تم قفل تحرير التكوين</white>"
+      lore:
+        - "<gray>لا يسمح هذا الإصدار بتعديلات تكوين وقت التشغيل.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لتحرير إعدادات التكوين.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تحرير التكوين مقفل في هذا الإصدار.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>محدث <white>{config_path}</white><gray> إلى <white>{updated_value}</white><gray>.</gray>"
+
+# نص المطالبة لتحرير قيم التكوين.
+shop_config_value_anvil_ui:
+  title: "تحرير {config_path}"
+  input:
+    lore:
+      - "<gray>المسار:</gray> <white>{config_path}</white>"
+      - "<gray>النوع:</gray> <white>{value_type}</white>"
+      - "<gray>القيمة الحالية:</gray> <white>{current_value}</white>"
+      - "<yellow>أدخل القيمة الجديدة وأكد.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>إدخال غير صالح للنوع <white>{value_type}</white><gray>. الإدخال:</gray> <white>{input}</white>"
+
+# نظرة عامة على بنك الخادم وإدخالات العملة وتعليقات السحب.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] بنك الخادم</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات]</gradient> <white>الدخل والتحويل الحالة</white>"
+    lore:
+      - "<gray>العملات المتتبعة:</gray> <white>{currency_count}</white>"
+      - "<gray>الدخل:</gray> <white>{income_summary}</white>"
+      - "<gray>السحب التالي:</gray> <white>{next_pull_at}</white>"
+      - "<gray>الوقت حتى السحب التالي:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>يتم نقل أرصدة متجر المسؤول هنا في الموعد المحدد.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>لا شيء</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>معطل</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>معلق...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>معطل</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>معلق...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[ينسحب]</gradient> <white>سحب الكل</white>"
+    lore:
+      - "<gray>محاولة سحب كل رصيد إيجابي.</gray>"
+      - "<gray>سيتم تخطي العملات غير المتوفرة.</gray>"
+      - "<yellow>انقر لسحب كل الأموال إلى حسابك.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+      - "<gray>الرصيد المتاح:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>انقر لسحب رصيد العملة بالكامل.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>بنك الخادم فارغ</white>"
+      lore:
+        - "<gray>لا توجد أرصدة إيجابية متاحة للسحب.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>يلزم وصول المسؤول</white>"
+      lore:
+        - "<gray>ليس لديك إذن لإدارة بنك الخادم.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة بنك الخادم.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لم يعد رصيد بنك الخادم هذا متاحًا.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>سحب <white>{amount} {currency_name}</white><gray>. المتبقي {currency_name}:</gray> <white>{remaining_amount}</white><gray>. العملات النشطة:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>سحب <white>{withdrawn_currency_count}</white><gray> رصيد (أرصدة) العملة. فشل:</gray> <white>{failed_currency_count}</white><gray>. العملات النشطة المتبقية:</gray> <white>{remaining_currency_count}</white><gray>. التفاصيل:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لا يمكن سحب أي أرصدة. فشل عد العملة:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>العملة <white>{currency_name}</white><gray> غير متاحة حاليًا.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل في السحب <white>{amount} {currency_name}</white><gray> من بنك الخادم.</gray>"
+
+# تسوق واجهة مستخدم إدخال العناصر المستخدمة عند إضافة إدخالات مخزون جديدة.
+shop_input_ui:
+  title: "إضافة عناصر - {owner} @ {location}"
+  summary:
+    name: "<gold>مساحة تخزين المتجر</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>المخزنة حاليًا:</gray> <white>{stored_count}</white>"
+      - "<yellow>العناصر الجديدة الافتراضية لنوع العملة والقيمة 0.</yellow>"
+  input_slot:
+    name: "<green>فتحة الإدخال</green>"
+    lore:
+      - "<gray>انقر بزر الماوس الأيسر مع عنصر على المؤشر</gray>"
+      - "<gray>أو انقر مع الضغط على مفتاح Shift على عنصر من مخزونك.</gray>"
+      - "<gray>انقر بزر الماوس الأيمن لإزالة مجموعة مدرجة.</gray>"
+  no_new_items_inserted: "<red>لم يتم إدراج عناصر جديدة.</red>"
+  saved: "<green>{added_count} إدخالات جديدة. يحتوي التسوق الآن على {stored_count} إدخالات.</green>"
+  save_failed: "<red>فشل في حفظ عناصر المتجر.</red>"
+  left_overs: "<yellow>تم إرجاع عناصر المتجر غير المحفوظة إلى مخزونك.</yellow>"
+  feedback:
+    no_permission: "<red>ليس لديك إذن لإضافة عناصر إلى هذا المتجر.</red>"
+    locked:
+      name: "<red>يلزم الوصول إلى العرض</red>"
+      lore:
+        - "<gray>فقط الزملاء واللاعبون الموثوق بهم يمكنهم إضافة عناصر هنا.</gray>"
+
+# واجهة مستخدم متصفح تخزين المتجر لعرض العناصر المخزنة وسحبها.
+shop_storage_ui:
+  title: "العناصر المخزنة - {location}"
+  summary:
+    name: "<gold>العناصر المخزنة</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>الإدخالات المخزنة:</gray> <white>{stored_count}</white>"
+      - "<yellow>انقر فوق أي عنصر أدناه لسحبه.</yellow>"
+  entry:
+    lore:
+      - "<gray>الكمية المخزنة:</gray> <white>{amount}</white>"
+      - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+      - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+      - "<gray>القيمة:</gray> <white>{value}</white>"
+      - "<yellow>انقر لاستخراج هذا العنصر من المتجر.</yellow>"
+  feedback:
+    not_owner: "<red>ليس لديك إذن لإدارة هذا المتجر.</red>"
+    extracted: "<green>مستخرج {amount}x {item_type}. كان السعر {value} {currency_type}. الإدخالات المخزنة المتبقية: {stored_count}.</green>"
+    item_missing: "<red>تعذر العثور على عنصر المتجر هذا.</red>"
+    locked:
+      name: "<red>يتطلب الوصول الكامل</red>"
+      lore:
+        - "<gray>فقط اللاعبين الموثوق بهم الذين لديهم حق الوصول الكامل يمكنهم سحب العناصر المخزنة.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# تسوق واجهة مستخدم التحديد لاختيار الإدخالات لتعديلها.
+shop_edit_ui:
+  title: "تحرير عناصر المتجر - {location}"
+  summary:
+    name: "<aqua>محرر أسعار المتجر</aqua>"
+    player:
+      lore:
+        - "<gray>المالك:</gray> <white>{owner}</white>"
+        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>الإدخالات المخزنة:</gray> <white>{stored_count}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر على أحد العناصر لتحريره التسعير.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن على أحد العناصر لإزالته من المتجر.</yellow>"
+    admin:
+      lore:
+        - "<gray>المالك:</gray> <white>{owner}</white>"
+        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>الإدخالات المخزنة:</gray> <white>{stored_count}</white>"
+        - "<gray>وضع إعادة تخزين المسؤول:</gray> <white>{restock_mode}</white>"
+        - "<gray>جدول إعادة المخزون:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر على أحد العناصر لتعديل الأسعار أو المخزون.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن على أحد العناصر لإزالته من المتجر.</yellow>"
+    restock_schedule:
+      gradual: "المؤقت الافتراضي: {reset_timer_ticks} نقرات لكل العنصر"
+  entry:
+    player:
+      lore:
+        - "<gray>الكمية المخزنة:</gray> <white>{amount}</white>"
+        - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+        - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+        - "<gray>القيمة:</gray> <white>{value}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر لتعديل عنصر المتجر هذا.</yellow>"
+        - "<yellow>يمين انقر لإزالته من المتجر.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>المخزون:</gray> <white>لانهائي</white>"
+        - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+        - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+        - "<gray>القيمة:</gray> <white>{value}</white>"
+        - "<gray>وضع إعادة المخزون:</gray> <white>{restock_mode}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر لتحرير عنصر متجر المسؤول هذا.</yellow>"
+        - "<yellow>يمين انقر لإزالته من المتجر.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>المخزون الحالي:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+        - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+        - "<gray>القيمة:</gray> <white>{value}</white>"
+        - "<gray>وضع إعادة المخزون:</gray> <white>{restock_mode}</white>"
+        - "<gray>جدول إعادة المخزون:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر لتحرير عنصر متجر المسؤول هذا.</yellow>"
+        - "<yellow>يمين انقر لإزالته من المتجر.</yellow>"
+    admin_mode:
+      gradual: "تدرجي"
+      full: "إعادة الضبط الكامل"
+    restock_schedule:
+      gradual: "عنصر واحد كل {reset_timer_ticks} نقرات"
+      full: "يعاد تخزينه بالكامل في{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>ليس لديك إذن لإدارة هذا المتجر.</red>"
+    removed: "<green>تمت الإزالة {amount}x {item_type} من المتجر. تم الوصول إلى السعر الذي كان {value} {currency_type}. الإدخالات المخزنة المتبقية: {stored_count}.</green>"
+    item_missing: "<red>تعذر العثور على عنصر المتجر هذا.</red>"
+    locked:
+      name: "<red>يتطلب الوصول الكامل</red>"
+      lore:
+        - "<gray>فقط اللاعبين الموثوق بهم الذين لديهم حق الوصول الكامل يمكنهم تحرير قيم العناصر.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# واجهة مستخدم مفصلة للمحرر لسلوك عناصر المتجر الفردية وتسعيرها.
+shop_item_edit_ui:
+  title: "تحرير {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>الكمية المخزنة:</gray> <white>{amount}</white>"
+        - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+        - "<gray>القيمة:</gray> <white>{value}</white>"
+        - "<gray>وضع التوفر:</gray> <white>{availability_mode}</white>"
+        - "<gray>التوفر الآن:</gray> <white>{availability_state}</white>"
+        - "<gray>تدوير النافذة:</gray> <white>{rotation_minutes} دقيقة (دقائق)</white>"
+        - "<yellow>استخدم الأزرار أدناه لتحرير هذا العنصر.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>المخزون:</gray> <white>لانهائي</white>"
+        - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+        - "<gray>القيمة:</gray> <white>{value}</white>"
+        - "<gray>وضع إعادة المخزون:</gray> <white>{restock_mode}</white>"
+        - "<gray>أوامر الشراء:</gray> <white>{command_count}</white>"
+        - "<gray>وضع التوفر:</gray> <white>{availability_mode}</white>"
+        - "<gray>التوفر الآن:</gray> <white>{availability_state}</white>"
+        - "<gray>تدوير النافذة:</gray> <white>{rotation_minutes} دقيقة (دقائق)</white>"
+        - "<yellow>استخدم الأزرار أدناه لتحرير عنصر الإدارة هذا.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>المخزون الحالي:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>العملة النوع:</gray> <white>{currency_type}</white>"
+        - "<gray>القيمة:</gray> <white>{value}</white>"
+        - "<gray>وضع إعادة المخزون:</gray> <white>{restock_mode}</white>"
+        - "<gray>جدول إعادة المخزون:</gray> <white>{restock_schedule}</white>"
+        - "<gray>أوامر الشراء:</gray> <white>{command_count}</white>"
+        - "<gray>وضع التوفر:</gray> <white>{availability_mode}</white>"
+        - "<gray>التوفر الآن:</gray> <white>{availability_state}</white>"
+        - "<gray>تدوير النافذة:</gray> <white>{rotation_minutes} دقيقة (دقائق)</white>"
+        - "<yellow>استخدم الأزرار أدناه لتحرير عنصر الإدارة هذا.</yellow>"
+  currency_type:
+    name: "<green>نوع العملة</green>"
+    lore:
+      - "<gray>النوع الحالي:</gray> <white>{currency_type}</white>"
+      - "<yellow>انقر لتحرير نوع العملة.</yellow>"
+  value:
+    name: "<gold>القيمة</gold>"
+    lore:
+      - "<gray>النوع الحالي:</gray> <white>{currency_type}</white>"
+      - "<gray>القيمة الحالية:</gray> <white>{value}</white>"
+      - "<yellow>انقر لتحرير القيمة الرقمية.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[الوضع] توفر العنصر</gradient>"
+    always: "<gradient:#22c55e:#86efac>[دائمًا]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[تناوب]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[أبداً]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[يفتح]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[مغلق]</gradient>"
+    lore:
+      - "<gray>الوضع الحالي:</gray> <white>{availability_mode}</white>"
+      - "<gray>الحالي الحالة:</gray> <white>{availability_state}</white>"
+      - "<gray>تدوير النافذة:</gray> <white>{rotation_minutes} دقيقة (دقائق)</white>"
+      - "<yellow>انقر للتدوير: دائمًا -> تدوير -> أبدًا.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[المؤقت] تدوير الدقائق</gradient>"
+    lore:
+      - "<gray>النافذة الحالية:</gray> <white>{rotation_minutes} دقيقة (دقائق)</white>"
+      - "<gray>الوضع الحالي:</gray> <white>{availability_mode}</white>"
+      - "<gray>تدوير تسمية الوضع:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>انقر لتعيين دقائق التدوير في السندان.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[التنفيذي] منفذ الأوامر</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[الخادم]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[لاعب]</gradient>"
+    lore:
+      - "<gray>الوضع الحالي:</gray> <white>{command_mode}</white>"
+      - "<gray>الوضع التالي:</gray> <white>{next_mode}</white>"
+      - "<yellow>انقر لتبديل من ينفذ الأوامر المضافة حديثًا.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] أوامر الشراء</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>لا شيء</gradient>"
+    lore:
+      - "<gray>الأوامر التي تم تكوينها:</gray> <white>{command_count}</white>"
+      - "<gray>أحدث أمر:</gray> <white>{latest_command}</white>"
+      - "<yellow>انقر لفتح إعدادات الأوامر وإضافة أوامر.</yellow>"
+  confirm:
+    name: "<green>حفظ تسعير العنصر</green>"
+    lore:
+      - "<gray>تطبيق نوع العملة الحالية وقيمتها</gray>"
+      - "<gray>إلى عنصر المتجر هذا.</gray>"
+  stock_limit:
+    name: "<gold>حد المخزون</gold>"
+    unlimited: "لانهائي"
+    lore:
+      - "<gray>الحد الحالي:</gray> <white>{stock_limit}</white>"
+      - "<gray>المخزون الحالي:</gray> <white>{current_stock}</white>"
+      - "<yellow>انقر لتعيين حد للمخزون.</yellow>"
+      - "<gray>استخدم -1 لإعادة هذا العنصر إلى المخزون اللانهائي.</gray>"
+  reset_timer:
+    name: "<aqua>إعادة ضبط المؤقت</aqua>"
+    lore:
+      - "<gray>المؤقت الحالي:</gray> <white>{reset_timer_ticks} نقرات</white>"
+      - "<yellow>انقر لتعيين إعادة المخزون. المؤقت.</yellow>"
+  restock_mode:
+    name: "<yellow>إعادة تخزين المسؤول الوضع</yellow>"
+    gradual: "تدرجي"
+    full: "إعادة الضبط الكامل"
+    lore:
+      - "<gray>الوضع الذي تم تكوينه:</gray> <white>{restock_mode}</white>"
+      - "<gray>تم تكوينها الجدول الزمني:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>انقر لتبديل وضع إعادة تخزين المسؤول العام.</yellow>"
+  restock_schedule:
+    gradual: "عنصر واحد كل {reset_timer_ticks} نقرات"
+    full: "يعاد تخزينه بالكامل في{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>ليس لديك إذن لإدارة هذا المتجر.</red>"
+    shop_missing: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+    item_missing: "<red>تعذر العثور على عنصر المتجر هذا.</red>"
+    saved: "<green>تم حفظ تسعير العنصر كـ {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>تم ضبط وضع الإتاحة على <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>تم تعيين وضع تنفيذ الأمر الجديد على <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>تمت إزالة الأمر الأخير. الأوامر المتبقية:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تم مسح جميع أوامر الشراء الإدارية.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>لم يتم اكتشاف أي أوامر شراء إدارية تم التهيئة.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تم قفل تغييرات تكوين البرنامج المساعد في <white>RDS مجاني</white><gray>. الترقية إلى الإصدار المميز للوصول الكامل.</gray>"
+    restock_mode_updated: "<green>تم تعيين وضع إعادة تخزين المسؤول على {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>فشل في حفظ وضع إعادة تخزين المسؤول.</red>"
+
+# مطالبة سندانية لإضافة أمر شراء إداري جديد.
+shop_item_admin_command_anvil_ui:
+  title: "إضافة أمر {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>أدخل أمرًا ليتم تشغيله عند شراء عنصر الإدارة هذا.</gray>"
+      - "<gray>نص الأمر فقط. تم تكوين التأخير في عرض إعدادات الأوامر.</gray>"
+      - "<gray>أمثلة:</gray>"
+      - "<white>إذاعة%player_name% اشترى {amount}x {item_type}</white>"
+      - "<white>ايكو تعطي%player_name% 50</white>"
+      - "<gray>الأوامر التي تم تكوينها:</gray> <white>{command_count}</white>"
+      - "<gray>التنفيذ الوضع:</gray> <white>{command_mode}</white>"
+      - "<gray>التأخير:</gray> <white>{command_delay_ticks} نقرات</white>"
+  mode:
+    server: "<gold>[الخادم]</gold>"
+    player: "<green>[لاعب]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لا يمكن أن يكون نص الأمر فارغًا. الإدخال:</gray> <white>{input}</white>"
+
+# واجهة مستخدم مدير أوامر الشراء الإداري للوضع والتأخير وقائمة الأوامر.
+shop_item_admin_command_ui:
+  title: "إعدادات الأوامر - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] إعدادات أمر الشراء</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>لا شيء</gradient>"
+    lore:
+      - "<gray>الأوامر التي تم تكوينها:</gray> <white>{command_count}</white>"
+      - "<gray>أحدث أمر:</gray> <white>{latest_command}</white>"
+      - "<gray>وضع الأمر التالي:</gray> <white>{command_mode}</white>"
+      - "<gray>تأخير الأمر التالي:</gray> <white>{command_delay_ticks} نقرات ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] منفذ الأمر التالي</gradient>"
+    server: "<gold>[الخادم]</gold>"
+    player: "<green>[لاعب]</green>"
+    lore:
+      - "<gray>الوضع الحالي:</gray> <white>{command_mode}</white>"
+      - "<gray>الوضع التالي:</gray> <white>{next_mode}</white>"
+      - "<yellow>انقر لتبديل المنفذ للأمر التالي.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[تأخير] تأخير الأمر التالي</gradient>"
+    lore:
+      - "<gray>التأخير الحالي:</gray> <white>{command_delay_ticks} نقرات ({command_delay_seconds}s)</white>"
+      - "<yellow>انقر لتعيين تأخير علامات التجزئة للأمر التالي.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] إضافة أمر</gradient>"
+    lore:
+      - "<gray>الوضع:</gray> <white>{command_mode}</white>"
+      - "<gray>التأخير:</gray> <white>{command_delay_ticks} نقرات ({command_delay_seconds}s)</white>"
+      - "<yellow>انقر لفتح إدخال الأوامر.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] إزالة الأمر</gradient>"
+    lore:
+      - "<gray>الأوامر التي تم تكوينها:</gray> <white>{command_count}</white>"
+      - "<yellow>انقر لإزالة أحدث أمر.</yellow>"
+      - "<yellow>Shift + انقر لمسح كافة الأوامر.</yellow>"
+  confirm:
+    name: "<green>حفظ الأمر الإعدادات</green>"
+    lore:
+      - "<gray>ارجع إلى محرر العناصر واحتفظ بتغييرات الأوامر هذه.</gray>"
+  feedback:
+    not_owner: "<red>ليس لديك إذن لإدارة هذا المتجر.</red>"
+    shop_missing: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>تم ضبط وضع الأمر التالي على <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>تمت إزالة الأمر الأخير. الأوامر المتبقية:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تم مسح جميع أوامر الشراء الإدارية.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>لم يتم اكتشاف أي أوامر شراء إدارية تم التهيئة.</gray>"
+
+# مطالبة سندانية لتعيين علامات تأخير أمر المسؤول.
+shop_item_admin_command_delay_anvil_ui:
+  title: "تعيين التأخير - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>أدخل عددًا صحيحًا من علامات التجزئة لتأخير الأمر التالي.</gray>"
+      - "<gray>التنفيذ الوضع:</gray> <white>{command_mode}</white>"
+      - "<gray>أمثلة:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[الخادم]</gold>"
+    player: "<green>[لاعب]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>أدخل عددًا صحيحًا أكبر من أو يساوي 0. الإدخال:</gray> <white>{input}</white>"
+
+# مطالبة سندانية لنافذة إتاحة وضع التدوير في دقائق.
+shop_item_availability_minutes_anvil_ui:
+  title: "تدوير الدقائق: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[المؤقت] تدوير الدقائق</gradient>"
+    lore:
+      - "<gray>أدخل عددًا صحيحًا من الدقائق.</gray>"
+      - "<gray>بدائل وضع التدوير متاحة/غير متاحة في كل نافذة.</gray>"
+  error:
+    invalid_number: "<red>أدخل رقمًا صحيحًا أكبر من 0. الإدخال: {input}</red>"
+
+# مطالبة سندانية لتعيين سعة مخزون إداري محدودة.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "حد المخزون: {stock_limit}"
+  input:
+    name: "<gold>حد المخزون</gold>"
+    lore:
+      - "<gray>أدخل حد مخزون موجب في العناصر.</gray>"
+      - "<gray>استخدم -1 لاستعادة المخزون الإداري اللانهائي.</gray>"
+  error:
+    invalid_number: "<red>أدخل -1 أو رقم صحيح أكبر من 0. الإدخال: {input}</red>"
+
+# مطالبة سندانية لتكوين علامات إعادة تخزين/إعادة ضبط مؤقت المسؤول.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "إعادة ضبط المؤقت: {reset_timer_ticks}"
+  input:
+    name: "<aqua>إعادة ضبط المؤقت</aqua>"
+    lore:
+      - "<gray>أدخل عددًا صحيحًا من علامات التجزئة في Bukkit.</gray>"
+      - "<gray>يستعيد الوضع التدريجي عنصرًا واحدًا لكل مؤقت.</gray>"
+  error:
+    invalid_number: "<red>أدخل رقمًا صحيحًا أكبر من 0. الإدخال: {input}</red>"
+
+# مطالبة سندانية لتحديد نوع العملة المستخدمة بواسطة عنصر.
+shop_item_currency_type_anvil_ui:
+  title: "نوع العملة: {currency_type}"
+  input:
+    name: "<green>نوع العملة</green>"
+    lore:
+      - "<gray>أدخل معرف العملة لهذا العنصر.</gray>"
+      - "<gray>أمثلة:</gray> <white>vault، الرموز المميزة، الأحجار الكريمة</white>"
+  error:
+    empty: "<red>لا يمكن أن يكون نوع العملة فارغًا.</red>"
+    invalid_currency: "<red>نوع العملة {currency_type} غير متاحة. استخدم قبوًا أو عملة مخصصة مسجلة.</red>"
+    processing_failed: "<red>فشل في تحديث نوع العملة. الإدخال: {input}</red>"
+
+# مطالبة سندانية لإعداد كل عنصر السعر/القيمة.
+shop_item_value_anvil_ui:
+  title: "القيمة: {value} {currency_type}"
+  input:
+    name: "<gold>قيمة العنصر</gold>"
+    lore:
+      - "<gray>أدخل قيمة رقمية غير سالبة.</gray>"
+      - "<gray>أمثلة:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>أدخل رقمًا صالحًا وغير سالب. الإدخال: {input}</red>"
+    processing_failed: "<red>فشل في تحديث قيمة العنصر. الإدخال: {input}</red>"
+
+# واجهة مستخدم بنك المتجر لأرصدة العملات وعمليات السحب لكل متجر.
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>أرصدة البنك</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>العملات المتتبعة:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>انقر فوق الرصيد أدناه لسحب مبلغه بالكامل.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+      - "<gray>الرصيد المتاح:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>انقر لسحب هذا الرصيد بالكامل.</yellow>"
+  feedback:
+    not_owner: "<red>ليس لديك إذن لإدارة هذا المتجر.</red>"
+    entry_missing: "<red>لم يعد هذا الرصيد البنكي متاحًا.</red>"
+    withdrawn: "<green>سحب {amount} {currency_name}. المتبقي {currency_name}: {remaining_amount}. العملات المتعقبة: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>فشل في السحب {amount} {currency_name} من بنك المتجر.</red>"
+    currency_unavailable: "<red>العملة {currency_name} غير متاحة حاليًا.</red>"
+    empty:
+      name: "<red>البنك فارغ</red>"
+      lore:
+        - "<gray>ليس لدى هذا المتجر أرصدة مصرفية لسحبها.</gray>"
+    locked:
+      name: "<red>يتطلب الوصول الكامل</red>"
+      lore:
+        - "<gray>فقط اللاعبين الموثوق بهم الذين لديهم حق الوصول الكامل يمكنهم سحب أموال المتجر.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# واجهة مستخدم موثوقة لإدارة اللاعبين لأدوار الوصول إلى المتجر.
+shop_trusted_ui:
+  title: "اللاعبون الموثوقون - {location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>الشركاء:</gray> <white>{associate_count}</white>"
+      - "<gray>موثوق اللاعبين:</gray> <white>{trusted_count}</white>"
+      - "<yellow>انقر فوق أحد اللاعبين لتبديل ثقته Status.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>الحالة:</gray> <white>عام</white>"
+        - "<gray>لا توجد أذونات إدارة.</gray>"
+        - "<yellow>انقر للتغيير إلى مشارك.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>الحالة:</gray> <white>Associate</white>"
+        - "<gray>يمكن إضافة عناصر إلى المتجر.</gray>"
+        - "<yellow>انقر للتغيير إلى موثوق.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>الحالة:</gray> <white>موثوق</white>"
+        - "<gray>يمكن إدارة المتجر بالكامل.</gray>"
+        - "<yellow>انقر للتغيير إلى عام.</yellow>"
+  feedback:
+    not_owner: "<red>فقط مالك المتجر يمكنه إدارة اللاعبين الموثوق بهم.</red>"
+    updated:
+      public: "<yellow>Set {player}للعامة.</yellow>"
+      associate: "<green>Set {player} للربط.</green>"
+      trusted: "<green>Set {player} للموثوق.</green>"
+    empty:
+      name: "<red>لم يتم العثور على لاعبين</red>"
+      lore:
+        - "<gray>لا يوجد لاعبين معروفين آخرين متاحين للثقة.</gray>"
+    locked:
+      name: "<red>وصول المالك فقط</red>"
+      lore:
+        - "<gray>فقط مالك المتجر يمكنه إدارة اللاعبين الموثوق بهم.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# واجهة مستخدم دفتر أستاذ المعاملات للمشتريات والضرائب التاريخ.
+shop_ledger_ui:
+  title: "دفتر الأستاذ للمتجر - {location}"
+  summary:
+    name: "<gold>معاملة المتجر Ledger</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>إجمالي الإدخالات:</gray> <white>{ledger_count}</white>"
+      - "<gray>المشتريات:</gray> <white>{purchase_count}</white>"
+      - "<gray>الضرائب:</gray> <white>{tax_count}</white>"
+      - "<yellow>تظهر أحدث المعاملات الأول.</yellow>"
+  entry:
+    purchase:
+      name: "<green>الشراء: {item_type}</green>"
+      lore:
+        - "<gray>المشتري:</gray> <white>{actor}</white>"
+        - "<gray>القيمة:</gray> <white>{item_amount}</white>"
+        - "<gray>الإجمالي المدفوعة:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+        - "<gray>تم التسجيل:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>الرسوم الضريبية</gold>"
+      lore:
+        - "<gray>يتم تحميلها إلى:</gray> <white>{actor}</white>"
+        - "<gray>الضريبة المشاركة:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>المتاجر المعدودة:</gray> <white>{counted_shops}</white>"
+        - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+        - "<gray>تم التسجيل:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>لم يتم العثور على إدخالات دفتر الأستاذ</red>"
+      lore:
+        - "<gray>ليس لدى هذا المتجر أي مشتريات أو ضرائب مسجلة حتى الآن.</gray>"
+    locked:
+      name: "<red>يتطلب الوصول الكامل</red>"
+      lore:
+        - "<gray>فقط اللاعبون الموثوق بهم الذين لديهم حق الوصول الكامل يمكنهم عرض دفتر الأستاذ.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# واجهة مستخدم المتجر التي تواجه العملاء لتصفح العناصر وشرائها.
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>عرض العميل</gold>"
+    player:
+      lore:
+        - "<gray>المالك:</gray> <white>{owner}</white>"
+        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>الإدخالات المتاحة:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop النوع:</gray> <white>متجر المشغل</white>"
+        - "<gray>المخزون:</gray> <white>محدود</white>"
+        - "<yellow>انقر بزر الماوس الأيسر على أحد العناصر لشراء واحد.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن على أحد العناصر لاختيار مبلغ.</yellow>"
+    admin:
+      lore:
+        - "<gray>المالك:</gray> <white>{owner}</white>"
+        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>الإدخالات المتاحة:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop النوع:</gray> <white>متجر الإدارة</white>"
+        - "<gray>المخزون:</gray> <white>لانهائي</white>"
+        - "<yellow>انقر بزر الماوس الأيسر على أحد العناصر لشراء واحد.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن على أحد العناصر لاختيار مبلغ.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>المخزون:</gray> <white>{amount}</white>"
+        - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+        - "<gray>سعر كل منها:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>إجمالي قيمة السهم:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر لشراء واحد.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن لاختيار مبلغ.</yellow>"
+    admin:
+      lore:
+        - "<gray>المخزون:</gray> <white>لانهائي</white>"
+        - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+        - "<gray>سعر كل منها:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+        - "<gray>Shop النوع:</gray> <white>متجر الإدارة</white>"
+        - "<yellow>انقر بزر الماوس الأيسر لشراء واحد.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن لاختيار مبلغ.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>المخزون:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>نوع العنصر:</gray> <white>{item_type}</white>"
+        - "<gray>سعر كل منها:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>معرف العملة:</gray> <white>{currency_type}</white>"
+        - "<gray>وضع إعادة المخزون:</gray> <white>{restock_mode}</white>"
+        - "<gray>جدول إعادة المخزون:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر لشراء واحد.</yellow>"
+        - "<yellow>انقر بزر الماوس الأيمن لاختيار مبلغ.</yellow>"
+    admin_mode:
+      gradual: "تدرجي"
+      full: "إعادة الضبط الكامل"
+    restock_schedule:
+      gradual: "عنصر واحد كل {reset_timer_ticks} نقرات"
+      full: "يعاد تخزينه بالكامل في{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>تم الشراء {amount}x {item_type} لـ {total_price} {currency_name}. المخزون المتبقي: {remaining_amount}.</green>"
+    purchased_admin: "<green>تم الشراء {amount}x {item_type} لـ {total_price} {currency_name}. يحتوي متجر الإدارة هذا على مخزون لا نهائي.</green>"
+    purchased_admin_limited: "<green>تم الشراء {amount}x {item_type} لـ {total_price} {currency_name}. المخزون الإداري المتبقي: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} غير متاحة حاليًا للشراء.</gray>"
+    insufficient_stock: "<red>يحتوي هذا المتجر فقط على {available_amount}x {item_type} متاح.</red>"
+    insufficient_funds: "<red>تحتاج إلى {total_price} {currency_name} لشراء {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>العملة {currency_name} غير متاحة حاليًا.</red>"
+    invalid_amount: "<red>أدخل مبلغ شراء صالح.</red>"
+    item_missing: "<red>لم يعد عنصر المتجر هذا متوفرًا.</red>"
+    empty_shop:
+      name: "<red>Shop فارغ</red>"
+      lore:
+        - "<gray>لا توجد عناصر متاحة للشراء.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# مطالبة سندانية لإدخال كمية الشراء المخصصة.
+shop_purchase_amount_anvil_ui:
+  title: "شراء {item_type}"
+  input:
+    name: "<gold>شراء المبلغ</gold>"
+    player:
+      lore:
+        - "<gray>أدخل عدد العناصر تريد الشراء.</gray>"
+        - "<gray>الحد الأقصى المتاح:</gray> <white>{max_amount}</white>"
+        - "<gray>العنصر:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>أدخل عدد العناصر تريد الشراء.</gray>"
+        - "<gray>يحتوي متجر الإدارة هذا على مخزون لا نهائي.</gray>"
+        - "<gray>العنصر:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>أدخل عدد العناصر تريد الشراء.</gray>"
+        - "<gray>الحد الأقصى المتاح:</gray> <white>{max_amount}</white>"
+        - "<gray>العنصر:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>أدخل رقمًا صحيحًا بين 1 و{max_amount}. الإدخال: {input}</red>"
+    invalid_number_admin: "<red>أدخل رقمًا صحيحًا أكبر من 0. الإدخال: {input}</red>"
+    processing_failed: "<red>فشل في معالجة مبلغ الشراء. الإدخال: {input}</red>"
+
+# واجهة مستخدم اكتشاف المتجر لـ تصفح الكل والبحث عن المواد.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Shop Browser</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Browser</gradient>"
+    lore:
+      - "<gray>تصفح كل متجر أو تصفية يتم تتبعها حسب مادة معينة.</gray>"
+      - "<yellow>حدد أحد الإجراءات أدناه للمتابعة.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>تصفح جميع المتاجر</gradient>"
+    lore:
+      - "<gray>افتح دليل المتجر المرقّم بالكامل.</gray>"
+      - "<yellow>انقر لعرض كل ما تم تتبعه shop.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>بحث حسب المادة</gradient>"
+    lore:
+      - "<gray>افتح موجه سندان وأدخل اسم المادة.</gray>"
+      - "<gray>مثال:</gray> <white>Diamond_block</white>"
+      - "<yellow>انقر للبحث حسب نوع العنصر.</yellow>"
+
+# واجهة مستخدم الدليل المرقّم تسرد جميع المتاجر المتعقبة.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>الكل المتاجر</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Directory</gradient>"
+    lore:
+      - "<gray>المتاجر المتتبعة:</gray> <white>{shop_count}</white>"
+      - "<gray>إجمالي المخزون المتاح:</gray> <white>{available_count}</white>"
+      - "<yellow>انقر فوق أي متجر أدناه لفتحه.</yellow>"
+  entry:
+    name: "<gold>{owner} متجر</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>المخزون المتاح:</gray> <white>{available_count}</white>"
+      - "<yellow>انقر لفتح هذا المتجر.</yellow>"
+  feedback:
+    empty:
+      name: "<red>لم يتم العثور على متاجر</red>"
+      lore:
+        - "<gray>يوجد لم يتم تسجيل أي متاجر حتى الآن.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# نتائج المتجر التي تمت تصفيتها حسب المواد UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>نتائج {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>نتائج {material}</gradient>"
+    lore:
+      - "<gray>المادة:</gray> <white>{material}</white>"
+      - "<gray>محلات تجارية مطابقة:</gray> <white>{shop_count}</white>"
+      - "<gray>عروض مطابقة:</gray> <white>{matching_count}</white>"
+      - "<yellow>انقر فوق أي متجر مطابق أدناه لفتحه.</yellow>"
+  entry:
+    name: "<gold>{owner} متجر</gold>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>الموقع:</gray> <white>{location}</white>"
+      - "<gray>مطابقة {material} عروض:</gray> <white>{matching_count}</white>"
+      - "<gray>إجمالي المخزون المرئي:</gray> <white>{available_count}</white>"
+      - "<yellow>انقر لفتح هذا المتجر.</yellow>"
+  feedback:
+    empty:
+      name: "<red>لم يتم العثور على متاجر {material}</red>"
+      lore:
+        - "<gray>لا توجد متاجر متتبعة تقدم هذا حاليًا المادة.</gray>"
+    shop_missing:
+      name: "<red>المتجر غير موجود</red>"
+      lore:
+        - "<gray>لا يمكن تحميل هذا المتجر من التخزين.</gray>"
+      message: "<red>لا يمكن تحميل هذا المتجر من التخزين.</red>"
+
+# سندان سندانية لإدخال عامل تصفية المواد search.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>بحث عن المادة</gradient>"
+  input:
+    lore:
+      - "<gray>أدخل اسم مادة Bukkit للبحث المتعقب المحلات التجارية.</gray>"
+      - "<gray>أمثلة:</gray> <white>الماس</white><gray>,</gray> <white>Diamond_block</white>"
+      - "<yellow>انقر فوق فتحة النتيجة لفتح المتاجر المطابقة.</yellow>"
+  error:
+    invalid_material: "<red>أدخل مادة صالحة مثل Diamond_block. الإدخال: {input}</red>"
+    processing_failed: "<red>فشل في البحث عن المادة. الإدخال: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# تسميات عناصر ترقيم الصفحات المشتركة المستخدمة عبر القائمة واجهات المستخدم.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 الصفحة %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>الصفحة الحالية:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إجمالي الصفحات:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 الصفحة %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# تسميات أزرار الرأس/التنقل المشتركة (الإرجاع/التأكيد/التالي).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 الإرجاع</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>انقر للذهاب back</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 تأكيد</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>انقر لتأكيد الإعدادات</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 تأكيد</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>انقر لتأكيد الإعدادات</gradient>"

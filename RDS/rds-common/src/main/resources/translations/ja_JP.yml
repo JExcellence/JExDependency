@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# プレフィックスでロックされます一般的なプラグイン チャット出力の先頭に追加されます。
+prefix: "<gradient:#a855f7:#c084fc>【RDS】</gradient> "
+
+# ショップ、銀行、税金の状況をプレイヤーに表示する簡単な概要行。
+info:
+  total: "<blue>ショップ:</blue> <white>{owned_shops}</white>"
+  bank: "<green>追跡残高 ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>として保存します({taxed_shops} 課税対象ショップ):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>次の税金:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# プレイヤーが参加するときに表示される参加時メッセージサーバーにログインします。
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} 課税対象ショップ\n[<blue>金額<yellow>]\n{taxes}\n<red>期限:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+#  コマンド応答`/rs` 機能とトグルの文字列。
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray><white>RDS 管理者</white><gray> パネル。</gray>"
+  bar:
+    enabled: "<green>ショップを見ている間ショップ ボス バーが有効。</green>"
+    disabled: "<yellow>ショップ ボス バーが無効。</yellow>"
+  give:
+    syntax: "<red>使用法: /rs give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>使用法:</gray> <white>/rs スコアボード &lt;元帳|株式&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>有効化<white>{scoreboard_type}</white><gray> サイドバー。</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>無効化 <white>{scoreboard_type}</white><gray> サイドバー。</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray><white>{scoreboard_type}</white><gray> サイドバー。</gray>"
+    type:
+      ledger: "<gold>元帳</gold>"
+      stock: "<aqua>在庫</aqua>"
+
+# サイドバーのスコアボードのラベルと値の書式設定。
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] 元帳 ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ 銀行合計</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>銀行資金がありません</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] 在庫 ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>在庫:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>プレーヤー ショップはありません</red>"
+
+# ボス バーのテキストショップをターゲットにしているときに表示されます。
+shop_boss_bar:
+  title: "<gold>{shop_type} ショップ</gold> <gray>|</gray> <yellow>所有者:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>アイテム:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>場所:</yellow> <white>{location}</white>"
+  type:
+    player: "プレイヤー"
+    admin: "管理者"
+  owner:
+    admin: "管理者"
+  available_items:
+    finite: "{item_count}"
+    limited: "在庫に限りがあります"
+    infinite: "無限"
+    various: "さまざま"
+
+# ============================================
+# GUI ボタン
+# ============================================
+
+# ショップ ブロックのアイテム名と伝承メタデータ。
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>このブロックを配置してショップを設定します。</yellow>"
+
+# ショップ ストアの概要 UI ラベル、情報、および在庫状況。
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] ショップ ストア</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] 所有するショップ ブロック</gradient>"
+    lore:
+      - "<gray>所有ショップ ブロックをオープンしました:</gray> <white>{owned_shops}</white>"
+      - "<gray> のみがあります購入または付与された追跡</gray>"
+      - "<gray>ShopBlock の所有権。</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[上限] ショップ ブロック制限</gradient>"
+    lore:
+      - "<gray>所有ショップ ブロックをオープンしました:</gray> <white>{owned_shops}</white>"
+      - "<gray>最大ショップ ブロック:</gray> <white>{max_shops}</white>"
+      - "<gray>この制限によりショップの数が制御されます</gray>"
+      - "<gray>ロックを解除できるブロック。</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>【必須】店舗要件</gradient>"
+    lore:
+      - "<gray>構成された要件:</gray> <white>{requirement_count}</white>"
+      - "<gray>現在の要件数:</gray> <white>{requirements}</white>"
+      - "<gray>ステータス:</gray> <white>{availability}</white>"
+      - "<yellow>クリックして検査してください次のショップ階層。</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[準備ができて]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[保留中]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[オフライン]</gradient>"
+
+# ショップ層の要件 UI、進行状況の表示、および購入フィードバック。
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[必須] ショップ階層{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] ショップ ブロックを購入</gradient>"
+    lore:
+      - "<gray>購入段階:</gray> <white>{purchase_number}</white>"
+      - "<gray>所有ショップ ブロックをオープンしました:</gray> <white>{owned_shops}</white>"
+      - "<gray>最大ショップ ブロック:</gray> <white>{max_shops}</white>"
+      - "<gray>構成された要件:</gray> <white>{requirement_count}</white>"
+      - "<gray>現在一致している:</gray> <white>{met_count}</white>"
+      - "<gray>ステータス:</gray> <white>{availability}</white>"
+      - "<yellow>このレベルの準備ができたらクリックして購入します。</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[準備ができて]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[保留中]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[オフライン]</gradient>"
+    none: "<gradient:#10b981:#34d399>[無料]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>【無料】条件なし</gradient>"
+    lore:
+      - "<gray>この購入層には構成された要件がありません。</gray>"
+      - "<yellow>このショップ ブロックは追加の小切手なしで購入できます。</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[必須]{requirement_name}</gradient>"
+    lore:
+      - "<gray>キー:</gray> <white>{requirement_key}</white>"
+      - "<gray>タイプ:</gray> <white>{requirement_type}</white>"
+      - "<gray>ステータス:</gray> <white>{status}</white>"
+      - "<gray>進捗状況:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>概要:</gray> <white>{summary}</white>"
+      - "<yellow>互換性のある要件を右クリックして進行状況を確認します。</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓詳細チェック</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[会った]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[保留中]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[利用不可]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>ショップ ブロックを購入しました。消費された要件:</gray> <white>{requirements}</white><gray>。所有するショップ ブロック:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>のショップ税を現在満たしていません<white>{requirement}</white><gray>。ストア要件:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>ストア要件 <white>{requirement}</white><gray> は現在利用できないか無効です。</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>ショップ ブロック制限の <white>{max_shops}</white><gray>。所有するショップ ブロック:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> は準備ができています。</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>保管された進行状況<white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray><white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{requirement}</white><gray> はバンクされた進行状況をサポートしていません。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{requirement}</white><gray> は現在利用できません。</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDS プロファイルをロードできなかったため、進行できませんでした。 </gray>"
+
+# インタラクション検証エラーと保護通知をブロックします。
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>このアイテムからショップオーナーを読み取ることができません。</red>"
+    not_owner: "<red>このショップブロックは別のプレイヤーに属しているため、あなたは配置できません。</red>"
+    max_shops_reached: "<red> に達しました。ショップ制限 {max_shops}。現在配置されているショップ: {owned_shops}.</red>"
+    shop_protected: "<red>ショップを直接破壊することはできません。ショップ メニューを使用してショップを閉じます。</red>"
+    double_chest_requires_shop_block: "<red>ダブルチェスト ショップには 2 番目の <blue>ShopBlock</blue><red>。通常のチェストはショップのチェストと結合できません。</red>"
+    double_chest_owner_mismatch: "<red>このショップブロックは別の所有者に属しているため、このショップを拡張できません。</red>"
+    shop_already_double_chest: "<red>このショップはすでに両方のチェストハーフを使用しています。</red>"
+    double_chest_ambiguous: "<red>このショップブロックは複数のショップチェストに触れています。 1 つのショップのみの隣に配置してください。</red>"
+
+# 予定税処理結果メッセージ。
+tax_scheduler:
+  paid: "<yellow>予定されている店舗税 {amount}。カウントされたショップ: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>予定された金額を支払うことができませんでした。 {amount}。カウントされたショップ: {owned_shops}.</red>"
+  charge_failed: "<red>{amount}。カウントされたショップ: {owned_shops}.</red>"
+
+# オーナー/管理者管理アクション用のメイン ショップ概要インターフェイス。
+shop_overview_ui:
+  title: "{owner} ショップ - {location}"
+  summary:
+    name: "<gold>ショップ概要</gold>"
+    player:
+      lore:
+        - "<gray>所有者:</gray> <white>{owner}</white>"
+        - "<gray>場所:</gray> <white>{location}</white>"
+        - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
+        - "<gray>ショップtype:</gray> <white>プレイヤー ショップ</white>"
+        - "<gray>在庫:</gray> <white>有限</white>"
+    admin:
+      lore:
+        - "<gray>所有者:</gray> <white>{owner}</white>"
+        - "<gray>場所:</gray> <white>{location}</white>"
+        - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
+        - "<gray>ショップtype:</gray> <white>管理ショップ</white>"
+        - "<gray>在庫:</gray> <white>無限</white>"
+  finance:
+    name: "<gold>Shop Bank</gold>"
+    lore:
+      - "<gray>追跡通貨:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>クリックして資金を確認して引き出します。</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>管理ショップ有効</red>"
+        lore:
+          - "<gray>このショップは現在管理ショップです。</gray>"
+          - "<gray>インベントリは無限です顧客。</gray>"
+          - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
+          - "<yellow>クリックして在庫制限に戻ります。プレーヤー ショップ。</yellow>"
+      disabled:
+        name: "<green>管理ショップ無効</green>"
+        lore:
+          - "<gray>このショップは現在通常を使用しています在庫です。</gray>"
+          - "<gray>顧客は保存された数量のみを購入できます。</gray>"
+          - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
+          - "<yellow>クリックして管理ショップモードを有効にします。</yellow>"
+    close:
+      name: "<red>店を閉じる</red>"
+      lore:
+        - "<gray>このショップを削除し、ショップ ブロックを返します。</gray>"
+        - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
+        - "<gray>追跡銀行通貨:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>ショップの在庫は閉店前に空である必要があります。</yellow>"
+    manage:
+      name: "<green>ショップアイテムの追加</green>"
+      lore:
+        - "<gray>ここに新しいアイテムを保管しますshop.</gray>"
+        - "<gray>現在のエントリ:</gray> <white>{item_count}</white>"
+        - "<yellow>クリックしてアイテム入力を開きます。</yellow>"
+    customer_view:
+      name: "<gold>顧客ビューを開く</gold>"
+      lore:
+        - "<gray>顧客が表示するこのショップをプレビューします。</gray>"
+        - "<gray>現在のエントリ:</gray> <white>{item_count}</white>"
+        - "<yellow>クリックして顧客としてこのショップを閲覧します。</yellow>"
+    trusted:
+      name: "<gold>Trusted Players</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Trustedプレイヤー:</gray> <white>{trusted_count}</white>"
+        - "<yellow>クリックしてショップの信頼レベルを管理します。</yellow>"
+    ledger:
+      name: "<gold>Shop Ledger</gold>"
+      lore:
+        - "<gray>エントリの合計:</gray> <white>{ledger_count}</white>"
+        - "<gray>購入数:</gray> <white>{purchase_count}</white>"
+        - "<gray>税金:</gray> <white>{tax_count}</white>"
+        - "<yellow>クリックしてショップの取引履歴を確認します。</yellow>"
+    edit:
+      name: "<aqua>ショップ アイテムの編集</aqua>"
+      lore:
+        - "<gray>ストア ショップの価格設定の編集items.</gray>"
+        - "<gray>現在のエントリ:</gray> <white>{item_count}</white>"
+        - "<yellow>クリックして価格を編集通貨。</yellow>"
+    storage:
+      name: "<gold>保管アイテムの表示</gold>"
+      lore:
+        - "<gray>確認このショップにすでに保管されているアイテム。</gray>"
+        - "<gray>現在のエントリ:</gray> <white>{item_count}</white>"
+        - "<yellow>クリック保管されているアイテムを引き出すにはクリックしてください。</yellow>"
+    locked:
+      name: "<red>ショップがロックされています</red>"
+      lore:
+        - "<gray>アイテムを追加できるのはオーナーだけです。</gray>"
+        - "<gray>現在のエントリ:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>このショップを管理する権限がありません。</red>"
+    no_admin_permission: "<red>管理ショップを切り替える権限がありません。</red>"
+    admin_limit_reached: "<red>サーバーにはすでに {admin_shops} 管理ショップ。無料版では、{max_admin_shops} 管理ショップ。</red>"
+    admin_enabled: "<green>このショップは現在、無限の顧客在庫を持つ管理ショップです。カウントされるショップ: {owned_shops}.</green>"
+    admin_disabled: "<yellow>このショップは現在、限られた顧客在庫を持つ通常のプレーヤー ショップです。カウントされるショップ: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>ショップ制限が {max_shops} にすでに達しています。カウントされるショップ: {owned_shops}.</red>"
+    close_not_empty: "<red>保管されているアイテムをすべて削除した後でのみ、ショップを閉じることができます。残りのエントリ: {item_count}.</red>"
+    close_bank_not_empty: "<red>このショップを閉じる前にショップ銀行を引き出してください。追跡されている残りの通貨: {bank_currency_count}.</red>"
+    closed: "<green>店を閉めて返品しました {returned_blocks} ショップブロック。カウントされるショップ: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# RDS 管理用のグローバル管理コントロール パネル。
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[管理者] RDS コントロール</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS 管理パネル</white>"
+    lore:
+      - "<gray>グローバル管理ショップ システムを 1 か所から管理します。</gray>"
+      - "<gray>サーバーバンクを開くか、構成設定を編集します以下。</gray>"
+      - "<yellow>要件:</yellow> <white>Raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] サーバー銀行</gradient>"
+      lore:
+        - "<gray>サーバー バンクに引き込まれた管理ショップの収入を確認します。</gray>"
+        - "<gray>次回のプルタイミングを確認し、残高を引き出します。</gray>"
+        - "<yellow>クリックサーバー バンク コントロールを開きます。</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] ショップConfig</gradient>"
+      lore:
+        - "<gray>値の編集</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>すべての編集可能な設定は、金床プロンプトから変更できます。</gray>"
+        - "<yellow>クリックして構成コントロールを開きます。</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] 通貨マネージャー</gradient>"
+      lore:
+        - "<gray>Vault と JExEconomy から検出された通貨を確認します。</gray>"
+        - "<gray>デフォルトを作成</gray> <white>雨滴</white> <gray>必要なときに通貨を使用します。</gray>"
+        - "<yellow>クリックして通貨コントロールを開きます。</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要</white>"
+      lore:
+        - "<gray>この管理者を使用する権限がありません。パネル。</gray>"
+
+# 検出されたプロバイダーの管理通貨ビューとデフォルトの通貨作成。
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] 通貨マネージャー</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>通貨プロバイダ</white>"
+    lore:
+      - "<gray>検出済み通貨:</gray> <white>{currency_count}</white>"
+      - "<gray>利用可能な保管庫:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy が利用可能:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>デフォルトを作成するには、クリスタル ボタンを使用します。通貨.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[カー]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>プロバイダー:</gray> <white>{provider}</white>"
+      - "<gray>に切り替えましたシンボル:</gray> <white>{symbol}</white>"
+      - "<gray>プレフィックス:</gray> <white>{prefix}</white>"
+      - "<gray>サフィックス:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>作成{currency_id}</white>"
+      lore:
+        - "<gray>JExEconomy でデフォルトの RDS 通貨を作成します。</gray>"
+        - "<yellow>クリックして作成 {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>JExEconomy が必要</white>"
+      lore:
+        - "<gray>JExEconomy なしではデフォルトの通貨を作成できません。</gray>"
+        - "<gray>最初に JExEconomy をインストールして有効にします。</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[わかりました]</gradient> <white>{currency_id}準備完了</white>"
+      lore:
+        - "<gray>デフォルトの通貨はすでに存在します。</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>作成されたデフォルト通貨:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>の予定された店舗税の徴収に失敗しました。通貨の作成に失敗しました:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>通貨がすでに存在します:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>あるため、この管理ショップをプレーヤー ショップに戻すことはできません。JExEconomy が利用可能でない限り、このボタンは使用できません。</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>通貨が検出されません</white>"
+      lore:
+        - "<gray>Vault または JExEconomy 通貨が検出されませんでした。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要</white>"
+      lore:
+        - "<gray>この通貨ビューを使用する権限がありません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>通貨を管理する権限がありません。</gray>"
+  decoration:
+    border:
+      name: " "
+
+# 編集可能な設定と更新フィードバック用のブラウザ UI を構成します。
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] ショップConfig</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>構成設定</white>"
+    lore:
+      - "<gray>検出された編集可能な設定:</gray> <white>{setting_count}</white>"
+      - "<gray>値を編集するには下のいずれかのエントリをクリックしてください</gray>"
+      - "<yellow>変更はに直接書き込まれます。 config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[セット]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>パス:</gray> <white>{config_path}</white>"
+      - "<gray>タイプ:</gray> <white>{value_type}</white>"
+      - "<gray>現在の値:</gray> <white>{current_value}</white>"
+      - "<yellow>クリックしてこの設定を編集します。</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[ブール値]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[整数]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[長さ]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[ダブル]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[リスト]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[弦]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>編集不可設定</white>"
+      lore:
+        - "<gray>編集可能なスカラー/リスト構成設定が見つかりませんでした。</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要</white>"
+      lore:
+        - "<gray>この構成ビューを使用する権限がありません。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>構成編集はロックされています</white>"
+      lore:
+        - "<gray>このエディションではランタイム設定の編集ができません。</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>構成設定を編集する権限がありません。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このエディションでは構成編集がロックされています。</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>更新 <white>{config_path}</white><gray> を <white>{updated_value}</white><gray>.</gray>"
+
+# 構成値を編集するための Anvil プロンプト テキスト。
+shop_config_value_anvil_ui:
+  title: "編集 {config_path}"
+  input:
+    lore:
+      - "<gray>パス:</gray> <white>{config_path}</white>"
+      - "<gray>タイプ:</gray> <white>{value_type}</white>"
+      - "<gray>現在の値:</gray> <white>{current_value}</white>"
+      - "<yellow>新しい値を入力して確認してください。</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>タイプの入力が無効です<white>{value_type}</white><gray>。入力:</gray> <white>{input}</white>"
+
+# サーバー銀行の概要、通貨入力、および引き出しのフィードバック。
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] サーバー銀行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>収入と送金ステータス</white>"
+    lore:
+      - "<gray>追跡通貨:</gray> <white>{currency_count}</white>"
+      - "<gray>収入:</gray> <white>{income_summary}</white>"
+      - "<gray>次のプル:</gray> <white>{next_pull_at}</white>"
+      - "<gray>次のプルまでの時間:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>管理者とショップの残高はスケジュールに従ってここに転送されます。</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>なし</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>無効</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>保留中...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>無効</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>保留中...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[撤回する]</gradient> <white>すべて引き出し</white>"
+    lore:
+      - "<gray>すべてのプラス残高の引き出しを試みます。</gray>"
+      - "<gray>利用できない通貨はスキップされます。</gray>"
+      - "<yellow>クリックすると、すべての資金をアカウントに引き出します。</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+      - "<gray>利用可能な残高:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>通貨残高全額を引き出すにはクリックしてください。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>サーバー銀行が空</white>"
+      lore:
+        - "<gray>出金できるプラスの残高はありません。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要</white>"
+      lore:
+        - "<gray>サーバー銀行を管理する権限がありません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>サーバー銀行を管理する権限がありません。</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>サーバーと銀行の残高は利用できなくなりました。</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>撤退 <white>{amount} {currency_name}</white><gray> でした。残り {currency_name}:</gray> <white>{remaining_amount}</white><gray> を購入します。有効な通貨:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>撤退 <white>{withdrawn_currency_count}</white><gray> の通貨残高を購入しました。失敗:</gray> <white>{failed_currency_count}</white><gray>。残りの有効な通貨:</gray> <white>{remaining_currency_count}</white><gray>。詳細:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>残高はありません撤回された。通貨カウントに失敗しました:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>通貨 <white>{currency_name}</white><gray> は現在購入できません。</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>出金に失敗しました <white>{amount} {currency_name}</white><gray>。ショップ バンクからの</gray>"
+
+# 使用されるショップ アイテム入力 UI新しい株式エントリーを追加するとき。
+shop_input_ui:
+  title: "アイテムの追加 - {owner} @ {location}"
+  summary:
+    name: "<gold>ショップ保管</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>現在保存されている:</gray> <white>{stored_count}</white>"
+      - "<yellow> に設定されました新しいアイテムのデフォルトは通貨タイプのボールトと値 0 です。</yellow>"
+  input_slot:
+    name: "<green>入力スロット</green>"
+    lore:
+      - "<gray>アイテムをカーソルの上で左クリックします</gray>"
+      - "<gray>または、Shift キーを押しながらインベントリからアイテムをクリックします。</gray>"
+      - "<gray>右クリックして挿入されたスタックを削除します。</gray>"
+  no_new_items_inserted: "<red>に一致するアイテムや通貨はありませんでした。新しいアイテムは挿入されませんでした。</red>"
+  saved: "<green>保管 {added_count} の新しいエントリ。現在、ショップには {stored_count} エントリ。サーバー バンクからの </green>"
+  save_failed: "<red>ショップアイテムの保存に失敗しました。</red>"
+  left_overs: "<yellow>未保存のショップ アイテムを在庫に戻します。</yellow>"
+  feedback:
+    no_permission: "<red>このショップに商品を追加する権限がありません。</red>"
+    locked:
+      name: "<red>サプライ アクセスが必要</red>"
+      lore:
+        - "<gray>ここにアイテムを追加できるのは、仲間と信頼できるプレイヤーだけです。</gray>"
+
+# 保管アイテムを表示および取り出すためのショップ ストレージ ブラウザ UI。
+shop_storage_ui:
+  title: "保管アイテム - {location}"
+  summary:
+    name: "<gold>保管アイテム</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>保管エントリ:</gray> <white>{stored_count}</white>"
+      - "<yellow>下のいずれかのアイテムをクリックして引き出してください。</yellow>"
+  entry:
+    lore:
+      - "<gray>保管量:</gray> <white>{amount}</white>"
+      - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+      - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+      - "<gray>値:</gray> <white>{value}</white>"
+      - "<yellow>クリックしてショップからこのアイテムを抽出してください。</yellow>"
+  feedback:
+    not_owner: "<red>このショップを管理する権限がありません。</red>"
+    extracted: "<green>抽出{amount}x {item_type}。価格は {value} {currency_type}。残りの保存エントリ: {stored_count}.</green>"
+    item_missing: "<red>そのストアされたアイテムが見つかりませんでした。</red>"
+    locked:
+      name: "<red>完全なアクセスが必要です</red>"
+      lore:
+        - "<gray>完全なアクセス権を持つ信頼できるプレーヤーのみが保存されたアイテムを引き出すことができます。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# 変更するエントリを選択するためのショップ編集選択 UI。
+shop_edit_ui:
+  title: "ショップ アイテムの編集 - {location}"
+  summary:
+    name: "<aqua>ショップ価格エディター</aqua>"
+    player:
+      lore:
+        - "<gray>所有者:</gray> <white>{owner}</white>"
+        - "<gray>場所:</gray> <white>{location}</white>"
+        - "<gray>保管エントリ:</gray> <white>{stored_count}</white>"
+        - "<yellow>アイテムを左クリックして価格を編集します。</yellow>"
+        - "<yellow>アイテムを右クリックしてショップから削除します。</yellow>"
+    admin:
+      lore:
+        - "<gray>所有者:</gray> <white>{owner}</white>"
+        - "<gray>場所:</gray> <white>{location}</white>"
+        - "<gray>保管エントリ:</gray> <white>{stored_count}</white>"
+        - "<gray> に設定されています管理者補充モード:</gray> <white>{restock_mode}</white>"
+        - "<gray>再入荷スケジュール:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>アイテムを左クリックして価格または在庫を編集します。</yellow>"
+        - "<yellow>アイテムを右クリックしてショップから削除します。</yellow>"
+    restock_schedule:
+      gradual: "デフォルトのタイマー: {reset_timer_ticks} ティック) item"
+  entry:
+    player:
+      lore:
+        - "<gray>保管量:</gray> <white>{amount}</white>"
+        - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+        - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+        - "<gray>値:</gray> <white>{value}</white>"
+        - "<yellow>左クリックしてこのショップ アイテムを編集します。</yellow>"
+        - "<yellow>右クリックしてアイテムを削除しますshop.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>在庫:</gray> <white>無限</white>"
+        - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+        - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+        - "<gray>値:</gray> <white>{value}</white>"
+        - "<gray>再ストック モード:</gray> <white>{restock_mode}</white>"
+        - "<yellow>左クリックこの管理ショップ アイテムを編集するには、</yellow>"
+        - "<yellow>右クリックしてアイテムを削除しますshop.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>現在の在庫:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+        - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+        - "<gray>値:</gray> <white>{value}</white>"
+        - "<gray>再ストック モード:</gray> <white>{restock_mode}</white>"
+        - "<gray>再入荷スケジュール:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>左クリックこの管理ショップ アイテムを編集するには、</yellow>"
+        - "<yellow>右クリックしてアイテムを削除しますshop.</yellow>"
+    admin_mode:
+      gradual: "段階的"
+      full: "完全なリセット"
+    restock_schedule:
+      gradual: "1 アイテムごと {reset_timer_ticks} ティック"
+      full: "完全に再入荷します{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>このショップを管理する権限がありません。</red>"
+    removed: "<green>削除されました {amount}x {item_type}。価格は {value} {currency_type}。残りの保存エントリ: {stored_count}.</green>"
+    item_missing: "<red>そのショップ アイテムが見つかりませんでした。</red>"
+    locked:
+      name: "<red>完全なアクセスが必要です</red>"
+      lore:
+        - "<gray>完全なアクセス権を持つ信頼できるプレイヤーだけがアイテムの値を編集できます。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# 個々のショップ商品の動作と価格設定の詳細なエディター UI。
+shop_item_edit_ui:
+  title: "編集 {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>保管量:</gray> <white>{amount}</white>"
+        - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+        - "<gray>値:</gray> <white>{value}</white>"
+        - "<gray> に設定します可用性モード:</gray> <white>{availability_mode}</white>"
+        - "<gray>現在利用可能:</gray> <white>{availability_state}</white>"
+        - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+        - "<yellow>このアイテムを編集するには、下のボタンを使用します。</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>在庫:</gray> <white>無限</white>"
+        - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+        - "<gray>値:</gray> <white>{value}</white>"
+        - "<gray>再ストック モード:</gray> <white>{restock_mode}</white>"
+        - "<gray>購入コマンド:</gray> <white>{command_count}</white>"
+        - "<gray> に設定します可用性モード:</gray> <white>{availability_mode}</white>"
+        - "<gray>現在利用可能:</gray> <white>{availability_state}</white>"
+        - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+        - "<yellow>この管理アイテムを編集するには、下のボタンを使用します。</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>現在の在庫:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Currencyタイプ:</gray> <white>{currency_type}</white>"
+        - "<gray>値:</gray> <white>{value}</white>"
+        - "<gray>再ストック モード:</gray> <white>{restock_mode}</white>"
+        - "<gray>再入荷スケジュール:</gray> <white>{restock_schedule}</white>"
+        - "<gray>購入コマンド:</gray> <white>{command_count}</white>"
+        - "<gray> に設定します可用性モード:</gray> <white>{availability_mode}</white>"
+        - "<gray>現在利用可能:</gray> <white>{availability_state}</white>"
+        - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+        - "<yellow>この管理アイテムを編集するには、下のボタンを使用します。</yellow>"
+  currency_type:
+    name: "<green>通貨タイプ</green>"
+    lore:
+      - "<gray>現在のタイプ:</gray> <white>{currency_type}</white>"
+      - "<yellow>クリックして通貨タイプを編集します。</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>現在のタイプ:</gray> <white>{currency_type}</white>"
+      - "<gray>現在の値:</gray> <white>{value}</white>"
+      - "<yellow>クリックして数値を編集します。</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[モード]アイテムの入手可能性</gradient>"
+    always: "<gradient:#22c55e:#86efac>[常に]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[回転]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[一度もない]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[開ける]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Closed]</gradient>"
+    lore:
+      - "<gray>現在のモード:</gray> <white>{availability_mode}</white>"
+      - "<gray>現在の状態:</gray> <white>{availability_state}</white>"
+      - "<gray>回転ウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+      - "<yellow>クリックして循環: 常に -> 回転 -> しない。</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[タイマー] 分を回転させます</gradient>"
+    lore:
+      - "<gray>現在のウィンドウ:</gray> <white>{rotation_minutes} 分 (秒)</white>"
+      - "<gray>現在のモード:</gray> <white>{availability_mode}</white>"
+      - "<gray>回転モード ラベル:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>クリックして金床の回転時間を設定します。</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] コマンド実行者</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[サーバ]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[プレーヤー]</gradient>"
+    lore:
+      - "<gray>現在のモード:</gray> <white>{command_mode}</white>"
+      - "<gray>次のモード:</gray> <white>{next_mode}</white>"
+      - "<yellow>クリックすると、新しく追加されたコマンドを実行するユーザーが切り替わります。</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] コマンドの購入</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>なし</gradient>"
+    lore:
+      - "<gray>構成されたコマンド:</gray> <white>{command_count}</white>"
+      - "<gray>最新のコマンド:</gray> <white>{latest_command}</white>"
+      - "<yellow>クリックしてコマンド設定を開き、コマンドを追加します。</yellow>"
+  confirm:
+    name: "<green>品目の価格を保存</green>"
+    lore:
+      - "<gray>現在の通貨タイプを適用し、 value</gray>"
+      - "<gray>このショップアイテムに。</gray>"
+  stock_limit:
+    name: "<gold>在庫制限</gold>"
+    unlimited: "無限"
+    lore:
+      - "<gray>現在の制限:</gray> <white>{stock_limit}</white>"
+      - "<gray>現在の在庫:</gray> <white>{current_stock}</white>"
+      - "<yellow>クリックして在庫制限を設定します。</yellow>"
+      - "<gray>このアイテムを無限のストックに戻すには、-1 を使用します。</gray>"
+  reset_timer:
+    name: "<aqua>リセット タイマー</aqua>"
+    lore:
+      - "<gray>現在タイマー:</gray> <white>{reset_timer_ticks} ティック</white>"
+      - "<yellow>クリックして補充タイマーを設定します。</yellow>"
+  restock_mode:
+    name: "<yellow>管理者在庫モード</yellow>"
+    gradual: "段階的"
+    full: "完全なリセット"
+    lore:
+      - "<gray>構成されたモード:</gray> <white>{restock_mode}</white>"
+      - "<gray>構成済みスケジュール:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>クリックすると、全体管理者補充モードが切り替わります。</yellow>"
+  restock_schedule:
+    gradual: "1 アイテムごと {reset_timer_ticks} ティック"
+    full: "完全に再入荷します{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>このショップを管理する権限がありません。</red>"
+    shop_missing: "<red>このショップはストレージからロードできませんでした。</red>"
+    item_missing: "<red>そのショップ アイテムが見つかりませんでした。</red>"
+    saved: "<green>品目の価格を{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>可用性モードを <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>新しいコマンド実行モードが <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>最新のコマンドを削除しました。残りのコマンド:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>すべての管理者購入コマンドをクリアしました。</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>管理購入コマンドが設定されていません。</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>プラグイン設定の変更は <white>RDS無料</white><gray>。フルアクセスするには、プレミアムにアップグレードしてください。</gray>"
+    restock_mode_updated: "<green>管理者補充モードが {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>管理在庫補充モードの保存に失敗しました。</red>"
+
+# Anvil新しい管理購入コマンドを追加するためのプロンプト。
+shop_item_admin_command_anvil_ui:
+  title: "コマンドの追加 {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>この管理アイテムが有効な場合に実行するコマンドを入力してください購入しました。</gray>"
+      - "<gray>コマンド テキストのみ。遅延はコマンド設定ビューで構成されます。</gray>"
+      - "<gray>例:</gray>"
+      - "<white>放送%player_name% が {amount}x {item_type}</white>"
+      - "<white>エコギブ%player_name% 50</white>"
+      - "<gray>構成されたコマンド:</gray> <white>{command_count}</white>"
+      - "<gray>実行モード:</gray> <white>{command_mode}</white>"
+      - "<gray>遅延:</gray> <white>{command_delay_ticks} ティック</white>"
+  mode:
+    server: "<gold>[サーバ]</gold>"
+    player: "<green>[プレーヤー]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>コマンド テキストを空にすることはできません。入力:</gray> <white>{input}</white>"
+
+# モード、遅延、およびコマンド リストの管理者購入コマンド マネージャー UI。
+shop_item_admin_command_ui:
+  title: " を徴収しました コマンド設定 - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] コマンド設定の購入</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>なし</gradient>"
+    lore:
+      - "<gray>構成されたコマンド:</gray> <white>{command_count}</white>"
+      - "<gray>最新のコマンド:</gray> <white>{latest_command}</white>"
+      - "<gray> に設定次のコマンド モード:</gray> <white>{command_mode}</white>"
+      - "<gray>次のコマンドの遅延:</gray> <white>{command_delay_ticks} ティック ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] 次のコマンド実行者</gradient>"
+    server: "<gold>[サーバ]</gold>"
+    player: "<green>[プレーヤー]</green>"
+    lore:
+      - "<gray>現在のモード:</gray> <white>{command_mode}</white>"
+      - "<gray>次のモード:</gray> <white>{next_mode}</white>"
+      - "<yellow>クリックすると、次のコマンドの実行者が切り替わります。</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[遅延] 次のコマンドの遅延</gradient>"
+    lore:
+      - "<gray>現在の遅延:</gray> <white>{command_delay_ticks} ティック ({command_delay_seconds}s)</white>"
+      - "<yellow>クリックして次のコマンドの遅延を設定します。</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] コマンドを追加</gradient>"
+    lore:
+      - "<gray>モード:</gray> <white>{command_mode}</white>"
+      - "<gray>遅延:</gray> <white>{command_delay_ticks} ティック ({command_delay_seconds}s)</white>"
+      - "<yellow>クリックしてコマンド入力を開きます。</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] 削除コマンド</gradient>"
+    lore:
+      - "<gray>構成されたコマンド:</gray> <white>{command_count}</white>"
+      - "<yellow>クリックして最新のコマンドを削除します。</yellow>"
+      - "<yellow>Shift + クリックすべてのコマンドをクリアします。</yellow>"
+  confirm:
+    name: "<green>保存コマンド設定</green>"
+    lore:
+      - "<gray>の結果アイテム エディターに戻り、これらのコマンドの変更を保持します。</gray>"
+  feedback:
+    not_owner: "<red>このショップを管理する権限がありません。</red>"
+    shop_missing: "<red>このショップはストレージからロードできませんでした。</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>次のコマンド モードを <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>最新のコマンドを削除しました。残りのコマンド:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>すべての管理者購入コマンドをクリアしました。</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>管理購入コマンドが設定されていません。</gray>"
+
+# 管理コマンド遅延ティックを設定するための Anvil プロンプト。
+shop_item_admin_command_delay_anvil_ui:
+  title: "遅延の設定 - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray> 次のコマンド遅延のティックの整数を入力してください。</gray>"
+      - "<gray>実行モード:</gray> <white>{command_mode}</white>"
+      - "<gray>例:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[サーバ]</gold>"
+    player: "<green>[プレーヤー]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[×]</gradient> <gray> 0 以上の整数を入力してください。 入力:</gray> <white>{input}</white>"
+
+# 分単位の回転モード利用可能ウィンドウのための Anvil プロンプト。
+shop_item_availability_minutes_anvil_ui:
+  title: "回転時間: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[タイマー] 分を回転させます</gradient>"
+    lore:
+      - "<gray> 分数の整数を入力してください。</gray>"
+      - "<gray>回転モードは、各ウィンドウごとに使用可能/使用不可を切り替えます。</gray>"
+  error:
+    invalid_number: "<red>0 より大きい整数を入力してください。 入力: {input}</red>"
+
+# 制限された管理在庫容量を設定するための Anvil プロンプト。
+shop_item_admin_stock_limit_anvil_ui:
+  title: "在庫制限: {stock_limit}"
+  input:
+    name: "<gold>在庫制限</gold>"
+    lore:
+      - "<gray>アイテムに正の在庫制限を入力してください。</gray>"
+      - "<gray>無限の管理ストックに戻すには、-1 を使用します。</gray>"
+  error:
+    invalid_number: "<red>-1 または 0 より大きい整数を入力してください。入力: {input}</red>"
+
+# 管理者在庫補充/リセット タイマー ティックを構成するための Anvil プロンプト。
+shop_item_admin_reset_timer_anvil_ui:
+  title: "リセット タイマー: {reset_timer_ticks}"
+  input:
+    name: "<aqua>リセット タイマー</aqua>"
+    lore:
+      - "<gray> Bukkit ティックの整数を入力してください。</gray>"
+      - "<gray>段階的モードでは、タイマーごとに 1 つのアイテムが復元されます。</gray>"
+  error:
+    invalid_number: "<red>0 より大きい整数を入力してください。 入力: {input}</red>"
+
+# 使用する通貨タイプを選択するための Anvil プロンプトアイテム。
+shop_item_currency_type_anvil_ui:
+  title: "通貨タイプ: {currency_type}"
+  input:
+    name: "<green>通貨タイプ</green>"
+    lore:
+      - "<gray>このアイテムの通貨識別子を入力してください。</gray>"
+      - "<gray>例:</gray> <white>保管庫、トークン、ジェム</white>"
+  error:
+    empty: "<red>通貨タイプを空にすることはできません。</red>"
+    invalid_currency: "<red>通貨タイプ {currency_type} は使用できません。 Vault または登録済みのカスタム通貨を使用してください。</red>"
+    processing_failed: "<red>通貨タイプの更新に失敗しました。入力: {input}</red>"
+
+# アイテムごとの価格/値を設定するための Anvil プロンプト。
+shop_item_value_anvil_ui:
+  title: "値: {value} {currency_type}"
+  input:
+    name: "<gold>アイテム値</gold>"
+    lore:
+      - "<gray>負ではない数値を入力してください。</gray>"
+      - "<gray>例:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>有効な負でない数値を入力してください。入力: {input}</red>"
+    processing_failed: "<red>項目値の更新に失敗しました。入力: {input}</red>"
+
+# ショップごとの通貨残高を確認するためのショップ銀行 UI出金。
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>銀行残高</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>追跡通貨:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>全額を引き出すには下の残高をクリックしてください。</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+      - "<gray>利用可能な残高:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>この残高全額を引き出すにはクリックしてください。</yellow>"
+  feedback:
+    not_owner: "<red>このショップを管理する権限がありません。</red>"
+    entry_missing: "<red>その銀行残高は利用できなくなりました。</red>"
+    withdrawn: "<green>撤退 {amount} {currency_name} でした。残り {currency_name}: {remaining_amount}。追跡通貨: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>出金に失敗しました {amount} {currency_name}。ショップからの</red>"
+    currency_unavailable: "<red>通貨 {currency_name} は現在購入できません。</red>"
+    empty:
+      name: "<red>銀行空</red>"
+      lore:
+        - "<gray>このショップには引き出すための銀行残高がありません。</gray>"
+    locked:
+      name: "<red>完全なアクセスが必要です</red>"
+      lore:
+        - "<gray>完全なアクセス権を持つ信頼できるプレーヤーのみがショップ資金を引き出すことができます。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# ショップ アクセス ロール用の信頼できるプレーヤー管理 UI。
+shop_trusted_ui:
+  title: "Trusted Players - {location}"
+  summary:
+    name: "<gold>ショップトラストマネージャー</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trustedプレイヤー:</gray> <white>{trusted_count}</white>"
+      - "<yellow>信頼ステータスを切り替えるにはプレーヤーをクリックしてください。</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>ステータス:</gray> <white>パブリック</white>"
+        - "<gray>管理権限がありません。</gray>"
+        - "<yellow>クリックしてアソシエートに変更します。</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>ステータス:</gray> <white>Associate</white>"
+        - "<gray>アイテムをショップに追加できます。</gray>"
+        - "<yellow>クリックして信頼済みに変更します。</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>ステータス:</gray> <white>Trusted</white>"
+        - "<gray>ショップを完全に管理できます。</gray>"
+        - "<yellow>クリックしてパブリックに変更します。</yellow>"
+  feedback:
+    not_owner: "<red>信頼できるプレイヤーを管理できるのはショップのオーナーだけです。</red>"
+    updated:
+      public: "<yellow>設定 {player}Public.</yellow>"
+      associate: "<green>設定 {player} に関連付けます。</green>"
+      trusted: "<green>設定 {player} から Trusted.</green>"
+    empty:
+      name: "<red>プレーヤーが見つかりません</red>"
+      lore:
+        - "<gray>他に信頼できる既知のプレーヤーはありません。</gray>"
+    locked:
+      name: "<red>所有者アクセスのみ</red>"
+      lore:
+        - "<gray>信頼できるプレイヤーを管理できるのはショップのオーナーだけです。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# 購入と税金の取引台帳 UI History.
+shop_ledger_ui:
+  title: "Shop Ledger - {location}"
+  summary:
+    name: "<gold>ショップ取引台帳</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>エントリの合計:</gray> <white>{ledger_count}</white>"
+      - "<gray>購入数:</gray> <white>{purchase_count}</white>"
+      - "<gray>税金:</gray> <white>{tax_count}</white>"
+      - "<yellow>最新のトランザクションが表示されます最初。</yellow>"
+  entry:
+    purchase:
+      name: "<green>購入: {item_type}</green>"
+      lore:
+        - "<gray>購入者:</gray> <white>{actor}</white>"
+        - "<gray>金額:</gray> <white>{item_amount}</white>"
+        - "<gray>支払総額:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+        - "<gray>記録:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>税金</gold>"
+      lore:
+        - "<gray>チャージ先:</gray> <white>{actor}</white>"
+        - "<gray>税金共有:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>カウントされるショップ:</gray> <white>{counted_shops}</white>"
+        - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+        - "<gray>記録:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>元帳エントリがありません</red>"
+      lore:
+        - "<gray>このショップにはまだ購入や税金が記録されていません。</gray>"
+    locked:
+      name: "<red>完全なアクセスが必要です</red>"
+      lore:
+        - "<gray>完全なアクセス権を持つ信頼できるプレイヤーだけがアイテムを表示できます。台帳。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# 商品を閲覧および購入するための顧客向けのショップ UI。
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Customer View</gold>"
+    player:
+      lore:
+        - "<gray>所有者:</gray> <white>{owner}</white>"
+        - "<gray>場所:</gray> <white>{location}</white>"
+        - "<gray>利用可能なエントリ:</gray> <white>{stored_count}</white>"
+        - "<gray>ショップtype:</gray> <white>プレイヤー ショップ</white>"
+        - "<gray>在庫:</gray> <white>有限</white>"
+        - "<yellow>アイテムを左クリックして購入します。</yellow>"
+        - "<yellow>アイテムを右クリックして数量を選択します。</yellow>"
+    admin:
+      lore:
+        - "<gray>所有者:</gray> <white>{owner}</white>"
+        - "<gray>場所:</gray> <white>{location}</white>"
+        - "<gray>利用可能なエントリ:</gray> <white>{stored_count}</white>"
+        - "<gray>ショップtype:</gray> <white>管理ショップ</white>"
+        - "<gray>在庫:</gray> <white>無限</white>"
+        - "<yellow>アイテムを左クリックして購入します。</yellow>"
+        - "<yellow>アイテムを右クリックして数量を選択します。</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>在庫:</gray> <white>{amount}</white>"
+        - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+        - "<gray>それぞれの価格:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>在庫の合計値:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+        - "<yellow>左クリックして購入します。</yellow>"
+        - "<yellow>右クリックして数量を選択します。</yellow>"
+    admin:
+      lore:
+        - "<gray>在庫:</gray> <white>無限</white>"
+        - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+        - "<gray>それぞれの価格:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+        - "<gray>ショップtype:</gray> <white>管理ショップ</white>"
+        - "<yellow>左クリックして購入します。</yellow>"
+        - "<yellow>右クリックして数量を選択します。</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>在庫:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>アイテムの種類:</gray> <white>{item_type}</white>"
+        - "<gray>それぞれの価格:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>通貨ID:</gray> <white>{currency_type}</white>"
+        - "<gray>再ストック モード:</gray> <white>{restock_mode}</white>"
+        - "<gray>再入荷スケジュール:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>左クリックして購入します。</yellow>"
+        - "<yellow>右クリックして数量を選択します。</yellow>"
+    admin_mode:
+      gradual: "段階的"
+      full: "完全なリセット"
+    restock_schedule:
+      gradual: "1 アイテムごと {reset_timer_ticks} ティック"
+      full: "完全に再入荷します{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>購入 {amount}x {item_type} の{total_price} {currency_name}。残りの在庫: {remaining_amount}.</green>"
+    purchased_admin: "<green>購入 {amount}x {item_type} の{total_price} {currency_name}。この管理ショップには無限の在庫があります。</green>"
+    purchased_admin_limited: "<green>購入 {amount}x {item_type} の{total_price} {currency_name}。残りの管理在庫: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>{item_type} は現在購入できません。</gray>"
+    insufficient_stock: "<red>このショップには {available_amount}x {item_type} のみが利用可能です。</red>"
+    insufficient_funds: "<red> が必要です。{total_price} {currency_name} へ、{amount}x {item_type}.</red>"
+    currency_unavailable: "<red>通貨 {currency_name} は現在購入できません。</red>"
+    invalid_amount: "<red>有効な購入金額を入力してください。</red>"
+    item_missing: "<red>そのショップ アイテムは利用できなくなりました。</red>"
+    empty_shop:
+      name: "<red>Shop Empty</red>"
+      lore:
+        - "<gray>で利用できるアイテムはありません購入します。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# カスタム購入数量を入力するための Anvil プロンプト。
+shop_purchase_amount_anvil_ui:
+  title: "購入 {item_type}"
+  input:
+    name: "<gold>購入金額</gold>"
+    player:
+      lore:
+        - "<gray> 必要な項目の数を入力してください。 buy.</gray>"
+        - "<gray>利用可能な最大数:</gray> <white>{max_amount}</white>"
+        - "<gray>アイテム:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray> 必要な項目の数を入力してください。 buy.</gray>"
+        - "<gray>この管理ショップには無限の在庫があります。</gray>"
+        - "<gray>アイテム:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray> 必要な項目の数を入力してください。 buy.</gray>"
+        - "<gray>利用可能な最大数:</gray> <white>{max_amount}</white>"
+        - "<gray>アイテム:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>1 から 1 までの整数を入力してください{max_amount}。入力: {input}</red>"
+    invalid_number_admin: "<red>0 より大きい整数を入力してください。 入力: {input}</red>"
+    processing_failed: "<red>購入金額の処理に失敗しました。入力: {input}</red>"
+
+# すべて参照およびマテリアル検索用のショップ発見ランディング UI。
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Shop Browser</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Browser</gradient>"
+    lore:
+      - "<gray>追跡されたすべてのショップを参照するか、特定の素材でフィルターします。</gray>"
+      - "<yellow>続行するには、以下のアクションのいずれかを選択してください。</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>すべてのショップを参照</gradient>"
+    lore:
+      - "<gray>完全なページ分割されたショップディレクトリを開きます。</gray>"
+      - "<yellow>クリックすると、追跡されているすべてのショップが表示されます。</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>材料で検索</gradient>"
+    lore:
+      - "<gray>金床プロンプトを開き、マテリアル名を入力します。</gray>"
+      - "<gray>例:</gray> <white>ダイヤモンドブロック</white>"
+      - "<yellow>クリックしてアイテム タイプで検索します。</yellow>"
+
+# 追跡されているすべてのショップをリストするページ分割されたディレクトリ UI。
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>すべてのショップ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Directory</gradient>"
+    lore:
+      - "<gray>追跡ショップ:</gray> <white>{shop_count}</white>"
+      - "<gray>利用可能な在庫の合計:</gray> <white>{available_count}</white>"
+      - "<yellow>下のいずれかのショップをクリックして開きます。</yellow>"
+  entry:
+    name: "<gold>{owner} のショップ</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>利用可能な在庫:</gray> <white>{available_count}</white>"
+      - "<yellow>クリックしてこのショップを開きます。</yellow>"
+  feedback:
+    empty:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>まだ登録されているショップはありません。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# マテリアルでフィルターされたショップ結果UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>{material}</gradient>"
+    lore:
+      - "<gray>マテリアル:</gray> <white>{material}</white>"
+      - "<gray>マッチング ショップ:</gray> <white>{shop_count}</white>"
+      - "<gray>マッチング オファー:</gray> <white>{matching_count}</white>"
+      - "<yellow>下の一致するショップをクリックして開きます。</yellow>"
+  entry:
+    name: "<gold>{owner} のショップ</gold>"
+    lore:
+      - "<gray>所有者:</gray> <white>{owner}</white>"
+      - "<gray>場所:</gray> <white>{location}</white>"
+      - "<gray>マッチング {material} オファーがあります:</gray> <white>{matching_count}</white>"
+      - "<gray>表示可能な在庫合計:</gray> <white>{available_count}</white>"
+      - "<yellow>クリックしてこのショップを開きます。</yellow>"
+  feedback:
+    empty:
+      name: "<red>販売するショップはありません{material}</red>"
+      lore:
+        - "<gray>現在これを提供している追跡ショップはありません。マテリアル。</gray>"
+    shop_missing:
+      name: "<red>ショップが見つかりません</red>"
+      lore:
+        - "<gray>このショップはストレージからロードできませんでした。</gray>"
+      message: "<red>このショップはストレージからロードできませんでした。</red>"
+
+# 材料フィルター検索を入力するための Anvil プロンプト。
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>材料を検索</gradient>"
+  input:
+    lore:
+      - "<gray>追跡対象のショップを検索する Bukkit マテリアル名を入力してください。</gray>"
+      - "<gray>例:</gray> <white>ダイヤモンド</white><gray>,</gray> <white>ダイヤモンドブロック</white>"
+      - "<yellow>結果スロットをクリックして一致するショップを開きます。</yellow>"
+  error:
+    invalid_material: "<red>diamond_block などの有効な材料を入力してください。入力: {input}</red>"
+    processing_failed: "<red>素材の検索に失敗しました。入力: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# リスト UI 間で使用される共有ページ分割項目ラベル。
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 ページ %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>現在のページ:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ページの合計:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 ページ %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# 共有ヘッド/ナビゲーション ボタン ラベル (戻る/確認/次へ)。
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 戻る</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 確認</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして設定を確認</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 確認</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>クリックして設定を確認</gradient>"

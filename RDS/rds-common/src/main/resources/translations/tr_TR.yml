@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# Prefix'te kilitlendi genel eklenti sohbet çıkışına eklenmiştir.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Mağaza, banka ve vergi durumu için oyuncuya yönelik hızlı özet satırları.
+info:
+  total: "<blue>Mağazalar:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Takip edilen Bakiyeler ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Planlanmış Vergi olarak kaydedilen öğe fiyatlandırması ({taxed_shops}vergiye tabi mağazalar):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Sonraki Vergi:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Oyuncular sunucuya girdiğinde gösterilen katılma zamanı mesajları.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops}vergiye tabi mağaza(lar)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# '/rs' özellikleri ve geçişler için komut yanıt dizeleri için toplanan planlanmış mağaza vergisi.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray><white>RDS Yöneticisi</white><gray>paneli.</gray>"
+  bar:
+    enabled: "<green>Mağaza patronu çubuğu, bir mağazaya bakarken etkinleştirildi.</green>"
+    disabled: "<yellow>Mağaza patronu çubuğu devre dışı.</yellow>"
+  give:
+    syntax: "<red>Kullanım: /rs Give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kullanım:</gray> <white>/rs puan tablosu&lt;defter | stok&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{scoreboard_type}</white><gray>kenar çubuğu.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Devre dışı <white>{scoreboard_type}</white><gray>kenar çubuğu.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray><white>{scoreboard_type}</white><gray>kenar çubuğu.</gray>"
+    type:
+      ledger: "<gold>defter</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# Kenar çubuğu puan tablosu etiketleri ve değer biçimlendirmesi.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Defter ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Banka Toplamları</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Bankaya yatırılan fon yok</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Hisse Senedi ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Stok:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Oyuncu mağazası yok</red>"
+
+# Boss çubuğu metni şu sırada gösterilir: bir mağaza hedefleniyor.
+shop_boss_bar:
+  title: "<gold>{shop_type}Mağaza</gold> <gray>|</gray> <yellow>Sahip:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Öğeler:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Konum:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Yönetici"
+  owner:
+    admin: "Yönetici"
+  available_items:
+    finite: "{item_count}"
+    limited: "Sınırlı Stok"
+    infinite: "Infinite"
+    various: "Çeşitli"
+
+# ============================================
+# GUI Düğmeleri
+# ============================================
+
+# Mağaza blok öğesi adı ve bilgi meta verileri.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Mağazanızı kurmak için bu bloğu yerleştirin.</yellow>"
+
+# Mağaza mağazasına genel bakış kullanıcı arayüzü etiketleri, bilgi ve kullanılabilirlik durumları.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Mağaza Mağazası</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Sahip Olunan Mağaza Blokları</gradient>"
+    lore:
+      - "<gray>Sahip olunan mağaza bloklarını açtı:</gray> <white>{owned_shops}</white>"
+      - "<gray>Bu parça satın alındı veya verildi</gray>"
+      - "<gray>ShopBlock sahipliği.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Mağaza Blok Sınırı</gradient>"
+    lore:
+      - "<gray>Sahip olunan mağaza bloklarını açtı:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maksimum mağaza blokları:</gray> <white>{max_shops}</white>"
+      - "<gray>Bu sınır, kaç mağazanın olduğunu kontrol eder</gray>"
+      - "<gray>kilidini açabileceğiniz bloklar.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Mağaza Gereksinimleri</gradient>"
+    lore:
+      - "<gray>Yapılandırılan gereksinimler:</gray> <white>{requirement_count}</white>"
+      - "<gray>Mevcut gereksinim sayısı:</gray> <white>{requirements}</white>"
+      - "<gray>Durum:</gray> <white>{availability}</white>"
+      - "<yellow>Sonraki mağaza katmanını incelemek için tıklayın.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Hazır]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Askıda olması]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Çevrimdışı]</gradient>"
+
+# Mağaza katmanı gereksinimi kullanıcı arayüzü, ilerleme ekranı ve satın alma geri bildirimi.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Mağaza Seviyesi{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Mağaza Blokunu Satın Al</gradient>"
+    lore:
+      - "<gray>Satın Alma katmanı:</gray> <white>{purchase_number}</white>"
+      - "<gray>Sahip olunan mağaza bloklarını açtı:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maksimum mağaza blokları:</gray> <white>{max_shops}</white>"
+      - "<gray>Yapılandırılan gereksinimler:</gray> <white>{requirement_count}</white>"
+      - "<gray>Şu anda buluşulan:</gray> <white>{met_count}</white>"
+      - "<gray>Durum:</gray> <white>{availability}</white>"
+      - "<yellow>Bu seviye hazır olduğunda satın almak için tıklayın.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Hazır]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Askıda olması]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Çevrimdışı]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Özgür]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Ücretsiz] Gereksinim Yok</gradient>"
+    lore:
+      - "<gray>Bu satın alma katmanının yapılandırılmış gereksinimleri yoktur.</gray>"
+      - "<yellow>Bu mağaza bloğunu ekstra çekler olmadan satın alabilirsiniz.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[İstek]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Anahtar:</gray> <white>{requirement_key}</white>"
+      - "<gray>Tür:</gray> <white>{requirement_type}</white>"
+      - "<gray>Durum:</gray> <white>{status}</white>"
+      - "<gray>Progress:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Özet:</gray> <white>{summary}</white>"
+      - "<yellow>Banka ilerlemesi için uyumlu gereksinimlere sağ tıklayın.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Ayrıntılı Çekler</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Tanıştık]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Askıda olması]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Mevcut değil]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Bir mağaza bloğu satın alındı. Tüketilen gereksinimler:</gray> <white>{requirements}</white><gray>. Sahip olunan mağaza blokları:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> Şu anda <white>{requirement}</white><gray>. Mağaza gereksinimleri:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Mağaza gereksinimi <white>{requirement}</white><gray>şu anda kullanılamıyor veya geçersiz.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{max_shops}</white><gray>. Sahip olunan mağaza blokları:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>artık hazır.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Saklanan ilerleme <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray><white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>bankalı ilerlemeyi desteklemez.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>şu anda kullanılamıyor.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>'ye ihtiyacınız var RDS profiliniz yüklenemedi, dolayısıyla ilerleme sağlanamadı kaydedildi.</gray>"
+
+# Etkileşim doğrulama hatalarını ve koruma bildirimlerini engelle.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Dükkan sahibi buradan okunamıyor item.</red>"
+    not_owner: "<red>Bu ShopBlock başka bir oyuncuya aittir ve sizin tarafınızdan yerleştirilemez.</red>"
+    max_shops_reached: "<red> mağaza blokaj sınırına ulaştınız {max_shops}. Mevcut yerleştirilmiş mağazalar:{owned_shops}.</red>"
+    shop_protected: "<red>Mağazalar doğrudan kırılamaz. Mağazayı kapatmak için mağaza menüsünü kullanın.</red>"
+    double_chest_requires_shop_block: "<red>Çift sandıklı mağazalar ikinci bir <blue>ShopBlock</blue><red>. Normal sandıklar mağaza sandıklarıyla birleşemez.</red>"
+    double_chest_owner_mismatch: "<red>Bu ShopBlock farklı bir sahibe ait olduğundan bu mağazayı genişletemez.</red>"
+    shop_already_double_chest: "<red>Bu mağaza zaten her iki sandık yarısını da kullanıyor.</red>"
+    double_chest_ambiguous: "<red>Bu ShopBlock birden fazla mağaza sandığına dokunur. Yalnızca bir mağazanın yanına yerleştirin.</red>"
+
+# Planlanmış vergi işleme sonuç mesajları.
+tax_scheduler:
+  paid: "<yellow>{amount}. Sayılan mağazalar:{owned_shops}.</yellow>"
+  insufficient_funds: "<red>Planlanmış mağaza vergisini ödeyemezsiniz / {amount}. Sayılan mağazalar:{owned_shops}.</red>"
+  charge_failed: "<red>{amount}. Sayılan mağazalar:{owned_shops}.</red>"
+
+# Sahip/yönetici yönetimi eylemleri için ana mağazaya genel bakış arayüzü.
+shop_overview_ui:
+  title: "{owner}Mağaza -{location}"
+  summary:
+    name: "<gold>Mağaza Özeti</gold>"
+    player:
+      lore:
+        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Konum:</gray> <white>{location}</white>"
+        - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
+        - "<gray>Alışveriş tür:</gray> <white>Player Shop</white>"
+        - "<gray>Envanter:</gray> <white>Finite</white>"
+    admin:
+      lore:
+        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Konum:</gray> <white>{location}</white>"
+        - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
+        - "<gray>Alışveriş tür:</gray> <white>Yönetici Mağazası</white>"
+        - "<gray>Envanter:</gray> <white>Infinite</white>"
+  finance:
+    name: "<gold>Shop Bank</gold>"
+    lore:
+      - "<gray>Takip edilen para birimleri:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Parayı incelemek ve çekmek için tıklayın.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Yönetici Mağazası Etkin</red>"
+        lore:
+          - "<gray>Bu mağaza şu anda bir yönetici mağazasıdır.</gray>"
+          - "<gray> türü için geçersiz giriş Envanter için sonsuzdur müşteriler.</gray>"
+          - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
+          - "<yellow>Oynatıcı mağazasına geri dönmek için tıklayın.</yellow>"
+      disabled:
+        name: "<green>Yönetici Mağazası Devre Dışı</green>"
+        lore:
+          - "<gray>Bu mağaza şu anda normal kullanıyor stok.</gray>"
+          - "<gray>Müşteriler yalnızca depolanan tutarları satın alabilir.</gray>"
+          - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
+          - "<yellow>Yönetici mağaza modunu etkinleştirmek için tıklayın.</yellow>"
+    close:
+      name: "<red>Mağazayı Kapat</red>"
+      lore:
+        - "<gray>Bu mağazayı kaldırın ve mağaza bloğunu geri getirin.</gray>"
+        - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
+        - "<gray>Takip edilen banka para birimleri:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Mağaza stoğu kapanmadan önce boş olmalıdır.</yellow>"
+    manage:
+      name: "<green>Mağaza Öğeleri Ekle</green>"
+      lore:
+        - "<gray>Yeni öğeleri burada depolayın shop.</gray>"
+        - "<gray>Mevcut girişler:</gray> <white>{item_count}</white>"
+        - "<yellow>Öğe girişini açmak için tıklayın.</yellow>"
+    customer_view:
+      name: "<gold>Müşteri Görünümünü Aç</gold>"
+      lore:
+        - "<gray>Bu mağazayı müşterilerin gördüğü şekilde önizleyin.</gray>"
+        - "<gray>Mevcut girişler:</gray> <white>{item_count}</white>"
+        - "<yellow>Bu mağazaya müşteri olarak göz atmak için tıklayın.</yellow>"
+    trusted:
+      name: "<gold>Güvenilen Oyuncular</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Güvenilen oyuncular:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Mağaza güven düzeylerini yönetmek için tıklayın.</yellow>"
+    ledger:
+      name: "<gold>Shop Defter</gold>"
+      lore:
+        - "<gray>Toplam girişler:</gray> <white>{ledger_count}</white>"
+        - "<gray>Purchases:</gray> <white>{purchase_count}</white>"
+        - "<gray>Taxes:</gray> <white>{tax_count}</white>"
+        - "<yellow>Mağaza işlem geçmişini incelemek için tıklayın.</yellow>"
+    edit:
+      name: "<aqua>Mağaza Öğelerini Düzenle</aqua>"
+      lore:
+        - "<gray>Depolanan mağaza için fiyatlandırmayı düzenle öğeler.</gray>"
+        - "<gray>Mevcut girişler:</gray> <white>{item_count}</white>"
+        - "<yellow>Fiyatları düzenlemek için tıklayın ve para birimleri.</yellow>"
+    storage:
+      name: "<gold>Saklanan Öğeleri Görüntüle</gold>"
+      lore:
+        - "<gray>Bu mağazada zaten depolanan öğeleri inceleyin.</gray>"
+        - "<gray>Mevcut girişler:</gray> <white>{item_count}</white>"
+        - "<yellow>Depolanan öğeleri çekmek için tıklayın.</yellow>"
+    locked:
+      name: "<red>Mağaza Kilitlendi</red>"
+      lore:
+        - "<gray>Yalnızca sahip öğe ekleyebilir.</gray>"
+        - "<gray>Mevcut girişler:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Bu mağazayı yönetme izniniz yok.</red>"
+    no_admin_permission: "<red>Yönetici mağazalarını değiştirme izniniz yok.</red>"
+    admin_limit_reached: "<red>Sunucuda zaten {admin_shops}yönetici mağazaları. Ücretsiz sürüm yalnızca izin verir{max_admin_shops}yönetici mağazaları.</red>"
+    admin_enabled: "<green>Bu mağaza artık sonsuz müşteri envanterine sahip bir yönetici mağazasıdır. Sayılan mağazalar: {owned_shops}.</green>"
+    admin_disabled: "<yellow>Bu mağaza artık sınırlı müşteri envanterine sahip normal bir oyuncu mağazasıdır. Sayılan mağazalar: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Mağaza limitiniz {max_shops}zaten ulaşılmıştır. Sayılan mağazalar:{owned_shops}.</red>"
+    close_not_empty: "<red>Bir mağazayı ancak depolanan tüm öğeleri kaldırdıktan sonra kapatabilirsiniz. Kalan girişler: {item_count}.</red>"
+    close_bank_not_empty: "<red>Bu mağazayı kapatmadan önce mağaza bankanızı çekin. Takip edilen kalan para birimleri: {bank_currency_count}.</red>"
+    closed: "<green>Mağazayı kapattı ve geri döndü {returned_blocks}ShopBlock(lar). Sayılan mağazalar:{owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# RDS yönetimi için genel yönetici kontrol paneli.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Yönetici] RDS Kontrolü</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Yönetici Paneli</white>"
+    lore:
+      - "<gray>Genel yönetici-mağaza sistemlerini tek yerden yönetin.</gray>"
+      - "<gray>Sunucu bankasını açın veya aşağıdaki yapılandırma ayarlarını düzenleyin.</gray>"
+      - "<yellow>Gerektirir:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Sunucu Bankası</gradient>"
+      lore:
+        - "<gray>Sunucu bankasına çekilen yönetici-mağaza gelirini inceleyin.</gray>"
+        - "<gray>Sonraki çekme zamanlamasını kontrol edin ve bakiyeleri çekin.</gray>"
+        - "<yellow>Sunucu bankası kontrollerini açmak için tıklayın.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Mağaza Config</gradient>"
+      lore:
+        - "<gray>Değerleri düzenle</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Her düzenlenebilir ayar, bir örs istemi aracılığıyla değiştirilebilir.</gray>"
+        - "<yellow>Yapılandırma kontrollerini açmak için tıklayın.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Döviz Yöneticisi</gradient>"
+      lore:
+        - "<gray>Vault'tan tespit edilen para birimlerini inceleyin ve JExEconomy.</gray>"
+        - "<gray>Varsayılanı oluştur</gray> <white>yağmur damlaları</white> <gray>gerektiğinde para birimi.</gray>"
+        - "<yellow>Para birimini açmak için tıklayın kontrolleri.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu yöneticiyi kullanma izniniz yok panel.</gray>"
+
+# Algılanan sağlayıcılar için yönetici para birimi görünümü ve varsayılan para birimi oluşturma.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Döviz Yöneticisi</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>Currency Sağlayıcılar</white>"
+    lore:
+      - "<gray>Algılandı para birimleri:</gray> <white>{currency_count}</white>"
+      - "<gray>Kasa kullanılabilir:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy mevcut:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Varsayılanı oluşturmak için kristal düğmeyi kullanın para birimi.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Kür]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Provider:</gray> <white>{provider}</white>"
+      - "<gray>Sembolüne Geçildi:</gray> <white>{symbol}</white>"
+      - "<gray>Prefix:</gray> <white>{prefix}</white>"
+      - "<gray>Sonek:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>{currency_id}</white>"
+      lore:
+        - "<gray>JExEconomy'de varsayılan RDS para birimini oluştur.</gray>"
+        - "<yellow>{currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEkonomi Gerekli</white>"
+      lore:
+        - "<gray>JExEconomy olmadan varsayılan para birimi oluşturamazsınız.</gray>"
+        - "<gray>Önce JExEconomy'yi kurun ve etkinleştirin.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[TAMAM]</gradient> <white>{currency_id}Hazır</white>"
+      lore:
+        - "<gray>Varsayılan para birimi zaten mevcut.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Varsayılan para birimi oluşturuldu:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> planlı mağaza vergisi tahsil edilemedi Para birimi oluşturulamadı:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Para birimi zaten mevcut:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> olduğundan bu yönetici mağazasını tekrar oyuncu mağazasına geçiremezsiniz.JExEconomy mevcut olmadığı sürece bu düğmeyi kullanamazsınız.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Para Birimi Yok Algılandı</white>"
+      lore:
+        - "<gray>Vault veya JExEconomy para birimi algılanmadı.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu para birimi görünümünü kullanma izniniz yok.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Para birimlerini yönetme izniniz yok.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Düzenlenebilir ayarlar ve güncelleme geri bildirimi için tarayıcı kullanıcı arayüzünü yapılandırın.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Mağaza Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>Yapılandırma Ayarları</white>"
+    lore:
+      - "<gray>Düzenlenebilir ayarlar algılandı:</gray> <white>{setting_count}</white>"
+      - "<gray>Aşağıdaki herhangi bir girişe tıklayın değerini bir örs içinde düzenlemek için.</gray>"
+      - "<yellow>Değişiklikler yazılır doğrudan config/config.yml'ye.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Ayarlamak]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Path:</gray> <white>{config_path}</white>"
+      - "<gray>Tür:</gray> <white>{value_type}</white>"
+      - "<gray>Mevcut değer:</gray> <white>{current_value}</white>"
+      - "<yellow>Bu ayarı düzenlemek için tıklayın.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Tamsayı]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Uzun]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Çift]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Liste]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Sicim]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Düzenlenebilir Ayar Yok</white>"
+      lore:
+        - "<gray>Düzenlenebilir skaler/liste yapılandırma ayarı bulunamadı.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu yapılandırma görünümünü kullanma izniniz yok.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yapılandırma Düzenleme Kilitli</white>"
+      lore:
+        - "<gray>Bu sürüm, çalışma zamanı yapılandırma düzenlemelerine izin vermiyor.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yapılandırma ayarlarını düzenleme izniniz yok.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu sürümde yapılandırma düzenleme kilitlidir.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Güncellendi <white>{config_path}</white><gray>ile<white>{updated_value}</white><gray>.</gray>"
+
+# Yapılandırma değerlerini düzenlemek için örs bilgi istemi metni.
+shop_config_value_anvil_ui:
+  title: "Düzenle {config_path}"
+  input:
+    lore:
+      - "<gray>Path:</gray> <white>{config_path}</white>"
+      - "<gray>Tür:</gray> <white>{value_type}</white>"
+      - "<gray>Mevcut değer:</gray> <white>{current_value}</white>"
+      - "<yellow>Yeni değeri girin ve onaylayın.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{value_type}</white><gray>. Giriş:</gray> <white>{input}</white>"
+
+# Sunucu bankasına genel bakış, para birimi girişleri ve para çekme geri bildirimi.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Sunucu Bankası</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>Gelir ve Transfer Durum</white>"
+    lore:
+      - "<gray>Takip edilen para birimleri:</gray> <white>{currency_count}</white>"
+      - "<gray>Gelir:</gray> <white>{income_summary}</white>"
+      - "<gray>Sonraki çekme:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Bir sonraki çekime kadar geçen süre:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Yönetici mağaza bakiyeleri programa göre buraya aktarılır.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Yok</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Disabled</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Pending...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Disabled</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Pending...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Geri çekilmek]</gradient> <white>Tümünü Çek</white>"
+    lore:
+      - "<gray>Her pozitif bakiyeyi çekmeye çalışın.</gray>"
+      - "<gray>Kullanılamayan para birimleri atlanacak.</gray>"
+      - "<yellow>Hesabınıza tüm parayı çekmek için tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+      - "<gray>Mevcut bakiye:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Bu para bakiyesinin tamamını çekmek için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Sunucu Bankası Boş</white>"
+      lore:
+        - "<gray>Çekilebilecek pozitif bakiye yok.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Sunucu bankasını yönetme izniniz yok.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sunucu bankasını yönetme izniniz yok.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu sunucu-banka bakiyesi artık mevcut değil.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Çekildi <white>{amount} {currency_name}</white><gray>. Geriye kalan{currency_name}:</gray> <white>{remaining_amount}</white><gray>. Aktif para birimleri:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Çekildi <white>{withdrawn_currency_count}</white><gray>döviz bakiyesi/bakiyeleri. Arızalı:</gray> <white>{failed_currency_count}</white><gray>. Kalan aktif para birimleri:</gray> <white>{remaining_currency_count}</white><gray>. Detaylar:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hiçbir bakiye çekilemedi. Başarısız para birimi sayımı:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Currency <white>{currency_name}</white><gray>şu anda kullanılamıyor.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Çekilme başarısız <white>{amount} {currency_name}</white><gray>sunucu bankasından.</gray>"
+
+# Yeni stok girişleri eklenirken kullanılan mağaza öğesi girişi kullanıcı arayüzü.
+shop_input_ui:
+  title: "Öğe Ekle -{owner} @ {location}"
+  summary:
+    name: "<gold>Mağaza Depolama</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Şu anda depolanan:</gray> <white>{stored_count}</white>"
+      - "<yellow> olarak ayarlandı Yeni öğeler varsayılan olarak para birimi türü kasasına ve %0.</yellow>"
+  input_slot:
+    name: "<green>Giriş Yuvası</green>"
+    lore:
+      - "<gray>İmlecinizde bir öğe varken sol tıklayın</gray>"
+      - "<gray>veya envanterinizdeki bir öğeyi Shift tuşuna basarak tıklayın.</gray>"
+      - "<gray>Eklenen yığını kaldırmak için sağ tıklayın.</gray>"
+  no_new_items_inserted: "<red> için eşleşen öğe veya para birimi mevcut değil Yeni öğe eklenmedi.</red>"
+  saved: "<green>Saklanan {added_count}yeni girişler. Şimdi alışveriş var{stored_count}girişler.</green>"
+  save_failed: "<red>Mağaza öğeleri kaydedilemedi.</red>"
+  left_overs: "<yellow>Kaydedilmemiş mağaza öğelerini envanterinize geri getirdi.</yellow>"
+  feedback:
+    no_permission: "<red> ile tanışmıyorsunuz. Bu mağazaya ürün ekleme izniniz yok.</red>"
+    locked:
+      name: "<red>Tedarik Erişimi Gerekli</red>"
+      lore:
+        - "<gray>Yalnızca ortaklar ve güvenilir oyuncular buraya öğe ekleyebilir.</gray>"
+
+# Saklanan öğeleri görüntülemek ve geri çekmek için mağaza depolama tarayıcısı kullanıcı arayüzü.
+shop_storage_ui:
+  title: "Saklanan Öğeler - {location}"
+  summary:
+    name: "<gold>Saklanan Öğeler</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Saklanan girişler:</gray> <white>{stored_count}</white>"
+      - "<yellow>Geri çekmek için aşağıdaki herhangi bir öğeyi tıklayın.</yellow>"
+  entry:
+    lore:
+      - "<gray>Saklanan miktar:</gray> <white>{amount}</white>"
+      - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+      - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Bu öğeyi mağazadan çıkarmak için tıklayın.</yellow>"
+  feedback:
+    not_owner: "<red>Bu mağazayı yönetme izniniz yok.</red>"
+    extracted: "<green>Çıkartıldı {amount}x {item_type}. Fiyat şuydu:{value} {currency_type}. Kalan kayıtlı girişler:{stored_count}.</green>"
+    item_missing: "<red>Bu depolanan öğe bulunamadı.</red>"
+    locked:
+      name: "<red>Tam Erişim Gerekli</red>"
+      lore:
+        - "<gray>Yalnızca tam erişime sahip güvenilir oyuncular depolanan öğeleri çekebilir.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Değiştirilecek girişleri seçmek için mağaza düzenleme seçimi kullanıcı arayüzü.
+shop_edit_ui:
+  title: "Mağaza Öğelerini Düzenle - {location}"
+  summary:
+    name: "<aqua>Mağaza Fiyat Düzenleyicisi</aqua>"
+    player:
+      lore:
+        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Konum:</gray> <white>{location}</white>"
+        - "<gray>Saklanan girişler:</gray> <white>{stored_count}</white>"
+        - "<yellow>Düzenlemek için bir öğeye sol tıklayın fiyatlandırma.</yellow>"
+        - "<yellow>Dükkandan kaldırmak için bir öğeye sağ tıklayın.</yellow>"
+    admin:
+      lore:
+        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Konum:</gray> <white>{location}</white>"
+        - "<gray>Saklanan girişler:</gray> <white>{stored_count}</white>"
+        - "<gray>Yönetici stok yenileme modu olarak ayarlandı:</gray> <white>{restock_mode}</white>"
+        - "<gray>Stok yenileme planı:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Fiyatlandırmayı veya stoğu düzenlemek için bir öğeye sol tıklayın.</yellow>"
+        - "<yellow>Dükkandan kaldırmak için bir öğeye sağ tıklayın.</yellow>"
+    restock_schedule:
+      gradual: "Varsayılan zamanlayıcı: {reset_timer_ticks}öğe başına işaretler"
+  entry:
+    player:
+      lore:
+        - "<gray>Saklanan miktar:</gray> <white>{amount}</white>"
+        - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+        - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<yellow>Bu mağaza öğesini düzenlemek için sol tıklayın.</yellow>"
+        - "<yellow>için sağ tıklayın mağazadan kaldırın.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Stok:</gray> <white>Infinite</white>"
+        - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+        - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Yeniden Stok modu:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Bu yönetici mağazası öğesini düzenlemek için sol tıklayın.</yellow>"
+        - "<yellow>için sağ tıklayın mağazadan kaldırın.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Mevcut hisse senedi:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+        - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Yeniden Stok modu:</gray> <white>{restock_mode}</white>"
+        - "<gray>Stok yenileme planı:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Bu yönetici mağazası öğesini düzenlemek için sol tıklayın.</yellow>"
+        - "<yellow>için sağ tıklayın mağazadan kaldırın.</yellow>"
+    admin_mode:
+      gradual: "Kademeli"
+      full: "Tam Sıfırlama"
+    restock_schedule:
+      gradual: "her biri 1 öğe{reset_timer_ticks}keneler"
+      full: "Şu tarihte tamamen yeniden stoklanıyor:{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Bu mağazayı yönetme izniniz yok.</red>"
+    removed: "<green>Kaldırıldı {amount}x {item_type}dükkandan. Fiyat şuydu:{value} {currency_type}. Kalan kayıtlı girişler:{stored_count}.</green>"
+    item_missing: "<red>Bu mağaza öğesi bulunamadı.</red>"
+    locked:
+      name: "<red>Tam Erişim Gerekli</red>"
+      lore:
+        - "<gray>Yalnızca tam erişime sahip güvenilir oyuncular öğe değerlerini düzenleyebilir.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Bireysel mağaza öğesi davranışı ve fiyatlandırması için ayrıntılı düzenleyici kullanıcı arayüzü.
+shop_item_edit_ui:
+  title: "Düzenle {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Saklanan miktar:</gray> <white>{amount}</white>"
+        - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Kullanılabilirlik modu:</gray> <white>{availability_mode}</white>"
+        - "<gray>Şu anda kullanılabilirlik:</gray> <white>{availability_state}</white>"
+        - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+        - "<yellow>Bu öğeyi düzenlemek için aşağıdaki düğmeleri kullanın.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Stok:</gray> <white>Infinite</white>"
+        - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Yeniden Stok modu:</gray> <white>{restock_mode}</white>"
+        - "<gray>Satın Alma komutları:</gray> <white>{command_count}</white>"
+        - "<gray>Kullanılabilirlik modu:</gray> <white>{availability_mode}</white>"
+        - "<gray>Şu anda kullanılabilirlik:</gray> <white>{availability_state}</white>"
+        - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+        - "<yellow>Bu yönetici öğesini düzenlemek için aşağıdaki düğmeleri kullanın.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Mevcut hisse senedi:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Para birimi tür:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Yeniden Stok modu:</gray> <white>{restock_mode}</white>"
+        - "<gray>Stok yenileme planı:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Satın Alma komutları:</gray> <white>{command_count}</white>"
+        - "<gray>Kullanılabilirlik modu:</gray> <white>{availability_mode}</white>"
+        - "<gray>Şu anda kullanılabilirlik:</gray> <white>{availability_state}</white>"
+        - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+        - "<yellow>Bu yönetici öğesini düzenlemek için aşağıdaki düğmeleri kullanın.</yellow>"
+  currency_type:
+    name: "<green>Para Birimi Türü</green>"
+    lore:
+      - "<gray>Mevcut tür:</gray> <white>{currency_type}</white>"
+      - "<yellow>Para türünü düzenlemek için tıklayın.</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>Mevcut tür:</gray> <white>{currency_type}</white>"
+      - "<gray>Mevcut değer:</gray> <white>{value}</white>"
+      - "<yellow>Sayısal değeri düzenlemek için tıklayın.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Mod] Öğe Kullanılabilirliği</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Always]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Döndür]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Asla]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Açık]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Closed]</gradient>"
+    lore:
+      - "<gray>Mevcut mod:</gray> <white>{availability_mode}</white>"
+      - "<gray>Mevcut durum:</gray> <white>{availability_state}</white>"
+      - "<gray>Pencereyi döndür:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+      - "<yellow>Oluşturmak için tıklayın: Her Zaman -> Döndür -> Asla.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Zamanlayıcı] Dakikaları Döndür</gradient>"
+    lore:
+      - "<gray>Mevcut pencere:</gray> <white>{rotation_minutes}dakika(lar)</white>"
+      - "<gray>Mevcut mod:</gray> <white>{availability_mode}</white>"
+      - "<gray>Döndürme modu etiketi:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Bir örsteki döndürme dakikalarını ayarlamak için tıklayın.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Yürütme] Komut Yürütücüsü</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Sunucu]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Oyuncu]</gradient>"
+    lore:
+      - "<gray>Mevcut mod:</gray> <white>{command_mode}</white>"
+      - "<gray>Sonraki mod:</gray> <white>{next_mode}</white>"
+      - "<yellow>Yeni eklenen komutları kimin yürüteceğini değiştirmek için tıklayın.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Satın Alma Komutları</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Yok</gradient>"
+    lore:
+      - "<gray>Yapılandırılan komutlar:</gray> <white>{command_count}</white>"
+      - "<gray>En son komut:</gray> <white>{latest_command}</white>"
+      - "<yellow>Komut ayarlarını açmak ve komut eklemek için tıklayın.</yellow>"
+  confirm:
+    name: "<green>Öğe Fiyatlandırmasını Kaydet</green>"
+    lore:
+      - "<gray>Geçerli para birimi türünü ve değerini uygulayın</gray>"
+      - "<gray>bu mağaza ürününe.</gray>"
+  stock_limit:
+    name: "<gold>Stok Limiti</gold>"
+    unlimited: "Infinite"
+    lore:
+      - "<gray>Mevcut limit:</gray> <white>{stock_limit}</white>"
+      - "<gray>Mevcut hisse senedi:</gray> <white>{current_stock}</white>"
+      - "<yellow>Bir stok limiti ayarlamak için tıklayın.</yellow>"
+      - "<gray>Bu öğeyi sonsuz stoğa döndürmek için -1'i kullanın.</gray>"
+  reset_timer:
+    name: "<aqua>Zamanlayıcıyı Sıfırla</aqua>"
+    lore:
+      - "<gray>Mevcut zamanlayıcı:</gray> <white>{reset_timer_ticks}keneler</white>"
+      - "<yellow>Yeniden stoğu ayarlamak için tıklayın zamanlayıcı.</yellow>"
+  restock_mode:
+    name: "<yellow>Yönetici Stok Yenileme Modu</yellow>"
+    gradual: "Kademeli"
+    full: "Tam Sıfırlama"
+    lore:
+      - "<gray>Yapılandırılan mod:</gray> <white>{restock_mode}</white>"
+      - "<gray>Yapılandırılan zamanlama:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Genel yönetici stoklama modunu değiştirmek için tıklayın.</yellow>"
+  restock_schedule:
+    gradual: "her biri 1 öğe{reset_timer_ticks}keneler"
+    full: "Şu tarihte tamamen yeniden stoklanıyor:{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Bu mağazayı yönetme izniniz yok.</red>"
+    shop_missing: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+    item_missing: "<red>Bu mağaza öğesi bulunamadı.</red>"
+    saved: "<green>{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Kullanılabilirlik modu şu şekilde ayarlandı: <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Yeni komut yürütme modu <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>En son komut kaldırıldı. Kalan komutlar:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tüm yönetici satın alma komutları temizlendi.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Yönetici satın alma komutu yok yapılandırıldı.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Eklenti yapılandırma değişiklikleri <white>RDS Ücretsiz</white><gray>. Tam erişim için premium'a yükseltin.</gray>"
+    restock_mode_updated: "<green>Yönetici stok yenileme modu {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Yönetici stok yenileme modu kaydedilemedi.</red>"
+
+# Yeni bir yönetici satın alma komutu eklemek için örs istemi.
+shop_item_admin_command_anvil_ui:
+  title: "Komut Ekle{command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Bu yönetici öğesi etkinleştirildiğinde çalıştırılacak bir komut girin. satın alındı.</gray>"
+      - "<gray>Yalnızca komut metni. Gecikme, komut ayarları görünümünde yapılandırılır.</gray>"
+      - "<gray>Örnekler:</gray>"
+      - "<white>yayın%player_name%satın alınmış{amount}x {item_type}</white>"
+      - "<white>eko vermek%player_name% 50</white>"
+      - "<gray>Yapılandırılan komutlar:</gray> <white>{command_count}</white>"
+      - "<gray>Yürütme mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Delay:</gray> <white>{command_delay_ticks}keneler</white>"
+  mode:
+    server: "<gold>[Sunucu]</gold>"
+    player: "<green>[Oyuncu]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Komut metni boş olamaz. Giriş:</gray> <white>{input}</white>"
+
+# Mod, gecikme ve komut listesi için yönetici satın alma komut yöneticisi kullanıcı arayüzü.
+shop_item_admin_command_ui:
+  title: "Komut Ayarları - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Satın Alma Komutu Ayarları</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Yok</gradient>"
+    lore:
+      - "<gray>Yapılandırılan komutlar:</gray> <white>{command_count}</white>"
+      - "<gray>En son komut:</gray> <white>{latest_command}</white>"
+      - "<gray> olarak ayarlandıSonraki komut modu:</gray> <white>{command_mode}</white>"
+      - "<gray>Sonraki komut gecikmesi:</gray> <white>{command_delay_ticks}tikler ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Yürüt] Sonraki Komut Yürütücüsü</gradient>"
+    server: "<gold>[Sunucu]</gold>"
+    player: "<green>[Oyuncu]</green>"
+    lore:
+      - "<gray>Mevcut mod:</gray> <white>{command_mode}</white>"
+      - "<gray>Sonraki mod:</gray> <white>{next_mode}</white>"
+      - "<yellow>Sonraki komut için yürütücüyü değiştirmek için tıklayın.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Gecikme] Sonraki Komut Gecikmesi</gradient>"
+    lore:
+      - "<gray>Mevcut gecikme:</gray> <white>{command_delay_ticks}tikler ({command_delay_seconds}s)</white>"
+      - "<yellow>Sonraki komut için tıklamalardaki gecikmeyi ayarlamak için tıklayın.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Komut Ekle</gradient>"
+    lore:
+      - "<gray>Mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Delay:</gray> <white>{command_delay_ticks}tikler ({command_delay_seconds}s)</white>"
+      - "<yellow>Komut girişini açmak için tıklayın.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Kaldır Komut</gradient>"
+    lore:
+      - "<gray>Yapılandırılan komutlar:</gray> <white>{command_count}</white>"
+      - "<yellow>En son komutu kaldırmak için tıklayın.</yellow>"
+      - "<yellow>Shift + tüm komutları temizlemek için tıklayın.</yellow>"
+  confirm:
+    name: "<green>Komutu Kaydet Ayarlar</green>"
+    lore:
+      - "<gray>Öğe düzenleyicisine dönün ve bu komut değişikliklerini koruyun.</gray>"
+  feedback:
+    not_owner: "<red>Bu mağazayı yönetme izniniz yok.</red>"
+    shop_missing: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sonraki komut modu <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>En son komut kaldırıldı. Kalan komutlar:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tüm yönetici satın alma komutları temizlendi.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Yönetici satın alma komutu yok yapılandırıldı.</gray>"
+
+# Yönetici komut gecikme işaretlerini ayarlamak için örs istemi.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Gecikmeyi Ayarla - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Sonraki komut gecikmesi için işaretlerin tam sayısını girin.</gray>"
+      - "<gray>Yürütme mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Örnekler:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Sunucu]</gold>"
+    player: "<green>[Oyuncu]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>0'dan büyük veya ona eşit bir tam sayı girin. Giriş:</gray> <white>{input}</white>"
+
+# Dakika cinsinden döndürme modu kullanılabilirlik penceresi için örs istemi.
+shop_item_availability_minutes_anvil_ui:
+  title: "Dakikaları Döndür: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Zamanlayıcı] Dakikaları Döndür</gradient>"
+    lore:
+      - "<gray>Tam dakika sayısını girin.</gray>"
+      - "<gray>Döndürme modu her pencerede kullanılabilir/kullanılamaz olarak değişir.</gray>"
+  error:
+    invalid_number: "<red>0'dan büyük bir tam sayı girin. Giriş: {input}</red>"
+
+# Sınırlı yönetici stok kapasitesini ayarlamak için örs istemi.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Stok Limiti: {stock_limit}"
+  input:
+    name: "<gold>Stok Limiti</gold>"
+    lore:
+      - "<gray>Öğelerde pozitif stok limiti girin.</gray>"
+      - "<gray>Sonsuz yönetici stoğunu geri yüklemek için -1'i kullanın.</gray>"
+  error:
+    invalid_number: "<red> etkinleştirildi -1 veya 0'dan büyük bir tam sayı girin. Giriş: {input}</red>"
+
+# Yönetici stok yenileme/sıfırlama zamanlayıcı tıklamalarını yapılandırmak için örs istemi.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Zamanlayıcıyı Sıfırla: {reset_timer_ticks}"
+  input:
+    name: "<aqua>Zamanlayıcıyı Sıfırla</aqua>"
+    lore:
+      - "<gray>Bukkit işaretlerinin tam sayısını girin.</gray>"
+      - "<gray>Kademeli mod, zamanlayıcı başına bir öğeyi geri yükler.</gray>"
+  error:
+    invalid_number: "<red>0'dan büyük bir tam sayı girin. Giriş: {input}</red>"
+
+# Bir öğe tarafından kullanılan para birimi türünü seçmek için örs istemi.
+shop_item_currency_type_anvil_ui:
+  title: "Para Birimi Türü: {currency_type}"
+  input:
+    name: "<green>Para Birimi Türü</green>"
+    lore:
+      - "<gray>Bu öğenin para birimi tanımlayıcısını girin.</gray>"
+      - "<gray>Örnekler:</gray> <white>kasa, jetonlar, mücevherler</white>"
+  error:
+    empty: "<red>Para birimi türü boş olamaz.</red>"
+    invalid_currency: "<red>Para birimi türü {currency_type}mevcut değil. Kasayı veya kayıtlı özel bir para birimini kullanın.</red>"
+    processing_failed: "<red>Para birimi türü güncellenemedi. Giriş: {input}</red>"
+
+# Örs öğe başına ayarlama için istem fiyat/değer.
+shop_item_value_anvil_ui:
+  title: "Value: {value} {currency_type}"
+  input:
+    name: "<gold>Öğe Değeri</gold>"
+    lore:
+      - "<gray>Negatif olmayan bir sayısal değer girin.</gray>"
+      - "<gray>Örnekler:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Negatif olmayan geçerli bir sayı girin. Giriş: {input}</red>"
+    processing_failed: "<red>Öğe değeri güncellenemedi. Giriş: {input}</red>"
+
+# Mağaza başına para bakiyeleri ve para çekme işlemleri için mağaza bankası kullanıcı arayüzü.
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>Bank Bakiyeler</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Takip edilen para birimleri:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Tüm tutarını çekmek için aşağıdaki bir bakiyeye tıklayın.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+      - "<gray>Mevcut bakiye:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Bu bakiyenin tamamını çekmek için tıklayın.</yellow>"
+  feedback:
+    not_owner: "<red>Bu mağazayı yönetme izniniz yok.</red>"
+    entry_missing: "<red>Bu banka bakiyesi artık mevcut değil.</red>"
+    withdrawn: "<green>Çekildi {amount} {currency_name}. Geriye kalan{currency_name}: {remaining_amount}. Takip edilen para birimleri:{bank_currency_count}.</green>"
+    withdraw_failed: "<red>Çekilme başarısız {amount} {currency_name}mağaza bankasından.</red>"
+    currency_unavailable: "<red>Currency {currency_name}şu anda mevcut değil.</red>"
+    empty:
+      name: "<red>Bank Empty</red>"
+      lore:
+        - "<gray>Bu mağazada çekilecek banka bakiyesi yok.</gray>"
+    locked:
+      name: "<red>Tam Erişim Gerekli</red>"
+      lore:
+        - "<gray>Yalnızca tam erişime sahip güvenilir oyuncular mağaza paralarını çekebilir.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Mağaza erişim rolleri için güvenilir oyuncu yönetimi kullanıcı arayüzü.
+shop_trusted_ui:
+  title: "Güvenilen Oyuncular - {location}"
+  summary:
+    name: "<gold>Mağaza Güveni Yönetici</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Güvenilen oyuncular:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Güven durumunu değiştirmek için bir oyuncuya tıklayın.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Durum:</gray> <white>Public</white>"
+        - "<gray>Yönetim izni yok.</gray>"
+        - "<yellow>İlişkilendirmek için tıklayın.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Durum:</gray> <white>Associate</white>"
+        - "<gray>Mağazaya ürün ekleyebilir.</gray>"
+        - "<yellow>Güvenilir olarak değiştirmek için tıklayın.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Durum:</gray> <white>Güvenilen</white>"
+        - "<gray>Mağazayı tamamen yönetebilir.</gray>"
+        - "<yellow>Genel olarak değiştirmek için tıklayın.</yellow>"
+  feedback:
+    not_owner: "<red>Yalnızca mağaza sahibi güvenilir oyuncuları yönetebilir.</red>"
+    updated:
+      public: "<yellow>Set {player}Kamuya.</yellow>"
+      associate: "<green>Set {player}Ortak olmak.</green>"
+      trusted: "<green>Set {player}Güvenilir'e.</green>"
+    empty:
+      name: "<red>Oyuncu Bulunamadı</red>"
+      lore:
+        - "<gray>Güvenilebilecek başka bilinen oyuncu yok.</gray>"
+    locked:
+      name: "<red>Yalnızca Sahip Erişimi</red>"
+      lore:
+        - "<gray>Yalnızca mağaza sahibi güvenilir oyuncuları yönetebilir.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Satın almalar ve vergi için işlem defteri kullanıcı arayüzü geçmiş.
+shop_ledger_ui:
+  title: "Mağaza Defteri - {location}"
+  summary:
+    name: "<gold>Mağaza İşlem Defteri</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Toplam girişler:</gray> <white>{ledger_count}</white>"
+      - "<gray>Purchases:</gray> <white>{purchase_count}</white>"
+      - "<gray>Taxes:</gray> <white>{tax_count}</white>"
+      - "<yellow> değerine ayarlandı En yeni işlemler görüntülenir ilk.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Satın Alma: {item_type}</green>"
+      lore:
+        - "<gray>Buyer:</gray> <white>{actor}</white>"
+        - "<gray>Amount:</gray> <white>{item_amount}</white>"
+        - "<gray>Ödenen toplam:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+        - "<gray>Kaydedildi:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Vergi Ücreti</gold>"
+      lore:
+        - "<gray>Ücretlendirildi:</gray> <white>{actor}</white>"
+        - "<gray>Vergi share:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Sayılan mağazalar:</gray> <white>{counted_shops}</white>"
+        - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+        - "<gray>Kaydedildi:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Defter Girişi Yok</red>"
+      lore:
+        - "<gray>Bu mağazada henüz kayıtlı bir satın alma veya vergi yok.</gray>"
+    locked:
+      name: "<red>Tam Erişim Gerekli</red>"
+      lore:
+        - "<gray>Yalnızca tam erişime sahip güvenilir oyuncular öğeyi görüntüleyebilir defter.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Ürünlere göz atmak ve satın almak için müşteriye yönelik mağaza kullanıcı arayüzü.
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Müşteri Görünümü</gold>"
+    player:
+      lore:
+        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Konum:</gray> <white>{location}</white>"
+        - "<gray>Mevcut girişler:</gray> <white>{stored_count}</white>"
+        - "<gray>Alışveriş tür:</gray> <white>Player Shop</white>"
+        - "<gray>Envanter:</gray> <white>Finite</white>"
+        - "<yellow>Bir tane satın almak için bir öğeye sol tıklayın.</yellow>"
+        - "<yellow>Bir miktar seçmek için bir öğeye sağ tıklayın.</yellow>"
+    admin:
+      lore:
+        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Konum:</gray> <white>{location}</white>"
+        - "<gray>Mevcut girişler:</gray> <white>{stored_count}</white>"
+        - "<gray>Alışveriş tür:</gray> <white>Yönetici Mağazası</white>"
+        - "<gray>Envanter:</gray> <white>Infinite</white>"
+        - "<yellow>Bir tane satın almak için bir öğeye sol tıklayın.</yellow>"
+        - "<yellow>Bir miktar seçmek için bir öğeye sağ tıklayın.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Stok:</gray> <white>{amount}</white>"
+        - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+        - "<gray>Fiyat her:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Toplam stok değeri:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+        - "<yellow>Bir tane satın almak için sol tıklayın.</yellow>"
+        - "<yellow>Bir miktar seçmek için sağ tıklayın.</yellow>"
+    admin:
+      lore:
+        - "<gray>Envanter:</gray> <white>Infinite</white>"
+        - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+        - "<gray>Fiyat her:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+        - "<gray>Alışveriş tür:</gray> <white>Yönetici Mağazası</white>"
+        - "<yellow>Bir tane satın almak için sol tıklayın.</yellow>"
+        - "<yellow>Bir miktar seçmek için sağ tıklayın.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Stok:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Öğe türü:</gray> <white>{item_type}</white>"
+        - "<gray>Fiyat her:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Para birimi kimliği:</gray> <white>{currency_type}</white>"
+        - "<gray>Yeniden Stok modu:</gray> <white>{restock_mode}</white>"
+        - "<gray>Stok yenileme planı:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Bir tane satın almak için sol tıklayın.</yellow>"
+        - "<yellow>Bir miktar seçmek için sağ tıklayın.</yellow>"
+    admin_mode:
+      gradual: "Kademeli"
+      full: "Tam Sıfırlama"
+    restock_schedule:
+      gradual: "her biri 1 öğe{reset_timer_ticks}keneler"
+      full: "Şu tarihte tamamen yeniden stoklanıyor:{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Satın Alındı {amount}x {item_type}için{total_price} {currency_name}. Kalan stok:{remaining_amount}.</green>"
+    purchased_admin: "<green>Satın Alındı {amount}x {item_type}için{total_price} {currency_name}. Bu yönetici dükkanının sonsuz envanteri var.</green>"
+    purchased_admin_limited: "<green>Satın Alındı {amount}x {item_type}için{total_price} {currency_name}. Kalan yönetici stoku:{remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}şu anda satın alınamıyor.</gray>"
+    insufficient_stock: "<red>Bu mağazada yalnızca {available_amount}x {item_type}mevcut.</red>"
+    insufficient_funds: "<red> mağaza sınırına ulaştınız {total_price} {currency_name}satın almak{amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Currency {currency_name}şu anda mevcut değil.</red>"
+    invalid_amount: "<red>Geçerli bir satın alma tutarı girin.</red>"
+    item_missing: "<red>Bu mağaza öğesi artık mevcut değil.</red>"
+    empty_shop:
+      name: "<red>Shop Empty</red>"
+      lore:
+        - "<gray>Satın alınabilecek öğe yok.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Özel satın alma miktarı girişi için örs istemi.
+shop_purchase_amount_anvil_ui:
+  title: "Satın Alın {item_type}"
+  input:
+    name: "<gold>Purchase Tutar</gold>"
+    player:
+      lore:
+        - "<gray>İstediğiniz öğe sayısını girin satın almak için.</gray>"
+        - "<gray>Kullanılabilir maksimum:</gray> <white>{max_amount}</white>"
+        - "<gray>Öğe:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>İstediğiniz öğe sayısını girin satın almak için.</gray>"
+        - "<gray>Bu yönetici mağazasının sonsuz envanteri var.</gray>"
+        - "<gray>Öğe:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>İstediğiniz öğe sayısını girin satın almak için.</gray>"
+        - "<gray>Kullanılabilir maksimum:</gray> <white>{max_amount}</white>"
+        - "<gray>Öğe:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>1 ile arasında bir tam sayı girin{max_amount}. Giriş:{input}</red>"
+    invalid_number_admin: "<red>0'dan büyük bir tam sayı girin. Giriş: {input}</red>"
+    processing_failed: "<red>Satın alma tutarı işlenemedi. Giriş: {input}</red>"
+
+# Tümüne göz atma ve malzeme için mağaza keşif açılış arayüzü search.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Shop Tarayıcı</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Tarayıcı</gradient>"
+    lore:
+      - "<gray>Takip edilen her mağazaya göz atın veya belirli bir malzemeye göre filtreleyin.</gray>"
+      - "<yellow>Devam etmek için aşağıdaki eylemlerden birini seçin.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Tüm Mağazalara Göz Atın</gradient>"
+    lore:
+      - "<gray>Sayfalara ayrılmış mağaza dizininin tamamını açın.</gray>"
+      - "<yellow>İzlenen her komutu görüntülemek için tıklayın alışveriş.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Malzemeye Göre Arama</gradient>"
+    lore:
+      - "<gray>Örs istemini açın ve bir malzeme adı girin.</gray>"
+      - "<gray>Örnek:</gray> <white>elmas_blok</white>"
+      - "<yellow>Öğe türüne göre aramak için tıklayın.</yellow>"
+
+# İzlenen tüm mağazaları listeleyen sayfalandırılmış dizin kullanıcı arayüzü.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Tümü Mağazalar</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Directory</gradient>"
+    lore:
+      - "<gray>Takip edilen mağazalar:</gray> <white>{shop_count}</white>"
+      - "<gray>Mevcut toplam stok:</gray> <white>{available_count}</white>"
+      - "<yellow>Açmak için aşağıdaki herhangi bir mağazayı tıklayın.</yellow>"
+  entry:
+    name: "<gold>{owner}Mağazası</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Mevcut stok:</gray> <white>{available_count}</white>"
+      - "<yellow>Bu mağazayı açmak için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Var henüz kayıtlı mağaza yok.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Malzeme filtreli mağaza sonuçları UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Sonuçlar: {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Sonuçlar: {material}</gradient>"
+    lore:
+      - "<gray>Malzeme:</gray> <white>{material}</white>"
+      - "<gray>Eşleşen mağazalar:</gray> <white>{shop_count}</white>"
+      - "<gray>Eşleşen teklifler:</gray> <white>{matching_count}</white>"
+      - "<yellow>Açmak için aşağıdaki eşleşen herhangi bir mağazayı tıklayın.</yellow>"
+  entry:
+    name: "<gold>{owner}Mağazası</gold>"
+    lore:
+      - "<gray>Sahip:</gray> <white>{owner}</white>"
+      - "<gray>Konum:</gray> <white>{location}</white>"
+      - "<gray>Eşleşen {material}teklifler:</gray> <white>{matching_count}</white>"
+      - "<gray>Görünür toplam stok:</gray> <white>{available_count}</white>"
+      - "<yellow>Bu mağazayı açmak için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Satılan Mağaza Yok {material}</red>"
+      lore:
+        - "<gray>Şu anda bunu sunan izlenen mağaza yok malzeme.</gray>"
+    shop_missing:
+      name: "<red>Mağaza Bulunamadı</red>"
+      lore:
+        - "<gray>Bu mağaza depolama alanından yüklenemedi.</gray>"
+      message: "<red>Bu mağaza depolama alanından yüklenemedi.</red>"
+
+# Bir malzeme filtresi girmek için örs istemi search.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Malzeme Ara</gradient>"
+  input:
+    lore:
+      - "<gray>İzlenen mağazaları aramak için bir Bukkit malzeme adı girin.</gray>"
+      - "<gray>Örnekler:</gray> <white>elmas</white><gray>,</gray> <white>elmas_blok</white>"
+      - "<yellow>Eşleşen mağazaları açmak için sonuç alanını tıklayın.</yellow>"
+  error:
+    invalid_material: "<red>diamond_block gibi geçerli bir malzeme girin. Giriş: {input}</red>"
+    processing_failed: "<red>Malzeme aranamadı. Giriş: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# Listede kullanılan paylaşılan sayfalama öğesi etiketleri Kullanıcı Arayüzleri.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Sayfa %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Mevcut sayfa:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Toplam sayfalar:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Sayfa %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# Paylaşılan başlık/gezinme düğmesi etiketleri (geri dönüş/onayla/sonraki).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Geri Dön</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Gitmek için tıklayın back</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Onayla</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ayarları onaylamak için tıklayın</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Onayla</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ayarları onaylamak için tıklayın</gradient>"

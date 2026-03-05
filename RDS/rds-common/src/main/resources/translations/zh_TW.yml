@@ -1,0 +1,1204 @@
+# ============================================
+# 全球前綴
+# ============================================
+# 一般插件聊天輸出前面的前綴。
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# 面向玩家的商店、銀行和稅務狀況的快速總結行。
+info:
+  total: "<blue>商店：</blue> <white>{owned_shops}</white>"
+  bank: "<green>追蹤餘額 ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>預定稅（{taxed_shops}應稅商店）：</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>下一個稅：</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# 玩家進入伺服器時顯示的加入時間訊息。
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops}應稅商店\n[<blue>金額<yellow>]\n{taxes}\n<red>到期的：<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# 命令回應字串`/rs` 功能和切換。 
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[一]</gradient> <gray>開啟<white>RDS 管理員</white><gray>控制板。</gray>"
+  bar:
+    enabled: "<green>查看商店時啟用商店老闆欄。</green>"
+    disabled: "<yellow>店老闆酒吧禁用。</yellow>"
+  give:
+    syntax: "<red>用法： /rs 給出<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>用法：</gray> <white>/rs 記分牌&lt;分類帳|庫存&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>啟用了<white>{scoreboard_type}</white><gray>側邊欄。</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>禁用了<white>{scoreboard_type}</white><gray>側邊欄。</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>切換到<white>{scoreboard_type}</white><gray>側邊欄。</gray>"
+    type:
+      ledger: "<gold>分類帳</gold>"
+      stock: "<aqua>庫存</aqua>"
+
+# 側邊欄記分板標籤和值格式。
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] 帳本 ◆</gradient>"
+    transactions: "<yellow>發送：</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ 銀行總計</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>沒有銀行資金</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] 庫存 ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>庫存：</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>沒有玩家商店</red>"
+
+# 定位目標時顯示的老闆列文字商店。 
+shop_boss_bar:
+  title: "<gold>{shop_type}店鋪</gold> <gray>|</gray> <yellow>擁有者：</yellow> <white>{owner}</white> <gray>|</gray> <yellow>專案:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>地點：</yellow> <white>{location}</white>"
+  type:
+    player: "玩家"
+    admin: "行政"
+  owner:
+    admin: "行政"
+  available_items:
+    finite: "{item_count}"
+    limited: "庫存有限"
+    infinite: "無限"
+    various: "各種"
+
+# ============================================
+# 圖形使用者介面按鈕
+# ============================================
+
+# 商店區塊物品名稱和傳說元資料。
+shop_block:
+  name: "<blue>雨滴店</blue>"
+  lore:
+    - "<yellow>放置此區塊來建立您的商店。</yellow>"
+
+# 商店概覽 UI 標籤、知識和可用性狀態。
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 商店 商店</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] 擁有的商店街區</gradient>"
+    lore:
+      - "<gray>擁有的商店區塊：</gray> <white>{owned_shops}</white>"
+      - "<gray>這追蹤購買或授予</gray>"
+      - "<gray>ShopBlock 所有權。</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[上限] 商舖區塊限制</gradient>"
+    lore:
+      - "<gray>擁有的商店區塊：</gray> <white>{owned_shops}</white>"
+      - "<gray>最大商鋪街區：</gray> <white>{max_shops}</white>"
+      - "<gray>此限制控製商店數量</gray>"
+      - "<gray>您可以解鎖的塊。</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[需求] 店家要求</gradient>"
+    lore:
+      - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
+      - "<gray>當前需求數量：</gray> <white>{requirements}</white>"
+      - "<gray>地位：</gray> <white>{availability}</white>"
+      - "<yellow>點擊以檢查下一個商店</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[準備好]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待辦的]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[離線]</gradient>"
+
+# 商店等級要求UI、進度顯示和購買回饋。
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[需求] 商店等級{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] 購買商店街區</gradient>"
+    lore:
+      - "<gray>購買等級：</gray> <white>{purchase_number}</white>"
+      - "<gray>擁有的商店區塊：</gray> <white>{owned_shops}</white>"
+      - "<gray>最大商鋪街區：</gray> <white>{max_shops}</white>"
+      - "<gray>配置要求：</gray> <white>{requirement_count}</white>"
+      - "<gray>目前遇到：</gray> <white>{met_count}</white>"
+      - "<gray>地位：</gray> <white>{availability}</white>"
+      - "<yellow>點擊以在該層準備就緒時進行購買。 </yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[準備好]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待辦的]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[離線]</gradient>"
+    none: "<gradient:#10b981:#34d399>[自由的]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[免費] 無要求</gradient>"
+    lore:
+      - "<gray>此購買層沒有設定要求。 </gray>"
+      - "<yellow>您無需額外檢查即可購買此商店區塊。 </yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[請求]{requirement_name}</gradient>"
+    lore:
+      - "<gray>鑰匙：</gray> <white>{requirement_key}</white>"
+      - "<gray>類型：</gray> <white>{requirement_type}</white>"
+      - "<gray>地位：</gray> <white>{status}</white>"
+      - "<gray>進步：</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>概括：</gray> <white>{summary}</white>"
+      - "<yellow>右鍵單擊相容的要求以儲存進度。</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ 詳細檢查</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[遇見]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[待辦的]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[不可用]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>購買了一塊商店。消耗要求：</gray> <white>{requirements}</white><gray>。擁有商鋪街區：</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您目前不符合 <white>{requirement}</white><gray>。店舖要求：</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>商店要求 <white>{requirement}</white><gray>現在不可用或無效。</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您已達到商店街區限制<white>{max_shops}</white><gray>。擁有商鋪街區：</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>現在已經準備好了。</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>儲存的進度<white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>沒有可用於 <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>不支援儲存進度。</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>現在不可用。</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>無法載入您的 RDS 設定文件，因此無法儲存進度。</gray>"
+
+# 阻止交互驗證錯誤和保護通知。 
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>無法讀取該商品的店主。</red>"
+    not_owner: "<red>此 ShopBlock 屬於其他玩家，無法由您放置。 </red>"
+    max_shops_reached: "<red>您已達到店舖限額{max_shops}。目前已入駐的店：{owned_shops}.</red>"
+    shop_protected: "<red>商店不能直接破壞。使用商店菜單關閉商店。</red>"
+    double_chest_requires_shop_block: "<red>雙胸店需要第二個<blue>商店街區</blue><red>。普通寶箱無法與商店寶箱合併。</red>"
+    double_chest_owner_mismatch: "<red>此 ShopBlock 屬於其他擁有者，因此無法擴充此商店。 </red>"
+    shop_already_double_chest: "<red>這家商店已經在使用兩半箱。</red>"
+    double_chest_ambiguous: "<red>此 ShopBlock 涉及多個商店箱。僅將其放置在一個商店旁邊。 </red>"
+
+# 預定的稅務處理結果訊息。
+tax_scheduler:
+  paid: "<yellow>收取的計劃商店稅{amount}。統計店：{owned_shops}.</yellow>"
+  insufficient_funds: "<red>您無法支付預定的商店稅{amount}。統計店：{owned_shops}.</red>"
+  charge_failed: "<red>未能收取{amount}。統計店：{owned_shops}.</red>"
+
+# 用於所有者/管理員管理操作的主商店概覽介面。
+shop_overview_ui:
+  title: "{owner}店鋪 -{location}"
+  summary:
+    name: "<gold>店鋪概要</gold>"
+    player:
+      lore:
+        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>地點：</gray> <white>{location}</white>"
+        - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
+        - "<gray>店鋪類型：</gray> <white>球員商店</white>"
+        - "<gray>存貨：</gray> <white>有限</white>"
+    admin:
+      lore:
+        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>地點：</gray> <white>{location}</white>"
+        - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
+        - "<gray>店鋪類型：</gray> <white>管理商店</white>"
+        - "<gray>存貨：</gray> <white>無限</white>"
+  finance:
+    name: "<gold>商店銀行</gold>"
+    lore:
+      - "<gray>追蹤貨幣：</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>點擊以查看並提取資金。</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>已啟用管理商店</red>"
+        lore:
+          - "<gray>本店目前為行政店。</gray>"
+          - "<gray>庫存對客戶來說是無限的。</gray>"
+          - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
+          - "<yellow>點選可切換回</yellow>"
+      disabled:
+        name: "<green>管理員商店已停用</green>"
+        lore:
+          - "<gray>此商店目前使用普通庫存。 </gray>"
+          - "<gray>客戶只能購買預存金額。</gray>"
+          - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
+          - "<yellow>點選啟用管理商店模式。 </yellow>"
+    close:
+      name: "<red>關閉商店</red>"
+      lore:
+        - "<gray>刪除該商店並歸還商店區塊。</gray>"
+        - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
+        - "<gray>追蹤銀行貨幣：</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>關門前商店庫存必須清空。</yellow>"
+    manage:
+      name: "<green>添加商店商品</green>"
+      lore:
+        - "<gray>在這家商店存放新物品。</gray>"
+        - "<gray>目前條目：</gray> <white>{item_count}</white>"
+        - "<yellow>點選以開啟項目輸入。 </yellow>"
+    customer_view:
+      name: "<gold>開啟客戶視圖</gold>"
+      lore:
+        - "<gray>當顧客看到這家商店時預覽它。</gray>"
+        - "<gray>目前條目：</gray> <white>{item_count}</white>"
+        - "<yellow>點選以客戶身分瀏覽該商店。</yellow>"
+    trusted:
+      name: "<gold>值得信賴的玩家</gold>"
+      lore:
+        - "<gray>關聯：</gray> <white>{associate_count}</white>"
+        - "<gray>值得信賴的玩家：</gray> <white>{trusted_count}</white>"
+        - "<yellow>點擊以管理商店信任等級。 </yellow>"
+    ledger:
+      name: "<gold>商店分類帳</gold>"
+      lore:
+        - "<gray>總條目：</gray> <white>{ledger_count}</white>"
+        - "<gray>購買：</gray> <white>{purchase_count}</white>"
+        - "<gray>稅費：</gray> <white>{tax_count}</white>"
+        - "<yellow>按一下可查看商店交易記錄。 </yellow>"
+    edit:
+      name: "<aqua>編輯商店商品</aqua>"
+      lore:
+        - "<gray>編輯儲存的商店商品的定價。</gray>"
+        - "<gray>目前條目：</gray> <white>{item_count}</white>"
+        - "<yellow>點擊以編輯價格和貨幣。 </yellow>"
+    storage:
+      name: "<gold>查看儲存的物品</gold>"
+      lore:
+        - "<gray>查看該商店中已存放的商品。</gray>"
+        - "<gray>目前條目：</gray> <white>{item_count}</white>"
+        - "<yellow>點擊可提取儲存的資金</yellow>"
+    locked:
+      name: "<red>商店已上鎖</red>"
+      lore:
+        - "<gray>只有擁有者可以新增物品。 </gray>"
+        - "<gray>目前條目：</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>您沒有管理該商店的權限。</red>"
+    no_admin_permission: "<red>您無權切換管理商店。</red>"
+    admin_limit_reached: "<red>伺服器已有 {admin_shops}管理商店。免費版僅允許{max_admin_shops}管理商店。</red>"
+    admin_enabled: "<green>該商店現在是一個管理商店，擁有無限的客戶庫存。統計店：{owned_shops}.</green>"
+    admin_disabled: "<yellow>該商店現在是一家普通玩家商店，客戶庫存有限。統計店：{owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>您無法將此管理商店切換回玩家商店，因為您的商店限制為 {max_shops}已經達到了。統計店：{owned_shops}.</red>"
+    close_not_empty: "<red>您只能在刪除所有儲存的物品後才能關閉商店。剩餘條目：{item_count}.</red>"
+    close_bank_not_empty: "<red>在關閉此商店之前提取您的商店銀行。剩餘追蹤貨幣：{bank_currency_count}.</red>"
+    closed: "<green>關閉商店並返回{returned_blocks}商店街區。統計店：{owned_shops}.</green>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於 RDS 管理的全域管理控制面板。
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[管理員] RDS 控制</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS 管理面板</white>"
+    lore:
+      - "<gray>從一處管理全球管理商店系統。</gray>"
+      - "<gray>開啟伺服器庫或編輯設定設定如下。 </gray>"
+      - "<yellow>要求：</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] 伺服器銀行</gradient>"
+      lore:
+        - "<gray>審查進入伺服器銀行的管理商店收入。</gray>"
+        - "<gray>檢查下次拉取時間並提取餘額。 </gray>"
+        - "<yellow>按一下以開啟伺服器</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] 商店配置</gradient>"
+      lore:
+        - "<gray>編輯值來自</gray> <white>配置/config.yml</white><gray>.</gray>"
+        - "<gray>每個可編輯設定都可以透過鐵砧提示進行變更。 </gray>"
+        - "<yellow>點選以開啟設定控制項。 </yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] 貨幣經理</gradient>"
+      lore:
+        - "<gray>查看從 Vault 和 JExEconomy 檢測到的貨幣。</gray>"
+        - "<gray>建立預設值</gray> <white>雨滴</white> <gray>需要時使用貨幣。</gray>"
+        - "<yellow>點選以開啟貨幣控制項。 </yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>需要管理員存取權限</white>"
+      lore:
+        - "<gray>您無權使用此管理面板。</gray>"
+
+# 用於偵測到的提供者和預設貨幣建立的管理貨幣視圖。
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] 貨幣經理</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊]</gradient> <white>貨幣供應商</white>"
+    lore:
+      - "<gray>偵測到的貨幣：</gray> <white>{currency_count}</white>"
+      - "<gray>可用保險庫：</gray> <white>{vault_available}</white>"
+      - "<gray>JEx經濟可用：</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>使用水晶按鈕建立預設值</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[當前]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>提供者：</gray> <white>{provider}</white>"
+      - "<gray>象徵：</gray> <white>{symbol}</white>"
+      - "<gray>前綴：</gray> <white>{prefix}</white>"
+      - "<gray>後綴：</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>創造{currency_id}</white>"
+      lore:
+        - "<gray>在 JExEconomy 中建立預設 RDS 貨幣。</gray>"
+        - "<yellow>點擊以建立 {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JEx經濟需求</white>"
+      lore:
+        - "<gray>您無法在沒有 JExEconomy 的情況下建立預設貨幣。 </gray>"
+        - "<gray>首先安裝並啟用 JExEconomy。</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[好的]</gradient> <white>{currency_id}準備好</white>"
+      lore:
+        - "<gray>預設貨幣已存在。 </gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>創建預設貨幣：</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>的預定商店稅未建立貨幣：</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>貨幣已存在：</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>除非 JExEconomy 可用，否則您無法使用此按鈕。 </gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>未偵測到貨幣</white>"
+      lore:
+        - "<gray>未偵測到 Vault 或 JExEconomy 貨幣。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>需要管理員存取權限</white>"
+      lore:
+        - "<gray>您無權使用此貨幣視圖。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您沒有管理貨幣的權限。</gray>"
+  decoration:
+    border:
+      name: " "
+
+# 配置瀏覽器 UI 以進行可編輯設定和更新回饋。
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] 商店配置</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊]</gradient> <white>配置設定</white>"
+    lore:
+      - "<gray>偵測到可編輯設定：</gray> <white>{setting_count}</white>"
+      - "<gray>點擊下面的任何條目以編輯其值鐵砧。 </gray>"
+      - "<yellow>更改直接寫入config/config.yml。 </yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[放]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>小路：</gray> <white>{config_path}</white>"
+      - "<gray>類型：</gray> <white>{value_type}</white>"
+      - "<gray>目前值：</gray> <white>{current_value}</white>"
+      - "<yellow>點擊以編輯此設定。 </yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[布林值]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[整數]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[長的]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[雙倍的]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[列表]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[細繩]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>沒有可編輯的設置</white>"
+      lore:
+        - "<gray>找不到可編輯的標量/清單配置設定。</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>需要管理員存取權限</white>"
+      lore:
+        - "<gray>您無權使用此配置視圖。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>配置編輯已鎖定</white>"
+      lore:
+        - "<gray>此版本不允許執行時期配置編輯。 </gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權編輯配置設定。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>此版本中配置編輯被鎖定。</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>已更新<white>{config_path}</white><gray>到<white>{updated_value}</white><gray>.</gray>"
+
+# 用於編輯配置值的 Anvil 提示文字。 
+shop_config_value_anvil_ui:
+  title: "編輯{config_path}"
+  input:
+    lore:
+      - "<gray>小路：</gray> <white>{config_path}</white>"
+      - "<gray>類型：</gray> <white>{value_type}</white>"
+      - "<gray>目前值：</gray> <white>{current_value}</white>"
+      - "<yellow>輸入新值並確認。 </yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>輸入的類型無效<white>{value_type}</white><gray>。輸入：</gray> <white>{input}</white>"
+
+# 伺服器銀行概覽、貨幣條目和提款回饋。
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] 伺服器銀行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊]</gradient> <white>收入和轉移狀態</white>"
+    lore:
+      - "<gray>追蹤貨幣：</gray> <white>{currency_count}</white>"
+      - "<gray>收入：</gray> <white>{income_summary}</white>"
+      - "<gray>下一步拉：</gray> <white>{next_pull_at}</white>"
+      - "<gray>距離下次拉取的時間：</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>管理員商店餘額按計畫轉移到此處。 </yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>無</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>殘障人士</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>待辦的...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>殘障人士</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>待辦的...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[提取]</gradient> <white>全部提取</white>"
+    lore:
+      - "<gray>嘗試提取每個正餘額。 </gray>"
+      - "<gray>將跳過不可用的貨幣。</gray>"
+      - "<yellow>點擊可將所有資金提取到您的帳戶。 </yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+      - "<gray>可用餘額：</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>點擊以提取此全部貨幣餘額。 </yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>伺服器銀行空</white>"
+      lore:
+        - "<gray>沒有可提取的正餘額。 </gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>需要管理員存取權限</white>"
+      lore:
+        - "<gray>您沒有管理伺服器群組的權限。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您沒有管理伺服器群組的權限。</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>該伺服器銀行餘額不再可用。</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>撤回<white>{amount} {currency_name}</white><gray>。其餘的{currency_name}:</gray> <white>{remaining_amount}</white><gray>。活躍貨幣：</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>撤回<white>{withdrawn_currency_count}</white><gray>貨幣餘額。失敗的：</gray> <white>{failed_currency_count}</white><gray>。剩餘活躍貨幣：</gray> <white>{remaining_currency_count}</white><gray>。細節：</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>無法提取餘額。失敗的貨幣計數：</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>貨幣<white>{currency_name}</white><gray>目前不可用。</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>提款失敗<white>{amount} {currency_name}</white><gray>從伺服器銀行。</gray>"
+
+# 新增庫存條目時使用的商店商品輸入 UI。
+shop_input_ui:
+  title: "新增項目 -{owner} @ {location}"
+  summary:
+    name: "<gold>商店存儲</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>目前儲存：</gray> <white>{stored_count}</white>"
+      - "<yellow>新項目預設為貨幣類型金庫且值為 0。</yellow>"
+  input_slot:
+    name: "<green>輸入槽</green>"
+    lore:
+      - "<gray>左鍵點選遊標上的項目</gray>"
+      - "<gray>或按住 Shift 鍵並點擊庫存中的物品。</gray>"
+      - "<gray>右鍵點選可刪除插入的堆疊。</gray>"
+  no_new_items_inserted: "<red>的匹配物品或貨幣。 </red>"
+  saved: "<green>已儲存{added_count}新條目。店鋪現在有{stored_count}條目。</green>"
+  save_failed: "<red>無法儲存商店物品。 </red>"
+  left_overs: "<yellow>將未儲存的商店物品退回到您的庫存中。</yellow>"
+  feedback:
+    no_permission: "<red>您無權向該商店新增商品。</red>"
+    locked:
+      name: "<red>需要供應訪問</red>"
+      lore:
+        - "<gray>只有同事和受信任的玩家可以在此處新增物品。 </gray>"
+
+# 用於查看和提取儲存物品的商店儲存瀏覽器 UI。
+shop_storage_ui:
+  title: "儲存的物品 -{location}"
+  summary:
+    name: "<gold>儲存物品</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>儲存的條目：</gray> <white>{stored_count}</white>"
+      - "<yellow>點擊下面的任意項目即可將其提現。 </yellow>"
+  entry:
+    lore:
+      - "<gray>儲存金額：</gray> <white>{amount}</white>"
+      - "<gray>物品類型：</gray> <white>{item_type}</white>"
+      - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+      - "<gray>值：</gray> <white>{value}</white>"
+      - "<yellow>點擊以從商店中提取此項目。 </yellow>"
+  feedback:
+    not_owner: "<red>您沒有管理該商店的權限。</red>"
+    extracted: "<green>已提取{amount}x{item_type}。價格為{value} {currency_type}。剩餘儲存條目：{stored_count}.</green>"
+    item_missing: "<red>找不到該儲存商品。 </red>"
+    locked:
+      name: "<red>需要完全訪問</red>"
+      lore:
+        - "<gray>只有具有完全存取權限的可信任玩家才能提取儲存的物品。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於選擇要修改的條目的商店編輯選擇 UI。
+shop_edit_ui:
+  title: "編輯商店商品 -{location}"
+  summary:
+    name: "<aqua>商店價格編輯器</aqua>"
+    player:
+      lore:
+        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>地點：</gray> <white>{location}</white>"
+        - "<gray>儲存的條目：</gray> <white>{stored_count}</white>"
+        - "<yellow>左鍵點擊一個項目以編輯定價。</yellow>"
+        - "<yellow>右鍵單擊商品可將其從商店中刪除。</yellow>"
+    admin:
+      lore:
+        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>地點：</gray> <white>{location}</white>"
+        - "<gray>儲存的條目：</gray> <white>{stored_count}</white>"
+        - "<gray>管理員補貨模式：</gray> <white>{restock_mode}</white>"
+        - "<gray>補貨時間表：</gray> <white>{restock_schedule}</white>"
+        - "<yellow>左鍵點擊商品以編輯定價或庫存。</yellow>"
+        - "<yellow>右鍵單擊商品可將其從商店中刪除。</yellow>"
+    restock_schedule:
+      gradual: "預設定時器：{reset_timer_ticks}每個項目的刻度"
+  entry:
+    player:
+      lore:
+        - "<gray>儲存金額：</gray> <white>{amount}</white>"
+        - "<gray>物品類型：</gray> <white>{item_type}</white>"
+        - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+        - "<gray>值：</gray> <white>{value}</white>"
+        - "<yellow>左鍵點選可編輯此商店商品。</yellow>"
+        - "<yellow>右鍵單擊將其從商店中刪除。</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>庫存：</gray> <white>無限</white>"
+        - "<gray>物品類型：</gray> <white>{item_type}</white>"
+        - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+        - "<gray>值：</gray> <white>{value}</white>"
+        - "<gray>補貨模式：</gray> <white>{restock_mode}</white>"
+        - "<yellow>左鍵點選可編輯此管理商店項目。</yellow>"
+        - "<yellow>右鍵單擊將其從商店中刪除。</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>目前庫存：</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>物品類型：</gray> <white>{item_type}</white>"
+        - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+        - "<gray>值：</gray> <white>{value}</white>"
+        - "<gray>補貨模式：</gray> <white>{restock_mode}</white>"
+        - "<gray>補貨時間表：</gray> <white>{restock_schedule}</white>"
+        - "<yellow>左鍵點選可編輯此管理商店項目。</yellow>"
+        - "<yellow>右鍵單擊將其從商店中刪除。</yellow>"
+    admin_mode:
+      gradual: "循序漸進"
+      full: "完全重置"
+    restock_schedule:
+      gradual: "每 1 件{reset_timer_ticks}蜱蟲"
+      full: "完全重新進貨{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>您沒有管理該商店的權限。</red>"
+    removed: "<green>已刪除{amount}x{item_type}從商店。價格為{value} {currency_type}。剩餘儲存條目：{stored_count}.</green>"
+    item_missing: "<red>找不到該商店商品。 </red>"
+    locked:
+      name: "<red>需要完全訪問</red>"
+      lore:
+        - "<gray>只有具有完全存取權限的受信任玩家才能編輯物品值。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 針對單一商店商品行為和定價的詳細編輯器 UI。
+shop_item_edit_ui:
+  title: "編輯{item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>儲存金額：</gray> <white>{amount}</white>"
+        - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+        - "<gray>值：</gray> <white>{value}</white>"
+        - "<gray>可用性模式：</gray> <white>{availability_mode}</white>"
+        - "<gray>現在可用：</gray> <white>{availability_state}</white>"
+        - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+        - "<yellow>使用下面的按鈕編輯此項目。 </yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>庫存：</gray> <white>無限</white>"
+        - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+        - "<gray>值：</gray> <white>{value}</white>"
+        - "<gray>補貨模式：</gray> <white>{restock_mode}</white>"
+        - "<gray>購買命令：</gray> <white>{command_count}</white>"
+        - "<gray>可用性模式：</gray> <white>{availability_mode}</white>"
+        - "<gray>現在可用：</gray> <white>{availability_state}</white>"
+        - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+        - "<yellow>使用下面的按鈕編輯此管理項目。 </yellow>"
+    admin_limited:
+      lore:
+        - "<gray>目前庫存：</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>貨幣類型：</gray> <white>{currency_type}</white>"
+        - "<gray>值：</gray> <white>{value}</white>"
+        - "<gray>補貨模式：</gray> <white>{restock_mode}</white>"
+        - "<gray>補貨時間表：</gray> <white>{restock_schedule}</white>"
+        - "<gray>購買命令：</gray> <white>{command_count}</white>"
+        - "<gray>可用性模式：</gray> <white>{availability_mode}</white>"
+        - "<gray>現在可用：</gray> <white>{availability_state}</white>"
+        - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+        - "<yellow>使用下面的按鈕編輯此管理項目。 </yellow>"
+  currency_type:
+    name: "<green>貨幣類型</green>"
+    lore:
+      - "<gray>目前類型：</gray> <white>{currency_type}</white>"
+      - "<yellow>點擊以編輯貨幣類型。 </yellow>"
+  value:
+    name: "<gold>值</gold>"
+    lore:
+      - "<gray>目前類型：</gray> <white>{currency_type}</white>"
+      - "<gray>目前值：</gray> <white>{value}</white>"
+      - "<yellow>點擊以編輯數值。 </yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[模式] 物品可用性</gradient>"
+    always: "<gradient:#22c55e:#86efac>[總是]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[旋轉]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[絕不]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[打開]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[關閉]</gradient>"
+    lore:
+      - "<gray>當前模式：</gray> <white>{availability_mode}</white>"
+      - "<gray>目前狀態：</gray> <white>{availability_state}</white>"
+      - "<gray>旋轉視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+      - "<yellow>點擊以循環：始終 -> 輪換 -> 從不。 </yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[計時器] 旋轉分鐘</gradient>"
+    lore:
+      - "<gray>目前視窗：</gray> <white>{rotation_minutes}分鐘）</white>"
+      - "<gray>當前模式：</gray> <white>{availability_mode}</white>"
+      - "<gray>旋轉模式標籤：</gray> <white>{rotate_mode}</white>"
+      - "<yellow>點選可設定砧座旋轉分鐘數。 </yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] 命令執行器</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[伺服器]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[玩家]</gradient>"
+    lore:
+      - "<gray>當前模式：</gray> <white>{command_mode}</white>"
+      - "<gray>下一個模式：</gray> <white>{next_mode}</white>"
+      - "<yellow>點選可切換誰執行新新增的指令。 </yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] 購買命令</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>無</gradient>"
+    lore:
+      - "<gray>配置的命令：</gray> <white>{command_count}</white>"
+      - "<gray>最新指令：</gray> <white>{latest_command}</white>"
+      - "<yellow>點擊以開啟命令設定並新增命令。 </yellow>"
+  confirm:
+    name: "<green>保存商品定價</green>"
+    lore:
+      - "<gray>應用目前貨幣類型和值</gray>"
+      - "<gray>到這個商店的商品。</gray>"
+  stock_limit:
+    name: "<gold>庫存限制</gold>"
+    unlimited: "無限"
+    lore:
+      - "<gray>電流限制：</gray> <white>{stock_limit}</white>"
+      - "<gray>目前庫存：</gray> <white>{current_stock}</white>"
+      - "<yellow>點選可設定庫存限制。 </yellow>"
+      - "<gray>使用 -1 將此項目恢復為無限庫存。 </gray>"
+  reset_timer:
+    name: "<aqua>重置定時器</aqua>"
+    lore:
+      - "<gray>目前計時器：</gray> <white>{reset_timer_ticks}蜱蟲</white>"
+      - "<yellow>點選可設定補貨計時器。 </yellow>"
+  restock_mode:
+    name: "<yellow>管理員補貨模式</yellow>"
+    gradual: "循序漸進"
+    full: "完全重置"
+    lore:
+      - "<gray>配置模式：</gray> <white>{restock_mode}</white>"
+      - "<gray>配置的時間表：</gray> <white>{restock_schedule}</white>"
+      - "<yellow>點選可切換全域管理員補貨模式。 </yellow>"
+  restock_schedule:
+    gradual: "每 1 件{reset_timer_ticks}蜱蟲"
+    full: "完全重新進貨{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>您沒有管理該商店的權限。</red>"
+    shop_missing: "<red>此商店無法從儲存載入。 </red>"
+    item_missing: "<red>找不到該商店商品。 </red>"
+    saved: "<green>將商品定價保存為{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>可用性模式設定為<white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>新指令執行模式設定為<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>刪除了最新的命令。剩餘命令：</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>清除所有管理員購買指令。 </gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>未配置管理員購買命令。</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>插件配置變更已鎖定<white>免費 RDS</white><gray>。升級到高級版以獲得完全存取權。</gray>"
+    restock_mode_updated: "<green>管理員補貨模式設定為 {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>無法儲存管理員補貨模式。 </red>"
+
+# 用於新增管理購買指令的鐵砧提示。 
+shop_item_admin_command_anvil_ui:
+  title: "新增命令{command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>輸入購買此管理項目時要執行的命令。</gray>"
+      - "<gray>僅限指令文字。延遲在命令設定視圖中配置。 </gray>"
+      - "<gray>範例：</gray>"
+      - "<white>pod送%player_name%買{amount}x{item_type}</white>"
+      - "<white>生態給予%player_name% 50</white>"
+      - "<gray>配置的命令：</gray> <white>{command_count}</white>"
+      - "<gray>執行模式：</gray> <white>{command_mode}</white>"
+      - "<gray>延遲：</gray> <white>{command_delay_ticks}蜱蟲</white>"
+  mode:
+    server: "<gold>[伺服器]</gold>"
+    player: "<green>[玩家]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>命令文字不能為空。輸入：</gray> <white>{input}</white>"
+
+# 用於模式、延遲和命令清單的管理員購買命令管理器 UI。 
+shop_item_admin_command_ui:
+  title: "命令設定 - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] 購買命令設定</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>無</gradient>"
+    lore:
+      - "<gray>配置的命令：</gray> <white>{command_count}</white>"
+      - "<gray>最新指令：</gray> <white>{latest_command}</white>"
+      - "<gray>下一個命令模式：</gray> <white>{command_mode}</white>"
+      - "<gray>下一個命令延遲：</gray> <white>{command_delay_ticks}刻度線（{command_delay_seconds}）</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] 下一個命令執行器</gradient>"
+    server: "<gold>[伺服器]</gold>"
+    player: "<green>[玩家]</green>"
+    lore:
+      - "<gray>當前模式：</gray> <white>{command_mode}</white>"
+      - "<gray>下一個模式：</gray> <white>{next_mode}</white>"
+      - "<yellow>點選可切換下一個指令的執行者。 </yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[延遲] 下一個命令延遲</gradient>"
+    lore:
+      - "<gray>當前延遲：</gray> <white>{command_delay_ticks}刻度線（{command_delay_seconds}）</white>"
+      - "<yellow>點選可設定下一個指令的延遲時間。 </yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] 新增指令</gradient>"
+    lore:
+      - "<gray>模式：</gray> <white>{command_mode}</white>"
+      - "<gray>延遲：</gray> <white>{command_delay_ticks}刻度線（{command_delay_seconds}）</white>"
+      - "<yellow>點選以開啟命令輸入。 </yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] 刪除命令</gradient>"
+    lore:
+      - "<gray>配置的命令：</gray> <white>{command_count}</white>"
+      - "<yellow>點擊以刪除最新命令。 </yellow>"
+      - "<yellow>Shift + 點選可清除所有指令。</yellow>"
+  confirm:
+    name: "<green>儲存命令設定</green>"
+    lore:
+      - "<gray>返回專案編輯器並保留這些命令變更。</gray>"
+  feedback:
+    not_owner: "<red>您沒有管理該商店的權限。</red>"
+    shop_missing: "<red>此商店無法從儲存載入。 </red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>下一個命令模式設定為<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>刪除了最新的命令。剩餘命令：</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>清除所有管理員購買指令。 </gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>未配置管理員購買命令。</gray>"
+
+# Anvil 提示設定管理指令延遲刻度。 
+shop_item_admin_command_delay_anvil_ui:
+  title: "設定延遲 -{command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>輸入下一個指令延遲的刻度的整數。 </gray>"
+      - "<gray>執行模式：</gray> <white>{command_mode}</white>"
+      - "<gray>範例：</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[伺服器]</gold>"
+    player: "<green>[玩家]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>輸入大於或等於 0 的整數。輸入：</gray> <white>{input}</white>"
+
+# Anvil 在幾分鐘內提示旋轉模式可用性視窗。 
+shop_item_availability_minutes_anvil_ui:
+  title: "旋轉分鐘數：{rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[計時器] 旋轉分鐘</gradient>"
+    lore:
+      - "<gray>輸入分鐘的整數。 </gray>"
+      - "<gray>旋轉模式交替每個視窗可用/不可用。</gray>"
+  error:
+    invalid_number: "<red>輸入大於 0 的整數。輸入：{input}</red>"
+
+# Anvil 提示設定有限的管理庫存容量。 
+shop_item_admin_stock_limit_anvil_ui:
+  title: "庫存限制：{stock_limit}"
+  input:
+    name: "<gold>庫存限制</gold>"
+    lore:
+      - "<gray>輸入商品的正庫存限制。</gray>"
+      - "<gray>使用 -1 恢復無限管理庫存。 </gray>"
+  error:
+    invalid_number: "<red>輸入-1或大於0的整數。輸入：{input}</red>"
+
+# 用於配置管理員補貨/重設計時器刻度的鐵砧提示。 
+shop_item_admin_reset_timer_anvil_ui:
+  title: "重置定時器：{reset_timer_ticks}"
+  input:
+    name: "<aqua>重置定時器</aqua>"
+    lore:
+      - "<gray>輸入 Bukkit 刻度的整數。 </gray>"
+      - "<gray>漸進模式每個計時器恢復一項。</gray>"
+  error:
+    invalid_number: "<red>輸入大於 0 的整數。輸入：{input}</red>"
+
+# Anvil 提示選擇項目使用的貨幣類型。 
+shop_item_currency_type_anvil_ui:
+  title: "貨幣類型：{currency_type}"
+  input:
+    name: "<green>貨幣類型</green>"
+    lore:
+      - "<gray>輸入該商品的貨幣識別碼。 </gray>"
+      - "<gray>範例：</gray> <white>金庫、代幣、寶石</white>"
+  error:
+    empty: "<red>貨幣類型不能為空。</red>"
+    invalid_currency: "<red>貨幣類型{currency_type}不可用。使用金庫或註冊的自訂貨幣。</red>"
+    processing_failed: "<red>無法更新貨幣類型。輸入：{input}</red>"
+
+# Anvil 提示設定每個項目價格/價值。 
+shop_item_value_anvil_ui:
+  title: "值：{value} {currency_type}"
+  input:
+    name: "<gold>物品價值</gold>"
+    lore:
+      - "<gray>輸入一個非負數值。</gray>"
+      - "<gray>範例：</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>輸入有效的非負數。輸入：{input}</red>"
+    processing_failed: "<red>無法更新項目值。輸入：{input}</red>"
+
+# 商店銀行 UI 用於每個商店的貨幣餘額和提款。
+shop_bank_ui:
+  title: "商店銀行 -{location}"
+  summary:
+    name: "<gold>銀行餘額</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>追蹤貨幣：</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>點擊下面的餘額以提取其全部金額。 </yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+      - "<gray>可用餘額：</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>點擊以提取此全部餘額。 </yellow>"
+  feedback:
+    not_owner: "<red>您沒有管理該商店的權限。</red>"
+    entry_missing: "<red>該銀行餘額不再可用。</red>"
+    withdrawn: "<green>撤回{amount} {currency_name}。其餘的{currency_name}: {remaining_amount}。追蹤貨幣：{bank_currency_count}.</green>"
+    withdraw_failed: "<red>提款失敗{amount} {currency_name}從商店銀行。</red>"
+    currency_unavailable: "<red>貨幣{currency_name}現在不可用。</red>"
+    empty:
+      name: "<red>銀行空</red>"
+      lore:
+        - "<gray>這家商店沒有可提領的銀行餘額。 </gray>"
+    locked:
+      name: "<red>需要完全訪問</red>"
+      lore:
+        - "<gray>只有具有完全存取權限的可信任玩家才能提取商店資金。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於商店存取角色的可信任玩家管理 UI。
+shop_trusted_ui:
+  title: "值得信賴的玩家 -{location}"
+  summary:
+    name: "<gold>店鋪信託經理</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>關聯：</gray> <white>{associate_count}</white>"
+      - "<gray>值得信賴的玩家：</gray> <white>{trusted_count}</white>"
+      - "<yellow>點選玩家以循環其信任狀態。 </yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>地位：</gray> <white>民眾</white>"
+        - "<gray>無管理權限。 </gray>"
+        - "<yellow>按一下以變更為“關聯”。 </yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>地位：</gray> <white>關聯</white>"
+        - "<gray>可以新增商品至商店。 </gray>"
+        - "<yellow>按一下以變更為「受信任」。 </yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>地位：</gray> <white>值得信賴</white>"
+        - "<gray>可以完全管理商店。 </gray>"
+        - "<yellow>按一下以變更為「公共」。 </yellow>"
+  feedback:
+    not_owner: "<red>只有店主可以管理受信任的玩家。 </red>"
+    updated:
+      public: "<yellow>放{player}公開。</yellow>"
+      associate: "<green>放{player}關聯。</green>"
+      trusted: "<green>放{player}至受信任。</green>"
+    empty:
+      name: "<red>未找到玩家</red>"
+      lore:
+        - "<gray>沒有其他已知玩家可以信任。 </gray>"
+    locked:
+      name: "<red>僅限擁有者存取</red>"
+      lore:
+        - "<gray>只有店主可以管理受信任的玩家。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於採購和稅務歷史記錄的交易分類帳 UI。
+shop_ledger_ui:
+  title: "商店分類帳 -{location}"
+  summary:
+    name: "<gold>店鋪交易帳本</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>總條目：</gray> <white>{ledger_count}</white>"
+      - "<gray>購買：</gray> <white>{purchase_count}</white>"
+      - "<gray>稅費：</gray> <white>{tax_count}</white>"
+      - "<yellow>最新的交易首先出現。</yellow>"
+  entry:
+    purchase:
+      name: "<green>購買：{item_type}</green>"
+      lore:
+        - "<gray>買家：</gray> <white>{actor}</white>"
+        - "<gray>金額：</gray> <white>{item_amount}</white>"
+        - "<gray>支付總額：</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+        - "<gray>記錄：</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>稅費</gold>"
+      lore:
+        - "<gray>收費至：</gray> <white>{actor}</white>"
+        - "<gray>稅收份額：</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>統計店：</gray> <white>{counted_shops}</white>"
+        - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+        - "<gray>記錄：</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>沒有分類帳項目</red>"
+      lore:
+        - "<gray>這家商店還沒有記錄購買或稅金。 </gray>"
+    locked:
+      name: "<red>需要完全訪問</red>"
+      lore:
+        - "<gray>只有具有完全存取權限的受信任玩家才能查看</gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於瀏覽和購買商品的面向客戶的商店 UI。
+shop_customer_ui:
+  title: "店鋪 -{location}"
+  summary:
+    name: "<gold>客戶觀點</gold>"
+    player:
+      lore:
+        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>地點：</gray> <white>{location}</white>"
+        - "<gray>可用條目：</gray> <white>{stored_count}</white>"
+        - "<gray>店鋪類型：</gray> <white>球員商店</white>"
+        - "<gray>存貨：</gray> <white>有限</white>"
+        - "<yellow>左鍵點擊一件物品即可購買一件。</yellow>"
+        - "<yellow>右鍵單擊一個項目以選擇金額。</yellow>"
+    admin:
+      lore:
+        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>地點：</gray> <white>{location}</white>"
+        - "<gray>可用條目：</gray> <white>{stored_count}</white>"
+        - "<gray>店鋪類型：</gray> <white>管理商店</white>"
+        - "<gray>存貨：</gray> <white>無限</white>"
+        - "<yellow>左鍵點擊一件物品即可購買一件。</yellow>"
+        - "<yellow>右鍵單擊一個項目以選擇金額。</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>庫存：</gray> <white>{amount}</white>"
+        - "<gray>物品類型：</gray> <white>{item_type}</white>"
+        - "<gray>每件價格：</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>股票總價值：</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+        - "<yellow>左鍵點擊購買一個。</yellow>"
+        - "<yellow>右鍵單擊選擇金額。</yellow>"
+    admin:
+      lore:
+        - "<gray>存貨：</gray> <white>無限</white>"
+        - "<gray>物品類型：</gray> <white>{item_type}</white>"
+        - "<gray>每件價格：</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+        - "<gray>店鋪類型：</gray> <white>管理商店</white>"
+        - "<yellow>左鍵點擊購買一個。</yellow>"
+        - "<yellow>右鍵單擊選擇金額。</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>庫存：</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>物品類型：</gray> <white>{item_type}</white>"
+        - "<gray>每件價格：</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>貨幣編號：</gray> <white>{currency_type}</white>"
+        - "<gray>補貨模式：</gray> <white>{restock_mode}</white>"
+        - "<gray>補貨時間表：</gray> <white>{restock_schedule}</white>"
+        - "<yellow>左鍵點擊購買一個。</yellow>"
+        - "<yellow>右鍵單擊選擇金額。</yellow>"
+    admin_mode:
+      gradual: "循序漸進"
+      full: "完全重置"
+    restock_schedule:
+      gradual: "每 1 件{reset_timer_ticks}蜱蟲"
+      full: "完全重新進貨{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>已購買{amount}x{item_type}為了{total_price} {currency_name}。剩餘庫存：{remaining_amount}.</green>"
+    purchased_admin: "<green>已購買{amount}x{item_type}為了{total_price} {currency_name}。這個管理商店有無限的庫存。</green>"
+    purchased_admin_limited: "<green>已購買{amount}x{item_type}為了{total_price} {currency_name}。剩餘管理庫存：{remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}目前無法購買。</gray>"
+    insufficient_stock: "<red>這家店只有{available_amount}x{item_type}可用的。</red>"
+    insufficient_funds: "<red>你需要{total_price} {currency_name}買{amount}x{item_type}.</red>"
+    currency_unavailable: "<red>貨幣{currency_name}現在不可用。</red>"
+    invalid_amount: "<red>輸入有效的購買金額。</red>"
+    item_missing: "<red>該商店商品不再可用。 </red>"
+    empty_shop:
+      name: "<red>商店空無一人</red>"
+      lore:
+        - "<gray>沒有可用商品購買。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於自訂購買數量輸入的鐵砧提示。 
+shop_purchase_amount_anvil_ui:
+  title: "購買{item_type}"
+  input:
+    name: "<gold>購買金額</gold>"
+    player:
+      lore:
+        - "<gray>輸入您想要的項目數購買。 </gray>"
+        - "<gray>最大可用：</gray> <white>{max_amount}</white>"
+        - "<gray>物品：</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>輸入您想要的項目數購買。 </gray>"
+        - "<gray>此管理商店有無限庫存。 </gray>"
+        - "<gray>物品：</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>輸入您想要的項目數購買。 </gray>"
+        - "<gray>最大可用：</gray> <white>{max_amount}</white>"
+        - "<gray>物品：</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>輸入 1 到 1 之間的整數{max_amount}。輸入：{input}</red>"
+    invalid_number_admin: "<red>輸入大於 0 的整數。輸入：{input}</red>"
+    processing_failed: "<red>未能購買處理金額。輸入：{input}</red>"
+
+# 用於瀏覽所有內容和材料搜尋的商店發現登陸 UI。
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>商店瀏覽器</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>商店瀏覽器</gradient>"
+    lore:
+      - "<gray>瀏覽每個追蹤的商店或按特定資料過濾。 </gray>"
+      - "<yellow>選擇以下操作之一以繼續。</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>瀏覽所有商店</gradient>"
+    lore:
+      - "<gray>開啟完整分頁的商店目錄。 </gray>"
+      - "<yellow>點擊可查看每個追蹤的商店。 </yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>按材質搜尋</gradient>"
+    lore:
+      - "<gray>開啟砧提示並輸入材料名稱。 </gray>"
+      - "<gray>範例：</gray> <white>鑽石塊</white>"
+      - "<yellow>點選可依商品類型搜尋。 </yellow>"
+
+# 分頁目錄 UI 列出所有追蹤的商店。
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>全部商店</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>店鋪目錄</gradient>"
+    lore:
+      - "<gray>追蹤店鋪：</gray> <white>{shop_count}</white>"
+      - "<gray>可用庫存總量：</gray> <white>{available_count}</white>"
+      - "<yellow>點擊下面的任意商店將其打開。 </yellow>"
+  entry:
+    name: "<gold>{owner}的商店</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>可用庫存：</gray> <white>{available_count}</white>"
+      - "<yellow>按一下以開啟此商店。 </yellow>"
+  feedback:
+    empty:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>尚未註冊商店。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 經過材質過濾的商店結果 UI。
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>結果：{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>結果：{material}</gradient>"
+    lore:
+      - "<gray>材料：</gray> <white>{material}</white>"
+      - "<gray>配套店鋪：</gray> <white>{shop_count}</white>"
+      - "<gray>配套優惠：</gray> <white>{matching_count}</white>"
+      - "<yellow>點擊下面的任意匹配的商店將其打開。 </yellow>"
+  entry:
+    name: "<gold>{owner}的商店</gold>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>地點：</gray> <white>{location}</white>"
+      - "<gray>匹配{material}優惠：</gray> <white>{matching_count}</white>"
+      - "<gray>可見庫存總量：</gray> <white>{available_count}</white>"
+      - "<yellow>按一下以開啟此商店。 </yellow>"
+  feedback:
+    empty:
+      name: "<red>沒有商店出售{material}</red>"
+      lore:
+        - "<gray>目前沒有提供此服務的追蹤商店材料。 </gray>"
+    shop_missing:
+      name: "<red>未找到商店</red>"
+      lore:
+        - "<gray>此商店無法從儲存載入。 </gray>"
+      message: "<red>此商店無法從儲存載入。 </red>"
+
+# 用於輸入材料過濾器的鐵砧提示搜尋。 
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>搜尋資料</gradient>"
+  input:
+    lore:
+      - "<gray>輸入 Bukkit 材料名稱以搜尋追蹤的商店。</gray>"
+      - "<gray>範例：</gray> <white>鑽石</white><gray>,</gray> <white>鑽石塊</white>"
+      - "<yellow>點擊結果欄將開啟符合的商店。 </yellow>"
+  error:
+    invalid_material: "<red>輸入有效材料，例如 Diamond_block。輸入：{input}</red>"
+    processing_failed: "<red>無法搜尋資料。輸入：{input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# 跨清單 UI 使用共用分頁項目標籤。
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 頁面%current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>目前頁面：</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>總頁數：</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 頁面%direction%</gradient>"
+
+# ============================================
+# 頭部物品
+# ============================================
+# 共用頭部/導航按鈕標籤（返回/確認/下一步）。
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙返回</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊以返回</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 確認</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊以確認設定</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 確認</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>點擊以確認設定</gradient>"

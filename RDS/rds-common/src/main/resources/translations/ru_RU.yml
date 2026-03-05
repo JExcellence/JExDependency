@@ -1,0 +1,1204 @@
+# ============================================
+# ГЛОБАЛЬНЫЙ ПРЕФИКС
+# ============================================
+# Prefix добавляется к общему выводу чата плагина.
+prefix: "<gradient:#a855f7:#c084fc>[РДС]</gradient> "
+
+# Быстрые сводные строки для игроков о магазине, банке и налоговом статусе.
+info:
+  total: "<blue>Магазины:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Отслеживаемые балансы ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Запланированный налог ({taxed_shops} налогооблагаемые магазины:</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Следующий налог:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Сообщения о времени присоединения, отображаемые при входе игроков на сервер.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} налогооблагаемые магазины\n[<blue>Amount<yellow>]\n{taxes}\n<red>Срок:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Строки ответа команды для функций и переключателей `/rs`.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Открыл <white>Администратор RDS</white><gray> панель.</gray>"
+  bar:
+    enabled: "<green>Панель босса магазина включена при просмотре магазина.</green>"
+    disabled: "<yellow>Панель босса магазина отключена.</yellow>"
+  give:
+    syntax: "<red>Использование: /rs дать<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Использование:</gray> <white>/rs табло &lt;бухгалтерская книга|акции&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Включен <white>{scoreboard_type}</white><gray> боковая панель.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Отключено <white>{scoreboard_type}</white><gray> боковая панель.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Переключен на <white>{scoreboard_type}</white><gray> боковая панель.</gray>"
+    type:
+      ledger: "<gold>бухгалтерская книга</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# Ярлыки на боковой панели и форматирование значений.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Ledger ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Банковские итоги</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Нет банковских средств</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Акции ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Акции:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Нет магазинов игроков</red>"
+
+# Панель босса текст, отображаемый при нацеливании на магазин.
+shop_boss_bar:
+  title: "<gold>{shop_type} Магазин</gold> <gray>|</gray> <yellow>Владелец:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Предметы:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Местоположение:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Ограниченный запас"
+    infinite: "Бесконечный"
+    various: "Various"
+
+# ============================================
+# Кнопки графического интерфейса
+# ============================================
+
+# Имя элемента блока магазина и метаданные истории.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Поместите этот блок, чтобы настроить свой магазин.</yellow>"
+
+# Обзор магазина. Ярлыки пользовательского интерфейса, сведения и состояния доступности.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Магазин магазина</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Принадлежащие блоки магазина</gradient>"
+    lore:
+      - "<gray>Корпоративные блоки магазинов:</gray> <white>{owned_shops}</white>"
+      - "<gray>Эти треки куплены или предоставлены</gray>"
+      - "<gray>Владение ShopBlock.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Предел блока магазина</gradient>"
+    lore:
+      - "<gray>Корпоративные блоки магазинов:</gray> <white>{owned_shops}</white>"
+      - "<gray>Максимальное количество блоков магазина:</gray> <white>{max_shops}</white>"
+      - "<gray>Этот предел контролирует количество магазинов</gray>"
+      - "<gray>блоки, которые вы можете разблокировать.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Требуется] Требования к магазину</gradient>"
+    lore:
+      - "<gray>Настроенные требования:</gray> <white>{requirement_count}</white>"
+      - "<gray>Текущее количество требований:</gray> <white>{requirements}</white>"
+      - "<gray>Статус:</gray> <white>{availability}</white>"
+      - "<yellow>Нажмите, чтобы проверить следующий уровень магазина.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Готовый]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[В ожидании]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Офлайн]</gradient>"
+
+# Пользовательский интерфейс требований к уровню магазина, отображение прогресса и отзывы о покупках.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Требуется] Уровень магазина{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Покупка Блока магазина</gradient>"
+    lore:
+      - "<gray>Уровень покупки:</gray> <white>{purchase_number}</white>"
+      - "<gray>Корпоративные блоки магазинов:</gray> <white>{owned_shops}</white>"
+      - "<gray>Максимальное количество блоков магазина:</gray> <white>{max_shops}</white>"
+      - "<gray>Настроенные требования:</gray> <white>{requirement_count}</white>"
+      - "<gray>В настоящее время выполнено:</gray> <white>{met_count}</white>"
+      - "<gray>Статус:</gray> <white>{availability}</white>"
+      - "<yellow>Нажмите, чтобы купить, когда этот уровень будет готов.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Готовый]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[В ожидании]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Офлайн]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Бесплатно]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Бесплатно] Никаких требований</gradient>"
+    lore:
+      - "<gray>Этот уровень покупки не имеет настроенных требований.</gray>"
+      - "<yellow>Вы можете приобрести этот блок магазина без дополнительных проверок.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Требуется]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Ключ:</gray> <white>{requirement_key}</white>"
+      - "<gray>Тип:</gray> <white>{requirement_type}</white>"
+      - "<gray>Статус:</gray> <white>{status}</white>"
+      - "<gray>Прогресс:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Сводка:</gray> <white>{summary}</white>"
+      - "<yellow>Нажмите правой кнопкой мыши совместимые требования для прогресса в банке.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Подробно Чеки</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Встретил]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[В ожидании]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Недоступно]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Куплен блок магазина. Израсходованные требования: </gray> <white>{requirements}</white><gray>. Собственные блоки магазинов: </gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>В настоящее время вы не встречаетесь с <white>{requirement}</white><gray>. Требования к магазину: </gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Требования магазина <white>{requirement}</white><gray> сейчас недоступен или недействителен. </gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Вы достигли ограничения магазина <white>{max_shops}</white><gray>. Собственные блоки магазинов: </gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> теперь готово. </gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Сохраненный прогресс для <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Нет соответствующих предметов или валюты для <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray><white>{requirement}</white><gray> не поддерживает прогресс в банке. </gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray><white>{requirement}</white><gray> сейчас недоступен. </gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ваш профиль RDS не может быть загружен, поэтому прогресс невозможен сохранено.</gray>"
+
+# Блокировать ошибки проверки взаимодействия и уведомления о защите.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Невозможно прочитать владельца магазина из этого предмета.</red>"
+    not_owner: "<red>Этот ShopBlock принадлежит другому игроку и не может быть размещен вами.</red>"
+    max_shops_reached: "<red>Вы достигли ограничения магазина {max_shops}. Текущие размещенные магазины: {owned_shops}.</red>"
+    shop_protected: "<red>Магазины не могут быть взломаны напрямую. Используйте меню магазина, чтобы закрыть магазин. </red>"
+    double_chest_requires_shop_block: "<red>Для магазинов с двумя сундуками требуется второй <blue>ShopBlock</blue><red>. Обычные сундуки не могут объединяться с сундуками из магазина.</red>"
+    double_chest_owner_mismatch: "<red>Этот ShopBlock принадлежит другому владельцу, поэтому он не может расширить этот магазин.</red>"
+    shop_already_double_chest: "<red>Этот магазин уже использует обе половины сундука.</red>"
+    double_chest_ambiguous: "<red>Этот ShopBlock касается нескольких сундуков с магазинами. Разместите его рядом только с одним магазином.</red>"
+
+# Сообщения о результатах обработки запланированного налога.
+tax_scheduler:
+  paid: "<yellow>Собранный запланированный торговый налог в размере {amount}. Подсчитано магазинов: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>Вы не можете оплатить запланированный налог магазина из {amount}. Подсчитано магазинов: {owned_shops}.</red>"
+  charge_failed: "<red>Не удалось собрать запланированный налог магазина в размере {amount}. Подсчитано магазинов: {owned_shops}.</red>"
+
+# Главный интерфейс обзора магазина для действий по управлению владельцем/администратором. 
+shop_overview_ui:
+  title: "{owner} Магазин - {location}"
+  summary:
+    name: "<gold>Shop Summary</gold>"
+    player:
+      lore:
+        - "<gray>Владелец:</gray> <white>{owner}</white>"
+        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Инвентарь:</gray> <white>Конечный</white>"
+    admin:
+      lore:
+        - "<gray>Владелец:</gray> <white>{owner}</white>"
+        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
+        - "<gray>Shop type:</gray> <white>Администратор магазина</white>"
+        - "<gray>Инвентарь:</gray> <white>Бесконечный</white>"
+  finance:
+    name: "<gold>Shop Bank</gold>"
+    lore:
+      - "<gray>Отслеживаемые валюты:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Нажмите, чтобы просмотреть и вывести средства.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Администратор магазина включен</red>"
+        lore:
+          - "<gray>Этот магазин в настоящее время является магазином администратора. </gray>"
+          - "<gray>Инвентаризация бесконечна для клиентов.</gray>"
+          - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
+          - "<yellow>Нажмите, чтобы вернуться в магазин игроков.</yellow>"
+      disabled:
+        name: "<green>Администратор магазина отключен</green>"
+        lore:
+          - "<gray>Этот магазин в настоящее время использует обычный режим stock.</gray>"
+          - "<gray>Клиенты могут покупать только сохраненные суммы.</gray>"
+          - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
+          - "<yellow>Нажмите, чтобы включить режим администратора магазина.</yellow>"
+    close:
+      name: "<red>Закрыть магазин</red>"
+      lore:
+        - "<gray>Удалить этот магазин и вернуть блок магазина.</gray>"
+        - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
+        - "<gray>Отслеживаемые банковские валюты:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Перед закрытием запасы магазина должны быть пусты. </yellow>"
+    manage:
+      name: "<green>Добавить элементы магазина</green>"
+      lore:
+        - "<gray>Храните новые товары в этом магазине. shop.</gray>"
+        - "<gray>Текущие записи:</gray> <white>{item_count}</white>"
+        - "<yellow>Нажмите, чтобы открыть ввод элемента.</yellow>"
+    customer_view:
+      name: "<gold>Открыть представление клиента</gold>"
+      lore:
+        - "<gray>Просмотрите этот магазин так, как его видят покупатели.</gray>"
+        - "<gray>Текущие записи:</gray> <white>{item_count}</white>"
+        - "<yellow>Нажмите чтобы просмотреть этот магазин в качестве покупателя.</yellow>"
+    trusted:
+      name: "<gold>Доверенные игроки</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Доверенные игроки:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Нажмите, чтобы управлять уровнями доверия магазина.</yellow>"
+    ledger:
+      name: "<gold>Shop Ledger</gold>"
+      lore:
+        - "<gray>Всего записей:</gray> <white>{ledger_count}</white>"
+        - "<gray>Покупки:</gray> <white>{purchase_count}</white>"
+        - "<gray>Налоги:</gray> <white>{tax_count}</white>"
+        - "<yellow>Нажмите, чтобы просмотреть историю транзакций магазина.</yellow>"
+    edit:
+      name: "<aqua>Редактировать предметы магазина</aqua>"
+      lore:
+        - "<gray>Изменить цены для сохраненных товаров в магазине.</gray>"
+        - "<gray>Текущие записи:</gray> <white>{item_count}</white>"
+        - "<yellow>Нажмите, чтобы изменить цены и валюты.</yellow>"
+    storage:
+      name: "<gold>Просмотреть сохраненные элементы</gold>"
+      lore:
+        - "<gray>Просмотрите предметы, уже хранящиеся в этом магазине.</gray>"
+        - "<gray>Текущие записи:</gray> <white>{item_count}</white>"
+        - "<yellow>Нажмите, чтобы вывести сохраненные предметы.</yellow>"
+    locked:
+      name: "<red>Shop Locked</red>"
+      lore:
+        - "<gray>Только владелец может добавлять предметы.</gray>"
+        - "<gray>Текущие записи:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>У вас нет разрешения на управление этим магазином.</red>"
+    no_admin_permission: "<red>У вас нет разрешения на переключение магазинов администратора.</red>"
+    admin_limit_reached: "<red>На сервере уже есть {admin_shops} административные магазины. Бесплатная версия позволяет использовать только {max_admin_shops} административные магазины. </red>"
+    admin_enabled: "<green>Этот магазин теперь является магазином администратора с бесконечным количеством покупателей. Подсчитано магазинов: {owned_shops}.</green>"
+    admin_disabled: "<yellow>Этот магазин теперь является обычным магазином игроков с ограниченным количеством покупателей. Подсчитанные магазины: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Вы не можете переключить этот магазин администратора обратно в магазин игрока, поскольку ваш лимит магазина составляет {max_shops} уже достигнута. Подсчитанные магазины: {owned_shops}.</red>"
+    close_not_empty: "<red>Вы можете закрыть магазин только после удаления всех сохраненных товаров. Оставшиеся записи: {item_count}.</red>"
+    close_bank_not_empty: "<red>Выведите свой банк магазина перед закрытием этого магазина. Остальные отслеживаемые валюты: {bank_currency_count}.</red>"
+    closed: "<green>Закрыл магазин и вернулся {returned_blocks} ShopBlock(s). Подсчитанные магазины: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Глобальная панель управления администратором для управления RDS.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Администратор] Управление RDS</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Панель администратора RDS</white>"
+    lore:
+      - "<gray>Управляйте глобальными системами администрирования и магазина из одного места.</gray>"
+      - "<gray>Откройте банк сервера или отредактируйте настройки конфигурации ниже. </gray>"
+      - "<yellow>Требуется:</yellow> <white>Raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Серверный банк</gradient>"
+      lore:
+        - "<gray>Просмотр доходов администратора магазина, перенесенных в банк сервера.</gray>"
+        - "<gray>Проверить время следующего извлечения и снять баланс.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления банком сервера.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Магазин Конфигурация</gradient>"
+      lore:
+        - "<gray>Изменить значения из</gray> <white>конфигурация/config.yml</white><gray>.</gray>"
+        - "<gray>Каждый редактируемый параметр можно изменить с помощью наковальни.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления конфигурацией.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Валютный менеджер</gradient>"
+      lore:
+        - "<gray>Просмотр обнаруженных валют из хранилища и JExEconomy.</gray>"
+        - "<gray>Создать значение по умолчанию</gray> <white>капли дождя</white> <gray>валюту при необходимости.</gray>"
+        - "<yellow>Нажмите, чтобы открыть валюту control.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Требуется доступ администратора</white>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого администратора Panel.</gray>"
+
+# Администратор Просмотр валюты для обнаруженных поставщиков и создание валюты по умолчанию.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Валютный менеджер</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация]</gradient> <white>Currency Поставщики</white>"
+    lore:
+      - "<gray>Обнаружено валюты:</gray> <white>{currency_count}</white>"
+      - "<gray>Хранилище доступно:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy доступно:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Используйте кнопку кристалла, чтобы создать значение по умолчанию валюта.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Дядя]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Поставщик:</gray> <white>{provider}</white>"
+      - "<gray>Символ:</gray> <white>{symbol}</white>"
+      - "<gray>Префикс:</gray> <white>{prefix}</white>"
+      - "<gray>Суффикс:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Создать {currency_id}</white>"
+      lore:
+        - "<gray>Создать валюту RDS по умолчанию в JExEconomy.</gray>"
+        - "<yellow>Нажмите, чтобы создать {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Требуется JExEconomy</white>"
+      lore:
+        - "<gray>Вы не можете создать валюту по умолчанию без JExEconomy.</gray>"
+        - "<gray>Сначала установите и включите JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[ХОРОШО]</gradient> <white>{currency_id}Готово</white>"
+      lore:
+        - "<gray>Валюта по умолчанию уже существует.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Создать валюту по умолчанию:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Не удалось создать валюту:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Валюта уже существует:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Вы не можете использовать эту кнопку, если не доступен JExEconomy.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Нет валюты Обнаружено</white>"
+      lore:
+        - "<gray>Валюты Vault или JExEconomy не обнаружены.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Требуется доступ администратора</white>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого представления валюты.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>У вас нет разрешения на управление валютами.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Настройте пользовательский интерфейс браузера для редактируемых настроек и отзывов об обновлениях.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Магазин Конфигурация</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация]</gradient> <white>Настройки конфигурации</white>"
+    lore:
+      - "<gray>Обнаружены редактируемые настройки:</gray> <white>{setting_count}</white>"
+      - "<gray>Нажмите любую запись ниже, чтобы изменить ее значение на наковальне.</gray>"
+      - "<yellow>Изменения записываются непосредственно в config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Набор]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Путь:</gray> <white>{config_path}</white>"
+      - "<gray>Тип:</gray> <white>{value_type}</white>"
+      - "<gray>Текущее значение:</gray> <white>{current_value}</white>"
+      - "<yellow>Нажмите, чтобы изменить этот параметр.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Целое число]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Длинный]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Двойной]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Список]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Нить]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Нет редактируемых настроек</white>"
+      lore:
+        - "<gray>Не найдено редактируемых скалярных/списочных настроек конфигурации.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Требуется доступ администратора</white>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого представления конфигурации.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Редактирование конфигурации заблокировано</white>"
+      lore:
+        - "<gray>Эта версия не позволяет редактировать конфигурацию во время выполнения.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>У вас нет разрешения на редактирование настроек конфигурации.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Редактирование конфигурации заблокировано в этой версии.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Обновлено <white>{config_path}</white><gray> до <white>{updated_value}</white><gray>.</gray>"
+
+# Текст подсказки Anvil для редактирования значений конфигурации.
+shop_config_value_anvil_ui:
+  title: "Редактировать {config_path}"
+  input:
+    lore:
+      - "<gray>Путь:</gray> <white>{config_path}</white>"
+      - "<gray>Тип:</gray> <white>{value_type}</white>"
+      - "<gray>Текущее значение:</gray> <white>{current_value}</white>"
+      - "<yellow>Введите новое значение и подтвердите.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Недопустимый ввод для типа <white>{value_type}</white><gray>. Ввод: </gray> <white>{input}</white>"
+
+# Обзор банка сервера, ввод валюты и отзыв о снятии средств.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Серверный банк</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация]</gradient> <white>Доход и передача Статус</white>"
+    lore:
+      - "<gray>Отслеживаемые валюты:</gray> <white>{currency_count}</white>"
+      - "<gray>Доход:</gray> <white>{income_summary}</white>"
+      - "<gray>Следующий запрос:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Время до следующего запроса:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Остатки магазинов администратора переносятся сюда по расписанию.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Нет</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Отключено</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Ожидание...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Отключено</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Ожидание...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Отзывать]</gradient> <white>Вывести все</white>"
+    lore:
+      - "<gray>Попытка вывести каждый положительный баланс.</gray>"
+      - "<gray>Недоступные валюты будут пропущены.</gray>"
+      - "<yellow>Нажмите, чтобы вывести все средства на свой счет.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+      - "<gray>Доступный баланс:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Нажмите, чтобы вывести весь баланс в валюте.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Пустой банк сервера</white>"
+      lore:
+        - "<gray>Нет положительных балансов, доступных для вывода.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Требуется доступ администратора</white>"
+      lore:
+        - "<gray>У вас нет разрешения на управление банком серверов.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>У вас нет разрешения на управление банком серверов.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Этот банковский баланс сервера больше недоступен.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Снято <white>{amount} {currency_name}</white><gray>. Осталось {currency_name}:</gray> <white>{remaining_amount}</white><gray>. Активные валюты:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Снято <white>{withdrawn_currency_count}</white><gray> валютного баланса. Ошибка: </gray> <white>{failed_currency_count}</white><gray>. Оставшиеся активные валюты: </gray> <white>{remaining_currency_count}</white><gray>. Подробности: </gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Ни один баланс не может быть выведен. Не удалось подсчитать валюту: </gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Currency <white>{currency_name}</white><gray> на данный момент недоступен. </gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Не удалось вывести <white>{amount} {currency_name}</white><gray> из банка серверов. </gray>"
+
+# Пользовательский интерфейс ввода товаров в магазине, используемый при добавлении новых записей о наличии.
+shop_input_ui:
+  title: "Добавить элементы - {owner} @ {location}"
+  summary:
+    name: "<gold>Shop Storage</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Сохранено в настоящее время:</gray> <white>{stored_count}</white>"
+      - "<yellow>Новые элементы по умолчанию имеют хранилище типа валюты и значение 0.</yellow>"
+  input_slot:
+    name: "<green>Входной слот</green>"
+    lore:
+      - "<gray>Нажмите левой кнопкой мыши, удерживая предмет под курсором</gray>"
+      - "<gray>или щелкните предмет из своего инвентаря, удерживая клавишу Shift.</gray>"
+      - "<gray>Нажмите правой кнопкой мыши, чтобы удалить вставленную стопку.</gray>"
+  no_new_items_inserted: "<red>Новые предметы не были вставлены.</red>"
+  saved: "<green>Сохраненные {added_count} новые записи. В магазине теперь есть {stored_count} записей. </green>"
+  save_failed: "<red>Не удалось сохранить товары в магазине.</red>"
+  left_overs: "<yellow>Возврат несохраненных предметов магазина в ваш инвентарь.</yellow>"
+  feedback:
+    no_permission: "<red>У вас нет разрешения на добавление товаров в этот магазин.</red>"
+    locked:
+      name: "<red>Требуется доступ к поставкам</red>"
+      lore:
+        - "<gray>Только партнеры и доверенные игроки могут добавлять сюда предметы.</gray>"
+
+# Пользовательский интерфейс браузера хранилища магазина для просмотра и извлечения хранящихся предметов.
+shop_storage_ui:
+  title: "Сохраненные элементы - {location}"
+  summary:
+    name: "<gold>Сохраненные элементы</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Сохраненные записи:</gray> <white>{stored_count}</white>"
+      - "<yellow>Нажмите любой элемент ниже, чтобы отозвать его.</yellow>"
+  entry:
+    lore:
+      - "<gray>Сохраненная сумма:</gray> <white>{amount}</white>"
+      - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+      - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Нажмите, чтобы извлечь этот элемент из магазина.</yellow>"
+  feedback:
+    not_owner: "<red>У вас нет разрешения на управление этим магазином.</red>"
+    extracted: "<green>Извлечено {amount}x {item_type}. Цена составила {value} {currency_type}. Оставшиеся сохраненные записи: {stored_count}.</green>"
+    item_missing: "<red>Этот сохраненный предмет не найден.</red>"
+    locked:
+      name: "<red>Требуется полный доступ</red>"
+      lore:
+        - "<gray>Только доверенные игроки с полным доступом могут выводить сохраненные предметы.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Пользовательский интерфейс редактирования выбора магазина для выбора записей для изменения.
+shop_edit_ui:
+  title: "Редактировать предметы магазина - {location}"
+  summary:
+    name: "<aqua>Shop Price Editor</aqua>"
+    player:
+      lore:
+        - "<gray>Владелец:</gray> <white>{owner}</white>"
+        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Сохраненные записи:</gray> <white>{stored_count}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши на предмет, чтобы изменить цена.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши на предмет, чтобы удалить его из магазина.</yellow>"
+    admin:
+      lore:
+        - "<gray>Владелец:</gray> <white>{owner}</white>"
+        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Сохраненные записи:</gray> <white>{stored_count}</white>"
+        - "<gray>Режим пополнения запасов администратора:</gray> <white>{restock_mode}</white>"
+        - "<gray>График пополнения запасов: </gray> <white>{restock_schedule}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши на предмет, чтобы изменить цену или количество.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши на предмет, чтобы удалить его из магазина.</yellow>"
+    restock_schedule:
+      gradual: "Таймер по умолчанию: {reset_timer_ticks} тиков за элемент от "
+  entry:
+    player:
+      lore:
+        - "<gray>Сохраненная сумма:</gray> <white>{amount}</white>"
+        - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+        - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши, чтобы отредактировать этот элемент магазина.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши, чтобы удалите его из магазина.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Акции:</gray> <white>Бесконечный</white>"
+        - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+        - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Режим восстановления:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши, чтобы изменить этот элемент магазина администратора.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши, чтобы удалите его из магазина.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Текущий запас:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+        - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Режим восстановления:</gray> <white>{restock_mode}</white>"
+        - "<gray>График пополнения запасов: </gray> <white>{restock_schedule}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши, чтобы изменить этот элемент магазина администратора.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши, чтобы удалите его из магазина.</yellow>"
+    admin_mode:
+      gradual: "Постепенный"
+      full: "Полный сброс"
+    restock_schedule:
+      gradual: "1 элемент каждые {reset_timer_ticks} тиков"
+      full: "Полное пополнение запасов в{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>У вас нет разрешения на управление этим магазином.</red>"
+    removed: "<green>Удален {amount}x {item_type} из магазина. Цена {value} {currency_type}. Оставшиеся сохраненные записи: {stored_count}.</green>"
+    item_missing: "<red>Этот предмет в магазине не найден.</red>"
+    locked:
+      name: "<red>Требуется полный доступ</red>"
+      lore:
+        - "<gray>Только доверенные игроки с полным доступом могут редактировать значения предметов.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Детальный редактор пользовательского интерфейса для поведения и цен отдельных товаров в магазине.
+shop_item_edit_ui:
+  title: "Редактировать {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Сохраненная сумма:</gray> <white>{amount}</white>"
+        - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Режим доступности:</gray> <white>{availability_mode}</white>"
+        - "<gray>Доступно сейчас: </gray> <white>{availability_state}</white>"
+        - "<gray>Поворот окна:</gray> <white>{rotation_minutes} минут(ы)</white>"
+        - "<yellow>Используйте кнопки ниже, чтобы редактировать этот элемент.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Акции:</gray> <white>Бесконечный</white>"
+        - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Режим восстановления:</gray> <white>{restock_mode}</white>"
+        - "<gray>Команды покупки:</gray> <white>{command_count}</white>"
+        - "<gray>Режим доступности:</gray> <white>{availability_mode}</white>"
+        - "<gray>Доступно сейчас: </gray> <white>{availability_state}</white>"
+        - "<gray>Поворот окна:</gray> <white>{rotation_minutes} минут(ы)</white>"
+        - "<yellow>Используйте кнопки ниже, чтобы редактировать этот элемент администратора.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Текущий запас:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Currency тип:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Режим восстановления:</gray> <white>{restock_mode}</white>"
+        - "<gray>График пополнения запасов: </gray> <white>{restock_schedule}</white>"
+        - "<gray>Команды покупки:</gray> <white>{command_count}</white>"
+        - "<gray>Режим доступности:</gray> <white>{availability_mode}</white>"
+        - "<gray>Доступно сейчас: </gray> <white>{availability_state}</white>"
+        - "<gray>Поворот окна:</gray> <white>{rotation_minutes} минут(ы)</white>"
+        - "<yellow>Используйте кнопки ниже, чтобы редактировать этот элемент администратора.</yellow>"
+  currency_type:
+    name: "<green>Тип валюты</green>"
+    lore:
+      - "<gray>Тип тока:</gray> <white>{currency_type}</white>"
+      - "<yellow>Нажмите, чтобы изменить тип валюты.</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>Тип тока:</gray> <white>{currency_type}</white>"
+      - "<gray>Текущее значение:</gray> <white>{value}</white>"
+      - "<yellow>Нажмите, чтобы изменить числовое значение.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Режим] Доступность предметов</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Всегда]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Повернуть]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Никогда]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Открыть]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Закрыто]</gradient>"
+    lore:
+      - "<gray>Текущий режим:</gray> <white>{availability_mode}</white>"
+      - "<gray>Current состояние:</gray> <white>{availability_state}</white>"
+      - "<gray>Поворот окна:</gray> <white>{rotation_minutes} минут(ы)</white>"
+      - "<yellow>Нажмите, чтобы переключиться: Всегда -> Поворот -> Никогда.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Таймер] Поворот минут</gradient>"
+    lore:
+      - "<gray>Текущее окно:</gray> <white>{rotation_minutes} минут(ы)</white>"
+      - "<gray>Текущий режим:</gray> <white>{availability_mode}</white>"
+      - "<gray>Метка режима поворота:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Нажмите, чтобы установить минуты ротации на наковальне.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Исполнитель команд</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Сервер]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Игрок]</gradient>"
+    lore:
+      - "<gray>Текущий режим:</gray> <white>{command_mode}</white>"
+      - "<gray>Следующий режим:</gray> <white>{next_mode}</white>"
+      - "<yellow>Нажмите, чтобы переключить, кто выполняет вновь добавленные команды.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Команды покупки</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Нет</gradient>"
+    lore:
+      - "<gray>Настроенные команды:</gray> <white>{command_count}</white>"
+      - "<gray>Последняя команда:</gray> <white>{latest_command}</white>"
+      - "<yellow>Нажмите, чтобы открыть настройки команды и добавить команды.</yellow>"
+  confirm:
+    name: "<green>Сохранить цену товара</green>"
+    lore:
+      - "<gray>Применить текущий тип и значение валюты</gray>"
+      - "<gray>к этому товару в магазине.</gray>"
+  stock_limit:
+    name: "<gold>Лимит запасов</gold>"
+    unlimited: "Бесконечный"
+    lore:
+      - "<gray>Текущий лимит:</gray> <white>{stock_limit}</white>"
+      - "<gray>Текущий запас:</gray> <white>{current_stock}</white>"
+      - "<yellow>Нажмите, чтобы установить лимит запаса.</yellow>"
+      - "<gray>Используйте -1, чтобы вернуть этот элемент в бесконечный запас.</gray>"
+  reset_timer:
+    name: "<aqua>Сбросить таймер</aqua>"
+    lore:
+      - "<gray>Текущий таймер:</gray> <white>{reset_timer_ticks} тиков</white>"
+      - "<yellow>Нажмите, чтобы установить пополнение запасов timer.</yellow>"
+  restock_mode:
+    name: "<yellow>Пополнение запаса администратора Режим</yellow>"
+    gradual: "Постепенный"
+    full: "Полный сброс"
+    lore:
+      - "<gray>Настроенный режим:</gray> <white>{restock_mode}</white>"
+      - "<gray>Настроено расписание:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Нажмите, чтобы переключить режим пополнения запасов глобального администратора.</yellow>"
+  restock_schedule:
+    gradual: "1 элемент каждые {reset_timer_ticks} тиков"
+    full: "Полное пополнение запасов в{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>У вас нет разрешения на управление этим магазином.</red>"
+    shop_missing: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+    item_missing: "<red>Этот предмет в магазине не найден.</red>"
+    saved: "<green>Сохранил цену товара как {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Режим доступности установлен на <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Новый режим выполнения команд установлен на <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Удалена последняя команда. Остальные команды: </gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Все команды администратора на покупку удалены.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Команды администратора для покупки не обнаружены настроено.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Изменения конфигурации плагина заблокированы в <white>RDS Бесплатно</white><gray>. Обновите премиум-версию для полного доступа.</gray>"
+    restock_mode_updated: "<green>Режим пополнения запасов администратора установлен на {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Не удалось сохранить режим пополнения запасов администратора.</red>"
+
+# Anvil приглашение для добавления новой команды покупки для администратора. 
+shop_item_admin_command_anvil_ui:
+  title: "Добавить команду {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Введите команду, которая будет выполняться при покупке этого административного элемента.</gray>"
+      - "<gray>Только текст команды. Задержка настраивается в представлении настроек команды. </gray>"
+      - "<gray>Примеры:</gray>"
+      - "<white>транслировать%player_name% купил {amount}x {item_type}</white>"
+      - "<white>эко дай%player_name% 50</white>"
+      - "<gray>Настроенные команды:</gray> <white>{command_count}</white>"
+      - "<gray>Выполнение режим: </gray> <white>{command_mode}</white>"
+      - "<gray>Delay:</gray> <white>{command_delay_ticks} тиков</white>"
+  mode:
+    server: "<gold>[Сервер]</gold>"
+    player: "<green>[Игрок]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Текст команды не может быть пустым. Ввод:</gray> <white>{input}</white>"
+
+# Пользовательский интерфейс менеджера команд покупки с правами администратора для режима, задержки и списка команд. 
+shop_item_admin_command_ui:
+  title: "Настройки команды — {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Настройки команды покупки</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Нет</gradient>"
+    lore:
+      - "<gray>Настроенные команды:</gray> <white>{command_count}</white>"
+      - "<gray>Последняя команда:</gray> <white>{latest_command}</white>"
+      - "<gray>Следующий командный режим:</gray> <white>{command_mode}</white>"
+      - "<gray>Задержка следующей команды:</gray> <white>{command_delay_ticks} тиков ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Исполнитель следующей команды</gradient>"
+    server: "<gold>[Сервер]</gold>"
+    player: "<green>[Игрок]</green>"
+    lore:
+      - "<gray>Текущий режим:</gray> <white>{command_mode}</white>"
+      - "<gray>Следующий режим:</gray> <white>{next_mode}</white>"
+      - "<yellow>Нажмите, чтобы переключить исполнителя для следующей команды.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Задержка] Задержка следующей команды</gradient>"
+    lore:
+      - "<gray>Текущая задержка:</gray> <white>{command_delay_ticks} тиков ({command_delay_seconds}s)</white>"
+      - "<yellow>Нажмите, чтобы установить задержку в тактах для следующей команды.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Добавить команду</gradient>"
+    lore:
+      - "<gray>Режим:</gray> <white>{command_mode}</white>"
+      - "<gray>Delay:</gray> <white>{command_delay_ticks} тиков ({command_delay_seconds}s)</white>"
+      - "<yellow>Нажмите, чтобы открыть ввод команды.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Удалить Команда</gradient>"
+    lore:
+      - "<gray>Настроенные команды:</gray> <white>{command_count}</white>"
+      - "<yellow>Нажмите, чтобы удалить последнюю команду.</yellow>"
+      - "<yellow>Shift + щелчок, чтобы очистить все команды.</yellow>"
+  confirm:
+    name: "<green>Сохранить команду Настройки</green>"
+    lore:
+      - "<gray>Вернитесь в редактор элементов и сохраните эти изменения команды.</gray>"
+  feedback:
+    not_owner: "<red>У вас нет разрешения на управление этим магазином.</red>"
+    shop_missing: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Следующий командный режим установлен на <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Удалена последняя команда. Остальные команды: </gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Все команды администратора на покупку удалены.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Команды администратора для покупки не обнаружены настроено.</gray>"
+
+# Anvil, приглашение для установки меток задержки команды администратора.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Задержка установки - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Введите целое число тактов для следующей задержки команды.</gray>"
+      - "<gray>Выполнение режим: </gray> <white>{command_mode}</white>"
+      - "<gray>Примеры:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Сервер]</gold>"
+    player: "<green>[Игрок]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Введите целое число больше или равное 0. Введите:</gray> <white>{input}</white>"
+
+# Anvil, приглашение для окна доступности в режиме ротации в минутах.
+shop_item_availability_minutes_anvil_ui:
+  title: "Поворот минут: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Таймер] Поворот минут</gradient>"
+    lore:
+      - "<gray>Введите целое количество минут.</gray>"
+      - "<gray>Поворот режима доступен/недоступен в каждом окне.</gray>"
+  error:
+    invalid_number: "<red>Введите целое число больше 0. Введите: {input}</red>"
+
+# Anvil, приглашение для настройки ограниченной емкости запаса администратора.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Лимит запасов: {stock_limit}"
+  input:
+    name: "<gold>Лимит запасов</gold>"
+    lore:
+      - "<gray>Введите положительный лимит запаса в элементах.</gray>"
+      - "<gray>Используйте -1, чтобы восстановить бесконечный запас администратора.</gray>"
+  error:
+    invalid_number: "<red>Введите -1 или целое число больше 0. Ввод: {input}</red>"
+
+# Anvil приглашение для настройки таймера пополнения запасов/сброса администратора. 
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Сбросить таймер: {reset_timer_ticks}"
+  input:
+    name: "<aqua>Сбросить таймер</aqua>"
+    lore:
+      - "<gray>Введите целое число тактов Bukkit.</gray>"
+      - "<gray>Постепенный режим восстанавливает один элемент за каждый таймер.</gray>"
+  error:
+    invalid_number: "<red>Введите целое число больше 0. Введите: {input}</red>"
+
+# Anvil, приглашение для выбора типа валюты, используемой предметом.
+shop_item_currency_type_anvil_ui:
+  title: "Тип валюты: {currency_type}"
+  input:
+    name: "<green>Тип валюты</green>"
+    lore:
+      - "<gray>Введите идентификатор валюты для этого предмета.</gray>"
+      - "<gray>Примеры:</gray> <white>хранилище, жетоны, драгоценные камни</white>"
+  error:
+    empty: "<red>Тип валюты не может быть пустым.</red>"
+    invalid_currency: "<red>Тип валюты {currency_type} недоступен. Используйте хранилище или зарегистрированную пользовательскую валюту. </red>"
+    processing_failed: "<red>Не удалось обновить тип валюты. Ввод: {input}</red>"
+
+# Anvil, приглашение для настройки каждого элемента цена/значение.
+shop_item_value_anvil_ui:
+  title: "Value: {value} {currency_type}"
+  input:
+    name: "<gold>Ценность предмета</gold>"
+    lore:
+      - "<gray>Введите неотрицательное числовое значение.</gray>"
+      - "<gray>Примеры:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Введите допустимое неотрицательное число. Ввод: {input}</red>"
+    processing_failed: "<red>Не удалось обновить значение элемента. Ввод: {input}</red>"
+
+# Интерфейс банка магазина для баланса валюты и снятия средств в каждом магазине.
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>Банковские балансы</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Отслеживаемые валюты:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Нажмите баланс ниже, чтобы вывести его полную сумму.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+      - "<gray>Доступный баланс:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Нажмите, чтобы вывести весь баланс.</yellow>"
+  feedback:
+    not_owner: "<red>У вас нет разрешения на управление этим магазином.</red>"
+    entry_missing: "<red>Этот банковский баланс больше недоступен.</red>"
+    withdrawn: "<green>Снято {amount} {currency_name}. Осталось {currency_name}: {remaining_amount}. Отслеживаемые валюты: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>Не удалось вывести {amount} {currency_name} из банка магазина. </red>"
+    currency_unavailable: "<red>Currency {currency_name} сейчас недоступен. </red>"
+    empty:
+      name: "<red>Банк пуст</red>"
+      lore:
+        - "<gray>В этом магазине нет банковских остатков для вывода.</gray>"
+    locked:
+      name: "<red>Требуется полный доступ</red>"
+      lore:
+        - "<gray>Только доверенные игроки с полным доступом могут выводить средства из магазина.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Пользовательский интерфейс управления доверенными игроками для ролей доступа к магазину.
+shop_trusted_ui:
+  title: "Доверенные игроки - {location}"
+  summary:
+    name: "<gold>Shop Trust Менеджер</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Доверенные игроки:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Нажмите игрока, чтобы перейти к циклу их статус доверия.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Статус:</gray> <white>Public</white>"
+        - "<gray>Нет разрешений на управление.</gray>"
+        - "<yellow>Нажмите, чтобы изменить на «Ассоциированный».</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Статус:</gray> <white>Associate</white>"
+        - "<gray>Может добавлять товары в магазин.</gray>"
+        - "<yellow>Нажмите, чтобы изменить на «Надежный».</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Статус:</gray> <white>Доверенные</white>"
+        - "<gray>Может полностью управлять shop.</gray>"
+        - "<yellow>Нажмите, чтобы изменить на «Общественный».</yellow>"
+  feedback:
+    not_owner: "<red>Только владелец магазина может управлять доверенными игроками.</red>"
+    updated:
+      public: "<yellow>Set {player}в общедоступный.</yellow>"
+      associate: "<green>Set {player} для связывания.</green>"
+      trusted: "<green>Set {player} в доверенный.</green>"
+    empty:
+      name: "<red>Игроки не найдены</red>"
+      lore:
+        - "<gray>Нет других известных игроков, которым можно доверять.</gray>"
+    locked:
+      name: "<red>Доступ только для владельцев</red>"
+      lore:
+        - "<gray>Только владелец магазина может управлять доверенными игроками.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Интерфейс книги транзакций для покупок и налогов история.
+shop_ledger_ui:
+  title: "Shop Ledger - {location}"
+  summary:
+    name: "<gold>Shop Transactions Ledger</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Всего записей:</gray> <white>{ledger_count}</white>"
+      - "<gray>Покупки:</gray> <white>{purchase_count}</white>"
+      - "<gray>Налоги:</gray> <white>{tax_count}</white>"
+      - "<yellow>Появляются новые транзакции first.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Покупка: {item_type}</green>"
+      lore:
+        - "<gray>Покупатель:</gray> <white>{actor}</white>"
+        - "<gray>Amount:</gray> <white>{item_amount}</white>"
+        - "<gray>Всего оплачено:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+        - "<gray>Записано:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Налоговые сборы</gold>"
+      lore:
+        - "<gray>Списано с:</gray> <white>{actor}</white>"
+        - "<gray>Налог доля:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Подсчитанные магазины:</gray> <white>{counted_shops}</white>"
+        - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+        - "<gray>Записано:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Нет записей в книге</red>"
+      lore:
+        - "<gray>В этом магазине еще нет зарегистрированных покупок или налогов.</gray>"
+    locked:
+      name: "<red>Требуется полный доступ</red>"
+      lore:
+        - "<gray>Только доверенные игроки с полным доступом могут просматривать Ledger.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Пользовательский интерфейс магазина для просмотра и покупки товаров.
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Просмотр клиента</gold>"
+    player:
+      lore:
+        - "<gray>Владелец:</gray> <white>{owner}</white>"
+        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Доступные записи:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Инвентарь:</gray> <white>Конечный</white>"
+        - "<yellow>Нажмите левой кнопкой мыши на предмет, чтобы купить его.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши на предмет, чтобы выбрать количество.</yellow>"
+    admin:
+      lore:
+        - "<gray>Владелец:</gray> <white>{owner}</white>"
+        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Доступные записи:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop type:</gray> <white>Администратор магазина</white>"
+        - "<gray>Инвентарь:</gray> <white>Бесконечный</white>"
+        - "<yellow>Нажмите левой кнопкой мыши на предмет, чтобы купить его.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши на предмет, чтобы выбрать количество.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Акции:</gray> <white>{amount}</white>"
+        - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+        - "<gray>Цена за штуку:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Всего стоимость акций: </gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши, чтобы купить.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши, чтобы выбрать количество.</yellow>"
+    admin:
+      lore:
+        - "<gray>Инвентарь:</gray> <white>Бесконечный</white>"
+        - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+        - "<gray>Цена за штуку:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+        - "<gray>Shop type:</gray> <white>Администратор магазина</white>"
+        - "<yellow>Нажмите левой кнопкой мыши, чтобы купить.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши, чтобы выбрать количество.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Акции:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Тип предмета:</gray> <white>{item_type}</white>"
+        - "<gray>Цена за штуку:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Идентификатор валюты:</gray> <white>{currency_type}</white>"
+        - "<gray>Режим восстановления:</gray> <white>{restock_mode}</white>"
+        - "<gray>График пополнения запасов: </gray> <white>{restock_schedule}</white>"
+        - "<yellow>Нажмите левой кнопкой мыши, чтобы купить.</yellow>"
+        - "<yellow>Нажмите правой кнопкой мыши, чтобы выбрать количество.</yellow>"
+    admin_mode:
+      gradual: "Постепенный"
+      full: "Полный сброс"
+    restock_schedule:
+      gradual: "1 элемент каждые {reset_timer_ticks} тиков"
+      full: "Полное пополнение запасов в{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Куплено {amount}x {item_type} для {total_price} {currency_name}. Остаток: {remaining_amount}.</green>"
+    purchased_admin: "<green>Куплено {amount}x {item_type} для {total_price} {currency_name}. В этом магазине администратора бесконечный инвентарь.</green>"
+    purchased_admin_limited: "<green>Куплено {amount}x {item_type} для {total_price} {currency_name}. Оставшийся административный запас: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>{item_type} на данный момент недоступен для покупки. </gray>"
+    insufficient_stock: "<red>В этом магазине есть только {available_amount}x {item_type}. </red>"
+    insufficient_funds: "<red>Вам нужно {total_price} {currency_name} для покупки {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Currency {currency_name} сейчас недоступен. </red>"
+    invalid_amount: "<red>Введите действительную сумму покупки.</red>"
+    item_missing: "<red>Этот предмет в магазине больше недоступен.</red>"
+    empty_shop:
+      name: "<red>Shop Empty</red>"
+      lore:
+        - "<gray>Нет предметов, доступных для покупки.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Anvil приглашение для ввода пользовательского количества покупки.
+shop_purchase_amount_anvil_ui:
+  title: "Купить {item_type}"
+  input:
+    name: "<gold>Purchase Сумма</gold>"
+    player:
+      lore:
+        - "<gray>Введите необходимое количество элементов для покупки.</gray>"
+        - "<gray>Максимум доступный:</gray> <white>{max_amount}</white>"
+        - "<gray>Предмет:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Введите необходимое количество элементов для покупки.</gray>"
+        - "<gray>Этот магазин администратора имеет бесконечный инвентарь.</gray>"
+        - "<gray>Предмет:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Введите необходимое количество элементов для покупки.</gray>"
+        - "<gray>Максимум доступный:</gray> <white>{max_amount}</white>"
+        - "<gray>Предмет:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Введите целое число от 1 до{max_amount}. Ввод: {input}</red>"
+    invalid_number_admin: "<red>Введите целое число больше 0. Введите: {input}</red>"
+    processing_failed: "<red>Не удалось обработать сумму покупки. Ввод: {input}</red>"
+
+# Интерфейс целевой страницы открытия магазина для просмотра всех материалов и материалов search.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Shop Browser</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Browser</gradient>"
+    lore:
+      - "<gray>Просмотреть каждый отслеживаемый магазин или отфильтровать по определенному материалу.</gray>"
+      - "<yellow>Выберите одно из действий ниже, чтобы продолжить.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Просмотреть все магазины</gradient>"
+    lore:
+      - "<gray>Откройте полный каталог магазина с разбивкой на страницы.</gray>"
+      - "<yellow>Нажмите, чтобы просмотреть все отслеживаемые shop.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Поиск по материалу</gradient>"
+    lore:
+      - "<gray>Откройте подсказку наковальни и введите имя материала.</gray>"
+      - "<gray>Пример:</gray> <white>алмаз_блок</white>"
+      - "<yellow>Нажмите, чтобы выполнить поиск по типу товара.</yellow>"
+
+# Пользовательский интерфейс каталога с разбивкой на страницы со списком всех отслеживаемых магазинов.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>All Магазины</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop Directory</gradient>"
+    lore:
+      - "<gray>Отслеживаемые магазины:</gray> <white>{shop_count}</white>"
+      - "<gray>Общий доступный запас:</gray> <white>{available_count}</white>"
+      - "<yellow>Нажмите любой магазин ниже, чтобы открыть его.</yellow>"
+  entry:
+    name: "<gold>{owner} в магазине</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Доступные акции:</gray> <white>{available_count}</white>"
+      - "<yellow>Нажмите, чтобы открыть этот магазин.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Магазины не найдены</red>"
+      lore:
+        - "<gray>Есть магазины еще не зарегистрированы. </gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Результаты магазина с фильтрацией материалов UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Результаты для {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Результаты для {material}</gradient>"
+    lore:
+      - "<gray>Материал:</gray> <white>{material}</white>"
+      - "<gray>Сопоставление магазинов:</gray> <white>{shop_count}</white>"
+      - "<gray>Сопоставление предложений:</gray> <white>{matching_count}</white>"
+      - "<yellow>Нажмите любой соответствующий магазин ниже, чтобы открыть его.</yellow>"
+  entry:
+    name: "<gold>{owner} в магазине</gold>"
+    lore:
+      - "<gray>Владелец:</gray> <white>{owner}</white>"
+      - "<gray>Местоположение:</gray> <white>{location}</white>"
+      - "<gray>Сопоставление {material} предложений: </gray> <white>{matching_count}</white>"
+      - "<gray>Общий видимый запас:</gray> <white>{available_count}</white>"
+      - "<yellow>Нажмите, чтобы открыть этот магазин.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Магазины не продаются {material}</red>"
+      lore:
+        - "<gray>Ни один отслеживаемый магазин в настоящее время не предлагает это материал.</gray>"
+    shop_missing:
+      name: "<red>Shop Not Found</red>"
+      lore:
+        - "<gray>Этот магазин не может быть загружен из хранилища.</gray>"
+      message: "<red>Этот магазин не может быть загружен из хранилища.</red>"
+
+# Anvil приглашение для ввода фильтра материалов search.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Поиск материала</gradient>"
+  input:
+    lore:
+      - "<gray>Введите название материала Bukkit для поиска в отслеживаемом месте shop.</gray>"
+      - "<gray>Примеры:</gray> <white>алмаз</white><gray>,</gray> <white>алмаз_блок</white>"
+      - "<yellow>Нажмите на ячейку результата, чтобы открыть соответствующие магазины.</yellow>"
+  error:
+    invalid_material: "<red>Введите допустимый материал, например Diamond_block. Ввод: {input}</red>"
+    processing_failed: "<red>Не удалось выполнить поиск материала. Ввод: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# Общие метки элементов нумерации страниц, используемые в списке Пользовательский интерфейс.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Страница %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Текущая страница:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Всего страниц:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Страница %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# Общие метки заголовка/кнопки навигации (возврат/подтверждение/следующий).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Вернуться</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы перейти назад</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Подтвердить</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы подтвердить настройки</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Подтвердить</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Нажмите, чтобы подтвердить настройки</gradient>"

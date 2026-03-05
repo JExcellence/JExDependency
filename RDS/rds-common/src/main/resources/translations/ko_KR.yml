@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# 접두사에 잠겨 있습니다. 플러그인 채팅 출력.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# 상점, 은행 및 세금 상태에 대한 빠른 플레이어 표시 요약 줄.
+info:
+  total: "<blue>상점:</blue> <white>{owned_shops}</white>"
+  bank: "<green>추적된 잔고({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>예정세로 저장했습니다({taxed_shops} 과세 상점):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>다음 세금:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# 플레이어가 서버에 들어갈 때 표시되는 조인 타임 메시지.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} 과세 상점\n[<blue>Amount<yellow>]\n{taxes}\n<red>가 필요합니다. 기한:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# 에 대한 명령 응답 문자열 `/rs` 기능 및 토글.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray><white>RDS 관리자</white><gray> 패널.</gray>"
+  bar:
+    enabled: "<green>상점을 보는 동안 상점 보스 바가 활성화되었습니다.</green>"
+    disabled: "<yellow>상점 보스 바가 비활성화되었습니다.</yellow>"
+  give:
+    syntax: "<red>사용: /rs give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>사용:</gray> <white>/rs 점수판 &lt;원장|재고&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{scoreboard_type}</white><gray> 사이드바.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray><white>{scoreboard_type}</white><gray> 사이드바.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray><white>{scoreboard_type}</white><gray> 사이드바.</gray>"
+    type:
+      ledger: "<gold>원장</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# 사이드바 점수판 레이블 및 값 형식.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] 원장 ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ 은행 총액</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>은행 자금 없음</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] 재고 ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>재고:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>플레이어 상점이 없습니다</red>"
+
+# 보스 바 텍스트 표시 상점을 타겟팅합니다.
+shop_boss_bar:
+  title: "<gold>{shop_type} 상점</gold> <gray>|</gray> <yellow>소유자:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>항목:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>위치:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Limited Stock"
+    infinite: "무한"
+    various: "Various"
+
+# ============================================
+# GUI 버튼
+# ============================================
+
+# 상점 블록 항목 이름 및 지식 메타데이터.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>상점을 설정하려면 이 블록을 배치하십시오.</yellow>"
+
+# 상점 상점 개요 UI 라벨, 지식 및 가용성 상태.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 상점 상점</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] 소유 상점 블록</gradient>"
+    lore:
+      - "<gray>오픈 상점 블록:</gray> <white>{owned_shops}</white>"
+      - "<gray>이 트랙이 구매되었거나 부여되었습니다.</gray>"
+      - "<gray>ShopBlock 소유권.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Shop Block Limit</gradient>"
+    lore:
+      - "<gray>오픈 상점 블록:</gray> <white>{owned_shops}</white>"
+      - "<gray>최대 상점 블록:</gray> <white>{max_shops}</white>"
+      - "<gray>이 제한은 상점 수를 제어합니다.</gray>"
+      - "<gray>잠금을 해제할 수 있는 블록입니다.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[요청] 매장 요구사항</gradient>"
+    lore:
+      - "<gray>구성 요구 사항:</gray> <white>{requirement_count}</white>"
+      - "<gray>현재 요구 사항 수:</gray> <white>{requirements}</white>"
+      - "<gray>상태:</gray> <white>{availability}</white>"
+      - "<yellow>다음 상점을 살펴보려면 클릭하세요 tier.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[준비가 된]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[보류 중]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[오프라인]</gradient>"
+
+# 상점 계층 요구 사항 UI, 진행률 표시 및 구매 피드백
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[요청] 샵티어{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] 상점 블록 구매</gradient>"
+    lore:
+      - "<gray>구매 등급:</gray> <white>{purchase_number}</white>"
+      - "<gray>오픈 상점 블록:</gray> <white>{owned_shops}</white>"
+      - "<gray>최대 상점 블록:</gray> <white>{max_shops}</white>"
+      - "<gray>구성 요구 사항:</gray> <white>{requirement_count}</white>"
+      - "<gray>현재 충족:</gray> <white>{met_count}</white>"
+      - "<gray>상태:</gray> <white>{availability}</white>"
+      - "<yellow>이 계층이 준비되면 구매하려면 클릭하십시오.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[준비가 된]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[보류 중]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[오프라인]</gradient>"
+    none: "<gradient:#10b981:#34d399>[무료]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[무료] 요구 사항 없음</gradient>"
+    lore:
+      - "<gray>이 구매 계층에는 구성된 요구 사항이 없습니다.</gray>"
+      - "<yellow>추가 확인 없이 이 상점 블록을 구입할 수 있습니다.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[요구사항]{requirement_name}</gradient>"
+    lore:
+      - "<gray>키:</gray> <white>{requirement_key}</white>"
+      - "<gray>유형:</gray> <white>{requirement_type}</white>"
+      - "<gray>상태:</gray> <white>{status}</white>"
+      - "<gray>진행:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>요약:</gray> <white>{summary}</white>"
+      - "<yellow>은행 진행을 위한 호환 요구 사항을 마우스 오른쪽 버튼으로 클릭하십시오.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ 상세 수표</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[만났어요]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[보류 중]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[없는]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>상점 블록을 구매했습니다. 소비된 요구 사항:</gray> <white>{requirements}</white><gray>. 소유한 상점 블록:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>현재 <white>{requirement}</white><gray>. 스토어 요구 사항:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>상점 요구 사항 <white>{requirement}</white><gray>은(는) 지금 사용할 수 없거나 유효하지 않습니다.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>상점 차단 한도 <white>{max_shops}</white><gray>. 소유한 상점 블록:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>은(는) 이제 준비되었습니다.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>저장된 진행률 <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray><white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray><white>{requirement}</white><gray>는 뱅킹 진행을 지원하지 않습니다.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray><white>{requirement}</white><gray>는 지금 사용할 수 없습니다.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDS 프로필을 로드할 수 없어 진행을 진행할 수 없습니다. 저장된.</gray>"
+
+# 차단 상호 작용 확인 오류 및 보호 알림.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>이 항목에서 상점 주인을 읽을 수 없습니다.</red>"
+    not_owner: "<red>이 ShopBlock은 다른 플레이어의 것이므로 귀하가 설치할 수 없습니다.</red>"
+    max_shops_reached: "<red>에 도달했습니다.상점 한도 {max_shops}. 현재 배치된 상점: {owned_shops}.</red>"
+    shop_protected: "<red>상점은 직접 파괴할 수 없습니다. 상점을 닫으려면 상점 메뉴를 사용하십시오.</red>"
+    double_chest_requires_shop_block: "<red>비활성화됨이중 상자 상점에는 두 번째 <blue>ShopBlock</blue><red>. 일반 상자는 상점 상자와 합쳐질 수 없습니다.</red>"
+    double_chest_owner_mismatch: "<red>이 ShopBlock은 다른 소유자의 것이므로 이 상점을 확장할 수 없습니다.</red>"
+    shop_already_double_chest: "<red>이 상점은 이미 양쪽 가슴 반쪽을 모두 사용하고 있습니다.</red>"
+    double_chest_ambiguous: "<red>이 ShopBlock은 여러 상점 상자에 닿습니다. 단 하나의 상점 옆에 배치하십시오.</red>"
+
+# 예정된 세금 처리 결과 메시지.
+tax_scheduler:
+  paid: "<yellow>징수된 예정된 상점 세금 {amount}. 계산된 상점: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>예정된 상점 세금을 지불할 수 없습니다. of {amount}. 계산된 상점: {owned_shops}.</red>"
+  charge_failed: "<red>{amount}. 계산된 상점: {owned_shops}.</red>"
+
+# 소유자/관리자 관리 작업을 위한 주요 상점 개요 인터페이스.
+shop_overview_ui:
+  title: "{owner} 상점 - {location}"
+  summary:
+    name: "<gold>상점 요약</gold>"
+    player:
+      lore:
+        - "<gray>소유자:</gray> <white>{owner}</white>"
+        - "<gray>위치:</gray> <white>{location}</white>"
+        - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
+        - "<gray>Shop 유형:</gray> <white>Player Shop</white>"
+        - "<gray>재고:</gray> <white>유한</white>"
+    admin:
+      lore:
+        - "<gray>소유자:</gray> <white>{owner}</white>"
+        - "<gray>위치:</gray> <white>{location}</white>"
+        - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
+        - "<gray>Shop 유형:</gray> <white>Admin Shop</white>"
+        - "<gray>재고:</gray> <white>무한</white>"
+  finance:
+    name: "<gold>상점 은행</gold>"
+    lore:
+      - "<gray>추적된 통화:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>자금을 검토하고 인출하려면 클릭하십시오.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop 활성화</red>"
+        lore:
+          - "<gray>이 상점은 현재 관리 상점입니다.</gray>"
+          - "<gray>에 대한 입력이 잘못되었습니다. 고객의 재고는 무한합니다.</gray>"
+          - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
+          - "<yellow>한계로 다시 전환하려면 클릭하십시오. 플레이어 상점.</yellow>"
+      disabled:
+        name: "<green>Admin Shop 비활성화됨</green>"
+        lore:
+          - "<gray>이 상점은 현재 일반을 사용합니다. 재고.</gray>"
+          - "<gray>고객은 저장된 금액만 구매할 수 있습니다.</gray>"
+          - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
+          - "<yellow>관리 상점 모드를 활성화하려면 클릭하세요.</yellow>"
+    close:
+      name: "<red>상점 폐쇄</red>"
+      lore:
+        - "<gray>이 상점을 제거하고 상점 블록을 반환합니다.</gray>"
+        - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
+        - "<gray>추적된 은행 통화:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>닫히기 전에 상점 재고가 비어 있어야 합니다.</yellow>"
+    manage:
+      name: "<green>상점 항목 추가</green>"
+      lore:
+        - "<gray>새 항목을 여기에 저장 shop.</gray>"
+        - "<gray>현재 항목:</gray> <white>{item_count}</white>"
+        - "<yellow>항목 입력을 열려면 클릭하십시오.</yellow>"
+    customer_view:
+      name: "<gold>고객 보기 열기</gold>"
+      lore:
+        - "<gray>고객이 보는 대로 이 상점을 미리 보십시오.</gray>"
+        - "<gray>현재 항목:</gray> <white>{item_count}</white>"
+        - "<yellow>고객으로서 이 상점을 탐색하려면 클릭하세요.</yellow>"
+    trusted:
+      name: "<gold>Trusted Players</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Trusted 플레이어:</gray> <white>{trusted_count}</white>"
+        - "<yellow>상점 신뢰 수준을 관리하려면 클릭하십시오.</yellow>"
+    ledger:
+      name: "<gold>상점 원장</gold>"
+      lore:
+        - "<gray>총 항목 수:</gray> <white>{ledger_count}</white>"
+        - "<gray>구매:</gray> <white>{purchase_count}</white>"
+        - "<gray>세금:</gray> <white>{tax_count}</white>"
+        - "<yellow>상점 거래 내역을 검토하려면 클릭하십시오.</yellow>"
+    edit:
+      name: "<aqua>상점 항목 편집</aqua>"
+      lore:
+        - "<gray>저장된 상점의 가격 편집 items.</gray>"
+        - "<gray>현재 항목:</gray> <white>{item_count}</white>"
+        - "<yellow>가격과 통화를 편집하려면 클릭하세요.</yellow>"
+    storage:
+      name: "<gold>Stored Items 보기</gold>"
+      lore:
+        - "<gray>이 상점에 이미 저장된 품목을 검토하십시오.</gray>"
+        - "<gray>현재 항목:</gray> <white>{item_count}</white>"
+        - "<yellow>저장된 자금을 인출하려면 클릭하십시오. items.</yellow>"
+    locked:
+      name: "<red>상점 잠김</red>"
+      lore:
+        - "<gray>오너만 항목을 추가할 수 있습니다.</gray>"
+        - "<gray>현재 항목:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>이 샵을 관리할 수 있는 권한이 없습니다.</red>"
+    no_admin_permission: "<red>어드민 샵을 전환할 수 있는 권한이 없습니다.</red>"
+    admin_limit_reached: "<red>서버에 이미 {admin_shops} 관리 상점. 무료 버전에서는 {max_admin_shops} 관리 상점.</red>"
+    admin_enabled: "<green>이 상점은 이제 무한한 고객 재고를 갖춘 관리 상점입니다. 계산된 상점: {owned_shops}.</green>"
+    admin_disabled: "<yellow>이 상점은 이제 한정된 고객 재고를 갖춘 일반 플레이어 상점입니다. 계산된 상점: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red> 상점 한도가 {max_shops}에 이미 도달했습니다. 집계된 상점: {owned_shops}.</red>"
+    close_not_empty: "<red>저장된 항목을 모두 제거한 후에만 상점을 닫을 수 있습니다. 남은 항목: {item_count}.</red>"
+    close_bank_not_empty: "<red>이 매장을 닫기 전에 Shop Bank를 인출하세요. 남은 추적 통화: {bank_currency_count}.</red>"
+    closed: "<green>상점을 폐쇄하고 {returned_blocks} ShopBlock. 계산된 상점: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# RDS 관리를 위한 전역 관리자 제어판.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS 관리자 패널</white>"
+    lore:
+      - "<gray>한 곳에서 글로벌 관리 상점 시스템을 관리합니다.</gray>"
+      - "<gray>서버 뱅크를 열거나 구성을 편집합니다 아래 설정을 참조하세요.</gray>"
+      - "<yellow>필요:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] 서버 뱅크</gradient>"
+      lore:
+        - "<gray>서버 뱅크로 가져온 관리 상점 수입을 검토하십시오.</gray>"
+        - "<gray>다음 풀 시간을 확인하고 잔액을 인출합니다.</gray>"
+        - "<yellow>서버를 열려면 클릭하십시오. 은행 통제.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+      lore:
+        - "<gray></gray> <white>구성/config.yml</white><gray>.</gray>"
+        - "<gray>모든 편집 가능한 설정은 앤빌 프롬프트를 통해 변경할 수 있습니다.</gray>"
+        - "<yellow>구성 제어를 열려면 클릭하십시오.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[현재] 통화 관리자</gradient>"
+      lore:
+        - "<gray>Vault에서 감지된 통화를 검토하고 JExEconomy.</gray>"
+        - "<gray>기본값 생성</gray> <white>빗방울</white> <gray>필요할 때 통화.</gray>"
+        - "<yellow>통화 제어를 열려면 클릭하십시오.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 관리자를 사용할 수 있는 권한이 없습니다. panel.</gray>"
+
+# 감지된 공급자 및 기본 통화 생성에 대한 관리 통화 보기.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[현재] 통화 관리자</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>통화 공급자</white>"
+    lore:
+      - "<gray>감지됨 통화:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault available:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy 사용 가능:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>기본값을 생성하려면 크리스탈 버튼을 사용하세요 통화.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[똥개]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>공급자:</gray> <white>{provider}</white>"
+      - "<gray>로 전환됨기호:</gray> <white>{symbol}</white>"
+      - "<gray>Prefix:</gray> <white>{prefix}</white>"
+      - "<gray>접미사:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>생성 {currency_id}</white>"
+      lore:
+        - "<gray>JExEconomy에서 기본 RDS 통화를 생성합니다.</gray>"
+        - "<yellow>생성하려면 클릭하세요 {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>JExEconomy 필수</white>"
+      lore:
+        - "<gray>JExEconomy 없이는 기본 통화를 생성할 수 없습니다.</gray>"
+        - "<gray>JExEconomy를 먼저 설치하고 활성화합니다.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[좋아요]</gradient> <white>{currency_id}준비됨</white>"
+      lore:
+        - "<gray>기본 통화가 이미 존재합니다.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>생성된 기본 통화:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>의 예정된 상점 세금을 징수하지 못했습니다. 통화 생성에 실패했습니다:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>통화가 이미 존재합니다:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>이므로 이 관리자 상점을 플레이어 상점으로 다시 전환할 수 없습니다. JExEconomy를 사용할 수 없으면 이 버튼을 사용할 수 없습니다.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>통화가 감지되지 않음</white>"
+      lore:
+        - "<gray>Vault 또는 JExEconomy 통화가 감지되지 않았습니다.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 통화 보기를 사용할 권한이 없습니다.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>통화를 관리할 수 있는 권한이 없습니다.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# 편집 가능한 설정 및 업데이트 피드백을 위한 구성 브라우저 UI.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>구성 설정</white>"
+    lore:
+      - "<gray>에서 값 수정 편집 가능한 설정이 감지되었습니다:</gray> <white>{setting_count}</white>"
+      - "<gray>아래 항목을 클릭하여 값을 편집하십시오. 모루.</gray>"
+      - "<yellow>변경 사항은 다음에 직접 기록됩니다. config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[세트]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>경로:</gray> <white>{config_path}</white>"
+      - "<gray>유형:</gray> <white>{value_type}</white>"
+      - "<gray>현재 가치:</gray> <white>{current_value}</white>"
+      - "<yellow>이 설정을 편집하려면 클릭하세요.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[정수]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[긴]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[더블]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[목록]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[끈]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>편집 가능 없음 설정</white>"
+      lore:
+        - "<gray>편집 가능한 스칼라/목록 구성 설정을 찾을 수 없습니다.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 구성 보기를 사용할 권한이 없습니다.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>구성 편집 잠김</white>"
+      lore:
+        - "<gray>이 버전은 런타임 구성 편집을 허용하지 않습니다.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>구성 설정을 편집할 수 있는 권한이 없습니다.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>구성 편집은 이 버전에서 잠겨 있습니다.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>업데이트됨 <white>{config_path}</white><gray> ~ <white>{updated_value}</white><gray>.</gray>"
+
+# 구성 값 편집을 위한 앤빌 프롬프트 텍스트.
+shop_config_value_anvil_ui:
+  title: "{config_path}"
+  input:
+    lore:
+      - "<gray>경로:</gray> <white>{config_path}</white>"
+      - "<gray>유형:</gray> <white>{value_type}</white>"
+      - "<gray>현재 가치:</gray> <white>{current_value}</white>"
+      - "<yellow>새 값을 입력하고 확인하십시오.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>유형 <white>{value_type}</white><gray>. 입력:</gray> <white>{input}</white>"
+
+# 서버 뱅크 개요, 통화 입력 및 출금 피드백.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] 서버 뱅크</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>수입 및 이체 상태</white>"
+    lore:
+      - "<gray>추적된 통화:</gray> <white>{currency_count}</white>"
+      - "<gray>수입:</gray> <white>{income_summary}</white>"
+      - "<gray>다음 풀:</gray> <white>{next_pull_at}</white>"
+      - "<gray>다음 가져오기까지의 시간:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>관리 상점 잔액은 일정에 따라 여기로 전송됩니다.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>없음</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Disabled</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>보류 중...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Disabled</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>보류 중...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[철회하다]</gradient> <white>Withdraw All</white>"
+    lore:
+      - "<gray>모든 잔액을 인출하려고 시도합니다.</gray>"
+      - "<gray>사용할 수 없는 통화는 건너뜁니다.</gray>"
+      - "<yellow>귀하의 계정으로 모든 자금을 인출하려면 클릭하십시오.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+      - "<gray>사용 가능한 잔액:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>전체 통화 잔액을 인출하려면 클릭하십시오.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>서버 뱅크 비어 있음</white>"
+      lore:
+        - "<gray>인출할 수 있는 잔고가 없습니다.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>서버 뱅크를 관리할 수 있는 권한이 없습니다.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>서버 뱅크를 관리할 수 있는 권한이 없습니다.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>해당 서버-은행 잔액은 더 이상 사용할 수 없습니다.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>철회 <white>{amount} {currency_name}</white><gray>였습니다. 남은 {currency_name}:</gray> <white>{remaining_amount}</white><gray>. 활성 통화:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>철회 <white>{withdrawn_currency_count}</white><gray> 통화 잔액을 구입했습니다. 실패:</gray> <white>{failed_currency_count}</white><gray>. 남은 활성 통화:</gray> <white>{remaining_currency_count}</white><gray>. 세부정보:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>잔액을 인출할 수 없습니다. 실패한 통화 수:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>통화 <white>{currency_name}</white><gray>은 현재 구매할 수 없습니다.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>철회 실패 <white>{amount} {currency_name}</white><gray>.샵 뱅크의</gray>"
+
+# 상점 항목 새로운 주식 항목을 추가할 때 사용되는 입력 UI입니다.
+shop_input_ui:
+  title: "항목 추가 - {owner} @ {location}"
+  summary:
+    name: "<gold>상점 보관</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>현재 저장됨:</gray> <white>{stored_count}</white>"
+      - "<yellow>로 설정된 새 명령 실행 모드새 항목은 통화 유형 금고 및 값 0으로 기본 설정됩니다.</yellow>"
+  input_slot:
+    name: "<green>입력 슬롯</green>"
+    lore:
+      - "<gray>커서에 있는 항목을 마우스 왼쪽 버튼으로 클릭하세요.</gray>"
+      - "<gray>또는 인벤토리에서 항목을 Shift 키를 누른 채 클릭하세요.</gray>"
+      - "<gray>삽입된 스택을 제거하려면 마우스 오른쪽 버튼을 클릭하십시오.</gray>"
+  no_new_items_inserted: "<red>에 사용할 수 있는 일치 항목이나 통화가 없습니다. 새 항목이 삽입되지 않았습니다.</red>"
+  saved: "<green>저장된 {added_count} 새 항목입니다. 현재 상점에는 {stored_count} 항목.서버 뱅크의 </green>"
+  save_failed: "<red>상점 항목을 저장하지 못했습니다.</red>"
+  left_overs: "<yellow>저장되지 않은 상점 항목을 인벤토리로 반환했습니다.</yellow>"
+  feedback:
+    no_permission: "<red>을(를) 충족하지 않습니다. 이 상점에 항목을 추가할 권한이 없습니다.</red>"
+    locked:
+      name: "<red>공급 액세스 필요</red>"
+      lore:
+        - "<gray>직원과 신뢰할 수 있는 플레이어만 여기에 항목을 추가할 수 있습니다.</gray>"
+
+# 저장된 항목을 보고 인출하기 위한 상점 저장 브라우저 UI.
+shop_storage_ui:
+  title: "저장된 항목 - {location}"
+  summary:
+    name: "<gold>저장된 항목</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>저장된 항목:</gray> <white>{stored_count}</white>"
+      - "<yellow>철회하려면 아래 항목을 클릭하세요.</yellow>"
+  entry:
+    lore:
+      - "<gray>저장된 금액:</gray> <white>{amount}</white>"
+      - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+      - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>상점에서 이 항목을 추출하려면 클릭하세요.</yellow>"
+  feedback:
+    not_owner: "<red>이 샵을 관리할 수 있는 권한이 없습니다.</red>"
+    extracted: "<green>추출됨 {amount}x {item_type}. 가격은 {value} {currency_type}. 남아 있는 저장된 항목: {stored_count}.</green>"
+    item_missing: "<red>저장된 항목을 찾을 수 없습니다.</red>"
+    locked:
+      name: "<red>전체 액세스 필요</red>"
+      lore:
+        - "<gray>전체 액세스 권한이 있는 신뢰할 수 있는 플레이어만 저장된 항목을 인출할 수 있습니다.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 수정할 항목을 선택하기 위한 상점 편집 선택 UI.
+shop_edit_ui:
+  title: "상점 항목 편집 - {location}"
+  summary:
+    name: "<aqua>상점 가격 편집자</aqua>"
+    player:
+      lore:
+        - "<gray>소유자:</gray> <white>{owner}</white>"
+        - "<gray>위치:</gray> <white>{location}</white>"
+        - "<gray>저장된 항목:</gray> <white>{stored_count}</white>"
+        - "<yellow>가격을 편집하려면 항목을 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>상점에서 제거하려면 품목을 마우스 오른쪽 버튼으로 클릭하십시오.</yellow>"
+    admin:
+      lore:
+        - "<gray>소유자:</gray> <white>{owner}</white>"
+        - "<gray>위치:</gray> <white>{location}</white>"
+        - "<gray>저장된 항목:</gray> <white>{stored_count}</white>"
+        - "<gray>로 설정됨관리 재입고 모드:</gray> <white>{restock_mode}</white>"
+        - "<gray>재입고 일정:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>가격이나 재고를 편집하려면 항목을 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>상점에서 제거하려면 품목을 마우스 오른쪽 버튼으로 클릭하십시오.</yellow>"
+    restock_schedule:
+      gradual: "기본 타이머: {reset_timer_ticks} 틱 당 item"
+  entry:
+    player:
+      lore:
+        - "<gray>저장된 금액:</gray> <white>{amount}</white>"
+        - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+        - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<yellow>이 상점을 편집하려면 왼쪽 클릭하십시오 item.</yellow>"
+        - "<yellow>마우스 오른쪽 버튼을 클릭하여 다음을 수행하십시오. 상점에서 제거하십시오.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>재고:</gray> <white>무한</white>"
+        - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+        - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>재입고 모드:</gray> <white>{restock_mode}</white>"
+        - "<yellow>이 관리 상점 항목을 편집하려면 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>마우스 오른쪽 버튼을 클릭하여 다음을 수행하십시오. 상점에서 제거하십시오.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>현재 재고:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+        - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>재입고 모드:</gray> <white>{restock_mode}</white>"
+        - "<gray>재입고 일정:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>이 관리 상점 항목을 편집하려면 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>마우스 오른쪽 버튼을 클릭하여 다음을 수행하십시오. 상점에서 제거하십시오.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "전체 재설정"
+    restock_schedule:
+      gradual: "1 항목 매 {reset_timer_ticks} 틱"
+      full: "완전 재입고{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>이 샵을 관리할 수 있는 권한이 없습니다.</red>"
+    removed: "<green>제거됨 {amount}x {item_type}. 가격은 {value} {currency_type}. 남아 있는 저장된 항목: {stored_count}.</green>"
+    item_missing: "<red>해당 상점 항목을 찾을 수 없습니다.</red>"
+    locked:
+      name: "<red>전체 액세스 필요</red>"
+      lore:
+        - "<gray>전체 액세스 권한이 있는 신뢰할 수 있는 플레이어만 항목 값을 편집할 수 있습니다.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 개별 상점 항목 동작 및 가격에 대한 자세한 편집기 UI.
+shop_item_edit_ui:
+  title: "{item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>저장된 금액:</gray> <white>{amount}</white>"
+        - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>로 설정되었습니다.가용성 모드:</gray> <white>{availability_mode}</white>"
+        - "<gray>현재 사용 가능 여부:</gray> <white>{availability_state}</white>"
+        - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+        - "<yellow>이 항목을 편집하려면 아래 버튼을 사용하세요.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>재고:</gray> <white>무한</white>"
+        - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>재입고 모드:</gray> <white>{restock_mode}</white>"
+        - "<gray>구매 명령:</gray> <white>{command_count}</white>"
+        - "<gray>로 설정되었습니다.가용성 모드:</gray> <white>{availability_mode}</white>"
+        - "<gray>현재 사용 가능 여부:</gray> <white>{availability_state}</white>"
+        - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+        - "<yellow>이 관리 항목을 편집하려면 아래 버튼을 사용하세요.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>현재 재고:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>통화 유형:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>재입고 모드:</gray> <white>{restock_mode}</white>"
+        - "<gray>재입고 일정:</gray> <white>{restock_schedule}</white>"
+        - "<gray>구매 명령:</gray> <white>{command_count}</white>"
+        - "<gray>로 설정되었습니다.가용성 모드:</gray> <white>{availability_mode}</white>"
+        - "<gray>현재 사용 가능 여부:</gray> <white>{availability_state}</white>"
+        - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+        - "<yellow>이 관리 항목을 편집하려면 아래 버튼을 사용하세요.</yellow>"
+  currency_type:
+    name: "<green>통화 유형</green>"
+    lore:
+      - "<gray>현재 유형:</gray> <white>{currency_type}</white>"
+      - "<yellow>클릭 통화 유형을 편집하려면 클릭하세요.</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>현재 유형:</gray> <white>{currency_type}</white>"
+      - "<gray>현재 가치:</gray> <white>{value}</white>"
+      - "<yellow>숫자 값을 편집하려면 클릭하세요.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[모드] 아이템 가용성</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Always]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[회전]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[절대]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[열려 있는]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[닫기]</gradient>"
+    lore:
+      - "<gray>현재 모드:</gray> <white>{availability_mode}</white>"
+      - "<gray>현재 상태:</gray> <white>{availability_state}</white>"
+      - "<gray>창 회전:</gray> <white>{rotation_minutes}분</white>"
+      - "<yellow>순환하려면 클릭하세요: Always -> Rotate -> Never.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[타이머] 분 회전</gradient>"
+    lore:
+      - "<gray>현재 창:</gray> <white>{rotation_minutes}분</white>"
+      - "<gray>현재 모드:</gray> <white>{availability_mode}</white>"
+      - "<gray>회전 모드 레이블:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>모루에서 회전 분을 설정하려면 클릭하십시오.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[실행] 명령 실행자</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[섬기는 사람]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[플레이어]</gradient>"
+    lore:
+      - "<gray>현재 모드:</gray> <white>{command_mode}</white>"
+      - "<gray>다음 모드:</gray> <white>{next_mode}</white>"
+      - "<yellow>새로 추가된 명령을 실행하는 사람을 전환하려면 클릭하십시오.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] 구매 명령</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>없음</gradient>"
+    lore:
+      - "<gray>구성된 명령:</gray> <white>{command_count}</white>"
+      - "<gray>최신 명령:</gray> <white>{latest_command}</white>"
+      - "<yellow>명령 설정을 열고 명령을 추가하려면 클릭하십시오.</yellow>"
+  confirm:
+    name: "<green>항목 가격 저장</green>"
+    lore:
+      - "<gray>현재 통화 유형을 적용하고 value</gray>"
+      - "<gray>이 상점 항목에 </gray>"
+  stock_limit:
+    name: "<gold>재고 한도</gold>"
+    unlimited: "무한"
+    lore:
+      - "<gray>현재 제한:</gray> <white>{stock_limit}</white>"
+      - "<gray>현재 재고:</gray> <white>{current_stock}</white>"
+      - "<yellow>재고 한도를 설정하려면 클릭하십시오.</yellow>"
+      - "<gray>이 항목을 무한 재고로 되돌리려면 -1을 사용하세요.</gray>"
+  reset_timer:
+    name: "<aqua>타이머 재설정</aqua>"
+    lore:
+      - "<gray>현재 타이머:</gray> <white>{reset_timer_ticks} 틱</white>"
+      - "<yellow>재입고 타이머를 설정하려면 클릭하십시오.</yellow>"
+  restock_mode:
+    name: "<yellow>관리자 재입고 모드</yellow>"
+    gradual: "Gradual"
+    full: "전체 재설정"
+    lore:
+      - "<gray>구성 모드:</gray> <white>{restock_mode}</white>"
+      - "<gray>구성된 일정:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>전역 관리자 재입고 모드를 전환하려면 클릭하십시오.</yellow>"
+  restock_schedule:
+    gradual: "1 항목 매 {reset_timer_ticks} 틱"
+    full: "완전 재입고{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>이 샵을 관리할 수 있는 권한이 없습니다.</red>"
+    shop_missing: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+    item_missing: "<red>해당 상점 항목을 찾을 수 없습니다.</red>"
+    saved: "<green>항목 가격을 {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>가용성 모드가 <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>최신 명령을 제거했습니다. 나머지 명령:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>모든 관리자 구매 명령을 지웠습니다.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>관리자 구매 명령이 구성되지 않았습니다.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>플러그인 구성 변경 사항은 일반 앞에 붙는 <white>RDS 무료</white><gray>. 전체 액세스를 위해 프리미엄으로 업그레이드하세요.</gray>"
+    restock_mode_updated: "<green>관리 재입고 모드가 {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>관리 재입고 모드를 저장하지 못했습니다.</red>"
+
+# Anvil 새로운 관리 구매 명령 추가를 위한 프롬프트.
+shop_item_admin_command_anvil_ui:
+  title: "명령 추가 {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>이 관리 항목이 다음과 같을 때 실행할 명령을 입력하십시오. 구입했습니다.</gray>"
+      - "<gray>명령 텍스트만. 지연은 명령 설정 보기에서 구성됩니다.</gray>"
+      - "<gray>예:</gray>"
+      - "<white>방송%player_name%는 {amount}x {item_type}</white>"
+      - "<white>에코 줘%player_name% 50</white>"
+      - "<gray>구성된 명령:</gray> <white>{command_count}</white>"
+      - "<gray>실행 모드:</gray> <white>{command_mode}</white>"
+      - "<gray>지연:</gray> <white>{command_delay_ticks} 틱</white>"
+  mode:
+    server: "<gold>[섬기는 사람]</gold>"
+    player: "<green>[플레이어]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>명령 텍스트는 비워둘 수 없습니다. 입력:</gray> <white>{input}</white>"
+
+# 모드, 지연 및 명령 목록에 대한 관리자 구매 명령 관리자 UI.
+shop_item_admin_command_ui:
+  title: "명령 설정 - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] 구매 명령 설정</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>없음</gradient>"
+    lore:
+      - "<gray>구성된 명령:</gray> <white>{command_count}</white>"
+      - "<gray>최신 명령:</gray> <white>{latest_command}</white>"
+      - "<gray>로 설정됨다음 명령 모드:</gray> <white>{command_mode}</white>"
+      - "<gray>다음 명령 지연:</gray> <white>{command_delay_ticks} 틱({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[실행] 다음 명령 실행자</gradient>"
+    server: "<gold>[섬기는 사람]</gold>"
+    player: "<green>[플레이어]</green>"
+    lore:
+      - "<gray>현재 모드:</gray> <white>{command_mode}</white>"
+      - "<gray>다음 모드:</gray> <white>{next_mode}</white>"
+      - "<yellow>다음 명령에 대한 실행기를 전환하려면 클릭하십시오.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[지연] 다음 명령 지연</gradient>"
+    lore:
+      - "<gray>현재 지연:</gray> <white>{command_delay_ticks} 틱({command_delay_seconds}s)</white>"
+      - "<yellow>다음 명령에 대한 지연 시간을 설정하려면 클릭하십시오.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] 명령 추가</gradient>"
+    lore:
+      - "<gray>모드:</gray> <white>{command_mode}</white>"
+      - "<gray>지연:</gray> <white>{command_delay_ticks} 틱({command_delay_seconds}s)</white>"
+      - "<yellow>명령 입력을 열려면 클릭하십시오.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] 제거 명령</gradient>"
+    lore:
+      - "<gray>구성된 명령:</gray> <white>{command_count}</white>"
+      - "<yellow>최신 명령을 제거하려면 클릭하십시오.</yellow>"
+      - "<yellow>Shift + 클릭 모든 명령을 지웁니다.</yellow>"
+  confirm:
+    name: "<green>저장 명령 설정</green>"
+    lore:
+      - "<gray>에 대한 결과 항목 편집기로 돌아가서 이러한 명령 변경 사항을 유지하십시오.</gray>"
+  feedback:
+    not_owner: "<red>이 샵을 관리할 수 있는 권한이 없습니다.</red>"
+    shop_missing: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>다음 명령 모드가 <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>최신 명령을 제거했습니다. 나머지 명령:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>모든 관리자 구매 명령을 지웠습니다.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>관리자 구매 명령이 구성되지 않았습니다.</gray>"
+
+# 관리 명령 지연 틱 설정을 위한 앤빌 프롬프트.
+shop_item_admin_command_delay_anvil_ui:
+  title: "지연 설정 - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>다음 명령 지연에 대한 정수 틱 수를 입력하십시오.</gray>"
+      - "<gray>실행 모드:</gray> <white>{command_mode}</white>"
+      - "<gray>예:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[섬기는 사람]</gold>"
+    player: "<green>[플레이어]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>0보다 크거나 같은 정수를 입력하십시오. 입력:</gray> <white>{input}</white>"
+
+# 분 단위로 회전 모드 가용성 창을 위한 앤빌 프롬프트.
+shop_item_availability_minutes_anvil_ui:
+  title: "회전 분: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[타이머] 분 회전</gradient>"
+    lore:
+      - "<gray>분의 정수를 입력하십시오.</gray>"
+      - "<gray>회전 모드는 각 창에서 사용 가능/사용 불가능을 번갈아 나타냅니다.</gray>"
+  error:
+    invalid_number: "<red>0보다 큰 정수를 입력하십시오. 입력: {input}</red>"
+
+# 제한된 관리 재고 용량 설정을 위한 앤빌 프롬프트.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "재고 한도: {stock_limit}"
+  input:
+    name: "<gold>재고 한도</gold>"
+    lore:
+      - "<gray>항목의 양수 재고 한도를 입력하세요.</gray>"
+      - "<gray>무한 관리 재고를 복원하려면 -1을 사용하세요.</gray>"
+  error:
+    invalid_number: "<red>활성화됨 -1 또는 0보다 큰 정수를 입력하십시오. 입력: {input}</red>"
+
+# 관리자 재입고/타이머 틱 재설정을 위한 앤빌 프롬프트.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "타이머 재설정: {reset_timer_ticks}"
+  input:
+    name: "<aqua>타이머 재설정</aqua>"
+    lore:
+      - "<gray>Bukkit 틱의 정수를 입력하십시오.</gray>"
+      - "<gray>점진적 모드는 타이머당 하나의 항목을 복원합니다.</gray>"
+  error:
+    invalid_number: "<red>0보다 큰 정수를 입력하십시오. 입력: {input}</red>"
+
+# 사용하는 통화 유형을 선택하기 위한 앤빌 프롬프트 item.
+shop_item_currency_type_anvil_ui:
+  title: "통화 유형: {currency_type}"
+  input:
+    name: "<green>통화 유형</green>"
+    lore:
+      - "<gray>이 항목에 대한 통화 식별자를 입력하십시오.</gray>"
+      - "<gray>예:</gray> <white>vault, 토큰, 보석</white>"
+  error:
+    empty: "<red>통화 유형은 비워둘 수 없습니다.</red>"
+    invalid_currency: "<red>통화 유형 {currency_type}는 구매할 수 없습니다. 금고 또는 등록된 사용자 정의 통화를 사용하십시오.</red>"
+    processing_failed: "<red>통화 유형을 업데이트하지 못했습니다. 입력: {input}</red>"
+
+# 항목별 가격/값 설정을 위한 앤빌 프롬프트.
+shop_item_value_anvil_ui:
+  title: "Value: {value} {currency_type}"
+  input:
+    name: "<gold>항목 값</gold>"
+    lore:
+      - "<gray>음수가 아닌 숫자 값을 입력하세요.</gray>"
+      - "<gray>예:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>음수가 아닌 유효한 숫자를 입력하세요. 입력: {input}</red>"
+    processing_failed: "<red>항목 값을 업데이트하지 못했습니다. 입력: {input}</red>"
+
+# 상점별 통화 잔액을 위한 상점 은행 UI 및 인출.
+shop_bank_ui:
+  title: "상점 은행 - {location}"
+  summary:
+    name: "<gold>은행 잔고</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>추적된 통화:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>전체 금액을 인출하려면 아래 잔액을 클릭하십시오.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+      - "<gray>사용 가능한 잔액:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>전체 잔액을 인출하려면 클릭하십시오.</yellow>"
+  feedback:
+    not_owner: "<red>이 샵을 관리할 수 있는 권한이 없습니다.</red>"
+    entry_missing: "<red>해당 은행 잔액은 더 이상 사용할 수 없습니다.</red>"
+    withdrawn: "<green>철회 {amount} {currency_name}였습니다. 남은 {currency_name}: {remaining_amount}. 추적된 통화: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>철회 실패 {amount} {currency_name}.샵의</red>"
+    currency_unavailable: "<red>통화 {currency_name}는 현재 구매할 수 없습니다.</red>"
+    empty:
+      name: "<red>은행 비어 있음</red>"
+      lore:
+        - "<gray>이 상점에는 인출할 예금 잔액이 없습니다.</gray>"
+    locked:
+      name: "<red>전체 액세스 필요</red>"
+      lore:
+        - "<gray>전체 액세스 권한이 있는 신뢰할 수 있는 플레이어만 상점 자금을 인출할 수 있습니다.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 상점 액세스 역할을 위한 신뢰할 수 있는 플레이어 관리 UI.
+shop_trusted_ui:
+  title: "Trusted Players - {location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Trusted 플레이어:</gray> <white>{trusted_count}</white>"
+      - "<yellow>신뢰 상태를 순환하려면 플레이어를 클릭하십시오.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>상태:</gray> <white>공개</white>"
+        - "<gray>관리 권한이 없습니다.</gray>"
+        - "<yellow>Associate로 변경하려면 클릭하세요.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>상태:</gray> <white>Associate</white>"
+        - "<gray>상점에 항목을 추가할 수 있습니다.</gray>"
+        - "<yellow>Trusted로 변경하려면 클릭하세요.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>상태:</gray> <white>Trusted</white>"
+        - "<gray>상점을 완전히 관리할 수 있습니다.</gray>"
+        - "<yellow>Public으로 변경하려면 클릭하세요.</yellow>"
+  feedback:
+    not_owner: "<red>상점 소유자만 신뢰할 수 있는 플레이어를 관리할 수 있습니다.</red>"
+    updated:
+      public: "<yellow>설정 {player}공개.</yellow>"
+      associate: "<green>설정 {player} 연결.</green>"
+      trusted: "<green>설정 {player} 신뢰.</green>"
+    empty:
+      name: "<red>플레이어 없음</red>"
+      lore:
+        - "<gray>신뢰할 수 있는 다른 알려진 플레이어가 없습니다.</gray>"
+    locked:
+      name: "<red>소유자 액세스만 가능</red>"
+      lore:
+        - "<gray>상점 소유자만 신뢰할 수 있는 플레이어를 관리할 수 있습니다.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 구매 및 세금에 대한 거래 원장 UI History.
+shop_ledger_ui:
+  title: "상점 원장 - {location}"
+  summary:
+    name: "<gold>상점 거래 원장</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>총 항목 수:</gray> <white>{ledger_count}</white>"
+      - "<gray>구매:</gray> <white>{purchase_count}</white>"
+      - "<gray>세금:</gray> <white>{tax_count}</white>"
+      - "<yellow>최신 거래가 나타납니다. 첫 번째.</yellow>"
+  entry:
+    purchase:
+      name: "<green>구매: {item_type}</green>"
+      lore:
+        - "<gray>구매자:</gray> <white>{actor}</white>"
+        - "<gray>Amount:</gray> <white>{item_amount}</white>"
+        - "<gray>결제 총액:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+        - "<gray>기록됨:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>세금</gold>"
+      lore:
+        - "<gray>청구 대상:</gray> <white>{actor}</white>"
+        - "<gray>세금 공유:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Counted 상점:</gray> <white>{counted_shops}</white>"
+        - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+        - "<gray>기록됨:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>원장 항목 없음</red>"
+      lore:
+        - "<gray>이 상점에는 아직 기록된 구매 내역이나 세금이 없습니다.</gray>"
+    locked:
+      name: "<red>전체 액세스 필요</red>"
+      lore:
+        - "<gray>전체 액세스 권한이 있는 신뢰할 수 있는 플레이어만 볼 수 있습니다. ledger.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 항목 검색 및 구매를 위한 고객 대상 상점 UI.
+shop_customer_ui:
+  title: "상점 - {location}"
+  summary:
+    name: "<gold>고객 보기</gold>"
+    player:
+      lore:
+        - "<gray>소유자:</gray> <white>{owner}</white>"
+        - "<gray>위치:</gray> <white>{location}</white>"
+        - "<gray>사용 가능한 항목:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop 유형:</gray> <white>Player Shop</white>"
+        - "<gray>재고:</gray> <white>유한</white>"
+        - "<yellow>하나를 구입하려면 항목을 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>금액을 선택하려면 품목을 마우스 오른쪽 버튼으로 클릭하십시오.</yellow>"
+    admin:
+      lore:
+        - "<gray>소유자:</gray> <white>{owner}</white>"
+        - "<gray>위치:</gray> <white>{location}</white>"
+        - "<gray>사용 가능한 항목:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop 유형:</gray> <white>Admin Shop</white>"
+        - "<gray>재고:</gray> <white>무한</white>"
+        - "<yellow>하나를 구입하려면 항목을 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>금액을 선택하려면 품목을 마우스 오른쪽 버튼으로 클릭하십시오.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>재고:</gray> <white>{amount}</white>"
+        - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+        - "<gray>각 가격:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>총계 주식 가치:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+        - "<yellow>하나를 구입하려면 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>금액을 선택하려면 마우스 오른쪽 버튼을 클릭하십시오.</yellow>"
+    admin:
+      lore:
+        - "<gray>재고:</gray> <white>무한</white>"
+        - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+        - "<gray>각 가격:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+        - "<gray>Shop 유형:</gray> <white>Admin Shop</white>"
+        - "<yellow>하나를 구입하려면 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>금액을 선택하려면 마우스 오른쪽 버튼을 클릭하십시오.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>재고:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>항목 유형:</gray> <white>{item_type}</white>"
+        - "<gray>각 가격:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>통화 ID:</gray> <white>{currency_type}</white>"
+        - "<gray>재입고 모드:</gray> <white>{restock_mode}</white>"
+        - "<gray>재입고 일정:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>하나를 구입하려면 왼쪽 클릭하십시오.</yellow>"
+        - "<yellow>금액을 선택하려면 마우스 오른쪽 버튼을 클릭하십시오.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "전체 재설정"
+    restock_schedule:
+      gradual: "1 항목 매 {reset_timer_ticks} 틱"
+      full: "완전 재입고{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>구매됨 {amount}x {item_type}에 대한{total_price} {currency_name}. 남은 재고: {remaining_amount}.</green>"
+    purchased_admin: "<green>구매됨 {amount}x {item_type}에 대한{total_price} {currency_name}. 이 관리 상점에는 무한한 재고가 있습니다.</green>"
+    purchased_admin_limited: "<green>구매됨 {amount}x {item_type}에 대한{total_price} {currency_name}. 남은 관리 재고: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>{item_type}는 현재 구매할 수 없습니다.</gray>"
+    insufficient_stock: "<red>이 상점에는 {available_amount}x {item_type}만 사용할 수 있습니다.</red>"
+    insufficient_funds: "<red>에 도달했습니다. {total_price} {currency_name} 구매 {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>통화 {currency_name}는 현재 구매할 수 없습니다.</red>"
+    invalid_amount: "<red>유효한 구매 금액을 입력하세요.</red>"
+    item_missing: "<red>그 상점 항목을 더 이상 사용할 수 없습니다.</red>"
+    empty_shop:
+      name: "<red>상점 비어 있음</red>"
+      lore:
+        - "<gray>구매할 수 있는 항목이 없습니다.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 맞춤형 구매 수량 입력을 위한 앤빌 프롬프트.
+shop_purchase_amount_anvil_ui:
+  title: "구매 {item_type}"
+  input:
+    name: "<gold>구매 금액</gold>"
+    player:
+      lore:
+        - "<gray>원하는 항목 수를 입력하십시오. 구매.</gray>"
+        - "<gray>사용 가능한 최대값:</gray> <white>{max_amount}</white>"
+        - "<gray>항목:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>원하는 항목 수를 입력하십시오. 구매.</gray>"
+        - "<gray>이 관리 상점에는 무한한 인벤토리가 있습니다.</gray>"
+        - "<gray>항목:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>원하는 항목 수를 입력하십시오. 구매.</gray>"
+        - "<gray>사용 가능한 최대값:</gray> <white>{max_amount}</white>"
+        - "<gray>항목:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>1과 사이의 정수를 입력하세요.{max_amount}. 입력: {input}</red>"
+    invalid_number_admin: "<red>0보다 큰 정수를 입력하십시오. 입력: {input}</red>"
+    processing_failed: "<red>구매 금액을 처리하지 못했습니다. 입력: {input}</red>"
+
+# 전체 탐색 및 자료 검색을 위한 상점 발견 랜딩 UI.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>상점 브라우저</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>상점 브라우저</gradient>"
+    lore:
+      - "<gray>추적된 모든 상점을 탐색하거나 특정 자료로 필터링합니다.</gray>"
+      - "<yellow>계속하려면 아래 작업 중 하나를 선택하세요.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>모든 상점 탐색</gradient>"
+    lore:
+      - "<gray>페이지가 매겨진 전체 상점 디렉토리를 엽니다.</gray>"
+      - "<yellow>추적된 모든 상점을 보려면 클릭하십시오.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>자재별 검색</gradient>"
+    lore:
+      - "<gray>모루 프롬프트를 열고 재료 이름을 입력하십시오.</gray>"
+      - "<gray>예:</gray> <white>다이아몬드 블록</white>"
+      - "<yellow>항목 유형별로 검색하려면 클릭하십시오.</yellow>"
+
+# 추적된 모든 상점을 나열하는 페이지가 매겨진 디렉토리 UI.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>모든 상점</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>상점 디렉터리</gradient>"
+    lore:
+      - "<gray>추적된 상점:</gray> <white>{shop_count}</white>"
+      - "<gray>사용 가능한 총 재고:</gray> <white>{available_count}</white>"
+      - "<yellow>열려면 아래 상점을 클릭하세요.</yellow>"
+  entry:
+    name: "<gold>{owner} 상점</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>사용 가능한 재고:</gray> <white>{available_count}</white>"
+      - "<yellow>이 상점을 열려면 클릭하십시오.</yellow>"
+  feedback:
+    empty:
+      name: "<red>상점 없음</red>"
+      lore:
+        - "<gray>있습니다 아직 등록된 상점이 없습니다.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 재료 필터링된 상점 결과 UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>{material}</gradient>"
+    lore:
+      - "<gray>재료:</gray> <white>{material}</white>"
+      - "<gray>매칭 상점:</gray> <white>{shop_count}</white>"
+      - "<gray>매칭 제안:</gray> <white>{matching_count}</white>"
+      - "<yellow>열려면 아래 일치하는 상점을 클릭하세요.</yellow>"
+  entry:
+    name: "<gold>{owner} 상점</gold>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>위치:</gray> <white>{location}</white>"
+      - "<gray>매칭 {material} 제안이 있습니다:</gray> <white>{matching_count}</white>"
+      - "<gray>표시되는 총 재고:</gray> <white>{available_count}</white>"
+      - "<yellow>이 상점을 열려면 클릭하십시오.</yellow>"
+  feedback:
+    empty:
+      name: "<red>판매 상점 없음 {material}</red>"
+      lore:
+        - "<gray>현재 이 기능을 제공하는 추적된 상점이 없습니다. 재료.</gray>"
+    shop_missing:
+      name: "<red>상점을 찾을 수 없음</red>"
+      lore:
+        - "<gray>이 상점은 스토리지에서 로드할 수 없습니다.</gray>"
+      message: "<red>이 상점은 스토리지에서 로드할 수 없습니다.</red>"
+
+# 재료 필터 검색을 입력하기 위한 앤빌 프롬프트.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>자재 검색</gradient>"
+  input:
+    lore:
+      - "<gray>추적된 상점을 검색하려면 Bukkit 재료 이름을 입력하십시오.</gray>"
+      - "<gray>예:</gray> <white>다이아몬드</white><gray>,</gray> <white>다이아몬드 블록</white>"
+      - "<yellow>맞춤 상점을 열려면 결과 슬롯을 클릭하세요.</yellow>"
+  error:
+    invalid_material: "<red>diamond_block과 같은 유효한 재료를 입력하세요. 입력: {input}</red>"
+    processing_failed: "<red>자재를 검색하지 못했습니다. 입력: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# 목록 UI 전체에서 사용되는 공유 페이지 매김 항목 라벨.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 페이지 %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>현재 페이지:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>총 페이지 수:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 페이지 %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# 공유 헤드/탐색 버튼 라벨(반환/확인/다음).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 반환</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>뒤로 돌아가려면 클릭하세요</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 확인</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>설정을 확인하려면 클릭하세요</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 확인</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>설정을 확인하려면 클릭하세요</gradient>"

@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# Præfiks forudsat til generel plugin-chatoutput.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Hurtige spillervendte oversigtslinjer for butiks-, bank- og skattestatus.
+info:
+  total: "<blue>Butikker:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Sporede saldi ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Planlagt skat ({taxed_shops}afgiftspligtige butikker):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Næste skat:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Deltagelsestidsmeddelelser vises, når spillere kommer ind på serveren.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops}afgiftspligtige butikker\n[<blue>Beløb<yellow>]\n{taxes}\n<red>Forfalder:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Kommandosvarstrenge for \"/rs\"-funktioner og skift.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[EN]</gradient> <gray>Åbnede<white>RDS Admin</white><gray>panel.</gray>"
+  bar:
+    enabled: "<green>Butikschefbar aktiveret, mens du kigger på en butik.</green>"
+    disabled: "<yellow>Butikschef bar deaktiveret.</yellow>"
+  give:
+    syntax: "<red>Anvendelse: /rs give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Anvendelse:</gray> <white>/rs resultattavle&lt;hovedbog|lager&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktiverede<white>{scoreboard_type}</white><gray>sidebjælke.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Deaktiveret<white>{scoreboard_type}</white><gray>sidebjælke.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Skiftede til<white>{scoreboard_type}</white><gray>sidebjælke.</gray>"
+    type:
+      ledger: "<gold>hovedbog</gold>"
+      stock: "<aqua>lager</aqua>"
+
+# Sidebar resultattavleetiketter og værdiformatering.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Ledger ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Bank totaler</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Ingen bankmidler</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Aktie ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Lager:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Ingen spillerbutikker</red>"
+
+# Boss-bjælketekst vist, mens du målretter mod en butik.
+shop_boss_bar:
+  title: "<gold>{shop_type}Butik</gold> <gray>|</gray> <yellow>Ejer:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Varer:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Beliggenhed:</yellow> <white>{location}</white>"
+  type:
+    player: "Spiller"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Begrænset lager"
+    infinite: "Uendelig"
+    various: "Forskellige"
+
+# ============================================
+# GUI knapper
+# ============================================
+
+# Butiksblokvarenavn og lore-metadata.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Placer denne blok for at oprette din butik.</yellow>"
+
+# Butiksoversigt UI-etiketter, viden og tilgængelighedstilstande.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Butiksbutik</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Ejede butiksblokke</gradient>"
+    lore:
+      - "<gray>Ejede butiksblokke:</gray> <white>{owned_shops}</white>"
+      - "<gray>Dette spor købt eller givet</gray>"
+      - "<gray>ShopBlock ejerskab.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Butiksblokgrænse</gradient>"
+    lore:
+      - "<gray>Ejede butiksblokke:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maksimalt antal butiksblokke:</gray> <white>{max_shops}</white>"
+      - "<gray>Denne grænse kontrollerer, hvor mange der handler</gray>"
+      - "<gray>blokke, du kan låse op.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Butikskrav</gradient>"
+    lore:
+      - "<gray>Konfigurerede krav:</gray> <white>{requirement_count}</white>"
+      - "<gray>Aktuelt antal krav:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klik for at inspicere det næste butiksniveau.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Parat]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Indtil]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+
+# Butiksniveaukrav UI, statusvisning og købsfeedback.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Butiksniveau{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Køb Butiksblok</gradient>"
+    lore:
+      - "<gray>Købsniveau:</gray> <white>{purchase_number}</white>"
+      - "<gray>Ejede butiksblokke:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maksimalt antal butiksblokke:</gray> <white>{max_shops}</white>"
+      - "<gray>Konfigurerede krav:</gray> <white>{requirement_count}</white>"
+      - "<gray>I øjeblikket mødt:</gray> <white>{met_count}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klik for at købe, når dette niveau er klar.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Parat]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Indtil]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Gratis]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Gratis] Ingen krav</gradient>"
+    lore:
+      - "<gray>Dette købsniveau har ingen konfigurerede krav.</gray>"
+      - "<yellow>Du kan købe denne butiksblok uden ekstra kontrol.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Nøgle:</gray> <white>{requirement_key}</white>"
+      - "<gray>Type:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Fremskridt:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Oversigt:</gray> <white>{summary}</white>"
+      - "<yellow>Højreklik på kompatible krav til bankens fremskridt.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Detaljeret kontrol</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Mødte]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Indtil]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Utilgængelig]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Købte en butiksblok. Forbrugte krav:</gray> <white>{requirements}</white><gray>. Ejede butiksblokke:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du mødes ikke i øjeblikket<white>{requirement}</white><gray>. Butikskrav:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Butikskravet<white>{requirement}</white><gray>er ikke tilgængelig eller ugyldig lige nu.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har nået butiksblokeringsgrænsen på<white>{max_shops}</white><gray>. Ejede butiksblokke:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>er nu klar.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Gemt fremskridt for<white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Ingen matchende varer eller valuta var tilgængelige for<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>understøtter ikke bankede fremskridt.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>er ikke tilgængelig lige nu.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Din RDS-profil kunne ikke indlæses, så fremskridt kunne ikke gemmes.</gray>"
+
+# Bloker interaktionsvalideringsfejl og beskyttelsesmeddelelser.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Kan ikke læse butiksejeren fra denne vare.</red>"
+    not_owner: "<red>Denne ShopBlock tilhører en anden spiller og kan ikke placeres af dig.</red>"
+    max_shops_reached: "<red>Du har nået butiksgrænsen på{max_shops}. Nuværende placerede butikker:{owned_shops}.</red>"
+    shop_protected: "<red>Butikker kan ikke brydes direkte. Brug butiksmenuen til at lukke butikken.</red>"
+    double_chest_requires_shop_block: "<red>Double-chest butikker kræver et sekund<blue>ShopBlock</blue><red>. Normale kister kan ikke smelte sammen med butikskister.</red>"
+    double_chest_owner_mismatch: "<red>Denne ShopBlock tilhører en anden ejer, så den kan ikke udvide denne butik.</red>"
+    shop_already_double_chest: "<red>Denne butik bruger allerede begge brysthalvdele.</red>"
+    double_chest_ambiguous: "<red>Denne ShopBlock rører ved flere butikskasser. Placer den ved siden af ​​kun én butik.</red>"
+
+# Meddelelser om udfald af planlagt skattebehandling.
+tax_scheduler:
+  paid: "<yellow>Opkrævet planlagt butiksafgift på{amount}. Optalte butikker:{owned_shops}.</yellow>"
+  insufficient_funds: "<red>Du kunne ikke betale den planlagte butiksafgift på{amount}. Optalte butikker:{owned_shops}.</red>"
+  charge_failed: "<red>Det lykkedes ikke at opkræve den planlagte butiksafgift på{amount}. Optalte butikker:{owned_shops}.</red>"
+
+# Oversigtsgrænseflade for hovedbutik for ejer/admin-administrationshandlinger.
+shop_overview_ui:
+  title: "{owner}Shop -{location}"
+  summary:
+    name: "<gold>Butiksoversigt</gold>"
+    player:
+      lore:
+        - "<gray>Ejer:</gray> <white>{owner}</white>"
+        - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+        - "<gray>Gemte poster:</gray> <white>{item_count}</white>"
+        - "<gray>Butikstype:</gray> <white>Player Shop</white>"
+        - "<gray>Beholdning:</gray> <white>Finite</white>"
+    admin:
+      lore:
+        - "<gray>Ejer:</gray> <white>{owner}</white>"
+        - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+        - "<gray>Gemte poster:</gray> <white>{item_count}</white>"
+        - "<gray>Butikstype:</gray> <white>Admin butik</white>"
+        - "<gray>Beholdning:</gray> <white>Uendelig</white>"
+  finance:
+    name: "<gold>Butiksbank</gold>"
+    lore:
+      - "<gray>Sporede valutaer:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klik for at gennemgå og hæve penge.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop aktiveret</red>"
+        lore:
+          - "<gray>Denne butik er i øjeblikket en adminbutik.</gray>"
+          - "<gray>Beholdningen er uendelig for kunderne.</gray>"
+          - "<gray>Gemte poster:</gray> <white>{item_count}</white>"
+          - "<yellow>Klik for at skifte tilbage til en spillerbutik.</yellow>"
+      disabled:
+        name: "<green>Admin Shop deaktiveret</green>"
+        lore:
+          - "<gray>Denne butik bruger i øjeblikket normalt lager.</gray>"
+          - "<gray>Kunder kan kun købe lagrede mængder.</gray>"
+          - "<gray>Gemte poster:</gray> <white>{item_count}</white>"
+          - "<yellow>Klik for at aktivere admin butikstilstand.</yellow>"
+    close:
+      name: "<red>Luk butik</red>"
+      lore:
+        - "<gray>Fjern denne butik og returner butiksblokken.</gray>"
+        - "<gray>Gemte poster:</gray> <white>{item_count}</white>"
+        - "<gray>Sporede bankvalutaer:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Butikslagret skal være tomt før lukning.</yellow>"
+    manage:
+      name: "<green>Tilføj butiksvarer</green>"
+      lore:
+        - "<gray>Gem nye varer i denne butik.</gray>"
+        - "<gray>Aktuelle poster:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik for at åbne elementinput.</yellow>"
+    customer_view:
+      name: "<gold>Åbn kundevisning</gold>"
+      lore:
+        - "<gray>Se en forhåndsvisning af denne butik, som kunderne ser den.</gray>"
+        - "<gray>Aktuelle poster:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik for at gennemse denne butik som kunde.</yellow>"
+    trusted:
+      name: "<gold>Betroede spillere</gold>"
+      lore:
+        - "<gray>Associerede:</gray> <white>{associate_count}</white>"
+        - "<gray>Betroede spillere:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Klik for at administrere butikstillidsniveauer.</yellow>"
+    ledger:
+      name: "<gold>Shop Ledger</gold>"
+      lore:
+        - "<gray>Samlet antal poster:</gray> <white>{ledger_count}</white>"
+        - "<gray>Indkøb:</gray> <white>{purchase_count}</white>"
+        - "<gray>Skatter:</gray> <white>{tax_count}</white>"
+        - "<yellow>Klik for at gennemgå butikstransaktionshistorik.</yellow>"
+    edit:
+      name: "<aqua>Rediger butiksvarer</aqua>"
+      lore:
+        - "<gray>Rediger priser for lagrede butiksvarer.</gray>"
+        - "<gray>Aktuelle poster:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik for at redigere priser og valutaer.</yellow>"
+    storage:
+      name: "<gold>Se gemte genstande</gold>"
+      lore:
+        - "<gray>Gennemgå varer, der allerede er gemt i denne butik.</gray>"
+        - "<gray>Aktuelle poster:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik for at trække gemte varer tilbage.</yellow>"
+    locked:
+      name: "<red>Butikken er låst</red>"
+      lore:
+        - "<gray>Kun ejeren kan tilføje elementer.</gray>"
+        - "<gray>Aktuelle poster:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Du har ikke tilladelse til at administrere denne butik.</red>"
+    no_admin_permission: "<red>Du har ikke tilladelse til at skifte adminbutikker.</red>"
+    admin_limit_reached: "<red>Serveren har allerede{admin_shops}admin butikker. Gratis udgave tillader kun{max_admin_shops}admin butikker.</red>"
+    admin_enabled: "<green>Denne butik er nu en adminbutik med uendelig kundebeholdning. Optalte butikker:{owned_shops}.</green>"
+    admin_disabled: "<yellow>Denne butik er nu en normal spillerbutik med begrænset kundebeholdning. Optalte butikker:{owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Du kan ikke skifte denne adminbutik tilbage til en spillerbutik, fordi din butiksgrænse på{max_shops}er allerede nået. Optalte butikker:{owned_shops}.</red>"
+    close_not_empty: "<red>Du kan kun lukke en butik efter at have fjernet alle lagrede varer. Resterende poster:{item_count}.</red>"
+    close_bank_not_empty: "<red>Hæv din butiksbank før du lukker denne butik. Resterende sporede valutaer:{bank_currency_count}.</red>"
+    closed: "<green>Lukkede butikken og vendte tilbage{returned_blocks}ShopBlock(e). Optalte butikker:{owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Globalt admin kontrolpanel til RDS-administration.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS-kontrol</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
+    lore:
+      - "<gray>Administrer globale admin-shop-systemer fra ét sted.</gray>"
+      - "<gray>Åbn serverbanken, eller rediger konfigurationsindstillingerne nedenfor.</gray>"
+      - "<yellow>Kræver:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+      lore:
+        - "<gray>Gennemgå admin-shop-indtægter trukket ind i serverbanken.</gray>"
+        - "<gray>Tjek tidspunktet for næste træk, og træk saldi ud.</gray>"
+        - "<yellow>Klik for at åbne serverbankkontroller.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+      lore:
+        - "<gray>Rediger værdier fra</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Alle redigerbare indstillinger kan ændres via en ambolt-prompt.</gray>"
+        - "<yellow>Klik for at åbne konfigurationskontroller.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Valutaadministrator</gradient>"
+      lore:
+        - "<gray>Gennemgå registrerede valutaer fra Vault og JExEconomy.</gray>"
+        - "<gray>Opret standarden</gray> <white>regndråber</white> <gray>valuta efter behov.</gray>"
+        - "<yellow>Klik for at åbne valutakontrol.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Adgang påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge dette administratorpanel.</gray>"
+
+# Administratorvalutavisning for registrerede udbydere og oprettelse af standardvaluta.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Valutaadministrator</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Valutaudbydere</white>"
+    lore:
+      - "<gray>Registrerede valutaer:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault tilgængelig:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy tilgængelig:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Brug krystalknappen til at oprette standardvaluta.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Udbyder:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Præfiks:</gray> <white>{prefix}</white>"
+      - "<gray>Suffiks:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Skabe{currency_id}</white>"
+      lore:
+        - "<gray>Opret standard RDS-valutaen i JExEconomy.</gray>"
+        - "<yellow>Klik for at oprette{currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEconomy påkrævet</white>"
+      lore:
+        - "<gray>Du kan ikke oprette standardvaluta uden JExEconomy.</gray>"
+        - "<gray>Installer og aktiver JExEconomy først.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>{currency_id}Parat</white>"
+      lore:
+        - "<gray>Standardvalutaen findes allerede.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Oprettet standardvaluta:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke oprette valuta:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuta eksisterer allerede:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du kan ikke bruge denne knap, medmindre JExEconomy er tilgængelig.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Ingen valutaer fundet</white>"
+      lore:
+        - "<gray>Der blev ikke fundet nogen Vault- eller JExEconomy-valutaer.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Adgang påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne valutavisning.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at administrere valutaer.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Konfigurer browser-UI for redigerbare indstillinger og opdateringsfeedback.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Konfigurationsindstillinger</white>"
+    lore:
+      - "<gray>Redigerbare indstillinger fundet:</gray> <white>{setting_count}</white>"
+      - "<gray>Klik på en indgang nedenfor for at redigere dens værdi i en ambolt.</gray>"
+      - "<yellow>Ændringer skrives direkte til config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Sæt]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Sti:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Nuværende værdi:</gray> <white>{current_value}</white>"
+      - "<yellow>Klik for at redigere denne indstilling.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolesk]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Heltal]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Lang]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dobbelt]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Liste]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Snor]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Ingen redigerbare indstillinger</white>"
+      lore:
+        - "<gray>Der blev ikke fundet nogen redigerbare skalar-/listekonfigurationsindstillinger.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Adgang påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne konfigurationsvisning.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Konfigurationsredigering låst</white>"
+      lore:
+        - "<gray>Denne udgave tillader ikke redigeringer af runtime-konfigurationer.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at redigere konfigurationsindstillinger.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurationsredigering er låst i denne udgave.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Opdateret<white>{config_path}</white><gray>til<white>{updated_value}</white><gray>.</gray>"
+
+# Ambolt-prompttekst til redigering af konfigurationsværdier.
+shop_config_value_anvil_ui:
+  title: "Redigere{config_path}"
+  input:
+    lore:
+      - "<gray>Sti:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Nuværende værdi:</gray> <white>{current_value}</white>"
+      - "<yellow>Indtast den nye værdi og bekræft.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ugyldig input for type<white>{value_type}</white><gray>. Input:</gray> <white>{input}</white>"
+
+# Serverbankoversigt, valutaindtastninger og tilbagetrækningsfeedback.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Indkomst og overførselsstatus</white>"
+    lore:
+      - "<gray>Sporede valutaer:</gray> <white>{currency_count}</white>"
+      - "<gray>Indkomst:</gray> <white>{income_summary}</white>"
+      - "<gray>Næste træk:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Tid til næste træk:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Admin-shop-saldi overføres hertil efter planen.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Ingen</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Handicappet</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Indtil...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Handicappet</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Indtil...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Tilbage]</gradient> <white>Træk alle tilbage</white>"
+    lore:
+      - "<gray>Forsøg at trække enhver positiv saldo tilbage.</gray>"
+      - "<gray>Utilgængelige valutaer vil blive sprunget over.</gray>"
+      - "<yellow>Klik for at hæve alle midler til din konto.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+      - "<gray>Tilgængelig saldo:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klik for at hæve hele denne valutasaldo.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Serverbanken er tom</white>"
+      lore:
+        - "<gray>Ingen positive saldi er tilgængelige at hæve.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Adgang påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at administrere serverbanken.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at administrere serverbanken.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Denne server-bank-saldo er ikke længere tilgængelig.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>trak sig tilbage<white>{amount} {currency_name}</white><gray>. Tilbage{currency_name}:</gray> <white>{remaining_amount}</white><gray>. Aktive valutaer:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>trak sig tilbage<white>{withdrawn_currency_count}</white><gray>valutabalance(r). Mislykkedes:</gray> <white>{failed_currency_count}</white><gray>. Resterende aktive valutaer:</gray> <white>{remaining_currency_count}</white><gray>. Detaljer:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ingen saldi kunne hæves. Mislykket optælling af valuta:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Valuta<white>{currency_name}</white><gray>er i øjeblikket ikke tilgængelig.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Det lykkedes ikke at trække sig tilbage<white>{amount} {currency_name}</white><gray>fra serverbanken.</gray>"
+
+# Butiksvare input UI, der bruges ved tilføjelse af nye lagerposter.
+shop_input_ui:
+  title: "Tilføj varer -{owner} @ {location}"
+  summary:
+    name: "<gold>Butik Opbevaring</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>I øjeblikket gemt:</gray> <white>{stored_count}</white>"
+      - "<yellow>Nye elementer har som standard valutatype boks og værdi 0.</yellow>"
+  input_slot:
+    name: "<green>Indgangsåbning</green>"
+    lore:
+      - "<gray>Venstreklik med et element på din markør</gray>"
+      - "<gray>eller Skift-klik på en vare fra dit lager.</gray>"
+      - "<gray>Højreklik for at fjerne en indsat stak.</gray>"
+  no_new_items_inserted: "<red>Ingen nye elementer blev indsat.</red>"
+  saved: "<green>Gemt{added_count}nye poster. Shop har nu{stored_count}indgange.</green>"
+  save_failed: "<red>Butiksvarer kunne ikke gemmes.</red>"
+  left_overs: "<yellow>Returnerede ikke-gemte butiksvarer til dit lager.</yellow>"
+  feedback:
+    no_permission: "<red>Du har ikke tilladelse til at tilføje varer til denne butik.</red>"
+    locked:
+      name: "<red>Forsyningsadgang påkrævet</red>"
+      lore:
+        - "<gray>Kun associerede og betroede spillere kan tilføje elementer her.</gray>"
+
+# Shop storage browser UI til visning og tilbagetrækning af lagrede varer.
+shop_storage_ui:
+  title: "Gemte genstande -{location}"
+  summary:
+    name: "<gold>Gemte genstande</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>Gemte poster:</gray> <white>{stored_count}</white>"
+      - "<yellow>Klik på en vare nedenfor for at trække den tilbage.</yellow>"
+  entry:
+    lore:
+      - "<gray>Gemt beløb:</gray> <white>{amount}</white>"
+      - "<gray>Varetype:</gray> <white>{item_type}</white>"
+      - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+      - "<gray>Værdi:</gray> <white>{value}</white>"
+      - "<yellow>Klik for at udtrække denne vare fra butikken.</yellow>"
+  feedback:
+    not_owner: "<red>Du har ikke tilladelse til at administrere denne butik.</red>"
+    extracted: "<green>Udvundet{amount}x{item_type}. Prisen var{value} {currency_type}. Resterende gemte poster:{stored_count}.</green>"
+    item_missing: "<red>Det gemte element kunne ikke findes.</red>"
+    locked:
+      name: "<red>Fuld adgang påkrævet</red>"
+      lore:
+        - "<gray>Kun betroede spillere med fuld adgang kan trække gemte genstande tilbage.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Shop rediger valg UI for at vælge poster, der skal ændres.
+shop_edit_ui:
+  title: "Rediger butiksvarer -{location}"
+  summary:
+    name: "<aqua>Butiksprisredaktør</aqua>"
+    player:
+      lore:
+        - "<gray>Ejer:</gray> <white>{owner}</white>"
+        - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+        - "<gray>Gemte poster:</gray> <white>{stored_count}</white>"
+        - "<yellow>Venstreklik på en vare for at redigere priser.</yellow>"
+        - "<yellow>Højreklik på en vare for at fjerne den fra butikken.</yellow>"
+    admin:
+      lore:
+        - "<gray>Ejer:</gray> <white>{owner}</white>"
+        - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+        - "<gray>Gemte poster:</gray> <white>{stored_count}</white>"
+        - "<gray>Admin genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
+        - "<gray>Genopbevaringsplan:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Venstreklik på en vare for at redigere priser eller lager.</yellow>"
+        - "<yellow>Højreklik på en vare for at fjerne den fra butikken.</yellow>"
+    restock_schedule:
+      gradual: "Standard timer:{reset_timer_ticks}kryds pr. vare"
+  entry:
+    player:
+      lore:
+        - "<gray>Gemt beløb:</gray> <white>{amount}</white>"
+        - "<gray>Varetype:</gray> <white>{item_type}</white>"
+        - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+        - "<gray>Værdi:</gray> <white>{value}</white>"
+        - "<yellow>Venstre klik for at redigere denne butiksvare.</yellow>"
+        - "<yellow>Højreklik for at fjerne den fra butikken.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Lager:</gray> <white>Uendelig</white>"
+        - "<gray>Varetype:</gray> <white>{item_type}</white>"
+        - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+        - "<gray>Værdi:</gray> <white>{value}</white>"
+        - "<gray>Genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Venstreklik for at redigere denne administratorbutik.</yellow>"
+        - "<yellow>Højreklik for at fjerne den fra butikken.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Nuværende lager:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Varetype:</gray> <white>{item_type}</white>"
+        - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+        - "<gray>Værdi:</gray> <white>{value}</white>"
+        - "<gray>Genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
+        - "<gray>Genopbevaringsplan:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Venstreklik for at redigere denne administratorbutik.</yellow>"
+        - "<yellow>Højreklik for at fjerne den fra butikken.</yellow>"
+    admin_mode:
+      gradual: "Gradvis"
+      full: "Fuld nulstilling"
+    restock_schedule:
+      gradual: "1 vare hver{reset_timer_ticks}flåter"
+      full: "Fuldt op på lager kl{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Du har ikke tilladelse til at administrere denne butik.</red>"
+    removed: "<green>Fjernet{amount}x{item_type}fra butikken. Prisen var{value} {currency_type}. Resterende gemte poster:{stored_count}.</green>"
+    item_missing: "<red>Denne butiksvare kunne ikke findes.</red>"
+    locked:
+      name: "<red>Fuld adgang påkrævet</red>"
+      lore:
+        - "<gray>Kun betroede spillere med fuld adgang kan redigere elementværdier.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Detaljeret editor UI for individuelle butiksvarers adfærd og prissætning.
+shop_item_edit_ui:
+  title: "Redigere{item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Gemt beløb:</gray> <white>{amount}</white>"
+        - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+        - "<gray>Værdi:</gray> <white>{value}</white>"
+        - "<gray>Tilgængelighedstilstand:</gray> <white>{availability_mode}</white>"
+        - "<gray>Tilgængelighed nu:</gray> <white>{availability_state}</white>"
+        - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+        - "<yellow>Brug knapperne nedenfor til at redigere dette element.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Lager:</gray> <white>Uendelig</white>"
+        - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+        - "<gray>Værdi:</gray> <white>{value}</white>"
+        - "<gray>Genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
+        - "<gray>Købskommandoer:</gray> <white>{command_count}</white>"
+        - "<gray>Tilgængelighedstilstand:</gray> <white>{availability_mode}</white>"
+        - "<gray>Tilgængelighed nu:</gray> <white>{availability_state}</white>"
+        - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+        - "<yellow>Brug knapperne nedenfor til at redigere dette administratorelement.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Nuværende lager:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Valutatype:</gray> <white>{currency_type}</white>"
+        - "<gray>Værdi:</gray> <white>{value}</white>"
+        - "<gray>Genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
+        - "<gray>Genopbevaringsplan:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Købskommandoer:</gray> <white>{command_count}</white>"
+        - "<gray>Tilgængelighedstilstand:</gray> <white>{availability_mode}</white>"
+        - "<gray>Tilgængelighed nu:</gray> <white>{availability_state}</white>"
+        - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+        - "<yellow>Brug knapperne nedenfor til at redigere dette administratorelement.</yellow>"
+  currency_type:
+    name: "<green>Valutatype</green>"
+    lore:
+      - "<gray>Nuværende type:</gray> <white>{currency_type}</white>"
+      - "<yellow>Klik for at redigere valutatypen.</yellow>"
+  value:
+    name: "<gold>Værdi</gold>"
+    lore:
+      - "<gray>Nuværende type:</gray> <white>{currency_type}</white>"
+      - "<gray>Nuværende værdi:</gray> <white>{value}</white>"
+      - "<yellow>Klik for at redigere den numeriske værdi.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Tilstand] Elementtilgængelighed</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Altid]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Rotere]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Aldrig]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Åben]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Lukket]</gradient>"
+    lore:
+      - "<gray>Aktuel tilstand:</gray> <white>{availability_mode}</white>"
+      - "<gray>Nuværende tilstand:</gray> <white>{availability_state}</white>"
+      - "<gray>Roter vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+      - "<yellow>Klik for at cykle: Altid -> Roter -> Aldrig.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Roter minutter</gradient>"
+    lore:
+      - "<gray>Nuværende vindue:</gray> <white>{rotation_minutes}minut(er)</white>"
+      - "<gray>Aktuel tilstand:</gray> <white>{availability_mode}</white>"
+      - "<gray>Roter tilstand etiket:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Klik for at indstille roterende minutter i en ambolt.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Command Executor</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Spiller]</gradient>"
+    lore:
+      - "<gray>Aktuel tilstand:</gray> <white>{command_mode}</white>"
+      - "<gray>Næste tilstand:</gray> <white>{next_mode}</white>"
+      - "<yellow>Klik for at skifte, hvem der udfører nyligt tilføjede kommandoer.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Købskommandoer</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Ingen</gradient>"
+    lore:
+      - "<gray>Konfigurerede kommandoer:</gray> <white>{command_count}</white>"
+      - "<gray>Seneste kommando:</gray> <white>{latest_command}</white>"
+      - "<yellow>Klik for at åbne kommandoindstillinger og tilføje kommandoer.</yellow>"
+  confirm:
+    name: "<green>Gem varepriser</green>"
+    lore:
+      - "<gray>Anvend den aktuelle valutatype og -værdi</gray>"
+      - "<gray>til denne butiksvare.</gray>"
+  stock_limit:
+    name: "<gold>Lagergrænse</gold>"
+    unlimited: "Uendelig"
+    lore:
+      - "<gray>Nuværende grænse:</gray> <white>{stock_limit}</white>"
+      - "<gray>Nuværende lager:</gray> <white>{current_stock}</white>"
+      - "<yellow>Klik for at indstille en lagergrænse.</yellow>"
+      - "<gray>Brug -1 til at returnere denne vare til uendeligt lager.</gray>"
+  reset_timer:
+    name: "<aqua>Nulstil timer</aqua>"
+    lore:
+      - "<gray>Aktuel timer:</gray> <white>{reset_timer_ticks}flåter</white>"
+      - "<yellow>Klik for at indstille genopfyldningstimeren.</yellow>"
+  restock_mode:
+    name: "<yellow>Admin Restock Mode</yellow>"
+    gradual: "Gradvis"
+    full: "Fuld nulstilling"
+    lore:
+      - "<gray>Konfigureret tilstand:</gray> <white>{restock_mode}</white>"
+      - "<gray>Konfigureret tidsplan:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Klik for at skifte til den globale administratorgenopfyldningstilstand.</yellow>"
+  restock_schedule:
+    gradual: "1 vare hver{reset_timer_ticks}flåter"
+    full: "Fuldt op på lager kl{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Du har ikke tilladelse til at administrere denne butik.</red>"
+    shop_missing: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+    item_missing: "<red>Denne butiksvare kunne ikke findes.</red>"
+    saved: "<green>Gemt vareprissætning som{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Tilgængelighedstilstand indstillet til<white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ny kommandoudførelsestilstand indstillet til<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Fjernede den seneste kommando. Resterende kommandoer:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ryddede alle administratorkøbskommandoer.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Ingen admin-købskommandoer er konfigureret.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ændringer af plugin-konfiguration er låst ind<white>RDS gratis</white><gray>. Opgrader til premium for fuld adgang.</gray>"
+    restock_mode_updated: "<green>Admin genopfyldningstilstand indstillet til{restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Kunne ikke gemme administratorgenopfyldningstilstanden.</red>"
+
+# Ambolt-prompt for at tilføje en ny admin-købskommando.
+shop_item_admin_command_anvil_ui:
+  title: "Tilføj kommando{command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Indtast en kommando, der skal køres, når dette administratorelement er købt.</gray>"
+      - "<gray>Kun kommandotekst. Forsinkelse er konfigureret i kommandoindstillingsvisningen.</gray>"
+      - "<gray>Eksempler:</gray>"
+      - "<white>udsende%player_name%købt{amount}x{item_type}</white>"
+      - "<white>øko give%player_name% 50</white>"
+      - "<gray>Konfigurerede kommandoer:</gray> <white>{command_count}</white>"
+      - "<gray>Udførelsestilstand:</gray> <white>{command_mode}</white>"
+      - "<gray>Forsinke:</gray> <white>{command_delay_ticks}flåter</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Spiller]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kommandoteksten må ikke være tom. Input:</gray> <white>{input}</white>"
+
+# Administratorkøbskommandohåndterings brugergrænseflade til tilstand, forsinkelse og kommandoliste.
+shop_item_admin_command_ui:
+  title: "Kommandoindstillinger -{item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Indstillinger for købskommando</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Ingen</gradient>"
+    lore:
+      - "<gray>Konfigurerede kommandoer:</gray> <white>{command_count}</white>"
+      - "<gray>Seneste kommando:</gray> <white>{latest_command}</white>"
+      - "<gray>Næste kommandotilstand:</gray> <white>{command_mode}</white>"
+      - "<gray>Næste kommandoforsinkelse:</gray> <white>{command_delay_ticks}krydser ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Next Command Executor</gradient>"
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Spiller]</green>"
+    lore:
+      - "<gray>Aktuel tilstand:</gray> <white>{command_mode}</white>"
+      - "<gray>Næste tilstand:</gray> <white>{next_mode}</white>"
+      - "<yellow>Klik for at skifte executor for den næste kommando.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Forsinkelse] Næste kommandoforsinkelse</gradient>"
+    lore:
+      - "<gray>Aktuel forsinkelse:</gray> <white>{command_delay_ticks}krydser ({command_delay_seconds}s)</white>"
+      - "<yellow>Klik for at indstille forsinkelse i flueben for den næste kommando.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Tilføj kommando</gradient>"
+    lore:
+      - "<gray>Mode:</gray> <white>{command_mode}</white>"
+      - "<gray>Forsinke:</gray> <white>{command_delay_ticks}krydser ({command_delay_seconds}s)</white>"
+      - "<yellow>Klik for at åbne kommandoinput.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Fjern kommando</gradient>"
+    lore:
+      - "<gray>Konfigurerede kommandoer:</gray> <white>{command_count}</white>"
+      - "<yellow>Klik for at fjerne den seneste kommando.</yellow>"
+      - "<yellow>Skift + klik for at rydde alle kommandoer.</yellow>"
+  confirm:
+    name: "<green>Gem kommandoindstillinger</green>"
+    lore:
+      - "<gray>Vend tilbage til elementeditoren og behold disse kommandoændringer.</gray>"
+  feedback:
+    not_owner: "<red>Du har ikke tilladelse til at administrere denne butik.</red>"
+    shop_missing: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Næste kommandotilstand indstillet til<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Fjernede den seneste kommando. Resterende kommandoer:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ryddede alle administratorkøbskommandoer.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Ingen admin-købskommandoer er konfigureret.</gray>"
+
+# Ambolt-prompt for at indstille admin-kommando forsinkelse flueben.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Indstil forsinkelse -{command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Indtast et helt antal flueben for den næste kommandoforsinkelse.</gray>"
+      - "<gray>Udførelsestilstand:</gray> <white>{command_mode}</white>"
+      - "<gray>Eksempler:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Spiller]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Indtast et helt tal større end eller lig med 0. Indtast:</gray> <white>{input}</white>"
+
+# Ambolt-prompt for rotationstilstand tilgængelighedsvindue på få minutter.
+shop_item_availability_minutes_anvil_ui:
+  title: "Roter minutter:{rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Roter minutter</gradient>"
+    lore:
+      - "<gray>Indtast et helt antal minutter.</gray>"
+      - "<gray>Rotationstilstand skifter mellem tilgængelig/utilgængelig hvert vindue.</gray>"
+  error:
+    invalid_number: "<red>Indtast et helt tal større end 0. Indtast:{input}</red>"
+
+# Ambolt-prompt for indstilling af begrænset kapacitet for administratorlager.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Lagergrænse:{stock_limit}"
+  input:
+    name: "<gold>Lagergrænse</gold>"
+    lore:
+      - "<gray>Indtast en positiv lagergrænse i varer.</gray>"
+      - "<gray>Brug -1 til at gendanne uendeligt admin lager.</gray>"
+  error:
+    invalid_number: "<red>Indtast -1 eller et helt tal større end 0. Indtast:{input}</red>"
+
+# Ambolt prompt for at konfigurere admin restock/reset timer ticks.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Nulstil timer:{reset_timer_ticks}"
+  input:
+    name: "<aqua>Nulstil timer</aqua>"
+    lore:
+      - "<gray>Indtast et helt antal Bukkit-flåter.</gray>"
+      - "<gray>Gradvis tilstand gendanner ét element pr. timer.</gray>"
+  error:
+    invalid_number: "<red>Indtast et helt tal større end 0. Indtast:{input}</red>"
+
+# Ambolt prompt for at vælge den valutatype, der bruges af en vare.
+shop_item_currency_type_anvil_ui:
+  title: "Valutatype:{currency_type}"
+  input:
+    name: "<green>Valutatype</green>"
+    lore:
+      - "<gray>Indtast valuta-id'et for denne vare.</gray>"
+      - "<gray>Eksempler:</gray> <white>hvælving, poletter, ædelstene</white>"
+  error:
+    empty: "<red>Valutatypen må ikke være tom.</red>"
+    invalid_currency: "<red>Valutatype{currency_type}er ikke tilgængelig. Brug vault eller en registreret tilpasset valuta.</red>"
+    processing_failed: "<red>Kunne ikke opdatere valutatypen. Input:{input}</red>"
+
+# Ambolt prompt for at angive pris/værdi pr.
+shop_item_value_anvil_ui:
+  title: "Værdi:{value} {currency_type}"
+  input:
+    name: "<gold>Vareværdi</gold>"
+    lore:
+      - "<gray>Indtast en ikke-negativ numerisk værdi.</gray>"
+      - "<gray>Eksempler:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Indtast et gyldigt ikke-negativt tal. Input:{input}</red>"
+    processing_failed: "<red>Kunne ikke opdatere varens værdi. Input:{input}</red>"
+
+# Shop bank UI for per-shop valutasaldi og udbetalinger.
+shop_bank_ui:
+  title: "Butiksbank -{location}"
+  summary:
+    name: "<gold>Bankbalancer</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>Sporede valutaer:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klik på en saldo nedenfor for at hæve det fulde beløb.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+      - "<gray>Tilgængelig saldo:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klik for at hæve hele denne saldo.</yellow>"
+  feedback:
+    not_owner: "<red>Du har ikke tilladelse til at administrere denne butik.</red>"
+    entry_missing: "<red>Den banksaldo er ikke længere tilgængelig.</red>"
+    withdrawn: "<green>trak sig tilbage{amount} {currency_name}. Tilbage{currency_name}: {remaining_amount}. Sporede valutaer:{bank_currency_count}.</green>"
+    withdraw_failed: "<red>Det lykkedes ikke at trække sig tilbage{amount} {currency_name}fra butiksbanken.</red>"
+    currency_unavailable: "<red>Valuta{currency_name}er ikke tilgængelig lige nu.</red>"
+    empty:
+      name: "<red>Bank tom</red>"
+      lore:
+        - "<gray>Denne butik har ingen banksaldi at hæve.</gray>"
+    locked:
+      name: "<red>Fuld adgang påkrævet</red>"
+      lore:
+        - "<gray>Kun betroede spillere med fuld adgang kan hæve shoppene.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Trusted player management UI til butiksadgangsroller.
+shop_trusted_ui:
+  title: "Betroede spillere -{location}"
+  summary:
+    name: "<gold>Butik Trust Manager</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>Associerede:</gray> <white>{associate_count}</white>"
+      - "<gray>Betroede spillere:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Klik på en spiller for at skifte til deres tillidsstatus.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Status:</gray> <white>Offentlig</white>"
+        - "<gray>Ingen administrationstilladelser.</gray>"
+        - "<yellow>Klik for at skifte til Associate.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Status:</gray> <white>Associeret</white>"
+        - "<gray>Kan tilføje varer til butikken.</gray>"
+        - "<yellow>Klik for at skifte til Trusted.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Status:</gray> <white>Betroet</white>"
+        - "<gray>Kan fuldt ud styre butikken.</gray>"
+        - "<yellow>Klik for at skifte til Offentlig.</yellow>"
+  feedback:
+    not_owner: "<red>Kun butiksejeren kan administrere betroede spillere.</red>"
+    updated:
+      public: "<yellow>Sæt{player}til offentligheden.</yellow>"
+      associate: "<green>Sæt{player}at associere.</green>"
+      trusted: "<green>Sæt{player}til Trusted.</green>"
+    empty:
+      name: "<red>Ingen spillere fundet</red>"
+      lore:
+        - "<gray>Ingen andre kendte spillere er tilgængelige at stole på.</gray>"
+    locked:
+      name: "<red>Kun ejeradgang</red>"
+      lore:
+        - "<gray>Kun butiksejeren kan administrere betroede spillere.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Transaktionsreskontro UI til køb og skattehistorik.
+shop_ledger_ui:
+  title: "Shop Ledger -{location}"
+  summary:
+    name: "<gold>Shop Transaktionsbog</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>Samlet antal poster:</gray> <white>{ledger_count}</white>"
+      - "<gray>Indkøb:</gray> <white>{purchase_count}</white>"
+      - "<gray>Skatter:</gray> <white>{tax_count}</white>"
+      - "<yellow>Nyeste transaktioner vises først.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Køb:{item_type}</green>"
+      lore:
+        - "<gray>Køber:</gray> <white>{actor}</white>"
+        - "<gray>Beløb:</gray> <white>{item_amount}</white>"
+        - "<gray>Samlet betalt:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Optaget:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Skat</gold>"
+      lore:
+        - "<gray>Opkrævet til:</gray> <white>{actor}</white>"
+        - "<gray>Skatteandel:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Optalte butikker:</gray> <white>{counted_shops}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Optaget:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Ingen hovedbogsposter</red>"
+      lore:
+        - "<gray>Denne butik har endnu ingen registrerede køb eller afgifter.</gray>"
+    locked:
+      name: "<red>Fuld adgang påkrævet</red>"
+      lore:
+        - "<gray>Kun betroede spillere med fuld adgang kan se hovedbogen.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Kundevendt butiks-UI til at gennemse og købe varer.
+shop_customer_ui:
+  title: "Shop -{location}"
+  summary:
+    name: "<gold>Kundevisning</gold>"
+    player:
+      lore:
+        - "<gray>Ejer:</gray> <white>{owner}</white>"
+        - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+        - "<gray>Tilgængelige poster:</gray> <white>{stored_count}</white>"
+        - "<gray>Butikstype:</gray> <white>Player Shop</white>"
+        - "<gray>Beholdning:</gray> <white>Finite</white>"
+        - "<yellow>Venstreklik på en vare for at købe en.</yellow>"
+        - "<yellow>Højreklik på en vare for at vælge et beløb.</yellow>"
+    admin:
+      lore:
+        - "<gray>Ejer:</gray> <white>{owner}</white>"
+        - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+        - "<gray>Tilgængelige poster:</gray> <white>{stored_count}</white>"
+        - "<gray>Butikstype:</gray> <white>Admin butik</white>"
+        - "<gray>Beholdning:</gray> <white>Uendelig</white>"
+        - "<yellow>Venstreklik på en vare for at købe en.</yellow>"
+        - "<yellow>Højreklik på en vare for at vælge et beløb.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Lager:</gray> <white>{amount}</white>"
+        - "<gray>Varetype:</gray> <white>{item_type}</white>"
+        - "<gray>Pris hver:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Samlet lagerværdi:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<yellow>Venstre klik for at købe en.</yellow>"
+        - "<yellow>Højreklik for at vælge et beløb.</yellow>"
+    admin:
+      lore:
+        - "<gray>Beholdning:</gray> <white>Uendelig</white>"
+        - "<gray>Varetype:</gray> <white>{item_type}</white>"
+        - "<gray>Pris hver:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Butikstype:</gray> <white>Admin butik</white>"
+        - "<yellow>Venstre klik for at købe en.</yellow>"
+        - "<yellow>Højreklik for at vælge et beløb.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Lager:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Varetype:</gray> <white>{item_type}</white>"
+        - "<gray>Pris hver:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Genopfyldningstilstand:</gray> <white>{restock_mode}</white>"
+        - "<gray>Genopbevaringsplan:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Venstre klik for at købe en.</yellow>"
+        - "<yellow>Højreklik for at vælge et beløb.</yellow>"
+    admin_mode:
+      gradual: "Gradvis"
+      full: "Fuld nulstilling"
+    restock_schedule:
+      gradual: "1 vare hver{reset_timer_ticks}flåter"
+      full: "Fuldt op på lager kl{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Købt{amount}x{item_type}for{total_price} {currency_name}. Resterende lager:{remaining_amount}.</green>"
+    purchased_admin: "<green>Købt{amount}x{item_type}for{total_price} {currency_name}. Denne adminbutik har uendelig inventar.</green>"
+    purchased_admin_limited: "<green>Købt{amount}x{item_type}for{total_price} {currency_name}. Resterende administratorlager:{remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}er i øjeblikket ikke tilgængelig for køb.</gray>"
+    insufficient_stock: "<red>Denne butik har kun{available_amount}x{item_type}tilgængelig.</red>"
+    insufficient_funds: "<red>Du har brug for{total_price} {currency_name}at købe{amount}x{item_type}.</red>"
+    currency_unavailable: "<red>Valuta{currency_name}er ikke tilgængelig lige nu.</red>"
+    invalid_amount: "<red>Indtast et gyldigt købsbeløb.</red>"
+    item_missing: "<red>Denne butiksvare er ikke længere tilgængelig.</red>"
+    empty_shop:
+      name: "<red>Butikken er tom</red>"
+      lore:
+        - "<gray>Der er ingen varer, der kan købes.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Ambolt-prompt for input af tilpasset købsmængde.
+shop_purchase_amount_anvil_ui:
+  title: "Købe{item_type}"
+  input:
+    name: "<gold>Købsbeløb</gold>"
+    player:
+      lore:
+        - "<gray>Indtast hvor mange varer du vil købe.</gray>"
+        - "<gray>Maksimalt tilgængeligt:</gray> <white>{max_amount}</white>"
+        - "<gray>Punkt:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Indtast hvor mange varer du vil købe.</gray>"
+        - "<gray>Denne adminbutik har uendelig inventar.</gray>"
+        - "<gray>Punkt:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Indtast hvor mange varer du vil købe.</gray>"
+        - "<gray>Maksimalt tilgængeligt:</gray> <white>{max_amount}</white>"
+        - "<gray>Punkt:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Indtast et helt tal mellem 1 og{max_amount}. Input:{input}</red>"
+    invalid_number_admin: "<red>Indtast et helt tal større end 0. Indtast:{input}</red>"
+    processing_failed: "<red>Kunne ikke behandle købsbeløbet. Input:{input}</red>"
+
+# Shop discovery landing UI til gennemse alt og materialesøgning.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Shop browser</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop browser</gradient>"
+    lore:
+      - "<gray>Gennemse hver sporede butik eller filtrer efter et bestemt materiale.</gray>"
+      - "<yellow>Vælg en af ​​handlingerne nedenfor for at fortsætte.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Gennemse alle butikker</gradient>"
+    lore:
+      - "<gray>Åbn den fulde paginerede butikskatalog.</gray>"
+      - "<yellow>Klik for at se alle sporede butikker.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Søg efter materiale</gradient>"
+    lore:
+      - "<gray>Åbn en ambolt-prompt, og indtast et materialenavn.</gray>"
+      - "<gray>Eksempel:</gray> <white>diamantblok</white>"
+      - "<yellow>Klik for at søge efter varetype.</yellow>"
+
+# Sideinddelt mappe-UI med alle sporede butikker.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Alle butikker</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Butikskatalog</gradient>"
+    lore:
+      - "<gray>Sporede butikker:</gray> <white>{shop_count}</white>"
+      - "<gray>Samlet tilgængeligt lager:</gray> <white>{available_count}</white>"
+      - "<yellow>Klik på en hvilken som helst butik nedenfor for at åbne den.</yellow>"
+  entry:
+    name: "<gold>{owner}'s butik</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>Tilgængeligt lager:</gray> <white>{available_count}</white>"
+      - "<yellow>Klik for at åbne denne butik.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Ingen butikker fundet</red>"
+      lore:
+        - "<gray>Der er endnu ingen butikker tilmeldt.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Materialefiltrerede butiksresultater UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Resultater for{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Resultater for{material}</gradient>"
+    lore:
+      - "<gray>Materiale:</gray> <white>{material}</white>"
+      - "<gray>Matchende butikker:</gray> <white>{shop_count}</white>"
+      - "<gray>Matchende tilbud:</gray> <white>{matching_count}</white>"
+      - "<yellow>Klik på en matchende butik nedenfor for at åbne den.</yellow>"
+  entry:
+    name: "<gold>{owner}'s butik</gold>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Beliggenhed:</gray> <white>{location}</white>"
+      - "<gray>Matchende{material}tilbyder:</gray> <white>{matching_count}</white>"
+      - "<gray>Samlet synlig lagerbeholdning:</gray> <white>{available_count}</white>"
+      - "<yellow>Klik for at åbne denne butik.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Ingen butikker sælger{material}</red>"
+      lore:
+        - "<gray>Ingen sporede butikker tilbyder i øjeblikket dette materiale.</gray>"
+    shop_missing:
+      name: "<red>Butik ikke fundet</red>"
+      lore:
+        - "<gray>Denne butik kunne ikke indlæses fra lageret.</gray>"
+      message: "<red>Denne butik kunne ikke indlæses fra lageret.</red>"
+
+# Ambolt-prompt for at indtaste en materialefiltersøgning.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Søg materiale</gradient>"
+  input:
+    lore:
+      - "<gray>Indtast et Bukkit-materialenavn for at søge i sporede butikker.</gray>"
+      - "<gray>Eksempler:</gray> <white>diamant</white><gray>,</gray> <white>diamantblok</white>"
+      - "<yellow>Klik på resultatpladsen for at åbne matchende butikker.</yellow>"
+  error:
+    invalid_material: "<red>Indtast et gyldigt materiale såsom diamantblok. Input:{input}</red>"
+    processing_failed: "<red>Kunne ikke søge efter materiale. Input:{input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# Delte pagineringselementetiketter brugt på tværs af listebrugergrænseflader.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Side%current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Nuværende side:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Samlet antal sider:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Side%direction%</gradient>"
+
+# ============================================
+# HOVEDPUNKTER
+# ============================================
+# Delte hoved-/navigationsknapper (retur/bekræft/næste).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Retur</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Bekræft</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik for at bekræfte indstillinger</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Bekræft</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik for at bekræfte indstillinger</gradient>"

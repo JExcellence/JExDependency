@@ -1,0 +1,1204 @@
+# ============================================
+# TIỀN TỐ TOÀN CẦU
+# ============================================
+# Tiền tố được thêm vào trước cuộc trò chuyện plugin chung đầu ra.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Dòng tóm tắt nhanh chóng đối với người chơi về trạng thái cửa hàng, ngân hàng và thuế.
+info:
+  total: "<blue>Cửa hàng:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Số dư được theo dõi ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Thuế theo lịch trình ({taxed_shops} cửa hàng chịu thuế):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Thuế tiếp theo:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Thông báo thời gian tham gia được hiển thị khi người chơi tham gia máy chủ.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} cửa hàng chịu thuế\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Chuỗi phản hồi lệnh cho các tính năng và chuyển đổi của `/rs`.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Đã mở <white>RDS Quản trị viên</white><gray> bảng điều khiển.</gray>"
+  bar:
+    enabled: "<green>Thanh ông chủ cửa hàng được bật khi đang xem cửa hàng.</green>"
+    disabled: "<yellow>Thanh ông chủ cửa hàng bị vô hiệu hóa.</yellow>"
+  give:
+    syntax: "<red>Cách sử dụng: /rs đưa ra<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Cách sử dụng:</gray> <white>/rs bảng điểm &lt;sổ cái|chứng khoán&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã bật <white>{scoreboard_type}</white><gray> thanh bên.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Đã tắt <white>{scoreboard_type}</white><gray> thanh bên.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Đã chuyển sang <white>{scoreboard_type}</white><gray> thanh bên.</gray>"
+    type:
+      ledger: "<gold>sổ cái</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# Nhãn bảng điểm bên cạnh và định dạng giá trị.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ Sổ cái [RDS] ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Tổng số tiền trong Cửa hàng của Ngân hàng</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Không có tiền được gửi vào ngân hàng</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Cổ phiếu ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Trạng thái:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Không có cửa hàng người chơi</red>"
+
+# Văn bản thanh Boss được hiển thị khi nhắm mục tiêu một shop.
+shop_boss_bar:
+  title: "<gold>{shop_type} Cửa hàng</gold> <gray>|</gray> <yellow>Chủ sở hữu:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Các mặt hàng:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Vị trí:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Quản trị viên"
+  owner:
+    admin: "Quản trị viên"
+  available_items:
+    finite: "{item_count}"
+    limited: "Hàng có hạn"
+    infinite: "Infinite"
+    various: "Various"
+
+# ============================================
+# Các nút GUI
+# ============================================
+
+# Tên mặt hàng chặn cửa hàng và siêu dữ liệu truyền thuyết.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Đặt khối này để thiết lập cửa hàng của bạn.</yellow>"
+
+# Nhãn giao diện người dùng tổng quan về cửa hàng cửa hàng, truyền thuyết và trạng thái sẵn có.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Cửa hàng cửa hàng</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Khối cửa hàng được sở hữu</gradient>"
+    lore:
+      - "<gray>Khối cửa hàng được sở hữu:</gray> <white>{owned_shops}</white>"
+      - "<gray>Bản nhạc này đã được mua hoặc cấp</gray>"
+      - "<gray>ShopBlock quyền sở hữu.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Giới hạn khối cửa hàng</gradient>"
+    lore:
+      - "<gray>Khối cửa hàng được sở hữu:</gray> <white>{owned_shops}</white>"
+      - "<gray>Số khối cửa hàng tối đa:</gray> <white>{max_shops}</white>"
+      - "<gray>Giới hạn này kiểm soát số lượng cửa hàng</gray>"
+      - "<gray>khối bạn có thể mở khóa.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Yêu cầu] Yêu cầu về cửa hàng</gradient>"
+    lore:
+      - "<gray>Yêu cầu được định cấu hình:</gray> <white>{requirement_count}</white>"
+      - "<gray>Số lượng yêu cầu hiện tại:</gray> <white>{requirements}</white>"
+      - "<gray>Trạng thái:</gray> <white>{availability}</white>"
+      - "<yellow>Nhấp để kiểm tra cấp cửa hàng tiếp theo.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Sẵn sàng]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Chưa giải quyết]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ngoại tuyến]</gradient>"
+
+# Giao diện người dùng yêu cầu cấp cửa hàng, hiển thị tiến trình và phản hồi mua hàng.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Yêu cầu] Cấp cửa hàng{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Khối cửa hàng mua</gradient>"
+    lore:
+      - "<gray>Cấp mua hàng:</gray> <white>{purchase_number}</white>"
+      - "<gray>Khối cửa hàng được sở hữu:</gray> <white>{owned_shops}</white>"
+      - "<gray>Số khối cửa hàng tối đa:</gray> <white>{max_shops}</white>"
+      - "<gray>Yêu cầu được định cấu hình:</gray> <white>{requirement_count}</white>"
+      - "<gray>Đã đáp ứng hiện tại:</gray> <white>{met_count}</white>"
+      - "<gray>Trạng thái:</gray> <white>{availability}</white>"
+      - "<yellow>Nhấp để mua khi cấp này sẵn sàng.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Sẵn sàng]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Chưa giải quyết]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ngoại tuyến]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Miễn phí]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Miễn phí] Không yêu cầu</gradient>"
+    lore:
+      - "<gray>Cấp mua hàng này không có yêu cầu được định cấu hình.</gray>"
+      - "<yellow>Bạn có thể mua khối cửa hàng này mà không cần kiểm tra thêm.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Yêu cầu]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Khóa:</gray> <white>{requirement_key}</white>"
+      - "<gray>Loại:</gray> <white>{requirement_type}</white>"
+      - "<gray>Trạng thái:</gray> <white>{status}</white>"
+      - "<gray>Tiến trình:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Tóm tắt:</gray> <white>{summary}</white>"
+      - "<yellow>Nhấp chuột phải vào các yêu cầu tương thích với tiến trình ngân hàng.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Chi tiết Kiểm tra</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Đã gặp]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Chưa giải quyết]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Không có sẵn]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã mua một khối cửa hàng. Yêu cầu đã sử dụng:</gray> <white>{requirements}</white><gray>. Khối cửa hàng được sở hữu:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn hiện không đáp ứng <white>{requirement}</white><gray>. Yêu cầu về cửa hàng:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Yêu cầu về cửa hàng <white>{requirement}</white><gray> hiện không khả dụng hoặc không hợp lệ.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn đã đạt đến giới hạn khối cửa hàng là <white>{max_shops}</white><gray>. Khối cửa hàng được sở hữu:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> hiện đã sẵn sàng.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Tiến trình đã lưu trữ cho <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Không có vật phẩm hoặc đơn vị tiền tệ phù hợp nào có sẵn cho <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> không hỗ trợ tiến trình được tích vào ngân hàng.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> hiện không khả dụng.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Hồ sơ RDS của bạn không thể tải được nên tiến trình không thể được tải đã lưu.</gray>"
+
+# Chặn các lỗi xác thực tương tác và thông báo bảo vệ.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Không thể đọc chủ cửa hàng từ đây item.</red>"
+    not_owner: "<red>ShopBlock này thuộc về một người chơi khác và bạn không thể đặt được.</red>"
+    max_shops_reached: "<red>Bạn đã đạt đến giới hạn cửa hàng là {max_shops}. Cửa hàng được đặt hiện tại: {owned_shops}.</red>"
+    shop_protected: "<red>Cửa hàng không thể bị phá vỡ trực tiếp. Sử dụng menu cửa hàng để đóng cửa hàng.</red>"
+    double_chest_requires_shop_block: "<red>Cửa hàng hai ngăn yêu cầu <blue>ShopBlock</blue><red>. Rương bình thường không thể hợp nhất với rương cửa hàng.</red>"
+    double_chest_owner_mismatch: "<red>ShopBlock này thuộc về một chủ sở hữu khác, vì vậy nó không thể mở rộng cửa hàng này.</red>"
+    shop_already_double_chest: "<red>Cửa hàng này đã sử dụng cả hai nửa rương.</red>"
+    double_chest_ambiguous: "<red>ShopBlock này chạm vào nhiều rương cửa hàng. Chỉ đặt nó bên cạnh một cửa hàng.</red>"
+
+# Thông báo kết quả xử lý thuế theo lịch trình.
+tax_scheduler:
+  paid: "<yellow>Đã thu thuế cửa hàng theo lịch trình đã thu {amount}. Cửa hàng được tính: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>Bạn không thể thanh toán thuế cửa hàng theo lịch trình trong số {amount}. Cửa hàng được tính: {owned_shops}.</red>"
+  charge_failed: "<red>Không thể thu thuế cửa hàng theo lịch trình của {amount}. Cửa hàng được tính: {owned_shops}.</red>"
+
+# Giao diện tổng quan về cửa hàng chính dành cho các hành động quản lý chủ sở hữu/quản trị viên.
+shop_overview_ui:
+  title: "{owner} Cửa hàng - {location}"
+  summary:
+    name: "<gold>Tóm tắt cửa hàng</gold>"
+    player:
+      lore:
+        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Vị trí:</gray> <white>{location}</white>"
+        - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
+        - "<gray>Loại cửa hàng:</gray> <white>Player Shop</white>"
+        - "<gray>Hàng tồn kho:</gray> <white>Finite</white>"
+    admin:
+      lore:
+        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Vị trí:</gray> <white>{location}</white>"
+        - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
+        - "<gray>Loại cửa hàng:</gray> <white>Cửa hàng quản trị</white>"
+        - "<gray>Hàng tồn kho:</gray> <white>Infinite</white>"
+  finance:
+    name: "<gold>Ngân hàng cửa hàng</gold>"
+    lore:
+      - "<gray>Tiền tệ được theo dõi:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Nhấp để xem lại và rút tiền.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Cửa hàng quản trị đã bật</red>"
+        lore:
+          - "<gray>Cửa hàng này hiện là cửa hàng quản trị.</gray>"
+          - "<gray>Inventory là vô hạn cho khách hàng.</gray>"
+          - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
+          - "<yellow>Nhấp để chuyển về chế độ một cửa hàng người chơi.</yellow>"
+      disabled:
+        name: "<green>Cửa hàng quản trị bị vô hiệu hóa</green>"
+        lore:
+          - "<gray>Cửa hàng này hiện đang sử dụng bình thường stock.</gray>"
+          - "<gray>Khách hàng chỉ có thể mua số lượng đã lưu trữ.</gray>"
+          - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
+          - "<yellow>Nhấp để bật chế độ cửa hàng quản trị.</yellow>"
+    close:
+      name: "<red>Đóng cửa hàng</red>"
+      lore:
+        - "<gray>Xóa cửa hàng này và trả lại khối cửa hàng.</gray>"
+        - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
+        - "<gray>Tiền tệ ngân hàng được theo dõi:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Kho hàng của cửa hàng phải trống trước khi đóng.</yellow>"
+    manage:
+      name: "<green>Thêm mặt hàng trong cửa hàng</green>"
+      lore:
+        - "<gray>Lưu trữ các mặt hàng mới trong này shop.</gray>"
+        - "<gray>Mục hiện tại:</gray> <white>{item_count}</white>"
+        - "<yellow>Nhấp để mở mục nhập.</yellow>"
+    customer_view:
+      name: "<gold>Mở chế độ xem khách hàng</gold>"
+      lore:
+        - "<gray>Xem trước cửa hàng này khi khách hàng nhìn thấy.</gray>"
+        - "<gray>Mục hiện tại:</gray> <white>{item_count}</white>"
+        - "<yellow>Nhấp để duyệt qua cửa hàng này với tư cách là khách hàng.</yellow>"
+    trusted:
+      name: "<gold>Người chơi đáng tin cậy</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Người chơi đáng tin cậy:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Nhấp để quản lý mức độ tin cậy của cửa hàng.</yellow>"
+    ledger:
+      name: "<gold>Sổ cái cửa hàng</gold>"
+      lore:
+        - "<gray>Tổng số mục:</gray> <white>{ledger_count}</white>"
+        - "<gray>Mua hàng:</gray> <white>{purchase_count}</white>"
+        - "<gray>Thuế:</gray> <white>{tax_count}</white>"
+        - "<yellow>Nhấp để xem lại lịch sử giao dịch của cửa hàng.</yellow>"
+    edit:
+      name: "<aqua>Chỉnh sửa Mặt hàng trong Cửa hàng</aqua>"
+      lore:
+        - "<gray>Chỉnh sửa giá cho cửa hàng được lưu trữ items.</gray>"
+        - "<gray>Mục hiện tại:</gray> <white>{item_count}</white>"
+        - "<yellow>Nhấp để chỉnh sửa giá và tiền tệ.</yellow>"
+    storage:
+      name: "<gold>Xem các mục được lưu trữ</gold>"
+      lore:
+        - "<gray>Xem lại các mặt hàng đã được lưu trữ trong cửa hàng này.</gray>"
+        - "<gray>Mục hiện tại:</gray> <white>{item_count}</white>"
+        - "<yellow>Nhấp để rút tiền được lưu trữ items.</yellow>"
+    locked:
+      name: "<red>Cửa hàng Đã khóa</red>"
+      lore:
+        - "<gray>Chỉ chủ sở hữu mới có thể thêm vật phẩm.</gray>"
+        - "<gray>Mục hiện tại:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Bạn không có quyền quản lý cửa hàng này.</red>"
+    no_admin_permission: "<red>Bạn không có quyền chuyển đổi các cửa hàng quản trị.</red>"
+    admin_limit_reached: "<red>Máy chủ đã có {admin_shops} cửa hàng quản trị viên. Phiên bản miễn phí chỉ cho phép có sẵn {max_admin_shops} cửa hàng quản trị viên.</red>"
+    admin_enabled: "<green>Cửa hàng này hiện là cửa hàng quản trị với lượng hàng tồn kho vô hạn dành cho khách hàng. Các cửa hàng được tính: {owned_shops}.</green>"
+    admin_disabled: "<yellow>Cửa hàng này hiện là cửa hàng người chơi bình thường với lượng hàng tồn kho có hạn cho khách hàng. Cửa hàng được tính: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Bạn không thể chuyển cửa hàng quản trị này trở lại cửa hàng người chơi vì giới hạn cửa hàng của bạn là {max_shops}. Các cửa hàng được tính: {owned_shops}.</red>"
+    close_not_empty: "<red>Bạn chỉ có thể đóng cửa hàng sau khi xóa tất cả các mặt hàng được lưu trữ. Các mục còn lại: {item_count}.</red>"
+    close_bank_not_empty: "<red>Rút ngân hàng cửa hàng của bạn trước khi đóng cửa hàng này. Các loại tiền tệ còn lại được theo dõi: {bank_currency_count}.</red>"
+    closed: "<green>Đã đóng cửa hàng và trả lại {returned_blocks} ShopBlock(s). Cửa hàng được tính: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Bảng điều khiển quản trị viên toàn cầu để quản lý RDS.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Quản trị viên] Kiểm soát RDS</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Bảng điều khiển quản trị RDS</white>"
+    lore:
+      - "<gray>Quản lý hệ thống cửa hàng quản trị toàn cầu từ một nơi.</gray>"
+      - "<gray>Mở ngân hàng máy chủ hoặc chỉnh sửa cài đặt cấu hình bên dưới.</gray>"
+      - "<yellow>Yêu cầu:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Ngân hàng máy chủ</gradient>"
+      lore:
+        - "<gray>Xem xét thu nhập của cửa hàng quản trị được kéo vào ngân hàng máy chủ.</gray>"
+        - "<gray>Kiểm tra thời gian kéo tiếp theo và rút số dư.</gray>"
+        - "<yellow>Nhấp để mở điều khiển ngân hàng máy chủ.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Cửa hàng Config</gradient>"
+      lore:
+        - "<gray>Chỉnh sửa giá trị từ</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Mọi cài đặt có thể chỉnh sửa đều có thể được thay đổi thông qua lời nhắc đe.</gray>"
+        - "<yellow>Nhấp để mở điều khiển cấu hình.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Trình quản lý tiền tệ</gradient>"
+      lore:
+        - "<gray>Xem lại các loại tiền tệ được phát hiện từ Vault và JExEconomy.</gray>"
+        - "<gray>Tạo loại tiền mặc định</gray> <white>hạt mưa</white> <gray>ngoại tệ khi cần thiết.</gray>"
+        - "<yellow>Nhấp để mở kiểm soát tiền tệ.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập của quản trị viên</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng quản trị viên này panel.</gray>"
+
+# Chế độ xem tiền tệ của quản trị viên cho các nhà cung cấp được phát hiện và tạo tiền tệ mặc định.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Trình quản lý tiền tệ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Nhà cung cấp tiền tệ</white>"
+    lore:
+      - "<gray>Đã phát hiện tiền tệ:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault có sẵn:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy có sẵn:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Sử dụng nút tinh thể để tạo mặc định tệ.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Hay gây]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Nhà cung cấp:</gray> <white>{provider}</white>"
+      - "<gray>Biểu tượng:</gray> <white>{symbol}</white>"
+      - "<gray>Tiền tố:</gray> <white>{prefix}</white>"
+      - "<gray>Hậu tố:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Tạo {currency_id}</white>"
+      lore:
+        - "<gray>Tạo loại tiền RDS mặc định trong JExEconomy.</gray>"
+        - "<yellow>Nhấp để tạo {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEconomy Bắt buộc</white>"
+      lore:
+        - "<gray>Bạn không thể tạo loại tiền mặc định mà không có JExEconomy.</gray>"
+        - "<gray>Trước tiên hãy cài đặt và bật JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[ĐƯỢC RỒI]</gradient> <white>{currency_id}Sẵn sàng</white>"
+      lore:
+        - "<gray>Tiền tệ mặc định đã tồn tại.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã tạo loại tiền mặc định:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không thể tạo đơn vị tiền tệ:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Loại tiền tệ đã tồn tại:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không thể sử dụng nút này trừ khi có JExEconomy.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Không phát hiện loại tiền tệ</white>"
+      lore:
+        - "<gray>Không phát hiện thấy tiền tệ Vault hoặc JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập của quản trị viên</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng chế độ xem đơn vị tiền tệ này.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền quản lý tiền tệ.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Định cấu hình giao diện người dùng trình duyệt để có các cài đặt có thể chỉnh sửa và cập nhật phản hồi.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Cửa hàng Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Cài đặt cấu hình</white>"
+    lore:
+      - "<gray>Đã phát hiện cài đặt có thể chỉnh sửa:</gray> <white>{setting_count}</white>"
+      - "<gray>Nhấp vào bất kỳ mục nào bên dưới để chỉnh sửa giá trị của nó trong một anvil.</gray>"
+      - "<yellow>Các thay đổi được ghi trực tiếp vào config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Bộ]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Đường dẫn:</gray> <white>{config_path}</white>"
+      - "<gray>Loại:</gray> <white>{value_type}</white>"
+      - "<gray>Giá trị hiện tại:</gray> <white>{current_value}</white>"
+      - "<yellow>Nhấp để chỉnh sửa cài đặt này.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Số nguyên]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Dài]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Gấp đôi]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Danh sách]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Sợi dây]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Không có thể chỉnh sửa Cài đặt</white>"
+      lore:
+        - "<gray>Không tìm thấy cài đặt cấu hình vô hướng/danh sách có thể chỉnh sửa.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập của quản trị viên</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng chế độ xem cấu hình này.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Chỉnh sửa cấu hình Đã khóa</white>"
+      lore:
+        - "<gray>Phiên bản này không cho phép chỉnh sửa cấu hình thời gian chạy.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền chỉnh sửa cài đặt cấu hình.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Việc chỉnh sửa cấu hình bị khóa trong phiên bản này.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã cập nhật <white>{config_path}</white><gray> đến <white>{updated_value}</white><gray>.</gray>"
+
+# Văn bản nhắc Anvil để chỉnh sửa giá trị cấu hình.
+shop_config_value_anvil_ui:
+  title: "Chỉnh sửa {config_path}"
+  input:
+    lore:
+      - "<gray>Đường dẫn:</gray> <white>{config_path}</white>"
+      - "<gray>Loại:</gray> <white>{value_type}</white>"
+      - "<gray>Giá trị hiện tại:</gray> <white>{current_value}</white>"
+      - "<yellow>Nhập giá trị mới và xác nhận.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Đầu vào không hợp lệ cho loại <white>{value_type}</white><gray>. Đầu vào:</gray> <white>{input}</white>"
+
+# Tổng quan về ngân hàng máy chủ, mục nhập tiền tệ và phản hồi rút tiền.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Ngân hàng máy chủ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Thu nhập & Chuyển khoản Trạng thái</white>"
+    lore:
+      - "<gray>Tiền tệ được theo dõi:</gray> <white>{currency_count}</white>"
+      - "<gray>Thu nhập:</gray> <white>{income_summary}</white>"
+      - "<gray>Kéo tiếp theo:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Thời gian cho đến lần kéo tiếp theo:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Số dư của cửa hàng quản trị được chuyển đến đây theo lịch trình.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>None</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Đã tắt</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Đang chờ xử lý...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Đã tắt</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Đang chờ xử lý...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Rút]</gradient> <white>Rút tất cả</white>"
+    lore:
+      - "<gray>Cố gắng rút mọi số dư dương.</gray>"
+      - "<gray>Các loại tiền tệ không có sẵn sẽ bị bỏ qua.</gray>"
+      - "<yellow>Nhấp để rút tất cả tiền về tài khoản của bạn.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+      - "<gray>Số dư khả dụng:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Nhấp để rút toàn bộ số dư tiền tệ này.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Ngân hàng Máy chủ Trống</white>"
+      lore:
+        - "<gray>Không có số dư dương để rút.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập của quản trị viên</white>"
+      lore:
+        - "<gray>Bạn không có quyền quản lý ngân hàng máy chủ.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền quản lý ngân hàng máy chủ.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Số dư ngân hàng máy chủ đó không còn nữa.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Rút tiền <white>{amount} {currency_name}</white><gray>. Còn lại {currency_name}:</gray> <white>{remaining_amount}</white><gray>. Đơn vị tiền tệ đang hoạt động:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Rút tiền <white>{withdrawn_currency_count}</white><gray> số dư tiền tệ. Không thành công:</gray> <white>{failed_currency_count}</white><gray>. Các loại tiền tệ đang hoạt động còn lại:</gray> <white>{remaining_currency_count}</white><gray>. Chi tiết:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không thể rút số dư. Đếm tiền tệ không thành công:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tiền tệ <white>{currency_name}</white><gray> hiện không có sẵn.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không rút được <white>{amount} {currency_name}</white><gray> từ ngân hàng máy chủ.</gray>"
+
+# Giao diện người dùng nhập mục cửa hàng được sử dụng khi thêm các mục nhập kho mới.
+shop_input_ui:
+  title: "Thêm mặt hàng - {owner} @ {location}"
+  summary:
+    name: "<gold>Bộ nhớ cửa hàng</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Hiện được lưu trữ:</gray> <white>{stored_count}</white>"
+      - "<yellow>Các mục mới mặc định là loại tiền tệ vault và giá trị 0.</yellow>"
+  input_slot:
+    name: "<green>Vị trí đầu vào</green>"
+    lore:
+      - "<gray>Nhấp chuột trái vào một mặt hàng trên con trỏ của bạn</gray>"
+      - "<gray>hoặc nhấp chuột shift vào một mục từ kho của bạn.</gray>"
+      - "<gray>Nhấp chuột phải để xóa ngăn xếp đã chèn.</gray>"
+  no_new_items_inserted: "<red>Không có vật phẩm mới nào được chèn.</red>"
+  saved: "<green>Đã lưu trữ {added_count} mục nhập mới. Cửa hàng hiện có {stored_count} mục nhập.</green>"
+  save_failed: "<red>Không lưu được các mặt hàng trong cửa hàng.</red>"
+  left_overs: "<yellow>Trả lại các mặt hàng cửa hàng chưa được lưu vào kho của bạn.</yellow>"
+  feedback:
+    no_permission: "<red>Bạn không được phép thêm mặt hàng vào cửa hàng này.</red>"
+    locked:
+      name: "<red>Yêu cầu quyền truy cập nguồn cung</red>"
+      lore:
+        - "<gray>Chỉ cộng sự và người chơi đáng tin cậy mới có thể thêm vật phẩm tại đây.</gray>"
+
+# Giao diện người dùng trình duyệt bộ nhớ cửa hàng để xem và rút các mặt hàng đã lưu trữ.
+shop_storage_ui:
+  title: "Các mục đã lưu trữ - {location}"
+  summary:
+    name: "<gold>Các mục đã lưu trữ</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Các mục đã lưu trữ:</gray> <white>{stored_count}</white>"
+      - "<yellow>Nhấp vào bất kỳ mặt hàng nào bên dưới để rút nó.</yellow>"
+  entry:
+    lore:
+      - "<gray>Số lượng đã lưu trữ:</gray> <white>{amount}</white>"
+      - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+      - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+      - "<gray>Value:</gray> <white>{value}</white>"
+      - "<yellow>Nhấp để trích xuất mặt hàng này khỏi cửa hàng.</yellow>"
+  feedback:
+    not_owner: "<red>Bạn không có quyền quản lý cửa hàng này.</red>"
+    extracted: "<green>Extracted {amount}x {item_type}. Giá là {value} {currency_type}. Các mục được lưu trữ còn lại: {stored_count}.</green>"
+    item_missing: "<red>Không thể tìm thấy mặt hàng được lưu trữ đó.</red>"
+    locked:
+      name: "<red>Yêu cầu toàn quyền truy cập</red>"
+      lore:
+        - "<gray>Chỉ những người chơi đáng tin cậy có toàn quyền truy cập mới có thể rút các vật phẩm được lưu trữ.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Giao diện người dùng chỉnh sửa cửa hàng để chọn các mục cần sửa đổi.
+shop_edit_ui:
+  title: "Chỉnh sửa Mặt hàng trong Cửa hàng - {location}"
+  summary:
+    name: "<aqua>Trình chỉnh sửa giá cửa hàng</aqua>"
+    player:
+      lore:
+        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Vị trí:</gray> <white>{location}</white>"
+        - "<gray>Các mục đã lưu trữ:</gray> <white>{stored_count}</white>"
+        - "<yellow>Nhấp chuột trái vào một mặt hàng để chỉnh sửa giá.</yellow>"
+        - "<yellow>Nhấp chuột phải vào một mặt hàng để xóa nó khỏi cửa hàng.</yellow>"
+    admin:
+      lore:
+        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Vị trí:</gray> <white>{location}</white>"
+        - "<gray>Các mục đã lưu trữ:</gray> <white>{stored_count}</white>"
+        - "<gray>Chế độ khôi phục của quản trị viên:</gray> <white>{restock_mode}</white>"
+        - "<gray>Lịch trình bổ sung lại:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Nhấp chuột trái vào một mặt hàng để chỉnh sửa giá hoặc kho.</yellow>"
+        - "<yellow>Nhấp chuột phải vào một mặt hàng để xóa nó khỏi cửa hàng.</yellow>"
+    restock_schedule:
+      gradual: "Bộ hẹn giờ mặc định: {reset_timer_ticks} phiếu mỗi lần item"
+  entry:
+    player:
+      lore:
+        - "<gray>Số lượng đã lưu trữ:</gray> <white>{amount}</white>"
+        - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+        - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<yellow>Nhấp chuột trái để chỉnh sửa mặt hàng trong cửa hàng này.</yellow>"
+        - "<yellow>Nhấp chuột phải để xóa nó khỏi shop.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Trạng thái:</gray> <white>Infinite</white>"
+        - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+        - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Chế độ khôi phục lại:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Nhấp chuột trái để chỉnh sửa mặt hàng trong cửa hàng quản trị này.</yellow>"
+        - "<yellow>Nhấp chuột phải để xóa nó khỏi shop.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Hàng tồn kho hiện tại:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+        - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Chế độ khôi phục lại:</gray> <white>{restock_mode}</white>"
+        - "<gray>Lịch trình bổ sung lại:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Nhấp chuột trái để chỉnh sửa mặt hàng trong cửa hàng quản trị này.</yellow>"
+        - "<yellow>Nhấp chuột phải để xóa nó khỏi shop.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "Đặt lại toàn bộ"
+    restock_schedule:
+      gradual: "1 mặt hàng mỗi {reset_timer_ticks} phiếu"
+      full: "Cung cấp lại toàn bộ số hàng tại{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Bạn không có quyền quản lý cửa hàng này.</red>"
+    removed: "<green>Đã xóa {amount}x {item_type} từ cửa hàng. Đã đạt đến mức giá {value} {currency_type}. Các mục được lưu trữ còn lại: {stored_count}.</green>"
+    item_missing: "<red>Không thể tìm thấy mặt hàng đó trong cửa hàng.</red>"
+    locked:
+      name: "<red>Yêu cầu toàn quyền truy cập</red>"
+      lore:
+        - "<gray>Chỉ những người chơi đáng tin cậy có toàn quyền truy cập mới có thể chỉnh sửa giá trị vật phẩm.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Giao diện người dùng trình chỉnh sửa chi tiết cho hoạt động và giá cả của từng mặt hàng trong cửa hàng.
+shop_item_edit_ui:
+  title: "Chỉnh sửa {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Số lượng đã lưu trữ:</gray> <white>{amount}</white>"
+        - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Chế độ khả dụng:</gray> <white>{availability_mode}</white>"
+        - "<gray>Hiện có sẵn:</gray> <white>{availability_state}</white>"
+        - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+        - "<yellow>Sử dụng các nút bên dưới để chỉnh sửa mặt hàng này.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Trạng thái:</gray> <white>Infinite</white>"
+        - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Chế độ khôi phục lại:</gray> <white>{restock_mode}</white>"
+        - "<gray>Purchase lệnh:</gray> <white>{command_count}</white>"
+        - "<gray>Chế độ khả dụng:</gray> <white>{availability_mode}</white>"
+        - "<gray>Hiện có sẵn:</gray> <white>{availability_state}</white>"
+        - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+        - "<yellow>Sử dụng các nút bên dưới để chỉnh sửa mặt hàng quản trị này.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Hàng tồn kho hiện tại:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Loại tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Value:</gray> <white>{value}</white>"
+        - "<gray>Chế độ khôi phục lại:</gray> <white>{restock_mode}</white>"
+        - "<gray>Lịch trình bổ sung lại:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Purchase lệnh:</gray> <white>{command_count}</white>"
+        - "<gray>Chế độ khả dụng:</gray> <white>{availability_mode}</white>"
+        - "<gray>Hiện có sẵn:</gray> <white>{availability_state}</white>"
+        - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+        - "<yellow>Sử dụng các nút bên dưới để chỉnh sửa mặt hàng quản trị này.</yellow>"
+  currency_type:
+    name: "<green>Tiền tệ Loại</green>"
+    lore:
+      - "<gray>Hiện tại loại:</gray> <white>{currency_type}</white>"
+      - "<yellow>Nhấp để chỉnh sửa loại tiền tệ.</yellow>"
+  value:
+    name: "<gold>Value</gold>"
+    lore:
+      - "<gray>Hiện tại loại:</gray> <white>{currency_type}</white>"
+      - "<gray>Giá trị hiện tại:</gray> <white>{value}</white>"
+      - "<yellow>Nhấp để chỉnh sửa giá trị số.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Chế độ] Tính sẵn có của mặt hàng</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Luôn luôn]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Quay]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Không bao giờ]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Mở]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Closed]</gradient>"
+    lore:
+      - "<gray>Chế độ hiện tại:</gray> <white>{availability_mode}</white>"
+      - "<gray>Trạng thái hiện tại:</gray> <white>{availability_state}</white>"
+      - "<gray>Xoay cửa sổ:</gray> <white>{rotation_minutes} phút</white>"
+      - "<yellow>Nhấp để chuyển đổi: Luôn luôn -> Xoay -> Không bao giờ.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Hẹn giờ] Phút quay</gradient>"
+    lore:
+      - "<gray>Cửa sổ hiện tại:</gray> <white>{rotation_minutes} phút</white>"
+      - "<gray>Chế độ hiện tại:</gray> <white>{availability_mode}</white>"
+      - "<gray>Nhãn chế độ xoay:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Nhấp để đặt số phút xoay trong một cái đe.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Người thực thi lệnh</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Máy chủ]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Người chơi]</gradient>"
+    lore:
+      - "<gray>Chế độ hiện tại:</gray> <white>{command_mode}</white>"
+      - "<gray>Chế độ tiếp theo:</gray> <white>{next_mode}</white>"
+      - "<yellow>Nhấp để chuyển đổi ai thực thi các lệnh mới được thêm.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Lệnh mua</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>None</gradient>"
+    lore:
+      - "<gray>Các lệnh được định cấu hình:</gray> <white>{command_count}</white>"
+      - "<gray>Lệnh mới nhất:</gray> <white>{latest_command}</white>"
+      - "<yellow>Nhấp để mở cài đặt lệnh và thêm lệnh.</yellow>"
+  confirm:
+    name: "<green>Lưu mục Định giá</green>"
+    lore:
+      - "<gray>Áp dụng loại tiền tệ hiện tại và value</gray>"
+      - "<gray>cho mặt hàng trong cửa hàng này.</gray>"
+  stock_limit:
+    name: "<gold>Giới hạn hàng tồn kho</gold>"
+    unlimited: "Infinite"
+    lore:
+      - "<gray>Giới hạn hiện tại:</gray> <white>{stock_limit}</white>"
+      - "<gray>Hàng tồn kho hiện tại:</gray> <white>{current_stock}</white>"
+      - "<yellow>Nhấp để đặt giới hạn hàng tồn kho.</yellow>"
+      - "<gray>Sử dụng -1 để trả mặt hàng này về kho vô hạn.</gray>"
+  reset_timer:
+    name: "<aqua>Đặt lại bộ hẹn giờ</aqua>"
+    lore:
+      - "<gray>Bộ tính giờ hiện tại:</gray> <white>{reset_timer_ticks} phiếu</white>"
+      - "<yellow>Nhấp để đặt bộ hẹn giờ khôi phục hàng.</yellow>"
+  restock_mode:
+    name: "<yellow>Thêm mặt hàng quản trị viên Chế độ</yellow>"
+    gradual: "Gradual"
+    full: "Đặt lại toàn bộ"
+    lore:
+      - "<gray>Chế độ được định cấu hình:</gray> <white>{restock_mode}</white>"
+      - "<gray>Lịch trình được định cấu hình:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Nhấp để chuyển đổi chế độ khôi phục lại quản trị viên toàn cầu.</yellow>"
+  restock_schedule:
+    gradual: "1 mặt hàng mỗi {reset_timer_ticks} phiếu"
+    full: "Cung cấp lại toàn bộ số hàng tại{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Bạn không có quyền quản lý cửa hàng này.</red>"
+    shop_missing: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+    item_missing: "<red>Không thể tìm thấy mặt hàng đó trong cửa hàng.</red>"
+    saved: "<green>Giá mặt hàng đã lưu dưới dạng {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Chế độ khả dụng được đặt thành <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Chế độ thực thi lệnh mới được đặt thành <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Đã xóa lệnh mới nhất. Các lệnh còn lại:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Đã xóa tất cả các lệnh mua của quản trị viên.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Không có lệnh mua quản trị viên nào được định cấu hình.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Các thay đổi về cấu hình plugin bị khóa trong <white>RDS Free</white><gray>. Nâng cấp lên bản cao cấp để có toàn quyền truy cập.</gray>"
+    restock_mode_updated: "<green>Chế độ khôi phục của quản trị viên được đặt thành {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Không lưu được chế độ khôi phục của quản trị viên.</red>"
+
+# Anvil lời nhắc thêm lệnh mua hàng của quản trị viên mới.
+shop_item_admin_command_anvil_ui:
+  title: "Thêm lệnh {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Nhập lệnh để chạy khi mục quản trị này được bật đã mua.</gray>"
+      - "<gray>Chỉ văn bản lệnh. Độ trễ được định cấu hình trong chế độ xem cài đặt lệnh.</gray>"
+      - "<gray>Ví dụ:</gray>"
+      - "<white>phát tin%player_name% đã mua {amount}x {item_type}</white>"
+      - "<white>tặng sinh thái%player_name% 50</white>"
+      - "<gray>Các lệnh được định cấu hình:</gray> <white>{command_count}</white>"
+      - "<gray>Chế độ thực thi:</gray> <white>{command_mode}</white>"
+      - "<gray>Độ trễ:</gray> <white>{command_delay_ticks} phiếu</white>"
+  mode:
+    server: "<gold>[Máy chủ]</gold>"
+    player: "<green>[Người chơi]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Văn bản lệnh không được để trống. Đầu vào:</gray> <white>{input}</white>"
+
+# Giao diện người dùng trình quản lý lệnh mua của quản trị viên cho chế độ, độ trễ và danh sách lệnh.
+shop_item_admin_command_ui:
+  title: "Cài đặt lệnh - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Cài đặt lệnh mua</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>None</gradient>"
+    lore:
+      - "<gray>Các lệnh được định cấu hình:</gray> <white>{command_count}</white>"
+      - "<gray>Lệnh mới nhất:</gray> <white>{latest_command}</white>"
+      - "<gray>Chế độ lệnh tiếp theo:</gray> <white>{command_mode}</white>"
+      - "<gray>Độ trễ lệnh tiếp theo:</gray> <white>{command_delay_ticks} phiếu ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Trình thực thi lệnh tiếp theo</gradient>"
+    server: "<gold>[Máy chủ]</gold>"
+    player: "<green>[Người chơi]</green>"
+    lore:
+      - "<gray>Chế độ hiện tại:</gray> <white>{command_mode}</white>"
+      - "<gray>Chế độ tiếp theo:</gray> <white>{next_mode}</white>"
+      - "<yellow>Nhấp để chuyển đổi người thực thi cho lệnh tiếp theo.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Độ trễ] Độ trễ lệnh tiếp theo</gradient>"
+    lore:
+      - "<gray>Hiện tại độ trễ:</gray> <white>{command_delay_ticks} phiếu ({command_delay_seconds}s)</white>"
+      - "<yellow>Nhấp để đặt độ trễ trong các tích tắc cho lệnh tiếp theo.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Thêm lệnh</gradient>"
+    lore:
+      - "<gray>Chế độ:</gray> <white>{command_mode}</white>"
+      - "<gray>Độ trễ:</gray> <white>{command_delay_ticks} phiếu ({command_delay_seconds}s)</white>"
+      - "<yellow>Nhấp để mở mục nhập lệnh.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Xóa Lệnh</gradient>"
+    lore:
+      - "<gray>Các lệnh được định cấu hình:</gray> <white>{command_count}</white>"
+      - "<yellow>Nhấp để xóa lệnh mới nhất.</yellow>"
+      - "<yellow>Shift + nhấp vào xóa tất cả các lệnh.</yellow>"
+  confirm:
+    name: "<green>Lưu cài đặt lệnh</green>"
+    lore:
+      - "<gray>Quay lại trình chỉnh sửa vật phẩm và giữ các thay đổi lệnh này.</gray>"
+  feedback:
+    not_owner: "<red>Bạn không có quyền quản lý cửa hàng này.</red>"
+    shop_missing: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Chế độ lệnh tiếp theo được đặt thành <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Đã xóa lệnh mới nhất. Các lệnh còn lại:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Đã xóa tất cả các lệnh mua của quản trị viên.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Không có lệnh mua quản trị viên nào được định cấu hình.</gray>"
+
+# Lời nhắc Anvil để thiết lập dấu kiểm độ trễ lệnh của quản trị viên.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Đặt độ trễ - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Nhập toàn bộ số tích tắc cho độ trễ lệnh tiếp theo.</gray>"
+      - "<gray>Chế độ thực thi:</gray> <white>{command_mode}</white>"
+      - "<gray>Ví dụ:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Máy chủ]</gold>"
+    player: "<green>[Người chơi]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nhập một số nguyên lớn hơn hoặc bằng 0. Nhập:</gray> <white>{input}</white>"
+
+# Lời nhắc về tình trạng sẵn có của chế độ xoay trong vài phút.
+shop_item_availability_minutes_anvil_ui:
+  title: "Xoay phút: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Hẹn giờ] Phút quay</gradient>"
+    lore:
+      - "<gray>Nhập toàn bộ số phút.</gray>"
+      - "<gray>Chế độ xoay thay thế có sẵn/không khả dụng trên mỗi cửa sổ.</gray>"
+  error:
+    invalid_number: "<red>Nhập một số nguyên lớn hơn 0. Nhập: {input}</red>"
+
+# Lời nhắc Anvil để thiết lập giới hạn dung lượng kho quản trị viên.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Giới hạn tồn kho: {stock_limit}"
+  input:
+    name: "<gold>Giới hạn hàng tồn kho</gold>"
+    lore:
+      - "<gray>Nhập giới hạn tồn kho dương trong các mặt hàng.</gray>"
+      - "<gray>Sử dụng -1 để khôi phục kho quản trị vô hạn.</gray>"
+  error:
+    invalid_number: "<red>Enter -1 hoặc một số nguyên lớn hơn 0. Nhập: {input}</red>"
+
+# Lời nhắc về việc định cấu hình dấu kiểm thời gian khôi phục/đặt lại của quản trị viên.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Đặt lại bộ hẹn giờ: {reset_timer_ticks}"
+  input:
+    name: "<aqua>Đặt lại bộ hẹn giờ</aqua>"
+    lore:
+      - "<gray>Nhập toàn bộ số tích tắc Bukkit.</gray>"
+      - "<gray>Chế độ dần dần khôi phục một mục cho mỗi bộ hẹn giờ.</gray>"
+  error:
+    invalid_number: "<red>Nhập một số nguyên lớn hơn 0. Nhập: {input}</red>"
+
+# Lời nhắc về việc chọn loại tiền tệ được sử dụng bởi một item.
+shop_item_currency_type_anvil_ui:
+  title: "Loại tiền tệ: {currency_type}"
+  input:
+    name: "<green>Tiền tệ Loại</green>"
+    lore:
+      - "<gray>Nhập mã định danh đơn vị tiền tệ cho mặt hàng này.</gray>"
+      - "<gray>Ví dụ:</gray> <white>vault, token, gems</white>"
+  error:
+    empty: "<red>Loại tiền tệ không được để trống.</red>"
+    invalid_currency: "<red>Loại tiền tệ {currency_type} không có sẵn. Sử dụng vault hoặc loại tiền tệ tùy chỉnh đã đăng ký.</red>"
+    processing_failed: "<red>Không thể cập nhật loại tiền tệ. Đầu vào: {input}</red>"
+
+# Lời nhắc Anvil để đặt giá/giá trị cho mỗi mặt hàng.
+shop_item_value_anvil_ui:
+  title: "Value: {value} {currency_type}"
+  input:
+    name: "<gold>Giá trị mặt hàng</gold>"
+    lore:
+      - "<gray>Nhập giá trị số không âm.</gray>"
+      - "<gray>Ví dụ:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Nhập số không âm hợp lệ. Đầu vào: {input}</red>"
+    processing_failed: "<red>Không thể cập nhật giá trị mục. Đầu vào: {input}</red>"
+
+# Giao diện người dùng ngân hàng mua sắm để biết số dư tiền tệ của mỗi cửa hàng và số lần rút tiền.
+shop_bank_ui:
+  title: "Ngân hàng cửa hàng - {location}"
+  summary:
+    name: "<gold>Số dư ngân hàng</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Tiền tệ được theo dõi:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Nhấp vào số dư bên dưới để rút toàn bộ số tiền.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+      - "<gray>Số dư khả dụng:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Nhấp để rút toàn bộ số dư này.</yellow>"
+  feedback:
+    not_owner: "<red>Bạn không có quyền quản lý cửa hàng này.</red>"
+    entry_missing: "<red>Số dư ngân hàng đó không còn nữa.</red>"
+    withdrawn: "<green>Rút tiền {amount} {currency_name}. Còn lại {currency_name}: {remaining_amount}. Đơn vị tiền tệ được theo dõi: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>Không rút được {amount} {currency_name} từ ngân hàng cửa hàng.</red>"
+    currency_unavailable: "<red>Tiền tệ {currency_name} hiện không có sẵn.</red>"
+    empty:
+      name: "<red>Ngân hàng trống</red>"
+      lore:
+        - "<gray>Cửa hàng này không có số dư ngân hàng để rút.</gray>"
+    locked:
+      name: "<red>Yêu cầu toàn quyền truy cập</red>"
+      lore:
+        - "<gray>Chỉ những người chơi đáng tin cậy có toàn quyền truy cập mới có thể rút tiền cửa hàng.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Giao diện người dùng quản lý người chơi đáng tin cậy cho các vai trò truy cập cửa hàng.
+shop_trusted_ui:
+  title: "Người chơi đáng tin cậy - {location}"
+  summary:
+    name: "<gold>Trình quản lý cửa hàng tin cậy</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Người chơi đáng tin cậy:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Nhấp vào một người chơi để xoay vòng trạng thái tin cậy của họ.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Trạng thái:</gray> <white>Public</white>"
+        - "<gray>Không có quyền quản lý.</gray>"
+        - "<yellow>Nhấp để thay đổi thành Liên kết.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Trạng thái:</gray> <white>Associate</white>"
+        - "<gray>Có thể thêm vật phẩm vào cửa hàng.</gray>"
+        - "<yellow>Nhấp để thay đổi thành Đáng tin cậy.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Trạng thái:</gray> <white>Trusted</white>"
+        - "<gray>Có thể quản lý hoàn toàn cửa hàng.</gray>"
+        - "<yellow>Nhấp để thay đổi thành Công khai.</yellow>"
+  feedback:
+    not_owner: "<red>Chỉ chủ cửa hàng mới có thể quản lý người chơi đáng tin cậy.</red>"
+    updated:
+      public: "<yellow>Đặt {player}lên Công khai.</yellow>"
+      associate: "<green>Đặt {player} để liên kết.</green>"
+      trusted: "<green>Đặt {player} thành Trusted.</green>"
+    empty:
+      name: "<red>Không tìm thấy người chơi</red>"
+      lore:
+        - "<gray>Không có người chơi đã biết nào khác có thể tin tưởng.</gray>"
+    locked:
+      name: "<red>Chỉ quyền truy cập của chủ sở hữu</red>"
+      lore:
+        - "<gray>Chỉ chủ cửa hàng mới có thể quản lý người chơi đáng tin cậy.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Giao diện người dùng sổ cái giao dịch cho mua hàng và thuế history.
+shop_ledger_ui:
+  title: "Sổ cái cửa hàng - {location}"
+  summary:
+    name: "<gold>Sổ cái giao dịch cửa hàng</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Tổng số mục:</gray> <white>{ledger_count}</white>"
+      - "<gray>Mua hàng:</gray> <white>{purchase_count}</white>"
+      - "<gray>Thuế:</gray> <white>{tax_count}</white>"
+      - "<yellow>Giao dịch mới nhất xuất hiện đầu tiên.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Mua hàng: {item_type}</green>"
+      lore:
+        - "<gray>Người mua:</gray> <white>{actor}</white>"
+        - "<gray>Số tiền:</gray> <white>{item_amount}</white>"
+        - "<gray>Tổng cộng đã thanh toán:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Đã ghi:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Phí thuế</gold>"
+      lore:
+        - "<gray>Được tính phí vào:</gray> <white>{actor}</white>"
+        - "<gray>Tax share:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Đã đếm cửa hàng:</gray> <white>{counted_shops}</white>"
+        - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Đã ghi:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Không có mục nhập sổ cái</red>"
+      lore:
+        - "<gray>Cửa hàng này chưa ghi nhận giao dịch mua hàng hoặc thuế nào.</gray>"
+    locked:
+      name: "<red>Yêu cầu toàn quyền truy cập</red>"
+      lore:
+        - "<gray>Chỉ những người chơi đáng tin cậy có toàn quyền truy cập mới có thể xem sổ cái.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Giao diện người dùng cửa hàng hướng tới khách hàng để duyệt và mua các mặt hàng.
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Chế độ xem khách hàng</gold>"
+    player:
+      lore:
+        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Vị trí:</gray> <white>{location}</white>"
+        - "<gray>Các mục có sẵn:</gray> <white>{stored_count}</white>"
+        - "<gray>Loại cửa hàng:</gray> <white>Player Shop</white>"
+        - "<gray>Hàng tồn kho:</gray> <white>Finite</white>"
+        - "<yellow>Nhấp chuột trái vào một mặt hàng để mua một mặt hàng.</yellow>"
+        - "<yellow>Nhấp chuột phải vào một mặt hàng để chọn số lượng.</yellow>"
+    admin:
+      lore:
+        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Vị trí:</gray> <white>{location}</white>"
+        - "<gray>Các mục có sẵn:</gray> <white>{stored_count}</white>"
+        - "<gray>Loại cửa hàng:</gray> <white>Cửa hàng quản trị</white>"
+        - "<gray>Hàng tồn kho:</gray> <white>Infinite</white>"
+        - "<yellow>Nhấp chuột trái vào một mặt hàng để mua một mặt hàng.</yellow>"
+        - "<yellow>Nhấp chuột phải vào một mặt hàng để chọn số lượng.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Trạng thái:</gray> <white>{amount}</white>"
+        - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+        - "<gray>Giá mỗi:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Tổng giá trị cổ phiếu:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<yellow>Nhấp chuột trái để mua một mặt hàng.</yellow>"
+        - "<yellow>Nhấp chuột phải để chọn số tiền.</yellow>"
+    admin:
+      lore:
+        - "<gray>Hàng tồn kho:</gray> <white>Infinite</white>"
+        - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+        - "<gray>Giá mỗi:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Loại cửa hàng:</gray> <white>Cửa hàng quản trị</white>"
+        - "<yellow>Nhấp chuột trái để mua một mặt hàng.</yellow>"
+        - "<yellow>Nhấp chuột phải để chọn số tiền.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Trạng thái:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Loại mặt hàng:</gray> <white>{item_type}</white>"
+        - "<gray>Giá mỗi:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Id tiền tệ:</gray> <white>{currency_type}</white>"
+        - "<gray>Chế độ khôi phục lại:</gray> <white>{restock_mode}</white>"
+        - "<gray>Lịch trình bổ sung lại:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Nhấp chuột trái để mua một mặt hàng.</yellow>"
+        - "<yellow>Nhấp chuột phải để chọn số tiền.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "Đặt lại toàn bộ"
+    restock_schedule:
+      gradual: "1 mặt hàng mỗi {reset_timer_ticks} phiếu"
+      full: "Cung cấp lại toàn bộ số hàng tại{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Đã mua {amount}x {item_type} cho {total_price} {currency_name}. Hàng còn lại: {remaining_amount}.</green>"
+    purchased_admin: "<green>Đã mua {amount}x {item_type} cho {total_price} {currency_name}. Cửa hàng quản trị này có kho hàng vô hạn.</green>"
+    purchased_admin_limited: "<green>Đã mua {amount}x {item_type} cho {total_price} {currency_name}. Kho quản trị còn lại: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} hiện không có sẵn để mua.</gray>"
+    insufficient_stock: "<red>Cửa hàng này chỉ có {available_amount}x {item_type}.</red>"
+    insufficient_funds: "<red>Bạn cần {total_price} {currency_name} để mua {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Tiền tệ {currency_name} hiện không có sẵn.</red>"
+    invalid_amount: "<red>Nhập số tiền mua hợp lệ.</red>"
+    item_missing: "<red>Mặt hàng đó trong cửa hàng không còn nữa.</red>"
+    empty_shop:
+      name: "<red>Cửa hàng trống</red>"
+      lore:
+        - "<gray>Không có mặt hàng nào cho buy.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Lời nhắc về việc nhập số lượng mua tùy chỉnh.
+shop_purchase_amount_anvil_ui:
+  title: "Mua {item_type}"
+  input:
+    name: "<gold>Số tiền mua</gold>"
+    player:
+      lore:
+        - "<gray>Nhập số lượng mục bạn muốn mua.</gray>"
+        - "<gray>Có sẵn tối đa:</gray> <white>{max_amount}</white>"
+        - "<gray>Mặt hàng:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Nhập số lượng mục bạn muốn mua.</gray>"
+        - "<gray>Cửa hàng quản trị này có kho hàng vô hạn.</gray>"
+        - "<gray>Mặt hàng:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Nhập số lượng mục bạn muốn mua.</gray>"
+        - "<gray>Có sẵn tối đa:</gray> <white>{max_amount}</white>"
+        - "<gray>Mặt hàng:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Nhập một số nguyên từ 1 đến{max_amount}. Đầu vào: {input}</red>"
+    invalid_number_admin: "<red>Nhập một số nguyên lớn hơn 0. Nhập: {input}</red>"
+    processing_failed: "<red>Không thể xử lý số tiền mua hàng. Đầu vào: {input}</red>"
+
+# Giao diện người dùng đích của khám phá cửa hàng để duyệt qua tất cả và tìm kiếm tài liệu.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Trình duyệt cửa hàng</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Trình duyệt cửa hàng</gradient>"
+    lore:
+      - "<gray>Duyệt qua mọi cửa hàng được theo dõi hoặc lọc theo vật liệu cụ thể.</gray>"
+      - "<yellow>Chọn một trong các hành động bên dưới để tiếp tục.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Duyệt qua tất cả cửa hàng</gradient>"
+    lore:
+      - "<gray>Mở thư mục cửa hàng được phân trang đầy đủ.</gray>"
+      - "<yellow>Nhấp để xem mọi cửa hàng được theo dõi.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Tìm kiếm theo tài liệu</gradient>"
+    lore:
+      - "<gray>Mở lời nhắc đe và nhập tên vật liệu.</gray>"
+      - "<gray>Ví dụ:</gray> <white>khối kim cương</white>"
+      - "<yellow>Nhấp để tìm kiếm theo loại mặt hàng.</yellow>"
+
+# Giao diện người dùng thư mục được phân trang liệt kê tất cả các cửa hàng được theo dõi.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Tất cả các cửa hàng</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Danh mục cửa hàng</gradient>"
+    lore:
+      - "<gray>Cửa hàng được theo dõi:</gray> <white>{shop_count}</white>"
+      - "<gray>Tổng số hàng có sẵn:</gray> <white>{available_count}</white>"
+      - "<yellow>Nhấp vào bất kỳ cửa hàng nào bên dưới để mở.</yellow>"
+  entry:
+    name: "<gold>{owner}</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Hàng có sẵn:</gray> <white>{available_count}</white>"
+      - "<yellow>Nhấp để mở cửa hàng này.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Chưa có cửa hàng nào được đăng ký.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Kết quả cửa hàng được lọc theo nguyên liệu UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Kết quả cho {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Kết quả cho {material}</gradient>"
+    lore:
+      - "<gray>Material:</gray> <white>{material}</white>"
+      - "<gray>Cửa hàng phù hợp:</gray> <white>{shop_count}</white>"
+      - "<gray>Ưu đãi phù hợp:</gray> <white>{matching_count}</white>"
+      - "<yellow>Nhấp vào bất kỳ cửa hàng phù hợp nào bên dưới để mở.</yellow>"
+  entry:
+    name: "<gold>{owner}</gold>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Vị trí:</gray> <white>{location}</white>"
+      - "<gray>Khớp {material} ưu đãi:</gray> <white>{matching_count}</white>"
+      - "<gray>Tổng số cổ phiếu hiển thị:</gray> <white>{available_count}</white>"
+      - "<yellow>Nhấp để mở cửa hàng này.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Không có cửa hàng bán {material}</red>"
+      lore:
+        - "<gray>Không có cửa hàng được theo dõi nào hiện cung cấp dịch vụ này chất liệu.</gray>"
+    shop_missing:
+      name: "<red>Không tìm thấy cửa hàng</red>"
+      lore:
+        - "<gray>Không thể tải cửa hàng này từ bộ lưu trữ.</gray>"
+      message: "<red>Không thể tải cửa hàng này từ bộ lưu trữ.</red>"
+
+# Lời nhắc về việc nhập tìm kiếm bộ lọc vật liệu.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Tài liệu tìm kiếm</gradient>"
+  input:
+    lore:
+      - "<gray>Nhập tên vật liệu Bukkit để tìm kiếm các cửa hàng được theo dõi.</gray>"
+      - "<gray>Ví dụ:</gray> <white>kim cương</white><gray>,</gray> <white>khối kim cương</white>"
+      - "<yellow>Nhấp vào ô kết quả để mở các cửa hàng phù hợp.</yellow>"
+  error:
+    invalid_material: "<red>Nhập vật liệu hợp lệ, chẳng hạn như Diamond_block. Đầu vào: {input}</red>"
+    processing_failed: "<red>Không thể tìm kiếm tài liệu. Đầu vào: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# Nhãn mục phân trang được chia sẻ được sử dụng trên các giao diện người dùng danh sách.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Trang %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Trang hiện tại:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tổng số trang:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Trang %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# Nhãn nút điều hướng/đầu được chia sẻ (trở lại/xác nhận/tiếp theo).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Trả về</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để quay lại</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Xác nhận</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để xác nhận cài đặt</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Xác nhận</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Nhấp để xác nhận cài đặt</gradient>"

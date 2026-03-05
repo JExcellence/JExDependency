@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# Voorvoegsel toegevoegd aan algemene plug-in chatuitvoer.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Snelle, op de speler gerichte samenvattingsregels voor winkel-, bank- en belastingstatus.
+info:
+  total: "<blue>Winkels:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Bijgehouden saldi ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Geplande belasting ({taxed_shops} belastbare winkels):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Volgende belasting:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Join-time berichten worden weergegeven wanneer spelers de server betreden.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} belastbare winkel(s)\n[<blue>Bedrag<yellow>]\n{taxes}\n<red>Verschuldigd:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Opdrachtantwoordreeksen voor `/rs`-functies en schakelaars.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Heeft de <white>RDS-beheerder</white><gray> paneel.</gray>"
+  bar:
+    enabled: "<green>Winkelbaasbalk ingeschakeld terwijl je naar een winkel kijkt.</green>"
+    disabled: "<yellow>Winkelbaasbalk uitgeschakeld.</yellow>"
+  give:
+    syntax: "<red>Gebruik: /rs give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gebruik:</gray> <white>/rs scorebord &lt;grootboek|voorraad&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{scoreboard_type}</white><gray> zijbalk.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray><white>{scoreboard_type}</white><gray> zijbalk.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Overgeschakeld naar <white>{scoreboard_type}</white><gray> zijbalk.</gray>"
+    type:
+      ledger: "<gold>grootboek</gold>"
+      stock: "<aqua>voorraad</aqua>"
+
+# Zijbalkscorebordlabels en waardeopmaak.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Grootboek ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ banktotalen</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Geen banktegoeden</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Voorraad ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Voorraad:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Geen spelerswinkels</red>"
+
+# Baasbalktekst wordt weergegeven tijdens het targeten van een winkel.
+shop_boss_bar:
+  title: "<gold>{shop_type} Winkel</gold> <gray>|</gray> <yellow>Eigenaar:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Artikelen:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Locatie:</yellow> <white>{location}</white>"
+  type:
+    player: "Speler"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Beperkte voorraad"
+    infinite: "Oneindig"
+    various: "Diverse"
+
+# ============================================
+# GUI-knoppen
+# ============================================
+
+# Winkelblokitemnaam en metagegevens.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Plaats dit blok om uw winkel in te stellen.</yellow>"
+
+# Winkelwinkeloverzicht UI-labels, kennis en beschikbaarheidsstatussen.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Winkelwinkel</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Eigen winkelblokken</gradient>"
+    lore:
+      - "<gray>winkelblokken geopend:</gray> <white>{owned_shops}</white>"
+      - "<gray>Deze tracks zijn gekocht of toegekend</gray>"
+      - "<gray>ShopBlock eigendom.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Winkelblokkeringslimiet</gradient>"
+    lore:
+      - "<gray>winkelblokken geopend:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum winkelblokken:</gray> <white>{max_shops}</white>"
+      - "<gray>Deze limiet bepaalt hoeveel winkels</gray>"
+      - "<gray>blokken die je kunt ontgrendelen.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Vraag] Winkelvereisten</gradient>"
+    lore:
+      - "<gray>Geconfigureerde vereisten:</gray> <white>{requirement_count}</white>"
+      - "<gray>Huidige aantal vereisten:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klik om het volgende winkelniveau te bekijken.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Klaar]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[In behandeling]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+
+# Winkelniveau-gebruikersinterface, voortgangsweergave en aankoopfeedback.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Vereist] Winkelniveau{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Aankoopwinkelblok</gradient>"
+    lore:
+      - "<gray>Aankoopniveau:</gray> <white>{purchase_number}</white>"
+      - "<gray>winkelblokken geopend:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximum winkelblokken:</gray> <white>{max_shops}</white>"
+      - "<gray>Geconfigureerde vereisten:</gray> <white>{requirement_count}</white>"
+      - "<gray>Momenteel voldaan:</gray> <white>{met_count}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klik om te kopen wanneer dit niveau klaar is.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Klaar]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[In behandeling]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Vrij]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Gratis] Geen vereisten</gradient>"
+    lore:
+      - "<gray>Deze aankooplaag heeft geen geconfigureerde vereisten.</gray>"
+      - "<yellow>Je kunt dit winkelblok kopen zonder extra cheques.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Vraag]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Sleutel:</gray> <white>{requirement_key}</white>"
+      - "<gray>Type:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Voortgang:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Samenvatting:</gray> <white>{summary}</white>"
+      - "<yellow>Rechtsklik op compatibele vereisten om voortgang te boeken.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Gedetailleerd Cheques</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[In behandeling]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Niet beschikbaar]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Een winkelblok gekocht. Verbruikte vereisten:</gray> <white>{requirements}</white><gray>. Eigen winkelblokken:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je voldoet momenteel niet aan <white>{requirement}</white><gray>. Winkelvereisten:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>De winkelvereiste <white>{requirement}</white><gray> is momenteel niet beschikbaar of ongeldig.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt de winkelblokkeringslimiet van <white>{max_shops}</white><gray>. Eigen winkelblokken:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> is nu gereed.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Opgeslagen voortgang voor <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Er waren geen overeenkomende items of valuta beschikbaar voor <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> ondersteunt geen voortgang in de bank.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> is momenteel niet beschikbaar.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray> nodigJe RDS-profiel kan niet worden geladen, dus de voortgang kan niet worden geladen opgeslagen.</gray>"
+
+# Blokkeerinteractievalidatiefouten en beveiligingsmeldingen.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Kan de winkeleigenaar van dit item niet lezen.</red>"
+    not_owner: "<red>Dit ShopBlock is van een andere speler en kan niet door jou worden geplaatst.</red>"
+    max_shops_reached: "<red> bereiktJe hebt de winkellimiet van {max_shops}. Huidig ​​geplaatste winkels: {owned_shops}.</red>"
+    shop_protected: "<red>Winkels kunnen niet direct worden verbroken. Gebruik het winkelmenu om de winkel te sluiten.</red>"
+    double_chest_requires_shop_block: "<red>Uitgeschakeld voor winkels met dubbele kist <blue>ShopBlock</blue><red>. Normale kisten kunnen niet samenvoegen met winkelkisten.</red>"
+    double_chest_owner_mismatch: "<red>Dit ShopBlock is van een andere eigenaar en kan deze winkel dus niet uitbreiden.</red>"
+    shop_already_double_chest: "<red>Deze winkel gebruikt al beide kisthelften.</red>"
+    double_chest_ambiguous: "<red>Dit ShopBlock raakt meerdere winkelkisten. Plaats het naast slechts één winkel.</red>"
+
+# Geplande berichten over de uitkomst van belastingverwerking.
+tax_scheduler:
+  paid: "<yellow> geretourneerd Geplande winkelbelasting van {amount}. Getelde winkels: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>Je kon de geplande winkelbelasting van niet betalen {amount}. Getelde winkels: {owned_shops}.</red>"
+  charge_failed: "<red>Kan de geplande winkelbelasting van {amount}. Getelde winkels: {owned_shops}.</red>"
+
+# Hoofdwinkeloverzichtinterface voor beheeracties eigenaar/beheerder.
+shop_overview_ui:
+  title: "{owner} Winkel - {location}"
+  summary:
+    name: "<gold>Winkeloverzicht</gold>"
+    player:
+      lore:
+        - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+        - "<gray>Locatie:</gray> <white>{location}</white>"
+        - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
+        - "<gray>Winkel type:</gray> <white>Spelerwinkel</white>"
+        - "<gray>Voorraad:</gray> <white>Eind</white>"
+    admin:
+      lore:
+        - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+        - "<gray>Locatie:</gray> <white>{location}</white>"
+        - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
+        - "<gray>Winkel type:</gray> <white>Admin Shop</white>"
+        - "<gray>Voorraad:</gray> <white>Oneindig</white>"
+  finance:
+    name: "<gold>Winkelbank</gold>"
+    lore:
+      - "<gray>Bijgehouden valuta's:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klik om geld te bekijken en op te nemen.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop ingeschakeld</red>"
+        lore:
+          - "<gray>Deze winkel is momenteel een beheerderswinkel.</gray>"
+          - "<gray>Inventaris is oneindig voor klanten.</gray>"
+          - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
+          - "<yellow>Klik om terug te schakelen naar een spelerwinkel.</yellow>"
+      disabled:
+        name: "<green>Admin Shop uitgeschakeld</green>"
+        lore:
+          - "<gray>Deze winkel gebruikt momenteel normaal voorraad.</gray>"
+          - "<gray>Klanten kunnen alleen opgeslagen hoeveelheden kopen.</gray>"
+          - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
+          - "<yellow>Klik om de beheerderswinkelmodus in te schakelen.</yellow>"
+    close:
+      name: "<red>Winkel sluiten</red>"
+      lore:
+        - "<gray>Verwijder deze winkel en retourneer het winkelblok.</gray>"
+        - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
+        - "<gray>Bijgehouden bankvaluta's:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Winkelvoorraad moet leeg zijn voordat deze wordt gesloten.</yellow>"
+    manage:
+      name: "<green>Winkelitems toevoegen</green>"
+      lore:
+        - "<gray>Sla nieuwe items op in deze shop.</gray>"
+        - "<gray>Huidige invoer:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik om iteminvoer te openen.</yellow>"
+    customer_view:
+      name: "<gold>Open klantoverzicht</gold>"
+      lore:
+        - "<gray>Bekijk een voorbeeld van deze winkel zoals klanten deze zien.</gray>"
+        - "<gray>Huidige invoer:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik om als klant door deze winkel te bladeren.</yellow>"
+    trusted:
+      name: "<gold>Vertrouwde spelers</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Vertrouwd spelers:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Klik om winkelvertrouwensniveaus te beheren.</yellow>"
+    ledger:
+      name: "<gold>Winkelgrootboek</gold>"
+      lore:
+        - "<gray>Totaal aantal inzendingen:</gray> <white>{ledger_count}</white>"
+        - "<gray>Aankopen:</gray> <white>{purchase_count}</white>"
+        - "<gray>Belastingen:</gray> <white>{tax_count}</white>"
+        - "<yellow>Klik om de transactiegeschiedenis van de winkel te bekijken.</yellow>"
+    edit:
+      name: "<aqua>Bewerk winkelitems</aqua>"
+      lore:
+        - "<gray>Bewerk prijzen voor opgeslagen winkel items.</gray>"
+        - "<gray>Huidige invoer:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik om prijzen en valuta's te bewerken.</yellow>"
+    storage:
+      name: "<gold>Opgeslagen items bekijken</gold>"
+      lore:
+        - "<gray>Bekijk artikelen die al in deze winkel zijn opgeslagen.</gray>"
+        - "<gray>Huidige invoer:</gray> <white>{item_count}</white>"
+        - "<yellow>Klik om opgeslagen items op te nemen.</yellow>"
+    locked:
+      name: "<red>Winkel vergrendeld</red>"
+      lore:
+        - "<gray>Alleen de eigenaar kan items toevoegen.</gray>"
+        - "<gray>Huidige invoer:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Je hebt geen toestemming om deze winkel te beheren.</red>"
+    no_admin_permission: "<red>Je hebt geen toestemming om beheerderswinkels in of uit te schakelen.</red>"
+    admin_limit_reached: "<red>De server heeft al {admin_shops} beheerderswinkels. In de gratis versie is slechts {max_admin_shops} beheerderswinkels.</red>"
+    admin_enabled: "<green>Deze winkel is nu een beheerderswinkel met een oneindige klantenvoorraad. Getelde winkels: {owned_shops}.</green>"
+    admin_disabled: "<yellow>Deze winkel is nu een normale spelerswinkel met een beperkte klantenvoorraad. Getelde winkels: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Je kunt deze beheerderswinkel niet terugzetten naar een spelerswinkel omdat je winkellimiet van {max_shops} is al bereikt. Getelde winkels: {owned_shops}.</red>"
+    close_not_empty: "<red>Je kunt een winkel alleen sluiten nadat je alle opgeslagen items hebt verwijderd. Resterende inzendingen: {item_count}.</red>"
+    close_bank_not_empty: "<red>Trek je winkelbank op voordat je deze winkel sluit. Resterende gevolgde valuta: {bank_currency_count}.</red>"
+    closed: "<green>Winkel gesloten en {returned_blocks} Winkelblok(ken). Getelde winkels: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Global admin control panel voor RDS-beheer.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS-controle</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS-beheerderspaneel</white>"
+    lore:
+      - "<gray>Beheer wereldwijde admin-shopsystemen vanaf één plek.</gray>"
+      - "<gray>Open de serverbank of bewerk configuratie-instellingen hieronder.</gray>"
+      - "<yellow>Vereist:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+      lore:
+        - "<gray>Bekijk de inkomsten uit de beheerderswinkel die naar de serverbank zijn gehaald.</gray>"
+        - "<gray>Controleer de timing van de volgende ophaalactie en neem het saldo op.</gray>"
+        - "<yellow>Klik om serverbank te openen controles.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Winkel Config</gradient>"
+      lore:
+        - "<gray>Waarden bewerken van</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Elke bewerkbare instelling kan worden gewijzigd via een aambeeldprompt.</gray>"
+        - "<yellow>Klik om configuratiecontroles te openen.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Valutabeheerder</gradient>"
+      lore:
+        - "<gray>Bekijk de gedetecteerde valuta uit de kluis en JExEconomy.</gray>"
+        - "<gray>Maak de standaard</gray> <white>regendruppels</white> <gray>munt wanneer dat nodig is.</gray>"
+        - "<yellow>Klik om valutacontroles te openen.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Beheerderstoegang vereist</white>"
+      lore:
+        - "<gray>Je hebt geen toestemming om deze beheerder te gebruiken panel.</gray>"
+
+# Beheerdersvalutaweergave voor gedetecteerde providers en standaardvalutacreatie.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Valutabeheerder</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Valuta Providers</white>"
+    lore:
+      - "<gray>Gedetecteerd valuta:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault beschikbaar:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy beschikbaar:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Gebruik de kristallen knop om een standaard aan te maken valuta.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Huidige]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Provider:</gray> <white>{provider}</white>"
+      - "<gray>Symbool:</gray> <white>{symbol}</white>"
+      - "<gray>Voorvoegsel:</gray> <white>{prefix}</white>"
+      - "<gray>Achtervoegsel:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Maak {currency_id}</white>"
+      lore:
+        - "<gray>Maak de standaard RDS-valuta in JExEconomy.</gray>"
+        - "<yellow>Klik om {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEconomy vereist</white>"
+      lore:
+        - "<gray>Je kunt geen standaardvaluta creëren zonder JExEconomy.</gray>"
+        - "<gray>Installeer en schakel eerst JExEconomy in.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>{currency_id}Klaar</white>"
+      lore:
+        - "<gray>De standaardvaluta bestaat al.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Standaardvaluta gemaakt:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> niet innen:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuta bestaat al:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je kunt deze knop niet gebruiken tenzij JExEconomy beschikbaar is.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Geen valuta gedetecteerd</white>"
+      lore:
+        - "<gray>Er zijn geen kluis- of JExEconomy-valuta's gedetecteerd.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Beheerderstoegang vereist</white>"
+      lore:
+        - "<gray>Je hebt geen toestemming om deze valutaweergave te gebruiken.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt geen toestemming om valuta's te beheren.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Config browser-UI voor bewerkbare instellingen en update-feedback.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Winkel Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Configuratie-instellingen</white>"
+    lore:
+      - "<gray>Bewerkbare instellingen gedetecteerd:</gray> <white>{setting_count}</white>"
+      - "<gray>Klik op een item hieronder om de waarde ervan te bewerken een aambeeld.</gray>"
+      - "<yellow>Wijzigingen worden rechtstreeks naar de winkel geschreven config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Pad:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Huidige waarde:</gray> <white>{current_value}</white>"
+      - "<yellow>Klik om deze instelling te bewerken.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Geheel getal]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Lang]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dubbele]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lijst]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Snaar]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Niet bewerkbaar Instellingen</white>"
+      lore:
+        - "<gray>Er zijn geen bewerkbare scalaire/lijstconfiguratie-instellingen gevonden.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Beheerderstoegang vereist</white>"
+      lore:
+        - "<gray>Je hebt geen toestemming om deze configuratieweergave te gebruiken.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>Deze editie staat geen bewerkingen in de runtime-configuratie toe.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt geen toestemming om de configuratie-instellingen te bewerken.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config-bewerking is vergrendeld in deze editie.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Bijgewerkt <white>{config_path}</white><gray> naar <white>{updated_value}</white><gray>.</gray>"
+
+# Aambeeldprompttekst voor het bewerken van configuratiewaarden.
+shop_config_value_anvil_ui:
+  title: "Bewerken {config_path}"
+  input:
+    lore:
+      - "<gray>Pad:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Huidige waarde:</gray> <white>{current_value}</white>"
+      - "<yellow>Voer de nieuwe waarde in en bevestig.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ongeldige invoer voor type <white>{value_type}</white><gray>. Invoer:</gray> <white>{input}</white>"
+
+# Serverbankoverzicht, valuta-invoer en opnamefeedback.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Inkomen en overdracht Status</white>"
+    lore:
+      - "<gray>Bijgehouden valuta's:</gray> <white>{currency_count}</white>"
+      - "<gray>Inkomen:</gray> <white>{income_summary}</white>"
+      - "<gray>Volgende pull:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Tijd tot de volgende pull:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Het saldo van de beheerderswinkel wordt hier volgens schema overgedragen.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Geen</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Uitgeschakeld</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>In behandeling...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Uitgeschakeld</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>In behandeling...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Terugtrekken]</gradient> <white>Alles opnemen</white>"
+    lore:
+      - "<gray>Probeer elk positief saldo op te nemen.</gray>"
+      - "<gray>Niet-beschikbare valuta worden overgeslagen.</gray>"
+      - "<yellow>Klik om al het geld op te nemen in uw account.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+      - "<gray>Beschikbaar saldo:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klik om dit volledige valutasaldo op te nemen.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Serverbank leeg</white>"
+      lore:
+        - "<gray>Er zijn geen positieve saldi beschikbaar om op te nemen.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Beheerderstoegang vereist</white>"
+      lore:
+        - "<gray>Je hebt geen toestemming om de serverbank te beheren.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt geen toestemming om de serverbank te beheren.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dat server-banksaldo is niet langer beschikbaar.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Opgenomen <white>{amount} {currency_name}</white><gray>. Resterende {currency_name}:</gray> <white>{remaining_amount}</white><gray> te kopen. Actieve valuta:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Opgenomen <white>{withdrawn_currency_count}</white><gray> valutasaldo(s). Mislukt:</gray> <white>{failed_currency_count}</white><gray>. Resterende actieve valuta:</gray> <white>{remaining_currency_count}</white><gray>. Details:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Er kunnen geen saldi worden opgenomen. Mislukte valutatelling:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Valuta <white>{currency_name}</white><gray> is momenteel niet beschikbaar.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Opname mislukt <white>{amount} {currency_name}</white><gray> van de serverbank.</gray>"
+
+# Winkel-iteminvoerinterface gebruikt wanneer nieuwe voorraadposten toevoegen.
+shop_input_ui:
+  title: "Items toevoegen - {owner} @ {location}"
+  summary:
+    name: "<gold>Winkelopslag</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Momenteel opgeslagen:</gray> <white>{stored_count}</white>"
+      - "<yellow>Nieuwe items zijn standaard ingesteld op valutatype kluis en waarde 0.</yellow>"
+  input_slot:
+    name: "<green>Invoersleuf</green>"
+    lore:
+      - "<gray>Klik met de linkermuisknop met een item op uw cursor</gray>"
+      - "<gray>of Shift-klik op een item uit je inventaris.</gray>"
+      - "<gray>Klik met de rechtermuisknop om een ingevoegde stapel te verwijderen.</gray>"
+  no_new_items_inserted: "<red>Er zijn geen nieuwe items ingevoegd.</red>"
+  saved: "<green>Opgeslagen {added_count} nieuwe invoer. Winkel heeft nu {stored_count} invoer.</green>"
+  save_failed: "<red>Kan winkelitems niet opslaan.</red>"
+  left_overs: "<yellow>Heeft niet-opgeslagen winkelitems teruggestuurd naar je inventaris.</yellow>"
+  feedback:
+    no_permission: "<red>Je hebt geen toestemming om items aan deze winkel toe te voegen.</red>"
+    locked:
+      name: "<red>Toegang tot levering vereist</red>"
+      lore:
+        - "<gray>Alleen medewerkers en vertrouwde spelers kunnen hier items toevoegen.</gray>"
+
+# Winkelopslagbrowser-UI voor het bekijken en verwijderen van opgeslagen items.
+shop_storage_ui:
+  title: "Opgeslagen items - {location}"
+  summary:
+    name: "<gold>Opgeslagen items</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Opgeslagen items:</gray> <white>{stored_count}</white>"
+      - "<yellow>Klik op een item hieronder om het in te trekken.</yellow>"
+  entry:
+    lore:
+      - "<gray>Opgeslagen bedrag:</gray> <white>{amount}</white>"
+      - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+      - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+      - "<gray>Waarde:</gray> <white>{value}</white>"
+      - "<yellow>Klik om dit item uit de winkel te halen.</yellow>"
+  feedback:
+    not_owner: "<red>Je hebt geen toestemming om deze winkel te beheren.</red>"
+    extracted: "<green>Geëxtraheerd {amount}x {item_type}. Prijs was {value} {currency_type}. Resterende opgeslagen vermeldingen: {stored_count}.</green>"
+    item_missing: "<red>Dat opgeslagen item kan niet worden gevonden.</red>"
+    locked:
+      name: "<red>Volledige toegang vereist</red>"
+      lore:
+        - "<gray>Alleen vertrouwde spelers met volledige toegang kunnen opgeslagen items opnemen.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Winkelbewerkingsselectie-UI voor het kiezen van items om te wijzigen.
+shop_edit_ui:
+  title: "Bewerk winkelitems - {location}"
+  summary:
+    name: "<aqua>Winkelprijseditor</aqua>"
+    player:
+      lore:
+        - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+        - "<gray>Locatie:</gray> <white>{location}</white>"
+        - "<gray>Opgeslagen items:</gray> <white>{stored_count}</white>"
+        - "<yellow>Klik met de linkermuisknop op een item om te bewerken prijzen.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop op een artikel om het uit de winkel te verwijderen.</yellow>"
+    admin:
+      lore:
+        - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+        - "<gray>Locatie:</gray> <white>{location}</white>"
+        - "<gray>Opgeslagen items:</gray> <white>{stored_count}</white>"
+        - "<gray>Beheer-aanvulmodus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Herbevoorradingsschema:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Klik met de linkermuisknop op een item om de prijzen of voorraad te bewerken.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop op een artikel om het uit de winkel te verwijderen.</yellow>"
+    restock_schedule:
+      gradual: "Standaardtimer: {reset_timer_ticks} ticks per item"
+  entry:
+    player:
+      lore:
+        - "<gray>Opgeslagen bedrag:</gray> <white>{amount}</white>"
+        - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+        - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+        - "<gray>Waarde:</gray> <white>{value}</white>"
+        - "<yellow>Klik met de linkermuisknop om dit winkelitem te bewerken.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop om verwijder het uit de winkel.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Voorraad:</gray> <white>Oneindig</white>"
+        - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+        - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+        - "<gray>Waarde:</gray> <white>{value}</white>"
+        - "<gray>Restock-modus:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Klik met de linkermuisknop om dit beheerderswinkelitem te bewerken.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop om verwijder het uit de winkel.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Huidige voorraad:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+        - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+        - "<gray>Waarde:</gray> <white>{value}</white>"
+        - "<gray>Restock-modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Herbevoorradingsschema:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Klik met de linkermuisknop om dit beheerderswinkelitem te bewerken.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop om verwijder het uit de winkel.</yellow>"
+    admin_mode:
+      gradual: "Geleidelijk"
+      full: "Volledige reset"
+    restock_schedule:
+      gradual: "1 item per {reset_timer_ticks} ticks"
+      full: "Volledig aangevuld op{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Je hebt geen toestemming om deze winkel te beheren.</red>"
+    removed: "<green>Verwijderd {amount}x {item_type} van de winkel. Prijs was {value} {currency_type}. Resterende opgeslagen vermeldingen: {stored_count}.</green>"
+    item_missing: "<red>Dat winkelitem kan niet worden gevonden.</red>"
+    locked:
+      name: "<red>Volledige toegang vereist</red>"
+      lore:
+        - "<gray>Alleen vertrouwde spelers met volledige toegang kunnen itemwaarden bewerken.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Gedetailleerde editor-UI voor het gedrag en de prijzen van individuele winkelartikelen.
+shop_item_edit_ui:
+  title: "Bewerken {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Opgeslagen bedrag:</gray> <white>{amount}</white>"
+        - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+        - "<gray>Waarde:</gray> <white>{value}</white>"
+        - "<gray>Beschikbaarheidsmodus:</gray> <white>{availability_mode}</white>"
+        - "<gray>Nu beschikbaar:</gray> <white>{availability_state}</white>"
+        - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+        - "<yellow>Gebruik de onderstaande knoppen om dit item te bewerken.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Voorraad:</gray> <white>Oneindig</white>"
+        - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+        - "<gray>Waarde:</gray> <white>{value}</white>"
+        - "<gray>Restock-modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Aankoopopdrachten:</gray> <white>{command_count}</white>"
+        - "<gray>Beschikbaarheidsmodus:</gray> <white>{availability_mode}</white>"
+        - "<gray>Nu beschikbaar:</gray> <white>{availability_state}</white>"
+        - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+        - "<yellow>Gebruik de onderstaande knoppen om dit admin-item te bewerken.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Huidige voorraad:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Valuta type:</gray> <white>{currency_type}</white>"
+        - "<gray>Waarde:</gray> <white>{value}</white>"
+        - "<gray>Restock-modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Herbevoorradingsschema:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Aankoopopdrachten:</gray> <white>{command_count}</white>"
+        - "<gray>Beschikbaarheidsmodus:</gray> <white>{availability_mode}</white>"
+        - "<gray>Nu beschikbaar:</gray> <white>{availability_state}</white>"
+        - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+        - "<yellow>Gebruik de onderstaande knoppen om dit admin-item te bewerken.</yellow>"
+  currency_type:
+    name: "<green>Valutatype</green>"
+    lore:
+      - "<gray>Huidig type:</gray> <white>{currency_type}</white>"
+      - "<yellow>Klik om te bewerken het valutatype.</yellow>"
+  value:
+    name: "<gold>Waarde</gold>"
+    lore:
+      - "<gray>Huidig type:</gray> <white>{currency_type}</white>"
+      - "<gray>Huidige waarde:</gray> <white>{value}</white>"
+      - "<yellow>Klik om de numerieke waarde te bewerken.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Modus] Beschikbaarheid van artikelen</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Altijd]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Draaien]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Nooit]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Open]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Gesloten]</gradient>"
+    lore:
+      - "<gray>Huidige modus:</gray> <white>{availability_mode}</white>"
+      - "<gray>Huidige status:</gray> <white>{availability_state}</white>"
+      - "<gray>Roteer venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+      - "<yellow>Klik om te wisselen: Altijd -> Roteren -> Nooit.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Minuten roteren</gradient>"
+    lore:
+      - "<gray>Huidige venster:</gray> <white>{rotation_minutes} minuut(en)</white>"
+      - "<gray>Huidige modus:</gray> <white>{availability_mode}</white>"
+      - "<gray>Roteer moduslabel:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Klik om de rotatieminuten in een aambeeld in te stellen.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Commando-uitvoerder</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Speler]</gradient>"
+    lore:
+      - "<gray>Huidige modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Volgende modus:</gray> <white>{next_mode}</white>"
+      - "<yellow>Klik om te schakelen wie nieuw toegevoegde opdrachten uitvoert.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Aankoopopdrachten</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Geen</gradient>"
+    lore:
+      - "<gray>Geconfigureerde opdrachten:</gray> <white>{command_count}</white>"
+      - "<gray>Laatste opdracht:</gray> <white>{latest_command}</white>"
+      - "<yellow>Klik om opdrachtinstellingen te openen en opdrachten toe te voegen.</yellow>"
+  confirm:
+    name: "<green>Artikelprijzen opslaan</green>"
+    lore:
+      - "<gray>Pas het huidige valutatype en de huidige waarde toe</gray>"
+      - "<gray>naar dit winkelitem.</gray>"
+  stock_limit:
+    name: "<gold>Voorraadlimiet</gold>"
+    unlimited: "Oneindig"
+    lore:
+      - "<gray>Huidige limiet:</gray> <white>{stock_limit}</white>"
+      - "<gray>Huidige voorraad:</gray> <white>{current_stock}</white>"
+      - "<yellow>Klik om een voorraadlimiet in te stellen.</yellow>"
+      - "<gray>Gebruik -1 om dit item terug te zetten naar de oneindige voorraad.</gray>"
+  reset_timer:
+    name: "<aqua>Reset Timer</aqua>"
+    lore:
+      - "<gray>Huidige timer:</gray> <white>{reset_timer_ticks} ticks</white>"
+      - "<yellow>Klik om de aanvultimer in te stellen.</yellow>"
+  restock_mode:
+    name: "<yellow>Admin Restock Modus</yellow>"
+    gradual: "Geleidelijk"
+    full: "Volledige reset"
+    lore:
+      - "<gray>Geconfigureerde modus:</gray> <white>{restock_mode}</white>"
+      - "<gray>Geconfigureerd schema:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Klik om de algemene beheermodus voor het aanvullen van de voorraad in of uit te schakelen.</yellow>"
+  restock_schedule:
+    gradual: "1 item per {reset_timer_ticks} ticks"
+    full: "Volledig aangevuld op{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Je hebt geen toestemming om deze winkel te beheren.</red>"
+    shop_missing: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+    item_missing: "<red>Dat winkelitem kan niet worden gevonden.</red>"
+    saved: "<green>Opgeslagen itemprijzen als {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Beschikbaarheidsmodus ingesteld op <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nieuwe uitvoeringsmodus voor opdrachten ingesteld op <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>De laatste opdracht verwijderd. Resterende opdrachten:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alle beheerdersaankoopopdrachten gewist.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Er zijn geen beheerdersaankoopopdrachten geconfigureerd.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Wijzigingen in de plug-inconfiguratie zijn vergrendeld in <white>RDS Gratis</white><gray>. Upgrade naar premium voor volledige toegang.</gray>"
+    restock_mode_updated: "<green>Beheer-aanvulmodus ingesteld op {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Kan de beheerdersaanvulmodus niet opslaan.</red>"
+
+# Aambeeldprompt voor het toevoegen van een nieuw beheerderaankoopcommando.
+shop_item_admin_command_anvil_ui:
+  title: "Commando toevoegen {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Voer een opdracht in die moet worden uitgevoerd wanneer dit beheerdersitem wordt weergegeven gekocht.</gray>"
+      - "<gray>Alleen opdrachttekst. Vertraging is geconfigureerd in de weergave van opdrachtinstellingen.</gray>"
+      - "<gray>Voorbeelden:</gray>"
+      - "<white>uitzending%player_name% kocht {amount}x {item_type}</white>"
+      - "<white>eco geven%player_name% 50</white>"
+      - "<gray>Geconfigureerde opdrachten:</gray> <white>{command_count}</white>"
+      - "<gray>Uitvoering modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Vertraging:</gray> <white>{command_delay_ticks} ticks</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Speler]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Opdrachttekst mag niet leeg zijn. Invoer:</gray> <white>{input}</white>"
+
+# Gebruikersinterface voor beheeraankoopopdrachten voor modus, vertraging en opdrachtenlijst.
+shop_item_admin_command_ui:
+  title: "Opdrachtinstellingen - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Aankoopopdrachtinstellingen</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Geen</gradient>"
+    lore:
+      - "<gray>Geconfigureerde opdrachten:</gray> <white>{command_count}</white>"
+      - "<gray>Laatste opdracht:</gray> <white>{latest_command}</white>"
+      - "<gray>Volgende opdrachtmodus:</gray> <white>{command_mode}</white>"
+      - "<gray>Vertraging volgende opdracht:</gray> <white>{command_delay_ticks} ticks ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Volgende opdrachtuitvoerder</gradient>"
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Speler]</green>"
+    lore:
+      - "<gray>Huidige modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Volgende modus:</gray> <white>{next_mode}</white>"
+      - "<yellow>Klik om de uitvoerder voor de volgende opdracht in of uit te schakelen.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Vertraging] Vertraging volgende opdracht</gradient>"
+    lore:
+      - "<gray>Huidige vertraging:</gray> <white>{command_delay_ticks} ticks ({command_delay_seconds}s)</white>"
+      - "<yellow>Klik om de vertraging in het aantal tikken voor de volgende opdracht in te stellen.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Commando toevoegen</gradient>"
+    lore:
+      - "<gray>Modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Vertraging:</gray> <white>{command_delay_ticks} ticks ({command_delay_seconds}s)</white>"
+      - "<yellow>Klik om opdrachtinvoer te openen.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Verwijderen Commando</gradient>"
+    lore:
+      - "<gray>Geconfigureerde opdrachten:</gray> <white>{command_count}</white>"
+      - "<yellow>Klik om de laatste opdracht te verwijderen.</yellow>"
+      - "<yellow>Shift + klik om alle opdrachten te wissen.</yellow>"
+  confirm:
+    name: "<green>Opdracht opslaan Instellingen</green>"
+    lore:
+      - "<gray>Ga terug naar de item-editor en bewaar deze opdrachtwijzigingen.</gray>"
+  feedback:
+    not_owner: "<red>Je hebt geen toestemming om deze winkel te beheren.</red>"
+    shop_missing: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Volgende opdrachtmodus ingesteld op <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>De laatste opdracht verwijderd. Resterende opdrachten:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alle beheerdersaankoopopdrachten gewist.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Er zijn geen beheerdersaankoopopdrachten geconfigureerd.</gray>"
+
+# Aambeeldprompt voor het instellen van vertragingstekens voor beheerdersopdrachten.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Vertraging instellen - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Voer een heel aantal ticks in voor de volgende opdrachtvertraging.</gray>"
+      - "<gray>Uitvoering modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Voorbeelden:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Speler]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Voer een geheel getal in dat groter is dan of gelijk is aan 0. Invoer:</gray> <white>{input}</white>"
+
+# Aambeeldprompt voor het beschikbaarheidsvenster van de rotatiemodus in minuten.
+shop_item_availability_minutes_anvil_ui:
+  title: "Route Minuten: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Minuten roteren</gradient>"
+    lore:
+      - "<gray>Voer een heel aantal minuten in.</gray>"
+      - "<gray>Roteermodus wisselt tussen beschikbaar/niet beschikbaar per venster.</gray>"
+  error:
+    invalid_number: "<red>Voer een geheel getal in dat groter is dan 0. Voer in: {input}</red>"
+
+# Aambeeldprompt voor het instellen van de beperkte beheerdervoorraadcapaciteit.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Voorraadlimiet: {stock_limit}"
+  input:
+    name: "<gold>Voorraadlimiet</gold>"
+    lore:
+      - "<gray>Voer een positieve voorraadlimiet in items in.</gray>"
+      - "<gray>Gebruik -1 om de oneindige admin-voorraad te herstellen.</gray>"
+  error:
+    invalid_number: "<red>Ingeschakeld -1 of een geheel getal groter dan 0. Invoer: {input}</red>"
+
+# Aambeeldprompt voor het configureren van beheerdersbevoorradings-/resettimer-tikken.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Reset Timer: {reset_timer_ticks}"
+  input:
+    name: "<aqua>Reset Timer</aqua>"
+    lore:
+      - "<gray>Voer een heel aantal Bukkit-ticks in.</gray>"
+      - "<gray>Geleidelijke modus herstelt één item per timer.</gray>"
+  error:
+    invalid_number: "<red>Voer een geheel getal in dat groter is dan 0. Voer in: {input}</red>"
+
+# Aambeeldprompt voor het selecteren van het valutatype dat door een item wordt gebruikt.
+shop_item_currency_type_anvil_ui:
+  title: "Valutatype: {currency_type}"
+  input:
+    name: "<green>Valutatype</green>"
+    lore:
+      - "<gray>Voer de valuta-identificatie voor dit item in.</gray>"
+      - "<gray>Voorbeelden:</gray> <white>kluis, tokens, edelstenen</white>"
+  error:
+    empty: "<red>Valutatype mag niet leeg zijn.</red>"
+    invalid_currency: "<red>Valutatype {currency_type} is niet beschikbaar. Gebruik een kluis of een geregistreerde aangepaste valuta.</red>"
+    processing_failed: "<red>Kan het valutatype niet bijwerken. Invoer: {input}</red>"
+
+# Aambeeldprompt voor het instellen per item prijs/waarde.
+shop_item_value_anvil_ui:
+  title: "Waarde: {value} {currency_type}"
+  input:
+    name: "<gold>Itemwaarde</gold>"
+    lore:
+      - "<gray>Voer een niet-negatieve numerieke waarde in.</gray>"
+      - "<gray>Voorbeelden:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Voer een geldig, niet-negatief getal in. Invoer: {input}</red>"
+    processing_failed: "<red>Kan de itemwaarde niet bijwerken. Invoer: {input}</red>"
+
+# Winkelbank-UI voor valutasaldi per winkel en opnames.
+shop_bank_ui:
+  title: "Winkelbank - {location}"
+  summary:
+    name: "<gold>Banksaldi</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Bijgehouden valuta's:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klik op een saldo hieronder om het volledige bedrag op te nemen.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+      - "<gray>Beschikbaar saldo:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klik om dit volledige saldo op te nemen.</yellow>"
+  feedback:
+    not_owner: "<red>Je hebt geen toestemming om deze winkel te beheren.</red>"
+    entry_missing: "<red>Dat banksaldo is niet langer beschikbaar.</red>"
+    withdrawn: "<green>Opgenomen {amount} {currency_name}. Resterende {currency_name}: {remaining_amount}. Bijgehouden valuta's: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>Opname mislukt {amount} {currency_name} van de winkelbank.</red>"
+    currency_unavailable: "<red>Valuta {currency_name} is momenteel niet beschikbaar.</red>"
+    empty:
+      name: "<red>Bank leeg</red>"
+      lore:
+        - "<gray>Deze winkel heeft geen banktegoeden om op te nemen.</gray>"
+    locked:
+      name: "<red>Volledige toegang vereist</red>"
+      lore:
+        - "<gray>Alleen vertrouwde spelers met volledige toegang kunnen winkelgeld opnemen.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Vertrouwde gebruikersinterface voor spelersbeheer voor winkeltoegangsrollen.
+shop_trusted_ui:
+  title: "Vertrouwde spelers - {location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Vertrouwd spelers:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Klik op een speler om de vertrouwensstatus te wijzigen.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Status:</gray> <white>Openbaar</white>"
+        - "<gray>Geen beheerrechten.</gray>"
+        - "<yellow>Klik om te wijzigen naar Associate.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Kan items aan de winkel toevoegen.</gray>"
+        - "<yellow>Klik om te wijzigen naar Trusted.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Status:</gray> <white>Vertrouwd</white>"
+        - "<gray>Kan de winkel volledig beheren.</gray>"
+        - "<yellow>Klik om te wijzigen naar Openbaar.</yellow>"
+  feedback:
+    not_owner: "<red>Alleen de winkeleigenaar kan vertrouwde spelers beheren.</red>"
+    updated:
+      public: "<yellow>Set {player}naar publiek.</yellow>"
+      associate: "<green>Set {player} om te koppelen.</green>"
+      trusted: "<green>Set {player} naar Trusted.</green>"
+    empty:
+      name: "<red>Geen spelers gevonden</red>"
+      lore:
+        - "<gray>Er zijn geen andere bekende spelers beschikbaar om te vertrouwen.</gray>"
+    locked:
+      name: "<red>Alleen toegang voor eigenaren</red>"
+      lore:
+        - "<gray>Alleen de winkeleigenaar kan vertrouwde spelers beheren.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Transactiegrootboek-UI voor aankopen en belastingen geschiedenis.
+shop_ledger_ui:
+  title: "Winkelgrootboek - {location}"
+  summary:
+    name: "<gold>Winkeltransactiegrootboek</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Totaal aantal inzendingen:</gray> <white>{ledger_count}</white>"
+      - "<gray>Aankopen:</gray> <white>{purchase_count}</white>"
+      - "<gray>Belastingen:</gray> <white>{tax_count}</white>"
+      - "<yellow>Nieuwste transacties verschijnen eerste.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Aankoop: {item_type}</green>"
+      lore:
+        - "<gray>Koper:</gray> <white>{actor}</white>"
+        - "<gray>Bedrag:</gray> <white>{item_amount}</white>"
+        - "<gray>Totaal betaald:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Opgenomen:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Belastingheffing</gold>"
+      lore:
+        - "<gray>In rekening gebracht op:</gray> <white>{actor}</white>"
+        - "<gray>Belasting share:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Getelde winkels:</gray> <white>{counted_shops}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Opgenomen:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Geen grootboekgegevens</red>"
+      lore:
+        - "<gray>Deze winkel heeft nog geen geregistreerde aankopen of belastingen.</gray>"
+    locked:
+      name: "<red>Volledige toegang vereist</red>"
+      lore:
+        - "<gray>Alleen vertrouwde spelers met volledige toegang kunnen de items bekijken ledger.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Klantgerichte winkel-UI voor het bladeren en kopen van artikelen.
+shop_customer_ui:
+  title: "Winkel - {location}"
+  summary:
+    name: "<gold>Klantoverzicht</gold>"
+    player:
+      lore:
+        - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+        - "<gray>Locatie:</gray> <white>{location}</white>"
+        - "<gray>Beschikbare items:</gray> <white>{stored_count}</white>"
+        - "<gray>Winkel type:</gray> <white>Spelerwinkel</white>"
+        - "<gray>Voorraad:</gray> <white>Eind</white>"
+        - "<yellow>Klik met de linkermuisknop op een item om er een te kopen.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop op een artikel om een bedrag te kiezen.</yellow>"
+    admin:
+      lore:
+        - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+        - "<gray>Locatie:</gray> <white>{location}</white>"
+        - "<gray>Beschikbare items:</gray> <white>{stored_count}</white>"
+        - "<gray>Winkel type:</gray> <white>Admin Shop</white>"
+        - "<gray>Voorraad:</gray> <white>Oneindig</white>"
+        - "<yellow>Klik met de linkermuisknop op een item om er een te kopen.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop op een artikel om een bedrag te kiezen.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Voorraad:</gray> <white>{amount}</white>"
+        - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+        - "<gray>Prijs per stuk:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Totaal voorraadwaarde:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<yellow>Klik met de linkermuisknop om er een te kopen.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop om een bedrag te kiezen.</yellow>"
+    admin:
+      lore:
+        - "<gray>Voorraad:</gray> <white>Oneindig</white>"
+        - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+        - "<gray>Prijs per stuk:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Winkel type:</gray> <white>Admin Shop</white>"
+        - "<yellow>Klik met de linkermuisknop om er een te kopen.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop om een bedrag te kiezen.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Voorraad:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Itemtype:</gray> <white>{item_type}</white>"
+        - "<gray>Prijs per stuk:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Valuta-id:</gray> <white>{currency_type}</white>"
+        - "<gray>Restock-modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Herbevoorradingsschema:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Klik met de linkermuisknop om er een te kopen.</yellow>"
+        - "<yellow>Klik met de rechtermuisknop om een bedrag te kiezen.</yellow>"
+    admin_mode:
+      gradual: "Geleidelijk"
+      full: "Volledige reset"
+    restock_schedule:
+      gradual: "1 item per {reset_timer_ticks} ticks"
+      full: "Volledig aangevuld op{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Gekocht {amount}x {item_type} voor {total_price} {currency_name}. Resterende voorraad: {remaining_amount}.</green>"
+    purchased_admin: "<green>Gekocht {amount}x {item_type} voor {total_price} {currency_name}. Deze beheerderswinkel heeft een oneindige voorraad.</green>"
+    purchased_admin_limited: "<green>Gekocht {amount}x {item_type} voor {total_price} {currency_name}. Resterende beheerdersvoorraad: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} is momenteel niet beschikbaar voor aankoop.</gray>"
+    insufficient_stock: "<red>Deze winkel heeft slechts {available_amount}x {item_type} beschikbaar.</red>"
+    insufficient_funds: "<red> bereiktJe hebt {total_price} {currency_name} om {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Valuta {currency_name} is momenteel niet beschikbaar.</red>"
+    invalid_amount: "<red>Voer een geldig aankoopbedrag in.</red>"
+    item_missing: "<red>Dat winkelitem is niet langer beschikbaar.</red>"
+    empty_shop:
+      name: "<red>Winkel leeg</red>"
+      lore:
+        - "<gray>Er zijn geen items beschikbaar voor aankoop.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Aambeeldprompt voor invoer van aangepaste aankoophoeveelheid.
+shop_purchase_amount_anvil_ui:
+  title: "Koop {item_type}"
+  input:
+    name: "<gold>Aankoop Bedrag</gold>"
+    player:
+      lore:
+        - "<gray>Voer in hoeveel items u wilt om te kopen.</gray>"
+        - "<gray>Maximaal beschikbaar:</gray> <white>{max_amount}</white>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Voer in hoeveel items u wilt om te kopen.</gray>"
+        - "<gray>Deze beheerderswinkel heeft een oneindige voorraad.</gray>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Voer in hoeveel items u wilt om te kopen.</gray>"
+        - "<gray>Maximaal beschikbaar:</gray> <white>{max_amount}</white>"
+        - "<gray>Item:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Voer een geheel getal in tussen 1 en{max_amount}. Invoer: {input}</red>"
+    invalid_number_admin: "<red>Voer een geheel getal in dat groter is dan 0. Voer in: {input}</red>"
+    processing_failed: "<red>Kan het aankoopbedrag niet verwerken. Invoer: {input}</red>"
+
+# Shop-ontdekkingslandingsinterface voor zoeken naar alles en materiaal.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Winkelbrowser</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Winkelbrowser</gradient>"
+    lore:
+      - "<gray>Blader door elke gevolgde winkel of filter op een specifiek materiaal.</gray>"
+      - "<yellow>Selecteer een van de onderstaande acties om door te gaan.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Blader door alle winkels</gradient>"
+    lore:
+      - "<gray>Open de volledige gepagineerde winkeldirectory.</gray>"
+      - "<yellow>Klik om elke gevolgde winkel te bekijken.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Zoeken op materiaal</gradient>"
+    lore:
+      - "<gray>Open een aambeeldprompt en voer een materiaalnaam in.</gray>"
+      - "<gray>Voorbeeld:</gray> <white>diamant_blok</white>"
+      - "<yellow>Klik om op itemtype te zoeken.</yellow>"
+
+# Gepagineerde directory-UI met alle gevolgde winkels.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>All Winkels</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Winkelmap</gradient>"
+    lore:
+      - "<gray>Bijgehouden winkels:</gray> <white>{shop_count}</white>"
+      - "<gray>Totaal beschikbare voorraad:</gray> <white>{available_count}</white>"
+      - "<yellow>Klik op een winkel hieronder om het te openen.</yellow>"
+  entry:
+    name: "<gold>{owner}'s winkel</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Beschikbare voorraad:</gray> <white>{available_count}</white>"
+      - "<yellow>Klik om deze winkel te openen.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Geen winkels gevonden</red>"
+      lore:
+        - "<gray>Er zijn nog geen winkels geregistreerd.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Op materiaal gefilterde winkelresultaten UI.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Resultaten voor {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Resultaten voor {material}</gradient>"
+    lore:
+      - "<gray>Materiaal:</gray> <white>{material}</white>"
+      - "<gray>Overeenkomende winkels:</gray> <white>{shop_count}</white>"
+      - "<gray>Overeenkomende aanbiedingen:</gray> <white>{matching_count}</white>"
+      - "<yellow>Klik op een overeenkomende winkel hieronder om het te openen.</yellow>"
+  entry:
+    name: "<gold>{owner}'s winkel</gold>"
+    lore:
+      - "<gray>Eigenaar:</gray> <white>{owner}</white>"
+      - "<gray>Locatie:</gray> <white>{location}</white>"
+      - "<gray>Overeenkomend {material} aanbiedingen:</gray> <white>{matching_count}</white>"
+      - "<gray>Totale zichtbare voorraad:</gray> <white>{available_count}</white>"
+      - "<yellow>Klik om deze winkel te openen.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Geen winkels verkopen {material}</red>"
+      lore:
+        - "<gray>Geen gevolgde winkels bieden dit momenteel aan materiaal.</gray>"
+    shop_missing:
+      name: "<red>Winkel niet gevonden</red>"
+      lore:
+        - "<gray>Deze winkel kan niet vanuit de opslag worden geladen.</gray>"
+      message: "<red>Deze winkel kan niet vanuit de opslag worden geladen.</red>"
+
+# Aambeeldprompt voor het invoeren van een materiaalfilter search.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Zoek materiaal</gradient>"
+  input:
+    lore:
+      - "<gray>Voer een Bukkit-materiaalnaam in om bijgehouden winkels te zoeken.</gray>"
+      - "<gray>Voorbeelden:</gray> <white>diamant</white><gray>,</gray> <white>diamant_blok</white>"
+      - "<yellow>Klik op het resultaatvak om overeenkomende winkels te openen.</yellow>"
+  error:
+    invalid_material: "<red>Voer een geldig materiaal in, zoals diamant_blok. Invoer: {input}</red>"
+    processing_failed: "<red>Kan niet naar materiaal zoeken. Invoer: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# Gedeelde pagineringsitemlabels gebruikt in lijst-UI's.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totaal aantal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# Gedeelde hoofd-/navigatieknoplabels (return/confirm/next).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Retour</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Bevestig</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om de instellingen te bevestigen</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Bevestig</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klik om de instellingen te bevestigen</gradient>"

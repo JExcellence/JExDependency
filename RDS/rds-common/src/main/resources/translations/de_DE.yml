@@ -1,0 +1,1204 @@
+# ============================================
+# GLOBAL PREFIX
+# ============================================
+# Präfix vor dem allgemeinen Plugin-Chat gesperrt Ausgabe.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Schnelle Zusammenfassungszeilen für den Spieler für Shop, Bank und Steuerstatus.
+info:
+  total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Verfolgte Salden ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Geplante Steuer ({taxed_shops} steuerpflichtige Geschäfte):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Nächste Steuer:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Beitrittszeitnachrichten werden angezeigt, wenn Spieler den Server betreten.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} steuerpflichtige Geschäfte\n[<blue>Amount<yellow>]\n{taxes}\n<red>Fällig:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Befehlsantwortzeichenfolgen für „/rs“-Funktionen und -Schalter.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Öffnete die <white>RDS Admin</white><gray> Panel.</gray>"
+  bar:
+    enabled: "<green>Shop-Bossleiste beim Betrachten eines Shops aktiviert.</green>"
+    disabled: "<yellow>Shop-Bossleiste deaktiviert.</yellow>"
+  give:
+    syntax: "<red>Verwendung: /rs geben<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Verwendung:</gray> <white>/rs Anzeigetafel &lt;ledger|stock&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktiviert die <white>{scoreboard_type}</white><gray> Seitenleiste.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Deaktiviert die <white>{scoreboard_type}</white><gray> Seitenleiste.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Umgestellt auf <white>{scoreboard_type}</white><gray> Seitenleiste.</gray>"
+    type:
+      ledger: "<gold>ledger</gold>"
+      stock: "<aqua>stock</aqua>"
+
+# Sidebar-Scoreboard-Beschriftungen und Werteformatierung.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Hauptbuch ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Banksummen</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Keine Bankmittel</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Bestand ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Lagerbestand:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Keine Spieler-Shops</red>"
+
+# Bossleistentext wird beim Targeting angezeigt shop.
+shop_boss_bar:
+  title: "<gold>{shop_type} Shop</gold> <gray>|</gray> <yellow>Eigentümer:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Elemente:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Standort:</yellow> <white>{location}</white>"
+  type:
+    player: "Player"
+    admin: "Administrator"
+  owner:
+    admin: "Administrator"
+  available_items:
+    finite: "{item_count}"
+    limited: "Begrenzter Bestand"
+    infinite: "Unendlich"
+    various: "Verschiedenes"
+
+# ============================================
+# GUI-Schaltflächen
+# ============================================
+
+# Shop-Blockartikelname und Lore-Metadaten.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Platzieren Sie diesen Block, um Ihren Shop einzurichten.</yellow>"
+
+# Shop-Shop-Übersichts-UI-Beschriftungen, Lore und Verfügbarkeitsstatus.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Shop-Shop</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Eigene Shop-Blöcke</gradient>"
+    lore:
+      - "<gray>Eigene Shop-Blöcke:</gray> <white>{owned_shops}</white>"
+      - "<gray>Dies verfolgt gekaufte oder gewährte</gray>"
+      - "<gray>ShopBlock Eigentümerschaft.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Shop-Block-Limit</gradient>"
+    lore:
+      - "<gray>Eigene Shop-Blöcke:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximale Shop-Blöcke:</gray> <white>{max_shops}</white>"
+      - "<gray>Dieses Limit steuert, wie viele Shops</gray>"
+      - "<gray>Blöcke, die Sie entsperren können.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Shop-Anforderungen</gradient>"
+    lore:
+      - "<gray>Konfigurierte Anforderungen:</gray> <white>{requirement_count}</white>"
+      - "<gray>Aktuelle Anforderungsanzahl:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klicken Sie, um den nächsten Shop zu überprüfen Stufe.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Bereit]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Ausstehend]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+
+# Shop-Stufen-Anforderungs-Benutzeroberfläche, Fortschrittsanzeige und Kauf-Feedback.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Shop-Stufe {purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Shop-Block kaufen</gradient>"
+    lore:
+      - "<gray>Kaufstufe:</gray> <white>{purchase_number}</white>"
+      - "<gray>Eigene Shop-Blöcke:</gray> <white>{owned_shops}</white>"
+      - "<gray>Maximale Shop-Blöcke:</gray> <white>{max_shops}</white>"
+      - "<gray>Konfigurierte Anforderungen:</gray> <white>{requirement_count}</white>"
+      - "<gray>Derzeit erfüllt:</gray> <white>{met_count}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Klicken Sie, um zu kaufen, wenn diese Stufe bereit ist.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Bereit]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Ausstehend]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Frei]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Frei] Nein Anforderungen</gradient>"
+    lore:
+      - "<gray>Für diese Kaufebene sind keine Anforderungen konfiguriert.</gray>"
+      - "<yellow>Sie können diesen Shop-Block ohne zusätzliche Schecks kaufen.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Erforderlich] {requirement_name}</gradient>"
+    lore:
+      - "<gray>Schlüssel:</gray> <white>{requirement_key}</white>"
+      - "<gray>Typ:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Fortschritt:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Zusammenfassung:</gray> <white>{summary}</white>"
+      - "<yellow>Rechtsklick auf kompatible Anforderungen zur Bank Fortschritt.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Detailliert Schecks</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Erfüllt]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Ausstehend]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nicht verfügbar]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Einen Shop-Block gekauft. Verbrauchte Anforderungen:</gray> <white>{requirements}</white><gray>. Eigene Shop-Blöcke:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie treffen derzeit nicht auf <white>{requirement}</white><gray>. Speicheranforderungen:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Die Shop-Anforderung <white>{requirement}</white><gray> ist derzeit nicht verfügbar oder ungültig.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben das Shop-Blocklimit von <white>{max_shops}</white><gray>. Eigene Shop-Blöcke:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray> ist jetzt bereit.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Gespeicherter Fortschritt für <white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Keine passenden Artikel oder Währungen verfügbar für <white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> unterstützt keinen Bankfortschritt.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray> ist derzeit nicht verfügbar.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Ihr RDS-Profil konnte nicht geladen werden, daher konnte kein Fortschritt erzielt werden gespeichert.</gray>"
+
+# Interaktionsvalidierungsfehler und Schutzhinweise blockieren.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Der Shop-Inhaber kann aus diesem Artikel nicht gelesen werden.</red>"
+    not_owner: "<red>Dieser ShopBlock gehört einem anderen Spieler und kann nicht von Ihnen platziert werden.</red>"
+    max_shops_reached: "<red>Sie haben das Shop-Blocklimit von {max_shops}. Aktuell platzierte Shops: {owned_shops}.</red>"
+    shop_protected: "<red>Shops können nicht direkt zerstört werden. Verwenden Sie das Shop-Menü, um den Shop zu schließen.</red>"
+    double_chest_requires_shop_block: "<red>Doppeltruhen-Shops erfordern eine zweite <blue>ShopBlock</blue><red>. Normale Truhen können nicht mit Shop-Truhen zusammengeführt werden.</red>"
+    double_chest_owner_mismatch: "<red>Dieser ShopBlock gehört einem anderen Besitzer, daher kann er diesen Shop nicht erweitern.</red>"
+    shop_already_double_chest: "<red>Dieser Shop verwendet bereits beide Truhenhälften.</red>"
+    double_chest_ambiguous: "<red>Dieser ShopBlock berührt mehrere Shop-Truhen. Platzieren Sie es nur neben einem Shop.</red>"
+
+# Ergebnismeldungen zur Verarbeitung geplanter Steuern.
+tax_scheduler:
+  paid: "<yellow>Eingezogene geplante Shop-Steuer von {amount}. Gezählte Shops: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>Sie konnten die geplante Shop-Steuer von nicht bezahlen {amount}. Gezählte Shops: {owned_shops}.</red>"
+  charge_failed: "<red>Die geplante Ladensteuer von {amount}. Gezählte Shops: {owned_shops}.</red>"
+
+# Haupt-Shop-Übersichtsoberfläche für Eigentümer-/Administrator-Verwaltungsaktionen.
+shop_overview_ui:
+  title: "{owner} Shop - {location}"
+  summary:
+    name: "<gold>Shop-Zusammenfassung</gold>"
+    player:
+      lore:
+        - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+        - "<gray>Standort:</gray> <white>{location}</white>"
+        - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
+        - "<gray>Shop-Typ:</gray> <white>Player-Shop</white>"
+        - "<gray>Bestand:</gray> <white>Finite</white>"
+    admin:
+      lore:
+        - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+        - "<gray>Standort:</gray> <white>{location}</white>"
+        - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
+        - "<gray>Shop-Typ:</gray> <white>Admin-Shop</white>"
+        - "<gray>Bestand:</gray> <white>Unendlich</white>"
+  finance:
+    name: "<gold>Shop Bank</gold>"
+    lore:
+      - "<gray>Verfolgte Währungen:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klicken Sie, um Geld zu überprüfen und abzuheben.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin-Shop aktiviert</red>"
+        lore:
+          - "<gray>Dieser Shop ist derzeit ein Admin-Shop.</gray>"
+          - "<gray>Der Bestand ist für Kunden unbegrenzt.</gray>"
+          - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
+          - "<yellow>Klicken Sie hier, um zurück zu wechseln ein Spieler-Shop.</yellow>"
+      disabled:
+        name: "<green>Admin-Shop deaktiviert</green>"
+        lore:
+          - "<gray>Dieser Shop verwendet derzeit Normal Lagerbestand.</gray>"
+          - "<gray>Kunden können nur gespeicherte Mengen kaufen.</gray>"
+          - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
+          - "<yellow>Klicken Sie, um den Admin-Shop-Modus zu aktivieren.</yellow>"
+    close:
+      name: "<red>Shop schließen</red>"
+      lore:
+        - "<gray>Diesen Shop entfernen und den Shop-Block zurückgeben.</gray>"
+        - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
+        - "<gray>Verfolgte Bankwährungen:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Der Shop-Bestand muss vor dem Schließen leer sein.</yellow>"
+    manage:
+      name: "<green>Shop-Artikel hinzufügen</green>"
+      lore:
+        - "<gray>Neue Artikel in diesem Shop speichern.</gray>"
+        - "<gray>Aktuelle Einträge:</gray> <white>{item_count}</white>"
+        - "<yellow>Klicken, um Artikeleingabe zu öffnen.</yellow>"
+    customer_view:
+      name: "<gold>Kundenansicht öffnen</gold>"
+      lore:
+        - "<gray>Vorschau dieses Shops, wie Kunden ihn sehen.</gray>"
+        - "<gray>Aktuelle Einträge:</gray> <white>{item_count}</white>"
+        - "<yellow>Klicken Sie, um diesen Shop als Kunde zu durchsuchen.</yellow>"
+    trusted:
+      name: "<gold>Vertrauenswürdig Spieler</gold>"
+      lore:
+        - "<gray>Associates:</gray> <white>{associate_count}</white>"
+        - "<gray>Vertrauenswürdige Spieler:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Klicken, um Shop-Vertrauensstufen zu verwalten.</yellow>"
+    ledger:
+      name: "<gold>Shop-Ledger</gold>"
+      lore:
+        - "<gray>Gesamteinträge:</gray> <white>{ledger_count}</white>"
+        - "<gray>Käufe:</gray> <white>{purchase_count}</white>"
+        - "<gray>Steuern:</gray> <white>{tax_count}</white>"
+        - "<yellow>Klicken Sie hier, um den Shop-Transaktionsverlauf zu überprüfen.</yellow>"
+    edit:
+      name: "<aqua>Shop-Artikel bearbeiten</aqua>"
+      lore:
+        - "<gray>Preise für gespeicherten Shop bearbeiten Elemente.</gray>"
+        - "<gray>Aktuelle Einträge:</gray> <white>{item_count}</white>"
+        - "<yellow>Klicken Sie, um Preise und Währungen zu bearbeiten.</yellow>"
+    storage:
+      name: "<gold>Gespeicherte Artikel anzeigen</gold>"
+      lore:
+        - "<gray>Überprüfen Sie Artikel bereits in diesem Shop gespeichert.</gray>"
+        - "<gray>Aktuelle Einträge:</gray> <white>{item_count}</white>"
+        - "<yellow>Klicken Sie, um gespeicherte Artikel abzuheben.</yellow>"
+    locked:
+      name: "<red>Shop gesperrt</red>"
+      lore:
+        - "<gray>Nur der Besitzer kann Artikel hinzufügen.</gray>"
+        - "<gray>Aktuelle Einträge:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Sie haben keine Berechtigung, diesen Shop zu verwalten.</red>"
+    no_admin_permission: "<red>Sie haben keine Berechtigung, Admin-Shops umzuschalten.</red>"
+    admin_limit_reached: "<red>Der Server hat bereits {admin_shops} Admin-Shops. In der kostenlosen Edition sind nur {max_admin_shops} Admin-Shops.</red>"
+    admin_enabled: "<green>Dieser Shop ist jetzt ein Admin-Shop mit unbegrenztem Kundenbestand. Gezählte Shops: {owned_shops}.</green>"
+    admin_disabled: "<yellow>Dieser Shop ist jetzt ein normaler Spielershop mit begrenztem Kundenbestand. Gezählte Shops: {owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Sie können diesen Admin-Shop nicht wieder in einen Player-Shop umwandeln, da Ihr Shop-Limit von {max_shops} und ist bereits erreicht. Gezählte Geschäfte: {owned_shops}.</red>"
+    close_not_empty: "<red>Sie können einen Shop erst schließen, nachdem Sie alle gespeicherten Artikel entfernt haben. Verbleibende Einträge: {item_count}.</red>"
+    close_bank_not_empty: "<red>Zahlen Sie Ihr Shop-Konto ab, bevor Sie diesen Shop schließen. Verbleibende verfolgte Währungen: {bank_currency_count}.</red>"
+    closed: "<green>Shop geschlossen und {returned_blocks} ShopBlock(s). Gezählte Shops: {owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Globales Admin-Kontrollfeld für die RDS-Verwaltung.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
+    lore:
+      - "<gray>Verwalten Sie globale Admin-Shop-Systeme von einem Ort aus.</gray>"
+      - "<gray>Öffnen Sie die Serverbank oder bearbeiten Sie die Konfigurationseinstellungen unten.</gray>"
+      - "<yellow>Erfordert: </yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie die in die Serverbank übertragenen Admin-Shop-Einnahmen.</gray>"
+        - "<gray>Überprüfen Sie den Zeitpunkt des nächsten Abrufs und heben Sie Guthaben ab.</gray>"
+        - "<yellow>Klicken, um Server zu öffnen Bankkontrollen.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop-Konfiguration</gradient>"
+      lore:
+        - "<gray>Werte bearbeiten aus</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Jede editierbare Einstellung kann über eine Amboss-Eingabeaufforderung geändert werden.</gray>"
+        - "<yellow>Klicken, um Konfigurationskontrollen zu öffnen.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Währungsmanager</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie erkannte Währungen aus Vault und JExEconomy.</gray>"
+        - "<gray>Erstellen Sie die Standardwährung.</gray> <white>raindrops</white> <gray>Währung wann benötigt.</gray>"
+        - "<yellow>Klicken, um Währungskontrollen zu öffnen.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratorzugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diesen Admin zu verwenden Panel.</gray>"
+
+# Admin-Währungsansicht für erkannte Anbieter und Standardwährungserstellung.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Währungsmanager</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Währungsanbieter</white>"
+    lore:
+      - "<gray>Erkannt Währungen:</gray> <white>{currency_count}</white>"
+      - "<gray>Tresor verfügbar:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy verfügbar:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Verwenden Sie die Kristallschaltfläche, um einen Standard zu erstellen Währung.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Anbieter:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Präfix:</gray> <white>{prefix}</white>"
+      - "<gray>Suffix:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Erstellen {currency_id}</white>"
+      lore:
+        - "<gray>Erstellen Sie die Standard-RDS-Währung in JExEconomy.</gray>"
+        - "<yellow>Klicken Sie, um {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEconomy erforderlich</white>"
+      lore:
+        - "<gray>Sie können keine Standardwährung ohne JExEconomy erstellen.</gray>"
+        - "<gray>Installieren und aktivieren Sie zuerst JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>{currency_id}Bereit</white>"
+      lore:
+        - "<gray>Die Standardwährung existiert bereits.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Erstellen Sie eine Standardwährung:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray> konnte nicht eingezogen werden. Die Währung konnte nicht erstellt werden: </gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Währung existiert bereits:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie können diese Schaltfläche nur verwenden, wenn JExEconomy verfügbar ist.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Keine Währungen erkannt</white>"
+      lore:
+        - "<gray>Es wurden keine Vault- oder JExEconomy-Währungen erkannt.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratorzugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diese Währungsansicht zu verwenden.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben keine Berechtigung, Währungen zu verwalten.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Konfigurieren Sie die Browser-Benutzeroberfläche für bearbeitbare Einstellungen und Update-Feedback.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop-Konfiguration</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Konfigurationseinstellungen</white>"
+    lore:
+      - "<gray>Bearbeitbare Einstellungen erkannt:</gray> <white>{setting_count}</white>"
+      - "<gray>Klicken Sie auf einen beliebigen Eintrag unten, um seinen Wert in einem zu bearbeiten Amboss.</gray>"
+      - "<yellow>Änderungen werden direkt geschrieben config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Pfad:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktueller Wert:</gray> <white>{current_value}</white>"
+      - "<yellow>Klicken Sie, um diese Einstellung zu bearbeiten.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Integer]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Long]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Double]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Liste]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[String]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Keine bearbeitbaren Einstellungen</white>"
+      lore:
+        - "<gray>Es wurden keine bearbeitbaren Skalar-/Listenkonfigurationseinstellungen gefunden.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratorzugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diese Konfigurationsansicht zu verwenden.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config-Bearbeitung gesperrt</white>"
+      lore:
+        - "<gray>Diese Edition erlaubt keine Änderungen an der Laufzeitkonfiguration.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben keine Berechtigung, Konfigurationseinstellungen zu bearbeiten.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Die Konfigurationsbearbeitung ist in dieser Edition gesperrt.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aktualisiert <white>{config_path}</white><gray> bis <white>{updated_value}</white><gray>.</gray>"
+
+# Anvil-Eingabeaufforderungstext zum Bearbeiten von Konfigurationswerten.
+shop_config_value_anvil_ui:
+  title: "Bearbeiten {config_path}"
+  input:
+    lore:
+      - "<gray>Pfad:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktueller Wert:</gray> <white>{current_value}</white>"
+      - "<yellow>Geben Sie den neuen Wert ein und bestätigen Sie.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ungültige Eingabe für Typ <white>{value_type}</white><gray>. Eingabe:</gray> <white>{input}</white>"
+
+# Serverbankübersicht, Währungseinträge und Auszahlungsfeedback.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Einkommen und Transfer Status</white>"
+    lore:
+      - "<gray>Verfolgte Währungen:</gray> <white>{currency_count}</white>"
+      - "<gray>Einkommen:</gray> <white>{income_summary}</white>"
+      - "<gray>Nächster Pull:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Zeit bis zum nächsten Abruf:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Admin-Shop-Guthaben werden hier nach Zeitplan übertragen.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Keine</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Deaktiviert</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Ausstehend...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Deaktiviert</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Ausstehend...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Abheben]</gradient> <white>Alles abheben</white>"
+    lore:
+      - "<gray>Versuch, jeden positiven Saldo abzuheben.</gray>"
+      - "<gray>Es werden keine Währungen verfügbar sein übersprungen.</gray>"
+      - "<yellow>Klicken Sie hier, um alle Gelder auf Ihren Shop abzuheben Konto.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+      - "<gray>Verfügbares Guthaben:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klicken Sie, um dieses gesamte Währungsguthaben abzuheben.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Serverbank leer</white>"
+      lore:
+        - "<gray>Es sind keine positiven Guthaben zum Abheben verfügbar.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratorzugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, die Serverbank zu verwalten.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben keine Berechtigung, die Serverbank zu verwalten.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dieser Server-Banksaldo ist nicht mehr verfügbar.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zurückgezogen <white>{amount} {currency_name}</white><gray>. Verbleibende {currency_name}:</gray> <white>{remaining_amount}</white><gray>. Aktive Währungen:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zurückgezogen <white>{withdrawn_currency_count}</white><gray> Währungsguthaben gekauft. Fehlgeschlagen: </gray> <white>{failed_currency_count}</white><gray>. Verbleibende aktive Währungen:</gray> <white>{remaining_currency_count}</white><gray>. Details:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Es konnten keine Guthaben abgebucht werden. Währungszählung fehlgeschlagen:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Währung <white>{currency_name}</white><gray> ist derzeit nicht verfügbar.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Fehler beim Abheben <white>{amount} {currency_name}</white><gray> von der Serverbank.</gray>"
+
+# Shop-Artikeleingabe-UI, die beim Hinzufügen neuer Lagereinträge verwendet wird.
+shop_input_ui:
+  title: "Artikel hinzufügen - {owner} @ {location}"
+  summary:
+    name: "<gold>Shop-Speicher</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Derzeit gespeichert:</gray> <white>{stored_count}</white>"
+      - "<yellow>Neue Elemente werden standardmäßig auf den Währungstyp „Tresor“ und den Wert 0 gesetzt.</yellow>"
+  input_slot:
+    name: "<green>Eingabeslot</green>"
+    lore:
+      - "<gray>Linksklick mit einem Artikel auf Ihrem Cursor</gray>"
+      - "<gray>oder klicke bei gedrückter Umschalttaste auf einen Gegenstand aus deinem Inventar.</gray>"
+      - "<gray>Rechtsklick, um einen eingefügten Stapel zu entfernen.</gray>"
+  no_new_items_inserted: "<red>Es wurden keine neuen Artikel hinzugefügt.</red>"
+  saved: "<green>Gespeichert {added_count} neue Einträge. Shop hat jetzt {stored_count} Einträge.</green>"
+  save_failed: "<red>Fehler beim Speichern von Shop-Artikeln.</red>"
+  left_overs: "<yellow>Nicht gespeicherte Shop-Artikel in Ihr Inventar zurückgeführt.</yellow>"
+  feedback:
+    no_permission: "<red>Sie haben keine Berechtigung, Artikel zu diesem Shop hinzuzufügen.</red>"
+    locked:
+      name: "<red>Versorgungszugriff Erforderlich</red>"
+      lore:
+        - "<gray>Nur Partner und vertrauenswürdige Spieler können hier Artikel hinzufügen.</gray>"
+
+# Shop-Speicherbrowser-Benutzeroberfläche zum Anzeigen und Entnehmen gelagerter Artikel.
+shop_storage_ui:
+  title: "Gespeicherte Elemente - {location}"
+  summary:
+    name: "<gold>Gespeicherte Elemente</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Gespeicherte Einträge:</gray> <white>{stored_count}</white>"
+      - "<yellow>Klicken Sie unten auf einen beliebigen Artikel, um ihn zurückzuziehen.</yellow>"
+  entry:
+    lore:
+      - "<gray>Gespeicherte Menge:</gray> <white>{amount}</white>"
+      - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+      - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+      - "<gray>Wert:</gray> <white>{value}</white>"
+      - "<yellow>Klicken Sie, um diesen Artikel aus dem Shop zu extrahieren.</yellow>"
+  feedback:
+    not_owner: "<red>Sie haben keine Berechtigung, diesen Shop zu verwalten.</red>"
+    extracted: "<green>Extrahiert {amount}x {item_type}. Der Preis betrug {value} {currency_type}. Verbleibende gespeicherte Einträge: {stored_count}.</green>"
+    item_missing: "<red>Dieser gespeicherte Artikel konnte nicht gefunden werden.</red>"
+    locked:
+      name: "<red>Vollständiger Zugriff erforderlich</red>"
+      lore:
+        - "<gray>Nur vertrauenswürdige Spieler mit Vollzugriff können gespeicherte Gegenstände abheben.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Shop-Auswahl-UI zum Auswählen von zu ändernden Einträgen.
+shop_edit_ui:
+  title: "Shop-Artikel bearbeiten - {location}"
+  summary:
+    name: "<aqua>Shop-Preiseditor</aqua>"
+    player:
+      lore:
+        - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+        - "<gray>Standort:</gray> <white>{location}</white>"
+        - "<gray>Gespeicherte Einträge:</gray> <white>{stored_count}</white>"
+        - "<yellow>Linksklick auf einen Artikel, um Preis zu bearbeiten.</yellow>"
+        - "<yellow>Rechtsklick auf einen Artikel, um ihn aus dem Shop zu entfernen.</yellow>"
+    admin:
+      lore:
+        - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+        - "<gray>Standort:</gray> <white>{location}</white>"
+        - "<gray>Gespeicherte Einträge:</gray> <white>{stored_count}</white>"
+        - "<gray>Admin-Aufstockungsmodus eingestellt:</gray> <white>{restock_mode}</white>"
+        - "<gray>Auffüllungsplan:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Linksklick auf einen Artikel, um Preis oder Lagerbestand zu bearbeiten.</yellow>"
+        - "<yellow>Rechtsklick auf einen Artikel, um ihn aus dem Shop zu entfernen.</yellow>"
+    restock_schedule:
+      gradual: "Standard-Timer: {reset_timer_ticks} Ticks pro Artikel"
+  entry:
+    player:
+      lore:
+        - "<gray>Gespeicherte Menge:</gray> <white>{amount}</white>"
+        - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+        - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+        - "<gray>Wert:</gray> <white>{value}</white>"
+        - "<yellow>Linksklick, um diesen Shop zu bearbeiten Artikel.</yellow>"
+        - "<yellow>Rechtsklick, um ihn aus dem Shop zu entfernen.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Lagerbestand:</gray> <white>Unendlich</white>"
+        - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+        - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+        - "<gray>Wert:</gray> <white>{value}</white>"
+        - "<gray>Restock-Modus:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Linksklick, um diesen Admin-Shop-Artikel zu bearbeiten.</yellow>"
+        - "<yellow>Rechtsklick, um ihn aus dem Shop zu entfernen.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Aktueller Bestand:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+        - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+        - "<gray>Wert:</gray> <white>{value}</white>"
+        - "<gray>Restock-Modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Auffüllungsplan:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Linksklick, um diesen Admin-Shop-Artikel zu bearbeiten.</yellow>"
+        - "<yellow>Rechtsklick, um ihn aus dem Shop zu entfernen.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "Vollständiges Zurücksetzen"
+    restock_schedule:
+      gradual: "1 Artikel pro {reset_timer_ticks} Ticks"
+      full: "Vollständige Auffüllung um{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Sie haben keine Berechtigung, diesen Shop zu verwalten.</red>"
+    removed: "<green>Entfernt {amount}x {item_type} vom Shop. Der Preis betrug {value} {currency_type}. Verbleibende gespeicherte Einträge: {stored_count}.</green>"
+    item_missing: "<red>Dieser Shop-Artikel konnte nicht gefunden werden.</red>"
+    locked:
+      name: "<red>Vollständiger Zugriff erforderlich</red>"
+      lore:
+        - "<gray>Nur vertrauenswürdige Spieler mit vollem Zugriff können Artikelwerte bearbeiten.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Detaillierte Editor-Benutzeroberfläche für das Verhalten und die Preise einzelner Shop-Artikel.
+shop_item_edit_ui:
+  title: "Bearbeiten {item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Gespeicherte Menge:</gray> <white>{amount}</white>"
+        - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+        - "<gray>Wert:</gray> <white>{value}</white>"
+        - "<gray>Verfügbarkeitsmodus gesetzt:</gray> <white>{availability_mode}</white>"
+        - "<gray>Jetzt verfügbar:</gray> <white>{availability_state}</white>"
+        - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+        - "<yellow>Verwenden Sie die Schaltflächen unten, um diesen Artikel zu bearbeiten.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Lagerbestand:</gray> <white>Unendlich</white>"
+        - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+        - "<gray>Wert:</gray> <white>{value}</white>"
+        - "<gray>Restock-Modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Kauf Befehle:</gray> <white>{command_count}</white>"
+        - "<gray>Verfügbarkeitsmodus gesetzt:</gray> <white>{availability_mode}</white>"
+        - "<gray>Jetzt verfügbar:</gray> <white>{availability_state}</white>"
+        - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+        - "<yellow>Verwenden Sie die Schaltflächen unten, um diesen Admin-Artikel zu bearbeiten.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Aktueller Bestand:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Währungstyp:</gray> <white>{currency_type}</white>"
+        - "<gray>Wert:</gray> <white>{value}</white>"
+        - "<gray>Restock-Modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Auffüllungsplan:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Kauf Befehle:</gray> <white>{command_count}</white>"
+        - "<gray>Verfügbarkeitsmodus gesetzt:</gray> <white>{availability_mode}</white>"
+        - "<gray>Jetzt verfügbar:</gray> <white>{availability_state}</white>"
+        - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+        - "<yellow>Verwenden Sie die Schaltflächen unten, um diesen Admin-Artikel zu bearbeiten.</yellow>"
+  currency_type:
+    name: "<green>Währung Typ</green>"
+    lore:
+      - "<gray>Aktueller Typ:</gray> <white>{currency_type}</white>"
+      - "<yellow>Klicken Sie, um zu bearbeiten der Währungstyp.</yellow>"
+  value:
+    name: "<gold>Wert</gold>"
+    lore:
+      - "<gray>Aktueller Typ:</gray> <white>{currency_type}</white>"
+      - "<gray>Aktueller Wert:</gray> <white>{value}</white>"
+      - "<yellow>Klicken Sie, um den numerischen Wert zu bearbeiten.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Modus] Element Verfügbarkeit</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Immer]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Rotate]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Nie]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Offen]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Geschlossen]</gradient>"
+    lore:
+      - "<gray>Aktueller Modus:</gray> <white>{availability_mode}</white>"
+      - "<gray>Aktueller Status:</gray> <white>{availability_state}</white>"
+      - "<gray>Rotationsfenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+      - "<yellow>Klicken Sie, um zu erstellen: Immer -> Drehen -> Nie.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Rotate Minuten</gradient>"
+    lore:
+      - "<gray>Aktuelles Fenster:</gray> <white>{rotation_minutes} Minute(n)</white>"
+      - "<gray>Aktueller Modus:</gray> <white>{availability_mode}</white>"
+      - "<gray>Rotationsmodusbezeichnung:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Klicken Sie hier, um die Rotationsminuten in einem Amboss festzulegen.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Befehlsausführer</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Server]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Spieler]</gradient>"
+    lore:
+      - "<gray>Aktueller Modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Nächster Modus:</gray> <white>{next_mode}</white>"
+      - "<yellow>Klicken Sie hier, um umzuschalten, wer neu hinzugefügte Befehle ausführt.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Kaufbefehle</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Keine</gradient>"
+    lore:
+      - "<gray>Konfigurierte Befehle:</gray> <white>{command_count}</white>"
+      - "<gray>Neueste Befehl:</gray> <white>{latest_command}</white>"
+      - "<yellow>Klicken, um Befehlseinstellungen zu öffnen und Befehle hinzuzufügen.</yellow>"
+  confirm:
+    name: "<green>Artikelpreis speichern</green>"
+    lore:
+      - "<gray>Wenden Sie den aktuellen Währungstyp an und value</gray>"
+      - "<gray>zu diesem Shop-Artikel.</gray>"
+  stock_limit:
+    name: "<gold>Lagerbeschränkung</gold>"
+    unlimited: "Unendlich"
+    lore:
+      - "<gray>Aktuelles Limit:</gray> <white>{stock_limit}</white>"
+      - "<gray>Aktueller Bestand:</gray> <white>{current_stock}</white>"
+      - "<yellow>Klicken Sie hier, um eine Lagerbestandsgrenze festzulegen.</yellow>"
+      - "<gray>Verwenden Sie -1, um diesen Artikel auf den unendlichen Bestand zurückzusetzen.</gray>"
+  reset_timer:
+    name: "<aqua>Reset-Timer</aqua>"
+    lore:
+      - "<gray>Aktuell Timer:</gray> <white>{reset_timer_ticks} Ticks</white>"
+      - "<yellow>Klicken Sie hier, um den Nachfüll-Timer einzustellen.</yellow>"
+  restock_mode:
+    name: "<yellow>Administrator-Auffüllung Modus</yellow>"
+    gradual: "Gradual"
+    full: "Vollständiges Zurücksetzen"
+    lore:
+      - "<gray>Konfigurierter Modus:</gray> <white>{restock_mode}</white>"
+      - "<gray>Konfigurierter Zeitplan:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Klicken Sie hier, um den globalen Admin-Auffüllungsmodus umzuschalten.</yellow>"
+  restock_schedule:
+    gradual: "1 Artikel pro {reset_timer_ticks} Ticks"
+    full: "Vollständige Auffüllung um{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Sie haben keine Berechtigung, diesen Shop zu verwalten.</red>"
+    shop_missing: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+    item_missing: "<red>Dieser Shop-Artikel konnte nicht gefunden werden.</red>"
+    saved: "<green>Artikelpreis gespeichert unter {value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Verfügbarkeitsmodus auf <white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Neuer Befehlsausführungsmodus auf <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Der neueste Befehl wurde entfernt. Verbleibende Befehle: </gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alle Administratorkaufbefehle gelöscht.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Keine Admin-Kaufbefehle konfiguriert.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Plugin-Konfigurationsänderungen sind in <white>RDS Kostenlos</white><gray>. Upgrade auf Premium für vollen Zugriff.</gray>"
+    restock_mode_updated: "<green>Admin-Aufstockungsmodus auf {restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Fehler beim Speichern des Admin-Auffüllungsmodus.</red>"
+
+# Anvil-Eingabeaufforderung zum Hinzufügen eines Neuer Admin-Kaufbefehl.
+shop_item_admin_command_anvil_ui:
+  title: "Befehl hinzufügen {command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Geben Sie einen Befehl ein, der ausgeführt werden soll, wenn dieses Admin-Element vorhanden ist gekauft.</gray>"
+      - "<gray>Nur Befehlstext. Die Verzögerung wird in der Befehlseinstellungsansicht konfiguriert.</gray>"
+      - "<gray>Beispiele:</gray>"
+      - "<white>Broadcast %player_name% haben {amount}x {item_type}</white>"
+      - "<white>eco gib %player_name% 50</white>"
+      - "<gray>Konfigurierte Befehle:</gray> <white>{command_count}</white>"
+      - "<gray>Ausführungsmodus:</gray> <white>{command_mode}</white>"
+      - "<gray>Verzögerung:</gray> <white>{command_delay_ticks} Ticks</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Spieler]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Befehlstext darf nicht leer sein. Eingabe:</gray> <white>{input}</white>"
+
+# Admin-Kaufbefehlsmanager-Benutzeroberfläche für Modus, Verzögerung und Befehlsliste.
+shop_item_admin_command_ui:
+  title: "Befehlseinstellungen - {item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Kaufbefehlseinstellungen</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Keine</gradient>"
+    lore:
+      - "<gray>Konfigurierte Befehle:</gray> <white>{command_count}</white>"
+      - "<gray>Neueste Befehl:</gray> <white>{latest_command}</white>"
+      - "<gray>Nächster Befehlsmodus gesetzt:</gray> <white>{command_mode}</white>"
+      - "<gray>Nächster Befehl Verzögerung:</gray> <white>{command_delay_ticks} Ticks ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Nächster Befehlsausführer</gradient>"
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Spieler]</green>"
+    lore:
+      - "<gray>Aktueller Modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Nächster Modus:</gray> <white>{next_mode}</white>"
+      - "<yellow>Klicken Sie hier, um den Executor für den nächsten Befehl umzuschalten.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Verzögerung] Verzögerung des nächsten Befehls</gradient>"
+    lore:
+      - "<gray>Aktuell Verzögerung:</gray> <white>{command_delay_ticks} Ticks ({command_delay_seconds}s)</white>"
+      - "<yellow>Klicken Sie hier, um die Verzögerung in Ticks für den nächsten Befehl festzulegen.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Befehl hinzufügen</gradient>"
+    lore:
+      - "<gray>Modus:</gray> <white>{command_mode}</white>"
+      - "<gray>Verzögerung:</gray> <white>{command_delay_ticks} Ticks ({command_delay_seconds}s)</white>"
+      - "<yellow>Klicken, um Befehlseingabe zu öffnen.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Befehl entfernen</gradient>"
+    lore:
+      - "<gray>Konfigurierte Befehle:</gray> <white>{command_count}</white>"
+      - "<yellow>Klicken Sie, um den neuesten Befehl zu entfernen.</yellow>"
+      - "<yellow>Umschalt + Klicken, um alles zu löschen Befehle.</yellow>"
+  confirm:
+    name: "<green>Befehlseinstellungen speichern</green>"
+    lore:
+      - "<gray>Kehren Sie zum Artikeleditor zurück und behalten Sie diese Befehlsänderungen bei.</gray>"
+  feedback:
+    not_owner: "<red>Sie haben keine Berechtigung, diesen Shop zu verwalten.</red>"
+    shop_missing: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nächster Befehlsmodus auf <white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Der neueste Befehl wurde entfernt. Verbleibende Befehle: </gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alle Administratorkaufbefehle gelöscht.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Keine Admin-Kaufbefehle konfiguriert.</gray>"
+
+# Amboss-Eingabeaufforderung zum Festlegen von Admin-Befehlsverzögerungs-Ticks.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Festlegen der Verzögerung - {command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Geben Sie eine ganze Zahl von Ticks für die nächste Befehlsverzögerung ein.</gray>"
+      - "<gray>Ausführungsmodus:</gray> <white>{command_mode}</white>"
+      - "<gray>Beispiele:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Server]</gold>"
+    player: "<green>[Spieler]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Geben Sie eine ganze Zahl größer oder gleich 0 ein. Eingabe:</gray> <white>{input}</white>"
+
+# Anvil-Eingabeaufforderung für das Rotationsmodus-Verfügbarkeitsfenster in Minuten.
+shop_item_availability_minutes_anvil_ui:
+  title: "Rotationsminuten: {rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Timer] Rotate Minuten</gradient>"
+    lore:
+      - "<gray>Geben Sie eine ganze Zahl von Minuten ein.</gray>"
+      - "<gray>Rotationsmodus wechselt in jedem Fenster zwischen verfügbar/nicht verfügbar.</gray>"
+  error:
+    invalid_number: "<red>Geben Sie eine ganze Zahl größer als 0 ein. Eingabe: {input}</red>"
+
+# Anvil-Eingabeaufforderung zum Festlegen einer begrenzten Admin-Bestandskapazität.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Lagerbeschränkung: {stock_limit}"
+  input:
+    name: "<gold>Lagerbeschränkung</gold>"
+    lore:
+      - "<gray>Geben Sie eine positive Lagerbestandsgrenze in Artikeln ein.</gray>"
+      - "<gray>Verwenden Sie -1, um den unbegrenzten Admin-Bestand wiederherzustellen.</gray>"
+  error:
+    invalid_number: "<red>Geben Sie -1 oder eine ganze Zahl größer als 0 ein. Eingabe: {input}</red>"
+
+# Anvil-Eingabeaufforderung zum Konfigurieren von Admin-Timer-Ticks zum Auffüllen/Zurücksetzen.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Reset-Timer: {reset_timer_ticks}"
+  input:
+    name: "<aqua>Reset-Timer</aqua>"
+    lore:
+      - "<gray>Geben Sie eine ganze Zahl von Bukkit-Ticks ein.</gray>"
+      - "<gray>Der schrittweise Modus stellt ein Element pro Timer wieder her.</gray>"
+  error:
+    invalid_number: "<red>Geben Sie eine ganze Zahl größer als 0 ein. Eingabe: {input}</red>"
+
+# Anvil-Eingabeaufforderung zur Auswahl des Währungstyps, der von einem verwendet wird Artikel.
+shop_item_currency_type_anvil_ui:
+  title: "Währungstyp: {currency_type}"
+  input:
+    name: "<green>Währung Typ</green>"
+    lore:
+      - "<gray>Geben Sie die Währungskennung für diesen Artikel ein.</gray>"
+      - "<gray>Beispiele:</gray> <white>Tresor, Token, Edelsteine</white>"
+  error:
+    empty: "<red>Währungstyp darf nicht leer sein.</red>"
+    invalid_currency: "<red>Währungstyp {currency_type} ist nicht verfügbar. Verwenden Sie den Tresor oder eine registrierte benutzerdefinierte Währung.</red>"
+    processing_failed: "<red>Fehler beim Aktualisieren des Währungstyps. Eingabe: {input}</red>"
+
+# Anvil-Eingabeaufforderung zum Festlegen von Preis/Wert pro Artikel.
+shop_item_value_anvil_ui:
+  title: "Wert: {value} {currency_type}"
+  input:
+    name: "<gold>Artikel Wert</gold>"
+    lore:
+      - "<gray>Geben Sie einen nicht negativen numerischen Wert ein.</gray>"
+      - "<gray>Beispiele:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Geben Sie eine gültige nicht negative Zahl ein. Eingabe: {input}</red>"
+    processing_failed: "<red>Der Elementwert konnte nicht aktualisiert werden. Eingabe: {input}</red>"
+
+# Shop-Bank-Benutzeroberfläche für Währungssalden und -abhebungen pro Shop.
+shop_bank_ui:
+  title: "Shop Bank - {location}"
+  summary:
+    name: "<gold>Bankguthaben</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Verfolgte Währungen:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Klicken Sie unten auf ein Guthaben, um den gesamten Betrag abzuheben.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+      - "<gray>Verfügbares Guthaben:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Klicken Sie, um dieses gesamte Guthaben abzuheben.</yellow>"
+  feedback:
+    not_owner: "<red>Sie haben keine Berechtigung, diesen Shop zu verwalten.</red>"
+    entry_missing: "<red>Dieser Banksaldo ist nicht mehr verfügbar.</red>"
+    withdrawn: "<green>Zurückgezogen {amount} {currency_name}. Verbleibende {currency_name}: {remaining_amount}. Verfolgte Währungen: {bank_currency_count}.</green>"
+    withdraw_failed: "<red>Fehler beim Abheben {amount} {currency_name} von der Shop-Bank.</red>"
+    currency_unavailable: "<red>Währung {currency_name} ist derzeit nicht verfügbar.</red>"
+    empty:
+      name: "<red>Bank leer</red>"
+      lore:
+        - "<gray>Dieser Shop verfügt über kein Bankguthaben zum Abheben.</gray>"
+    locked:
+      name: "<red>Vollständiger Zugriff erforderlich</red>"
+      lore:
+        - "<gray>Nur vertrauenswürdige Spieler mit Vollzugriff können Shop-Gelder abheben.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Benutzeroberfläche zur Verwaltung vertrauenswürdiger Spieler für Shop-Zugriffsrollen.
+shop_trusted_ui:
+  title: "Vertrauenswürdige Spieler – {location}"
+  summary:
+    name: "<gold>Shop-Trust-Manager</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Associates:</gray> <white>{associate_count}</white>"
+      - "<gray>Vertrauenswürdige Spieler:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Klicken Sie auf einen Spieler, um seinen Vertrauensstatus zu ändern.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Status:</gray> <white>Öffentlich</white>"
+        - "<gray>Keine Verwaltungsberechtigungen.</gray>"
+        - "<yellow>Klicken Sie, um zu „Verbinden“ zu wechseln.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Kann Artikel zum Shop hinzufügen.</gray>"
+        - "<yellow>Klicken Sie, um zu „Vertrauenswürdig“ zu wechseln.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Status:</gray> <white>Vertrauenswürdig</white>"
+        - "<gray>Kann den Shop vollständig verwalten.</gray>"
+        - "<yellow>Klicken Sie, um zu „Öffentlich“ zu wechseln.</yellow>"
+  feedback:
+    not_owner: "<red>Nur der Shop-Inhaber kann vertrauenswürdige Spieler verwalten.</red>"
+    updated:
+      public: "<yellow>Setzen Sie {player}an Öffentlich.</yellow>"
+      associate: "<green>Setzen Sie {player} zum Zuordnen.</green>"
+      trusted: "<green>Setzen Sie {player} an Vertrauenswürdig.</green>"
+    empty:
+      name: "<red>Keine Spieler Gefunden</red>"
+      lore:
+        - "<gray>Keine anderen bekannten Spieler sind vertrauenswürdig.</gray>"
+    locked:
+      name: "<red>Nur Besitzerzugriff</red>"
+      lore:
+        - "<gray>Nur der Shop-Inhaber kann vertrauenswürdige Spieler verwalten.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Transaktionsbuch-Benutzeroberfläche für Einkäufe und Steuerhistorie.
+shop_ledger_ui:
+  title: "Shop-Ledger - {location}"
+  summary:
+    name: "<gold>Shop-Transaktionsbuch</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Gesamteinträge:</gray> <white>{ledger_count}</white>"
+      - "<gray>Käufe:</gray> <white>{purchase_count}</white>"
+      - "<gray>Steuern:</gray> <white>{tax_count}</white>"
+      - "<yellow>Neueste Transaktionen werden zuerst angezeigt.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Kauf: {item_type}</green>"
+      lore:
+        - "<gray>Käufer:</gray> <white>{actor}</white>"
+        - "<gray>Amount:</gray> <white>{item_amount}</white>"
+        - "<gray>Gesamt bezahlt:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+        - "<gray>Aufgezeichnet:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Steuergebühr</gold>"
+      lore:
+        - "<gray>Belastet:</gray> <white>{actor}</white>"
+        - "<gray>Steueranteil:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Gezählt Shops:</gray> <white>{counted_shops}</white>"
+        - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+        - "<gray>Aufgezeichnet:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Keine Hauptbucheinträge</red>"
+      lore:
+        - "<gray>Dieser Shop hat noch keine erfassten Käufe oder Steuern.</gray>"
+    locked:
+      name: "<red>Vollständiger Zugriff erforderlich</red>"
+      lore:
+        - "<gray>Nur vertrauenswürdige Spieler mit vollem Zugriff können die sehen Ledger.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Kundenorientierte Shop-Benutzeroberfläche zum Durchsuchen und Kaufen von Artikeln.
+shop_customer_ui:
+  title: "Shop - {location}"
+  summary:
+    name: "<gold>Kundenansicht</gold>"
+    player:
+      lore:
+        - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+        - "<gray>Standort:</gray> <white>{location}</white>"
+        - "<gray>Verfügbare Einträge:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop-Typ:</gray> <white>Player-Shop</white>"
+        - "<gray>Bestand:</gray> <white>Finite</white>"
+        - "<yellow>Linksklick auf einen Artikel, um einen zu kaufen.</yellow>"
+        - "<yellow>Rechtsklick auf einen Artikel, um eine Menge auszuwählen.</yellow>"
+    admin:
+      lore:
+        - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+        - "<gray>Standort:</gray> <white>{location}</white>"
+        - "<gray>Verfügbare Einträge:</gray> <white>{stored_count}</white>"
+        - "<gray>Shop-Typ:</gray> <white>Admin-Shop</white>"
+        - "<gray>Bestand:</gray> <white>Unendlich</white>"
+        - "<yellow>Linksklick auf einen Artikel, um einen zu kaufen.</yellow>"
+        - "<yellow>Rechtsklick auf einen Artikel, um eine Menge auszuwählen.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Lagerbestand:</gray> <white>{amount}</white>"
+        - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+        - "<gray>Preis pro Stück:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Gesamtbestand Wert:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+        - "<yellow>Linksklick, um einen zu kaufen.</yellow>"
+        - "<yellow>Rechtsklick, um einen Betrag auszuwählen.</yellow>"
+    admin:
+      lore:
+        - "<gray>Bestand:</gray> <white>Unendlich</white>"
+        - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+        - "<gray>Preis pro Stück:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+        - "<gray>Shop-Typ:</gray> <white>Admin-Shop</white>"
+        - "<yellow>Linksklick, um einen zu kaufen.</yellow>"
+        - "<yellow>Rechtsklick, um einen Betrag auszuwählen.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Lagerbestand:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Elementtyp:</gray> <white>{item_type}</white>"
+        - "<gray>Preis pro Stück:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Währungs-ID:</gray> <white>{currency_type}</white>"
+        - "<gray>Restock-Modus:</gray> <white>{restock_mode}</white>"
+        - "<gray>Auffüllungsplan:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Linksklick, um einen zu kaufen.</yellow>"
+        - "<yellow>Rechtsklick, um einen Betrag auszuwählen.</yellow>"
+    admin_mode:
+      gradual: "Gradual"
+      full: "Vollständiges Zurücksetzen"
+    restock_schedule:
+      gradual: "1 Artikel pro {reset_timer_ticks} Ticks"
+      full: "Vollständige Auffüllung um{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Gekauft {amount}x {item_type} für {total_price} {currency_name}. Restbestand: {remaining_amount}.</green>"
+    purchased_admin: "<green>Gekauft {amount}x {item_type} für {total_price} {currency_name}. Dieser Admin-Shop verfügt über unbegrenzten Bestand.</green>"
+    purchased_admin_limited: "<green>Gekauft {amount}x {item_type} für {total_price} {currency_name}. Verbleibender Admin-Bestand: {remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} ist derzeit nicht zum Kauf verfügbar.</gray>"
+    insufficient_stock: "<red>Dieser Shop hat nur {available_amount}x {item_type} verfügbar. </red>"
+    insufficient_funds: "<red>Sie benötigen {total_price} {currency_name} zum Kauf von {amount}x {item_type}.</red>"
+    currency_unavailable: "<red>Währung {currency_name} ist derzeit nicht verfügbar.</red>"
+    invalid_amount: "<red>Geben Sie einen gültigen Kaufbetrag ein.</red>"
+    item_missing: "<red>Dieser Shop-Artikel ist nicht mehr verfügbar.</red>"
+    empty_shop:
+      name: "<red>Shop leer</red>"
+      lore:
+        - "<gray>Es sind keine Artikel zum Kauf verfügbar.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Anvil-Eingabeaufforderung zur Eingabe einer benutzerdefinierten Kaufmenge.
+shop_purchase_amount_anvil_ui:
+  title: "Kaufen {item_type}"
+  input:
+    name: "<gold>Kaufbetrag</gold>"
+    player:
+      lore:
+        - "<gray>Geben Sie ein, wie viele Elemente Sie verwenden möchten kaufen.</gray>"
+        - "<gray>Maximum verfügbar:</gray> <white>{max_amount}</white>"
+        - "<gray>Element:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Geben Sie ein, wie viele Elemente Sie verwenden möchten kaufen.</gray>"
+        - "<gray>Dieser Admin-Shop verfügt über unbegrenzten Bestand.</gray>"
+        - "<gray>Element:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Geben Sie ein, wie viele Elemente Sie verwenden möchten kaufen.</gray>"
+        - "<gray>Maximum verfügbar:</gray> <white>{max_amount}</white>"
+        - "<gray>Element:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Geben Sie eine ganze Zahl zwischen 1 und ein{max_amount}. Eingabe: {input}</red>"
+    invalid_number_admin: "<red>Geben Sie eine ganze Zahl größer als 0 ein. Eingabe: {input}</red>"
+    processing_failed: "<red>Der Kaufbetrag konnte nicht verarbeitet werden. Eingabe: {input}</red>"
+
+# Shop-Discovery-Landing-UI zum Durchsuchen aller Artikel und Materialsuche.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Shop-Browser</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop-Browser</gradient>"
+    lore:
+      - "<gray>Jeden verfolgten Shop durchsuchen oder nach einem bestimmten Material filtern.</gray>"
+      - "<yellow>Wählen Sie eine der folgenden Aktionen aus, um fortzufahren.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Alle Shops durchsuchen</gradient>"
+    lore:
+      - "<gray>Öffnen Sie das vollständig paginierte Shop-Verzeichnis.</gray>"
+      - "<yellow>Klicken Sie hier, um alle verfolgten Shops anzuzeigen.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Suche nach Material</gradient>"
+    lore:
+      - "<gray>Öffnen Sie eine Amboss-Eingabeaufforderung und geben Sie einen Materialnamen ein.</gray>"
+      - "<gray>Beispiel:</gray> <white>diamond_block</white>"
+      - "<yellow>Klicken Sie hier, um nach Artikeltyp zu suchen.</yellow>"
+
+# Paginierte Verzeichnis-Benutzeroberfläche mit allen verfolgten Shops.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Alle Shops</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Shop-Verzeichnis</gradient>"
+    lore:
+      - "<gray>Verfolgte Geschäfte:</gray> <white>{shop_count}</white>"
+      - "<gray>Gesamt verfügbarer Bestand:</gray> <white>{available_count}</white>"
+      - "<yellow>Klicken Sie unten auf einen beliebigen Shop, um ihn zu öffnen.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Verfügbarer Bestand:</gray> <white>{available_count}</white>"
+      - "<yellow>Klicken Sie, um diesen Shop zu öffnen.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Keine Shops gefunden</red>"
+      lore:
+        - "<gray>Es sind keine Shops registriert Noch nicht.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Benutzeroberfläche für materialgefilterte Shop-Ergebnisse.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Ergebnisse für {material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Ergebnisse für {material}</gradient>"
+    lore:
+      - "<gray>Material:</gray> <white>{material}</white>"
+      - "<gray>Übereinstimmende Shops:</gray> <white>{shop_count}</white>"
+      - "<gray>Übereinstimmende Angebote:</gray> <white>{matching_count}</white>"
+      - "<yellow>Klicken Sie unten auf einen passenden Shop, um ihn zu öffnen.</yellow>"
+  entry:
+    name: "<gold>{owner}'s Shop</gold>"
+    lore:
+      - "<gray>Eigentümer:</gray> <white>{owner}</white>"
+      - "<gray>Standort:</gray> <white>{location}</white>"
+      - "<gray>Übereinstimmende {material} Angebote:</gray> <white>{matching_count}</white>"
+      - "<gray>Sichtbarer Gesamtbestand:</gray> <white>{available_count}</white>"
+      - "<yellow>Klicken Sie, um diesen Shop zu öffnen.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Keine Shops verkaufen {material}</red>"
+      lore:
+        - "<gray>Keine verfolgten Shops bieten dies derzeit an Material.</gray>"
+    shop_missing:
+      name: "<red>Shop nicht Gefunden</red>"
+      lore:
+        - "<gray>Dieser Shop konnte nicht aus dem Speicher geladen werden.</gray>"
+      message: "<red>Dieser Shop konnte nicht aus dem Speicher geladen werden.</red>"
+
+# Anvil-Eingabeaufforderung zur Eingabe einer Materialfiltersuche.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Suche nach Material</gradient>"
+  input:
+    lore:
+      - "<gray>Geben Sie einen Bukkit-Materialnamen ein, um nachverfolgte Geschäfte zu durchsuchen.</gray>"
+      - "<gray>Beispiele:</gray> <white>diamond</white><gray>,</gray> <white>diamond_block</white>"
+      - "<yellow>Klicken Sie auf den Ergebnisbereich, um passende Shops zu öffnen.</yellow>"
+  error:
+    invalid_material: "<red>Geben Sie ein gültiges Material ein, z. B. Diamond_Block. Eingabe: {input}</red>"
+    processing_failed: "<red>Fehler beim Suchen nach Material. Eingabe: {input}</red>"
+
+# ============================================
+# PAGINATION
+# ============================================
+# Gemeinsame Paginierungselementbeschriftungen, die in allen Listen-UIs verwendet werden.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Seite %current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Aktuelle Seite:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gesamtseiten:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Seite %direction%</gradient>"
+
+# ============================================
+# HEAD ITEMS
+# ============================================
+# Gemeinsame Kopf-/Navigationsschaltflächenbeschriftungen (Zurück/Bestätigen/Weiter).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Rückgabe</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicken Sie, um zurück zu gehen</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Bestätigen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicken Sie, um die Einstellungen zu bestätigen</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Bestätigen</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Klicken Sie, um die Einstellungen zu bestätigen</gradient>"

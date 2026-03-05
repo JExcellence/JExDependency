@@ -1,0 +1,1204 @@
+# ============================================
+# MAAILMANLAAJUINEN ETULIITE
+# ============================================
+# Etuliite liitetty yleisen laajennuksen chat-lähtöön.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Nopeat pelaajien puoleiset yhteenvetolinjat myymälän, pankin ja verotuksellisesta asemasta.
+info:
+  total: "<blue>Kaupat:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Seuratut saldot ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Suunniteltu vero ({taxed_shops}verolliset kaupat):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Seuraava vero:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Liittymisaikaviestit, jotka näytetään, kun pelaajat tulevat palvelimelle.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops}verollinen kauppa/kaupat\n[<blue>Määrä<yellow>]\n{taxes}\n<red>Eräpäivä:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Komennon vastausmerkkijonot /rs-ominaisuuksille ja vaihtokytkimille.
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[A]</gradient> <gray>Avasi<white>RDS-järjestelmänvalvoja</white><gray>paneeli.</gray>"
+  bar:
+    enabled: "<green>Kaupan pomopalkki käytössä, kun katsot kauppaa.</green>"
+    disabled: "<yellow>Kaupan pomobaari pois käytöstä.</yellow>"
+  give:
+    syntax: "<red>Käyttö: /rs anna<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Käyttö:</gray> <white>/rs tulostaulu&lt;pääkirja|varasto&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Otettu käyttöön<white>{scoreboard_type}</white><gray>sivupalkki.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Pois käytöstä<white>{scoreboard_type}</white><gray>sivupalkki.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Vaihdettu kohtaan<white>{scoreboard_type}</white><gray>sivupalkki.</gray>"
+    type:
+      ledger: "<gold>pääkirja</gold>"
+      stock: "<aqua>varastossa</aqua>"
+
+# Sivupalkin tulostaulun tarrat ja arvojen muotoilu.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Reskontra ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Pankkien kokonaissummat</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Ei pankkivaroja</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Varasto ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Varasto:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Ei pelaajakauppoja</red>"
+
+# Pääpalkin teksti näkyy, kun kohdistat kauppaan.
+shop_boss_bar:
+  title: "<gold>{shop_type}Kauppa</gold> <gray>|</gray> <yellow>Omistaja:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Tuotteet:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Sijainti:</yellow> <white>{location}</white>"
+  type:
+    player: "Pelaaja"
+    admin: "Admin"
+  owner:
+    admin: "Admin"
+  available_items:
+    finite: "{item_count}"
+    limited: "Rajoitettu erä"
+    infinite: "Ääretön"
+    various: "Eri"
+
+# ============================================
+# GUI-painikkeet
+# ============================================
+
+# Shop block -tuotteen nimi ja opintojen metatiedot.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Aseta tämä lohko perustaaksesi myymäläsi.</yellow>"
+
+# Kauppakaupan yleiskatsauksen käyttöliittymätunnisteet, oppitunnit ja saatavuustilat.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Shop Store</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Omista myymälälohkoja</gradient>"
+    lore:
+      - "<gray>Omistamat kauppakorttelit:</gray> <white>{owned_shops}</white>"
+      - "<gray>Tämä kappaleita on ostettu tai myönnetty</gray>"
+      - "<gray>ShopBlock-omistus.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Cap] Shop Block Limit</gradient>"
+    lore:
+      - "<gray>Omistamat kauppakorttelit:</gray> <white>{owned_shops}</white>"
+      - "<gray>Myymälälohkojen enimmäismäärä:</gray> <white>{max_shops}</white>"
+      - "<gray>Tämä raja määrää ostosten määrän</gray>"
+      - "<gray>lohkot, jotka voit avata.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Kaupan vaatimukset</gradient>"
+    lore:
+      - "<gray>Määritetyt vaatimukset:</gray> <white>{requirement_count}</white>"
+      - "<gray>Nykyinen tarvemäärä:</gray> <white>{requirements}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Tarkista seuraava kauppataso napsauttamalla.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Valmis]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Odottaa]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+
+# Kauppatason vaatimuskäyttöliittymä, edistymisen näyttö ja ostopalaute.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Kauppataso{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Osta kauppalohko</gradient>"
+    lore:
+      - "<gray>Ostotaso:</gray> <white>{purchase_number}</white>"
+      - "<gray>Omistamat kauppakorttelit:</gray> <white>{owned_shops}</white>"
+      - "<gray>Myymälälohkojen enimmäismäärä:</gray> <white>{max_shops}</white>"
+      - "<gray>Määritetyt vaatimukset:</gray> <white>{requirement_count}</white>"
+      - "<gray>Tällä hetkellä tavattu:</gray> <white>{met_count}</white>"
+      - "<gray>Status:</gray> <white>{availability}</white>"
+      - "<yellow>Napsauta ostaaksesi, kun tämä taso on valmis.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Valmis]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Odottaa]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Offline]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Ilmainen]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Ilmainen] Ei vaatimuksia</gradient>"
+    lore:
+      - "<gray>Tällä ostotasolla ei ole määritettyjä vaatimuksia.</gray>"
+      - "<yellow>Voit ostaa tämän kauppalohkon ilman ylimääräisiä shekkejä.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Pyydä]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Avain:</gray> <white>{requirement_key}</white>"
+      - "<gray>Tyyppi:</gray> <white>{requirement_type}</white>"
+      - "<gray>Status:</gray> <white>{status}</white>"
+      - "<gray>Edistyminen:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Yhteenveto:</gray> <white>{summary}</white>"
+      - "<yellow>Napsauta hiiren kakkospainikkeella yhteensopivia vaatimuksia pankin edistymiseen.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Yksityiskohtaiset tarkastukset</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Met]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Odottaa]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ei saatavilla]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Osti kauppakorttelin. Kulutetut vaatimukset:</gray> <white>{requirements}</white><gray>. Omistamat kauppakorttelit:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Et tapaa tällä hetkellä<white>{requirement}</white><gray>. Kaupan vaatimukset:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kaupan vaatimus<white>{requirement}</white><gray>ei ole saatavilla tai on virheellinen juuri nyt.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Olet saavuttanut kaupan lohkorajan<white>{max_shops}</white><gray>. Omistamat kauppakorttelit:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>on nyt valmis.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Tallennetun edistymisen kohteelle<white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Vastaavia tuotteita tai valuuttoja ei ollut saatavilla<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>ei tue pankkien edistymistä.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>ei ole saatavilla juuri nyt.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>RDS-profiiliasi ei voitu ladata, joten edistymistä ei voitu tallentaa.</gray>"
+
+# Estä vuorovaikutuksen vahvistusvirheet ja suojausilmoitukset.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Kaupan omistajaa ei voi lukea tästä tuotteesta.</red>"
+    not_owner: "<red>Tämä ShopBlock kuuluu toiselle pelaajalle, etkä voi sijoittaa sitä.</red>"
+    max_shops_reached: "<red>Olet saavuttanut kaupan rajan{max_shops}. Tällä hetkellä sijoitetut kaupat:{owned_shops}.</red>"
+    shop_protected: "<red>Kauppoja ei voi rikkoa suoraan. Sulje kauppa käyttämällä kauppavalikkoa.</red>"
+    double_chest_requires_shop_block: "<red>Tuplaarkkukaupat vaativat toisen<blue>ShopBlock</blue><red>. Normaalit arkut eivät voi sulautua kauppaarkkuihin.</red>"
+    double_chest_owner_mismatch: "<red>Tämä ShopBlock kuuluu toiselle omistajalle, joten se ei voi laajentaa tätä kauppaa.</red>"
+    shop_already_double_chest: "<red>Tässä kaupassa on jo käytössä molemmat rintakehät.</red>"
+    double_chest_ambiguous: "<red>Tämä ShopBlock koskettaa useita kauppaarkkuja. Sijoita se vain yhden liikkeen viereen.</red>"
+
+# Ajoitetun verokäsittelyn tulosviestit.
+tax_scheduler:
+  paid: "<yellow>Kerätty aikataulun mukainen myymälävero{amount}. Lasketut kaupat:{owned_shops}.</yellow>"
+  insufficient_funds: "<red>Et voinut maksaa aikataulun mukaista kauppaveroa{amount}. Lasketut kaupat:{owned_shops}.</red>"
+  charge_failed: "<red>Suunnitellun kauppaveron periminen epäonnistui{amount}. Lasketut kaupat:{owned_shops}.</red>"
+
+# Pääkaupan yleiskatsauksen käyttöliittymä omistajan/järjestelmänvalvojan hallintatoimintoihin.
+shop_overview_ui:
+  title: "{owner}Kauppa -{location}"
+  summary:
+    name: "<gold>Kaupan yhteenveto</gold>"
+    player:
+      lore:
+        - "<gray>Omistaja:</gray> <white>{owner}</white>"
+        - "<gray>Sijainti:</gray> <white>{location}</white>"
+        - "<gray>Tallennetut merkinnät:</gray> <white>{item_count}</white>"
+        - "<gray>Kaupan tyyppi:</gray> <white>Pelaajakauppa</white>"
+        - "<gray>Varasto:</gray> <white>Rajallinen</white>"
+    admin:
+      lore:
+        - "<gray>Omistaja:</gray> <white>{owner}</white>"
+        - "<gray>Sijainti:</gray> <white>{location}</white>"
+        - "<gray>Tallennetut merkinnät:</gray> <white>{item_count}</white>"
+        - "<gray>Kaupan tyyppi:</gray> <white>Admin kauppa</white>"
+        - "<gray>Varasto:</gray> <white>Ääretön</white>"
+  finance:
+    name: "<gold>Kauppa pankki</gold>"
+    lore:
+      - "<gray>Seuratut valuutat:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Napsauta tarkistaaksesi ja nostaaksesi varoja.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Admin Shop käytössä</red>"
+        lore:
+          - "<gray>Tämä kauppa on tällä hetkellä järjestelmänvalvojakauppa.</gray>"
+          - "<gray>Varasto on asiakkaille ääretön.</gray>"
+          - "<gray>Tallennetut merkinnät:</gray> <white>{item_count}</white>"
+          - "<yellow>Napsauta vaihtaaksesi takaisin pelaajakauppaan.</yellow>"
+      disabled:
+        name: "<green>Admin Shop pois käytöstä</green>"
+        lore:
+          - "<gray>Tämä kauppa käyttää tällä hetkellä normaalia varastoa.</gray>"
+          - "<gray>Asiakkaat voivat ostaa vain talletettuja määriä.</gray>"
+          - "<gray>Tallennetut merkinnät:</gray> <white>{item_count}</white>"
+          - "<yellow>Napsauta ottaaksesi järjestelmänvalvojan kauppatilan käyttöön.</yellow>"
+    close:
+      name: "<red>Sulje kauppa</red>"
+      lore:
+        - "<gray>Poista tämä kauppa ja palauta kauppalohko.</gray>"
+        - "<gray>Tallennetut merkinnät:</gray> <white>{item_count}</white>"
+        - "<gray>Seuratut pankkien valuutat:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Myymälävaraston tulee olla tyhjä ennen sulkemista.</yellow>"
+    manage:
+      name: "<green>Lisää kauppatuotteita</green>"
+      lore:
+        - "<gray>Säilytä uusia tuotteita tässä kaupassa.</gray>"
+        - "<gray>Nykyiset merkinnät:</gray> <white>{item_count}</white>"
+        - "<yellow>Napsauta avataksesi kohteen syöttötavan.</yellow>"
+    customer_view:
+      name: "<gold>Avaa Asiakasnäkymä</gold>"
+      lore:
+        - "<gray>Esikatsele tätä kauppaa sellaisena kuin asiakkaat näkevät sen.</gray>"
+        - "<gray>Nykyiset merkinnät:</gray> <white>{item_count}</white>"
+        - "<yellow>Napsauta selataksesi tätä kauppaa asiakkaana.</yellow>"
+    trusted:
+      name: "<gold>Luotetut pelaajat</gold>"
+      lore:
+        - "<gray>Yhteistyökumppanit:</gray> <white>{associate_count}</white>"
+        - "<gray>Luotetut pelaajat:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Napsauta hallitaksesi kaupan luottamustasoja.</yellow>"
+    ledger:
+      name: "<gold>Kauppakirja</gold>"
+      lore:
+        - "<gray>Merkintöjä yhteensä:</gray> <white>{ledger_count}</white>"
+        - "<gray>Ostokset:</gray> <white>{purchase_count}</white>"
+        - "<gray>Verot:</gray> <white>{tax_count}</white>"
+        - "<yellow>Napsauta nähdäksesi kaupan tapahtumahistorian.</yellow>"
+    edit:
+      name: "<aqua>Muokkaa kaupan kohteita</aqua>"
+      lore:
+        - "<gray>Muokkaa varastoitujen myymälätuotteiden hintoja.</gray>"
+        - "<gray>Nykyiset merkinnät:</gray> <white>{item_count}</white>"
+        - "<yellow>Napsauta muokataksesi hintoja ja valuuttoja.</yellow>"
+    storage:
+      name: "<gold>Näytä tallennetut kohteet</gold>"
+      lore:
+        - "<gray>Tarkista tähän kauppaan jo tallennetut tuotteet.</gray>"
+        - "<gray>Nykyiset merkinnät:</gray> <white>{item_count}</white>"
+        - "<yellow>Napsauta poistaaksesi tallennetut kohteet.</yellow>"
+    locked:
+      name: "<red>Kauppa lukittu</red>"
+      lore:
+        - "<gray>Vain omistaja voi lisätä kohteita.</gray>"
+        - "<gray>Nykyiset merkinnät:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Sinulla ei ole lupaa hallinnoida tätä kauppaa.</red>"
+    no_admin_permission: "<red>Sinulla ei ole lupaa vaihtaa järjestelmänvalvojan kauppoja.</red>"
+    admin_limit_reached: "<red>Palvelimella on jo{admin_shops}admin kaupat. Ilmainen versio sallii vain{max_admin_shops}admin kaupat.</red>"
+    admin_enabled: "<green>Tämä kauppa on nyt järjestelmänvalvojakauppa, jossa on loputon asiakasvalikoima. Lasketut kaupat:{owned_shops}.</green>"
+    admin_disabled: "<yellow>Tämä kauppa on nyt normaali pelaajakauppa, jossa on rajallinen asiakasvarasto. Lasketut kaupat:{owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Et voi vaihtaa tätä järjestelmänvalvojakauppaa takaisin pelaajakauppaksi, koska kauppasi raja on{max_shops}on jo saavutettu. Lasketut kaupat:{owned_shops}.</red>"
+    close_not_empty: "<red>Voit sulkea kaupan vasta, kun olet poistanut kaikki tallennetut tavarat. Loput merkinnät:{item_count}.</red>"
+    close_bank_not_empty: "<red>Nosta myymäläpankki ennen tämän kaupan sulkemista. Loput seurattavat valuutat:{bank_currency_count}.</red>"
+    closed: "<green>Sulki myymälän ja palasi{returned_blocks}ShopBlock(t). Lasketut kaupat:{owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Maailmanlaajuinen järjestelmänvalvojan ohjauspaneeli RDS-hallintaa varten.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Järjestelmänvalvoja] RDS-ohjaus</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS-hallintapaneeli</white>"
+    lore:
+      - "<gray>Hallitse globaaleja järjestelmänvalvojan järjestelmiä yhdestä paikasta.</gray>"
+      - "<gray>Avaa palvelinpankki tai muokkaa asetuksia alla.</gray>"
+      - "<yellow>Vaatii:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Palvelinpankki</gradient>"
+      lore:
+        - "<gray>Tarkista palvelinpankkiin vedetyt ylläpitokaupan tulot.</gray>"
+        - "<gray>Tarkista seuraavan vedon ajoitus ja nosta saldot.</gray>"
+        - "<yellow>Napsauta avataksesi palvelinpankin ohjaimet.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+      lore:
+        - "<gray>Muokkaa arvoja kohteesta</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Jokaista muokattavaa asetusta voidaan muuttaa alasinkehotteen avulla.</gray>"
+        - "<yellow>Napsauta avataksesi konfigurointiohjaimet.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Valuutta] Valuuttapäällikkö</gradient>"
+      lore:
+        - "<gray>Tarkista havaitut valuutat Holvista ja JExEconomystä.</gray>"
+        - "<gray>Luo oletusarvo</gray> <white>sadepisarat</white> <gray>valuuttaa tarvittaessa.</gray>"
+        - "<yellow>Napsauta avataksesi valuuttasäätimet.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä hallintapaneelia.</gray>"
+
+# Havaittujen palveluntarjoajien järjestelmänvalvojan valuuttanäkymä ja oletusvaluutan luonti.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Valuutta] Valuuttapäällikkö</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>Valuutantarjoajat</white>"
+    lore:
+      - "<gray>Havaitut valuutat:</gray> <white>{currency_count}</white>"
+      - "<gray>Varasto käytettävissä:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy saatavilla:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Käytä kristallipainiketta luodaksesi oletusvaluutta.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Palveluntarjoaja:</gray> <white>{provider}</white>"
+      - "<gray>Symboli:</gray> <white>{symbol}</white>"
+      - "<gray>Etuliite:</gray> <white>{prefix}</white>"
+      - "<gray>Suffiksi:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Luoda{currency_id}</white>"
+      lore:
+        - "<gray>Luo RDS-oletusvaluutta JExEconomyssa.</gray>"
+        - "<yellow>Luo napsauttamalla{currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEconomy vaaditaan</white>"
+      lore:
+        - "<gray>Et voi luoda oletusvaluuttaa ilman JExEconomya.</gray>"
+        - "<gray>Asenna ja ota JExEconomy ensin käyttöön.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>{currency_id}Valmis</white>"
+      lore:
+        - "<gray>Oletusvaluutta on jo olemassa.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Luotu oletusvaluutta:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Valuutan luominen epäonnistui:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Valuutta on jo olemassa:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Et voi käyttää tätä painiketta, ellei JExEconomy ole käytettävissä.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Valuuttoja ei havaittu</white>"
+      lore:
+        - "<gray>Holvi- tai JExEconomy-valuuttoja ei havaittu.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä valuuttanäkymää.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta hallita valuuttoja.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Määritä selaimen käyttöliittymä muokattavia asetuksia ja päivityspalautetta varten.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>Määritysasetukset</white>"
+    lore:
+      - "<gray>Muokattavat asetukset havaittu:</gray> <white>{setting_count}</white>"
+      - "<gray>Napsauta mitä tahansa alla olevaa merkintää muokataksesi sen arvoa alasimessa.</gray>"
+      - "<yellow>Muutokset kirjoitetaan suoraan tiedostoon config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Sarja]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Polku:</gray> <white>{config_path}</white>"
+      - "<gray>Tyyppi:</gray> <white>{value_type}</white>"
+      - "<gray>Nykyinen arvo:</gray> <white>{current_value}</white>"
+      - "<yellow>Napsauta muokataksesi tätä asetusta.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Kokonaisluku]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[pitkä]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Kaksinkertainen]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lista]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[merkkijono]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Ei muokattavia asetuksia</white>"
+      lore:
+        - "<gray>Muokattavia skalaari-/luetteloasetusasetuksia ei löytynyt.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä asetusnäkymää.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Asetusten muokkaus lukittu</white>"
+      lore:
+        - "<gray>Tämä versio ei salli ajonaikaisten asetusten muokkauksia.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta muokata määritysasetuksia.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Määritysten muokkaus on lukittu tässä versiossa.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Päivitetty<white>{config_path}</white><gray>to<white>{updated_value}</white><gray>.</gray>"
+
+# Alasin kehoteteksti asetusarvojen muokkaamiseen.
+shop_config_value_anvil_ui:
+  title: "Muokata{config_path}"
+  input:
+    lore:
+      - "<gray>Polku:</gray> <white>{config_path}</white>"
+      - "<gray>Tyyppi:</gray> <white>{value_type}</white>"
+      - "<gray>Nykyinen arvo:</gray> <white>{current_value}</white>"
+      - "<yellow>Syötä uusi arvo ja vahvista.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Virheellinen syöte tyypille<white>{value_type}</white><gray>. Syöte:</gray> <white>{input}</white>"
+
+# Palvelinpankin yleiskatsaus, valuuttamerkinnät ja nostopalaute.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Palvelinpankki</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>Tulojen ja siirtojen tila</white>"
+    lore:
+      - "<gray>Seuratut valuutat:</gray> <white>{currency_count}</white>"
+      - "<gray>Tulot:</gray> <white>{income_summary}</white>"
+      - "<gray>Seuraava veto:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Aika seuraavaan vetoon:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Admin-shop saldot siirretään tänne aikataulussa.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Ei mitään</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Ei käytössä</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Odottaa...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Ei käytössä</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Odottaa...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Peruuttaa]</gradient> <white>Poista kaikki</white>"
+    lore:
+      - "<gray>Yritä nostaa jokainen positiivinen saldo.</gray>"
+      - "<gray>Valuutat, jotka eivät ole käytettävissä, ohitetaan.</gray>"
+      - "<yellow>Napsauta nostaaksesi kaikki varat tilillesi.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+      - "<gray>Käytettävissä oleva saldo:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Napsauta nostaaksesi koko valuuttasaldon.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Palvelinpankki tyhjä</white>"
+      lore:
+        - "<gray>Positiivisia saldoja ei ole nostettavissa.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole oikeutta hallita palvelinpankkia.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta hallita palvelinpankkia.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Palvelin-pankkisaldo ei ole enää käytettävissä.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>vetäytyi<white>{amount} {currency_name}</white><gray>. Jäljellä{currency_name}:</gray> <white>{remaining_amount}</white><gray>. Aktiiviset valuutat:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>vetäytyi<white>{withdrawn_currency_count}</white><gray>valuuttasaldo(t). Epäonnistui:</gray> <white>{failed_currency_count}</white><gray>. Jäljellä olevat aktiiviset valuutat:</gray> <white>{remaining_currency_count}</white><gray>. Tiedot:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Mitään saldoa ei voitu nostaa. Epäonnistunut valuuttalaskenta:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Valuutta<white>{currency_name}</white><gray>ei ole tällä hetkellä saatavilla.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Peruuttaminen epäonnistui<white>{amount} {currency_name}</white><gray>palvelinpankista.</gray>"
+
+# Kauppanimikkeiden syöttöliittymä, jota käytetään lisättäessä uusia varastomerkintöjä.
+shop_input_ui:
+  title: "Lisää kohteita -{owner} @ {location}"
+  summary:
+    name: "<gold>Kauppa Säilytys</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Tällä hetkellä tallennettu:</gray> <white>{stored_count}</white>"
+      - "<yellow>Uusien kohteiden oletusarvo on valuuttatyyppi holvi ja arvo 0.</yellow>"
+  input_slot:
+    name: "<green>Tulopaikka</green>"
+    lore:
+      - "<gray>Napsauta hiiren kakkospainikkeella, kun kohde on kohdistimen päällä</gray>"
+      - "<gray>tai vaihto-napsauta tuotetta varastosta.</gray>"
+      - "<gray>Napsauta hiiren kakkospainikkeella poistaaksesi lisätyn pinon.</gray>"
+  no_new_items_inserted: "<red>Uusia kohteita ei lisätty.</red>"
+  saved: "<green>Tallennettu{added_count}uusia merkintöjä. Kaupassa on nyt{stored_count}merkintöjä.</green>"
+  save_failed: "<red>Kaupan tuotteiden tallentaminen epäonnistui.</red>"
+  left_overs: "<yellow>Palautti tallentamattomat kauppatuotteet varastoosi.</yellow>"
+  feedback:
+    no_permission: "<red>Sinulla ei ole lupaa lisätä tuotteita tähän kauppaan.</red>"
+    locked:
+      name: "<red>Supply Access vaaditaan</red>"
+      lore:
+        - "<gray>Vain yhteistyökumppanit ja luotettavat pelaajat voivat lisätä kohteita tähän.</gray>"
+
+# Kaupan tallennusselaimen käyttöliittymä tallennettujen kohteiden katseluun ja nostamiseen.
+shop_storage_ui:
+  title: "Tallennetut tavarat -{location}"
+  summary:
+    name: "<gold>Tallennetut kohteet</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Tallennetut merkinnät:</gray> <white>{stored_count}</white>"
+      - "<yellow>Napsauta mitä tahansa alla olevaa kohdetta peruuttaaksesi sen.</yellow>"
+  entry:
+    lore:
+      - "<gray>Tallennettu määrä:</gray> <white>{amount}</white>"
+      - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+      - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+      - "<gray>Arvo:</gray> <white>{value}</white>"
+      - "<yellow>Napsauta purkaaksesi tämän tuotteen kaupasta.</yellow>"
+  feedback:
+    not_owner: "<red>Sinulla ei ole lupaa hallinnoida tätä kauppaa.</red>"
+    extracted: "<green>Purettu{amount}x{item_type}. Hinta oli{value} {currency_type}. Jäljellä olevat tallennetut merkinnät:{stored_count}.</green>"
+    item_missing: "<red>Tätä tallennettua kohdetta ei löytynyt.</red>"
+    locked:
+      name: "<red>Täysi käyttöoikeus vaaditaan</red>"
+      lore:
+        - "<gray>Vain luotettavat pelaajat, joilla on täysi käyttöoikeus, voivat nostaa tallennettuja kohteita.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Kaupan muokkausvalinnan käyttöliittymä muokattavien merkintöjen valitsemiseen.
+shop_edit_ui:
+  title: "Muokkaa kaupan kohteita -{location}"
+  summary:
+    name: "<aqua>Kaupan hintaeditori</aqua>"
+    player:
+      lore:
+        - "<gray>Omistaja:</gray> <white>{owner}</white>"
+        - "<gray>Sijainti:</gray> <white>{location}</white>"
+        - "<gray>Tallennetut merkinnät:</gray> <white>{stored_count}</white>"
+        - "<yellow>Napsauta tuotetta hiiren kakkospainikkeella muokataksesi hintoja.</yellow>"
+        - "<yellow>Napsauta tuotetta hiiren kakkospainikkeella poistaaksesi sen kaupasta.</yellow>"
+    admin:
+      lore:
+        - "<gray>Omistaja:</gray> <white>{owner}</white>"
+        - "<gray>Sijainti:</gray> <white>{location}</white>"
+        - "<gray>Tallennetut merkinnät:</gray> <white>{stored_count}</white>"
+        - "<gray>Järjestelmänvalvojan varastotila:</gray> <white>{restock_mode}</white>"
+        - "<gray>Varaston täydennysaikataulu:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Napsauta tuotetta hiiren kakkospainikkeella muokataksesi hintoja tai varastoa.</yellow>"
+        - "<yellow>Napsauta tuotetta hiiren kakkospainikkeella poistaaksesi sen kaupasta.</yellow>"
+    restock_schedule:
+      gradual: "Oletusajastin:{reset_timer_ticks}rastia per tuote"
+  entry:
+    player:
+      lore:
+        - "<gray>Tallennettu määrä:</gray> <white>{amount}</white>"
+        - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+        - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+        - "<gray>Arvo:</gray> <white>{value}</white>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella muokataksesi tätä kaupan tuotetta.</yellow>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella poistaaksesi sen kaupasta.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Varasto:</gray> <white>Ääretön</white>"
+        - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+        - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+        - "<gray>Arvo:</gray> <white>{value}</white>"
+        - "<gray>Varastotila:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella muokataksesi tätä järjestelmänvalvojakaupan tuotetta.</yellow>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella poistaaksesi sen kaupasta.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Tämänhetkinen varasto:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+        - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+        - "<gray>Arvo:</gray> <white>{value}</white>"
+        - "<gray>Varastotila:</gray> <white>{restock_mode}</white>"
+        - "<gray>Varaston täydennysaikataulu:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella muokataksesi tätä järjestelmänvalvojakaupan tuotetta.</yellow>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella poistaaksesi sen kaupasta.</yellow>"
+    admin_mode:
+      gradual: "Asteittainen"
+      full: "Täysi nollaus"
+    restock_schedule:
+      gradual: "1 kohde per{reset_timer_ticks}punkkeja"
+      full: "Täysin varastot klo{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Sinulla ei ole lupaa hallinnoida tätä kauppaa.</red>"
+    removed: "<green>Poistettu{amount}x{item_type}kaupasta. Hinta oli{value} {currency_type}. Jäljellä olevat tallennetut merkinnät:{stored_count}.</green>"
+    item_missing: "<red>Tätä kaupan tuotetta ei löytynyt.</red>"
+    locked:
+      name: "<red>Täysi käyttöoikeus vaaditaan</red>"
+      lore:
+        - "<gray>Vain luotettavat pelaajat, joilla on täydet käyttöoikeudet, voivat muokata kohteiden arvoja.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Yksityiskohtainen editorin käyttöliittymä yksittäisten myymälätuotteiden käyttäytymiseen ja hinnoitteluun.
+shop_item_edit_ui:
+  title: "Muokata{item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Tallennettu määrä:</gray> <white>{amount}</white>"
+        - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+        - "<gray>Arvo:</gray> <white>{value}</white>"
+        - "<gray>Saatavuustila:</gray> <white>{availability_mode}</white>"
+        - "<gray>Saatavuus nyt:</gray> <white>{availability_state}</white>"
+        - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+        - "<yellow>Käytä alla olevia painikkeita muokataksesi tätä kohdetta.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Varasto:</gray> <white>Ääretön</white>"
+        - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+        - "<gray>Arvo:</gray> <white>{value}</white>"
+        - "<gray>Varastotila:</gray> <white>{restock_mode}</white>"
+        - "<gray>Ostokomennot:</gray> <white>{command_count}</white>"
+        - "<gray>Saatavuustila:</gray> <white>{availability_mode}</white>"
+        - "<gray>Saatavuus nyt:</gray> <white>{availability_state}</white>"
+        - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+        - "<yellow>Käytä alla olevia painikkeita muokataksesi tätä järjestelmänvalvojan kohdetta.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Tämänhetkinen varasto:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Valuuttatyyppi:</gray> <white>{currency_type}</white>"
+        - "<gray>Arvo:</gray> <white>{value}</white>"
+        - "<gray>Varastotila:</gray> <white>{restock_mode}</white>"
+        - "<gray>Varaston täydennysaikataulu:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Ostokomennot:</gray> <white>{command_count}</white>"
+        - "<gray>Saatavuustila:</gray> <white>{availability_mode}</white>"
+        - "<gray>Saatavuus nyt:</gray> <white>{availability_state}</white>"
+        - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+        - "<yellow>Käytä alla olevia painikkeita muokataksesi tätä järjestelmänvalvojan kohdetta.</yellow>"
+  currency_type:
+    name: "<green>Valuuttatyyppi</green>"
+    lore:
+      - "<gray>Nykyinen tyyppi:</gray> <white>{currency_type}</white>"
+      - "<yellow>Napsauta muokataksesi valuuttatyyppiä.</yellow>"
+  value:
+    name: "<gold>Arvo</gold>"
+    lore:
+      - "<gray>Nykyinen tyyppi:</gray> <white>{currency_type}</white>"
+      - "<gray>Nykyinen arvo:</gray> <white>{value}</white>"
+      - "<yellow>Napsauta muokataksesi numeerista arvoa.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Mode] Tuotteen saatavuus</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Aina]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Kiertää]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Ei koskaan]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Avata]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Suljettu]</gradient>"
+    lore:
+      - "<gray>Nykyinen tila:</gray> <white>{availability_mode}</white>"
+      - "<gray>Nykyinen tila:</gray> <white>{availability_state}</white>"
+      - "<gray>Kierrä ikkunaa:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+      - "<yellow>Napsauta vaihtaaksesi: Aina -> Kierrä -> Ei koskaan.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Ajastin] Kierrä minuuttia</gradient>"
+    lore:
+      - "<gray>Nykyinen ikkuna:</gray> <white>{rotation_minutes}minuutti(t)</white>"
+      - "<gray>Nykyinen tila:</gray> <white>{availability_mode}</white>"
+      - "<gray>Kiertotilan otsikko:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Napsauta asettaaksesi kiertominuutit alasimessa.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Command Executor</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Palvelin]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Pelaaja]</gradient>"
+    lore:
+      - "<gray>Nykyinen tila:</gray> <white>{command_mode}</white>"
+      - "<gray>Seuraava tila:</gray> <white>{next_mode}</white>"
+      - "<yellow>Napsauta vaihtaaksesi, kuka suorittaa äskettäin lisätyt komennot.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Ostokomennot</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Ei mitään</gradient>"
+    lore:
+      - "<gray>Konfiguroidut komennot:</gray> <white>{command_count}</white>"
+      - "<gray>Viimeisin komento:</gray> <white>{latest_command}</white>"
+      - "<yellow>Napsauta avataksesi komentoasetukset ja lisätäksesi komentoja.</yellow>"
+  confirm:
+    name: "<green>Tallenna tuotteen hinnoittelu</green>"
+    lore:
+      - "<gray>Käytä nykyistä valuuttatyyppiä ja arvoa</gray>"
+      - "<gray>tähän kauppaan.</gray>"
+  stock_limit:
+    name: "<gold>Varastorajoitus</gold>"
+    unlimited: "Ääretön"
+    lore:
+      - "<gray>Nykyinen raja:</gray> <white>{stock_limit}</white>"
+      - "<gray>Tämänhetkinen varasto:</gray> <white>{current_stock}</white>"
+      - "<yellow>Napsauta asettaaksesi varastorajan.</yellow>"
+      - "<gray>Käytä -1 palauttaaksesi tämän tuotteen äärettömään varastoon.</gray>"
+  reset_timer:
+    name: "<aqua>Nollaa ajastin</aqua>"
+    lore:
+      - "<gray>Nykyinen ajastin:</gray> <white>{reset_timer_ticks}punkkeja</white>"
+      - "<yellow>Napsauta asettaaksesi varastointiajastimen.</yellow>"
+  restock_mode:
+    name: "<yellow>Admin Restock Mode</yellow>"
+    gradual: "Asteittainen"
+    full: "Täysi nollaus"
+    lore:
+      - "<gray>Konfiguroitu tila:</gray> <white>{restock_mode}</white>"
+      - "<gray>Määritetty aikataulu:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Napsauta vaihtaaksesi globaalin järjestelmänvalvojan varastotilaa.</yellow>"
+  restock_schedule:
+    gradual: "1 kohde per{reset_timer_ticks}punkkeja"
+    full: "Täysin varastot klo{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Sinulla ei ole lupaa hallinnoida tätä kauppaa.</red>"
+    shop_missing: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+    item_missing: "<red>Tätä kaupan tuotetta ei löytynyt.</red>"
+    saved: "<green>Tallennetun tuotteen hinnoittelu muodossa{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Saatavuustila asetettu kohtaan<white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Uusi komennon suoritustila on asetettu<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Uusin komento poistettu. Jäljellä olevat komennot:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tyhjennettiin kaikki järjestelmänvalvojan ostokomennot.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Yhtään järjestelmänvalvojan ostokomentoa ei ole määritetty.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Plugin konfiguraatiomuutokset on lukittu<white>RDS ilmainen</white><gray>. Päivitä premium-versioon saadaksesi täyden pääsyn.</gray>"
+    restock_mode_updated: "<green>Järjestelmänvalvojan varastotila on asetettu{restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Järjestelmänvalvojan varastotilan tallennus epäonnistui.</red>"
+
+# Alasin kehote uuden järjestelmänvalvojan ostokomennon lisäämiseksi.
+shop_item_admin_command_anvil_ui:
+  title: "Lisää komento{command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Anna komento, joka suoritetaan, kun tämä järjestelmänvalvojan kohde ostetaan.</gray>"
+      - "<gray>Vain komentoteksti. Viive määritetään komentoasetusnäkymässä.</gray>"
+      - "<gray>Esimerkkejä:</gray>"
+      - "<white>lähettää%player_name%ostanut{amount}x{item_type}</white>"
+      - "<white>eko antaa%player_name% 50</white>"
+      - "<gray>Konfiguroidut komennot:</gray> <white>{command_count}</white>"
+      - "<gray>Suoritustila:</gray> <white>{command_mode}</white>"
+      - "<gray>Viive:</gray> <white>{command_delay_ticks}punkkeja</white>"
+  mode:
+    server: "<gold>[Palvelin]</gold>"
+    player: "<green>[Pelaaja]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Komennon teksti ei voi olla tyhjä. Syöte:</gray> <white>{input}</white>"
+
+# Järjestelmänvalvojan ostokomentojen hallinnan käyttöliittymä tilalle, viiveelle ja komentoluettelolle.
+shop_item_admin_command_ui:
+  title: "Komentoasetukset -{item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Osta komentoasetukset</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Ei mitään</gradient>"
+    lore:
+      - "<gray>Konfiguroidut komennot:</gray> <white>{command_count}</white>"
+      - "<gray>Viimeisin komento:</gray> <white>{latest_command}</white>"
+      - "<gray>Seuraava komentotila:</gray> <white>{command_mode}</white>"
+      - "<gray>Seuraavan komennon viive:</gray> <white>{command_delay_ticks}punkit ({command_delay_seconds}s)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Next Command Executor</gradient>"
+    server: "<gold>[Palvelin]</gold>"
+    player: "<green>[Pelaaja]</green>"
+    lore:
+      - "<gray>Nykyinen tila:</gray> <white>{command_mode}</white>"
+      - "<gray>Seuraava tila:</gray> <white>{next_mode}</white>"
+      - "<yellow>Napsauta vaihtaaksesi seuraavan komennon suorittajan.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Viive] Seuraavan komennon viive</gradient>"
+    lore:
+      - "<gray>Nykyinen viive:</gray> <white>{command_delay_ticks}punkit ({command_delay_seconds}s)</white>"
+      - "<yellow>Napsauta asettaaksesi seuraavan komennon rastien viiveen.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Lisää komento</gradient>"
+    lore:
+      - "<gray>Tila:</gray> <white>{command_mode}</white>"
+      - "<gray>Viive:</gray> <white>{command_delay_ticks}punkit ({command_delay_seconds}s)</white>"
+      - "<yellow>Napsauta avataksesi komentosyöttö.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Poista komento</gradient>"
+    lore:
+      - "<gray>Konfiguroidut komennot:</gray> <white>{command_count}</white>"
+      - "<yellow>Napsauta poistaaksesi viimeisimmän komennon.</yellow>"
+      - "<yellow>Vaihto + napsauta tyhjentääksesi kaikki komennot.</yellow>"
+  confirm:
+    name: "<green>Tallenna komentoasetukset</green>"
+    lore:
+      - "<gray>Palaa kohdeeditoriin ja säilytä nämä komentomuutokset.</gray>"
+  feedback:
+    not_owner: "<red>Sinulla ei ole lupaa hallinnoida tätä kauppaa.</red>"
+    shop_missing: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Seuraava komentotila on asetettu<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Uusin komento poistettu. Jäljellä olevat komennot:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tyhjennettiin kaikki järjestelmänvalvojan ostokomennot.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Yhtään järjestelmänvalvojan ostokomentoa ei ole määritetty.</gray>"
+
+# Alasin kehote järjestelmänvalvojan komennon viiveen asettamiseen.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Aseta viive -{command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Syötä kokonaislukumäärä seuraavan komennon viivettä varten.</gray>"
+      - "<gray>Suoritustila:</gray> <white>{command_mode}</white>"
+      - "<gray>Esimerkkejä:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Palvelin]</gold>"
+    player: "<green>[Pelaaja]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Syötä kokonaisluku, joka on suurempi tai yhtä suuri kuin 0. Syötä:</gray> <white>{input}</white>"
+
+# Alasin kehote kiertotilan saatavuusikkunaan minuuteissa.
+shop_item_availability_minutes_anvil_ui:
+  title: "Kiertominuutit:{rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Ajastin] Kierrä minuuttia</gradient>"
+    lore:
+      - "<gray>Syötä kokonaisluku minuutteja.</gray>"
+      - "<gray>Kiertotila vaihtelee käytettävissä/ei käytettävissä jokaisessa ikkunassa.</gray>"
+  error:
+    invalid_number: "<red>Syötä kokonaisluku, joka on suurempi kuin 0. Syötä:{input}</red>"
+
+# Alasin kehote rajoitetun järjestelmänvalvojan varastokapasiteetin asettamiseen.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Varastorajoitus:{stock_limit}"
+  input:
+    name: "<gold>Varastorajoitus</gold>"
+    lore:
+      - "<gray>Syötä tuotteisiin positiivinen varastoraja.</gray>"
+      - "<gray>Käytä -1 palauttaaksesi äärettömän järjestelmänvalvojan varaston.</gray>"
+  error:
+    invalid_number: "<red>Syötä -1 tai kokonaisluku, joka on suurempi kuin 0. Syötä:{input}</red>"
+
+# Alasin kehote järjestelmänvalvojan varaston palauttamisen/nollauksen ajastimen määrittämiseen.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Nollaa ajastin:{reset_timer_ticks}"
+  input:
+    name: "<aqua>Nollaa ajastin</aqua>"
+    lore:
+      - "<gray>Syötä kokonaisluku Bukkit-merkkiä.</gray>"
+      - "<gray>Asteittainen tila palauttaa yhden kohteen ajastinta kohden.</gray>"
+  error:
+    invalid_number: "<red>Syötä kokonaisluku, joka on suurempi kuin 0. Syötä:{input}</red>"
+
+# Alasin kehote tuotteen käyttämän valuuttatyypin valitsemiseksi.
+shop_item_currency_type_anvil_ui:
+  title: "Valuuttatyyppi:{currency_type}"
+  input:
+    name: "<green>Valuuttatyyppi</green>"
+    lore:
+      - "<gray>Anna tämän tuotteen valuuttatunniste.</gray>"
+      - "<gray>Esimerkkejä:</gray> <white>holvi, rahakkeet, jalokivet</white>"
+  error:
+    empty: "<red>Valuuttatyyppi ei voi olla tyhjä.</red>"
+    invalid_currency: "<red>Valuuttatyyppi{currency_type}ei ole saatavilla. Käytä holvia tai rekisteröityä mukautettua valuuttaa.</red>"
+    processing_failed: "<red>Valuuttatyypin päivittäminen epäonnistui. Syöte:{input}</red>"
+
+# Alasin kehote tuotekohtaisen hinnan/arvon asettamiseksi.
+shop_item_value_anvil_ui:
+  title: "Arvo:{value} {currency_type}"
+  input:
+    name: "<gold>Tuotteen arvo</gold>"
+    lore:
+      - "<gray>Anna ei-negatiivinen numeerinen arvo.</gray>"
+      - "<gray>Esimerkkejä:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Anna kelvollinen ei-negatiivinen luku. Syöte:{input}</red>"
+    processing_failed: "<red>Nimikkeen arvon päivittäminen epäonnistui. Syöte:{input}</red>"
+
+# Kauppapankin käyttöliittymä kauppakohtaisiin valuuttasaldoihin ja nostoihin.
+shop_bank_ui:
+  title: "Shop Bank -{location}"
+  summary:
+    name: "<gold>Pankkisaldot</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Seuratut valuutat:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Napsauta alla olevaa saldoa nostaaksesi sen koko summan.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+      - "<gray>Käytettävissä oleva saldo:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Napsauta nostaaksesi tämän täyden saldon.</yellow>"
+  feedback:
+    not_owner: "<red>Sinulla ei ole lupaa hallinnoida tätä kauppaa.</red>"
+    entry_missing: "<red>Pankkisaldo ei ole enää saatavilla.</red>"
+    withdrawn: "<green>vetäytyi{amount} {currency_name}. Jäljellä{currency_name}: {remaining_amount}. Seuratut valuutat:{bank_currency_count}.</green>"
+    withdraw_failed: "<red>Peruuttaminen epäonnistui{amount} {currency_name}myymäläpankista.</red>"
+    currency_unavailable: "<red>Valuutta{currency_name}ei ole saatavilla juuri nyt.</red>"
+    empty:
+      name: "<red>Pankki tyhjä</red>"
+      lore:
+        - "<gray>Tällä kaupalla ei ole nostettavia pankkisaldoja.</gray>"
+    locked:
+      name: "<red>Täysi käyttöoikeus vaaditaan</red>"
+      lore:
+        - "<gray>Vain luotettavat pelaajat, joilla on täysi käyttöoikeus, voivat nostaa kaupan varoja.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Luotettu pelaajien hallintakäyttöliittymä myymälän käyttörooleille.
+shop_trusted_ui:
+  title: "Luotetut pelaajat -{location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Yhteistyökumppanit:</gray> <white>{associate_count}</white>"
+      - "<gray>Luotetut pelaajat:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Napsauta pelaajaa tarkistaaksesi hänen luottamustilansa.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Status:</gray> <white>Julkinen</white>"
+        - "<gray>Ei hallintaoikeuksia.</gray>"
+        - "<yellow>Napsauta vaihtaaksesi Associate-tilaan.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Status:</gray> <white>Associate</white>"
+        - "<gray>Voidaan lisätä tuotteita kauppaan.</gray>"
+        - "<yellow>Napsauta vaihtaaksesi Luotettavaksi.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Status:</gray> <white>Luotettu</white>"
+        - "<gray>Voi hallita kauppaa täysin.</gray>"
+        - "<yellow>Napsauta vaihtaaksesi julkiseksi.</yellow>"
+  feedback:
+    not_owner: "<red>Vain kaupan omistaja voi hallita luotettavia pelaajia.</red>"
+    updated:
+      public: "<yellow>Sarja{player}Yleisölle.</yellow>"
+      associate: "<green>Sarja{player}yhdistyä.</green>"
+      trusted: "<green>Sarja{player}Luotettuun.</green>"
+    empty:
+      name: "<red>Pelaajia ei löytynyt</red>"
+      lore:
+        - "<gray>Muihin tunnettuihin pelaajiin ei voi luottaa.</gray>"
+    locked:
+      name: "<red>Vain omistajan käyttöoikeus</red>"
+      lore:
+        - "<gray>Vain kaupan omistaja voi hallita luotettavia pelaajia.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Tapahtumareskontin käyttöliittymä ostoille ja verohistorialle.
+shop_ledger_ui:
+  title: "Kauppakirja -{location}"
+  summary:
+    name: "<gold>Kauppatapahtumareskontra</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Merkintöjä yhteensä:</gray> <white>{ledger_count}</white>"
+      - "<gray>Ostokset:</gray> <white>{purchase_count}</white>"
+      - "<gray>Verot:</gray> <white>{tax_count}</white>"
+      - "<yellow>Uusimmat tapahtumat näkyvät ensin.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Ostaa:{item_type}</green>"
+      lore:
+        - "<gray>Ostaja:</gray> <white>{actor}</white>"
+        - "<gray>Määrä:</gray> <white>{item_amount}</white>"
+        - "<gray>Maksettu yhteensä:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+        - "<gray>Tallennettu:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Tax Charge</gold>"
+      lore:
+        - "<gray>Veloitettu:</gray> <white>{actor}</white>"
+        - "<gray>Veron osuus:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Lasketut kaupat:</gray> <white>{counted_shops}</white>"
+        - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+        - "<gray>Tallennettu:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Ei pääkirjamerkintöjä</red>"
+      lore:
+        - "<gray>Tässä kaupassa ei ole vielä kirjattuja ostoja tai veroja.</gray>"
+    locked:
+      name: "<red>Täysi käyttöoikeus vaaditaan</red>"
+      lore:
+        - "<gray>Vain luotettavat pelaajat, joilla on täydet käyttöoikeudet, voivat tarkastella pääkirjaa.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Asiakkaille suunnattu myymäläkäyttöliittymä tavaroiden selaamiseen ja ostamiseen.
+shop_customer_ui:
+  title: "Kauppa -{location}"
+  summary:
+    name: "<gold>Asiakasnäkymä</gold>"
+    player:
+      lore:
+        - "<gray>Omistaja:</gray> <white>{owner}</white>"
+        - "<gray>Sijainti:</gray> <white>{location}</white>"
+        - "<gray>Saatavilla olevat merkinnät:</gray> <white>{stored_count}</white>"
+        - "<gray>Kaupan tyyppi:</gray> <white>Pelaajakauppa</white>"
+        - "<gray>Varasto:</gray> <white>Rajallinen</white>"
+        - "<yellow>Napsauta tuotetta hiiren vasemmalla ostaaksesi sen.</yellow>"
+        - "<yellow>Napsauta kohdetta hiiren kakkospainikkeella valitaksesi summa.</yellow>"
+    admin:
+      lore:
+        - "<gray>Omistaja:</gray> <white>{owner}</white>"
+        - "<gray>Sijainti:</gray> <white>{location}</white>"
+        - "<gray>Saatavilla olevat merkinnät:</gray> <white>{stored_count}</white>"
+        - "<gray>Kaupan tyyppi:</gray> <white>Admin kauppa</white>"
+        - "<gray>Varasto:</gray> <white>Ääretön</white>"
+        - "<yellow>Napsauta tuotetta hiiren vasemmalla ostaaksesi sen.</yellow>"
+        - "<yellow>Napsauta kohdetta hiiren kakkospainikkeella valitaksesi summa.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Varasto:</gray> <white>{amount}</white>"
+        - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+        - "<gray>Hinta kpl:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Varaston kokonaisarvo:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+        - "<yellow>Napsauta hiiren vasemmalla ostaaksesi sellaisen.</yellow>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella valitaksesi summa.</yellow>"
+    admin:
+      lore:
+        - "<gray>Varasto:</gray> <white>Ääretön</white>"
+        - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+        - "<gray>Hinta kpl:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+        - "<gray>Kaupan tyyppi:</gray> <white>Admin kauppa</white>"
+        - "<yellow>Napsauta hiiren vasemmalla ostaaksesi sellaisen.</yellow>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella valitaksesi summa.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Varasto:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Tuotetyyppi:</gray> <white>{item_type}</white>"
+        - "<gray>Hinta kpl:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Valuuttatunnus:</gray> <white>{currency_type}</white>"
+        - "<gray>Varastotila:</gray> <white>{restock_mode}</white>"
+        - "<gray>Varaston täydennysaikataulu:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Napsauta hiiren vasemmalla ostaaksesi sellaisen.</yellow>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella valitaksesi summa.</yellow>"
+    admin_mode:
+      gradual: "Asteittainen"
+      full: "Täysi nollaus"
+    restock_schedule:
+      gradual: "1 kohde per{reset_timer_ticks}punkkeja"
+      full: "Täysin varastot klo{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Ostettu{amount}x{item_type}varten{total_price} {currency_name}. Jäljellä oleva varasto:{remaining_amount}.</green>"
+    purchased_admin: "<green>Ostettu{amount}x{item_type}varten{total_price} {currency_name}. Tällä järjestelmänvalvojakaupalla on loputon valikoima.</green>"
+    purchased_admin_limited: "<green>Ostettu{amount}x{item_type}varten{total_price} {currency_name}. Jäljellä oleva järjestelmänvalvojavarasto:{remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}ei ole tällä hetkellä ostettavissa.</gray>"
+    insufficient_stock: "<red>Tässä kaupassa on vain{available_amount}x{item_type}saatavilla.</red>"
+    insufficient_funds: "<red>Tarvitset{total_price} {currency_name}ostaa{amount}x{item_type}.</red>"
+    currency_unavailable: "<red>Valuutta{currency_name}ei ole saatavilla juuri nyt.</red>"
+    invalid_amount: "<red>Anna kelvollinen ostosumma.</red>"
+    item_missing: "<red>Tuo myymälätuote ei ole enää saatavilla.</red>"
+    empty_shop:
+      name: "<red>Kauppa tyhjä</red>"
+      lore:
+        - "<gray>Tuotteita ei ole ostettavissa.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Alasin kehote mukautetun ostomäärän syöttämiseen.
+shop_purchase_amount_anvil_ui:
+  title: "Ostaa{item_type}"
+  input:
+    name: "<gold>Ostosumma</gold>"
+    player:
+      lore:
+        - "<gray>Anna kuinka monta tuotetta haluat ostaa.</gray>"
+        - "<gray>Suurin käytettävissä oleva:</gray> <white>{max_amount}</white>"
+        - "<gray>Tuote:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Anna kuinka monta tuotetta haluat ostaa.</gray>"
+        - "<gray>Tällä järjestelmänvalvojakaupalla on loputon valikoima.</gray>"
+        - "<gray>Tuote:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Anna kuinka monta tuotetta haluat ostaa.</gray>"
+        - "<gray>Suurin käytettävissä oleva:</gray> <white>{max_amount}</white>"
+        - "<gray>Tuote:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Syötä kokonaisluku väliltä 1 ja{max_amount}. Syöte:{input}</red>"
+    invalid_number_admin: "<red>Syötä kokonaisluku, joka on suurempi kuin 0. Syötä:{input}</red>"
+    processing_failed: "<red>Ostosumman käsittely epäonnistui. Syöte:{input}</red>"
+
+# Shop Discovery Landing -käyttöliittymä kaikkien selaamiseen ja materiaalihakuun.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Kaupan selain</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Kaupan selain</gradient>"
+    lore:
+      - "<gray>Selaa jokaista jäljitettyä kauppaa tai suodatinta tietyn materiaalin mukaan.</gray>"
+      - "<yellow>Jatka valitsemalla jokin alla olevista toimista.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Selaa kaikkia kauppoja</gradient>"
+    lore:
+      - "<gray>Avaa koko sivutettu kauppahakemisto.</gray>"
+      - "<yellow>Napsauta nähdäksesi kaikki seuratut kaupat.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Hae materiaalin mukaan</gradient>"
+    lore:
+      - "<gray>Avaa alasin kehote ja kirjoita materiaalin nimi.</gray>"
+      - "<gray>Esimerkki:</gray> <white>diamond_block</white>"
+      - "<yellow>Napsauta etsiäksesi tuotetyypin mukaan.</yellow>"
+
+# Sivutettu hakemiston käyttöliittymä, jossa luetellaan kaikki seuratut kaupat.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Kaikki kaupat</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Kauppahakemisto</gradient>"
+    lore:
+      - "<gray>Seuratut kaupat:</gray> <white>{shop_count}</white>"
+      - "<gray>Saatavilla oleva varasto yhteensä:</gray> <white>{available_count}</white>"
+      - "<yellow>Napsauta mitä tahansa alla olevaa kauppaa avataksesi sen.</yellow>"
+  entry:
+    name: "<gold>{owner}Kauppa</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Saatavilla oleva varasto:</gray> <white>{available_count}</white>"
+      - "<yellow>Napsauta avataksesi tämän kaupan.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Kauppoja ei löytynyt</red>"
+      lore:
+        - "<gray>Vielä ei ole rekisteröityjä kauppoja.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Materiaalisuodatettu kauppatulosten käyttöliittymä.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Tulokset haulle{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Tulokset haulle{material}</gradient>"
+    lore:
+      - "<gray>Materiaali:</gray> <white>{material}</white>"
+      - "<gray>Vastaavat kaupat:</gray> <white>{shop_count}</white>"
+      - "<gray>Vastaavat tarjoukset:</gray> <white>{matching_count}</white>"
+      - "<yellow>Napsauta alla olevaa vastaavaa kauppaa avataksesi sen.</yellow>"
+  entry:
+    name: "<gold>{owner}Kauppa</gold>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Sijainti:</gray> <white>{location}</white>"
+      - "<gray>Vastaava{material}tarjoaa:</gray> <white>{matching_count}</white>"
+      - "<gray>Näkyvä kokonaisvarasto:</gray> <white>{available_count}</white>"
+      - "<yellow>Napsauta avataksesi tämän kaupan.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Ei myymälöitä{material}</red>"
+      lore:
+        - "<gray>Yksikään seurattu kauppa ei tällä hetkellä tarjoa tätä materiaalia.</gray>"
+    shop_missing:
+      name: "<red>Kauppaa ei löydy</red>"
+      lore:
+        - "<gray>Tätä kauppaa ei voitu ladata varastosta.</gray>"
+      message: "<red>Tätä kauppaa ei voitu ladata varastosta.</red>"
+
+# Alasin kehote materiaalisuodattimen hakuun syöttämiseen.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Hae materiaalia</gradient>"
+  input:
+    lore:
+      - "<gray>Syötä Bukkit-materiaalin nimi etsiäksesi seurattuja kauppoja.</gray>"
+      - "<gray>Esimerkkejä:</gray> <white>timantti</white><gray>,</gray> <white>diamond_block</white>"
+      - "<yellow>Napsauta tulospaikkaa avataksesi vastaavat kaupat.</yellow>"
+  error:
+    invalid_material: "<red>Anna kelvollinen materiaali, kuten diamond_block. Syöte:{input}</red>"
+    processing_failed: "<red>Materiaalin haku epäonnistui. Syöte:{input}</red>"
+
+# ============================================
+# SIVUNUMEROINTI
+# ============================================
+# Jaetut sivutuskohteiden tunnisteet, joita käytetään luetteloiden käyttöliittymissä.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Sivu%current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Nykyinen sivu:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sivuja yhteensä:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Sivu%direction%</gradient>"
+
+# ============================================
+# PÄÄTAVARAT
+# ============================================
+# Jaetut pää-/navigointipainikkeiden tarrat (palaa/vahvista/seuraava).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Paluu</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Vahvista</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Napsauta vahvistaaksesi asetukset</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Vahvista</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Napsauta vahvistaaksesi asetukset</gradient>"

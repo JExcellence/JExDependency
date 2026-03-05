@@ -1,0 +1,1204 @@
+# ============================================
+# ΠΑΓΚΟΣΜΙΟ ΠΡΟΘΕΜΑ
+# ============================================
+# Το πρόθεμα προστέθηκε στη γενική έξοδο συνομιλίας με προσθήκη.
+prefix: "<gradient:#a855f7:#c084fc>[RDS]</gradient> "
+
+# Γρήγορες γραμμές σύνοψης για το κατάστημα, την τράπεζα και τη φορολογική κατάσταση.
+info:
+  total: "<blue>Καταστήματα:</blue> <white>{owned_shops}</white>"
+  bank: "<green>Παρακολουθούμενα υπόλοιπα ({currency_count}):</green> <white>{currencies}</white>"
+  tax_amount: "<gold>Προγραμματισμένος φόρος ({taxed_shops}φορολογητέα καταστήματα):</gold> <white>{taxes}</white>"
+  tax_schedule: "<yellow>Επόμενος φόρος:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
+
+# Τα μηνύματα χρόνου συμμετοχής εμφανίζονται όταν οι παίκτες εισέρχονται στον διακομιστή.
+player_join:
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops}φορολογητέο(α) κατάστημα(α)\n[<blue>Ποσό<yellow>]\n{taxes}\n<red>Οφειλόμενος:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+
+# Συμβολοσειρές απόκρισης εντολών για χαρακτηριστικά και εναλλαγές «/rs».
+prs:
+  admin:
+    opened: "<gradient:#38bdf8:#60a5fa>[ΕΝΑ]</gradient> <gray>Άνοιξε το<white>Διαχειριστής RDS</white><gray>πίνακας.</gray>"
+  bar:
+    enabled: "<green>Η γραμμή αφεντικού καταστήματος ενεργοποιήθηκε ενώ κοιτάζετε ένα κατάστημα.</green>"
+    disabled: "<yellow>Η γραμμή αφεντικού καταστήματος απενεργοποιήθηκε.</yellow>"
+  give:
+    syntax: "<red>Χρήση: /rs give<target_player> <amount></red>"
+  scoreboard:
+    syntax: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Χρήση:</gray> <white>/rs πίνακας αποτελεσμάτων&lt;καθολικό|απόθεμα&gt;</white>"
+    enabled: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Ενεργοποιήθηκε το<white>{scoreboard_type}</white><gray>πλαϊνή μπάρα.</gray>"
+    disabled: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Απενεργοποιήθηκε το<white>{scoreboard_type}</white><gray>πλαϊνή μπάρα.</gray>"
+    switched: "<gradient:#38bdf8:#60a5fa>[>]</gradient> <gray>Μετάβαση στο<white>{scoreboard_type}</white><gray>πλαϊνή μπάρα.</gray>"
+    type:
+      ledger: "<gold>καθολικό</gold>"
+      stock: "<aqua>στοκ</aqua>"
+
+# Ετικέτες πίνακα αποτελεσμάτων πλευρικής γραμμής και μορφοποίηση τιμών.
+scoreboard_sidebar:
+  ledger:
+    title: "<gradient:#f59e0b:#fbbf24>◆ [RDS] Ledger ◆</gradient>"
+    transactions: "<yellow>Tx:</yellow> <white>{transaction_count}</white>"
+    bank_header: "<gold>$ Τραπεζικά Σύνολα</gold>"
+    bank_entry: "<gray>{currency_name}:</gray> <white>{amount}</white>"
+    bank_empty: "<red>Χωρίς τραπεζικά κεφάλαια</red>"
+  stock:
+    title: "<gradient:#38bdf8:#60a5fa>◆ [RDS] Απόθεμα ◆</gradient>"
+    location: "<white>{location}</white>"
+    amount: "<gray>Στοκ:</gray> <white>{current_stock}/{total_stock}</white>"
+    empty: "<red>Δεν υπάρχουν καταστήματα παικτών</red>"
+
+# Το κείμενο της γραμμής αφεντικού εμφανίζεται κατά τη στόχευση ενός καταστήματος.
+shop_boss_bar:
+  title: "<gold>{shop_type}Κατάστημα</gold> <gray>|</gray> <yellow>Ιδιοκτήτης:</yellow> <white>{owner}</white> <gray>|</gray> <yellow>Στοιχεία:</yellow> <white>{available_items}</white> <gray>|</gray> <yellow>Τοποθεσία:</yellow> <white>{location}</white>"
+  type:
+    player: "Παίχτης"
+    admin: "Διαχειρ"
+  owner:
+    admin: "Διαχειρ"
+  available_items:
+    finite: "{item_count}"
+    limited: "Περιορισμένο απόθεμα"
+    infinite: "Απειρος"
+    various: "Διάφορος"
+
+# ============================================
+# Κουμπιά GUI
+# ============================================
+
+# Όνομα στοιχείου μπλοκ καταστήματος και μεταδεδομένα γνώσης.
+shop_block:
+  name: "<blue>RaindropShop</blue>"
+  lore:
+    - "<yellow>Τοποθετήστε αυτό το μπλοκ για να ρυθμίσετε το κατάστημά σας.</yellow>"
+
+# Επισκόπηση καταστημάτων ετικέτες διεπαφής χρήστη, παραδόσεις και καταστάσεις διαθεσιμότητας.
+shop_store_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Κατάστημα</gradient>"
+  owned_shops:
+    name: "<gradient:#10b981:#34d399>[#] Ιδιόκτητα μπλοκ καταστημάτων</gradient>"
+    lore:
+      - "<gray>Ιδιόκτητα μπλοκ καταστημάτων:</gray> <white>{owned_shops}</white>"
+      - "<gray>Αυτό το κομμάτι αγοράστηκε ή παραχωρήθηκε</gray>"
+      - "<gray>Ιδιοκτησία ShopBlock.</gray>"
+  max_shops:
+    name: "<gradient:#f59e0b:#fbbf24>[Κεφάλαιο] Όριο αποκλεισμού καταστημάτων</gradient>"
+    lore:
+      - "<gray>Ιδιόκτητα μπλοκ καταστημάτων:</gray> <white>{owned_shops}</white>"
+      - "<gray>Μέγιστα μπλοκ καταστημάτων:</gray> <white>{max_shops}</white>"
+      - "<gray>Αυτό το όριο ελέγχει πόσα καταστήματα</gray>"
+      - "<gray>μπλοκ που μπορείτε να ξεκλειδώσετε.</gray>"
+  costs:
+    name: "<gradient:#f59e0b:#fbbf24>[Req] Απαιτήσεις καταστήματος</gradient>"
+    lore:
+      - "<gray>Διαμορφωμένες απαιτήσεις:</gray> <white>{requirement_count}</white>"
+      - "<gray>Τρέχουσα καταμέτρηση απαιτήσεων:</gray> <white>{requirements}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{availability}</white>"
+      - "<yellow>Κάντε κλικ για να επιθεωρήσετε την επόμενη βαθμίδα καταστήματος.</yellow>"
+    availability:
+      available: "<gradient:#10b981:#34d399>[Ετοιμος]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Εκκρεμής]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Εκτός σύνδεσης]</gradient>"
+
+# Διεπαφή χρήστη απαίτησης επιπέδου καταστημάτων, προβολή προόδου και σχόλια αγοράς.
+shop_store_cost_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Req] Επίπεδο καταστήματος{purchase_number}</gradient>"
+  summary:
+    name: "<gradient:#10b981:#34d399>[+] Αγορά μπλοκ καταστήματος</gradient>"
+    lore:
+      - "<gray>Επίπεδο αγοράς:</gray> <white>{purchase_number}</white>"
+      - "<gray>Ιδιόκτητα μπλοκ καταστημάτων:</gray> <white>{owned_shops}</white>"
+      - "<gray>Μέγιστα μπλοκ καταστημάτων:</gray> <white>{max_shops}</white>"
+      - "<gray>Διαμορφωμένες απαιτήσεις:</gray> <white>{requirement_count}</white>"
+      - "<gray>Επί του παρόντος συναντήθηκαν:</gray> <white>{met_count}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{availability}</white>"
+      - "<yellow>Κάντε κλικ για αγορά όταν αυτό το επίπεδο είναι έτοιμο.</yellow>"
+    availability:
+      ready: "<gradient:#10b981:#34d399>[Ετοιμος]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Εκκρεμής]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Εκτός σύνδεσης]</gradient>"
+    none: "<gradient:#10b981:#34d399>[Δωρεάν]</gradient>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[Δωρεάν] Χωρίς Απαιτήσεις</gradient>"
+    lore:
+      - "<gray>Αυτό το επίπεδο αγοράς δεν έχει διαμορφωμένες απαιτήσεις.</gray>"
+      - "<yellow>Μπορείτε να αγοράσετε αυτό το μπλοκ καταστήματος χωρίς επιπλέον ελέγχους.</yellow>"
+  progress_bar:
+    empty: "<gradient:#6b7280:#9ca3af>░</gradient>"
+    partial: "<gradient:#f59e0b:#fbbf24>▓</gradient>"
+    filled: "<gradient:#10b981:#34d399>█</gradient>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[Req]{requirement_name}</gradient>"
+    lore:
+      - "<gray>Κλειδί:</gray> <white>{requirement_key}</white>"
+      - "<gray>Τύπος:</gray> <white>{requirement_type}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{status}</white>"
+      - "<gray>Πρόοδος:</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+      - "<gray>Περίληψη:</gray> <white>{summary}</white>"
+      - "<yellow>Κάντε δεξί κλικ σε συμβατές απαιτήσεις για την πρόοδο της τράπεζας.</yellow>"
+    details: "<gradient:#f59e0b:#fbbf24>▓ Λεπτομερείς Έλεγχοι</gradient>"
+    status:
+      met: "<gradient:#10b981:#34d399>[Μετ]</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>[Εκκρεμής]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Δυσεύρετος]</gradient>"
+  feedback:
+    purchased: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Αγόρασε ένα μπλοκ καταστήματος. Απαιτήσεις που καταναλώνονται:</gray> <white>{requirements}</white><gray>. Ιδιόκτητα μπλοκ καταστημάτων:</gray> <white>{owned_shops}/{max_shops}</white>"
+    requirement_unmet: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν συναντιέστε αυτήν τη στιγμή<white>{requirement}</white><gray>. Απαιτήσεις καταστήματος:</gray> <white>{requirements}</white>"
+    requirement_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Η απαίτηση του καταστήματος<white>{requirement}</white><gray>δεν είναι διαθέσιμο ή δεν είναι έγκυρο αυτήν τη στιγμή.</gray>"
+    limit_reached: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Έχετε φτάσει το όριο αποκλεισμού καταστημάτων<white>{max_shops}</white><gray>. Ιδιόκτητα μπλοκ καταστημάτων:</gray> <white>{owned_shops}</white>"
+    complete: "<gradient:#10b981:#34d399>█</gradient> <gray><white>{requirement}</white><gray>είναι τώρα έτοιμο.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    progress_saved: "<gradient:#f59e0b:#fbbf24>▓</gradient> <gray>Αποθηκευμένη πρόοδος για<white>{requirement}</white><gray>.</gray> {progress_bar} <gradient:#6b7280:#9ca3af>{progress}</gradient>"
+    no_progress: "<gradient:#6b7280:#9ca3af>░</gradient> <gray>Δεν υπήρχαν διαθέσιμα στοιχεία ή νόμισμα που να ταιριάζουν<white>{requirement}</white><gray>.</gray>"
+    unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>δεν υποστηρίζει την τραπεζική πρόοδο.</gray>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{requirement}</white><gray>δεν είναι διαθέσιμο αυτή τη στιγμή.</gray>"
+    profile_missing: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Δεν ήταν δυνατή η φόρτωση του προφίλ σας RDS, επομένως δεν ήταν δυνατή η αποθήκευση της προόδου.</gray>"
+
+# Αποκλεισμός σφαλμάτων επικύρωσης αλληλεπίδρασης και ειδοποιήσεων προστασίας.
+block_listener:
+  error:
+    invalid_owner_uuid: "<red>Δεν είναι δυνατή η ανάγνωση του ιδιοκτήτη του καταστήματος από αυτό το στοιχείο.</red>"
+    not_owner: "<red>Αυτό το ShopBlock ανήκει σε άλλο παίκτη και δεν μπορεί να τοποθετηθεί από εσάς.</red>"
+    max_shops_reached: "<red>Έχετε φτάσει το όριο καταστήματος του{max_shops}. Τρέχοντα τοποθετημένα καταστήματα:{owned_shops}.</red>"
+    shop_protected: "<red>Τα καταστήματα δεν μπορούν να σπάσουν απευθείας. Χρησιμοποιήστε το μενού καταστήματος για να κλείσετε το κατάστημα.</red>"
+    double_chest_requires_shop_block: "<red>Τα μαγαζιά με διπλό στήθος απαιτούν ένα δεύτερο<blue>ShopBlock</blue><red>. Τα κανονικά σεντούκια δεν μπορούν να συγχωνευθούν με τα σεντούκια καταστημάτων.</red>"
+    double_chest_owner_mismatch: "<red>Αυτό το ShopBlock ανήκει σε διαφορετικό ιδιοκτήτη, επομένως δεν μπορεί να επεκτείνει αυτό το κατάστημα.</red>"
+    shop_already_double_chest: "<red>Αυτό το κατάστημα χρησιμοποιεί ήδη και τα δύο μισά στήθους.</red>"
+    double_chest_ambiguous: "<red>Αυτό το ShopBlock αγγίζει πολλαπλά σεντούκια καταστημάτων. Τοποθετήστε το δίπλα σε ένα μόνο κατάστημα.</red>"
+
+# Προγραμματισμένα μηνύματα αποτελέσματος φορολογικής επεξεργασίας.
+tax_scheduler:
+  paid: "<yellow>Εισπράττεται προγραμματισμένος φόρος καταστημάτων του{amount}. Καταμετρημένα καταστήματα:{owned_shops}.</yellow>"
+  insufficient_funds: "<red>Δεν μπορούσατε να πληρώσετε τον προγραμματισμένο φόρο καταστήματος του{amount}. Καταμετρημένα καταστήματα:{owned_shops}.</red>"
+  charge_failed: "<red>Αποτυχία είσπραξης του προγραμματισμένου φόρου καταστήματος του{amount}. Καταμετρημένα καταστήματα:{owned_shops}.</red>"
+
+# Κύρια διεπαφή επισκόπησης καταστήματος για ενέργειες διαχείρισης ιδιοκτήτη/διαχειριστή.
+shop_overview_ui:
+  title: "{owner}Κατάστημα -{location}"
+  summary:
+    name: "<gold>Περίληψη καταστήματος</gold>"
+    player:
+      lore:
+        - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+        - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+        - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{item_count}</white>"
+        - "<gray>Τύπος καταστήματος:</gray> <white>Player Shop</white>"
+        - "<gray>Καταγραφή εμπορευμάτων:</gray> <white>Πεπερασμένος</white>"
+    admin:
+      lore:
+        - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+        - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+        - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{item_count}</white>"
+        - "<gray>Τύπος καταστήματος:</gray> <white>Κατάστημα διαχειριστή</white>"
+        - "<gray>Καταγραφή εμπορευμάτων:</gray> <white>Απειρος</white>"
+  finance:
+    name: "<gold>Τράπεζα καταστήματος</gold>"
+    lore:
+      - "<gray>Παρακολουθούμενα νομίσματα:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Κάντε κλικ για έλεγχο και ανάληψη χρημάτων.</yellow>"
+  actions:
+    admin_toggle:
+      enabled:
+        name: "<red>Ενεργοποιήθηκε το κατάστημα Admin</red>"
+        lore:
+          - "<gray>Αυτό το κατάστημα είναι επί του παρόντος ένα κατάστημα διαχείρισης.</gray>"
+          - "<gray>Το απόθεμα είναι άπειρο για τους πελάτες.</gray>"
+          - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{item_count}</white>"
+          - "<yellow>Κάντε κλικ για να επιστρέψετε σε ένα κατάστημα παικτών.</yellow>"
+      disabled:
+        name: "<green>Το Admin Shop απενεργοποιήθηκε</green>"
+        lore:
+          - "<gray>Αυτό το κατάστημα χρησιμοποιεί προς το παρόν κανονικό απόθεμα.</gray>"
+          - "<gray>Οι πελάτες μπορούν να αγοράσουν μόνο αποθηκευμένα ποσά.</gray>"
+          - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{item_count}</white>"
+          - "<yellow>Κάντε κλικ για να ενεργοποιήσετε τη λειτουργία καταστήματος διαχειριστή.</yellow>"
+    close:
+      name: "<red>Κλείσιμο καταστήματος</red>"
+      lore:
+        - "<gray>Αφαιρέστε αυτό το κατάστημα και επιστρέψτε το μπλοκ καταστήματος.</gray>"
+        - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{item_count}</white>"
+        - "<gray>Τραπεζικά νομίσματα που παρακολουθούνται:</gray> <white>{bank_currency_count}</white>"
+        - "<yellow>Το απόθεμα του καταστήματος πρέπει να είναι άδειο πριν κλείσει.</yellow>"
+    manage:
+      name: "<green>Προσθήκη ειδών καταστήματος</green>"
+      lore:
+        - "<gray>Αποθηκεύστε νέα αντικείμενα σε αυτό το κατάστημα.</gray>"
+        - "<gray>Τρέχουσες εγγραφές:</gray> <white>{item_count}</white>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε την εισαγωγή στοιχείου.</yellow>"
+    customer_view:
+      name: "<gold>Ανοίξτε την Προβολή πελατών</gold>"
+      lore:
+        - "<gray>Κάντε προεπισκόπηση αυτού του καταστήματος όπως το βλέπουν οι πελάτες.</gray>"
+        - "<gray>Τρέχουσες εγγραφές:</gray> <white>{item_count}</white>"
+        - "<yellow>Κάντε κλικ για να περιηγηθείτε σε αυτό το κατάστημα ως πελάτης.</yellow>"
+    trusted:
+      name: "<gold>Αξιόπιστοι παίκτες</gold>"
+      lore:
+        - "<gray>Συνεργάτες:</gray> <white>{associate_count}</white>"
+        - "<gray>Αξιόπιστοι παίκτες:</gray> <white>{trusted_count}</white>"
+        - "<yellow>Κάντε κλικ για να διαχειριστείτε τα επίπεδα εμπιστοσύνης καταστήματος.</yellow>"
+    ledger:
+      name: "<gold>Κατάστημα Ledger</gold>"
+      lore:
+        - "<gray>Σύνολο συμμετοχών:</gray> <white>{ledger_count}</white>"
+        - "<gray>Ψώνια:</gray> <white>{purchase_count}</white>"
+        - "<gray>Φόροι:</gray> <white>{tax_count}</white>"
+        - "<yellow>Κάντε κλικ για να ελέγξετε το ιστορικό συναλλαγών καταστήματος.</yellow>"
+    edit:
+      name: "<aqua>Επεξεργασία ειδών καταστήματος</aqua>"
+      lore:
+        - "<gray>Επεξεργασία τιμολόγησης για αποθηκευμένα είδη καταστήματος.</gray>"
+        - "<gray>Τρέχουσες εγγραφές:</gray> <white>{item_count}</white>"
+        - "<yellow>Κάντε κλικ για να επεξεργαστείτε τιμές και νομίσματα.</yellow>"
+    storage:
+      name: "<gold>Προβολή αποθηκευμένων αντικειμένων</gold>"
+      lore:
+        - "<gray>Ελέγξτε τα είδη που είναι ήδη αποθηκευμένα σε αυτό το κατάστημα.</gray>"
+        - "<gray>Τρέχουσες εγγραφές:</gray> <white>{item_count}</white>"
+        - "<yellow>Κάντε κλικ για ανάληψη αποθηκευμένων στοιχείων.</yellow>"
+    locked:
+      name: "<red>Το κατάστημα είναι κλειδωμένο</red>"
+      lore:
+        - "<gray>Μόνο ο κάτοχος μπορεί να προσθέσει στοιχεία.</gray>"
+        - "<gray>Τρέχουσες εγγραφές:</gray> <white>{item_count}</white>"
+  feedback:
+    not_owner: "<red>Δεν έχετε άδεια διαχείρισης αυτού του καταστήματος.</red>"
+    no_admin_permission: "<red>Δεν έχετε άδεια για εναλλαγή καταστημάτων διαχειριστή.</red>"
+    admin_limit_reached: "<red>Ο διακομιστής έχει ήδη{admin_shops}admin καταστήματα. Η δωρεάν έκδοση επιτρέπει μόνο{max_admin_shops}admin καταστήματα.</red>"
+    admin_enabled: "<green>Αυτό το κατάστημα είναι πλέον ένα κατάστημα διαχείρισης με άπειρο απόθεμα πελατών. Καταμετρημένα καταστήματα:{owned_shops}.</green>"
+    admin_disabled: "<yellow>Αυτό το κατάστημα είναι πλέον ένα κανονικό κατάστημα παικτών με πεπερασμένο απόθεμα πελατών. Καταμετρημένα καταστήματα:{owned_shops}.</yellow>"
+    admin_disable_limit_reached: "<red>Δεν μπορείτε να επαναφέρετε αυτό το κατάστημα διαχειριστή σε κατάστημα αναπαραγωγής επειδή το όριο του καταστήματός σας είναι{max_shops}έχει ήδη επιτευχθεί. Καταμετρημένα καταστήματα:{owned_shops}.</red>"
+    close_not_empty: "<red>Μπορείτε να κλείσετε ένα κατάστημα μόνο αφού αφαιρέσετε όλα τα αποθηκευμένα αντικείμενα. Υπόλοιπες καταχωρήσεις:{item_count}.</red>"
+    close_bank_not_empty: "<red>Αποσύρετε την τράπεζα του καταστήματός σας πριν κλείσετε αυτό το κατάστημα. Υπόλοιπα παρακολουθούμενα νομίσματα:{bank_currency_count}.</red>"
+    closed: "<green>Έκλεισε το μαγαζί και επέστρεψε{returned_blocks}ShopBlock(α). Καταμετρημένα καταστήματα:{owned_shops}.</green>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Παγκόσμιος πίνακας ελέγχου διαχειριστή για διαχείριση RDS.
+shop_admin_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Διαχειριστής] Έλεγχος RDS</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Πίνακας διαχείρισης RDS</white>"
+    lore:
+      - "<gray>Διαχειριστείτε τα παγκόσμια συστήματα admin-shop από ένα μέρος.</gray>"
+      - "<gray>Ανοίξτε την τράπεζα διακομιστή ή επεξεργαστείτε τις ρυθμίσεις παραμέτρων παρακάτω.</gray>"
+      - "<yellow>Απαιτεί:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    server_bank:
+      name: "<gradient:#10b981:#34d399>[$] Τράπεζα διακομιστή</gradient>"
+      lore:
+        - "<gray>Ελέγξτε το εισόδημα του καταστήματος διαχειριστή που έχει εισαχθεί στην τράπεζα διακομιστή.</gray>"
+        - "<gray>Ελέγξτε τον επόμενο χρόνο έλξης και αποσύρετε τα υπόλοιπα.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου τράπεζας διακομιστή.</yellow>"
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+      lore:
+        - "<gray>Επεξεργασία τιμών από</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Κάθε επεξεργάσιμη ρύθμιση μπορεί να αλλάξει μέσω μιας προτροπής με αμόνι.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου διαμόρφωσης.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Υπεύθυνος νομίσματος</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τα νομίσματα που εντοπίστηκαν από το Vault και το JExEconomy.</gray>"
+        - "<gray>Δημιουργήστε την προεπιλογή</gray> <white>σταγόνες βροχής</white> <gray>νόμισμα όταν χρειάζεται.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου νομισμάτων.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτού του πίνακα διαχείρισης.</gray>"
+
+# Προβολή νομίσματος διαχειριστή για εντοπισμένους παρόχους και δημιουργία προεπιλεγμένου νομίσματος.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Υπεύθυνος νομίσματος</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>Πάροχοι νομισμάτων</white>"
+    lore:
+      - "<gray>Εντοπίστηκαν νομίσματα:</gray> <white>{currency_count}</white>"
+      - "<gray>Διαθέσιμο θησαυροφυλάκιο:</gray> <white>{vault_available}</white>"
+      - "<gray>Διαθέσιμο JExEconomy:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Χρησιμοποιήστε το κουμπί κρυστάλλου για να δημιουργήσετε το προεπιλεγμένο νόμισμα.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Κοπρίτης]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Προμηθευτής:</gray> <white>{provider}</white>"
+      - "<gray>Σύμβολο:</gray> <white>{symbol}</white>"
+      - "<gray>Πρόθεμα:</gray> <white>{prefix}</white>"
+      - "<gray>Κατάληξη:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Δημιουργώ{currency_id}</white>"
+      lore:
+        - "<gray>Δημιουργήστε το προεπιλεγμένο νόμισμα RDS στο JExEconomy.</gray>"
+        - "<yellow>Κάντε κλικ για δημιουργία{currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται JExEconomy</white>"
+      lore:
+        - "<gray>Δεν μπορείτε να δημιουργήσετε προεπιλεγμένο νόμισμα χωρίς το JExEconomy.</gray>"
+        - "<gray>Εγκαταστήστε και ενεργοποιήστε πρώτα το JExEconomy.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[ΕΝΤΑΞΕΙ]</gradient> <white>{currency_id}Ετοιμος</white>"
+      lore:
+        - "<gray>Το προεπιλεγμένο νόμισμα υπάρχει ήδη.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Δημιουργήθηκε προεπιλεγμένο νόμισμα:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Αποτυχία δημιουργίας νομίσματος:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Το νόμισμα υπάρχει ήδη:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν μπορείτε να χρησιμοποιήσετε αυτό το κουμπί εκτός εάν είναι διαθέσιμο το JExEconomy.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Δεν εντοπίστηκαν νομίσματα</white>"
+      lore:
+        - "<gray>Δεν εντοπίστηκαν νομίσματα Vault ή JExEconomy.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτής της προβολής νομίσματος.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια διαχείρισης νομισμάτων.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Διαμόρφωση διεπαφής χρήστη του προγράμματος περιήγησης για επεξεργάσιμες ρυθμίσεις και σχόλια ενημέρωσης.
+shop_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>Ρυθμίσεις διαμόρφωσης</white>"
+    lore:
+      - "<gray>Εντοπίστηκαν επεξεργάσιμες ρυθμίσεις:</gray> <white>{setting_count}</white>"
+      - "<gray>Κάντε κλικ σε οποιαδήποτε καταχώρηση παρακάτω για να επεξεργαστείτε την τιμή της σε ένα αμόνι.</gray>"
+      - "<yellow>Οι αλλαγές γράφονται απευθείας στο config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Σειρά]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Μονοπάτι:</gray> <white>{config_path}</white>"
+      - "<gray>Τύπος:</gray> <white>{value_type}</white>"
+      - "<gray>Τρέχουσα τιμή:</gray> <white>{current_value}</white>"
+      - "<yellow>Κάντε κλικ για να επεξεργαστείτε αυτήν τη ρύθμιση.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Ακέραιος αριθμός]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Μακρύς]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Διπλό]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Λίστα]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Σειρά]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Δεν υπάρχουν επεξεργάσιμες ρυθμίσεις</white>"
+      lore:
+        - "<gray>Δεν βρέθηκαν επεξεργάσιμες ρυθμίσεις παραμέτρων κλιμακωτή/λίστας.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτής της προβολής διαμόρφωσης.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Η επεξεργασία διαμόρφωσης κλειδώθηκε</white>"
+      lore:
+        - "<gray>Αυτή η έκδοση δεν επιτρέπει τροποποιήσεις ρυθμίσεων χρόνου εκτέλεσης.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια να επεξεργαστείτε τις ρυθμίσεις παραμέτρων.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Η επεξεργασία διαμόρφωσης είναι κλειδωμένη σε αυτήν την έκδοση.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ενημερώθηκε<white>{config_path}</white><gray>να<white>{updated_value}</white><gray>.</gray>"
+
+# Κείμενο προτροπής αμόνι για επεξεργασία τιμών διαμόρφωσης.
+shop_config_value_anvil_ui:
+  title: "Εκδίδω{config_path}"
+  input:
+    lore:
+      - "<gray>Μονοπάτι:</gray> <white>{config_path}</white>"
+      - "<gray>Τύπος:</gray> <white>{value_type}</white>"
+      - "<gray>Τρέχουσα τιμή:</gray> <white>{current_value}</white>"
+      - "<yellow>Εισαγάγετε τη νέα τιμή και επιβεβαιώστε.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Μη έγκυρη εισαγωγή για τον τύπο<white>{value_type}</white><gray>. Εισαγωγή:</gray> <white>{input}</white>"
+
+# Επισκόπηση τράπεζας διακομιστή, καταχωρίσεις νομισμάτων και σχόλια για τις αναλήψεις.
+server_bank_ui:
+  title: "<gradient:#10b981:#34d399>[$] Τράπεζα διακομιστή</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>Κατάσταση Εισοδήματος & Μεταγραφών</white>"
+    lore:
+      - "<gray>Παρακολουθούμενα νομίσματα:</gray> <white>{currency_count}</white>"
+      - "<gray>Εισόδημα:</gray> <white>{income_summary}</white>"
+      - "<gray>Επόμενο τράβηγμα:</gray> <white>{next_pull_at}</white>"
+      - "<gray>Χρόνος μέχρι το επόμενο τράβηγμα:</gray> <white>{time_until_next_pull}</white>"
+      - "<yellow>Τα υπόλοιπα του διαχειριστή του καταστήματος μεταφέρονται εδώ σύμφωνα με το χρονοδιάγραμμα.</yellow>"
+    income:
+      none: "<gradient:#6b7280:#9ca3af>Κανένας</gradient>"
+    next_pull:
+      disabled: "<gradient:#ef4444:#f87171>Ανάπηρος</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Εκκρεμής...</gradient>"
+    time_until:
+      disabled: "<gradient:#ef4444:#f87171>Ανάπηρος</gradient>"
+      pending: "<gradient:#f59e0b:#fbbf24>Εκκρεμής...</gradient>"
+  withdraw_all:
+    name: "<gradient:#22c55e:#86efac>[Αποσύρω]</gradient> <white>Απόσυρση όλων</white>"
+    lore:
+      - "<gray>Προσπαθήστε να αποσύρετε κάθε θετικό υπόλοιπο.</gray>"
+      - "<gray>Τα μη διαθέσιμα νομίσματα θα παραβλεφθούν.</gray>"
+      - "<yellow>Κάντε κλικ για ανάληψη όλων των χρημάτων στον λογαριασμό σας.</yellow>"
+  entry:
+    name: "<gradient:#f59e0b:#fbbf24>[$] {currency_name}</gradient>"
+    lore:
+      - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+      - "<gray>Διαθέσιμο υπόλοιπο:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Κάντε κλικ για ανάληψη αυτού του πλήρους υπολοίπου νομίσματος.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Κενή τράπεζα διακομιστή</white>"
+      lore:
+        - "<gray>Δεν υπάρχουν διαθέσιμα θετικά υπόλοιπα για ανάληψη.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια διαχείρισης της τράπεζας διακομιστή.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια διαχείρισης της τράπεζας διακομιστή.</gray>"
+    entry_missing: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Αυτό το υπόλοιπο διακομιστή-τράπεζας δεν είναι πλέον διαθέσιμο.</gray>"
+    withdrawn: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Αποσύρθηκε<white>{amount} {currency_name}</white><gray>. Παραμένων{currency_name}:</gray> <white>{remaining_amount}</white><gray>. Ενεργά νομίσματα:</gray> <white>{currency_count}</white>"
+    withdraw_all: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Αποσύρθηκε<white>{withdrawn_currency_count}</white><gray>ισοζύγιο νομίσματος. Αποτυχημένος:</gray> <white>{failed_currency_count}</white><gray>. Υπόλοιπα ενεργά νομίσματα:</gray> <white>{remaining_currency_count}</white><gray>. Καθέκαστα:</gray> <white>{withdrawn_summary}</white>"
+    withdraw_all_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν ήταν δυνατή η ανάληψη των υπολοίπων. Αποτυχία καταμέτρησης νομισμάτων:</gray> <white>{failed_currency_count}</white>"
+    currency_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Νόμισμα<white>{currency_name}</white><gray>είναι προς το παρόν μη διαθέσιμο.</gray>"
+    withdraw_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Αποτυχία απόσυρσης<white>{amount} {currency_name}</white><gray>από την τράπεζα διακομιστή.</gray>"
+
+# Διεπαφή χρήστη εισαγωγής αντικειμένων καταστήματος που χρησιμοποιείται κατά την προσθήκη νέων καταχωρίσεων μετοχών.
+shop_input_ui:
+  title: "Προσθήκη αντικειμένων -{owner} @ {location}"
+  summary:
+    name: "<gold>Αποθήκευση καταστήματος</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Αποθηκευμένα αυτήν τη στιγμή:</gray> <white>{stored_count}</white>"
+      - "<yellow>Τα νέα στοιχεία από προεπιλογή είναι θησαυροφυλάκιο τύπου νομίσματος και τιμή 0.</yellow>"
+  input_slot:
+    name: "<green>Υποδοχή εισόδου</green>"
+    lore:
+      - "<gray>Αριστερό κλικ με ένα στοιχείο στον κέρσορα σας</gray>"
+      - "<gray>ή κάντε Shift-κλικ σε ένα στοιχείο από το απόθεμά σας.</gray>"
+      - "<gray>Κάντε δεξί κλικ για να αφαιρέσετε μια στοίβα που έχει εισαχθεί.</gray>"
+  no_new_items_inserted: "<red>Δεν έχουν εισαχθεί νέα στοιχεία.</red>"
+  saved: "<green>Αποθηκευμένο{added_count}νέες εγγραφές. Το κατάστημα έχει τώρα{stored_count}καταχωρήσεις.</green>"
+  save_failed: "<red>Αποτυχία αποθήκευσης αντικειμένων καταστήματος.</red>"
+  left_overs: "<yellow>Επιστράφηκαν μη αποθηκευμένα είδη καταστήματος στο απόθεμά σας.</yellow>"
+  feedback:
+    no_permission: "<red>Δεν έχετε άδεια να προσθέσετε αντικείμενα σε αυτό το κατάστημα.</red>"
+    locked:
+      name: "<red>Απαιτείται πρόσβαση σε προμήθεια</red>"
+      lore:
+        - "<gray>Μόνο συνεργάτες και έμπιστοι παίκτες μπορούν να προσθέσουν στοιχεία εδώ.</gray>"
+
+# Αγοράστε το περιβάλλον χρήστη του προγράμματος περιήγησης αποθήκευσης για προβολή και ανάληψη αποθηκευμένων αντικειμένων.
+shop_storage_ui:
+  title: "Αποθηκευμένα είδη -{location}"
+  summary:
+    name: "<gold>Αποθηκευμένα Αντικείμενα</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{stored_count}</white>"
+      - "<yellow>Κάντε κλικ σε οποιοδήποτε στοιχείο παρακάτω για να το αποσύρετε.</yellow>"
+  entry:
+    lore:
+      - "<gray>Αποθηκευμένη ποσότητα:</gray> <white>{amount}</white>"
+      - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+      - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+      - "<gray>Αξία:</gray> <white>{value}</white>"
+      - "<yellow>Κάντε κλικ για να εξαγάγετε αυτό το αντικείμενο από το κατάστημα.</yellow>"
+  feedback:
+    not_owner: "<red>Δεν έχετε άδεια διαχείρισης αυτού του καταστήματος.</red>"
+    extracted: "<green>Εξήχθη{amount}x{item_type}. Η τιμή ήταν{value} {currency_type}. Υπόλοιπες αποθηκευμένες καταχωρήσεις:{stored_count}.</green>"
+    item_missing: "<red>Δεν ήταν δυνατή η εύρεση αυτού του αποθηκευμένου στοιχείου.</red>"
+    locked:
+      name: "<red>Απαιτείται πλήρης πρόσβαση</red>"
+      lore:
+        - "<gray>Μόνο αξιόπιστοι παίκτες με πλήρη πρόσβαση μπορούν να αποσύρουν αποθηκευμένα στοιχεία.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Αγοράστε διεπαφή χρήστη επεξεργασίας επιλογής για την επιλογή καταχωρήσεων προς τροποποίηση.
+shop_edit_ui:
+  title: "Επεξεργασία ειδών καταστήματος -{location}"
+  summary:
+    name: "<aqua>Επεξεργαστής τιμών καταστήματος</aqua>"
+    player:
+      lore:
+        - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+        - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+        - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{stored_count}</white>"
+        - "<yellow>Κάντε αριστερό κλικ σε ένα στοιχείο για να επεξεργαστείτε την τιμολόγηση.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ σε ένα αντικείμενο για να το αφαιρέσετε από το κατάστημα.</yellow>"
+    admin:
+      lore:
+        - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+        - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+        - "<gray>Αποθηκευμένες καταχωρήσεις:</gray> <white>{stored_count}</white>"
+        - "<gray>Λειτουργία επανεφοδιασμού διαχειριστή:</gray> <white>{restock_mode}</white>"
+        - "<gray>Πρόγραμμα ανανέωσης:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Κάντε αριστερό κλικ σε ένα στοιχείο για να επεξεργαστείτε την τιμή ή το απόθεμα.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ σε ένα αντικείμενο για να το αφαιρέσετε από το κατάστημα.</yellow>"
+    restock_schedule:
+      gradual: "Προεπιλεγμένο χρονόμετρο:{reset_timer_ticks}κρότωνες ανά είδος"
+  entry:
+    player:
+      lore:
+        - "<gray>Αποθηκευμένη ποσότητα:</gray> <white>{amount}</white>"
+        - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+        - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Αξία:</gray> <white>{value}</white>"
+        - "<yellow>Αριστερό κλικ για να επεξεργαστείτε αυτό το αντικείμενο καταστήματος.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ για να το αφαιρέσετε από το κατάστημα.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Στοκ:</gray> <white>Απειρος</white>"
+        - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+        - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Αξία:</gray> <white>{value}</white>"
+        - "<gray>Λειτουργία ανανέωσης:</gray> <white>{restock_mode}</white>"
+        - "<yellow>Κάντε αριστερό κλικ για να επεξεργαστείτε αυτό το στοιχείο καταστήματος διαχειριστή.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ για να το αφαιρέσετε από το κατάστημα.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Τρέχον απόθεμα:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+        - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Αξία:</gray> <white>{value}</white>"
+        - "<gray>Λειτουργία ανανέωσης:</gray> <white>{restock_mode}</white>"
+        - "<gray>Πρόγραμμα ανανέωσης:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Κάντε αριστερό κλικ για να επεξεργαστείτε αυτό το στοιχείο καταστήματος διαχειριστή.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ για να το αφαιρέσετε από το κατάστημα.</yellow>"
+    admin_mode:
+      gradual: "Βαθμιαίος"
+      full: "Πλήρης επαναφορά"
+    restock_schedule:
+      gradual: "1 τεμάχιο κάθε{reset_timer_ticks}κρότωνες"
+      full: "Πλήρως ανανεώνεται στο{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Δεν έχετε άδεια διαχείρισης αυτού του καταστήματος.</red>"
+    removed: "<green>Καταργήθηκε{amount}x{item_type}από το κατάστημα. Η τιμή ήταν{value} {currency_type}. Υπόλοιπες αποθηκευμένες καταχωρήσεις:{stored_count}.</green>"
+    item_missing: "<red>Αυτό το αντικείμενο καταστήματος δεν βρέθηκε.</red>"
+    locked:
+      name: "<red>Απαιτείται πλήρης πρόσβαση</red>"
+      lore:
+        - "<gray>Μόνο αξιόπιστοι παίκτες με πλήρη πρόσβαση μπορούν να επεξεργαστούν τις τιμές των στοιχείων.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Λεπτομερής διεπαφή χρήστη προγράμματος επεξεργασίας για τη συμπεριφορά και την τιμολόγηση μεμονωμένων ειδών καταστήματος.
+shop_item_edit_ui:
+  title: "Εκδίδω{item_type}"
+  summary:
+    player:
+      lore:
+        - "<gray>Αποθηκευμένη ποσότητα:</gray> <white>{amount}</white>"
+        - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Αξία:</gray> <white>{value}</white>"
+        - "<gray>Λειτουργία διαθεσιμότητας:</gray> <white>{availability_mode}</white>"
+        - "<gray>Διαθεσιμότητα τώρα:</gray> <white>{availability_state}</white>"
+        - "<gray>Περιστροφή παραθύρου:</gray> <white>{rotation_minutes}πρακτικά)</white>"
+        - "<yellow>Χρησιμοποιήστε τα παρακάτω κουμπιά για να επεξεργαστείτε αυτό το στοιχείο.</yellow>"
+    admin_unlimited:
+      lore:
+        - "<gray>Στοκ:</gray> <white>Απειρος</white>"
+        - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Αξία:</gray> <white>{value}</white>"
+        - "<gray>Λειτουργία ανανέωσης:</gray> <white>{restock_mode}</white>"
+        - "<gray>Εντολές αγοράς:</gray> <white>{command_count}</white>"
+        - "<gray>Λειτουργία διαθεσιμότητας:</gray> <white>{availability_mode}</white>"
+        - "<gray>Διαθεσιμότητα τώρα:</gray> <white>{availability_state}</white>"
+        - "<gray>Περιστροφή παραθύρου:</gray> <white>{rotation_minutes}πρακτικά)</white>"
+        - "<yellow>Χρησιμοποιήστε τα παρακάτω κουμπιά για να επεξεργαστείτε αυτό το στοιχείο διαχειριστή.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Τρέχον απόθεμα:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Τύπος νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Αξία:</gray> <white>{value}</white>"
+        - "<gray>Λειτουργία ανανέωσης:</gray> <white>{restock_mode}</white>"
+        - "<gray>Πρόγραμμα ανανέωσης:</gray> <white>{restock_schedule}</white>"
+        - "<gray>Εντολές αγοράς:</gray> <white>{command_count}</white>"
+        - "<gray>Λειτουργία διαθεσιμότητας:</gray> <white>{availability_mode}</white>"
+        - "<gray>Διαθεσιμότητα τώρα:</gray> <white>{availability_state}</white>"
+        - "<gray>Περιστροφή παραθύρου:</gray> <white>{rotation_minutes}πρακτικά)</white>"
+        - "<yellow>Χρησιμοποιήστε τα παρακάτω κουμπιά για να επεξεργαστείτε αυτό το στοιχείο διαχειριστή.</yellow>"
+  currency_type:
+    name: "<green>Τύπος νομίσματος</green>"
+    lore:
+      - "<gray>Τρέχων τύπος:</gray> <white>{currency_type}</white>"
+      - "<yellow>Κάντε κλικ για να επεξεργαστείτε τον τύπο νομίσματος.</yellow>"
+  value:
+    name: "<gold>Αξία</gold>"
+    lore:
+      - "<gray>Τρέχων τύπος:</gray> <white>{currency_type}</white>"
+      - "<gray>Τρέχουσα τιμή:</gray> <white>{value}</white>"
+      - "<yellow>Κάντε κλικ για να επεξεργαστείτε την αριθμητική τιμή.</yellow>"
+  availability_mode:
+    name: "<gradient:#22c55e:#86efac>[Mode] Διαθεσιμότητα αντικειμένου</gradient>"
+    always: "<gradient:#22c55e:#86efac>[Πάντοτε]</gradient>"
+    rotate: "<gradient:#f59e0b:#fbbf24>[Γυρίζω]</gradient>"
+    never: "<gradient:#ef4444:#f87171>[Ποτέ]</gradient>"
+    state:
+      available: "<gradient:#22c55e:#86efac>[Ανοιχτό]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Κλειστό]</gradient>"
+    lore:
+      - "<gray>Τρέχουσα λειτουργία:</gray> <white>{availability_mode}</white>"
+      - "<gray>Τρέχουσα κατάσταση:</gray> <white>{availability_state}</white>"
+      - "<gray>Περιστροφή παραθύρου:</gray> <white>{rotation_minutes}πρακτικά)</white>"
+      - "<yellow>Κάντε κλικ για κύκλο: Πάντα -> Περιστροφή -> Ποτέ.</yellow>"
+  availability_window:
+    name: "<gradient:#38bdf8:#60a5fa>[Χρονόμετρο] Λεπτά περιστροφής</gradient>"
+    lore:
+      - "<gray>Τρέχον παράθυρο:</gray> <white>{rotation_minutes}πρακτικά)</white>"
+      - "<gray>Τρέχουσα λειτουργία:</gray> <white>{availability_mode}</white>"
+      - "<gray>Περιστροφή ετικέτας λειτουργίας:</gray> <white>{rotate_mode}</white>"
+      - "<yellow>Κάντε κλικ για να ορίσετε λεπτά περιστροφής σε ένα αμόνι.</yellow>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Εκτελεστής εντολών</gradient>"
+    server: "<gradient:#f59e0b:#fbbf24>[Υπηρέτης]</gradient>"
+    player: "<gradient:#22c55e:#86efac>[Παίχτης]</gradient>"
+    lore:
+      - "<gray>Τρέχουσα λειτουργία:</gray> <white>{command_mode}</white>"
+      - "<gray>Επόμενη λειτουργία:</gray> <white>{next_mode}</white>"
+      - "<yellow>Κάντε κλικ για να αλλάξετε ποιος εκτελεί τις εντολές που προστέθηκαν πρόσφατα.</yellow>"
+  admin_commands:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Εντολές αγοράς</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Κανένας</gradient>"
+    lore:
+      - "<gray>Διαμορφωμένες εντολές:</gray> <white>{command_count}</white>"
+      - "<gray>Τελευταία εντολή:</gray> <white>{latest_command}</white>"
+      - "<yellow>Κάντε κλικ για να ανοίξετε τις ρυθμίσεις εντολών και να προσθέσετε εντολές.</yellow>"
+  confirm:
+    name: "<green>Αποθήκευση τιμής προϊόντος</green>"
+    lore:
+      - "<gray>Εφαρμόστε τον τρέχοντα τύπο και τιμή νομίσματος</gray>"
+      - "<gray>σε αυτό το αντικείμενο καταστήματος.</gray>"
+  stock_limit:
+    name: "<gold>Όριο αποθεμάτων</gold>"
+    unlimited: "Απειρος"
+    lore:
+      - "<gray>Τρέχον όριο:</gray> <white>{stock_limit}</white>"
+      - "<gray>Τρέχον απόθεμα:</gray> <white>{current_stock}</white>"
+      - "<yellow>Κάντε κλικ για να ορίσετε ένα όριο αποθεμάτων.</yellow>"
+      - "<gray>Χρησιμοποιήστε -1 για να επιστρέψετε αυτό το στοιχείο σε άπειρο απόθεμα.</gray>"
+  reset_timer:
+    name: "<aqua>Επαναφορά χρονοδιακόπτη</aqua>"
+    lore:
+      - "<gray>Τρέχον χρονόμετρο:</gray> <white>{reset_timer_ticks}κρότωνες</white>"
+      - "<yellow>Κάντε κλικ για να ρυθμίσετε το χρονοδιακόπτη επανεκκίνησης.</yellow>"
+  restock_mode:
+    name: "<yellow>Λειτουργία επανεκκίνησης διαχειριστή</yellow>"
+    gradual: "Βαθμιαίος"
+    full: "Πλήρης επαναφορά"
+    lore:
+      - "<gray>Διαμορφωμένη λειτουργία:</gray> <white>{restock_mode}</white>"
+      - "<gray>Διαμορφωμένο πρόγραμμα:</gray> <white>{restock_schedule}</white>"
+      - "<yellow>Κάντε κλικ για εναλλαγή της λειτουργίας ανανέωσης αποθεμάτων καθολικού διαχειριστή.</yellow>"
+  restock_schedule:
+    gradual: "1 τεμάχιο κάθε{reset_timer_ticks}κρότωνες"
+    full: "Πλήρως ανανεώνεται στο{restock_time} {time_zone}"
+  feedback:
+    not_owner: "<red>Δεν έχετε άδεια διαχείρισης αυτού του καταστήματος.</red>"
+    shop_missing: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+    item_missing: "<red>Αυτό το αντικείμενο καταστήματος δεν βρέθηκε.</red>"
+    saved: "<green>Αποθηκευμένη τιμολόγηση αντικειμένου ως{value} {currency_type}.</green>"
+    availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Η λειτουργία διαθεσιμότητας έχει οριστεί σε<white>{availability_mode}</white><gray>.</gray>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ο τρόπος εκτέλεσης νέας εντολής ορίστηκε σε<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Καταργήθηκε η πιο πρόσφατη εντολή. Υπόλοιπες εντολές:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Εκκαθάριση όλων των εντολών αγοράς διαχειριστή.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Δεν έχουν διαμορφωθεί εντολές αγοράς διαχειριστή.</gray>"
+    config_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Οι αλλαγές διαμόρφωσης προσθηκών είναι κλειδωμένες<white>Δωρεάν RDS</white><gray>. Αναβάθμιση σε premium για πλήρη πρόσβαση.</gray>"
+    restock_mode_updated: "<green>Η λειτουργία ανανέωσης αποθέματος διαχειριστή έχει οριστεί σε{restock_mode}.</green>"
+    restock_mode_save_failed: "<red>Αποτυχία αποθήκευσης της λειτουργίας ανανέωσης αποθεμάτων διαχειριστή.</red>"
+
+# Ερώτηση Anvil για την προσθήκη μιας νέας εντολής αγοράς διαχειριστή.
+shop_item_admin_command_anvil_ui:
+  title: "Προσθήκη εντολής{command_mode} ({command_delay_ticks}t)"
+  input:
+    lore:
+      - "<gray>Εισαγάγετε μια εντολή για εκτέλεση κατά την αγορά αυτού του στοιχείου διαχειριστή.</gray>"
+      - "<gray>Μόνο κείμενο εντολών. Η καθυστέρηση διαμορφώνεται στην προβολή ρυθμίσεων εντολών.</gray>"
+      - "<gray>Παραδείγματα:</gray>"
+      - "<white>αναμετάδοση%player_name%αγορασμένος{amount}x{item_type}</white>"
+      - "<white>eco δίνουν%player_name% 50</white>"
+      - "<gray>Διαμορφωμένες εντολές:</gray> <white>{command_count}</white>"
+      - "<gray>Τρόπος εκτέλεσης:</gray> <white>{command_mode}</white>"
+      - "<gray>Καθυστέρηση:</gray> <white>{command_delay_ticks}κρότωνες</white>"
+  mode:
+    server: "<gold>[Υπηρέτης]</gold>"
+    player: "<green>[Παίχτης]</green>"
+  error:
+    invalid_format: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Το κείμενο της εντολής δεν μπορεί να είναι κενό. Εισαγωγή:</gray> <white>{input}</white>"
+
+# Διεπαφή χρήστη διαχείρισης εντολών αγοράς διαχειριστή για λίστα λειτουργίας, καθυστέρησης και εντολών.
+shop_item_admin_command_ui:
+  title: "Ρυθμίσεις εντολών -{item_type}"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Cmd] Ρυθμίσεις εντολών αγοράς</gradient>"
+    none: "<gradient:#6b7280:#9ca3af>Κανένας</gradient>"
+    lore:
+      - "<gray>Διαμορφωμένες εντολές:</gray> <white>{command_count}</white>"
+      - "<gray>Τελευταία εντολή:</gray> <white>{latest_command}</white>"
+      - "<gray>Επόμενη λειτουργία εντολής:</gray> <white>{command_mode}</white>"
+      - "<gray>Επόμενη καθυστέρηση εντολής:</gray> <white>{command_delay_ticks}τσιμπούρια ({command_delay_seconds}μικρό)</white>"
+  command_executor:
+    name: "<gradient:#38bdf8:#60a5fa>[Exec] Επόμενος Εκτελεστής Εντολών</gradient>"
+    server: "<gold>[Υπηρέτης]</gold>"
+    player: "<green>[Παίχτης]</green>"
+    lore:
+      - "<gray>Τρέχουσα λειτουργία:</gray> <white>{command_mode}</white>"
+      - "<gray>Επόμενη λειτουργία:</gray> <white>{next_mode}</white>"
+      - "<yellow>Κάντε κλικ για εναλλαγή του εκτελεστή για την επόμενη εντολή.</yellow>"
+  command_delay:
+    name: "<gradient:#38bdf8:#60a5fa>[Καθυστέρηση] Επόμενη Καθυστέρηση Εντολής</gradient>"
+    lore:
+      - "<gray>Τρέχουσα καθυστέρηση:</gray> <white>{command_delay_ticks}τσιμπούρια ({command_delay_seconds}μικρό)</white>"
+      - "<yellow>Κάντε κλικ για να ορίσετε καθυστέρηση στα τικ για την επόμενη εντολή.</yellow>"
+  add_command:
+    name: "<gradient:#22c55e:#86efac>[+] Προσθήκη εντολής</gradient>"
+    lore:
+      - "<gray>Τρόπος:</gray> <white>{command_mode}</white>"
+      - "<gray>Καθυστέρηση:</gray> <white>{command_delay_ticks}τσιμπούρια ({command_delay_seconds}μικρό)</white>"
+      - "<yellow>Κάντε κλικ για να ανοίξετε την είσοδο εντολών.</yellow>"
+  remove_command:
+    name: "<gradient:#ef4444:#f87171>[-] Κατάργηση εντολής</gradient>"
+    lore:
+      - "<gray>Διαμορφωμένες εντολές:</gray> <white>{command_count}</white>"
+      - "<yellow>Κάντε κλικ για να αφαιρέσετε την πιο πρόσφατη εντολή.</yellow>"
+      - "<yellow>Shift + κλικ για να διαγράψετε όλες τις εντολές.</yellow>"
+  confirm:
+    name: "<green>Αποθήκευση ρυθμίσεων εντολών</green>"
+    lore:
+      - "<gray>Επιστρέψτε στο πρόγραμμα επεξεργασίας στοιχείων και διατηρήστε αυτές τις αλλαγές εντολών.</gray>"
+  feedback:
+    not_owner: "<red>Δεν έχετε άδεια διαχείρισης αυτού του καταστήματος.</red>"
+    shop_missing: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+    command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Η επόμενη λειτουργία εντολής ορίστηκε σε<white>{command_mode}</white><gray>.</gray>"
+    command_removed: "<gradient:#f59e0b:#fbbf24>[-]</gradient> <gray>Καταργήθηκε η πιο πρόσφατη εντολή. Υπόλοιπες εντολές:</gray> <white>{command_count}</white>"
+    commands_cleared: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Εκκαθάριση όλων των εντολών αγοράς διαχειριστή.</gray>"
+    commands_empty: "<gradient:#6b7280:#9ca3af>[!]</gradient> <gray>Δεν έχουν διαμορφωθεί εντολές αγοράς διαχειριστή.</gray>"
+
+# Ερώτηση άκμονα για τη ρύθμιση τικ καθυστέρησης εντολών διαχειριστή.
+shop_item_admin_command_delay_anvil_ui:
+  title: "Ρύθμιση καθυστέρησης -{command_delay_ticks}t"
+  input:
+    lore:
+      - "<gray>Εισαγάγετε έναν ακέραιο αριθμό τικ για την επόμενη καθυστέρηση εντολής.</gray>"
+      - "<gray>Τρόπος εκτέλεσης:</gray> <white>{command_mode}</white>"
+      - "<gray>Παραδείγματα:</gray> <white>0, 20, 100</white>"
+  mode:
+    server: "<gold>[Υπηρέτης]</gold>"
+    player: "<green>[Παίχτης]</green>"
+  error:
+    invalid_number: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Εισαγάγετε έναν ακέραιο αριθμό μεγαλύτερο ή ίσο του 0. Εισαγωγή:</gray> <white>{input}</white>"
+
+# Ερώτηση στο αμόνι για το παράθυρο διαθεσιμότητας της λειτουργίας περιστροφής μέσα σε λίγα λεπτά.
+shop_item_availability_minutes_anvil_ui:
+  title: "Λεπτά εναλλαγής:{rotation_minutes}"
+  input:
+    name: "<gradient:#38bdf8:#60a5fa>[Χρονόμετρο] Λεπτά περιστροφής</gradient>"
+    lore:
+      - "<gray>Εισαγάγετε έναν ακέραιο αριθμό λεπτών.</gray>"
+      - "<gray>Εναλλακτικές λειτουργίες περιστροφής διαθέσιμες/μη διαθέσιμες σε κάθε παράθυρο.</gray>"
+  error:
+    invalid_number: "<red>Εισαγάγετε έναν ακέραιο αριθμό μεγαλύτερο από 0. Εισαγωγή:{input}</red>"
+
+# Προτροπή άκμονα για ρύθμιση περιορισμένης χωρητικότητας αποθέματος διαχειριστή.
+shop_item_admin_stock_limit_anvil_ui:
+  title: "Όριο αποθέματος:{stock_limit}"
+  input:
+    name: "<gold>Όριο αποθεμάτων</gold>"
+    lore:
+      - "<gray>Εισαγάγετε ένα θετικό όριο αποθέματος σε είδη.</gray>"
+      - "<gray>Χρησιμοποιήστε -1 για να επαναφέρετε άπειρο απόθεμα διαχειριστή.</gray>"
+  error:
+    invalid_number: "<red>Εισαγάγετε -1 ή ακέραιο αριθμό μεγαλύτερο από 0. Εισαγωγή:{input}</red>"
+
+# Ερώτηση άκμονα για τη ρύθμιση παραμέτρων admin restock/reset tick timer.
+shop_item_admin_reset_timer_anvil_ui:
+  title: "Επαναφορά χρονοδιακόπτη:{reset_timer_ticks}"
+  input:
+    name: "<aqua>Επαναφορά χρονοδιακόπτη</aqua>"
+    lore:
+      - "<gray>Εισαγάγετε έναν ακέραιο αριθμό τικ Bukkit.</gray>"
+      - "<gray>Η σταδιακή λειτουργία επαναφέρει ένα στοιχείο ανά χρονόμετρο.</gray>"
+  error:
+    invalid_number: "<red>Εισαγάγετε έναν ακέραιο αριθμό μεγαλύτερο από 0. Εισαγωγή:{input}</red>"
+
+# Προτροπή με αμόνι για την επιλογή του τύπου νομίσματος που χρησιμοποιείται από ένα στοιχείο.
+shop_item_currency_type_anvil_ui:
+  title: "Τύπος νομίσματος:{currency_type}"
+  input:
+    name: "<green>Τύπος νομίσματος</green>"
+    lore:
+      - "<gray>Εισαγάγετε το αναγνωριστικό νομίσματος για αυτό το στοιχείο.</gray>"
+      - "<gray>Παραδείγματα:</gray> <white>θησαυροφυλάκιο, μάρκες, πετράδια</white>"
+  error:
+    empty: "<red>Ο τύπος νομίσματος δεν μπορεί να είναι κενός.</red>"
+    invalid_currency: "<red>Τύπος νομίσματος{currency_type}δεν είναι διαθέσιμο. Χρησιμοποιήστε θησαυροφυλάκιο ή καταχωρημένο προσαρμοσμένο νόμισμα.</red>"
+    processing_failed: "<red>Η ενημέρωση του τύπου νομίσματος απέτυχε. Εισαγωγή:{input}</red>"
+
+# Προτροπή άκμονα για τον ορισμό τιμής/αξίας ανά στοιχείο.
+shop_item_value_anvil_ui:
+  title: "Αξία:{value} {currency_type}"
+  input:
+    name: "<gold>Τιμή αντικειμένου</gold>"
+    lore:
+      - "<gray>Εισαγάγετε μια μη αρνητική αριθμητική τιμή.</gray>"
+      - "<gray>Παραδείγματα:</gray> <white>0, 10, 25.5</white>"
+  error:
+    invalid_number: "<red>Εισαγάγετε έναν έγκυρο μη αρνητικό αριθμό. Εισαγωγή:{input}</red>"
+    processing_failed: "<red>Η ενημέρωση της τιμής του στοιχείου απέτυχε. Εισαγωγή:{input}</red>"
+
+# Αγοράστε UI τράπεζας για υπόλοιπα νομισμάτων και αναλήψεις ανά κατάστημα.
+shop_bank_ui:
+  title: "Τράπεζα καταστήματος -{location}"
+  summary:
+    name: "<gold>Υπόλοιπα Τραπεζών</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Παρακολουθούμενα νομίσματα:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>Κάντε κλικ σε ένα υπόλοιπο παρακάτω για να κάνετε ανάληψη ολόκληρου του ποσού.</yellow>"
+  entry:
+    name: "<gold>{currency_name}</gold>"
+    lore:
+      - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+      - "<gray>Διαθέσιμο υπόλοιπο:</gray> <white>{amount} {currency_name}</white>"
+      - "<yellow>Κάντε κλικ για ανάληψη αυτού του πλήρους υπολοίπου.</yellow>"
+  feedback:
+    not_owner: "<red>Δεν έχετε άδεια διαχείρισης αυτού του καταστήματος.</red>"
+    entry_missing: "<red>Αυτό το τραπεζικό υπόλοιπο δεν είναι πλέον διαθέσιμο.</red>"
+    withdrawn: "<green>Αποσύρθηκε{amount} {currency_name}. Παραμένων{currency_name}: {remaining_amount}. Παρακολουθούμενα νομίσματα:{bank_currency_count}.</green>"
+    withdraw_failed: "<red>Αποτυχία απόσυρσης{amount} {currency_name}από την τράπεζα του καταστήματος.</red>"
+    currency_unavailable: "<red>Νόμισμα{currency_name}δεν είναι διαθέσιμο αυτή τη στιγμή.</red>"
+    empty:
+      name: "<red>Τράπεζα άδεια</red>"
+      lore:
+        - "<gray>Αυτό το κατάστημα δεν έχει τραπεζικά υπόλοιπα για ανάληψη.</gray>"
+    locked:
+      name: "<red>Απαιτείται πλήρης πρόσβαση</red>"
+      lore:
+        - "<gray>Μόνο έμπιστοι παίκτες με πλήρη πρόσβαση μπορούν να κάνουν ανάληψη χρημάτων από το κατάστημα.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# UI διαχείρισης αξιόπιστου παίκτη για ρόλους πρόσβασης στο κατάστημα.
+shop_trusted_ui:
+  title: "Αξιόπιστοι παίκτες -{location}"
+  summary:
+    name: "<gold>Shop Trust Manager</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Συνεργάτες:</gray> <white>{associate_count}</white>"
+      - "<gray>Αξιόπιστοι παίκτες:</gray> <white>{trusted_count}</white>"
+      - "<yellow>Κάντε κλικ σε έναν παίκτη για να κυκλώσετε την κατάσταση εμπιστοσύνης του.</yellow>"
+  entry:
+    public:
+      name: "<gray>{player}</gray>"
+      lore:
+        - "<gray>Κατάσταση:</gray> <white>Κοινό</white>"
+        - "<gray>Δεν υπάρχουν δικαιώματα διαχείρισης.</gray>"
+        - "<yellow>Κάντε κλικ για αλλαγή σε Συσχέτιση.</yellow>"
+    associate:
+      name: "<yellow>{player}</yellow>"
+      lore:
+        - "<gray>Κατάσταση:</gray> <white>Σύντροφος</white>"
+        - "<gray>Μπορεί να προσθέσει αντικείμενα στο κατάστημα.</gray>"
+        - "<yellow>Κάντε κλικ για αλλαγή σε Αξιόπιστο.</yellow>"
+    trusted:
+      name: "<green>{player}</green>"
+      lore:
+        - "<gray>Κατάσταση:</gray> <white>Εμπιστος</white>"
+        - "<gray>Μπορεί να διαχειριστεί πλήρως το κατάστημα.</gray>"
+        - "<yellow>Κάντε κλικ για αλλαγή σε Δημόσιο.</yellow>"
+  feedback:
+    not_owner: "<red>Μόνο ο ιδιοκτήτης του καταστήματος μπορεί να διαχειριστεί αξιόπιστους παίκτες.</red>"
+    updated:
+      public: "<yellow>Σειρά{player}στο Public.</yellow>"
+      associate: "<green>Σειρά{player}σε Συνεργάτη.</green>"
+      trusted: "<green>Σειρά{player}στο Trusted.</green>"
+    empty:
+      name: "<red>Δεν βρέθηκαν παίκτες</red>"
+      lore:
+        - "<gray>Δεν υπάρχουν άλλοι γνωστοί παίκτες για να τους εμπιστευτείτε.</gray>"
+    locked:
+      name: "<red>Μόνο πρόσβαση κατόχου</red>"
+      lore:
+        - "<gray>Μόνο ο ιδιοκτήτης του καταστήματος μπορεί να διαχειριστεί αξιόπιστους παίκτες.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Διεπαφή χρήστη του καθολικού συναλλαγών για αγορές και φορολογικό ιστορικό.
+shop_ledger_ui:
+  title: "Καθολικό καταστήματος -{location}"
+  summary:
+    name: "<gold>Καθολικό Συναλλαγών καταστήματος</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Σύνολο συμμετοχών:</gray> <white>{ledger_count}</white>"
+      - "<gray>Ψώνια:</gray> <white>{purchase_count}</white>"
+      - "<gray>Φόροι:</gray> <white>{tax_count}</white>"
+      - "<yellow>Οι πιο πρόσφατες συναλλαγές εμφανίζονται πρώτα.</yellow>"
+  entry:
+    purchase:
+      name: "<green>Αγορά:{item_type}</green>"
+      lore:
+        - "<gray>Αγοραστής:</gray> <white>{actor}</white>"
+        - "<gray>Ποσό:</gray> <white>{item_amount}</white>"
+        - "<gray>Συνολικά πληρωμένα:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Εγγεγραμμένος:</gray> <white>{created_at}</white>"
+    taxation:
+      name: "<gold>Φορολογική Επιβάρυνση</gold>"
+      lore:
+        - "<gray>Χρεώθηκε σε:</gray> <white>{actor}</white>"
+        - "<gray>Φορολογικό μερίδιο:</gray> <white>{amount} {currency_name}</white>"
+        - "<gray>Καταμετρημένα καταστήματα:</gray> <white>{counted_shops}</white>"
+        - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Εγγεγραμμένος:</gray> <white>{created_at}</white>"
+  feedback:
+    empty:
+      name: "<red>Δεν υπάρχουν εγγραφές στο καθολικό</red>"
+      lore:
+        - "<gray>Αυτό το κατάστημα δεν έχει ακόμη καταγεγραμμένες αγορές ή φόρους.</gray>"
+    locked:
+      name: "<red>Απαιτείται πλήρης πρόσβαση</red>"
+      lore:
+        - "<gray>Μόνο έμπιστοι παίκτες με πλήρη πρόσβαση μπορούν να δουν το καθολικό.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Διεπαφή χρήστη καταστήματος που απευθύνεται σε πελάτες για περιήγηση και αγορά αντικειμένων.
+shop_customer_ui:
+  title: "Κατάστημα -{location}"
+  summary:
+    name: "<gold>Προβολή Πελατών</gold>"
+    player:
+      lore:
+        - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+        - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+        - "<gray>Διαθέσιμες καταχωρήσεις:</gray> <white>{stored_count}</white>"
+        - "<gray>Τύπος καταστήματος:</gray> <white>Player Shop</white>"
+        - "<gray>Καταγραφή εμπορευμάτων:</gray> <white>Πεπερασμένος</white>"
+        - "<yellow>Κάντε αριστερό κλικ σε ένα αντικείμενο για να αγοράσετε ένα.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ σε ένα στοιχείο για να επιλέξετε ένα ποσό.</yellow>"
+    admin:
+      lore:
+        - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+        - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+        - "<gray>Διαθέσιμες καταχωρήσεις:</gray> <white>{stored_count}</white>"
+        - "<gray>Τύπος καταστήματος:</gray> <white>Κατάστημα διαχειριστή</white>"
+        - "<gray>Καταγραφή εμπορευμάτων:</gray> <white>Απειρος</white>"
+        - "<yellow>Κάντε αριστερό κλικ σε ένα αντικείμενο για να αγοράσετε ένα.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ σε ένα στοιχείο για να επιλέξετε ένα ποσό.</yellow>"
+  entry:
+    player:
+      lore:
+        - "<gray>Στοκ:</gray> <white>{amount}</white>"
+        - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+        - "<gray>Τιμή το καθένα:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Συνολική αξία αποθέματος:</gray> <white>{total_price} {currency_name}</white>"
+        - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<yellow>Κάντε αριστερό κλικ για να αγοράσετε ένα.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ για να επιλέξετε ένα ποσό.</yellow>"
+    admin:
+      lore:
+        - "<gray>Καταγραφή εμπορευμάτων:</gray> <white>Απειρος</white>"
+        - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+        - "<gray>Τιμή το καθένα:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Τύπος καταστήματος:</gray> <white>Κατάστημα διαχειριστή</white>"
+        - "<yellow>Κάντε αριστερό κλικ για να αγοράσετε ένα.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ για να επιλέξετε ένα ποσό.</yellow>"
+    admin_limited:
+      lore:
+        - "<gray>Στοκ:</gray> <white>{amount}/{stock_limit}</white>"
+        - "<gray>Τύπος αντικειμένου:</gray> <white>{item_type}</white>"
+        - "<gray>Τιμή το καθένα:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Αναγνωριστικό νομίσματος:</gray> <white>{currency_type}</white>"
+        - "<gray>Λειτουργία ανανέωσης:</gray> <white>{restock_mode}</white>"
+        - "<gray>Πρόγραμμα ανανέωσης:</gray> <white>{restock_schedule}</white>"
+        - "<yellow>Κάντε αριστερό κλικ για να αγοράσετε ένα.</yellow>"
+        - "<yellow>Κάντε δεξί κλικ για να επιλέξετε ένα ποσό.</yellow>"
+    admin_mode:
+      gradual: "Βαθμιαίος"
+      full: "Πλήρης επαναφορά"
+    restock_schedule:
+      gradual: "1 τεμάχιο κάθε{reset_timer_ticks}κρότωνες"
+      full: "Πλήρως ανανεώνεται στο{restock_time} {time_zone}"
+  feedback:
+    purchased_player: "<green>Αγορασμένο{amount}x{item_type}για{total_price} {currency_name}. Υπόλοιπο απόθεμα:{remaining_amount}.</green>"
+    purchased_admin: "<green>Αγορασμένο{amount}x{item_type}για{total_price} {currency_name}. Αυτό το κατάστημα διαχείρισης έχει άπειρο απόθεμα.</green>"
+    purchased_admin_limited: "<green>Αγορασμένο{amount}x{item_type}για{total_price} {currency_name}. Υπόλοιπο απόθεμα διαχειριστή:{remaining_amount}.</green>"
+    unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type}προς το παρόν δεν είναι διαθέσιμο για αγορά.</gray>"
+    insufficient_stock: "<red>Αυτό το κατάστημα έχει μόνο{available_amount}x{item_type}διαθέσιμος.</red>"
+    insufficient_funds: "<red>χρειάζεσαι{total_price} {currency_name}να αγοράσουν{amount}x{item_type}.</red>"
+    currency_unavailable: "<red>Νόμισμα{currency_name}δεν είναι διαθέσιμο αυτή τη στιγμή.</red>"
+    invalid_amount: "<red>Εισαγάγετε ένα έγκυρο ποσό αγοράς.</red>"
+    item_missing: "<red>Αυτό το είδος καταστήματος δεν είναι πλέον διαθέσιμο.</red>"
+    empty_shop:
+      name: "<red>Κατάστημα Άδειο</red>"
+      lore:
+        - "<gray>Δεν υπάρχουν διαθέσιμα στοιχεία για αγορά.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Ένδειξη άκμονας για προσαρμοσμένη εισαγωγή ποσότητας αγοράς.
+shop_purchase_amount_anvil_ui:
+  title: "Αγορά{item_type}"
+  input:
+    name: "<gold>Ποσό Αγοράς</gold>"
+    player:
+      lore:
+        - "<gray>Εισαγάγετε πόσα είδη θέλετε να αγοράσετε.</gray>"
+        - "<gray>Μέγιστο διαθέσιμο:</gray> <white>{max_amount}</white>"
+        - "<gray>Είδος:</gray> <white>{item_type}</white>"
+    admin:
+      lore:
+        - "<gray>Εισαγάγετε πόσα είδη θέλετε να αγοράσετε.</gray>"
+        - "<gray>Αυτό το κατάστημα διαχείρισης έχει άπειρο απόθεμα.</gray>"
+        - "<gray>Είδος:</gray> <white>{item_type}</white>"
+    admin_limited:
+      lore:
+        - "<gray>Εισαγάγετε πόσα είδη θέλετε να αγοράσετε.</gray>"
+        - "<gray>Μέγιστο διαθέσιμο:</gray> <white>{max_amount}</white>"
+        - "<gray>Είδος:</gray> <white>{item_type}</white>"
+  error:
+    invalid_number: "<red>Εισαγάγετε έναν ακέραιο αριθμό μεταξύ 1 και{max_amount}. Εισαγωγή:{input}</red>"
+    invalid_number_admin: "<red>Εισαγάγετε έναν ακέραιο αριθμό μεγαλύτερο από 0. Εισαγωγή:{input}</red>"
+    processing_failed: "<red>Απέτυχε η επεξεργασία του ποσού αγοράς. Εισαγωγή:{input}</red>"
+
+# Αγορά διεπαφής διεπαφής προσγείωσης ανακαλύψεων για περιήγηση σε όλα και αναζήτηση υλικού.
+shop_search_ui:
+  title: "<gradient:#38bdf8:#22c55e>Αγορά προγράμματος περιήγησης</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Αγορά προγράμματος περιήγησης</gradient>"
+    lore:
+      - "<gray>Περιηγηθείτε σε κάθε κατάστημα ή φίλτρο που παρακολουθείτε με βάση ένα συγκεκριμένο υλικό.</gray>"
+      - "<yellow>Επιλέξτε μία από τις παρακάτω ενέργειες για να συνεχίσετε.</yellow>"
+  browse:
+    name: "<gradient:#f59e0b:#f97316>Περιήγηση σε όλα τα καταστήματα</gradient>"
+    lore:
+      - "<gray>Ανοίξτε τον πλήρη σελιδοποιημένο κατάλογο καταστημάτων.</gray>"
+      - "<yellow>Κάντε κλικ για να δείτε κάθε κατάστημα που παρακολουθείτε.</yellow>"
+  search:
+    name: "<gradient:#22c55e:#14b8a6>Αναζήτηση κατά Υλικό</gradient>"
+    lore:
+      - "<gray>Ανοίξτε μια προτροπή άκμονα και εισαγάγετε ένα όνομα υλικού.</gray>"
+      - "<gray>Παράδειγμα:</gray> <white>diamond_block</white>"
+      - "<yellow>Κάντε κλικ για αναζήτηση ανά τύπο στοιχείου.</yellow>"
+
+# Διεπαφή χρήστη σελιδοποιημένου καταλόγου που περιλαμβάνει όλα τα καταστήματα που παρακολουθούνται.
+shop_list_ui:
+  title: "<gradient:#f59e0b:#f97316>Όλα τα καταστήματα</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#f97316>Κατάλογος καταστημάτων</gradient>"
+    lore:
+      - "<gray>Καταστήματα που παρακολουθούνται:</gray> <white>{shop_count}</white>"
+      - "<gray>Συνολικό διαθέσιμο απόθεμα:</gray> <white>{available_count}</white>"
+      - "<yellow>Κάντε κλικ σε οποιοδήποτε κατάστημα παρακάτω για να το ανοίξετε.</yellow>"
+  entry:
+    name: "<gold>{owner}Κατάστημα του</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Διαθέσιμο απόθεμα:</gray> <white>{available_count}</white>"
+      - "<yellow>Κάντε κλικ για να ανοίξετε αυτό το κατάστημα.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Δεν βρέθηκαν καταστήματα</red>"
+      lore:
+        - "<gray>Δεν υπάρχουν ακόμη εγγεγραμμένα καταστήματα.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Διεπαφή χρήστη αποτελεσμάτων καταστήματος φιλτραρισμένο με υλικό.
+shop_results_ui:
+  title: "<gradient:#22c55e:#14b8a6>Αποτελέσματα για{material}</gradient>"
+  summary:
+    name: "<gradient:#22c55e:#14b8a6>Αποτελέσματα για{material}</gradient>"
+    lore:
+      - "<gray>Υλικό:</gray> <white>{material}</white>"
+      - "<gray>Καταστήματα που ταιριάζουν:</gray> <white>{shop_count}</white>"
+      - "<gray>Προσφορές που ταιριάζουν:</gray> <white>{matching_count}</white>"
+      - "<yellow>Κάντε κλικ σε οποιοδήποτε αντίστοιχο κατάστημα παρακάτω για να το ανοίξετε.</yellow>"
+  entry:
+    name: "<gold>{owner}Κατάστημα του</gold>"
+    lore:
+      - "<gray>Ιδιοκτήτης:</gray> <white>{owner}</white>"
+      - "<gray>Τοποθεσία:</gray> <white>{location}</white>"
+      - "<gray>Ταίριασμα{material}προσφέρει:</gray> <white>{matching_count}</white>"
+      - "<gray>Συνολικό ορατό απόθεμα:</gray> <white>{available_count}</white>"
+      - "<yellow>Κάντε κλικ για να ανοίξετε αυτό το κατάστημα.</yellow>"
+  feedback:
+    empty:
+      name: "<red>Δεν πωλούνται καταστήματα{material}</red>"
+      lore:
+        - "<gray>Προς το παρόν, κανένα κατάστημα με παρακολούθηση δεν προσφέρει αυτό το υλικό.</gray>"
+    shop_missing:
+      name: "<red>Το κατάστημα δεν βρέθηκε</red>"
+      lore:
+        - "<gray>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</gray>"
+      message: "<red>Δεν ήταν δυνατή η φόρτωση αυτού του καταστήματος από τον χώρο αποθήκευσης.</red>"
+
+# Ερώτηση άκμονα για είσοδο σε αναζήτηση φίλτρου υλικού.
+shop_material_search_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>Υλικό αναζήτησης</gradient>"
+  input:
+    lore:
+      - "<gray>Εισαγάγετε ένα όνομα υλικού Bukkit για αναζήτηση καταστημάτων που παρακολουθούνται.</gray>"
+      - "<gray>Παραδείγματα:</gray> <white>διαμάντι</white><gray>,</gray> <white>diamond_block</white>"
+      - "<yellow>Κάντε κλικ στην υποδοχή αποτελεσμάτων για να ανοίξετε τα αντίστοιχα καταστήματα.</yellow>"
+  error:
+    invalid_material: "<red>Εισαγάγετε ένα έγκυρο υλικό, όπως το diamond_block. Εισαγωγή:{input}</red>"
+    processing_failed: "<red>Αποτυχία αναζήτησης υλικού. Εισαγωγή:{input}</red>"
+
+# ============================================
+# ΣΕΛΙΔΟΠΟΙΗΣΗ
+# ============================================
+# Κοινόχρηστες ετικέτες στοιχείων σελιδοποίησης που χρησιμοποιούνται σε διεπαφές χρήστη λιστών.
+page:
+  name: "<gradient:#6b7280:#9ca3af>📄 Σελίδα%current_page%</gradient>"
+  lore:
+    - "<gradient:#6b7280:#9ca3af>Τρέχουσα σελίδα:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Σύνολο σελίδων:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  fallback: "<gradient:#6b7280:#9ca3af>📄 Σελίδα%direction%</gradient>"
+
+# ============================================
+# ΕΙΔΗ ΚΕΦΑΛΗΣ
+# ============================================
+# Κοινόχρηστες ετικέτες κεφαλής/κουμπιού πλοήγησης (επιστροφή/επιβεβαίωση/επόμενο).
+head:
+  return:
+    name: "<gradient:#f59e0b:#fbbf24>🔙 Επιστροφή</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιστρέψετε</gradient>"
+  proceed:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Επιβεβαίωση</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιβεβαιώσετε τις ρυθμίσεις</gradient>"
+  next:
+    name: "<gradient:#f59e0b:#fbbf24>💾 Επιβεβαίωση</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να επιβεβαιώσετε τις ρυθμίσεις</gradient>"
