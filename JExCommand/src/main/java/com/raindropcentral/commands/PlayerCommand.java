@@ -176,6 +176,12 @@ public abstract class PlayerCommand extends BukkitCommand {
                 final @NotNull IPermissionNode permissionNode
         ) {
 
+		if (
+			player.isOp()
+		) {
+			return true;
+		}
+
 		final PermissionsSection permissionsSection = this.commandSection.getPermissions();
 		if (
 			permissionsSection == null

@@ -91,12 +91,16 @@ public final class PermissionHierarchyRegistrar {
 
         final Permission existingPermission = pluginManager.getPermission(permissionNode);
         if (existingPermission != null) {
+            if (existingPermission.getDefault() != PermissionDefault.OP) {
+                existingPermission.setDefault(PermissionDefault.OP);
+                existingPermission.recalculatePermissibles();
+            }
             return existingPermission;
         }
 
         final Permission registeredPermission = new Permission(
             permissionNode,
-            PermissionDefault.FALSE
+            PermissionDefault.OP
         );
 
         try {
