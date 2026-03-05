@@ -24,6 +24,8 @@ import com.raindropcentral.rdr.service.StorageService;
 import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import com.raindropcentral.rdr.view.AdminCurrencyView;
 import com.raindropcentral.rdr.view.StorageAdminView;
+import com.raindropcentral.rdr.view.StorageConfigValueAnvilView;
+import com.raindropcentral.rdr.view.StorageConfigView;
 import com.raindropcentral.rdr.view.StorageHotkeyAnvilView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StoragePlayerView;
@@ -577,9 +579,11 @@ public class RDR {
                 new StorageTrustedView(),
                 new StorageStoreView(),
                 new StorageAdminView(),
+                new StorageConfigView(),
                 new AdminCurrencyView(),
                 new StorageStoreRequirementsView(),
                 new StorageHotkeyAnvilView(),
+                new StorageConfigValueAnvilView(),
                 new StorageView()
             )
             .disableMetrics();

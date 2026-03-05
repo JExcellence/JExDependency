@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * Administrative landing view for RDR controls.
  *
  * <p>This view centralizes privileged storage administration actions and currently
- * exposes the currency-management entry point.</p>
+ * exposes currency-management and config-editing entry points.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
@@ -50,14 +50,14 @@ public class StorageAdminView extends BaseView {
     /**
      * Returns the menu layout for this view.
      *
-     * @return rendered layout with summary and currency controls
+     * @return rendered layout with summary, config, and currency controls
      */
     @Override
     protected String[] getLayout() {
         return new String[]{
             "         ",
             "    s    ",
-            "    c    ",
+            "   g c   ",
             "         ",
             "         ",
             "         "
@@ -81,6 +81,11 @@ public class StorageAdminView extends BaseView {
         }
 
         render.layoutSlot('s', this.createSummaryItem(player));
+        render.layoutSlot('g', this.createConfigButton(player))
+            .onClick(clickContext -> clickContext.openForPlayer(
+                StorageConfigView.class,
+                Map.of("plugin", this.rdr.get(clickContext))
+            ));
         render.layoutSlot('c', this.createCurrencyButton(player))
             .onClick(clickContext -> clickContext.openForPlayer(
                 AdminCurrencyView.class,
@@ -116,6 +121,16 @@ public class StorageAdminView extends BaseView {
         return UnifiedBuilderFactory.item(Material.PRISMARINE_CRYSTALS)
             .setName(this.i18n("actions.currency.name", player).build().component())
             .setLore(this.i18n("actions.currency.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createConfigButton(
+        final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
+            .setName(this.i18n("actions.config.name", player).build().component())
+            .setLore(this.i18n("actions.config.lore", player).build().children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }
