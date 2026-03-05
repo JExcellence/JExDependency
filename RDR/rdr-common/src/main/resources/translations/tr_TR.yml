@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Yönetici Paneli</gradient>"
     lore:
       - "<gray>Ayrıcalıklı depolama sistemlerini tek yerden yönetin.</gray>"
-      - "<gray>Para birimi desteğini yapılandırmak için bu paneli kullanın.</gray>"
+      - "<gray>Yapilandirma degerlerini ve para birimi destegini duzenlemek icin bu paneli kullanin.</gray>"
       - "<yellow>Gereklilikler:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Depolama Yapilandirmasi</gradient>"
+      lore:
+        - "<gray>Değerleri düzenle</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Her düzenlenebilir ayar, bir örs istemi aracılığıyla değiştirilebilir.</gray>"
+        - "<yellow>Yapılandırma kontrollerini açmak için tıklayın.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Döviz Yöneticisi</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Depolama Yapilandirmasi</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>Yapılandırma Ayarları</white>"
+    lore:
+      - "<gray>Düzenlenebilir ayarlar algılandı:</gray> <white>{setting_count}</white>"
+      - "<gray>Aşağıdaki herhangi bir girişe tıklayın değerini bir örs içinde düzenlemek için.</gray>"
+      - "<yellow>Değişiklikler yazılır doğrudan config/config.yml'ye.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Ayarlamak]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Path:</gray> <white>{config_path}</white>"
+      - "<gray>Tür:</gray> <white>{value_type}</white>"
+      - "<gray>Mevcut değer:</gray> <white>{current_value}</white>"
+      - "<yellow>Bu ayarı düzenlemek için tıklayın.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Tamsayı]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Uzun]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Çift]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Liste]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Sicim]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Düzenlenebilir Ayar Yok</white>"
+      lore:
+        - "<gray>Düzenlenebilir skaler/liste yapılandırma ayarı bulunamadı.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu yapılandırma görünümünü kullanma izniniz yok.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yapılandırma Düzenleme Kilitli</white>"
+      lore:
+        - "<gray>Bu sürüm, çalışma zamanı yapılandırma düzenlemelerine izin vermiyor.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yapılandırma ayarlarını düzenleme izniniz yok.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu sürümde yapılandırma düzenleme kilitlidir.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Güncellendi <white>{config_path}</white><gray>ile<white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Düzenle {config_path}"
+  input:
+    lore:
+      - "<gray>Path:</gray> <white>{config_path}</white>"
+      - "<gray>Tür:</gray> <white>{value_type}</white>"
+      - "<gray>Mevcut değer:</gray> <white>{current_value}</white>"
+      - "<yellow>Yeni değeri girin ve onaylayın.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{value_type}</white><gray>. Giriş:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Depolama Mağazası</gradient>"

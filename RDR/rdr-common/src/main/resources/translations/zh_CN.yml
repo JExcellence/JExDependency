@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 管理面板</gradient>"
     lore:
       - "<gray>从一处管理特权存储系统。</gray>"
-      - "<gray>使用此面板配置货币支持。</gray>"
+      - "<gray>使用此面板可编辑配置值和货币支持。</gray>"
       - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] 存储配置</gradient>"
+      lore:
+        - "<gray>从</gray> <white>配置/config.yml</white><gray>.</gray>"
+        - "<gray>每个可编辑设置都可以通过铁砧提示进行更改。</gray>"
+        - "<yellow>单击以打开配置控件。</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 货币经理</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] 存储配置</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息]</gradient> <white>配置设置</white>"
+    lore:
+      - "<gray>编辑值，检测到可编辑设置：</gray> <white>{setting_count}</white>"
+      - "<gray>单击下面的任何条目以编辑其值铁砧。</gray>"
+      - "<yellow>更改直接写入config/config.yml。</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[放]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>路径：</gray> <white>{config_path}</white>"
+      - "<gray>类型：</gray> <white>{value_type}</white>"
+      - "<gray>当前值：</gray> <white>{current_value}</white>"
+      - "<yellow>单击以编辑此设置。</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[布尔值]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[整数]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[长的]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[双倍的]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[列表]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[细绳]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>不可编辑设置</white>"
+      lore:
+        - "<gray>找不到可编辑的标量/列表配置设置。</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>需要管理员访问权限</white>"
+      lore:
+        - "<gray>您无权使用此配置视图。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>配置编辑已锁定</white>"
+      lore:
+        - "<gray>此版本不允许运行时配置编辑。</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您无权编辑配置设置。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>配置编辑在此版本中被锁定。</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>更新<white>{config_path}</white><gray> 到<white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "编辑{config_path}"
+  input:
+    lore:
+      - "<gray>路径：</gray> <white>{config_path}</white>"
+      - "<gray>类型：</gray> <white>{value_type}</white>"
+      - "<gray>当前值：</gray> <white>{current_value}</white>"
+      - "<yellow>输入新值并确认。</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>类型的输入无效<white>{value_type}</white><gray>。输入：</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] 存储存储</gradient>"

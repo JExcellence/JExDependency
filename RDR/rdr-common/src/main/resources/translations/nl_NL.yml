@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Beheerderspaneel</gradient>"
     lore:
       - "<gray>Beheer geprivilegieerde opslagsystemen vanaf één plek.</gray>"
-      - "<gray>Gebruik dit paneel om valutaondersteuning te configureren.</gray>"
+      - "<gray>Gebruik dit paneel om configuratiewaarden en valutaondersteuning te bewerken.</gray>"
       - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Opslagconfiguratie</gradient>"
+      lore:
+        - "<gray>Waarden bewerken van</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Elke bewerkbare instelling kan worden gewijzigd via een aambeeldprompt.</gray>"
+        - "<yellow>Klik om configuratiecontroles te openen.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Opslagconfiguratie</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Configuratie-instellingen</white>"
+    lore:
+      - "<gray>Bewerkbare instellingen gedetecteerd:</gray> <white>{setting_count}</white>"
+      - "<gray>Klik op een item hieronder om de waarde ervan te bewerken een aambeeld.</gray>"
+      - "<yellow>Wijzigingen worden rechtstreeks naar de winkel geschreven config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Pad:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Huidige waarde:</gray> <white>{current_value}</white>"
+      - "<yellow>Klik om deze instelling te bewerken.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Geheel getal]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Lang]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dubbele]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lijst]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Snaar]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Niet bewerkbaar Instellingen</white>"
+      lore:
+        - "<gray>Er zijn geen bewerkbare scalaire/lijstconfiguratie-instellingen gevonden.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Beheerderstoegang vereist</white>"
+      lore:
+        - "<gray>Je hebt geen toestemming om deze configuratieweergave te gebruiken.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>Deze editie staat geen bewerkingen in de runtime-configuratie toe.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt geen toestemming om de configuratie-instellingen te bewerken.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config-bewerking is vergrendeld in deze editie.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Bijgewerkt <white>{config_path}</white><gray> naar <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Bewerken {config_path}"
+  input:
+    lore:
+      - "<gray>Pad:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Huidige waarde:</gray> <white>{current_value}</white>"
+      - "<yellow>Voer de nieuwe waarde in en bevestig.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ongeldige invoer voor type <white>{value_type}</white><gray>. Invoer:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Opslagruimte</gradient>"

@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Adminpanel</gradient>"
     lore:
       - "<gray>Hantera privilegierade lagringssystem från ett ställe.</gray>"
-      - "<gray>Använd den här panelen för att konfigurera valutastöd.</gray>"
+      - "<gray>Anvand denna panel for att redigera konfigurationsvarden och valutastod.</gray>"
       - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfiguration</gradient>"
+      lore:
+        - "<gray>Redigera värden från</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Varje redigerbar inställning kan ändras genom en städprompt.</gray>"
+        - "<yellow>Klicka för att öppna konfigurationskontroller.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutahanterare</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfiguration</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Konfigurationsinställningar</white>"
+    lore:
+      - "<gray>Redigerbara inställningar upptäcktes:</gray> <white>{setting_count}</white>"
+      - "<gray>Klicka på valfri post nedan för att redigera dess värde i ett städ.</gray>"
+      - "<yellow>Ändringar skrivs direkt till config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Uppsättning]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Väg:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktuellt värde:</gray> <white>{current_value}</white>"
+      - "<yellow>Klicka för att redigera den här inställningen.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Heltal]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Lång]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dubbel]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lista]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Sträng]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Inga redigerbara inställningar</white>"
+      lore:
+        - "<gray>Inga redigerbara inställningar för skalär/listkonfiguration hittades.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Adminåtkomst krävs</white>"
+      lore:
+        - "<gray>Du har inte behörighet att använda den här konfigurationsvyn.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Konfigurationsredigering låst</white>"
+      lore:
+        - "<gray>Den här utgåvan tillåter inte redigeringar av körtidskonfigurationer.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att redigera konfigurationsinställningar.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurationsredigering är låst i denna utgåva.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Uppdaterad<white>{config_path}</white><gray>till<white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Redigera{config_path}"
+  input:
+    lore:
+      - "<gray>Väg:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktuellt värde:</gray> <white>{current_value}</white>"
+      - "<yellow>Ange det nya värdet och bekräfta.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ogiltig inmatning för typ<white>{value_type}</white><gray>. Input:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Lagringsbutik</gradient>"

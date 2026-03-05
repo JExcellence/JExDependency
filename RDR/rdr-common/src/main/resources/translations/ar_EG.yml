@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR لوحة الإدارة</gradient>"
     lore:
       - "<gray>إدارة أنظمة التخزين المميزة من مكان واحد.</gray>"
-      - "<gray>استخدم هذه اللوحة لتكوين دعم العملة.</gray>"
+      - "<gray>استخدم هذه اللوحة لتحرير قيم الإعدادات ودعم العملات.</gray>"
       - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] إعدادات التخزين</gradient>"
+      lore:
+        - "<gray>تحرير القيم من</gray> <white>التكوين/config.yml</white><gray>.</gray>"
+        - "<gray>يمكن تغيير كل إعداد قابل للتحرير من خلال مطالبة السندان.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في التكوين.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] مدير العملة</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] إعدادات التخزين</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات]</gradient> <white>إعدادات التكوين</white>"
+    lore:
+      - "<gray>تم اكتشاف إعدادات التحرير:</gray> <white>{setting_count}</white>"
+      - "<gray>انقر فوق أي إدخال أدناه لتحرير قيمته في سندان.</gray>"
+      - "<yellow>التغييرات تتم كتابتها مباشرة إلى config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[تعيين]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>المسار:</gray> <white>{config_path}</white>"
+      - "<gray>النوع:</gray> <white>{value_type}</white>"
+      - "<gray>القيمة الحالية:</gray> <white>{current_value}</white>"
+      - "<yellow>انقر لتحرير هذا الإعداد.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[عدد صحيح]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[طويل]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[مزدوج]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[قائمة]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[خيط]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>لم يتم العثور على إعدادات قابلة للتحرير</white>"
+      lore:
+        - "<gray>لم يتم العثور على إعدادات تكوين الحجم/القائمة القابلة للتحرير.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>يلزم وصول المسؤول</white>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام عرض التكوين هذا.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>تم قفل تحرير التكوين</white>"
+      lore:
+        - "<gray>لا يسمح هذا الإصدار بتعديلات تكوين وقت التشغيل.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لتحرير إعدادات التكوين.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تحرير التكوين مقفل في هذا الإصدار.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>محدث <white>{config_path}</white><gray> إلى <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "تحرير {config_path}"
+  input:
+    lore:
+      - "<gray>المسار:</gray> <white>{config_path}</white>"
+      - "<gray>النوع:</gray> <white>{value_type}</white>"
+      - "<gray>القيمة الحالية:</gray> <white>{current_value}</white>"
+      - "<yellow>أدخل القيمة الجديدة وأكد.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>إدخال غير صالح للنوع <white>{value_type}</white><gray>. الإدخال:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] مخزن التخزين</gradient>"

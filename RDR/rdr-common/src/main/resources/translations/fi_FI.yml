@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Hallintapaneeli</gradient>"
     lore:
       - "<gray>Hallitse etuoikeutettuja tallennusjärjestelmiä yhdestä paikasta.</gray>"
-      - "<gray>Tämän paneelin avulla voit määrittää valuuttatuen.</gray>"
+      - "<gray>Kayta tata paneelia muokataksesi asetusarvoja ja valuuttatukea.</gray>"
       - "<yellow>Vaatii:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Tallennusasetukset</gradient>"
+      lore:
+        - "<gray>Muokkaa arvoja kohteesta</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Jokaista muokattavaa asetusta voidaan muuttaa alasinkehotteen avulla.</gray>"
+        - "<yellow>Napsauta avataksesi konfigurointiohjaimet.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valuuttapäällikkö</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Tallennusasetukset</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>Määritysasetukset</white>"
+    lore:
+      - "<gray>Muokattavat asetukset havaittu:</gray> <white>{setting_count}</white>"
+      - "<gray>Napsauta mitä tahansa alla olevaa merkintää muokataksesi sen arvoa alasimessa.</gray>"
+      - "<yellow>Muutokset kirjoitetaan suoraan tiedostoon config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Sarja]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Polku:</gray> <white>{config_path}</white>"
+      - "<gray>Tyyppi:</gray> <white>{value_type}</white>"
+      - "<gray>Nykyinen arvo:</gray> <white>{current_value}</white>"
+      - "<yellow>Napsauta muokataksesi tätä asetusta.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Kokonaisluku]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[pitkä]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Kaksinkertainen]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lista]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[merkkijono]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Ei muokattavia asetuksia</white>"
+      lore:
+        - "<gray>Muokattavia skalaari-/luetteloasetusasetuksia ei löytynyt.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä asetusnäkymää.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Asetusten muokkaus lukittu</white>"
+      lore:
+        - "<gray>Tämä versio ei salli ajonaikaisten asetusten muokkauksia.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta muokata määritysasetuksia.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Määritysten muokkaus on lukittu tässä versiossa.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Päivitetty<white>{config_path}</white><gray>to<white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Muokata{config_path}"
+  input:
+    lore:
+      - "<gray>Polku:</gray> <white>{config_path}</white>"
+      - "<gray>Tyyppi:</gray> <white>{value_type}</white>"
+      - "<gray>Nykyinen arvo:</gray> <white>{current_value}</white>"
+      - "<yellow>Syötä uusi arvo ja vahvista.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Virheellinen syöte tyypille<white>{value_type}</white><gray>. Syöte:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Tallennusmyymälä</gradient>"

@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Panel administracyjny</gradient>"
     lore:
       - "<gray>Zarządzaj uprzywilejowanymi systemami pamięci masowej z jednego miejsca.</gray>"
-      - "<gray>Użyj tego panelu, aby skonfigurować obsługę walut.</gray>"
+      - "<gray>Uzyj tego panelu, aby edytowac wartosci konfiguracji i obsluge walut.</gray>"
       - "<yellow>Wymaga:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfiguracja Magazynu</gradient>"
+      lore:
+        - "<gray>Edytuj wartości z</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Każde edytowalne ustawienie można zmienić za pomocą podpowiedzi kowadła.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące konfiguracją.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Menedżer walutowy</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfiguracja Magazynu</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje]</gradient> <white>Ustawienia konfiguracji</white>"
+    lore:
+      - "<gray>Wykryto edytowalne ustawienia:</gray> <white>{setting_count}</white>"
+      - "<gray>Kliknij dowolny wpis poniżej, aby edytować jego wartość w kowadle.</gray>"
+      - "<yellow>Zmiany są zapisywane bezpośrednio w config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Ustawić]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Ścieżka:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktualna wartość:</gray> <white>{current_value}</white>"
+      - "<yellow>Kliknij, aby edytować to ustawienie.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Liczba całkowita]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Długi]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Podwójnie]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lista]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Smyczkowy]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Brak edytowalnych ustawień</white>"
+      lore:
+        - "<gray>Nie znaleziono edytowalnych ustawień konfiguracyjnych skalarów/list.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Dostęp administracyjny Wymagane</white>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z tego widoku konfiguracji.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Edycja konfiguracji zablokowana</white>"
+      lore:
+        - "<gray>Ta edycja nie pozwala na edycję konfiguracji w czasie wykonywania.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do edycji ustawień konfiguracyjnych.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edycja konfiguracji jest zablokowana w tej wersji.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Zaktualizowano <white>{config_path}</white><gray> do <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Edytuj {config_path}"
+  input:
+    lore:
+      - "<gray>Ścieżka:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktualna wartość:</gray> <white>{current_value}</white>"
+      - "<yellow>Wprowadź nową wartość i potwierdź.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nieprawidłowe dane wejściowe dla typu <white>{value_type}</white><gray>. Dane wejściowe:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Magazyn</gradient>"

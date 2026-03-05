@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Pannello di amministrazione</gradient>"
     lore:
       - "<gray>Gestisci i sistemi di storage privilegiati da un'unica posizione.</gray>"
-      - "<gray>Utilizza questo pannello per configurare il supporto valutario.</gray>"
+      - "<gray>Usa questo pannello per modificare i valori di configurazione e il supporto valuta.</gray>"
       - "<yellow>Richiede:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configurazione Archiviazione</gradient>"
+      lore:
+        - "<gray>Modifica valori da</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Ogni impostazione modificabile può essere modificata tramite un'incudine prompt.</gray>"
+        - "<yellow>Fare clic per aprire i controlli di configurazione.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Gestore valutario</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Configurazione Archiviazione</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informazioni]</gradient> <white>Impostazioni di configurazione</white>"
+    lore:
+      - "<gray>Impostazioni modificabili rilevate:</gray> <white>{setting_count}</white>"
+      - "<gray>Fai clic su qualsiasi voce di seguito per modificarne il valore in un'incudine.</gray>"
+      - "<yellow>Le modifiche vengono scritte direttamente in config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Impostato]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Percorso:</gray> <white>{config_path}</white>"
+      - "<gray>Tipo:</gray> <white>{value_type}</white>"
+      - "<gray>Corrente valore:</gray> <white>{current_value}</white>"
+      - "<yellow>Fare clic per modificare questa impostazione.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Booleano]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Intero]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Lungo]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Raddoppiare]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lista]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Corda]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Nessuna impostazione modificabile</white>"
+      lore:
+        - "<gray>Non è stata trovata alcuna impostazione di configurazione scalare/elenco modificabile.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accesso amministratore Obbligatorio</white>"
+      lore:
+        - "<gray>Non hai l'autorizzazione per utilizzare questa visualizzazione di configurazione.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Modifica configurazione bloccata</white>"
+      lore:
+        - "<gray>Questa edizione non consente modifiche alla configurazione di runtime.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Non hai l'autorizzazione per modificare le impostazioni di configurazione.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>La modifica della configurazione è bloccata in questa edizione.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aggiornato <white>{config_path}</white><gray> a <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Modifica {config_path}"
+  input:
+    lore:
+      - "<gray>Percorso:</gray> <white>{config_path}</white>"
+      - "<gray>Tipo:</gray> <white>{value_type}</white>"
+      - "<gray>Corrente valore:</gray> <white>{current_value}</white>"
+      - "<yellow>Inserisci il nuovo valore e conferma.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Input non valido per il tipo <white>{value_type}</white><gray>. Immissione:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Negozio di archiviazione</gradient>"

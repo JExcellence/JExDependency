@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Painel de administração</gradient>"
     lore:
       - "<gray>Gerencie sistemas de armazenamento privilegiados em um só lugar.</gray>"
-      - "<gray>Use este painel para configurar o suporte monetário.</gray>"
+      - "<gray>Use este painel para editar valores de configuracao e suporte de moeda.</gray>"
       - "<yellow>Requer:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuracao de Armazenamento</gradient>"
+      lore:
+        - "<gray>Editar valores de</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Todas as configurações editáveis podem ser alteradas por meio de um prompt de bigorna.</gray>"
+        - "<yellow>Clique para abrir os controles de configuração.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Gerenciador de moeda</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuracao de Armazenamento</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informações]</gradient> <white>Configurações</white>"
+    lore:
+      - "<gray>Configurações editáveis detectadas:</gray> <white>{setting_count}</white>"
+      - "<gray>Clique em qualquer entrada abaixo para editar seu valor em uma bigorna.</gray>"
+      - "<yellow>As alterações são escritas diretamente para config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Definir]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Caminho:</gray> <white>{config_path}</white>"
+      - "<gray>Tipo:</gray> <white>{value_type}</white>"
+      - "<gray>Valor atual:</gray> <white>{current_value}</white>"
+      - "<yellow>Clique para editar esta configuração.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Booleano]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Inteiro]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Longo]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dobro]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Lista]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Corda]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Nenhuma configuração editável</white>"
+      lore:
+        - "<gray>Nenhuma configuração editável de escalar/lista foi encontrada.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Acesso de administrador necessário</white>"
+      lore:
+        - "<gray>Você não tem permissão para usar esta visualização de configuração.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Edição de configuração bloqueada</white>"
+      lore:
+        - "<gray>Esta edição não permite edições de configuração de tempo de execução.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Você não tem permissão para editar as configurações.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>A edição de configuração está bloqueada nesta edição.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Atualizado <white>{config_path}</white><gray> para <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Editar {config_path}"
+  input:
+    lore:
+      - "<gray>Caminho:</gray> <white>{config_path}</white>"
+      - "<gray>Tipo:</gray> <white>{value_type}</white>"
+      - "<gray>Valor atual:</gray> <white>{current_value}</white>"
+      - "<yellow>Insira o novo valor e confirme.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Entrada inválida para o tipo <white>{value_type}</white><gray>. Entrada:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Armazenamento</gradient>"

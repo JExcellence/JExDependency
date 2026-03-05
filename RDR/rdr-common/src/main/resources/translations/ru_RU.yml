@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Панель администратора</gradient>"
     lore:
       - "<gray>Управляйте привилегированными системами хранения из одного места.</gray>"
-      - "<gray>Используйте эту панель для настройки поддержки валюты.</gray>"
+      - "<gray>Используйте эту панель для редактирования значений конфигурации и поддержки валют.</gray>"
       - "<yellow>Требует:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Настройка Хранилища</gradient>"
+      lore:
+        - "<gray>Изменить значения из</gray> <white>конфигурация/config.yml</white><gray>.</gray>"
+        - "<gray>Каждый редактируемый параметр можно изменить с помощью наковальни.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления конфигурацией.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Валютный менеджер</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Настройка Хранилища</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация]</gradient> <white>Настройки конфигурации</white>"
+    lore:
+      - "<gray>Обнаружены редактируемые настройки:</gray> <white>{setting_count}</white>"
+      - "<gray>Нажмите любую запись ниже, чтобы изменить ее значение на наковальне.</gray>"
+      - "<yellow>Изменения записываются непосредственно в config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Набор]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Путь:</gray> <white>{config_path}</white>"
+      - "<gray>Тип:</gray> <white>{value_type}</white>"
+      - "<gray>Текущее значение:</gray> <white>{current_value}</white>"
+      - "<yellow>Нажмите, чтобы изменить этот параметр.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Целое число]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Длинный]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Двойной]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Список]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Нить]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Нет редактируемых настроек</white>"
+      lore:
+        - "<gray>Не найдено редактируемых скалярных/списочных настроек конфигурации.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Требуется доступ администратора</white>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого представления конфигурации.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[Х]</gradient> <white>Редактирование конфигурации заблокировано</white>"
+      lore:
+        - "<gray>Эта версия не позволяет редактировать конфигурацию во время выполнения.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>У вас нет разрешения на редактирование настроек конфигурации.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Редактирование конфигурации заблокировано в этой версии.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Обновлено <white>{config_path}</white><gray> до <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Редактировать {config_path}"
+  input:
+    lore:
+      - "<gray>Путь:</gray> <white>{config_path}</white>"
+      - "<gray>Тип:</gray> <white>{value_type}</white>"
+      - "<gray>Текущее значение:</gray> <white>{current_value}</white>"
+      - "<yellow>Введите новое значение и подтвердите.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Недопустимый ввод для типа <white>{value_type}</white><gray>. Ввод: </gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Хранилище хранения</gradient>"

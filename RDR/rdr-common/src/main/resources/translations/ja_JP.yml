@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 管理パネル</gradient>"
     lore:
       - "<gray>特権ストレージ システムを 1 か所から管理します。</gray>"
-      - "<gray>このパネルを使用して、通貨サポートを構成します。</gray>"
+      - "<gray>このパネルで設定値と通貨サポートを編集できます。</gray>"
       - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] ストレージ設定</gradient>"
+      lore:
+        - "<gray>値の編集</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>すべての編集可能な設定は、金床プロンプトから変更できます。</gray>"
+        - "<yellow>クリックして構成コントロールを開きます。</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] ストレージ設定</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>構成設定</white>"
+    lore:
+      - "<gray>検出された編集可能な設定:</gray> <white>{setting_count}</white>"
+      - "<gray>値を編集するには下のいずれかのエントリをクリックしてください</gray>"
+      - "<yellow>変更はに直接書き込まれます。 config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[セット]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>パス:</gray> <white>{config_path}</white>"
+      - "<gray>タイプ:</gray> <white>{value_type}</white>"
+      - "<gray>現在の値:</gray> <white>{current_value}</white>"
+      - "<yellow>クリックしてこの設定を編集します。</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[ブール値]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[整数]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[長さ]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[ダブル]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[リスト]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[弦]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>編集不可設定</white>"
+      lore:
+        - "<gray>編集可能なスカラー/リスト構成設定が見つかりませんでした。</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要</white>"
+      lore:
+        - "<gray>この構成ビューを使用する権限がありません。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>構成編集はロックされています</white>"
+      lore:
+        - "<gray>このエディションではランタイム設定の編集ができません。</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>構成設定を編集する権限がありません。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このエディションでは構成編集がロックされています。</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>更新 <white>{config_path}</white><gray> を <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "編集 {config_path}"
+  input:
+    lore:
+      - "<gray>パス:</gray> <white>{config_path}</white>"
+      - "<gray>タイプ:</gray> <white>{value_type}</white>"
+      - "<gray>現在の値:</gray> <white>{current_value}</white>"
+      - "<yellow>新しい値を入力して確認してください。</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>タイプの入力が無効です<white>{value_type}</white><gray>。入力:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] ストレージ ストア</gradient>"

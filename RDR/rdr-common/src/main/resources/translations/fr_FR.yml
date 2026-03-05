@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] Panneau d'administration RDR</gradient>"
     lore:
       - "<gray>Gérez les systèmes de stockage privilégiés à partir d’un seul endroit.</gray>"
-      - "<gray>Utilisez ce panneau pour configurer la prise en charge des devises.</gray>"
+      - "<gray>Utilisez ce panneau pour modifier les valeurs de configuration et la prise en charge des devises.</gray>"
       - "<yellow>Nécessite :</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuration du Stockage</gradient>"
+      lore:
+        - "<gray>Modifier les valeurs de</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Chaque paramètre modifiable peut être modifié via une invite d'enclume.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles de configuration.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Gestionnaire de devises</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuration du Stockage</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Paramètres de configuration</white>"
+    lore:
+      - "<gray>Paramètres modifiables détectés :</gray> <white>{setting_count}</white>"
+      - "<gray>Cliquez sur n'importe quelle entrée ci-dessous pour modifier sa valeur dans un anvil.</gray>"
+      - "<yellow>Les modifications sont écrites directement dans config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Chemin :</gray> <white>{config_path}</white>"
+      - "<gray>Type :</gray> <white>{value_type}</white>"
+      - "<gray>Valeur actuelle :</gray> <white>{current_value}</white>"
+      - "<yellow>Cliquez pour modifier ce paramètre.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Booléen]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Integer]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Long]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Double]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[List]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[String]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Aucun paramètre modifiable</white>"
+      lore:
+        - "<gray>Aucun paramètre de configuration scalaire/liste modifiable n'a été trouvé.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accès administrateur requis</white>"
+      lore:
+        - "<gray>Vous n'êtes pas autorisé à utiliser cette vue de configuration.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Modification de la configuration verrouillée</white>"
+      lore:
+        - "<gray>Cette édition n'autorise pas les modifications de la configuration d'exécution.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vous n'êtes pas autorisé à modifier les paramètres de configuration.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>La modification de la configuration est verrouillée dans cette édition.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Mise à jour <white>{config_path}</white><gray> à <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Modifier {config_path}"
+  input:
+    lore:
+      - "<gray>Chemin :</gray> <white>{config_path}</white>"
+      - "<gray>Type :</gray> <white>{value_type}</white>"
+      - "<gray>Valeur actuelle :</gray> <white>{current_value}</white>"
+      - "<yellow>Entrez la nouvelle valeur et confirmez.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Entrée non valide pour le type <white>{value_type}</white><gray>. Entrée : </gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Magasin de stockage</gradient>"

@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Administrasjonspanel</gradient>"
     lore:
       - "<gray>Administrer privilegerte lagringssystemer fra ett sted.</gray>"
-      - "<gray>Bruk dette panelet til å konfigurere valutastøtte.</gray>"
+      - "<gray>Bruk dette panelet til a redigere konfigurasjonsverdier og valutastotte.</gray>"
       - "<yellow>Krever:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfig</gradient>"
+      lore:
+        - "<gray>Rediger verdier fra</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Alle redigerbare innstillinger kan endres gjennom en ambolt-melding.</gray>"
+        - "<yellow>Klikk for å åpne konfigurasjonskontroller.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutaforvalter</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfig</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Konfigurasjonsinnstillinger</white>"
+    lore:
+      - "<gray>Redigerbare innstillinger oppdaget:</gray> <white>{setting_count}</white>"
+      - "<gray>Klikk på en oppføring nedenfor for å redigere verdien i en ambolt.</gray>"
+      - "<yellow>Endringer skrives direkte til config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Sett]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Sti:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Gjeldende verdi:</gray> <white>{current_value}</white>"
+      - "<yellow>Klikk for å redigere denne innstillingen.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[boolsk]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Heltall]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Lang]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dobbelt]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Liste]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[String]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Ingen redigerbare innstillinger</white>"
+      lore:
+        - "<gray>Ingen redigerbare skalar-/listekonfigurasjonsinnstillinger ble funnet.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratortilgang kreves</white>"
+      lore:
+        - "<gray>Du har ikke tillatelse til å bruke denne konfigurasjonsvisningen.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Konfigurasjonsredigering låst</white>"
+      lore:
+        - "<gray>Denne utgaven tillater ikke redigeringer av kjøretidskonfigurasjon.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tillatelse til å redigere konfigurasjonsinnstillinger.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurasjonsredigering er låst i denne utgaven.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Oppdatert<white>{config_path}</white><gray> til <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Redigere{config_path}"
+  input:
+    lore:
+      - "<gray>Sti:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Gjeldende verdi:</gray> <white>{current_value}</white>"
+      - "<yellow>Skriv inn den nye verdien og bekreft.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ugyldig inndata for type<white>{value_type}</white><gray>. Inndata:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Lagringsbutikk</gradient>"

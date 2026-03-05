@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Πίνακας διαχειριστή</gradient>"
     lore:
       - "<gray>Διαχειριστείτε προνομιακά συστήματα αποθήκευσης από ένα μέρος.</gray>"
-      - "<gray>Χρησιμοποιήστε αυτό το πλαίσιο για να διαμορφώσετε την υποστήριξη νομισμάτων.</gray>"
+      - "<gray>Χρησιμοποίησε αυτό το πάνελ για επεξεργασία τιμών ρυθμίσεων και υποστήριξης νομίσματος.</gray>"
       - "<yellow>Απαιτεί:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Ρύθμιση Αποθήκευσης</gradient>"
+      lore:
+        - "<gray>Επεξεργασία τιμών από</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Κάθε επεξεργάσιμη ρύθμιση μπορεί να αλλάξει μέσω μιας προτροπής με αμόνι.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου διαμόρφωσης.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Υπεύθυνος νομισμάτων</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Ρύθμιση Αποθήκευσης</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>Ρυθμίσεις διαμόρφωσης</white>"
+    lore:
+      - "<gray>Εντοπίστηκαν επεξεργάσιμες ρυθμίσεις:</gray> <white>{setting_count}</white>"
+      - "<gray>Κάντε κλικ σε οποιαδήποτε καταχώρηση παρακάτω για να επεξεργαστείτε την τιμή της σε ένα αμόνι.</gray>"
+      - "<yellow>Οι αλλαγές γράφονται απευθείας στο config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Σειρά]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Μονοπάτι:</gray> <white>{config_path}</white>"
+      - "<gray>Τύπος:</gray> <white>{value_type}</white>"
+      - "<gray>Τρέχουσα τιμή:</gray> <white>{current_value}</white>"
+      - "<yellow>Κάντε κλικ για να επεξεργαστείτε αυτήν τη ρύθμιση.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Ακέραιος αριθμός]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Μακρύς]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Διπλό]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Λίστα]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Σειρά]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Δεν υπάρχουν επεξεργάσιμες ρυθμίσεις</white>"
+      lore:
+        - "<gray>Δεν βρέθηκαν επεξεργάσιμες ρυθμίσεις παραμέτρων κλιμακωτή/λίστας.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτής της προβολής διαμόρφωσης.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Η επεξεργασία διαμόρφωσης κλειδώθηκε</white>"
+      lore:
+        - "<gray>Αυτή η έκδοση δεν επιτρέπει τροποποιήσεις ρυθμίσεων χρόνου εκτέλεσης.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια να επεξεργαστείτε τις ρυθμίσεις παραμέτρων.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Η επεξεργασία διαμόρφωσης είναι κλειδωμένη σε αυτήν την έκδοση.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ενημερώθηκε<white>{config_path}</white><gray>να<white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Εκδίδω{config_path}"
+  input:
+    lore:
+      - "<gray>Μονοπάτι:</gray> <white>{config_path}</white>"
+      - "<gray>Τύπος:</gray> <white>{value_type}</white>"
+      - "<gray>Τρέχουσα τιμή:</gray> <white>{current_value}</white>"
+      - "<yellow>Εισαγάγετε τη νέα τιμή και επιβεβαιώστε.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Μη έγκυρη εισαγωγή για τον τύπο<white>{value_type}</white><gray>. Εισαγωγή:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Κατάστημα αποθήκευσης</gradient>"

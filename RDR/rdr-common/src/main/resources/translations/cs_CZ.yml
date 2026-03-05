@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR panel administrátora</gradient>"
     lore:
       - "<gray>Spravujte privilegované úložné systémy z jednoho místa.</gray>"
-      - "<gray>Tento panel použijte ke konfiguraci podpory měn.</gray>"
+      - "<gray>Pouzij tento panel k uprave hodnot konfigurace a podpory men.</gray>"
       - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace Uloziste</gradient>"
+      lore:
+        - "<gray>Upravit hodnoty z</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Každé upravitelné nastavení lze změnit pomocí výzvy kovadliny.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky konfigurace.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace Uloziste</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informace]</gradient> <white>Nastavení konfigurace</white>"
+    lore:
+      - "<gray>Zjištěna upravitelná nastavení:</gray> <white>{setting_count}</white>"
+      - "<gray>Kliknutím na libovolnou položku níže upravíte její hodnotu v kovadlině.</gray>"
+      - "<yellow>Změny se zapisují přímo do config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Soubor]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Cesta:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktuální hodnota:</gray> <white>{current_value}</white>"
+      - "<yellow>Kliknutím upravíte toto nastavení.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Celé číslo]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Dlouho]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Dvojnásobek]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Seznam]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[řetězec]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Žádná upravitelná nastavení</white>"
+      lore:
+        - "<gray>Nebyla nalezena žádná upravitelná nastavení skalární/seznamové konfigurace.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Je vyžadován přístup správce</white>"
+      lore:
+        - "<gray>K použití tohoto konfiguračního zobrazení nemáte oprávnění.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Úprava konfigurace uzamčena</white>"
+      lore:
+        - "<gray>Tato edice neumožňuje úpravy konfigurace za běhu.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění upravovat nastavení konfigurace.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Úpravy konfigurací jsou v tomto vydání uzamčeny.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aktualizováno<white>{config_path}</white><gray>na<white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Upravit{config_path}"
+  input:
+    lore:
+      - "<gray>Cesta:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktuální hodnota:</gray> <white>{current_value}</white>"
+      - "<yellow>Zadejte novou hodnotu a potvrďte.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Neplatný vstup pro typ<white>{value_type}</white><gray>. Vstup:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] úložiště</gradient>"

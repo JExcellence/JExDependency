@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Bảng quản trị</gradient>"
     lore:
       - "<gray>Quản lý hệ thống lưu trữ đặc quyền từ một nơi.</gray>"
-      - "<gray>Sử dụng bảng này để định cấu hình hỗ trợ tiền tệ.</gray>"
+      - "<gray>Dung bang nay de chinh sua gia tri cau hinh va ho tro tien te.</gray>"
       - "<yellow>Yêu cầu:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Cau Hinh Kho Luu Tru</gradient>"
+      lore:
+        - "<gray>Chỉnh sửa giá trị từ</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Mọi cài đặt có thể chỉnh sửa đều có thể được thay đổi thông qua lời nhắc đe.</gray>"
+        - "<yellow>Nhấp để mở điều khiển cấu hình.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Quản lý tiền tệ</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Cau Hinh Kho Luu Tru</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Cài đặt cấu hình</white>"
+    lore:
+      - "<gray>Đã phát hiện cài đặt có thể chỉnh sửa:</gray> <white>{setting_count}</white>"
+      - "<gray>Nhấp vào bất kỳ mục nào bên dưới để chỉnh sửa giá trị của nó trong một anvil.</gray>"
+      - "<yellow>Các thay đổi được ghi trực tiếp vào config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Bộ]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Đường dẫn:</gray> <white>{config_path}</white>"
+      - "<gray>Loại:</gray> <white>{value_type}</white>"
+      - "<gray>Giá trị hiện tại:</gray> <white>{current_value}</white>"
+      - "<yellow>Nhấp để chỉnh sửa cài đặt này.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Số nguyên]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Dài]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Gấp đôi]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Danh sách]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[Sợi dây]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Không có thể chỉnh sửa Cài đặt</white>"
+      lore:
+        - "<gray>Không tìm thấy cài đặt cấu hình vô hướng/danh sách có thể chỉnh sửa.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập của quản trị viên</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng chế độ xem cấu hình này.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Chỉnh sửa cấu hình Đã khóa</white>"
+      lore:
+        - "<gray>Phiên bản này không cho phép chỉnh sửa cấu hình thời gian chạy.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền chỉnh sửa cài đặt cấu hình.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Việc chỉnh sửa cấu hình bị khóa trong phiên bản này.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã cập nhật <white>{config_path}</white><gray> đến <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Chỉnh sửa {config_path}"
+  input:
+    lore:
+      - "<gray>Đường dẫn:</gray> <white>{config_path}</white>"
+      - "<gray>Loại:</gray> <white>{value_type}</white>"
+      - "<gray>Giá trị hiện tại:</gray> <white>{current_value}</white>"
+      - "<yellow>Nhập giá trị mới và xác nhận.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Đầu vào không hợp lệ cho loại <white>{value_type}</white><gray>. Đầu vào:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Kho lưu trữ</gradient>"

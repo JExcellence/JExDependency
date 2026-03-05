@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 관리자 패널</gradient>"
     lore:
       - "<gray>한 곳에서 권한 있는 스토리지 시스템을 관리하세요.</gray>"
-      - "<gray>이 패널을 사용하여 통화 지원을 구성합니다.</gray>"
+      - "<gray>이 패널에서 설정 값과 통화 지원을 수정하세요.</gray>"
       - "<yellow>요구사항:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] 저장소 설정</gradient>"
+      lore:
+        - "<gray></gray> <white>구성/config.yml</white><gray>.</gray>"
+        - "<gray>모든 편집 가능한 설정은 앤빌 프롬프트를 통해 변경할 수 있습니다.</gray>"
+        - "<yellow>구성 제어를 열려면 클릭하십시오.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 통화 관리자</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] 저장소 설정</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>구성 설정</white>"
+    lore:
+      - "<gray>에서 값 수정 편집 가능한 설정이 감지되었습니다:</gray> <white>{setting_count}</white>"
+      - "<gray>아래 항목을 클릭하여 값을 편집하십시오. 모루.</gray>"
+      - "<yellow>변경 사항은 다음에 직접 기록됩니다. config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[세트]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>경로:</gray> <white>{config_path}</white>"
+      - "<gray>유형:</gray> <white>{value_type}</white>"
+      - "<gray>현재 가치:</gray> <white>{current_value}</white>"
+      - "<yellow>이 설정을 편집하려면 클릭하세요.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[정수]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[긴]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[더블]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[목록]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[끈]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>편집 가능 없음 설정</white>"
+      lore:
+        - "<gray>편집 가능한 스칼라/목록 구성 설정을 찾을 수 없습니다.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 구성 보기를 사용할 권한이 없습니다.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>구성 편집 잠김</white>"
+      lore:
+        - "<gray>이 버전은 런타임 구성 편집을 허용하지 않습니다.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>구성 설정을 편집할 수 있는 권한이 없습니다.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>구성 편집은 이 버전에서 잠겨 있습니다.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>업데이트됨 <white>{config_path}</white><gray> ~ <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "{config_path}"
+  input:
+    lore:
+      - "<gray>경로:</gray> <white>{config_path}</white>"
+      - "<gray>유형:</gray> <white>{value_type}</white>"
+      - "<gray>현재 가치:</gray> <white>{current_value}</white>"
+      - "<yellow>새 값을 입력하고 확인하십시오.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>유형 <white>{value_type}</white><gray>. 입력:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] 저장소 저장소</gradient>"

@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Panel de administración</gradient>"
     lore:
       - "<gray>Administre sistemas de almacenamiento privilegiados desde un solo lugar.</gray>"
-      - "<gray>Utilice este panel para configurar el soporte de moneda.</gray>"
+      - "<gray>Usa este panel para editar valores de configuracion y soporte de moneda.</gray>"
       - "<yellow>Requiere:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuracion de Almacenamiento</gradient>"
+      lore:
+        - "<gray>Editar valores de</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Cada configuración editable se puede cambiar a través de un indicador de yunque.</gray>"
+        - "<yellow>Haga clic para abrir los controles de configuración.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Administrador de divisas</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuracion de Almacenamiento</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Configuración de configuración</white>"
+    lore:
+      - "<gray>Configuraciones editables detectadas:</gray> <white>{setting_count}</white>"
+      - "<gray>Haga clic en cualquier entrada a continuación para editar su valor en un yunque.</gray>"
+      - "<yellow>Los cambios se escriben directamente en config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Ruta:</gray> <white>{config_path}</white>"
+      - "<gray>Tipo:</gray> <white>{value_type}</white>"
+      - "<gray>Current valor:</gray> <white>{current_value}</white>"
+      - "<yellow>Haga clic para editar esta configuración.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Booleano]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Integer]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Long]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Double]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[List]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[String]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>No hay configuraciones editables</white>"
+      lore:
+        - "<gray>No se encontraron configuraciones de escalar/lista editables.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Se requiere acceso de administrador</white>"
+      lore:
+        - "<gray>No tienes permiso para usar esta vista de configuración.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Edición de configuración bloqueada</white>"
+      lore:
+        - "<gray>Esta edición no permite ediciones de configuración en tiempo de ejecución.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tienes permiso para editar la configuración.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>La edición de configuración está bloqueada en esta edición.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Actualizado <white>{config_path}</white><gray> a <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Editar {config_path}"
+  input:
+    lore:
+      - "<gray>Ruta:</gray> <white>{config_path}</white>"
+      - "<gray>Tipo:</gray> <white>{value_type}</white>"
+      - "<gray>Current valor:</gray> <white>{current_value}</white>"
+      - "<yellow>Ingrese el nuevo valor y confirme.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Entrada no válida para el tipo <white>{value_type}</white><gray>. Entrada:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Almacén de almacenamiento</gradient>"

@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin-Panel</gradient>"
     lore:
       - "<gray>Verwalten Sie privilegierte Speichersysteme von einem Ort aus.</gray>"
-      - "<gray>Verwenden Sie dieses Panel, um die Währungsunterstützung zu konfigurieren.</gray>"
+      - "<gray>Nutze dieses Panel, um Konfigurationswerte und Waehrungsunterstuetzung zu bearbeiten.</gray>"
       - "<yellow>Erfordert:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Speicher-Konfiguration</gradient>"
+      lore:
+        - "<gray>Werte bearbeiten aus</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Jede editierbare Einstellung kann über eine Amboss-Eingabeaufforderung geändert werden.</gray>"
+        - "<yellow>Klicken, um Konfigurationskontrollen zu öffnen.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Währungsmanager</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Speicher-Konfiguration</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Konfigurationseinstellungen</white>"
+    lore:
+      - "<gray>Bearbeitbare Einstellungen erkannt:</gray> <white>{setting_count}</white>"
+      - "<gray>Klicken Sie auf einen beliebigen Eintrag unten, um seinen Wert in einem zu bearbeiten Amboss.</gray>"
+      - "<yellow>Änderungen werden direkt geschrieben config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Pfad:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktueller Wert:</gray> <white>{current_value}</white>"
+      - "<yellow>Klicken Sie, um diese Einstellung zu bearbeiten.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Integer]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Long]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Double]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[Liste]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[String]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>Keine bearbeitbaren Einstellungen</white>"
+      lore:
+        - "<gray>Es wurden keine bearbeitbaren Skalar-/Listenkonfigurationseinstellungen gefunden.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratorzugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diese Konfigurationsansicht zu verwenden.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config-Bearbeitung gesperrt</white>"
+      lore:
+        - "<gray>Diese Edition erlaubt keine Änderungen an der Laufzeitkonfiguration.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben keine Berechtigung, Konfigurationseinstellungen zu bearbeiten.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Die Konfigurationsbearbeitung ist in dieser Edition gesperrt.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aktualisiert <white>{config_path}</white><gray> bis <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Bearbeiten {config_path}"
+  input:
+    lore:
+      - "<gray>Pfad:</gray> <white>{config_path}</white>"
+      - "<gray>Typ:</gray> <white>{value_type}</white>"
+      - "<gray>Aktueller Wert:</gray> <white>{current_value}</white>"
+      - "<yellow>Geben Sie den neuen Wert ein und bestätigen Sie.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ungültige Eingabe für Typ <white>{value_type}</white><gray>. Eingabe:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Speicherspeicher</gradient>"

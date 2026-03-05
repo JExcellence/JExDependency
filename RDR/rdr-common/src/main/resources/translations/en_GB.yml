@@ -42,9 +42,15 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin Panel</gradient>"
     lore:
       - "<gray>Manage privileged storage systems from one place.</gray>"
-      - "<gray>Use this panel to configure currency support.</gray>"
+      - "<gray>Use this panel to edit config values and currency support.</gray>"
       - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    config:
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
+      lore:
+        - "<gray>Edit values from</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Every editable setting can be changed through an anvil prompt.</gray>"
+        - "<yellow>Click to open config controls.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Currency Manager</gradient>"
       lore:
@@ -106,6 +112,57 @@ storage_admin_currency_ui:
   decoration:
     border:
       name: " "
+
+storage_config_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Config Settings</white>"
+    lore:
+      - "<gray>Editable settings detected:</gray> <white>{setting_count}</white>"
+      - "<gray>Click any entry below to edit its value in an anvil.</gray>"
+      - "<yellow>Changes are written directly to config/config.yml.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#86efac>[Set]</gradient> <white>{config_path}</white>"
+    lore:
+      - "<gray>Path:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Current value:</gray> <white>{current_value}</white>"
+      - "<yellow>Click to edit this setting.</yellow>"
+  type:
+    boolean: "<gradient:#22c55e:#86efac>[Boolean]</gradient>"
+    integer: "<gradient:#f59e0b:#fbbf24>[Integer]</gradient>"
+    long: "<gradient:#f59e0b:#fbbf24>[Long]</gradient>"
+    double: "<gradient:#38bdf8:#60a5fa>[Double]</gradient>"
+    list: "<gradient:#a78bfa:#c4b5fd>[List]</gradient>"
+    string: "<gradient:#6b7280:#9ca3af>[String]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>No Editable Settings</white>"
+      lore:
+        - "<gray>No editable scalar/list config settings were found.</gray>"
+    permission_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this config view.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>This edition does not allow runtime config edits.</gray>"
+    permission_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to edit config settings.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config editing is locked in this edition.</gray>"
+    updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Updated <white>{config_path}</white><gray> to <white>{updated_value}</white><gray>.</gray>"
+
+storage_config_value_anvil_ui:
+  title: "Edit {config_path}"
+  input:
+    lore:
+      - "<gray>Path:</gray> <white>{config_path}</white>"
+      - "<gray>Type:</gray> <white>{value_type}</white>"
+      - "<gray>Current value:</gray> <white>{current_value}</white>"
+      - "<yellow>Enter the new value and confirm.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Invalid input for type <white>{value_type}</white><gray>. Input:</gray> <white>{input}</white>"
+
 
 storage_store_ui:
   title: "<gradient:#38bdf8:#60a5fa>[$] Storage Store</gradient>"
