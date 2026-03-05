@@ -55,7 +55,7 @@ public class ShopAdminView extends BaseView {
         return new String[]{
                 "         ",
                 "    s    ",
-                "    b    ",
+                "   b c   ",
                 "         ",
                 "         ",
                 "         "
@@ -83,6 +83,12 @@ public class ShopAdminView extends BaseView {
         render.layoutSlot('b', this.createServerBankButton(player))
                 .onClick(clickContext -> clickContext.openForPlayer(
                         ServerBankView.class,
+                        java.util.Map.of("plugin", this.rds.get(clickContext))
+                ));
+
+        render.layoutSlot('c', this.createConfigButton(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        ShopConfigView.class,
                         java.util.Map.of("plugin", this.rds.get(clickContext))
                 ));
     }
@@ -115,6 +121,16 @@ public class ShopAdminView extends BaseView {
         return UnifiedBuilderFactory.item(Material.GOLD_BLOCK)
                 .setName(this.i18n("actions.server_bank.name", player).build().component())
                 .setLore(this.i18n("actions.server_bank.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createConfigButton(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
+                .setName(this.i18n("actions.config.name", player).build().component())
+                .setLore(this.i18n("actions.config.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     }
