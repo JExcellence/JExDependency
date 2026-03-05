@@ -3,14 +3,19 @@ package com.raindropcentral.rdr.commands;
 import de.jexcellence.evaluable.section.IPermissionNode;
 
 /**
- * Permission nodes used by the primary player command ({@code /prt}).
+ * Permission nodes used by the primary player command ({@code /prr}).
  * <p>
  * Each enum value provides an {@code internalName} used by the configuration system
  * and a {@code fallbackNode} string that represents the default Bukkit permission
  * when no explicit mapping is provided.
+ *
+ * @author ItsRainingHP
+ * @since 5.0.0
+ * @version 5.0.0
  */
 public enum EPRRPermission implements IPermissionNode{
     COMMAND("command","raindroprdr.command"),
+    ADMIN("commandAdmin","raindroprdr.command.admin"),
     INFO("commandInfo","raindroprdr.command.info"),
     SCOREBOARD("commandScoreboard","raindroprdr.command.scoreboard"),
     STORAGE("commandStorage","raindroprdr.command.storage")

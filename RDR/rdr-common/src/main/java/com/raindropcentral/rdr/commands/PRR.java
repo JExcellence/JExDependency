@@ -11,6 +11,7 @@ import com.raindropcentral.commands.utility.Command;
 import com.raindropcentral.rdr.RDR;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
+import com.raindropcentral.rdr.view.StorageAdminView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StorageViewLauncher;
 import de.jexcellence.evaluable.section.ACommandSection;
@@ -25,7 +26,8 @@ import org.jspecify.annotations.NonNull;
  * Primary player command for the RDR storage plugin.
  *
  * <p>The command exposes the storage overview entry point, quick hotkey opens via
- * {@code /rr <hotkey>}, and first-argument tab completion for supported actions and bound hotkeys.</p>
+ * {@code /rr <hotkey>}, the storage-admin menu for privileged players, and first-argument
+ * tab completion for supported actions and bound hotkeys.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
@@ -70,6 +72,7 @@ public class PRR extends PlayerCommand {
 
         final EPRRAction action = this.resolveAction(args);
         switch (action) {
+            case ADMIN -> this.handleAdminCommand(player);
             case SCOREBOARD -> this.handleScoreboardToggle(player, args);
             case STORAGE -> this.openStorageOverview(player);
             default -> {
@@ -158,6 +161,21 @@ public class PRR extends PlayerCommand {
         );
     }
 
+    private void handleAdminCommand(final @NotNull Player player) {
+        if (this.hasNoPermission(player, EPRRPermission.ADMIN) || this.rdr == null) {
+            return;
+        }
+
+        new I18n.Builder("storage.message.admin_opened", player)
+            .build()
+            .sendMessage();
+        this.rdr.getViewFrame().open(
+            StorageAdminView.class,
+            player,
+            Map.of("plugin", this.rdr)
+        );
+    }
+
     private void handleScoreboardToggle(
         final @NotNull Player player,
         final @NotNull String[] args
@@ -200,6 +218,9 @@ public class PRR extends PlayerCommand {
 
     private @NotNull List<String> getAvailableActions(final @NotNull Player player) {
         final List<String> actions = new ArrayList<>();
+        if (this.hasPermission(player, EPRRPermission.ADMIN)) {
+            actions.add(EPRRAction.ADMIN.name().toLowerCase(Locale.ROOT));
+        }
         if (this.hasPermission(player, EPRRPermission.SCOREBOARD)) {
             actions.add(EPRRAction.SCOREBOARD.name().toLowerCase(Locale.ROOT));
         }

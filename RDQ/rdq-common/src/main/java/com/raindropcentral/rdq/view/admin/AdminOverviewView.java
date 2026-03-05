@@ -46,6 +46,7 @@ public class AdminOverviewView extends BaseView {
 	) {
 		this.initializePermissionsViewButton(render, player);
 		this.initializeGroupCreationButton(render, player);
+		this.initializeCurrencyViewButton(render, player);
 	}
 	
 	/**
@@ -168,6 +169,41 @@ public class AdminOverviewView extends BaseView {
 				       i18n("create_ranks.error", player)
 				           .includePrefix()
 				           .build().sendMessage();
+			       }
+		       });
+	}
+
+	/**
+	 * Initializes the button that opens the currency administration view.
+	 *
+	 * @param context the render context for the current inventory
+	 * @param player the player viewing the interface
+	 */
+	private void initializeCurrencyViewButton(
+		final @NotNull RenderContext context,
+		final @NotNull Player player
+	) {
+		context.slot(1, 3)
+		       .withItem(
+			       UnifiedBuilderFactory.item(Material.GOLD_INGOT)
+			                            .setName(i18n("view_currencies.name", player).build().component())
+			                            .setLore(i18n("view_currencies.lore", player).build().children())
+			                            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+			                            .build()
+		       ).onClick(clickContext -> {
+			       try {
+				       clickContext.openForPlayer(
+					       AdminCurrencyView.class,
+					       Map.of("plugin", rdq.get(clickContext))
+				       );
+			       } catch (final Exception exception) {
+				       LOGGER.log(
+					       Level.SEVERE,
+					       "Failed to open currency view for player: " + player.getName(),
+					       exception
+				       );
+
+				       i18n("view_currencies.error", player).includePrefix().build().sendMessage();
 			       }
 		       });
 	}

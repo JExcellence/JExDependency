@@ -297,11 +297,68 @@ shop_admin_ui:
         - "<gray>Edit values from</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Every editable setting can be changed through an anvil prompt.</gray>"
         - "<yellow>Click to open config controls.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Currency Manager</gradient>"
+      lore:
+        - "<gray>Review detected currencies from Vault and JExEconomy.</gray>"
+        - "<gray>Create the default</gray> <white>raindrops</white> <gray>currency when needed.</gray>"
+        - "<yellow>Click to open currency controls.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
       lore:
         - "<gray>You do not have permission to use this admin panel.</gray>"
+
+# Admin currency view for detected providers and default currency creation.
+shop_admin_currency_ui:
+  title: "<gradient:#a78bfa:#c4b5fd>[Cur] Currency Manager</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Currency Providers</white>"
+    lore:
+      - "<gray>Detected currencies:</gray> <white>{currency_count}</white>"
+      - "<gray>Vault available:</gray> <white>{vault_available}</white>"
+      - "<gray>JExEconomy available:</gray> <white>{jexeconomy_available}</white>"
+      - "<yellow>Use the crystal button to create default currency.</yellow>"
+  currency_entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Cur]</gradient> <white>{currency_id}</white>"
+    lore:
+      - "<gray>Provider:</gray> <white>{provider}</white>"
+      - "<gray>Symbol:</gray> <white>{symbol}</white>"
+      - "<gray>Prefix:</gray> <white>{prefix}</white>"
+      - "<gray>Suffix:</gray> <white>{suffix}</white>"
+  default_currency:
+    create:
+      name: "<gradient:#10b981:#34d399>[+]</gradient> <white>Create {currency_id}</white>"
+      lore:
+        - "<gray>Create the default RDS currency in JExEconomy.</gray>"
+        - "<yellow>Click to create {currency_id}.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>JExEconomy Required</white>"
+      lore:
+        - "<gray>You cannot create default currency without JExEconomy.</gray>"
+        - "<gray>Install and enable JExEconomy first.</gray>"
+    already_exists:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>{currency_id} Ready</white>"
+      lore:
+        - "<gray>The default currency already exists.</gray>"
+    messages:
+      created: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Created default currency:</gray> <white>{currency_id}</white>"
+      failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to create currency:</gray> <white>{currency_id}</white>"
+      already_exists: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>Currency already exists:</gray> <white>{currency_id}</white>"
+      jexeconomy_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You cannot use this button unless JExEconomy is available.</gray>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>No Currencies Detected</white>"
+      lore:
+        - "<gray>No Vault or JExEconomy currencies were detected.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this currency view.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage currencies.</gray>"
+  decoration:
+    border:
+      name: " "
 
 # Config browser UI for editable settings and update feedback.
 shop_config_ui:

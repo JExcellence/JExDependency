@@ -29,6 +29,16 @@ class PRRTest {
     }
 
     @Test
+    void tabCompletionSuggestsAdminAction() {
+        final PRR command = new PRR(new PRRSection(new EvaluationEnvironmentBuilder()), null);
+        final Player player = this.createPlayer();
+
+        final List<String> suggestions = command.onPlayerTabCompletion(player, "prr", new String[]{"ad"});
+
+        assertEquals(List.of("admin"), suggestions);
+    }
+
+    @Test
     void tabCompletionReturnsEmptyListBeyondFirstArgument() {
         final PRR command = new PRR(new PRRSection(new EvaluationEnvironmentBuilder()), null);
         final Player player = this.createPlayer();

@@ -52,7 +52,7 @@ public class ShopAdminView extends BaseView {
         return new String[]{
                 "         ",
                 "    s    ",
-                "   b c   ",
+                "  b c u  ",
                 "         ",
                 "         ",
                 "         "
@@ -70,7 +70,7 @@ public class ShopAdminView extends BaseView {
             final @NotNull RenderContext render,
             final @NotNull Player player
     ) {
-        if (!player.hasPermission(ADMIN_COMMAND_PERMISSION)) {
+        if (!this.hasAdminAccess(player)) {
             render.slot(22).renderWith(() -> this.createLockedItem(player));
             return;
         }
@@ -86,6 +86,12 @@ public class ShopAdminView extends BaseView {
         render.layoutSlot('c', this.createConfigButton(player))
                 .onClick(clickContext -> clickContext.openForPlayer(
                         ShopConfigView.class,
+                        java.util.Map.of("plugin", this.rds.get(clickContext))
+                ));
+
+        render.layoutSlot('u', this.createCurrencyButton(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        AdminCurrencyView.class,
                         java.util.Map.of("plugin", this.rds.get(clickContext))
                 ));
     }
@@ -132,6 +138,16 @@ public class ShopAdminView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createCurrencyButton(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.PRISMARINE_CRYSTALS)
+                .setName(this.i18n("actions.currency.name", player).build().component())
+                .setLore(this.i18n("actions.currency.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private @NotNull ItemStack createLockedItem(
             final @NotNull Player player
     ) {
@@ -140,5 +156,11 @@ public class ShopAdminView extends BaseView {
                 .setLore(this.i18n("feedback.locked.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
+    }
+
+    private boolean hasAdminAccess(
+            final @NotNull Player player
+    ) {
+        return player.isOp() || player.hasPermission(ADMIN_COMMAND_PERMISSION);
     }
 }

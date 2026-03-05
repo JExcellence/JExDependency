@@ -4,9 +4,9 @@ commands:
     description: 'RDR Commands'
     aliases:
       - rr
-    usage: 'rr [storage|scoreboard]'
+    usage: 'rr [admin|storage|scoreboard|<hotkey>]'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<storage | scoreboard>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | storage | scoreboard | hotkey>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &
@@ -25,6 +25,7 @@ commands:
       missingMessage$: 'lut["prefix"] & "You\sre lacking the permission: " & permission'
       nodes:
         command: 'raindroprdr.command'
+        commandAdmin: 'raindroprdr.command.admin'
         commandInfo: 'raindroprdr.command.info'
         commandScoreboard: 'raindroprdr.command.scoreboard'
         commandStorage: 'raindroprdr.command.storage'

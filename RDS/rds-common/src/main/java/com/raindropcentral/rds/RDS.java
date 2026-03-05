@@ -14,6 +14,7 @@ import com.raindropcentral.rds.service.bank.AdminShopServerBankScheduler;
 import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
+import com.raindropcentral.rds.view.shop.AdminCurrencyView;
 import com.raindropcentral.rds.view.shop.ShopBankView;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
 import com.raindropcentral.rds.view.shop.ShopEditView;
@@ -443,6 +444,7 @@ public class RDS {
                 .with(
                     new ShopOverviewView(),
                     new ShopAdminView(),
+                    new AdminCurrencyView(),
                     new ShopConfigView(),
                     new ShopBankView(),
                     new ServerBankView(),

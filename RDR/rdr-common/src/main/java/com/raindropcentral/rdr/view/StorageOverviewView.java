@@ -21,13 +21,16 @@ import org.jetbrains.annotations.NotNull;
  * Root storage menu for RDR players.
  *
  * <p>This view summarizes the player's current storage ownership and exposes a button to open the
- * paginated per-storage list.</p>
+ * paginated per-storage list. Players with admin access also receive a shortcut to storage-admin
+ * controls.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
  * @version 5.0.0
  */
 public class StorageOverviewView extends BaseView {
+
+    private static final String ADMIN_COMMAND_PERMISSION = "raindroprdr.command.admin";
 
     private final State<RDR> rdr = initialState("plugin");
 
@@ -50,7 +53,7 @@ public class StorageOverviewView extends BaseView {
     protected String[] getLayout() {
         return new String[]{
             "    s    ",
-            "   o t   ",
+            "   o t a ",
             "         "
         };
     }
@@ -80,7 +83,8 @@ public class StorageOverviewView extends BaseView {
     }
 
     /**
-     * Renders the storage summary, list-navigation button, and storage store button.
+     * Renders the storage summary, list-navigation button, storage store button, and optional
+     * admin button.
      *
      * @param render render context for slot registration
      * @param player player viewing the menu
@@ -118,6 +122,18 @@ public class StorageOverviewView extends BaseView {
                     this.rdr.get(clickContext)
                 )
             ));
+
+        if (this.hasAdminAccess(player)) {
+            render.layoutSlot('a')
+                .withItem(this.createAdminItem(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                    StorageAdminView.class,
+                    Map.of(
+                        "plugin",
+                        this.rdr.get(clickContext)
+                    )
+                ));
+        }
     }
 
     /**
@@ -189,5 +205,21 @@ public class StorageOverviewView extends BaseView {
                 .children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
+    }
+
+    private @NotNull ItemStack createAdminItem(
+        final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.COMMAND_BLOCK)
+            .setName(this.i18n("admin.name", player).build().component())
+            .setLore(this.i18n("admin.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private boolean hasAdminAccess(
+        final @NotNull Player player
+    ) {
+        return player.isOp() || player.hasPermission(ADMIN_COMMAND_PERMISSION);
     }
 }
