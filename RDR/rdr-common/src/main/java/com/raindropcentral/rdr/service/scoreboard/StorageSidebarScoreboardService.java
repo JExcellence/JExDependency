@@ -174,11 +174,20 @@ public class StorageSidebarScoreboardService {
             }
         }
 
+        final int maxStorages = this.plugin.getMaximumStorages(player, this.plugin.getDefaultConfig());
+        final String maxStoragesDisplay = maxStorages > 0
+            ? Integer.toString(maxStorages)
+            : this.i18nLine("scoreboard_sidebar.unlimited", player, Map.of());
+
         return List.of(
             this.i18nLine("scoreboard_sidebar.items", player, Map.of("total_items", totalItems)),
             this.i18nLine("scoreboard_sidebar.available_slots", player, Map.of("available_slots", totalAvailableSlots)),
             this.i18nLine("scoreboard_sidebar.storages_obtained", player, Map.of("owned_storages", storages.size())),
-            this.i18nLine("scoreboard_sidebar.max_storages", player, Map.of("max_storages", this.plugin.getMaximumStorages()))
+            this.i18nLine(
+                "scoreboard_sidebar.max_storages",
+                player,
+                Map.of("max_storages", maxStoragesDisplay)
+            )
         );
     }
 

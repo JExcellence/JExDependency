@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Tilgængelige slots:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Opbevaring opnået:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Maksimal lagerplads:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maksimal lagerplads:</gray><white>{max_storages}</white>"
       - "<gray>Dit vault-netværk er vedvarende</gray>"
       - "<gray>og klar til brug på tværs af servere.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Se lagre</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Brug dette panel til at redigere konfigurationsværdier og åbne integrationskontroller.</gray>"
       - "<yellow>Kræver:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] spillerkontroller</gradient>"
+      lore:
+        - "<gray>Rediger afspiller-/gruppegrænser, rabatter og lagringskraftkontroller.</gray>"
+        - "<gray>Åbn tilsidesætte editorer og nødhåndteringshandlinger.</gray>"
+        - "<yellow>Klik for at åbne afspillerens kontroller.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Adminadgang påkrævet</gradient>"
       lore:
         - "<gray>Du har ikke tilladelse til at bruge dette administratorpanel.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Spiller- og gruppekontrol</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Admin Toolkit</gradient>"
+    lore:
+      - "<gray>Rediger maks. lagerplads og rabatter for spillere og grupper.</gray>"
+      - "<gray>Tving dræn/nulstil lager eller luk alle åbne RDR-visninger.</gray>"
+      - "<yellow>Kræver:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Player Tilsidesætter</gradient>"
+      lore:
+        - "<gray>Gennemse online-spillere og konfigurerede tilsidesættelsesmål.</gray>"
+        - "<gray>Rediger maks. lagerplads pr. spiller og rabatværdier.</gray>"
+        - "<yellow>Klik for at åbne afspillertilsidesættelser.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Gruppetilsidesættelser</gradient>"
+      lore:
+        - "<gray>Vælg en LuckPerms-gruppe og indstil tilsidesættelsesværdier.</gray>"
+        - "<gray>Nyttig til tilladelsesbaserede rangtier.</gray>"
+        - "<yellow>Klik for at åbne gruppetilsidesættelser.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Tving drænopbevaring</gradient>"
+      lore:
+        - "<gray>Rydder alt elementindhold fra et valgt lager.</gray>"
+        - "<gray>Bevarer pålidelige indstillinger, gæld og genvejstastværdier.</gray>"
+        - "<yellow>Klik for at vælge et lager.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Tvungen nulstilling af lager</gradient>"
+      lore:
+        - "<gray>Nulstiller et valgt lager til en ren tilstand.</gray>"
+        - "<gray>Rydder elementer, gæld, betroet adgang og genvejstast.</gray>"
+        - "<yellow>Klik for at vælge et lager.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Tving lukke alle RDR-visninger</gradient>"
+      lore:
+        - "<gray>Lukker alle aktuelt åbne RDR-menuer.</gray>"
+        - "<gray>Nyttig efter konfigurationsændringer eller nødhandlinger.</gray>"
+        - "<yellow>Klik for at tvinge alle RDR-visninger til at lukke.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Admin påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne menu.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at bruge afspiller-/gruppeadministratorkontroller.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Tvangslukket <hvid>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Vælg Player Override Target</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Player Tilsidesæt Targets</gradient>"
+    lore:
+      - "<gray>Sporede spillere:</gray> <white>{tracked_players}</white>"
+      - "<gray>Konfigurerede tilsidesættelser:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>overskriver en spiller nedenfor til ZZX.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Tilsidesæt maksimale lagerpladser:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effektive maksimale lagerpladser:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Tilsidesæt rabat:</gray> <white>{override_discount}</white>"
+      - "<gray>Effektiv rabat:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Klik for at redigere denne afspillers tilsidesættelsesprofil.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Ingen spillere fundet</gradient>"
+      lore:
+        - "<gray>Der blev ikke fundet nogen online spillere eller gemte spillertilsidesættelser.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Admin påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at gennemse afspillertilsidesættelser.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Rediger {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Overstyring af afspilleren Override</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Tilsidesæt maksimale lagerpladser:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effektive maksimale lagerpladser:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Tilsidesæt rabat:</gray> <white>{override_discount}</white>"
+      - "<gray>Effektiv rabat:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maksimale lagerpladser</gradient>"
+      lore:
+        - "<gray>Tilsidesæt maksimale lagerpladser:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Effektive maksimale lagerpladser:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Klik for at redigere maks. lagerpladser.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Butiksrabat</gradient>"
+      lore:
+        - "<gray>Tilsidesæt rabat:</gray> <white>{override_discount}</white>"
+        - "<gray>Effektiv rabat:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Klik for at redigere rabatprocent.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Ryd afspillertilsidesættelser</gradient>"
+      lore:
+        - "<gray>Fjerner alle tilsidesættelser af maks. lagerplads og rabat.</gray>"
+        - "<yellow>Klik for at rydde denne spillers tilsidesættelser.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Admin påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at redigere afspillertilsidesættelser.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at redigere afspillertilsidesættelser.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Spillermål mangler</gradient>"
+      lore:
+        - "<gray>Der blev ikke angivet noget spillermål for denne editor.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Der er ikke valgt noget spillermål.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Afspiller/gruppeindstillingstjeneste er ikke tilgængelig lige nu.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ryddede alle tilsidesættelser for <hvid>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Rediger gruppe {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sammenfatning af gruppetilsidesættelse</gradient>"
+    lore:
+      - "<gray>Valgt gruppe:</gray> <white>{group_name}</white>"
+      - "<gray>Detekteret LuckPerms-grupper:</gray> <white>{group_count}</white>"
+      - "<gray>Tilsidesæt maksimale lagerpladser:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Tilsidesæt rabat:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Ingen]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Vælg gruppe</gradient>"
+      lore:
+        - "<gray>Nuværende gruppe:</gray> <white>{group_name}</white>"
+        - "<gray>Detekteret LuckPerms-grupper:</gray> <white>{group_count}</white>"
+        - "<yellow>Venstreklik for næste gruppe, højreklik for forrige.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Grupper maksimale lagerpladser</gradient>"
+      lore:
+        - "<gray>Tilsidesæt maksimale lagerpladser:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Klik for at redigere maksimale lagerpladser for denne gruppe.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Grupperabat</gradient>"
+      lore:
+        - "<gray>Tilsidesæt rabat:</gray> <white>{override_discount}</white>"
+        - "<yellow>Klik for at redigere rabat for denne gruppe.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Ryd gruppetilsidesættelser</gradient>"
+      lore:
+        - "<gray>Fjerner maks. lager- og rabattilsidesættelser for denne gruppe.</gray>"
+        - "<yellow>Klik for at rydde denne gruppetilsidesættelse.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Admin påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at redigere gruppetilsidesættelser.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at redigere gruppetilsidesættelser.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vælg først en gruppe, før du redigerer værdier.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gruppe <hvid>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Valgt LuckPerms gruppe <hvid>{group_name}</white> <gray>fra <hvid>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ingen LuckPerms grupper blev fundet fra online spillere lige nu.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Afspiller/gruppeindstillingstjeneste er ikke tilgængelig lige nu.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ryddede tilsidesættelser for gruppe <hvid>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Storage] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Force Drain Storage</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Force Reset Storage</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Control Browser</gradient>"
+    lore:
+      - "<gray>Handlingstilstand:</gray> <white>{action_mode}</white>"
+      - "<gray>Sporede lager:</gray> <white>{storage_count}</white>"
+      - "<yellow>Klik på et hvilket som helst lager nedenfor for at udføre den valgte handling.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Lager]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Ejer:</gray> <white>{owner}</white>"
+      - "<gray>Lagernøgle:</gray> <white>{storage_key}</white>"
+      - "<gray>Lager-id:</gray> <white>{storage_id}</white>"
+      - "<gray>Brugte slots:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Handling:</gray> <white>{action}</white>"
+      - "<yellow>Klik for at fortsætte.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Dræn]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Nulstil]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Ingen lager fundet</gradient>"
+      lore:
+        - "<gray>Ingen lagerregistreringer er i øjeblikket tilgængelige.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Admin påkrævet</gradient>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne handling.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at styre lager fra denne menu.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dette lager eksisterer ikke længere:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Dræn]</gradient> <gray>Tvangsdrænet <hvid>{owner}</white>'s storage <white>{storage_key}</white><gray>. Lukkede visninger:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Nulstil]</gradient> <gray>Tving-nulstilling <hvid>{owner}</white>'s storage <white>{storage_key}</white><gray>. Lukkede visninger:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Rediger] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Redigeringstilstand:</gray> <white>{edit_mode}</white>"
+      - "<gray>Spillermål:</gray> <white>{target_name}</white>"
+      - "<gray>Gruppemål:</gray> <white>{group_name}</white>"
+      - "<gray>Nuværende værdi:</gray> <white>{current_value}</white>"
+      - "<yellow>Indtast en ny værdi, og klik derefter på resultat for at bekræfte.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ugyldig værdi <hvid>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sæt <hvid>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sæt <hvid>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Indstil gruppe <hvid>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Indstil gruppe <hvid>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Maksimal lagerplads:</gray><white>{max_storages}</white>"
       - "<gray>Køb ekstra boksplads indtil</gray>"
       - "<gray>du når det konfigurerede loft.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Butikskrav</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Maksimal lagerplads:</gray><white>{max_storages}</white>"
       - "<gray>Brug denne liste til at gennemgå din</gray>"
       - "<gray>vedvarende opbevaringsbeholdere.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Ubegrænset]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Boks]{storage_key}</gradient>"
     lore:

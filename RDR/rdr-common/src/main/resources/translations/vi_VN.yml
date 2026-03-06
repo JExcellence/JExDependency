@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Các vị trí có sẵn:</gray> <white>{available_slots}</white>"
   storages_obtained: "<gray>Bộ nhớ thu được:</gray> <white>{owned_storages}</white>"
   max_storages: "<gray>Bộ nhớ tối đa:</gray> <white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Trung tâm lưu trữ</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<gray>Mạng vault của bạn vẫn tồn tại</gray>"
       - "<gray>và sẵn sàng để sử dụng trên nhiều máy chủ.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Xem kho lưu trữ</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Sử dụng bảng này để chỉnh sửa giá trị cấu hình và mở các điều khiển tích hợp.</gray>"
       - "<yellow>Yêu cầu:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Lớp] Kiểm soát người chơi</gradient>"
+      lore:
+        - "<gray>Chỉnh sửa giới hạn người chơi/nhóm, giảm giá và kiểm soát lực lượng lưu trữ.</gray>"
+        - "<gray>Mở trình chỉnh sửa ghi đè và hành động quản lý trường hợp khẩn cấp.</gray>"
+        - "<yellow>Nhấp để mở điều khiển trình phát.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Cấu hình lưu trữ</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
       lore:
         - "<gray>Bạn không có quyền sử dụng bảng quản trị này.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Điều khiển người chơi & nhóm</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Bộ công cụ quản trị lưu trữ</gradient>"
+    lore:
+      - "<gray>Chỉnh sửa kho lưu trữ tối đa và giảm giá cho người chơi và nhóm.</gray>"
+      - "<gray>Buộc xả/đặt lại kho lưu trữ hoặc đóng tất cả các chế độ xem RDR đang mở.</gray>"
+      - "<yellow>Yêu cầu:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Ghi đè người chơi</gradient>"
+      lore:
+        - "<gray>Duyệt qua người chơi trực tuyến và các mục tiêu ghi đè được định cấu hình.</gray>"
+        - "<gray>Chỉnh sửa kho lưu trữ tối đa và giá trị chiết khấu cho mỗi người chơi.</gray>"
+        - "<yellow>Nhấp để mở ghi đè trình phát.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Ghi đè nhóm</gradient>"
+      lore:
+        - "<gray>Chọn nhóm LuckPerms và đặt các giá trị ghi đè.</gray>"
+        - "<gray>Hữu ích cho các cấp xếp hạng dựa trên quyền.</gray>"
+        - "<yellow>Nhấp để mở phần ghi đè nhóm.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Force Drain Storage</gradient>"
+      lore:
+        - "<gray>Xóa tất cả nội dung mục khỏi kho lưu trữ đã chọn.</gray>"
+        - "<gray>Giữ các cài đặt đáng tin cậy, nợ và giá trị phím nóng.</gray>"
+        - "<yellow>Nhấp để chọn nơi lưu trữ.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Buộc đặt lại bộ nhớ</gradient>"
+      lore:
+        - "<gray>Đặt lại bộ nhớ đã chọn về trạng thái sạch.</gray>"
+        - "<gray>Xóa các mục, khoản nợ, quyền truy cập đáng tin cậy và phím nóng.</gray>"
+        - "<yellow>Nhấp để chọn nơi lưu trữ.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Buộc đóng tất cả các chế độ xem RDR</gradient>"
+      lore:
+        - "<gray>Đóng tất cả các menu RDR hiện đang mở.</gray>"
+        - "<gray>Hữu ích sau khi thay đổi cấu hình hoặc hành động khẩn cấp.</gray>"
+        - "<yellow>Nhấp để buộc đóng tất cả các chế độ xem RDR.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng menu này.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền sử dụng các điều khiển quản trị viên/nhóm.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Buộc đóng <white>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Chọn mục tiêu ghi đè người chơi</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Mục tiêu ghi đè người chơi</gradient>"
+    lore:
+      - "<gray>Người chơi được theo dõi:</gray> <white>{tracked_players}</white>"
+      - "<gray>Ghi đè được định cấu hình:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Nhấp vào một trình phát bên dưới để chỉnh sửa ghi đè.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Ghi đè kho lưu trữ tối đa:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Dung lượng lưu trữ tối đa hiệu quả:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Ghi đè giảm giá:</gray> <white>{override_discount}</white>"
+      - "<gray>Giảm giá hiệu quả:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Nhấp để chỉnh sửa hồ sơ ghi đè người chơi này.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Trực tuyến]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Ngoại tuyến]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Kế thừa]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Không tìm thấy người chơi</gradient>"
+      lore:
+        - "<gray>Không tìm thấy người chơi trực tuyến hoặc phần ghi đè trình phát được lưu trữ.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không có quyền duyệt phần ghi đè của trình phát.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Chỉnh sửa {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Tóm tắt ghi đè người chơi</gradient>"
+    lore:
+      - "<gray>Người chơi:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Ghi đè kho lưu trữ tối đa:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Dung lượng lưu trữ tối đa hiệu quả:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Ghi đè giảm giá:</gray> <white>{override_discount}</white>"
+      - "<gray>Giảm giá hiệu quả:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Kế thừa]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Tối đa] Dung lượng lưu trữ tối đa</gradient>"
+      lore:
+        - "<gray>Ghi đè kho lưu trữ tối đa:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Dung lượng lưu trữ tối đa hiệu quả:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Nhấp để chỉnh sửa dung lượng lưu trữ tối đa.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Giảm giá cửa hàng</gradient>"
+      lore:
+        - "<gray>Ghi đè giảm giá:</gray> <white>{override_discount}</white>"
+        - "<gray>Giảm giá hiệu quả:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Nhấp để chỉnh sửa phần trăm giảm giá.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Ghi đè trình phát rõ ràng</gradient>"
+      lore:
+        - "<gray>Xóa tất cả các ghi đè dung lượng lưu trữ tối đa và giảm giá.</gray>"
+        - "<yellow>Nhấp để xóa phần ghi đè của người chơi này.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không có quyền chỉnh sửa ghi đè trình phát.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền chỉnh sửa ghi đè trình phát.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Mục tiêu người chơi Thiếu</gradient>"
+      lore:
+        - "<gray>Không có mục tiêu người chơi nào được cung cấp cho trình chỉnh sửa này.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không có mục tiêu người chơi nào được chọn. Dịch vụ cài đặt nhóm/trình phát</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>hiện không khả dụng.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã xóa tất cả ghi đè cho <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Chỉnh sửa nhóm {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Tóm tắt ghi đè nhóm</gradient>"
+    lore:
+      - "<gray>Nhóm đã chọn:</gray> <white>{group_name}</white>"
+      - "<gray>Đã phát hiện nhóm LuckPerms:</gray> <white>{group_count}</white>"
+      - "<gray>Ghi đè kho lưu trữ tối đa:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Ghi đè giảm giá:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Kế thừa]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Chọn nhóm</gradient>"
+      lore:
+        - "<gray>Hiện tại nhóm:</gray> <white>{group_name}</white>"
+        - "<gray>Đã phát hiện nhóm LuckPerms:</gray> <white>{group_count}</white>"
+        - "<yellow>Nhấp chuột trái cho nhóm tiếp theo, nhấp chuột phải cho nhóm trước đó.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Tối đa] Nhóm Dung lượng lưu trữ tối đa</gradient>"
+      lore:
+        - "<gray>Ghi đè kho lưu trữ tối đa:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Nhấp để chỉnh sửa dung lượng lưu trữ tối đa cho nhóm này.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Giảm giá theo nhóm</gradient>"
+      lore:
+        - "<gray>Ghi đè giảm giá:</gray> <white>{override_discount}</white>"
+        - "<yellow>Nhấp để chỉnh sửa giảm giá cho nhóm này.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Xóa ghi đè nhóm</gradient>"
+      lore:
+        - "<gray>Xóa ghi đè dung lượng lưu trữ tối đa và giảm giá cho nhóm này.</gray>"
+        - "<yellow>Nhấp để xóa ghi đè nhóm này.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không có quyền chỉnh sửa phần ghi đè nhóm.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền chỉnh sửa phần ghi đè nhóm.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Chọn nhóm trước khi chỉnh sửa giá trị. Nhóm</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Nhóm LuckPerms đã chọn <white>{group_name}</white> <gray>từ <white>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hiện không phát hiện thấy nhóm LuckPerms nào từ những người chơi trực tuyến.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>hiện không khả dụng.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã xóa phần ghi đè cho nhóm <white>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Storage] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Buộc xả bộ nhớ</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Buộc đặt lại bộ nhớ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Trình duyệt kiểm soát bộ nhớ</gradient>"
+    lore:
+      - "<gray>Chế độ hành động:</gray> <white>{action_mode}</white>"
+      - "<gray>Bộ nhớ được theo dõi:</gray> <white>{storage_count}</white>"
+      - "<yellow>Nhấp vào bất kỳ bộ nhớ nào bên dưới để thực hiện hành động đã chọn.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Storage]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+      - "<gray>Khóa lưu trữ:</gray> <white>{storage_key}</white>"
+      - "<gray>Id lưu trữ:</gray> <white>{storage_id}</white>"
+      - "<gray>Khe cắm đã sử dụng:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Hành động:</gray> <white>{action}</white>"
+      - "<yellow>Nhấp để tiếp tục.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Drain]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Reset]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Không tìm thấy kho lưu trữ</gradient>"
+      lore:
+        - "<gray>Hiện không có bản ghi lưu trữ nào.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của quản trị viên</gradient>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng tác vụ này.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền kiểm soát kho lưu trữ từ menu này.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bộ lưu trữ đó không còn tồn tại:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Drain]</gradient> <gray>Buộc thoát nước <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Chế độ xem đã đóng:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Reset]</gradient> <gray>Buộc đặt lại <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Chế độ xem đã đóng:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Chỉnh sửa] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Chế độ chỉnh sửa:</gray> <white>{edit_mode}</white>"
+      - "<gray>Mục tiêu người chơi:</gray> <white>{target_name}</white>"
+      - "<gray>Mục tiêu nhóm:</gray> <white>{group_name}</white>"
+      - "<gray>Giá trị hiện tại:</gray> <white>{current_value}</white>"
+      - "<yellow>Nhập một giá trị mới, sau đó nhấp vào kết quả để xác nhận.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Giá trị không hợp lệ <white>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đặt <white>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đặt <white>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đặt nhóm <white>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đặt nhóm <white>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int]</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<gray>Mua thêm dung lượng vault cho đến</gray>"
       - "<gray>bạn đạt đến giới hạn được định cấu hình.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Yêu cầu] Yêu cầu về cửa hàng</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Dung lượng lưu trữ tối đa:</gray> <white>{max_storages}</white>"
       - "<gray>Sử dụng danh sách này để xem xét</gray>"
       - "<gray>hộp lưu trữ liên tục.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Không giới hạn]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Hộp] {storage_key}</gradient>"
     lore:

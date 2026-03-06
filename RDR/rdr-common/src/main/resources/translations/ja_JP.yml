@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>利用可能なスロット:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>取得したストレージ:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>最大ストレージ数:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] ストレージハブ</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>最大ストレージ数:</gray><white>{max_storages}</white>"
       - "<gray>コンテナー ネットワークは永続化されています</gray>"
       - "<gray>、クロスサーバー使用の準備が整いました。</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] ストレージの表示</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>このパネルを使用して構成値を編集し、統合コントロールを開きます。</gray>"
       - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[プライ] プレーヤーのコントロール</gradient>"
+      lore:
+        - "<gray>プレーヤー/グループの制限、割引、および保管力の制御を編集します。</gray>"
+        - "<gray>オーバーライド エディターと緊急管理アクションを開きます。</gray>"
+        - "<yellow>クリックしてプレーヤー コントロールを開きます。</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] ストレージ構成</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
       lore:
         - "<gray>この管理パネルを使用する権限がありません。</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] プレーヤーとグループのコントロール</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] ストレージ管理者ツールキット</gradient>"
+    lore:
+      - "<gray>プレーヤーとグループの最大ストレージと割引を編集します。</gray>"
+      - "<gray>ストレージを強制的にドレイン/リセットするか、開いているすべての RDR ビューを閉じます。</gray>"
+      - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] プレイヤーのオーバーライド</gradient>"
+      lore:
+        - "<gray>オンライン プレーヤーと設定されたオーバーライド ターゲットを参照します。</gray>"
+        - "<gray>プレイヤーごとの最大ストレージと割引値を編集します。</gray>"
+        - "<yellow>クリックしてプレーヤーのオーバーライドを開きます。</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] グループのオーバーライド</gradient>"
+      lore:
+        - "<gray>LuckPerms グループを選択し、オーバーライド値を設定します。</gray>"
+        - "<gray>権限ベースのランク階層に役立ちます。</gray>"
+        - "<yellow>クリックしてグループの上書きを開きます。</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] 強制排出ストレージ</gradient>"
+      lore:
+        - "<gray>選択したストレージからすべてのアイテムの内容をクリアします。</gray>"
+        - "<gray>信頼できる設定、負債、ホットキーの値を保持します。</gray>"
+        - "<yellow>クリックしてストレージを選択します。</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] 強制リセットストレージ</gradient>"
+      lore:
+        - "<gray>選択したストレージをクリーンな状態にリセットします。</gray>"
+        - "<gray>アイテム、負債、信頼されたアクセス、およびホットキーをクリアします。</gray>"
+        - "<yellow>クリックしてストレージを選択します。</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] すべての RDR ビューを強制的に閉じる</gradient>"
+      lore:
+        - "<gray>現在開いているすべての RDR メニューを閉じます。</gray>"
+        - "<gray>設定変更や緊急アクションの後に役立ちます。</gray>"
+        - "<yellow>クリックすると、すべての RDR ビューが強制的に閉じられます。</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>このメニューを使用する権限がありません。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>プレーヤー/グループ管理コントロールを使用する権限がありません。</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>強制的に閉じられた <白>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] プレイヤーオーバーライドターゲットを選択</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] プレイヤーオーバーライドターゲット</gradient>"
+    lore:
+      - "<gray>追跡対象のプレイヤー:</gray> <white>{tracked_players}</white>"
+      - "<gray>設定されたオーバーライド:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>オーバーライドを編集するには、下のプレーヤーをクリックします。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>最大ストレージ数の上書き:</gray> <white>{override_max_storages}</white>"
+      - "<gray>有効な最大ストレージ数:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>割引の上書き:</gray> <white>{override_discount}</white>"
+      - "<gray>実質的な割引:</gray> <white>{effective_discount}</white>"
+      - "<yellow>クリックして、このプレーヤー オーバーライド プロファイルを編集します。</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[オンライン]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[オフライン]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>【継承】</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] プレーヤーが見つかりません</gradient>"
+      lore:
+        - "<gray>オンライン プレーヤーまたは保存されたプレーヤーのオーバーライドは見つかりませんでした。</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>プレーヤーのオーバーライドを参照する権限がありません。</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] {player_name} を編集します</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] プレイヤーオーバーライド概要</gradient>"
+    lore:
+      - "<gray>プレーヤー：</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>最大ストレージ数の上書き:</gray> <white>{override_max_storages}</white>"
+      - "<gray>有効な最大ストレージ数:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>割引の上書き:</gray> <white>{override_discount}</white>"
+      - "<gray>実質的な割引:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>【継承】</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[最大] 最大ストレージ数</gradient>"
+      lore:
+        - "<gray>最大ストレージ数の上書き:</gray> <white>{override_max_storages}</white>"
+        - "<gray>有効な最大ストレージ数:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>クリックして最大ストレージを編集します。</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] 店舗割引</gradient>"
+      lore:
+        - "<gray>割引の上書き:</gray> <white>{override_discount}</white>"
+        - "<gray>実質的な割引:</gray> <white>{effective_discount}</white>"
+        - "<yellow>クリックして割引率を編集します。</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] プレイヤーのオーバーライドをクリア</gradient>"
+      lore:
+        - "<gray>すべての最大ストレージと割引の上書きを削除します。</gray>"
+        - "<yellow>クリックすると、このプレーヤーのオーバーライドがクリアされます。</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>プレーヤーのオーバーライドを編集する権限がありません。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>プレーヤーのオーバーライドを編集する権限がありません。</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] プレイヤーのターゲットが見つかりません</gradient>"
+      lore:
+        - "<gray>このエディタにはプレーヤー ターゲットが提供されていません。</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>プレイヤーターゲットが選択されていません。</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>現在、プレーヤー/グループ設定サービスは利用できません。</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{player_name} のすべてのオーバーライドをクリアしました</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] グループ編集 {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] グループオーバーライドの概要</gradient>"
+    lore:
+      - "<gray>選択したグループ:</gray> <white>{group_name}</white>"
+      - "<gray>検出された LuckPerms グループ:</gray> <white>{group_count}</white>"
+      - "<gray>最大ストレージ数の上書き:</gray> <white>{override_max_storages}</white>"
+      - "<gray>割引の上書き:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[なし]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>【継承】</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[タグ]グループを選択</gradient>"
+      lore:
+        - "<gray>現在のグループ:</gray> <white>{group_name}</white>"
+        - "<gray>検出された LuckPerms グループ:</gray> <white>{group_count}</white>"
+        - "<yellow>左クリックすると次のグループ、右クリックすると前のグループになります。</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[最大] グループ最大ストレージ数</gradient>"
+      lore:
+        - "<gray>最大ストレージ数の上書き:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>クリックして、このグループの最大ストレージを編集します。</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] 団体割引</gradient>"
+      lore:
+        - "<gray>割引の上書き:</gray> <white>{override_discount}</white>"
+        - "<yellow>クリックしてこのグループの割引を編集します。</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] グループのオーバーライドをクリア</gradient>"
+      lore:
+        - "<gray>このグループの最大ストレージと割引の上書きを削除します。</gray>"
+        - "<yellow>クリックしてこのグループの上書きをクリアします。</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>グループの上書きを編集する権限がありません。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>グループの上書きを編集する権限がありません。</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>値を編​​集する前に、まずグループを選択します。</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>グループ<白>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>選択された LuckPerms グループ <白>{group_name}</white> <gray><白>{group_count} より</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>現在、オンライン プレーヤーから LuckPerms グループは検出されませんでした。</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>現在、プレーヤー/グループ設定サービスは利用できません。</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>グループ <white>{group_name} のオーバーライドをクリアしました</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[ストレージ] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>強制排出ストレージ</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>ストレージの強制リセット</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] ストレージ制御ブラウザ</gradient>"
+    lore:
+      - "<gray>アクションモード:</gray> <white>{action_mode}</white>"
+      - "<gray>追跡されるストレージ:</gray> <white>{storage_count}</white>"
+      - "<yellow>以下のいずれかのストレージをクリックして、選択したアクションを実行します。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[ストレージ]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>所有者：</gray> <white>{owner}</white>"
+      - "<gray>ストレージキー:</gray> <white>{storage_key}</white>"
+      - "<gray>ストレージID:</gray> <white>{storage_id}</white>"
+      - "<gray>使用スロット:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>アクション：</gray> <white>{action}</white>"
+      - "<yellow>クリックして続行してください。</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[ドレイン]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>［リセット］</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] ストレージが見つかりません</gradient>"
+      lore:
+        - "<gray>現在利用可能な保管レコードはありません。</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>このアクションを使用する権限がありません。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このメニューからストレージを制御する権限がありません。</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>そのストレージはもう存在しません。</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[ドレイン]</gradient> <gray>強制排出された <白>{owner}</white>'s storage <white>{storage_key}</white><gray>。閉じたビュー:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>［リセット］</gradient> <gray>強制リセット <白>{owner}</white>'s storage <white>{storage_key}</white><gray>。閉じたビュー:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[編集] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>編集モード:</gray> <white>{edit_mode}</white>"
+      - "<gray>プレイヤーのターゲット:</gray> <white>{target_name}</white>"
+      - "<gray>グループ対象:</gray> <white>{group_name}</white>"
+      - "<gray>現在の値:</gray> <white>{current_value}</white>"
+      - "<yellow>新しい値を入力し、結果をクリックして確認します。</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>無効な値 <白>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><白>{player_name} を設定します</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><白>{player_name} を設定します</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>グループ <白>{group_name} を設定します</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>グループ <白>{group_name} を設定します</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] プラグインの統合</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>最大ストレージ数:</gray><white>{max_storages}</white>"
       - "<gray></gray>まで追加のボールト スペースを購入してください"
       - "<gray>構成された上限に達しました。</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[必須] ストア要件</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>最大ストレージ数:</gray><white>{max_storages}</white>"
       - "<gray>このリストを使用して</gray>を確認してください"
       - "<gray>永続化ストレージ コンテナー。</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[無制限]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[ボックス]{storage_key}</gradient>"
     lore:

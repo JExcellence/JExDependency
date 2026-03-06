@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Tillgängliga platser:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Erhållna lagringsutrymmen:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Max lagringsutrymme:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<gray>Ditt valvnätverk är beständigt</gray>"
       - "<gray>och redo för gränsöverskridande användning.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Visa lagringar</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Använd denna panel för att redigera konfigurationsvärden och öppna integrationskontroller.</gray>"
       - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Spelarkontroller</gradient>"
+      lore:
+        - "<gray>Redigera spelar-/gruppgränser, rabatter och kontroller för lagringskraft.</gray>"
+        - "<gray>Öppna åsidosättningsredigerare och nödhanteringsåtgärder.</gray>"
+        - "<yellow>Klicka för att öppna spelarkontrollerna.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
       lore:
         - "<gray>Du har inte behörighet att använda denna adminpanel.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Spelar- och gruppkontroller</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Admin Toolkit</gradient>"
+    lore:
+      - "<gray>Redigera maximala lagringsutrymmen och rabatter för spelare och grupper.</gray>"
+      - "<gray>Tvinga tömning/återställ lagringar eller stäng alla öppna RDR-vyer.</gray>"
+      - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Spelaren åsidosätter</gradient>"
+      lore:
+        - "<gray>Bläddra online-spelare och konfigurerade åsidosättande mål.</gray>"
+        - "<gray>Redigera max lagringsutrymme och rabattvärden per spelare.</gray>"
+        - "<yellow>Klicka för att öppna spelaröverstyrningar.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Gruppöverstyrningar</gradient>"
+      lore:
+        - "<gray>Välj en LuckPerms-grupp och ställ in åsidosättningsvärden.</gray>"
+        - "<gray>Användbar för behörighetsbaserade rangnivåer.</gray>"
+        - "<yellow>Klicka för att öppna gruppöverstyrningar.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Forcerad tömningslagring</gradient>"
+      lore:
+        - "<gray>Rensar allt objektinnehåll från en vald lagring.</gray>"
+        - "<gray>Behåller pålitliga inställningar, skulder och snabbtangentvärden.</gray>"
+        - "<yellow>Klicka för att välja en lagring.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Force Reset Storage</gradient>"
+      lore:
+        - "<gray>Återställer en vald lagring till ett rent tillstånd.</gray>"
+        - "<gray>Rensar objekt, skulder, betrodd åtkomst och snabbtangent.</gray>"
+        - "<yellow>Klicka för att välja en lagring.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Tvinga stängning av alla RDR-vyer</gradient>"
+      lore:
+        - "<gray>Stänger alla för närvarande öppna RDR-menyer.</gray>"
+        - "<gray>Användbar efter konfigurationsändringar eller nödåtgärder.</gray>"
+        - "<yellow>Klicka för att tvinga stänga alla RDR-vyer.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda den här menyn.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att använda spelar-/gruppadministratörskontroller.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Tvångsstängd <vit>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Välj spelare Åsidosätt mål</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Spelare Åsidosätt mål</gradient>"
+    lore:
+      - "<gray>Spårade spelare:</gray> <white>{tracked_players}</white>"
+      - "<gray>Konfigurerade åsidosättanden:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>överskrider en spelare nedan för att klicka på en spelare.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Åsidosätt max lagringsutrymme:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effektivt max lagringsutrymme:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Åsidosätt rabatt:</gray> <white>{override_discount}</white>"
+      - "<gray>Effektiv rabatt:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Klicka för att redigera den här spelaröverstyrningsprofilen.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Ärva]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Inga spelare hittades</gradient>"
+      lore:
+        - "<gray>Inga onlinespelare eller lagrade spelaröverstyrningar hittades.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att bläddra i spelaröverstyrningar.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Redigera {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sammanfattning av spelareöverstyrning</gradient>"
+    lore:
+      - "<gray>Spelare:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Åsidosätt max lagringsutrymme:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effektivt max lagringsutrymme:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Åsidosätt rabatt:</gray> <white>{override_discount}</white>"
+      - "<gray>Effektiv rabatt:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Ärva]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maximalt lagringsutrymme</gradient>"
+      lore:
+        - "<gray>Åsidosätt max lagringsutrymme:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Effektivt max lagringsutrymme:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Klicka för att redigera max lagringsutrymme.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Butiksrabatt</gradient>"
+      lore:
+        - "<gray>Åsidosätt rabatt:</gray> <white>{override_discount}</white>"
+        - "<gray>Effektiv rabatt:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Klicka för att redigera rabattprocent.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Rensa spelaröverstyrningar</gradient>"
+      lore:
+        - "<gray>Tar bort alla åsidosättningar av maxlagring och rabatter.</gray>"
+        - "<yellow>Klicka för att rensa spelarens åsidosättningar.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att redigera spelaröverstyrningar.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att redigera spelaröverstyrningar.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Spelarmål saknas</gradient>"
+      lore:
+        - "<gray>Inget spelarmål angavs för denna editor.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ingen spelare har valts.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Spelar-/gruppinställningar är inte tillgänglig just nu.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Rensade alla åsidosättningar för <vit>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Redigera grupp {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sammanfattning av gruppöverstyrning</gradient>"
+    lore:
+      - "<gray>Vald grupp:</gray> <white>{group_name}</white>"
+      - "<gray>Detekterade LuckPerms-grupper:</gray> <white>{group_count}</white>"
+      - "<gray>Åsidosätt max lagringsutrymme:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Åsidosätt rabatt:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Ingen]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Ärva]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Välj grupp</gradient>"
+      lore:
+        - "<gray>Aktuell grupp:</gray> <white>{group_name}</white>"
+        - "<gray>Detekterade LuckPerms-grupper:</gray> <white>{group_count}</white>"
+        - "<yellow>Vänsterklicka för nästa grupp, högerklicka för föregående.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Grupp maximala lagringsutrymmen</gradient>"
+      lore:
+        - "<gray>Åsidosätt max lagringsutrymme:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Klicka för att redigera maximala lagringsutrymmen för denna grupp.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Grupprabatt</gradient>"
+      lore:
+        - "<gray>Åsidosätt rabatt:</gray> <white>{override_discount}</white>"
+        - "<yellow>Klicka för att redigera rabatt för denna grupp.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Rensa gruppöverstyrningar</gradient>"
+      lore:
+        - "<gray>Tar bort maxlagrings- och rabattförbidrag för denna grupp.</gray>"
+        - "<yellow>Klicka för att rensa den här gruppöverstyrningen.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att redigera gruppöverstyrningar.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att redigera gruppöverstyrningar.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Välj en grupp först innan du redigerar värden.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Group <vit>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Vald LuckPerms-grupp <vit>{group_name}</white> <gray>från <vit>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Inga LuckPerms-grupper har upptäckts från onlinespelare just nu.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Spelar-/gruppinställningar är inte tillgänglig just nu.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Rensade åsidosättningar för grupp <vit>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Storage] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Force Drin Storage</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Force Reset Storage</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Lagringskontroll Webbläsare</gradient>"
+    lore:
+      - "<gray>Åtgärdsläge:</gray> <white>{action_mode}</white>"
+      - "<gray>Spårade lagringar:</gray> <white>{storage_count}</white>"
+      - "<yellow>Klicka på valfri lagring nedan för att utföra den valda åtgärden.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Lagring]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Ägare:</gray> <white>{owner}</white>"
+      - "<gray>Lagringsnyckel:</gray> <white>{storage_key}</white>"
+      - "<gray>Lagrings-id:</gray> <white>{storage_id}</white>"
+      - "<gray>Använda platser:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Åtgärd:</gray> <white>{action}</white>"
+      - "<yellow>Klicka för att fortsätta.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Tömning]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Återställ]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Inga lagringar hittades</gradient>"
+      lore:
+        - "<gray>Inga lagringsposter är tillgängliga för närvarande.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda den här åtgärden.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att styra lagringar från den här menyn.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Den lagringen finns inte längre:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Tömning]</gradient> <gray>Tvångsdränerad <vit>{owner}</white>'s storage <white>{storage_key}</white><gray>. Stängda vyer:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Återställ]</gradient> <gray>Force-reset <vit>{owner}</white>'s storage <white>{storage_key}</white><gray>. Stängda vyer:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Redigera] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Redigeringsläge:</gray> <white>{edit_mode}</white>"
+      - "<gray>Spelarmål:</gray> <white>{target_name}</white>"
+      - "<gray>Gruppmål:</gray> <white>{group_name}</white>"
+      - "<gray>Aktuellt värde:</gray> <white>{current_value}</white>"
+      - "<yellow>Skriv ett nytt värde och klicka sedan på resultat för att bekräfta.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ogiltigt värde <white>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set group <white>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set group <white>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<gray>Köp ytterligare valvutrymme tills</gray>"
       - "<gray>du når det konfigurerade locket.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Butikskrav</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Maximala lagringsutrymmen:</gray><white>{max_storages}</white>"
       - "<gray>Använd den här listan för att granska din</gray>"
       - "<gray>beständiga lagringsbehållare.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Obegränsat]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Box]{storage_key}</gradient>"
     lore:

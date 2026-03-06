@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Dostupné sloty:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Získaná úložiště:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Max úložiště:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Neomezený]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
       - "<gray>Vaše síť trezoru je trvalá</gray>"
       - "<gray>a připraven k použití mezi servery.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Neomezený]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Zobrazit úložiště</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Pomocí tohoto panelu můžete upravit hodnoty konfigurace a otevřít ovládací prvky integrace.</gray>"
       - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Ovládací prvky přehrávače</gradient>"
+      lore:
+        - "<gray>Upravte limity hráčů/skupin, slevy a ovládací prvky síly úložiště.</gray>"
+        - "<gray>Otevřete editory přepisů a akce nouzového řízení.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky přehrávače.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace úložiště</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
       lore:
         - "<gray>Nemáte oprávnění používat tento panel administrátora.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Ovládání přehrávače a skupiny</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Sada nástrojů pro správu úložiště</gradient>"
+    lore:
+      - "<gray>Upravte maximální úložiště a slevy pro hráče a skupiny.</gray>"
+      - "<gray>Vynucené vyprázdnění/resetování úložišť nebo uzavření všech otevřených zobrazení RDR.</gray>"
+      - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Přepisy přehrávače</gradient>"
+      lore:
+        - "<gray>Prohlížejte online hráče a nakonfigurované přepisovací cíle.</gray>"
+        - "<gray>Upravte maximální úložiště pro hráče a hodnoty slev.</gray>"
+        - "<yellow>Kliknutím otevřete přepisy přehrávače.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Přepsání skupiny</gradient>"
+      lore:
+        - "<gray>Vyberte skupinu LuckPerms a nastavte hodnoty přepsání.</gray>"
+        - "<gray>Užitečné pro úrovně hodnocení založené na oprávněních.</gray>"
+        - "<yellow>Klepnutím otevřete přepsání skupiny.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Vynutit vyprázdnění úložiště</gradient>"
+      lore:
+        - "<gray>Vymaže veškerý obsah položky z vybraného úložiště.</gray>"
+        - "<gray>Uchovává důvěryhodná nastavení, dluhy a hodnoty klávesových zkratek.</gray>"
+        - "<yellow>Klepnutím vyberte úložiště.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Vynutit reset úložiště</gradient>"
+      lore:
+        - "<gray>Resetuje vybrané úložiště do čistého stavu.</gray>"
+        - "<gray>Vymaže položky, dluhy, důvěryhodný přístup a klávesovou zkratku.</gray>"
+        - "<yellow>Klepnutím vyberte úložiště.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Vynutit uzavření všech zobrazení RDR</gradient>"
+      lore:
+        - "<gray>Zavře všechny aktuálně otevřené nabídky RDR.</gray>"
+        - "<gray>Užitečné po změnách konfigurace nebo nouzových akcích.</gray>"
+        - "<yellow>Kliknutím vynutíte uzavření všech pohledů RDR.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>K použití této nabídky nemáte oprávnění.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění používat ovládací prvky správce přehrávače/skupiny.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Vynuceně zavřeno <bílá>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Vybrat cíl přepsání hráčem</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Cíle přepsání hráčem</gradient>"
+    lore:
+      - "<gray>Sledovaní hráči:</gray> <white>{tracked_players}</white>"
+      - "<gray>Nakonfigurovaná přepsání:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>přepíšete přepsání.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Přepsat max. úložiště:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Efektivní max. úložiště:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Přepsat slevu:</gray> <white>{override_discount}</white>"
+      - "<gray>Efektivní slevu:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Klikněte pro úpravu profilu přepsání tohoto hráče.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Zdědit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Neomezeno]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Nenalezeni žádní hráči</gradient>"
+      lore:
+        - "<gray>Nebyli nalezeni žádní online hráči ani uložená přepsání přehrávače.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění procházet přepisy přehrávače.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Upravit {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Přepsání přehrávače Shrnutí</gradient>"
+    lore:
+      - "<gray>Přehrávač:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Přepsat max. úložiště:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Efektivní max. úložiště:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Přepsat slevu:</gray> <white>{override_discount}</white>"
+      - "<gray>Efektivní slevu:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Zdědit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Neomezeno]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maximální úložiště</gradient>"
+      lore:
+        - "<gray>Přepsat max. úložiště:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Efektivní max. úložiště:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Kliknutím upravíte maximální úložiště.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Sleva v obchodě</gradient>"
+      lore:
+        - "<gray>Přepsat slevu:</gray> <white>{override_discount}</white>"
+        - "<gray>Efektivní slevu:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Kliknutím upravíte procento slevy.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Vymazat přepsání přehrávače</gradient>"
+      lore:
+        - "<gray>Odstraní všechna přepsání maximálního úložiště a slev.</gray>"
+        - "<yellow>Kliknutím vymažete přepsání tohoto hráče.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění upravovat přepsání přehrávače.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění upravovat přepsání přehrávače.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Cíl hráče chybí</gradient>"
+      lore:
+        - "<gray>Pro tento editor nebyl poskytnut žádný cíl hráče.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Není vybrán žádný cíl hráče.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Služba nastavení přehrávače/skupiny je právě nedostupná.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Vymazána všechna přepsání pro <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Upravit skupinu {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Souhrn přepsání skupiny</gradient>"
+    lore:
+      - "<gray>Vybraná skupina:</gray> <white>{group_name}</white>"
+      - "<gray>Zjištěné skupiny LuckPerms:</gray> <white>{group_count}</white>"
+      - "<gray>Přepsat max. úložiště:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Přepsat slevu:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Žádné]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Zdědit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Neomezeno]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Vybrat skupinu</gradient>"
+      lore:
+        - "<gray>Aktuální skupina:</gray> <white>{group_name}</white>"
+        - "<gray>Zjištěné skupiny LuckPerms:</gray> <white>{group_count}</white>"
+        - "<yellow>Klikněte levým tlačítkem pro další skupinu, kliknutím pravým tlačítkem pro předchozí.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Skupina Maximální úložiště</gradient>"
+      lore:
+        - "<gray>Přepsat max. úložiště:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Kliknutím upravíte maximální úložiště pro tuto skupinu.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Skupinová sleva</gradient>"
+      lore:
+        - "<gray>Přepsat slevu:</gray> <white>{override_discount}</white>"
+        - "<yellow>Kliknutím upravíte slevu pro tuto skupinu.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Vymazat přepsání skupiny</gradient>"
+      lore:
+        - "<gray>Odstraní přepsání maximálního úložiště a slev pro tuto skupinu.</gray>"
+        - "<yellow>Klepnutím zrušte toto přepsání skupiny.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění upravovat přepsání skupiny.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění upravovat přepsání skupiny.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Před úpravou hodnot nejprve vyberte skupinu. Skupina</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><bílá>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Vybraná skupina LuckPerms <bílá>{group_name}</white> <gray>z <bílá>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Z online hráčů nebyly aktuálně zjištěny žádné skupiny LuckPerms.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Služba nastavení přehrávače/skupiny je právě nedostupná.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Vymazána přepsání pro skupinu <bílá>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Úložiště] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Vynutit vypuštění úložiště</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Vynutit reset úložiště</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Prohlížeč ovládání úložiště</gradient>"
+    lore:
+      - "<gray>Režim akce:</gray> <white>{action_mode}</white>"
+      - "<gray>Sledovaná úložiště:</gray> <white>{storage_count}</white>"
+      - "<yellow>Klepnutím na libovolné úložiště níže provedete vybranou akci.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Úložiště]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Vlastník:</gray> <white>{owner}</white>"
+      - "<gray>Klíč úložiště:</gray> <white>{storage_key}</white>"
+      - "<gray>ID úložiště:</gray> <white>{storage_id}</white>"
+      - "<gray>Použité sloty:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Akce:</gray> <white>{action}</white>"
+      - "<yellow>Pokračujte kliknutím.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Vypouštění]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Resetovat]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Nebyla nalezena žádná úložiště</gradient>"
+      lore:
+        - "<gray>Momentálně nejsou k dispozici žádné záznamy o úložišti.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>K použití této akce nemáte oprávnění.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ovládat úložiště z této nabídky.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Toto úložiště již neexistuje:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Vypouštění]</gradient> <gray>Vynucené vypouštění <bílá>{owner}</white>'s storage <white>{storage_key}</white><gray>. Zavřená zobrazení:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Resetovat]</gradient> <gray>Vynutit reset <bílá>{owner}</white>'s storage <white>{storage_key}</white><gray>. Zavřená zobrazení:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Upravit] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Režim úprav:</gray> <white>{edit_mode}</white>"
+      - "<gray>Cíl hráče:</gray> <white>{target_name}</white>"
+      - "<gray>Cíl skupiny:</gray> <white>{group_name}</white>"
+      - "<gray>Aktuální hodnota:</gray> <white>{current_value}</white>"
+      - "<yellow>pro potvrzení zadáním nové hodnoty a zadáním nové hodnoty.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Neplatná hodnota <bílá>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nastavit <bílá>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nastavit <bílá>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nastavit skupinu <bílá>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Nastavit skupinu <bílá>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Integrace pluginů</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
       - "<gray>Kupte si další úložný prostor do</gray>"
       - "<gray>dosáhnete nastaveného limitu.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Neomezený]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Požadavky na obchod</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Maximální úložiště:</gray><white>{max_storages}</white>"
       - "<gray>Použijte tento seznam ke kontrole svého</gray>"
       - "<gray>trvalé skladovací kontejnery.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Neomezený]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Box]{storage_key}</gradient>"
     lore:

@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Available slots:</gray> <white>{available_slots}</white>"
   storages_obtained: "<gray>Storages obtained:</gray> <white>{owned_storages}</white>"
   max_storages: "<gray>Max storages:</gray> <white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
       - "<gray>Your vault network is persisted</gray>"
       - "<gray>and ready for cross-server use.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] View Storages</gradient>"
     lore:
@@ -44,6 +46,12 @@ storage_admin_ui:
       - "<gray>Use this panel to edit config values and open integration controls.</gray>"
       - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Player Controls</gradient>"
+      lore:
+        - "<gray>Edit player/group limits, discounts, and storage force controls.</gray>"
+        - "<gray>Open override editors and emergency management actions.</gray>"
+        - "<yellow>Click to open player controls.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
       lore:
@@ -79,6 +87,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
       lore:
         - "<gray>You do not have permission to use this admin panel.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Player & Group Controls</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Admin Toolkit</gradient>"
+    lore:
+      - "<gray>Edit max storages and discounts for players and groups.</gray>"
+      - "<gray>Force-drain/reset storages or close all open RDR views.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Player Overrides</gradient>"
+      lore:
+        - "<gray>Browse online players and configured override targets.</gray>"
+        - "<gray>Edit per-player max storages and discount values.</gray>"
+        - "<yellow>Click to open player overrides.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Group Overrides</gradient>"
+      lore:
+        - "<gray>Select a LuckPerms group and set override values.</gray>"
+        - "<gray>Useful for permission-based rank tiers.</gray>"
+        - "<yellow>Click to open group overrides.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Force Drain Storage</gradient>"
+      lore:
+        - "<gray>Clears all item contents from a selected storage.</gray>"
+        - "<gray>Keeps trusted settings, debt, and hotkey values.</gray>"
+        - "<yellow>Click to choose a storage.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Force Reset Storage</gradient>"
+      lore:
+        - "<gray>Resets a selected storage to a clean state.</gray>"
+        - "<gray>Clears items, debt, trusted access, and hotkey.</gray>"
+        - "<yellow>Click to choose a storage.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Force Close All RDR Views</gradient>"
+      lore:
+        - "<gray>Closes all currently open RDR menus.</gray>"
+        - "<gray>Useful after config changes or emergency actions.</gray>"
+        - "<yellow>Click to force close all RDR views.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to use this menu.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to use player/group admin controls.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Force-closed <white>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Select Player Override Target</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Player Override Targets</gradient>"
+    lore:
+      - "<gray>Tracked players:</gray> <white>{tracked_players}</white>"
+      - "<gray>Configured overrides:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Click a player below to edit overrides.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Override max storages:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effective max storages:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+      - "<gray>Effective discount:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Click to edit this player override profile.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] No Players Found</gradient>"
+      lore:
+        - "<gray>No online players or stored player overrides were found.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to browse player overrides.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Edit {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Player Override Summary</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Override max storages:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effective max storages:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+      - "<gray>Effective discount:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maximum Storages</gradient>"
+      lore:
+        - "<gray>Override max storages:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Effective max storages:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Click to edit max storages.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Store Discount</gradient>"
+      lore:
+        - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+        - "<gray>Effective discount:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Click to edit discount percent.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Clear Player Overrides</gradient>"
+      lore:
+        - "<gray>Removes all max-storage and discount overrides.</gray>"
+        - "<yellow>Click to clear this player's overrides.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to edit player overrides.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to edit player overrides.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Player Target Missing</gradient>"
+      lore:
+        - "<gray>No player target was provided for this editor.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No player target is selected.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Player/group settings service is unavailable right now.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Cleared all overrides for <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Edit Group {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Group Override Summary</gradient>"
+    lore:
+      - "<gray>Selected group:</gray> <white>{group_name}</white>"
+      - "<gray>Detected LuckPerms groups:</gray> <white>{group_count}</white>"
+      - "<gray>Override max storages:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Select Group</gradient>"
+      lore:
+        - "<gray>Current group:</gray> <white>{group_name}</white>"
+        - "<gray>Detected LuckPerms groups:</gray> <white>{group_count}</white>"
+        - "<yellow>Left click for next group, right click for previous.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Group Maximum Storages</gradient>"
+      lore:
+        - "<gray>Override max storages:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Click to edit max storages for this group.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Group Discount</gradient>"
+      lore:
+        - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+        - "<yellow>Click to edit discount for this group.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Clear Group Overrides</gradient>"
+      lore:
+        - "<gray>Removes max-storage and discount overrides for this group.</gray>"
+        - "<yellow>Click to clear this group override.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to edit group overrides.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to edit group overrides.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Select a group first before editing values.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Group <white>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Selected LuckPerms group <white>{group_name}</white> <gray>from <white>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No LuckPerms groups were detected from online players right now.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Player/group settings service is unavailable right now.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Cleared overrides for group <white>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Storage] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Force Drain Storage</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Force Reset Storage</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Control Browser</gradient>"
+    lore:
+      - "<gray>Action mode:</gray> <white>{action_mode}</white>"
+      - "<gray>Tracked storages:</gray> <white>{storage_count}</white>"
+      - "<yellow>Click any storage below to execute the selected action.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Storage]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Storage key:</gray> <white>{storage_key}</white>"
+      - "<gray>Storage id:</gray> <white>{storage_id}</white>"
+      - "<gray>Used slots:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Action:</gray> <white>{action}</white>"
+      - "<yellow>Click to continue.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Drain]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Reset]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] No Storages Found</gradient>"
+      lore:
+        - "<gray>No storage records are currently available.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to use this action.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to control storages from this menu.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>That storage no longer exists:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Drain]</gradient> <gray>Force-drained <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Closed views:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Reset]</gradient> <gray>Force-reset <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Closed views:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Edit] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Edit mode:</gray> <white>{edit_mode}</white>"
+      - "<gray>Player target:</gray> <white>{target_name}</white>"
+      - "<gray>Group target:</gray> <white>{group_name}</white>"
+      - "<gray>Current value:</gray> <white>{current_value}</white>"
+      - "<yellow>Type a new value, then click result to confirm.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Invalid value <white>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set group <white>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set group <white>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
@@ -357,6 +590,7 @@ storage_store_ui:
       - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
       - "<gray>Buy additional vault space until</gray>"
       - "<gray>you reach the configured cap.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Store Requirements</gradient>"
     lore:
@@ -461,6 +695,7 @@ storage_player_ui:
       - "<gray>Maximum storages:</gray> <white>{max_storages}</white>"
       - "<gray>Use this list to review your</gray>"
       - "<gray>persisted storage containers.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Box] {storage_key}</gradient>"
     lore:

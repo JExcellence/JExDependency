@@ -120,9 +120,10 @@ public class StoragePlayerView extends APaginatedView<RStorage> {
         final List<RStorage> storages = this.findStorages(render);
         final RDRPlayer rdrPlayer = this.findPlayer(render);
         final int ownedStorages = storages.size();
-        final int maxStorages = plugin.getMaximumStorages(config);
+        final int maxStorages = plugin.getMaximumStorages(player, config);
+        final String maxStoragesDisplay = this.formatMaxStorages(player, maxStorages);
 
-        render.layoutSlot('s', this.createSummaryItem(player, ownedStorages, maxStorages));
+        render.layoutSlot('s', this.createSummaryItem(player, ownedStorages, maxStoragesDisplay));
 
         if (rdrPlayer == null) {
             render.slot(22).renderWith(() -> this.createMissingProfileItem(player));
@@ -161,7 +162,7 @@ public class StoragePlayerView extends APaginatedView<RStorage> {
     private @NotNull ItemStack createSummaryItem(
         final @NotNull Player player,
         final int ownedStorages,
-        final int maxStorages
+        final @NotNull String maxStorages
     ) {
         return UnifiedBuilderFactory.item(Material.BARREL)
             .setName(this.i18n("summary.name", player).build().component())
@@ -279,5 +280,15 @@ public class StoragePlayerView extends APaginatedView<RStorage> {
         return offlineName == null || offlineName.isBlank()
             ? storage.getPlayer().getIdentifier().toString()
             : offlineName;
+    }
+
+    private @NotNull String formatMaxStorages(
+        final @NotNull Player player,
+        final int maxStorages
+    ) {
+        if (maxStorages > 0) {
+            return Integer.toString(maxStorages);
+        }
+        return this.i18n("summary.unlimited", player).build().getI18nVersionWrapper().asPlaceholder();
     }
 }

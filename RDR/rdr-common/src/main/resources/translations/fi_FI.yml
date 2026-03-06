@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Saatavilla olevat paikat:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Hankitut tallennustilat:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Maksimaalinen tallennustila:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Rajoittamaton]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Tallennuskeskus</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Tallennustilojen enimmäismäärä:</gray><white>{max_storages}</white>"
       - "<gray>Holviverkkosi on säilynyt</gray>"
       - "<gray>ja valmis palvelinten väliseen käyttöön.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Rajoittamaton]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Näytä tallennustilat</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Käytä tätä paneelia määritysarvojen muokkaamiseen ja integrointisäätimien avaamiseen.</gray>"
       - "<yellow>Vaatii:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Player Controls</gradient>"
+      lore:
+        - "<gray>Muokkaa pelaajien/ryhmien rajoja, alennuksia ja tallennusvoiman säätimiä.</gray>"
+        - "<gray>Avaa ohituseditorit ja hätätilanteiden hallintatoiminnot.</gray>"
+        - "<yellow>Napsauta avataksesi soittimen ohjaimet.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
       lore:
         - "<gray>Sinulla ei ole lupaa käyttää tätä hallintapaneelia.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Player & Group Controls</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Admin Toolkit</gradient>"
+    lore:
+      - "<gray>Muokkaa maksimitallennustilaa ja alennuksia pelaajille ja ryhmille.</gray>"
+      - "<gray>Pakota varastojen tyhjennys/nollaus tai sulje kaikki avoimet RDR-näkymät.</gray>"
+      - "<yellow>Vaatii:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Player Overrides</gradient>"
+      lore:
+        - "<gray>Selaa online-pelaajia ja määritettyjä ohituskohteita.</gray>"
+        - "<gray>Muokkaa pelaajakohtaista enimmäistallennustilaa ja alennusarvoja.</gray>"
+        - "<yellow>Napsauta avataksesi soittimen ohitukset.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Ryhmän ohitukset</gradient>"
+      lore:
+        - "<gray>Valitse LuckPerms-ryhmä ja aseta ohitusarvot.</gray>"
+        - "<gray>Hyödyllinen lupaperusteisille sijoitustasoille.</gray>"
+        - "<yellow>Napsauta avataksesi ryhmän ohitukset.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Force Drain Storage</gradient>"
+      lore:
+        - "<gray>Tyhjentää kaiken sisällön valitusta tallennustilasta.</gray>"
+        - "<gray>Säilyttää luotetut asetukset, velat ja pikanäppäinarvot.</gray>"
+        - "<yellow>Valitse tallennustila napsauttamalla.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Pakota tallennustilan nollaus</gradient>"
+      lore:
+        - "<gray>Palauttaa valitun tallennustilan puhtaaseen tilaan.</gray>"
+        - "<gray>Tyhjentää kohteet, velat, luotetut käyttöoikeudet ja pikanäppäimet.</gray>"
+        - "<yellow>Valitse tallennustila napsauttamalla.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Pakota sulkemaan kaikki RDR-näkymät</gradient>"
+      lore:
+        - "<gray>Sulkee kaikki avoinna olevat RDR-valikot.</gray>"
+        - "<gray>Hyödyllinen asetusten muutosten tai hätätoimenpiteiden jälkeen.</gray>"
+        - "<yellow>Napsauta sulkeaksesi kaikki RDR-näkymät.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä valikkoa.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole lupaa käyttää pelaajan/ryhmän järjestelmänvalvojan ohjaimia.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Pakkosuljettu <valkoinen>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Valitse pelaajan ohituskohde</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Pelaajan ohituskohteet</gradient>"
+    lore:
+      - "<gray>Seuratut pelaajat:</gray> <white>{tracked_players}</white>"
+      - "<gray>Määritetyt ohitukset:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Napsauta alla olevaa soitinta muokataksesi ohituksia.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Ohita enimmäistallennustila:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Tehokkaat enimmäistallennustilat:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Ohitusalennus:</gray> <white>{override_discount}</white>"
+      - "<gray>Todellinen alennus:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Napsauta muokataksesi tätä soittimen ohitusprofiilia.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Peri]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Pelaajia ei löytynyt</gradient>"
+      lore:
+        - "<gray>Online-pelaajia tai tallennettuja pelaajien ohituksia ei löytynyt.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa selata soittimen ohituksia.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Muokkaa {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Soittimen ohituksen yhteenveto</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Ohita enimmäistallennustila:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Tehokkaat enimmäistallennustilat:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Ohitusalennus:</gray> <white>{override_discount}</white>"
+      - "<gray>Todellinen alennus:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Peri]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Tallennustilaen enimmäismäärä</gradient>"
+      lore:
+        - "<gray>Ohita enimmäistallennustila:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Tehokkaat enimmäistallennustilat:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Napsauta muokataksesi enimmäistallennustilaa.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Kaupan alennus</gradient>"
+      lore:
+        - "<gray>Ohitusalennus:</gray> <white>{override_discount}</white>"
+        - "<gray>Todellinen alennus:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Napsauta muokataksesi alennusprosenttia.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Tyhjennä soittimen ohitukset</gradient>"
+      lore:
+        - "<gray>Poistaa kaikki enimmäistallennustilan ja alennuskorot.</gray>"
+        - "<yellow>Napsauta poistaaksesi tämän soittimen ohitukset.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa muokata soittimen ohituksia.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole lupaa muokata soittimen ohituksia.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Pelaajakohde puuttuu</gradient>"
+      lore:
+        - "<gray>Tälle editorille ei annettu pelaajakohdetta.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Pelaajakohdetta ei ole valittu.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Soittimen/ryhmän asetuspalvelu ei ole tällä hetkellä saatavilla.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Tyhjennettiin kaikki ohitukset kohteelle <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Muokkaa ryhmää {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Ryhmän ohituksen yhteenveto</gradient>"
+    lore:
+      - "<gray>Valittu ryhmä:</gray> <white>{group_name}</white>"
+      - "<gray>Havaitut LuckPerms-ryhmät:</gray> <white>{group_count}</white>"
+      - "<gray>Ohita enimmäistallennustila:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Ohitusalennus:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Ei mitään]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Peri]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tagi] Valitse ryhmä</gradient>"
+      lore:
+        - "<gray>Nykyinen ryhmä:</gray> <white>{group_name}</white>"
+        - "<gray>Havaitut LuckPerms-ryhmät:</gray> <white>{group_count}</white>"
+        - "<yellow>Napsauta hiiren kakkospainikkeella seuraavaa ryhmää varten, napsauta hiiren kakkospainiketta edelliseen.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Ryhmän enimmäistallennustila</gradient>"
+      lore:
+        - "<gray>Ohita enimmäistallennustila:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Napsauta muokataksesi tämän ryhmän enimmäistallennustilaa.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Ryhmäalennus</gradient>"
+      lore:
+        - "<gray>Ohitusalennus:</gray> <white>{override_discount}</white>"
+        - "<yellow>Napsauta muokataksesi tämän ryhmän alennusta.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Tyhjennä ryhmän ohitukset</gradient>"
+      lore:
+        - "<gray>Poistaa tämän ryhmän enimmäistallennustila- ja alennusohit.</gray>"
+        - "<yellow>Napsauta poistaaksesi tämän ryhmän ohituksen.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa muokata ryhmän ohituksia.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole lupaa muokata ryhmän ohituksia.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Valitse ensin ryhmä ennen arvojen muokkaamista.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ryhmä <valkoinen>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Valittu LuckPerms-ryhmä <valkoinen>{group_name}</white> <gray>kohteesta <valkoinen>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Online-pelaajilta ei löytynyt LuckPerms-ryhmiä juuri nyt.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Soittimen/ryhmän asetuspalvelu ei ole tällä hetkellä saatavilla.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Poistetut ohitukset ryhmälle <valkoinen>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Storage] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Force Drain Storage</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Pakota nollaamaan tallennustila</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot] Tallennushallintaselain</gradient>"
+    lore:
+      - "<gray>Toimintotila:</gray> <white>{action_mode}</white>"
+      - "<gray>Seuratut tallennustilat:</gray> <white>{storage_count}</white>"
+      - "<yellow>Suorita valittu toiminto napsauttamalla mitä tahansa alla olevaa tallennustilaa.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Tallennustila]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Omistaja:</gray> <white>{owner}</white>"
+      - "<gray>Tallennusavain:</gray> <white>{storage_key}</white>"
+      - "<gray>Tallennuksen tunnus:</gray> <white>{storage_id}</white>"
+      - "<gray>Käytetyt paikat:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Toimi:</gray> <white>{action}</white>"
+      - "<yellow>Jatka napsauttamalla.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Tyhjennys]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Nollaa]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Tallennustilaa ei löytynyt</gradient>"
+      lore:
+        - "<gray>Tallennustietueita ei ole tällä hetkellä saatavilla.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Järjestelmänvalvojan käyttöoikeudet vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä toimintoa.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta hallita tallennustilaa tästä valikosta.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tätä tallennustilaa ei enää ole:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Tyhjennys]</gradient> <gray>Pakotettu <valkoinen>{owner}</white>'s storage <white>{storage_key}</white><gray>. Suljetut näkymät:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Nollaa]</gradient> <gray>Pakota palautus <valkoinen>{owner}</white>'s storage <white>{storage_key}</white><gray>. Suljetut näkymät:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Muokkaa] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Muokkaustila:</gray> <white>{edit_mode}</white>"
+      - "<gray>Pelaajan kohde:</gray> <white>{target_name}</white>"
+      - "<gray>Ryhmän kohde:</gray> <white>{group_name}</white>"
+      - "<gray>Nykyinen arvo:</gray> <white>{current_value}</white>"
+      - "<yellow>Kirjoita uusi arvo ja vahvista napsauttamalla tulosta.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Virheellinen arvo <valkoinen>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aseta <valkoinen>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aseta <valkoinen>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aseta ryhmä <valkoinen>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Aseta ryhmä <valkoinen>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Tallennustilojen enimmäismäärä:</gray><white>{max_storages}</white>"
       - "<gray>Osta lisää varastotilaa</gray>asti"
       - "<gray>saavutat määritetyn rajan.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Rajoittamaton]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Kaupan vaatimukset</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Tallennustilojen enimmäismäärä:</gray><white>{max_storages}</white>"
       - "<gray>Käytä tätä luetteloa tarkistaaksesi</gray>"
       - "<gray>pysyvät säilytyssäiliöt.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Rajoittamaton]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Laatikko]{storage_key}</gradient>"
     lore:

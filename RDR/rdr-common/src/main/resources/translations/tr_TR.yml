@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Kullanılabilir yuvalar:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Elde edilen depolar:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Maksimum depolama:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Depolama Merkezi</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maksimum depolama:</gray><white>{max_storages}</white>"
       - "<gray>Kasa ağınız kalıcı</gray>"
       - "<gray>ve sunucular arası kullanıma hazır.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Depolamaları Görüntüle</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Yapılandırma değerlerini düzenlemek ve entegrasyon kontrollerini açmak için bu paneli kullanın.</gray>"
       - "<yellow>Gerektirir:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Kat] Oyuncu Kontrolleri</gradient>"
+      lore:
+        - "<gray>Oyuncu/grup limitlerini, indirimleri ve depolama gücü kontrollerini düzenleyin.</gray>"
+        - "<gray>Geçersiz kılma düzenleyicilerini ve acil durum yönetimi eylemlerini açın.</gray>"
+        - "<yellow>Oynatıcı kontrollerini açmak için tıklayın.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Depolama Yapılandırması</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
       lore:
         - "<gray>Bu yönetici panelini kullanma izniniz yok.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Kat] Oyuncu ve Grup Kontrolleri</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Depolama Yöneticisi Araç Seti</gradient>"
+    lore:
+      - "<gray>Oyuncular ve gruplar için maksimum depolama ve indirimleri düzenleyin.</gray>"
+      - "<gray>Depolamaları zorla boşaltın/sıfırlayın veya tüm açık RDR görünümlerini kapatın.</gray>"
+      - "<yellow>Gerektirir:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Oyuncunun Geçersiz Kılması</gradient>"
+      lore:
+        - "<gray>Çevrimiçi oynatıcılara göz atın ve geçersiz kılma hedeflerini yapılandırın.</gray>"
+        - "<gray>Oyuncu başına maksimum depolamayı ve indirim değerlerini düzenleyin.</gray>"
+        - "<yellow>Oynatıcı geçersiz kılmalarını açmak için tıklayın.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Grup Geçersiz Kılmaları</gradient>"
+      lore:
+        - "<gray>Bir LuckPerms grubu seçin ve geçersiz kılma değerlerini ayarlayın.</gray>"
+        - "<gray>İzne dayalı sıralama katmanları için kullanışlıdır.</gray>"
+        - "<yellow>Grup geçersiz kılmalarını açmak için tıklayın.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Depolamayı Zorla</gradient>"
+      lore:
+        - "<gray>Seçilen bir depodaki tüm öğe içeriğini temizler.</gray>"
+        - "<gray>Güvenilir ayarları, borcu ve kısayol tuşu değerlerini korur.</gray>"
+        - "<yellow>Bir depolama alanı seçmek için tıklayın.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Depolamayı Sıfırlamaya Zorla</gradient>"
+      lore:
+        - "<gray>Seçilen bir depolamayı temiz duruma sıfırlar.</gray>"
+        - "<gray>Öğeleri, borcu, güvenilir erişimi ve kısayol tuşunu temizler.</gray>"
+        - "<yellow>Bir depolama alanı seçmek için tıklayın.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Tüm RDR Görünümlerini Kapatmaya Zorla</gradient>"
+      lore:
+        - "<gray>Şu anda açık olan tüm RDR menülerini kapatır.</gray>"
+        - "<gray>Yapılandırma değişikliklerinden veya acil durum eylemlerinden sonra kullanışlıdır.</gray>"
+        - "<yellow>Tüm RDR görünümlerini kapatmaya zorlamak için tıklayın.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu menüyü kullanma izniniz yok.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Oyuncu/grup yönetici kontrollerini kullanma izniniz yok.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Zorla kapatılmış <beyaz>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Oyuncuyu Geçersiz Kılma Hedefini Seçin</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Oyuncuyu Geçersiz Kılma Hedefleri</gradient>"
+    lore:
+      - "<gray>Takip edilen oyuncular:</gray> <white>{tracked_players}</white>"
+      - "<gray>Yapılandırılmış geçersiz kılmalar:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Geçersiz kılmaları düzenlemek için aşağıdaki bir oyuncuya tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Maksimum depolama alanlarını geçersiz kıl:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Etkin maksimum depolama alanları:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>İndirimi geçersiz kılma:</gray> <white>{override_discount}</white>"
+      - "<gray>Etkin indirim:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Bu oynatıcı geçersiz kılma profilini düzenlemek için tıklayın.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Çevrimiçi]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Çevrimdışı]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Devral]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Oyuncu Bulunamadı</gradient>"
+      lore:
+        - "<gray>Hiçbir çevrimiçi oynatıcı veya kayıtlı oynatıcı geçersiz kılma bulunamadı.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Oynatıcı geçersiz kılmalarına göz atma izniniz yok.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Düzenle {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Oynatıcıyı Geçersiz Kılma Özeti</gradient>"
+    lore:
+      - "<gray>Oynatıcı:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Maksimum depolama alanlarını geçersiz kıl:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Etkin maksimum depolama alanları:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>İndirimi geçersiz kılma:</gray> <white>{override_discount}</white>"
+      - "<gray>Etkin indirim:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Devral]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Maks.] Maksimum Depolama</gradient>"
+      lore:
+        - "<gray>Maksimum depolama alanlarını geçersiz kıl:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Etkin maksimum depolama alanları:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Maksimum depolamaları düzenlemek için tıklayın.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Mağaza İndirimi</gradient>"
+      lore:
+        - "<gray>İndirimi geçersiz kılma:</gray> <white>{override_discount}</white>"
+        - "<gray>Etkin indirim:</gray> <white>{effective_discount}</white>"
+        - "<yellow>İndirim yüzdesini düzenlemek için tıklayın.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Oynatıcıyı Geçersiz Kılmaları Temizle</gradient>"
+      lore:
+        - "<gray>Tüm maksimum depolama ve indirim geçersiz kılmalarını kaldırır.</gray>"
+        - "<yellow>Bu oynatıcının geçersiz kılmalarını temizlemek için tıklayın.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Oynatıcı geçersiz kılmalarını düzenleme izniniz yok.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Oynatıcı geçersiz kılmalarını düzenleme izniniz yok.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Oyuncu Hedefi Eksik</gradient>"
+      lore:
+        - "<gray>Bu düzenleyici için oyuncu hedefi sağlanmadı.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Hiçbir oyuncu hedefi seçilmedi.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Oynatıcı/grup ayarları hizmeti şu anda kullanılamıyor.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{player_name} için tüm geçersiz kılmalar temizlendi</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Grubu Düzenle {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Grup Geçersiz Kılma Özeti</gradient>"
+    lore:
+      - "<gray>Seçilen grup:</gray> <white>{group_name}</white>"
+      - "<gray>Algılanan ŞansPerms grupları:</gray> <white>{group_count}</white>"
+      - "<gray>Maksimum depolama alanlarını geçersiz kıl:</gray> <white>{override_max_storages}</white>"
+      - "<gray>İndirimi geçersiz kılma:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Yok]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Devral]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Etiket] Grup Seç</gradient>"
+      lore:
+        - "<gray>Geçerli grup:</gray> <white>{group_name}</white>"
+        - "<gray>Algılanan ŞansPerms grupları:</gray> <white>{group_count}</white>"
+        - "<yellow>Sonraki grup için sol tıklayın, önceki grup için sağ tıklayın.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Maks.] Grup Maksimum Depolama</gradient>"
+      lore:
+        - "<gray>Maksimum depolama alanlarını geçersiz kıl:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Bu grup için maksimum depolama alanlarını düzenlemek için tıklayın.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Grup İndirimi</gradient>"
+      lore:
+        - "<gray>İndirimi geçersiz kılma:</gray> <white>{override_discount}</white>"
+        - "<yellow>Bu gruba ait indirimi düzenlemek için tıklayın.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Grup Geçersiz Kılmalarını Temizle</gradient>"
+      lore:
+        - "<gray>Bu grup için maksimum depolama ve indirim geçersiz kılmalarını kaldırır.</gray>"
+        - "<yellow>Bu grup geçersiz kılmayı temizlemek için tıklayın.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Grup geçersiz kılmalarını düzenleme izniniz yok.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Grup geçersiz kılmalarını düzenleme izniniz yok.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Değerleri düzenlemeden önce bir grup seçin.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Grubu <beyaz>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Seçilen LuckPerms grubu <beyaz>{group_name}</white> <gray><beyaz>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Şu anda çevrimiçi oyunculardan herhangi bir LuckPerms grubu tespit edilmedi.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Oynatıcı/grup ayarları hizmeti şu anda kullanılamıyor.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{group_name} grubu için geçersiz kılmalar temizlendi</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Depolama] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Depolamayı Zorla</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Depolamayı Zorla Sıfırlamaya</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Depolama Denetimi Tarayıcısı</gradient>"
+    lore:
+      - "<gray>Eylem modu:</gray> <white>{action_mode}</white>"
+      - "<gray>İzlenen depolamalar:</gray> <white>{storage_count}</white>"
+      - "<yellow>seçilen eylem.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Depolama]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Sahibi:</gray> <white>{owner}</white>"
+      - "<gray>Depolama anahtarı:</gray> <white>{storage_key}</white>"
+      - "<gray>Depolama kimliği:</gray> <white>{storage_id}</white>"
+      - "<gray>Kullanılan yuvalar:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Eylem:</gray> <white>{action}</white>"
+      - "<yellow>Devam etmek için tıklayın.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Boşaltma]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Sıfırla]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Depolama Bulunamadı</gradient>"
+      lore:
+        - "<gray>Şu anda mevcut depolama kaydı yok.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu eylemi kullanma izniniz yok.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu menüden depoları kontrol etme izniniz yok.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bu depolama artık mevcut değil:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Boşaltma]</gradient> <gray>Zorla boşaltılmış <beyaz>{owner}</white>'s storage <white>{storage_key}</white><gray>. Kapalı görünümler:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Sıfırla]</gradient> <gray>Zorla sıfırlama <beyaz>{owner}</white>'s storage <white>{storage_key}</white><gray>. Kapalı görünümler:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Düzenle] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Düzenleme modu:</gray> <white>{edit_mode}</white>"
+      - "<gray>Oyuncu hedefi:</gray> <white>{target_name}</white>"
+      - "<gray>Grup hedefi:</gray> <white>{group_name}</white>"
+      - "<gray>Geçerli değer:</gray> <white>{current_value}</white>"
+      - "<yellow>Yeni bir değer yazın, ardından onaylamak için sonuca tıklayın.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Geçersiz değer <beyaz>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ayarla <beyaz>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ayarla <beyaz>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ayarla grup <beyaz>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ayarla grup <beyaz>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Eklenti Entegrasyonları</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Maksimum depolama:</gray><white>{max_storages}</white>"
       - "<gray></gray>tarihine kadar ek kasa alanı satın alın"
       - "<gray>yapılandırılan sınıra ulaşırsınız.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Mağaza Gereksinimleri</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Maksimum depolama:</gray><white>{max_storages}</white>"
       - "<gray></gray>'nizi incelemek için bu listeyi kullanın"
       - "<gray>kalıcı depolama kapları.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Sınırsız]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Kutu]{storage_key}</gradient>"
     lore:

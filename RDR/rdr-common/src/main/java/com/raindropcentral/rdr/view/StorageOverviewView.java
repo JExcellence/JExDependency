@@ -98,13 +98,14 @@ public class StorageOverviewView extends BaseView {
         final RDRPlayer rdrPlayer = this.findPlayer(render);
         final ConfigSection config = plugin.getDefaultConfig();
         final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
-        final int maxStorages = plugin.getMaximumStorages(config);
+        final int maxStorages = plugin.getMaximumStorages(player, config);
+        final String maxStoragesDisplay = this.formatMaxStorages(player, maxStorages);
 
         render.layoutSlot('s')
-            .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStorages));
+            .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStoragesDisplay));
 
         render.layoutSlot('o')
-            .withItem(this.createOpenListItem(player, ownedStorages, maxStorages))
+            .withItem(this.createOpenListItem(player, ownedStorages, maxStoragesDisplay))
             .onClick(clickContext -> clickContext.openForPlayer(
                 StoragePlayerView.class,
                 Map.of(
@@ -114,7 +115,7 @@ public class StorageOverviewView extends BaseView {
             ));
 
         render.layoutSlot('t')
-            .withItem(this.createStoreItem(player, ownedStorages, maxStorages))
+            .withItem(this.createStoreItem(player, ownedStorages, maxStoragesDisplay))
             .onClick(clickContext -> clickContext.openForPlayer(
                 StorageStoreView.class,
                 Map.of(
@@ -156,7 +157,7 @@ public class StorageOverviewView extends BaseView {
     private @NotNull ItemStack createSummaryItem(
         final @NotNull Player player,
         final int ownedStorages,
-        final int maxStorages
+        final @NotNull String maxStorages
     ) {
         return UnifiedBuilderFactory.item(Material.BARREL)
             .setName(this.i18n("summary.name", player).build().component())
@@ -174,7 +175,7 @@ public class StorageOverviewView extends BaseView {
     private @NotNull ItemStack createOpenListItem(
         final @NotNull Player player,
         final int ownedStorages,
-        final int maxStorages
+        final @NotNull String maxStorages
     ) {
         return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
             .setName(this.i18n("open.name", player).build().component())
@@ -192,7 +193,7 @@ public class StorageOverviewView extends BaseView {
     private @NotNull ItemStack createStoreItem(
         final @NotNull Player player,
         final int ownedStorages,
-        final int maxStorages
+        final @NotNull String maxStorages
     ) {
         return UnifiedBuilderFactory.item(Material.GOLD_INGOT)
             .setName(this.i18n("store.name", player).build().component())
@@ -221,5 +222,15 @@ public class StorageOverviewView extends BaseView {
         final @NotNull Player player
     ) {
         return player.isOp() || player.hasPermission(ADMIN_COMMAND_PERMISSION);
+    }
+
+    private @NotNull String formatMaxStorages(
+        final @NotNull Player player,
+        final int maxStorages
+    ) {
+        if (maxStorages > 0) {
+            return Integer.toString(maxStorages);
+        }
+        return this.i18n("summary.unlimited", player).build().getI18nVersionWrapper().asPlaceholder();
     }
 }

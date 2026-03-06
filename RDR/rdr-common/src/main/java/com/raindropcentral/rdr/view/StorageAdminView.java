@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * Administrative landing view for RDR controls.
  *
  * <p>This view centralizes privileged storage administration actions and currently
- * exposes config-editing and plugin-integration management entry points.</p>
+ * exposes player/group controls, config-editing, and plugin-integration entry points.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
@@ -56,7 +56,7 @@ public class StorageAdminView extends BaseView {
     protected String[] getLayout() {
         return new String[]{
             "    s    ",
-            "   g i   ",
+            "  p g i  ",
             "         "
         };
     }
@@ -78,6 +78,11 @@ public class StorageAdminView extends BaseView {
         }
 
         render.layoutSlot('s', this.createSummaryItem(player));
+        render.layoutSlot('p', this.createPlayerAdminButton(player))
+            .onClick(clickContext -> clickContext.openForPlayer(
+                StorageAdminPlayerView.class,
+                Map.of("plugin", this.rdr.get(clickContext))
+            ));
         render.layoutSlot('g', this.createConfigButton(player))
             .onClick(clickContext -> clickContext.openForPlayer(
                 StorageConfigView.class,
@@ -118,6 +123,16 @@ public class StorageAdminView extends BaseView {
         return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
             .setName(this.i18n("actions.integrations.name", player).build().component())
             .setLore(this.i18n("actions.integrations.lore", player).build().children())
+            .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+            .build();
+    }
+
+    private @NotNull ItemStack createPlayerAdminButton(
+        final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.PLAYER_HEAD)
+            .setName(this.i18n("actions.players.name", player).build().component())
+            .setLore(this.i18n("actions.players.lore", player).build().children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }

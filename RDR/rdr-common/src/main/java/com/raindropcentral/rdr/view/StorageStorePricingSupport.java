@@ -57,13 +57,17 @@ final class StorageStorePricingSupport {
             final StoreRequirementSection section = entry.getValue();
             try {
                 final AbstractRequirement requirement = factory.fromMap(section.toRequirementMap());
+                final double requiredCurrencyAmount = requirement instanceof CurrencyRequirement currencyRequirement
+                    ? resolveDiscountedCurrencyAmount(plugin, player, currencyRequirement)
+                    : -1.0D;
                 requirements.add(new ResolvedStoreRequirement(
                     purchaseNumber,
                     key,
                     section,
                     requirement,
-                    describeRequirement(plugin, requirement, section),
-                    isRequirementOperational(requirement)
+                    describeRequirement(plugin, requirement, section, requiredCurrencyAmount),
+                    isRequirementOperational(requirement),
+                    requiredCurrencyAmount
                 ));
             } catch (Exception exception) {
                 requirements.add(new ResolvedStoreRequirement(
@@ -72,7 +76,8 @@ final class StorageStorePricingSupport {
                     section,
                     null,
                     describeMissingRequirement(section),
-                    false
+                    false,
+                    -1.0D
                 ));
             }
         }
@@ -297,6 +302,23 @@ final class StorageStorePricingSupport {
         return "vault".equalsIgnoreCase(currencyType);
     }
 
+    private static double resolveDiscountedCurrencyAmount(
+        final @NotNull RDR plugin,
+        final @NotNull Player player,
+        final @NotNull CurrencyRequirement currencyRequirement
+    ) {
+        final double discountedAmount = plugin.applyStorageDiscount(player, currencyRequirement.getAmount());
+        return Math.max(0.0D, discountedAmount);
+    }
+
+    private static double resolveRequiredCurrencyAmount(
+        final @NotNull ResolvedStoreRequirement requirement,
+        final @NotNull CurrencyRequirement currencyRequirement
+    ) {
+        final double configuredAmount = requirement.requiredCurrencyAmount();
+        return configuredAmount < 0.0D ? currencyRequirement.getAmount() : configuredAmount;
+    }
+
     private static boolean isRequirementMet(
         final @NotNull Player player,
         final @NotNull ResolvedStoreRequirement requirement,
@@ -307,9 +329,10 @@ final class StorageStorePricingSupport {
         }
 
         if (requirement.requirement() instanceof CurrencyRequirement currencyRequirement) {
+            final double requiredAmount = resolveRequiredCurrencyAmount(requirement, currencyRequirement);
             return thisOrGreater(
                 currencyRequirement.getCurrentBalance(player) + getStoredCurrencyProgress(progressPlayer, requirement),
-                currencyRequirement.getAmount()
+                requiredAmount
             );
         }
 
@@ -339,11 +362,12 @@ final class StorageStorePricingSupport {
         }
 
         if (requirement.requirement() instanceof CurrencyRequirement currencyRequirement) {
-            if (currencyRequirement.getAmount() <= 0.0D) {
+            final double requiredAmount = resolveRequiredCurrencyAmount(requirement, currencyRequirement);
+            if (requiredAmount <= 0.0D) {
                 return 1.0D;
             }
             final double progressAmount = currencyRequirement.getCurrentBalance(player) + getStoredCurrencyProgress(progressPlayer, requirement);
-            return Math.max(0.0D, Math.min(1.0D, progressAmount / currencyRequirement.getAmount()));
+            return Math.max(0.0D, Math.min(1.0D, progressAmount / requiredAmount));
         }
 
         if (requirement.requirement() instanceof ItemRequirement itemRequirement) {
@@ -408,7 +432,8 @@ final class StorageStorePricingSupport {
 
         if (requirement.requirement() instanceof CurrencyRequirement currencyRequirement) {
             final double storedAmount = getStoredCurrencyProgress(progressPlayer, requirement);
-            final double remainingAmount = Math.max(0.0D, currencyRequirement.getAmount() - storedAmount);
+            final double requiredAmount = resolveRequiredCurrencyAmount(requirement, currencyRequirement);
+            final double remainingAmount = Math.max(0.0D, requiredAmount - storedAmount);
             if (remainingAmount > EPSILON && !withdrawCurrency(plugin, player, currencyRequirement.getCurrencyId(), remainingAmount)) {
                 return false;
             }
@@ -453,7 +478,7 @@ final class StorageStorePricingSupport {
         final @NotNull RDR plugin,
         final @NotNull AbstractRequirement requirement
     ) {
-        return describeRequirement(plugin, requirement, null);
+        return describeRequirement(plugin, requirement, null, -1.0D);
     }
 
     private static @NotNull String describeRequirement(
@@ -461,12 +486,24 @@ final class StorageStorePricingSupport {
         final @NotNull AbstractRequirement requirement,
         final @Nullable StoreRequirementSection section
     ) {
+        return describeRequirement(plugin, requirement, section, -1.0D);
+    }
+
+    private static @NotNull String describeRequirement(
+        final @NotNull RDR plugin,
+        final @NotNull AbstractRequirement requirement,
+        final @Nullable StoreRequirementSection section,
+        final double requiredCurrencyAmount
+    ) {
         if (requirement instanceof CurrencyRequirement currencyRequirement) {
+            final double amount = requiredCurrencyAmount >= 0.0D
+                ? requiredCurrencyAmount
+                : currencyRequirement.getAmount();
             return currencyRequirement.getCurrencyDisplayName() + ": "
                 + formatCurrency(
                     plugin,
                     currencyRequirement.getCurrencyId(),
-                    currencyRequirement.getAmount()
+                    amount
                 );
         }
         if (requirement instanceof ItemRequirement itemRequirement) {
@@ -499,7 +536,7 @@ final class StorageStorePricingSupport {
         }
         if (requirement instanceof TimedRequirement timedRequirement) {
             return "Timed: "
-                + describeRequirement(plugin, timedRequirement.getDelegate())
+                + describeRequirement(plugin, timedRequirement.getDelegate(), null, -1.0D)
                 + " within "
                 + PlaytimeRequirement.formatDuration(timedRequirement.getTimeLimitSeconds());
         }
@@ -548,7 +585,8 @@ final class StorageStorePricingSupport {
         final @NotNull CurrencyRequirement currencyRequirement
     ) {
         final double storedAmount = getStoredCurrencyProgress(progressPlayer, requirement);
-        final double remainingAmount = Math.max(0.0D, currencyRequirement.getAmount() - storedAmount);
+        final double requiredAmount = resolveRequiredCurrencyAmount(requirement, currencyRequirement);
+        final double remainingAmount = Math.max(0.0D, requiredAmount - storedAmount);
         if (remainingAmount <= EPSILON) {
             return false;
         }
@@ -751,7 +789,8 @@ final class StorageStorePricingSupport {
         @NotNull StoreRequirementSection section,
         @Nullable AbstractRequirement requirement,
         @NotNull String summary,
-        boolean operational
+        boolean operational,
+        double requiredCurrencyAmount
     ) {
     }
 

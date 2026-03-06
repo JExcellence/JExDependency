@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Verfügbare Slots:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Erhaltene Speicher:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Max. Speicher:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Speicher-Hub</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maximale Speicherkapazität:</gray><white>{max_storages}</white>"
       - "<gray>Ihr Tresornetzwerk ist persistent</gray>"
       - "<gray>und bereit für den serverübergreifenden Einsatz.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Speicher anzeigen</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Verwenden Sie dieses Bedienfeld, um Konfigurationswerte zu bearbeiten und Integrationssteuerelemente zu öffnen.</gray>"
       - "<yellow>Erfordert:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Spielerkontrollen</gradient>"
+      lore:
+        - "<gray>Bearbeiten Sie Spieler-/Gruppenlimits, Rabatte und Lagerkräftekontrollen.</gray>"
+        - "<gray>Öffnen Sie Override-Editoren und Notfallverwaltungsaktionen.</gray>"
+        - "<yellow>Klicken Sie hier, um die Player-Steuerung zu öffnen.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Speicherkonfiguration</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
       lore:
         - "<gray>Sie haben keine Berechtigung, dieses Admin-Panel zu verwenden.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Spieler- und Gruppensteuerung</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Admin Toolkit</gradient>"
+    lore:
+      - "<gray>Bearbeiten Sie maximale Speicher und Rabatte für Spieler und Gruppen.</gray>"
+      - "<gray>Erzwingen Sie das Entleeren/Zurücksetzen von Speicher oder das Schließen aller geöffneten RDR-Ansichten.</gray>"
+      - "<yellow>Erfordert:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Spielerüberschreibungen</gradient>"
+      lore:
+        - "<gray>Durchsuchen Sie Online-Spieler und konfigurierte Überschreibungsziele.</gray>"
+        - "<gray>Bearbeiten Sie die maximalen Speicherkapazitäten und Rabattwerte pro Spieler.</gray>"
+        - "<yellow>Klicken Sie hier, um Spielerüberschreibungen zu öffnen.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Gruppenüberschreibungen</gradient>"
+      lore:
+        - "<gray>Wählen Sie eine LuckPerms-Gruppe aus und legen Sie Überschreibungswerte fest.</gray>"
+        - "<gray>Nützlich für berechtigungsbasierte Rangstufen.</gray>"
+        - "<yellow>Klicken Sie hier, um Gruppenüberschreibungen zu öffnen.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Speicher entleeren erzwingen</gradient>"
+      lore:
+        - "<gray>Löscht alle Artikelinhalte aus einem ausgewählten Speicher.</gray>"
+        - "<gray>Behält vertrauenswürdige Einstellungen, Schulden und Hotkey-Werte bei.</gray>"
+        - "<yellow>Klicken Sie hier, um einen Speicher auszuwählen.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Zurücksetzen des Speichers erzwingen</gradient>"
+      lore:
+        - "<gray>Setzt einen ausgewählten Speicher in einen sauberen Zustand zurück.</gray>"
+        - "<gray>Löscht Elemente, Schulden, vertrauenswürdigen Zugriff und Hotkey.</gray>"
+        - "<yellow>Klicken Sie hier, um einen Speicher auszuwählen.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Schließen aller RDR-Ansichten erzwingen</gradient>"
+      lore:
+        - "<gray>Schließt alle derzeit geöffneten RDR-Menüs.</gray>"
+        - "<gray>Nützlich nach Konfigurationsänderungen oder Notfallmaßnahmen.</gray>"
+        - "<yellow>Klicken Sie hier, um das Schließen aller RDR-Ansichten zu erzwingen.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, dieses Menü zu verwenden.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie haben keine Berechtigung, die Spieler-/Gruppenadministratorsteuerung zu verwenden.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Zwangsgeschlossen <white>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Spieler-Override-Ziel auswählen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Spieler-Override-Ziele</gradient>"
+    lore:
+      - "<gray>Verfolgte Spieler:</gray> <white>{tracked_players}</white>"
+      - "<gray>Konfigurierte Overrides:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Klicken Sie unten auf einen Spieler, um Overrides zu bearbeiten.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Maximale Speicher überschreiben:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effektive maximale Speicher:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Rabatt überschreiben:</gray> <white>{override_discount}</white>"
+      - "<gray>Effektiver Rabatt:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Klicken Sie, um dieses Spieler-Überschreibungsprofil zu bearbeiten.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Erben]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Keine Spieler gefunden</gradient>"
+      lore:
+        - "<gray>Es wurden keine Online-Spieler oder gespeicherten Spielerüberschreibungen gefunden.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie sind nicht berechtigt, Player-Überschreibungen zu durchsuchen.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Bearbeiten {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Player-Override-Zusammenfassung</gradient>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Maximale Speicher überschreiben:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Effektive maximale Speicher:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Rabatt überschreiben:</gray> <white>{override_discount}</white>"
+      - "<gray>Effektiver Rabatt:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Erben]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maximale Speicherkapazität</gradient>"
+      lore:
+        - "<gray>Maximale Speicher überschreiben:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Effektive maximale Speicher:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Klicken Sie hier, um die maximale Speicherkapazität zu bearbeiten.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Store-Rabatt</gradient>"
+      lore:
+        - "<gray>Rabatt überschreiben:</gray> <white>{override_discount}</white>"
+        - "<gray>Effektiver Rabatt:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Klicken Sie hier, um den Rabattprozentsatz zu bearbeiten.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Player-Überschreibungen löschen</gradient>"
+      lore:
+        - "<gray>Entfernt alle Maximalspeicher- und Rabattüberschreibungen.</gray>"
+        - "<yellow>Klicken Sie hier, um die Überschreibungen dieses Spielers zu löschen.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie sind nicht berechtigt, Spielerüberschreibungen zu bearbeiten.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie sind nicht berechtigt, Spielerüberschreibungen zu bearbeiten.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Spielerziel fehlt</gradient>"
+      lore:
+        - "<gray>Für diesen Editor wurde kein Spielerziel angegeben.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Es ist kein Spielerziel ausgewählt.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Der Dienst für Spieler-/Gruppeneinstellungen ist derzeit nicht verfügbar.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Alle Überschreibungen für <white>{player_name} gelöscht</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Gruppe bearbeiten {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Gruppenüberschreibungszusammenfassung</gradient>"
+    lore:
+      - "<gray>Ausgewählte Gruppe:</gray> <white>{group_name}</white>"
+      - "<gray>Erkannte LuckPerms-Gruppen:</gray> <white>{group_count}</white>"
+      - "<gray>Maximale Speicher überschreiben:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Rabatt überschreiben:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Keine]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Erben]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Gruppe auswählen</gradient>"
+      lore:
+        - "<gray>Aktuelle Gruppe:</gray> <white>{group_name}</white>"
+        - "<gray>Erkannte LuckPerms-Gruppen:</gray> <white>{group_count}</white>"
+        - "<yellow>Linksklick für nächste Gruppe, Rechtsklick für vorherige.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maximale Speicherkapazität der Gruppe</gradient>"
+      lore:
+        - "<gray>Maximale Speicher überschreiben:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Klicken Sie hier, um die maximale Speicherkapazität für diese Gruppe zu bearbeiten.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Gruppenrabatt</gradient>"
+      lore:
+        - "<gray>Rabatt überschreiben:</gray> <white>{override_discount}</white>"
+        - "<yellow>Klicken Sie hier, um den Rabatt für diese Gruppe zu bearbeiten.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Gruppenüberschreibungen löschen</gradient>"
+      lore:
+        - "<gray>Entfernt Maximalspeicher- und Rabattüberschreibungen für diese Gruppe.</gray>"
+        - "<yellow>Klicken Sie, um diese Gruppenüberschreibung zu löschen.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie sind nicht berechtigt, Gruppenüberschreibungen zu bearbeiten.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie sind nicht berechtigt, Gruppenüberschreibungen zu bearbeiten.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Wählen Sie zunächst eine Gruppe aus, bevor Sie Werte bearbeiten.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Gruppe <white>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Ausgewählte LuckPerms-Gruppe <white>{group_name}</white> <gray>von <white>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Derzeit wurden keine LuckPerms-Gruppen von Online-Spielern erkannt.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Der Dienst für Spieler-/Gruppeneinstellungen ist derzeit nicht verfügbar.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Überschreibungen für Gruppe <white>{group_name} gelöscht</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Speicher] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Speicher entleeren erzwingen</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Speicher zurücksetzen erzwingen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Speichersteuerungsbrowser</gradient>"
+    lore:
+      - "<gray>Aktionsmodus:</gray> <white>{action_mode}</white>"
+      - "<gray>Verfolgte Speicher:</gray> <white>{storage_count}</white>"
+      - "<yellow>Klicken Sie unten auf einen Speicher, um die ausgewählte Aktion auszuführen.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Speicher]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Besitzer:</gray> <white>{owner}</white>"
+      - "<gray>Speicherschlüssel:</gray> <white>{storage_key}</white>"
+      - "<gray>Speicher-ID:</gray> <white>{storage_id}</white>"
+      - "<gray>Verwendete Steckplätze:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Aktion:</gray> <white>{action}</white>"
+      - "<yellow>Klicken Sie, um fortzufahren.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Entleeren]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Zurücksetzen]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Keine Speicher gefunden</gradient>"
+      lore:
+        - "<gray>Derzeit sind keine Speicherdatensätze verfügbar.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Administratorzugriff erforderlich</gradient>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diese Aktion zu verwenden.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie sind nicht berechtigt, Speicher über dieses Menü zu steuern.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Dieser Speicher existiert nicht mehr:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Entleeren]</gradient> <gray>Zwangsentleerung <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Geschlossene Ansichten:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Zurücksetzen]</gradient> <gray>Force-reset <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Geschlossene Ansichten:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Bearbeiten] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Bearbeitungsmodus:</gray> <white>{edit_mode}</white>"
+      - "<gray>Spielerziel:</gray> <white>{target_name}</white>"
+      - "<gray>Gruppenziel:</gray> <white>{group_name}</white>"
+      - "<gray>Aktueller Wert:</gray> <white>{current_value}</white>"
+      - "<yellow>Geben Sie einen neuen Wert ein und klicken Sie dann zur Bestätigung auf das Ergebnis.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ungültiger Wert <white>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Setze Gruppe <white>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Setze Gruppe <white>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Plugin-Integrationen</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Maximale Speicherkapazität:</gray><white>{max_storages}</white>"
       - "<gray>Zusätzlichen Tresorraum kaufen bis</gray>"
       - "<gray>Sie erreichen die konfigurierte Obergrenze.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Store-Anforderungen</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Maximale Speicherkapazität:</gray><white>{max_storages}</white>"
       - "<gray>Verwenden Sie diese Liste, um Ihre</gray>zu überprüfen"
       - "<gray>persistente Speichercontainer.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unbegrenzt]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Box]{storage_key}</gradient>"
     lore:

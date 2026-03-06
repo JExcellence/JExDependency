@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>사용 가능한 슬롯:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>획득한 스토리지:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>최대 저장 용량:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[제한 없는]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] 스토리지 허브</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
       - "<gray>Vault 네트워크가 지속됩니다</gray>"
       - "<gray>서버 간 사용이 준비되었습니다.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[제한 없는]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] 저장소 보기</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>이 패널을 사용하여 구성 값을 편집하고 통합 컨트롤을 엽니다.</gray>"
       - "<yellow>요구 사항:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] 플레이어 제어</gradient>"
+      lore:
+        - "<gray>플레이어/그룹 제한, 할인 및 저장력 제어를 편집합니다.</gray>"
+        - "<gray>재정의 편집기 및 긴급 관리 작업을 엽니다.</gray>"
+        - "<yellow>플레이어 컨트롤을 열려면 클릭하세요.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] 스토리지 구성</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] 관리자 액세스 필요</gradient>"
       lore:
         - "<gray>이 관리자 패널을 사용할 권한이 없습니다.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] 플레이어 및 그룹 컨트롤</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 저장소 관리 도구 키트</gradient>"
+    lore:
+      - "<gray>플레이어 및 그룹에 대한 최대 저장소 및 할인을 편집합니다.</gray>"
+      - "<gray>스토리지를 강제로 비우거나 재설정하거나 열려 있는 모든 RDR 보기를 닫습니다.</gray>"
+      - "<yellow>요구 사항:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] 플레이어 재정의</gradient>"
+      lore:
+        - "<gray>온라인 플레이어와 구성된 재정의 대상을 검색합니다.</gray>"
+        - "<gray>플레이어당 최대 저장 공간 및 할인 값을 편집합니다.</gray>"
+        - "<yellow>플레이어 재정의를 열려면 클릭하세요.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] 그룹 재정의</gradient>"
+      lore:
+        - "<gray>LuckPerms 그룹을 선택하고 재정의 값을 설정합니다.</gray>"
+        - "<gray>권한 기반 순위 계층에 유용합니다.</gray>"
+        - "<yellow>그룹 재정의를 열려면 클릭하세요.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] 저장소 강제 배수</gradient>"
+      lore:
+        - "<gray>선택한 저장소에서 모든 항목 내용을 지웁니다.</gray>"
+        - "<gray>신뢰할 수 있는 설정, 부채 및 단축키 값을 유지합니다.</gray>"
+        - "<yellow>스토리지를 선택하려면 클릭하세요.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] 저장소 강제 재설정</gradient>"
+      lore:
+        - "<gray>선택한 저장소를 깨끗한 상태로 재설정합니다.</gray>"
+        - "<gray>항목, 부채, 신뢰할 수 있는 액세스 및 단축키를 지웁니다.</gray>"
+        - "<yellow>스토리지를 선택하려면 클릭하세요.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] 모든 RDR 보기 강제 닫기</gradient>"
+      lore:
+        - "<gray>현재 열려 있는 모든 RDR 메뉴를 닫습니다.</gray>"
+        - "<gray>구성 변경 또는 긴급 조치 후에 유용합니다.</gray>"
+        - "<yellow>모든 RDR 보기를 강제로 닫으려면 클릭하세요.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 접근 필요</gradient>"
+      lore:
+        - "<gray>이 메뉴를 사용할 수 있는 권한이 없습니다.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>플레이어/그룹 관리자 컨트롤을 사용할 권한이 없습니다.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>강제 종료 <white>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] 플레이어 재정의 대상 선택</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 플레이어 재정의 대상</gradient>"
+    lore:
+      - "<gray>추적된 플레이어:</gray> <white>{tracked_players}</white>"
+      - "<gray>구성된 재정의:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>재정의를 편집하려면 아래 플레이어를 클릭하세요.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>재정의 최대 저장 용량:</gray> <white>{override_max_storages}</white>"
+      - "<gray>유효 최대 저장 용량:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>재정의 할인:</gray> <white>{override_discount}</white>"
+      - "<gray>유효 할인:</gray> <white>{effective_discount}</white>"
+      - "<yellow>이 플레이어 재정의 프로필을 편집하려면 클릭하세요.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[온라인]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[오프라인]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[상속]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[무제한]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] 플레이어를 찾을 수 없습니다</gradient>"
+      lore:
+        - "<gray>온라인 플레이어 또는 저장된 플레이어 재정의를 찾을 수 없습니다.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 접근 필요</gradient>"
+      lore:
+        - "<gray>플레이어 재정의를 찾아볼 권한이 없습니다.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] 편집 {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 플레이어 재정의 요약</gradient>"
+    lore:
+      - "<gray>플레이어:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>재정의 최대 저장 용량:</gray> <white>{override_max_storages}</white>"
+      - "<gray>유효 최대 저장 용량:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>재정의 할인:</gray> <white>{override_discount}</white>"
+      - "<gray>유효 할인:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[상속]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[무제한]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[최대] 최대 저장 공간</gradient>"
+      lore:
+        - "<gray>재정의 최대 저장 용량:</gray> <white>{override_max_storages}</white>"
+        - "<gray>유효 최대 저장 용량:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>최대 저장 공간을 편집하려면 클릭하세요.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] 매장 할인</gradient>"
+      lore:
+        - "<gray>재정의 할인:</gray> <white>{override_discount}</white>"
+        - "<gray>유효 할인:</gray> <white>{effective_discount}</white>"
+        - "<yellow>할인율을 편집하려면 클릭하세요.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] 플레이어 재정의 지우기</gradient>"
+      lore:
+        - "<gray>모든 최대 저장 공간 및 할인 재정의를 제거합니다.</gray>"
+        - "<yellow>이 플레이어의 재정의를 지우려면 클릭하세요.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 접근 필요</gradient>"
+      lore:
+        - "<gray>플레이어 재정의를 편집할 권한이 없습니다.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>플레이어 재정의를 편집할 권한이 없습니다.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] 플레이어 타겟 누락</gradient>"
+      lore:
+        - "<gray>이 편집기에 플레이어 타겟이 제공되지 않았습니다.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>선택한 플레이어 대상이 없습니다.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>플레이어/그룹 설정 서비스를 현재 사용할 수 없습니다.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{player_name}에 대한 모든 재정의를 지웠습니다.</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] 그룹 편집 {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 그룹 재정의 요약</gradient>"
+    lore:
+      - "<gray>선택한 그룹:</gray> <white>{group_name}</white>"
+      - "<gray>감지된 LuckPerms 그룹:</gray> <white>{group_count}</white>"
+      - "<gray>재정의 최대 저장 용량:</gray> <white>{override_max_storages}</white>"
+      - "<gray>재정의 할인:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[없음]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[상속]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[무제한]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[태그] 그룹 선택</gradient>"
+      lore:
+        - "<gray>현재 그룹:</gray> <white>{group_name}</white>"
+        - "<gray>감지된 LuckPerms 그룹:</gray> <white>{group_count}</white>"
+        - "<yellow>다음 그룹을 보려면 마우스 왼쪽 버튼을 클릭하고, 이전 그룹을 보려면 마우스 오른쪽 버튼을 클릭하세요.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[최대] 그룹 최대 저장소</gradient>"
+      lore:
+        - "<gray>재정의 최대 저장 용량:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>이 그룹의 최대 저장소를 편집하려면 클릭하세요.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] 단체 할인</gradient>"
+      lore:
+        - "<gray>재정의 할인:</gray> <white>{override_discount}</white>"
+        - "<yellow>이 그룹에 대한 할인을 편집하려면 클릭하세요.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] 그룹 재정의 지우기</gradient>"
+      lore:
+        - "<gray>이 그룹에 대한 최대 저장 용량 및 할인 재정의를 제거합니다.</gray>"
+        - "<yellow>이 그룹 재정의를 지우려면 클릭하세요.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 접근 필요</gradient>"
+      lore:
+        - "<gray>그룹 재정의를 편집할 권한이 없습니다.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>그룹 재정의를 편집할 권한이 없습니다.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>값을 편집하기 전에 먼저 그룹을 선택하세요.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>그룹 <white>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>선택한 LuckPerms 그룹 <white>{group_name}</white> <gray>from <white>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>현재 온라인 플레이어에서 LuckPerms 그룹이 감지되지 않았습니다.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>플레이어/그룹 설정 서비스를 현재 사용할 수 없습니다.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{group_name} 그룹에 대한 재정의가 지워졌습니다.</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[스토리지] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>스토리지 강제 배수</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>스토리지 강제 재설정</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 스토리지 제어 브라우저</gradient>"
+    lore:
+      - "<gray>작업 모드:</gray> <white>{action_mode}</white>"
+      - "<gray>추적된 스토리지:</gray> <white>{storage_count}</white>"
+      - "<yellow>선택한 스토리지를 실행하려면 아래 스토리지를 클릭하세요. 행동.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[스토리지]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>소유자:</gray> <white>{owner}</white>"
+      - "<gray>스토리지 키:</gray> <white>{storage_key}</white>"
+      - "<gray>스토리지 ID:</gray> <white>{storage_id}</white>"
+      - "<gray>사용된 슬롯:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>작업:</gray> <white>{action}</white>"
+      - "<yellow>계속하려면 클릭하세요.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[드레인]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[재설정]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] 저장소를 찾을 수 없습니다.</gradient>"
+      lore:
+        - "<gray>현재 사용 가능한 저장소 기록이 없습니다.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 관리자 접근 필요</gradient>"
+      lore:
+        - "<gray>이 작업을 사용할 권한이 없습니다.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>이 메뉴에서 저장소를 제어할 수 있는 권한이 없습니다.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>해당 스토리지는 더 이상 존재하지 않습니다.</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[드레인]</gradient> <gray>Force-drained <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. 닫힌 보기:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[재설정]</gradient> <gray>강제 재설정 <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. 닫힌 보기:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[편집] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>편집 모드:</gray> <white>{edit_mode}</white>"
+      - "<gray>플레이어 대상:</gray> <white>{target_name}</white>"
+      - "<gray>그룹 대상:</gray> <white>{group_name}</white>"
+      - "<gray>현재 값:</gray> <white>{current_value}</white>"
+      - "<yellow>새 값을 입력한 다음 결과를 클릭하여 확인합니다.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>잘못된 값 <흰색>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><흰색>{player_name} 설정</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><흰색>{player_name} 설정</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><흰색>{group_name} 설정 그룹</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><흰색>{group_name} 설정 그룹</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] 플러그인 통합</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
       - "<gray></gray>까지 추가 저장소 공간 구입"
       - "<gray>구성된 한도에 도달했습니다.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[제한 없는]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[요구] 저장소 요구 사항</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>최대 저장 공간:</gray><white>{max_storages}</white>"
       - "<gray>이 목록을 사용하여 귀하의</gray>을 검토하세요."
       - "<gray>지속형 스토리지 컨테이너.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[제한 없는]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[박스]{storage_key}</gradient>"
     lore:

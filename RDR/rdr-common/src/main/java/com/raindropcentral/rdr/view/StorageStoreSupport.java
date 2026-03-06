@@ -14,6 +14,9 @@ final class StorageStoreSupport {
         final int ownedStorages,
         final int maxStorages
     ) {
+        if (maxStorages <= 0) {
+            return false;
+        }
         return ownedStorages >= maxStorages;
     }
 

@@ -94,7 +94,8 @@ public class StorageStoreView extends BaseView {
         final ConfigSection config = plugin.getDefaultConfig();
         final RDRPlayer rdrPlayer = this.findPlayer(render);
         final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
-        final int maxStorages = plugin.getMaximumStorages(config);
+        final int maxStorages = plugin.getMaximumStorages(player, config);
+        final String maxStoragesDisplay = this.formatMaxStorages(player, maxStorages);
         final int purchaseNumber = StorageStoreSupport.getNextPurchaseNumber(
             ownedStorages,
             config.getStartingStorages()
@@ -107,7 +108,7 @@ public class StorageStoreView extends BaseView {
             StorageStorePricingSupport.resolveAvailability(player, requirements, rdrPlayer);
 
         render.layoutSlot('s')
-            .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStorages));
+            .renderWith(() -> this.createSummaryItem(player, ownedStorages, maxStoragesDisplay));
 
         render.layoutSlot('c')
             .withItem(this.createCostItem(player, requirements.size(), requirementAvailability))
@@ -120,7 +121,7 @@ public class StorageStoreView extends BaseView {
                 costSummary,
                 requirements.size(),
                 ownedStorages,
-                maxStorages,
+                maxStoragesDisplay,
                 rdrPlayer != null,
                 requirementAvailability,
                 limitReached
@@ -146,7 +147,8 @@ public class StorageStoreView extends BaseView {
         final Player player = clickContext.getPlayer();
         final RDRPlayer rdrPlayer = this.findPlayer(clickContext);
         final int ownedStorages = rdrPlayer == null ? 0 : rdrPlayer.getStorages().size();
-        final int maxStorages = plugin.getMaximumStorages(config);
+        final int maxStorages = plugin.getMaximumStorages(player, config);
+        final String maxStoragesDisplay = this.formatMaxStorages(player, maxStorages);
         final int purchaseNumber = StorageStoreSupport.getNextPurchaseNumber(
             ownedStorages,
             config.getStartingStorages()
@@ -164,7 +166,7 @@ public class StorageStoreView extends BaseView {
             this.i18n("feedback.limit_reached", player)
                 .withPlaceholders(Map.of(
                     "owned_storages", ownedStorages,
-                    "max_storages", maxStorages
+                    "max_storages", maxStoragesDisplay
                 ))
                 .build()
                 .sendMessage();
@@ -185,7 +187,7 @@ public class StorageStoreView extends BaseView {
                     "requirement", purchaseResult.failedRequirement(),
                     "requirements", purchaseResult.requirementSummary(),
                     "owned_storages", ownedStorages,
-                    "max_storages", maxStorages
+                    "max_storages", maxStoragesDisplay
                 ))
                 .build()
                 .sendMessage();
@@ -205,7 +207,7 @@ public class StorageStoreView extends BaseView {
                 "storage_key", storageKey,
                 "requirements", requirementSummary,
                 "owned_storages", rdrPlayer.getStorages().size(),
-                "max_storages", maxStorages
+                "max_storages", maxStoragesDisplay
             ))
             .build()
             .sendMessage();
@@ -257,7 +259,7 @@ public class StorageStoreView extends BaseView {
     private @NotNull ItemStack createSummaryItem(
         final @NotNull Player player,
         final int ownedStorages,
-        final int maxStorages
+        final @NotNull String maxStorages
     ) {
         return UnifiedBuilderFactory.item(Material.BARREL)
             .setName(this.i18n("summary.name", player).build().component())
@@ -318,7 +320,7 @@ public class StorageStoreView extends BaseView {
         final @NotNull String costSummary,
         final int requirementCount,
         final int ownedStorages,
-        final int maxStorages,
+        final @NotNull String maxStorages,
         final boolean profileLoaded,
         final @NotNull StorageStorePricingSupport.RequirementAvailability requirementAvailability,
         final boolean limitReached
@@ -375,5 +377,15 @@ public class StorageStoreView extends BaseView {
             .setLore(lore)
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
+    }
+
+    private @NotNull String formatMaxStorages(
+        final @NotNull Player player,
+        final int maxStorages
+    ) {
+        if (maxStorages > 0) {
+            return Integer.toString(maxStorages);
+        }
+        return this.i18n("summary.unlimited", player).build().getI18nVersionWrapper().asPlaceholder();
     }
 }

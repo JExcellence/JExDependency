@@ -21,12 +21,19 @@ import com.raindropcentral.rdr.database.repository.RRDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRStorage;
 import com.raindropcentral.rdr.database.repository.RRTownStorageBank;
 import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
+import com.raindropcentral.rdr.service.StorageAdminPlayerSettingsService;
 import com.raindropcentral.rdr.service.StorageFilledTaxScheduler;
 import com.raindropcentral.rdr.service.StorageService;
 import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import com.raindropcentral.rdr.view.AdminCurrencyView;
 import com.raindropcentral.rdr.view.PlaceholderAPIView;
 import com.raindropcentral.rdr.view.PluginIntegrationManagementView;
+import com.raindropcentral.rdr.view.StorageAdminGroupEditView;
+import com.raindropcentral.rdr.view.StorageAdminOverrideValueAnvilView;
+import com.raindropcentral.rdr.view.StorageAdminPlayerEditView;
+import com.raindropcentral.rdr.view.StorageAdminPlayerSelectView;
+import com.raindropcentral.rdr.view.StorageAdminPlayerView;
+import com.raindropcentral.rdr.view.StorageAdminStorageControlView;
 import com.raindropcentral.rdr.view.StorageAdminView;
 import com.raindropcentral.rdr.view.StorageConfigValueAnvilView;
 import com.raindropcentral.rdr.view.StorageConfigView;
@@ -46,6 +53,7 @@ import com.raindropcentral.rdr.view.StorageView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.hibernate.JEHibernate;
@@ -89,9 +97,11 @@ public class RDR {
     private PlatformType platformType;
 
     private Object economyInstance;
+    private LuckPermsService luckPermsService;
     private ViewFrame viewFrame;
     private StorageSidebarScoreboardService storageSidebarScoreboardService;
     private StorageFilledTaxScheduler storageFilledTaxScheduler;
+    private StorageAdminPlayerSettingsService storageAdminPlayerSettingsService;
 
     private RRDRPlayer playerRepository;
     private RRStorage storageRepository;
@@ -149,6 +159,7 @@ public class RDR {
         }
 
         this.initializePlugins();
+        this.initializeAdminPlayerSettings();
         this.initializeCommands();
         this.initializeViews();
         this.initializeStorageSidebarScoreboards();
@@ -161,6 +172,14 @@ public class RDR {
      */
     public void onDisable() {
         this.getLogger().info("Disabling RDR (" + this.edition + "): closing Hibernate");
+
+        if (this.storageAdminPlayerSettingsService != null) {
+            try {
+                this.storageAdminPlayerSettingsService.save();
+            } catch (Exception exception) {
+                this.getLogger().warning("Failed to save storage admin player settings: " + exception.getMessage());
+            }
+        }
 
         if (this.executor != null) {
             this.executor.shutdownNow();
@@ -212,12 +231,95 @@ public class RDR {
     }
 
     /**
+     * Returns the effective maximum storages for a player after admin overrides are applied.
+     *
+     * @param player target player
+     * @param config configuration snapshot to evaluate
+     * @return effective max storages for the player ({@code -1} means unlimited)
+     * @throws NullPointerException if {@code player} or {@code config} is {@code null}
+     */
+    public int getMaximumStorages(
+        final @NotNull org.bukkit.entity.Player player,
+        final @NotNull ConfigSection config
+    ) {
+        final int defaultMaximum = this.getMaximumStorages(config);
+        return this.storageAdminPlayerSettingsService == null
+            ? defaultMaximum
+            : this.storageAdminPlayerSettingsService.resolveMaximumStorages(player, defaultMaximum);
+    }
+
+    /**
+     * Returns the effective maximum storages for a player using the current config.
+     *
+     * @param player target player
+     * @return effective max storages ({@code -1} means unlimited)
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    public int getMaximumStorages(final @NotNull org.bukkit.entity.Player player) {
+        return this.getMaximumStorages(player, this.getDefaultConfig());
+    }
+
+    /**
+     * Returns the effective maximum storages for a player UUID after player overrides are applied.
+     *
+     * <p>This overload does not evaluate group membership and therefore only uses explicit player
+     * overrides plus edition defaults.</p>
+     *
+     * @param playerId target player identifier
+     * @param config configuration snapshot to evaluate
+     * @return effective max storages ({@code -1} means unlimited)
+     * @throws NullPointerException if {@code playerId} or {@code config} is {@code null}
+     */
+    public int getMaximumStorages(
+        final @NotNull UUID playerId,
+        final @NotNull ConfigSection config
+    ) {
+        final int defaultMaximum = this.getMaximumStorages(config);
+        return this.storageAdminPlayerSettingsService == null
+            ? defaultMaximum
+            : this.storageAdminPlayerSettingsService.resolveMaximumStorages(playerId, defaultMaximum);
+    }
+
+    /**
      * Returns the effective edition storage cap using the current configuration file.
      *
      * @return effective edition-aware storage cap
      */
     public int getMaximumStorages() {
         return this.getMaximumStorages(this.getDefaultConfig());
+    }
+
+    /**
+     * Returns the effective storage-store discount percent for a player.
+     *
+     * @param player target player
+     * @return discount percent in range {@code 0.0} to {@code 100.0}
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    public double getStorageDiscountPercent(final @NotNull org.bukkit.entity.Player player) {
+        return this.storageAdminPlayerSettingsService == null
+            ? 0.0D
+            : this.storageAdminPlayerSettingsService.resolveDiscountPercent(player);
+    }
+
+    /**
+     * Applies the resolved player storage discount to a base amount.
+     *
+     * @param player target player
+     * @param baseAmount amount before discount
+     * @return discounted amount
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    public double applyStorageDiscount(
+        final @NotNull org.bukkit.entity.Player player,
+        final double baseAmount
+    ) {
+        if (baseAmount <= 0.0D) {
+            return 0.0D;
+        }
+
+        final double discountPercent = this.getStorageDiscountPercent(player);
+        return baseAmount * (1.0D - (Math.max(0.0D, Math.min(100.0D, discountPercent)) / 100.0D));
     }
 
     /**
@@ -346,6 +448,24 @@ public class RDR {
      */
     public @Nullable StorageSidebarScoreboardService getStorageSidebarScoreboardService() {
         return this.storageSidebarScoreboardService;
+    }
+
+    /**
+     * Returns the service managing per-player/group admin overrides for storage limits and discounts.
+     *
+     * @return admin override settings service, or {@code null} before enable completes
+     */
+    public @Nullable StorageAdminPlayerSettingsService getStorageAdminPlayerSettingsService() {
+        return this.storageAdminPlayerSettingsService;
+    }
+
+    /**
+     * Returns the optional LuckPerms integration wrapper.
+     *
+     * @return LuckPerms service wrapper, or {@code null} if LuckPerms is unavailable
+     */
+    public @Nullable LuckPermsService getLuckPermsService() {
+        return this.luckPermsService;
     }
 
     /**
@@ -538,8 +658,12 @@ public class RDR {
     }
 
     private void initializePlugins() {
+        final ServiceRegistry registry = this.platform == null
+            ? new ServiceRegistry()
+            : this.platform.getServiceRegistry();
+
         this.getLogger().info("Registering Vault service");
-        new ServiceRegistry().register(
+        registry.register(
             "net.milkbowl.vault.economy.Economy",
             "TheNewEconomy"
         ).optional().maxAttempts(30).retryDelay(1000).onSuccess(economy -> {
@@ -548,11 +672,33 @@ public class RDR {
         }).onFailure(() -> this.getLogger().warning(
             "Vault service not present; initialization failed")
         ).load();
+
+        this.getLogger().info("Registering LuckPerms service");
+        registry.register(
+            "net.luckperms.api.LuckPerms",
+            "LuckPerms"
+        ).optional().maxAttempts(30).retryDelay(500).onSuccess(luckPerms -> {
+            if (this.platform == null) {
+                this.getLogger().warning("LuckPerms detected but RPlatform is unavailable.");
+                return;
+            }
+
+            this.luckPermsService = new LuckPermsService(this.platform);
+            this.getLogger().info("LuckPerms service initialized");
+        }).onFailure(() -> {
+            this.luckPermsService = null;
+            this.getLogger().info("LuckPerms service not present; continuing without LuckPerms integration");
+        }).load();
     }
 
     private void initializeCommands() {
         final var commandFactory = new CommandFactory(this.plugin, this);
         commandFactory.registerAllCommandsAndListeners();
+    }
+
+    private void initializeAdminPlayerSettings() {
+        this.storageAdminPlayerSettingsService = new StorageAdminPlayerSettingsService(this);
+        this.storageAdminPlayerSettingsService.load();
     }
 
     private void initializeRepositories() {
@@ -616,6 +762,11 @@ public class RDR {
                 new StorageTrustedView(),
                 new StorageStoreView(),
                 new StorageAdminView(),
+                new StorageAdminPlayerView(),
+                new StorageAdminPlayerSelectView(),
+                new StorageAdminPlayerEditView(),
+                new StorageAdminGroupEditView(),
+                new StorageAdminStorageControlView(),
                 new StorageConfigView(),
                 new PluginIntegrationManagementView(),
                 new AdminCurrencyView(),
@@ -625,6 +776,7 @@ public class RDR {
                 new StorageStoreRequirementsView(),
                 new StorageHotkeyAnvilView(),
                 new StorageConfigValueAnvilView(),
+                new StorageAdminOverrideValueAnvilView(),
                 new StorageTaxView(),
                 new StorageFrozenStorageView(),
                 new StorageTaxTownBankView(),

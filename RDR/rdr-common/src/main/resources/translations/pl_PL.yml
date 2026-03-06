@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Dostępne sloty:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Uzyskane magazyny:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Maksymalna pojemność:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Koncentrator pamięci masowej</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
       - "<gray>Twoja sieć skarbca jest utrwalona</gray>"
       - "<gray>i gotowy do użytku na wielu serwerach.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Wyświetl magazyny</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Ten panel służy do edycji wartości konfiguracyjnych i otwierania elementów sterujących integracją.</gray>"
       - "<yellow>Wymaga:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Kontrola gracza</gradient>"
+      lore:
+        - "<gray>Edytuj limity gracza/grupy, rabaty i kontrolę siły przechowywania.</gray>"
+        - "<gray>Otwórz edytory zastępowania i akcje zarządzania awaryjnego.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące odtwarzacza.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfiguracja przechowywania</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
       lore:
         - "<gray>Nie masz uprawnień do korzystania z tego panelu administracyjnego.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Sterowanie graczami i grupami</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Zestaw narzędzi administratora pamięci</gradient>"
+    lore:
+      - "<gray>Edytuj maksymalne miejsca i zniżki dla graczy i grup.</gray>"
+      - "<gray>Wymuś opróżnienie/resetowanie magazynów lub zamknij wszystkie otwarte widoki RDR.</gray>"
+      - "<yellow>Wymaga:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Zastąpienie gracza</gradient>"
+      lore:
+        - "<gray>Przeglądaj graczy online i skonfigurowane cele zastąpienia.</gray>"
+        - "<gray>Edytuj maksymalne magazyny i wartości rabatów na gracza.</gray>"
+        - "<yellow>Kliknij, aby otworzyć zmiany gracza.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Przesłonięcia grupowe</gradient>"
+      lore:
+        - "<gray>Wybierz grupę LuckPerms i ustaw wartości przesłonięć.</gray>"
+        - "<gray>Przydatne w przypadku poziomów rang opartych na uprawnieniach.</gray>"
+        - "<yellow>Kliknij, aby otworzyć nadpisania grupowe.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Wymuś opróżnienie magazynu</gradient>"
+      lore:
+        - "<gray>Usuwa całą zawartość elementu z wybranego magazynu.</gray>"
+        - "<gray>Zachowuje zaufane ustawienia, zadłużenie i wartości klawiszy skrótu.</gray>"
+        - "<yellow>Kliknij, aby wybrać magazyn.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Wymuś resetowanie pamięci</gradient>"
+      lore:
+        - "<gray>Resetuje wybraną pamięć do stanu czystego.</gray>"
+        - "<gray>Czyści przedmioty, długi, zaufany dostęp i klawisz skrótu.</gray>"
+        - "<yellow>Kliknij, aby wybrać magazyn.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Wymuś zamknięcie wszystkich widoków RDR</gradient>"
+      lore:
+        - "<gray>Zamyka wszystkie aktualnie otwarte menu RDR.</gray>"
+        - "<gray>Przydatne po zmianach konfiguracji lub działaniach awaryjnych.</gray>"
+        - "<yellow>Kliknij, aby wymusić zamknięcie wszystkich widoków RDR.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień, aby korzystać z tego menu.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do korzystania z elementów sterujących administratora gracza/grupy.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Zamknięte na siłę <biały>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Wybierz cel zmiany gracza</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Cele zmiany gracza</gradient>"
+    lore:
+      - "<gray>Śledzeni gracze:</gray> <white>{tracked_players}</white>"
+      - "<gray>Skonfigurowane zmiany:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Kliknij gracza poniżej, aby edytować zmiany.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Zastąp maksymalne magazyny:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Efektywne maksymalne magazyny:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Zastąp rabat:</gray> <white>{override_discount}</white>"
+      - "<gray>Efektywny rabat:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Kliknij, aby edytować profil zastąpienia tego gracza.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Dziedzicz]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Nie znaleziono graczy</gradient>"
+      lore:
+        - "<gray>Nie znaleziono graczy online ani zapisanych zastąpień graczy.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień do przeglądania zastąpień graczy.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Edytuj {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Podsumowanie zmiany gracza</gradient>"
+    lore:
+      - "<gray>Gracz:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Zastąp maksymalne magazyny:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Efektywne maksymalne magazyny:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Zastąp rabat:</gray> <white>{override_discount}</white>"
+      - "<gray>Efektywny rabat:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Dziedzicz]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Maks.] Maksymalna liczba magazynów</gradient>"
+      lore:
+        - "<gray>Zastąp maksymalne magazyny:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Efektywne maksymalne magazyny:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Kliknij, aby edytować maksymalną liczbę magazynów.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Rabat sklepowy</gradient>"
+      lore:
+        - "<gray>Zastąp rabat:</gray> <white>{override_discount}</white>"
+        - "<gray>Efektywny rabat:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Kliknij, aby edytować procent rabatu.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Wyczyść nadpisania graczy</gradient>"
+      lore:
+        - "<gray>Usuwa wszystkie nadpisania maksymalnego miejsca i rabatów.</gray>"
+        - "<yellow>Kliknij, aby wyczyścić zmiany dokonane przez tego gracza.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień do edytowania zastąpień graczy.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do edytowania zastąpień graczy.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Brakujący cel gracza</gradient>"
+      lore:
+        - "<gray>W tym edytorze nie podano celu gracza.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie wybrano celu gracza.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usługa ustawień gracza/grupy jest obecnie niedostępna.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Wyczyszczono wszystkie przesłonięcia dla <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Edytuj grupę {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Podsumowanie przesłonięć grupy</gradient>"
+    lore:
+      - "<gray>Wybrana grupa:</gray> <white>{group_name}</white>"
+      - "<gray>Wykryta grupa LuckPerms:</gray> <white>{group_count}</white>"
+      - "<gray>Zastąp maksymalne magazyny:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Zastąp rabat:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Brak]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Dziedzicz]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Wybierz grupę</gradient>"
+      lore:
+        - "<gray>Bieżąca grupa:</gray> <white>{group_name}</white>"
+        - "<gray>Wykryta grupa LuckPerms:</gray> <white>{group_count}</white>"
+        - "<yellow>Kliknij lewym przyciskiem myszy, aby przejść do następnej grupy, kliknij prawym przyciskiem myszy, aby przejść do poprzedniej.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Grupa Maksymalna liczba magazynów</gradient>"
+      lore:
+        - "<gray>Zastąp maksymalne magazyny:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Kliknij, aby edytować maksymalną liczbę magazynów dla tej grupy.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Rabat grupowy</gradient>"
+      lore:
+        - "<gray>Zastąp rabat:</gray> <white>{override_discount}</white>"
+        - "<yellow>Kliknij, aby edytować rabat dla tej grupy.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Usuń nadpisania grupy</gradient>"
+      lore:
+        - "<gray>Usuwa nadpisania maksymalnej ilości miejsca i rabatu dla tej grupy.</gray>"
+        - "<yellow>Kliknij, aby wyczyścić to zastąpienie grupy.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień do edycji nadpisań grupowych.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do edycji nadpisań grupowych.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Wybierz najpierw grupę przed edycją wartości.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Grupa <biały>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Wybrana grupa LuckPerms <biały>{group_name}</white> <gray>z <biały>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>W tej chwili nie wykryto żadnych grup LuckPerms wśród graczy online.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Usługa ustawień gracza/grupy jest obecnie niedostępna.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Wyczyszczono nadpisania dla grupy <biały>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Storage] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Force Drain Storage</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Force Reset Storage</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Storage Control Browser</gradient>"
+    lore:
+      - "<gray>Tryb akcji:</gray> <white>{action_mode}</white>"
+      - "<gray>Śledzone magazyny:</gray> <white>{storage_count}</white>"
+      - "<yellow>Kliknij dowolną pamięć poniżej, aby wykonać wybraną akcję.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Magazyn]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Właściciel:</gray> <white>{owner}</white>"
+      - "<gray>Klucz magazynu:</gray> <white>{storage_key}</white>"
+      - "<gray>Identyfikator magazynu:</gray> <white>{storage_id}</white>"
+      - "<gray>Używane sloty:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Akcja:</gray> <white>{action}</white>"
+      - "<yellow>Kliknij, aby kontynuować.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Opróżnij]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Resetuj]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Nie znaleziono magazynów</gradient>"
+      lore:
+        - "<gray>Obecnie nie są dostępne żadne zapisy magazynów.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień, aby użyć tej akcji.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do kontrolowania magazynów z poziomu tego menu.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tego magazynu już nie ma:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Opróżnij]</gradient> <gray>Z drenażem wymuszonym <biały>{owner}</white>'s storage <white>{storage_key}</white><gray>. Zamknięte widoki:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Resetuj]</gradient> <gray>Wymuszony reset <biały>{owner}</white>'s storage <white>{storage_key}</white><gray>. Zamknięte widoki:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Edycja] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Tryb edycji:</gray> <white>{edit_mode}</white>"
+      - "<gray>Cel gracza:</gray> <white>{target_name}</white>"
+      - "<gray>Cel grupy:</gray> <white>{group_name}</white>"
+      - "<gray>Aktualna wartość:</gray> <white>{current_value}</white>"
+      - "<yellow>Wpisz nową wartość, a następnie kliknij wynik, aby potwierdzić.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nieprawidłowa wartość <biały>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ustaw <biały>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ustaw <biały>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ustaw grupę <biały>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ustaw grupę <biały>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Integracja wtyczek</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
       - "<gray>Kup dodatkowe miejsce w skarbcu do</gray>"
       - "<gray>osiągasz skonfigurowany limit.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Wymagania dotyczące sklepu</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Maksymalna liczba magazynów:</gray><white>{max_storages}</white>"
       - "<gray>Użyj tej listy, aby sprawdzić swoje</gray>"
       - "<gray>pojemniki do trwałego przechowywania.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Nieograniczony]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Pole]{storage_key}</gradient>"
     lore:

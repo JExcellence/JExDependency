@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>可用插槽：</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>所獲得的儲存：</gray><white>{owned_storages}</white>"
   max_storages: "<gray>最大儲存：</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] 儲存集線器</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>最大儲存量：</gray><white>{max_storages}</white>"
       - "<gray>您的保管庫網路已保留</gray>"
       - "<gray>並準備好跨伺服器使用.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] 查看儲存體</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>使用此面板可以編輯配置值並開啟整合式控制項。</gray>"
       - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[層] 玩家控制</gradient>"
+      lore:
+        - "<gray>編輯玩家/群組限制、折扣和儲存力控制。</gray>"
+        - "<gray>開啟覆蓋編輯器和緊急管理操作。</gray>"
+        - "<yellow>點選可開啟播放器控制。</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] 儲存配置</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
       lore:
         - "<gray>您無權使用此管理面板。</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] 播放器與群組控制</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] 儲存管理工具包</gradient>"
+    lore:
+      - "<gray>編輯玩家和團體的最大儲存空間和折扣。</gray>"
+      - "<gray>強制清空/重設儲存或關閉所有開啟的 RDR 視圖。</gray>"
+      - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] 玩家覆蓋</gradient>"
+      lore:
+        - "<gray>瀏覽線上玩家並配置覆蓋目標。</gray>"
+        - "<gray>編輯每位玩家的最大儲存空間和折扣值。</gray>"
+        - "<yellow>點選可開啟播放器覆蓋。</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] 組覆蓋</gradient>"
+      lore:
+        - "<gray>選擇一個 LuckPerms 群組並設定覆蓋值。</gray>"
+        - "<gray>對於基於權限的等級非常有用。</gray>"
+        - "<yellow>點選可開啟群組覆蓋。</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] 強制清空儲存</gradient>"
+      lore:
+        - "<gray>清除選定儲存中的所有項目內容。</gray>"
+        - "<gray>保留可信任設定、債務和熱鍵值。</gray>"
+        - "<yellow>點擊以選擇儲存。</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] 強制重置儲存</gradient>"
+      lore:
+        - "<gray>將選定的儲存重設為乾淨狀態。</gray>"
+        - "<gray>清除項目、債務、可信任存取和熱鍵。</gray>"
+        - "<yellow>點擊以選擇儲存。</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] 強制關閉所有 RDR 視圖</gradient>"
+      lore:
+        - "<gray>關閉所有目前開啟的 RDR 選單。</gray>"
+        - "<gray>在配置變更或緊急操作後有用。</gray>"
+        - "<yellow>按一下可強制關閉所有 RDR 視圖。</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您沒有使用此選單的權限。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權使用玩家/群組管理控制。</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>強制關閉<白色>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] 選擇玩家覆蓋目標</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[訊息] 玩家覆蓋目標</gradient>"
+    lore:
+      - "<gray>追蹤的玩家：</gray> <white>{tracked_players}</white>"
+      - "<gray>配置的覆蓋：</gray> <white>{configured_overrides}</white>"
+      - "<yellow>點擊下面的播放器來編輯覆蓋。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID：</gray> <white>{player_uuid}</white>"
+      - "<gray>覆蓋最大儲存空間：</gray> <white>{override_max_storages}</white>"
+      - "<gray>有效最大儲存量：</gray> <white>{effective_max_storages}</white>"
+      - "<gray>覆蓋折扣：</gray> <white>{override_discount}</white>"
+      - "<gray>有效折扣：</gray> <white>{effective_discount}</white>"
+      - "<yellow>按一下可編輯此播放器覆蓋設定檔。</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[線上]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[離線]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[繼承]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] 未找到玩家</gradient>"
+      lore:
+        - "<gray>未找到線上玩家或儲存的玩家覆蓋。</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權瀏覽播放器覆蓋。</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] 編輯 {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 玩家覆蓋摘要</gradient>"
+    lore:
+      - "<gray>玩家：</gray> <white>{player_name}</white>"
+      - "<gray>UUID：</gray> <white>{player_uuid}</white>"
+      - "<gray>覆蓋最大儲存空間：</gray> <white>{override_max_storages}</white>"
+      - "<gray>有效最大儲存量：</gray> <white>{effective_max_storages}</white>"
+      - "<gray>覆蓋折扣：</gray> <white>{override_discount}</white>"
+      - "<gray>有效折扣：</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[繼承]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[最大] 最大儲存</gradient>"
+      lore:
+        - "<gray>覆蓋最大儲存空間：</gray> <white>{override_max_storages}</white>"
+        - "<gray>有效最大儲存量：</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>點選可編輯最大儲存。</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] 商店折扣</gradient>"
+      lore:
+        - "<gray>覆蓋折扣：</gray> <white>{override_discount}</white>"
+        - "<gray>有效折扣：</gray> <white>{effective_discount}</white>"
+        - "<yellow>點選可編輯折扣百分比。</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] 清除播放器覆蓋</gradient>"
+      lore:
+        - "<gray>刪除所有最大儲存和折扣覆蓋範圍。</gray>"
+        - "<yellow>點選可清除該玩家的覆蓋範圍。</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權編輯播放器覆蓋。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權編輯播放器覆蓋。</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] 玩家目標缺失</gradient>"
+      lore:
+        - "<gray>沒有為此編輯器提供玩家目標。</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>未選擇玩家目標。</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>玩家/群組設定服務目前無法使用。</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>清除了 <white>{player_name} 的所有覆蓋</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] 編輯群組 {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] 群組覆蓋摘要</gradient>"
+    lore:
+      - "<gray>所選組：</gray> <white>{group_name}</white>"
+      - "<gray>偵測到的 LuckPerms 組：</gray> <white>{group_count}</white>"
+      - "<gray>覆蓋最大儲存空間：</gray> <white>{override_max_storages}</white>"
+      - "<gray>覆蓋折扣：</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[無]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[繼承]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[標籤] 選擇群組</gradient>"
+      lore:
+        - "<gray>目前組：</gray> <white>{group_name}</white>"
+        - "<gray>偵測到的 LuckPerms 組：</gray> <white>{group_count}</white>"
+        - "<yellow>左鍵查看下一組，右鍵查看上一組。</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[最大] 群組最大儲存</gradient>"
+      lore:
+        - "<gray>覆蓋最大儲存空間：</gray> <white>{override_max_storages}</white>"
+        - "<yellow>點選可編輯該群組的最大儲存。</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] 團體折扣</gradient>"
+      lore:
+        - "<gray>覆蓋折扣：</gray> <white>{override_discount}</white>"
+        - "<yellow>點選可編輯該團體的折扣。</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] 清除組覆蓋</gradient>"
+      lore:
+        - "<gray>刪除該組的最大儲存和折扣覆蓋範圍。</gray>"
+        - "<yellow>點選可清除該群組覆蓋。</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權編輯群組覆蓋。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權編輯群組覆蓋。</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>編輯值之前先選擇一個群組。</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>組 <白色>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>選定的 LuckPerms 群組 <白色>{group_name}</white> <gray>來自<白色>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>目前未從線上玩家中檢測到 LuckPerms 組。</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>玩家/群組設定服務目前無法使用。</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>已清除組 <white>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[儲存] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>強制耗盡儲存的覆蓋</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>強制重置儲存</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 儲存控制瀏覽器</gradient>"
+    lore:
+      - "<gray>操作模式：</gray> <white>{action_mode}</white>"
+      - "<gray>追蹤儲存：</gray> <white>{storage_count}</white>"
+      - "<yellow>點擊下面的任意儲存以執行所選操作。</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[儲存]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>擁有者：</gray> <white>{owner}</white>"
+      - "<gray>儲存鍵：</gray> <white>{storage_key}</white>"
+      - "<gray>儲存 ID:</gray> <white>{storage_id}</white>"
+      - "<gray>使用的插槽：</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>行動：</gray> <white>{action}</white>"
+      - "<yellow>單擊繼續。</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[排空]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[重置]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] 找不到存儲</gradient>"
+      lore:
+        - "<gray>目前沒有可用的儲存記錄。</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用此操作。</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權從此選單控制儲存。</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>該儲存不再存在：</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[排空]</gradient> <gray>強制排水<白色>{owner}</white>'s storage <white>{storage_key}</white><gray>。關閉視圖：</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[重置]</gradient> <gray>強制重置 <white>{owner}</white>'s storage <white>{storage_key}</white><gray>。關閉視圖：</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[編輯] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>編輯模式：</gray> <white>{edit_mode}</white>"
+      - "<gray>玩家目標：</gray> <white>{target_name}</white>"
+      - "<gray>集團目標：</gray> <white>{group_name}</white>"
+      - "<gray>目前值：</gray> <white>{current_value}</white>"
+      - "<yellow>輸入新值，然後按一下結果進行確認。</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>無效值 <白色>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>設定 <白色>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>設定 <白色>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>設定群組 <白色>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>設定群組 <白色>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] 外掛程式整合</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>最大儲存量：</gray><white>{max_storages}</white>"
       - "<gray>購買額外的保管庫空間，直到</gray>"
       - "<gray>您達到配置的上限。</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[需求] 儲存需求</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>最大儲存量：</gray><white>{max_storages}</white>"
       - "<gray>使用此清單查看您的</gray>"
       - "<gray>持久性儲存容器.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[無限]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[框]{storage_key}</gradient>"
     lore:

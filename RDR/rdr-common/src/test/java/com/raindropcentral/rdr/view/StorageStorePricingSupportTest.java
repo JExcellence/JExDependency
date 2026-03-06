@@ -35,7 +35,8 @@ class StorageStorePricingSupportTest {
                     StoreRequirementSection.currency("one", "vault", 1000.0D, "GOLD_INGOT"),
                     null,
                     "Vault: 1000.00",
-                    true
+                    true,
+                    -1.0D
                 ),
                 new StorageStorePricingSupport.ResolvedStoreRequirement(
                     1,
@@ -43,7 +44,8 @@ class StorageStorePricingSupportTest {
                     StoreRequirementSection.currency("two", "coins", 50.0D, "EMERALD"),
                     null,
                     "Coins: 50.00",
-                    true
+                    true,
+                    -1.0D
                 )
             )
         );
@@ -64,7 +66,8 @@ class StorageStorePricingSupportTest {
                         StoreRequirementSection.currency("one", "vault", 1000.0D, "GOLD_INGOT"),
                         new FakeRequirement(true),
                         "ready",
-                        true
+                        true,
+                        -1.0D
                     )
                 )
             );
@@ -85,7 +88,8 @@ class StorageStorePricingSupportTest {
                         StoreRequirementSection.currency("one", "vault", 1000.0D, "GOLD_INGOT"),
                         new FakeRequirement(false),
                         "pending",
-                        true
+                        true,
+                        -1.0D
                     )
                 )
             );
@@ -106,7 +110,8 @@ class StorageStorePricingSupportTest {
                         StoreRequirementSection.currency("one", "vault", 1000.0D, "GOLD_INGOT"),
                         null,
                         "offline",
-                        false
+                        false,
+                        -1.0D
                     )
                 )
             );

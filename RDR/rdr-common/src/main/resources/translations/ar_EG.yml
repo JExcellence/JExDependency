@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>الفتحات المتاحة:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>المخازن التي تم الحصول عليها:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>الحد الأقصى للسعة التخزينية:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] مركز التخزين</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>الحد الأقصى للسعة التخزينية:</gray><white>{max_storages}</white>"
       - "<gray>شبكة المخزن الخاصة بك مستمرة</gray>"
       - "<gray>وجاهز للاستخدام عبر الخادم.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] عرض المخازن</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>استخدم هذه اللوحة لتحرير قيم التكوين وفتح عناصر التحكم في التكامل.</gray>"
       - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] عناصر التحكم في المشغل</gradient>"
+      lore:
+        - "<gray>تحرير حدود اللاعب/المجموعة والخصومات وعناصر التحكم في قوة التخزين.</gray>"
+        - "<gray>محررات التجاوز المفتوحة وإجراءات إدارة الطوارئ.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في المشغل.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] تكوين التخزين</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
       lore:
         - "<gray>ليس لديك إذن لاستخدام لوحة الإدارة هذه.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] عناصر تحكم المشغل والمجموعة</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] مجموعة أدوات إدارة التخزين</gradient>"
+    lore:
+      - "<gray>تحرير الحد الأقصى للمخازن والخصومات للاعبين والمجموعات.</gray>"
+      - "<gray>فرض استنزاف/إعادة ضبط المخازن أو إغلاق كافة طرق عرض RDR المفتوحة.</gray>"
+      - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] تجاوزات اللاعب</gradient>"
+      lore:
+        - "<gray>تصفح اللاعبين عبر الإنترنت وأهداف التجاوز التي تم تكوينها.</gray>"
+        - "<gray>قم بتحرير الحد الأقصى من المخازن وقيم الخصم لكل لاعب.</gray>"
+        - "<yellow>انقر لفتح تجاوزات اللاعب.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] تجاوزات المجموعة</gradient>"
+      lore:
+        - "<gray>حدد مجموعة LuckPerms وقم بتعيين قيم التجاوز.</gray>"
+        - "<gray>مفيد لمستويات التصنيف القائمة على الأذونات.</gray>"
+        - "<yellow>انقر لفتح تجاوزات المجموعة.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] تخزين الصرف القسري</gradient>"
+      lore:
+        - "<gray>يمسح كافة محتويات العنصر من وحدة التخزين المحددة.</gray>"
+        - "<gray>يحتفظ بالإعدادات الموثوقة والديون وقيم مفاتيح التشغيل السريع.</gray>"
+        - "<yellow>انقر لاختيار مساحة تخزين.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] فرض إعادة تعيين وحدة التخزين</gradient>"
+      lore:
+        - "<gray>يعيد تعيين وحدة تخزين محددة إلى حالة نظيفة.</gray>"
+        - "<gray>يمسح العناصر والديون والوصول الموثوق به ومفتاح التشغيل السريع.</gray>"
+        - "<yellow>انقر لاختيار مساحة تخزين.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] فرض إغلاق كافة طرق عرض RDR</gradient>"
+      lore:
+        - "<gray>لإغلاق كافة قوائم RDR المفتوحة حاليًا.</gray>"
+        - "<gray>مفيد بعد تغييرات التكوين أو إجراءات الطوارئ.</gray>"
+        - "<yellow>انقر لفرض إغلاق كافة طرق عرض RDR.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك الإذن باستخدام هذه القائمة.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لاستخدام عناصر تحكم مسؤول المشغل/المجموعة.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>مغلق بالقوة <أبيض>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] حدد هدف تجاوز اللاعب</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] أهداف تجاوز اللاعب</gradient>"
+    lore:
+      - "<gray>اللاعبون المتعقبون:</gray> <white>{tracked_players}</white>"
+      - "<gray>التجاوزات التي تم تكوينها:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>انقر فوق أحد اللاعبين أدناه لتحرير التجاوزات.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>تجاوز الحد الأقصى لوحدات التخزين:</gray> <white>{override_max_storages}</white>"
+      - "<gray>الحد الأقصى لوحدات التخزين الفعالة:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>تجاوز الخصم:</gray> <white>{override_discount}</white>"
+      - "<gray>الخصم الفعال:</gray> <white>{effective_discount}</white>"
+      - "<yellow>انقر لتحرير ملف تعريف تجاوز هذا اللاعب.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[أون لاين]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[غير متصل]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[وراثة]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] لم يتم العثور على أي لاعبين</gradient>"
+      lore:
+        - "<gray>لم يتم العثور على أي لاعبين متصلين أو تجاوزات للاعب مخزنة.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لتصفح تجاوزات اللاعب.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] تحرير {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] ملخص تجاوز اللاعب</gradient>"
+    lore:
+      - "<gray>اللاعب:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>تجاوز الحد الأقصى لوحدات التخزين:</gray> <white>{override_max_storages}</white>"
+      - "<gray>الحد الأقصى لوحدات التخزين الفعالة:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>تجاوز الخصم:</gray> <white>{override_discount}</white>"
+      - "<gray>الخصم الفعال:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[وراثة]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[الحد الأقصى] الحد الأقصى لسعة التخزين</gradient>"
+      lore:
+        - "<gray>تجاوز الحد الأقصى لوحدات التخزين:</gray> <white>{override_max_storages}</white>"
+        - "<gray>الحد الأقصى لوحدات التخزين الفعالة:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>انقر لتعديل الحد الأقصى لسعة التخزين.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] خصم المتجر</gradient>"
+      lore:
+        - "<gray>تجاوز الخصم:</gray> <white>{override_discount}</white>"
+        - "<gray>الخصم الفعال:</gray> <white>{effective_discount}</white>"
+        - "<yellow>انقر لتعديل نسبة الخصم.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] مسح تجاوزات المشغل</gradient>"
+      lore:
+        - "<gray>يزيل جميع تجاوزات الحد الأقصى للتخزين والخصم.</gray>"
+        - "<yellow>انقر لمسح تجاوزات هذا اللاعب.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لتعديل تجاوزات المشغل.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لتعديل تجاوزات المشغل.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] هدف اللاعب مفقود</gradient>"
+      lore:
+        - "<gray>لم يتم توفير هدف اللاعب لهذا المحرر.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لم يتم تحديد هدف اللاعب. خدمة إعدادات المشغل/المجموعة</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>غير متاحة الآن.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>تم مسح جميع التجاوزات لـ <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] تحرير المجموعة {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] ملخص تجاوز المجموعة</gradient>"
+    lore:
+      - "<gray>المجموعة المحددة:</gray> <white>{group_name}</white>"
+      - "<gray>مجموعات LuckPerms المكتشفة:</gray> <white>{group_count}</white>"
+      - "<gray>تجاوز الحد الأقصى لوحدات التخزين:</gray> <white>{override_max_storages}</white>"
+      - "<gray>تجاوز الخصم:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[لا شيء]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[وراثة]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[علامة] تحديد المجموعة</gradient>"
+      lore:
+        - "<gray>المجموعة الحالية:</gray> <white>{group_name}</white>"
+        - "<gray>مجموعات LuckPerms المكتشفة:</gray> <white>{group_count}</white>"
+        - "<yellow>انقر بزر الماوس الأيسر للمجموعة التالية، وانقر بزر الماوس الأيمن للمجموعة السابقة.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] الحد الأقصى لسعة التخزين للمجموعة</gradient>"
+      lore:
+        - "<gray>تجاوز الحد الأقصى لوحدات التخزين:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>انقر لتحرير الحد الأقصى لسعة التخزين لهذه المجموعة.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] خصم المجموعة</gradient>"
+      lore:
+        - "<gray>تجاوز الخصم:</gray> <white>{override_discount}</white>"
+        - "<yellow>انقر لتعديل الخصم لهذه المجموعة.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] مسح تجاوزات المجموعة</gradient>"
+      lore:
+        - "<gray>يزيل تجاوزات الحد الأقصى للتخزين والخصم لهذه المجموعة.</gray>"
+        - "<yellow>انقر لمسح تجاوز هذه المجموعة.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لتحرير تجاوزات المجموعة.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لتحرير تجاوزات المجموعة.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>حدد مجموعة أولاً قبل تحرير القيم. مجموعة</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><أبيض> {group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>مجموعة LuckPerms المحددة <white> {group_name}</white> <gray>من <white> {group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>لم يتم اكتشاف مجموعات LuckPerms من اللاعبين عبر الإنترنت في الوقت الحالي.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>غير متاحة الآن.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>تم مسح التجاوزات للمجموعة <white>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[التخزين] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>تخزين الصرف القسري</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>فرض إعادة تعيين التخزين</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] متصفح التحكم في التخزين</gradient>"
+    lore:
+      - "<gray>وضع الإجراء:</gray> <white>{action_mode}</white>"
+      - "<gray>وحدات التخزين المتعقبة:</gray> <white>{storage_count}</white>"
+      - "<yellow>انقر فوق أي مساحة تخزين أدناه تنفيذ الإجراء المحدد.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[التخزين]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>المالك:</gray> <white>{owner}</white>"
+      - "<gray>مفتاح التخزين:</gray> <white>{storage_key}</white>"
+      - "<gray>معرف التخزين:</gray> <white>{storage_id}</white>"
+      - "<gray>الفتحات المستخدمة:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>الإجراء:</gray> <white>{action}</white>"
+      - "<yellow>انقر للمتابعة.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Drain]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Reset]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] لم يتم العثور على أي مخازن</gradient>"
+      lore:
+        - "<gray>لا توجد سجلات تخزين متاحة حاليًا.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام هذا الإجراء.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك الإذن بالتحكم في المخازن من هذه القائمة.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>هذا التخزين لم يعد موجودًا:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Drain]</gradient> <gray>تم استنزاف القوة <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. العروض المغلقة:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Reset]</gradient> <gray>فرض إعادة الضبط <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. العروض المغلقة:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[تحرير] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>وضع التحرير:</gray> <white>{edit_mode}</white>"
+      - "<gray>هدف المشغل:</gray> <white>{target_name}</white>"
+      - "<gray>هدف المجموعة:</gray> <white>{group_name}</white>"
+      - "<gray>القيمة الحالية:</gray> <white>{current_value}</white>"
+      - "<yellow>اكتب قيمة جديدة، ثم انقر فوق النتيجة للتأكيد.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>قيمة غير صالحة <أبيض> {input} مجموعة</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><أبيض> {player_name} مجموعة</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><أبيض> {player_name} مجموعة</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><أبيض> {group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><أبيض> {group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[كثافة العمليات] تكامل البرنامج المساعد</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>الحد الأقصى للسعة التخزينية:</gray><white>{max_storages}</white>"
       - "<gray>شراء مساحة خزينة إضافية حتى</gray>"
       - "<gray>لقد وصلت إلى الحد الأقصى الذي تم تكوينه.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[الطلب] متطلبات المتجر</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>الحد الأقصى للسعة التخزينية:</gray><white>{max_storages}</white>"
       - "<gray>استخدم هذه القائمة لمراجعة</gray>"
       - "<gray>حاويات تخزين ثابتة.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[غير محدود]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[الصندوق]{storage_key}</gradient>"
     lore:

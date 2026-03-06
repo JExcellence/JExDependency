@@ -6,6 +6,7 @@ scoreboard_sidebar:
   available_slots: "<gray>Διαθέσιμες υποδοχές:</gray><white>{available_slots}</white>"
   storages_obtained: "<gray>Αποθηκευτικοί χώροι που ελήφθησαν:</gray><white>{owned_storages}</white>"
   max_storages: "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
+  unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστος]</gradient>"
 
 storage_overview_ui:
   title: "<gradient:#38bdf8:#60a5fa>[*] Storage Hub</gradient>"
@@ -16,6 +17,7 @@ storage_overview_ui:
       - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
       - "<gray>Το δίκτυό σας στο θησαυροφυλάκιο παραμένει</gray>"
       - "<gray>και έτοιμο για χρήση μεταξύ διακομιστών.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστος]</gradient>"
   open:
     name: "<gradient:#10b981:#34d399>[>>] Προβολή αποθηκευτικών χώρων</gradient>"
     lore:
@@ -45,6 +47,12 @@ storage_admin_ui:
       - "<gray>Χρησιμοποιήστε αυτό το πλαίσιο για να επεξεργαστείτε τις τιμές διαμόρφωσης και να ανοίξετε τα στοιχεία ελέγχου ενοποίησης.</gray>"
       - "<yellow>Απαιτεί:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Χειριστήρια αναπαραγωγής</gradient>"
+      lore:
+        - "<gray>Επεξεργαστείτε τα όρια, τις εκπτώσεις και τα στοιχεία ελέγχου δύναμης αποθήκευσης αναπαραγωγής/ομάδας.</gray>"
+        - "<gray>Ανοίξτε τους επεξεργαστές παράκαμψης και τις ενέργειες διαχείρισης έκτακτης ανάγκης.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου του προγράμματος αναπαραγωγής.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Διαμόρφωση αποθήκευσης</gradient>"
       lore:
@@ -80,6 +88,231 @@ storage_admin_ui:
       name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
       lore:
         - "<gray>Δεν έχετε άδεια χρήσης αυτού του πίνακα διαχείρισης.</gray>"
+
+storage_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Χειριστήρια αναπαραγωγής & ομάδας</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Αποθήκευση Εργαλειοθήκη διαχειριστή</gradient>"
+    lore:
+      - "<gray>Επεξεργαστείτε μέγιστους αποθηκευτικούς χώρους και εκπτώσεις για παίκτες και ομάδες.</gray>"
+      - "<gray>Αναγκαστική αποστράγγιση/επαναφορά αποθηκευτικών χώρων ή κλείσιμο όλων των ανοιχτών προβολών RDR. Το</gray>"
+      - "<yellow>Απαιτεί:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Παράκαμψη παίκτη</gradient>"
+      lore:
+        - "<gray>Περιηγηθείτε σε διαδικτυακούς παίκτες και διαμορφωμένους στόχους παράκαμψης.</gray>"
+        - "<gray>Επεξεργαστείτε τους μέγιστους αποθηκευτικούς χώρους και τις τιμές έκπτωσης ανά παίκτη.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τις παρακάμψεις του προγράμματος αναπαραγωγής.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Παράκαμψη ομάδας</gradient>"
+      lore:
+        - "<gray>Επιλέξτε μια ομάδα LuckPerms και ορίστε τιμές παράκαμψης.</gray>"
+        - "<gray>Χρήσιμο για επίπεδα κατάταξης βάσει αδειών.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τις παρακάμψεις ομάδας.</yellow>"
+    force_drain_storage:
+      name: "<gradient:#f59e0b:#fbbf24>[D] Force Drain Storage</gradient>"
+      lore:
+        - "<gray>Διαγράφει όλα τα περιεχόμενα των αντικειμένων από έναν επιλεγμένο χώρο αποθήκευσης.</gray>"
+        - "<gray>Διατηρεί αξιόπιστες ρυθμίσεις, τιμές χρέους και πλήκτρα πρόσβασης.</gray>"
+        - "<yellow>Κάντε κλικ για να επιλέξετε χώρο αποθήκευσης.</yellow>"
+    force_reset_storage:
+      name: "<gradient:#ef4444:#f87171>[R] Αναγκαστική επαναφορά αποθήκευσης</gradient>"
+      lore:
+        - "<gray>Επαναφέρει έναν επιλεγμένο χώρο αποθήκευσης σε καθαρή κατάσταση.</gray>"
+        - "<gray>Διαγράφει στοιχεία, χρέη, αξιόπιστη πρόσβαση και πλήκτρο πρόσβασης.</gray>"
+        - "<yellow>Κάντε κλικ για να επιλέξετε χώρο αποθήκευσης.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Αναγκαστικό κλείσιμο όλων των προβολών RDR</gradient>"
+      lore:
+        - "<gray>Κλείνει όλα τα ανοιχτά μενού RDR.</gray>"
+        - "<gray>Χρήσιμο μετά από αλλαγές διαμόρφωσης ή ενέργειες έκτακτης ανάγκης.</gray>"
+        - "<yellow>Κάντε κλικ για να κλείσετε αναγκαστικά όλες τις προβολές RDR.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
+      lore:
+        - "<gray>Δεν έχετε άδεια να χρησιμοποιήσετε αυτό το μενού.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια χρήσης των στοιχείων ελέγχου διαχειριστή του προγράμματος αναπαραγωγής/ομάδας.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Αναγκαστικά κλειστό <λευκό>{closed_views}</white> open RDR view(s).</gray>"
+
+storage_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Επιλέξτε Παράκαμψη στόχου παίκτη</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Στόχοι παράκαμψης παίκτη</gradient>"
+    lore:
+      - "<gray>Παρακολουθούμενοι παίκτες:</gray> <white>{tracked_players}</white>"
+      - "<gray>Διαμορφωμένες παρακάμψεις:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Κάντε κλικ σε ένα πρόγραμμα αναπαραγωγής παρακάτω για να επεξεργαστείτε παρακάμψεις.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Παράκαμψη μέγιστων αποθηκευτικών χώρων:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Πραγματικά μέγιστοι αποθηκευτικοί χώροι:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Έκπτωση παράκαμψης:</gray> <white>{override_discount}</white>"
+      - "<gray>Πραγματική έκπτωση:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Κάντε κλικ για να επεξεργαστείτε αυτό το προφίλ παράκαμψης παίκτη.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Διαδικτυακός]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Εκτός σύνδεσης]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Κληρονόμηση]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστο]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Δεν βρέθηκαν παίκτες</gradient>"
+      lore:
+        - "<gray>Δεν βρέθηκαν διαδικτυακοί παίκτες ή αποθηκευμένες παρακάμψεις παίκτη.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
+      lore:
+        - "<gray>Δεν έχετε άδεια να περιηγηθείτε σε παρακάμψεις προγράμματος αναπαραγωγής.</gray>"
+
+storage_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Επεξεργασία {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Παράκαμψη προγράμματος αναπαραγωγής Περίληψη</gradient>"
+    lore:
+      - "<gray>Πρόγραμμα αναπαραγωγής:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Παράκαμψη μέγιστων αποθηκευτικών χώρων:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Πραγματικά μέγιστοι αποθηκευτικοί χώροι:</gray> <white>{effective_max_storages}</white>"
+      - "<gray>Έκπτωση παράκαμψης:</gray> <white>{override_discount}</white>"
+      - "<gray>Πραγματική έκπτωση:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Κληρονόμηση]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστο]</gradient>"
+  actions:
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Μέγ.] Μέγιστες αποθηκευτικοί χώροι</gradient>"
+      lore:
+        - "<gray>Παράκαμψη μέγιστων αποθηκευτικών χώρων:</gray> <white>{override_max_storages}</white>"
+        - "<gray>Πραγματικά μέγιστοι αποθηκευτικοί χώροι:</gray> <white>{effective_max_storages}</white>"
+        - "<yellow>Κάντε κλικ για να επεξεργαστείτε μέγιστους αποθηκευτικούς χώρους.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Έκπτωση καταστήματος</gradient>"
+      lore:
+        - "<gray>Έκπτωση παράκαμψης:</gray> <white>{override_discount}</white>"
+        - "<gray>Πραγματική έκπτωση:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Κάντε κλικ για να επεξεργαστείτε το ποσοστό έκπτωσης.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Εκκαθάριση παρακάμψεων προγράμματος αναπαραγωγής</gradient>"
+      lore:
+        - "<gray>Καταργεί όλες τις παρακάμψεις μέγιστης αποθήκευσης και έκπτωσης.</gray>"
+        - "<yellow>Κάντε κλικ για να διαγράψετε τις παρακάμψεις αυτού του προγράμματος αναπαραγωγής.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
+      lore:
+        - "<gray>Δεν έχετε άδεια να επεξεργαστείτε τις παρακάμψεις του προγράμματος αναπαραγωγής.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια να επεξεργαστείτε τις παρακάμψεις του προγράμματος αναπαραγωγής.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X] Ο στόχος παίκτη λείπει</gradient>"
+      lore:
+        - "<gray>Δεν παρέχεται στόχος παίκτη για αυτόν τον επεξεργαστή.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχει επιλεγεί στόχος παίκτη. Η υπηρεσία ρυθμίσεων αναπαραγωγής/ομάδας</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>δεν είναι διαθέσιμη αυτήν τη στιγμή.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Διαγράφηκαν όλες οι παρακάμψεις για <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+storage_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Επεξεργασία ομάδας {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Παράκαμψη ομάδας Σύνοψη</gradient>"
+    lore:
+      - "<gray>Επιλεγμένη ομάδα:</gray> <white>{group_name}</white>"
+      - "<gray>Εντοπίστηκαν ομάδες LuckPerms:</gray> <white>{group_count}</white>"
+      - "<gray>Παράκαμψη μέγιστων αποθηκευτικών χώρων:</gray> <white>{override_max_storages}</white>"
+      - "<gray>Έκπτωση παράκαμψης:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[Καμία]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Κληρονόμηση]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστο]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Ετικέτα] Επιλογή ομάδας</gradient>"
+      lore:
+        - "<gray>Τρέχουσα ομάδα:</gray> <white>{group_name}</white>"
+        - "<gray>Εντοπίστηκαν ομάδες LuckPerms:</gray> <white>{group_count}</white>"
+        - "<yellow>Αριστερό κλικ για την επόμενη ομάδα, δεξί κλικ για την προηγούμενη.</yellow>"
+    maximum_storages:
+      name: "<gradient:#38bdf8:#60a5fa>[Μέγ] Ομάδα Μέγιστες Αποθηκευτικοί χώροι</gradient>"
+      lore:
+        - "<gray>Παράκαμψη μέγιστων αποθηκευτικών χώρων:</gray> <white>{override_max_storages}</white>"
+        - "<yellow>Κάντε κλικ για να επεξεργαστείτε μέγιστους αποθηκευτικούς χώρους για αυτήν την ομάδα.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Ομαδική Έκπτωση</gradient>"
+      lore:
+        - "<gray>Έκπτωση παράκαμψης:</gray> <white>{override_discount}</white>"
+        - "<yellow>Κάντε κλικ για να επεξεργαστείτε την έκπτωση για αυτήν την ομάδα.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Εκκαθάριση παρακάμψεων ομάδας</gradient>"
+      lore:
+        - "<gray>Καταργεί τις παρακάμψεις μέγιστου αποθηκευτικού χώρου και έκπτωσης για αυτήν την ομάδα.</gray>"
+        - "<yellow>Κάντε κλικ για να καταργήσετε αυτήν την παράκαμψη ομάδας.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
+      lore:
+        - "<gray>Δεν έχετε άδεια να επεξεργαστείτε παρακάμψεις ομάδας.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια να επεξεργαστείτε παρακάμψεις ομάδας.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Επιλέξτε πρώτα μια ομάδα πριν επεξεργαστείτε τις τιμές. Ομάδα</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><λευκό>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Επιλεγμένη ομάδα LuckPerms <λευκό>{group_name}</white> <gray>από <λευκό>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν εντοπίστηκαν ομάδες LuckPerms από διαδικτυακούς παίκτες αυτήν τη στιγμή.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>δεν είναι διαθέσιμη αυτήν τη στιγμή.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Διαγράφηκαν παρακάμψεις για ομάδα <λευκό>{group_name}</white><gray>.</gray>"
+
+storage_admin_storage_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Αποθήκευση] {action_mode}</gradient>"
+  mode:
+    force_drain: "<gradient:#f59e0b:#fbbf24>Force Drain Storage</gradient>"
+    force_reset: "<gradient:#ef4444:#f87171>Αναγκαστική επαναφορά αποθήκευσης</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Πρόγραμμα περιήγησης ελέγχου αποθήκευσης</gradient>"
+    lore:
+      - "<gray>Λειτουργία δράσης:</gray> <white>{action_mode}</white>"
+      - "<gray>Αποθηκευτικοί χώροι που παρακολουθούνται:</gray> <white>{storage_count}</white>"
+      - "<yellow>Κάντε κλικ σε οποιοδήποτε χώρο αποθήκευσης παρακάτω για να εκτελέσετε την επιλεγμένη ενέργεια.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Αποθήκευση]</gradient> <white>{owner}</white> <gray>- {storage_key}</gray>"
+    lore:
+      - "<gray>Κάτοχος:</gray> <white>{owner}</white>"
+      - "<gray>Κλειδί αποθήκευσης:</gray> <white>{storage_key}</white>"
+      - "<gray>Αναγνωριστικό αποθήκευσης:</gray> <white>{storage_id}</white>"
+      - "<gray>Χρησιμοποιημένες υποδοχές:</gray> <white>{stored_slots}/{inventory_size}</white>"
+      - "<gray>Ενέργεια:</gray> <white>{action}</white>"
+      - "<yellow>Κάντε κλικ για να συνεχίσετε.</yellow>"
+    action:
+      force_drain: "<gradient:#f59e0b:#fbbf24>[Αποστράγγιση]</gradient>"
+      force_reset: "<gradient:#ef4444:#f87171>[Επαναφορά]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~] Δεν βρέθηκαν αποθηκευτικοί χώροι</gradient>"
+      lore:
+        - "<gray>Δεν υπάρχουν διαθέσιμες εγγραφές αποθήκευσης αυτήν τη στιγμή.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση διαχειριστή</gradient>"
+      lore:
+        - "<gray>Δεν έχετε άδεια να χρησιμοποιήσετε αυτήν την ενέργεια.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια να ελέγχετε αποθηκευτικούς χώρους από αυτό το μενού.</gray>"
+    storage_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Αυτός ο χώρος αποθήκευσης δεν υπάρχει πλέον:</gray> <white>{storage_key}</white><gray>.</gray>"
+    drained: "<gradient:#f59e0b:#fbbf24>[Αποστράγγιση]</gradient> <gray>Αναγκαστική αποστράγγιση <white>{owner}</white>'s storage <white>{storage_key}</white><gray>. Κλειστές προβολές:</gray> <white>{closed_views}</white><gray>.</gray>"
+    reset: "<gradient:#ef4444:#f87171>[Επαναφορά]</gradient> <gray>Αναγκαστική επαναφορά <λευκό>{owner}</white>'s storage <white>{storage_key}</white><gray>. Κλειστές προβολές:</gray> <white>{closed_views}</white><gray>.</gray>"
+
+storage_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Επεξεργασία] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Τρόπος επεξεργασίας:</gray> <white>{edit_mode}</white>"
+      - "<gray>Στόχος προγράμματος αναπαραγωγής:</gray> <white>{target_name}</white>"
+      - "<gray>Στόχος ομάδας:</gray> <white>{group_name}</white>"
+      - "<gray>Στόχος ομάδας:</gray> <white>{current_value}</white>"
+      - "<yellow>νέα τιμή για επιβεβαίωση: ZZX.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Μη έγκυρη τιμή <λευκό>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Σετ <λευκό>{player_name}</white>'s max storages override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Σετ <λευκό>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ορισμός ομάδας <λευκό>{group_name}</white> max storages override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ορισμός ομάδας <λευκό>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 plugin_integration_management_ui:
   title: "<gradient:#10b981:#34d399>[Int] Ενσωματώσεις προσθηκών</gradient>"
@@ -359,6 +592,7 @@ storage_store_ui:
       - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
       - "<gray>Αγοράστε επιπλέον χώρο στο θησαυροφυλάκιο μέχρι</gray>"
       - "<gray>φτάνετε στο διαμορφωμένο όριο.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστος]</gradient>"
   cost:
     name: "<gradient:#f59e0b:#fbbf24>[Req] Απαιτήσεις καταστήματος</gradient>"
     lore:
@@ -463,6 +697,7 @@ storage_player_ui:
       - "<gray>Μέγιστες αποθήκες:</gray><white>{max_storages}</white>"
       - "<gray>Χρησιμοποιήστε αυτήν τη λίστα για να ελέγξετε</gray>"
       - "<gray>επέμεινε δοχεία αποθήκευσης.</gray>"
+    unlimited: "<gradient:#22c55e:#86efac>[Απεριόριστος]</gradient>"
   entry:
     name: "<gradient:#10b981:#34d399>[Πλαίσιο]{storage_key}</gradient>"
     lore:
