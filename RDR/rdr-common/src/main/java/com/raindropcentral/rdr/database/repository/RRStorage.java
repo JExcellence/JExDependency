@@ -173,6 +173,19 @@ public class RRStorage extends BaseRepository<RStorage, Long> {
     }
 
     /**
+     * Finds every storage and eagerly loads each owning player.
+     *
+     * @return immutable snapshot of every storage ordered by owner UUID and storage key
+     */
+    public @NotNull List<RStorage> findAllWithPlayer() {
+        return List.copyOf(this.executeInTransaction(entityManager -> entityManager.createQuery(
+                "select storage from RStorage storage join fetch storage.player player order by player.playerUuid asc, storage.storageKey asc",
+                RStorage.class
+            )
+            .getResultList()));
+    }
+
+    /**
      * Finds every storage the supplied player may access, including shared storages.
      *
      * @param playerUuid player UUID whose accessible storages should be loaded

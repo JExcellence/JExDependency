@@ -8,7 +8,6 @@
 package com.raindropcentral.rds.service.tax;
 
 import com.raindropcentral.rds.configs.ProtectionSection;
-import com.raindropcentral.rds.configs.TaxCurrencySection;
 import com.raindropcentral.rds.database.entity.Shop;
 import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.junit.jupiter.api.Test;
@@ -54,9 +53,9 @@ class ShopTaxSupportTest {
     @Test
     void resolvesProtectionTaxCurrencies() {
         final ProtectionSection protectionSection = new ProtectionSection(new EvaluationEnvironmentBuilder());
-        final Map<String, TaxCurrencySection> configuredTaxes = new LinkedHashMap<>();
-        configuredTaxes.put("vault", this.createCurrencySection("vault"));
-        configuredTaxes.put("coins", this.createCurrencySection("coins"));
+        final Map<String, Double> configuredTaxes = new LinkedHashMap<>();
+        configuredTaxes.put("vault", -1.0D);
+        configuredTaxes.put("coins", 2500.0D);
         protectionSection.setContext(false, configuredTaxes);
 
         assertTrue(ShopTaxSupport.usesProtectionTax(protectionSection, "vault"));
@@ -79,13 +78,5 @@ class ShopTaxSupportTest {
         final Shop shop = new Shop(ownerId, null);
         shop.setAdminShop(adminShop);
         return shop;
-    }
-
-    private TaxCurrencySection createCurrencySection(
-            final String currencyType
-    ) {
-        final TaxCurrencySection section = new TaxCurrencySection(new EvaluationEnvironmentBuilder());
-        section.setContext(currencyType, 100.0D, 1.125D, -1D);
-        return section;
     }
 }

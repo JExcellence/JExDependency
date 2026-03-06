@@ -36,6 +36,18 @@ class ConfigSectionTest {
         assertTrue(section.getRequirements().isEmpty());
         assertTrue(section.getMissingRequirementPurchases().isEmpty());
         assertEquals(1, section.getInitialProvisionedStorages());
+        assertEquals("none", section.getProtectionRestrictedStorages());
+        assertEquals("all", section.getProtectionTaxedStorages());
+        assertEquals(0.0D, section.getProtectionOpenStorageTaxes().get("vault"));
+        assertEquals(0.0D, section.getProtectionOpenStorageTaxes().get("raindrops"));
+        assertEquals(1_728_000L, section.getProtectionFilledStorageTaxIntervalTicks());
+        assertEquals(-1, section.getProtectionFilledStorageMaximumFreeze());
+        assertEquals(-1.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("vault"));
+        assertEquals(-1.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("raindrops"));
+        assertEquals(0.0D, section.getProtectionFilledStorageTaxes().get("vault"));
+        assertEquals(0.0D, section.getProtectionFilledStorageTaxes().get("raindrops"));
+        assertFalse(section.isProtectionRestrictedStorage("storage-1"));
+        assertTrue(section.isProtectionTaxedStorage("storage-1"));
     }
 
     @Test
@@ -101,6 +113,122 @@ class ConfigSectionTest {
         assertEquals("PAPER", section.getRequirementsForPurchase(2).get("access_gate").getIcon().getType());
         assertTrue(section.getRequirementsForPurchase(9).isEmpty());
         assertEquals(List.of(1, 3, 4, 5, 6, 7, 8, 9), section.getMissingRequirementPurchases());
+    }
+
+    @Test
+    void parsesProtectionSelectorsAndStorageTaxes(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 10
+            max_hotkeys: 9
+            protection:
+              restricted_storages: "1-3,5"
+              taxed_storages: "2,4-6"
+              open_storage_taxes:
+                vault: 12.5
+                raindrops: 3.75
+                gems: 2.25
+              filled_storage_taxes:
+                interval_ticks: 1440
+                maximum_freeze: 3
+                maximum_debt:
+                  vault: 120.0
+                  raindrops: 45.5
+                  gems: 8.0
+                currencies:
+                  vault: 4.5
+                  raindrops: 1.5
+                  gems: 0.25
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertEquals("1-3,5", section.getProtectionRestrictedStorages());
+        assertEquals("2,4-6", section.getProtectionTaxedStorages());
+        assertTrue(section.isProtectionRestrictedStorage("storage-1"));
+        assertTrue(section.isProtectionRestrictedStorage("storage-3"));
+        assertTrue(section.isProtectionRestrictedStorage("storage-5"));
+        assertFalse(section.isProtectionRestrictedStorage("storage-4"));
+        assertFalse(section.isProtectionRestrictedStorage("storage-20"));
+        assertFalse(section.isProtectionRestrictedStorage("custom-key"));
+        assertFalse(section.isProtectionRestrictedStorage(""));
+        assertTrue(section.isProtectionTaxedStorage("storage-2"));
+        assertTrue(section.isProtectionTaxedStorage("storage-4"));
+        assertTrue(section.isProtectionTaxedStorage("storage-6"));
+        assertFalse(section.isProtectionTaxedStorage("storage-1"));
+        assertEquals(12.5D, section.getProtectionOpenStorageTaxes().get("vault"));
+        assertEquals(3.75D, section.getProtectionOpenStorageTaxes().get("raindrops"));
+        assertEquals(2.25D, section.getProtectionOpenStorageTaxes().get("gems"));
+        assertEquals(1440L, section.getProtectionFilledStorageTaxIntervalTicks());
+        assertEquals(3, section.getProtectionFilledStorageMaximumFreeze());
+        assertEquals(120.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("vault"));
+        assertEquals(45.5D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("raindrops"));
+        assertEquals(8.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("gems"));
+        assertEquals(4.5D, section.getProtectionFilledStorageTaxes().get("vault"));
+        assertEquals(1.5D, section.getProtectionFilledStorageTaxes().get("raindrops"));
+        assertEquals(0.25D, section.getProtectionFilledStorageTaxes().get("gems"));
+    }
+
+    @Test
+    void normalizesInvalidProtectionSelectorsAndTaxValues(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 2
+            max_hotkeys: 9
+            protection:
+              restricted_storages: "invalid,3-"
+              taxed_storages: "none"
+              open_storage_taxes:
+                vault: -15
+                raindrops: "not-a-number"
+              filled_storage_taxes:
+                interval_ticks: -1
+                maximum_freeze: 0
+                maximum_debt:
+                  vault: -3
+                  raindrops: "oops"
+                  gems: 11.5
+                currencies:
+                  vault: -3
+                  raindrops: "oops"
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertFalse(section.isProtectionRestrictedStorage("storage-1"));
+        assertFalse(section.isProtectionRestrictedStorage("storage-3"));
+        assertFalse(section.isProtectionTaxedStorage("storage-1"));
+        assertEquals(0.0D, section.getProtectionOpenStorageTaxes().get("vault"));
+        assertEquals(0.0D, section.getProtectionOpenStorageTaxes().get("raindrops"));
+        assertEquals(0L, section.getProtectionFilledStorageTaxIntervalTicks());
+        assertEquals(0, section.getProtectionFilledStorageMaximumFreeze());
+        assertEquals(-1.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("vault"));
+        assertEquals(-1.0D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("raindrops"));
+        assertEquals(11.5D, section.getProtectionFilledStorageMaximumDebtByCurrency().get("gems"));
+        assertEquals(0.0D, section.getProtectionFilledStorageTaxes().get("vault"));
+        assertEquals(0.0D, section.getProtectionFilledStorageTaxes().get("raindrops"));
+    }
+
+    @Test
+    void supportsLegacyStorageTaxesKeyForBackwardCompatibility(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            starting_storages: 1
+            max_storages: 2
+            max_hotkeys: 9
+            protection:
+              taxed_storages: "all"
+              storage_taxes:
+                vault: 8.0
+                raindrops: 2.0
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+
+        assertEquals(8.0D, section.getProtectionOpenStorageTaxes().get("vault"));
+        assertEquals(2.0D, section.getProtectionOpenStorageTaxes().get("raindrops"));
     }
 
     @Test

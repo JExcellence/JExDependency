@@ -2,10 +2,12 @@ package com.raindropcentral.rplatform.protection.impl;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Locale;
 import java.util.concurrent.CompletableFuture;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -170,6 +172,89 @@ abstract class AbstractReflectionProtectionBridge implements RProtectionBridge {
         }
 
         return false;
+    }
+
+    @Nullable
+    protected final String resolveTownIdentifier(@Nullable Object town) {
+        if (town == null) {
+            return null;
+        }
+
+        final UUID uuid = asUuid(firstNonNull(
+            invokeOptional(town, "getUUID"),
+            invokeOptional(town, "getUuid"),
+            invokeOptional(town, "getTownUUID"),
+            invokeOptional(town, "getTownUuid"),
+            invokeOptional(town, "getIdentifier")
+        ));
+        if (uuid != null) {
+            return uuid.toString().toLowerCase(Locale.ROOT);
+        }
+
+        final Object nameObject = firstNonNull(
+            invokeOptional(town, "getName"),
+            invokeOptional(town, "getTownName")
+        );
+        if (nameObject instanceof String townName && !townName.isBlank()) {
+            return townName.trim().toLowerCase(Locale.ROOT);
+        }
+        return null;
+    }
+
+    @Nullable
+    protected final String resolveTownDisplayName(@Nullable Object town) {
+        if (town == null) {
+            return null;
+        }
+
+        final Object nameObject = firstNonNull(
+            invokeOptional(town, "getName"),
+            invokeOptional(town, "getTownName")
+        );
+        if (nameObject instanceof String townName && !townName.isBlank()) {
+            return townName.trim();
+        }
+        return resolveTownIdentifier(town);
+    }
+
+    protected final boolean isMayorIdentityMatch(
+        final @NotNull Player player,
+        final @Nullable Object mayorObject
+    ) {
+        if (mayorObject == null) {
+            return false;
+        }
+
+        if (mayorObject instanceof Player mayorPlayer) {
+            return mayorPlayer.getUniqueId().equals(player.getUniqueId());
+        }
+        if (mayorObject instanceof UUID mayorUuid) {
+            return mayorUuid.equals(player.getUniqueId());
+        }
+        if (mayorObject instanceof String mayorText) {
+            if (mayorText.equalsIgnoreCase(player.getName())) {
+                return true;
+            }
+            final UUID mayorUuid = asUuid(mayorText);
+            return mayorUuid != null && mayorUuid.equals(player.getUniqueId());
+        }
+
+        final Object nestedUuid = firstNonNull(
+            invokeOptional(mayorObject, "getUniqueId"),
+            invokeOptional(mayorObject, "getUUID"),
+            invokeOptional(mayorObject, "getUuid"),
+            invokeOptional(mayorObject, "getIdentifier")
+        );
+        final UUID mayorUuid = asUuid(nestedUuid);
+        if (mayorUuid != null) {
+            return mayorUuid.equals(player.getUniqueId());
+        }
+
+        final Object nestedName = firstNonNull(
+            invokeOptional(mayorObject, "getName"),
+            invokeOptional(mayorObject, "getPlayerName")
+        );
+        return nestedName instanceof String mayorName && mayorName.equalsIgnoreCase(player.getName());
     }
 
     protected final boolean isSuccessfulResult(@Nullable Object result) {

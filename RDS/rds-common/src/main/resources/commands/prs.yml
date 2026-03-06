@@ -4,9 +4,9 @@ commands:
     description: 'RDSImpl Commands'
     aliases:
       - rs
-    usage: 'rs <info | admin | give | scoreboard | search | store>'
+    usage: 'rs <info | admin | give | scoreboard | search | store | taxes>'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c <info | admin | give | scoreboard | search | store>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c <info | admin | give | scoreboard | search | store | taxes>"'
       2$: 'lut["prefix"] & "&7/" & alias & " scoreboard &c<ledger | stock>"'
     errorMessages:
       malformedEnum$: |
@@ -33,5 +33,6 @@ commands:
         commandScoreboard: 'raindropshops.command.scoreboard'
         commandSearch: 'raindropshops.command.search'
         commandStore: 'raindropshops.command.store'
+        commandTaxes: 'raindropshops.command.taxes'
 lut:
   prefix: '&8[&1Admin&8] &7'

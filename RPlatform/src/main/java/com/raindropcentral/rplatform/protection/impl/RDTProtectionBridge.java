@@ -1,6 +1,7 @@
 package com.raindropcentral.rplatform.protection.impl;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -123,6 +124,128 @@ public final class RDTProtectionBridge extends AbstractReflectionProtectionBridg
         } catch (Exception exception) {
             LOGGER.log(Level.FINE, "Failed to resolve RDT location ownership for " + player.getName(), exception);
             return false;
+        }
+    }
+
+    /**
+     * Checks whether a player is the mayor/leader of their RDT town.
+     *
+     * @param player player to inspect
+     * @return {@code true} when the resolved town mayor identity matches the player
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public boolean isPlayerTownMayor(@NotNull Player player) {
+        if (!isAvailable()) {
+            return false;
+        }
+
+        try {
+            final Object playerRecord = resolvePlayerRecord(player);
+            if (playerRecord == null) {
+                return false;
+            }
+
+            final Object directMayorFlag = firstNonNull(
+                invokeOptional(playerRecord, "isMayor"),
+                invokeOptional(playerRecord, "isTownMayor"),
+                invokeOptional(playerRecord, "isLeader")
+            );
+            if (directMayorFlag instanceof Boolean mayorFlag && mayorFlag) {
+                return true;
+            }
+
+            final UUID townUuid = resolveTownUuid(playerRecord);
+            if (townUuid == null) {
+                return false;
+            }
+
+            final Object town = resolveTown(townUuid);
+            if (town == null) {
+                return false;
+            }
+
+            final Object mayorIdentity = firstNonNull(
+                invokeOptional(town, "getMayorUUID"),
+                invokeOptional(town, "getMayorUuid"),
+                invokeOptional(town, "getOwnerUUID"),
+                invokeOptional(town, "getOwnerUuid"),
+                invokeOptional(town, "getLeaderUUID"),
+                invokeOptional(town, "getLeaderUuid"),
+                invokeOptional(town, "getMayor"),
+                invokeOptional(town, "getOwner"),
+                invokeOptional(town, "getLeader")
+            );
+            return isMayorIdentityMatch(player, mayorIdentity);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve RDT mayor check for " + player.getName(), exception);
+            return false;
+        }
+    }
+
+    /**
+     * Resolves a stable town identifier for a player's RDT town.
+     *
+     * @param player player to inspect
+     * @return stable town identifier, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public @Nullable String getPlayerTownIdentifier(@NotNull Player player) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        try {
+            final Object playerRecord = resolvePlayerRecord(player);
+            if (playerRecord == null) {
+                return null;
+            }
+
+            final UUID townUuid = resolveTownUuid(playerRecord);
+            if (townUuid == null) {
+                return null;
+            }
+
+            final Object town = resolveTown(townUuid);
+            final String identifier = resolveTownIdentifier(town);
+            return identifier == null ? townUuid.toString().toLowerCase(Locale.ROOT) : identifier;
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve RDT town identifier for " + player.getName(), exception);
+            return null;
+        }
+    }
+
+    /**
+     * Resolves a display name for a player's RDT town.
+     *
+     * @param player player to inspect
+     * @return town display name, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public @Nullable String getPlayerTownDisplayName(@NotNull Player player) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        try {
+            final Object playerRecord = resolvePlayerRecord(player);
+            if (playerRecord == null) {
+                return null;
+            }
+
+            final UUID townUuid = resolveTownUuid(playerRecord);
+            if (townUuid == null) {
+                return null;
+            }
+
+            final Object town = resolveTown(townUuid);
+            final String displayName = resolveTownDisplayName(town);
+            return displayName == null ? townUuid.toString() : displayName;
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve RDT town display name for " + player.getName(), exception);
+            return null;
         }
     }
 

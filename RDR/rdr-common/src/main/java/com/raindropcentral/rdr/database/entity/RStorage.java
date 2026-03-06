@@ -2,7 +2,9 @@ package com.raindropcentral.rdr.database.entity;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -57,6 +59,7 @@ public class RStorage extends BaseEntity {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RStorage.class);
     private static final TypeReference<Map<UUID, StorageTrustStatus>> TRUSTED_PLAYERS_TYPE = new TypeReference<>() {};
+    private static final TypeReference<Map<String, Double>> TAX_DEBT_TYPE = new TypeReference<>() {};
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -79,6 +82,9 @@ public class RStorage extends BaseEntity {
     @Column(name = "trusted_players", nullable = false, columnDefinition = "LONGTEXT")
     private String trustedPlayersJson = "{}";
 
+    @Column(name = "tax_debt", nullable = false, columnDefinition = "LONGTEXT")
+    private String taxDebtJson = "{}";
+
     @Convert(converter = UUIDConverter.class)
     @Column(name = "lease_server_uuid")
     private UUID leaseServerUuid;
@@ -96,6 +102,9 @@ public class RStorage extends BaseEntity {
 
     @Transient
     private Map<UUID, StorageTrustStatus> cachedTrustedPlayers;
+
+    @Transient
+    private Map<String, Double> cachedTaxDebt;
 
     /**
      * Creates a new empty storage container for the provided player.
@@ -350,6 +359,121 @@ public class RStorage extends BaseEntity {
     }
 
     /**
+     * Returns persisted tax debt amounts keyed by currency identifier.
+     *
+     * @return defensive copy of tax debt entries
+     */
+    public @NotNull Map<String, Double> getTaxDebtEntries() {
+        if (this.cachedTaxDebt == null) {
+            this.cachedTaxDebt = this.parseTaxDebt();
+        }
+
+        return new LinkedHashMap<>(this.cachedTaxDebt);
+    }
+
+    /**
+     * Replaces all persisted tax debt entries for this storage.
+     *
+     * @param taxDebt replacement tax debt map keyed by currency identifier
+     */
+    public void setTaxDebtEntries(final @Nullable Map<String, Double> taxDebt) {
+        final Map<String, Double> normalizedDebt = new LinkedHashMap<>();
+        if (taxDebt != null) {
+            for (final Map.Entry<String, Double> entry : taxDebt.entrySet()) {
+                final String currencyId = entry.getKey();
+                final Double amount = entry.getValue();
+                if (currencyId == null || currencyId.isBlank() || amount == null) {
+                    continue;
+                }
+
+                final double normalizedAmount = Math.max(0.0D, amount);
+                if (normalizedAmount <= 1.0E-6D) {
+                    continue;
+                }
+
+                normalizedDebt.put(currencyId.trim().toLowerCase(), normalizedAmount);
+            }
+        }
+
+        this.cachedTaxDebt = normalizedDebt;
+
+        try {
+            this.taxDebtJson = OBJECT_MAPPER.writeValueAsString(normalizedDebt);
+        } catch (IOException exception) {
+            LOGGER.error("Failed to serialize storage tax debt", exception);
+            throw new RuntimeException("Failed to serialize storage tax debt", exception);
+        }
+    }
+
+    /**
+     * Adds tax debt for a specific currency.
+     *
+     * @param currencyId currency identifier
+     * @param amount amount to add
+     */
+    public void addTaxDebt(
+        final @NotNull String currencyId,
+        final double amount
+    ) {
+        if (amount <= 1.0E-6D) {
+            return;
+        }
+
+        final Map<String, Double> debt = this.getTaxDebtEntries();
+        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
+        debt.put(normalizedCurrencyId, debt.getOrDefault(normalizedCurrencyId, 0.0D) + amount);
+        this.setTaxDebtEntries(debt);
+    }
+
+    /**
+     * Reduces tax debt for a specific currency.
+     *
+     * @param currencyId currency identifier
+     * @param amount amount to reduce
+     */
+    public void reduceTaxDebt(
+        final @NotNull String currencyId,
+        final double amount
+    ) {
+        if (amount <= 1.0E-6D) {
+            return;
+        }
+
+        final String normalizedCurrencyId = normalizeCurrencyId(currencyId);
+        final Map<String, Double> debt = this.getTaxDebtEntries();
+        final double current = debt.getOrDefault(normalizedCurrencyId, 0.0D);
+        final double remaining = Math.max(0.0D, current - amount);
+        if (remaining <= 1.0E-6D) {
+            debt.remove(normalizedCurrencyId);
+        } else {
+            debt.put(normalizedCurrencyId, remaining);
+        }
+        this.setTaxDebtEntries(debt);
+    }
+
+    /**
+     * Returns whether this storage currently has unpaid tax debt.
+     *
+     * @return {@code true} when one or more tax debt entries exist
+     */
+    public boolean hasTaxDebt() {
+        return !this.getTaxDebtEntries().isEmpty();
+    }
+
+    /**
+     * Returns the total amount of tax debt across all currencies.
+     *
+     * @return summed debt amount
+     */
+    public double getTotalTaxDebtAmount() {
+        double total = 0.0D;
+        for (final double amount : this.getTaxDebtEntries().values()) {
+            total += Math.max(0.0D, amount);
+        }
+        return total;
+    }
+
+    /**
      * Returns whether the supplied player may access this storage.
      *
      * @param playerId player UUID to evaluate
@@ -530,5 +654,27 @@ public class RStorage extends BaseEntity {
             LOGGER.error("Failed to parse trusted storage players JSON", exception);
             throw new RuntimeException("Failed to parse trusted storage players", exception);
         }
+    }
+
+    private @NotNull Map<String, Double> parseTaxDebt() {
+        if (this.taxDebtJson == null || this.taxDebtJson.isBlank()) {
+            return new LinkedHashMap<>();
+        }
+
+        try {
+            final Map<String, Double> parsed = OBJECT_MAPPER.readValue(this.taxDebtJson, TAX_DEBT_TYPE);
+            return parsed == null ? new LinkedHashMap<>() : new LinkedHashMap<>(parsed);
+        } catch (IOException exception) {
+            LOGGER.error("Failed to parse storage tax debt JSON", exception);
+            throw new RuntimeException("Failed to parse storage tax debt", exception);
+        }
+    }
+
+    private static @NotNull String normalizeCurrencyId(final @NotNull String currencyId) {
+        final String normalized = Objects.requireNonNull(currencyId, "currencyId cannot be null").trim().toLowerCase(Locale.ROOT);
+        if (normalized.isEmpty()) {
+            throw new IllegalArgumentException("currencyId cannot be blank");
+        }
+        return normalized;
     }
 }

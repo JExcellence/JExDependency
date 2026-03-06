@@ -4,9 +4,9 @@ commands:
     description: 'RDR Commands'
     aliases:
       - rr
-    usage: 'rr [admin|storage|scoreboard|<hotkey>]'
+    usage: 'rr [admin|storage|taxes|scoreboard|<hotkey>]'
     argumentUsages:
-      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | storage | scoreboard | hotkey>"'
+      1$: 'lut["prefix"] & "&7/" & alias & "&c<admin | storage | taxes | scoreboard | hotkey>"'
     errorMessages:
       malformedEnum$: |
         lut["prefix"] & "&7The value &c" & value & " &7is not one of (" &

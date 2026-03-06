@@ -16,6 +16,40 @@ global_blacklist:
 # Missing purchases are treated as having no requirements.
 warn_missing_requirements: true
 
+# Protection and storage-tax settings.
+# Supported protection plugins: RDT, Towny, and HuskTowns.
+protection:
+  # Storages that require the player to stand in their own claim from a supported protection plugin.
+  # Supports "none", "all", or one-based ranges such as "1-3,5".
+  restricted_storages: none
+  # Storages that should apply open taxes when accessed.
+  # Supports "none", "all", or one-based ranges such as "1-3,5".
+  taxed_storages: all
+  # Per-open storage taxes charged to the player.
+  # Set values to 0 to disable taxes by currency.
+  # Supports Vault and custom JExEconomy currencies.
+  open_storage_taxes:
+    vault: 0.0
+    raindrops: 0.0
+  # Recurring taxes charged for storages that currently contain one or more items.
+  # Taxes are applied per non-empty storage each interval using configured currencies.
+  filled_storage_taxes:
+    # Bukkit ticks between recurring tax runs.
+    interval_ticks: 1728000
+    # Maximum number of storages per owner that may be frozen for unpaid tax debt.
+    # Positive values cap frozen storages, 0 disallows creating new frozen storages, -1 is unlimited.
+    maximum_freeze: -1
+    # Maximum debt a single frozen storage may accrue for each currency.
+    # Positive values cap debt accrual, 0 or negative values allow unlimited debt.
+    maximum_debt:
+      vault: -1.0
+      raindrops: -1.0
+    # Tax amount charged per non-empty storage for each currency.
+    # Set values to 0 to disable recurring taxes by currency.
+    currencies:
+      vault: 0.0
+      raindrops: 0.0
+
 # RPlatform-powered requirements consumed for each one-based storage shop purchase tier.
 # Only the tiers required to move from `starting_storages` to `max_storages` are needed.
 # The bundled config defines the first 10 purchase tiers so higher storage caps can reuse the same pattern.

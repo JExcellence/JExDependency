@@ -425,11 +425,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Use a number between <white>1</white> and <white>{max_hotkeys}</white><gray>. Input:</gray> <white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Storage Taxes</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Tax Overview</gradient>"
+    lore:
+      - "<gray>Frozen storages:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Debt currencies:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Review debt and transfer controls below.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Debt Summary</gradient>"
+      lore:
+        - "<gray>Storages requiring payment:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Debt details by currency:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>No outstanding frozen-storage debt.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Outstanding debt:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Frozen Storages</gradient>"
+      lore:
+        - "<gray>Frozen storages:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Click to open the frozen storage list.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Town] Transfer Taxes</gradient>"
+      lore:
+        - "<gray>Town:</gray> <white>{town_name}</white>"
+        - "<gray>Move collected storage taxes</gray>"
+        - "<gray>into your protection town bank.</gray>"
+        - "<yellow>Mayor-only action.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Mayor Access Required</gradient>"
+      lore:
+        - "<gray>You must be the current town mayor</gray>"
+        - "<gray>to transfer collected storage taxes.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Frozen Storages</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Frozen Storage Debt</gradient>"
+    lore:
+      - "<gray>Frozen storages:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Click an entry to pay debt and unfreeze.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>This storage is frozen due to unpaid debt.</gray>"
+      - "<gray>Click to attempt payment and open it.</gray>"
+      - "<gray>Outstanding debt:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] No Frozen Storages</gradient>"
+    lore:
+      - "<gray>You have no frozen storages right now.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Town] Tax Transfer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Town Tax Ledger</gradient>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Protection:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Ledger entries:</gray> <white>{entry_count}</white>"
+      - "<yellow>Click a transferable currency to move it.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Available:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Click to transfer this amount.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Transferable]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Unsupported]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Mayor Access Required</gradient>"
+    lore:
+      - "<gray>You must be the active town mayor</gray>"
+      - "<gray>to use tax transfer controls.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] No Ledger Entries</gradient>"
+    lore:
+      - "<gray>No collected storage taxes are waiting</gray>"
+      - "<gray>for town-bank transfer.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> cannot be transferred to town bank. Town-bank transfers currently support Vault only.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to transfer <white>{currency}</white><gray> into your town bank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Transferred <white>{amount}</white><gray> in <white>{currency}</white><gray> to your town bank.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} is already open in another session.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be opened right now.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have access to <white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> requires protection checks, but no supported protection plugin bridge is available.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You must stand in your own <white>{protection_plugin}</white> claim to open <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Storage tax currency <white>{currency}</white><gray> is not available right now for <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You need <white>{amount}</white><gray> in <white>{currency}</white> to pay storage tax for <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to collect <white>{amount}</white><gray> in <white>{currency}</white> for <white>{storage_key}</white><gray>. No tax was charged.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Storage tax charged for <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> is frozen because payment is due.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Outstanding debt for <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Paid outstanding debt for <white>{storage_key}</white><gray>. Storage unfrozen.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Debt payment summary:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Recurring storage taxes charged for <white>{taxed_storages}</white> filled storages:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Recurring storage tax skipped for <white>{taxed_storages}</white> filled storages because <white>{currency}</white> is unavailable.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Recurring storage tax failed for <white>{taxed_storages}</white> filled storages: need <white>{amount}</white> in <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Recurring storage tax could not be charged for <white>{taxed_storages}</white> filled storages in <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> is globally blacklisted from RDR storage.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Your edit session for {storage_key} expired or moved elsewhere. Changes were not saved.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} could not be saved. Check the console for details.</gray>"

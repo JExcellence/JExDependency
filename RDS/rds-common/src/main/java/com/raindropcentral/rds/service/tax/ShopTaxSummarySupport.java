@@ -68,18 +68,25 @@ public final class ShopTaxSummarySupport {
                 }
 
                 final double baseAmount = ShopTaxSupport.calculateTax(entry.getValue(), taxedShops);
-                final double amount = ShopTaxSupport.applyNeverItemPenalty(
+                double amount = ShopTaxSupport.applyNeverItemPenalty(
                         baseAmount,
                         taxes.getNeverItemPenaltyRate(),
                         neverAvailabilityItems
                 );
+                final boolean protectionTaxCurrency = ShopTaxSupport.usesProtectionTax(config.getProtection(), currencyType);
+                if (protectionTaxCurrency) {
+                    final Double configuredMaximum = config.getProtection().getShopTaxMaximum(currencyType);
+                    if (configuredMaximum != null && configuredMaximum > 0D) {
+                        amount = Math.min(amount, configuredMaximum);
+                    }
+                }
                 if (amount <= 0D) {
                     continue;
                 }
 
                 final String formattedAmount = ShopTaxSupport.formatCurrency(plugin, currencyType, amount);
                 amounts.add(formattedAmount);
-                if (ShopTaxSupport.usesProtectionTax(config.getProtection(), currencyType)) {
+                if (protectionTaxCurrency) {
                     protectionAmounts.add(formattedAmount);
                 }
             }
@@ -166,12 +173,6 @@ public final class ShopTaxSummarySupport {
             }
 
             final String currencyType = rawCurrencyType.trim().toLowerCase(Locale.ROOT);
-            final TaxCurrencySection protectionCurrency = config.getProtection().getShopTaxCurrency(currencyType);
-            if (protectionCurrency != null) {
-                resolvedTaxes.put(currencyType, protectionCurrency);
-                continue;
-            }
-
             final TaxCurrencySection standardCurrency = taxes.getTaxCurrency(currencyType);
             if (standardCurrency != null) {
                 resolvedTaxes.put(currencyType, standardCurrency);

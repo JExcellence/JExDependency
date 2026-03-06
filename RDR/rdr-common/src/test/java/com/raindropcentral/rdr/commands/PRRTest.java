@@ -39,6 +39,16 @@ class PRRTest {
     }
 
     @Test
+    void tabCompletionSuggestsTaxesAction() {
+        final PRR command = new PRR(new PRRSection(new EvaluationEnvironmentBuilder()), null);
+        final Player player = this.createPlayer();
+
+        final List<String> suggestions = command.onPlayerTabCompletion(player, "prr", new String[]{"ta"});
+
+        assertEquals(List.of("taxes"), suggestions);
+    }
+
+    @Test
     void tabCompletionReturnsEmptyListBeyondFirstArgument() {
         final PRR command = new PRR(new PRRSection(new EvaluationEnvironmentBuilder()), null);
         final Player player = this.createPlayer();

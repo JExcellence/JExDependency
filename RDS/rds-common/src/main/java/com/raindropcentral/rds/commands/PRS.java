@@ -11,6 +11,7 @@ import com.raindropcentral.rds.service.tax.ShopTaxSummarySupport;
 import com.raindropcentral.rds.view.shop.ShopAdminView;
 import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
+import com.raindropcentral.rds.view.shop.ShopTaxView;
 import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.protection.RProtectionBridge;
@@ -78,6 +79,16 @@ public class PRS extends PlayerCommand {
             case STORE -> {
                 this.rds.getViewFrame().open(
                     ShopStoreView.class,
+                    player,
+                    Map.of("plugin", this.rds)
+                );
+            }
+            case TAXES -> {
+                if (this.hasNoPermission(player, EPRSPermission.TAXES)) {
+                    return;
+                }
+                this.rds.getViewFrame().open(
+                    ShopTaxView.class,
                     player,
                     Map.of("plugin", this.rds)
                 );
@@ -466,6 +477,7 @@ public class PRS extends PlayerCommand {
             case SCOREBOARD -> this.hasPermission(player, EPRSPermission.SCOREBOARD);
             case SEARCH -> this.hasPermission(player, EPRSPermission.SEARCH);
             case STORE -> this.hasPermission(player, EPRSPermission.STORE);
+            case TAXES -> this.hasPermission(player, EPRSPermission.TAXES);
             case INFO -> this.hasPermission(player, EPRSPermission.INFO);
         };
     }

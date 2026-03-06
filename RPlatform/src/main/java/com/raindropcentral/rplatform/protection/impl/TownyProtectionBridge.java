@@ -119,6 +119,89 @@ public final class TownyProtectionBridge extends AbstractReflectionProtectionBri
     }
 
     /**
+     * Checks whether a player is the mayor (or equivalent leader) of their Towny town.
+     *
+     * @param player player to inspect
+     * @return {@code true} when Towny resolves the player as mayor/leader
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public boolean isPlayerTownMayor(@NotNull Player player) {
+        if (!isAvailable()) {
+            return false;
+        }
+
+        try {
+            final Object residentTown = resolveResidentTown(player);
+            if (residentTown == null) {
+                return false;
+            }
+
+            final Object resident = resolveResident(player);
+            final Object residentMayorFlag = firstNonNull(
+                resident == null ? null : invokeOptional(resident, "isMayor"),
+                resident == null ? null : invokeOptional(resident, "isKing")
+            );
+            if (residentMayorFlag instanceof Boolean mayorFlag && mayorFlag) {
+                return true;
+            }
+
+            final Object mayor = firstNonNull(
+                invokeOptional(residentTown, "getMayor"),
+                invokeOptional(residentTown, "getMayorResident"),
+                invokeOptional(residentTown, "getKing"),
+                invokeOptional(residentTown, "getLeader")
+            );
+            return isMayorIdentityMatch(player, mayor);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve Towny mayor check for " + player.getName(), exception);
+            return false;
+        }
+    }
+
+    /**
+     * Resolves a stable town identifier for a player's Towny town.
+     *
+     * @param player player to inspect
+     * @return stable town identifier, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public @Nullable String getPlayerTownIdentifier(@NotNull Player player) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        try {
+            return resolveTownIdentifier(resolveResidentTown(player));
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve Towny town identifier for " + player.getName(), exception);
+            return null;
+        }
+    }
+
+    /**
+     * Resolves a display name for a player's Towny town.
+     *
+     * @param player player to inspect
+     * @return town display name, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public @Nullable String getPlayerTownDisplayName(@NotNull Player player) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        try {
+            return resolveTownDisplayName(resolveResidentTown(player));
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve Towny town display name for " + player.getName(), exception);
+            return null;
+        }
+    }
+
+    /**
      * Deposits funds into the player's Towny town bank.
      *
      * @param player player whose town receives the deposit

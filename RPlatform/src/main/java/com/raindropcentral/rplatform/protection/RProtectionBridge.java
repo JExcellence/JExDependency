@@ -63,6 +63,36 @@ public interface RProtectionBridge {
     boolean isPlayerStandingInOwnTown(@NotNull Player player);
 
     /**
+     * Checks whether a player is the mayor/leader of their current town.
+     *
+     * @param player player to inspect
+     * @return {@code true} when the player is recognized as the town mayor/leader
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    boolean isPlayerTownMayor(@NotNull Player player);
+
+    /**
+     * Resolves a stable identifier for the player's town.
+     *
+     * <p>The identifier should remain stable across restarts for the same town (for example a UUID),
+     * and is used for plugin-owned tax-ledger persistence.</p>
+     *
+     * @param player player whose town identifier should be resolved
+     * @return stable town identifier, or {@code null} when the player is not in a town
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Nullable String getPlayerTownIdentifier(@NotNull Player player);
+
+    /**
+     * Resolves a display name for the player's town.
+     *
+     * @param player player whose town display name should be resolved
+     * @return town display name, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Nullable String getPlayerTownDisplayName(@NotNull Player player);
+
+    /**
      * Deposits funds into the player's own town bank.
      *
      * @param player player whose town should receive the deposit

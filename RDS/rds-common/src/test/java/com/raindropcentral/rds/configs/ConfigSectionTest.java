@@ -158,14 +158,8 @@ class ConfigSectionTest {
               only_player_shops: true
               shop_taxes_fallback_to_player: true
               shop_taxes:
-                vault:
-                  initial_cost: 250.0
-                  growth_rate: 1.5
-                  maximum_tax: 5000.0
-                coins:
-                  initial_cost: 10.0
-                  growth_rate: 1.25
-                  maximum_tax: 1000.0
+                vault: 5000.0
+                coins: 1000.0
             """);
 
         final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
@@ -174,8 +168,8 @@ class ConfigSectionTest {
         assertTrue(section.getProtection().isShopTaxCurrency("vault"));
         assertTrue(section.getProtection().isShopTaxCurrency("coins"));
         assertFalse(section.getProtection().isShopTaxCurrency("gems"));
-        assertEquals(250.0D, section.getProtection().getShopTaxCurrency("vault").getInitialCost());
-        assertEquals(10.0D, section.getProtection().getShopTaxCurrency("coins").getInitialCost());
+        assertEquals(5000.0D, section.getProtection().getShopTaxMaximum("vault"));
+        assertEquals(1000.0D, section.getProtection().getShopTaxMaximum("coins"));
     }
 
     private static double getDouble(final Map<String, Object> definition, final String key) {

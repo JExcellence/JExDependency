@@ -19,7 +19,9 @@ import com.raindropcentral.rdr.configs.ConfigSection;
 import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRDRPlayer;
 import com.raindropcentral.rdr.database.repository.RRStorage;
+import com.raindropcentral.rdr.database.repository.RRTownStorageBank;
 import com.raindropcentral.rdr.requirement.RDRRequirementSetup;
+import com.raindropcentral.rdr.service.StorageFilledTaxScheduler;
 import com.raindropcentral.rdr.service.StorageService;
 import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import com.raindropcentral.rdr.view.AdminCurrencyView;
@@ -32,8 +34,11 @@ import com.raindropcentral.rdr.view.StoragePlayerView;
 import com.raindropcentral.rdr.view.StorageSettingsView;
 import com.raindropcentral.rdr.view.StorageStoreRequirementsView;
 import com.raindropcentral.rdr.view.StorageStoreView;
+import com.raindropcentral.rdr.view.StorageTaxTownBankView;
+import com.raindropcentral.rdr.view.StorageTaxView;
 import com.raindropcentral.rdr.view.StorageTrustedView;
 import com.raindropcentral.rdr.view.StorageView;
+import com.raindropcentral.rdr.view.StorageFrozenStorageView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -82,9 +87,11 @@ public class RDR {
     private Object economyInstance;
     private ViewFrame viewFrame;
     private StorageSidebarScoreboardService storageSidebarScoreboardService;
+    private StorageFilledTaxScheduler storageFilledTaxScheduler;
 
     private RRDRPlayer playerRepository;
     private RRStorage storageRepository;
+    private RRTownStorageBank townStorageBankRepository;
     private UUID serverUuid;
 
     /**
@@ -141,6 +148,7 @@ public class RDR {
         this.initializeCommands();
         this.initializeViews();
         this.initializeStorageSidebarScoreboards();
+        this.initializeStorageFilledTaxScheduler();
         this.getLogger().info("RDR (" + this.edition + ") Edition enabled successfully");
     }
 
@@ -156,6 +164,9 @@ public class RDR {
 
         if (this.storageSidebarScoreboardService != null) {
             this.storageSidebarScoreboardService.shutdown();
+        }
+        if (this.storageFilledTaxScheduler != null) {
+            this.storageFilledTaxScheduler.shutdown();
         }
 
         if (this.entityManagerFactory != null) {
@@ -334,6 +345,15 @@ public class RDR {
     }
 
     /**
+     * Returns the recurring scheduler responsible for non-empty storage taxes.
+     *
+     * @return filled-storage tax scheduler, or {@code null} before initialization completes
+     */
+    public @Nullable StorageFilledTaxScheduler getStorageFilledTaxScheduler() {
+        return this.storageFilledTaxScheduler;
+    }
+
+    /**
      * Returns the repository used for persisted player storage profiles.
      *
      * @return player repository, or {@code null} before repository initialization completes
@@ -349,6 +369,15 @@ public class RDR {
      */
     public @Nullable RRStorage getStorageRepository() {
         return this.storageRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted town storage-tax bank ledgers.
+     *
+     * @return town storage-tax repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRTownStorageBank getTownStorageBankRepository() {
+        return this.townStorageBankRepository;
     }
 
     /**
@@ -533,6 +562,10 @@ public class RDR {
             this.executor,
             this.entityManagerFactory
         );
+        this.townStorageBankRepository = new RRTownStorageBank(
+            this.executor,
+            this.entityManagerFactory
+        );
     }
 
     @SuppressWarnings("resource")
@@ -584,6 +617,9 @@ public class RDR {
                 new StorageStoreRequirementsView(),
                 new StorageHotkeyAnvilView(),
                 new StorageConfigValueAnvilView(),
+                new StorageTaxView(),
+                new StorageFrozenStorageView(),
+                new StorageTaxTownBankView(),
                 new StorageView()
             )
             .disableMetrics();
@@ -593,6 +629,11 @@ public class RDR {
     private void initializeStorageSidebarScoreboards() {
         this.storageSidebarScoreboardService = new StorageSidebarScoreboardService(this);
         this.storageSidebarScoreboardService.start();
+    }
+
+    private void initializeStorageFilledTaxScheduler() {
+        this.storageFilledTaxScheduler = new StorageFilledTaxScheduler(this);
+        this.storageFilledTaxScheduler.start();
     }
 
     private @NotNull UUID loadOrCreateServerUuid() {

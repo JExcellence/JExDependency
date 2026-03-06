@@ -39,6 +39,13 @@ public class ConfigSection extends AConfigSection {
     private Boolean warn_missing_requirements;
     private List<String> global_blacklist;
     private Map<Integer, Map<String, StoreRequirementSection>> requirements;
+    private String protection_restricted_storages;
+    private String protection_taxed_storages;
+    private Map<String, Double> protection_open_storage_taxes;
+    private Long protection_filled_storage_tax_interval_ticks;
+    private Integer protection_filled_storage_maximum_freeze;
+    private Map<String, Double> protection_filled_storage_maximum_debt;
+    private Map<String, Double> protection_filled_storage_taxes;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -162,6 +169,110 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns the storage selector used for protection-area access restrictions.
+     *
+     * <p>Supported selectors are {@code none}, {@code all}, or one-based range lists such as
+     * {@code 1-3,5}.</p>
+     *
+     * @return normalized selector for protection access rules
+     */
+    public @NotNull String getProtectionRestrictedStorages() {
+        return normalizeStorageSelector(this.protection_restricted_storages, "none");
+    }
+
+    /**
+     * Returns the storage selector used to decide which storages should charge open taxes.
+     *
+     * <p>Supported selectors are {@code none}, {@code all}, or one-based range lists such as
+     * {@code 1-3,5}.</p>
+     *
+     * @return normalized selector for storage tax rules
+     */
+    public @NotNull String getProtectionTaxedStorages() {
+        return normalizeStorageSelector(this.protection_taxed_storages, "all");
+    }
+
+    /**
+     * Returns configured per-open storage taxes keyed by currency identifier.
+     *
+     * <p>Tax amounts are normalized to be non-negative and always include defaults for
+     * {@code vault} and {@code raindrops}.</p>
+     *
+     * @return normalized currency tax map
+     */
+    public @NotNull Map<String, Double> getProtectionOpenStorageTaxes() {
+        return normalizeProtectionTaxes(this.protection_open_storage_taxes);
+    }
+
+    /**
+     * Returns the configured recurring tax interval for non-empty storages.
+     *
+     * @return recurring tax period in Bukkit ticks, or {@code 0} when disabled
+     */
+    public long getProtectionFilledStorageTaxIntervalTicks() {
+        return normalizeNonNegative(this.protection_filled_storage_tax_interval_ticks, 1_728_000L);
+    }
+
+    /**
+     * Returns the maximum number of storages per owner that may be frozen for unpaid tax debt.
+     *
+     * <p>Positive values cap frozen storages, {@code 0} disallows creating new frozen storages, and
+     * negative values allow unlimited freezes.</p>
+     *
+     * @return configured maximum freeze cap
+     */
+    public int getProtectionFilledStorageMaximumFreeze() {
+        return this.protection_filled_storage_maximum_freeze == null
+            ? -1
+            : this.protection_filled_storage_maximum_freeze;
+    }
+
+    /**
+     * Returns the per-storage debt cap for recurring filled-storage taxes keyed by currency identifier.
+     *
+     * <p>Positive values cap how much debt a single storage may hold for that currency. Values less than
+     * or equal to {@code 0} are treated as unlimited ({@code -1}). The returned map always includes
+     * defaults for {@code vault} and {@code raindrops}.</p>
+     *
+     * @return normalized per-currency maximum storage debt map
+     */
+    public @NotNull Map<String, Double> getProtectionFilledStorageMaximumDebtByCurrency() {
+        return normalizeProtectionMaximumDebt(this.protection_filled_storage_maximum_debt);
+    }
+
+    /**
+     * Returns configured recurring taxes for non-empty storages keyed by currency identifier.
+     *
+     * <p>Tax amounts are normalized to be non-negative and always include defaults for
+     * {@code vault} and {@code raindrops}.</p>
+     *
+     * @return normalized recurring currency tax map
+     */
+    public @NotNull Map<String, Double> getProtectionFilledStorageTaxes() {
+        return normalizeProtectionTaxes(this.protection_filled_storage_taxes);
+    }
+
+    /**
+     * Returns whether the supplied storage key is covered by protection-area restrictions.
+     *
+     * @param storageKey storage key to evaluate
+     * @return {@code true} when the storage key matches the protection selector
+     */
+    public boolean isProtectionRestrictedStorage(final @Nullable String storageKey) {
+        return this.matchesStorageSelector(this.getProtectionRestrictedStorages(), storageKey);
+    }
+
+    /**
+     * Returns whether the supplied storage key is covered by storage tax rules.
+     *
+     * @param storageKey storage key to evaluate
+     * @return {@code true} when the storage key matches the tax selector
+     */
+    public boolean isProtectionTaxedStorage(final @Nullable String storageKey) {
+        return this.matchesStorageSelector(this.getProtectionTaxedStorages(), storageKey);
+    }
+
+    /**
      * Returns the shop purchase numbers required by the current storage limits that have no requirement entries.
      *
      * @return ordered list of missing purchase numbers
@@ -244,6 +355,39 @@ public class ConfigSection extends AConfigSection {
             ? new ArrayList<>(configuration.getStringList("global_blacklist"))
             : section.global_blacklist;
         section.requirements = parseRequirements(configuration.getConfigurationSection("requirements"));
+        final ConfigurationSection protectionSection = configuration.getConfigurationSection("protection");
+        if (protectionSection != null) {
+            section.protection_restricted_storages = protectionSection.contains("restricted_storages")
+                ? protectionSection.getString("restricted_storages")
+                : section.protection_restricted_storages;
+            section.protection_taxed_storages = protectionSection.contains("taxed_storages")
+                ? protectionSection.getString("taxed_storages")
+                : section.protection_taxed_storages;
+            final ConfigurationSection openStorageTaxesSection = firstNonNullSection(
+                protectionSection.getConfigurationSection("open_storage_taxes"),
+                protectionSection.getConfigurationSection("storage_taxes")
+            );
+            section.protection_open_storage_taxes = parseProtectionTaxes(openStorageTaxesSection);
+
+            final ConfigurationSection filledStorageTaxesSection = protectionSection.getConfigurationSection("filled_storage_taxes");
+            if (filledStorageTaxesSection != null) {
+                section.protection_filled_storage_tax_interval_ticks = filledStorageTaxesSection.contains("interval_ticks")
+                    ? filledStorageTaxesSection.getLong("interval_ticks")
+                    : section.protection_filled_storage_tax_interval_ticks;
+                section.protection_filled_storage_maximum_freeze = filledStorageTaxesSection.contains("maximum_freeze")
+                    ? filledStorageTaxesSection.getInt("maximum_freeze")
+                    : section.protection_filled_storage_maximum_freeze;
+                section.protection_filled_storage_maximum_debt = parseProtectionMaximumDebt(
+                    filledStorageTaxesSection.getConfigurationSection("maximum_debt")
+                );
+
+                final ConfigurationSection filledCurrencySection = firstNonNullSection(
+                    filledStorageTaxesSection.getConfigurationSection("currencies"),
+                    filledStorageTaxesSection
+                );
+                section.protection_filled_storage_taxes = parseProtectionTaxes(filledCurrencySection);
+            }
+        }
         return section;
     }
 
@@ -260,6 +404,13 @@ public class ConfigSection extends AConfigSection {
         section.warn_missing_requirements = true;
         section.global_blacklist = new ArrayList<>(List.of("NETHER_STAR"));
         section.requirements = createEmptyRequirements();
+        section.protection_restricted_storages = "none";
+        section.protection_taxed_storages = "all";
+        section.protection_open_storage_taxes = createDefaultProtectionTaxes();
+        section.protection_filled_storage_tax_interval_ticks = 1_728_000L;
+        section.protection_filled_storage_maximum_freeze = -1;
+        section.protection_filled_storage_maximum_debt = createDefaultProtectionMaximumDebt();
+        section.protection_filled_storage_taxes = createDefaultProtectionTaxes();
         return section;
     }
 
@@ -275,6 +426,13 @@ public class ConfigSection extends AConfigSection {
 
         if (this.requirements == null || this.requirements.isEmpty()) {
             this.global_blacklist = this.getGlobalBlacklist();
+            this.protection_restricted_storages = this.getProtectionRestrictedStorages();
+            this.protection_taxed_storages = this.getProtectionTaxedStorages();
+            this.protection_open_storage_taxes = this.getProtectionOpenStorageTaxes();
+            this.protection_filled_storage_tax_interval_ticks = this.getProtectionFilledStorageTaxIntervalTicks();
+            this.protection_filled_storage_maximum_freeze = this.getProtectionFilledStorageMaximumFreeze();
+            this.protection_filled_storage_maximum_debt = this.getProtectionFilledStorageMaximumDebtByCurrency();
+            this.protection_filled_storage_taxes = this.getProtectionFilledStorageTaxes();
             return;
         }
 
@@ -302,6 +460,13 @@ public class ConfigSection extends AConfigSection {
         }
 
         this.requirements = normalizedRequirements;
+        this.protection_restricted_storages = this.getProtectionRestrictedStorages();
+        this.protection_taxed_storages = this.getProtectionTaxedStorages();
+        this.protection_open_storage_taxes = this.getProtectionOpenStorageTaxes();
+        this.protection_filled_storage_tax_interval_ticks = this.getProtectionFilledStorageTaxIntervalTicks();
+        this.protection_filled_storage_maximum_freeze = this.getProtectionFilledStorageMaximumFreeze();
+        this.protection_filled_storage_maximum_debt = this.getProtectionFilledStorageMaximumDebtByCurrency();
+        this.protection_filled_storage_taxes = this.getProtectionFilledStorageTaxes();
     }
 
     private int normalizePositive(
@@ -312,6 +477,63 @@ public class ConfigSection extends AConfigSection {
             return defaultValue;
         }
         return value;
+    }
+
+    private long normalizeNonNegative(
+        final Long value,
+        final long defaultValue
+    ) {
+        if (value == null) {
+            return defaultValue;
+        }
+        return Math.max(0L, value);
+    }
+
+    private boolean matchesStorageSelector(
+        final @NotNull String selector,
+        final @Nullable String storageKey
+    ) {
+        if ("none".equalsIgnoreCase(selector)) {
+            return false;
+        }
+        if ("all".equalsIgnoreCase(selector)) {
+            return true;
+        }
+
+        final Integer storageIndex = parseStorageIndex(storageKey);
+        if (storageIndex == null || storageIndex < 1) {
+            return false;
+        }
+
+        for (final String rawToken : selector.split(",")) {
+            final String token = rawToken.trim();
+            if (token.isEmpty()) {
+                continue;
+            }
+
+            final int rangeSeparator = token.indexOf('-');
+            if (rangeSeparator > 0 && rangeSeparator < token.length() - 1) {
+                final Integer start = parsePositiveInteger(token.substring(0, rangeSeparator));
+                final Integer end = parsePositiveInteger(token.substring(rangeSeparator + 1));
+                if (start == null || end == null) {
+                    continue;
+                }
+
+                final int minimum = Math.min(start, end);
+                final int maximum = Math.max(start, end);
+                if (storageIndex >= minimum && storageIndex <= maximum) {
+                    return true;
+                }
+                continue;
+            }
+
+            final Integer singleIndex = parsePositiveInteger(token);
+            if (singleIndex != null && singleIndex.intValue() == storageIndex.intValue()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static @NotNull Map<Integer, Map<String, StoreRequirementSection>> parseRequirements(
@@ -342,6 +564,60 @@ public class ConfigSection extends AConfigSection {
         return parsedRequirements;
     }
 
+    private static @NotNull Map<String, Double> parseProtectionTaxes(
+        final @Nullable ConfigurationSection storageTaxesSection
+    ) {
+        if (storageTaxesSection == null) {
+            return createDefaultProtectionTaxes();
+        }
+
+        final Map<String, Double> parsedTaxes = new LinkedHashMap<>();
+        for (final String rawCurrencyId : storageTaxesSection.getKeys(false)) {
+            if ("interval_ticks".equalsIgnoreCase(rawCurrencyId)
+                || "maximum_freeze".equalsIgnoreCase(rawCurrencyId)
+                || "maximum_debt".equalsIgnoreCase(rawCurrencyId)
+                || "currencies".equalsIgnoreCase(rawCurrencyId)) {
+                continue;
+            }
+            if (rawCurrencyId == null || rawCurrencyId.isBlank()) {
+                continue;
+            }
+
+            final Double amount = parseDoubleValue(storageTaxesSection.get(rawCurrencyId));
+            if (amount == null) {
+                continue;
+            }
+
+            parsedTaxes.put(rawCurrencyId, amount);
+        }
+
+        return normalizeProtectionTaxes(parsedTaxes);
+    }
+
+    private static @NotNull Map<String, Double> parseProtectionMaximumDebt(
+        final @Nullable ConfigurationSection maximumDebtSection
+    ) {
+        if (maximumDebtSection == null) {
+            return createDefaultProtectionMaximumDebt();
+        }
+
+        final Map<String, Double> parsedDebtCaps = new LinkedHashMap<>();
+        for (final String rawCurrencyId : maximumDebtSection.getKeys(false)) {
+            if (rawCurrencyId == null || rawCurrencyId.isBlank()) {
+                continue;
+            }
+
+            final Double amount = parseDoubleValue(maximumDebtSection.get(rawCurrencyId));
+            if (amount == null) {
+                continue;
+            }
+
+            parsedDebtCaps.put(rawCurrencyId, amount);
+        }
+
+        return normalizeProtectionMaximumDebt(parsedDebtCaps);
+    }
+
     private static @NotNull Map<String, StoreRequirementSection> parsePurchaseRequirementSet(
         final @NotNull ConfigurationSection purchaseSection
     ) {
@@ -368,6 +644,20 @@ public class ConfigSection extends AConfigSection {
         return new LinkedHashMap<>();
     }
 
+    private static @NotNull Map<String, Double> createDefaultProtectionTaxes() {
+        final Map<String, Double> defaults = new LinkedHashMap<>();
+        defaults.put("vault", 0.0D);
+        defaults.put("raindrops", 0.0D);
+        return defaults;
+    }
+
+    private static @NotNull Map<String, Double> createDefaultProtectionMaximumDebt() {
+        final Map<String, Double> defaults = new LinkedHashMap<>();
+        defaults.put("vault", -1.0D);
+        defaults.put("raindrops", -1.0D);
+        return defaults;
+    }
+
     private int getRequiredPurchaseCount() {
         return Math.max(this.getMaxStorages() - this.getStartingStorages(), 0);
     }
@@ -382,6 +672,111 @@ public class ConfigSection extends AConfigSection {
         } catch (NumberFormatException ignored) {
             return null;
         }
+    }
+
+    private static @Nullable ConfigurationSection firstNonNullSection(
+        final @Nullable ConfigurationSection primary,
+        final @Nullable ConfigurationSection fallback
+    ) {
+        return primary != null ? primary : fallback;
+    }
+
+    private static @Nullable Integer parseStorageIndex(final @Nullable String storageKey) {
+        if (storageKey == null || storageKey.isBlank()) {
+            return null;
+        }
+
+        final String normalizedKey = storageKey.trim().toLowerCase(Locale.ROOT);
+        if (!normalizedKey.startsWith("storage-")) {
+            return null;
+        }
+
+        return parsePositiveInteger(normalizedKey.substring("storage-".length()));
+    }
+
+    private static @Nullable Integer parsePositiveInteger(final @Nullable String value) {
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+
+        try {
+            final int parsed = Integer.parseInt(value.trim());
+            return parsed > 0 ? parsed : null;
+        } catch (NumberFormatException ignored) {
+            return null;
+        }
+    }
+
+    private static @NotNull String normalizeStorageSelector(
+        final @Nullable String selector,
+        final @NotNull String fallback
+    ) {
+        if (selector == null || selector.isBlank()) {
+            return fallback;
+        }
+
+        final String normalized = selector.trim().toLowerCase(Locale.ROOT).replace(" ", "");
+        if ("all".equals(normalized) || "none".equals(normalized)) {
+            return normalized;
+        }
+        return normalized;
+    }
+
+    private static @NotNull Map<String, Double> normalizeProtectionTaxes(
+        final @Nullable Map<String, Double> taxes
+    ) {
+        final Map<String, Double> normalizedTaxes = createDefaultProtectionTaxes();
+        if (taxes == null || taxes.isEmpty()) {
+            return normalizedTaxes;
+        }
+
+        for (final Map.Entry<String, Double> entry : taxes.entrySet()) {
+            if (entry.getKey() == null || entry.getKey().isBlank()) {
+                continue;
+            }
+
+            final String currencyId = entry.getKey().trim().toLowerCase(Locale.ROOT);
+            final double amount = entry.getValue() == null ? 0.0D : Math.max(0.0D, entry.getValue());
+            normalizedTaxes.put(currencyId, amount);
+        }
+
+        return normalizedTaxes;
+    }
+
+    private static @NotNull Map<String, Double> normalizeProtectionMaximumDebt(
+        final @Nullable Map<String, Double> maximumDebt
+    ) {
+        final Map<String, Double> normalizedMaximumDebt = createDefaultProtectionMaximumDebt();
+        if (maximumDebt == null || maximumDebt.isEmpty()) {
+            return normalizedMaximumDebt;
+        }
+
+        for (final Map.Entry<String, Double> entry : maximumDebt.entrySet()) {
+            if (entry.getKey() == null || entry.getKey().isBlank()) {
+                continue;
+            }
+
+            final String currencyId = entry.getKey().trim().toLowerCase(Locale.ROOT);
+            final double rawAmount = entry.getValue() == null ? -1.0D : entry.getValue();
+            final double normalizedAmount = rawAmount > 0.0D ? rawAmount : -1.0D;
+            normalizedMaximumDebt.put(currencyId, normalizedAmount);
+        }
+
+        return normalizedMaximumDebt;
+    }
+
+    private static @Nullable Double parseDoubleValue(final @Nullable Object value) {
+        if (value instanceof Number number) {
+            return number.doubleValue();
+        }
+        if (value instanceof String text) {
+            try {
+                return Double.parseDouble(text.trim());
+            } catch (NumberFormatException ignored) {
+                return null;
+            }
+        }
+        return null;
     }
 
     private static @NotNull String normalizeRequirementKey(final @Nullable String requirementKey) {

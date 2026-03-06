@@ -12,12 +12,20 @@ dependencies:
     Vault:
       load: BEFORE
       required: false
-      join-classpath: true
+    LuckPerms:
+      load: BEFORE
+      required: false
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
     JExEconomy:
+      load: AFTER
+      required: false
+    TheNewEconomy:
       load: BEFORE
       required: false
       join-classpath: true
-    TheNewEconomy:
+    CMI:
       load: BEFORE
       required: false
       join-classpath: true

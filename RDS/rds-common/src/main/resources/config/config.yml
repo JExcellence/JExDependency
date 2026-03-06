@@ -183,19 +183,15 @@ protection:
   only_player_shops: false
   # If true, failed protection shop taxes first attempted from town bank will retry from the owner's player balance.
   # If false, a failed town-bank tax charge is recorded as unpaid debt on affected shops.
-  shop_taxes_fallback_to_player: false
-  # Tax currencies charged through the player's town bank during scheduled shop taxes.
-  # Uses the same per-currency format as taxes.<currency> (initial_cost, growth_rate, maximum_tax).
+  shop_taxes_fallback_to_player: true
+  # Protection-tax currencies and optional global maximum charge caps.
+  # Base tax calculation still comes from taxes.<currency> (initial_cost, growth_rate, maximum_tax).
+  # Values here are global maximums for the scheduled protection-tax charge per currency:
+  #   > 0 = cap charge at this amount, <= 0 = unlimited.
   # Supports multiple and custom currencies.
   shop_taxes:
-    vault:
-      initial_cost: 100.0
-      growth_rate: 1.125
-      maximum_tax: -1
-    raindrops:
-      initial_cost: 5.0
-      growth_rate: 1.075
-      maximum_tax: 50000
+    vault: -1
+    raindrops: 50000
 # Scheduled taxes for counted player shops.
 taxes:
   vault:

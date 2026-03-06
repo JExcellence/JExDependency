@@ -14,5 +14,6 @@ public enum EPRSAction {
     INFO,
     SCOREBOARD,
     SEARCH,
-    STORE
+    STORE,
+    TAXES
 }

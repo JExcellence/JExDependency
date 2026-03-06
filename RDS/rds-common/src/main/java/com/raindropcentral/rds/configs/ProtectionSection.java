@@ -16,8 +16,8 @@ import java.util.Map;
 /**
  * Represents optional protection integration settings.
  *
- * <p>The section controls where player shops may be placed and which tax currencies
- * should be charged through a supported town-protection plugin bank.</p>
+ * <p>The section controls where player shops may be placed and which tax currencies should be
+ * treated as protection-tax currencies with optional global maximum caps.</p>
  *
  * @author ItsRainingHP
  * @since 1.0.0
@@ -29,7 +29,7 @@ public class ProtectionSection extends AConfigSection {
 
     private Boolean only_player_shops;
     private Boolean shop_taxes_fallback_to_player;
-    private Map<String, TaxCurrencySection> shop_taxes;
+    private Map<String, Double> shop_taxes;
 
     /**
      * Creates a new protection config section.
@@ -65,7 +65,7 @@ public class ProtectionSection extends AConfigSection {
         section.shop_taxes_fallback_to_player = protectionSection.contains("shop_taxes_fallback_to_player")
                 ? protectionSection.getBoolean("shop_taxes_fallback_to_player")
                 : null;
-        section.shop_taxes = parseShopTaxes(configuration, protectionSection);
+        section.shop_taxes = parseShopTaxMaximums(configuration, protectionSection);
         return section;
     }
 
@@ -88,11 +88,14 @@ public class ProtectionSection extends AConfigSection {
     }
 
     /**
-     * Returns configured tax definitions that should be charged from town banks.
+     * Returns configured global tax caps for protection-tax currencies.
      *
-     * @return normalized map of currency tax definitions
+     * <p>Positive values are hard caps. Non-positive values are treated as unlimited and normalized
+     * to {@code -1.0}.</p>
+     *
+     * @return normalized map of protection-tax currency caps
      */
-    public @NotNull Map<String, TaxCurrencySection> getShopTaxes() {
+    public @NotNull Map<String, Double> getShopTaxes() {
         if (this.shop_taxes == null || this.shop_taxes.isEmpty()) {
             return Map.of();
         }
@@ -100,21 +103,24 @@ public class ProtectionSection extends AConfigSection {
     }
 
     /**
-     * Indicates whether any tax currencies are configured to use town-bank charging.
+     * Indicates whether any tax currencies are configured as protection-tax currencies.
      *
-     * @return {@code true} when at least one protected tax currency is configured
+     * @return {@code true} when at least one protection tax currency is configured
      */
     public boolean hasShopTaxes() {
         return !this.getShopTaxes().isEmpty();
     }
 
     /**
-     * Returns a configured tax definition that should be charged from a town bank.
+     * Returns the configured global maximum for a protection-tax currency.
+     *
+     * <p>When the returned value is positive, it is the applied cap. A value of {@code -1.0}
+     * indicates unlimited.</p>
      *
      * @param currencyType currency identifier to resolve
-     * @return matching tax definition, or {@code null} when not configured
+     * @return configured global maximum, or {@code null} when the currency is not configured
      */
-    public @Nullable TaxCurrencySection getShopTaxCurrency(
+    public @Nullable Double getShopTaxMaximum(
             final @Nullable String currencyType
     ) {
         if (currencyType == null || currencyType.isBlank()) {
@@ -126,12 +132,12 @@ public class ProtectionSection extends AConfigSection {
             return null;
         }
 
-        final TaxCurrencySection directMatch = this.shop_taxes.get(normalizedCurrencyType);
+        final Double directMatch = this.shop_taxes.get(normalizedCurrencyType);
         if (directMatch != null) {
             return directMatch;
         }
 
-        for (final Map.Entry<String, TaxCurrencySection> entry : this.shop_taxes.entrySet()) {
+        for (final Map.Entry<String, Double> entry : this.shop_taxes.entrySet()) {
             if (entry.getKey().equalsIgnoreCase(normalizedCurrencyType)) {
                 return entry.getValue();
             }
@@ -141,7 +147,7 @@ public class ProtectionSection extends AConfigSection {
     }
 
     /**
-     * Indicates whether a specific tax currency should be charged from a town bank.
+     * Indicates whether a specific currency is configured as a protection-tax currency.
      *
      * @param currencyType currency identifier to check
      * @return {@code true} when that currency is configured in {@code protection.shop_taxes}
@@ -149,21 +155,21 @@ public class ProtectionSection extends AConfigSection {
     public boolean isShopTaxCurrency(
             final @Nullable String currencyType
     ) {
-        return this.getShopTaxCurrency(currencyType) != null;
+        return this.getShopTaxMaximum(currencyType) != null;
     }
 
     /**
      * Sets the parsed section context.
      *
      * @param onlyPlayerShops whether own-town placement is required
-     * @param shopTaxes tax definitions charged through town banks
-     * @throws NullPointerException if {@code shopTaxes} is {@code null}
+     * @param shopTaxMaximums global max definitions for protection-tax currencies
+     * @throws NullPointerException if {@code shopTaxMaximums} is {@code null}
      */
     public void setContext(
             final boolean onlyPlayerShops,
-            final @NotNull Map<String, TaxCurrencySection> shopTaxes
+            final @NotNull Map<String, Double> shopTaxMaximums
     ) {
-        this.setContext(onlyPlayerShops, false, shopTaxes);
+        this.setContext(onlyPlayerShops, false, shopTaxMaximums);
     }
 
     /**
@@ -171,36 +177,45 @@ public class ProtectionSection extends AConfigSection {
      *
      * @param onlyPlayerShops whether own-town placement is required
      * @param shopTaxesFallbackToPlayer whether failed town-bank taxes should fall back to player balances
-     * @param shopTaxes tax definitions charged through town banks
-     * @throws NullPointerException if {@code shopTaxes} is {@code null}
+     * @param shopTaxMaximums global max definitions for protection-tax currencies
+     * @throws NullPointerException if {@code shopTaxMaximums} is {@code null}
      */
     public void setContext(
             final boolean onlyPlayerShops,
             final boolean shopTaxesFallbackToPlayer,
-            final @NotNull Map<String, TaxCurrencySection> shopTaxes
+            final @NotNull Map<String, Double> shopTaxMaximums
     ) {
         this.only_player_shops = onlyPlayerShops;
         this.shop_taxes_fallback_to_player = shopTaxesFallbackToPlayer;
-        final Map<String, TaxCurrencySection> normalizedShopTaxes = new LinkedHashMap<>();
-        for (final Map.Entry<String, TaxCurrencySection> entry : shopTaxes.entrySet()) {
+        final Map<String, Double> normalizedMaximums = new LinkedHashMap<>();
+        for (final Map.Entry<String, Double> entry : shopTaxMaximums.entrySet()) {
             if (entry.getKey() == null || entry.getKey().isBlank() || entry.getValue() == null) {
                 continue;
             }
-            normalizedShopTaxes.put(normalizeCurrencyType(entry.getKey()), entry.getValue());
+            normalizedMaximums.put(normalizeCurrencyType(entry.getKey()), normalizeMaximum(entry.getValue()));
         }
-        this.shop_taxes = normalizedShopTaxes;
+        this.shop_taxes = normalizedMaximums;
     }
 
-    private static @NotNull Map<String, TaxCurrencySection> parseShopTaxes(
+    private static @NotNull Map<String, Double> parseShopTaxMaximums(
             final @NotNull YamlConfiguration configuration,
             final @NotNull ConfigurationSection protectionSection
     ) {
-        final Map<String, TaxCurrencySection> parsedShopTaxes = new LinkedHashMap<>();
+        final Map<String, Double> parsedMaximums = new LinkedHashMap<>();
+        final ConfigurationSection taxesSection = configuration.getConfigurationSection("taxes");
 
         final ConfigurationSection structuredShopTaxes = protectionSection.getConfigurationSection("shop_taxes");
         if (structuredShopTaxes != null) {
             for (final String rawCurrencyType : structuredShopTaxes.getKeys(false)) {
                 if (rawCurrencyType == null || rawCurrencyType.isBlank()) {
+                    continue;
+                }
+
+                final String normalizedCurrencyType = normalizeCurrencyType(rawCurrencyType);
+                final Object rawValue = structuredShopTaxes.get(rawCurrencyType);
+                final Double parsedMaximum = parseMaximumValue(rawValue);
+                if (parsedMaximum != null) {
+                    parsedMaximums.put(normalizedCurrencyType, normalizeMaximum(parsedMaximum));
                     continue;
                 }
 
@@ -210,10 +225,21 @@ public class ProtectionSection extends AConfigSection {
                     continue;
                 }
 
-                final String normalizedCurrencyType = normalizeCurrencyType(rawCurrencyType);
-                parsedShopTaxes.put(normalizedCurrencyType, createCurrencySection(normalizedCurrencyType, currencySection));
+                if (currencySection.contains("maximum_tax")) {
+                    parsedMaximums.put(
+                            normalizedCurrencyType,
+                            normalizeMaximum(currencySection.getDouble("maximum_tax"))
+                    );
+                    continue;
+                }
+
+                final Double taxesSectionMaximum = resolveMaximumFromTaxesSection(taxesSection, normalizedCurrencyType);
+                parsedMaximums.put(
+                        normalizedCurrencyType,
+                        taxesSectionMaximum == null ? -1D : normalizeMaximum(taxesSectionMaximum)
+                );
             }
-            return parsedShopTaxes;
+            return parsedMaximums;
         }
 
         for (final String rawCurrencyType : protectionSection.getStringList("shop_taxes")) {
@@ -222,17 +248,29 @@ public class ProtectionSection extends AConfigSection {
             }
 
             final String normalizedCurrencyType = normalizeCurrencyType(rawCurrencyType);
-            final ConfigurationSection taxesSection = configuration.getConfigurationSection("taxes");
-            final ConfigurationSection taxCurrencySection = findCurrencySection(taxesSection, normalizedCurrencyType);
-            parsedShopTaxes.put(
+            final Double taxesSectionMaximum = resolveMaximumFromTaxesSection(taxesSection, normalizedCurrencyType);
+            parsedMaximums.put(
                     normalizedCurrencyType,
-                    taxCurrencySection == null
-                            ? createFallbackCurrency(normalizedCurrencyType)
-                            : createCurrencySection(normalizedCurrencyType, taxCurrencySection)
+                    taxesSectionMaximum == null ? -1D : normalizeMaximum(taxesSectionMaximum)
             );
         }
 
-        return parsedShopTaxes;
+        return parsedMaximums;
+    }
+
+    private static @Nullable Double resolveMaximumFromTaxesSection(
+            final @Nullable ConfigurationSection taxesSection,
+            final @NotNull String normalizedCurrencyType
+    ) {
+        final ConfigurationSection currencySection = findCurrencySection(taxesSection, normalizedCurrencyType);
+        if (currencySection == null) {
+            return null;
+        }
+
+        if (!currencySection.contains("maximum_tax")) {
+            return -1D;
+        }
+        return currencySection.getDouble("maximum_tax");
     }
 
     private static @Nullable ConfigurationSection findCurrencySection(
@@ -257,26 +295,26 @@ public class ProtectionSection extends AConfigSection {
         return null;
     }
 
-    private static @NotNull TaxCurrencySection createCurrencySection(
-            final @NotNull String currencyType,
-            final @NotNull ConfigurationSection section
+    private static @Nullable Double parseMaximumValue(
+            final @Nullable Object rawValue
     ) {
-        final TaxCurrencySection currencySection = new TaxCurrencySection(new EvaluationEnvironmentBuilder());
-        currencySection.setContext(
-                currencyType,
-                section.getDouble("initial_cost", 100.0D),
-                section.getDouble("growth_rate", 1.125D),
-                section.contains("maximum_tax") ? section.getDouble("maximum_tax") : -1D
-        );
-        return currencySection;
+        if (rawValue instanceof Number number) {
+            return number.doubleValue();
+        }
+        if (rawValue instanceof String text) {
+            try {
+                return Double.parseDouble(text.trim());
+            } catch (NumberFormatException ignored) {
+                return null;
+            }
+        }
+        return null;
     }
 
-    private static @NotNull TaxCurrencySection createFallbackCurrency(
-            final @NotNull String currencyType
+    private static double normalizeMaximum(
+            final double maximum
     ) {
-        final TaxCurrencySection fallback = new TaxCurrencySection(new EvaluationEnvironmentBuilder());
-        fallback.setContext(currencyType, 100.0D, 1.125D, -1D);
-        return fallback;
+        return maximum > 0D ? maximum : -1D;
     }
 
     private static @NotNull String normalizeCurrencyType(

@@ -9,3 +9,6 @@ softdepend:
   - Vault
   - JExEconomy
   - TheNewEconomy
+  - LuckPerms
+  - PlaceholderAPI
+  - CMI

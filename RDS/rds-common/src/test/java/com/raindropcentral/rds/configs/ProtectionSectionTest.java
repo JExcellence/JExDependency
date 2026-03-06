@@ -6,10 +6,11 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -42,14 +43,9 @@ class ProtectionSectionTest {
               only_player_shops: true
               shop_taxes_fallback_to_player: true
               shop_taxes:
-                Vault:
-                  initial_cost: 150.0
-                  growth_rate: 1.05
-                  maximum_tax: 2000.0
-                Coins:
-                  initial_cost: 7.5
-                  growth_rate: 1.02
-                  maximum_tax: 99999.0
+                Vault: 2000.0
+                Coins: 99999.0
+                Gems: -1.0
             """);
 
         final ProtectionSection section = ProtectionSection.fromFile(configFile.toFile());
@@ -58,14 +54,32 @@ class ProtectionSectionTest {
         assertTrue(section.hasShopTaxes());
         assertTrue(section.getShopTaxes().containsKey("vault"));
         assertTrue(section.getShopTaxes().containsKey("coins"));
-        assertEquals(2, section.getShopTaxes().size());
-        assertNotNull(section.getShopTaxCurrency("vault"));
-        assertNotNull(section.getShopTaxCurrency("coins"));
-        assertEquals(150.0D, section.getShopTaxCurrency("vault").getInitialCost());
-        assertEquals(7.5D, section.getShopTaxCurrency("coins").getInitialCost());
+        assertEquals(3, section.getShopTaxes().size());
+        assertEquals(2000.0D, section.getShopTaxMaximum("vault"));
+        assertEquals(99999.0D, section.getShopTaxMaximum("coins"));
+        assertEquals(-1.0D, section.getShopTaxMaximum("gems"));
         assertTrue(section.isShopTaxCurrency("VaUlT"));
         assertTrue(section.isShopTaxCurrency("coins"));
-        assertFalse(section.isShopTaxCurrency("gems"));
+        assertFalse(section.isShopTaxCurrency("missing"));
+        assertNull(section.getShopTaxMaximum("missing"));
+    }
+
+    @Test
+    void supportsLegacyStructuredTaxDefinition(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            protection:
+              shop_taxes:
+                vault:
+                  initial_cost: 150.0
+                  growth_rate: 1.05
+                  maximum_tax: 2750.0
+            """);
+
+        final ProtectionSection section = ProtectionSection.fromFile(configFile.toFile());
+        assertTrue(section.hasShopTaxes());
+        assertEquals(Map.of("vault", 2750.0D), section.getShopTaxes());
+        assertEquals(2750.0D, section.getShopTaxMaximum("vault"));
     }
 
     @Test
@@ -90,9 +104,7 @@ class ProtectionSectionTest {
         final ProtectionSection section = ProtectionSection.fromFile(configFile.toFile());
         assertFalse(section.isShopTaxesFallbackToPlayer());
         assertTrue(section.hasShopTaxes());
-        assertNotNull(section.getShopTaxCurrency("vault"));
-        assertNotNull(section.getShopTaxCurrency("raindrops"));
-        assertEquals(100.0D, section.getShopTaxCurrency("vault").getInitialCost());
-        assertEquals(5.0D, section.getShopTaxCurrency("raindrops").getInitialCost());
+        assertEquals(-1.0D, section.getShopTaxMaximum("vault"));
+        assertEquals(50000.0D, section.getShopTaxMaximum("raindrops"));
     }
 }

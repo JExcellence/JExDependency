@@ -1,6 +1,7 @@
 package com.raindropcentral.rplatform.protection.impl;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -113,6 +114,92 @@ public final class HuskTownProtectionBridge extends AbstractReflectionProtection
         } catch (Exception exception) {
             LOGGER.log(Level.FINE, "Failed to resolve HuskTowns location ownership for " + player.getName(), exception);
             return false;
+        }
+    }
+
+    /**
+     * Checks whether a player is the mayor/leader of their HuskTowns town.
+     *
+     * @param player player to inspect
+     * @return {@code true} when the player resolves to a mayor/leader role
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public boolean isPlayerTownMayor(@NotNull Player player) {
+        if (!isAvailable()) {
+            return false;
+        }
+
+        try {
+            final Object town = resolvePlayerTown(player);
+            if (town == null) {
+                return false;
+            }
+
+            final Object onlineUser = resolveOnlineUser(player);
+            final Object member = onlineUser == null ? null : invokeOptional(this.huskTownsApi, "getUserTown", onlineUser);
+            final Object role = firstNonNull(
+                member == null ? null : invokeOptional(member, "role"),
+                member == null ? null : invokeOptional(member, "getRole")
+            );
+            if (isMayorRole(role)) {
+                return true;
+            }
+
+            final Object mayorIdentity = firstNonNull(
+                invokeOptional(town, "getMayor"),
+                invokeOptional(town, "mayor"),
+                invokeOptional(town, "getOwner"),
+                invokeOptional(town, "owner"),
+                invokeOptional(town, "getLeader"),
+                invokeOptional(town, "leader")
+            );
+            return isMayorIdentityMatch(player, mayorIdentity);
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve HuskTowns mayor check for " + player.getName(), exception);
+            return false;
+        }
+    }
+
+    /**
+     * Resolves a stable town identifier for a player's HuskTowns town.
+     *
+     * @param player player to inspect
+     * @return stable town identifier, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public @Nullable String getPlayerTownIdentifier(@NotNull Player player) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        try {
+            return resolveTownIdentifier(resolvePlayerTown(player));
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve HuskTowns town identifier for " + player.getName(), exception);
+            return null;
+        }
+    }
+
+    /**
+     * Resolves a display name for a player's HuskTowns town.
+     *
+     * @param player player to inspect
+     * @return town display name, or {@code null} when unavailable
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    @Override
+    public @Nullable String getPlayerTownDisplayName(@NotNull Player player) {
+        if (!isAvailable()) {
+            return null;
+        }
+
+        try {
+            return resolveTownDisplayName(resolvePlayerTown(player));
+        } catch (Exception exception) {
+            LOGGER.log(Level.FINE, "Failed to resolve HuskTowns town display name for " + player.getName(), exception);
+            return null;
         }
     }
 
@@ -385,5 +472,33 @@ public final class HuskTownProtectionBridge extends AbstractReflectionProtection
                 || tryInvoke(this.huskTownsApi, "withdrawFromTown", player, town, amount)
                 || tryInvoke(this.huskTownsApi, "withdrawTown", player.getUniqueId(), town, amount)
                 || tryInvoke(this.huskTownsApi, "removeTownMoney", town, amount);
+    }
+
+    private boolean isMayorRole(@Nullable Object roleObject) {
+        if (roleObject == null) {
+            return false;
+        }
+
+        if (roleObject instanceof String roleText) {
+            return isMayorRoleName(roleText);
+        }
+
+        final Object roleName = firstNonNull(
+            invokeOptional(roleObject, "name"),
+            invokeOptional(roleObject, "getName")
+        );
+        if (roleName instanceof String roleText) {
+            return isMayorRoleName(roleText);
+        }
+
+        return false;
+    }
+
+    private boolean isMayorRoleName(@NotNull String roleText) {
+        final String normalized = roleText.trim().toLowerCase(Locale.ROOT);
+        return normalized.contains("mayor")
+            || normalized.contains("leader")
+            || normalized.contains("owner")
+            || normalized.contains("founder");
     }
 }

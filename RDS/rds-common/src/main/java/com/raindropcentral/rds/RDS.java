@@ -8,6 +8,7 @@ import com.raindropcentral.rds.database.entity.ServerBank;
 import com.raindropcentral.rds.database.repository.RRDSPlayer;
 import com.raindropcentral.rds.database.repository.RServerBank;
 import com.raindropcentral.rds.database.repository.RShop;
+import com.raindropcentral.rds.database.repository.RRTownShopBank;
 import com.raindropcentral.rds.service.ShopService;
 import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
 import com.raindropcentral.rds.service.bank.AdminShopServerBankScheduler;
@@ -32,6 +33,7 @@ import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.view.shop.ShopStorageView;
 import com.raindropcentral.rds.view.shop.ShopStoreCostView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
+import com.raindropcentral.rds.view.shop.ShopTaxView;
 import com.raindropcentral.rds.view.shop.ShopTrustedView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
@@ -111,6 +113,7 @@ public class RDS {
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
     private RServerBank serverBankRepository;
+    private RRTownShopBank townShopBankRepository;
 
     /**
      * Creates a new shared RDS runtime.
@@ -402,6 +405,11 @@ public class RDS {
                 ServerBank.class,
                 ServerBank::getCurrencyType
         );
+
+        this.townShopBankRepository = new RRTownShopBank(
+                this.executor,
+                this.entityManagerFactory
+        );
     }
 
     @SuppressWarnings("resource")
@@ -451,6 +459,7 @@ public class RDS {
                     new ShopSearchView(),
                     new ShopListView(),
                     new ShopResultsView(),
+                    new ShopTaxView(),
                     new ShopStoreView(),
                     new ShopStoreCostView(),
                     new ShopCustomerView(),
@@ -861,5 +870,14 @@ public class RDS {
      */
     public @Nullable RServerBank getServerBankRepository() {
         return this.serverBankRepository;
+    }
+
+    /**
+     * Returns the repository used for persisted town shop-tax bank ledgers.
+     *
+     * @return town shop-tax repository, or {@code null} before repository initialization completes
+     */
+    public @Nullable RRTownShopBank getTownShopBankRepository() {
+        return this.townShopBankRepository;
     }
 }

@@ -233,7 +233,7 @@ public class ShopTaxScheduler {
 
         final int ownedShopCount = taxableOwnedShops.size();
         final int neverAvailabilityItems = ShopTaxSupport.countNeverAvailabilityItems(taxableOwnedShops);
-        final Map<String, TaxCurrencySection> configuredTaxes = this.resolveConfiguredTaxes(config, taxes);
+            final Map<String, TaxCurrencySection> configuredTaxes = this.resolveConfiguredTaxes(config, taxes);
         for (final Map.Entry<String, TaxCurrencySection> taxEntry : configuredTaxes.entrySet()) {
             final String currencyType = taxEntry.getKey();
             if (!ShopTaxSupport.isCurrencyAvailable(this.plugin, currencyType)) {
@@ -248,7 +248,13 @@ public class ShopTaxScheduler {
                     taxes.getNeverItemPenaltyRate(),
                     neverAvailabilityItems
             );
-            if (taxAmount <= 0D) {
+            final double cappedTaxAmount = this.applyProtectionTaxMaximum(
+                    config,
+                    currencyType,
+                    taxAmount,
+                    protectionTaxCurrency
+            );
+            if (cappedTaxAmount <= 0D) {
                 continue;
             }
 
@@ -256,10 +262,10 @@ public class ShopTaxScheduler {
                     config,
                     owner,
                     currencyType,
-                    taxAmount,
+                    cappedTaxAmount,
                     protectionTaxCurrency
             );
-            final String formattedTax = ShopTaxSupport.formatCurrency(this.plugin, currencyType, taxAmount);
+            final String formattedTax = ShopTaxSupport.formatCurrency(this.plugin, currencyType, cappedTaxAmount);
             final String currencyName = ShopTaxSupport.getCurrencyDisplayName(currencyType);
             final Map<String, Object> placeholders = new LinkedHashMap<>();
             placeholders.put("amount", formattedTax);
@@ -273,7 +279,7 @@ public class ShopTaxScheduler {
                 this.applyFailedTaxDebt(
                         taxableOwnedShops,
                         currencyType,
-                        taxAmount,
+                        cappedTaxAmount,
                         taxes.getMaximumBankruptcyAmount()
                 );
                 placeholders.put("debt_summary", this.formatCurrencySummary(this.summarizeDebtByCurrency(taxableOwnedShops)));
@@ -282,7 +288,10 @@ public class ShopTaxScheduler {
                 continue;
             }
 
-            this.recordTaxLedgerEntries(taxableOwnedShops, owner, currencyType, taxAmount, ownedShopCount);
+            this.recordTaxLedgerEntries(taxableOwnedShops, owner, currencyType, cappedTaxAmount, ownedShopCount);
+            if (protectionTaxCurrency) {
+                ShopTownTaxBankService.recordCollectedTax(this.plugin, owner, currencyType, cappedTaxAmount);
+            }
             this.notifyOwner(owner, "tax_scheduler.paid", placeholders);
         }
     }
@@ -464,12 +473,6 @@ public class ShopTaxScheduler {
             }
 
             final String currencyType = rawCurrencyType.trim().toLowerCase(Locale.ROOT);
-            final TaxCurrencySection protectionCurrency = config.getProtection().getShopTaxCurrency(currencyType);
-            if (protectionCurrency != null) {
-                resolvedTaxes.put(currencyType, protectionCurrency);
-                continue;
-            }
-
             final TaxCurrencySection standardCurrency = taxes.getTaxCurrency(currencyType);
             if (standardCurrency != null) {
                 resolvedTaxes.put(currencyType, standardCurrency);
@@ -577,5 +580,23 @@ public class ShopTaxScheduler {
                 failureMessageKey = "tax_scheduler.charge_failed";
             }
         }
+    }
+
+    private double applyProtectionTaxMaximum(
+            final @NotNull ConfigSection config,
+            final @NotNull String currencyType,
+            final double calculatedTax,
+            final boolean protectionTaxCurrency
+    ) {
+        if (!protectionTaxCurrency) {
+            return calculatedTax;
+        }
+
+        final Double configuredMaximum = config.getProtection().getShopTaxMaximum(currencyType);
+        if (configuredMaximum == null || configuredMaximum <= 0D) {
+            return calculatedTax;
+        }
+
+        return Math.min(calculatedTax, configuredMaximum);
     }
 }

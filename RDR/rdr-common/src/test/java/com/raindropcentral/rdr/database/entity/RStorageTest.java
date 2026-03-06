@@ -102,4 +102,29 @@ class RStorageTest {
         assertEquals(StorageTrustStatus.TRUSTED, StorageTrustStatus.ASSOCIATE.next());
         assertEquals(StorageTrustStatus.PUBLIC, StorageTrustStatus.TRUSTED.next());
     }
+
+    @Test
+    void taxDebtLifecycleTracksOutstandingAmounts() {
+        final RDRPlayer player = new RDRPlayer(UUID.randomUUID());
+        final RStorage storage = new RStorage(player, "storage-1", 54);
+
+        storage.addTaxDebt("vault", 10.0D);
+        storage.addTaxDebt("vault", 2.5D);
+        storage.addTaxDebt("raindrops", 1.0D);
+
+        assertTrue(storage.hasTaxDebt());
+        assertEquals(12.5D, storage.getTaxDebtEntries().get("vault"));
+        assertEquals(1.0D, storage.getTaxDebtEntries().get("raindrops"));
+        assertEquals(13.5D, storage.getTotalTaxDebtAmount());
+
+        storage.reduceTaxDebt("vault", 2.5D);
+        assertEquals(10.0D, storage.getTaxDebtEntries().get("vault"));
+
+        storage.reduceTaxDebt("vault", 10.0D);
+        assertFalse(storage.getTaxDebtEntries().containsKey("vault"));
+
+        storage.setTaxDebtEntries(null);
+        assertFalse(storage.hasTaxDebt());
+        assertEquals(0.0D, storage.getTotalTaxDebtAmount());
+    }
 }

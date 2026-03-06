@@ -13,6 +13,7 @@ import com.raindropcentral.rdr.database.entity.RDRPlayer;
 import com.raindropcentral.rdr.database.entity.RStorage;
 import com.raindropcentral.rdr.view.StorageAdminView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
+import com.raindropcentral.rdr.view.StorageTaxView;
 import com.raindropcentral.rdr.view.StorageViewLauncher;
 import de.jexcellence.evaluable.section.ACommandSection;
 import de.jexcellence.jextranslate.i18n.I18n;
@@ -75,6 +76,7 @@ public class PRR extends PlayerCommand {
             case ADMIN -> this.handleAdminCommand(player);
             case SCOREBOARD -> this.handleScoreboardToggle(player, args);
             case STORAGE -> this.openStorageOverview(player);
+            case TAXES -> this.openStorageTaxes(player);
             default -> {
                 if (this.hasNoPermission(player, EPRRPermission.INFO)) {
                     return;
@@ -226,6 +228,7 @@ public class PRR extends PlayerCommand {
         }
         if (this.hasPermission(player, EPRRPermission.STORAGE)) {
             actions.add(EPRRAction.STORAGE.name().toLowerCase(Locale.ROOT));
+            actions.add(EPRRAction.TAXES.name().toLowerCase(Locale.ROOT));
         }
         return List.copyOf(actions);
     }
@@ -312,5 +315,17 @@ public class PRR extends PlayerCommand {
 
     private int resolveMaxHotkeys() {
         return this.rdr == null ? 9 : this.rdr.getDefaultConfig().getMaxHotkeys();
+    }
+
+    private void openStorageTaxes(final @NotNull Player player) {
+        if (this.hasNoPermission(player, EPRRPermission.STORAGE) || this.rdr == null) {
+            return;
+        }
+
+        this.rdr.getViewFrame().open(
+            StorageTaxView.class,
+            player,
+            Map.of("plugin", this.rdr)
+        );
     }
 }
