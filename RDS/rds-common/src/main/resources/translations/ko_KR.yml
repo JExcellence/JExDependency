@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>다음에서 값 편집</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>편집 가능한 모든 설정은 앤빌 프롬프트를 통해 변경할 수 있습니다.</gray>"
         - "<yellow>구성 컨트롤을 열려면 클릭하세요.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] 플레이어 및 그룹 컨트롤</gradient>"
+      lore:
+        - "<gray>플레이어별 및 그룹별 최대 상점 및 할인을 설정합니다.</gray>"
+        - "<gray>소유자로서 상점을 열거나 활성 상점 보기를 강제로 닫습니다.</gray>"
+        - "<yellow>플레이어/그룹 관리자 컨트롤을 열려면 클릭하세요.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] 플러그인 통합</gradient>"
       lore:

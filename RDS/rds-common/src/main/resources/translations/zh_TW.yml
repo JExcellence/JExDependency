@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>編輯</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>中的值 每個可編輯設定都可以透過砧提示進行變更。</gray>"
         - "<yellow>點選可開啟設定控制項。</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] 玩家和群組控制</gradient>"
+      lore:
+        - "<gray>設定每個玩家和每個群組的最大商店和折扣。</gray>"
+        - "<gray>以所有者身分開啟任何商店或強制關閉活動商店視圖。</gray>"
+        - "<yellow>點選可開啟玩家/群組管理控制。</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] 外掛程式整合</gradient>"
       lore:

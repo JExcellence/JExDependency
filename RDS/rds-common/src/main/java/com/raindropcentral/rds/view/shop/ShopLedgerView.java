@@ -86,7 +86,7 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
             final @NotNull Context context
     ) {
         final Shop shop = this.getCurrentShop(context);
-        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId())) {
+        if (shop == null || !this.canManage(context, shop)) {
             return CompletableFuture.completedFuture(List.of());
         }
 
@@ -120,7 +120,7 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
             return;
         }
 
-        if (!shop.canManage(player.getUniqueId())) {
+        if (!this.canManage(render, shop)) {
             render.slot(4).renderWith(() -> this.createLockedItem(player));
             return;
         }
@@ -279,5 +279,12 @@ public class ShopLedgerView extends APaginatedView<ShopLedgerEntry> {
     ) {
         final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
         return ownerName == null ? shop.getOwner().toString() : ownerName;
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
     }
 }

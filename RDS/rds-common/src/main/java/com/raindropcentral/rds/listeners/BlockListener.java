@@ -149,7 +149,7 @@ public class BlockListener implements Listener {
     ) {
         final RDSPlayer playerData = this.getOrCreatePlayer(ownerId);
 
-        final int maxShops = this.rds.getMaximumShops(config);
+        final int maxShops = this.rds.getMaximumShops(event.getPlayer(), config);
         final int activeOwnedShops = ShopOwnershipSupport.countOwnedPlayerShops(this.rds, ownerId);
         if (maxShops > 0 && activeOwnedShops >= maxShops) {
             event.setCancelled(true);

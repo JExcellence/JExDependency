@@ -98,7 +98,7 @@ public class ShopInputView extends BaseView {
         this.insertedItems.set(new HashMap<>(), render);
         this.saving.set(false, render);
 
-        if (!shop.canSupply(player.getUniqueId())) {
+        if (!this.canSupply(render, shop)) {
             render.layoutSlot(
                     's',
                     this.createLockedItem(player)
@@ -140,7 +140,7 @@ public class ShopInputView extends BaseView {
             final @NotNull SlotClickContext click
     ) {
         final Shop currentShop = this.getCurrentShop(click);
-        if (!currentShop.canSupply(click.getPlayer().getUniqueId())) {
+        if (!this.canSupply(click, currentShop)) {
             click.setCancelled(true);
             return;
         }
@@ -183,7 +183,7 @@ public class ShopInputView extends BaseView {
             final @NotNull SlotClickContext clickContext
     ) {
         final Shop currentShop = this.getCurrentShop(clickContext);
-        if (!currentShop.canSupply(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canSupply(clickContext, currentShop)) {
             this.i18n("feedback.no_permission", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -239,10 +239,7 @@ public class ShopInputView extends BaseView {
 
             clickContext.openForPlayer(
                     ShopOverviewView.class,
-                    Map.of(
-                            "plugin", this.rds.get(clickContext),
-                            "shopLocation", shop.getShopLocation()
-                    )
+                    this.createOverviewData(clickContext, shop)
             );
         } catch (Exception exception) {
             this.i18n("save_failed", clickContext.getPlayer())
@@ -535,5 +532,25 @@ public class ShopInputView extends BaseView {
             return "None";
         }
         return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
+    }
+
+    private boolean canSupply(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canSupply(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createOverviewData(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", shop.getShopLocation());
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
     }
 }

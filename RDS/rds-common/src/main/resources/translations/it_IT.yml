@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Modifica valori da</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Ogni impostazione modificabile può essere modificata tramite un prompt dell'incudine.</gray>"
         - "<yellow>Fare clic per aprire i controlli di configurazione.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Controlli giocatore e gruppo</gradient>"
+      lore:
+        - "<gray>Imposta negozi e sconti massimi per giocatore e per gruppo.</gray>"
+        - "<gray>Apri qualsiasi negozio come proprietario o forza la chiusura delle visualizzazioni del negozio attive.</gray>"
+        - "<yellow>Fai clic per aprire i controlli di amministrazione del giocatore/gruppo.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Integrazioni plug-in</gradient>"
       lore:

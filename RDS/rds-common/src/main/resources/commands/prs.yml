@@ -29,7 +29,6 @@ commands:
         commandAdmin: 'raindropshops.command.admin'
         commandInfo: 'raindropshops.command.info'
         commandGive: 'raindropshops.command.give'
-        commandMain: 'raindropshops.command.main'
         commandScoreboard: 'raindropshops.command.scoreboard'
         commandSearch: 'raindropshops.command.search'
         commandStore: 'raindropshops.command.store'

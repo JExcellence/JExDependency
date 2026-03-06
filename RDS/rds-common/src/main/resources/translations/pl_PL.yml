@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Edycja wartości z</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Każde edytowalne ustawienie można zmienić poprzez monit kowadła.</gray>"
         - "<yellow>Kliknij, aby otworzyć elementy sterujące konfiguracją.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Sterowanie graczami i grupami</gradient>"
+      lore:
+        - "<gray>Ustawia maksymalne sklepy i zniżki dla gracza i grupy.</gray>"
+        - "<gray>Otwórz dowolny sklep jako właściciel lub wymuś zamknięcie aktywnych widoków sklepu.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące administratora gracza/grupy.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Integracja wtyczek</gradient>"
       lore:

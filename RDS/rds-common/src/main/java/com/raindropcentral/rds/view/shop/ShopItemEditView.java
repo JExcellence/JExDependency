@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -133,11 +134,7 @@ public class ShopItemEditView extends BaseView {
 
                     clickContext.openForPlayer(
                             ShopItemCurrencyTypeAnvilView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", this.shopLocation.get(clickContext),
-                                    "shopItem", this.getEditedItem(clickContext)
-                            )
+                            this.createItemViewData(clickContext, this.getEditedItem(clickContext))
                     );
                 });
 
@@ -151,11 +148,7 @@ public class ShopItemEditView extends BaseView {
 
                     clickContext.openForPlayer(
                             ShopItemValueAnvilView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", this.shopLocation.get(clickContext),
-                                    "shopItem", this.getEditedItem(clickContext)
-                            )
+                            this.createItemViewData(clickContext, this.getEditedItem(clickContext))
                     );
                 });
 
@@ -174,11 +167,7 @@ public class ShopItemEditView extends BaseView {
 
                     clickContext.openForPlayer(
                             ShopItemAvailabilityMinutesAnvilView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", this.shopLocation.get(clickContext),
-                                    "shopItem", this.getEditedItem(clickContext)
-                            )
+                            this.createItemViewData(clickContext, this.getEditedItem(clickContext))
                     );
                 });
 
@@ -206,11 +195,7 @@ public class ShopItemEditView extends BaseView {
 
                         clickContext.openForPlayer(
                                 ShopItemAdminStockLimitAnvilView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shopLocation", this.shopLocation.get(clickContext),
-                                        "shopItem", this.getEditedItem(clickContext)
-                                )
+                                this.createItemViewData(clickContext, this.getEditedItem(clickContext))
                         );
                     });
 
@@ -224,11 +209,7 @@ public class ShopItemEditView extends BaseView {
 
                         clickContext.openForPlayer(
                                 ShopItemAdminResetTimerAnvilView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shopLocation", this.shopLocation.get(clickContext),
-                                        "shopItem", this.getEditedItem(clickContext)
-                                )
+                                this.createItemViewData(clickContext, this.getEditedItem(clickContext))
                         );
                     });
 
@@ -259,7 +240,7 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -293,10 +274,7 @@ public class ShopItemEditView extends BaseView {
 
             clickContext.openForPlayer(
                     ShopEditView.class,
-                    Map.of(
-                            "plugin", this.rds.get(clickContext),
-                            "shopLocation", this.shopLocation.get(clickContext)
-                    )
+                    this.createBaseViewData(clickContext)
             );
             return;
         }
@@ -320,7 +298,7 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -358,7 +336,7 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -373,11 +351,7 @@ public class ShopItemEditView extends BaseView {
 
         clickContext.openForPlayer(
                 ShopItemAdminCommandView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext),
-                        "shopItem", this.getEditedItem(clickContext)
-                )
+                this.createItemViewData(clickContext, this.getEditedItem(clickContext))
         );
     }
 
@@ -395,7 +369,7 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -450,6 +424,34 @@ public class ShopItemEditView extends BaseView {
             plugin.getAdminShopRestockScheduler().restockShop(shop);
         }
         return shop;
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createBaseViewData(
+            final @NotNull Context context
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", this.shopLocation.get(context));
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
+    }
+
+    private @NotNull Map<String, Object> createItemViewData(
+            final @NotNull Context context,
+            final @NotNull ShopItem shopItem
+    ) {
+        final Map<String, Object> viewData = this.createBaseViewData(context);
+        viewData.put("shopItem", shopItem);
+        return viewData;
     }
 
     private @Nullable AdminShopRestockMode toggleAdminRestockMode(

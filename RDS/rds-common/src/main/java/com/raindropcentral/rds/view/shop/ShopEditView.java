@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -88,7 +89,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             final @NotNull Context context
     ) {
         final Shop shop = this.getCurrentShop(context);
-        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId()) || shop.hasTaxDebt()) {
+        if (shop == null || !this.canManage(context, shop) || shop.hasTaxDebt()) {
             return CompletableFuture.completedFuture(List.of());
         }
 
@@ -136,7 +137,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             return;
         }
 
-        if (!shop.canManage(player.getUniqueId())) {
+        if (!this.canManage(render, shop)) {
             render.slot(4).renderWith(() -> this.createLockedItem(player));
             return;
         }
@@ -192,11 +193,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
 
         clickContext.openForPlayer(
                 ShopItemEditView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext),
-                        "shopItem", entry.item()
-                )
+                this.createItemEditData(clickContext, entry.item())
         );
     }
 
@@ -214,7 +211,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -381,10 +378,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
     ) {
         context.openForPlayer(
                 ShopEditView.class,
-                Map.of(
-                        "plugin", this.rds.get(context),
-                        "shopLocation", this.shopLocation.get(context)
-                )
+                this.createViewData(context)
         );
     }
 
@@ -523,6 +517,34 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             return "None";
         }
         return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createViewData(
+            final @NotNull Context context
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", this.shopLocation.get(context));
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
+    }
+
+    private @NotNull Map<String, Object> createItemEditData(
+            final @NotNull Context context,
+            final @NotNull ShopItem shopItem
+    ) {
+        final Map<String, Object> viewData = this.createViewData(context);
+        viewData.put("shopItem", shopItem);
+        return viewData;
     }
 
     /**

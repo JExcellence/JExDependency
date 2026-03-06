@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Değerleri düzenle</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Düzenlenebilir her ayar, bir örs istemi aracılığıyla değiştirilebilir.</gray>"
         - "<yellow>Yapılandırma kontrollerini açmak için tıklayın.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Kat] Oyuncu ve Grup Kontrolleri</gradient>"
+      lore:
+        - "<gray>Oyuncu başına ve grup başına maksimum mağazaları ve indirimleri ayarlayın.</gray>"
+        - "<gray>Herhangi bir mağazayı sahip olarak açın veya etkin mağaza görünümlerini kapatmaya zorlayın.</gray>"
+        - "<yellow>Oynatıcı/grup yönetici kontrollerini açmak için tıklayın.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Eklenti Entegrasyonları</gradient>"
       lore:

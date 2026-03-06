@@ -1,0 +1,77 @@
+package com.raindropcentral.rds.view.shop;
+
+import com.raindropcentral.rds.database.entity.Shop;
+import me.devnatan.inventoryframework.context.Context;
+import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+
+/**
+ * Shared admin-access helpers for shop views.
+ *
+ * <p>This utility centralizes owner-override checks used by admin shop tooling so all views
+ * interpret the same context flag consistently.</p>
+ *
+ * @author ItsRainingHP
+ * @since 1.0.0
+ * @version 1.0.0
+ */
+final class ShopAdminAccessSupport {
+
+    static final String ADMIN_OWNER_OVERRIDE_KEY = "adminOwnerOverride";
+    private static final String ADMIN_COMMAND_PERMISSION = "raindropshops.command.admin";
+
+    private ShopAdminAccessSupport() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
+    static boolean hasAdminAccess(
+            final @NotNull Player player
+    ) {
+        Objects.requireNonNull(player, "player");
+        return player.isOp() || player.hasPermission(ADMIN_COMMAND_PERMISSION);
+    }
+
+    static boolean hasOwnerOverride(
+            final @NotNull Context context
+    ) {
+        if (!hasAdminAccess(context.getPlayer())) {
+            return false;
+        }
+
+        final Object initialData = context.getInitialData();
+        if (!(initialData instanceof Map<?, ?> data)) {
+            return false;
+        }
+
+        final Object overrideValue = data.get(ADMIN_OWNER_OVERRIDE_KEY);
+        return overrideValue instanceof Boolean enabled && enabled;
+    }
+
+    static boolean canActAsOwner(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        final UUID playerId = context.getPlayer().getUniqueId();
+        return shop.isOwner(playerId) || hasOwnerOverride(context);
+    }
+
+    static boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        final UUID playerId = context.getPlayer().getUniqueId();
+        return shop.canManage(playerId) || hasOwnerOverride(context);
+    }
+
+    static boolean canSupply(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        final UUID playerId = context.getPlayer().getUniqueId();
+        return shop.canSupply(playerId) || hasOwnerOverride(context);
+    }
+}

@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Werte von</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>bearbeiten Jede bearbeitbare Einstellung kann über eine Amboss-Eingabeaufforderung geändert werden.</gray>"
         - "<yellow>Klicken Sie hier, um die Konfigurationssteuerelemente zu öffnen.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Spieler- und Gruppensteuerung</gradient>"
+      lore:
+        - "<gray>Legen Sie maximale Shops und Rabatte pro Spieler und pro Gruppe fest.</gray>"
+        - "<gray>Öffnen Sie einen beliebigen Shop als Eigentümer oder erzwingen Sie das Schließen aktiver Shop-Ansichten.</gray>"
+        - "<yellow>Klicken Sie hier, um die Admin-Steuerelemente für Spieler/Gruppen zu öffnen.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin-Integrationen</gradient>"
       lore:

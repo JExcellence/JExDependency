@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Chỉnh sửa giá trị từ</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Mọi cài đặt có thể chỉnh sửa đều có thể được thay đổi thông qua lời nhắc đe.</gray>"
         - "<yellow>Nhấp để mở điều khiển cấu hình. Tích hợp plugin</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Kiểm soát người chơi & nhóm</gradient>"
+      lore:
+        - "<gray>Đặt cửa hàng và giảm giá tối đa cho mỗi người chơi và mỗi nhóm.</gray>"
+        - "<gray>Mở bất kỳ cửa hàng nào với tư cách chủ sở hữu hoặc buộc đóng các lượt xem cửa hàng đang hoạt động.</gray>"
+        - "<yellow>Nhấp để mở điều khiển quản trị viên/nhóm.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int]</gradient>"
       lore:

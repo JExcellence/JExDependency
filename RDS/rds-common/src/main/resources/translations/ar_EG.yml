@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>تحرير القيم من</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>يمكن تغيير كل إعداد قابل للتحرير من خلال موجه السندان.</gray>"
         - "<yellow>انقر لفتح عناصر التحكم في التكوين.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[رقائق] عناصر تحكم اللاعب والمجموعة</gradient>"
+      lore:
+        - "<gray>قم بتعيين الحد الأقصى من المتاجر والخصومات لكل لاعب ولكل مجموعة.</gray>"
+        - "<gray>افتح أي متجر كمالك أو فرض إغلاق عروض المتجر النشطة.</gray>"
+        - "<yellow>انقر لفتح عناصر تحكم مسؤول اللاعب/المجموعة.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] عمليات تكامل المكونات الإضافية</gradient>"
       lore:

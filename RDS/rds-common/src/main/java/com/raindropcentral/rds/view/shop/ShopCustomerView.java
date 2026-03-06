@@ -28,14 +28,15 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Renders the shop customer inventory view.
@@ -167,6 +168,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull RenderContext render,
             final @NotNull Player player
     ) {
+        final RDS plugin = this.rds.get(render);
         final Shop shop = this.getCurrentShop(render);
 
         if (shop == null) {
@@ -176,7 +178,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
 
         render.layoutSlot(
                 's',
-                this.createSummaryItem(player, shop)
+                this.createSummaryItem(player, shop, plugin)
         );
 
         if (!this.hasVisibleEntries(shop)) {
@@ -247,7 +249,12 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             return;
         }
 
-        final double totalPrice = currentItem.getValue() * desiredAmount;
+        final RDS plugin = this.rds.get(context);
+        final double baseTotalPrice = currentItem.getValue() * desiredAmount;
+        final double discountPercent = plugin.getShopDiscountPercent(context.getPlayer());
+        final double totalPrice = plugin.applyShopDiscount(context.getPlayer(), baseTotalPrice);
+        final double discountAmount = Math.max(0.0D, baseTotalPrice - totalPrice);
+        final double priceEach = desiredAmount < 1 ? 0.0D : totalPrice / desiredAmount;
         final String currencyName = this.getCurrencyDisplayName(currentItem.getCurrencyType());
         final PaymentResult paymentResult = this.tryChargePlayer(
                 context,
@@ -262,6 +269,10 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                             "item_type", currentItem.getItem().getType().name(),
                             "currency_type", currentItem.getCurrencyType(),
                             "currency_name", currencyName,
+                            "discount_percent", this.formatPercent(discountPercent),
+                            "discount_amount", this.formatAmount(discountAmount),
+                            "base_total_price", this.formatAmount(baseTotalPrice),
+                            "price_each", this.formatAmount(priceEach),
                             "total_price", this.formatAmount(totalPrice)
                     ))
                     .build()
@@ -287,7 +298,7 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             items.set(
                     matchingIndex,
                     AdminShopStockSupport.consumeLimitedStock(
-                            this.rds.get(context),
+                            plugin,
                             currentItem,
                             remainingAmount
                     )
@@ -307,11 +318,11 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                         desiredAmount
                 )
         );
-        this.rds.get(context).getShopRepository().update(shop);
+        plugin.getShopRepository().update(shop);
         this.grantPurchasedItems(context.getPlayer(), currentItem, desiredAmount);
         if (adminShop) {
             AdminShopPurchaseCommandSupport.executePurchaseCommands(
-                    this.rds.get(context),
+                    plugin,
                     context.getPlayer(),
                     shop,
                     currentItem,
@@ -335,7 +346,10 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                         "item_type", currentItem.getItem().getType().name(),
                         "currency_type", currentItem.getCurrencyType(),
                         "currency_name", currencyName,
-                        "price_each", this.formatAmount(currentItem.getValue()),
+                        "discount_percent", this.formatPercent(discountPercent),
+                        "discount_amount", this.formatAmount(discountAmount),
+                        "base_total_price", this.formatAmount(baseTotalPrice),
+                        "price_each", this.formatAmount(priceEach),
                         "total_price", this.formatAmount(totalPrice)
                 ))
                 .build()
@@ -515,6 +529,9 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
             final @NotNull ShopItem item,
             final @NotNull ItemStack displayItem
     ) {
+        final double discountPercent = plugin.getShopDiscountPercent(player);
+        final double discountedEach = plugin.applyShopDiscount(player, item.getValue());
+        final double discountEach = Math.max(0.0D, item.getValue() - discountedEach);
         final double totalPrice = item.getValue() * item.getAmount();
         final String loreKey;
         final Map<String, Object> placeholders;
@@ -526,27 +543,36 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                     "currency_type", item.getCurrencyType(),
                     "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
                     "price_each", this.formatAmount(item.getValue()),
-                    "total_price", this.formatAmount(totalPrice)
+                    "total_price", this.formatAmount(totalPrice),
+                    "discount_percent", this.formatPercent(discountPercent),
+                    "discount_each", this.formatAmount(discountEach),
+                    "discounted_price_each", this.formatAmount(discountedEach)
             );
         } else if (AdminShopStockSupport.usesLimitedAdminStock(shop, item)) {
             loreKey = "entry.admin_limited.lore";
-            placeholders = Map.of(
-                    "amount", item.getAmount(),
-                    "stock_limit", item.getAdminStockLimit(),
-                    "item_type", displayItem.getType().name(),
-                    "currency_type", item.getCurrencyType(),
-                    "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
-                    "price_each", this.formatAmount(item.getValue()),
-                    "restock_mode", this.getAdminRestockModeLabel(player, plugin),
-                    "restock_schedule", this.getAdminRestockSchedule(player, item, plugin)
-            );
+            final Map<String, Object> limitedPlaceholders = new HashMap<>();
+            limitedPlaceholders.put("amount", item.getAmount());
+            limitedPlaceholders.put("stock_limit", item.getAdminStockLimit());
+            limitedPlaceholders.put("item_type", displayItem.getType().name());
+            limitedPlaceholders.put("currency_type", item.getCurrencyType());
+            limitedPlaceholders.put("currency_name", this.getCurrencyDisplayName(item.getCurrencyType()));
+            limitedPlaceholders.put("price_each", this.formatAmount(item.getValue()));
+            limitedPlaceholders.put("discount_percent", this.formatPercent(discountPercent));
+            limitedPlaceholders.put("discount_each", this.formatAmount(discountEach));
+            limitedPlaceholders.put("discounted_price_each", this.formatAmount(discountedEach));
+            limitedPlaceholders.put("restock_mode", this.getAdminRestockModeLabel(player, plugin));
+            limitedPlaceholders.put("restock_schedule", this.getAdminRestockSchedule(player, item, plugin));
+            placeholders = limitedPlaceholders;
         } else {
             loreKey = "entry.admin.lore";
             placeholders = Map.of(
                     "item_type", displayItem.getType().name(),
                     "currency_type", item.getCurrencyType(),
                     "currency_name", this.getCurrencyDisplayName(item.getCurrencyType()),
-                    "price_each", this.formatAmount(item.getValue())
+                    "price_each", this.formatAmount(item.getValue()),
+                    "discount_percent", this.formatPercent(discountPercent),
+                    "discount_each", this.formatAmount(discountEach),
+                    "discounted_price_each", this.formatAmount(discountedEach)
             );
         }
         final List<Component> lore = new ArrayList<>(this.i18n(loreKey, player)
@@ -565,7 +591,8 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
 
     private @NotNull ItemStack createSummaryItem(
             final @NotNull Player player,
-            final @NotNull Shop shop
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
     ) {
         final String loreKey = shop.isAdminShop()
                 ? "summary.admin.lore"
@@ -576,7 +603,8 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
                         .withPlaceholders(Map.of(
                                 "owner", this.getOwnerName(shop),
                                 "location", this.formatLocation(shop.getShopLocation()),
-                                "stored_count", shop.getStoredItemCount()
+                                "stored_count", shop.getStoredItemCount(),
+                                "discount_percent", this.formatPercent(plugin.getShopDiscountPercent(player))
                         ))
                         .build()
                         .children())
@@ -655,6 +683,10 @@ public class ShopCustomerView extends APaginatedView<ShopCustomerView.CustomerSh
 
     private @NotNull String formatAmount(final double amount) {
         return String.format(Locale.US, "%.2f", amount);
+    }
+
+    private @NotNull String formatPercent(final double amount) {
+        return String.format(Locale.US, "%.2f%%", amount);
     }
 
     private @NotNull String getAdminRestockModeLabel(

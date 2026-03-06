@@ -64,7 +64,7 @@ com.raindropcentral.rdq
 
 - Java 21+
 - Minecraft Server 1.13 - 1.21.10 (Bukkit/Spigot/Paper/Folia)
-- [RPlatform](../RPlatform) (required dependency)
+- RPlatform is shaded into RDQ jars (no separate server-side installation required)
 - [Vault](https://www.spigotmc.org/resources/vault.34315/) (optional, for economy)
 - [LuckPerms](https://luckperms.net/) (optional, for permissions)
 
@@ -79,9 +79,11 @@ com.raindropcentral.rdq
    - Free: `rdq-free/build/libs/RDQ-Free-6.0.0-all.jar`
    - Premium: `rdq-premium/build/libs/RDQ-Premium-6.0.0-all.jar`
 
-3. Start the server - default configurations will be generated
+3. No separate RPlatform plugin install is required (already shaded in RDQ jars)
 
-4. Configure the plugin in `plugins/RDQ/`
+4. Start the server - default configurations will be generated
+
+5. Configure the plugin in `plugins/RDQ/`
 
 ### Building from Source
 
@@ -228,7 +230,7 @@ requirements:
 
 ## Dependencies
 
-- [RPlatform](../RPlatform) - Cross-version compatibility, logging, scheduling
+- [RPlatform](../RPlatform) - Internal platform layer (shaded into RDQ runtime jars)
 - [JExTranslate](../JExTranslate) - Internationalization (18+ locales)
 - [JExCommand](../JExCommand) - YAML-based command registration
 - [inventory-framework](https://github.com/DevNatan/inventory-framework) - GUI system

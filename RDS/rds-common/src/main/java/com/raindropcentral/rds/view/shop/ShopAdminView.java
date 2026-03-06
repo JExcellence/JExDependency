@@ -56,7 +56,7 @@ public class ShopAdminView extends BaseView {
                 "         ",
                 "    s    ",
                 "  b c u  ",
-                "   i t   ",
+                "  p i t  ",
                 "         ",
                 "         "
         };
@@ -95,6 +95,12 @@ public class ShopAdminView extends BaseView {
         render.layoutSlot('u', this.createCurrencyButton(player))
                 .onClick(clickContext -> clickContext.openForPlayer(
                         AdminCurrencyView.class,
+                        java.util.Map.of("plugin", this.rds.get(clickContext))
+                ));
+
+        render.layoutSlot('p', this.createPlayerAdminButton(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        ShopAdminPlayerView.class,
                         java.util.Map.of("plugin", this.rds.get(clickContext))
                 ));
 
@@ -166,6 +172,16 @@ public class ShopAdminView extends BaseView {
         return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
                 .setName(this.i18n("actions.integrations.name", player).build().component())
                 .setLore(this.i18n("actions.integrations.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createPlayerAdminButton(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.PLAYER_HEAD)
+                .setName(this.i18n("actions.players.name", player).build().component())
+                .setLore(this.i18n("actions.players.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     }

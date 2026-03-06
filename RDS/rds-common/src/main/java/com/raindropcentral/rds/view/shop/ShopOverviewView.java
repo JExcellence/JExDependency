@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -74,8 +75,8 @@ public class ShopOverviewView extends BaseView {
     ) {
         final Shop shop = this.getCurrentShop(render);
         final boolean owner = shop != null && shop.isOwner(player.getUniqueId());
-        final boolean canSupply = shop != null && shop.canSupply(player.getUniqueId());
-        final boolean canManage = shop != null && shop.canManage(player.getUniqueId());
+        final boolean canSupply = shop != null && this.canSupply(render, shop);
+        final boolean canManage = shop != null && this.canManage(render, shop);
         final boolean hasTaxDebt = shop != null && shop.hasTaxDebt();
 
         if (shop == null) {
@@ -98,10 +99,7 @@ public class ShopOverviewView extends BaseView {
 
                     clickContext.openForPlayer(
                             ShopCustomerView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", currentShop.getShopLocation()
-                            )
+                            this.createShopViewData(clickContext, currentShop)
                     );
                 });
         if (owner) {
@@ -167,7 +165,10 @@ public class ShopOverviewView extends BaseView {
                                 return;
                             }
                         } else {
-                            final int maxShops = plugin.getMaximumShops();
+                            final int maxShops = plugin.getMaximumShops(
+                                    currentShop.getOwner(),
+                                    plugin.getDefaultConfig()
+                            );
                             final int activeOwnedShops = ShopOwnershipSupport.countOwnedPlayerShops(plugin, currentShop.getOwner());
                             if (maxShops > 0 && activeOwnedShops >= maxShops) {
                                 this.i18n("feedback.admin_disable_limit_reached", clickContext.getPlayer())
@@ -198,10 +199,7 @@ public class ShopOverviewView extends BaseView {
 
                         clickContext.openForPlayer(
                                 ShopOverviewView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shopLocation", currentShop.getShopLocation()
-                                )
+                                this.createShopViewData(clickContext, currentShop)
                         );
                     });
         }
@@ -214,7 +212,7 @@ public class ShopOverviewView extends BaseView {
                             return;
                         }
 
-                        if (!currentShop.canManage(clickContext.getPlayer().getUniqueId())) {
+                        if (!this.canManage(clickContext, currentShop)) {
                             this.i18n("feedback.not_owner", clickContext.getPlayer())
                                     .includePrefix()
                                     .build()
@@ -224,10 +222,7 @@ public class ShopOverviewView extends BaseView {
 
                         clickContext.openForPlayer(
                                 ShopBankView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shopLocation", currentShop.getShopLocation()
-                                )
+                                this.createShopViewData(clickContext, currentShop)
                         );
                     });
 
@@ -239,7 +234,7 @@ public class ShopOverviewView extends BaseView {
                             return;
                         }
 
-                        if (!currentShop.canManage(clickContext.getPlayer().getUniqueId())) {
+                        if (!this.canManage(clickContext, currentShop)) {
                             this.i18n("feedback.not_owner", clickContext.getPlayer())
                                     .includePrefix()
                                     .build()
@@ -249,10 +244,7 @@ public class ShopOverviewView extends BaseView {
 
                         clickContext.openForPlayer(
                                 ShopLedgerView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shopLocation", currentShop.getShopLocation()
-                                )
+                                this.createShopViewData(clickContext, currentShop)
                         );
                     });
         }
@@ -270,7 +262,7 @@ public class ShopOverviewView extends BaseView {
                         .renderWith(() -> createManageItem(shop, player))
                         .onClick(clickContext -> {
                             final Shop currentShop = this.getCurrentShop(clickContext);
-                            if (currentShop == null || !currentShop.canSupply(clickContext.getPlayer().getUniqueId())) {
+                            if (currentShop == null || !this.canSupply(clickContext, currentShop)) {
                                 this.i18n("feedback.not_owner", clickContext.getPlayer())
                                         .includePrefix()
                                         .build()
@@ -287,14 +279,9 @@ public class ShopOverviewView extends BaseView {
                                 return;
                             }
 
-                            clickContext.openForPlayer(
-                                    ShopInputView.class,
-                                    Map.of(
-                                            "plugin", this.rds.get(clickContext),
-                                            "shop", currentShop,
-                                            "shopLocation", currentShop.getShopLocation()
-                                    )
-                            );
+                            final Map<String, Object> viewData = this.createShopViewData(clickContext, currentShop);
+                            viewData.put("shop", currentShop);
+                            clickContext.openForPlayer(ShopInputView.class, viewData);
                         });
             }
         }
@@ -311,24 +298,32 @@ public class ShopOverviewView extends BaseView {
             } else {
                 render.slot(7)
                         .renderWith(() -> createEditItem(shop, player))
-                        .onClick(clickContext -> clickContext.openForPlayer(
-                                ShopEditView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shopLocation", shop.getShopLocation()
-                                )
-                        ));
+                        .onClick(clickContext -> {
+                            final Shop currentShop = this.getCurrentShop(clickContext);
+                            if (currentShop == null) {
+                                return;
+                            }
+
+                            clickContext.openForPlayer(
+                                    ShopEditView.class,
+                                    this.createShopViewData(clickContext, currentShop)
+                            );
+                        });
             }
 
             render.slot(8)
                     .renderWith(() -> createStorageItem(shop, player))
-                    .onClick(clickContext -> clickContext.openForPlayer(
-                            ShopStorageView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", shop.getShopLocation()
-                            )
-                    ));
+                    .onClick(clickContext -> {
+                        final Shop currentShop = this.getCurrentShop(clickContext);
+                        if (currentShop == null) {
+                            return;
+                        }
+
+                        clickContext.openForPlayer(
+                                ShopStorageView.class,
+                                this.createShopViewData(clickContext, currentShop)
+                        );
+                    });
             if (hasTaxDebt) {
                 render.slot(PAY_TAXES_SLOT)
                         .renderWith(() -> this.createPayTaxesItem(shop, player, this.rds.get(render)))
@@ -666,7 +661,7 @@ public class ShopOverviewView extends BaseView {
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -727,10 +722,7 @@ public class ShopOverviewView extends BaseView {
 
         clickContext.openForPlayer(
                 ShopOverviewView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", shop.getShopLocation()
-                )
+                this.createShopViewData(clickContext, shop)
         );
     }
 
@@ -778,5 +770,32 @@ public class ShopOverviewView extends BaseView {
         }
 
         return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private boolean canSupply(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canSupply(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createShopViewData(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", shop.getShopLocation());
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
     }
 }

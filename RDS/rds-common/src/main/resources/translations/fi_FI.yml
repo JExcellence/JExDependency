@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Muokkaa arvoja kohteesta</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Jokaista muokattavaa asetusta voidaan muuttaa alasinkehotteen avulla.</gray>"
         - "<yellow>Napsauta avataksesi konfigurointiohjaimet.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Pelaaja- ja ryhmäohjaimet</gradient>"
+      lore:
+        - "<gray>Aseta pelaaja- ja ryhmäkohtaiset maksimikaupat ja alennukset.</gray>"
+        - "<gray>Avaa mikä tahansa kauppa omistajana tai pakota sulkemaan aktiiviset myymälänäkymät.</gray>"
+        - "<yellow>Napsauta avataksesi soittimen/ryhmän järjestelmänvalvojan ohjaimet.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
       lore:

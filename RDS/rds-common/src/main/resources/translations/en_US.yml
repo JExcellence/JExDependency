@@ -328,6 +328,12 @@ shop_admin_ui:
         - "<gray>Edit values from</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Every editable setting can be changed through an anvil prompt.</gray>"
         - "<yellow>Click to open config controls.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Player & Group Controls</gradient>"
+      lore:
+        - "<gray>Set per-player and per-group max shops and discounts.</gray>"
+        - "<gray>Open any shop as owner or force close active shop views.</gray>"
+        - "<yellow>Click to open player/group admin controls.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
       lore:
@@ -365,6 +371,242 @@ shop_admin_ui:
         - "<gray>You do not have permission to use this admin panel.</gray>"
     tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Triggered an immediate shop tax collection cycle.</gray>"
     tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Shop tax scheduler is not available right now.</gray>"
+
+# Player/group admin control landing view.
+shop_admin_player_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Ply] Player & Group Controls</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Player/Group Admin Toolkit</white>"
+    lore:
+      - "<gray>Edit max shops and discount overrides for players and groups.</gray>"
+      - "<gray>Open any shop as owner or force-close active views.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    player_overrides:
+      name: "<gradient:#22c55e:#86efac>[P] Player Overrides</gradient>"
+      lore:
+        - "<gray>Browse online players and configured override targets.</gray>"
+        - "<gray>Edit per-player max shops and discount values.</gray>"
+        - "<yellow>Click to open player overrides.</yellow>"
+    group_overrides:
+      name: "<gradient:#38bdf8:#60a5fa>[G] Group Overrides</gradient>"
+      lore:
+        - "<gray>Select a group id and set override values.</gray>"
+        - "<gray>Useful for permission-based rank tiers.</gray>"
+        - "<yellow>Click to open group overrides.</yellow>"
+    open_as_owner:
+      name: "<gradient:#f59e0b:#fbbf24>[O] Open Shop As Owner</gradient>"
+      lore:
+        - "<gray>Open any tracked shop with owner-level controls.</gray>"
+        - "<gray>Ideal for moderation and support workflows.</gray>"
+        - "<yellow>Click to choose a shop.</yellow>"
+    force_close_shop:
+      name: "<gradient:#ef4444:#f87171>[X] Force Close Shop</gradient>"
+      lore:
+        - "<gray>Immediately closes viewers on one selected shop.</gray>"
+        - "<gray>Then removes the shop from storage.</gray>"
+        - "<yellow>Click to choose a shop.</yellow>"
+    force_close_all_views:
+      name: "<gradient:#ef4444:#f97316>[!] Force Close All RDS Views</gradient>"
+      lore:
+        - "<gray>Closes all currently open RDS shop menus.</gray>"
+        - "<gray>Useful after configuration or emergency actions.</gray>"
+        - "<yellow>Click to force close all RDS views.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this menu.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to use player/group admin controls.</gray>"
+    force_close_all_views: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Force-closed <white>{closed_views}</white> open RDS shop view(s).</gray>"
+
+# Player selector for player-specific override editing.
+shop_admin_player_select_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Select Player Override Target</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Player Override Targets</white>"
+    lore:
+      - "<gray>Tracked players:</gray> <white>{tracked_players}</white>"
+      - "<gray>Configured overrides:</gray> <white>{configured_overrides}</white>"
+      - "<yellow>Click a player below to edit overrides.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[P]</gradient> <white>{player_name}</white> <gray>{status}</gray>"
+    lore:
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Override max shops:</gray> <white>{override_max_shops}</white>"
+      - "<gray>Effective max shops:</gray> <white>{effective_max_shops}</white>"
+      - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+      - "<gray>Effective discount:</gray> <white>{effective_discount}</white>"
+      - "<yellow>Click to edit this player override profile.</yellow>"
+    status:
+      online: "<gradient:#22c55e:#86efac>[Online]</gradient>"
+      offline: "<gradient:#6b7280:#9ca3af>[Offline]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>No Players Found</white>"
+      lore:
+        - "<gray>No online players or stored player overrides were found.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to browse player overrides.</gray>"
+
+# Player-specific override editor.
+shop_admin_player_edit_ui:
+  title: "<gradient:#22c55e:#86efac>[P] Edit {player_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Player Override Summary</white>"
+    lore:
+      - "<gray>Player:</gray> <white>{player_name}</white>"
+      - "<gray>UUID:</gray> <white>{player_uuid}</white>"
+      - "<gray>Override max shops:</gray> <white>{override_max_shops}</white>"
+      - "<gray>Effective max shops:</gray> <white>{effective_max_shops}</white>"
+      - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+      - "<gray>Effective discount:</gray> <white>{effective_discount}</white>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  actions:
+    maximum_shops:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Maximum Shops</gradient>"
+      lore:
+        - "<gray>Override max shops:</gray> <white>{override_max_shops}</white>"
+        - "<gray>Effective max shops:</gray> <white>{effective_max_shops}</white>"
+        - "<yellow>Click to edit max shops.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Purchase Discount</gradient>"
+      lore:
+        - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+        - "<gray>Effective discount:</gray> <white>{effective_discount}</white>"
+        - "<yellow>Click to edit discount percent.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Clear Player Overrides</gradient>"
+      lore:
+        - "<gray>Removes all max-shops and discount overrides.</gray>"
+        - "<yellow>Click to clear this player's overrides.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to edit player overrides.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to edit player overrides.</gray>"
+    player_missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Player Target Missing</white>"
+      lore:
+        - "<gray>No player target was provided for this editor.</gray>"
+    player_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No player target is selected.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Player/group settings service is unavailable right now.</gray>"
+    player_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Cleared all overrides for <white>{player_name}</white> <gray>(</gray><white>{player_uuid}</white><gray>).</gray>"
+
+# Group-specific override editor.
+shop_admin_group_edit_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[G] Edit Group {group_name}</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Group Override Summary</white>"
+    lore:
+      - "<gray>Selected group:</gray> <white>{group_name}</white>"
+      - "<gray>Detected LuckPerms groups:</gray> <white>{group_count}</white>"
+      - "<gray>Override max shops:</gray> <white>{override_max_shops}</white>"
+      - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+    none: "<gradient:#6b7280:#9ca3af>[None]</gradient>"
+    inherit: "<gradient:#6b7280:#9ca3af>[Inherit]</gradient>"
+    unlimited: "<gradient:#22c55e:#86efac>[Unlimited]</gradient>"
+  actions:
+    select_group:
+      name: "<gradient:#38bdf8:#60a5fa>[Tag] Select Group</gradient>"
+      lore:
+        - "<gray>Current group:</gray> <white>{group_name}</white>"
+        - "<gray>Detected LuckPerms groups:</gray> <white>{group_count}</white>"
+        - "<yellow>Left click for next group, right click for previous.</yellow>"
+    maximum_shops:
+      name: "<gradient:#38bdf8:#60a5fa>[Max] Group Maximum Shops</gradient>"
+      lore:
+        - "<gray>Override max shops:</gray> <white>{override_max_shops}</white>"
+        - "<yellow>Click to edit max shops for this group.</yellow>"
+    discount:
+      name: "<gradient:#22c55e:#86efac>[%] Group Discount</gradient>"
+      lore:
+        - "<gray>Override discount:</gray> <white>{override_discount}</white>"
+        - "<yellow>Click to edit discount for this group.</yellow>"
+    clear:
+      name: "<gradient:#ef4444:#f87171>[X] Clear Group Overrides</gradient>"
+      lore:
+        - "<gray>Removes max-shops and discount overrides for this group.</gray>"
+        - "<yellow>Click to clear this group override.</yellow>"
+  feedback:
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to edit group overrides.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to edit group overrides.</gray>"
+    group_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Select a group first before editing values.</gray>"
+    group_unknown: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Group <white>{group_name}</white> is not a detected LuckPerms group.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Selected LuckPerms group <white>{group_name}</white> <gray>from <white>{group_count}</white> detected group(s).</gray>"
+    luckperms_groups_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No LuckPerms groups were detected from online players right now.</gray>"
+    settings_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Player/group settings service is unavailable right now.</gray>"
+    group_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Cleared overrides for group <white>{group_name}</white><gray>.</gray>"
+
+# Shop selector for owner-override and force-close actions.
+shop_admin_shop_control_ui:
+  title: "<gradient:#f59e0b:#f97316>[Shop] {action_mode}</gradient>"
+  mode:
+    open_as_owner: "<gradient:#22c55e:#86efac>Open As Owner</gradient>"
+    force_close: "<gradient:#ef4444:#f87171>Force Close Shop</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Shop Control Browser</white>"
+    lore:
+      - "<gray>Action mode:</gray> <white>{action_mode}</white>"
+      - "<gray>Tracked shops:</gray> <white>{shop_count}</white>"
+      - "<yellow>Click any shop below to execute the selected action.</yellow>"
+  entry:
+    name: "<gradient:#38bdf8:#60a5fa>[Shop]</gradient> <white>{owner}</white> <gray>@ {location}</gray>"
+    lore:
+      - "<gray>Owner:</gray> <white>{owner}</white>"
+      - "<gray>Location:</gray> <white>{location}</white>"
+      - "<gray>Type:</gray> <white>{shop_type}</white>"
+      - "<gray>Stored items:</gray> <white>{stored_count}</white>"
+      - "<gray>Bank currencies:</gray> <white>{bank_count}</white>"
+      - "<gray>Action:</gray> <white>{action}</white>"
+      - "<yellow>Click to continue.</yellow>"
+    action:
+      open_owner: "<gradient:#22c55e:#86efac>[Open As Owner]</gradient>"
+      force_close: "<gradient:#ef4444:#f87171>[Force Close]</gradient>"
+    type:
+      admin: "<gradient:#f59e0b:#fbbf24>[Admin Shop]</gradient>"
+      player: "<gradient:#38bdf8:#60a5fa>[Player Shop]</gradient>"
+  feedback:
+    empty:
+      name: "<gradient:#6b7280:#9ca3af>[~]</gradient> <white>No Shops Found</white>"
+      lore:
+        - "<gray>No shop records are currently available.</gray>"
+    access_denied:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this action.</gray>"
+    access_denied_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to control shops from this menu.</gray>"
+    shop_missing_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>That shop no longer exists at <white>{location}</white><gray>.</gray>"
+    force_closed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Force-closed <white>{owner}</white>'s shop at <white>{location}</white><gray>. Closed views:</gray> <white>{closed_views}</white><gray>.</gray>"
+    force_closed_owner: "<gradient:#f59e0b:#f97316>[!]</gradient> <gray>Your shop at <white>{location}</white> <gray>was force-closed by <white>{admin}</white><gray>.</gray>"
+
+# Shared anvil editor for admin override values.
+shop_admin_override_anvil_ui:
+  title: "<gradient:#22c55e:#14b8a6>[Edit] {edit_mode}</gradient>"
+  input:
+    lore:
+      - "<gray>Edit mode:</gray> <white>{edit_mode}</white>"
+      - "<gray>Player target:</gray> <white>{target_name}</white>"
+      - "<gray>Group target:</gray> <white>{group_name}</white>"
+      - "<gray>Current value:</gray> <white>{current_value}</white>"
+      - "<yellow>Type a new value, then click result to confirm.</yellow>"
+  error:
+    invalid_value: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Invalid value <white>{input}</white> for edit mode <white>{edit_mode}</white><gray>.</gray>"
+  feedback:
+    player_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s max shops override to <white>{value}</white><gray>.</gray>"
+    player_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set <white>{player_name}</white>'s discount override to <white>{value}</white><gray>.</gray>"
+    group_selected: "<gradient:#38bdf8:#60a5fa>[=]</gradient> <gray>Selected group <white>{group_name}</white><gray>.</gray>"
+    group_max_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set group <white>{group_name}</white> max shops override to <white>{value}</white><gray>.</gray>"
+    group_discount_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Set group <white>{group_name}</white> discount override to <white>{value}</white><gray>.</gray>"
 
 # Plugin integration landing view for jobs, skills, and PlaceholderAPI tools.
 plugin_integration_management_ui:
@@ -1231,6 +1473,7 @@ shop_customer_ui:
         - "<gray>Owner:</gray> <white>{owner}</white>"
         - "<gray>Location:</gray> <white>{location}</white>"
         - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
         - "<gray>Shop type:</gray> <white>Player Shop</white>"
         - "<gray>Inventory:</gray> <white>Finite</white>"
         - "<yellow>Left click an item to buy one.</yellow>"
@@ -1240,6 +1483,7 @@ shop_customer_ui:
         - "<gray>Owner:</gray> <white>{owner}</white>"
         - "<gray>Location:</gray> <white>{location}</white>"
         - "<gray>Available entries:</gray> <white>{stored_count}</white>"
+        - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
         - "<gray>Shop type:</gray> <white>Admin Shop</white>"
         - "<gray>Inventory:</gray> <white>Infinite</white>"
         - "<yellow>Left click an item to buy one.</yellow>"
@@ -1250,6 +1494,8 @@ shop_customer_ui:
         - "<gray>Stock:</gray> <white>{amount}</white>"
         - "<gray>Item type:</gray> <white>{item_type}</white>"
         - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
+        - "<gray>Discounted each:</gray> <white>{discounted_price_each} {currency_name}</white>"
         - "<gray>Total stock value:</gray> <white>{total_price} {currency_name}</white>"
         - "<gray>Currency id:</gray> <white>{currency_type}</white>"
         - "<yellow>Left click to buy one.</yellow>"
@@ -1259,6 +1505,8 @@ shop_customer_ui:
         - "<gray>Inventory:</gray> <white>Infinite</white>"
         - "<gray>Item type:</gray> <white>{item_type}</white>"
         - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
+        - "<gray>Discounted each:</gray> <white>{discounted_price_each} {currency_name}</white>"
         - "<gray>Currency id:</gray> <white>{currency_type}</white>"
         - "<gray>Shop type:</gray> <white>Admin Shop</white>"
         - "<yellow>Left click to buy one.</yellow>"
@@ -1268,6 +1516,8 @@ shop_customer_ui:
         - "<gray>Stock:</gray> <white>{amount}/{stock_limit}</white>"
         - "<gray>Item type:</gray> <white>{item_type}</white>"
         - "<gray>Price each:</gray> <white>{price_each} {currency_name}</white>"
+        - "<gray>Your discount:</gray> <white>{discount_percent}</white>"
+        - "<gray>Discounted each:</gray> <white>{discounted_price_each} {currency_name}</white>"
         - "<gray>Currency id:</gray> <white>{currency_type}</white>"
         - "<gray>Restock mode:</gray> <white>{restock_mode}</white>"
         - "<gray>Restock schedule:</gray> <white>{restock_schedule}</white>"
@@ -1280,12 +1530,12 @@ shop_customer_ui:
       gradual: "1 item every {reset_timer_ticks} ticks"
       full: "Fully restocks at {restock_time} {time_zone}"
   feedback:
-    purchased_player: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining stock: {remaining_amount}.</green>"
-    purchased_admin: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. This admin shop has infinite inventory.</green>"
-    purchased_admin_limited: "<green>Purchased {amount}x {item_type} for {total_price} {currency_name}. Remaining admin stock: {remaining_amount}.</green>"
+    purchased_player: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Purchased <white>{amount}x {item_type}</white> for <white>{total_price} {currency_name}</white><gray>. Saved:</gray> <white>{discount_amount}</white> <gray>({discount_percent}). Remaining stock: <white>{remaining_amount}</white><gray>.</gray>"
+    purchased_admin: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Purchased <white>{amount}x {item_type}</white> for <white>{total_price} {currency_name}</white><gray>. Saved:</gray> <white>{discount_amount}</white> <gray>({discount_percent}). This admin shop has infinite inventory.</gray>"
+    purchased_admin_limited: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Purchased <white>{amount}x {item_type}</white> for <white>{total_price} {currency_name}</white><gray>. Saved:</gray> <white>{discount_amount}</white> <gray>({discount_percent}). Remaining admin stock: <white>{remaining_amount}</white><gray>.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{item_type} is currently not available for purchase.</gray>"
     insufficient_stock: "<red>This shop only has {available_amount}x {item_type} available.</red>"
-    insufficient_funds: "<red>You need {total_price} {currency_name} to buy {amount}x {item_type}.</red>"
+    insufficient_funds: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You need <white>{total_price} {currency_name}</white> to buy <white>{amount}x {item_type}</white><gray>. Base:</gray> <white>{base_total_price}</white><gray>, discount:</gray> <white>{discount_percent}</white><gray>.</gray>"
     currency_unavailable: "<red>Currency {currency_name} is not available right now.</red>"
     invalid_amount: "<red>Enter a valid purchase amount.</red>"
     item_missing: "<red>That shop item is no longer available.</red>"

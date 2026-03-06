@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Editar valores de</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Cada configuração editável pode ser alterada através de um prompt de bigorna.</gray>"
         - "<yellow>Clique para abrir os controles de configuração.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Controles de jogadores e grupos</gradient>"
+      lore:
+        - "<gray>Defina lojas e descontos máximos por jogador e por grupo.</gray>"
+        - "<gray>Abra qualquer loja como proprietário ou force o fechamento das visualizações ativas da loja.</gray>"
+        - "<yellow>Clique para abrir os controles de administração do jogador/grupo.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Integrações de plug-ins</gradient>"
       lore:

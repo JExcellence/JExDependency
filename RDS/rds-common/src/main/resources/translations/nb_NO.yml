@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Rediger verdier fra</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Hver redigerbare innstilling kan endres gjennom en ambolt-melding.</gray>"
         - "<yellow>Klikk for å åpne konfigurasjonskontroller.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Spiller- og gruppekontroller</gradient>"
+      lore:
+        - "<gray>Angi maks. butikker og rabatter per spiller og per gruppe.</gray>"
+        - "<gray>Åpne hvilken som helst butikk som eier eller tving til å lukke aktive butikkvisninger.</gray>"
+        - "<yellow>Klikk for å åpne spiller-/gruppeadministratorkontroller.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin-integrasjoner</gradient>"
       lore:

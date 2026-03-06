@@ -1,361 +1,241 @@
 # RPlatform
 
-**Modern Spigot/Paper/Folia Plugin Development Framework**
+RPlatform is the shared platform/runtime module used by RaindropCentral plugins.
+It provides cross-platform abstractions, requirement/reward systems, integrations, UI helpers, serialization, and runtime utilities for Spigot/Paper/Folia environments.
 
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/raindropcentral/rplatform)
-[![Java](https://img.shields.io/badge/java-21+-orange.svg)](https://adoptium.net/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+This README was refreshed from source on **March 6, 2026** to correct stale references and document current behavior.
 
----
+## Module Facts (Verified)
 
-## Overview
+- Module: `:RPlatform`
+- Group: `com.raindropcentral.platform`
+- Version: `2.0.0`
+- Java target: `21`
+- Core server API dependency: Paper `1.21.10-R0.1-SNAPSHOT` (compileOnly)
+- Platform detection order: `FOLIA -> PAPER -> SPIGOT`
+- Class inventory snapshot: `208` Java types (excluding `package-info.java`) across `62` packages
 
-RPlatform is a comprehensive utility framework designed for modern Minecraft plugin development. It provides essential tools and abstractions for building robust, performant plugins across Spigot, Paper, and Folia platforms.
+## What Exists In This Module
 
-### Key Features
+- Runtime orchestrator: `RPlatform`
+- Platform abstraction: `PlatformAPI`, `PlatformAPIFactory`, `PlatformType`, impls for Spigot/Paper/Folia
+- Scheduler abstraction: `ISchedulerAdapter` with Bukkit and Folia adapters
+- Requirements system: types, registry/provider model, parser/factory/builder, lifecycle/events/metrics/validators, plugin integrations
+- Rewards system: types, registry/provider model, parser/factory/builder, lifecycle/events/metrics/validators
+- Logging system: centralized plugin logging with formatting, filtered console output, rotating files, recursion safeguards
+- Localization: `TranslationManager` wrapper over JExTranslate (`R18nManager`)
+- Integrations: skill/job/protection/geyser/luckperms/economy bridges
+- UI abstractions: inventory-framework based views plus custom anvil input feature/NMS bridge
+- Utilities: item/head builders, serializers/converters, custom head catalog support, workload executor
 
-- ⚡ **Workload Management** - Time-budgeted task execution preventing server lag
-- 🕒 **Scheduler Delegation** - Folia-aware scheduler adapter selection through `ISchedulerAdapter`
-- 🔌 **Placeholder Integration** - Simplified PlaceholderAPI expansion creation backed by `PlaceholderManager`
-- 🎭 **Custom Head System** - Type-safe custom player head management
-- 📊 **Statistics Framework** - Comprehensive player statistics tracking
-- 📈 **Metrics Integration** - bStats integration with custom charts
-- 🧭 **Premium Detection** - Classpath resource probes via `detectPremiumVersion(...)`
-- 🗄️ **Database Safeguards** - Hibernate property bootstrapping with automatic resource copying
-- 🔄 **Async-First Design** - CompletableFuture-based operations
-- 🛡️ **Type Safety** - Extensive @NotNull/@Nullable annotations
-- ☕ **Modern Java** - Java 21+ features and best practices
+## Lifecycle And Usage
 
-### Security & logging
+`RPlatform` construction selects platform/scheduler adapters immediately, but most systems are prepared in `initialize()` asynchronously.
 
-- `CentralLogger` centralizes all plugin output, writing to rotating log files while optionally mirroring to console. Call `CentralLogger.initialize(plugin)` during `onLoad` to enable the managed handlers. ([CentralLogger.java#L34-L347](src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java#L34-L347))
-- `PlatformLogFormatter` renders structured JSON lines that include timestamp, plugin name, thread, and sanitized context, enabling ingestion into modern observability pipelines. ([PlatformLogFormatter.java#L17-L166](src/main/java/com/raindropcentral/rplatform/logging/PlatformLogFormatter.java#L17-L166))
-- Logging APIs expose console toggles, flush hooks, and shutdown routines; always invoke `CentralLogger.shutdown()` during plugin disable to avoid truncated records. ([CentralLogger.java#L351-L458](src/main/java/com/raindropcentral/rplatform/logging/CentralLogger.java#L351-L458))
+Initialization flow:
 
----
+1. Register built-in requirement types (`BuiltInRequirementProvider.initialize()`).
+2. Attempt database resource bootstrap (`database/hibernate.properties`) and create `EntityManagerFactory`.
+3. Build `TranslationManager` and `CommandUpdater`.
+4. Mark platform initialized.
+5. Initialize translations (`translationManager.initialize()`).
 
-## Quick Start
-
-### Installation
-
-**Gradle (Kotlin DSL)**
-```kotlin
-repositories {
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-}
-
-dependencies {
-    implementation("com.raindropcentral:rplatform:2.0.0")
-}
-```
-
-### Basic Usage
+Recommended usage:
 
 ```java
-public class MyPlugin extends JavaPlugin {
+public final class MyPlugin extends JavaPlugin {
 
     private RPlatform platform;
 
     @Override
     public void onEnable() {
         platform = new RPlatform(this);
-
-        platform.initialize()
-            .thenRun(() -> {
-                platform.initializeMetrics(12345);
-                platform.initializePlaceholders("myplugin");
-                getLogger().info("Plugin initialized!");
-            });
+        platform.initialize().thenRun(() -> {
+            platform.initializeMetrics(12345);
+            platform.initializeGeyser();
+            platform.initializePlaceholders("myplugin");
+        }).exceptionally(ex -> {
+            getLogger().severe("RPlatform init failed: " + ex.getMessage());
+            return null;
+        });
     }
 
     @Override
     public void onDisable() {
-        platform.shutdown();
+        if (platform != null) {
+            if (platform.isInitialized()) {
+                platform.getTranslationManager().shutdown();
+            }
+            platform.shutdown();
+        }
     }
 }
 ```
 
----
+## Requirements System
 
-## Core Components
+Primary packages:
 
-### 1. Workload System
+- `requirement`
+- `requirement.impl`
+- `requirement.config`
+- `requirement.json`
+- `requirement.plugin`
+- `requirement.validation`
+- `requirement.lifecycle`
+- `requirement.event`
+- `requirement.metrics`
+- `requirement.async`
 
-Execute tasks within a strict time budget to prevent server lag:
+Built-in type ids registered by `BuiltInRequirementProvider`:
 
-```java
-WorkloadExecutor executor = new WorkloadExecutor();
+- `ITEM`
+- `CURRENCY`
+- `EXPERIENCE_LEVEL`
+- `PERMISSION`
+- `LOCATION`
+- `PLAYTIME`
+- `COMPOSITE`
+- `CHOICE`
+- `TIME_BASED`
+- `PLUGIN`
 
-for (Chunk chunk : chunks) {
-    executor.submit(() -> processChunk(chunk));
-}
+Plugin requirements (`type: PLUGIN`) are routed through `PluginIntegrationRegistry` and support explicit integration ids plus category auto-detection (`SKILLS`, `JOBS`).
 
-Bukkit.getScheduler().runTaskTimer(plugin, executor, 0L, 1L);
+## Rewards System
+
+Primary packages:
+
+- `reward`
+- `reward.impl`
+- `reward.config`
+- `reward.json`
+- `reward.validation`
+- `reward.lifecycle`
+- `reward.event`
+- `reward.metrics`
+- `reward.async`
+
+Reward implementation classes currently present:
+
+- `ITEM`
+- `CURRENCY`
+- `EXPERIENCE`
+- `COMMAND`
+- `COMPOSITE`
+- `CHOICE`
+- `PERMISSION`
+- `SOUND`
+- `PARTICLE`
+- `TELEPORT`
+- `VANISHING_CHEST`
+
+Important wiring detail:
+
+- `RewardFactory` default converters currently cover: `ITEM`, `CURRENCY`, `EXPERIENCE`, `COMMAND`, `COMPOSITE`, `CHOICE`, `PERMISSION`.
+- If you need additional reward config parsing paths, register converters/adapters explicitly.
+
+## Integration Matrix
+
+Built-in bridge families:
+
+- Skills: EcoSkills, AuraSkills, mcMMO
+- Jobs: EcoJobs, JobsReborn
+- Protection: Towny, RDT, HuskTowns
+- Bedrock detection: Floodgate/Geyser via `GeyserService`
+- Economy bridge: JExEconomy reflection bridge
+- Permission bridge utilities: LuckPerms service helpers
+
+Related config/examples:
+
+- `src/main/resources/plugin-integrations.yml`
+- `src/main/resources/examples/plugin-requirement-examples.yml`
+
+## Logging
+
+The active logging classes in this module are:
+
+- `CentralLogger`
+- `PluginLogger`
+- `RLogFormatter`
+- `FilteredConsoleHandler`
+- `RotatingFileHandler`
+- `SafeLoggingPrintStream`
+
+There is no `PlatformLogFormatter` class in this module.
+
+## PlaceholderAPI Notes
+
+Two placeholder abstractions exist:
+
+- `AbstractPlaceholderExpansion` + `PlaceholderRegistry`
+- `PlaceholderManager` (reflection-based manager)
+
+`PlaceholderManager` currently reflects `com.raindropcentral.rplatform.placeholder.PAPIHook`.
+That class is not present in this module, so if you rely on `initializePlaceholders(...)`, provide the expected hook class in your runtime artifact or adapt the integration path.
+
+## Package Map (Developer + AI Friendly)
+
+Use this as the navigation index when changing behavior:
+
+- `api`: platform abstractions and implementations
+- `scheduler`: sync/async execution adapters
+- `service`: service discovery/registration with retries
+- `localization`: translation bootstrap wrapper
+- `logging`: centralized plugin logging stack
+- `metrics`: bStats wrapper and manager
+- `placeholder`: PlaceholderAPI abstractions and registration
+- `requirement`: requirement domain, parsing, lifecycle, events, validation
+- `reward`: reward domain, parsing, lifecycle, events, validation
+- `integration.geyser`: Floodgate/Geyser detection and adapter
+- `skill`, `job`, `protection`: optional plugin bridge layers
+- `view` and `view.anvil`: inventory-framework views and custom anvil feature
+- `utility`: builders, heads, small helpers
+- `serializer`, `json`, `database.converter`: serialization and persistence conversion helpers
+- `workload`: per-tick budgeted task execution
+- `type`: statistics enum (`EStatisticType`)
+- `version`: runtime environment detection
+
+To regenerate the class inventory quickly:
+
+```powershell
+Get-ChildItem src/main/java/com/raindropcentral/rplatform -Recurse -Filter *.java |
+  Where-Object { $_.Name -ne 'package-info.java' } |
+  Group-Object DirectoryName
 ```
 
-### 2. Placeholder System
+## Known Caveats
 
-Create PlaceholderAPI expansions with ease:
+- `RPlatform.initializeDatabaseResources()` expects `database/hibernate.properties` in plugin resources; this module does not currently include that resource under `src/main/resources`.
+- `RPlatform.shutdown()` handles placeholders/platform API/logger, but does not call `TranslationManager.shutdown()` automatically.
+- README previously referenced `PLATFORM_GUIDE.md` and `PlatformLogFormatter`; those references were stale and removed.
 
-```java
-public class MyExpansion extends AbstractPlaceholderExpansion {
+## Build And Verification
 
-    @Override
-    protected List<String> definePlaceholders() {
-        return List.of("balance", "level", "rank");
-    }
-
-    @Override
-    protected String resolvePlaceholder(Player player, String params) {
-        return switch (params) {
-            case "balance" -> getBalance(player);
-            case "level" -> getLevel(player);
-            case "rank" -> getRank(player);
-            default -> null;
-        };
-    }
-}
-```
-
-> ℹ️ Call `platform.initializePlaceholders("identifier")` inside the `initialize()` completion callback so the asynchronous bootstrap has populated translation, command, and database services before the PlaceholderAPI bridge registers. The `PlaceholderManager` will validate PlaceholderAPI availability and ignore duplicate registrations.
-
-### 3. Statistics System
-
-Type-safe player statistics tracking:
-
-```java
-// Get statistic by key
-StatisticType stat = StatisticType.getByKey("total_kills");
-
-// Filter by category
-List<StatisticType> gameplayStats = StatisticType.getByCategory(
-    StatisticType.Category.GAMEPLAY
-);
-
-// Get default values
-Map<String, Object> defaults = StatisticType.getDefaultValuesForCategory(
-    StatisticType.Category.CORE
-);
-```
-
-### 4. Custom Heads
-
-Manage custom player heads with type safety:
-
-```java
-public class MyHead extends CustomHead {
-
-    public MyHead() {
-        super(
-            "diamond_sword",
-            "8d7f3e3c-3f4a-4c5d-9e2f-1a2b3c4d5e6f",
-            "eyJ0ZXh0dXJlcyI6...",
-            HeadCategory.INVENTORY
-        );
-    }
-
-    @Override
-    public ItemStack createItem() {
-        return UnifiedBuilderFactory.head()
-            .setCustomTexture(getTextureUuid(), getTextureValue())
-            .setName(Component.text("Diamond Sword Head"))
-            .build();
-    }
-}
-```
-
-### 5. Metrics Integration
-
-bStats integration with custom charts:
-
-```java
-platform.initialize()
-    .thenRun(() -> {
-        platform.initializeMetrics(12345);
-
-        BStatsMetrics metrics = new BStatsMetrics(
-                this,
-                12345,
-                platform.getPlatformType() == PlatformType.FOLIA
-        );
-
-        metrics.addCustomChart(new BStatsMetrics.SimplePie("server_type", () -> {
-            return platform.getPlatformType().name();
-        }));
-
-        metrics.addCustomChart(new BStatsMetrics.AdvancedPie("player_ranks", () -> {
-            Map<String, Integer> ranks = new HashMap<>();
-            // Populate ranks
-            return ranks;
-        }));
-    });
-```
-
-> ✅ The metrics manager should be initialized only after `initialize()` completes; the guard in `initializeMetrics(int)` prevents duplicate registrations and ignores non-positive service identifiers.
-> 💡 Import `com.raindropcentral.rplatform.api.PlatformType` when using the enum comparison shown above.
-
-### 6. Localization Glue
-
-JExTranslate is configured by `com.raindropcentral.rplatform.localization.TranslationManager`,
-which RPlatform initializes asynchronously. The manager wires together the YAML repository,
-MiniMessage formatter, and auto-detecting locale resolver. Locale selection follows:
-
-1. Explicit overrides passed to `TranslationService.create(key, player, locale)` or `createFresh(...)`
-2. The player's cached locale from the active resolver
-3. The service default configured during bootstrap (defaults to `Locale.ENGLISH`)
-
-Locale caches are cleared whenever `TranslationManager.reload()` completes or when
-`setPlayerLocale(...)` is called. If you hot-swap repository files, formatter implementations,
-or resolver strategies, ensure `TranslationService.clearLocaleCache()` is triggered as part of
-your reload routine.
-
-Always route player-facing messages through the fluent `TranslationService` API so that
-MiniMessage formatting, prefixes, and placeholder chaining remain consistent. Translation YAML
-files live under `<plugin data folder>/translations`; the manager copies bundled defaults and
-reloads them on demand.
-
----
-
-## Documentation
-
-For complete documentation, examples, and API reference, see:
-
-📖 **[PLATFORM_GUIDE.md](PLATFORM_GUIDE.md)** - Complete platform guide with detailed examples
-
----
-
-## Project Structure
-
-```
-RPlatform/
-├── src/main/java/com/raindropcentral/rplatform/
-│   ├── api/               # Public-facing platform abstractions
-│   ├── config/            # Configuration and permission descriptors
-│   ├── database/          # Hibernate bootstrap and converters
-│   ├── localization/      # Translation manager and locale support
-│   ├── metrics/           # bStats integration helpers
-│   ├── placeholder/       # PlaceholderAPI expansions and managers
-│   ├── scheduler/         # Adaptive scheduler adapters and implementations
-│   ├── service/           # Service registry and default bindings
-│   ├── translation/       # YAML repository utilities and services
-│   ├── logging/           # Centralized logging utilities
-│   ├── utility/           # Builders, serializers, and shared helpers
-│   ├── view/              # Inventory and anvil view abstractions
-│   ├── workload/          # Workload management system
-│   └── RPlatform.java     # Main platform class
-└── PLATFORM_GUIDE.md      # Complete documentation
-```
-
----
-
-## Requirements
-
-- **Java:** 21 or higher
-- **Server:** Spigot/Paper/Folia 1.21+
-- **Gradle:** 8.0+
-
----
-
-## Building
+From repository root:
 
 ```bash
-# Build project
-./gradlew build
-
-# Publish to local Maven
-./gradlew publishToMavenLocal
-
-# Run tests
-./gradlew test
+./gradlew :RPlatform:build
+./gradlew :RPlatform:javadoc
 ```
 
----
+Windows:
 
-## Best Practices
-
-### 1. Always Use Async for I/O
-
-```java
-platform.getScheduler().runAsync(() -> {
-    // Database operations
-    // File operations
-    // Network requests
-});
+```powershell
+.\gradlew.bat :RPlatform:build
+.\gradlew.bat :RPlatform:javadoc
 ```
 
-### 2. Use Workload System for Heavy Tasks
+## For AI Contributors
 
-```java
-WorkloadExecutor executor = new WorkloadExecutor();
-for (Task task : heavyTasks) {
-    executor.submit(() -> processTask(task));
-}
-```
+When making edits in this module:
 
-### 3. Proper Resource Cleanup
-
-```java
-@Override
-public void onDisable() {
-    if (platform != null) {
-        platform.shutdown();
-    }
-}
-```
-
----
-
-## Migration from Old RPlatform
-
-**Old Code:**
-```java
-RPlatform platform = new RPlatform(plugin);
-platform.onEnable("Starting...");
-```
-
-**New Code:**
-```java
-RPlatform platform = new RPlatform(plugin);
-platform.initialize().thenRun(() -> {
-    platform.getLogger().info("Starting...");
-});
-```
-
----
-
-## Contributing
-
-Contributions are welcome! Please follow these guidelines:
-
-1. Fork the repository
-2. Create a feature branch
-3. Follow existing code style
-4. Add tests for new features
-5. Submit a pull request
-
----
-
-## Support
-
-- **Issues:** [GitHub Issues](https://github.com/raindropcentral/rplatform/issues)
-- **Documentation:** [Platform Guide](PLATFORM_GUIDE.md)
-- **Discord:** [RaindropCentral Discord](https://discord.gg/raindropcentral)
-
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Credits
-
-**Author:** JExcellence
-**Organization:** RaindropCentral
-**Version:** 2.0.0
-
----
-
-**© 2025 RaindropCentral - All Rights Reserved**
+1. Start from `RPlatform` for lifecycle impact.
+2. Check package-level docs (`package-info.java`) before changing public behavior.
+3. For new requirement/reward types, update all relevant wiring:
+   - implementation class
+   - type/provider registration
+   - parser/factory conversion path
+   - validation/lifecycle/event hooks as needed
+4. Do not assume reflective integrations are available at runtime; preserve graceful fallback behavior.
+5. Verify docs and code agree after edits.

@@ -133,8 +133,9 @@ public class ShopStoreView extends BaseView {
         final @NotNull ConfigSection config,
         final int ownedShops
     ) {
-        final boolean limited = plugin.hasShopLimit(config);
-        final String maxShopsDisplay = limited ? Integer.toString(plugin.getMaximumShops(config)) : "No limit";
+        final int maxShops = plugin.getMaximumShops(player, config);
+        final boolean limited = maxShops > 0;
+        final String maxShopsDisplay = limited ? Integer.toString(maxShops) : "No limit";
 
         return UnifiedBuilderFactory.item(limited ? Material.BEACON : Material.LIME_STAINED_GLASS_PANE)
             .setName(this.i18n("max_shops.name", player).build().component())

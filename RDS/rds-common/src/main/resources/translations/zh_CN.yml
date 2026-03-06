@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>编辑</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>中的值 每个可编辑设置都可以通过砧提示进行更改。</gray>"
         - "<yellow>单击可打开配置控件。</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] 玩家和群组控制</gradient>"
+      lore:
+        - "<gray>设置每个玩家和每个群组的最大商店和折扣。</gray>"
+        - "<gray>以所有者身份打开任何商店或强制关闭活动商店视图。</gray>"
+        - "<yellow>单击可打开玩家/组管理控件。</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] 插件集成</gradient>"
       lore:

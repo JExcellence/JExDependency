@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Upravit hodnoty ze</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Každé upravitelné nastavení lze změnit pomocí výzvy kovadliny.</gray>"
         - "<yellow>Klepnutím otevřete ovládací prvky konfigurace.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Ovládání hráče a skupiny</gradient>"
+      lore:
+        - "<gray>Nastavení maximálních obchodů a slev pro hráče a skupinu.</gray>"
+        - "<gray>Otevřete jakýkoli obchod jako vlastník nebo vynucte uzavření aktivních zobrazení obchodu.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky správce přehrávače/skupiny.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
       lore:

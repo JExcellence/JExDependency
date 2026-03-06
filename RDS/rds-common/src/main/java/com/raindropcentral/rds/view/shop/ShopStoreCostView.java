@@ -60,7 +60,8 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
         final int ownedShops = this.getOrCreatePlayer(openContext).getShops();
         final int purchaseNumber = ShopStoreSupport.getNextPurchaseNumber(ownedShops);
         final ConfigSection config = plugin.getDefaultConfig();
-        final String maxShops = plugin.hasShopLimit(config) ? Integer.toString(plugin.getMaximumShops(config)) : "No limit";
+        final int maxShopsValue = plugin.getMaximumShops(openContext.getPlayer(), config);
+        final String maxShops = maxShopsValue > 0 ? Integer.toString(maxShopsValue) : "No limit";
         return Map.of(
             "purchase_number", purchaseNumber,
             "owned_shops", ownedShops,
@@ -155,8 +156,8 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
         final Player player = clickContext.getPlayer();
         final RDS plugin = this.rds.get(clickContext);
         final int ownedShops = playerData.getShops();
-        final int maxShops = plugin.getMaximumShops(config);
-        final String maxShopsDisplay = plugin.hasShopLimit(config) ? Integer.toString(maxShops) : "No limit";
+        final int maxShops = plugin.getMaximumShops(player, config);
+        final String maxShopsDisplay = maxShops > 0 ? Integer.toString(maxShops) : "No limit";
         final int purchaseNumber = ShopStoreSupport.getNextPurchaseNumber(ownedShops);
 
         if (ShopStoreSupport.hasReachedShopLimit(ownedShops, maxShops)) {
@@ -235,7 +236,8 @@ public class ShopStoreCostView extends APaginatedView<ShopStorePricingSupport.Re
         final ShopStorePricingSupport.RequirementAvailability availability =
             ShopStorePricingSupport.resolveAvailability(player, requirements, playerData);
         final String availabilityPlaceholder = this.resolveAvailabilityPlaceholder(player, availability);
-        final String maxShops = plugin.hasShopLimit(config) ? Integer.toString(plugin.getMaximumShops(config)) : "No limit";
+        final int maxShopsValue = plugin.getMaximumShops(player, config);
+        final String maxShops = maxShopsValue > 0 ? Integer.toString(maxShopsValue) : "No limit";
         final Material material = switch (availability) {
             case READY -> Material.EMERALD;
             case PENDING -> Material.CLOCK;

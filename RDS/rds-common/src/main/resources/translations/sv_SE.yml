@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Redigera värden från</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Varje redigerbar inställning kan ändras genom en städprompt.</gray>"
         - "<yellow>Klicka för att öppna konfigurationskontroller.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Spelar- och gruppkontroller</gradient>"
+      lore:
+        - "<gray>Ställ in max butiker och rabatter per spelare och per grupp.</gray>"
+        - "<gray>Öppna valfri butik som ägare eller tvinga stäng aktiva butiksvyer.</gray>"
+        - "<yellow>Klicka för att öppna spelar-/gruppadministratörskontroller.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
       lore:

@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Bewerk waarden uit</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Elke bewerkbare instelling kan worden gewijzigd via een aambeeldprompt.</gray>"
         - "<yellow>Klik om de configuratiebesturingselementen te openen.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Speler- en groepsbediening</gradient>"
+      lore:
+        - "<gray>Stel het maximale aantal winkels en kortingen per speler en per groep in.</gray>"
+        - "<gray>Open een winkel als eigenaar of forceer actieve winkelweergaven.</gray>"
+        - "<yellow>Klik om de beheeropties voor spelers/groepen te openen.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin-integraties</gradient>"
       lore:

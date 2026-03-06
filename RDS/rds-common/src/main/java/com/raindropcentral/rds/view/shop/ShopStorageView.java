@@ -23,6 +23,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -83,7 +84,7 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
     ) {
         final Shop shop = this.getCurrentShop(context);
 
-        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId())) {
+        if (shop == null || !this.canManage(context, shop)) {
             return CompletableFuture.completedFuture(List.of());
         }
 
@@ -133,7 +134,7 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
             return;
         }
 
-        if (!shop.canManage(player.getUniqueId())) {
+        if (!this.canManage(render, shop)) {
             render.slot(4).renderWith(() -> this.createLockedItem(player));
             return;
         }
@@ -157,7 +158,7 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -175,10 +176,7 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
                     .sendMessage();
             clickContext.openForPlayer(
                     ShopStorageView.class,
-                    Map.of(
-                            "plugin", this.rds.get(clickContext),
-                            "shopLocation", this.shopLocation.get(clickContext)
-                    )
+                    this.createViewData(clickContext)
             );
             return;
         }
@@ -202,10 +200,7 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
 
         clickContext.openForPlayer(
                 ShopStorageView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext)
-                )
+                this.createViewData(clickContext)
         );
     }
 
@@ -345,6 +340,25 @@ public class ShopStorageView extends APaginatedView<ShopStorageView.StoredShopEn
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
         final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
         return ownerName == null ? shop.getOwner().toString() : ownerName;
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createViewData(
+            final @NotNull Context context
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", this.shopLocation.get(context));
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
     }
 
     /**

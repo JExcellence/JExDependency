@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>値を編​​集する</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>編集可能な設定はすべて、Anvil プロンプトを通じて変更できます。</gray>"
         - "<yellow>クリックして構成コントロールを開きます。</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] プレーヤーとグループのコントロール</gradient>"
+      lore:
+        - "<gray>プレイヤーごとおよびグループごとに最大ショップと割引を設定します。</gray>"
+        - "<gray>オーナーとしてショップを開くか、アクティブなショップビューを強制的に閉じます。</gray>"
+        - "<yellow>クリックしてプレーヤー/グループ管理コントロールを開きます。</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] プラグインの統合</gradient>"
       lore:

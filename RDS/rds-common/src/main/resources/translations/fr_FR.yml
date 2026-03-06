@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Modifier les valeurs de</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Chaque paramètre modifiable peut être modifié via une invite d'enclume.</gray>"
         - "<yellow>Cliquez pour ouvrir les contrôles de configuration.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Contrôles des joueurs et des groupes</gradient>"
+      lore:
+        - "<gray>Définit le nombre maximum de magasins et de réductions par joueur et par groupe.</gray>"
+        - "<gray>Ouvrez n'importe quelle boutique en tant que propriétaire ou forcez la fermeture des vues actives de la boutique.</gray>"
+        - "<yellow>Cliquez pour ouvrir les commandes d'administration du joueur/groupe.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Intégrations de plugins</gradient>"
       lore:

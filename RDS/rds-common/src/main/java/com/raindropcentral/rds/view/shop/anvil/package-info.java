@@ -1,11 +1,7 @@
-/*
- * package-info.java
+/**
+ * Anvil-based input views used by shop and admin edit workflows.
  *
  * @author ItsRainingHP
  * @version 5.0.0
- */
-
-/**
- * Anvil-backed inventory views used by the RDS shop interface.
  */
 package com.raindropcentral.rds.view.shop.anvil;

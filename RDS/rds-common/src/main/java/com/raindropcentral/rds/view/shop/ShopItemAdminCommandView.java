@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -223,12 +224,11 @@ public class ShopItemAdminCommandView extends BaseView {
 
         clickContext.openForPlayer(
                 ShopItemAdminCommandDelayAnvilView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext),
-                        "shopItem", this.getEditedItem(clickContext),
-                        "commandExecutionMode", this.getCommandExecutionMode(clickContext),
-                        "commandDelayTicks", this.getCommandDelayTicks(clickContext)
+                this.createCommandAnvilData(
+                        clickContext,
+                        this.getEditedItem(clickContext),
+                        this.getCommandExecutionMode(clickContext),
+                        this.getCommandDelayTicks(clickContext)
                 )
         );
     }
@@ -243,12 +243,11 @@ public class ShopItemAdminCommandView extends BaseView {
 
         clickContext.openForPlayer(
                 ShopItemAdminCommandAnvilView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext),
-                        "shopItem", this.getEditedItem(clickContext),
-                        "commandExecutionMode", this.getCommandExecutionMode(clickContext),
-                        "commandDelayTicks", this.getCommandDelayTicks(clickContext)
+                this.createCommandAnvilData(
+                        clickContext,
+                        this.getEditedItem(clickContext),
+                        this.getCommandExecutionMode(clickContext),
+                        this.getCommandDelayTicks(clickContext)
                 )
         );
     }
@@ -297,11 +296,7 @@ public class ShopItemAdminCommandView extends BaseView {
 
         clickContext.openForPlayer(
                 ShopItemEditView.class,
-                Map.of(
-                        "plugin", this.rds.get(clickContext),
-                        "shopLocation", this.shopLocation.get(clickContext),
-                        "shopItem", this.getEditedItem(clickContext)
-                )
+                this.createItemViewData(clickContext, this.getEditedItem(clickContext))
         );
     }
 
@@ -317,7 +312,7 @@ public class ShopItemAdminCommandView extends BaseView {
             return false;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -331,6 +326,46 @@ public class ShopItemAdminCommandView extends BaseView {
             final @NotNull Context context
     ) {
         return this.rds.get(context).getShopRepository().findByLocation(this.shopLocation.get(context));
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createBaseViewData(
+            final @NotNull Context context
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", this.shopLocation.get(context));
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
+    }
+
+    private @NotNull Map<String, Object> createItemViewData(
+            final @NotNull Context context,
+            final @NotNull ShopItem shopItem
+    ) {
+        final Map<String, Object> viewData = this.createBaseViewData(context);
+        viewData.put("shopItem", shopItem);
+        return viewData;
+    }
+
+    private @NotNull Map<String, Object> createCommandAnvilData(
+            final @NotNull Context context,
+            final @NotNull ShopItem shopItem,
+            final @NotNull ShopItem.CommandExecutionMode mode,
+            final long commandDelay
+    ) {
+        final Map<String, Object> viewData = this.createItemViewData(context, shopItem);
+        viewData.put("commandExecutionMode", mode);
+        viewData.put("commandDelayTicks", commandDelay);
+        return viewData;
     }
 
     private @NotNull ShopItem getEditedItem(

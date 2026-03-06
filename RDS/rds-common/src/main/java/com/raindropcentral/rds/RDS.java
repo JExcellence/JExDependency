@@ -12,6 +12,7 @@ import com.raindropcentral.rds.database.repository.RRTownShopBank;
 import com.raindropcentral.rds.service.ShopService;
 import com.raindropcentral.rds.service.scoreboard.ShopSidebarScoreboardService;
 import com.raindropcentral.rds.service.bank.AdminShopServerBankScheduler;
+import com.raindropcentral.rds.service.shop.ShopAdminPlayerSettingsService;
 import com.raindropcentral.rds.service.shop.AdminShopRestockScheduler;
 import com.raindropcentral.rds.service.shop.ShopBossBarService;
 import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
@@ -24,6 +25,11 @@ import com.raindropcentral.rds.view.shop.PluginIntegrationManagementView;
 import com.raindropcentral.rds.view.shop.PlaceholderAPIView;
 import com.raindropcentral.rds.view.shop.ServerBankView;
 import com.raindropcentral.rds.view.shop.ShopAdminView;
+import com.raindropcentral.rds.view.shop.ShopAdminPlayerEditView;
+import com.raindropcentral.rds.view.shop.ShopAdminPlayerSelectView;
+import com.raindropcentral.rds.view.shop.ShopAdminPlayerView;
+import com.raindropcentral.rds.view.shop.ShopAdminGroupEditView;
+import com.raindropcentral.rds.view.shop.ShopAdminShopControlView;
 import com.raindropcentral.rds.view.shop.ShopConfigView;
 import com.raindropcentral.rds.view.shop.ShopItemAdminCommandView;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
@@ -39,6 +45,7 @@ import com.raindropcentral.rds.view.shop.ShopStoreCostView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.view.shop.ShopTaxView;
 import com.raindropcentral.rds.view.shop.ShopTrustedView;
+import com.raindropcentral.rds.view.shop.anvil.ShopAdminOverrideValueAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminCommandAnvilView;
@@ -52,6 +59,7 @@ import com.raindropcentral.rds.view.shop.anvil.ShopConfigValueAnvilView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
+import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
@@ -61,6 +69,7 @@ import me.devnatan.inventoryframework.AnvilInputFeature;
 import me.devnatan.inventoryframework.ViewFrame;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -77,6 +86,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Logger;
@@ -108,12 +118,14 @@ public class RDS {
     private ISchedulerAdapter scheduler;
     private PlatformType platformType;
     private Object economyInstance;
+    private LuckPermsService luckPermsService;
     private ViewFrame viewFrame;
     private ShopTaxScheduler shopTaxScheduler;
     private ShopBossBarService shopBossBarService;
     private AdminShopRestockScheduler adminShopRestockScheduler;
     private AdminShopServerBankScheduler adminShopServerBankScheduler;
     private ShopSidebarScoreboardService shopSidebarScoreboardService;
+    private ShopAdminPlayerSettingsService shopAdminPlayerSettingsService;
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
     private RServerBank serverBankRepository;
@@ -171,6 +183,7 @@ public class RDS {
 
         this.initializePlugins();
         this.initializeCommands();
+        this.initializeAdminPlayerSettings();
         this.initializeViews();
         this.initializeTaxes();
         this.initializeAdminShopRestocking();
@@ -191,6 +204,14 @@ public class RDS {
      */
     public void onDisable() {
         this.getLogger().info("Disabling RDS (" + this.edition + "): closing Hibernate");
+
+        if (this.shopAdminPlayerSettingsService != null) {
+            try {
+                this.shopAdminPlayerSettingsService.save();
+            } catch (Exception exception) {
+                this.getLogger().warning("Failed to save admin player settings: " + exception.getMessage());
+            }
+        }
 
         if (this.executor != null) {
             this.executor.shutdownNow();
@@ -241,12 +262,95 @@ public class RDS {
     }
 
     /**
+     * Returns the effective maximum placed shops for a player after admin overrides are applied.
+     *
+     * @param player target player
+     * @param config configuration snapshot to evaluate
+     * @return effective max shops for the player ({@code -1} means unlimited)
+     * @throws NullPointerException if {@code player} or {@code config} is {@code null}
+     */
+    public int getMaximumShops(
+        final @NotNull Player player,
+        final @NotNull ConfigSection config
+    ) {
+        final int defaultMaximum = this.getMaximumShops(config);
+        return this.shopAdminPlayerSettingsService == null
+            ? defaultMaximum
+            : this.shopAdminPlayerSettingsService.resolveMaximumShops(player, defaultMaximum);
+    }
+
+    /**
+     * Returns the effective maximum placed shops for a player using the current config.
+     *
+     * @param player target player
+     * @return effective max shops ({@code -1} means unlimited)
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    public int getMaximumShops(final @NotNull Player player) {
+        return this.getMaximumShops(player, this.getDefaultConfig());
+    }
+
+    /**
+     * Returns the effective maximum placed shops for a player UUID after player overrides are applied.
+     *
+     * <p>This overload does not evaluate group membership and therefore only uses explicit player
+     * overrides plus edition defaults.</p>
+     *
+     * @param playerId target player identifier
+     * @param config configuration snapshot to evaluate
+     * @return effective max shops ({@code -1} means unlimited)
+     * @throws NullPointerException if {@code playerId} or {@code config} is {@code null}
+     */
+    public int getMaximumShops(
+        final @NotNull UUID playerId,
+        final @NotNull ConfigSection config
+    ) {
+        final int defaultMaximum = this.getMaximumShops(config);
+        return this.shopAdminPlayerSettingsService == null
+            ? defaultMaximum
+            : this.shopAdminPlayerSettingsService.resolveMaximumShops(playerId, defaultMaximum);
+    }
+
+    /**
      * Returns the effective maximum placed shops per player using the current config.
      *
      * @return edition-aware player shop cap
      */
     public int getMaximumShops() {
         return this.getMaximumShops(this.getDefaultConfig());
+    }
+
+    /**
+     * Returns the effective purchase discount percent for a player.
+     *
+     * @param player target player
+     * @return discount percent in range {@code 0.0} to {@code 100.0}
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    public double getShopDiscountPercent(final @NotNull Player player) {
+        return this.shopAdminPlayerSettingsService == null
+            ? 0.0D
+            : this.shopAdminPlayerSettingsService.resolveDiscountPercent(player);
+    }
+
+    /**
+     * Applies the resolved player discount to a base amount.
+     *
+     * @param player target player
+     * @param baseAmount amount before discount
+     * @return discounted amount
+     * @throws NullPointerException if {@code player} is {@code null}
+     */
+    public double applyShopDiscount(
+        final @NotNull Player player,
+        final double baseAmount
+    ) {
+        if (baseAmount <= 0.0D) {
+            return 0.0D;
+        }
+
+        final double discountPercent = this.getShopDiscountPercent(player);
+        return baseAmount * (1.0D - (Math.max(0.0D, Math.min(100.0D, discountPercent)) / 100.0D));
     }
 
     /**
@@ -371,8 +475,12 @@ public class RDS {
     }
 
     private void initializePlugins() {
+        final ServiceRegistry registry = this.platform == null
+                ? new ServiceRegistry()
+                : this.platform.getServiceRegistry();
+
         this.getLogger().info("Registering Vault service");
-        new ServiceRegistry().register(
+        registry.register(
                 "net.milkbowl.vault.economy.Economy",
                 "TheNewEconomy"
         ).optional().maxAttempts(30).retryDelay(1000).onSuccess(economy -> {
@@ -381,11 +489,33 @@ public class RDS {
         }).onFailure(() -> this.getLogger().info(
                 "Vault service not present; continuing without Vault integration")
         ).load();
+
+        this.getLogger().info("Registering LuckPerms service");
+        registry.register(
+                "net.luckperms.api.LuckPerms",
+                "LuckPerms"
+        ).optional().maxAttempts(30).retryDelay(500).onSuccess(luckPerms -> {
+            if (this.platform == null) {
+                this.getLogger().warning("LuckPerms detected but RPlatform is unavailable.");
+                return;
+            }
+
+            this.luckPermsService = new LuckPermsService(this.platform);
+            this.getLogger().info("LuckPerms service initialized");
+        }).onFailure(() -> {
+            this.luckPermsService = null;
+            this.getLogger().info("LuckPerms service not present; continuing without LuckPerms integration");
+        }).load();
     }
 
     private void initializeCommands() {
         final var commandFactory = new CommandFactory(this.plugin, this);
         commandFactory.registerAllCommandsAndListeners();
+    }
+
+    private void initializeAdminPlayerSettings() {
+        this.shopAdminPlayerSettingsService = new ShopAdminPlayerSettingsService(this);
+        this.shopAdminPlayerSettingsService.load();
     }
 
     private void initializeRepositories() {
@@ -456,6 +586,11 @@ public class RDS {
                 .with(
                     new ShopOverviewView(),
                     new ShopAdminView(),
+                    new ShopAdminPlayerView(),
+                    new ShopAdminPlayerSelectView(),
+                    new ShopAdminPlayerEditView(),
+                    new ShopAdminGroupEditView(),
+                    new ShopAdminShopControlView(),
                     new PluginIntegrationManagementView(),
                     new PlaceholderAPIView(),
                     new AdminCurrencyView(),
@@ -485,6 +620,7 @@ public class RDS {
                     new ShopItemCurrencyTypeAnvilView(),
                     new ShopItemValueAnvilView(),
                     new ShopConfigValueAnvilView(),
+                    new ShopAdminOverrideValueAnvilView(),
                     new ShopMaterialSearchAnvilView(),
                     new ShopPurchaseAmountAnvilView(),
                     new ShopTrustedView()
@@ -833,6 +969,24 @@ public class RDS {
      */
     public @Nullable ShopSidebarScoreboardService getShopSidebarScoreboardService() {
         return this.shopSidebarScoreboardService;
+    }
+
+    /**
+     * Returns the service managing per-player/group admin overrides for shop limits and discounts.
+     *
+     * @return admin override settings service, or {@code null} before enable completes
+     */
+    public @Nullable ShopAdminPlayerSettingsService getShopAdminPlayerSettingsService() {
+        return this.shopAdminPlayerSettingsService;
+    }
+
+    /**
+     * Returns the optional LuckPerms integration wrapper.
+     *
+     * @return LuckPerms service wrapper, or {@code null} if LuckPerms is unavailable
+     */
+    public @Nullable LuckPermsService getLuckPermsService() {
+        return this.luckPermsService;
     }
 
     /**

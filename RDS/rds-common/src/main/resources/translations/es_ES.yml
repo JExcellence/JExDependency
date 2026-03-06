@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Editar valores desde</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Cada configuración editable se puede cambiar a través de un mensaje de yunque.</gray>"
         - "<yellow>Haga clic para abrir los controles de configuración.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Controles de jugadores y grupos</gradient>"
+      lore:
+        - "<gray>Establece descuentos y tiendas máximas por jugador y por grupo.</gray>"
+        - "<gray>Abra cualquier tienda como propietario o fuerce el cierre de las vistas activas de la tienda.</gray>"
+        - "<yellow>Haga clic para abrir los controles de administración del reproductor/grupo.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Integraciones de complementos</gradient>"
       lore:

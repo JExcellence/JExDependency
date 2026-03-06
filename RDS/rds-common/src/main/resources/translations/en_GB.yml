@@ -297,6 +297,12 @@ shop_admin_ui:
         - "<gray>Edit values from</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Every editable setting can be changed through an anvil prompt.</gray>"
         - "<yellow>Click to open config controls.</yellow>"
+    players:
+      name: "<gradient:#22c55e:#86efac>[Ply] Player & Group Controls</gradient>"
+      lore:
+        - "<gray>Set per-player and per-group max shops and discounts.</gray>"
+        - "<gray>Open any shop as owner or force close active shop views.</gray>"
+        - "<yellow>Click to open player/group admin controls.</yellow>"
     integrations:
       name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
       lore:

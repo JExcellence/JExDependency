@@ -26,6 +26,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -85,7 +86,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             final @NotNull Context context
     ) {
         final Shop shop = this.getCurrentShop(context);
-        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId())) {
+        if (shop == null || !this.canManage(context, shop)) {
             return CompletableFuture.completedFuture(List.of());
         }
 
@@ -127,7 +128,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             return;
         }
 
-        if (!shop.canManage(player.getUniqueId())) {
+        if (!this.canManage(render, shop)) {
             render.slot(4).renderWith(() -> this.createLockedItem(player));
             return;
         }
@@ -163,7 +164,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
             return;
         }
 
-        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+        if (!this.canManage(clickContext, shop)) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
                     .includePrefix()
                     .build()
@@ -375,10 +376,7 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
     ) {
         context.openForPlayer(
                 ShopBankView.class,
-                Map.of(
-                        "plugin", this.rds.get(context),
-                        "shopLocation", this.shopLocation.get(context)
-                )
+                this.createViewData(context)
         );
     }
 
@@ -462,6 +460,25 @@ public class ShopBankView extends APaginatedView<ShopBankView.BankViewEntry> {
                 .setLore(this.i18n("feedback.shop_missing.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
+    }
+
+    private boolean canManage(
+            final @NotNull Context context,
+            final @NotNull Shop shop
+    ) {
+        return shop.canManage(context.getPlayer().getUniqueId()) || ShopAdminAccessSupport.hasOwnerOverride(context);
+    }
+
+    private @NotNull Map<String, Object> createViewData(
+            final @NotNull Context context
+    ) {
+        final Map<String, Object> viewData = new HashMap<>();
+        viewData.put("plugin", this.rds.get(context));
+        viewData.put("shopLocation", this.shopLocation.get(context));
+        if (ShopAdminAccessSupport.hasOwnerOverride(context)) {
+            viewData.put(ShopAdminAccessSupport.ADMIN_OWNER_OVERRIDE_KEY, true);
+        }
+        return viewData;
     }
 
     private boolean usesVaultCurrency(
