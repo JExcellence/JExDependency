@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Totaal plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Totaal rechten:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kon rechten beheerder niet openen!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Valutabeheerder</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Plugin-integraties</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk RDQ-gedetecteerde valuta's</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Inclusief Vault en JExEconomy vermeldingen</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Kan valutamanager niet openen!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beheer plugin-integraties voor beheerders op één plek</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Omvat valuta-, vaardigheden- en banendetectieweergaven</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Kan plugin-integraties niet openen!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms Groepen Maken</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Gemaakt</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms groepen!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Geen nieuwe groepen gemaakt.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kon LuckPerms groepen niet maken!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Plugin-integraties</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Integratiehub</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Open RDQ plugin-integratiedashboards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detectie van valuta, vaardigheden/banen en PlaceholderAPI-tools zijn hier beschikbaar</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Valuta-integraties</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Open beheer van valutaprovider</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Beoordeling gedetecteerde Vault- en JExEconomy-valuta's</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kan valuta-integraties niet openen!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Vaardigheidsintegraties</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ondersteuningsstatus bekijken voor mcMMO, Aura en EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Detecteer momenteel ingeschakelde vaardigheidsplug-ins</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kan vaardigheid niet openen integraties!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Taakintegraties</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ondersteuningsstatus bekijken voor EcoJobs en JobsReborn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Detecteer momenteel ingeschakelde taakplug-ins</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kan taakintegraties niet openen!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Detecteer PlaceholderAPI-ondersteuning en beheer uitbreidingen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Installeer de Player-uitbreiding en laad opnieuw PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kan PlaceholderAPI-tools niet openen!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI-integratie</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI ondersteund:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Doeluitbreiding:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installeer en herlaad rechtstreeks vanuit dit paneel</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI Gedetecteerd</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI is geïnstalleerd en ingeschakeld</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI Ontbreekt</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Installeer en schakel PlaceholderAPI in om deze actie te gebruiken</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 Installeer %expansion_name%-uitbreiding</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Uitgevoerd:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vervolgens uitgevoerd:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Klik om beide PlaceholderAPI-opdrachten uit te voeren</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Vereist</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Deze actie is niet beschikbaar totdat PlaceholderAPI is geïnstalleerd</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Je hebt geen toestemming om de PlaceholderAPI-beheertools te gebruiken</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Je hebt geen toestemming om PlaceholderAPI-integraties te beheren.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI is niet beschikbaar op deze server.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Kan uitbreiding niet downloaden:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Downloaden van uitbreiding voltooid, maar opnieuw laden van PlaceholderAPI mislukt.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ %expansion_name%-uitbreiding geïnstalleerd en PlaceholderAPI opnieuw geladen.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Vaardigheidsintegraties</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Status van vaardigheidsplug-in</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ondersteunde vaardigheidsintegraties:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nu gedetecteerd:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Controleert mcMMO, Aura en EcoSkills support</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Gedetecteerd</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Ontbrekend</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integratie-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Geen vaardigheidsintegraties geconfigureerd</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Er zijn momenteel geen vaardigheidsplug-in-integraties geconfigureerd</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Taakintegraties</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Functieplug-instatus</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ondersteunde taakintegraties:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nu gedetecteerd:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Controleert EcoJobs- en JobsReborn-ondersteuning</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Gedetecteerd</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Ontbrekend</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integratie-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Geen taakintegraties Geconfigureerd</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Er zijn momenteel geen jobplug-in-integraties geconfigureerd</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

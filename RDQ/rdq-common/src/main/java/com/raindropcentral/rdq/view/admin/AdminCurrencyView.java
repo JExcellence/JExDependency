@@ -62,10 +62,10 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
     private final State<RDQ> rdq = initialState("plugin");
 
     /**
-     * Creates the admin currency view with {@link AdminOverviewView} as its parent view.
+     * Creates the admin currency view with {@link PluginIntegrationManagementView} as its parent view.
      */
     public AdminCurrencyView() {
-        super(AdminOverviewView.class);
+        super(PluginIntegrationManagementView.class);
     }
 
     @Override

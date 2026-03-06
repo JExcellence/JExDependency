@@ -39,29 +39,125 @@ storage_overview_ui:
 storage_admin_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Admin] Lagringskontroll</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Administrasjonspanel</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin Panel</gradient>"
     lore:
       - "<gray>Administrer privilegerte lagringssystemer fra ett sted.</gray>"
-      - "<gray>Bruk dette panelet til a redigere konfigurasjonsverdier og valutastotte.</gray>"
+      - "<gray>Bruk dette panelet til å redigere konfigurasjonsverdier og åpne integrasjonskontroller.</gray>"
       - "<yellow>Krever:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfig</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfigurasjon</gradient>"
       lore:
         - "<gray>Rediger verdier fra</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Alle redigerbare innstillinger kan endres gjennom en ambolt-melding.</gray>"
+        - "<gray>Innskrevne innstillinger åpnes i en matchende ambolt-editor.</gray>"
         - "<yellow>Klikk for å åpne konfigurasjonskontroller.</yellow>"
-    currency:
-      name: "<gradient:#10b981:#34d399>[Cur] Valutaforvalter</gradient>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin-integrasjoner</gradient>"
       lore:
-        - "<gray>Se på oppdagede valutaer fra Vault og JExEconomy.</gray>"
+        - "<gray>Administrer ferdigheter, jobb, valuta og plassholderAPI-verktøy.</gray>"
+        - "<gray>Åpne integrasjonsspesifikke adminkontroller.</gray>"
+        - "<yellow>Klikk for å åpne integreringsadministrasjon.</yellow>"
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutabehandler</gradient>"
+      lore:
+        - "<gray>Gjennomgå oppdagede valutaer fra Vault og JExEconomy.</gray>"
         - "<gray>Opprett standarden</gray> <white>raindrops</white> <gray>valuta ved behov.</gray>"
         - "<yellow>Klikk for å åpne valutakontroller.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Ferdighetskrav</gradient>"
+      lore:
+        - "<gray>Gjennomgå støttede ferdighetsplugin-moduler og deteksjonstilstand.</gray>"
+        - "<gray>Bruk standard ferdighetskrav på alle lagringskjøpsnivåer.</gray>"
+        - "<yellow>Klikk for å åpne kontrollene for ferdighetskrav.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Jobb] Jobbkrav</gradient>"
+      lore:
+        - "<gray>Gjennomgå støttede jobbplugin-moduler og deteksjonsstatus.</gray>"
+        - "<gray>Bruk standard jobbkrav på alle lagringskjøpsnivåer.</gray>"
+        - "<yellow>Klikk for å åpne kontrollene for jobbkrav.</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[X] Administratortilgang kreves</gradient>"
+      name: "<gradient:#ef4444:#f87171>[X] Admintilgang kreves</gradient>"
       lore:
         - "<gray>Du har ikke tillatelse til å bruke dette administrasjonspanelet.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin-integrasjoner</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integration Hub</gradient>"
+    lore:
+      - "<gray>Sentraliserte integreringskontroller for lagringskrav.</gray>"
+      - "<gray>Åpen valuta, ferdigheter, jobber og plassholderAPI-handlinger.</gray>"
+      - "<yellow>Krever:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutabehandler</gradient>"
+      lore:
+        - "<gray>Gjennomgå oppdagede valutaer fra Vault og JExEconomy.</gray>"
+        - "<gray>Opprett standarden</gray> <white>raindrops</white> <gray>valuta ved behov.</gray>"
+        - "<yellow>Klikk for å åpne valutakontroller.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Ferdighetskrav</gradient>"
+      lore:
+        - "<gray>Gjennomgå støttede ferdighetsplugin-moduler og deteksjonstilstand.</gray>"
+        - "<gray>Bruk standard ferdighetskrav på alle lagringskjøpsnivåer.</gray>"
+        - "<yellow>Klikk for å åpne kontrollene for ferdighetskrav.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Jobb] Jobbkrav</gradient>"
+      lore:
+        - "<gray>Gjennomgå støttede jobbplugin-moduler og deteksjonsstatus.</gray>"
+        - "<gray>Bruk standard jobbkrav på alle lagringskjøpsnivåer.</gray>"
+        - "<yellow>Klikk for å åpne kontrollene for jobbkrav.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detect PlaceholderAPI støtter og administrer utvidelser.</gray>"
+        - "<gray>Installer</gray> <white>Player</white> <gray>utvidelse og last inn plassholderAPI på nytt.</gray>"
+        - "<yellow>Klikk for å åpne plassholderAPI-verktøy.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admintilgang kreves</gradient>"
+      lore:
+        - "<gray>Du har ikke tillatelse til å bruke dette integrasjonspanelet.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlassholderAPI-verktøy</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] PlassholderAPI-integrasjon</gradient>"
+    lore:
+      - "<gray>PlassholderAPI støttes:</gray> <white>{supported}</white>"
+      - "<gray>Målutvidelse:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Installer utvidelsen og last inn PlaceholderAPI på nytt fra dette panelet.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] Plassholder-API oppdaget</gradient>"
+      lore:
+        - "<gray>plassholder-API er tilgjengelig og aktivert.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI mangler</gradient>"
+      lore:
+        - "<gray>Installer og aktiver PlaceholderAPI for å bruke denne handlingen.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Installer {expansion_name} Utvidelse</gradient>"
+      lore:
+        - "<gray>Kjøres:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Deretter kjøres:</gray> <white>papi reload</white>"
+        - "<yellow>Klikk for å utføre begge PlaceholderAPI-kommandoene.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI påkrevd</gradient>"
+      lore:
+        - "<gray>Denne handlingen er utilgjengelig før PlaceholderAPI er installert.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admintilgang kreves</gradient>"
+      lore:
+        - "<gray>Du har ikke tillatelse til å bruke administrasjonsverktøy for PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tillatelse til å administrere PlaceholderAPI-integrasjoner.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI er ikke tilgjengelig på denne serveren.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke sende utvidelsesnedlasting for <hvit>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Utvidelsesnedlasting fullført, men plassholderAPI-innlastingen mislyktes.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Installert <hvit>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Valutaforvalter</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>Du har ikke tillatelse til å bruke denne valutavisningen.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tillatelse til å administrere valutaer.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Skill] Krav Integrasjoner</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Støttede Skill Plugins</gradient>"
+    lore:
+      - "<gray>Støttede broer:</gray> <white>{supported_count}</white>"
+      - "<gray>Oppdaget nå:</gray> <white>{detected_count}</white>"
+      - "<gray>Klikk på en plugin nedenfor for å injisere standard ferdighetskrav i hvert lagringskjøpsnivå.</gray>"
+      - "<yellow>En omstart av serveren er nødvendig etter å ha tatt i bruk endringer.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>oppdaget</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Mangler</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integrasjons-ID:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standard ferdighet:</gray> <white>{default_skill}</white>"
+      - "<gray>Nivåområde brukt:</gray> <white>{level_range}</white>"
+      - "<yellow>set to config.config.config.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Ingen ferdighetsbroer</gradient>"
+      lore:
+        - "<gray>Ingen støttede ferdighetsbrooppføringer er tilgjengelige.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admintilgang kreves</gradient>"
+      lore:
+        - "<gray>Du har ikke tillatelse til å bruke denne ferdighetsvisningen.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Konfigurasjonsredigering Låst</gradient>"
+      lore:
+        - "<gray>Denne utgaven tillater ikke redigering av kjøretidskonfigurasjon.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tillatelse til å administrere ferdighetskrav.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurasjonsredigering er låst i denne utgaven.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Brukt standard ferdighetskrav for <hvit>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, ferdighet:</gray> <white>{default_skill}</white><gray>, område:</gray> <white>{level_range}</white><gray>) til <hvit>{updated_tiers}</white> <gray>kjøpsnivå(er).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Start serveren på nytt for at kravendringer skal tre i kraft.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke bruke standardkrav for <hvit>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Jobb] Kravintegrasjoner</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info] Støttede jobbplugin-moduler</gradient>"
+    lore:
+      - "<gray>Støttede broer:</gray> <white>{supported_count}</white>"
+      - "<gray>Oppdaget nå:</gray> <white>{detected_count}</white>"
+      - "<gray>Klikk på en plugin nedenfor for å injisere standard jobbkrav i hvert lagringskjøpsnivå.</gray>"
+      - "<yellow>En omstart av serveren er nødvendig etter å ha tatt i bruk endringer.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>oppdaget</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Mangler</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integrasjons-ID:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardjobb:</gray> <white>{default_job}</white>"
+      - "<gray>Nivåområde brukt:</gray> <white>{level_range}</white>"
+      - "<yellow>set to config.config.config.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Ingen jobbbroer</gradient>"
+      lore:
+        - "<gray>Ingen støttede jobbbrooppføringer er tilgjengelige.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admintilgang kreves</gradient>"
+      lore:
+        - "<gray>Du har ikke tillatelse til å bruke denne jobbvisningen.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Konfigurasjonsredigering Låst</gradient>"
+      lore:
+        - "<gray>Denne utgaven tillater ikke redigering av kjøretidskonfigurasjon.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tillatelse til å administrere jobbkrav.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurasjonsredigering er låst i denne utgaven.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Brukt standard jobbkrav for <hvit>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, jobb:</gray> <white>{default_job}</white><gray>, område:</gray> <white>{level_range}</white><gray>) til <hvit>{updated_tiers}</white> <gray>kjøpsnivå(er).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Start serveren på nytt for at kravendringer skal tre i kraft.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke bruke standardkrav for <hvit>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Gjeldende krav:</gray><white>{requirements}</white>"
         - "<gray>Eide lagringer:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Oppfyll de gjenværende kravene før du kjøper.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Liste nedenfor]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Req List]</gradient> <gray>Gjeldende krav:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Lagringsgrense nådd</gradient>"
       lore:

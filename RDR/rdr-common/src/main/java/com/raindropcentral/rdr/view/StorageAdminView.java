@@ -18,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
  * Administrative landing view for RDR controls.
  *
  * <p>This view centralizes privileged storage administration actions and currently
- * exposes currency-management and config-editing entry points.</p>
+ * exposes config-editing and plugin-integration management entry points.</p>
  *
  * @author ItsRainingHP
  * @since 5.0.0
@@ -50,16 +50,13 @@ public class StorageAdminView extends BaseView {
     /**
      * Returns the menu layout for this view.
      *
-     * @return rendered layout with summary, config, and currency controls
+     * @return rendered layout with summary, config, and integration controls
      */
     @Override
     protected String[] getLayout() {
         return new String[]{
-            "         ",
             "    s    ",
-            "   g c   ",
-            "         ",
-            "         ",
+            "   g i   ",
             "         "
         };
     }
@@ -86,9 +83,9 @@ public class StorageAdminView extends BaseView {
                 StorageConfigView.class,
                 Map.of("plugin", this.rdr.get(clickContext))
             ));
-        render.layoutSlot('c', this.createCurrencyButton(player))
+        render.layoutSlot('i', this.createPluginIntegrationsButton(player))
             .onClick(clickContext -> clickContext.openForPlayer(
-                AdminCurrencyView.class,
+                PluginIntegrationManagementView.class,
                 Map.of("plugin", this.rdr.get(clickContext))
             ));
     }
@@ -115,12 +112,12 @@ public class StorageAdminView extends BaseView {
             .build();
     }
 
-    private @NotNull ItemStack createCurrencyButton(
+    private @NotNull ItemStack createPluginIntegrationsButton(
         final @NotNull Player player
     ) {
-        return UnifiedBuilderFactory.item(Material.PRISMARINE_CRYSTALS)
-            .setName(this.i18n("actions.currency.name", player).build().component())
-            .setLore(this.i18n("actions.currency.lore", player).build().children())
+        return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
+            .setName(this.i18n("actions.integrations.name", player).build().component())
+            .setLore(this.i18n("actions.integrations.lore", player).build().children())
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }

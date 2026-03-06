@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>插件總數：</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>總權限：</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 無法開啟權限管理員！</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 貨幣經理</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 插件集成</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>檢查 RDQ 偵測到的貨幣</gradient>"
-      - "<gradient:#6b7280:#9ca3af>包括 Vault 和 JExEconomy 條目</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 無法開啟貨幣管理器！</gradient>"
+      - "<gradient:#6b7280:#9ca3af>在一處管理管理插件集成</gradient>"
+      - "<gradient:#6b7280:#9ca3af>包括貨幣、技能和工作檢測視圖</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 無法開啟插件整合！</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ 建立 LuckPerms 群組</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ 已創建</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>幸運Perms組！</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>沒有建立新群組。</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 建立 LuckPerms 群組失敗！</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 插件集成</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 整合中心</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>開啟 RDQ 插件整合儀表板</gradient>"
+      - "<gradient:#6b7280:#9ca3af>貨幣、技能/工作檢測和 PlaceholderAPI 工具可在此使用</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 貨幣整合</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>開放貨幣提供者管理</gradient>"
+        - "<gradient:#6b7280:#9ca3af>檢查偵測到的 Vault 和 JExEconomy 貨幣</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 開啟幣種整合失敗！</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 技能整合</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>查看 mcMMO、Aura 和 EcoSkills 的支援狀態</gradient>"
+        - "<gradient:#6b7280:#9ca3af>偵測當前啟用的技能插件</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌技能融合開啟失敗！</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ 工作整合</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>查看 EcoJobs 和 JobsReborn 的支援狀態</gradient>"
+        - "<gradient:#6b7280:#9ca3af>偵測目前啟用的作業插件</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 開啟職位整合失敗！</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>檢測 PlaceholderAPI 支援並管理擴展</gradient>"
+        - "<gradient:#6b7280:#9ca3af>安裝Player擴充並重新載入PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 無法開啟PlaceholderAPI工具！</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI 工具</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI 集成</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 支援：</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>目標擴展：</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>直接從此面板安裝和重新加載</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ 偵測到 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 已安裝並啟用</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 缺失</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>安裝並啟用 PlaceholderAPI 以使用此操作</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 安裝 %expansion_name% 擴充</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>運行：</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>然後運行：</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>點選執行兩個 PlaceholderAPI 指令</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI 必需</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>在安裝 PlaceholderAPI 之前，此操作不可用</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ 需要管理員存取權限</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>您無權使用 PlaceholderAPI 管理工具</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌您無權管理 PlaceholderAPI 整合。</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 在此伺服器上不可用。</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ 下載擴充失敗：</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ 擴充包下載完成，但 PlaceholderAPI 重新載入失敗。</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ 安裝了 %expansion_name% 擴充功能並重新載入了 PlaceholderAPI。</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 技能整合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 技能插件狀態</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>支援的技能整合：</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>現在檢測到：</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>檢查 mcMMO、Aura 和 EcoSkills 支持</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>檢測到</gradient>"
+      missing: "<gradient:#ef4444:#f87171>遺失的</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>插件：</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>整合 ID：</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ 未配置技能集成</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>當前未配置技能插件集成</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ 工作整合</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 作業插件狀態</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>支援的工作整合：</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>現在檢測到：</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>檢查 EcoJobs 和 JobsReborn 支持</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>檢測到</gradient>"
+      missing: "<gradient:#ef4444:#f87171>遺失的</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>插件：</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>整合 ID：</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>地位：</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ 未配置作業集成</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>目前未配置作業插件集成</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

@@ -277,39 +277,137 @@ shop_overview_ui:
 
 # Panel de control de administración global para la gestión de RDS.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Administrador] Control RDS</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Panel de administración</white>"
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Panel de administración RDS</white>"
     lore:
       - "<gray>Administre sistemas globales de administración y tienda desde un solo lugar.</gray>"
-      - "<gray>Abra el banco del servidor o edite la configuración a continuación.</gray>"
+      - "<gray>Abra los controles de integración, configuración y banco de servidores a continuación.</gray>"
       - "<yellow>Requiere:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
-      name: "<gradient:#10b981:#34d399>[$] Banco de servidor</gradient>"
+      name: "<gradient:#10b981:#34d399>[$] Banco de servidores</gradient>"
       lore:
-        - "<gray>Revise los ingresos de la tienda administrativa ingresados en el banco del servidor.</gray>"
+        - "<gray>Revisar los ingresos de la tienda de administración ingresados ​​en el banco de servidores.</gray>"
         - "<gray>Verifique el momento del próximo retiro y retire los saldos.</gray>"
-        - "<yellow>Haga clic para abrir controles del banco del servidor.</yellow>"
+        - "<yellow>Haga clic para abrir los controles del banco del servidor.</yellow>"
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuración de tienda</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
-        - "<gray>Editar valores de</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Cada configuración editable se puede cambiar a través de un indicador de yunque.</gray>"
+        - "<gray>Editar valores desde</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Cada configuración editable se puede cambiar a través de un mensaje de yunque.</gray>"
         - "<yellow>Haga clic para abrir los controles de configuración.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Integraciones de complementos</gradient>"
+      lore:
+        - "<gray>Trabajos abiertos, habilidades y herramientas de integración de PlaceholderAPI.</gray>"
+        - "<gray>Administre los puentes de requisitos de complementos y la configuración de expansión.</gray>"
+        - "<yellow>Haga clic para abrir los controles de integración.</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] Administrador de divisas</gradient>"
       lore:
-        - "<gray>Revise las monedas detectadas de Vault y JExEconomy.</gray>"
-        - "<gray>Crear la moneda predeterminada</gray> <white>raindrops</white> <gray>currency cuando necesario.</gray>"
-        - "<yellow>Haga clic para abrir los controles de moneda.</yellow>"
+        - "<gray>La revisión detectó monedas de Vault y JExEconomy.</gray>"
+        - "<gray>Cree la moneda</gray> <white>raindrops</white> <gray>predeterminada cuando sea necesario.</gray>"
+        - "<yellow>Haga clic para abrir los controles de divisas.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Habilidad] Requisitos de habilidades</gradient>"
+      lore:
+        - "<gray>Revise los complementos de habilidades admitidos y el estado de detección.</gray>"
+        - "<gray>Aplicar requisitos de habilidades predeterminados a todos los niveles de compra.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos de habilidades.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Trabajo] Requisitos del trabajo</gradient>"
+      lore:
+        - "<gray>Revisar los complementos de trabajo admitidos y el estado de detección.</gray>"
+        - "<gray>Aplicar requisitos de trabajo predeterminados a todos los niveles de compra.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos del trabajo.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Impuestos] Ejecutar impuestos ahora</gradient>"
+      lore:
+        - "<gray>Activa un ciclo de recaudación de impuestos inmediato para realizar pruebas.</gray>"
+        - "<gray>Esto no cambia el temporizador de impuestos repetidos configurado.</gray>"
+        - "<yellow>Haga clic para ejecutar los impuestos una vez ahora mismo.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Se requiere acceso de administrador</white>"
       lore:
-        - "<gray>No tienes permiso para usar este administrador panel.</gray>"
+        - "<gray>No tiene permiso para utilizar este panel de administración.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Desencadenó un ciclo inmediato de recaudación de impuestos comerciales. El programador de impuestos de la tienda</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>no está disponible en este momento.</gray>"
 
-# Vista de moneda de administrador para proveedores detectados y creación de moneda predeterminada.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Integraciones de complementos</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Centro de integración</white>"
+    lore:
+      - "<gray>Administre integraciones de puentes de requisitos desde un solo lugar.</gray>"
+      - "<gray>Trabajos abiertos, habilidades y controles PlaceholderAPI.</gray>"
+      - "<yellow>Requiere:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Habilidad] Requisitos de habilidades</gradient>"
+      lore:
+        - "<gray>Revise los complementos de habilidades admitidos y el estado de detección.</gray>"
+        - "<gray>Aplicar requisitos de habilidades predeterminados a todos los niveles de compra.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos de habilidades.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Trabajo] Requisitos del trabajo</gradient>"
+      lore:
+        - "<gray>Revisar los complementos de trabajo admitidos y el estado de detección.</gray>"
+        - "<gray>Aplicar requisitos de trabajo predeterminados a todos los niveles de compra.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos del trabajo.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detectar soporte de PlaceholderAPI y gestionar expansiones.</gray>"
+        - "<gray>Instale la expansión</gray> <white>Player</white> <gray>y vuelva a cargar PlaceholderAPI.</gray>"
+        - "<yellow>Haga clic para abrir las herramientas PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Se requiere acceso de administrador</white>"
+      lore:
+        - "<gray>No tienes permiso para utilizar este panel de integración.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Herramientas de PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Integración de PlaceholderAPI</white>"
+    lore:
+      - "<gray>PlaceholderAPI compatible:</gray> <white>{supported}</white>"
+      - "<gray>Expansión de destino:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Instale la expansión y vuelva a cargar PlaceholderAPI desde este panel.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>PlaceholderAPI detectada</white>"
+      lore:
+        - "<gray>PlaceholderAPI está disponible y habilitada.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Falta</white>"
+      lore:
+        - "<gray>Instale y habilite PlaceholderAPI para utilizar esta acción.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Instalar {expansion_name} Expansión</white>"
+      lore:
+        - "<gray>Ejecuta:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Luego ejecuta:</gray> <white>papi reload</white>"
+        - "<yellow>Haga clic para ejecutar ambos comandos PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI requerido</white>"
+      lore:
+        - "<gray>Esta acción no está disponible hasta que se instale PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Se requiere acceso de administrador</white>"
+      lore:
+        - "<gray>No tiene permiso para utilizar las herramientas de administración de PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tienes permiso para administrar integraciones de PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI no está disponible en este servidor.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No se pudo enviar la descarga de expansión para <blanco>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Se completó la descarga de expansión, pero falló la recarga de PlaceholderAPI.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Instalado <blanco>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Administrador de divisas</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Configura la interfaz de usuario del navegador para configuraciones editables y comentarios de actualización.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Habilidad] Integraciones de requisitos</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Complementos de habilidades admitidos</white>"
+    lore:
+      - "<gray>Puentes admitidos:</gray> <white>{supported_count}</white>"
+      - "<gray>Detectado ahora:</gray> <white>{detected_count}</white>"
+      - "<gray>Haga clic en un complemento a continuación para inyectar requisitos de habilidades predeterminados en cada nivel de compra.</gray>"
+      - "<yellow>Es necesario reiniciar el servidor después de aplicar los cambios.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>detectado</gradient>"
+      missing: "<gradient:#ef4444:#f87171>faltante</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>ID de integración:</gray> <white>{integration_id}</white>"
+      - "<gray>Estado:</gray> <white>{detection_status}</white>"
+      - "<gray>Habilidad predeterminada:</gray> <white>{default_skill}</white>"
+      - "<gray>Rango de nivel aplicado:</gray> <white>{level_range}</white>"
+      - "<yellow>Haga clic para agregar este conjunto de requisitos a config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Sin puentes de habilidades</white>"
+      lore:
+        - "<gray>No hay entradas de puentes de habilidades compatibles disponibles.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Se requiere acceso de administrador</white>"
+      lore:
+        - "<gray>No tienes permiso para usar esta vista de habilidades. Edición de configuración</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>bloqueada</white>"
+      lore:
+        - "<gray>Esta edición no permite modificaciones de configuración en tiempo de ejecución.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tienes permiso para gestionar los requisitos de habilidades. La edición de configuración</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>está bloqueada en esta edición.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Se aplicó el requisito de habilidad predeterminado para <blanco>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, habilidad:</gray> <white>{default_skill}</white><gray>, rango:</gray> <white>{level_range}</white><gray>) a <blanco>{updated_tiers}</white> <gray>nivel(es) de compra.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Reinicie el servidor para que los cambios de requisitos surtan efecto.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No se pudieron aplicar los requisitos predeterminados para <blanco>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Trabajo] Integraciones de requisitos</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info]</gradient> <white>Complementos de trabajo admitidos</white>"
+    lore:
+      - "<gray>Puentes admitidos:</gray> <white>{supported_count}</white>"
+      - "<gray>Detectado ahora:</gray> <white>{detected_count}</white>"
+      - "<gray>Haga clic en un complemento a continuación para insertar requisitos de trabajo predeterminados en cada nivel de compra.</gray>"
+      - "<yellow>Es necesario reiniciar el servidor después de aplicar los cambios.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>detectado</gradient>"
+      missing: "<gradient:#ef4444:#f87171>faltante</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>ID de integración:</gray> <white>{integration_id}</white>"
+      - "<gray>Estado:</gray> <white>{detection_status}</white>"
+      - "<gray>Trabajo predeterminado:</gray> <white>{default_job}</white>"
+      - "<gray>Rango de nivel aplicado:</gray> <white>{level_range}</white>"
+      - "<yellow>Haga clic para agregar este conjunto de requisitos a config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Sin puentes de trabajos</white>"
+      lore:
+        - "<gray>No hay entradas de puentes de trabajos compatibles disponibles.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Se requiere acceso de administrador</white>"
+      lore:
+        - "<gray>No tiene permiso para utilizar esta vista de trabajo.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>bloqueada</white>"
+      lore:
+        - "<gray>Esta edición no permite modificaciones de configuración en tiempo de ejecución.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tienes permiso para gestionar los requisitos laborales.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>está bloqueada en esta edición.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Se aplicó el requisito de trabajo predeterminado para <blanco>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, trabajo:</gray> <white>{default_job}</white><gray>, rango:</gray> <white>{level_range}</white><gray>) a <blanco>{updated_tiers}</white> <gray>nivel(es) de compra.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Reinicie el servidor para que los cambios de requisitos surtan efecto.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No se pudieron aplicar los requisitos predeterminados para <blanco>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuración de tienda</gradient>"
   summary:

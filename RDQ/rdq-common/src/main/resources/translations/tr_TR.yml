@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Toplam eklentiler:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Toplam izinler:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ İzin yöneticisi açılamadı!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Döviz Yöneticisi</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Eklenti Entegrasyonları</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ ile algılanan para birimlerini inceleyin</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Vault ve JExEconomy girişlerini içerir</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Para birimi yöneticisi açılamadı!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Yönetici eklenti entegrasyonlarını tek bir yerden yönetin</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Para birimi, beceriler ve iş algılama görünümlerini içerir</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Eklenti entegrasyonları açılamadı!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms Grupları oluşturun</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅Oluşturuldu</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms grupları!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Yeni grup oluşturulmadı.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms grupları oluşturulamadı!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Eklenti Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Entegrasyon Merkezi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ eklenti entegrasyon kontrol panellerini açın</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Para birimi, beceriler/iş algılama ve PlaceholderAPI araçları mevcuttur burada</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Para Birimi Entegrasyonları</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Para birimi sağlayıcı yönetimini açın</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Algılanan Vault ve JExEconomy para birimlerini inceleyin</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Para birimi entegrasyonları açılamadı!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Beceri Entegrasyonları</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>mcMMO, Aura ve Aura için destek durumunu görüntüleyin EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Şu anda etkin olan beceri eklentilerini algıla</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Beceri entegrasyonları açılamadı!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ İş Entegrasyonları</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>EcoJobs ve JobsReborn için destek durumunu görüntüle</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Şu anda etkin olan iş eklentilerini algıla</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ İş entegrasyonları açılamadı!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI desteğini tespit edin ve genişletmeleri yönetin</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Player genişletmesini yükleyin ve PlaceholderAPI'i yeniden yükleyin</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI araçları açılamadı!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI Araçları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Entegrasyonu</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI desteklenir:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hedef genişletme:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Doğrudan bu panelden yükleyin ve yeniden yükleyin</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI Algılandı</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI yüklendi ve etkinleştirildi</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI Eksik</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Yükle ve etkinleştir Bu eylemi kullanmak için PlaceholderAPI</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 %expansion_name% Genişletmesini Yükle</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Çalıştırır:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sonra çalışır:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Her iki PlaceholderAPI komutunu yürütmek için tıklayın</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Gerekli</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bu eylem, PlaceholderAPI yüklenene kadar kullanılamaz</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Yönetici Erişim Gerekli</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI yönetici araçlarını kullanma izniniz yok</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI entegrasyonlarını yönetme izniniz yok.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI bu sunucuda mevcut değil.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Genişletme indirilemedi:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Genişletme indirme tamamlandı, ancak PlaceholderAPI yeniden yüklendi başarısız oldu.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ %expansion_name% genişletmesi yüklendi ve PlaceholderAPI yeniden yüklendi.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Beceri Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Beceri Eklentisi Durumu</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Desteklenen beceri entegrasyonları:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Şu anda algılandı:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>mcMMO, Aura ve EcoSkills'i kontrol ediyor destek</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Algılandı</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Entegrasyon kimliği:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Yapılandırılmış Beceri Entegrasyonu Yok</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Şu anda yapılandırılmış beceri eklentisi entegrasyonu yok</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ İş Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 İş Eklentisi Durumu</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Desteklenen iş entegrasyonları:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Şu anda algılandı:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>EcoJobs ve JobsReborn desteğini kontrol ediyor</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Algılandı</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Eklenti:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Entegrasyon kimliği:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Durum:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ İş Yok Yapılandırılan Entegrasyonlar</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Şu anda hiçbir iş eklentisi entegrasyonu yapılandırılmadı</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

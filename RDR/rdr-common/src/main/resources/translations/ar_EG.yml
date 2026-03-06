@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] التحكم في التخزين</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[المسؤول] التحكم في التخزين</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR لوحة الإدارة</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] لوحة إدارة RDR</gradient>"
     lore:
       - "<gray>إدارة أنظمة التخزين المميزة من مكان واحد.</gray>"
-      - "<gray>استخدم هذه اللوحة لتحرير قيم الإعدادات ودعم العملات.</gray>"
+      - "<gray>استخدم هذه اللوحة لتحرير قيم التكوين وفتح عناصر التحكم في التكامل.</gray>"
       - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] إعدادات التخزين</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] تكوين التخزين</gradient>"
       lore:
-        - "<gray>تحرير القيم من</gray> <white>التكوين/config.yml</white><gray>.</gray>"
-        - "<gray>يمكن تغيير كل إعداد قابل للتحرير من خلال مطالبة السندان.</gray>"
+        - "<gray>تحرير القيم من</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>يتم فتح الإعدادات المكتوبة في محرر سندان من الزجاج الملون المطابق.</gray>"
         - "<yellow>انقر لفتح عناصر التحكم في التكوين.</yellow>"
-    currency:
-      name: "<gradient:#10b981:#34d399>[Cur] مدير العملة</gradient>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[كثافة العمليات] تكامل البرنامج المساعد</gradient>"
       lore:
-        - "<gray>راجع العملات المكتشفة من Vault وJExEconomy.</gray>"
+        - "<gray>إدارة أدوات المهارات والوظيفة والعملة وPlaceholderAPI.</gray>"
+        - "<gray>افتح عناصر التحكم الإدارية الخاصة بالتكامل.</gray>"
+        - "<yellow>انقر لفتح إدارة التكامل.</yellow>"
+    currency:
+      name: "<gradient:#10b981:#34d399>[الكير] مدير العملة</gradient>"
+      lore:
+        - "<gray>قم بمراجعة العملات المكتشفة من Vault وJExEconomy.</gray>"
         - "<gray>قم بإنشاء الافتراضي</gray> <white>raindrops</white> <gray>العملة عند الحاجة.</gray>"
         - "<yellow>انقر لفتح ضوابط العملة.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[المهارة] متطلبات المهارة</gradient>"
+      lore:
+        - "<gray>قم بمراجعة المكونات الإضافية للمهارات المدعومة وحالة الكشف.</gray>"
+        - "<gray>قم بتطبيق متطلبات المهارات الافتراضية على جميع مستويات شراء التخزين.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في متطلبات المهارة.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[الوظيفة] متطلبات الوظيفة</gradient>"
+      lore:
+        - "<gray>قم بمراجعة المكونات الإضافية للمهمة المدعومة وحالة الكشف.</gray>"
+        - "<gray>تطبيق متطلبات الوظيفة الافتراضية على كافة طبقات شراء التخزين.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في متطلبات الوظيفة.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
       lore:
         - "<gray>ليس لديك إذن لاستخدام لوحة الإدارة هذه.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[كثافة العمليات] تكامل البرنامج المساعد</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] مركز التكامل</gradient>"
+    lore:
+      - "<gray>ضوابط التكامل المركزي لمتطلبات التخزين.</gray>"
+      - "<gray>العملة المفتوحة والمهارات والوظائف وإجراءات PlaceholderAPI.</gray>"
+      - "<yellow>يتطلب:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[الكير] مدير العملة</gradient>"
+      lore:
+        - "<gray>قم بمراجعة العملات المكتشفة من Vault وJExEconomy.</gray>"
+        - "<gray>قم بإنشاء الافتراضي</gray> <white>raindrops</white> <gray>العملة عند الحاجة.</gray>"
+        - "<yellow>انقر لفتح ضوابط العملة.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[المهارة] متطلبات المهارة</gradient>"
+      lore:
+        - "<gray>قم بمراجعة المكونات الإضافية للمهارات المدعومة وحالة الكشف.</gray>"
+        - "<gray>قم بتطبيق متطلبات المهارات الافتراضية على جميع مستويات شراء التخزين.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في متطلبات المهارة.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[الوظيفة] متطلبات الوظيفة</gradient>"
+      lore:
+        - "<gray>قم بمراجعة المكونات الإضافية للمهمة المدعومة وحالة الكشف.</gray>"
+        - "<gray>تطبيق متطلبات الوظيفة الافتراضية على كافة طبقات شراء التخزين.</gray>"
+        - "<yellow>انقر لفتح عناصر التحكم في متطلبات الوظيفة.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] العنصر النائب API</gradient>"
+      lore:
+        - "<gray>اكتشاف دعم PlaceholderAPI وإدارة التوسعات.</gray>"
+        - "<gray>تثبيت</gray> <white>Player</white> <gray>توسيع وإعادة تحميل PlaceholderAPI.</gray>"
+        - "<yellow>انقر لفتح أدوات PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام لوحة التكامل هذه.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] أدوات واجهة API للعنصر النائب</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] تكامل واجهة برمجة تطبيقات العنصر النائب</gradient>"
+    lore:
+      - "<gray>دعم العنصر النائب API:</gray> <white>{supported}</white>"
+      - "<gray>التوسع المستهدف:</gray> <white>{expansion_name}</white>"
+      - "<yellow>قم بتثبيت التوسيع وإعادة تحميل PlaceholderAPI من هذه اللوحة.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[موافق] تم اكتشاف واجهة برمجة تطبيقات العنصر النائب</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI متاح وممكّن.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] واجهة العنصر النائب مفقودة</gradient>"
+      lore:
+        - "<gray>قم بتثبيت وتمكين PlaceholderAPI لاستخدام هذا الإجراء.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] تثبيت التوسيع {expansion_name}</gradient>"
+      lore:
+        - "<gray>أشواط:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>ثم يجري:</gray> <white>papi reload</white>"
+        - "<yellow>انقر لتنفيذ كلا الأمرين PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب واجهة برمجة تطبيقات العنصر النائب</gradient>"
+      lore:
+        - "<gray>هذا الإجراء غير متاح حتى يتم تثبيت PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام أدوات إدارة PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة عمليات تكامل PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI غير متوفر على هذا الخادم.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل إرسال تنزيل التوسعة إلى <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>اكتمل تنزيل التوسيع، ولكن فشلت إعادة تحميل PlaceholderAPI.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>تم التثبيت <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] مدير العملة</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>ليس لديك إذن لاستخدام طريقة عرض العملة هذه.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة العملات.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[المهارة] تكامل المتطلبات</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] المكونات الإضافية للمهارات المدعومة</gradient>"
+    lore:
+      - "<gray>الجسور المدعومة:</gray> <white>{supported_count}</white>"
+      - "<gray>تم الكشف عنه الآن:</gray> <white>{detected_count}</white>"
+      - "<gray>انقر فوق أحد المكونات الإضافية أدناه لإدخال متطلبات المهارات الافتراضية في كل طبقة شراء للتخزين.</gray>"
+      - "<yellow>مطلوب إعادة تشغيل الخادم بعد تطبيق التغييرات.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>مُكتَشَف</gradient>"
+      missing: "<gradient:#ef4444:#f87171>مفتقد</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>معرف التكامل:</gray> <white>{integration_id}</white>"
+      - "<gray>حالة:</gray> <white>{detection_status}</white>"
+      - "<gray>المهارة الافتراضية:</gray> <white>{default_skill}</white>"
+      - "<gray>نطاق المستوى المطبق:</gray> <white>{level_range}</white>"
+      - "<yellow>انقر لإضافة مجموعة المتطلبات هذه إلى config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] لا توجد جسور مهارة</gradient>"
+      lore:
+        - "<gray>لا تتوفر إدخالات جسر المهارات المدعومة.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام طريقة عرض المهارات هذه.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] تم قفل تحرير التكوين</gradient>"
+      lore:
+        - "<gray>لا يسمح هذا الإصدار بتعديلات تكوين وقت التشغيل.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة متطلبات المهارات.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تحرير التكوين مقفل في هذا الإصدار.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>متطلبات المهارة الافتراضية المطبقة على <white>{plugin_name}</white> <gray>(بطاقة تعريف:</gray> <white>{integration_id}</white><gray>، المهارة:</gray> <white>{default_skill}</white><gray>، يتراوح:</gray> <white>{level_range}</white><gray>) إلى <أبيض>{updated_tiers}</white> <gray>طبقة (مستويات) شراء التخزين.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>أعد تشغيل الخادم لتصبح تغييرات المتطلبات سارية المفعول.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل تطبيق المتطلبات الافتراضية لـ <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[الوظيفة] تكامل المتطلبات</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[معلومات] الإضافات المهمة المدعومة</gradient>"
+    lore:
+      - "<gray>الجسور المدعومة:</gray> <white>{supported_count}</white>"
+      - "<gray>تم الكشف عنه الآن:</gray> <white>{detected_count}</white>"
+      - "<gray>انقر فوق أحد المكونات الإضافية أدناه لإدخال متطلبات الوظيفة الافتراضية في كل طبقة شراء للتخزين.</gray>"
+      - "<yellow>مطلوب إعادة تشغيل الخادم بعد تطبيق التغييرات.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>مُكتَشَف</gradient>"
+      missing: "<gradient:#ef4444:#f87171>مفتقد</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>معرف التكامل:</gray> <white>{integration_id}</white>"
+      - "<gray>حالة:</gray> <white>{detection_status}</white>"
+      - "<gray>الوظيفة الافتراضية:</gray> <white>{default_job}</white>"
+      - "<gray>نطاق المستوى المطبق:</gray> <white>{level_range}</white>"
+      - "<yellow>انقر لإضافة مجموعة المتطلبات هذه إلى config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] لا توجد جسور وظيفية</gradient>"
+      lore:
+        - "<gray>لا تتوفر أية إدخالات جسر المهام المدعومة.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gray>ليس لديك إذن لاستخدام عرض الوظيفة هذا.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] تم قفل تحرير التكوين</gradient>"
+      lore:
+        - "<gray>لا يسمح هذا الإصدار بتعديلات تكوين وقت التشغيل.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ليس لديك إذن لإدارة متطلبات الوظيفة.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تحرير التكوين مقفل في هذا الإصدار.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>تم تطبيق متطلبات الوظيفة الافتراضية على <white>{plugin_name}</white> <gray>(بطاقة تعريف:</gray> <white>{integration_id}</white><gray>، وظيفة:</gray> <white>{default_job}</white><gray>، يتراوح:</gray> <white>{level_range}</white><gray>) إلى <أبيض>{updated_tiers}</white> <gray>طبقة (مستويات) شراء التخزين.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>أعد تشغيل الخادم لتصبح تغييرات المتطلبات سارية المفعول.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل تطبيق المتطلبات الافتراضية لـ <white>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>المتطلبات الحالية:</gray><white>{requirements}</white>"
         - "<gray>المخازن المملوكة:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>استيفاء المتطلبات المتبقية قبل الشراء.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[القائمة أدناه]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[قائمة الطلبات]</gradient> <gray>المتطلبات الحالية:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] تم الوصول إلى حد التخزين</gradient>"
       lore:

@@ -277,18 +277,18 @@ shop_overview_ui:
 
 # Maailmanlaajuinen järjestelmänvalvojan ohjauspaneeli RDS-hallintaa varten.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Järjestelmänvalvoja] RDS-ohjaus</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Järjestelmänvalvoja] RDS-hallinta</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS-hallintapaneeli</white>"
     lore:
-      - "<gray>Hallitse globaaleja järjestelmänvalvojan järjestelmiä yhdestä paikasta.</gray>"
-      - "<gray>Avaa palvelinpankki tai muokkaa asetuksia alla.</gray>"
+      - "<gray>Hallitse maailmanlaajuisia järjestelmänvalvojan järjestelmiä yhdestä paikasta.</gray>"
+      - "<gray>Avaa palvelinpankki, konfigurointi ja integrointiohjaimet alla.</gray>"
       - "<yellow>Vaatii:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] Palvelinpankki</gradient>"
       lore:
-        - "<gray>Tarkista palvelinpankkiin vedetyt ylläpitokaupan tulot.</gray>"
+        - "<gray>Tarkista palvelinpankkiin vedetyt järjestelmänvalvojakaupan tulot.</gray>"
         - "<gray>Tarkista seuraavan vedon ajoitus ja nosta saldot.</gray>"
         - "<yellow>Napsauta avataksesi palvelinpankin ohjaimet.</yellow>"
     config:
@@ -297,19 +297,117 @@ shop_admin_ui:
         - "<gray>Muokkaa arvoja kohteesta</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Jokaista muokattavaa asetusta voidaan muuttaa alasinkehotteen avulla.</gray>"
         - "<yellow>Napsauta avataksesi konfigurointiohjaimet.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
+      lore:
+        - "<gray>Avoimet työpaikat, taidot ja PlaceholderAPI-integrointityökalut.</gray>"
+        - "<gray>Hallitse laajennusvaatimusten siltoja ja laajennusasetuksia.</gray>"
+        - "<yellow>Napsauta avataksesi integrointiohjaimet.</yellow>"
     currency:
-      name: "<gradient:#a78bfa:#c4b5fd>[Valuutta] Valuuttapäällikkö</gradient>"
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Currency Manager</gradient>"
       lore:
         - "<gray>Tarkista havaitut valuutat Holvista ja JExEconomystä.</gray>"
-        - "<gray>Luo oletusarvo</gray> <white>sadepisarat</white> <gray>valuuttaa tarvittaessa.</gray>"
+        - "<gray>Luo oletusvaluutta</gray> <white>raindrops</white> <gray>tarvittaessa.</gray>"
         - "<yellow>Napsauta avataksesi valuuttasäätimet.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Taito] Taitovaatimukset</gradient>"
+      lore:
+        - "<gray>Tarkista tuetut taitolaajennukset ja tunnistustila.</gray>"
+        - "<gray>Käytä oletustaitovaatimuksia kaikille ostotasoille.</gray>"
+        - "<yellow>Napsauta avataksesi taitovaatimusten säätimet.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Työ] Työn vaatimukset</gradient>"
+      lore:
+        - "<gray>Tarkista tuetut työlaajennukset ja tunnistuksen tila.</gray>"
+        - "<gray>Käytä oletustyön vaatimuksia kaikkiin ostotasoihin.</gray>"
+        - "<yellow>Napsauta avataksesi työvaatimusten säätimet.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Suorita verot nyt</gradient>"
+      lore:
+        - "<gray>Käynnistä yksi välitön veronkeräysjakso testausta varten.</gray>"
+        - "<gray>Tämä ei muuta määritettyä toistuvaa veroajastinta.</gray>"
+        - "<yellow>Napsauta suorittaaksesi verot kerran heti.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
       lore:
         - "<gray>Sinulla ei ole lupaa käyttää tätä hallintapaneelia.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Laukaisi välittömän myymäläveron perimisen.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kaupan verojen ajoitus ei ole saatavilla juuri nyt.</gray>"
 
-# Havaittujen palveluntarjoajien järjestelmänvalvojan valuuttanäkymä ja oletusvaluutan luonti.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>Integration Hub</white>"
+    lore:
+      - "<gray>Hallitse vaatimussiltaintegraatioita yhdestä paikasta.</gray>"
+      - "<gray>Avaa työpaikkoja, taitoja ja PlaceholderAPI-säätimiä.</gray>"
+      - "<yellow>Vaatii:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Taito] Taitovaatimukset</gradient>"
+      lore:
+        - "<gray>Tarkista tuetut taitolaajennukset ja tunnistustila.</gray>"
+        - "<gray>Käytä oletustaitovaatimuksia kaikille ostotasoille.</gray>"
+        - "<yellow>Napsauta avataksesi taitovaatimusten säätimet.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Työ] Työn vaatimukset</gradient>"
+      lore:
+        - "<gray>Tarkista tuetut työlaajennukset ja tunnistuksen tila.</gray>"
+        - "<gray>Käytä oletustyön vaatimuksia kaikkiin ostotasoihin.</gray>"
+        - "<yellow>Napsauta avataksesi työvaatimusten säätimet.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Tunnista PlaceholderAPI-tuki ja hallitse laajennuksia.</gray>"
+        - "<gray>Asenna</gray> <white>Player</white> <gray>laajenna ja lataa PlaceholderAPI uudelleen.</gray>"
+        - "<yellow>Napsauta avataksesi PlaceholderAPI-työkalut.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää tätä integrointipaneelia.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI-työkalut</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>PlaceholderAPI-integrointi</white>"
+    lore:
+      - "<gray>PlaceholderAPI-tuki:</gray> <white>{supported}</white>"
+      - "<gray>Kohdelaajennus:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Asenna laajennus ja lataa PlaceholderAPI uudelleen tästä paneelista.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>PlaceholderAPI havaittu</white>"
+      lore:
+        - "<gray>PlaceholderAPI on saatavilla ja käytössä.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI puuttuu</white>"
+      lore:
+        - "<gray>Asenna ja ota PlaceholderAPI käyttää tätä toimintoa.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Asenna {expansion_name} Laajennus</white>"
+      lore:
+        - "<gray>Suorittaa:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Sitten suorittaa:</gray> <white>papi reload</white>"
+        - "<yellow>Napsauta suorittaaksesi molemmat PlaceholderAPI-komennot.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI vaaditaan</white>"
+      lore:
+        - "<gray>Tämä toiminto ei ole käytettävissä, ennen kuin PlaceholderAPI on asennettu.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole lupaa käyttää PlaceholderAPI-hallintatyökaluja.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole oikeutta hallita PlaceholderAPI-integraatioita.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI ei ole saatavilla tällä palvelimella.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Laajennuksen <white>{expansion_name} lähettäminen epäonnistui.</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Laajennuksen lataus on valmis, mutta PlaceholderAPI:n uudelleenlataus epäonnistui.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Asennettu <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Valuutta] Valuuttapäällikkö</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Määritä selaimen käyttöliittymä muokattavia asetuksia ja päivityspalautetta varten.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Skill] Vaatimus Integraatiot</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Tiedot]</gradient> <white>Tuetut taitolaajennukset</white>"
+    lore:
+      - "<gray>Tuetut sillat:</gray> <white>{supported_count}</white>"
+      - "<gray>Havaittu nyt:</gray> <white>{detected_count}</white>"
+      - "<gray>Napsauta alla olevaa laajennusta jokaiseen oletustaitovaatimuksiin ostaaksesi tiejectr-vaatimukset.</gray>"
+      - "<yellow>Palvelin on käynnistettävä uudelleen muutosten käyttöönoton jälkeen.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Havaittu</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Puuttuva</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integrointitunnus:</gray> <white>{integration_id}</white>"
+      - "<gray>Tila:</gray> <white>{detection_status}</white>"
+      - "<gray>Oletustaito:</gray> <white>{default_skill}</white>"
+      - "<gray>Käytetty tasoalue:</gray> <white>{level_range}</white>"
+      - "<yellow>Napsauta lisätäksesi tämän vaatimuksen joukkoon config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Ei taitosiltoja</white>"
+      lore:
+        - "<gray>Tuettuja taitosiltamerkintöjä ei ole saatavilla.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole oikeutta käyttää tätä taitonäkymää.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Lukittu</white>"
+      lore:
+        - "<gray>Tämä versio ei salli ajonaikaisten asetusten muokkausta.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole lupaa hallita taitovaatimuksia.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config-muokkaus on lukittu tässä versiossa.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sovellettu oletustaitovaatimus kohteelle <white>{plugin_name}</white> <gray>(tunnus:</gray> <white>{integration_id}</white><gray>, taito:</gray> <white>{default_skill}</white><gray>, alue:</gray> <white>{level_range}</white><gray>) <valkoiseksi>{updated_tiers}</white> <gray>ostotaso(t).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Käynnistä palvelin uudelleen, jotta vaatimusmuutokset tulevat voimaan.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Oletusvaatimusten soveltaminen <valkoiselle>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Työ] Vaatimusintegraatiot</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Tiedot]</gradient> <white>Tuetut työlaajennukset</white>"
+    lore:
+      - "<gray>Tuetut sillat:</gray> <white>{supported_count}</white>"
+      - "<gray>Havaittu nyt:</gray> <white>{detected_count}</white>"
+      - "<gray>Napsauta alla olevaa laajennusta lisätäksesi työn oletusvaatimukset kuhunkin ostotasoon.</gray>"
+      - "<yellow>Palvelin on käynnistettävä uudelleen muutosten käyttöönoton jälkeen.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Havaittu</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Puuttuva</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integrointitunnus:</gray> <white>{integration_id}</white>"
+      - "<gray>Tila:</gray> <white>{detection_status}</white>"
+      - "<gray>Oletustyö:</gray> <white>{default_job}</white>"
+      - "<gray>Käytetty tasoalue:</gray> <white>{level_range}</white>"
+      - "<yellow>Napsauta lisätäksesi tämän vaatimuksen joukkoon config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Ei työsiltaja</white>"
+      lore:
+        - "<gray>Tuettuja työsiltamerkintöjä ei ole saatavilla.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Järjestelmänvalvojan käyttöoikeudet vaaditaan</white>"
+      lore:
+        - "<gray>Sinulla ei ole oikeutta käyttää tätä työnäkymää.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Lukittu</white>"
+      lore:
+        - "<gray>Tämä versio ei salli ajonaikaisten asetusten muokkausta.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinulla ei ole lupaa hallita työn vaatimuksia.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config-muokkaus on lukittu tässä versiossa.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Sovellettu oletustyön vaatimus <white>{plugin_name}</white> <gray>(tunnus:</gray> <white>{integration_id}</white><gray>, työ:</gray> <white>{default_job}</white><gray>, alue:</gray> <white>{level_range}</white><gray>) <valkoiseksi>{updated_tiers}</white> <gray>ostotaso(t).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Käynnistä palvelin uudelleen, jotta vaatimusmuutokset tulevat voimaan.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Oletusvaatimusten soveltaminen <valkoiselle>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
   summary:

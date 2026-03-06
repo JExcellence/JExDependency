@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>Requiere:</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Control de almacenamiento</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[Administrador] Control de almacenamiento</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Panel de administración</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Información] Panel de administración de RDR</gradient>"
     lore:
       - "<gray>Administre sistemas de almacenamiento privilegiados desde un solo lugar.</gray>"
-      - "<gray>Usa este panel para editar valores de configuracion y soporte de moneda.</gray>"
+      - "<gray>Utilice este panel para editar valores de configuración y abrir controles de integración.</gray>"
       - "<yellow>Requiere:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuracion de Almacenamiento</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuración de almacenamiento</gradient>"
       lore:
         - "<gray>Editar valores de</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Cada configuración editable se puede cambiar a través de un indicador de yunque.</gray>"
+        - "<gray>Las configuraciones escritas se abren en un editor de yunque de vidrieras a juego.</gray>"
         - "<yellow>Haga clic para abrir los controles de configuración.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Ent] Integraciones de complementos</gradient>"
+      lore:
+        - "<gray>Administre herramientas de habilidades, trabajos, divisas y PlaceholderAPI.</gray>"
+        - "<gray>Abra controles de administración específicos de la integración.</gray>"
+        - "<yellow>Haga clic para abrir la gestión de integración.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Administrador de divisas</gradient>"
       lore:
         - "<gray>Revise las monedas detectadas de Vault y JExEconomy.</gray>"
         - "<gray>Crear el predeterminado</gray> <white>raindrops</white> <gray>moneda cuando sea necesario.</gray>"
         - "<yellow>Haga clic para abrir los controles de divisas.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Habilidad] Requisitos de habilidad</gradient>"
+      lore:
+        - "<gray>Revise los complementos de habilidades admitidos y el estado de detección.</gray>"
+        - "<gray>Aplique requisitos de habilidades predeterminados a todos los niveles de compra de almacenamiento.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos de habilidades.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Trabajo] Requisitos del trabajo</gradient>"
+      lore:
+        - "<gray>Revise los complementos de trabajo compatibles y el estado de detección.</gray>"
+        - "<gray>Aplique requisitos de trabajo predeterminados a todos los niveles de compra de almacenamiento.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos laborales.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
       lore:
         - "<gray>No tienes permiso para utilizar este panel de administración.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Ent] Integraciones de complementos</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Información] Centro de integración</gradient>"
+    lore:
+      - "<gray>Controles de integración centralizados para requisitos de almacenamiento.</gray>"
+      - "<gray>Moneda abierta, habilidades, trabajos y acciones de PlaceholderAPI.</gray>"
+      - "<yellow>Requiere:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Administrador de divisas</gradient>"
+      lore:
+        - "<gray>Revise las monedas detectadas de Vault y JExEconomy.</gray>"
+        - "<gray>Crear el predeterminado</gray> <white>raindrops</white> <gray>moneda cuando sea necesario.</gray>"
+        - "<yellow>Haga clic para abrir los controles de divisas.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Habilidad] Requisitos de habilidad</gradient>"
+      lore:
+        - "<gray>Revise los complementos de habilidades admitidos y el estado de detección.</gray>"
+        - "<gray>Aplique requisitos de habilidades predeterminados a todos los niveles de compra de almacenamiento.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos de habilidades.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Trabajo] Requisitos del trabajo</gradient>"
+      lore:
+        - "<gray>Revise los complementos de trabajo compatibles y el estado de detección.</gray>"
+        - "<gray>Aplique requisitos de trabajo predeterminados a todos los niveles de compra de almacenamiento.</gray>"
+        - "<yellow>Haga clic para abrir los controles de requisitos laborales.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] API de marcador de posición</gradient>"
+      lore:
+        - "<gray>Detecta el soporte de PlaceholderAPI y gestiona las expansiones.</gray>"
+        - "<gray>Instale el</gray> <white>Player</white> <gray>expansión y recarga PlaceholderAPI.</gray>"
+        - "<yellow>Haga clic para abrir las herramientas PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
+      lore:
+        - "<gray>No tienes permiso para utilizar este panel de integración.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Herramientas API de marcador de posición</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Información] Integración de PlaceholderAPI</gradient>"
+    lore:
+      - "<gray>API de marcador de posición compatible:</gray> <white>{supported}</white>"
+      - "<gray>Expansión objetivo:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Instale la expansión y vuelva a cargar PlaceholderAPI desde este panel.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[Aceptar] API de marcador de posición detectada</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI está disponible y habilitada.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] Falta la API de marcador de posición</gradient>"
+      lore:
+        - "<gray>Instale y habilite PlaceholderAPI para utilizar esta acción.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Instalar expansión {expansion_name}</gradient>"
+      lore:
+        - "<gray>Carreras:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Luego ejecuta:</gray> <white>papi reload</white>"
+        - "<yellow>Haga clic para ejecutar ambos comandos de PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere API de marcador de posición</gradient>"
+      lore:
+        - "<gray>Esta acción no está disponible hasta que se instale PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
+      lore:
+        - "<gray>No tienes permiso para utilizar las herramientas de administración de PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>No tienes permiso para administrar integraciones de PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>PlaceholderAPI no está disponible en este servidor.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>No se pudo enviar la descarga de expansión para <blanco>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>Se completó la descarga de expansión, pero falló la recarga de PlaceholderAPI.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Instalado <blanco>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Administrador de divisas</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>No tienes permiso para utilizar esta vista de moneda.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tienes permiso para gestionar divisas.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Habilidad] Integraciones de requisitos</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Información] Complementos de habilidades admitidos</gradient>"
+    lore:
+      - "<gray>Puentes soportados:</gray> <white>{supported_count}</white>"
+      - "<gray>Detectado ahora:</gray> <white>{detected_count}</white>"
+      - "<gray>Haga clic en uno de los complementos a continuación para insertar requisitos de habilidades predeterminados en cada nivel de compra de almacenamiento.</gray>"
+      - "<yellow>Es necesario reiniciar el servidor después de aplicar los cambios.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detectado</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Desaparecido</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Identificación de integración:</gray> <white>{integration_id}</white>"
+      - "<gray>Estado:</gray> <white>{detection_status}</white>"
+      - "<gray>Habilidad predeterminada:</gray> <white>{default_skill}</white>"
+      - "<gray>Rango de niveles aplicado:</gray> <white>{level_range}</white>"
+      - "<yellow>Haga clic para agregar este conjunto de requisitos a config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Sin puentes de habilidades</gradient>"
+      lore:
+        - "<gray>No hay entradas de puente de habilidades admitidas disponibles.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
+      lore:
+        - "<gray>No tienes permiso para utilizar esta vista de habilidades.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Edición de configuración bloqueada</gradient>"
+      lore:
+        - "<gray>Esta edición no permite modificaciones de configuración en tiempo de ejecución.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>No tienes permiso para gestionar los requisitos de habilidades.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>La edición de configuración está bloqueada en esta edición.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Se aplicó el requisito de habilidad predeterminado para <blanco>{plugin_name}</white> <gray>(identificación:</gray> <white>{integration_id}</white><gray>, habilidad:</gray> <white>{default_skill}</white><gray>, rango:</gray> <white>{level_range}</white><gray>) a <blanco>{updated_tiers}</white> <gray>nivel(es) de compra de almacenamiento.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Reinicie el servidor para que los cambios de requisitos surtan efecto.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>No se pudieron aplicar los requisitos predeterminados para <blanco>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Trabajo] Integraciones de requisitos</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Información] Complementos de trabajo compatibles</gradient>"
+    lore:
+      - "<gray>Puentes soportados:</gray> <white>{supported_count}</white>"
+      - "<gray>Detectado ahora:</gray> <white>{detected_count}</white>"
+      - "<gray>Haga clic en uno de los complementos a continuación para insertar requisitos de trabajo predeterminados en cada nivel de compra de almacenamiento.</gray>"
+      - "<yellow>Es necesario reiniciar el servidor después de aplicar los cambios.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detectado</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Desaparecido</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Identificación de integración:</gray> <white>{integration_id}</white>"
+      - "<gray>Estado:</gray> <white>{detection_status}</white>"
+      - "<gray>Trabajo predeterminado:</gray> <white>{default_job}</white>"
+      - "<gray>Rango de niveles aplicado:</gray> <white>{level_range}</white>"
+      - "<yellow>Haga clic para agregar este conjunto de requisitos a config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Sin puentes laborales</gradient>"
+      lore:
+        - "<gray>No hay entradas de puente de trabajo admitidas disponibles.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Se requiere acceso de administrador</gradient>"
+      lore:
+        - "<gray>No tiene permiso para utilizar esta vista de trabajo.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Edición de configuración bloqueada</gradient>"
+      lore:
+        - "<gray>Esta edición no permite modificaciones de configuración en tiempo de ejecución.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>No tienes permiso para gestionar los requisitos laborales.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>La edición de configuración está bloqueada en esta edición.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Se aplicó el requisito de trabajo predeterminado para <blanco>{plugin_name}</white> <gray>(identificación:</gray> <white>{integration_id}</white><gray>, trabajo:</gray> <white>{default_job}</white><gray>, rango:</gray> <white>{level_range}</white><gray>) a <blanco>{updated_tiers}</white> <gray>nivel(es) de compra de almacenamiento.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Reinicie el servidor para que los cambios de requisitos surtan efecto.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[INCÓGNITA]</gradient> <gray>No se pudieron aplicar los requisitos predeterminados para <blanco>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Requisitos actuales:</gray><white>{requirements}</white>"
         - "<gray>Almacenamiento propio:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Cumplir con los requisitos restantes antes de comprar.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Lista a continuación]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Lista de solicitudes]</gradient> <gray>Requisitos actuales:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Límite de almacenamiento alcanzado</gradient>"
       lore:

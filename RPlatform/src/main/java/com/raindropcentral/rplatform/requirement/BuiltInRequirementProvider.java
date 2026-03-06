@@ -11,6 +11,10 @@ import java.util.Map;
  * <p>
  * This provider registers all the standard requirement types that come with RPlatform.
  * </p>
+ *
+ * @author ItsRainingHP, JExcellence
+ * @since 2.0.0
+ * @version 1.0.0
  */
 public final class BuiltInRequirementProvider implements PluginRequirementProvider {
 
@@ -27,6 +31,8 @@ public final class BuiltInRequirementProvider implements PluginRequirementProvid
         types.put("PLAYTIME", new RequirementType("PLAYTIME", PLUGIN_ID, PlaytimeRequirement.class));
         types.put("COMPOSITE", new RequirementType("COMPOSITE", PLUGIN_ID, CompositeRequirement.class));
         types.put("CHOICE", new RequirementType("CHOICE", PLUGIN_ID, ChoiceRequirement.class));
+        types.put("TIME_BASED", new RequirementType("TIME_BASED", PLUGIN_ID, TimedRequirement.class));
+        types.put("PLUGIN", new RequirementType("PLUGIN", PLUGIN_ID, PluginRequirement.class));
     }
 
     @Override

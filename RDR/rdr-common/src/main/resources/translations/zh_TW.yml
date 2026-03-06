@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] 儲存控制</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[管理員] 儲存控制</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 管理面板</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] RDR 管理面板</gradient>"
     lore:
       - "<gray>從一處管理特權儲存系統。</gray>"
-      - "<gray>使用此面板可編輯設定值與貨幣支援。</gray>"
+      - "<gray>使用此面板可以編輯配置值並開啟整合式控制項。</gray>"
       - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] 儲存設定</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] 儲存配置</gradient>"
       lore:
-        - "<gray>編輯值來自</gray> <white>配置/config.yml</white><gray>.</gray>"
-        - "<gray>每個可編輯設定都可以透過鐵砧提示進行變更。 </gray>"
-        - "<yellow>點選以開啟設定控制項。 </yellow>"
+        - "<gray>從</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>編輯值 在相符的彩色玻璃砧編輯器中開啟鍵入的設定。</gray>"
+        - "<yellow>點選可開啟設定控制項。</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] 外掛程式整合</gradient>"
+      lore:
+        - "<gray>管理技能、工作、貨幣和 PlaceholderAPI 工具。</gray>"
+        - "<gray>開啟整合特定的管理控制項。</gray>"
+        - "<yellow>點選開啟整合管理。</yellow>"
     currency:
-      name: "<gradient:#10b981:#34d399>[Cur] 貨幣經理</gradient>"
+      name: "<gradient:#10b981:#34d399>[Cur] 貨幣管理器</gradient>"
       lore:
-        - "<gray>檢查從 Vault 和 JExEconomy 偵測到的貨幣。</gray>"
-        - "<gray>建立預設值</gray> <white>raindrops</white> <gray>需要時使用貨幣。</gray>"
+        - "<gray>查看從 Vault 和 JExEconomy 偵測到的貨幣。</gray>"
+        - "<gray>在需要時建立預設的</gray> <white>raindrops</white> <gray>貨幣。</gray>"
         - "<yellow>點選可開啟貨幣控制。</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[技能] 技能要求</gradient>"
+      lore:
+        - "<gray>查看支援的技能插件和偵測狀態。</gray>"
+        - "<gray>將預設技能需求套用至所有儲存購買層。</gray>"
+        - "<yellow>點選可開啟技能要求控制。</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[作業] 作業要求</gradient>"
+      lore:
+        - "<gray>查看支援的作業插件和偵測狀態。</gray>"
+        - "<gray>將預設作業需求套用至所有儲存購買層。</gray>"
+        - "<yellow>按一下可開啟作業要求控制。</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
       lore:
         - "<gray>您無權使用此管理面板。</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] 外掛程式整合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 整合中心</gradient>"
+    lore:
+      - "<gray>針對儲存需求的集中整合控制。</gray>"
+      - "<gray>開放式貨幣、技能、工作和 PlaceholderAPI 操作。</gray>"
+      - "<yellow>要求：</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] 貨幣管理器</gradient>"
+      lore:
+        - "<gray>查看從 Vault 和 JExEconomy 偵測到的貨幣。</gray>"
+        - "<gray>在需要時建立預設的</gray> <white>raindrops</white> <gray>貨幣。</gray>"
+        - "<yellow>點選可開啟貨幣控制。</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[技能] 技能要求</gradient>"
+      lore:
+        - "<gray>查看支援的技能插件和偵測狀態。</gray>"
+        - "<gray>將預設技能需求套用至所有儲存購買層。</gray>"
+        - "<yellow>點選可開啟技能要求控制。</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[作業] 作業要求</gradient>"
+      lore:
+        - "<gray>查看支援的作業插件和偵測狀態。</gray>"
+        - "<gray>將預設作業需求套用至所有儲存購買層。</gray>"
+        - "<yellow>按一下可開啟作業要求控制。</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>偵測 PlaceholderAPI 支援並管理擴充功能。</gray>"
+        - "<gray>安裝</gray> <white>Player</white> <gray>擴充功能並重新載入 PlaceholderAPI。</gray>"
+        - "<yellow>點選可開啟 PlaceholderAPI 工具。</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用此整合面板。</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI 工具</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] PlaceholderAPI 整合</gradient>"
+    lore:
+      - "<gray>支援的 PlaceholderAPI：</gray> <white>{supported}</white>"
+      - "<gray>目標擴展：</gray> <white>{expansion_name}</white>"
+      - "<yellow>從該面板安裝擴充功能並重新載入 PlaceholderAPI。</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[確定] 偵測到佔位符API</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI 可用並已啟用。</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI 缺少</gradient>"
+      lore:
+        - "<gray>安裝並啟用 PlaceholderAPI 以使用此操作。</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] 安裝 {expansion_name} 擴充</gradient>"
+      lore:
+        - "<gray>運作：</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>然後執行：</gray> <white>papi reload</white>"
+        - "<yellow>按一下執行兩個 PlaceholderAPI 指令。</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI 必要</gradient>"
+      lore:
+        - "<gray>在安裝 PlaceholderAPI 之前，此操作不可用。</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用 PlaceholderAPI 管理工具。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權管理 PlaceholderAPI 整合。</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI 在此伺服器上不可用。</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>無法排程 <white>{expansion_name} 的擴充下載</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>擴充下載已完成，但 PlaceholderAPI 重新載入失敗。</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已安裝 <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] 貨幣經理</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>您無權使用此貨幣視圖。</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您沒有管理貨幣的權限。</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[技能] 要求整合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 支援的技能插件</gradient>"
+    lore:
+      - "<gray>支援的橋接：</gray> <white>{supported_count}</white>"
+      - "<gray>現在檢測到：</gray> <white>{detected_count}</white>"
+      - "<gray>點擊下面的插件將預設技能要求注入每個儲存購買層。</gray>"
+      - "<yellow>應用程式變更後需要重新啟動伺服器。</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>偵測到</gradient>"
+      missing: "<gradient:#ef4444:#f87171>缺失</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>整合 ID：</gray> <white>{integration_id}</white>"
+      - "<gray>地位：</gray> <white>{detection_status}</white>"
+      - "<gray>預設技能：</gray> <white>{default_skill}</white>"
+      - "<gray>適用等級範圍：</gray> <white>{level_range}</white>"
+      - "<yellow>按一下將此要求集新增至 config/config.yml。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] 無技能橋接</gradient>"
+      lore:
+        - "<gray>沒有可用的支援的技能橋條目。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用此技能視圖。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 設定編輯已鎖定</gradient>"
+      lore:
+        - "<gray>此版本不允許執行時間設定編輯。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權管理技能要求。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>設定編輯在此版本中被鎖定。</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>應用了 <white>{plugin_name} 的預設技能需求</white> <gray>（ID：</gray> <white>{integration_id}</white><gray>， 技能：</gray> <white>{default_skill}</white><gray>， 範圍：</gray> <white>{level_range}</white><gray>) 到 <white>{updated_tiers}</white> <gray>儲存購買層。</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>重新啟動伺服器以使要求變更生效。</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>無法套用 <white>{plugin_name} 的預設要求</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[作業] 要求整合</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[資訊] 支援的作業插件</gradient>"
+    lore:
+      - "<gray>支援的橋接：</gray> <white>{supported_count}</white>"
+      - "<gray>現在檢測到：</gray> <white>{detected_count}</white>"
+      - "<gray>點選下面的插件可將預設作業要求注入每個儲存購買層。</gray>"
+      - "<yellow>應用程式變更後需要重新啟動伺服器。</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>偵測到</gradient>"
+      missing: "<gradient:#ef4444:#f87171>缺失</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>整合 ID：</gray> <white>{integration_id}</white>"
+      - "<gray>地位：</gray> <white>{detection_status}</white>"
+      - "<gray>預設工作：</gray> <white>{default_job}</white>"
+      - "<gray>適用等級範圍：</gray> <white>{level_range}</white>"
+      - "<yellow>按一下將此要求集新增至 config/config.yml。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] 無作業橋接</gradient>"
+      lore:
+        - "<gray>沒有可用的受支援作業橋條目。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要管理員存取權限</gradient>"
+      lore:
+        - "<gray>您無權使用此作業檢視。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 設定編輯已鎖定</gradient>"
+      lore:
+        - "<gray>此版本不允許執行時間設定編輯。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>您無權管理工作要求。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>設定編輯在此版本中被鎖定。</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>應用了 <white>{plugin_name} 的預設工作要求</white> <gray>（ID：</gray> <white>{integration_id}</white><gray>， 工作：</gray> <white>{default_job}</white><gray>， 範圍：</gray> <white>{level_range}</white><gray>) 到 <white>{updated_tiers}</white> <gray>儲存購買層。</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>重新啟動伺服器以使要求變更生效。</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>無法套用 <white>{plugin_name} 的預設要求</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>目前需求：</gray><white>{requirements}</white>"
         - "<gray>擁有的儲存：</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>購買前滿足其餘要求。</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[列表如下]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[需求清單]</gradient> <gray>目前需求：</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] 已達到儲存限制</gradient>"
       lore:

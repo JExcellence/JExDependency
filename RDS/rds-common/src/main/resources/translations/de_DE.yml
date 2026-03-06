@@ -277,39 +277,137 @@ shop_overview_ui:
 
 # Globales Admin-Kontrollfeld für die RDS-Verwaltung.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS-Steuerung</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS-Admin-Panel</white>"
     lore:
       - "<gray>Verwalten Sie globale Admin-Shop-Systeme von einem Ort aus.</gray>"
-      - "<gray>Öffnen Sie die Serverbank oder bearbeiten Sie die Konfigurationseinstellungen unten.</gray>"
-      - "<yellow>Erfordert: </yellow> <white>raindropshops.command.admin</white>"
+      - "<gray>Öffnen Sie unten die Steuerelemente für Serverbank, Konfiguration und Integration.</gray>"
+      - "<yellow>Erfordert:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
       lore:
-        - "<gray>Überprüfen Sie die in die Serverbank übertragenen Admin-Shop-Einnahmen.</gray>"
-        - "<gray>Überprüfen Sie den Zeitpunkt des nächsten Abrufs und heben Sie Guthaben ab.</gray>"
-        - "<yellow>Klicken, um Server zu öffnen Bankkontrollen.</yellow>"
+        - "<gray>Überprüfen Sie die Einnahmen aus dem Admin-Shop, die in die Serverbank übertragen wurden.</gray>"
+        - "<gray>Überprüfen Sie den Zeitpunkt des nächsten Abzugs und heben Sie Guthaben ab.</gray>"
+        - "<yellow>Klicken Sie hier, um die Serverbanksteuerung zu öffnen.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop-Konfiguration</gradient>"
       lore:
-        - "<gray>Werte bearbeiten aus</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Jede editierbare Einstellung kann über eine Amboss-Eingabeaufforderung geändert werden.</gray>"
-        - "<yellow>Klicken, um Konfigurationskontrollen zu öffnen.</yellow>"
+        - "<gray>Werte von</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>bearbeiten Jede bearbeitbare Einstellung kann über eine Amboss-Eingabeaufforderung geändert werden.</gray>"
+        - "<yellow>Klicken Sie hier, um die Konfigurationssteuerelemente zu öffnen.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin-Integrationen</gradient>"
+      lore:
+        - "<gray>Offene Jobs, Fähigkeiten und PlaceholderAPI-Integrationstools.</gray>"
+        - "<gray>Verwalten Sie Plugin-Anforderungsbrücken und Erweiterungs-Setup.</gray>"
+        - "<yellow>Klicken Sie hier, um die Integrationssteuerelemente zu öffnen.</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] Währungsmanager</gradient>"
       lore:
         - "<gray>Überprüfen Sie erkannte Währungen aus Vault und JExEconomy.</gray>"
-        - "<gray>Erstellen Sie die Standardwährung.</gray> <white>raindrops</white> <gray>Währung wann benötigt.</gray>"
-        - "<yellow>Klicken, um Währungskontrollen zu öffnen.</yellow>"
+        - "<gray>Erstellen Sie den Standardwert</gray> <white>raindrops</white> <gray>Währung bei Bedarf.</gray>"
+        - "<yellow>Klicken Sie hier, um die Währungskontrolle zu öffnen.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skill-Anforderungen</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie die unterstützten Skill-Plugins und den Erkennungsstatus.</gray>"
+        - "<gray>Wenden Sie Standardfähigkeitsanforderungen auf alle Kaufstufen an.</gray>"
+        - "<yellow>Klicken Sie hier, um die Steuerelemente für die Qualifikationsanforderungen zu öffnen.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Jobanforderungen</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie die unterstützten Job-Plugins und den Erkennungsstatus.</gray>"
+        - "<gray>Standard-Jobanforderungen auf alle Kaufstufen anwenden.</gray>"
+        - "<yellow>Klicken Sie hier, um die Jobanforderungskontrollen zu öffnen.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Steuer] Steuern jetzt ausführen</gradient>"
+      lore:
+        - "<gray>Löst zum Testen einen sofortigen Steuererhebungszyklus aus.</gray>"
+        - "<gray>Dadurch wird der konfigurierte Wiederholungssteuer-Timer nicht geändert.</gray>"
+        - "<yellow>Klicken Sie hier, um die Steuern jetzt einmal auszuführen.</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Administratorzugriff erforderlich</white>"
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin-Zugriff erforderlich</white>"
       lore:
-        - "<gray>Sie haben keine Berechtigung, diesen Admin zu verwenden Panel.</gray>"
+        - "<gray>Sie haben keine Berechtigung, dieses Admin-Panel zu verwenden.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Hat einen sofortigen Ladensteuereinzugszyklus ausgelöst.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Shop-Steuerplaner ist derzeit nicht verfügbar.</gray>"
 
-# Admin-Währungsansicht für erkannte Anbieter und Standardwährungserstellung.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin-Integrationen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Integration Hub</white>"
+    lore:
+      - "<gray>Verwalten Sie Anforderungsbrückenintegrationen von einem Ort aus.</gray>"
+      - "<gray>Offene Jobs, Fähigkeiten und PlaceholderAPI-Steuerelemente.</gray>"
+      - "<yellow>Erfordert:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skill-Anforderungen</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie die unterstützten Skill-Plugins und den Erkennungsstatus.</gray>"
+        - "<gray>Wenden Sie Standardfähigkeitsanforderungen auf alle Kaufstufen an.</gray>"
+        - "<yellow>Klicken Sie hier, um die Steuerelemente für die Qualifikationsanforderungen zu öffnen.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Jobanforderungen</gradient>"
+      lore:
+        - "<gray>Überprüfen Sie die unterstützten Job-Plugins und den Erkennungsstatus.</gray>"
+        - "<gray>Standard-Jobanforderungen auf alle Kaufstufen anwenden.</gray>"
+        - "<yellow>Klicken Sie hier, um die Jobanforderungskontrollen zu öffnen.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Erkennen Sie die PlaceholderAPI-Unterstützung und verwalten Sie Erweiterungen.</gray>"
+        - "<gray>Installieren Sie die</gray> <white>Player</white> <gray>Erweiterung und Neuladen der PlaceholderAPI.</gray>"
+        - "<yellow>Klicken Sie hier, um die PlaceholderAPI-Tools zu öffnen.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin-Zugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, dieses Integrationspanel zu verwenden.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI-Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>PlaceholderAPI-Integration</white>"
+    lore:
+      - "<gray>Unterstützte PlaceholderAPI:</gray> <white>{supported}</white>"
+      - "<gray>Zielerweiterung:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Installieren Sie die Erweiterung und laden Sie PlaceholderAPI über dieses Bedienfeld neu.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>PlaceholderAPI erkannt</white>"
+      lore:
+        - "<gray>PlaceholderAPI ist verfügbar und aktiviert.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI fehlt</white>"
+      lore:
+        - "<gray>Installieren und aktivieren Sie PlaceholderAPI, um diese Aktion zu verwenden.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{expansion_name}-Erweiterung installieren</white>"
+      lore:
+        - "<gray>Führt aus:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Dann führt es aus:</gray> <white>papi reload</white>"
+        - "<yellow>Klicken Sie, um beide PlaceholderAPI-Befehle auszuführen.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI erforderlich</white>"
+      lore:
+        - "<gray>Diese Aktion ist erst verfügbar, wenn PlaceholderAPI installiert ist.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin-Zugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung zur Verwendung der PlaceholderAPI-Verwaltungstools.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie sind nicht berechtigt, PlaceholderAPI-Integrationen zu verwalten.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI ist auf diesem Server nicht verfügbar.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Der Download der Erweiterung für <white>{expansion_name} konnte nicht versendet werden.</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Der Download der Erweiterung wurde abgeschlossen, aber das erneute Laden der PlaceholderAPI ist fehlgeschlagen.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Installiert <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Währungsmanager</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Konfigurieren Sie die Browser-Benutzeroberfläche für bearbeitbare Einstellungen und Update-Feedback.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Skill]-Anforderungsintegrationen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Unterstützte Skill-Plugins</white>"
+    lore:
+      - "<gray>Unterstützte Bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Jetzt erkannt:</gray> <white>{detected_count}</white>"
+      - "<gray>Klicken Sie unten auf ein Plugin, um Standard-Skill-Anforderungen in jede Kaufstufe einzufügen.</gray>"
+      - "<yellow>Nach der Übernahme der Änderungen ist ein Serverneustart erforderlich.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Erkanntes</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Fehlendes</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integrations-ID:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardfähigkeit:</gray> <white>{default_skill}</white>"
+      - "<gray>Angewandter Levelbereich:</gray> <white>{level_range}</white>"
+      - "<yellow>Klicken Sie, um diesen Anforderungssatz zu config/config.yml hinzuzufügen.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Keine Skill Bridges</white>"
+      lore:
+        - "<gray>Es sind keine unterstützten Skill Bridge-Einträge verfügbar.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin-Zugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diese Skill-Ansicht zu verwenden.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Konfigurationsbearbeitung gesperrt</white>"
+      lore:
+        - "<gray>Diese Edition erlaubt keine Laufzeitkonfigurationsänderungen.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie sind nicht berechtigt, die Qualifikationsanforderungen zu verwalten.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Die Konfigurationsbearbeitung ist in dieser Edition gesperrt.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Angewandte Standardfähigkeitsanforderung für <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, Fertigkeit:</gray> <white>{default_skill}</white><gray>, Reichweite:</gray> <white>{level_range}</white><gray>) bis <white>{updated_tiers}</white> <gray>Kaufstufe(n).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Starten Sie den Server neu, damit die Anforderungsänderungen wirksam werden.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Fehler beim Anwenden der Standardanforderungen für <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] Anforderungsintegrationen</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info]</gradient> <white>Unterstützte Job-Plugins</white>"
+    lore:
+      - "<gray>Unterstützte Bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Jetzt erkannt:</gray> <white>{detected_count}</white>"
+      - "<gray>Klicken Sie unten auf ein Plugin, um Standard-Jobanforderungen in jede Kaufstufe einzufügen.</gray>"
+      - "<yellow>Nach der Übernahme der Änderungen ist ein Serverneustart erforderlich.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Erkanntes</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Fehlendes</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integrations-ID:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardjob:</gray> <white>{default_job}</white>"
+      - "<gray>Angewandter Levelbereich:</gray> <white>{level_range}</white>"
+      - "<yellow>Klicken Sie, um diesen Anforderungssatz zu config/config.yml hinzuzufügen.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Keine Jobbrücken</white>"
+      lore:
+        - "<gray>Es sind keine unterstützten Jobbrückeneinträge verfügbar.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin-Zugriff erforderlich</white>"
+      lore:
+        - "<gray>Sie haben keine Berechtigung, diese Jobansicht zu verwenden.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Konfigurationsbearbeitung gesperrt</white>"
+      lore:
+        - "<gray>Diese Edition erlaubt keine Laufzeitkonfigurationsänderungen.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sie sind nicht berechtigt, Jobanforderungen zu verwalten.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Die Konfigurationsbearbeitung ist in dieser Edition gesperrt.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Angewandte Standardjobanforderung für <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, Job:</gray> <white>{default_job}</white><gray>, Reichweite:</gray> <white>{level_range}</white><gray>) bis <white>{updated_tiers}</white> <gray>Kaufstufe(n).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Starten Sie den Server neu, damit die Anforderungsänderungen wirksam werden.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Fehler beim Anwenden der Standardanforderungen für <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop-Konfiguration</gradient>"
   summary:

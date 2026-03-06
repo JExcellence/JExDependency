@@ -277,39 +277,137 @@ shop_overview_ui:
 
 # Bảng điều khiển quản trị viên toàn cầu để quản lý RDS.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Quản trị viên] Kiểm soát RDS</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Quản trị viên] RDS Control</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Bảng điều khiển quản trị RDS</white>"
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Bảng quản trị RDS</white>"
     lore:
       - "<gray>Quản lý hệ thống cửa hàng quản trị toàn cầu từ một nơi.</gray>"
-      - "<gray>Mở ngân hàng máy chủ hoặc chỉnh sửa cài đặt cấu hình bên dưới.</gray>"
+      - "<gray>Mở ngân hàng máy chủ, cấu hình và các điều khiển tích hợp bên dưới.</gray>"
       - "<yellow>Yêu cầu:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] Ngân hàng máy chủ</gradient>"
       lore:
         - "<gray>Xem xét thu nhập của cửa hàng quản trị được kéo vào ngân hàng máy chủ.</gray>"
-        - "<gray>Kiểm tra thời gian kéo tiếp theo và rút số dư.</gray>"
+        - "<gray>Kiểm tra thời gian kéo và rút số dư tiếp theo.</gray>"
         - "<yellow>Nhấp để mở điều khiển ngân hàng máy chủ.</yellow>"
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Cửa hàng Config</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
         - "<gray>Chỉnh sửa giá trị từ</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Mọi cài đặt có thể chỉnh sửa đều có thể được thay đổi thông qua lời nhắc đe.</gray>"
-        - "<yellow>Nhấp để mở điều khiển cấu hình.</yellow>"
+        - "<yellow>Nhấp để mở điều khiển cấu hình. Tích hợp plugin</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int]</gradient>"
+      lore:
+        - "<gray>Mở các công việc, kỹ năng và công cụ tích hợp PlaceholderAPI.</gray>"
+        - "<gray>Quản lý cầu nối yêu cầu plugin và thiết lập mở rộng.</gray>"
+        - "<yellow>Nhấp để mở các điều khiển tích hợp.</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] Trình quản lý tiền tệ</gradient>"
       lore:
-        - "<gray>Xem lại các loại tiền tệ được phát hiện từ Vault và JExEconomy.</gray>"
-        - "<gray>Tạo loại tiền mặc định</gray> <white>hạt mưa</white> <gray>ngoại tệ khi cần thiết.</gray>"
+        - "<gray>Xem xét các loại tiền tệ được phát hiện từ Vault và JExEconomy.</gray>"
+        - "<gray>Tạo loại tiền</gray> <white>raindrops</white> <gray>mặc định khi cần.</gray>"
         - "<yellow>Nhấp để mở kiểm soát tiền tệ.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Kỹ năng] Yêu cầu kỹ năng</gradient>"
+      lore:
+        - "<gray>Xem lại các plugin kỹ năng được hỗ trợ và trạng thái phát hiện.</gray>"
+        - "<gray>Áp dụng các yêu cầu kỹ năng mặc định cho tất cả các cấp độ mua hàng.</gray>"
+        - "<yellow>Nhấp để mở điều khiển yêu cầu kỹ năng.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Công việc] Yêu cầu công việc</gradient>"
+      lore:
+        - "<gray>Xem lại các plugin công việc được hỗ trợ và trạng thái phát hiện.</gray>"
+        - "<gray>Áp dụng các yêu cầu công việc mặc định cho tất cả các cấp độ mua hàng.</gray>"
+        - "<yellow>Nhấp để mở điều khiển yêu cầu công việc.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Thuế] Chạy thuế ngay</gradient>"
+      lore:
+        - "<gray>Kích hoạt một chu kỳ thu thuế ngay lập tức để thử nghiệm.</gray>"
+        - "<gray>Điều này không thay đổi bộ đếm thời gian tính thuế lặp lại đã được cấu hình.</gray>"
+        - "<yellow>Nhấp để chạy thuế một lần ngay bây giờ.</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập của quản trị viên</white>"
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập quản trị</white>"
       lore:
-        - "<gray>Bạn không có quyền sử dụng quản trị viên này panel.</gray>"
+        - "<gray>Bạn không có quyền sử dụng bảng quản trị này.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã kích hoạt chu kỳ thu thuế cửa hàng ngay lập tức.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Công cụ lập lịch thuế cửa hàng hiện không khả dụng.</gray>"
 
-# Chế độ xem tiền tệ của quản trị viên cho các nhà cung cấp được phát hiện và tạo tiền tệ mặc định.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int]</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Trung tâm tích hợp</white>"
+    lore:
+      - "<gray>Quản lý tích hợp cầu yêu cầu từ một nơi.</gray>"
+      - "<gray>Mở công việc, kỹ năng và điều khiển PlaceholderAPI.</gray>"
+      - "<yellow>Yêu cầu:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Kỹ năng] Yêu cầu kỹ năng</gradient>"
+      lore:
+        - "<gray>Xem lại các plugin kỹ năng được hỗ trợ và trạng thái phát hiện.</gray>"
+        - "<gray>Áp dụng các yêu cầu kỹ năng mặc định cho tất cả các cấp độ mua hàng.</gray>"
+        - "<yellow>Nhấp để mở điều khiển yêu cầu kỹ năng.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Công việc] Yêu cầu công việc</gradient>"
+      lore:
+        - "<gray>Xem lại các plugin công việc được hỗ trợ và trạng thái phát hiện.</gray>"
+        - "<gray>Áp dụng các yêu cầu công việc mặc định cho tất cả các cấp độ mua hàng.</gray>"
+        - "<yellow>Nhấp để mở điều khiển yêu cầu công việc.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Phát hiện hỗ trợ PlaceholderAPI và quản lý các phần mở rộng.</gray>"
+        - "<gray>Cài đặt bản mở rộng</gray> <white>Player</white> <gray>và tải lại PlaceholderAPI.</gray>"
+        - "<yellow>Nhấp để mở công cụ PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập quản trị</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng bảng tích hợp này.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Công cụ placeholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Tích hợp placeholderAPI</white>"
+    lore:
+      - "<gray>PlaceholderAPI được hỗ trợ:</gray> <white>{supported}</white>"
+      - "<gray>Mở rộng mục tiêu:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Cài đặt phần mở rộng và tải lại PlaceholderAPI từ bảng này.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK] Đã phát hiện</gradient> <white>PlaceholderAPI</white>"
+      lore:
+        - "<gray>PlaceholderAPI đã có sẵn và được bật.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Thiếu</white>"
+      lore:
+        - "<gray>Cài đặt và bật PlaceholderAPI để sử dụng hành động này.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Cài đặt {expansion_name} Mở rộng</white>"
+      lore:
+        - "<gray>Chạy:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Sau đó chạy:</gray> <white>papi reload</white>"
+        - "<yellow>Nhấp để thực thi cả hai lệnh PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu API giữ chỗ</white>"
+      lore:
+        - "<gray>Hành động này không khả dụng cho đến khi cài đặt PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập quản trị</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng công cụ quản trị PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền quản lý tích hợp PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI không có sẵn trên máy chủ này.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không thể gửi bản tải xuống mở rộng cho <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Đã hoàn tất tải xuống bản mở rộng, nhưng việc tải lại PlaceholderAPI không thành công.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Đã cài đặt <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Trình quản lý tiền tệ</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Định cấu hình giao diện người dùng trình duyệt để có các cài đặt có thể chỉnh sửa và cập nhật phản hồi.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Kỹ năng] Yêu cầu Tích hợp</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin]</gradient> <white>Các plugin kỹ năng được hỗ trợ</white>"
+    lore:
+      - "<gray>Các cầu nối được hỗ trợ:</gray> <white>{supported_count}</white>"
+      - "<gray>Đã phát hiện ngay bây giờ:</gray> <white>{detected_count}</white>"
+      - "<gray>Nhấp vào plugin bên dưới để đưa các yêu cầu kỹ năng mặc định vào từng cấp mua.</gray>"
+      - "<yellow>Cần phải khởi động lại máy chủ sau khi áp dụng các thay đổi.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Đã phát hiện</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Mất tích</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Id tích hợp:</gray> <white>{integration_id}</white>"
+      - "<gray>Trạng thái:</gray> <white>{detection_status}</white>"
+      - "<gray>Kỹ năng mặc định:</gray> <white>{default_skill}</white>"
+      - "<gray>Phạm vi cấp độ được áp dụng:</gray> <white>{level_range}</white>"
+      - "<yellow>Nhấp để thêm yêu cầu này được đặt thành config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Không có cầu nối kỹ năng</white>"
+      lore:
+        - "<gray>Không có mục cầu kỹ năng nào được hỗ trợ.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập quản trị</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng chế độ xem kỹ năng này.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Chỉnh sửa cấu hình Đã khóa</white>"
+      lore:
+        - "<gray>Phiên bản này không cho phép chỉnh sửa cấu hình thời gian chạy.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền quản lý các yêu cầu về kỹ năng. Chỉnh sửa cấu hình</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>bị khóa trong phiên bản này.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Áp dụng yêu cầu kỹ năng mặc định cho <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, kỹ năng:</gray> <white>{default_skill}</white><gray>, phạm vi:</gray> <white>{level_range}</white><gray>) đến <white>{updated_tiers}</white> <gray>mua cấp độ.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Khởi động lại máy chủ để các thay đổi yêu cầu có hiệu lực.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không thể áp dụng các yêu cầu mặc định cho <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Công việc] Tích hợp yêu cầu</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Thông tin]</gradient> <white>Plugin công việc được hỗ trợ</white>"
+    lore:
+      - "<gray>Các cầu nối được hỗ trợ:</gray> <white>{supported_count}</white>"
+      - "<gray>Đã phát hiện ngay bây giờ:</gray> <white>{detected_count}</white>"
+      - "<gray>Nhấp vào plugin bên dưới để đưa các yêu cầu công việc mặc định vào từng cấp mua.</gray>"
+      - "<yellow>Cần phải khởi động lại máy chủ sau khi áp dụng các thay đổi.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Đã phát hiện</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Mất tích</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Id tích hợp:</gray> <white>{integration_id}</white>"
+      - "<gray>Trạng thái:</gray> <white>{detection_status}</white>"
+      - "<gray>Công việc mặc định:</gray> <white>{default_job}</white>"
+      - "<gray>Phạm vi cấp độ được áp dụng:</gray> <white>{level_range}</white>"
+      - "<yellow>Nhấp để thêm yêu cầu này được đặt thành config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Không có cầu nối công việc</white>"
+      lore:
+        - "<gray>Không có mục nhập cầu công việc được hỗ trợ nào.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yêu cầu quyền truy cập quản trị</white>"
+      lore:
+        - "<gray>Bạn không có quyền sử dụng chế độ xem công việc này.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Chỉnh sửa cấu hình Đã khóa</white>"
+      lore:
+        - "<gray>Phiên bản này không cho phép chỉnh sửa cấu hình thời gian chạy.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền quản lý các yêu cầu công việc.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>bị khóa trong phiên bản này.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Áp dụng yêu cầu công việc mặc định cho <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, công việc:</gray> <white>{default_job}</white><gray>, phạm vi:</gray> <white>{level_range}</white><gray>) đến <white>{updated_tiers}</white> <gray>mua cấp độ.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Khởi động lại máy chủ để các thay đổi yêu cầu có hiệu lực.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Không thể áp dụng các yêu cầu mặc định cho <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Cửa hàng Config</gradient>"
   summary:

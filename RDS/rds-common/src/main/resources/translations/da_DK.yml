@@ -277,39 +277,137 @@ shop_overview_ui:
 
 # Globalt admin kontrolpanel til RDS-administration.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS-kontrol</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Control</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
     lore:
       - "<gray>Administrer globale admin-shop-systemer fra ét sted.</gray>"
-      - "<gray>Åbn serverbanken, eller rediger konfigurationsindstillingerne nedenfor.</gray>"
+      - "<gray>Åbn serverbank, konfiguration og integrationskontroller nedenfor.</gray>"
       - "<yellow>Kræver:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
-      name: "<gradient:#10b981:#34d399>[$] Serverbank</gradient>"
+      name: "<gradient:#10b981:#34d399>[$] Server Bank</gradient>"
       lore:
-        - "<gray>Gennemgå admin-shop-indtægter trukket ind i serverbanken.</gray>"
-        - "<gray>Tjek tidspunktet for næste træk, og træk saldi ud.</gray>"
+        - "<gray>Gennemgå admin-shop indkomst trukket ind i serverbanken.</gray>"
+        - "<gray>Tjek næste træktidspunkt og træk saldi ud.</gray>"
         - "<yellow>Klik for at åbne serverbankkontroller.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
         - "<gray>Rediger værdier fra</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Alle redigerbare indstillinger kan ændres via en ambolt-prompt.</gray>"
+        - "<gray>Hver redigerbar indstilling kan ændres via en ambolt-prompt.</gray>"
         - "<yellow>Klik for at åbne konfigurationskontroller.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
+      lore:
+        - "<gray>Åbne job, færdigheder og PlaceholderAPI-integrationsværktøjer.</gray>"
+        - "<gray>Administrer plugin-kravbroer og udvidelsesopsætning.</gray>"
+        - "<yellow>Klik for at åbne integrationskontroller.</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] Valutaadministrator</gradient>"
       lore:
         - "<gray>Gennemgå registrerede valutaer fra Vault og JExEconomy.</gray>"
-        - "<gray>Opret standarden</gray> <white>regndråber</white> <gray>valuta efter behov.</gray>"
+        - "<gray>Opret standard</gray> <white>raindrops</white> <gray>valuta efter behov.</gray>"
         - "<yellow>Klik for at åbne valutakontrol.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Færdighedskrav</gradient>"
+      lore:
+        - "<gray>Gennemgå understøttede færdighedsplugins og detektionstilstand.</gray>"
+        - "<gray>Anvend standardkrav til færdigheder på alle købsniveauer.</gray>"
+        - "<yellow>Klik for at åbne kontrolelementer for færdighedskrav.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Jobkrav</gradient>"
+      lore:
+        - "<gray>Gennemgå understøttede jobplugins og registreringstilstand.</gray>"
+        - "<gray>Anvend standardjobkrav på alle købsniveauer.</gray>"
+        - "<yellow>Klik for at åbne kontrolelementer for jobkrav.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Skat] Kør skatter nu</gradient>"
+      lore:
+        - "<gray>Udløs en øjeblikkelig skatteopkrævningscyklus til test.</gray>"
+        - "<gray>Dette ændrer ikke den konfigurerede gentagne skattetimer.</gray>"
+        - "<yellow>Klik for at køre skat én gang lige nu.</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Adgang påkrævet</white>"
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Admin påkrævet</white>"
       lore:
-        - "<gray>Du har ikke tilladelse til at bruge dette administratorpanel.</gray>"
+        - "<gray>Du har ikke tilladelse til at bruge dette admin panel.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Udløste en øjeblikkelig butiksafgiftsopkrævningscyklus.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Shop skatteplanlægning er ikke tilgængelig lige nu.</gray>"
 
-# Administratorvalutavisning for registrerede udbydere og oprettelse af standardvaluta.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Integration Hub</white>"
+    lore:
+      - "<gray>Administrer kravbro-integrationer fra ét sted.</gray>"
+      - "<gray>Åbne job, færdigheder og PlaceholderAPI-kontroller.</gray>"
+      - "<yellow>Kræver:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Færdighedskrav</gradient>"
+      lore:
+        - "<gray>Gennemgå understøttede færdighedsplugins og detektionstilstand.</gray>"
+        - "<gray>Anvend standardkrav til færdigheder på alle købsniveauer.</gray>"
+        - "<yellow>Klik for at åbne kontrolelementer for færdighedskrav.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Jobkrav</gradient>"
+      lore:
+        - "<gray>Gennemgå understøttede jobplugins og registreringstilstand.</gray>"
+        - "<gray>Anvend standardjobkrav på alle købsniveauer.</gray>"
+        - "<yellow>Klik for at åbne kontrolelementer for jobkrav.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detect PlaceholderAPI understøtter og administrerer udvidelser.</gray>"
+        - "<gray>Installer</gray> <white>Player</white> <gray>udvidelse og genindlæs PlaceholderAPI.</gray>"
+        - "<yellow>Klik for at åbne PlaceholderAPI-værktøjer.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Admin påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge dette integrationspanel.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI-værktøjer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>PlaceholderAPI Integration</white>"
+    lore:
+      - "<gray>PlaceholderAPI understøttet:</gray> <white>{supported}</white>"
+      - "<gray>Måludvidelse:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Installer udvidelsen og genindlæs PlaceholderAPI fra dette panel.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>PlaceholderAPI fundet</white>"
+      lore:
+        - "<gray>PlaceholderAPI er tilgængelig og aktiveret.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Mangler</white>"
+      lore:
+        - "<gray>Installer og aktiver PlaceholderAPI for at bruge denne handling.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Installer {expansion_name} Udvidelse</white>"
+      lore:
+        - "<gray>Kører:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Kører derefter:</gray> <white>papi reload</white>"
+        - "<yellow>Klik for at udføre begge PlaceholderAPI-kommandoer.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI påkrævet</white>"
+      lore:
+        - "<gray>Denne handling er ikke tilgængelig, før PlaceholderAPI er installeret.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Admin påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge PlaceholderAPI-administrationsværktøjer.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at administrere PlaceholderAPI-integrationer.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI er ikke tilgængelig på denne server.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke sende udvidelsesdownload til <hvid>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Download af udvidelse fuldført, men genindlæsning af PlaceholderAPI mislykkedes.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Installeret <hvid>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Valutaadministrator</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Konfigurer browser-UI for redigerbare indstillinger og opdateringsfeedback.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Skill] Krav integrationer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Understøttede Skill Plugins</white>"
+    lore:
+      - "<gray>Understøttede broer:</gray> <white>{supported_count}</white>"
+      - "<gray>Opdaget nu:</gray> <white>{detected_count}</white>"
+      - "<gray>Klik på et plugin nedenfor for at indsætte standardkrav til færdigheder i hvert købsniveau.</gray>"
+      - "<yellow>En servergenstart er påkrævet efter anvendelse af ændringer.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>fundet</gradient>"
+      missing: "<gradient:#ef4444:#f87171>mangler</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integrations-id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardfærdighed:</gray> <white>{default_skill}</white>"
+      - "<gray>Niveauområde Anvendt:</gray> <white>{level_range}</white>"
+      - "<yellow>Klik for at tilføje dette kravsæt til config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Ingen færdighedsbroer</white>"
+      lore:
+        - "<gray>Ingen understøttede færdighedsbroposter er tilgængelige.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Admin påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne færdighedsvisning.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>Denne udgave tillader ikke runtime config redigeringer.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at administrere færdighedskrav.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurationsredigering er låst i denne udgave.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Anvendt standardkrav for færdigheder for <hvid>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, færdighed:</gray> <white>{default_skill}</white><gray>, område:</gray> <white>{level_range}</white><gray>) til <hvid>{updated_tiers}</white> <gray>købsniveau(er).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Genstart serveren for at kravændringer træder i kraft.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke anvende standardkrav for <hvid>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] Kravintegrationer</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info]</gradient> <white>Understøttede jobplugins</white>"
+    lore:
+      - "<gray>Understøttede broer:</gray> <white>{supported_count}</white>"
+      - "<gray>Opdaget nu:</gray> <white>{detected_count}</white>"
+      - "<gray>Klik på et plugin nedenfor for at indsætte standardjobkrav i hvert købsniveau.</gray>"
+      - "<yellow>En servergenstart er påkrævet efter anvendelse af ændringer.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>fundet</gradient>"
+      missing: "<gradient:#ef4444:#f87171>mangler</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integrations-id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardjob:</gray> <white>{default_job}</white>"
+      - "<gray>Niveauområde Anvendt:</gray> <white>{level_range}</white>"
+      - "<yellow>Klik for at tilføje dette kravsæt til config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Ingen jobbroer</white>"
+      lore:
+        - "<gray>Ingen understøttede jobbroposter er tilgængelige.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Admin påkrævet</white>"
+      lore:
+        - "<gray>Du har ikke tilladelse til at bruge denne jobvisning.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>Denne udgave tillader ikke runtime config redigeringer.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har ikke tilladelse til at administrere jobkrav.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurationsredigering er låst i denne udgave.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Anvendt standardjobkrav for <hvid>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, job:</gray> <white>{default_job}</white><gray>, område:</gray> <white>{level_range}</white><gray>) til <hvid>{updated_tiers}</white> <gray>købsniveau(er).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Genstart serveren for at kravændringer træder i kraft.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kunne ikke anvende standardkrav for <hvid>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
   summary:

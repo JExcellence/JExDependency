@@ -1,5 +1,6 @@
 package com.raindropcentral.rdr.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.RenderContext;
 import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -114,6 +116,7 @@ public class StorageStoreView extends BaseView {
         render.layoutSlot('p')
             .withItem(this.createPurchaseItem(
                 player,
+                requirements,
                 costSummary,
                 requirements.size(),
                 ownedStorages,
@@ -311,6 +314,7 @@ public class StorageStoreView extends BaseView {
 
     private @NotNull ItemStack createPurchaseItem(
         final @NotNull Player player,
+        final @NotNull List<StorageStorePricingSupport.ResolvedStoreRequirement> requirements,
         final @NotNull String costSummary,
         final int requirementCount,
         final int ownedStorages,
@@ -338,17 +342,37 @@ public class StorageStoreView extends BaseView {
             key = "purchase.available";
         }
 
+        final boolean includeRequirementLines = "purchase.pending".equals(key) && !requirements.isEmpty();
+        final String requirementPlaceholder = includeRequirementLines
+            ? this.i18n("purchase.requirement_breakdown.listed_below", player)
+                .build()
+                .getI18nVersionWrapper()
+                .asPlaceholder()
+            : costSummary;
+
+        final List<Component> lore = new ArrayList<>(this.i18n(key + ".lore", player)
+            .withPlaceholders(Map.of(
+                "requirements", requirementPlaceholder,
+                "requirement_count", requirementCount,
+                "owned_storages", ownedStorages,
+                "max_storages", maxStorages
+            ))
+            .build()
+            .children());
+
+        if (includeRequirementLines) {
+            lore.add(this.i18n("purchase.requirement_breakdown.header", player).build().component());
+            for (final StorageStorePricingSupport.ResolvedStoreRequirement requirement : requirements) {
+                lore.add(this.i18n("purchase.requirement_breakdown.entry", player)
+                    .withPlaceholder("requirement", requirement.summary())
+                    .build()
+                    .component());
+            }
+        }
+
         return UnifiedBuilderFactory.item(material)
             .setName(this.i18n(key + ".name", player).build().component())
-            .setLore(this.i18n(key + ".lore", player)
-                .withPlaceholders(Map.of(
-                    "requirements", costSummary,
-                    "requirement_count", requirementCount,
-                    "owned_storages", ownedStorages,
-                    "max_storages", maxStorages
-                ))
-                .build()
-                .children())
+            .setLore(lore)
             .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
             .build();
     }

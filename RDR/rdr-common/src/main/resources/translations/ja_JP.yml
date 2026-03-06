@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] ストレージ制御</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[管理者] ストレージ制御</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR 管理パネル</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[情報] RDR 管理パネル</gradient>"
     lore:
       - "<gray>特権ストレージ システムを 1 か所から管理します。</gray>"
-      - "<gray>このパネルで設定値と通貨サポートを編集できます。</gray>"
+      - "<gray>このパネルを使用して構成値を編集し、統合コントロールを開きます。</gray>"
       - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] ストレージ設定</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] ストレージ構成</gradient>"
       lore:
-        - "<gray>値の編集</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>すべての編集可能な設定は、金床プロンプトから変更できます。</gray>"
+        - "<gray>値を編​​集する</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>入力した設定は、対応するステンドグラスのアンビル エディターで開きます。</gray>"
         - "<yellow>クリックして構成コントロールを開きます。</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] プラグインの統合</gradient>"
+      lore:
+        - "<gray>スキル、ジョブ、通貨、および PlaceholderAPI ツールを管理します。</gray>"
+        - "<gray>統合固有の管理コントロールを開きます。</gray>"
+        - "<yellow>クリックして統合管理を開きます。</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
       lore:
         - "<gray>Vault および JExEconomy から検出された通貨を確認します。</gray>"
         - "<gray>デフォルトを作成する</gray> <white>raindrops</white> <gray>必要なときに通貨を使用します。</gray>"
         - "<yellow>クリックして通貨コントロールを開きます。</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>【スキル】スキル要件</gradient>"
+      lore:
+        - "<gray>サポートされているスキル プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのスキル要件をすべてのストレージ購入層に適用します。</gray>"
+        - "<yellow>クリックしてスキル要件コントロールを開きます。</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>【職種】 職種要件</gradient>"
+      lore:
+        - "<gray>サポートされているジョブ プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのジョブ要件をすべてのストレージ購入層に適用します。</gray>"
+        - "<yellow>クリックしてジョブ要件コントロールを開きます。</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
       lore:
         - "<gray>この管理パネルを使用する権限がありません。</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] プラグインの統合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] インテグレーションハブ</gradient>"
+    lore:
+      - "<gray>ストレージ要件に対する一元的な統合制御。</gray>"
+      - "<gray>オープン通貨、スキル、ジョブ、および PlaceholderAPI アクション。</gray>"
+      - "<yellow>必要：</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
+      lore:
+        - "<gray>Vault および JExEconomy から検出された通貨を確認します。</gray>"
+        - "<gray>デフォルトを作成する</gray> <white>raindrops</white> <gray>必要なときに通貨を使用します。</gray>"
+        - "<yellow>クリックして通貨コントロールを開きます。</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>【スキル】スキル要件</gradient>"
+      lore:
+        - "<gray>サポートされているスキル プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのスキル要件をすべてのストレージ購入層に適用します。</gray>"
+        - "<yellow>クリックしてスキル要件コントロールを開きます。</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>【職種】 職種要件</gradient>"
+      lore:
+        - "<gray>サポートされているジョブ プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのジョブ要件をすべてのストレージ購入層に適用します。</gray>"
+        - "<yellow>クリックしてジョブ要件コントロールを開きます。</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] プレースホルダーAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI サポートを検出し、拡張を管理します。</gray>"
+        - "<gray>をインストールします。</gray> <white>Player</white> <gray>PlaceholderAPI を展開してリロードします。</gray>"
+        - "<yellow>クリックして PlaceholderAPI ツールを開きます。</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>この統合パネルを使用する権限がありません。</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] プレースホルダー API ツール</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] PlaceholderAPI の統合</gradient>"
+    lore:
+      - "<gray>サポートされているプレースホルダー API:</gray> <white>{supported}</white>"
+      - "<gray>対象拡大:</gray> <white>{expansion_name}</white>"
+      - "<yellow>このパネルから拡張をインストールし、PlaceholderAPI をリロードします。</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] PlaceholderAPI が検出されました</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI が利用可能で有効になっています。</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI がありません</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI をインストールして有効にし、このアクションを使用できるようにします。</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] {expansion_name} 拡張をインストールする</gradient>"
+      lore:
+        - "<gray>実行:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>次に実行します:</gray> <white>papi reload</white>"
+        - "<yellow>クリックすると、両方の PlaceholderAPI コマンドが実行されます。</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI が必要です</gradient>"
+      lore:
+        - "<gray>このアクションは、PlaceholderAPI がインストールされるまで使用できません。</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI 管理ツールを使用する権限がありません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>PlaceholderAPI 統合を管理する権限がありません。</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このサーバーでは PlaceholderAPI を使用できません。</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{expansion_name} の拡張ダウンロードをディスパッチできませんでした</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>拡張のダウンロードは完了しましたが、PlaceholderAPI のリロードに失敗しました。</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray><白>{expansion_name} をインストールしました</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] 通貨マネージャー</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>この通貨ビューを使用する権限がありません。</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>通貨を管理する権限がありません。</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[スキル] 要件の統合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] サポートされているスキルプラグイン</gradient>"
+    lore:
+      - "<gray>サポートされているブリッジ:</gray> <white>{supported_count}</white>"
+      - "<gray>現在検出されています:</gray> <white>{detected_count}</white>"
+      - "<gray>以下のプラグインをクリックして、デフォルトのスキル要件を各ストレージ購入層に挿入します。</gray>"
+      - "<yellow>変更を適用した後はサーバーを再起動する必要があります。</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>検出されました</gradient>"
+      missing: "<gradient:#ef4444:#f87171>ない</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>統合ID:</gray> <white>{integration_id}</white>"
+      - "<gray>状態：</gray> <white>{detection_status}</white>"
+      - "<gray>デフォルトスキル:</gray> <white>{default_skill}</white>"
+      - "<gray>適用されるレベル範囲:</gray> <white>{level_range}</white>"
+      - "<yellow>クリックして、この要件セットを config/config.yml に追加します。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] スキルブリッジなし</gradient>"
+      lore:
+        - "<gray>サポートされているスキル ブリッジ エントリは使用できません。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>このスキル ビューを使用する権限がありません。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 設定編集がロックされています</gradient>"
+      lore:
+        - "<gray>このエディションでは、ランタイム構成の編集はできません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>スキル要件を管理する権限がありません。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このエディションでは構成の編集がロックされています。</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{plugin_name} にデフォルトのスキル要件を適用しました</white> <gray>(ID:</gray> <white>{integration_id}</white><gray>、 スキル：</gray> <white>{default_skill}</white><gray>、 範囲：</gray> <white>{level_range}</white><gray>) から <white>{updated_tiers}</white> <gray>ストレージ購入層。</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>要件の変更を有効にするには、サーバーを再起動します。</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{plugin_name} のデフォルト要件を適用できませんでした</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[仕事] 要件の統合</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[情報] サポートされているジョブ プラグイン</gradient>"
+    lore:
+      - "<gray>サポートされているブリッジ:</gray> <white>{supported_count}</white>"
+      - "<gray>現在検出されています:</gray> <white>{detected_count}</white>"
+      - "<gray>以下のプラグインをクリックして、デフォルトのジョブ要件を各ストレージ購入階層に挿入します。</gray>"
+      - "<yellow>変更を適用した後はサーバーを再起動する必要があります。</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>検出されました</gradient>"
+      missing: "<gradient:#ef4444:#f87171>ない</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>統合ID:</gray> <white>{integration_id}</white>"
+      - "<gray>状態：</gray> <white>{detection_status}</white>"
+      - "<gray>デフォルトのジョブ:</gray> <white>{default_job}</white>"
+      - "<gray>適用されるレベル範囲:</gray> <white>{level_range}</white>"
+      - "<yellow>クリックして、この要件セットを config/config.yml に追加します。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] ジョブブリッジがありません</gradient>"
+      lore:
+        - "<gray>サポートされているジョブ ブリッジ エントリは使用できません。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] 管理者アクセスが必要です</gradient>"
+      lore:
+        - "<gray>このジョブ ビューを使用する権限がありません。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 設定編集がロックされています</gradient>"
+      lore:
+        - "<gray>このエディションでは、ランタイム構成の編集はできません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>ジョブ要件を管理する権限がありません。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このエディションでは構成の編集がロックされています。</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{plugin_name} にデフォルトのジョブ要件を適用しました</white> <gray>(ID:</gray> <white>{integration_id}</white><gray>、 仕事：</gray> <white>{default_job}</white><gray>、 範囲：</gray> <white>{level_range}</white><gray>) から <white>{updated_tiers}</white> <gray>ストレージ購入層。</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>要件の変更を有効にするには、サーバーを再起動します。</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{plugin_name} のデフォルト要件を適用できませんでした</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>現在の要件:</gray><white>{requirements}</white>"
         - "<gray>所有ストレージ:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>購入する前に残りの要件を満たしてください。</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[以下のリスト]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>【要求リスト】</gradient> <gray>現在の要件:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] ストレージ制限に達しました</gradient>"
       lore:

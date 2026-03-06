@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Käyttöoikeuksien hallinnan avaaminen epäonnistui!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Valuuttapäällikkö</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Plugin-integraatiot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tarkista RDQ-tunnistetut valuutat</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sisältää Vault ja JExEconomy merkinnät</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Valuuttahallinnan avaaminen epäonnistui!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hallinnoi järjestelmänvalvojan laajennusten integraatioita yhdessä paikassa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sisältää valuutan, taitojen ja töiden havaitsemisnäkymät</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Lisäosien integraatioiden avaaminen epäonnistui!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Luo LuckPerms-ryhmät</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Luotu</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms ryhmät!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Uusia ryhmiä ei luotu.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms-ryhmien luominen epäonnistui!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Plugin-integraatiot</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Integraatiokeskus</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Avaa RDQ-laajennuksen integroinnin kojelaudat</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Valuutta-, taitojen/työnhavainnointi- ja PlaceholderAPI-työkalut ovat saatavilla täältä</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Valuuttaintegraatiot</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Avoin valuutantarjoajan hallinta</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tarkista havaitut valuutat Vault ja JExEconomy</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Valuuttaintegraatioiden avaaminen epäonnistui!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Taitojen integraatiot</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Katso tuen tila: mcMMO, Aura ja EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tunnista tällä hetkellä käytössä olevat taitolaajennukset</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Taitointegraatioiden avaaminen epäonnistui!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Työintegraatiot</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Katso EcoJobs- ja JobsReborn-tuen tila</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tunnista tällä hetkellä käytössä olevat työlaajennukset</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Työintegraatioiden avaaminen epäonnistui!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tunnista PlaceholderAPI-tuki ja hallitse laajennuksia</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Asenna Player-laajennus ja lataa PlaceholderAPI uudelleen</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI-työkalujen avaaminen epäonnistui!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI Työkalut</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Integrointi</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI tuettu:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kohteen laajennus:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Asenna ja lataa uudelleen suoraan tästä paneelista</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI havaittu</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI on asennettu ja otettu käyttöön</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI puuttuu</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Asenna ja ota käyttöön PlaceholderAPI käyttääksesi tätä toimintoa</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 Asenna %expansion_name%-laajennus</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Juoksu:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sitten juoksee:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Napsauta suorittaaksesi molemmat PlaceholderAPI-komennot</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Pakollinen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tämä toiminto ei ole käytettävissä, ennen kuin PlaceholderAPI on asennettu</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Edellyttää järjestelmänvalvojan oikeuksia</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Sinulla ei ole lupaa käyttää PlaceholderAPI-hallintatyökaluja</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Sinulla ei ole oikeutta hallita PlaceholderAPI-integraatioita.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI ei ole saatavilla tällä palvelimella.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Laajennuksen lataaminen epäonnistui:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Laajennuksen lataus valmis, mutta PlaceholderAPI:n uudelleenlataus epäonnistui.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ Asennettu %expansion_name%-laajennus ja ladattu uudelleen PlaceholderAPI.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Taitojen integraatiot</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Skill Pluginin tila</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tuetut taitojen integraatiot:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Havaittu juuri nyt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tarkistaa mcMMO-, Aura- ja EcoSkills-tuen</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Havaittu</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Puuttuu</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integrointitunnus:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Taitojen integraatioita ei ole määritetty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mitään taitolaajennusten integraatioita ei ole tällä hetkellä määritetty</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Työintegraatiot</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Työlaajennuksen tila</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tuetut työintegraatiot:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Havaittu juuri nyt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tarkistaa EcoJobs- ja JobsReborn-tuen</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Havaittu</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Puuttuu</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integrointitunnus:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Työintegraatioita ei ole määritetty</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Työlaajennusten integraatioita ei ole tällä hetkellä määritetty</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

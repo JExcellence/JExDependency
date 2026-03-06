@@ -281,35 +281,133 @@ shop_admin_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS 관리자 패널</white>"
     lore:
-      - "<gray>한 곳에서 글로벌 관리 상점 시스템을 관리합니다.</gray>"
-      - "<gray>서버 뱅크를 열거나 구성을 편집합니다 아래 설정을 참조하세요.</gray>"
+      - "<gray>글로벌 관리 상점 시스템을 한 곳에서 관리합니다.</gray>"
+      - "<gray>오픈 서버 뱅크, 구성 및 통합 제어는 아래에 나와 있습니다.</gray>"
       - "<yellow>필요:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] 서버 뱅크</gradient>"
       lore:
-        - "<gray>서버 뱅크로 가져온 관리 상점 수입을 검토하십시오.</gray>"
-        - "<gray>다음 풀 시간을 확인하고 잔액을 인출합니다.</gray>"
-        - "<yellow>서버를 열려면 클릭하십시오. 은행 통제.</yellow>"
+        - "<gray>서버뱅크로 인입된 어드민샵 수입을 검토합니다.</gray>"
+        - "<gray>다음 풀 타이밍을 확인하고 잔액을 인출하세요.</gray>"
+        - "<yellow>서버 뱅크 컨트롤을 열려면 클릭하세요.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
-        - "<gray></gray> <white>구성/config.yml</white><gray>.</gray>"
-        - "<gray>모든 편집 가능한 설정은 앤빌 프롬프트를 통해 변경할 수 있습니다.</gray>"
-        - "<yellow>구성 제어를 열려면 클릭하십시오.</yellow>"
-    currency:
-      name: "<gradient:#a78bfa:#c4b5fd>[현재] 통화 관리자</gradient>"
+        - "<gray>다음에서 값 편집</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>편집 가능한 모든 설정은 앤빌 프롬프트를 통해 변경할 수 있습니다.</gray>"
+        - "<yellow>구성 컨트롤을 열려면 클릭하세요.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] 플러그인 통합</gradient>"
       lore:
-        - "<gray>Vault에서 감지된 통화를 검토하고 JExEconomy.</gray>"
-        - "<gray>기본값 생성</gray> <white>빗방울</white> <gray>필요할 때 통화.</gray>"
-        - "<yellow>통화 제어를 열려면 클릭하십시오.</yellow>"
+        - "<gray>작업, 기술 및 PlaceholderAPI 통합 도구를 엽니다.</gray>"
+        - "<gray>플러그인 요구 사항 브리지 및 확장 설정을 관리합니다.</gray>"
+        - "<yellow>통합 제어를 열려면 클릭하세요.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] 통화 관리자</gradient>"
+      lore:
+        - "<gray>Vault 및 JExEconomy에서 감지된 통화를 검토합니다.</gray>"
+        - "<gray>필요한 경우 기본</gray> <white>raindrops</white> <gray>통화를 생성합니다.</gray>"
+        - "<yellow>통화 제어를 열려면 클릭하세요.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[스킬] 스킬 요구 사항</gradient>"
+      lore:
+        - "<gray>지원되는 스킬 플러그인 및 감지 상태를 검토합니다.</gray>"
+        - "<gray>모든 구매 계층에 기본 기술 요구 사항을 적용합니다.</gray>"
+        - "<yellow>기술 요구 사항 컨트롤을 열려면 클릭하세요.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[직업] 직무 요구 사항</gradient>"
+      lore:
+        - "<gray>지원되는 작업 플러그인 및 감지 상태를 검토하세요.</gray>"
+        - "<gray>모든 구매 계층에 기본 작업 요구 사항을 적용합니다.</gray>"
+        - "<yellow>직무 요구 사항 제어를 열려면 클릭하세요.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[세금] 지금 세금 실행</gradient>"
+      lore:
+        - "<gray>테스트를 위해 즉각적인 세금 징수 주기를 한 번 실행합니다.</gray>"
+        - "<gray>구성된 반복 세금 타이머는 변경되지 않습니다.</gray>"
+        - "<yellow>지금 당장 세금을 한 번 실행하려면 클릭하세요.</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[엑스]</gradient> <white>관리자 액세스 필요</white>"
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>관리자 액세스 필요</white>"
       lore:
-        - "<gray>이 관리자를 사용할 수 있는 권한이 없습니다. panel.</gray>"
+        - "<gray>이 관리자 패널을 사용할 권한이 없습니다.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>상점 세금 징수 주기가 즉시 시작되었습니다.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>매장 세금 스케줄러는 현재 사용할 수 없습니다.</gray>"
 
-# 감지된 공급자 및 기본 통화 생성에 대한 관리 통화 보기.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] 플러그인 통합</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>통합 허브</white>"
+    lore:
+      - "<gray>한 곳에서 요구 사항 브리지 통합을 관리합니다.</gray>"
+      - "<gray>작업, 기술 및 PlaceholderAPI 컨트롤을 엽니다.</gray>"
+      - "<yellow>필요:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[스킬] 스킬 요구 사항</gradient>"
+      lore:
+        - "<gray>지원되는 스킬 플러그인 및 감지 상태를 검토합니다.</gray>"
+        - "<gray>모든 구매 계층에 기본 기술 요구 사항을 적용합니다.</gray>"
+        - "<yellow>기술 요구 사항 컨트롤을 열려면 클릭하세요.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[직업] 직무 요구 사항</gradient>"
+      lore:
+        - "<gray>지원되는 작업 플러그인 및 감지 상태를 검토하세요.</gray>"
+        - "<gray>모든 구매 계층에 기본 작업 요구 사항을 적용합니다.</gray>"
+        - "<yellow>직무 요구 사항 제어를 열려면 클릭하세요.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI 지원을 감지하고 확장을 관리합니다.</gray>"
+        - "<gray>설치하다</gray> <white>Player</white> <gray>확장하고 PlaceholderAPI를 다시 로드합니다.</gray>"
+        - "<yellow>PlaceholderAPI 도구를 열려면 클릭하세요.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 통합 패널을 사용할 권한이 없습니다.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI 도구</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>PlaceholderAPI 통합</white>"
+    lore:
+      - "<gray>PlaceholderAPI 지원:</gray> <white>{supported}</white>"
+      - "<gray>대상 확장:</gray> <white>{expansion_name}</white>"
+      - "<yellow>이 패널에서 확장을 설치하고 PlaceholderAPI를 다시 로드합니다.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[확인]</gradient> <white>PlaceholderAPI가 감지되었습니다.</white>"
+      lore:
+        - "<gray>PlaceholderAPI가 사용 가능하고 활성화되었습니다.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI 누락</white>"
+      lore:
+        - "<gray>이 작업을 사용하려면 PlaceholderAPI를 설치하고 활성화하세요.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{expansion_name} 확장 설치</white>"
+      lore:
+        - "<gray>실행:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>그런 다음 실행:</gray> <white>papi reload</white>"
+        - "<yellow>두 PlaceholderAPI 명령을 모두 실행하려면 클릭하세요.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI 필수</white>"
+      lore:
+        - "<gray>PlaceholderAPI가 설치될 때까지 이 작업을 사용할 수 없습니다.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>PlaceholderAPI 관리 도구를 사용할 권한이 없습니다.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI 통합을 관리할 권한이 없습니다. 이 서버에서는</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI를 사용할 수 없습니다.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{expansion_name}에 대한 확장 다운로드를 발송하지 못했습니다.</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>확장 다운로드가 완료되었지만 PlaceholderAPI 다시 로드에 실패했습니다.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>설치된 <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[현재] 통화 관리자</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # 편집 가능한 설정 및 업데이트 피드백을 위한 구성 브라우저 UI.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[스킬] 요구 사항 통합</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보]</gradient> <white>지원되는 스킬 플러그인</white>"
+    lore:
+      - "<gray>지원되는 브리지:</gray> <white>{supported_count}</white>"
+      - "<gray>현재 감지됨:</gray> <white>{detected_count}</white>"
+      - "<gray>아래 플러그인을 클릭하여 각 구매 계층에 기본 스킬 요구 사항을 삽입하세요.</gray>"
+      - "<yellow>변경 사항을 적용한 후 서버를 다시 시작해야 합니다.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>감지</gradient>"
+      missing: "<gradient:#ef4444:#f87171>누락</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>통합 ID:</gray> <white>{integration_id}</white>"
+      - "<gray>상태:</gray> <white>{detection_status}</white>"
+      - "<gray>기본 스킬:</gray> <white>{default_skill}</white>"
+      - "<gray>적용 레벨 범위:</gray> <white>{level_range}</white>"
+      - "<yellow>이 요구 사항 세트를 config/config.yml에 추가하려면 클릭하세요.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>스킬 브리지 없음</white>"
+      lore:
+        - "<gray>지원되는 스킬 브리지 항목이 없습니다.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 스킬 뷰를 사용할 권한이 없습니다.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>구성 편집이 잠겼습니다.</white>"
+      lore:
+        - "<gray>이 버전에서는 런타임 구성 편집이 허용되지 않습니다.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>기술 요구 사항을 관리할 권한이 없습니다.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>구성 편집은 이 버전에서 잠겨 있습니다.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{plugin_name}에 기본 스킬 요구 사항이 적용되었습니다.</white> <gray>(ID:</gray> <white>{integration_id}</white><gray>, 스킬:</gray> <white>{default_skill}</white><gray>, 범위:</gray> <white>{level_range}</white><gray>)을 <white>{updated_tiers}</white> <gray>구매 등급으로 변경하세요.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>요구 사항 변경 사항을 적용하려면 서버를 다시 시작하세요.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{plugin_name}에 대한 기본 요구 사항을 적용하지 못했습니다.</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] 요구 사항 통합</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[정보]</gradient> <white>지원되는 작업 플러그인</white>"
+    lore:
+      - "<gray>지원되는 브리지:</gray> <white>{supported_count}</white>"
+      - "<gray>현재 감지됨:</gray> <white>{detected_count}</white>"
+      - "<gray>각 구매 계층에 기본 작업 요구 사항을 삽입하려면 아래 플러그인을 클릭하세요.</gray>"
+      - "<yellow>변경 사항을 적용한 후 서버를 다시 시작해야 합니다.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>감지</gradient>"
+      missing: "<gradient:#ef4444:#f87171>누락</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>통합 ID:</gray> <white>{integration_id}</white>"
+      - "<gray>상태:</gray> <white>{detection_status}</white>"
+      - "<gray>기본 작업:</gray> <white>{default_job}</white>"
+      - "<gray>적용 레벨 범위:</gray> <white>{level_range}</white>"
+      - "<yellow>이 요구 사항 세트를 config/config.yml에 추가하려면 클릭하세요.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>작업 브리지 없음</white>"
+      lore:
+        - "<gray>지원되는 작업 브리지 항목을 사용할 수 없습니다.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>관리자 액세스 필요</white>"
+      lore:
+        - "<gray>이 작업 보기를 사용할 권한이 없습니다.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>구성 편집이 잠겼습니다.</white>"
+      lore:
+        - "<gray>이 버전에서는 런타임 구성 편집이 허용되지 않습니다.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>작업 요구사항을 관리할 권한이 없습니다.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>구성 편집은 이 버전에서 잠겨 있습니다.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{plugin_name}</white> <gray>(ID:</gray> <white>{integration_id}</white><gray>에 대한 기본 작업 요구 사항이 적용되었습니다. 작업:</gray> <white>{default_job}</white><gray>, 범위:</gray> <white>{level_range}</white><gray>)을 <white>{updated_tiers}</white> <gray>구매 등급으로 변경하세요.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>요구 사항 변경 사항을 적용하려면 서버를 다시 시작하세요.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{plugin_name}에 대한 기본 요구 사항을 적용하지 못했습니다.</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
   summary:

@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Totalt antall plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Totale tillatelser:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne tillatelsesbehandling!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Valutaforvalter</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Plugin-integrasjoner</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Se gjennom RDQ-detekterte valutaer</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Inkluderer Vault og JExEconomy oppføringer</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne valutabehandleren!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Administrer admin plugin-integrasjoner på ett sted</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Inkluderer valuta-, ferdighets- og jobbgjenkjenningsvisninger</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne plugin-integrasjoner!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Opprett LuckPerms-grupper</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Opprettet</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms-grupper!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Ingen nye grupper ble opprettet.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kunne ikke opprette LuckPerms-grupper!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Plugin-integrasjoner</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Integrasjonshub</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Åpne RDQ-plugin-integrasjonsdashbord</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Deteksjon av valuta, ferdigheter/jobber og PlaceholderAPI-verktøy er tilgjengelige her</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Valutaintegrasjoner</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Åpen valutaleverandøradministrasjon</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Gjennomgå oppdagede Vault- og JExEconomy-valutaer</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne valutaintegrasjoner!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Ferdighetsintegrasjoner</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Se støttestatus for mcMMO, Aura og EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Oppdag aktiverte ferdighetsplugins</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne ferdighetsintegrasjoner!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Jobbintegrasjoner</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Se støttestatus for EcoJobs og JobsReborn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Oppdag aktiverte jobbplugins</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne jobbintegrasjoner!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Oppdag PlaceholderAPI-støtte og administrer utvidelser</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Installer Player-utvidelsen og last inn PlaceholderAPI på nytt</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åpne PlaceholderAPI-verktøy!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI Verktøy</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Integrasjon</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI støttes:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Målutvidelse:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installer og last inn på nytt direkte fra dette panelet</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI oppdaget</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI er installert og aktivert</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI mangler</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Installer og aktiver PlaceholderAPI for å bruke denne handlingen</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 Installer %expansion_name% Expansion</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Løper:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Deretter kjører:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Klikk for å utføre begge PlaceholderAPI-kommandoene</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI påkrevd</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Denne handlingen er utilgjengelig før PlaceholderAPI er installert</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Admintilgang kreves</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Du har ikke tillatelse til å bruke PlaceholderAPI administrasjonsverktøy</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Du har ikke tillatelse til å administrere PlaceholderAPI-integrasjoner.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI er ikke tilgjengelig på denne serveren.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke laste ned utvidelse:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Utvidelsesnedlasting fullført, men PlaceholderAPI omlasting mislyktes.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ Installerte %expansion_name% utvidelse og lastet inn PlaceholderAPI.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Ferdighetsintegrasjoner</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Status for ferdighetsplugin</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Støttede ferdighetsintegrasjoner:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Oppdaget akkurat nå:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sjekker støtte for mcMMO, Aura og EcoSkills</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Oppdaget</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Savnet</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integrasjons-ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Ingen ferdighetsintegrasjoner er konfigurert</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ingen ferdighetsplugin-integrasjoner er for øyeblikket konfigurert</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Jobbintegrasjoner</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Status for jobbplugin</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Støttede jobbintegrasjoner:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Oppdaget akkurat nå:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sjekker støtte for EcoJobs og JobsReborn</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Oppdaget</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Savnet</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integrasjons-ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Ingen jobbintegrasjoner er konfigurert</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ingen jobbplugin-integrasjoner er for øyeblikket konfigurert</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

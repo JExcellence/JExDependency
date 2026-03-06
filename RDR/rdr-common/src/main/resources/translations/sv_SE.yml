@@ -39,29 +39,125 @@ storage_overview_ui:
 storage_admin_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Admin] Lagringskontroll</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Adminpanel</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin Panel</gradient>"
     lore:
       - "<gray>Hantera privilegierade lagringssystem från ett ställe.</gray>"
-      - "<gray>Anvand denna panel for att redigera konfigurationsvarden och valutastod.</gray>"
+      - "<gray>Använd denna panel för att redigera konfigurationsvärden och öppna integrationskontroller.</gray>"
       - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Lagringskonfiguration</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
       lore:
         - "<gray>Redigera värden från</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Varje redigerbar inställning kan ändras genom en städprompt.</gray>"
+        - "<gray>Angivna inställningar öppnas i en matchande städredigerare av målat glas.</gray>"
         - "<yellow>Klicka för att öppna konfigurationskontroller.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
+      lore:
+        - "<gray>Hantera skicklighet, jobb, valuta och PlaceholderAPI-verktyg.</gray>"
+        - "<gray>Öppna integrationsspecifika administratörskontroller.</gray>"
+        - "<yellow>Klicka för att öppna integrationshantering.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutahanterare</gradient>"
       lore:
         - "<gray>Granska upptäckta valutor från Vault och JExEconomy.</gray>"
-        - "<gray>Skapa standard</gray> <white>raindrops</white> <gray>valuta när det behövs.</gray>"
+        - "<gray>Skapa standardvalutan för</gray> <white>raindrops</white> <gray>när det behövs.</gray>"
         - "<yellow>Klicka för att öppna valutakontroller.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skicklighetskrav</gradient>"
+      lore:
+        - "<gray>Granska färdighetsplugin som stöds och upptäcktstillstånd.</gray>"
+        - "<gray>Tillämpa standardkunskapskrav på alla lagerinköpsnivåer.</gray>"
+        - "<yellow>Klicka för att öppna kontroller för kompetenskrav.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Jobb] Jobbkrav</gradient>"
+      lore:
+        - "<gray>Granska stödda jobbplugin-program och detekteringstillstånd.</gray>"
+        - "<gray>Tillämpa standardjobbkrav på alla lagerinköpsnivåer.</gray>"
+        - "<yellow>Klicka för att öppna kontroller för jobbkrav.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
       lore:
         - "<gray>Du har inte behörighet att använda denna adminpanel.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin-integrationer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integration Hub</gradient>"
+    lore:
+      - "<gray>Centraliserade integrationskontroller för lagringskrav.</gray>"
+      - "<gray>Öppna valuta, färdigheter, jobb och PlaceholderAPI-åtgärder.</gray>"
+      - "<yellow>Kräver:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutahanterare</gradient>"
+      lore:
+        - "<gray>Granska upptäckta valutor från Vault och JExEconomy.</gray>"
+        - "<gray>Skapa standardvalutan för</gray> <white>raindrops</white> <gray>när det behövs.</gray>"
+        - "<yellow>Klicka för att öppna valutakontroller.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skicklighetskrav</gradient>"
+      lore:
+        - "<gray>Granska färdighetsplugin som stöds och upptäcktstillstånd.</gray>"
+        - "<gray>Tillämpa standardkunskapskrav på alla lagerinköpsnivåer.</gray>"
+        - "<yellow>Klicka för att öppna kontroller för kompetenskrav.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Jobb] Jobbkrav</gradient>"
+      lore:
+        - "<gray>Granska stödda jobbplugin-program och detekteringstillstånd.</gray>"
+        - "<gray>Tillämpa standardjobbkrav på alla lagerinköpsnivåer.</gray>"
+        - "<yellow>Klicka för att öppna kontroller för jobbkrav.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detect PlaceholderAPI stödjer och hanterar expansioner.</gray>"
+        - "<gray>Installera</gray> <white>Player</white> <gray>expandera och ladda om PlaceholderAPI.</gray>"
+        - "<yellow>Klicka för att öppna PlaceholderAPI-verktyg.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda denna integrationspanel.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI-verktyg</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] PlaceholderAPI-integrering</gradient>"
+    lore:
+      - "<gray>PlaceholderAPI stöds:</gray> <white>{supported}</white>"
+      - "<gray>Målexpansion:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Installera expansionen och ladda om PlaceholderAPI från den här panelen.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] PlatshållarAPI upptäckt</gradient>"
+      lore:
+        - "<gray>PlatshållarAPI är tillgängligt och aktiverat.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI saknas</gradient>"
+      lore:
+        - "<gray>Installera och aktivera PlaceholderAPI för att använda den här åtgärden.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Installera {expansion_name} Expansion</gradient>"
+      lore:
+        - "<gray>Körs:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Körs sedan:</gray> <white>papi reload</white>"
+        - "<yellow>Klicka för att köra båda PlaceholderAPI-kommandona.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI krävs</gradient>"
+      lore:
+        - "<gray>Den här åtgärden är inte tillgänglig förrän PlaceholderAPI har installerats.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda PlaceholderAPI-administratörsverktyg.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att hantera PlaceholderAPI-integrationer.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI är inte tillgängligt på den här servern.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Det gick inte att skicka expansionsnedladdning för <vit>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Expansionsnedladdningen slutförd, men PlaceholderAPI-återladdningen misslyckades.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Installerad <vit>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Valutahanterare</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>Du har inte behörighet att använda denna valutavy.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att hantera valutor.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Färdighet] Krav Integrationer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Skill Plugins som stöds</gradient>"
+    lore:
+      - "<gray>Broar som stöds:</gray> <white>{supported_count}</white>"
+      - "<gray>Upptäcks nu:</gray> <white>{detected_count}</white>"
+      - "<gray>Klicka på köp standardinsticksmoduler nedan för att köpa ett insticksprogram för lagringsfärdighet nedan.</gray>"
+      - "<yellow>En omstart av servern krävs efter tillämpning av ändringar.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detekterad</gradient>"
+      missing: "<gradient:#ef4444:#f87171>saknas</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integrerings-id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardfärdighet:</gray> <white>{default_skill}</white>"
+      - "<gray>Nivåintervall Tillämpad:</gray> <white>{level_range}</white>"
+      - "<yellow>set to config.config.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Inga färdighetsbryggor</gradient>"
+      lore:
+        - "<gray>Inga färdighetsbryggor som stöds är tillgängliga.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda denna färdighetsvy.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Konfigurationsredigering Låst</gradient>"
+      lore:
+        - "<gray>Den här utgåvan tillåter inte redigeringar av körtidskonfigurationer.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att hantera kompetenskrav.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurationsredigering är låst i denna utgåva.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Tillämpat standardfärdighetskrav för <vit>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, färdighet:</gray> <white>{default_skill}</white><gray>, intervall:</gray> <white>{level_range}</white><gray>) till <vit>{updated_tiers}</white> <gray>köpnivå(er).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Starta om servern för att kravändringar ska träda i kraft.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Det gick inte att tillämpa standardkrav för <vit>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Jobb] Kravintegrationer</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info] Jobbpluginprogram som stöds</gradient>"
+    lore:
+      - "<gray>Broar som stöds:</gray> <white>{supported_count}</white>"
+      - "<gray>Upptäcks nu:</gray> <white>{detected_count}</white>"
+      - "<gray>Klicka på ett plugin nedan för att införa standardjobbkrav i varje lagerinköpsnivå.</gray>"
+      - "<yellow>En omstart av servern krävs efter tillämpning av ändringar.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detekterad</gradient>"
+      missing: "<gradient:#ef4444:#f87171>saknas</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integrerings-id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standardjobb:</gray> <white>{default_job}</white>"
+      - "<gray>Nivåintervall Tillämpad:</gray> <white>{level_range}</white>"
+      - "<yellow>set to config.config.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Inga jobbbryggor</gradient>"
+      lore:
+        - "<gray>Inga stödda jobbbryggposter är tillgängliga.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Adminåtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du har inte behörighet att använda den här jobbvyn.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Konfigurationsredigering Låst</gradient>"
+      lore:
+        - "<gray>Den här utgåvan tillåter inte redigeringar av körtidskonfigurationer.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du har inte behörighet att hantera jobbkrav.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Konfigurationsredigering är låst i denna utgåva.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Tillämpat standardjobbkrav för <vit>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, jobb:</gray> <white>{default_job}</white><gray>, intervall:</gray> <white>{level_range}</white><gray>) till <vit>{updated_tiers}</white> <gray>köpnivå(er).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Starta om servern för att kravändringar ska träda i kraft.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Det gick inte att tillämpa standardkrav för <vit>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Nuvarande krav:</gray><white>{requirements}</white>"
         - "<gray>Ägda lagringar:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Uppfyll de återstående kraven innan du köper.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[lista nedan]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Req List]</gradient> <gray>Aktuella krav:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Lagringsgräns nådd</gradient>"
       lore:

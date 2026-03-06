@@ -282,7 +282,7 @@ shop_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
     lore:
       - "<gray>Manage global admin-shop systems from one place.</gray>"
-      - "<gray>Open the server bank or edit config settings below.</gray>"
+      - "<gray>Open server bank, config, and integration controls below.</gray>"
       - "<yellow>Requires:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
@@ -297,19 +297,117 @@ shop_admin_ui:
         - "<gray>Edit values from</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Every editable setting can be changed through an anvil prompt.</gray>"
         - "<yellow>Click to open config controls.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
+      lore:
+        - "<gray>Open jobs, skills, and PlaceholderAPI integration tools.</gray>"
+        - "<gray>Manage plugin requirement bridges and expansion setup.</gray>"
+        - "<yellow>Click to open integration controls.</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] Currency Manager</gradient>"
       lore:
         - "<gray>Review detected currencies from Vault and JExEconomy.</gray>"
         - "<gray>Create the default</gray> <white>raindrops</white> <gray>currency when needed.</gray>"
         - "<yellow>Click to open currency controls.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skill Requirements</gradient>"
+      lore:
+        - "<gray>Review supported skill plugins and detection state.</gray>"
+        - "<gray>Apply default skill requirements to all purchase tiers.</gray>"
+        - "<yellow>Click to open skill requirement controls.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Job Requirements</gradient>"
+      lore:
+        - "<gray>Review supported job plugins and detection state.</gray>"
+        - "<gray>Apply default job requirements to all purchase tiers.</gray>"
+        - "<yellow>Click to open job requirement controls.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Run Taxes Now</gradient>"
+      lore:
+        - "<gray>Trigger one immediate tax collection cycle for testing.</gray>"
+        - "<gray>This does not change the configured repeating tax timer.</gray>"
+        - "<yellow>Click to run taxes once right now.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
       lore:
         - "<gray>You do not have permission to use this admin panel.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Triggered an immediate shop tax collection cycle.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Shop tax scheduler is not available right now.</gray>"
 
-# Admin currency view for detected providers and default currency creation.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Integration Hub</white>"
+    lore:
+      - "<gray>Manage requirement bridge integrations from one place.</gray>"
+      - "<gray>Open jobs, skills, and PlaceholderAPI controls.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skill Requirements</gradient>"
+      lore:
+        - "<gray>Review supported skill plugins and detection state.</gray>"
+        - "<gray>Apply default skill requirements to all purchase tiers.</gray>"
+        - "<yellow>Click to open skill requirement controls.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Job Requirements</gradient>"
+      lore:
+        - "<gray>Review supported job plugins and detection state.</gray>"
+        - "<gray>Apply default job requirements to all purchase tiers.</gray>"
+        - "<yellow>Click to open job requirement controls.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detect PlaceholderAPI support and manage expansions.</gray>"
+        - "<gray>Install the</gray> <white>Player</white> <gray>expansion and reload PlaceholderAPI.</gray>"
+        - "<yellow>Click to open PlaceholderAPI tools.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this integration panel.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>PlaceholderAPI Integration</white>"
+    lore:
+      - "<gray>PlaceholderAPI supported:</gray> <white>{supported}</white>"
+      - "<gray>Target expansion:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Install the expansion and reload PlaceholderAPI from this panel.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>PlaceholderAPI Detected</white>"
+      lore:
+        - "<gray>PlaceholderAPI is available and enabled.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Missing</white>"
+      lore:
+        - "<gray>Install and enable PlaceholderAPI to use this action.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Install {expansion_name} Expansion</white>"
+      lore:
+        - "<gray>Runs:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Then runs:</gray> <white>papi reload</white>"
+        - "<yellow>Click to execute both PlaceholderAPI commands.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Required</white>"
+      lore:
+        - "<gray>This action is unavailable until PlaceholderAPI is installed.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use PlaceholderAPI admin tools.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage PlaceholderAPI integrations.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI is not available on this server.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to dispatch expansion download for <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Expansion download completed, but PlaceholderAPI reload failed.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Installed <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Currency Manager</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Config browser UI for editable settings and update feedback.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Skill] Requirement Integrations</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Supported Skill Plugins</white>"
+    lore:
+      - "<gray>Supported bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Detected now:</gray> <white>{detected_count}</white>"
+      - "<gray>Click a plugin below to inject default skill requirements into each purchase tier.</gray>"
+      - "<yellow>A server restart is required after applying changes.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detected</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integration id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Default skill:</gray> <white>{default_skill}</white>"
+      - "<gray>Level Range Applied:</gray> <white>{level_range}</white>"
+      - "<yellow>Click to add this requirement set to config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>No Skill Bridges</white>"
+      lore:
+        - "<gray>No supported skill bridge entries are available.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this skill view.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>This edition does not allow runtime config edits.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage skill requirements.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config editing is locked in this edition.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Applied default skill requirement for <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, skill:</gray> <white>{default_skill}</white><gray>, range:</gray> <white>{level_range}</white><gray>) to <white>{updated_tiers}</white> <gray>purchase tier(s).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Restart the server for requirement changes to take effect.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to apply default requirements for <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] Requirement Integrations</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info]</gradient> <white>Supported Job Plugins</white>"
+    lore:
+      - "<gray>Supported bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Detected now:</gray> <white>{detected_count}</white>"
+      - "<gray>Click a plugin below to inject default job requirements into each purchase tier.</gray>"
+      - "<yellow>A server restart is required after applying changes.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detected</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Integration id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Default job:</gray> <white>{default_job}</white>"
+      - "<gray>Level Range Applied:</gray> <white>{level_range}</white>"
+      - "<yellow>Click to add this requirement set to config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>No Job Bridges</white>"
+      lore:
+        - "<gray>No supported job bridge entries are available.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
+      lore:
+        - "<gray>You do not have permission to use this job view.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Config Editing Locked</white>"
+      lore:
+        - "<gray>This edition does not allow runtime config edits.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage job requirements.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config editing is locked in this edition.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Applied default job requirement for <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, job:</gray> <white>{default_job}</white><gray>, range:</gray> <white>{level_range}</white><gray>) to <white>{updated_tiers}</white> <gray>purchase tier(s).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Restart the server for requirement changes to take effect.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to apply default requirements for <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
   summary:

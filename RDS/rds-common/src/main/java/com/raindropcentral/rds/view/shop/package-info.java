@@ -6,6 +6,7 @@
  */
 
 /**
- * Inventory views and supporting helpers for the RDS shop interface.
+ * Inventory views and supporting helpers for the RDS shop interface, including
+ * admin plugin-integration controls for requirement bridges and PlaceholderAPI.
  */
 package com.raindropcentral.rds.view.shop;

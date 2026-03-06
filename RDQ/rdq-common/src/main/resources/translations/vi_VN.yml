@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Tổng plugin:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Tổng quyền:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Không thể mở trình quản lý quyền!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Quản lý tiền tệ</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Tích hợp plugin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Xem lại các loại tiền tệ được phát hiện RDQ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bao gồm các mục Vault và JExEconomy</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Không thể mở trình quản lý tiền tệ!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Quản lý tích hợp plugin quản trị ở một nơi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bao gồm chế độ xem phát hiện tiền tệ, kỹ năng và công việc</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Không thể mở tích hợp plugin!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Tạo nhóm LuckPerms</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Đã tạo</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>nhóm LuckPerms!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Không có nhóm mới nào được tạo.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Không thể tạo nhóm LuckPerms!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Tích hợp plugin</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Trung tâm tích hợp</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Mở bảng điều khiển tích hợp plugin RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tiền tệ, phát hiện kỹ năng/công việc và các công cụ PlaceholderAPI có sẵn tại đây</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Tích hợp tiền tệ</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nhà cung cấp tiền tệ mở quản lý</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Đánh giá đã phát hiện các loại tiền Vault và JExEconomy</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Không thể mở tích hợp tiền tệ!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Tích hợp kỹ năng</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Xem trạng thái hỗ trợ cho mcMMO, Aura và EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Phát hiện các plugin kỹ năng hiện được bật</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Không thể mở tích hợp kỹ năng!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Việc làm Tích hợp</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Xem trạng thái hỗ trợ cho EcoJobs và JobsReborn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Phát hiện các plugin công việc hiện đã bật</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Không thể mở tích hợp công việc!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Phát hiện hỗ trợ PlaceholderAPI và quản lý các bản mở rộng</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Cài đặt bản mở rộng Player và tải lại PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Không mở được công cụ PlaceholderAPI!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 Công cụ PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Integration</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI được hỗ trợ:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Mở rộng mục tiêu:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Cài đặt và tải lại trực tiếp từ bảng điều khiển này</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac> ✅ PlaceholderAPI Detected</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI đã được cài đặt và đã bật</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI Thiếu</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Cài đặt và kích hoạt PlaceholderAPI để sử dụng hành động này</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 Cài đặt %expansion_name% Expansion</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chạy:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sau đó chạy:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nhấp để thực thi cả hai lệnh PlaceholderAPI</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Bắt buộc</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Hành động này không khả dụng cho đến khi PlaceholderAPI đã được cài đặt</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Yêu cầu quyền truy cập quản trị viên</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Bạn không có quyền sử dụng công cụ quản trị PlaceholderAPI</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Bạn không có quyền quản lý tích hợp PlaceholderAPI.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI không khả dụng trên máy chủ này.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Không thể tải xuống bản mở rộng:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Tải xuống bản mở rộng đã hoàn tất, nhưng tải lại PlaceholderAPI không thành công.</gradient>"
+    completed: "<gradient:#22c55e:#86efac> ✅ Đã cài đặt bản mở rộng %expansion_name% và tải lại PlaceholderAPI.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Tích hợp kỹ năng</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Trạng thái plugin kỹ năng</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Tích hợp kỹ năng được hỗ trợ:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Đã phát hiện ngay bây giờ:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kiểm tra mcMMO, Aura và EcoSkills hỗ trợ</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Đã phát hiện</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Thiếu</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Id tích hợp:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Chưa định cấu hình tích hợp kỹ năng</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Hiện chưa định cấu hình tích hợp plugin kỹ năng</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Việc làm Tích hợp</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Trạng thái plugin công việc</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Các tích hợp công việc được hỗ trợ:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Đã phát hiện ngay bây giờ:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kiểm tra hỗ trợ EcoJobs và JobsReborn</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Đã phát hiện</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Thiếu</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Id tích hợp:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Trạng thái:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Không có tích hợp công việc nào được định cấu hình</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Không tích hợp plugin công việc hiện đang được cấu hình</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

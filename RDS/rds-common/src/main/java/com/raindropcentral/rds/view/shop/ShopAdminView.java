@@ -15,6 +15,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Renders the RDS admin landing view.
  *
+ * <p>This view centralizes server-bank, config, tax, and integration-management controls
+ * for privileged shop administration.</p>
+ *
  * @author ItsRainingHP
  * @since 1.0.0
  * @version 1.0.0
@@ -53,7 +56,7 @@ public class ShopAdminView extends BaseView {
                 "         ",
                 "    s    ",
                 "  b c u  ",
-                "    t    ",
+                "   i t   ",
                 "         ",
                 "         "
         };
@@ -92,6 +95,12 @@ public class ShopAdminView extends BaseView {
         render.layoutSlot('u', this.createCurrencyButton(player))
                 .onClick(clickContext -> clickContext.openForPlayer(
                         AdminCurrencyView.class,
+                        java.util.Map.of("plugin", this.rds.get(clickContext))
+                ));
+
+        render.layoutSlot('i', this.createIntegrationsButton(player))
+                .onClick(clickContext -> clickContext.openForPlayer(
+                        PluginIntegrationManagementView.class,
                         java.util.Map.of("plugin", this.rds.get(clickContext))
                 ));
 
@@ -147,6 +156,16 @@ public class ShopAdminView extends BaseView {
         return UnifiedBuilderFactory.item(Material.PRISMARINE_CRYSTALS)
                 .setName(this.i18n("actions.currency.name", player).build().component())
                 .setLore(this.i18n("actions.currency.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createIntegrationsButton(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.ENDER_CHEST)
+                .setName(this.i18n("actions.integrations.name", player).build().component())
+                .setLore(this.i18n("actions.integrations.lore", player).build().children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .build();
     }

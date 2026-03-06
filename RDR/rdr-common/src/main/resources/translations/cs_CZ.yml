@@ -39,29 +39,125 @@ storage_overview_ui:
 storage_admin_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Admin] Řízení úložiště</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR panel administrátora</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Informace] Panel správce RDR</gradient>"
     lore:
       - "<gray>Spravujte privilegované úložné systémy z jednoho místa.</gray>"
-      - "<gray>Pouzij tento panel k uprave hodnot konfigurace a podpory men.</gray>"
+      - "<gray>Pomocí tohoto panelu můžete upravit hodnoty konfigurace a otevřít ovládací prvky integrace.</gray>"
       - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace Uloziste</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfigurace úložiště</gradient>"
       lore:
         - "<gray>Upravit hodnoty z</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Každé upravitelné nastavení lze změnit pomocí výzvy kovadliny.</gray>"
+        - "<gray>Zadaná nastavení se otevřou v odpovídajícím editoru kovadliny z barevného skla.</gray>"
         - "<yellow>Kliknutím otevřete ovládací prvky konfigurace.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Integrace pluginů</gradient>"
+      lore:
+        - "<gray>Spravujte dovednosti, práci, měnu a nástroje PlaceholderAPI.</gray>"
+        - "<gray>Otevřete ovládací prvky pro správu specifické pro integraci.</gray>"
+        - "<yellow>Kliknutím otevřete správu integrace.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
       lore:
-        - "<gray>Zkontrolujte zjištěné měny z Vault a JExEconomy.</gray>"
+        - "<gray>Zkontrolujte zjištěné měny ze služby Vault a JExEconomy.</gray>"
         - "<gray>Vytvořte výchozí</gray> <white>raindrops</white> <gray>měny v případě potřeby.</gray>"
         - "<yellow>Kliknutím otevřete ovládací prvky měny.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Dovednosti] Požadavky na dovednosti</gradient>"
+      lore:
+        - "<gray>Zkontrolujte podporované pluginy dovedností a stav detekce.</gray>"
+        - "<gray>Použijte výchozí požadavky na dovednosti na všechny úrovně nákupu úložiště.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky požadavků na dovednosti.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Požadavky na zaměstnání</gradient>"
+      lore:
+        - "<gray>Zkontrolujte podporované pluginy úloh a stav detekce.</gray>"
+        - "<gray>Použít výchozí požadavky úlohy na všechny úrovně nákupu úložiště.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky požadavků na úlohu.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
       lore:
         - "<gray>Nemáte oprávnění používat tento panel administrátora.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Integrace pluginů</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integration Hub</gradient>"
+    lore:
+      - "<gray>Centralizované řízení integrace pro požadavky na úložiště.</gray>"
+      - "<gray>Otevřete akce měn, dovedností, pracovních míst a placeholderAPI.</gray>"
+      - "<yellow>Vyžaduje:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
+      lore:
+        - "<gray>Zkontrolujte zjištěné měny ze služby Vault a JExEconomy.</gray>"
+        - "<gray>Vytvořte výchozí</gray> <white>raindrops</white> <gray>měny v případě potřeby.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky měny.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Dovednosti] Požadavky na dovednosti</gradient>"
+      lore:
+        - "<gray>Zkontrolujte podporované pluginy dovedností a stav detekce.</gray>"
+        - "<gray>Použijte výchozí požadavky na dovednosti na všechny úrovně nákupu úložiště.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky požadavků na dovednosti.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Požadavky na zaměstnání</gradient>"
+      lore:
+        - "<gray>Zkontrolujte podporované pluginy úloh a stav detekce.</gray>"
+        - "<gray>Použít výchozí požadavky úlohy na všechny úrovně nákupu úložiště.</gray>"
+        - "<yellow>Kliknutím otevřete ovládací prvky požadavků na úlohu.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detekce podpory PlaceholderAPI a správa rozšíření.</gray>"
+        - "<gray>Nainstalujte</gray> <white>Player</white> <gray>rozbalte a znovu načtěte PlaceholderAPI.</gray>"
+        - "<yellow>Kliknutím otevřete nástroje PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění používat tento integrační panel.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integrace PlaceholderAPI</gradient>"
+    lore:
+      - "<gray>Podporované rozhraní API:</gray> <white>{supported}</white>"
+      - "<gray>Cílová expanze:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Nainstalujte rozšíření a znovu načtěte PlaceholderAPI z tohoto panelu.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] Zjištěno PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI je k dispozici a povoleno.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] Chybí zástupný symbol API</gradient>"
+      lore:
+        - "<gray>Chcete-li použít tuto akci, nainstalujte a povolte PlaceholderAPI.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Nainstalujte rozšíření {expansion_name}</gradient>"
+      lore:
+        - "<gray>Běží:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Poté běží:</gray> <white>papi reload</white>"
+        - "<yellow>Kliknutím spustíte oba příkazy PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] Vyžadováno PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Tato akce není k dispozici, dokud není nainstalováno PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění používat nástroje pro správu PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ke správě integrací PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI není na tomto serveru k dispozici.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se odeslat stažení rozšíření pro <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Stahování rozšíření bylo dokončeno, ale opětovné načtení PlaceholderAPI se nezdařilo.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Instalováno <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Měnový manažer</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>K použití tohoto zobrazení měny nemáte oprávnění.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ke správě měn.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Dovednosti] Integrace požadavků</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Podporované pluginy dovedností</gradient>"
+    lore:
+      - "<gray>Podporované mosty:</gray> <white>{supported_count}</white>"
+      - "<gray>Nyní zjištěno:</gray> <white>{detected_count}</white>"
+      - "<gray>Kliknutím na plugin níže vložíte výchozí požadavky na dovednosti do každé úrovně nákupu úložiště.</gray>"
+      - "<yellow>Po použití změn je vyžadován restart serveru.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Zjištěno</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Chybějící</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>ID integrace:</gray> <white>{integration_id}</white>"
+      - "<gray>Postavení:</gray> <white>{detection_status}</white>"
+      - "<gray>Výchozí dovednost:</gray> <white>{default_skill}</white>"
+      - "<gray>Použitý rozsah úrovní:</gray> <white>{level_range}</white>"
+      - "<yellow>Kliknutím přidáte tuto sadu požadavků do souboru config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Žádné mosty dovedností</gradient>"
+      lore:
+        - "<gray>Nejsou k dispozici žádné podporované položky můstku dovedností.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění používat toto zobrazení dovedností.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Úprava konfigurace uzamčena</gradient>"
+      lore:
+        - "<gray>Tato edice neumožňuje úpravy konfigurace za běhu.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění spravovat požadavky na dovednosti.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Úpravy konfigurací jsou v tomto vydání uzamčeny.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Byl použit výchozí požadavek na dovednosti pro <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, dovednost:</gray> <white>{default_skill}</white><gray>, rozsah:</gray> <white>{level_range}</white><gray>) až <bílá>{updated_tiers}</white> <gray>úrovně nákupu úložiště.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Restartujte server, aby se změny požadavků projevily.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se použít výchozí požadavky pro <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Zaměstnání] Integrace požadavků</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info] Podporované moduly Job Plugins</gradient>"
+    lore:
+      - "<gray>Podporované mosty:</gray> <white>{supported_count}</white>"
+      - "<gray>Nyní zjištěno:</gray> <white>{detected_count}</white>"
+      - "<gray>Kliknutím na plugin níže vložíte výchozí požadavky na úlohy do každé úrovně nákupu úložiště.</gray>"
+      - "<yellow>Po použití změn je vyžadován restart serveru.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Zjištěno</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Chybějící</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>ID integrace:</gray> <white>{integration_id}</white>"
+      - "<gray>Postavení:</gray> <white>{detection_status}</white>"
+      - "<gray>Výchozí úloha:</gray> <white>{default_job}</white>"
+      - "<gray>Použitý rozsah úrovní:</gray> <white>{level_range}</white>"
+      - "<yellow>Kliknutím přidáte tuto sadu požadavků do souboru config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Žádné pracovní mosty</gradient>"
+      lore:
+        - "<gray>Nejsou k dispozici žádné podporované položky mostu úloh.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gray>Nemáte oprávnění používat toto zobrazení úlohy.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Úprava konfigurace uzamčena</gradient>"
+      lore:
+        - "<gray>Tato edice neumožňuje úpravy konfigurace za běhu.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nemáte oprávnění ke správě požadavků na práci.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Úpravy konfigurací jsou v tomto vydání uzamčeny.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Byl použit výchozí požadavek úlohy pro <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, práce:</gray> <white>{default_job}</white><gray>, rozsah:</gray> <white>{level_range}</white><gray>) až <bílá>{updated_tiers}</white> <gray>úrovně nákupu úložiště.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Restartujte server, aby se změny požadavků projevily.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nepodařilo se použít výchozí požadavky pro <white>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Aktuální požadavky:</gray><white>{requirements}</white>"
         - "<gray>Vlastněná úložiště:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Před nákupem splňte zbývající požadavky.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Seznam níže]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Seznam požadavků]</gradient> <gray>Současné požadavky:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Dosažen limit úložiště</gradient>"
       lore:

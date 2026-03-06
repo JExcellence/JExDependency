@@ -66,7 +66,7 @@ public class AdminCurrencyView extends APaginatedView<AdminCurrencyView.Detected
      * Creates the storage admin currency view.
      */
     public AdminCurrencyView() {
-        super(StorageAdminView.class);
+        super(PluginIntegrationManagementView.class);
     }
 
     /**

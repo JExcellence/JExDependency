@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>총 권한:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 권한 관리자를 열 수 없습니다!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 통화 관리자</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 플러그인 통합</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ 감지 통화 검토</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Vault 및 JExEconomy 항목을 포함합니다.</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ 통화 관리자를 열지 못했습니다!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>관리 플러그인 통합을 한 곳에서 관리</gradient>"
+      - "<gradient:#6b7280:#9ca3af>통화, 기술 및 작업 감지 보기 포함</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ 플러그인 통합을 열지 못했습니다!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms 그룹 생성</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>개의 LuckPerms 그룹이 생성되었습니다!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>새 그룹이 생성되지 않았습니다.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms 그룹 생성 실패!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 플러그인 통합</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 통합 허브</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>RDQ 플러그인 통합 대시보드 열기</gradient>"
+      - "<gradient:#6b7280:#9ca3af>통화, 기술/작업 감지 및 PlaceholderAPI 도구는 여기에서 사용할 수 있습니다</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 통화 통합</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>통화 제공자 관리 공개</gradient>"
+        - "<gradient:#6b7280:#9ca3af>감지된 Vault 및 JExEconomy 통화 검토</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 통화 통합을 열지 못했습니다!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 스킬 통합</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>mcMMO, Aura 및 EcoSkills에 대한 지원 상태 보기</gradient>"
+        - "<gradient:#6b7280:#9ca3af>현재 활성화된 스킬 플러그인 감지</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 스킬 통합을 열지 못했습니다!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ 작업 통합</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>EcoJobs 및 JobsReborn에 대한 지원 상태 보기</gradient>"
+        - "<gradient:#6b7280:#9ca3af>현재 활성화된 작업 플러그인 감지</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ 작업 통합을 열지 못했습니다!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 지원 감지 및 확장 관리</gradient>"
+        - "<gradient:#6b7280:#9ca3af>설치 Player 확장 및 다시 로드 PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 도구를 열지 못했습니다!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI 도구</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI 통합</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 지원:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>대상 확장:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>여기에서 직접 설치 및 다시 로드 패널</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI 감지됨</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI가 설치되고 활성화되었습니다.</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 누락</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>이 작업을 사용하려면 PlaceholderAPI를 설치하고 활성화하세요</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 %expansion_name% 확장 설치</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>실행:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>그런 다음 실행:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>둘 다 실행하려면 클릭하세요. PlaceholderAPI 명령</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI 필수</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>이 작업은 PlaceholderAPI가 설치될 때까지 사용할 수 없습니다.</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ 관리자 액세스 필요</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 관리 도구를 사용할 권한이 없습니다.</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 통합을 관리할 권한이 없습니다.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI는 이 서버에서 사용할 수 없습니다.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ 확장 다운로드 실패:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ 확장 다운로드가 완료되었지만 PlaceholderAPI 다시 로드에 실패했습니다.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ %expansion_name% 확장을 설치하고 PlaceholderAPI를 다시 로드했습니다.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 스킬 통합</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 스킬 플러그인 상태</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>지원되는 스킬 통합:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>오른쪽 감지됨 지금:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>mcMMO, Aura 및 EcoSkills 지원 확인</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>감지됨</gradient>"
+      missing: "<gradient:#ef4444:#f87171>누락</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>통합 ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ 구성된 기술 통합 없음</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>현재 구성된 기술 플러그인 통합 없음</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ 작업 통합</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 작업 플러그인 상태</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>지원되는 작업 통합:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>오른쪽 감지됨 지금:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>EcoJobs 및 JobsReborn 지원 확인</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>감지됨</gradient>"
+      missing: "<gradient:#ef4444:#f87171>누락</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>통합 ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ 구성된 작업 통합 없음</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>현재 구성된 작업 플러그인 통합이 없습니다.</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

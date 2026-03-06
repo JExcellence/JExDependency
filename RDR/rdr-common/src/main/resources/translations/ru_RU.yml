@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>Требует:</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Контроль хранения</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[Администратор] Управление хранилищем</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Панель администратора</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Панель администратора RDR</gradient>"
     lore:
       - "<gray>Управляйте привилегированными системами хранения из одного места.</gray>"
-      - "<gray>Используйте эту панель для редактирования значений конфигурации и поддержки валют.</gray>"
-      - "<yellow>Требует:</yellow> <white>raindroprdr.command.admin</white>"
+      - "<gray>Используйте эту панель для редактирования значений конфигурации и открытия элементов управления интеграцией.</gray>"
+      - "<yellow>Требуется:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Настройка Хранилища</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Конфигурация хранилища.</gradient>"
       lore:
-        - "<gray>Изменить значения из</gray> <white>конфигурация/config.yml</white><gray>.</gray>"
-        - "<gray>Каждый редактируемый параметр можно изменить с помощью наковальни.</gray>"
+        - "<gray>Редактировать значения из</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Введенные настройки открываются в соответствующем редакторе с витражной наковальней.</gray>"
         - "<yellow>Нажмите, чтобы открыть элементы управления конфигурацией.</yellow>"
-    currency:
-      name: "<gradient:#10b981:#34d399>[Cur] Валютный менеджер</gradient>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Интеграция плагинов</gradient>"
       lore:
-        - "<gray>Просмотрите обнаруженные валюты из Vault и JExEconomy.</gray>"
-        - "<gray>Создайте значение по умолчанию</gray> <white>raindrops</white> <gray>валюту при необходимости.</gray>"
+        - "<gray>Управление навыками, работой, валютой и инструментами PlaceholderAPI.</gray>"
+        - "<gray>Откройте административные элементы управления, относящиеся к интеграции.</gray>"
+        - "<yellow>Нажмите, чтобы открыть управление интеграцией.</yellow>"
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Менеджер валют</gradient>"
+      lore:
+        - "<gray>Просмотр обнаруженных валют из Vault и JExEconomy.</gray>"
+        - "<gray>При необходимости создайте валюту</gray> <white>raindrops</white> <gray>по умолчанию.</gray>"
         - "<yellow>Нажмите, чтобы открыть валютный контроль.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Навык] Требования к навыкам</gradient>"
+      lore:
+        - "<gray>Просмотрите поддерживаемые плагины навыков и состояние обнаружения.</gray>"
+        - "<gray>Примените требования к навыкам по умолчанию ко всем уровням приобретения хранилища.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления требованиями к навыкам.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Задание] Требования к заданию</gradient>"
+      lore:
+        - "<gray>Просмотрите поддерживаемые плагины заданий и состояние обнаружения.</gray>"
+        - "<gray>Примените требования к заданиям по умолчанию ко всем уровням приобретения хранилища.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления требованиями к вакансии.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
       lore:
         - "<gray>У вас нет разрешения на использование этой панели администратора.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Интеграция плагинов</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Центр интеграции</gradient>"
+    lore:
+      - "<gray>Централизованное управление интеграцией для удовлетворения требований к хранению.</gray>"
+      - "<gray>Открытая валюта, навыки, вакансии и действия PlaceholderAPI.</gray>"
+      - "<yellow>Требуется:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Менеджер валют</gradient>"
+      lore:
+        - "<gray>Просмотр обнаруженных валют из Vault и JExEconomy.</gray>"
+        - "<gray>При необходимости создайте валюту</gray> <white>raindrops</white> <gray>по умолчанию.</gray>"
+        - "<yellow>Нажмите, чтобы открыть валютный контроль.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Навык] Требования к навыкам</gradient>"
+      lore:
+        - "<gray>Просмотрите поддерживаемые плагины навыков и состояние обнаружения.</gray>"
+        - "<gray>Примените требования к навыкам по умолчанию ко всем уровням приобретения хранилища.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления требованиями к навыкам.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Задание] Требования к заданию</gradient>"
+      lore:
+        - "<gray>Просмотрите поддерживаемые плагины заданий и состояние обнаружения.</gray>"
+        - "<gray>Примените требования к заданиям по умолчанию ко всем уровням приобретения хранилища.</gray>"
+        - "<yellow>Нажмите, чтобы открыть элементы управления требованиями к вакансии.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Обнаружение поддержки PlaceholderAPI и управление расширениями.</gray>"
+        - "<gray>Установите расширение</gray> <white>Player</white> <gray>и перезагрузите PlaceholderAPI.</gray>"
+        - "<yellow>Нажмите, чтобы открыть инструменты PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этой панели интеграции.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Инструменты PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Интеграция PlaceholderAPI</gradient>"
+    lore:
+      - "<gray>Поддерживается PlaceholderAPI:</gray> <white>{supported}</white>"
+      - "<gray>Целевое расширение:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Установите расширение и перезагрузите PlaceholderAPI с этой панели.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] Обнаружен PlaceholderAPI.</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI доступен и включен.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI Отсутствует</gradient>"
+      lore:
+        - "<gray>Установите и включите PlaceholderAPI, чтобы использовать это действие.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Установить {expansion_name} Расширение</gradient>"
+      lore:
+        - "<gray>Запускается:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Затем запускается:</gray> <white>papi reload</white>"
+        - "<yellow>Нажмите, чтобы выполнить обе команды PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Это действие недоступно, пока не установлен PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+      lore:
+        - "<gray>У вас нет разрешения на использование инструментов администрирования PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас нет разрешения на управление интеграциями PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI недоступен на этом сервере.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Не удалось отправить загрузку расширения для <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Загрузка расширения завершена, но не удалось перезагрузить PlaceholderAPI.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Установлен <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Валютный менеджер</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>У вас нет разрешения на использование этого представления валюты.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас нет разрешения на управление валютами.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Навыки] Интеграция требований</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Поддерживаемые плагины навыков</gradient>"
+    lore:
+      - "<gray>Поддерживаемые мосты:</gray> <white>{supported_count}</white>"
+      - "<gray>Обнаружено сейчас:</gray> <white>{detected_count}</white>"
+      - "<gray>Щелкните плагин ниже, чтобы внедрить требования к навыкам по умолчанию в каждый уровень покупки хранилища.</gray>"
+      - "<yellow>После применения изменений требуется перезагрузка сервера.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Обнаружен</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Отсутствует</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Идентификатор интеграции:</gray> <white>{integration_id}</white>"
+      - "<gray>Статус:</gray> <white>{detection_status}</white>"
+      - "<gray>Навык по умолчанию:</gray> <white>{default_skill}</white>"
+      - "<gray>Примененный диапазон уровней:</gray> <white>{level_range}</white>"
+      - "<yellow>Нажмите, чтобы добавить этот набор требований в config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Нет мостов навыков.</gradient>"
+      lore:
+        - "<gray>Нет доступных записей поддерживаемых мостов навыков.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого представления навыков.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Редактирование конфигурации заблокировано</gradient>"
+      lore:
+        - "<gray>Эта редакция не позволяет редактировать конфигурацию во время выполнения.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас недостаточно прав для управления требованиями к навыкам.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Редактирование конфигурации в этой версии заблокировано.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Применены требования к навыкам по умолчанию для <white>{plugin_name}</white> <gray>(идентификатор:</gray> <white>{integration_id}</white><gray>, навык:</gray> <white>{default_skill}</white><gray>, диапазон:</gray> <white>{level_range}</white><gray>) к <white>{updated_tiers}</white> <gray>уровням приобретения хранилища.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Перезапустите сервер, чтобы изменения требований вступили в силу.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Не удалось применить требования по умолчанию для <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Задание] Интеграция требований</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Информация] Поддерживаемые плагины заданий</gradient>"
+    lore:
+      - "<gray>Поддерживаемые мосты:</gray> <white>{supported_count}</white>"
+      - "<gray>Обнаружено сейчас:</gray> <white>{detected_count}</white>"
+      - "<gray>Щелкните плагин ниже, чтобы внедрить требования задания по умолчанию в каждый уровень приобретения хранилища.</gray>"
+      - "<yellow>После применения изменений требуется перезагрузка сервера.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Обнаружен</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Отсутствует</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Идентификатор интеграции:</gray> <white>{integration_id}</white>"
+      - "<gray>Статус:</gray> <white>{detection_status}</white>"
+      - "<gray>Задание по умолчанию:</gray> <white>{default_job}</white>"
+      - "<gray>Примененный диапазон уровней:</gray> <white>{level_range}</white>"
+      - "<yellow>Нажмите, чтобы добавить этот набор требований в config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Нет мостов заданий</gradient>"
+      lore:
+        - "<gray>Не существует поддерживаемых записей мостов заданий.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ администратора</gradient>"
+      lore:
+        - "<gray>У вас нет разрешения на использование этого представления задания.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Редактирование конфигурации заблокировано</gradient>"
+      lore:
+        - "<gray>Эта редакция не позволяет редактировать конфигурацию во время выполнения.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>У вас недостаточно прав для управления требованиями к заданиям.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Редактирование конфигурации в этой версии заблокировано.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Применены требования к заданию по умолчанию для <white>{plugin_name}</white> <gray>(идентификатор:</gray> <white>{integration_id}</white><gray>, задание:</gray> <white>{default_job}</white><gray>, диапазон:</gray> <white>{level_range}</white><gray>) к <white>{updated_tiers}</white> <gray>уровням приобретения хранилища.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Перезапустите сервер, чтобы изменения требований вступили в силу.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Не удалось применить требования по умолчанию для <white>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Текущие требования:</gray><white>{requirements}</white>"
         - "<gray>Собственные хранилища:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Перед покупкой выполните остальные требования.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Список ниже]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Список требований]</gradient> <gray>Текущие требования:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Достигнут предел хранилища</gradient>"
       lore:

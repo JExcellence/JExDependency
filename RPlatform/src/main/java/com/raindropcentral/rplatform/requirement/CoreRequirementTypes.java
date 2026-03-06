@@ -8,6 +8,10 @@ import com.raindropcentral.rplatform.requirement.impl.*;
  * This class should be called during RPlatform initialization to register
  * all built-in requirement types.
  * </p>
+ *
+ * @author ItsRainingHP, JExcellence
+ * @since 2.0.0
+ * @version 1.0.0
  */
 public final class CoreRequirementTypes {
     
@@ -26,13 +30,13 @@ public final class CoreRequirementTypes {
         registry.registerType(RequirementType.core("PERMISSION", PermissionRequirement.class));
         registry.registerType(RequirementType.core("LOCATION", LocationRequirement.class));
         registry.registerType(RequirementType.core("PLAYTIME", PlaytimeRequirement.class));
-        
-        // Composite requirements
-        registry.registerType(RequirementType.core("COMPOSITE", CompositeRequirement.class));
-        registry.registerType(RequirementType.core("CHOICE", ChoiceRequirement.class));
         registry.registerType(RequirementType.core("TIME_BASED", TimedRequirement.class));
         
-        // Plugin integration requirement (replaces old JOBS and SKILLS)
+        // Parent requirement options
+        registry.registerType(RequirementType.core("COMPOSITE", CompositeRequirement.class));
+        registry.registerType(RequirementType.core("CHOICE", ChoiceRequirement.class));
+        
+        // Plugin integration requirements
         registry.registerType(RequirementType.core("PLUGIN", PluginRequirement.class));
     }
 }

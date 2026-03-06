@@ -36,6 +36,10 @@ import java.util.logging.Logger;
  *     .consumeOnComplete(true)
  *     .build();
  * }</pre>
+ *
+ * @author ItsRainingHP, JExcellence
+ * @since 2.0.0
+ * @version 1.0.0
  */
 public final class RequirementFactory {
 
@@ -509,23 +513,61 @@ public final class RequirementFactory {
     private PluginRequirement createPluginRequirement(Map<String, Object> config) {
         String plugin = getString(config, "plugin", null);
         String category = getString(config, "category", null);
-        
-        @SuppressWarnings("unchecked")
-        Map<String, Object> valuesRaw = (Map<String, Object>) config.get("values");
+
+        if ((plugin == null || plugin.isBlank()) && category != null) {
+            if ("SKILLS".equalsIgnoreCase(category)) {
+                plugin = getString(config, "skillPlugin", null);
+            } else if ("JOBS".equalsIgnoreCase(category)) {
+                plugin = getString(config, "jobPlugin", null);
+            }
+        }
+        if (plugin == null || plugin.isBlank()) {
+            plugin = getString(config, "pluginId", null);
+        }
+        if (plugin == null || plugin.isBlank()) {
+            plugin = getString(config, "integrationId", null);
+        }
+        if (plugin == null || plugin.isBlank()) {
+            plugin = "auto";
+        }
+
         Map<String, Double> values = new HashMap<>();
-        
-        if (valuesRaw != null) {
-            for (Map.Entry<String, Object> entry : valuesRaw.entrySet()) {
-                Object value = entry.getValue();
-                if (value instanceof Number) {
-                    values.put(entry.getKey(), ((Number) value).doubleValue());
+        values.putAll(parseNumericMap(config.get("values")));
+
+        if (values.isEmpty()) {
+            if ("SKILLS".equalsIgnoreCase(category)) {
+                values.putAll(parseNumericMap(config.get("skills")));
+                if (values.isEmpty()) {
+                    String skill = getString(config, "skill", null);
+                    int level = getInt(config, "level", 1);
+                    if (skill != null && !skill.isBlank()) {
+                        values.put(skill, (double) level);
+                    }
+                }
+            } else if ("JOBS".equalsIgnoreCase(category)) {
+                values.putAll(parseNumericMap(config.get("jobs")));
+                if (values.isEmpty()) {
+                    String job = getString(config, "job", null);
+                    int level = getInt(config, "level", 1);
+                    if (job != null && !job.isBlank()) {
+                        values.put(job, (double) level);
+                    }
+                }
+            } else {
+                values.putAll(parseNumericMap(config.get("requiredValues")));
+                if (values.isEmpty()) {
+                    String key = getString(config, "key", null);
+                    double value = getDouble(config, "value");
+                    if (key != null && !key.isBlank() && value > 0.0D) {
+                        values.put(key, value);
+                    }
                 }
             }
         }
-        
+
         boolean consumable = getBoolean(config, "consumable", false);
         String description = getString(config, "description", null);
-        
+
         return new PluginRequirement(plugin, category, values, consumable, description);
     }
 
@@ -622,6 +664,32 @@ public final class RequirementFactory {
         if (value instanceof Boolean) return (Boolean) value;
         if (value instanceof String) return Boolean.parseBoolean((String) value);
         return defaultValue;
+    }
+
+    @NotNull
+    private Map<String, Double> parseNumericMap(@Nullable Object rawMap) {
+        if (!(rawMap instanceof Map<?, ?> map)) {
+            return Map.of();
+        }
+
+        final Map<String, Double> values = new HashMap<>();
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            if (entry.getKey() == null || entry.getValue() == null) {
+                continue;
+            }
+            if (entry.getValue() instanceof Number number) {
+                values.put(entry.getKey().toString(), number.doubleValue());
+                continue;
+            }
+            if (entry.getValue() instanceof String textValue) {
+                try {
+                    values.put(entry.getKey().toString(), Double.parseDouble(textValue));
+                } catch (NumberFormatException ignored) {
+                    // Ignore non-numeric map entries
+                }
+            }
+        }
+        return values;
     }
 
     @NotNull

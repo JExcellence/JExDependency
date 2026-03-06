@@ -281,35 +281,133 @@ shop_admin_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Yönetici Paneli</white>"
     lore:
-      - "<gray>Genel yönetici-mağaza sistemlerini tek yerden yönetin.</gray>"
-      - "<gray>Sunucu bankasını açın veya aşağıdaki yapılandırma ayarlarını düzenleyin.</gray>"
+      - "<gray>Global yönetici-mağaza sistemlerini tek yerden yönetin.</gray>"
+      - "<gray>Aşağıdaki sunucu bankasını, yapılandırmayı ve entegrasyon kontrollerini açın.</gray>"
       - "<yellow>Gerektirir:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] Sunucu Bankası</gradient>"
       lore:
-        - "<gray>Sunucu bankasına çekilen yönetici-mağaza gelirini inceleyin.</gray>"
-        - "<gray>Sonraki çekme zamanlamasını kontrol edin ve bakiyeleri çekin.</gray>"
+        - "<gray>Sunucu bankasına çekilen yönetici mağazası gelirini inceleyin.</gray>"
+        - "<gray>Bir sonraki çekme zamanlamasını kontrol edin ve bakiyeleri çekin.</gray>"
         - "<yellow>Sunucu bankası kontrollerini açmak için tıklayın.</yellow>"
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Mağaza Config</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
         - "<gray>Değerleri düzenle</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Her düzenlenebilir ayar, bir örs istemi aracılığıyla değiştirilebilir.</gray>"
+        - "<gray>Düzenlenebilir her ayar, bir örs istemi aracılığıyla değiştirilebilir.</gray>"
         - "<yellow>Yapılandırma kontrollerini açmak için tıklayın.</yellow>"
-    currency:
-      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Döviz Yöneticisi</gradient>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Eklenti Entegrasyonları</gradient>"
       lore:
-        - "<gray>Vault'tan tespit edilen para birimlerini inceleyin ve JExEconomy.</gray>"
-        - "<gray>Varsayılanı oluştur</gray> <white>yağmur damlaları</white> <gray>gerektiğinde para birimi.</gray>"
-        - "<yellow>Para birimini açmak için tıklayın kontrolleri.</yellow>"
+        - "<gray>Açık işler, beceriler ve PlaceholderAPI entegrasyon araçları.</gray>"
+        - "<gray>Eklenti gereksinimi köprülerini ve genişletme kurulumunu yönetin.</gray>"
+        - "<yellow>Entegrasyon kontrollerini açmak için tıklayın.</yellow>"
+    currency:
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Para Birimi Yöneticisi</gradient>"
+      lore:
+        - "<gray>İnceleme, Vault ve JExEconomy'den gelen para birimlerini tespit etti.</gray>"
+        - "<gray>Gerektiğinde varsayılan</gray> <white>raindrops</white> <gray>para birimini oluşturun.</gray>"
+        - "<yellow>Para birimi kontrollerini açmak için tıklayın.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Beceri] Beceri Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen beceri eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan beceri gerekliliklerini tüm satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>Beceri gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[İş] İş Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen iş eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan iş gereksinimlerini tüm satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>İş gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Vergi] Vergileri Şimdi Çalıştırın</gradient>"
+      lore:
+        - "<gray>Test için anında bir vergi toplama döngüsünü tetikleyin.</gray>"
+        - "<gray>Bu, yapılandırılan yinelenen vergi zamanlayıcısını değiştirmez.</gray>"
+        - "<yellow>Vergileri hemen şimdi çalıştırmak için tıklayın.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
       lore:
-        - "<gray>Bu yöneticiyi kullanma izniniz yok panel.</gray>"
+        - "<gray>Bu yönetici panelini kullanma izniniz yok.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Derhal mağaza vergisi tahsilat döngüsünü tetikledi.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Mağaza vergi planlayıcısı şu anda kullanılamıyor.</gray>"
 
-# Algılanan sağlayıcılar için yönetici para birimi görünümü ve varsayılan para birimi oluşturma.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Eklenti Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>Entegrasyon Merkezi</white>"
+    lore:
+      - "<gray>İhtiyaç köprüsü entegrasyonlarını tek yerden yönetin.</gray>"
+      - "<gray>Açık işler, beceriler ve PlaceholderAPI kontrolleri.</gray>"
+      - "<yellow>Gerektirir:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Beceri] Beceri Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen beceri eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan beceri gerekliliklerini tüm satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>Beceri gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[İş] İş Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen iş eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan iş gereksinimlerini tüm satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>İş gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI desteğini tespit edin ve genişletmeleri yönetin.</gray>"
+        - "<gray>Şunu yükleyin:</gray> <white>Player</white> <gray>PlaceholderAPI'yi genişletin ve yeniden yükleyin.</gray>"
+        - "<yellow>PlaceholderAPI araçlarını açmak için tıklayın.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu entegrasyon panelini kullanma izniniz yok.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Araçları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>PlaceholderAPI Entegrasyonu</white>"
+    lore:
+      - "<gray>PlaceholderAPI destekli:</gray> <white>{supported}</white>"
+      - "<gray>Hedef genişletme:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Genişletmeyi yükleyin ve PlaceholderAPI'yi bu panelden yeniden yükleyin.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[Tamam]</gradient> <white>PlaceholderAPI Algılandı</white>"
+      lore:
+        - "<gray>PlaceholderAPI mevcut ve etkin.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Eksik</white>"
+      lore:
+        - "<gray>Bu eylemi kullanmak için PlaceholderAPI'yi yükleyin ve etkinleştirin.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{expansion_name} Genişletmesini Kur</white>"
+      lore:
+        - "<gray>Çalıştırır:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Sonra çalıştırır:</gray> <white>papi reload</white>"
+        - "<yellow>Her iki PlaceholderAPI komutunu da yürütmek için tıklayın.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Gereklidir</white>"
+      lore:
+        - "<gray>Bu eylem, PlaceholderAPI yüklenene kadar kullanılamaz.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>PlaceholderAPI yönetici araçlarını kullanma izniniz yok.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI entegrasyonlarını yönetme izniniz yok.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI bu sunucuda mevcut değil.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{expansion_name} için genişletme indirmesi gönderilemedi</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Genişletme indirmesi tamamlandı, ancak PlaceholderAPI yeniden yükleme başarısız oldu.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Yüklendi <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Döviz Yöneticisi</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Düzenlenebilir ayarlar ve güncelleme geri bildirimi için tarayıcı kullanıcı arayüzünü yapılandırın.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Beceri] Gereksinim Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi]</gradient> <white>Desteklenen Beceri Eklentileri</white>"
+    lore:
+      - "<gray>Desteklenen köprüler:</gray> <white>{supported_count}</white>"
+      - "<gray>Şimdi algılandı:</gray> <white>{detected_count}</white>"
+      - "<gray>Her satın alma katmanına varsayılan beceri gereksinimlerini eklemek için aşağıdaki bir eklentiye tıklayın.</gray>"
+      - "<yellow>Değişiklikler uygulandıktan sonra sunucunun yeniden başlatılması gerekiyor.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Algılanan</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Entegrasyon kimliği:</gray> <white>{integration_id}</white>"
+      - "<gray>Durum:</gray> <white>{detection_status}</white>"
+      - "<gray>Varsayılan beceri:</gray> <white>{default_skill}</white>"
+      - "<gray>Uygulanan Düzey Aralığı:</gray> <white>{level_range}</white>"
+      - "<yellow>Bu gereksinim kümesini config/config.yml dosyasına eklemek için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Beceri Köprüsü Yok</white>"
+      lore:
+        - "<gray>Desteklenen beceri köprüsü girişi yok.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu beceri görünümünü kullanma izniniz yok.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yapılandırma Düzenleme Kilitli</white>"
+      lore:
+        - "<gray>Bu sürüm, çalışma zamanı yapılandırma düzenlemelerine izin vermez.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Beceri gereksinimlerini yönetme izniniz yok.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yapılandırma düzenleme bu sürümde kilitlidir.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, beceri:</gray> <white>{default_skill}</white><gray>, aralık:</gray> <white>{level_range}</white><gray>) ila <white>{updated_tiers}</white> <gray>satın alma kademeleri için varsayılan beceri gereksinimi uygulandı.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Gereksinim değişikliklerinin etkili olması için sunucuyu yeniden başlatın.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{plugin_name} için varsayılan gereksinimler uygulanamadı</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[İş] Gereksinim Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Bilgi]</gradient> <white>Desteklenen İş Eklentileri</white>"
+    lore:
+      - "<gray>Desteklenen köprüler:</gray> <white>{supported_count}</white>"
+      - "<gray>Şimdi algılandı:</gray> <white>{detected_count}</white>"
+      - "<gray>Her bir satın alma katmanına varsayılan iş gereksinimlerini eklemek için aşağıdaki bir eklentiye tıklayın.</gray>"
+      - "<yellow>Değişiklikler uygulandıktan sonra sunucunun yeniden başlatılması gerekiyor.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Algılanan</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Entegrasyon kimliği:</gray> <white>{integration_id}</white>"
+      - "<gray>Durum:</gray> <white>{detection_status}</white>"
+      - "<gray>Varsayılan iş:</gray> <white>{default_job}</white>"
+      - "<gray>Uygulanan Düzey Aralığı:</gray> <white>{level_range}</white>"
+      - "<yellow>Bu gereksinim kümesini config/config.yml dosyasına eklemek için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>İş Köprüsü Yok</white>"
+      lore:
+        - "<gray>Desteklenen iş köprüsü girişi yok.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yönetici Erişimi Gerekli</white>"
+      lore:
+        - "<gray>Bu iş görünümünü kullanma izniniz yok.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Yapılandırma Düzenleme Kilitli</white>"
+      lore:
+        - "<gray>Bu sürüm, çalışma zamanı yapılandırma düzenlemelerine izin vermez.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>İş gereksinimlerini yönetme izniniz yok.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yapılandırma düzenleme bu sürümde kilitlidir.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>işi için uygulanan varsayılan iş gereksinimi:</gray> <white>{default_job}</white><gray>, aralık:</gray> <white>{level_range}</white><gray>) ila <white>{updated_tiers}</white> <gray>satın alma kademeleri için varsayılan beceri gereksinimi uygulandı.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Gereksinim değişikliklerinin etkili olması için sunucuyu yeniden başlatın.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{plugin_name} için varsayılan gereksinimler uygulanamadı</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Mağaza Config</gradient>"
   summary:

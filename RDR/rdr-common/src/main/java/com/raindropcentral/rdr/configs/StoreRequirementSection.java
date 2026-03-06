@@ -564,8 +564,24 @@ public final class StoreRequirementSection {
         if (!source.containsKey("plugin") && source.containsKey("integrationId")) {
             source.put("plugin", source.get("integrationId"));
         }
+        if (!source.containsKey("plugin") && source.containsKey("skillPlugin")) {
+            source.put("plugin", source.get("skillPlugin"));
+            source.putIfAbsent("category", "SKILLS");
+        }
+        if (!source.containsKey("plugin") && source.containsKey("jobPlugin")) {
+            source.put("plugin", source.get("jobPlugin"));
+            source.putIfAbsent("category", "JOBS");
+        }
         if (!source.containsKey("values") && source.get("requiredValues") instanceof Map<?, ?> requiredValues) {
             source.put("values", toDoubleMap(requiredValues));
+        }
+        if (!source.containsKey("values") && source.get("skills") instanceof Map<?, ?> skills) {
+            source.put("values", toDoubleMap(skills));
+            source.putIfAbsent("category", "SKILLS");
+        }
+        if (!source.containsKey("values") && source.get("jobs") instanceof Map<?, ?> jobs) {
+            source.put("values", toDoubleMap(jobs));
+            source.putIfAbsent("category", "JOBS");
         }
         if (!source.containsKey("values")
             && source.containsKey("key")
@@ -576,12 +592,39 @@ public final class StoreRequirementSection {
                 source.put("values", Map.of(source.get("key").toString(), value));
             }
         }
+        if (!source.containsKey("values")
+            && source.containsKey("skill")
+            && source.get("level") != null
+        ) {
+            final Double value = toDouble(source.get("level"));
+            if (value != null) {
+                source.put("values", Map.of(source.get("skill").toString(), value));
+                source.putIfAbsent("category", "SKILLS");
+            }
+        }
+        if (!source.containsKey("values")
+            && source.containsKey("job")
+            && source.get("level") != null
+        ) {
+            final Double value = toDouble(source.get("level"));
+            if (value != null) {
+                source.put("values", Map.of(source.get("job").toString(), value));
+                source.putIfAbsent("category", "JOBS");
+            }
+        }
         if (!source.containsKey("consumable") && source.containsKey("consumeOnComplete")) {
             source.put("consumable", source.get("consumeOnComplete"));
         }
         source.remove("pluginId");
         source.remove("integrationId");
+        source.remove("skillPlugin");
+        source.remove("jobPlugin");
         source.remove("requiredValues");
+        source.remove("skills");
+        source.remove("jobs");
+        source.remove("skill");
+        source.remove("job");
+        source.remove("level");
         source.remove("key");
         source.remove("value");
         return source;

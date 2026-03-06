@@ -25,8 +25,12 @@ import com.raindropcentral.rdq.rank.RankSystemFactory;
 import com.raindropcentral.rdq.service.RankPathService;
 import com.raindropcentral.rdq.service.scoreboard.PerkSidebarScoreboardService;
 import com.raindropcentral.rdq.view.admin.AdminCurrencyView;
+import com.raindropcentral.rdq.view.admin.AdminJobsView;
 import com.raindropcentral.rdq.view.admin.AdminOverviewView;
 import com.raindropcentral.rdq.view.admin.AdminPermissionsView;
+import com.raindropcentral.rdq.view.admin.AdminSkillsView;
+import com.raindropcentral.rdq.view.admin.PlaceholderAPIView;
+import com.raindropcentral.rdq.view.admin.PluginIntegrationManagementView;
 import com.raindropcentral.rdq.view.bounty.*;
 import com.raindropcentral.rdq.view.main.MainOverviewView;
 import com.raindropcentral.rdq.view.perks.PerkDetailView;
@@ -254,7 +258,11 @@ public abstract class RDQ {
 				.with(
 						new ConfirmationView(),
 						new AdminOverviewView(),
+						new PluginIntegrationManagementView(),
 						new AdminCurrencyView(),
+						new AdminSkillsView(),
+						new AdminJobsView(),
+						new PlaceholderAPIView(),
 						new AdminPermissionsView(),
 						new BountyMainView(),
 						new BountyRewardView(),

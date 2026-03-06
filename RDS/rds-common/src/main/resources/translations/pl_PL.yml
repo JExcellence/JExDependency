@@ -277,39 +277,137 @@ shop_overview_ui:
 
 # Globalny administracyjny panel sterowania do zarządzania RDS.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Administrator] Kontrola RDS</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] Kontrola RDS</gradient>"
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Panel administracyjny RDS</white>"
     lore:
-      - "<gray>Zarządzaj globalnymi systemami administracyjnymi sklepu z jednego miejsca.</gray>"
-      - "<gray>Otwórz bank serwera lub edytuj ustawienia konfiguracji poniżej.</gray>"
-      - "<yellow>Wymaga:</yellow> <white>Raindropshops.command.admin</white>"
+      - "<gray>Zarządzaj globalnymi systemami administracyjnymi i sklepowymi z jednego miejsca.</gray>"
+      - "<gray>Otwórz bank serwerów, konfigurację i elementy sterujące integracją poniżej.</gray>"
+      - "<yellow>Wymaga:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] Bank serwerów</gradient>"
       lore:
-        - "<gray>Przejrzyj dochody administratora sklepu pobrane do banku serwera.</gray>"
+        - "<gray>Przegląd dochodów sklepu administracyjnego pobieranych do banku serwerów.</gray>"
         - "<gray>Sprawdź czas następnego pobrania i wypłać saldo.</gray>"
-        - "<yellow>Kliknij, aby otworzyć kontrole banku serwera.</yellow>"
+        - "<yellow>Kliknij, aby otworzyć kontrolę banku serwera.</yellow>"
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Sklep Konfiguracja</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
-        - "<gray>Edytuj wartości z</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Każde edytowalne ustawienie można zmienić za pomocą podpowiedzi kowadła.</gray>"
+        - "<gray>Edycja wartości z</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Każde edytowalne ustawienie można zmienić poprzez monit kowadła.</gray>"
         - "<yellow>Kliknij, aby otworzyć elementy sterujące konfiguracją.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Integracja wtyczek</gradient>"
+      lore:
+        - "<gray>Otwarte oferty pracy, umiejętności i narzędzia integracji PlaceholderAPI.</gray>"
+        - "<gray>Zarządzaj mostami wymagań wtyczek i konfiguracją rozszerzeń.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące integracją.</yellow>"
     currency:
-      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Menedżer walutowy</gradient>"
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Menedżer walut</gradient>"
       lore:
         - "<gray>Przejrzyj wykryte waluty z Vault i JExEconomy.</gray>"
-        - "<gray>Utwórz domyślną</gray> <white>krople deszczu</white> <gray>walutę, jeśli zajdzie taka potrzeba.</gray>"
-        - "<yellow>Kliknij, aby otworzyć walutę kontrole.</yellow>"
+        - "<gray>Utwórz wartość domyślną</gray> <white>raindrops</white> <gray>walutę, jeśli zajdzie taka potrzeba.</gray>"
+        - "<yellow>Kliknij, aby otworzyć kontrolę walut.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Umiejętność] Wymagania dotyczące umiejętności</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki umiejętności i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania dotyczące umiejętności do wszystkich poziomów zakupów.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami umiejętności.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Praca] Wymagania stanowiska</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki zadań i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania stanowiskowe do wszystkich poziomów zakupów.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami stanowiska.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Podatek] Uruchom podatki teraz</gradient>"
+      lore:
+        - "<gray>Uruchom jeden natychmiastowy cykl poboru podatku do celów testowych.</gray>"
+        - "<gray>Nie zmienia to skonfigurowanego licznika czasu podatku powtarzalnego.</gray>"
+        - "<yellow>Kliknij, aby natychmiast uruchomić podatki.</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Dostęp administracyjny Wymagane</white>"
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Wymagany dostęp administratora</white>"
       lore:
-        - "<gray>Nie masz uprawnień do korzystania z tego administratora panel.</gray>"
+        - "<gray>Nie masz uprawnień do korzystania z tego panelu administracyjnego.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Wywołało natychmiastowy cykl poboru podatku sklepowego.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Narzędzie do planowania podatków sklepu nie jest obecnie dostępne.</gray>"
 
-# Widok waluty administratora dla wykrytych dostawców i domyślne tworzenie waluty.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Integracja wtyczek</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje]</gradient> <white>Centrum integracji</white>"
+    lore:
+      - "<gray>Zarządzaj integracjami mostu wymagań z jednego miejsca.</gray>"
+      - "<gray>Otwarte stanowiska pracy, umiejętności i elementy sterujące PlaceholderAPI.</gray>"
+      - "<yellow>Wymaga:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Umiejętność] Wymagania dotyczące umiejętności</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki umiejętności i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania dotyczące umiejętności do wszystkich poziomów zakupów.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami umiejętności.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Praca] Wymagania stanowiska</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki zadań i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania stanowiskowe do wszystkich poziomów zakupów.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami stanowiska.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Wykryj obsługę PlaceholderAPI i zarządzaj rozszerzeniami.</gray>"
+        - "<gray>Zainstaluj rozszerzenie</gray> <white>Player</white> <gray>i ponownie załaduj PlaceholderAPI.</gray>"
+        - "<yellow>Kliknij, aby otworzyć narzędzia PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Wymagany dostęp administratora</white>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z tego panelu integracyjnego.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Narzędzia PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje]</gradient> <white>Integracja PlaceholderAPI</white>"
+    lore:
+      - "<gray>Obsługiwane PlaceholderAPI:</gray> <white>{supported}</white>"
+      - "<gray>Docelowa ekspansja:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Zainstaluj rozszerzenie i ponownie załaduj PlaceholderAPI z tego panelu.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK] Wykryto</gradient> <white>PlaceholderAPI</white>"
+      lore:
+        - "<gray>PlaceholderAPI jest dostępny i włączony.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Brak PlaceholderAPI</white>"
+      lore:
+        - "<gray>Zainstaluj i włącz PlaceholderAPI, aby móc korzystać z tej akcji.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Zainstaluj {expansion_name} Rozszerzenie</white>"
+      lore:
+        - "<gray>Uruchamia:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Następnie uruchamia:</gray> <white>papi reload</white>"
+        - "<yellow>Kliknij, aby wykonać oba polecenia PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Wymagane</white>"
+      lore:
+        - "<gray>Ta akcja jest niedostępna do czasu zainstalowania PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Wymagany dostęp administratora</white>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z narzędzi administracyjnych PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania integracjami z PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI nie jest dostępny na tym serwerze.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie udało się wysłać rozszerzenia dla <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Pobieranie rozszerzenia zostało ukończone, ale ponowne załadowanie interfejsu PlaceholderAPI nie powiodło się.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Zainstalowano <biały>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Menedżer walutowy</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Skonfiguruj interfejs przeglądarki pod kątem edytowalnych ustawień i informacji zwrotnych o aktualizacjach.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Umiejętność] Wymagania Integracje</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje]</gradient> <white>Obsługiwane wtyczki umiejętności</white>"
+    lore:
+      - "<gray>Obsługiwane mosty:</gray> <white>{supported_count}</white>"
+      - "<gray>Wykryto teraz:</gray> <white>{detected_count}</white>"
+      - "<gray>Kliknij wtyczkę poniżej, aby dodać domyślne wymagania dotyczące umiejętności do każdego poziomu zakupów.</gray>"
+      - "<yellow>Po zastosowaniu zmian wymagane jest ponowne uruchomienie serwera.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Wykryto</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Zaginiony</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Identyfikator integracji:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Domyślna umiejętność:</gray> <white>{default_skill}</white>"
+      - "<gray>Zastosowany zakres poziomów:</gray> <white>{level_range}</white>"
+      - "<yellow>Kliknij, aby dodać ten zestaw wymagań do config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Brak mostków umiejętności</white>"
+      lore:
+        - "<gray>Brak obsługiwanych wpisów mostów umiejętności.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Wymagany dostęp administratora</white>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z tego widoku umiejętności.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Edycja konfiguracji zablokowana</white>"
+      lore:
+        - "<gray>Ta edycja nie pozwala na edycję konfiguracji w czasie wykonywania.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania wymaganiami dotyczącymi umiejętności.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edycja konfiguracji jest w tej edycji zablokowana.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Zastosowano domyślne wymagania dotyczące umiejętności dla <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, umiejętność:</gray> <white>{default_skill}</white><gray>, zakres:</gray> <white>{level_range}</white><gray>) do <white>{updated_tiers}</white> <gray>poziomów zakupu.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Zrestartuj serwer, aby zmiany wymagań zaczęły obowiązywać.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie można zastosować domyślnych wymagań dla <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Praca] Integracje wymagań</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Informacje]</gradient> <white>Obsługiwane wtyczki stanowisk</white>"
+    lore:
+      - "<gray>Obsługiwane mosty:</gray> <white>{supported_count}</white>"
+      - "<gray>Wykryto teraz:</gray> <white>{detected_count}</white>"
+      - "<gray>Kliknij wtyczkę poniżej, aby dodać domyślne wymagania stanowiskowe do każdego poziomu zakupów.</gray>"
+      - "<yellow>Po zastosowaniu zmian wymagane jest ponowne uruchomienie serwera.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Wykryto</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Zaginiony</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Identyfikator integracji:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Zadanie domyślne:</gray> <white>{default_job}</white>"
+      - "<gray>Zastosowany zakres poziomów:</gray> <white>{level_range}</white>"
+      - "<yellow>Kliknij, aby dodać ten zestaw wymagań do config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Brak mostków zadań</white>"
+      lore:
+        - "<gray>Brak obsługiwanych wpisów mostów zadań.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Wymagany dostęp administratora</white>"
+      lore:
+        - "<gray>Nie masz uprawnień, aby korzystać z tego widoku zadań.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Edycja konfiguracji zablokowana</white>"
+      lore:
+        - "<gray>Ta edycja nie pozwala na edycję konfiguracji w czasie wykonywania.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania wymaganiami dotyczącymi stanowiska.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edycja konfiguracji jest w tej edycji zablokowana.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Zastosowano domyślne wymaganie stanowiska dla <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, stanowisko:</gray> <white>{default_job}</white><gray>, zakres:</gray> <white>{level_range}</white><gray>) do <white>{updated_tiers}</white> <gray>poziomów zakupu.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Zrestartuj serwer, aby zmiany wymagań zaczęły obowiązywać.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie można zastosować domyślnych wymagań dla <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Sklep Konfiguracja</gradient>"
   summary:

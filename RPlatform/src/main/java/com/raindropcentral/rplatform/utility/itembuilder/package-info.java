@@ -6,7 +6,7 @@
  * adapts per-version differences via {@link com.raindropcentral.rplatform.version.ServerEnvironment}
  * checks, enabling Paper-specific methods while falling back to legacy setters when required.
  * Builders are typically instantiated through
- * {@link com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory#item()} and then
+ * {@link com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory} and then
  * refined using fluent operations.</p>
  *
  * <p><strong>Usage patterns.</strong> Start with the base builder, set common metadata (name,

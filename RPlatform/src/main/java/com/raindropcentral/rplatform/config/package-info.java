@@ -2,9 +2,8 @@
  * Configuration section mappers that bridge YAML files into runtime toggles across the platform.
  *
  * <h2>Runtime behaviour mapping</h2>
- * <p>{@link com.raindropcentral.rplatform.logging.LoggerConfig#load(org.bukkit.plugin.java.JavaPlugin)
- * LoggerConfig#load(JavaPlugin)} hydrates {@link LoggerSection} data to align {@link com.raindropcentral.rplatform.logging.LogLevel}
- * routing with package-specific thresholds and console/debug switches at startup.
+ * <p><code>LoggerConfig#load(JavaPlugin)</code> hydrates {@link LoggerSection} data to align
+ * logging level routing with package-specific thresholds and console/debug switches at startup.
  * {@link DurationSection} standardises human readable length formats so permission-aware sections can
  * calculate milliseconds, seconds, and derived units without re-parsing user input.</p>
  * <p>The permission-focused views in {@link com.raindropcentral.rplatform.config.permission} depend on these

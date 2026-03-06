@@ -24,7 +24,7 @@
  *     <li>{@link com.raindropcentral.rplatform.api api} – Platform detection and API wrappers.</li>
  *     <li>{@link com.raindropcentral.rplatform.config config} – Configuration adapters and helpers.</li>
  *     <li>{@link com.raindropcentral.rplatform.console console} – Console message formatting.</li>
- *     <li>{@link com.raindropcentral.rplatform.database database} – Database resource descriptors.</li>
+ *     <li><code>com.raindropcentral.rplatform.database</code> – Database resource descriptors.</li>
  *     <li>{@link com.raindropcentral.rplatform.discord discord} – Discord webhook integration.</li>
  *     <li>{@link com.raindropcentral.rplatform.head head} – Player head utilities.</li>
  *     <li>{@link com.raindropcentral.rplatform.localization localization} – Translation facilities.</li>
@@ -36,7 +36,7 @@
  *     <li>{@link com.raindropcentral.rplatform.serializer serializer} – Serialization utilities.</li>
  *     <li>{@link com.raindropcentral.rplatform.service service} – Service registry and lookup.</li>
  *     <li>{@link com.raindropcentral.rplatform.type type} – Platform-specific enums and identifiers.</li>
- *     <li>{@link com.raindropcentral.rplatform.utility utility} – Shared helper classes.</li>
+ *     <li><code>com.raindropcentral.rplatform.utility</code> – Shared helper classes.</li>
  *     <li>{@link com.raindropcentral.rplatform.version version} – Version metadata helpers.</li>
  *     <li>{@link com.raindropcentral.rplatform.view view} – View layer helpers and UI components.</li>
  *     <li>{@link com.raindropcentral.rplatform.workload workload} – Workload scheduling and task

@@ -4,12 +4,12 @@
  * Views extend {@link me.devnatan.inventoryframework.View} but lean on the
  * platform lifecycle for translations and scheduling. Constructors generally
  * capture {@link com.raindropcentral.rplatform.localization.TranslationManager}
- * output through {@link de.jexcellence.jextranslate.api.TranslationService}
+ * output through the platform translation service
  * once {@link com.raindropcentral.rplatform.RPlatform#initialize()} has
  * completed. Delaying view creation until that asynchronous initialization
  * prevents empty titles or lore that would otherwise occur when translation
  * caches are cold. Translation keys are referenced explicitly through
- * {@link de.jexcellence.jextranslate.api.TranslationKey} to keep resource
+ * translation key wrappers to keep resource
  * bundles aligned with their corresponding views.
  * </p>
  * <p>

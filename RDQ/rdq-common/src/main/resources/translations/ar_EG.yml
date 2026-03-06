@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>إجمالي الأذونات:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ فشل في فتح مدير الأذونات!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 مدير العملة</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 تكامل البرنامج المساعد</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>قم بمراجعة العملات التي تم اكتشافها بواسطة RDQ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>يتضمن إدخالات Vault وJExEconomy</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ فشل في فتح مدير العملة!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إدارة عمليات تكامل المكونات الإضافية للمشرف في مكان واحد</gradient>"
+      - "<gradient:#6b7280:#9ca3af>يتضمن طرق عرض العملة والمهارات والكشف عن الوظائف</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات تكامل المكونات الإضافية!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ إنشاء LuckPerms المجموعات</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ تم إنشاؤها</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms مجموعات!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>لم يتم إنشاء أي مجموعات جديدة.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ فشل في الإنشاء LuckPerms مجموعات!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 تكامل البرنامج المساعد</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 مركز التكامل</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>افتح لوحات معلومات تكامل المكونات الإضافية RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>تتوفر هنا العملات واكتشاف المهارات/الوظائف وأدوات PlaceholderAPI</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 تكامل العملات</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>إدارة مزود العملة المفتوحة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>مراجعة عملات Vault وJExEconomy المكتشفة</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات تكامل العملات!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 تكامل المهارات</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>عرض حالة الدعم لـ mcMMO وAura وEcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>اكتشاف المكونات الإضافية للمهارة الممكّنة حاليًا</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات تكامل المهارات!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ التكامل الوظيفي</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>عرض حالة الدعم لـ EcoJobs وJobsReborn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>اكتشاف المكونات الإضافية للوظيفة الممكّنة حاليًا</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات التكامل الوظيفي!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>اكتشاف دعم PlaceholderAPI وإدارة التوسعات</gradient>"
+        - "<gradient:#6b7280:#9ca3af>قم بتثبيت التوسعة Player وأعد تحميل PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ فشل في فتح أدوات PlaceholderAPI!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 أدوات PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 التكامل PlaceholderAPI</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI المدعومة:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>التوسع المستهدف:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>التثبيت وإعادة التحميل مباشرة من هذه اللوحة</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ تم اكتشاف PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>تم تثبيت PlaceholderAPI وتمكينه</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI مفقود</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>قم بتثبيت وتمكين PlaceholderAPI لاستخدام هذا الإجراء</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 قم بتثبيت التوسعة %expansion_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>أشواط:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ثم يجري:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>انقر لتنفيذ كلا الأمرين PlaceholderAPI</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI مطلوب</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>هذا الإجراء غير متاح حتى يتم تثبيت PlaceholderAPI</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ مطلوب وصول المسؤول</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>ليس لديك إذن لاستخدام أدوات إدارة PlaceholderAPI</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ ليس لديك إذن لإدارة عمليات تكامل PlaceholderAPI.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI غير متوفر على هذا الخادم.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ فشل تنزيل التوسعة:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ اكتمل تنزيل التوسيع، ولكن فشلت إعادة تحميل PlaceholderAPI.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ تم تثبيت توسيع %expansion_name% وإعادة تحميل PlaceholderAPI.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 تكامل المهارات</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 حالة البرنامج المساعد للمهارة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>تكامل المهارات المدعومة:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>تم الكشف عنه الآن:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>التحقق من دعم mcMMO وAura وEcoSkills</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>مُكتَشَف</gradient>"
+      missing: "<gradient:#ef4444:#f87171>مفتقد</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>معرف التكامل:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ لم يتم تكوين عمليات تكامل المهارات</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين أي عمليات تكامل للمكونات الإضافية للمهارة حاليًا</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ التكامل الوظيفي</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 حالة البرنامج المساعد للوظيفة</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>تكامل الوظائف المدعومة:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>تم الكشف عنه الآن:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>التحقق من دعم EcoJobs وJobsReborn</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>مُكتَشَف</gradient>"
+      missing: "<gradient:#ef4444:#f87171>مفتقد</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>معرف التكامل:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ لم يتم تكوين عمليات تكامل الوظائف</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين أي عمليات تكامل للمكونات الإضافية للوظيفة حاليًا</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

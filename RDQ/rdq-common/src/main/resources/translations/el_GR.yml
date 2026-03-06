@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Σύνολο προσθηκών:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Συνολικά δικαιώματα:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα του διαχειριστή αδειών!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Υπεύθυνος νομισμάτων</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Ενσωματώσεις προσθηκών</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ελέγξτε RDQ-εντοπισμένα νομίσματα</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Περιλαμβάνει καταχωρήσεις Vault και JExEconomy</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα της διαχείρισης νομισμάτων!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Διαχειριστείτε τις ενσωματώσεις προσθηκών διαχειριστή σε ένα μέρος</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Περιλαμβάνει προβολές ανίχνευσης νομίσματος, δεξιοτήτων και θέσεων εργασίας</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Αποτυχία ανοίγματος ενσωματώσεων προσθηκών!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Δημιουργία Ομάδων LuckPerms</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Δημιουργήθηκαν</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>ομάδες LuckPerms!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Δεν δημιουργήθηκαν νέες ομάδες.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Η δημιουργία ομάδων LuckPerms απέτυχε!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Ενσωματώσεις προσθηκών</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Κόμβος ενσωμάτωσης</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Ανοίξτε τους πίνακες εργαλείων ενσωμάτωσης προσθηκών RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Εργαλεία νομίσματος, ανίχνευσης δεξιοτήτων/θέσεων εργασίας και PlaceholderAPI είναι διαθέσιμα εδώ</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Ενσωματώσεις νομισμάτων</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ανοιχτή διαχείριση παρόχου νομισμάτων</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ελέγξτε τα νομίσματα Vault και JExEconomy που εντοπίστηκαν</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Αποτυχία ανοίγματος ενσωματώσεων νομισμάτων!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Ενσωματώσεις δεξιοτήτων</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Προβολή κατάστασης υποστήριξης για mcMMO, Aura και EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Εντοπισμός προσθηκών δεξιοτήτων που είναι ενεργοποιημένες αυτήν τη στιγμή</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Αποτυχία ανοίγματος ενσωματώσεων δεξιοτήτων!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Ενσωματώσεις εργασίας</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δείτε την κατάσταση υποστήριξης για EcoJobs και JobsReborn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Εντοπισμός προσθηκών εργασίας που είναι ενεργοποιημένες αυτήν τη στιγμή</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Αποτυχία ανοίγματος ενσωματώσεων εργασίας!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Εντοπίστε την υποστήριξη PlaceholderAPI και διαχειριστείτε τις επεκτάσεις</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Εγκαταστήστε την επέκταση Player και επαναφορτώστε το PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Απέτυχε το άνοιγμα των εργαλείων PlaceholderAPI!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 Εργαλεία PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 Ενσωμάτωση PlaceholderAPI</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Υποστηρίζεται το PlaceholderAPI:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Στόχος επέκτασης:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Εγκαταστήστε και φορτώστε ξανά απευθείας από αυτόν τον πίνακα</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ Εντοπίστηκε PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Το PlaceholderAPI είναι εγκατεστημένο και ενεργοποιημένο</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ Λείπει PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Εγκαταστήστε και ενεργοποιήστε το PlaceholderAPI για να χρησιμοποιήσετε αυτήν την ενέργεια</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 Εγκαταστήστε το %expansion_name% Expansion</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Τρεξίματα:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Στη συνέχεια τρέχει:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Κάντε κλικ για να εκτελέσετε και τις δύο εντολές PlaceholderAPI</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 Απαιτείται PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Αυτή η ενέργεια δεν είναι διαθέσιμη μέχρι να εγκατασταθεί το PlaceholderAPI</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Απαιτείται πρόσβαση διαχειριστή</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Δεν έχετε άδεια χρήσης των εργαλείων διαχείρισης PlaceholderAPI</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Δεν έχετε άδεια διαχείρισης ενσωματώσεων PlaceholderAPI.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ Το PlaceholderAPI δεν είναι διαθέσιμο σε αυτόν τον διακομιστή.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Απέτυχε η λήψη της επέκτασης:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Η λήψη της επέκτασης ολοκληρώθηκε, αλλά η επαναφόρτωση του PlaceholderAPI απέτυχε.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ Εγκατέστησε την επέκταση %expansion_name% και επαναφόρτωσε το PlaceholderAPI.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Ενσωματώσεις δεξιοτήτων</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Κατάσταση πρόσθετου δεξιότητας</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Υποστηριζόμενες ενσωματώσεις δεξιοτήτων:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Εντοπίστηκε αυτή τη στιγμή:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ελέγχει την υποστήριξη mcMMO, Aura και EcoSkills</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Εντοπίστηκε</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Απών</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Πρόσθετο:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Αναγνωριστικό ενσωμάτωσης:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Δεν έχουν διαμορφωθεί ενσωματώσεις δεξιοτήτων</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δεν έχουν διαμορφωθεί επί του παρόντος ενσωματώσεις προσθηκών δεξιοτήτων</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Ενσωματώσεις εργασίας</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Κατάσταση πρόσθετου εργασίας</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Υποστηριζόμενες θέσεις εργασίας:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Εντοπίστηκε αυτή τη στιγμή:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ελέγχει την υποστήριξη EcoJobs και JobsReborn</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Εντοπίστηκε</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Απών</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Πρόσθετο:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Αναγνωριστικό ενσωμάτωσης:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Κατάσταση:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Δεν έχουν διαμορφωθεί ενσωματώσεις εργασιών</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Δεν έχουν διαμορφωθεί επί του παρόντος ενσωματώσεις προσθηκών εργασίας</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

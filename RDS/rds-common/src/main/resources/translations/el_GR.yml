@@ -279,37 +279,135 @@ shop_overview_ui:
 shop_admin_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Διαχειριστής] Έλεγχος RDS</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Πίνακας διαχείρισης RDS</white>"
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Πίνακας διαχειριστή RDS</white>"
     lore:
-      - "<gray>Διαχειριστείτε τα παγκόσμια συστήματα admin-shop από ένα μέρος.</gray>"
-      - "<gray>Ανοίξτε την τράπεζα διακομιστή ή επεξεργαστείτε τις ρυθμίσεις παραμέτρων παρακάτω.</gray>"
-      - "<yellow>Απαιτεί:</yellow> <white>raindropshops.command.admin</white>"
+      - "<gray>Διαχειριστείτε τα παγκόσμια συστήματα διαχείρισης καταστημάτων από ένα μέρος.</gray>"
+      - "<gray>Ανοίξτε τα στοιχεία ελέγχου τράπεζας διακομιστή, διαμόρφωσης και ενοποίησης παρακάτω.</gray>"
+      - "<yellow>Απαιτείται:</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
       name: "<gradient:#10b981:#34d399>[$] Τράπεζα διακομιστή</gradient>"
       lore:
-        - "<gray>Ελέγξτε το εισόδημα του καταστήματος διαχειριστή που έχει εισαχθεί στην τράπεζα διακομιστή.</gray>"
+        - "<gray>Έλεγχος εσόδων από το διαχειριστή του καταστήματος που τραβήχτηκε στην τράπεζα διακομιστή.</gray>"
         - "<gray>Ελέγξτε τον επόμενο χρόνο έλξης και αποσύρετε τα υπόλοιπα.</gray>"
         - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου τράπεζας διακομιστή.</yellow>"
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
-        - "<gray>Επεξεργασία τιμών από</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Επεξεργαστείτε τιμές από</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Κάθε επεξεργάσιμη ρύθμιση μπορεί να αλλάξει μέσω μιας προτροπής με αμόνι.</gray>"
-        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου διαμόρφωσης.</yellow>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου διαμόρφωσης. Ενσωματώσεις προσθηκών</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int]</gradient>"
+      lore:
+        - "<gray>Ανοίξτε εργασίες, δεξιότητες και εργαλεία ενσωμάτωσης PlaceholderAPI.</gray>"
+        - "<gray>Διαχειριστείτε τις γέφυρες απαιτήσεων προσθηκών και τη ρύθμιση επέκτασης.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου ενοποίησης.</yellow>"
     currency:
-      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Υπεύθυνος νομίσματος</gradient>"
+      name: "<gradient:#a78bfa:#c4b5fd>[Cur] Currency Manager</gradient>"
       lore:
         - "<gray>Ελέγξτε τα νομίσματα που εντοπίστηκαν από το Vault και το JExEconomy.</gray>"
-        - "<gray>Δημιουργήστε την προεπιλογή</gray> <white>σταγόνες βροχής</white> <gray>νόμισμα όταν χρειάζεται.</gray>"
+        - "<gray>Δημιουργήστε το προεπιλεγμένο νόμισμα</gray> <white>raindrops</white> <gray>όταν χρειάζεται.</gray>"
         - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου νομισμάτων.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Ικανότητα] Απαιτήσεις δεξιοτήτων</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τα υποστηριζόμενα πρόσθετα δεξιοτήτων και την κατάσταση ανίχνευσης.</gray>"
+        - "<gray>Εφαρμόστε προεπιλεγμένες απαιτήσεις δεξιοτήτων σε όλα τα επίπεδα αγοράς.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου απαιτήσεων δεξιοτήτων.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Απαιτήσεις εργασίας</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τις υποστηριζόμενες προσθήκες εργασίας και την κατάσταση ανίχνευσης.</gray>"
+        - "<gray>Εφαρμόστε τις προεπιλεγμένες απαιτήσεις εργασίας σε όλα τα επίπεδα αγοράς.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου απαιτήσεων εργασίας.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Φόρος] Εκτέλεση φόρων τώρα</gradient>"
+      lore:
+        - "<gray>Ενεργοποιήστε έναν άμεσο κύκλο είσπραξης φόρων για δοκιμή.</gray>"
+        - "<gray>Αυτό δεν αλλάζει το ρυθμισμένο χρονόμετρο επαναλαμβανόμενου φόρου.</gray>"
+        - "<yellow>Κάντε κλικ για να εκτελέσετε τους φόρους μία φορά αυτήν τη στιγμή.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
       lore:
         - "<gray>Δεν έχετε άδεια χρήσης αυτού του πίνακα διαχείρισης.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Ενεργοποίησε έναν άμεσο κύκλο είσπραξης φόρων καταστημάτων.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ο προγραμματιστής φόρου καταστήματος δεν είναι διαθέσιμος αυτήν τη στιγμή.</gray>"
 
-# Προβολή νομίσματος διαχειριστή για εντοπισμένους παρόχους και δημιουργία προεπιλεγμένου νομίσματος.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int]</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>Integration Hub</white>"
+    lore:
+      - "<gray>Διαχειριστείτε τις ενσωματώσεις γεφυρών απαιτήσεων από ένα μέρος.</gray>"
+      - "<gray>Άνοιγμα εργασιών, δεξιοτήτων και στοιχείων ελέγχου PlaceholderAPI.</gray>"
+      - "<yellow>Απαιτείται:</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Ικανότητα] Απαιτήσεις δεξιοτήτων</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τα υποστηριζόμενα πρόσθετα δεξιοτήτων και την κατάσταση ανίχνευσης.</gray>"
+        - "<gray>Εφαρμόστε προεπιλεγμένες απαιτήσεις δεξιοτήτων σε όλα τα επίπεδα αγοράς.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου απαιτήσεων δεξιοτήτων.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Απαιτήσεις εργασίας</gradient>"
+      lore:
+        - "<gray>Ελέγξτε τις υποστηριζόμενες προσθήκες εργασίας και την κατάσταση ανίχνευσης.</gray>"
+        - "<gray>Εφαρμόστε τις προεπιλεγμένες απαιτήσεις εργασίας σε όλα τα επίπεδα αγοράς.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα στοιχεία ελέγχου απαιτήσεων εργασίας.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detect PlaceholderAPI υποστήριξη και διαχείριση επεκτάσεων.</gray>"
+        - "<gray>Εγκαταστήστε την επέκταση</gray> <white>Player</white> <gray>και φορτώστε ξανά το PlaceholderAPI.</gray>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τα εργαλεία PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτού του πίνακα ενοποίησης.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Εργαλεία</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>PlaceholderAPI Ενσωμάτωση</white>"
+    lore:
+      - "<gray>PlaceholderAPI Υποστηρίζεται:</gray> <white>{supported}</white>"
+      - "<gray>Επέκταση στόχου:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Εγκαταστήστε την επέκταση και φορτώστε ξανά το PlaceholderAPI από αυτόν τον πίνακα.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK] Εντοπίστηκε το</gradient> <white>PlaceholderAPI Το</white>"
+      lore:
+        - "<gray>PlaceholderAPI είναι διαθέσιμο και ενεργοποιημένο.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Λείπει</white>"
+      lore:
+        - "<gray>Εγκαταστήστε και ενεργοποιήστε το PlaceholderAPI για χρήση αυτής της ενέργειας.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Εγκατάσταση {expansion_name} Επέκταση</white>"
+      lore:
+        - "<gray>Εκτελείται:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Στη συνέχεια εκτελείται:</gray> <white>papi reload</white>"
+        - "<yellow>Κάντε κλικ για να εκτελέσετε και τις δύο εντολές PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Απαιτείται</white>"
+      lore:
+        - "<gray>Αυτή η ενέργεια δεν είναι διαθέσιμη μέχρι να εγκατασταθεί το PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια να χρησιμοποιήσετε τα εργαλεία διαχείρισης PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια διαχείρισης ενσωματώσεων PlaceholderAPI. Το</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI δεν είναι διαθέσιμο σε αυτόν τον διακομιστή.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Απέτυχε η αποστολή λήψης επέκτασης για <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Η λήψη επέκτασης ολοκληρώθηκε, αλλά η επαναφόρτωση του PlaceholderAPI απέτυχε.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Εγκατεστημένο <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Υπεύθυνος νομίσματος</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Διαμόρφωση διεπαφής χρήστη του προγράμματος περιήγησης για επεξεργάσιμες ρυθμίσεις και σχόλια ενημέρωσης.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>Απαιτήσεις ενσωματώσεις</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες]</gradient> <white>Υποστηριζόμενες προσθήκες δεξιοτήτων</white>"
+    lore:
+      - "<gray>Υποστηριζόμενες γέφυρες:</gray> <white>{supported_count}</white>"
+      - "<gray>Εντοπίστηκε τώρα: Απαιτήσεις</gray> <white>{detected_count}</white>"
+      - "<gray>σε κάθε προεπιλεγμένη προσθήκη tiski Κάντε κλικ σε μια προεπιλεγμένη προσθήκη.</gray>"
+      - "<yellow>Απαιτείται επανεκκίνηση διακομιστή μετά την εφαρμογή των αλλαγών.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Εντοπίστηκε</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Λείπει το</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Αναγνωριστικό ενσωμάτωσης:</gray> <white>{integration_id}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{detection_status}</white>"
+      - "<gray>Προεπιλεγμένη ικανότητα:</gray> <white>{default_skill}</white>"
+      - "<gray>Εφαρμοσμένο εύρος επιπέδου:</gray> <white>{level_range}</white>"
+      - "<yellow>Κάντε κλικ για να προσθέσετε αυτήν την απαίτηση που έχει οριστεί σε configl.config.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Χωρίς γέφυρες δεξιοτήτων</white>"
+      lore:
+        - "<gray>Δεν υπάρχουν διαθέσιμες υποστηριζόμενες εγγραφές γέφυρας δεξιοτήτων.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτής της προβολής δεξιοτήτων.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Επεξεργασία διαμόρφωσης Κλειδωμένη</white>"
+      lore:
+        - "<gray>Αυτή η έκδοση δεν επιτρέπει επεξεργασίες ρυθμίσεων χρόνου εκτέλεσης.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια διαχείρισης απαιτήσεων δεξιοτήτων.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Η επεξεργασία διαμόρφωσης είναι κλειδωμένη σε αυτήν την έκδοση.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Εφαρμόστηκε η προεπιλεγμένη απαίτηση δεξιοτήτων για <white>{plugin_name}</white> <gray>(αναγνωριστικό:</gray> <white>{integration_id}</white><gray>, ικανότητα:</gray> <white>{default_skill}</white><gray>, εύρος:</gray> <white>{level_range}</white><gray>) έως <white>{updated_tiers}</white> <gray>(αγορά ????????).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Κάντε επανεκκίνηση του διακομιστή για να τεθούν σε ισχύ οι αλλαγές στις απαιτήσεις.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Απέτυχε η εφαρμογή προεπιλεγμένων απαιτήσεων για <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] Απαιτήσεις Ενσωματώσεις</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Πληροφορίες]</gradient> <white>Υποστηριζόμενες προσθήκες εργασίας</white>"
+    lore:
+      - "<gray>Υποστηριζόμενες γέφυρες:</gray> <white>{supported_count}</white>"
+      - "<gray>Εντοπίστηκε τώρα: Απαιτήσεις</gray> <white>{detected_count}</white>"
+      - "<gray>Κάντε κλικ σε μια προσθήκη παρακάτω για να εισαγάγετε τις προεπιλεγμένες απαιτήσεις εργασίας σε κάθε επίπεδο αγοράς.</gray>"
+      - "<yellow>Απαιτείται επανεκκίνηση διακομιστή μετά την εφαρμογή των αλλαγών.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Εντοπίστηκε</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Λείπει το</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>Αναγνωριστικό ενσωμάτωσης:</gray> <white>{integration_id}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{detection_status}</white>"
+      - "<gray>Προεπιλεγμένη εργασία:</gray> <white>{default_job}</white>"
+      - "<gray>Εφαρμοσμένο εύρος επιπέδου:</gray> <white>{level_range}</white>"
+      - "<yellow>Κάντε κλικ για να προσθέσετε αυτήν την απαίτηση που έχει οριστεί σε configl.config.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Δεν υπάρχουν γέφυρες εργασίας</white>"
+      lore:
+        - "<gray>Δεν υπάρχουν διαθέσιμες καταχωρήσεις γέφυρας εργασίας που υποστηρίζονται.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Απαιτείται πρόσβαση διαχειριστή</white>"
+      lore:
+        - "<gray>Δεν έχετε άδεια χρήσης αυτής της προβολής εργασίας.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Επεξεργασία διαμόρφωσης Κλειδωμένη</white>"
+      lore:
+        - "<gray>Αυτή η έκδοση δεν επιτρέπει επεξεργασίες ρυθμίσεων χρόνου εκτέλεσης.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Δεν έχετε άδεια διαχείρισης των απαιτήσεων εργασίας.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Η επεξεργασία διαμόρφωσης είναι κλειδωμένη σε αυτήν την έκδοση.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Εφαρμοσμένη προεπιλεγμένη απαίτηση εργασίας για <white>{plugin_name}</white> <gray>(αναγνωριστικό:</gray> <white>{integration_id}</white><gray>, εργασία:</gray> <white>{default_job}</white><gray>, εύρος:</gray> <white>{level_range}</white><gray>) έως <white>{updated_tiers}</white> <gray>(αγορά ????????).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Κάντε επανεκκίνηση του διακομιστή για να τεθούν σε ισχύ οι αλλαγές στις απαιτήσεις.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Απέτυχε η εφαρμογή προεπιλεγμένων απαιτήσεων για <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
   summary:

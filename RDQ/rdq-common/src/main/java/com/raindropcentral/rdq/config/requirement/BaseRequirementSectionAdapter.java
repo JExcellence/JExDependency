@@ -54,6 +54,7 @@ public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<
                 case "CHOICE" -> convertChoiceRequirement(section);
                 case "JOBS" -> convertJobsRequirement(section);
                 case "SKILLS" -> convertSkillsRequirement(section);
+                case "PLUGIN" -> convertPluginRequirement(section);
                 case "TIME_BASED" -> convertTimeBasedRequirement(section);
                 default -> {
                     LOGGER.warning("Unknown requirement type: " + type);
@@ -281,6 +282,24 @@ public class BaseRequirementSectionAdapter implements RequirementSectionAdapter<
             values,
             false,
             null
+        );
+    }
+
+    private AbstractRequirement convertPluginRequirement(BaseRequirementSection section) {
+        SkillRequirementSection skillSection = section.getSkillRequirement();
+        if (skillSection != null && skillSection.getRequiredSkills() != null
+            && !skillSection.getRequiredSkills().isEmpty()) {
+            return convertSkillsRequirement(section);
+        }
+
+        JobRequirementSection jobSection = section.getJobRequirement();
+        if (jobSection != null && jobSection.getRequiredJobs() != null
+            && !jobSection.getRequiredJobs().isEmpty()) {
+            return convertJobsRequirement(section);
+        }
+
+        throw new IllegalArgumentException(
+            "PLUGIN requirement in RDQ requires either skillRequirement or jobRequirement data"
         );
     }
 

@@ -277,39 +277,137 @@ shop_overview_ui:
 
 # Panneau de contrôle d'administration global pour la gestion RDS.
 shop_admin_ui:
-  title: "<gradient:#38bdf8:#60a5fa>[Admin] RDS Contrôle</gradient>"
+  title: "<gradient:#38bdf8:#60a5fa>[Admin] Contrôle RDS</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS Admin Panel</white>"
+    name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>Panneau d'administration RDS</white>"
     lore:
-      - "<gray>Gérez les systèmes d'administration globaux de la boutique à partir d'un seul endroit.</gray>"
-      - "<gray>Ouvrez la banque de serveurs ou modifiez les paramètres de configuration. ci-dessous.</gray>"
-      - "<yellow>Requiert :</yellow> <white>raindropshops.command.admin</white>"
+      - "<gray>Gérez les systèmes globaux de la boutique d'administration à partir d'un seul endroit.</gray>"
+      - "<gray>Ouvrez les contrôles de la banque de serveurs, de la configuration et de l'intégration ci-dessous.</gray>"
+      - "<yellow>Nécessite :</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
-      name: "<gradient:#10b981:#34d399>[$] Banque de serveur</gradient>"
+      name: "<gradient:#10b981:#34d399>[$] Banque de serveurs</gradient>"
       lore:
-        - "<gray>Examinez les revenus de l'administration de la boutique extraits de la banque du serveur.</gray>"
-        - "<gray>Vérifier le prochain timing de retrait et retirer les soldes.</gray>"
-        - "<yellow>Cliquez pour ouvrir contrôles bancaires du serveur.</yellow>"
+        - "<gray>Examinez les revenus de la boutique d'administration transférés dans la banque de serveurs.</gray>"
+        - "<gray>Vérifiez le moment du prochain tirage et retirez les soldes.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles de la banque du serveur.</yellow>"
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuration de la boutique</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Shop Config</gradient>"
       lore:
         - "<gray>Modifier les valeurs de</gray> <white>config/config.yml</white><gray>.</gray>"
         - "<gray>Chaque paramètre modifiable peut être modifié via une invite d'enclume.</gray>"
         - "<yellow>Cliquez pour ouvrir les contrôles de configuration.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Intégrations de plugins</gradient>"
+      lore:
+        - "<gray>Outils d'intégration d'emplois, de compétences et de PlaceholderAPI ouverts.</gray>"
+        - "<gray>Gérer les ponts d'exigences du plugin et la configuration de l'extension.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles d'intégration.</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] Gestionnaire de devises</gradient>"
       lore:
         - "<gray>Examinez les devises détectées dans Vault et JExEconomy.</gray>"
-        - "<gray>Créer la devise par défaut</gray> <white>raindrops</white> <gray>devise lorsque nécessaire.</gray>"
+        - "<gray>Créez la devise</gray> <white>raindrops</white> <gray>par défaut si nécessaire.</gray>"
         - "<yellow>Cliquez pour ouvrir les contrôles de devises.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Compétence] Exigences de compétences</gradient>"
+      lore:
+        - "<gray>Examinez les plugins de compétences pris en charge et l'état de détection.</gray>"
+        - "<gray>Appliquer les compétences requises par défaut à tous les niveaux d'achat.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles des compétences requises.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Travail] Exigences du travail</gradient>"
+      lore:
+        - "<gray>Examinez les plug-ins de travail pris en charge et l'état de détection.</gray>"
+        - "<gray>Appliquer les exigences de travail par défaut à tous les niveaux d'achat.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles des exigences de travail.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Exécuter les taxes maintenant</gradient>"
+      lore:
+        - "<gray>Déclenche un cycle immédiat de collecte des taxes à des fins de test.</gray>"
+        - "<gray>Cela ne modifie pas le temporisateur de taxe répétitive configuré.</gray>"
+        - "<yellow>Cliquez pour exécuter les taxes une fois maintenant.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accès administrateur requis</white>"
       lore:
-        - "<gray>Vous n'êtes pas autorisé à utiliser cet administrateur. panel.</gray>"
+        - "<gray>Vous n'êtes pas autorisé à utiliser ce panneau d'administration.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Déclenchement d'un cycle immédiat de collecte des taxes en magasin. Le planificateur de taxes</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Shop n'est pas disponible pour le moment.</gray>"
 
-# Vue de la devise d'administration pour les fournisseurs détectés et création de devise par défaut.
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Intégrations de plugins</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Integration Hub</white>"
+    lore:
+      - "<gray>Gérez les intégrations de ponts d'exigences à partir d'un seul endroit.</gray>"
+      - "<gray>Ouvrir les tâches, les compétences et les contrôles PlaceholderAPI.</gray>"
+      - "<yellow>Nécessite :</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Compétence] Exigences de compétences</gradient>"
+      lore:
+        - "<gray>Examinez les plugins de compétences pris en charge et l'état de détection.</gray>"
+        - "<gray>Appliquer les compétences requises par défaut à tous les niveaux d'achat.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles des compétences requises.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Travail] Exigences du travail</gradient>"
+      lore:
+        - "<gray>Examinez les plug-ins de travail pris en charge et l'état de détection.</gray>"
+        - "<gray>Appliquer les exigences de travail par défaut à tous les niveaux d'achat.</gray>"
+        - "<yellow>Cliquez pour ouvrir les contrôles des exigences de travail.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Détecte la prise en charge de PlaceholderAPI et gère les extensions.</gray>"
+        - "<gray>Installez l'extension</gray> <white>Player</white> <gray>et rechargez PlaceholderAPI.</gray>"
+        - "<yellow>Cliquez pour ouvrir les outils PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accès administrateur requis</white>"
+      lore:
+        - "<gray>Vous n'êtes pas autorisé à utiliser ce panneau d'intégration.</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Outils PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Intégration PlaceholderAPI</white>"
+    lore:
+      - "<gray>PlaceholderAPI pris en charge :</gray> <white>{supported}</white>"
+      - "<gray>Extension cible :</gray> <white>{expansion_name}</white>"
+      - "<yellow>Installez l'extension et rechargez PlaceholderAPI à partir de ce panneau.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[OK]</gradient> <white>PlaceholderAPI détecté</white>"
+      lore:
+        - "<gray>PlaceholderAPI est disponible et activé.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI manquant</white>"
+      lore:
+        - "<gray>Installez et activez PlaceholderAPI pour utiliser cette action.</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>Installer l'extension {expansion_name}</white>"
+      lore:
+        - "<gray>Exécute :</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Exécute ensuite :</gray> <white>papi reload</white>"
+        - "<yellow>Cliquez pour exécuter les deux commandes PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>PlaceholderAPI Obligatoire</white>"
+      lore:
+        - "<gray>Cette action n'est pas disponible tant que PlaceholderAPI n'est pas installé.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accès administrateur requis</white>"
+      lore:
+        - "<gray>Vous n'êtes pas autorisé à utiliser les outils d'administration PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vous n'êtes pas autorisé à gérer les intégrations PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI n'est pas disponible sur ce serveur.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Échec de l'envoi du téléchargement de l'extension pour <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Téléchargement de l'extension terminé, mais le rechargement de PlaceholderAPI a échoué.</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Installé <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] Gestionnaire de devises</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # Interface utilisateur du navigateur de configuration pour les paramètres modifiables et les commentaires de mise à jour.
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Compétence] Intégrations requises</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Plugins de compétences pris en charge</white>"
+    lore:
+      - "<gray>Ponts pris en charge :</gray> <white>{supported_count}</white>"
+      - "<gray>Détecté maintenant :</gray> <white>{detected_count}</white>"
+      - "<gray>Cliquez sur un plugin ci-dessous pour injecter les compétences par défaut requises dans chaque niveau d'achat.</gray>"
+      - "<yellow>Un redémarrage du serveur est requis après l'application des modifications.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Détecté</gradient>"
+      missing: "<gradient:#ef4444:#f87171>manquant</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>ID d'intégration :</gray> <white>{integration_id}</white>"
+      - "<gray>Statut :</gray> <white>{detection_status}</white>"
+      - "<gray>Compétence par défaut :</gray> <white>{default_skill}</white>"
+      - "<gray>Plage de niveaux appliquée :</gray> <white>{level_range}</white>"
+      - "<yellow>Cliquez pour ajouter cet ensemble d'exigences à config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Aucun pont de compétences</white>"
+      lore:
+        - "<gray>Aucune entrée de pont de compétences prise en charge n'est disponible.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accès administrateur requis</white>"
+      lore:
+        - "<gray>Vous n'êtes pas autorisé à utiliser cette vue de compétences.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Modification de la configuration verrouillée</white>"
+      lore:
+        - "<gray>Cette édition n'autorise pas les modifications de la configuration d'exécution.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vous n'êtes pas autorisé à gérer les exigences en matière de compétences. L'édition de la configuration</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>est verrouillée dans cette édition.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Exigence de compétence par défaut appliquée pour <white>{plugin_name}</white> <gray>(id :</gray> <white>{integration_id}</white><gray>, compétence :</gray> <white>{default_skill}</white><gray>, plage :</gray> <white>{level_range}</white><gray>) vers <blanc>{updated_tiers}</white> <gray>niveau(x) d'achat.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Redémarrez le serveur pour que les modifications requises prennent effet.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Échec de l'application des exigences par défaut pour <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Travail] Intégrations des exigences</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info]</gradient> <white>Plugins de travail pris en charge</white>"
+    lore:
+      - "<gray>Ponts pris en charge :</gray> <white>{supported_count}</white>"
+      - "<gray>Détecté maintenant :</gray> <white>{detected_count}</white>"
+      - "<gray>Cliquez sur un plugin ci-dessous pour injecter des exigences de travail par défaut dans chaque niveau d'achat.</gray>"
+      - "<yellow>Un redémarrage du serveur est requis après l'application des modifications.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Détecté</gradient>"
+      missing: "<gradient:#ef4444:#f87171>manquant</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>ID d'intégration :</gray> <white>{integration_id}</white>"
+      - "<gray>Statut :</gray> <white>{detection_status}</white>"
+      - "<gray>Travail par défaut :</gray> <white>{default_job}</white>"
+      - "<gray>Plage de niveaux appliquée :</gray> <white>{level_range}</white>"
+      - "<yellow>Cliquez pour ajouter cet ensemble d'exigences à config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Aucun pont de travaux</white>"
+      lore:
+        - "<gray>Aucune entrée de pont de travaux prise en charge n'est disponible.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Accès administrateur requis</white>"
+      lore:
+        - "<gray>Vous n'êtes pas autorisé à utiliser cette vue de travail.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Modification de la configuration verrouillée</white>"
+      lore:
+        - "<gray>Cette édition n'autorise pas les modifications de la configuration d'exécution.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vous n'êtes pas autorisé à gérer les exigences du poste.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>est verrouillée dans cette édition.</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Exigence de travail par défaut appliquée pour <white>{plugin_name}</white> <gray>(id :</gray> <white>{integration_id}</white><gray>, travail :</gray> <white>{default_job}</white><gray>, plage :</gray> <white>{level_range}</white><gray>) vers <blanc>{updated_tiers}</white> <gray>niveau(x) d'achat.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Redémarrez le serveur pour que les modifications requises prennent effet.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Échec de l'application des exigences par défaut pour <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] Configuration de la boutique</gradient>"
   summary:

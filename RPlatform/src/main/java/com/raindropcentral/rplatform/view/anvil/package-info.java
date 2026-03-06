@@ -4,9 +4,9 @@
  * Custom anvil inputs wrap Inventory Framework's experimental APIs and should
  * only be registered once {@link com.raindropcentral.rplatform.RPlatform#initialize()}
  * has set up translations. Titles, prompts, and validation messages should be
- * sourced through {@link de.jexcellence.jextranslate.api.TranslationService}
+ * sourced through the platform translation service
  * just like standard views to ensure locale-aware UX. Reference
- * {@link de.jexcellence.jextranslate.api.TranslationKey} when composing dynamic
+ * translation key wrappers when composing dynamic
  * strings so language resource bundles stay synchronized with code.
  * </p>
  * <p>

@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>Gereklilikler:</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Depolama Kontrolü</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[Yönetici] Depolama Denetimi</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Yönetici Paneli</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] RDR Yönetici Paneli</gradient>"
     lore:
       - "<gray>Ayrıcalıklı depolama sistemlerini tek yerden yönetin.</gray>"
-      - "<gray>Yapilandirma degerlerini ve para birimi destegini duzenlemek icin bu paneli kullanin.</gray>"
-      - "<yellow>Gereklilikler:</yellow> <white>raindroprdr.command.admin</white>"
+      - "<gray>Yapılandırma değerlerini düzenlemek ve entegrasyon kontrollerini açmak için bu paneli kullanın.</gray>"
+      - "<yellow>Gerektirir:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Depolama Yapilandirmasi</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Depolama Yapılandırması</gradient>"
       lore:
-        - "<gray>Değerleri düzenle</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Her düzenlenebilir ayar, bir örs istemi aracılığıyla değiştirilebilir.</gray>"
+        - "<gray>Eşleşen bir vitray örs düzenleyicide açılan</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Yazılan ayarlardan değerleri düzenleyin.</gray>"
         - "<yellow>Yapılandırma kontrollerini açmak için tıklayın.</yellow>"
-    currency:
-      name: "<gradient:#10b981:#34d399>[Cur] Döviz Yöneticisi</gradient>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Eklenti Entegrasyonları</gradient>"
       lore:
-        - "<gray>Vault ve JExEconomy'den tespit edilen para birimlerini inceleyin.</gray>"
-        - "<gray>Varsayılanı oluştur</gray> <white>raindrops</white> <gray>gerektiğinde para birimi.</gray>"
+        - "<gray>Beceri, iş, para birimi ve PlaceholderAPI araçlarını yönetin.</gray>"
+        - "<gray>Entegrasyona özel yönetici kontrollerini açın.</gray>"
+        - "<yellow>Entegrasyon yönetimini açmak için tıklayın.</yellow>"
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Para Birimi Yöneticisi</gradient>"
+      lore:
+        - "<gray>İnceleme, Vault ve JExEconomy'den gelen para birimlerini tespit etti.</gray>"
+        - "<gray>Gerektiğinde varsayılan</gray> <white>raindrops</white> <gray>para birimini oluşturun.</gray>"
         - "<yellow>Para birimi kontrollerini açmak için tıklayın.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Beceri] Beceri Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen beceri eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan beceri gereksinimlerini tüm depolama satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>Beceri gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[İş] İş Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen iş eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan iş gereksinimlerini tüm depolama satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>İş gereksinimi kontrollerini açmak için tıklayın.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
       lore:
         - "<gray>Bu yönetici panelini kullanma izniniz yok.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Eklenti Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Entegrasyon Merkezi</gradient>"
+    lore:
+      - "<gray>Depolama gereksinimleri için merkezi entegrasyon kontrolleri.</gray>"
+      - "<gray>Açık para birimi, beceriler, işler ve PlaceholderAPI eylemleri.</gray>"
+      - "<yellow>Gerektirir:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Para Birimi Yöneticisi</gradient>"
+      lore:
+        - "<gray>İnceleme, Vault ve JExEconomy'den gelen para birimlerini tespit etti.</gray>"
+        - "<gray>Gerektiğinde varsayılan</gray> <white>raindrops</white> <gray>para birimini oluşturun.</gray>"
+        - "<yellow>Para birimi kontrollerini açmak için tıklayın.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Beceri] Beceri Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen beceri eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan beceri gereksinimlerini tüm depolama satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>Beceri gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[İş] İş Gereksinimleri</gradient>"
+      lore:
+        - "<gray>Desteklenen iş eklentilerini ve algılama durumunu inceleyin.</gray>"
+        - "<gray>Varsayılan iş gereksinimlerini tüm depolama satın alma katmanlarına uygulayın.</gray>"
+        - "<yellow>İş gereksinimi kontrollerini açmak için tıklayın.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI desteğini tespit edin ve genişletmeleri yönetin.</gray>"
+        - "<gray>Şunu yükleyin:</gray> <white>Player</white> <gray>PlaceholderAPI'yi genişletin ve yeniden yükleyin.</gray>"
+        - "<yellow>PlaceholderAPI araçlarını açmak için tıklayın.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu entegrasyon panelini kullanma izniniz yok.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Araçları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] PlaceholderAPI Entegrasyonu</gradient>"
+    lore:
+      - "<gray>PlaceholderAPI destekli:</gray> <white>{supported}</white>"
+      - "<gray>Hedef genişletme:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Genişletmeyi yükleyin ve PlaceholderAPI'yi bu panelden yeniden yükleyin.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] PlaceholderAPI Detected</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI mevcut ve etkin.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI Eksik</gradient>"
+      lore:
+        - "<gray>Bu eylemi kullanmak için PlaceholderAPI'yi yükleyin ve etkinleştirin.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] {expansion_name} Genişletmesini Kur</gradient>"
+      lore:
+        - "<gray>Çalıştırır:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Sonra çalıştırır:</gray> <white>papi reload</white>"
+        - "<yellow>Her iki PlaceholderAPI komutunu da yürütmek için tıklayın.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI Gerekli</gradient>"
+      lore:
+        - "<gray>Bu eylem PlaceholderAPI yüklenene kadar kullanılamaz.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI yönetici araçlarını kullanma izniniz yok.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI entegrasyonlarını yönetme izniniz yok.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI bu sunucuda mevcut değil.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{expansion_name} için genişletme indirmesi gönderilemedi</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Genişletme indirmesi tamamlandı, ancak PlaceholderAPI yeniden yükleme başarısız oldu.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Kurulu <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Döviz Yöneticisi</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>Bu para birimi görünümünü kullanma izniniz yok.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Para birimlerini yönetme izniniz yok.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Beceri] Gereksinim Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Desteklenen Beceri Eklentileri</gradient>"
+    lore:
+      - "<gray>Desteklenen köprüler:</gray> <white>{supported_count}</white>"
+      - "<gray>Şimdi algılandı:</gray> <white>{detected_count}</white>"
+      - "<gray>Her depolama satın alma katmanına varsayılan beceri gereksinimlerini eklemek için aşağıdaki bir eklentiye tıklayın.</gray>"
+      - "<yellow>Değişiklikler uygulandıktan sonra sunucunun yeniden başlatılması gerekiyor.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Algılanan</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Entegrasyon kimliği:</gray> <white>{integration_id}</white>"
+      - "<gray>Durum:</gray> <white>{detection_status}</white>"
+      - "<gray>Varsayılan beceri:</gray> <white>{default_skill}</white>"
+      - "<gray>Uygulanan Düzey Aralığı:</gray> <white>{level_range}</white>"
+      - "<yellow>Bu gereksinim kümesini config/config.yml dosyasına eklemek için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Beceri Köprüsü Yok</gradient>"
+      lore:
+        - "<gray>Desteklenen beceri köprüsü girişi yok.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu beceri görünümünü kullanma izniniz yok.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yapılandırma Düzenleme Kilitli</gradient>"
+      lore:
+        - "<gray>Bu sürüm, çalışma zamanı yapılandırma düzenlemelerine izin vermez.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Beceri gereksinimlerini yönetme izniniz yok.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yapılandırma düzenleme bu sürümde kilitlidir.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, beceri:</gray> <white>{default_skill}</white><gray>, aralık:</gray> <white>{level_range}</white><gray>) ila <white>{updated_tiers}</white> <gray>depolama satın alma katmanları için uygulanan varsayılan beceri gereksinimi.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Gereksinim değişikliklerinin etkili olması için sunucuyu yeniden başlatın.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{plugin_name} için varsayılan gereksinimler uygulanamadı</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[İş] Gereksinim Entegrasyonları</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Bilgi] Desteklenen İş Eklentileri</gradient>"
+    lore:
+      - "<gray>Desteklenen köprüler:</gray> <white>{supported_count}</white>"
+      - "<gray>Şimdi algılandı:</gray> <white>{detected_count}</white>"
+      - "<gray>Her bir depolama satın alma katmanına varsayılan iş gereksinimlerini eklemek için aşağıdaki bir eklentiye tıklayın.</gray>"
+      - "<yellow>Değişiklikler uygulandıktan sonra sunucunun yeniden başlatılması gerekiyor.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Algılanan</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Eksik</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Entegrasyon kimliği:</gray> <white>{integration_id}</white>"
+      - "<gray>Durum:</gray> <white>{detection_status}</white>"
+      - "<gray>Varsayılan iş:</gray> <white>{default_job}</white>"
+      - "<gray>Uygulanan Düzey Aralığı:</gray> <white>{level_range}</white>"
+      - "<yellow>Bu gereksinim kümesini config/config.yml dosyasına eklemek için tıklayın.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] İş Köprüsü Yok</gradient>"
+      lore:
+        - "<gray>Desteklenen iş köprüsü girişi yok.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yönetici Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Bu iş görünümünü kullanma izniniz yok.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yapılandırma Düzenleme Kilitli</gradient>"
+      lore:
+        - "<gray>Bu sürüm, çalışma zamanı yapılandırma düzenlemelerine izin vermez.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>İş gereksinimlerini yönetme izniniz yok.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yapılandırma düzenleme bu sürümde kilitlidir.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray><white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>için uygulanan varsayılan iş gereksinimi, iş:</gray> <white>{default_job}</white><gray>, aralık:</gray> <white>{level_range}</white><gray>) ila <white>{updated_tiers}</white> <gray>depolama satın alma katmanları için uygulanan varsayılan beceri gereksinimi.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Gereksinim değişikliklerinin etkili olması için sunucuyu yeniden başlatın.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{plugin_name} için varsayılan gereksinimler uygulanamadı</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Mevcut gereksinimler:</gray><white>{requirements}</white>"
         - "<gray>Sahip olunan depolar:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Satın almadan önce kalan gereksinimleri karşılayın.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Aşağıdaki Liste]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[İstek Listesi]</gradient> <gray>Mevcut gereksinimler:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Depolama Sınırına Ulaşıldı</gradient>"
       lore:

@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Opslagcontrole</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[Beheerder] Opslagbeheer</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Beheerderspaneel</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR-beheerderspaneel</gradient>"
     lore:
       - "<gray>Beheer geprivilegieerde opslagsystemen vanaf één plek.</gray>"
-      - "<gray>Gebruik dit paneel om configuratiewaarden en valutaondersteuning te bewerken.</gray>"
+      - "<gray>Gebruik dit paneel om configuratiewaarden te bewerken en integratiecontroles te openen.</gray>"
       - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Opslagconfiguratie</gradient>"
       lore:
-        - "<gray>Waarden bewerken van</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Elke bewerkbare instelling kan worden gewijzigd via een aambeeldprompt.</gray>"
-        - "<yellow>Klik om configuratiecontroles te openen.</yellow>"
+        - "<gray>Bewerk waarden uit</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Getypte instellingen worden geopend in een bijpassende glas-in-lood-aambeeldeditor.</gray>"
+        - "<yellow>Klik om de configuratiebesturingselementen te openen.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin-integraties</gradient>"
+      lore:
+        - "<gray>Beheer tools voor vaardigheden, banen, valuta en PlaceholderAPI.</gray>"
+        - "<gray>Open integratiespecifieke beheerdersopties.</gray>"
+        - "<yellow>Klik om integratiebeheer te openen.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
       lore:
-        - "<gray>Controleer gedetecteerde valuta's van Vault en JExEconomy.</gray>"
+        - "<gray>Bekijk gedetecteerde valuta's uit Vault en JExEconomy.</gray>"
         - "<gray>Maak de standaard</gray> <white>raindrops</white> <gray>munt wanneer dat nodig is.</gray>"
         - "<yellow>Klik om valutacontroles te openen.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Vaardigheid] Vaardigheidsvereisten</gradient>"
+      lore:
+        - "<gray>Bekijk ondersteunde vaardigheidsplug-ins en detectiestatus.</gray>"
+        - "<gray>Pas standaardvaardigheidsvereisten toe op alle opslagaankoopniveaus.</gray>"
+        - "<yellow>Klik om de vaardigheidsvereisten te openen.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Taak] Taakvereisten</gradient>"
+      lore:
+        - "<gray>Bekijk ondersteunde taakplug-ins en detectiestatus.</gray>"
+        - "<gray>Standaardtaakvereisten toepassen op alle opslagaankooplagen.</gray>"
+        - "<yellow>Klik om de functievereisten te openen.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
       lore:
-        - "<gray>U heeft geen toestemming om dit beheerdersdashboard te gebruiken.</gray>"
+        - "<gray>U heeft geen toestemming om dit beheerderspaneel te gebruiken.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin-integraties</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integratiehub</gradient>"
+    lore:
+      - "<gray>Gecentraliseerde integratiecontroles voor opslagvereisten.</gray>"
+      - "<gray>Open valuta-, vaardigheden-, banen- en PlaceholderAPI-acties.</gray>"
+      - "<yellow>Vereist:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
+      lore:
+        - "<gray>Bekijk gedetecteerde valuta's uit Vault en JExEconomy.</gray>"
+        - "<gray>Maak de standaard</gray> <white>raindrops</white> <gray>munt wanneer dat nodig is.</gray>"
+        - "<yellow>Klik om valutacontroles te openen.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Vaardigheid] Vaardigheidsvereisten</gradient>"
+      lore:
+        - "<gray>Bekijk ondersteunde vaardigheidsplug-ins en detectiestatus.</gray>"
+        - "<gray>Pas standaardvaardigheidsvereisten toe op alle opslagaankoopniveaus.</gray>"
+        - "<yellow>Klik om de vaardigheidsvereisten te openen.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Taak] Taakvereisten</gradient>"
+      lore:
+        - "<gray>Bekijk ondersteunde taakplug-ins en detectiestatus.</gray>"
+        - "<gray>Standaardtaakvereisten toepassen op alle opslagaankooplagen.</gray>"
+        - "<yellow>Klik om de functievereisten te openen.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detecteer PlaceholderAPI ondersteunt en beheer uitbreidingen.</gray>"
+        - "<gray>Installeer het</gray> <white>Player</white> <gray>uitbreiden en opnieuw laden PlaceholderAPI.</gray>"
+        - "<yellow>Klik om de PlaceholderAPI-tools te openen.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gray>U heeft geen toestemming om dit integratiepaneel te gebruiken.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] PlaceholderAPI-integratie</gradient>"
+    lore:
+      - "<gray>PlaceholderAPI ondersteund:</gray> <white>{supported}</white>"
+      - "<gray>Doeluitbreiding:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Installeer de uitbreiding en laad PlaceholderAPI opnieuw vanuit dit paneel.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] PlaceholderAPI gedetecteerd</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI is beschikbaar en ingeschakeld.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI Ontbreekt</gradient>"
+      lore:
+        - "<gray>Installeer en schakel PlaceholderAPI in om deze actie te gebruiken.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Installeer {expansion_name} Uitbreiding</gradient>"
+      lore:
+        - "<gray>Voert uit:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Voert vervolgens uit:</gray> <white>papi reload</white>"
+        - "<yellow>Klik om beide PlaceholderAPI-opdrachten uit te voeren.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI vereist</gradient>"
+      lore:
+        - "<gray>Deze actie is pas beschikbaar nadat PlaceholderAPI is geïnstalleerd.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gray>U heeft geen toestemming om de PlaceholderAPI-beheertools te gebruiken.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>U heeft geen toestemming om PlaceholderAPI-integraties te beheren.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI is niet beschikbaar op deze server.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kan uitbreidingsdownload niet verzenden voor <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Uitbreidingsdownload voltooid, maar opnieuw laden van PlaceholderAPI mislukt.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Geïnstalleerd <wit>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Valutabeheerder</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>U heeft geen toestemming om deze valutaweergave te gebruiken.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>U heeft geen toestemming om valuta's te beheren.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Vaardigheid] Vereiste-integraties</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Ondersteunde vaardigheidsplug-ins</gradient>"
+    lore:
+      - "<gray>Ondersteunde bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Nu gedetecteerd:</gray> <white>{detected_count}</white>"
+      - "<gray>Klik op een plug-in hieronder om standaardvaardigheidsvereisten in elke opslagaankooplaag te injecteren.</gray>"
+      - "<yellow>Een herstart van de server is vereist na het toepassen van wijzigingen.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>gedetecteerd</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Ontbrekende</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integratie-ID:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standaardvaardigheid:</gray> <white>{default_skill}</white>"
+      - "<gray>Niveaubereik toegepast:</gray> <white>{level_range}</white>"
+      - "<yellow>Klik om deze vereisteset toe te voegen aan config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Geen vaardigheidsbruggen</gradient>"
+      lore:
+        - "<gray>Er zijn geen ondersteunde vaardigheidsbruggen beschikbaar.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gray>Je hebt geen toestemming om deze vaardigheidsweergave te gebruiken.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Configuratiebewerking vergrendeld</gradient>"
+      lore:
+        - "<gray>Deze editie staat geen runtime-configuratiebewerkingen toe.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>U heeft geen toestemming om de vaardigheidsvereisten te beheren.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config-bewerking is in deze editie vergrendeld.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Standaard vaardigheidsvereiste toegepast voor <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, vaardigheid:</gray> <white>{default_skill}</white><gray>, bereik:</gray> <white>{level_range}</white><gray>) tot <white>{updated_tiers}</white> <gray>opslagaankooplaag(s).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Start de server opnieuw op, zodat de wijzigingen in de vereisten van kracht worden.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kan standaardvereisten niet toepassen voor <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] Vereistenintegraties</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info] Ondersteunde jobplug-ins</gradient>"
+    lore:
+      - "<gray>Ondersteunde bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Nu gedetecteerd:</gray> <white>{detected_count}</white>"
+      - "<gray>Klik op een plug-in hieronder om standaardtaakvereisten in elke opslagaankooplaag te injecteren.</gray>"
+      - "<yellow>Een herstart van de server is vereist na het toepassen van wijzigingen.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>gedetecteerd</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Ontbrekende</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integratie-ID:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Standaardtaak:</gray> <white>{default_job}</white>"
+      - "<gray>Niveaubereik toegepast:</gray> <white>{level_range}</white>"
+      - "<yellow>Klik om deze vereisteset toe te voegen aan config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Geen taakbruggen</gradient>"
+      lore:
+        - "<gray>Er zijn geen ondersteunde taakbruggegevens beschikbaar.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Beheerderstoegang vereist</gradient>"
+      lore:
+        - "<gray>U heeft geen toestemming om deze vacatureweergave te gebruiken.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Configuratiebewerking vergrendeld</gradient>"
+      lore:
+        - "<gray>Deze editie staat geen runtime-configuratiebewerkingen toe.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>U heeft geen toestemming om de functievereisten te beheren.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config-bewerking is in deze editie vergrendeld.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Toegepaste standaard taakvereiste voor <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, taak:</gray> <white>{default_job}</white><gray>, bereik:</gray> <white>{level_range}</white><gray>) tot <white>{updated_tiers}</white> <gray>opslagaankooplaag(s).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Start de server opnieuw op, zodat de wijzigingen in de vereisten van kracht worden.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kan standaardvereisten niet toepassen voor <white>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Huidige vereisten:</gray><white>{requirements}</white>"
         - "<gray>Eigen opslag:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Voldoe aan de overige vereisten voordat u aanschaft.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Lijst hieronder]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Req List]</gradient> <gray>Huidige vereisten:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Opslaglimiet bereikt</gradient>"
       lore:

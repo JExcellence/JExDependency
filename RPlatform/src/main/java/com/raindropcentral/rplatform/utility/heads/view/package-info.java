@@ -5,7 +5,7 @@
  * <p>Each class encapsulates a texture, identifier, and translation backing for a specific
  * UI intent (next page, confirm, cancel, return, numeric digits, etc.).  These components are
  * meant to be instantiated once and reused across inventories so the lore and display name
- * resolve consistently via {@link de.jexcellence.jextranslate.api.TranslationService}.</p>
+ * resolve consistently via the configured translation service.</p>
  *
  * <p><strong>Usage patterns.</strong> Store singleton instances during GUI bootstrap and feed
  * them to builders produced by {@link com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory#head()}.

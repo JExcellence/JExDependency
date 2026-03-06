@@ -4,8 +4,7 @@
  * <p>The {@link com.raindropcentral.rplatform.localization.TranslationManager} wraps
  * {@link de.jexcellence.jextranslate.R18nManager} to provide a simplified interface
  * for plugin translation management. Initialize during plugin startup and use
- * {@link de.jexcellence.jextranslate.I18n#of(String, org.bukkit.entity.Player)} for
- * sending translated messages.</p>
+ * <code>I18n.of(String, Player)</code> for sending translated messages.</p>
  *
  * <h2>Usage Example</h2>
  * <pre>{@code
@@ -38,6 +37,5 @@
  *
  * @see com.raindropcentral.rplatform.localization.TranslationManager
  * @see de.jexcellence.jextranslate.R18nManager
- * @see de.jexcellence.jextranslate.I18n
  */
 package com.raindropcentral.rplatform.localization;

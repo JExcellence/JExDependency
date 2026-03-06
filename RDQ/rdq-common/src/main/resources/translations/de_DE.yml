@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Gesamtzahl der Plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Gesamtberechtigungen:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Der Berechtigungsmanager konnte nicht geöffnet werden!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Währungsmanager</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Plugin-Integrationen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Überprüfen Sie die von RDQ erkannten Währungen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Enthält die Einträge Vault und JExEconomy</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Währungsmanager konnte nicht geöffnet werden!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Administrator-Plugin-Integrationen an einem Ort verwalten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beinhaltet Währungs-, Kompetenz- und Joberkennungsansichten</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Plugin-Integrationen konnten nicht geöffnet werden!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Erstellen Sie LuckPerms-Gruppen</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Erstellt</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms-Gruppen!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Es wurden keine neuen Gruppen erstellt.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ LuckPerms-Gruppen konnten nicht erstellt werden!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Plugin-Integrationen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Integration Hub</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Öffnen Sie die RDQ-Plugin-Integrations-Dashboards</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Währung, Kompetenz-/Joberkennung und PlaceholderAPI-Tools sind hier verfügbar</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Währungsintegrationen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Offener Währungsanbieter Management</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Bewertung hat die Währungen Vault und JExEconomy erkannt</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Währungsintegrationen konnten nicht geöffnet werden!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Skill-Integrationen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Supportstatus für mcMMO, Aura und EcoSkills anzeigen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Aktuell aktivierte Skill-Plugins erkennen</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Skill-Integrationen konnten nicht geöffnet werden!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Job Integrationen</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Unterstützungsstatus für EcoJobs und JobsReborn anzeigen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Aktuell aktivierte Job-Plugins erkennen</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Jobintegrationen konnten nicht geöffnet werden!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Unterstützung für PlaceholderAPI erkennen und Erweiterungen verwalten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Installieren Sie die Player-Erweiterung und laden Sie PlaceholderAPI neu</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Fehler PlaceholderAPI-Tools öffnen!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI-Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI-Integration</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI unterstützt:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zielerweiterung:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Direkt von diesem Panel aus installieren und neu laden</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI erkannt</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI ist installiert und aktiviert</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI fehlt</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Installieren und aktivieren Sie PlaceholderAPI, um diese Aktion zu verwenden</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 %expansion_name%-Erweiterung installieren</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Ausführungen:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Dann ausgeführt:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Klicken Sie, um beide PlaceholderAPI-Befehle auszuführen</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI erforderlich</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Diese Aktion ist erst verfügbar, wenn PlaceholderAPI verfügbar ist installiert</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Admin-Zugriff erforderlich</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Sie haben keine Berechtigung, die Admin-Tools von PlaceholderAPI zu verwenden</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Sie haben keine Berechtigung, PlaceholderAPI-Integrationen zu verwalten.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI ist auf diesem Server nicht verfügbar.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Download der Erweiterung fehlgeschlagen:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Download der Erweiterung abgeschlossen, PlaceholderAPI jedoch neu geladen fehlgeschlagen.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ %expansion_name%-Erweiterung installiert und PlaceholderAPI neu geladen.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Skill-Integrationen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Skill-Plugin-Status</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Unterstützte Skill-Integrationen:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jetzt erkannt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Überprüft die Unterstützung für mcMMO, Aura und EcoSkills</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Erkannt</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Fehlend</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integration id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Keine Skill-Integrationen konfiguriert</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Derzeit sind keine Skill-Plugin-Integrationen konfiguriert</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Job Integrationen</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Job-Plugin-Status</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Unterstützte Job-Integrationen:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Jetzt erkannt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Überprüft die Unterstützung von EcoJobs und JobsReborn</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Erkannt</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Fehlend</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Integration id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Keine Job-Integrationen konfiguriert</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Es sind derzeit keine Job-Plugin-Integrationen konfiguriert</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

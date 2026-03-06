@@ -37,31 +37,127 @@ storage_overview_ui:
       - "<yellow>Wymaga:</yellow> <white>raindroprdr.command.admin</white>"
 
 storage_admin_ui:
-  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Kontrola przechowywania</gradient>"
+  title: "<gradient:#a78bfa:#c4b5fd>[Admin] Kontrola pamięci masowej</gradient>"
   summary:
-    name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Panel administracyjny</gradient>"
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Panel administracyjny RDR</gradient>"
     lore:
       - "<gray>Zarządzaj uprzywilejowanymi systemami pamięci masowej z jednego miejsca.</gray>"
-      - "<gray>Uzyj tego panelu, aby edytowac wartosci konfiguracji i obsluge walut.</gray>"
+      - "<gray>Ten panel służy do edycji wartości konfiguracyjnych i otwierania elementów sterujących integracją.</gray>"
       - "<yellow>Wymaga:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfiguracja Magazynu</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] Konfiguracja przechowywania</gradient>"
       lore:
-        - "<gray>Edytuj wartości z</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Każde edytowalne ustawienie można zmienić za pomocą podpowiedzi kowadła.</gray>"
+        - "<gray>Edycja wartości z</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>Wpisane ustawienia otwierają się w odpowiednim edytorze kowadeł witrażowych.</gray>"
         - "<yellow>Kliknij, aby otworzyć elementy sterujące konfiguracją.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Integracja wtyczek</gradient>"
+      lore:
+        - "<gray>Zarządzaj umiejętnościami, stanowiskami pracy, walutą i narzędziami PlaceholderAPI.</gray>"
+        - "<gray>Otwarta kontrola administracyjna specyficzna dla integracji.</gray>"
+        - "<yellow>Kliknij, aby otworzyć zarządzanie integracją.</yellow>"
     currency:
-      name: "<gradient:#10b981:#34d399>[Cur] Menedżer walutowy</gradient>"
+      name: "<gradient:#10b981:#34d399>[Cur] Menedżer walut</gradient>"
       lore:
         - "<gray>Przejrzyj wykryte waluty z Vault i JExEconomy.</gray>"
         - "<gray>Utwórz domyślny</gray> <white>raindrops</white> <gray>walutę, jeśli zajdzie taka potrzeba.</gray>"
-        - "<yellow>Kliknij, aby otworzyć kontrolę waluty.</yellow>"
+        - "<yellow>Kliknij, aby otworzyć kontrolę walut.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Umiejętność] Wymagania dotyczące umiejętności</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki umiejętności i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania dotyczące umiejętności do wszystkich poziomów zakupu przestrzeni dyskowej.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami umiejętności.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Praca] Wymagania stanowiska</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki zadań i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania dotyczące zadań do wszystkich poziomów zakupu pamięci masowej.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami stanowiska.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
       lore:
         - "<gray>Nie masz uprawnień do korzystania z tego panelu administracyjnego.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Integracja wtyczek</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Centrum integracji</gradient>"
+    lore:
+      - "<gray>Scentralizowane kontrole integracji dla wymagań dotyczących pamięci masowej.</gray>"
+      - "<gray>Otwarta waluta, umiejętności, stanowiska pracy i działania PlaceholderAPI.</gray>"
+      - "<yellow>Wymaga:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Menedżer walut</gradient>"
+      lore:
+        - "<gray>Przejrzyj wykryte waluty z Vault i JExEconomy.</gray>"
+        - "<gray>Utwórz domyślny</gray> <white>raindrops</white> <gray>walutę, jeśli zajdzie taka potrzeba.</gray>"
+        - "<yellow>Kliknij, aby otworzyć kontrolę walut.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Umiejętność] Wymagania dotyczące umiejętności</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki umiejętności i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania dotyczące umiejętności do wszystkich poziomów zakupu przestrzeni dyskowej.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami umiejętności.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Praca] Wymagania stanowiska</gradient>"
+      lore:
+        - "<gray>Przejrzyj obsługiwane wtyczki zadań i stan wykrywania.</gray>"
+        - "<gray>Zastosuj domyślne wymagania dotyczące zadań do wszystkich poziomów zakupu pamięci masowej.</gray>"
+        - "<yellow>Kliknij, aby otworzyć elementy sterujące wymaganiami stanowiska.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Wykryj obsługę PlaceholderAPI i zarządzaj rozszerzeniami.</gray>"
+        - "<gray>Zainstaluj rozszerzenie</gray> <white>Player</white> <gray>i ponownie załaduj PlaceholderAPI.</gray>"
+        - "<yellow>Kliknij, aby otworzyć narzędzia PlaceholderAPI.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z tego panelu integracyjnego.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] Narzędzia PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integracja PlaceholderAPI</gradient>"
+    lore:
+      - "<gray>Obsługiwane PlaceholderAPI:</gray> <white>{supported}</white>"
+      - "<gray>Docelowa ekspansja:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Zainstaluj rozszerzenie i ponownie załaduj PlaceholderAPI z tego panelu.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] Wykryto PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI jest dostępny i włączony.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] Brak PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Zainstaluj i włącz PlaceholderAPI, aby móc korzystać z tej akcji.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Zainstaluj {expansion_name} Rozszerzenie</gradient>"
+      lore:
+        - "<gray>Uruchamia:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Następnie uruchamia:</gray> <white>papi reload</white>"
+        - "<yellow>Kliknij, aby wykonać oba polecenia PlaceholderAPI.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagane PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Ta akcja jest niedostępna do czasu zainstalowania PlaceholderAPI.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z narzędzi administracyjnych PlaceholderAPI.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania integracjami z PlaceholderAPI.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI nie jest dostępny na tym serwerze.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie udało się wysłać rozszerzenia dla <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Pobieranie rozszerzenia zostało ukończone, ale ponowne załadowanie interfejsu PlaceholderAPI nie powiodło się.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zainstalowano <biały>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Menedżer walutowy</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>Nie masz uprawnień do korzystania z tego widoku waluty.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania walutami.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Umiejętność] Integracje wymagań</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Obsługiwane wtyczki umiejętności</gradient>"
+    lore:
+      - "<gray>Obsługiwane mosty:</gray> <white>{supported_count}</white>"
+      - "<gray>Wykryto teraz:</gray> <white>{detected_count}</white>"
+      - "<gray>Kliknij wtyczkę poniżej, aby dodać domyślne wymagania dotyczące umiejętności do każdego poziomu zakupu pamięci masowej.</gray>"
+      - "<yellow>Po zastosowaniu zmian wymagane jest ponowne uruchomienie serwera.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Wykryto</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Brakujący</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Identyfikator integracji:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Domyślna umiejętność:</gray> <white>{default_skill}</white>"
+      - "<gray>Zastosowany zakres poziomów:</gray> <white>{level_range}</white>"
+      - "<yellow>Kliknij, aby dodać to wymaganie ustawione do config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Brak mostków umiejętności</gradient>"
+      lore:
+        - "<gray>Brak obsługiwanych wpisów mostów umiejętności.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień do korzystania z tego widoku umiejętności.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Edycja konfiguracji zablokowana</gradient>"
+      lore:
+        - "<gray>Ta edycja nie pozwala na edycję konfiguracji w czasie wykonywania.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania wymaganiami dotyczącymi umiejętności.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edycja konfiguracji jest w tej edycji zablokowana.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zastosowano domyślne wymagania dotyczące umiejętności dla <white>{plugin_name}</white> <gray>(identyfikator:</gray> <white>{integration_id}</white><gray>, umiejętność:</gray> <white>{default_skill}</white><gray>, zakres:</gray> <white>{level_range}</white><gray>) do <white>{updated_tiers}</white> <gray>warstwy zakupu pamięci masowej.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Zrestartuj serwer, aby zmiany wymagań zaczęły obowiązywać.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie można zastosować domyślnych wymagań dla <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Praca] Integracje wymagań</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Informacje] Obsługiwane wtyczki zadań</gradient>"
+    lore:
+      - "<gray>Obsługiwane mosty:</gray> <white>{supported_count}</white>"
+      - "<gray>Wykryto teraz:</gray> <white>{detected_count}</white>"
+      - "<gray>Kliknij wtyczkę poniżej, aby wprowadzić domyślne wymagania dotyczące zadań do każdego poziomu zakupu pamięci masowej.</gray>"
+      - "<yellow>Po zastosowaniu zmian wymagane jest ponowne uruchomienie serwera.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Wykryto</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Brakujący</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Identyfikator integracji:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Zadanie domyślne:</gray> <white>{default_job}</white>"
+      - "<gray>Zastosowany zakres poziomów:</gray> <white>{level_range}</white>"
+      - "<yellow>Kliknij, aby dodać to wymaganie ustawione do config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] Brak mostków zadań</gradient>"
+      lore:
+        - "<gray>Brak obsługiwanych wpisów mostów zadań.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp administratora</gradient>"
+      lore:
+        - "<gray>Nie masz uprawnień, aby korzystać z tego widoku zadań.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Edycja konfiguracji zablokowana</gradient>"
+      lore:
+        - "<gray>Ta edycja nie pozwala na edycję konfiguracji w czasie wykonywania.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie masz uprawnień do zarządzania wymaganiami dotyczącymi stanowiska.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Edycja konfiguracji jest w tej edycji zablokowana.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zastosowane domyślne wymaganie stanowiska dla <white>{plugin_name}</white> <gray>(identyfikator:</gray> <white>{integration_id}</white><gray>, stanowisko:</gray> <white>{default_job}</white><gray>, zakres:</gray> <white>{level_range}</white><gray>) do <white>{updated_tiers}</white> <gray>warstwy zakupu pamięci masowej.</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Zrestartuj serwer, aby zmiany wymagań zaczęły obowiązywać.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie można zastosować domyślnych wymagań dla <white>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Aktualne wymagania:</gray><white>{requirements}</white>"
         - "<gray>Posiadane magazyny:</gray><white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Spełnij pozostałe wymagania przed zakupem.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[Lista poniżej]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Lista wymagań]</gradient> <gray>Aktualne wymagania:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Osiągnięto limit przechowywania</gradient>"
       lore:

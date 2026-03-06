@@ -42,26 +42,122 @@ storage_admin_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info] RDR Admin Panel</gradient>"
     lore:
       - "<gray>Manage privileged storage systems from one place.</gray>"
-      - "<gray>Use this panel to edit config values and currency support.</gray>"
+      - "<gray>Use this panel to edit config values and open integration controls.</gray>"
       - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
   actions:
     config:
       name: "<gradient:#38bdf8:#60a5fa>[Cfg] Storage Config</gradient>"
       lore:
         - "<gray>Edit values from</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>Every editable setting can be changed through an anvil prompt.</gray>"
+        - "<gray>Typed settings open in a matching stained-glass anvil editor.</gray>"
         - "<yellow>Click to open config controls.</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
+      lore:
+        - "<gray>Manage skill, job, currency, and PlaceholderAPI tools.</gray>"
+        - "<gray>Open integration-specific admin controls.</gray>"
+        - "<yellow>Click to open integration management.</yellow>"
     currency:
       name: "<gradient:#10b981:#34d399>[Cur] Currency Manager</gradient>"
       lore:
         - "<gray>Review detected currencies from Vault and JExEconomy.</gray>"
         - "<gray>Create the default</gray> <white>raindrops</white> <gray>currency when needed.</gray>"
         - "<yellow>Click to open currency controls.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skill Requirements</gradient>"
+      lore:
+        - "<gray>Review supported skill plugins and detection state.</gray>"
+        - "<gray>Apply default skill requirements to all storage purchase tiers.</gray>"
+        - "<yellow>Click to open skill requirement controls.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Job Requirements</gradient>"
+      lore:
+        - "<gray>Review supported job plugins and detection state.</gray>"
+        - "<gray>Apply default job requirements to all storage purchase tiers.</gray>"
+        - "<yellow>Click to open job requirement controls.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
       lore:
         - "<gray>You do not have permission to use this admin panel.</gray>"
+
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] Plugin Integrations</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Integration Hub</gradient>"
+    lore:
+      - "<gray>Centralized integration controls for storage requirements.</gray>"
+      - "<gray>Open currency, skills, jobs, and PlaceholderAPI actions.</gray>"
+      - "<yellow>Requires:</yellow> <white>raindroprdr.command.admin</white>"
+  actions:
+    currency:
+      name: "<gradient:#10b981:#34d399>[Cur] Currency Manager</gradient>"
+      lore:
+        - "<gray>Review detected currencies from Vault and JExEconomy.</gray>"
+        - "<gray>Create the default</gray> <white>raindrops</white> <gray>currency when needed.</gray>"
+        - "<yellow>Click to open currency controls.</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>[Skill] Skill Requirements</gradient>"
+      lore:
+        - "<gray>Review supported skill plugins and detection state.</gray>"
+        - "<gray>Apply default skill requirements to all storage purchase tiers.</gray>"
+        - "<yellow>Click to open skill requirement controls.</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>[Job] Job Requirements</gradient>"
+      lore:
+        - "<gray>Review supported job plugins and detection state.</gray>"
+        - "<gray>Apply default job requirements to all storage purchase tiers.</gray>"
+        - "<yellow>Click to open job requirement controls.</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI</gradient>"
+      lore:
+        - "<gray>Detect PlaceholderAPI support and manage expansions.</gray>"
+        - "<gray>Install the</gray> <white>Player</white> <gray>expansion and reload PlaceholderAPI.</gray>"
+        - "<yellow>Click to open PlaceholderAPI tools.</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to use this integration panel.</gray>"
+
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] PlaceholderAPI Tools</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] PlaceholderAPI Integration</gradient>"
+    lore:
+      - "<gray>PlaceholderAPI supported:</gray> <white>{supported}</white>"
+      - "<gray>Target expansion:</gray> <white>{expansion_name}</white>"
+      - "<yellow>Install the expansion and reload PlaceholderAPI from this panel.</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#10b981:#34d399>[OK] PlaceholderAPI Detected</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI is available and enabled.</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI Missing</gradient>"
+      lore:
+        - "<gray>Install and enable PlaceholderAPI to use this action.</gray>"
+  action:
+    install:
+      name: "<gradient:#10b981:#34d399>[+] Install {expansion_name} Expansion</gradient>"
+      lore:
+        - "<gray>Runs:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>Then runs:</gray> <white>papi reload</white>"
+        - "<yellow>Click to execute both PlaceholderAPI commands.</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[X] PlaceholderAPI Required</gradient>"
+      lore:
+        - "<gray>This action is unavailable until PlaceholderAPI is installed.</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to use PlaceholderAPI admin tools.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage PlaceholderAPI integrations.</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>PlaceholderAPI is not available on this server.</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to dispatch expansion download for <white>{expansion_name}</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Expansion download completed, but PlaceholderAPI reload failed.</gray>"
+    completed: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Installed <white>{expansion_name}</white> expansion and reloaded PlaceholderAPI.</gray>"
 
 storage_admin_currency_ui:
   title: "<gradient:#10b981:#34d399>[Cur] Currency Manager</gradient>"
@@ -109,6 +205,96 @@ storage_admin_currency_ui:
       lore:
         - "<gray>You do not have permission to use this currency view.</gray>"
     locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage currencies.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[Skill] Requirement Integrations</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Supported Skill Plugins</gradient>"
+    lore:
+      - "<gray>Supported bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Detected now:</gray> <white>{detected_count}</white>"
+      - "<gray>Click a plugin below to inject default skill requirements into each storage purchase tier.</gray>"
+      - "<yellow>A server restart is required after applying changes.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detected</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integration id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Default skill:</gray> <white>{default_skill}</white>"
+      - "<gray>Level Range Applied:</gray> <white>{level_range}</white>"
+      - "<yellow>Click to add this requirement set to config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] No Skill Bridges</gradient>"
+      lore:
+        - "<gray>No supported skill bridge entries are available.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to use this skill view.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Config Editing Locked</gradient>"
+      lore:
+        - "<gray>This edition does not allow runtime config edits.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage skill requirements.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config editing is locked in this edition.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Applied default skill requirement for <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, skill:</gray> <white>{default_skill}</white><gray>, range:</gray> <white>{level_range}</white><gray>) to <white>{updated_tiers}</white> <gray>storage purchase tier(s).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Restart the server for requirement changes to take effect.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to apply default requirements for <white>{plugin_name}</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+storage_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[Job] Requirement Integrations</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[Info] Supported Job Plugins</gradient>"
+    lore:
+      - "<gray>Supported bridges:</gray> <white>{supported_count}</white>"
+      - "<gray>Detected now:</gray> <white>{detected_count}</white>"
+      - "<gray>Click a plugin below to inject default job requirements into each storage purchase tier.</gray>"
+      - "<yellow>A server restart is required after applying changes.</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Detected</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Missing</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+] {plugin_name}</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[X] {plugin_name}</gradient>"
+    lore:
+      - "<gray>Integration id:</gray> <white>{integration_id}</white>"
+      - "<gray>Status:</gray> <white>{detection_status}</white>"
+      - "<gray>Default job:</gray> <white>{default_job}</white>"
+      - "<gray>Level Range Applied:</gray> <white>{level_range}</white>"
+      - "<yellow>Click to add this requirement set to config/config.yml.</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[X] No Job Bridges</gradient>"
+      lore:
+        - "<gray>No supported job bridge entries are available.</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[X] Admin Access Required</gradient>"
+      lore:
+        - "<gray>You do not have permission to use this job view.</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Config Editing Locked</gradient>"
+      lore:
+        - "<gray>This edition does not allow runtime config edits.</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>You do not have permission to manage job requirements.</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Config editing is locked in this edition.</gray>"
+    applied: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Applied default job requirement for <white>{plugin_name}</white> <gray>(id:</gray> <white>{integration_id}</white><gray>, job:</gray> <white>{default_job}</white><gray>, range:</gray> <white>{level_range}</white><gray>) to <white>{updated_tiers}</white> <gray>storage purchase tier(s).</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Restart the server for requirement changes to take effect.</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Failed to apply default requirements for <white>{plugin_name}</white><gray>.</gray>"
   decoration:
     border:
       name: " "
@@ -200,6 +386,10 @@ storage_store_ui:
         - "<gray>Current requirements:</gray> <white>{requirements}</white>"
         - "<gray>Owned storages:</gray> <white>{owned_storages}/{max_storages}</white>"
         - "<yellow>Meet the remaining requirements before purchasing.</yellow>"
+    requirement_breakdown:
+      listed_below: "<gradient:#38bdf8:#60a5fa>[List Below]</gradient>"
+      header: "<gradient:#38bdf8:#60a5fa>[Req List]</gradient> <gray>Current requirements:</gray>"
+      entry: "<gray>•</gray> <white>{requirement}</white>"
     limit_reached:
       name: "<gradient:#ef4444:#f87171>[X] Storage Limit Reached</gradient>"
       lore:

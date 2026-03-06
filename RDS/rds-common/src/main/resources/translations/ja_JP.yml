@@ -281,35 +281,133 @@ shop_admin_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <white>RDS 管理パネル</white>"
     lore:
-      - "<gray>グローバル管理ショップ システムを 1 か所から管理します。</gray>"
-      - "<gray>サーバーバンクを開くか、構成設定を編集します以下。</gray>"
-      - "<yellow>要件:</yellow> <white>Raindropshops.command.admin</white>"
+      - "<gray>グローバルな管理ショップ システムを 1 か所から管理します。</gray>"
+      - "<gray>以下のサーバーバンク、構成、統合コントロールを開きます。</gray>"
+      - "<yellow>必要：</yellow> <white>raindropshops.command.admin</white>"
   actions:
     server_bank:
-      name: "<gradient:#10b981:#34d399>[$] サーバー銀行</gradient>"
+      name: "<gradient:#10b981:#34d399>[$] サーバーバンク</gradient>"
       lore:
-        - "<gray>サーバー バンクに引き込まれた管理ショップの収入を確認します。</gray>"
-        - "<gray>次回のプルタイミングを確認し、残高を引き出します。</gray>"
-        - "<yellow>クリックサーバー バンク コントロールを開きます。</yellow>"
+        - "<gray>サーバーバンクに引き込まれた管理ショップの収入を確認します。</gray>"
+        - "<gray>次回の引き出しタイミングを確認し、残高を引き出します。</gray>"
+        - "<yellow>クリックしてサーバーバンクコントロールを開きます。</yellow>"
     config:
-      name: "<gradient:#38bdf8:#60a5fa>[Cfg] ショップConfig</gradient>"
+      name: "<gradient:#38bdf8:#60a5fa>[Cfg] ショップ構成</gradient>"
       lore:
-        - "<gray>値の編集</gray> <white>config/config.yml</white><gray>.</gray>"
-        - "<gray>すべての編集可能な設定は、金床プロンプトから変更できます。</gray>"
+        - "<gray>値を編​​集する</gray> <white>config/config.yml</white><gray>.</gray>"
+        - "<gray>編集可能な設定はすべて、Anvil プロンプトを通じて変更できます。</gray>"
         - "<yellow>クリックして構成コントロールを開きます。</yellow>"
+    integrations:
+      name: "<gradient:#10b981:#34d399>[Int] プラグインの統合</gradient>"
+      lore:
+        - "<gray>ジョブ、スキル、PlaceholderAPI 統合ツールを開きます。</gray>"
+        - "<gray>プラグイン要件のブリッジと拡張セットアップを管理します。</gray>"
+        - "<yellow>クリックして統合コントロールを開きます。</yellow>"
     currency:
       name: "<gradient:#a78bfa:#c4b5fd>[Cur] 通貨マネージャー</gradient>"
       lore:
-        - "<gray>Vault と JExEconomy から検出された通貨を確認します。</gray>"
-        - "<gray>デフォルトを作成</gray> <white>雨滴</white> <gray>必要なときに通貨を使用します。</gray>"
+        - "<gray>Vault および JExEconomy から検出された通貨を確認します。</gray>"
+        - "<gray>デフォルトを作成する</gray> <white>raindrops</white> <gray>必要なときに通貨を使用します。</gray>"
         - "<yellow>クリックして通貨コントロールを開きます。</yellow>"
+    skills:
+      name: "<gradient:#22c55e:#86efac>【スキル】スキル要件</gradient>"
+      lore:
+        - "<gray>サポートされているスキル プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのスキル要件をすべての購入層に適用します。</gray>"
+        - "<yellow>クリックしてスキル要件コントロールを開きます。</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>【職種】 職種要件</gradient>"
+      lore:
+        - "<gray>サポートされているジョブ プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのジョブ要件をすべての購入層に適用します。</gray>"
+        - "<yellow>クリックしてジョブ要件コントロールを開きます。</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[税金] 今すぐ税金を実行しましょう</gradient>"
+      lore:
+        - "<gray>テストのために即時税徴収サイクルを 1 回トリガーします。</gray>"
+        - "<gray>これにより、設定された繰り返し税金タイマーは変更されません。</gray>"
+        - "<yellow>クリックすると今すぐ税金を 1 回実行できます。</yellow>"
   feedback:
     locked:
-      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要</white>"
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要です</white>"
       lore:
-        - "<gray>この管理者を使用する権限がありません。パネル。</gray>"
+        - "<gray>この管理パネルを使用する権限がありません。</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>即時店舗税徴収サイクルを開始しました。</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>ショップ税スケジューラは現在利用できません。</gray>"
 
-# 検出されたプロバイダーの管理通貨ビューとデフォルトの通貨作成。
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>[Int] プラグインの統合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>統合ハブ</white>"
+    lore:
+      - "<gray>要件ブリッジの統合を 1 か所から管理します。</gray>"
+      - "<gray>ジョブ、スキル、および PlaceholderAPI コントロールを開きます。</gray>"
+      - "<yellow>必要：</yellow> <white>raindropshops.command.admin</white>"
+  actions:
+    skills:
+      name: "<gradient:#22c55e:#86efac>【スキル】スキル要件</gradient>"
+      lore:
+        - "<gray>サポートされているスキル プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのスキル要件をすべての購入層に適用します。</gray>"
+        - "<yellow>クリックしてスキル要件コントロールを開きます。</yellow>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>【職種】 職種要件</gradient>"
+      lore:
+        - "<gray>サポートされているジョブ プラグインと検出状態を確認します。</gray>"
+        - "<gray>デフォルトのジョブ要件をすべての購入層に適用します。</gray>"
+        - "<yellow>クリックしてジョブ要件コントロールを開きます。</yellow>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>[PAPI] プレースホルダーAPI</gradient>"
+      lore:
+        - "<gray>PlaceholderAPI サポートを検出し、拡張を管理します。</gray>"
+        - "<gray>をインストールします。</gray> <white>Player</white> <gray>PlaceholderAPI を展開してリロードします。</gray>"
+        - "<yellow>クリックして PlaceholderAPI ツールを開きます。</yellow>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要です</white>"
+      lore:
+        - "<gray>この統合パネルを使用する権限がありません。</gray>"
+
+# PlaceholderAPI integration view for expansion install and reload controls.
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[PAPI] プレースホルダー API ツール</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>プレースホルダーAPIの統合</white>"
+    lore:
+      - "<gray>サポートされているプレースホルダー API:</gray> <white>{supported}</white>"
+      - "<gray>対象拡大:</gray> <white>{expansion_name}</white>"
+      - "<yellow>このパネルから拡張をインストールし、PlaceholderAPI をリロードします。</yellow>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>[わかりました]</gradient> <white>プレースホルダーAPIが検出されました</white>"
+      lore:
+        - "<gray>PlaceholderAPI が利用可能で有効になっています。</gray>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>プレースホルダーAPIがありません</white>"
+      lore:
+        - "<gray>PlaceholderAPI をインストールして有効にし、このアクションを使用できるようにします。</gray>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{expansion_name} 拡張をインストールする</white>"
+      lore:
+        - "<gray>実行:</gray> <white>papi ecloud download {expansion_name}</white>"
+        - "<gray>次に実行します:</gray> <white>papi reload</white>"
+        - "<yellow>クリックすると、両方の PlaceholderAPI コマンドが実行されます。</yellow>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>プレースホルダーAPIが必要です</white>"
+      lore:
+        - "<gray>このアクションは、PlaceholderAPI がインストールされるまで使用できません。</gray>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要です</white>"
+      lore:
+        - "<gray>PlaceholderAPI 管理ツールを使用する権限がありません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>PlaceholderAPI 統合を管理する権限がありません。</gray>"
+    unsupported_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このサーバーでは PlaceholderAPI を使用できません。</gray>"
+    download_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{expansion_name} の拡張ダウンロードのディスパッチに失敗しました</white><gray>.</gray>"
+    reload_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>拡張のダウンロードは完了しましたが、PlaceholderAPI のリロードに失敗しました。</gray>"
+    completed: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><白>{expansion_name} をインストールしました</white> expansion and reloaded PlaceholderAPI.</gray>"
+
 shop_admin_currency_ui:
   title: "<gradient:#a78bfa:#c4b5fd>[Cur] 通貨マネージャー</gradient>"
   summary:
@@ -361,6 +459,96 @@ shop_admin_currency_ui:
       name: " "
 
 # 編集可能な設定と更新フィードバック用のブラウザ UI を構成します。
+shop_admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>[スキル] 要件の統合</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報]</gradient> <white>サポートされているスキルプラグイン</white>"
+    lore:
+      - "<gray>サポートされているブリッジ:</gray> <white>{supported_count}</white>"
+      - "<gray>現在検出されています:</gray> <white>{detected_count}</white>"
+      - "<gray>以下のプラグインをクリックして、デフォルトのスキル要件を各購入層に挿入します。</gray>"
+      - "<yellow>変更を適用した後はサーバーを再起動する必要があります。</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>検出されました</gradient>"
+      missing: "<gradient:#ef4444:#f87171>ない</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>統合ID:</gray> <white>{integration_id}</white>"
+      - "<gray>状態：</gray> <white>{detection_status}</white>"
+      - "<gray>デフォルトスキル:</gray> <white>{default_skill}</white>"
+      - "<gray>適用されるレベル範囲:</gray> <white>{level_range}</white>"
+      - "<yellow>クリックして、この要件セットを config/config.yml に追加します。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>スキルブリッジなし</white>"
+      lore:
+        - "<gray>サポートされているスキル ブリッジ エントリは使用できません。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要です</white>"
+      lore:
+        - "<gray>このスキル ビューを使用する権限がありません。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>設定編集がロックされています</white>"
+      lore:
+        - "<gray>このエディションでは、ランタイム構成の編集はできません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>スキル要件を管理する権限がありません。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このエディションでは構成の編集がロックされています。</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{plugin_name} にデフォルトのスキル要件を適用しました</white> <gray>(ID:</gray> <white>{integration_id}</white><gray>、 スキル：</gray> <white>{default_skill}</white><gray>、 範囲：</gray> <white>{level_range}</white><gray>) から <白>{updated_tiers}</white> <gray>購入層。</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>要件の変更を有効にするには、サーバーを再起動します。</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{plugin_name} のデフォルト要件を適用できませんでした</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
+
+# Admin job integration view for PLUGIN requirement insertion.
+shop_admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>[仕事] 要件の統合</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>[情報]</gradient> <white>サポートされているジョブプラグイン</white>"
+    lore:
+      - "<gray>サポートされているブリッジ:</gray> <white>{supported_count}</white>"
+      - "<gray>現在検出されています:</gray> <white>{detected_count}</white>"
+      - "<gray>以下のプラグインをクリックして、デフォルトのジョブ要件を各購入層に挿入します。</gray>"
+      - "<yellow>変更を適用した後はサーバーを再起動する必要があります。</yellow>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>検出されました</gradient>"
+      missing: "<gradient:#ef4444:#f87171>ない</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>[+]</gradient> <white>{plugin_name}</white>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>{plugin_name}</white>"
+    lore:
+      - "<gray>統合ID:</gray> <white>{integration_id}</white>"
+      - "<gray>状態：</gray> <white>{detection_status}</white>"
+      - "<gray>デフォルトのジョブ:</gray> <white>{default_job}</white>"
+      - "<gray>適用されるレベル範囲:</gray> <white>{level_range}</white>"
+      - "<yellow>クリックして、この要件セットを config/config.yml に追加します。</yellow>"
+  feedback:
+    empty:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>ジョブブリッジがありません</white>"
+      lore:
+        - "<gray>サポートされているジョブ ブリッジ エントリは使用できません。</gray>"
+    locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>管理者アクセスが必要です</white>"
+      lore:
+        - "<gray>このジョブ ビューを使用する権限がありません。</gray>"
+    config_locked:
+      name: "<gradient:#ef4444:#f87171>[×]</gradient> <white>設定編集がロックされています</white>"
+      lore:
+        - "<gray>このエディションでは、ランタイム構成の編集はできません。</gray>"
+    locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>ジョブ要件を管理する権限がありません。</gray>"
+    config_locked_message: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>このエディションでは構成の編集がロックされています。</gray>"
+    applied: "<gradient:#22c55e:#86efac>[+]</gradient> <gray><white>{plugin_name} にデフォルトのジョブ要件を適用しました</white> <gray>(ID:</gray> <white>{integration_id}</white><gray>、 仕事：</gray> <white>{default_job}</white><gray>、 範囲：</gray> <white>{level_range}</white><gray>) から <白>{updated_tiers}</white> <gray>購入層。</gray>"
+    restart_required: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>要件の変更を有効にするには、サーバーを再起動します。</gray>"
+    apply_failed: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{plugin_name} のデフォルト要件を適用できませんでした</white><gray>.</gray>"
+  decoration:
+    border:
+      name: " "
 shop_config_ui:
   title: "<gradient:#38bdf8:#60a5fa>[Cfg] ショップConfig</gradient>"
   summary:

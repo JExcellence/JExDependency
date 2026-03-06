@@ -25,20 +25,24 @@ import com.raindropcentral.rdr.service.StorageFilledTaxScheduler;
 import com.raindropcentral.rdr.service.StorageService;
 import com.raindropcentral.rdr.service.scoreboard.StorageSidebarScoreboardService;
 import com.raindropcentral.rdr.view.AdminCurrencyView;
+import com.raindropcentral.rdr.view.PlaceholderAPIView;
+import com.raindropcentral.rdr.view.PluginIntegrationManagementView;
 import com.raindropcentral.rdr.view.StorageAdminView;
 import com.raindropcentral.rdr.view.StorageConfigValueAnvilView;
 import com.raindropcentral.rdr.view.StorageConfigView;
+import com.raindropcentral.rdr.view.StorageFrozenStorageView;
 import com.raindropcentral.rdr.view.StorageHotkeyAnvilView;
+import com.raindropcentral.rdr.view.StorageJobsView;
 import com.raindropcentral.rdr.view.StorageOverviewView;
 import com.raindropcentral.rdr.view.StoragePlayerView;
 import com.raindropcentral.rdr.view.StorageSettingsView;
+import com.raindropcentral.rdr.view.StorageSkillsView;
 import com.raindropcentral.rdr.view.StorageStoreRequirementsView;
 import com.raindropcentral.rdr.view.StorageStoreView;
 import com.raindropcentral.rdr.view.StorageTaxTownBankView;
 import com.raindropcentral.rdr.view.StorageTaxView;
 import com.raindropcentral.rdr.view.StorageTrustedView;
 import com.raindropcentral.rdr.view.StorageView;
-import com.raindropcentral.rdr.view.StorageFrozenStorageView;
 import com.raindropcentral.rplatform.RPlatform;
 import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
@@ -613,7 +617,11 @@ public class RDR {
                 new StorageStoreView(),
                 new StorageAdminView(),
                 new StorageConfigView(),
+                new PluginIntegrationManagementView(),
                 new AdminCurrencyView(),
+                new StorageSkillsView(),
+                new StorageJobsView(),
+                new PlaceholderAPIView(),
                 new StorageStoreRequirementsView(),
                 new StorageHotkeyAnvilView(),
                 new StorageConfigValueAnvilView(),

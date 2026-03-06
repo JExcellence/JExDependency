@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +25,10 @@ import java.util.logging.Logger;
  * - Skills: {"plugin": "ecoskills", "values": {"mining": 50, "combat": 30}}
  * - Jobs: {"plugin": "jobsreborn", "values": {"miner": 10}}
  * - Economy: {"plugin": "vault", "values": {"balance": 1000}}
+ *
+ * @author ItsRainingHP
+ * @since 2.0.0
+ * @version 1.0.0
  */
 public class PluginRequirement extends AbstractRequirement {
 	
@@ -67,7 +72,7 @@ public class PluginRequirement extends AbstractRequirement {
 	) {
 		super("PLUGIN");
 		
-		if (pluginIntegrationId.trim().isEmpty()) {
+		if (pluginIntegrationId == null || pluginIntegrationId.trim().isEmpty()) {
 			throw new IllegalArgumentException("Plugin integration ID cannot be null or empty");
 		}
 		
@@ -84,8 +89,10 @@ public class PluginRequirement extends AbstractRequirement {
 			}
 		}
 		
-		this.pluginIntegrationId = pluginIntegrationId.toLowerCase();
-		this.category = category;
+		this.pluginIntegrationId = pluginIntegrationId.trim().toLowerCase(Locale.ROOT);
+		this.category = category == null || category.trim().isEmpty()
+			? null
+			: category.trim().toUpperCase(Locale.ROOT);
 		this.requiredValues = new HashMap<>(requiredValues);
 		this.consumable = consumable != null && consumable;
 		this.description = description;

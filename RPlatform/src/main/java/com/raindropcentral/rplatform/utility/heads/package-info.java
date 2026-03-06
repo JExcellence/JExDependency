@@ -23,7 +23,7 @@
  *
  * <p><strong>Performance.</strong> Large collections should be cached after translation when
  * the same player revisits a menu in quick succession.  Expensive translation requests may
- * be offloaded to async tasks via {@link de.jexcellence.jextranslate.api.TranslationService#buildAsync()},
+ * be offloaded to async tasks via <code>TranslationService#buildAsync()</code>,
  * but ensure the {@code ItemStack} assembly executes on the main thread.</p>
  */
 package com.raindropcentral.rplatform.utility.heads;

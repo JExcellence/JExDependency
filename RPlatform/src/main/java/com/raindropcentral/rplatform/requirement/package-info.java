@@ -18,7 +18,6 @@
  * <ul>
  *   <li>{@link com.raindropcentral.rplatform.database.converter.RequirementConverter} - JPA converter for single requirements</li>
  *   <li>{@link com.raindropcentral.rplatform.database.converter.RequirementListConverter} - JPA converter for requirement lists</li>
- *   <li>{@link com.raindropcentral.rplatform.requirement.entity.BaseRequirement} - Database entity for requirements</li>
  * </ul>
  *
  * <h2>JSON Serialization</h2>
@@ -34,13 +33,11 @@
  *   <li>EXPERIENCE_LEVEL - XP level requirements</li>
  *   <li>PERMISSION - Permission-based requirements</li>
  *   <li>LOCATION - World/region/coordinate requirements</li>
- *   <li>CUSTOM - JavaScript-based custom logic</li>
  *   <li>COMPOSITE - AND/OR/MINIMUM combinations</li>
  *   <li>CHOICE - Alternative requirement paths</li>
  *   <li>TIME_BASED - Time-limited requirements</li>
  *   <li>PLAYTIME - Player playtime requirements</li>
- *   <li>JOBS - Jobs plugin integration</li>
- *   <li>SKILLS - Skills plugin integration</li>
+ *   <li>PLUGIN - External plugin integration (skills/jobs and other value providers)</li>
  * </ul>
  *
  * <h2>Plugin Extension</h2>
@@ -70,8 +67,6 @@
  * }</pre>
  *
  * @see com.raindropcentral.rplatform.requirement.impl
- * @see com.raindropcentral.rplatform.requirement.impl.plugins
- * @see com.raindropcentral.rplatform.requirement.entity
  * @see com.raindropcentral.rplatform.requirement.json
  */
 package com.raindropcentral.rplatform.requirement;

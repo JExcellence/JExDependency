@@ -1176,12 +1176,12 @@ admin_overview_ui:
       - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
       - "<gradient:#6b7280:#9ca3af>Celková oprávnění:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít správce oprávnění!</gradient>"
-  view_currencies:
-    name: "<gradient:#10b981:#34d399>💱 Měnový manažer</gradient>"
+  view_integrations:
+    name: "<gradient:#10b981:#34d399>🔌 Integrace pluginů</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zkontrolujte RDQ-zjištěné měny</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Zahrnuje položky Vault a JExEconomy</gradient>"
-    error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít správce měn!</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Spravujte integrace pluginů pro správce na jednom místě</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zahrnuje zobrazení detekce měny, dovedností a pracovních míst</gradient>"
+    error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít integrace pluginů!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Vytvořte skupiny LuckPerms</gradient>"
     lore:
@@ -1191,6 +1191,140 @@ admin_overview_ui:
     created: "<gradient:#10b981:#34d399>✅ Vytvořeno</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms skupiny!</gradient>"
     no_changes: "<gradient:#6b7280:#9ca3af>Nebyly vytvořeny žádné nové skupiny.</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se vytvořit skupiny LuckPerms!</gradient>"
+
+# ============================================
+# PLUGIN INTEGRATION MANAGEMENT UI
+# ============================================
+plugin_integration_management_ui:
+  title: "<gradient:#10b981:#34d399>🔌 Integrace pluginů</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>🧭 Integrační centrum</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Otevřete řídicí panely integrace zásuvných modulů RDQ</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detekce měn, dovedností/úkolů a nástroje PlaceholderAPI jsou k dispozici zde</gradient>"
+  actions:
+    currency:
+      name: "<gradient:#22c55e:#86efac>💱 Integrace měn</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Otevřená správa poskytovatelů měn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kontrola zjistila měny Vault a JExEconomy</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít měnové integrace!</gradient>"
+    skills:
+      name: "<gradient:#38bdf8:#60a5fa>📘 Integrace dovedností</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Zobrazit stav podpory pro mcMMO, Aura a EcoSkills</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Zjistit aktuálně povolené pluginy dovedností</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít integraci dovedností!</gradient>"
+    jobs:
+      name: "<gradient:#f59e0b:#fbbf24>⛏ Pracovní integrace</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Zobrazit stav podpory pro EcoJobs a JobsReborn</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Zjistit aktuálně povolené pluginy úloh</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít pracovní integrace!</gradient>"
+    placeholder_api:
+      name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Zjistit podporu PlaceholderAPI a spravovat rozšíření</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nainstalujte rozšíření Player a znovu načtěte PlaceholderAPI</gradient>"
+      error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít nástroje PlaceholderAPI!</gradient>"
+
+# ============================================
+# PLACEHOLDER API UI
+# ============================================
+placeholder_api_ui:
+  title: "<gradient:#38bdf8:#60a5fa>🏷 Nástroje PlaceholderAPI</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📘 Integrace PlaceholderAPI</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Podporováno PlaceholderAPI:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Cílová expanze:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nainstalujte a znovu načtěte přímo z tohoto panelu</gradient>"
+  detection:
+    supported:
+      name: "<gradient:#22c55e:#86efac>✅ Bylo zjištěno PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI je nainstalován a povolen</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ Chybí PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Chcete-li použít tuto akci, nainstalujte a povolte PlaceholderAPI</gradient>"
+  action:
+    install:
+      name: "<gradient:#22c55e:#86efac>📥 Nainstalujte rozšíření %expansion_name%</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Běží:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Poté běží:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kliknutím spustíte oba příkazy PlaceholderAPI</gradient>"
+    unavailable:
+      name: "<gradient:#ef4444:#f87171>🚫 Vyžadováno PlaceholderAPI</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Tato akce není k dispozici, dokud není nainstalován PlaceholderAPI</gradient>"
+  feedback:
+    locked:
+      name: "<gradient:#ef4444:#f87171>❌ Je vyžadován přístup správce</gradient>"
+      lore:
+        - "<gradient:#6b7280:#9ca3af>Nemáte oprávnění používat nástroje pro správu PlaceholderAPI</gradient>"
+    locked_message: "<gradient:#ef4444:#f87171>❌ Nemáte oprávnění ke správě integrací PlaceholderAPI.</gradient>"
+    unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI není na tomto serveru k dispozici.</gradient>"
+    download_failed: "<gradient:#ef4444:#f87171>❌ Nepodařilo se stáhnout rozšíření:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    reload_failed: "<gradient:#ef4444:#f87171>❌ Stahování rozšíření bylo dokončeno, ale opětovné načtení PlaceholderAPI se nezdařilo.</gradient>"
+    completed: "<gradient:#22c55e:#86efac>✅ Nainstalováno rozšíření %expansion_name% a znovu načteno PlaceholderAPI.</gradient>"
+
+# ============================================
+# ADMIN SKILLS INTEGRATION UI
+# ============================================
+admin_skills_ui:
+  title: "<gradient:#22c55e:#86efac>📘 Integrace dovedností</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>📊 Stav pluginu Skill</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Podporované integrace dovedností:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zjištěno právě teď:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kontroluje podporu mcMMO, Aura a EcoSkills</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Zjištěno</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Chybějící</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ID integrace:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Postavení:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Nejsou nakonfigurovány žádné integrace dovedností</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Aktuálně nejsou nakonfigurovány žádné integrace pluginu dovedností</gradient>"
+
+# ============================================
+# ADMIN JOBS INTEGRATION UI
+# ============================================
+admin_jobs_ui:
+  title: "<gradient:#f59e0b:#fbbf24>⛏ Pracovní integrace</gradient>"
+  summary:
+    name: "<gradient:#38bdf8:#60a5fa>📊 Stav pluginu Job</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Podporované integrace pracovních míst:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zjištěno právě teď:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kontroluje podporu EcoJobs a JobsReborn</gradient>"
+  plugin_entry:
+    status:
+      detected: "<gradient:#22c55e:#86efac>Zjištěno</gradient>"
+      missing: "<gradient:#ef4444:#f87171>Chybějící</gradient>"
+    detected:
+      name: "<gradient:#22c55e:#86efac>✅ %plugin_name%</gradient>"
+    missing:
+      name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ID integrace:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Postavení:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+  empty:
+    name: "<gradient:#ef4444:#f87171>❌ Nejsou nakonfigurovány žádné integrace úloh</gradient>"
+    lore:
+      - "<gradient:#6b7280:#9ca3af>Aktuálně nejsou nakonfigurovány žádné integrace pluginů úloh</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI

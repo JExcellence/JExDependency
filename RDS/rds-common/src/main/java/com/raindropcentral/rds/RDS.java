@@ -20,6 +20,8 @@ import com.raindropcentral.rds.view.shop.ShopBankView;
 import com.raindropcentral.rds.view.shop.ShopCustomerView;
 import com.raindropcentral.rds.view.shop.ShopEditView;
 import com.raindropcentral.rds.view.shop.ShopInputView;
+import com.raindropcentral.rds.view.shop.PluginIntegrationManagementView;
+import com.raindropcentral.rds.view.shop.PlaceholderAPIView;
 import com.raindropcentral.rds.view.shop.ServerBankView;
 import com.raindropcentral.rds.view.shop.ShopAdminView;
 import com.raindropcentral.rds.view.shop.ShopConfigView;
@@ -27,9 +29,11 @@ import com.raindropcentral.rds.view.shop.ShopItemAdminCommandView;
 import com.raindropcentral.rds.view.shop.ShopItemEditView;
 import com.raindropcentral.rds.view.shop.ShopLedgerView;
 import com.raindropcentral.rds.view.shop.ShopListView;
+import com.raindropcentral.rds.view.shop.ShopJobsView;
 import com.raindropcentral.rds.view.shop.ShopOverviewView;
 import com.raindropcentral.rds.view.shop.ShopResultsView;
 import com.raindropcentral.rds.view.shop.ShopSearchView;
+import com.raindropcentral.rds.view.shop.ShopSkillsView;
 import com.raindropcentral.rds.view.shop.ShopStorageView;
 import com.raindropcentral.rds.view.shop.ShopStoreCostView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
@@ -452,7 +456,11 @@ public class RDS {
                 .with(
                     new ShopOverviewView(),
                     new ShopAdminView(),
+                    new PluginIntegrationManagementView(),
+                    new PlaceholderAPIView(),
                     new AdminCurrencyView(),
+                    new ShopSkillsView(),
+                    new ShopJobsView(),
                     new ShopConfigView(),
                     new ShopBankView(),
                     new ServerBankView(),

@@ -19,7 +19,7 @@
  * so the registry emits warnings when providers never materialize. Optional services should supply failure callbacks to record
  * telemetry or disable feature flags gracefully.</p>
  *
- * <h2>Caching & logging</h2>
+ * <h2>Caching &amp; Logging</h2>
  * <p>{@link com.raindropcentral.rplatform.service.ServiceRegistry} maintains a thread-safe cache backed by
  * {@link java.util.concurrent.ConcurrentHashMap}, ensuring lookups remain safe when futures complete on worker threads.
  * Successful registrations log at {@code INFO} level while exhausted required registrations escalate to {@code WARNING} so
