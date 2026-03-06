@@ -170,9 +170,9 @@ tax_scheduler:
   insufficient_funds: "<red>Sie konnten die geplante Shop-Steuer von nicht bezahlen {amount}. Gezählte Shops: {owned_shops}.</red>"
   charge_failed: "<red>Die geplante Ladensteuer von {amount}. Gezählte Shops: {owned_shops}.</red>"
 
-# Haupt-Shop-Übersichtsoberfläche für Eigentümer-/Administrator-Verwaltungsaktionen.
+# Hauptoberfläche der Shop-Übersicht für Eigentümer-/Administratorverwaltungsaktionen.
 shop_overview_ui:
-  title: "{owner} Shop - {location}"
+  title: "{owner} Geschäft - {location}"
   summary:
     name: "<gold>Shop-Zusammenfassung</gold>"
     player:
@@ -180,20 +180,20 @@ shop_overview_ui:
         - "<gray>Eigentümer:</gray> <white>{owner}</white>"
         - "<gray>Standort:</gray> <white>{location}</white>"
         - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
-        - "<gray>Shop-Typ:</gray> <white>Player-Shop</white>"
-        - "<gray>Bestand:</gray> <white>Finite</white>"
+        - "<gray>Shoptyp:</gray> <white>Spielershop</white>"
+        - "<gray>Inventar:</gray> <white>Endlich</white>"
     admin:
       lore:
         - "<gray>Eigentümer:</gray> <white>{owner}</white>"
         - "<gray>Standort:</gray> <white>{location}</white>"
         - "<gray>Gespeicherte Einträge:</gray> <white>{item_count}</white>"
-        - "<gray>Shop-Typ:</gray> <white>Admin-Shop</white>"
-        - "<gray>Bestand:</gray> <white>Unendlich</white>"
+        - "<gray>Shoptyp:</gray> <white>Admin-Shop</white>"
+        - "<gray>Inventar:</gray> <white>Unendlich</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>Shop-Bank</gold>"
     lore:
       - "<gray>Verfolgte Währungen:</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>Klicken Sie, um Geld zu überprüfen und abzuheben.</yellow>"
+      - "<yellow>Klicken Sie hier, um Geld zu überprüfen und abzuheben.</yellow>"
   actions:
     admin_toggle:
       enabled:

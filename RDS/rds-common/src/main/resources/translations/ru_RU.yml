@@ -170,27 +170,27 @@ tax_scheduler:
   insufficient_funds: "<red>Вы не можете оплатить запланированный налог магазина из {amount}. Подсчитано магазинов: {owned_shops}.</red>"
   charge_failed: "<red>Не удалось собрать запланированный налог магазина в размере {amount}. Подсчитано магазинов: {owned_shops}.</red>"
 
-# Главный интерфейс обзора магазина для действий по управлению владельцем/администратором. 
+# Главный интерфейс обзора магазина для действий по управлению владельцем/администратором.
 shop_overview_ui:
   title: "{owner} Магазин - {location}"
   summary:
-    name: "<gold>Shop Summary</gold>"
+    name: "<gold>Краткое описание магазина</gold>"
     player:
       lore:
         - "<gray>Владелец:</gray> <white>{owner}</white>"
-        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Расположение:</gray> <white>{location}</white>"
         - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
-        - "<gray>Shop type:</gray> <white>Player Shop</white>"
+        - "<gray>Тип магазина:</gray> <white>Магазин игроков</white>"
         - "<gray>Инвентарь:</gray> <white>Конечный</white>"
     admin:
       lore:
         - "<gray>Владелец:</gray> <white>{owner}</white>"
-        - "<gray>Местоположение:</gray> <white>{location}</white>"
+        - "<gray>Расположение:</gray> <white>{location}</white>"
         - "<gray>Сохраненные записи:</gray> <white>{item_count}</white>"
-        - "<gray>Shop type:</gray> <white>Администратор магазина</white>"
-        - "<gray>Инвентарь:</gray> <white>Бесконечный</white>"
+        - "<gray>Тип магазина:</gray> <white>Админ магазин</white>"
+        - "<gray>Инвентарь:</gray> <white>бесконечный</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>Магазин Банк</gold>"
     lore:
       - "<gray>Отслеживаемые валюты:</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Нажмите, чтобы просмотреть и вывести средства.</yellow>"

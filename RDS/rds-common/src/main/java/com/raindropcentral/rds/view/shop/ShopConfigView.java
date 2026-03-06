@@ -187,7 +187,8 @@ public class ShopConfigView extends APaginatedView<ShopConfigView.ConfigEntry> {
         }
 
         final int entryCount = this.countEntries(this.rds.get(render));
-        render.layoutSlot('s', this.createSummaryItem(player, entryCount));
+        final int protectionEntryCount = this.countProtectionEntries(this.rds.get(render));
+        render.layoutSlot('s', this.createSummaryItem(player, entryCount, protectionEntryCount));
         if (entryCount < 1) {
             render.slot(22).renderWith(() -> this.createEmptyItem(player));
         }
@@ -281,6 +282,28 @@ public class ShopConfigView extends APaginatedView<ShopConfigView.ConfigEntry> {
         return count;
     }
 
+    private int countProtectionEntries(
+            final @NotNull RDS plugin
+    ) {
+        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(this.getConfigFile(plugin));
+        int count = 0;
+        for (final Map.Entry<String, Object> valueEntry : configuration.getValues(true).entrySet()) {
+            final String path = valueEntry.getKey();
+            final Object value = valueEntry.getValue();
+            if (path == null || !path.startsWith("protection.")) {
+                continue;
+            }
+            if (value instanceof ConfigurationSection || value instanceof MemorySection) {
+                continue;
+            }
+            if (!ShopConfigEditSupport.isEditableValue(value)) {
+                continue;
+            }
+            count++;
+        }
+        return count;
+    }
+
     private @NotNull File getConfigFile(
             final @NotNull RDS plugin
     ) {
@@ -289,12 +312,16 @@ public class ShopConfigView extends APaginatedView<ShopConfigView.ConfigEntry> {
 
     private @NotNull ItemStack createSummaryItem(
             final @NotNull Player player,
-            final int settingCount
+            final int settingCount,
+            final int protectionSettingCount
     ) {
         return UnifiedBuilderFactory.item(Material.WRITABLE_BOOK)
                 .setName(this.i18n("summary.name", player).build().component())
                 .setLore(this.i18n("summary.lore", player)
-                        .withPlaceholder("setting_count", settingCount)
+                        .withPlaceholders(Map.of(
+                                "setting_count", settingCount,
+                                "protection_setting_count", protectionSettingCount
+                        ))
                         .build()
                         .children())
                 .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)

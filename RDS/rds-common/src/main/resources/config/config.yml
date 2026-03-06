@@ -18,7 +18,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 50.0
       consumable: true
       icon:
@@ -33,7 +33,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 53.75
       consumable: true
       icon:
@@ -48,7 +48,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 57.78
       consumable: true
       icon:
@@ -63,7 +63,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 62.11
       consumable: true
       icon:
@@ -78,7 +78,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 66.77
       consumable: true
       icon:
@@ -93,7 +93,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 71.78
       consumable: true
       icon:
@@ -108,7 +108,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 77.16
       consumable: true
       icon:
@@ -123,7 +123,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 82.95
       consumable: true
       icon:
@@ -138,7 +138,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 89.17
       consumable: true
       icon:
@@ -153,7 +153,7 @@ requirements:
         type: "GOLD_INGOT"
     coins_purchase:
       type: "CURRENCY"
-      currency: coins
+      currency: raindrops
       amount: 95.86
       consumable: true
       icon:
@@ -177,6 +177,25 @@ server_bank:
   enabled: true
   # Bukkit ticks between transfer sweeps (20 ticks = 1 second).
   transfer_interval_ticks: 1200
+# Protection bridge settings. Currently supports RDT, Towny, and HuskTowns.
+protection:
+  # If true, players can place ShopBlocks only while standing in their own town claim.
+  only_player_shops: false
+  # If true, failed protection shop taxes first attempted from town bank will retry from the owner's player balance.
+  # If false, a failed town-bank tax charge is recorded as unpaid debt on affected shops.
+  shop_taxes_fallback_to_player: false
+  # Tax currencies charged through the player's town bank during scheduled shop taxes.
+  # Uses the same per-currency format as taxes.<currency> (initial_cost, growth_rate, maximum_tax).
+  # Supports multiple and custom currencies.
+  shop_taxes:
+    vault:
+      initial_cost: 100.0
+      growth_rate: 1.125
+      maximum_tax: -1
+    raindrops:
+      initial_cost: 5.0
+      growth_rate: 1.075
+      maximum_tax: 50000
 # Scheduled taxes for counted player shops.
 taxes:
   vault:
@@ -184,7 +203,7 @@ taxes:
     growth_rate: 1.125
     # -1 for no cap
     maximum_tax: -1
-  coins:
+  raindrops:
     initial_cost: 5.0
     growth_rate: 1.075
     maximum_tax: 50000
@@ -200,6 +219,9 @@ taxes:
   # Extra tax multiplier per shop item marked with availability mode NEVER.
   # Example: 0.25 means +25% tax for each NEVER item across your player shops.
   never_item_penalty_rate: 0.25
+  # Maximum unpaid bankruptcy debt tracked per shop and currency.
+  # Positive values cap debt growth; -1 (or any non-positive value) allows unlimited debt.
+  maximum_bankruptcy_amount: -1
 # Player shop boss bar settings for /rs bar.
 boss_bar:
   # Bukkit ticks between boss bar refreshes.

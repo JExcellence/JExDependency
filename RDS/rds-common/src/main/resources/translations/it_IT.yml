@@ -174,23 +174,23 @@ tax_scheduler:
 shop_overview_ui:
   title: "{owner} Negozio - {location}"
   summary:
-    name: "<gold>Riepilogo negozio</gold>"
+    name: "<gold>Riepilogo del negozio</gold>"
     player:
       lore:
         - "<gray>Proprietario:</gray> <white>{owner}</white>"
-        - "<gray>Ubicazione:</gray> <white>{location}</white>"
-        - "<gray>Archiviati voci:</gray> <white>{item_count}</white>"
-        - "<gray>Negozio tipo:</gray> <white>Player Shop</white>"
+        - "<gray>Posizione:</gray> <white>{location}</white>"
+        - "<gray>Voci memorizzate:</gray> <white>{item_count}</white>"
+        - "<gray>Tipo di negozio:</gray> <white>Negozio dei giocatori</white>"
         - "<gray>Inventario:</gray> <white>Finito</white>"
     admin:
       lore:
         - "<gray>Proprietario:</gray> <white>{owner}</white>"
-        - "<gray>Ubicazione:</gray> <white>{location}</white>"
-        - "<gray>Archiviati voci:</gray> <white>{item_count}</white>"
-        - "<gray>Negozio tipo:</gray> <white>Negozio amministratore</white>"
+        - "<gray>Posizione:</gray> <white>{location}</white>"
+        - "<gray>Voci memorizzate:</gray> <white>{item_count}</white>"
+        - "<gray>Tipo di negozio:</gray> <white>Negozio di amministrazione</white>"
         - "<gray>Inventario:</gray> <white>Infinito</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>Banca dei negozi</gold>"
     lore:
       - "<gray>Valute monitorate:</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Fare clic per rivedere e prelevare fondi.</yellow>"

@@ -45,6 +45,7 @@ public class ConfigSection extends AConfigSection {
     private BossBarSection boss_bar;
     private AdminShopSection admin_shops;
     private ServerBankSection server_bank;
+    private ProtectionSection protection;
 
     /**
      * Creates a configuration section bound to the provided evaluation environment.
@@ -308,6 +309,17 @@ public class ConfigSection extends AConfigSection {
     }
 
     /**
+     * Returns the configured protection section.
+     *
+     * @return protection configuration
+     */
+    public @NotNull ProtectionSection getProtection() {
+        return this.protection == null
+                ? new ProtectionSection(new EvaluationEnvironmentBuilder())
+                : this.protection;
+    }
+
+    /**
      * Returns the initial tax amount for the default tax currency.
      *
      * @return initial tax amount
@@ -439,6 +451,7 @@ public class ConfigSection extends AConfigSection {
         section.boss_bar = BossBarSection.fromFile(configFile);
         section.admin_shops = AdminShopSection.fromFile(configFile);
         section.server_bank = ServerBankSection.fromFile(configFile);
+        section.protection = ProtectionSection.fromFile(configFile);
         return section;
     }
 

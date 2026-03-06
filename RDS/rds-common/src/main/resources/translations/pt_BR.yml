@@ -172,7 +172,7 @@ tax_scheduler:
 
 # Interface principal de visão geral da loja para ações de gerenciamento de proprietário/administrador.
 shop_overview_ui:
-  title: "{owner} Loja - {location}"
+  title: "{owner} Comprar - {location}"
   summary:
     name: "<gold>Resumo da loja</gold>"
     player:
@@ -180,17 +180,17 @@ shop_overview_ui:
         - "<gray>Proprietário:</gray> <white>{owner}</white>"
         - "<gray>Localização:</gray> <white>{location}</white>"
         - "<gray>Entradas armazenadas:</gray> <white>{item_count}</white>"
-        - "<gray>Loja tipo:</gray> <white>Player Shop</white>"
+        - "<gray>Tipo de loja:</gray> <white>Loja de jogadores</white>"
         - "<gray>Inventário:</gray> <white>Finito</white>"
     admin:
       lore:
         - "<gray>Proprietário:</gray> <white>{owner}</white>"
         - "<gray>Localização:</gray> <white>{location}</white>"
         - "<gray>Entradas armazenadas:</gray> <white>{item_count}</white>"
-        - "<gray>Loja tipo:</gray> <white>Admin Shop</white>"
+        - "<gray>Tipo de loja:</gray> <white>Loja de administração</white>"
         - "<gray>Inventário:</gray> <white>Infinito</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>Banco da loja</gold>"
     lore:
       - "<gray>Moedas rastreadas:</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Clique para revisar e sacar fundos.</yellow>"

@@ -170,9 +170,9 @@ tax_scheduler:
   insufficient_funds: "<red>예정된 상점 세금을 지불할 수 없습니다. of {amount}. 계산된 상점: {owned_shops}.</red>"
   charge_failed: "<red>{amount}. 계산된 상점: {owned_shops}.</red>"
 
-# 소유자/관리자 관리 작업을 위한 주요 상점 개요 인터페이스.
+# 소유자/관리자 관리 작업을 위한 주요 상점 개요 인터페이스입니다.
 shop_overview_ui:
-  title: "{owner} 상점 - {location}"
+  title: "{owner} 가게 - {location}"
   summary:
     name: "<gold>상점 요약</gold>"
     player:
@@ -180,20 +180,20 @@ shop_overview_ui:
         - "<gray>소유자:</gray> <white>{owner}</white>"
         - "<gray>위치:</gray> <white>{location}</white>"
         - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
-        - "<gray>Shop 유형:</gray> <white>Player Shop</white>"
-        - "<gray>재고:</gray> <white>유한</white>"
+        - "<gray>상점 유형:</gray> <white>플레이어 상점</white>"
+        - "<gray>목록:</gray> <white>한정된</white>"
     admin:
       lore:
         - "<gray>소유자:</gray> <white>{owner}</white>"
         - "<gray>위치:</gray> <white>{location}</white>"
         - "<gray>저장된 항목:</gray> <white>{item_count}</white>"
-        - "<gray>Shop 유형:</gray> <white>Admin Shop</white>"
-        - "<gray>재고:</gray> <white>무한</white>"
+        - "<gray>상점 유형:</gray> <white>관리 상점</white>"
+        - "<gray>목록:</gray> <white>무한</white>"
   finance:
     name: "<gold>상점 은행</gold>"
     lore:
       - "<gray>추적된 통화:</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>자금을 검토하고 인출하려면 클릭하십시오.</yellow>"
+      - "<yellow>자금을 검토하고 인출하려면 클릭하세요.</yellow>"
   actions:
     admin_toggle:
       enabled:

@@ -180,20 +180,20 @@ shop_overview_ui:
         - "<gray>Właściciel:</gray> <white>{owner}</white>"
         - "<gray>Lokalizacja:</gray> <white>{location}</white>"
         - "<gray>Przechowywane wpisy:</gray> <white>{item_count}</white>"
-        - "<gray>Shop type:</gray> <white>Player Shop</white>"
-        - "<gray>Zapasy:</gray> <white>Finite</white>"
+        - "<gray>Typ sklepu:</gray> <white>Sklep Gracza</white>"
+        - "<gray>Spis:</gray> <white>Skończony</white>"
     admin:
       lore:
         - "<gray>Właściciel:</gray> <white>{owner}</white>"
         - "<gray>Lokalizacja:</gray> <white>{location}</white>"
         - "<gray>Przechowywane wpisy:</gray> <white>{item_count}</white>"
-        - "<gray>Shop type:</gray> <white>Sklep administracyjny</white>"
-        - "<gray>Zapasy:</gray> <white>Nieskończony</white>"
+        - "<gray>Typ sklepu:</gray> <white>Sklep administratora</white>"
+        - "<gray>Spis:</gray> <white>Nieskończony</white>"
   finance:
-    name: "<gold>Sklep Bank</gold>"
+    name: "<gold>Sklep Bankowy</gold>"
     lore:
       - "<gray>Śledzone waluty:</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>Kliknij, aby przejrzeć i wypłacić środki.</yellow>"
+      - "<yellow>Kliknij, aby sprawdzić i wypłacić środki.</yellow>"
   actions:
     admin_toggle:
       enabled:

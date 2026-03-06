@@ -172,27 +172,27 @@ tax_scheduler:
 
 # Interfaz de descripción general de la tienda principal para acciones de gestión del propietario/administrador.
 shop_overview_ui:
-  title: "{owner} Tienda - {location}"
+  title: "{owner} Comercio - {location}"
   summary:
     name: "<gold>Resumen de la tienda</gold>"
     player:
       lore:
-        - "<gray>Propietario:</gray> <white>{owner}</white>"
+        - "<gray>Dueño:</gray> <white>{owner}</white>"
         - "<gray>Ubicación:</gray> <white>{location}</white>"
         - "<gray>Entradas almacenadas:</gray> <white>{item_count}</white>"
-        - "<gray>Tipo de tienda:</gray> <white>Player Shop</white>"
+        - "<gray>Tipo de tienda:</gray> <white>Tienda de jugadores</white>"
         - "<gray>Inventario:</gray> <white>Finito</white>"
     admin:
       lore:
-        - "<gray>Propietario:</gray> <white>{owner}</white>"
+        - "<gray>Dueño:</gray> <white>{owner}</white>"
         - "<gray>Ubicación:</gray> <white>{location}</white>"
         - "<gray>Entradas almacenadas:</gray> <white>{item_count}</white>"
-        - "<gray>Tipo de tienda:</gray> <white>Admin Shop</white>"
+        - "<gray>Tipo de tienda:</gray> <white>Tienda de administración</white>"
         - "<gray>Inventario:</gray> <white>Infinito</white>"
   finance:
-    name: "<gold>Banco de tienda</gold>"
+    name: "<gold>Tienda Banco</gold>"
     lore:
-      - "<gray>Divisas rastreadas:</gray> <white>{bank_currency_count}</white>"
+      - "<gray>Monedas rastreadas:</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Haga clic para revisar y retirar fondos.</yellow>"
   actions:
     admin_toggle:

@@ -1,10 +1,12 @@
 package com.raindropcentral.rds.listeners;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rds.service.shop.ShopOwnershipSupport;
+import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -108,12 +110,18 @@ public class BlockListener implements Listener {
             return;
         }
 
+        final ConfigSection config = this.rds.getDefaultConfig();
+        if (!this.canPlacePlayerShop(event.getPlayer(), config)) {
+            event.setCancelled(true);
+            return;
+        }
+
         if (mergedPartner != null) {
             this.upgradeShopToDoubleChest(event, ownerId, placedBlock.getLocation(), mergedPartner);
             return;
         }
 
-        this.createSingleChestShop(event, ownerId, placedBlock.getLocation());
+        this.createSingleChestShop(event, ownerId, placedBlock.getLocation(), config);
     }
 
     private void preventNormalChestShopMerge(
@@ -136,11 +144,12 @@ public class BlockListener implements Listener {
     private void createSingleChestShop(
             final @NotNull BlockPlaceEvent event,
             final @NotNull UUID ownerId,
-            final @NotNull Location shopLocation
+            final @NotNull Location shopLocation,
+            final @NotNull ConfigSection config
     ) {
         final RDSPlayer playerData = this.getOrCreatePlayer(ownerId);
 
-        final int maxShops = this.rds.getMaximumShops();
+        final int maxShops = this.rds.getMaximumShops(config);
         final int activeOwnedShops = ShopOwnershipSupport.countOwnedPlayerShops(this.rds, ownerId);
         if (maxShops > 0 && activeOwnedShops >= maxShops) {
             event.setCancelled(true);
@@ -156,6 +165,33 @@ public class BlockListener implements Listener {
         }
 
         this.placeShopItem(ownerId, playerData, shopLocation);
+    }
+
+    private boolean canPlacePlayerShop(
+            final @NotNull Player player,
+            final @NotNull ConfigSection config
+    ) {
+        if (!config.getProtection().isOnlyPlayerShops()) {
+            return true;
+        }
+
+        final RProtectionBridge protectionBridge = RProtectionBridge.getBridge();
+        if (protectionBridge == null || !protectionBridge.isAvailable()) {
+            this.sendMessage(player, "block_listener.error.protection_unavailable");
+            return false;
+        }
+
+        if (!protectionBridge.isPlayerInTown(player)) {
+            this.sendMessage(player, "block_listener.error.protection_requires_town");
+            return false;
+        }
+
+        if (!protectionBridge.isPlayerStandingInOwnTown(player)) {
+            this.sendMessage(player, "block_listener.error.protection_requires_own_town");
+            return false;
+        }
+
+        return true;
     }
 
     private void upgradeShopToDoubleChest(

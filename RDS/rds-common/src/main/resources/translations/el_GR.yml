@@ -172,7 +172,7 @@ tax_scheduler:
 
 # Κύρια διεπαφή επισκόπησης καταστήματος για ενέργειες διαχείρισης ιδιοκτήτη/διαχειριστή.
 shop_overview_ui:
-  title: "{owner}Κατάστημα -{location}"
+  title: "{owner} Κατάστημα - {location}"
   summary:
     name: "<gold>Περίληψη καταστήματος</gold>"
     player:

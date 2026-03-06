@@ -6,6 +6,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
+import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAvailabilityMinutesAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminResetTimerAnvilView;
 import com.raindropcentral.rds.view.shop.anvil.ShopItemAdminStockLimitAnvilView;
@@ -125,26 +126,38 @@ public class ShopItemEditView extends BaseView {
         render.layoutSlot('t')
                 .renderWith(() -> this.createCurrencyTypeItem(player, this.getEditedItem(render)))
                 .updateOnStateChange(this.editedItem)
-                .onClick(clickContext -> clickContext.openForPlayer(
-                        ShopItemCurrencyTypeAnvilView.class,
-                        Map.of(
-                                "plugin", this.rds.get(clickContext),
-                                "shopLocation", this.shopLocation.get(clickContext),
-                                "shopItem", this.getEditedItem(clickContext)
-                        )
-                ));
+                .onClick(clickContext -> {
+                    if (!this.ensureTaxUnlocked(clickContext)) {
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopItemCurrencyTypeAnvilView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", this.shopLocation.get(clickContext),
+                                    "shopItem", this.getEditedItem(clickContext)
+                            )
+                    );
+                });
 
         render.layoutSlot('v')
                 .renderWith(() -> this.createValueItem(player, this.getEditedItem(render)))
                 .updateOnStateChange(this.editedItem)
-                .onClick(clickContext -> clickContext.openForPlayer(
-                        ShopItemValueAnvilView.class,
-                        Map.of(
-                                "plugin", this.rds.get(clickContext),
-                                "shopLocation", this.shopLocation.get(clickContext),
-                                "shopItem", this.getEditedItem(clickContext)
-                        )
-                ));
+                .onClick(clickContext -> {
+                    if (!this.ensureTaxUnlocked(clickContext)) {
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopItemValueAnvilView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", this.shopLocation.get(clickContext),
+                                    "shopItem", this.getEditedItem(clickContext)
+                            )
+                    );
+                });
 
         render.layoutSlot('a')
                 .renderWith(() -> this.createAvailabilityModeItem(player, this.getEditedItem(render)))
@@ -154,14 +167,20 @@ public class ShopItemEditView extends BaseView {
         render.layoutSlot('n')
                 .renderWith(() -> this.createAvailabilityWindowItem(player, this.getEditedItem(render)))
                 .updateOnStateChange(this.editedItem)
-                .onClick(clickContext -> clickContext.openForPlayer(
-                        ShopItemAvailabilityMinutesAnvilView.class,
-                        Map.of(
-                                "plugin", this.rds.get(clickContext),
-                                "shopLocation", this.shopLocation.get(clickContext),
-                                "shopItem", this.getEditedItem(clickContext)
-                        )
-                ));
+                .onClick(clickContext -> {
+                    if (!this.ensureTaxUnlocked(clickContext)) {
+                        return;
+                    }
+
+                    clickContext.openForPlayer(
+                            ShopItemAvailabilityMinutesAnvilView.class,
+                            Map.of(
+                                    "plugin", this.rds.get(clickContext),
+                                    "shopLocation", this.shopLocation.get(clickContext),
+                                    "shopItem", this.getEditedItem(clickContext)
+                            )
+                    );
+                });
 
         render.layoutSlot(
                 'c',
@@ -180,26 +199,38 @@ public class ShopItemEditView extends BaseView {
             render.layoutSlot('l')
                     .renderWith(() -> this.createStockLimitItem(player, this.getEditedItem(render)))
                     .updateOnStateChange(this.editedItem)
-                    .onClick(clickContext -> clickContext.openForPlayer(
-                            ShopItemAdminStockLimitAnvilView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", this.shopLocation.get(clickContext),
-                                    "shopItem", this.getEditedItem(clickContext)
-                            )
-                    ));
+                    .onClick(clickContext -> {
+                        if (!this.ensureTaxUnlocked(clickContext)) {
+                            return;
+                        }
+
+                        clickContext.openForPlayer(
+                                ShopItemAdminStockLimitAnvilView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shopLocation", this.shopLocation.get(clickContext),
+                                        "shopItem", this.getEditedItem(clickContext)
+                                )
+                        );
+                    });
 
             render.layoutSlot('r')
                     .renderWith(() -> this.createResetTimerItem(player, plugin, this.getEditedItem(render)))
                     .updateOnStateChange(this.editedItem)
-                    .onClick(clickContext -> clickContext.openForPlayer(
-                            ShopItemAdminResetTimerAnvilView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", this.shopLocation.get(clickContext),
-                                    "shopItem", this.getEditedItem(clickContext)
-                            )
-                    ));
+                    .onClick(clickContext -> {
+                        if (!this.ensureTaxUnlocked(clickContext)) {
+                            return;
+                        }
+
+                        clickContext.openForPlayer(
+                                ShopItemAdminResetTimerAnvilView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shopLocation", this.shopLocation.get(clickContext),
+                                        "shopItem", this.getEditedItem(clickContext)
+                                )
+                        );
+                    });
 
             render.layoutSlot('m')
                     .renderWith(() -> this.createRestockModeItem(player, plugin))
@@ -233,6 +264,11 @@ public class ShopItemEditView extends BaseView {
                     .includePrefix()
                     .build()
                     .sendMessage();
+            return;
+        }
+
+        if (shop.hasTaxDebt()) {
+            this.sendTaxLockedFeedback(clickContext, shop);
             return;
         }
 
@@ -292,6 +328,11 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
+        if (shop.hasTaxDebt()) {
+            this.sendTaxLockedFeedback(clickContext, shop);
+            return;
+        }
+
         final ShopItem current = this.getEditedItem(clickContext);
         final ShopItem.AvailabilityMode updatedMode = current.getAvailabilityMode().next();
         this.editedItem.set(current.withAvailabilityMode(updatedMode), clickContext);
@@ -325,6 +366,11 @@ public class ShopItemEditView extends BaseView {
             return;
         }
 
+        if (shop.hasTaxDebt()) {
+            this.sendTaxLockedFeedback(clickContext, shop);
+            return;
+        }
+
         clickContext.openForPlayer(
                 ShopItemAdminCommandView.class,
                 Map.of(
@@ -354,6 +400,11 @@ public class ShopItemEditView extends BaseView {
                     .includePrefix()
                     .build()
                     .sendMessage();
+            return;
+        }
+
+        if (shop.hasTaxDebt()) {
+            this.sendTaxLockedFeedback(clickContext, shop);
             return;
         }
 
@@ -510,6 +561,29 @@ public class ShopItemEditView extends BaseView {
         if (updatedItem instanceof ShopItem shopItem) {
             this.editedItem.set(shopItem, stateContext);
         }
+    }
+
+    private boolean ensureTaxUnlocked(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null || !shop.hasTaxDebt()) {
+            return true;
+        }
+
+        this.sendTaxLockedFeedback(clickContext, shop);
+        return false;
+    }
+
+    private void sendTaxLockedFeedback(
+            final @NotNull SlotClickContext clickContext,
+            final @NotNull Shop shop
+    ) {
+        this.i18n("feedback.tax_locked", clickContext.getPlayer())
+                .withPlaceholder("debt_summary", this.formatDebtSummary(shop, this.rds.get(clickContext)))
+                .includePrefix()
+                .build()
+                .sendMessage();
     }
 
 
@@ -904,5 +978,17 @@ public class ShopItemEditView extends BaseView {
                 .build()
                 .getI18nVersionWrapper()
                 .asPlaceholder();
+    }
+
+    private @NotNull String formatDebtSummary(
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        final ShopTaxScheduler scheduler = plugin.getShopTaxScheduler();
+        if (scheduler == null) {
+            return "None";
+        }
+
+        return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
     }
 }

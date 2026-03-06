@@ -2,6 +2,7 @@ package com.raindropcentral.rds.database.entity;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.raindropcentral.rds.items.AbstractItem;
+import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.items.json.ItemParser;
 import com.raindropcentral.rplatform.database.converter.LocationConverter;
 import com.raindropcentral.rplatform.database.converter.UUIDConverter;
@@ -21,7 +22,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -78,6 +81,9 @@ public class Shop extends BaseEntity {
     @Column(name = "trusted_players", unique = false, nullable = false, columnDefinition = "LONGTEXT")
     private String trustedPlayersJson = "{}";
 
+    @Column(name = "tax_debt", unique = false, nullable = false, columnDefinition = "LONGTEXT")
+    private String taxDebtJson = "{}";
+
     @OneToMany(
             mappedBy = "shop",
             cascade = CascadeType.ALL,
@@ -92,6 +98,9 @@ public class Shop extends BaseEntity {
 
     @Transient
     private Map<UUID, ShopTrustStatus> cachedTrustedPlayers;
+
+    @Transient
+    private Map<String, Double> cachedTaxDebt;
 
     /**
      * Creates a new shop.
@@ -111,6 +120,7 @@ public class Shop extends BaseEntity {
         this.secondary_shop_location = null;
         this.bankEntries = new ArrayList<>();
         this.ledgerEntries = new ArrayList<>();
+        this.taxDebtJson = "{}";
         setItems(List.of());
     }
 
@@ -262,6 +272,182 @@ public class Shop extends BaseEntity {
         }
 
         return true;
+    }
+
+    /**
+     * Returns per-currency outstanding tax debt tracked for this shop.
+     *
+     * @return normalized tax debt map where keys are currency ids and values are positive owed amounts
+     */
+    public @NotNull Map<String, Double> getTaxDebtEntries() {
+        final Map<String, Double> normalized = new LinkedHashMap<>();
+        for (final Map.Entry<String, Double> entry : this.getMutableTaxDebtEntries().entrySet()) {
+            final String currencyType = normalizeCurrencyType(entry.getKey());
+            final double amount = entry.getValue() == null ? 0D : Math.max(0D, entry.getValue());
+            if (currencyType == null || amount <= 1.0E-6D) {
+                continue;
+            }
+
+            normalized.put(currencyType, amount);
+        }
+        return normalized;
+    }
+
+    /**
+     * Returns outstanding tax debt for one currency.
+     *
+     * @param currencyType currency identifier
+     * @return owed amount for the provided currency, or {@code 0.0} when none is tracked
+     */
+    public double getTaxDebtAmount(
+            final @NotNull String currencyType
+    ) {
+        final String normalizedCurrencyType = normalizeCurrencyType(currencyType);
+        if (normalizedCurrencyType == null) {
+            return 0D;
+        }
+
+        return this.getTaxDebtEntries().getOrDefault(normalizedCurrencyType, 0D);
+    }
+
+    /**
+     * Adds outstanding tax debt for one currency.
+     *
+     * @param currencyType currency identifier
+     * @param amount amount to add
+     * @return updated owed amount for that currency
+     */
+    public double addTaxDebt(
+            final @NotNull String currencyType,
+            final double amount
+    ) {
+        return this.addTaxDebt(currencyType, amount, -1D);
+    }
+
+    /**
+     * Adds outstanding tax debt for one currency with an optional cap.
+     *
+     * <p>When {@code maximumAmount} is positive, the stored debt for {@code currencyType}
+     * will not increase beyond that value. Non-positive cap values are treated as unlimited.</p>
+     *
+     * @param currencyType currency identifier
+     * @param amount amount to add
+     * @param maximumAmount maximum debt amount allowed for this currency on this shop
+     * @return updated owed amount for that currency
+     */
+    public double addTaxDebt(
+            final @NotNull String currencyType,
+            final double amount,
+            final double maximumAmount
+    ) {
+        final String normalizedCurrencyType = normalizeCurrencyType(currencyType);
+        if (normalizedCurrencyType == null || amount <= 1.0E-6D) {
+            return this.getTaxDebtAmount(currencyType);
+        }
+
+        final Map<String, Double> mutableTaxDebt = this.getMutableTaxDebtEntries();
+        final double existingAmount = mutableTaxDebt.getOrDefault(normalizedCurrencyType, 0D);
+        if (maximumAmount > 0D && existingAmount >= maximumAmount - 1.0E-6D) {
+            return existingAmount;
+        }
+
+        final double updatedAmount = maximumAmount > 0D
+                ? Math.min(maximumAmount, Math.max(0D, existingAmount + amount))
+                : Math.max(0D, existingAmount + amount);
+        mutableTaxDebt.put(normalizedCurrencyType, updatedAmount);
+        this.setTaxDebtEntries(mutableTaxDebt);
+        return updatedAmount;
+    }
+
+    /**
+     * Reduces outstanding tax debt for one currency.
+     *
+     * @param currencyType currency identifier
+     * @param amount amount to remove
+     * @return remaining owed amount for that currency after the reduction
+     */
+    public double reduceTaxDebt(
+            final @NotNull String currencyType,
+            final double amount
+    ) {
+        final String normalizedCurrencyType = normalizeCurrencyType(currencyType);
+        if (normalizedCurrencyType == null || amount <= 1.0E-6D) {
+            return this.getTaxDebtAmount(currencyType);
+        }
+
+        final Map<String, Double> mutableTaxDebt = this.getMutableTaxDebtEntries();
+        final double existingAmount = mutableTaxDebt.getOrDefault(normalizedCurrencyType, 0D);
+        if (existingAmount <= 1.0E-6D) {
+            return 0D;
+        }
+
+        final double remainingAmount = Math.max(0D, existingAmount - amount);
+        if (remainingAmount <= 1.0E-6D) {
+            mutableTaxDebt.remove(normalizedCurrencyType);
+        } else {
+            mutableTaxDebt.put(normalizedCurrencyType, remainingAmount);
+        }
+
+        this.setTaxDebtEntries(mutableTaxDebt);
+        return remainingAmount;
+    }
+
+    /**
+     * Clears all tracked tax debt for this shop.
+     */
+    public void clearTaxDebt() {
+        this.setTaxDebtEntries(Map.of());
+    }
+
+    /**
+     * Indicates whether this shop has any unpaid tax debt.
+     *
+     * @return {@code true} when one or more positive debt entries exist
+     */
+    public boolean hasTaxDebt() {
+        return !this.getTaxDebtEntries().isEmpty();
+    }
+
+    /**
+     * Indicates whether this shop is bankrupt due to unpaid taxes.
+     *
+     * @return {@code true} when unpaid tax debt exists
+     */
+    public boolean isBankrupt() {
+        return this.hasTaxDebt();
+    }
+
+    /**
+     * Forces all stored shop items to {@link ShopItem.AvailabilityMode#NEVER}.
+     *
+     * @return {@code true} when at least one item availability mode changed
+     */
+    public boolean forceItemsNeverAvailability() {
+        final List<AbstractItem> currentItems = this.getItems();
+        if (currentItems.isEmpty()) {
+            return false;
+        }
+
+        final List<AbstractItem> updatedItems = new ArrayList<>(currentItems.size());
+        boolean changed = false;
+        for (final AbstractItem item : currentItems) {
+            if (item instanceof ShopItem shopItem) {
+                if (shopItem.getAvailabilityMode() != ShopItem.AvailabilityMode.NEVER) {
+                    updatedItems.add(shopItem.withAvailabilityMode(ShopItem.AvailabilityMode.NEVER));
+                    changed = true;
+                } else {
+                    updatedItems.add(shopItem);
+                }
+                continue;
+            }
+
+            updatedItems.add(item);
+        }
+
+        if (changed) {
+            this.setItems(updatedItems);
+        }
+        return changed;
     }
 
     /**
@@ -517,6 +703,87 @@ public class Shop extends BaseEntity {
             LOGGER.error("Failed to parse trusted players JSON", e);
             throw new RuntimeException("Failed to parse trusted players", e);
         }
+    }
+
+    private @NotNull Map<String, Double> getMutableTaxDebtEntries() {
+        if (this.cachedTaxDebt == null) {
+            this.cachedTaxDebt = this.parseTaxDebtEntries();
+        }
+
+        return new LinkedHashMap<>(this.cachedTaxDebt);
+    }
+
+    private void setTaxDebtEntries(
+            final @NotNull Map<String, Double> taxDebtEntries
+    ) {
+        final Map<String, Double> normalizedTaxDebt = new LinkedHashMap<>();
+        for (final Map.Entry<String, Double> entry : taxDebtEntries.entrySet()) {
+            final String currencyType = normalizeCurrencyType(entry.getKey());
+            if (currencyType == null || entry.getValue() == null) {
+                continue;
+            }
+
+            final double normalizedAmount = Math.max(0D, entry.getValue());
+            if (normalizedAmount <= 1.0E-6D) {
+                continue;
+            }
+
+            normalizedTaxDebt.put(currencyType, normalizedAmount);
+        }
+
+        this.cachedTaxDebt = normalizedTaxDebt;
+        try {
+            this.taxDebtJson = ItemParser.getObjectMapper().writeValueAsString(normalizedTaxDebt);
+        } catch (Exception e) {
+            LOGGER.error("Failed to serialize tax debt entries", e);
+            throw new RuntimeException("Failed to serialize tax debt entries", e);
+        }
+    }
+
+    private @NotNull Map<String, Double> parseTaxDebtEntries() {
+        if (this.taxDebtJson == null || this.taxDebtJson.isBlank()) {
+            return new LinkedHashMap<>();
+        }
+
+        try {
+            final Map<String, Double> parsed = ItemParser.getObjectMapper().readValue(
+                    this.taxDebtJson,
+                    new TypeReference<Map<String, Double>>() {
+                    }
+            );
+            if (parsed == null || parsed.isEmpty()) {
+                return new LinkedHashMap<>();
+            }
+
+            final Map<String, Double> normalized = new LinkedHashMap<>();
+            for (final Map.Entry<String, Double> entry : parsed.entrySet()) {
+                final String currencyType = normalizeCurrencyType(entry.getKey());
+                if (currencyType == null || entry.getValue() == null) {
+                    continue;
+                }
+
+                final double amount = Math.max(0D, entry.getValue());
+                if (amount <= 1.0E-6D) {
+                    continue;
+                }
+
+                normalized.put(currencyType, amount);
+            }
+            return normalized;
+        } catch (Exception e) {
+            LOGGER.error("Failed to parse tax debt JSON", e);
+            throw new RuntimeException("Failed to parse tax debt JSON", e);
+        }
+    }
+
+    private static @Nullable String normalizeCurrencyType(
+            final @Nullable String currencyType
+    ) {
+        if (currencyType == null || currencyType.isBlank()) {
+            return null;
+        }
+
+        return currencyType.trim().toLowerCase(Locale.ROOT);
     }
 
     private @Nullable Bank findBankEntry(

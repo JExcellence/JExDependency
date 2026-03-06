@@ -170,7 +170,7 @@ tax_scheduler:
   insufficient_funds: "<red>Je kon de geplande winkelbelasting van niet betalen {amount}. Getelde winkels: {owned_shops}.</red>"
   charge_failed: "<red>Kan de geplande winkelbelasting van {amount}. Getelde winkels: {owned_shops}.</red>"
 
-# Hoofdwinkeloverzichtinterface voor beheeracties eigenaar/beheerder.
+# Overzichtsinterface van de hoofdwinkel voor beheeracties van de eigenaar/beheerder.
 shop_overview_ui:
   title: "{owner} Winkel - {location}"
   summary:
@@ -179,16 +179,16 @@ shop_overview_ui:
       lore:
         - "<gray>Eigenaar:</gray> <white>{owner}</white>"
         - "<gray>Locatie:</gray> <white>{location}</white>"
-        - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
-        - "<gray>Winkel type:</gray> <white>Spelerwinkel</white>"
-        - "<gray>Voorraad:</gray> <white>Eind</white>"
+        - "<gray>Opgeslagen vermeldingen:</gray> <white>{item_count}</white>"
+        - "<gray>Soort winkel:</gray> <white>Spelerwinkel</white>"
+        - "<gray>Inventaris:</gray> <white>Eindig</white>"
     admin:
       lore:
         - "<gray>Eigenaar:</gray> <white>{owner}</white>"
         - "<gray>Locatie:</gray> <white>{location}</white>"
-        - "<gray>Opgeslagen items:</gray> <white>{item_count}</white>"
-        - "<gray>Winkel type:</gray> <white>Admin Shop</white>"
-        - "<gray>Voorraad:</gray> <white>Oneindig</white>"
+        - "<gray>Opgeslagen vermeldingen:</gray> <white>{item_count}</white>"
+        - "<gray>Soort winkel:</gray> <white>Administratieve winkel</white>"
+        - "<gray>Inventaris:</gray> <white>Oneindig</white>"
   finance:
     name: "<gold>Winkelbank</gold>"
     lore:

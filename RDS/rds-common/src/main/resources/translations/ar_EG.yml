@@ -172,28 +172,28 @@ tax_scheduler:
 
 # واجهة نظرة عامة على المتجر الرئيسي لإجراءات إدارة المالك/المشرف.
 shop_overview_ui:
-  title: "{owner} متجر - {location}"
+  title: "{owner} محل - {location}"
   summary:
     name: "<gold>ملخص المتجر</gold>"
     player:
       lore:
-        - "<gray>المالك:</gray> <white>{owner}</white>"
-        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>مالك:</gray> <white>{owner}</white>"
+        - "<gray>موقع:</gray> <white>{location}</white>"
         - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
-        - "<gray>Shop النوع:</gray> <white>متجر المشغل</white>"
-        - "<gray>المخزون:</gray> <white>محدود</white>"
+        - "<gray>نوع المتجر:</gray> <white>متجر اللاعب</white>"
+        - "<gray>جرد:</gray> <white>محدود</white>"
     admin:
       lore:
-        - "<gray>المالك:</gray> <white>{owner}</white>"
-        - "<gray>الموقع:</gray> <white>{location}</white>"
+        - "<gray>مالك:</gray> <white>{owner}</white>"
+        - "<gray>موقع:</gray> <white>{location}</white>"
         - "<gray>الإدخالات المخزنة:</gray> <white>{item_count}</white>"
-        - "<gray>Shop النوع:</gray> <white>متجر الإدارة</white>"
-        - "<gray>المخزون:</gray> <white>لانهائي</white>"
+        - "<gray>نوع المتجر:</gray> <white>متجر المشرف</white>"
+        - "<gray>جرد:</gray> <white>لانهائي</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>متجر البنك</gold>"
     lore:
-      - "<gray>العملات المتتبعة:</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>انقر للمراجعة وسحب الأموال.</yellow>"
+      - "<gray>العملات المتعقبة:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>انقر لمراجعة وسحب الأموال.</yellow>"
   actions:
     admin_toggle:
       enabled:

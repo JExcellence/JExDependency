@@ -6,6 +6,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.database.entity.ShopLedgerType;
 import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rds.service.shop.ShopOwnershipSupport;
+import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
 import me.devnatan.inventoryframework.context.Context;
@@ -33,6 +34,7 @@ import java.util.Map;
 public class ShopOverviewView extends BaseView {
 
     private static final String ADMIN_SHOPS_PERMISSION = "raindropshops.admin.shops";
+    private static final int PAY_TAXES_SLOT = 14;
 
     private final State<RDS> rds = initialState("plugin");
     private final State<Location> shopLocation = initialState("shopLocation");
@@ -74,6 +76,7 @@ public class ShopOverviewView extends BaseView {
         final boolean owner = shop != null && shop.isOwner(player.getUniqueId());
         final boolean canSupply = shop != null && shop.canSupply(player.getUniqueId());
         final boolean canManage = shop != null && shop.canManage(player.getUniqueId());
+        final boolean hasTaxDebt = shop != null && shop.hasTaxDebt();
 
         if (shop == null) {
             render.slot(4).renderWith(() -> createMissingShopItem(player));
@@ -254,39 +257,68 @@ public class ShopOverviewView extends BaseView {
                     });
         }
         if (canSupply) {
-            render.slot(6)
-                    .renderWith(() -> createManageItem(shop, player))
-                    .onClick(clickContext -> {
-                        final Shop currentShop = this.getCurrentShop(clickContext);
-                        if (currentShop == null || !currentShop.canSupply(clickContext.getPlayer().getUniqueId())) {
-                            this.i18n("feedback.not_owner", clickContext.getPlayer())
-                                    .includePrefix()
-                                    .build()
-                                    .sendMessage();
-                            return;
-                        }
+            if (hasTaxDebt) {
+                render.slot(6)
+                        .renderWith(() -> this.createTaxLockedManageItem(shop, player, this.rds.get(render)))
+                        .onClick(clickContext -> this.i18n("feedback.tax_locked", clickContext.getPlayer())
+                                .withPlaceholder("debt_summary", this.formatDebtSummary(this.getCurrentShop(clickContext), this.rds.get(clickContext)))
+                                .includePrefix()
+                                .build()
+                                .sendMessage());
+            } else {
+                render.slot(6)
+                        .renderWith(() -> createManageItem(shop, player))
+                        .onClick(clickContext -> {
+                            final Shop currentShop = this.getCurrentShop(clickContext);
+                            if (currentShop == null || !currentShop.canSupply(clickContext.getPlayer().getUniqueId())) {
+                                this.i18n("feedback.not_owner", clickContext.getPlayer())
+                                        .includePrefix()
+                                        .build()
+                                        .sendMessage();
+                                return;
+                            }
 
-                        clickContext.openForPlayer(
-                                ShopInputView.class,
-                                Map.of(
-                                        "plugin", this.rds.get(clickContext),
-                                        "shop", currentShop,
-                                        "shopLocation", currentShop.getShopLocation()
-                                )
-                        );
-                    });
+                            if (currentShop.hasTaxDebt()) {
+                                this.i18n("feedback.tax_locked", clickContext.getPlayer())
+                                        .withPlaceholder("debt_summary", this.formatDebtSummary(currentShop, this.rds.get(clickContext)))
+                                        .includePrefix()
+                                        .build()
+                                        .sendMessage();
+                                return;
+                            }
+
+                            clickContext.openForPlayer(
+                                    ShopInputView.class,
+                                    Map.of(
+                                            "plugin", this.rds.get(clickContext),
+                                            "shop", currentShop,
+                                            "shopLocation", currentShop.getShopLocation()
+                                    )
+                            );
+                        });
+            }
         }
 
         if (canManage) {
-            render.slot(7)
-                    .renderWith(() -> createEditItem(shop, player))
-                    .onClick(clickContext -> clickContext.openForPlayer(
-                            ShopEditView.class,
-                            Map.of(
-                                    "plugin", this.rds.get(clickContext),
-                                    "shopLocation", shop.getShopLocation()
-                            )
-                    ));
+            if (hasTaxDebt) {
+                render.slot(7)
+                        .renderWith(() -> this.createTaxLockedEditItem(shop, player, this.rds.get(render)))
+                        .onClick(clickContext -> this.i18n("feedback.tax_locked", clickContext.getPlayer())
+                                .withPlaceholder("debt_summary", this.formatDebtSummary(this.getCurrentShop(clickContext), this.rds.get(clickContext)))
+                                .includePrefix()
+                                .build()
+                                .sendMessage());
+            } else {
+                render.slot(7)
+                        .renderWith(() -> createEditItem(shop, player))
+                        .onClick(clickContext -> clickContext.openForPlayer(
+                                ShopEditView.class,
+                                Map.of(
+                                        "plugin", this.rds.get(clickContext),
+                                        "shopLocation", shop.getShopLocation()
+                                )
+                        ));
+            }
 
             render.slot(8)
                     .renderWith(() -> createStorageItem(shop, player))
@@ -297,6 +329,11 @@ public class ShopOverviewView extends BaseView {
                                     "shopLocation", shop.getShopLocation()
                             )
                     ));
+            if (hasTaxDebt) {
+                render.slot(PAY_TAXES_SLOT)
+                        .renderWith(() -> this.createPayTaxesItem(shop, player, this.rds.get(render)))
+                        .onClick(this::handlePayTaxesClick);
+            }
         }
     }
 
@@ -563,6 +600,140 @@ public class ShopOverviewView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createTaxLockedManageItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player,
+            final @NotNull RDS plugin
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+                .setName(this.i18n("actions.manage_locked.name", player).build().component())
+                .setLore(this.i18n("actions.manage_locked.lore", player)
+                        .withPlaceholders(Map.of(
+                                "item_count", shop.getStoredItemCount(),
+                                "debt_summary", this.formatDebtSummary(shop, plugin)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createTaxLockedEditItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player,
+            final @NotNull RDS plugin
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+                .setName(this.i18n("actions.edit_locked.name", player).build().component())
+                .setLore(this.i18n("actions.edit_locked.lore", player)
+                        .withPlaceholders(Map.of(
+                                "item_count", shop.getStoredItemCount(),
+                                "debt_summary", this.formatDebtSummary(shop, plugin)
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private @NotNull ItemStack createPayTaxesItem(
+            final @NotNull Shop shop,
+            final @NotNull Player player,
+            final @NotNull RDS plugin
+    ) {
+        return UnifiedBuilderFactory.item(Material.CLOCK)
+                .setName(this.i18n("actions.pay_taxes.name", player).build().component())
+                .setLore(this.i18n("actions.pay_taxes.lore", player)
+                        .withPlaceholders(Map.of(
+                                "debt_summary", this.formatDebtSummary(shop, plugin),
+                                "debt_currency_count", shop.getTaxDebtEntries().size()
+                        ))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
+    private void handlePayTaxesClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
+            this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (!shop.hasTaxDebt()) {
+            this.i18n("feedback.tax_not_due", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        final RDS plugin = this.rds.get(clickContext);
+        final ShopTaxScheduler scheduler = plugin.getShopTaxScheduler();
+        if (scheduler == null) {
+            this.i18n("feedback.tax_payment_unavailable", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        final ShopTaxScheduler.TaxDebtPaymentResult paymentResult = scheduler.payOutstandingDebt(
+                shop,
+                clickContext.getPlayer()
+        );
+        final String paidSummary = scheduler.formatCurrencySummary(paymentResult.paidDebts());
+        final String remainingSummary = scheduler.formatCurrencySummary(paymentResult.remainingDebts());
+
+        if (!paymentResult.hasPaidAny()) {
+            this.i18n("feedback.tax_payment_failed", clickContext.getPlayer())
+                    .withPlaceholder("remaining_debt", remainingSummary)
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (paymentResult.isFullyPaid()) {
+            this.i18n("feedback.tax_payment_cleared", clickContext.getPlayer())
+                    .withPlaceholder("paid_amount", paidSummary)
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+        } else {
+            this.i18n("feedback.tax_payment_partial", clickContext.getPlayer())
+                    .withPlaceholders(Map.of(
+                            "paid_amount", paidSummary,
+                            "remaining_debt", remainingSummary
+                    ))
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+        }
+
+        clickContext.openForPlayer(
+                ShopOverviewView.class,
+                Map.of(
+                        "plugin", this.rds.get(clickContext),
+                        "shopLocation", shop.getShopLocation()
+                )
+        );
+    }
+
     private @NotNull ItemStack createMissingShopItem(
             final @NotNull Player player
     ) {
@@ -591,5 +762,21 @@ public class ShopOverviewView extends BaseView {
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
         final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
         return ownerName == null ? shop.getOwner().toString() : ownerName;
+    }
+
+    private @NotNull String formatDebtSummary(
+            final Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        if (shop == null || !shop.hasTaxDebt()) {
+            return "None";
+        }
+
+        final ShopTaxScheduler scheduler = plugin.getShopTaxScheduler();
+        if (scheduler == null) {
+            return "None";
+        }
+
+        return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
     }
 }

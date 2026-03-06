@@ -170,27 +170,27 @@ tax_scheduler:
   insufficient_funds: "<red>Vous ne pouvez pas payer la taxe de boutique prévue de {amount}. Magasins dénombrés : {owned_shops}.</red>"
   charge_failed: "<red>Échec de la collecte de la taxe de magasin programmée de {amount}. Magasins dénombrés : {owned_shops}.</red>"
 
-# Interface principale de présentation de la boutique pour les actions de gestion du propriétaire/administrateur.
+# Interface de présentation principale de la boutique pour les actions de gestion propriétaire/administrateur.
 shop_overview_ui:
   title: "{owner} Boutique - {location}"
   summary:
     name: "<gold>Résumé de la boutique</gold>"
     player:
       lore:
-        - "<gray>Propriétaire :</gray> <white>{owner}</white>"
-        - "<gray>Emplacement :</gray> <white>{location}</white>"
+        - "<gray>Propriétaire:</gray> <white>{owner}</white>"
+        - "<gray>Emplacement:</gray> <white>{location}</white>"
         - "<gray>Entrées stockées :</gray> <white>{item_count}</white>"
-        - "<gray>Type de boutique :</gray> <white>Player Shop</white>"
-        - "<gray>Inventaire :</gray> <white>Finite</white>"
+        - "<gray>Type de magasin :</gray> <white>Boutique des joueurs</white>"
+        - "<gray>Inventaire:</gray> <white>Fini</white>"
     admin:
       lore:
-        - "<gray>Propriétaire :</gray> <white>{owner}</white>"
-        - "<gray>Emplacement :</gray> <white>{location}</white>"
+        - "<gray>Propriétaire:</gray> <white>{owner}</white>"
+        - "<gray>Emplacement:</gray> <white>{location}</white>"
         - "<gray>Entrées stockées :</gray> <white>{item_count}</white>"
-        - "<gray>Type de boutique :</gray> <white>Admin Boutique</white>"
-        - "<gray>Inventaire :</gray> <white>Infinite</white>"
+        - "<gray>Type de magasin :</gray> <white>Boutique administrative</white>"
+        - "<gray>Inventaire:</gray> <white>Infini</white>"
   finance:
-    name: "<gold>Banque de boutique</gold>"
+    name: "<gold>Boutique Banque</gold>"
     lore:
       - "<gray>Devises suivies :</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Cliquez pour examiner et retirer des fonds.</yellow>"

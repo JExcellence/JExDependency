@@ -9,11 +9,13 @@ info:
   total: "<blue>Shops:</blue> <white>{owned_shops}</white>"
   bank: "<green>Tracked Balances ({currency_count}):</green> <white>{currencies}</white>"
   tax_amount: "<gold>Scheduled Tax ({taxed_shops} taxable shops):</gold> <white>{taxes}</white>"
+  protection_plugin: "<gradient:#38bdf8:#60a5fa>[Shield]</gradient> <gray>Protection Plugin:</gray> <white>{protection_plugin}</white>"
+  protection_tax_amount: "<gradient:#f59e0b:#fbbf24>[Town Tax]</gradient> <gray>{protection_tax_currency_count} protection currency(ies), {taxed_shops} taxable shop(s), plugin:</gray> <white>{protection_plugin}</white> <gray>| Charges:</gray> <white>{protection_taxes}</white>"
   tax_schedule: "<yellow>Next Tax:</yellow> <white>{next_tax_at}</white> <gray>({time_until})</gray>"
 
 # Join-time messages shown when players enter the server.
 player_join:
-  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
+  tax_notice: "<green>~~~~~~~~<red>RDS<green>~~~~~~~~\n<yellow>{taxed_shops} taxable shop(s)\n[<blue>Amount<yellow>]\n{taxes}\n[<aqua>Protection<yellow>]\nPlugin: <white>{protection_plugin}</white>\nConfigured currencies: <white>{protection_tax_currency_count}</white>\nProtection charges: <white>{protection_taxes}</white>\n<red>Due:<yellow> {next_tax_at} ({time_until}).\n<green>~~~~~~~~<red>RDS<green>~~~~~~~~</green>"
 
 # Command response strings for `/rs` features and toggles.
 prs:
@@ -158,6 +160,9 @@ block_listener:
     invalid_owner_uuid: "<red>Unable to read the shop owner from this item.</red>"
     not_owner: "<red>This ShopBlock belongs to another player and cannot be placed by you.</red>"
     max_shops_reached: "<red>You have reached the shop limit of {max_shops}. Current placed shops: {owned_shops}.</red>"
+    protection_unavailable: "<red>Shop protection is enabled, but no supported protection plugin is available (RDT, Towny, HuskTowns).</red>"
+    protection_requires_town: "<red>You must belong to a town to place a ShopBlock while protection.only_player_shops is enabled.</red>"
+    protection_requires_own_town: "<red>You must stand in your own town claim to place this ShopBlock.</red>"
     shop_protected: "<red>Shops cannot be broken directly. Use the shop menu to close the shop.</red>"
     double_chest_requires_shop_block: "<red>Double-chest shops require a second <blue>ShopBlock</blue><red>. Normal chests cannot merge with shop chests.</red>"
     double_chest_owner_mismatch: "<red>This ShopBlock belongs to a different owner, so it cannot extend this shop.</red>"
@@ -166,9 +171,10 @@ block_listener:
 
 # Scheduled tax processing outcome messages.
 tax_scheduler:
-  paid: "<yellow>Collected scheduled shop tax of {amount}. Counted shops: {owned_shops}.</yellow>"
-  insufficient_funds: "<red>You could not pay the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
-  charge_failed: "<red>Failed to collect the scheduled shop tax of {amount}. Counted shops: {owned_shops}.</red>"
+  paid: "<yellow>Collected scheduled shop tax of {amount} from {payment_source}. Counted shops: {owned_shops}.</yellow>"
+  insufficient_funds: "<red>You could not pay the scheduled shop tax of {amount} from {payment_source}. Counted shops: {owned_shops}.</red>"
+  charge_failed: "<red>Failed to collect the scheduled shop tax of {amount} from {payment_source}. Counted shops: {owned_shops}.</red>"
+  debt_recorded: "<gradient:#ef4444:#f87171>[Debt]</gradient> <gray>Marked taxable items as unavailable and recorded overdue tax. Current debt:</gray> <white>{debt_summary}</white>"
 
 # Main shop overview interface for owner/admin management actions.
 shop_overview_ui:
@@ -223,6 +229,12 @@ shop_overview_ui:
         - "<gray>Store new items in this shop.</gray>"
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
         - "<yellow>Click to open item input.</yellow>"
+    manage_locked:
+      name: "<gradient:#ef4444:#f87171>[Debt] Add Locked</gradient>"
+      lore:
+        - "<gray>This shop has unpaid tax debt.</gray>"
+        - "<gray>Outstanding debt:</gray> <white>{debt_summary}</white>"
+        - "<gray>Pay taxes to unlock adding items again.</gray>"
     customer_view:
       name: "<gold>Open Customer View</gold>"
       lore:
@@ -248,12 +260,25 @@ shop_overview_ui:
         - "<gray>Edit pricing for stored shop items.</gray>"
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
         - "<yellow>Click to edit prices and currencies.</yellow>"
+    edit_locked:
+      name: "<gradient:#ef4444:#f87171>[Debt] Edit Locked</gradient>"
+      lore:
+        - "<gray>This shop has unpaid tax debt.</gray>"
+        - "<gray>Outstanding debt:</gray> <white>{debt_summary}</white>"
+        - "<gray>Pay taxes to unlock item editing.</gray>"
     storage:
       name: "<gold>View Stored Items</gold>"
       lore:
         - "<gray>Review items already stored in this shop.</gray>"
         - "<gray>Current entries:</gray> <white>{item_count}</white>"
         - "<yellow>Click to withdraw stored items.</yellow>"
+    pay_taxes:
+      name: "<gradient:#22c55e:#86efac>[$] Pay Shop Taxes</gradient>"
+      lore:
+        - "<gray>Pay this shop's overdue tax debt now.</gray>"
+        - "<gray>Tracked debt currencies:</gray> <white>{debt_currency_count}</white>"
+        - "<gray>Outstanding debt:</gray> <white>{debt_summary}</white>"
+        - "<yellow>Owner and trusted full-access players can use this.</yellow>"
     locked:
       name: "<red>Shop Locked</red>"
       lore:
@@ -269,6 +294,12 @@ shop_overview_ui:
     close_not_empty: "<red>You can only close a shop after removing all stored items. Remaining entries: {item_count}.</red>"
     close_bank_not_empty: "<red>Withdraw your shop bank before closing this shop. Remaining tracked currencies: {bank_currency_count}.</red>"
     closed: "<green>Closed the shop and returned {returned_blocks} ShopBlock(s). Counted shops: {owned_shops}.</green>"
+    tax_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This shop has unpaid tax debt:</gray> <white>{debt_summary}</white><gray>. Pay taxes to unlock add/edit.</gray>"
+    tax_not_due: "<gradient:#38bdf8:#60a5fa>[!]</gradient> <gray>This shop has no unpaid tax debt.</gray>"
+    tax_payment_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tax payment is unavailable because the tax scheduler is not loaded.</gray>"
+    tax_payment_failed: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>No tax debt could be paid. Remaining debt:</gray> <white>{remaining_debt}</white>"
+    tax_payment_partial: "<gradient:#f59e0b:#fbbf24>[~]</gradient> <gray>Paid:</gray> <white>{paid_amount}</white><gray>. Remaining debt:</gray> <white>{remaining_debt}</white>"
+    tax_payment_cleared: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Paid shop tax debt:</gray> <white>{paid_amount}</white><gray>. Add/edit is unlocked again.</gray>"
     shop_missing:
       name: "<red>Shop Not Found</red>"
       lore:
@@ -303,11 +334,19 @@ shop_admin_ui:
         - "<gray>Review detected currencies from Vault and JExEconomy.</gray>"
         - "<gray>Create the default</gray> <white>raindrops</white> <gray>currency when needed.</gray>"
         - "<yellow>Click to open currency controls.</yellow>"
+    tax_run:
+      name: "<gradient:#f59e0b:#fbbf24>[Tax] Run Taxes Now</gradient>"
+      lore:
+        - "<gray>Trigger one immediate tax collection cycle for testing.</gray>"
+        - "<gray>This does not change the configured repeating tax timer.</gray>"
+        - "<yellow>Click to run taxes once right now.</yellow>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>[X]</gradient> <white>Admin Access Required</white>"
       lore:
         - "<gray>You do not have permission to use this admin panel.</gray>"
+    tax_run_triggered: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Triggered an immediate shop tax collection cycle.</gray>"
+    tax_run_unavailable: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Shop tax scheduler is not available right now.</gray>"
 
 # Admin currency view for detected providers and default currency creation.
 shop_admin_currency_ui:
@@ -367,6 +406,7 @@ shop_config_ui:
     name: "<gradient:#f59e0b:#fbbf24>[Info]</gradient> <white>Config Settings</white>"
     lore:
       - "<gray>Editable settings detected:</gray> <white>{setting_count}</white>"
+      - "<gray>Protection settings detected:</gray> <white>{protection_setting_count}</white> <gray>(protection.only_player_shops, protection.shop_taxes_fallback_to_player, protection.shop_taxes.&lt;currency&gt;.*)</gray>"
       - "<gray>Click any entry below to edit its value in an anvil.</gray>"
       - "<yellow>Changes are written directly to config/config.yml.</yellow>"
   entry:
@@ -482,6 +522,13 @@ shop_input_ui:
   left_overs: "<yellow>Returned unsaved shop items to your inventory.</yellow>"
   feedback:
     no_permission: "<red>You do not have permission to add items to this shop.</red>"
+    tax_locked:
+      name: "<gradient:#ef4444:#f87171>[Debt] Supply Locked</gradient>"
+      lore:
+        - "<gray>This shop has unpaid tax debt.</gray>"
+        - "<gray>Outstanding debt:</gray> <white>{debt_summary}</white>"
+        - "<gray>Pay taxes from the overview to unlock supply.</gray>"
+    tax_locked_message: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This shop has unpaid tax debt:</gray> <white>{debt_summary}</white><gray>. Pay taxes before adding items.</gray>"
     locked:
       name: "<red>Supply Access Required</red>"
       lore:
@@ -579,6 +626,12 @@ shop_edit_ui:
     not_owner: "<red>You do not have permission to manage this shop.</red>"
     removed: "<green>Removed {amount}x {item_type} from the shop. Price was {value} {currency_type}. Remaining stored entries: {stored_count}.</green>"
     item_missing: "<red>That shop item could not be found.</red>"
+    tax_locked_name: "<gradient:#ef4444:#f87171>[Debt] Editing Locked</gradient>"
+    tax_locked_lore:
+      - "<gray>This shop has unpaid tax debt.</gray>"
+      - "<gray>Outstanding debt:</gray> <white>{debt_summary}</white>"
+      - "<gray>Pay taxes from the overview to unlock editing.</gray>"
+    tax_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This shop has unpaid tax debt:</gray> <white>{debt_summary}</white><gray>. Pay taxes before editing items.</gray>"
     locked:
       name: "<red>Full Access Required</red>"
       lore:
@@ -704,6 +757,7 @@ shop_item_edit_ui:
     not_owner: "<red>You do not have permission to manage this shop.</red>"
     shop_missing: "<red>This shop could not be loaded from storage.</red>"
     item_missing: "<red>That shop item could not be found.</red>"
+    tax_locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>This shop has unpaid tax debt:</gray> <white>{debt_summary}</white><gray>. Pay taxes before changing this item.</gray>"
     saved: "<green>Saved item pricing as {value} {currency_type}.</green>"
     availability_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>Availability mode set to <white>{availability_mode}</white><gray>.</gray>"
     command_mode_updated: "<gradient:#22c55e:#86efac>[+]</gradient> <gray>New command execution mode set to <white>{command_mode}</white><gray>.</gray>"

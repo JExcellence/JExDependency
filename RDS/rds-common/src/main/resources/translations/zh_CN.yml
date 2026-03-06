@@ -172,28 +172,28 @@ tax_scheduler:
 
 # 用于所有者/管理员管理操作的主商店概览界面。
 shop_overview_ui:
-  title: "{owner} 商店 - {location}"
+  title: "{owner} 店铺 - {location}"
   summary:
-    name: "<gold>商店摘要</gold>"
+    name: "<gold>店铺概要</gold>"
     player:
       lore:
         - "<gray>所有者：</gray> <white>{owner}</white>"
-        - "<gray>位置：</gray> <white>{location}</white>"
-        - "<gray>已存储条目：</gray> <white>{item_count}</white>"
-        - "<gray>商店类型：</gray> <white>玩家商店</white>"
-        - "<gray>库存：</gray> <white>有限</white>"
+        - "<gray>地点：</gray> <white>{location}</white>"
+        - "<gray>存储的条目：</gray> <white>{item_count}</white>"
+        - "<gray>店铺类型：</gray> <white>球员商店</white>"
+        - "<gray>存货：</gray> <white>有限</white>"
     admin:
       lore:
         - "<gray>所有者：</gray> <white>{owner}</white>"
-        - "<gray>位置：</gray> <white>{location}</white>"
-        - "<gray>已存储条目：</gray> <white>{item_count}</white>"
-        - "<gray>商店类型：</gray> <white>管理商店</white>"
-        - "<gray>库存：</gray> <white>无限</white>"
+        - "<gray>地点：</gray> <white>{location}</white>"
+        - "<gray>存储的条目：</gray> <white>{item_count}</white>"
+        - "<gray>店铺类型：</gray> <white>管理商店</white>"
+        - "<gray>存货：</gray> <white>无限</white>"
   finance:
     name: "<gold>商店银行</gold>"
     lore:
-      - "<gray>跟踪货币：</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>单击以查看并提取资金。</yellow>"
+      - "<gray>追踪货币：</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>点击查看并提取资金。</yellow>"
   actions:
     admin_toggle:
       enabled:

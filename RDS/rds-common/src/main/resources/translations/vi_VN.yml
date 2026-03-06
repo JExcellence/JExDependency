@@ -170,30 +170,30 @@ tax_scheduler:
   insufficient_funds: "<red>Bạn không thể thanh toán thuế cửa hàng theo lịch trình trong số {amount}. Cửa hàng được tính: {owned_shops}.</red>"
   charge_failed: "<red>Không thể thu thuế cửa hàng theo lịch trình của {amount}. Cửa hàng được tính: {owned_shops}.</red>"
 
-# Giao diện tổng quan về cửa hàng chính dành cho các hành động quản lý chủ sở hữu/quản trị viên.
+# Giao diện tổng quan về cửa hàng chính dành cho các hành động quản lý của chủ sở hữu/quản trị viên.
 shop_overview_ui:
   title: "{owner} Cửa hàng - {location}"
   summary:
     name: "<gold>Tóm tắt cửa hàng</gold>"
     player:
       lore:
-        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Người sở hữu:</gray> <white>{owner}</white>"
         - "<gray>Vị trí:</gray> <white>{location}</white>"
-        - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
-        - "<gray>Loại cửa hàng:</gray> <white>Player Shop</white>"
-        - "<gray>Hàng tồn kho:</gray> <white>Finite</white>"
+        - "<gray>Các mục được lưu trữ:</gray> <white>{item_count}</white>"
+        - "<gray>Loại cửa hàng:</gray> <white>Cửa hàng người chơi</white>"
+        - "<gray>Hàng tồn kho:</gray> <white>hữu hạn</white>"
     admin:
       lore:
-        - "<gray>Chủ sở hữu:</gray> <white>{owner}</white>"
+        - "<gray>Người sở hữu:</gray> <white>{owner}</white>"
         - "<gray>Vị trí:</gray> <white>{location}</white>"
-        - "<gray>Các mục đã lưu trữ:</gray> <white>{item_count}</white>"
+        - "<gray>Các mục được lưu trữ:</gray> <white>{item_count}</white>"
         - "<gray>Loại cửa hàng:</gray> <white>Cửa hàng quản trị</white>"
-        - "<gray>Hàng tồn kho:</gray> <white>Infinite</white>"
+        - "<gray>Hàng tồn kho:</gray> <white>vô hạn</white>"
   finance:
-    name: "<gold>Ngân hàng cửa hàng</gold>"
+    name: "<gold>Ngân hàng mua sắm</gold>"
     lore:
       - "<gray>Tiền tệ được theo dõi:</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>Nhấp để xem lại và rút tiền.</yellow>"
+      - "<yellow>Nhấp để xem xét và rút tiền.</yellow>"
   actions:
     admin_toggle:
       enabled:

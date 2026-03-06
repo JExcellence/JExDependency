@@ -170,30 +170,30 @@ tax_scheduler:
   insufficient_funds: "<red>予定された金額を支払うことができませんでした。 {amount}。カウントされたショップ: {owned_shops}.</red>"
   charge_failed: "<red>{amount}。カウントされたショップ: {owned_shops}.</red>"
 
-# オーナー/管理者管理アクション用のメイン ショップ概要インターフェイス。
+# オーナー/管理者の管理アクションのためのメインショップ概要インターフェイス。
 shop_overview_ui:
-  title: "{owner} ショップ - {location}"
+  title: "{owner} 店 - {location}"
   summary:
     name: "<gold>ショップ概要</gold>"
     player:
       lore:
-        - "<gray>所有者:</gray> <white>{owner}</white>"
-        - "<gray>場所:</gray> <white>{location}</white>"
-        - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
-        - "<gray>ショップtype:</gray> <white>プレイヤー ショップ</white>"
-        - "<gray>在庫:</gray> <white>有限</white>"
+        - "<gray>所有者：</gray> <white>{owner}</white>"
+        - "<gray>位置：</gray> <white>{location}</white>"
+        - "<gray>保存されたエントリ:</gray> <white>{item_count}</white>"
+        - "<gray>ショップタイプ:</gray> <white>プレイヤーショップ</white>"
+        - "<gray>在庫：</gray> <white>有限</white>"
     admin:
       lore:
-        - "<gray>所有者:</gray> <white>{owner}</white>"
-        - "<gray>場所:</gray> <white>{location}</white>"
-        - "<gray>保管エントリ:</gray> <white>{item_count}</white>"
-        - "<gray>ショップtype:</gray> <white>管理ショップ</white>"
-        - "<gray>在庫:</gray> <white>無限</white>"
+        - "<gray>所有者：</gray> <white>{owner}</white>"
+        - "<gray>位置：</gray> <white>{location}</white>"
+        - "<gray>保存されたエントリ:</gray> <white>{item_count}</white>"
+        - "<gray>ショップタイプ:</gray> <white>管理者ショップ</white>"
+        - "<gray>在庫：</gray> <white>無限</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>ショップバンク</gold>"
     lore:
-      - "<gray>追跡通貨:</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>クリックして資金を確認して引き出します。</yellow>"
+      - "<gray>追跡対象通貨:</gray> <white>{bank_currency_count}</white>"
+      - "<yellow>クリックして資金を確認し、引き出します。</yellow>"
   actions:
     admin_toggle:
       enabled:

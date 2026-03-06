@@ -9,6 +9,7 @@ import com.raindropcentral.rplatform.view.AbstractAnvilView;
 import me.devnatan.inventoryframework.context.Context;
 import me.devnatan.inventoryframework.context.OpenContext;
 import me.devnatan.inventoryframework.context.RenderContext;
+import me.devnatan.inventoryframework.context.SlotClickContext;
 import me.devnatan.inventoryframework.state.State;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
@@ -79,6 +80,18 @@ public class ShopItemCurrencyTypeAnvilView extends AbstractAnvilView {
             final @NotNull Context context
     ) {
         return this.isAvailableCurrencyType(input, context);
+    }
+
+    /**
+     * Cancels raw inventory interaction to prevent the anvil slot icon from being moved to player inventory.
+     *
+     * @param click slot click context
+     */
+    @Override
+    public void onClick(
+            final @NotNull SlotClickContext click
+    ) {
+        click.setCancelled(true);
     }
 
     @Override

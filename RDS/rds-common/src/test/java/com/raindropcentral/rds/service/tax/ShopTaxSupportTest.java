@@ -7,9 +7,14 @@
 
 package com.raindropcentral.rds.service.tax;
 
+import com.raindropcentral.rds.configs.ProtectionSection;
+import com.raindropcentral.rds.configs.TaxCurrencySection;
 import com.raindropcentral.rds.database.entity.Shop;
+import de.jexcellence.gpeee.interpreter.EvaluationEnvironmentBuilder;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -46,6 +51,27 @@ class ShopTaxSupportTest {
         assertFalse(ShopTaxSupport.isTaxableShopForOwner(adminShop, ownerId));
     }
 
+    @Test
+    void resolvesProtectionTaxCurrencies() {
+        final ProtectionSection protectionSection = new ProtectionSection(new EvaluationEnvironmentBuilder());
+        final Map<String, TaxCurrencySection> configuredTaxes = new LinkedHashMap<>();
+        configuredTaxes.put("vault", this.createCurrencySection("vault"));
+        configuredTaxes.put("coins", this.createCurrencySection("coins"));
+        protectionSection.setContext(false, configuredTaxes);
+
+        assertTrue(ShopTaxSupport.usesProtectionTax(protectionSection, "vault"));
+        assertTrue(ShopTaxSupport.usesProtectionTax(protectionSection, "COINS"));
+        assertFalse(ShopTaxSupport.usesProtectionTax(protectionSection, "gems"));
+    }
+
+    @Test
+    void exposesProtectionFallbackToPlayerSetting() {
+        final ProtectionSection protectionSection = new ProtectionSection(new EvaluationEnvironmentBuilder());
+        protectionSection.setContext(false, true, Map.of());
+
+        assertTrue(protectionSection.isShopTaxesFallbackToPlayer());
+    }
+
     private Shop createShop(
             final UUID ownerId,
             final boolean adminShop
@@ -53,5 +79,13 @@ class ShopTaxSupportTest {
         final Shop shop = new Shop(ownerId, null);
         shop.setAdminShop(adminShop);
         return shop;
+    }
+
+    private TaxCurrencySection createCurrencySection(
+            final String currencyType
+    ) {
+        final TaxCurrencySection section = new TaxCurrencySection(new EvaluationEnvironmentBuilder());
+        section.setContext(currencyType, 100.0D, 1.125D, -1D);
+        return section;
     }
 }

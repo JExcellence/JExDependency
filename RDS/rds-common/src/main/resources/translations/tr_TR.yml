@@ -172,25 +172,25 @@ tax_scheduler:
 
 # Sahip/yönetici yönetimi eylemleri için ana mağazaya genel bakış arayüzü.
 shop_overview_ui:
-  title: "{owner}Mağaza -{location}"
+  title: "{owner} Mağaza - {location}"
   summary:
     name: "<gold>Mağaza Özeti</gold>"
     player:
       lore:
-        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Mal sahibi:</gray> <white>{owner}</white>"
         - "<gray>Konum:</gray> <white>{location}</white>"
         - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
-        - "<gray>Alışveriş tür:</gray> <white>Player Shop</white>"
-        - "<gray>Envanter:</gray> <white>Finite</white>"
+        - "<gray>Mağaza türü:</gray> <white>Oyuncu Mağazası</white>"
+        - "<gray>Envanter:</gray> <white>Sonlu</white>"
     admin:
       lore:
-        - "<gray>Sahip:</gray> <white>{owner}</white>"
+        - "<gray>Mal sahibi:</gray> <white>{owner}</white>"
         - "<gray>Konum:</gray> <white>{location}</white>"
         - "<gray>Saklanan girişler:</gray> <white>{item_count}</white>"
-        - "<gray>Alışveriş tür:</gray> <white>Yönetici Mağazası</white>"
-        - "<gray>Envanter:</gray> <white>Infinite</white>"
+        - "<gray>Mağaza türü:</gray> <white>Yönetici Mağazası</white>"
+        - "<gray>Envanter:</gray> <white>Sonsuz</white>"
   finance:
-    name: "<gold>Shop Bank</gold>"
+    name: "<gold>Mağaza Bankası</gold>"
     lore:
       - "<gray>Takip edilen para birimleri:</gray> <white>{bank_currency_count}</white>"
       - "<yellow>Parayı incelemek ve çekmek için tıklayın.</yellow>"

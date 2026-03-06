@@ -53,7 +53,7 @@ public class ShopAdminView extends BaseView {
                 "         ",
                 "    s    ",
                 "  b c u  ",
-                "         ",
+                "    t    ",
                 "         ",
                 "         "
         };
@@ -94,6 +94,9 @@ public class ShopAdminView extends BaseView {
                         AdminCurrencyView.class,
                         java.util.Map.of("plugin", this.rds.get(clickContext))
                 ));
+
+        render.layoutSlot('t', this.createTaxRunButton(player))
+                .onClick(this::handleTaxRunClick);
     }
 
     /**
@@ -148,6 +151,16 @@ public class ShopAdminView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createTaxRunButton(
+            final @NotNull Player player
+    ) {
+        return UnifiedBuilderFactory.item(Material.CLOCK)
+                .setName(this.i18n("actions.tax_run.name", player).build().component())
+                .setLore(this.i18n("actions.tax_run.lore", player).build().children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private @NotNull ItemStack createLockedItem(
             final @NotNull Player player
     ) {
@@ -162,5 +175,27 @@ public class ShopAdminView extends BaseView {
             final @NotNull Player player
     ) {
         return player.isOp() || player.hasPermission(ADMIN_COMMAND_PERMISSION);
+    }
+
+    private void handleTaxRunClick(
+            final @NotNull SlotClickContext clickContext
+    ) {
+        clickContext.setCancelled(true);
+
+        final RDS plugin = this.rds.get(clickContext);
+        final var taxScheduler = plugin.getShopTaxScheduler();
+        if (taxScheduler == null || plugin.getScheduler() == null) {
+            this.i18n("feedback.tax_run_unavailable", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        plugin.getScheduler().runSync(taxScheduler::collectTaxesNow);
+        this.i18n("feedback.tax_run_triggered", clickContext.getPlayer())
+                .includePrefix()
+                .build()
+                .sendMessage();
     }
 }

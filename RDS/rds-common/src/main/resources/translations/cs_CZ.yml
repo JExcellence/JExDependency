@@ -172,7 +172,7 @@ tax_scheduler:
 
 # Hlavní rozhraní přehledu obchodu pro akce správy vlastníka/administrátora.
 shop_overview_ui:
-  title: "{owner}Obchod -{location}"
+  title: "{owner} Nakupovat - {location}"
   summary:
     name: "<gold>Souhrn obchodu</gold>"
     player:

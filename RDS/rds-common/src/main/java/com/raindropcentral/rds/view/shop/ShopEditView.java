@@ -6,6 +6,7 @@ import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rds.service.shop.AdminShopStockSupport;
+import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.APaginatedView;
 import me.devnatan.inventoryframework.component.BukkitItemComponentBuilder;
@@ -87,7 +88,7 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             final @NotNull Context context
     ) {
         final Shop shop = this.getCurrentShop(context);
-        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId())) {
+        if (shop == null || !shop.canManage(context.getPlayer().getUniqueId()) || shop.hasTaxDebt()) {
             return CompletableFuture.completedFuture(List.of());
         }
 
@@ -140,6 +141,11 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             return;
         }
 
+        if (shop.hasTaxDebt()) {
+            render.slot(4).renderWith(() -> this.createTaxLockedItem(player, shop, plugin));
+            return;
+        }
+
         render.layoutSlot(
                 's',
                 this.createSummaryItem(player, shop, plugin)
@@ -159,6 +165,26 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
             final @NotNull SlotClickContext clickContext,
             final @NotNull EditableShopEntry entry
     ) {
+        final Shop shop = this.getCurrentShop(clickContext);
+        if (shop == null) {
+            this.i18n("feedback.shop_missing.message", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            this.openFreshView(clickContext);
+            return;
+        }
+
+        if (shop.hasTaxDebt()) {
+            this.i18n("feedback.tax_locked", clickContext.getPlayer())
+                    .withPlaceholder("debt_summary", this.formatDebtSummary(shop, this.rds.get(clickContext)))
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            this.openFreshView(clickContext);
+            return;
+        }
+
         if (clickContext.isRightClick()) {
             this.handleRemoveClick(clickContext, entry);
             return;
@@ -190,6 +216,16 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
 
         if (!shop.canManage(clickContext.getPlayer().getUniqueId())) {
             this.i18n("feedback.not_owner", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            this.openFreshView(clickContext);
+            return;
+        }
+
+        if (shop.hasTaxDebt()) {
+            this.i18n("feedback.tax_locked", clickContext.getPlayer())
+                    .withPlaceholder("debt_summary", this.formatDebtSummary(shop, this.rds.get(clickContext)))
                     .includePrefix()
                     .build()
                     .sendMessage();
@@ -396,6 +432,21 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
                 .build();
     }
 
+    private @NotNull ItemStack createTaxLockedItem(
+            final @NotNull Player player,
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+                .setName(this.i18n("feedback.tax_locked_name", player).build().component())
+                .setLore(this.i18n("feedback.tax_locked_lore", player)
+                        .withPlaceholder("debt_summary", this.formatDebtSummary(shop, plugin))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private @NotNull String formatLocation(final @NotNull Location location) {
         return "("
                 + location.getBlockX() + ", "
@@ -461,6 +512,17 @@ public class ShopEditView extends APaginatedView<ShopEditView.EditableShopEntry>
                 .build()
                 .getI18nVersionWrapper()
                 .asPlaceholder();
+    }
+
+    private @NotNull String formatDebtSummary(
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        final ShopTaxScheduler scheduler = plugin.getShopTaxScheduler();
+        if (scheduler == null) {
+            return "None";
+        }
+        return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
     }
 
     /**

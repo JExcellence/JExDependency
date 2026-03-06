@@ -172,7 +172,7 @@ tax_scheduler:
 
 # Pääkaupan yleiskatsauksen käyttöliittymä omistajan/järjestelmänvalvojan hallintatoimintoihin.
 shop_overview_ui:
-  title: "{owner}Kauppa -{location}"
+  title: "{owner} Kauppa - {location}"
   summary:
     name: "<gold>Kaupan yhteenveto</gold>"
     player:

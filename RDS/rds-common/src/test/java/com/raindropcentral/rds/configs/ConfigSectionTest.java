@@ -150,6 +150,34 @@ class ConfigSectionTest {
         assertEquals(3600L, section.getServerBank().getTransferIntervalTicks());
     }
 
+    @Test
+    void loadsProtectionConfiguration(final @TempDir Path tempDir) throws IOException {
+        final Path configFile = tempDir.resolve("config.yml");
+        Files.writeString(configFile, """
+            protection:
+              only_player_shops: true
+              shop_taxes_fallback_to_player: true
+              shop_taxes:
+                vault:
+                  initial_cost: 250.0
+                  growth_rate: 1.5
+                  maximum_tax: 5000.0
+                coins:
+                  initial_cost: 10.0
+                  growth_rate: 1.25
+                  maximum_tax: 1000.0
+            """);
+
+        final ConfigSection section = ConfigSection.fromFile(configFile.toFile());
+        assertTrue(section.getProtection().isOnlyPlayerShops());
+        assertTrue(section.getProtection().isShopTaxesFallbackToPlayer());
+        assertTrue(section.getProtection().isShopTaxCurrency("vault"));
+        assertTrue(section.getProtection().isShopTaxCurrency("coins"));
+        assertFalse(section.getProtection().isShopTaxCurrency("gems"));
+        assertEquals(250.0D, section.getProtection().getShopTaxCurrency("vault").getInitialCost());
+        assertEquals(10.0D, section.getProtection().getShopTaxCurrency("coins").getInitialCost());
+    }
+
     private static double getDouble(final Map<String, Object> definition, final String key) {
         return ((Number) definition.get(key)).doubleValue();
     }

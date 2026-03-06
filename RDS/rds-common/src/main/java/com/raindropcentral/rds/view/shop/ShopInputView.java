@@ -4,6 +4,7 @@ import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
+import com.raindropcentral.rds.service.tax.ShopTaxScheduler;
 import com.raindropcentral.rplatform.utility.heads.view.Proceed;
 import com.raindropcentral.rplatform.utility.unified.UnifiedBuilderFactory;
 import com.raindropcentral.rplatform.view.BaseView;
@@ -105,6 +106,14 @@ public class ShopInputView extends BaseView {
             return;
         }
 
+        if (shop.hasTaxDebt()) {
+            render.layoutSlot(
+                    's',
+                    this.createTaxLockedItem(player, shop, this.rds.get(render))
+            );
+            return;
+        }
+
         render.layoutSlot(
                 's',
                 createSummaryItem(player, shop)
@@ -130,7 +139,13 @@ public class ShopInputView extends BaseView {
     public void onClick(
             final @NotNull SlotClickContext click
     ) {
-        if (!this.getCurrentShop(click).canSupply(click.getPlayer().getUniqueId())) {
+        final Shop currentShop = this.getCurrentShop(click);
+        if (!currentShop.canSupply(click.getPlayer().getUniqueId())) {
+            click.setCancelled(true);
+            return;
+        }
+
+        if (currentShop.hasTaxDebt()) {
             click.setCancelled(true);
             return;
         }
@@ -167,8 +182,18 @@ public class ShopInputView extends BaseView {
     private void handleConfirmClick(
             final @NotNull SlotClickContext clickContext
     ) {
-        if (!this.getCurrentShop(clickContext).canSupply(clickContext.getPlayer().getUniqueId())) {
+        final Shop currentShop = this.getCurrentShop(clickContext);
+        if (!currentShop.canSupply(clickContext.getPlayer().getUniqueId())) {
             this.i18n("feedback.no_permission", clickContext.getPlayer())
+                    .includePrefix()
+                    .build()
+                    .sendMessage();
+            return;
+        }
+
+        if (currentShop.hasTaxDebt()) {
+            this.i18n("feedback.tax_locked_message", clickContext.getPlayer())
+                    .withPlaceholder("debt_summary", this.formatDebtSummary(currentShop, this.rds.get(clickContext)))
                     .includePrefix()
                     .build()
                     .sendMessage();
@@ -342,6 +367,21 @@ public class ShopInputView extends BaseView {
                 .build();
     }
 
+    private @NotNull ItemStack createTaxLockedItem(
+            final @NotNull Player player,
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        return UnifiedBuilderFactory.item(Material.BARRIER)
+                .setName(this.i18n("feedback.tax_locked.name", player).build().component())
+                .setLore(this.i18n("feedback.tax_locked.lore", player)
+                        .withPlaceholder("debt_summary", this.formatDebtSummary(shop, plugin))
+                        .build()
+                        .children())
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
     private void mergeStoredItem(
             final @NotNull List<AbstractItem> storedItems,
             final @NotNull ItemStack template,
@@ -484,5 +524,16 @@ public class ShopInputView extends BaseView {
     private @NotNull String getOwnerName(final @NotNull Shop shop) {
         final String ownerName = Bukkit.getOfflinePlayer(shop.getOwner()).getName();
         return ownerName == null ? shop.getOwner().toString() : ownerName;
+    }
+
+    private @NotNull String formatDebtSummary(
+            final @NotNull Shop shop,
+            final @NotNull RDS plugin
+    ) {
+        final ShopTaxScheduler scheduler = plugin.getShopTaxScheduler();
+        if (scheduler == null) {
+            return "None";
+        }
+        return scheduler.formatCurrencySummary(shop.getTaxDebtEntries());
     }
 }

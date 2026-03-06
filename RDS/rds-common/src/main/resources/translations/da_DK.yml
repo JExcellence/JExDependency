@@ -172,7 +172,7 @@ tax_scheduler:
 
 # Oversigtsgrænseflade for hovedbutik for ejer/admin-administrationshandlinger.
 shop_overview_ui:
-  title: "{owner}Shop -{location}"
+  title: "{owner} Butik - {location}"
   summary:
     name: "<gold>Butiksoversigt</gold>"
     player:

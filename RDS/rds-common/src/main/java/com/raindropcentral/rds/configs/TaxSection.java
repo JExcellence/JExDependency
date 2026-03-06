@@ -39,6 +39,7 @@ public class TaxSection extends AConfigSection {
     private String time_zone;
     private Boolean join_notification;
     private Double never_item_penalty_rate;
+    private Double maximum_bankruptcy_amount;
 
     /**
      * Creates a new tax section.
@@ -138,6 +139,24 @@ public class TaxSection extends AConfigSection {
                 : Math.max(0D, this.never_item_penalty_rate);
     }
 
+    /**
+     * Returns the maximum bankruptcy debt tracked per shop and currency.
+     *
+     * <p>When this value is positive, unpaid debt accumulation is capped at this amount.
+     * Non-positive values are treated as unlimited.</p>
+     *
+     * @return positive cap amount, or {@code -1.0} when uncapped
+     */
+    public double getMaximumBankruptcyAmount() {
+        if (this.maximum_bankruptcy_amount == null) {
+            return -1D;
+        }
+
+        return this.maximum_bankruptcy_amount > 0D
+                ? this.maximum_bankruptcy_amount
+                : -1D;
+    }
+
     private @NotNull LocalTime parseStartTime(
             final @Nullable String rawValue
     ) {
@@ -210,7 +229,8 @@ public class TaxSection extends AConfigSection {
             final @Nullable String startTime,
             final @Nullable String timeZone,
             final boolean joinNotification,
-            final double neverItemPenaltyRate
+            final double neverItemPenaltyRate,
+            final double maximumBankruptcyAmount
     ) {
         this.currencies = new LinkedHashMap<>(currencies);
         this.duration = duration;
@@ -218,6 +238,9 @@ public class TaxSection extends AConfigSection {
         this.time_zone = timeZone;
         this.join_notification = joinNotification;
         this.never_item_penalty_rate = Math.max(0D, neverItemPenaltyRate);
+        this.maximum_bankruptcy_amount = maximumBankruptcyAmount > 0D
+                ? maximumBankruptcyAmount
+                : -1D;
     }
 
     public static @NotNull TaxSection fromFile(
@@ -239,7 +262,8 @@ public class TaxSection extends AConfigSection {
                 taxesSection.getString("start_time", "noon"),
                 taxesSection.getString("time_zone", ZoneId.systemDefault().getId()),
                 taxesSection.getBoolean("join_notification", true),
-                Math.max(0D, taxesSection.getDouble("never_item_penalty_rate", 0.25D))
+                Math.max(0D, taxesSection.getDouble("never_item_penalty_rate", 0.25D)),
+                taxesSection.getDouble("maximum_bankruptcy_amount", -1D)
         );
         return section;
     }
@@ -254,7 +278,8 @@ public class TaxSection extends AConfigSection {
                 "noon",
                 ZoneId.systemDefault().getId(),
                 true,
-                0.25D
+                0.25D,
+                -1D
         );
         return section;
     }
@@ -273,7 +298,8 @@ public class TaxSection extends AConfigSection {
                     || "start_time".equalsIgnoreCase(key)
                     || "time_zone".equalsIgnoreCase(key)
                     || "join_notification".equalsIgnoreCase(key)
-                    || "never_item_penalty_rate".equalsIgnoreCase(key)) {
+                    || "never_item_penalty_rate".equalsIgnoreCase(key)
+                    || "maximum_bankruptcy_amount".equalsIgnoreCase(key)) {
                 continue;
             }
 

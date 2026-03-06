@@ -172,19 +172,19 @@ tax_scheduler:
 
 # 用於所有者/管理員管理操作的主商店概覽介面。
 shop_overview_ui:
-  title: "{owner}店鋪 -{location}"
+  title: "{owner} 店鋪 - {location}"
   summary:
     name: "<gold>店鋪概要</gold>"
     player:
       lore:
-        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>所有者：</gray> <white>{owner}</white>"
         - "<gray>地點：</gray> <white>{location}</white>"
         - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
         - "<gray>店鋪類型：</gray> <white>球員商店</white>"
         - "<gray>存貨：</gray> <white>有限</white>"
     admin:
       lore:
-        - "<gray>擁有者：</gray> <white>{owner}</white>"
+        - "<gray>所有者：</gray> <white>{owner}</white>"
         - "<gray>地點：</gray> <white>{location}</white>"
         - "<gray>儲存的條目：</gray> <white>{item_count}</white>"
         - "<gray>店鋪類型：</gray> <white>管理商店</white>"
@@ -193,7 +193,7 @@ shop_overview_ui:
     name: "<gold>商店銀行</gold>"
     lore:
       - "<gray>追蹤貨幣：</gray> <white>{bank_currency_count}</white>"
-      - "<yellow>點擊以查看並提取資金。</yellow>"
+      - "<yellow>點擊查看並提取資金。</yellow>"
   actions:
     admin_toggle:
       enabled:

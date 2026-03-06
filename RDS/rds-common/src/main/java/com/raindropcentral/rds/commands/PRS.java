@@ -13,6 +13,7 @@ import com.raindropcentral.rds.view.shop.ShopSearchView;
 import com.raindropcentral.rds.view.shop.ShopStoreView;
 import com.raindropcentral.rds.items.ShopBlock;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
+import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import de.jexcellence.evaluable.section.ACommandSection;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.Bukkit;
@@ -88,6 +89,7 @@ public class PRS extends PlayerCommand {
                         this.rds,
                         player.getUniqueId()
                 );
+                final String protectionPluginName = this.resolveProtectionPluginName();
                 new I18n.Builder("info.total", player)
                     .withPlaceholder("owned_shops", ownedShops.size())
                     .build()
@@ -106,6 +108,21 @@ public class PRS extends PlayerCommand {
                         ))
                         .build()
                         .sendMessage();
+                new I18n.Builder("info.protection_plugin", player)
+                        .withPlaceholder("protection_plugin", protectionPluginName)
+                        .build()
+                        .sendMessage();
+                if (taxSummary.hasProtectionTaxesConfigured()) {
+                    new I18n.Builder("info.protection_tax_amount", player)
+                            .withPlaceholders(Map.of(
+                                    "taxed_shops", taxSummary.taxedShops(),
+                                    "protection_tax_currency_count", taxSummary.protectionTaxCurrencyCount(),
+                                    "protection_plugin", protectionPluginName,
+                                    "protection_taxes", taxSummary.protectionAmountSummary()
+                            ))
+                            .build()
+                            .sendMessage();
+                }
                 new I18n.Builder("info.tax_schedule", player)
                         .withPlaceholders(Map.of(
                                 "next_tax_at", taxSummary.nextTaxDisplay(),
@@ -312,6 +329,15 @@ public class PRS extends PlayerCommand {
             final double amount
     ) {
         return String.format(Locale.US, "%.2f", amount);
+    }
+
+    private @NotNull String resolveProtectionPluginName() {
+        final RProtectionBridge bridge = RProtectionBridge.getBridge();
+        if (bridge == null || !bridge.isAvailable()) {
+            return "None";
+        }
+
+        return bridge.getPluginName();
     }
 
     private int parsePositiveAmount(

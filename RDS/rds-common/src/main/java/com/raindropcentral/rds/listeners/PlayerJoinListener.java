@@ -3,6 +3,7 @@ package com.raindropcentral.rds.listeners;
 import com.raindropcentral.rds.RDS;
 import com.raindropcentral.rds.database.entity.RDSPlayer;
 import com.raindropcentral.rds.service.tax.ShopTaxSummarySupport;
+import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import de.jexcellence.jextranslate.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -74,11 +75,15 @@ public class PlayerJoinListener implements Listener {
         if (!taxSummary.hasTaxableShops() || !taxSummary.hasConfiguredCharges()) {
             return;
         }
+        final String protectionPluginName = this.resolveProtectionPluginName();
 
         new I18n.Builder("player_join.tax_notice", player)
                 .withPlaceholders(Map.of(
                         "taxed_shops", taxSummary.taxedShops(),
                         "taxes", taxSummary.amountSummary(),
+                        "protection_taxes", taxSummary.protectionAmountSummary(),
+                        "protection_tax_currency_count", taxSummary.protectionTaxCurrencyCount(),
+                        "protection_plugin", protectionPluginName,
                         "next_tax_at", taxSummary.nextTaxDisplay(),
                         "time_until", taxSummary.timeUntilDisplay()
                 ))
@@ -96,5 +101,13 @@ public class PlayerJoinListener implements Listener {
         if (event == null) return;
         this.rds.getShopBossBarService().clearPlayer(event.getPlayer());
         this.rds.getShopSidebarScoreboardService().disable(event.getPlayer());
+    }
+
+    private String resolveProtectionPluginName() {
+        final RProtectionBridge bridge = RProtectionBridge.getBridge();
+        if (bridge == null || !bridge.isAvailable()) {
+            return "None";
+        }
+        return bridge.getPluginName();
     }
 }

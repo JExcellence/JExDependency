@@ -1,13 +1,16 @@
 package com.raindropcentral.rds.service.tax;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.configs.ProtectionSection;
 import com.raindropcentral.rds.configs.TaxCurrencySection;
 import com.raindropcentral.rds.configs.TaxSection;
 import com.raindropcentral.rds.database.entity.Shop;
 import com.raindropcentral.rds.items.AbstractItem;
 import com.raindropcentral.rds.items.ShopItem;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
+import com.raindropcentral.rplatform.protection.RProtectionBridge;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
@@ -181,6 +184,44 @@ final class ShopTaxSupport {
         return bridge != null
                 && hasCustomCurrency(bridge, currencyType)
                 && bridge.withdraw(player, currencyType, amount).join();
+    }
+
+    static boolean usesProtectionTax(
+            final @NotNull ProtectionSection protection,
+            final @NotNull String currencyType
+    ) {
+        return protection.isShopTaxCurrency(currencyType);
+    }
+
+    static boolean canWithdrawFromTownBank(
+            final @NotNull OfflinePlayer owner
+    ) {
+        final Player onlineOwner = owner.getPlayer();
+        if (onlineOwner == null) {
+            return false;
+        }
+
+        final RProtectionBridge protectionBridge = RProtectionBridge.getBridge();
+        return protectionBridge != null && protectionBridge.isAvailable();
+    }
+
+    static boolean withdrawFromTownBank(
+            final @NotNull OfflinePlayer owner,
+            final double amount
+    ) {
+        if (amount <= 0D) {
+            return true;
+        }
+
+        final Player onlineOwner = owner.getPlayer();
+        if (onlineOwner == null) {
+            return false;
+        }
+
+        final RProtectionBridge protectionBridge = RProtectionBridge.getBridge();
+        return protectionBridge != null
+                && protectionBridge.isAvailable()
+                && protectionBridge.withdrawFromTownBank(onlineOwner, amount);
     }
 
     static @NotNull String getCurrencyDisplayName(

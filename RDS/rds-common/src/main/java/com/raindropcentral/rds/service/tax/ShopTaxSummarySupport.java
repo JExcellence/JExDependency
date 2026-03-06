@@ -1,6 +1,7 @@
 package com.raindropcentral.rds.service.tax;
 
 import com.raindropcentral.rds.RDS;
+import com.raindropcentral.rds.configs.ConfigSection;
 import com.raindropcentral.rds.configs.TaxCurrencySection;
 import com.raindropcentral.rds.configs.TaxSection;
 import com.raindropcentral.rds.database.entity.Shop;
@@ -12,8 +13,12 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -25,6 +30,8 @@ import java.util.UUID;
  */
 public final class ShopTaxSummarySupport {
 
+    private static final String NONE_SUMMARY = "None";
+    private static final String SUMMARY_LINE_DELIMITER = "\n";
     private static final DateTimeFormatter NEXT_TAX_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm z");
 
     private ShopTaxSummarySupport() {
@@ -42,16 +49,19 @@ public final class ShopTaxSummarySupport {
             final @NotNull UUID ownerId,
             final @NotNull Instant now
     ) {
-        final TaxSection taxes = plugin.getDefaultConfig().getTaxes();
+        final ConfigSection config = plugin.getDefaultConfig();
+        final TaxSection taxes = config.getTaxes();
         final List<Shop> taxableShops = getTaxableShops(plugin, ownerId);
         final int taxedShops = taxableShops.size();
         final int neverAvailabilityItems = ShopTaxSupport.countNeverAvailabilityItems(taxableShops);
         final Instant nextTaxAt = ShopTaxSupport.calculateNextRun(taxes, now);
         final ZoneId zoneId = taxes.getTimeZoneId();
+        final Map<String, TaxCurrencySection> configuredTaxes = resolveConfiguredTaxes(config, taxes);
 
         final List<String> amounts = new ArrayList<>();
+        final List<String> protectionAmounts = new ArrayList<>();
         if (taxedShops > 0) {
-            for (final Map.Entry<String, TaxCurrencySection> entry : taxes.getCurrencies().entrySet()) {
+            for (final Map.Entry<String, TaxCurrencySection> entry : configuredTaxes.entrySet()) {
                 final String currencyType = entry.getKey();
                 if (!ShopTaxSupport.isCurrencyAvailable(plugin, currencyType)) {
                     continue;
@@ -67,15 +77,20 @@ public final class ShopTaxSummarySupport {
                     continue;
                 }
 
-                amounts.add(
-                        ShopTaxSupport.formatCurrency(plugin, currencyType, amount)
-                );
+                final String formattedAmount = ShopTaxSupport.formatCurrency(plugin, currencyType, amount);
+                amounts.add(formattedAmount);
+                if (ShopTaxSupport.usesProtectionTax(config.getProtection(), currencyType)) {
+                    protectionAmounts.add(formattedAmount);
+                }
             }
         }
 
         final String amountSummary = amounts.isEmpty()
-                ? "None"
-                : String.join(", ", amounts);
+                ? NONE_SUMMARY
+                : String.join(SUMMARY_LINE_DELIMITER, amounts);
+        final String protectionAmountSummary = protectionAmounts.isEmpty()
+                ? NONE_SUMMARY
+                : String.join(SUMMARY_LINE_DELIMITER, protectionAmounts);
         final ZonedDateTime zonedNextTax = ZonedDateTime.ofInstant(nextTaxAt, zoneId);
         final String nextTaxDisplay = zonedNextTax.format(NEXT_TAX_FORMAT);
         final String timeUntil = formatRemainingTime(Duration.between(now, nextTaxAt));
@@ -86,7 +101,9 @@ public final class ShopTaxSummarySupport {
                 nextTaxAt,
                 zoneId,
                 nextTaxDisplay,
-                timeUntil
+                timeUntil,
+                config.getProtection().getShopTaxes().size(),
+                protectionAmountSummary
         );
     }
 
@@ -134,6 +151,36 @@ public final class ShopTaxSummarySupport {
         return String.join(" ", parts.subList(0, limit));
     }
 
+    private static @NotNull Map<String, TaxCurrencySection> resolveConfiguredTaxes(
+            final @NotNull ConfigSection config,
+            final @NotNull TaxSection taxes
+    ) {
+        final Map<String, TaxCurrencySection> resolvedTaxes = new LinkedHashMap<>();
+        final Set<String> orderedCurrencyTypes = new LinkedHashSet<>();
+        orderedCurrencyTypes.addAll(taxes.getCurrencies().keySet());
+        orderedCurrencyTypes.addAll(config.getProtection().getShopTaxes().keySet());
+
+        for (final String rawCurrencyType : orderedCurrencyTypes) {
+            if (rawCurrencyType == null || rawCurrencyType.isBlank()) {
+                continue;
+            }
+
+            final String currencyType = rawCurrencyType.trim().toLowerCase(Locale.ROOT);
+            final TaxCurrencySection protectionCurrency = config.getProtection().getShopTaxCurrency(currencyType);
+            if (protectionCurrency != null) {
+                resolvedTaxes.put(currencyType, protectionCurrency);
+                continue;
+            }
+
+            final TaxCurrencySection standardCurrency = taxes.getTaxCurrency(currencyType);
+            if (standardCurrency != null) {
+                resolvedTaxes.put(currencyType, standardCurrency);
+            }
+        }
+
+        return resolvedTaxes;
+    }
+
     /**
      * Represents shop tax summary.
      *
@@ -143,6 +190,8 @@ public final class ShopTaxSummarySupport {
      * @param timeZone time zone
      * @param nextTaxDisplay next tax display
      * @param timeUntilDisplay time until display
+     * @param protectionTaxCurrencyCount configured protection tax currencies
+     * @param protectionAmountSummary protection tax amount summary
      */
     public record ShopTaxSummary(
             int taxedShops,
@@ -150,7 +199,9 @@ public final class ShopTaxSummarySupport {
             @NotNull Instant nextTaxAt,
             @NotNull ZoneId timeZone,
             @NotNull String nextTaxDisplay,
-            @NotNull String timeUntilDisplay
+            @NotNull String timeUntilDisplay,
+            int protectionTaxCurrencyCount,
+            @NotNull String protectionAmountSummary
     ) {
         /**
          * Indicates whether the summary contains any taxable shops.
@@ -167,7 +218,25 @@ public final class ShopTaxSummarySupport {
          * @return {@code true} if configured charges; otherwise {@code false}
          */
         public boolean hasConfiguredCharges() {
-            return !"None".equalsIgnoreCase(this.amountSummary);
+            return !NONE_SUMMARY.equalsIgnoreCase(this.amountSummary);
+        }
+
+        /**
+         * Indicates whether protection-tax currencies are configured.
+         *
+         * @return {@code true} if one or more protection tax currencies are configured
+         */
+        public boolean hasProtectionTaxesConfigured() {
+            return this.protectionTaxCurrencyCount > 0;
+        }
+
+        /**
+         * Indicates whether any protection-tax amounts are currently chargeable.
+         *
+         * @return {@code true} if protection tax summary contains chargeable amounts
+         */
+        public boolean hasProtectionCharges() {
+            return !NONE_SUMMARY.equalsIgnoreCase(this.protectionAmountSummary);
         }
     }
 }
