@@ -34,6 +34,11 @@ public class MetricsManager {
     private final PlatformType platformType;
 
     /**
+     * Active bStats metrics facade used to register custom charts.
+     */
+    private BStatsMetrics metrics;
+
+    /**
      * Creates a new metrics manager that attempts to bootstrap the relocated metrics implementation.
      *
      * @param plugin       the plugin requesting metrics initialization
@@ -59,9 +64,20 @@ public class MetricsManager {
      */
     private void initialize() {
         try {
-            new BStatsMetrics(plugin, serviceId, platformType == PlatformType.FOLIA);
+            this.metrics = new BStatsMetrics(plugin, serviceId, platformType == PlatformType.FOLIA);
         } catch (final Exception e) {
             plugin.getLogger().log(Level.WARNING, "Failed to initialize metrics", e);
+        }
+    }
+
+    /**
+     * Registers a custom chart with the active bStats instance.
+     *
+     * @param chart chart to register for reporting
+     */
+    public void addCustomChart(final @NotNull BStatsMetrics.CustomChart chart) {
+        if (this.metrics != null) {
+            this.metrics.addCustomChart(chart);
         }
     }
 }

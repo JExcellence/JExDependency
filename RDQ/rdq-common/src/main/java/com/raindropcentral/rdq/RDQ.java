@@ -37,7 +37,9 @@ import com.raindropcentral.rdq.view.perks.PerkDetailView;
 import com.raindropcentral.rdq.view.perks.PerkOverviewView;
 import com.raindropcentral.rdq.view.ranks.*;
 import com.raindropcentral.rplatform.RPlatform;
+import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
+import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import com.raindropcentral.rplatform.view.ConfirmationView;
@@ -130,6 +132,7 @@ public abstract class RDQ {
 	private PerkRequirementService perkRequirementService;
 	private com.raindropcentral.rdq.perk.cache.SimplePerkCache playerPerkCache;
     private PerkSidebarScoreboardService perkSidebarScoreboardService;
+	private BStatsMetrics metrics;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -157,7 +160,7 @@ public abstract class RDQ {
 				.thenRun(() -> {
 					initializePlugins();
 					initializeViews();
-					platform.initializeMetrics(getMetricsId());
+					initializeMetrics();
 
 					com.raindropcentral.rdq.requirement.RDQRequirementSetup.initialize();
 
@@ -203,6 +206,23 @@ public abstract class RDQ {
 
 	@NotNull
 	protected abstract IRankSystemService createRankSystemService();
+
+	private void initializeMetrics() {
+		final int metricsId = getMetricsId();
+		if (metricsId <= 0 || this.metrics != null) {
+			return;
+		}
+
+		this.metrics = new BStatsMetrics(
+				plugin,
+				metricsId,
+				platform.getPlatformType() == PlatformType.FOLIA
+		);
+
+		final boolean premiumEdition = "premium".equalsIgnoreCase(edition);
+		this.metrics.addCustomChart(new BStatsMetrics.SingleLineChart("free", () -> premiumEdition ? 0 : 1));
+		this.metrics.addCustomChart(new BStatsMetrics.SingleLineChart("premium", () -> premiumEdition ? 1 : 0));
+	}
 
 	private void initializeRepositories() {
 		final var emf = this.platform.getEntityManagerFactory();

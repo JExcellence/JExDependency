@@ -13,7 +13,9 @@ import com.raindropcentral.core.service.central.RCentralService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryService;
 import com.raindropcentral.core.service.statistics.StatisticsDeliveryServiceFactory;
 import com.raindropcentral.rplatform.RPlatform;
+import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.logging.CentralLogger;
+import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import de.jexcellence.dependency.delegate.AbstractPluginDelegate;
 import de.jexcellence.hibernate.repository.InjectRepository;
 import de.jexcellence.hibernate.repository.RepositoryManager;
@@ -24,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -55,6 +58,8 @@ import java.util.logging.Logger;
  * @version 2.0.0
  */
 public class RCoreImpl extends AbstractPluginDelegate<RCore> {
+
+    private static final int METRICS_SERVICE_ID = 25809;
 
     /**
      * Logger emitting lifecycle and repository wiring information through the shared
@@ -100,6 +105,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
      * Statistics delivery service for transmitting player statistics to RaindropCentral.
      */
     private StatisticsDeliveryService statisticsDeliveryService;
+    private BStatsMetrics metrics;
 
     private RCoreAdapter rCoreAdapter;
 
@@ -159,7 +165,7 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
                     initializePlugins();
                 }))
                 .thenCompose(v -> runSync(() -> {
-                    this.platform.initializeMetrics(25809);
+                    this.initializeMetrics();
 
                     LOGGER.info(STARTUP_MESSAGE);
                     LOGGER.info("RCore enabled successfully");
@@ -337,6 +343,23 @@ public class RCoreImpl extends AbstractPluginDelegate<RCore> {
                 .filter(Boolean::booleanValue)
                 .count();
         LOGGER.info("Detected %d/%d supported plugins".formatted(enabledCount, supportedPlugins.size()));
+    }
+
+    private void initializeMetrics() {
+        if (this.metrics != null) {
+            return;
+        }
+
+        this.metrics = new BStatsMetrics(
+                this.getPlugin(),
+                METRICS_SERVICE_ID,
+                this.platform.getPlatformType() == PlatformType.FOLIA
+        );
+
+        final String pluginName = this.getPlugin().getPluginMeta().getName().toLowerCase(Locale.ROOT);
+        final boolean premiumEdition = this.platform.isPremiumVersion() || !pluginName.contains("free");
+        this.metrics.addCustomChart(new BStatsMetrics.SingleLineChart("free", () -> premiumEdition ? 0 : 1));
+        this.metrics.addCustomChart(new BStatsMetrics.SingleLineChart("premium", () -> premiumEdition ? 1 : 0));
     }
 
     /**

@@ -49,7 +49,7 @@ public final class RDQFreeImpl extends AbstractPluginDelegate<RDQFree> {
 
                 @Override
                 protected int getMetricsId() {
-                    return -1;
+                    return 1690;
                 }
 
                 @Override

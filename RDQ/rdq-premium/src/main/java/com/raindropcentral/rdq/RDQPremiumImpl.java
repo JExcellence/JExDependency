@@ -58,7 +58,7 @@ public final class RDQPremiumImpl extends AbstractPluginDelegate<RDQPremium> {
 
                 @Override
                 protected int getMetricsId() {
-                    return -1;
+                    return 1690;
                 }
 
                 @Override

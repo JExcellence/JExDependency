@@ -7,6 +7,7 @@ import com.raindropcentral.rplatform.integration.geyser.GeyserService;
 import com.raindropcentral.rplatform.localization.TranslationManager;
 import com.raindropcentral.rplatform.logging.CentralLogger;
 import com.raindropcentral.rplatform.logging.PluginLogger;
+import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.metrics.MetricsManager;
 import com.raindropcentral.rplatform.placeholder.PlaceholderManager;
 import com.raindropcentral.rplatform.requirement.BuiltInRequirementProvider;
@@ -215,6 +216,17 @@ public class RPlatform {
         if (serviceId > 0 && metricsManager == null) {
             metricsManager = new MetricsManager(plugin, serviceId, platformType);
             logger.info("Metrics initialized with service ID: " + serviceId);
+        }
+    }
+
+    /**
+     * Registers a custom bStats chart when metrics have been initialized.
+     *
+     * @param chart custom chart to include in future metrics payloads
+     */
+    public void addMetricsChart(final @NotNull BStatsMetrics.CustomChart chart) {
+        if (this.metricsManager != null) {
+            this.metricsManager.addCustomChart(chart);
         }
     }
 

@@ -61,6 +61,7 @@ import com.raindropcentral.rplatform.api.PlatformAPIFactory;
 import com.raindropcentral.rplatform.api.PlatformType;
 import com.raindropcentral.rplatform.api.luckperms.LuckPermsService;
 import com.raindropcentral.rplatform.economy.JExEconomyBridge;
+import com.raindropcentral.rplatform.metrics.BStatsMetrics;
 import com.raindropcentral.rplatform.scheduler.ISchedulerAdapter;
 import com.raindropcentral.rplatform.service.ServiceRegistry;
 import de.jexcellence.hibernate.JEHibernate;
@@ -107,6 +108,7 @@ public class RDS {
     private static final String VAULT_ECONOMY_CLASS = "net.milkbowl.vault.economy.Economy";
     private static final String CONFIG_FOLDER_PATH = "config";
     private static final String CONFIG_FILE_NAME = "config.yml";
+    private static final int METRICS_SERVICE_ID = 29963;
 
     private final JavaPlugin plugin;
     private final String edition;
@@ -126,6 +128,7 @@ public class RDS {
     private AdminShopServerBankScheduler adminShopServerBankScheduler;
     private ShopSidebarScoreboardService shopSidebarScoreboardService;
     private ShopAdminPlayerSettingsService shopAdminPlayerSettingsService;
+    private BStatsMetrics metrics;
     private RRDSPlayer playerRepository;
     private RShop shopRepository;
     private RServerBank serverBankRepository;
@@ -165,6 +168,7 @@ public class RDS {
         this.getLogger().info("Enabling RDS (" + this.edition + ") Edition");
 
         this.platform.initialize();
+        this.initializeMetrics();
         this.platformType = PlatformAPIFactory.detectPlatformType();
         this.scheduler = this.platform.getScheduler();
         this.executor = Executors.newFixedThreadPool(4);
@@ -511,6 +515,21 @@ public class RDS {
     private void initializeCommands() {
         final var commandFactory = new CommandFactory(this.plugin, this);
         commandFactory.registerAllCommandsAndListeners();
+    }
+
+    private void initializeMetrics() {
+        if (this.platform == null || this.metrics != null) {
+            return;
+        }
+
+        this.metrics = new BStatsMetrics(
+            this.plugin,
+            METRICS_SERVICE_ID,
+            this.platform.getPlatformType() == PlatformType.FOLIA
+        );
+        final boolean premiumEdition = this.shopService.isPremium();
+        this.metrics.addCustomChart(new BStatsMetrics.SingleLineChart("free", () -> premiumEdition ? 0 : 1));
+        this.metrics.addCustomChart(new BStatsMetrics.SingleLineChart("premium", () -> premiumEdition ? 1 : 0));
     }
 
     private void initializeAdminPlayerSettings() {
