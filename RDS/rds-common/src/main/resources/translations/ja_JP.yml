@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>diamond_block などの有効な材料を入力してください。入力: {input}</red>"
     processing_failed: "<red>素材の検索に失敗しました。入力: {input}</red>"
 
+# 町民保護税移管UI /rs 税金。
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>【街】商店税金庫</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>【情報】町税台帳</gradient>"
+    lore:
+      - "<gray>町：</gray> <white>{town_name}</white>"
+      - "<gray>保護：</gray> <white>{protection_plugin}</white>"
+      - "<gray>台帳エントリ:</gray> <white>{entry_count}</white>"
+      - "<gray>市長の異動が有効になりました:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>サポートされている通貨を送金するには、下のエントリをクリックしてください。</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>利用可能：</gray> <white>{amount}</white>"
+      - "<gray>状態：</gray> <white>{transfer_status}</white>"
+      - "<yellow>クリックしてこの残高を転送します。</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>【譲渡可能】</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>【市長必須】</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>【未対応】</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] 町は必須です</gradient>"
+    lore:
+      - "<gray>サポートされている町に所属している必要があります</gray>"
+      - "<gray>保護税を表示および転送するため。</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 市長へのアクセスが必要です</gradient>"
+    lore:
+      - "<gray>あなたは現役の町長でなければなりません</gray>"
+      - "<gray>店舗保護税を移転するため。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 元帳エントリがありません</gradient>"
+    lore:
+      - "<gray>徴収された保護税は待っていません</gray>"
+      - "<gray>あなたの街の銀行に送金します。</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>保護税を移譲できるのは町長だけです。</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{currency}</white><gray> 転送することはできません。現在、都市銀行振込がサポートされています Vault のみ。</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>転送に失敗しました <white>{currency}</white><gray> あなたの街の銀行に。</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>転送されました <white>{amount}</white><gray> で <white>{currency}</white><gray> あなたの街の銀行へ。</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

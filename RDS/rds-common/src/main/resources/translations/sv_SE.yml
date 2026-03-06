@@ -1178,6 +1178,49 @@ shop_material_search_anvil_ui:
 # PAGINERING
 # ============================================
 # Delade pagineringsobjektetiketter som används över listgränssnitt.
+
+# Stadsskydd-skattöverföring UI för /rs skatter.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Stad] Butiksskattebanken</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Stadsskattebok</gradient>"
+    lore:
+      - "<gray>Stad:</gray> <white>{town_name}</white>"
+      - "<gray>Skydd:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Ledger poster:</gray> <white>{entry_count}</white>"
+      - "<gray>Borgmästaröverföring aktiverad:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Klicka på en post nedan för att överföra valutor som stöds.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Tillgänglig:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klicka för att överföra detta saldo.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Överförbar]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[borgmästare krävs]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Utan stöd]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Stad krävs</gradient>"
+    lore:
+      - "<gray>Du måste tillhöra en stad som stöds</gray>"
+      - "<gray>för att se och överföra skyddsskatter.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Borgmästaråtkomst krävs</gradient>"
+    lore:
+      - "<gray>Du måste vara den aktiva stadsborgmästaren</gray>"
+      - "<gray>att överföra butiksskyddsskatter.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Inga bokföringsposter</gradient>"
+    lore:
+      - "<gray>Inga indrivna skyddsskatter väntar</gray>"
+      - "<gray>för överföring till din stadsbank.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Endast borgmästare i staden kan överföra skyddsskatter.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan inte överföras. Stad-banköverföringar stöds för närvarande Vault endast.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Det gick inte att överföra <white>{currency}</white><gray> till din stadsbank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Överförd <white>{amount}</white><gray> i <white>{currency}</white><gray> till din stadsbank.</gray>"
+
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Sida%current_page%</gradient>"
   lore:

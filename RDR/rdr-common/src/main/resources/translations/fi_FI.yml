@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Käytä numeroa väliltä<white>1</white>ja<white>{max_hotkeys}</white><gray>. Syöte:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Varastointiverot</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Verokatsaus</gradient>"
+    lore:
+      - "<gray>Pakastevarastot:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Velkavaluutat:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Tarkista velkojen ja siirtojen hallinta alta.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Velkayhteenveto</gradient>"
+      lore:
+        - "<gray>Maksua vaativat varastot:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Velkatiedot valuutan mukaan:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Ei maksamattomia jäädytettyjen varastojen velkaa.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Maksamaton velka:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Jääkaapit</gradient>"
+      lore:
+        - "<gray>Pakastevarastot:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Napsauta avataksesi jäädytettyjen tallennustietojen luettelon.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Kaupunki] Varainsiirtoverot</gradient>"
+      lore:
+        - "<gray>Kaupunki:</gray> <white>{town_name}</white>"
+        - "<gray>Siirrä kerätyt varastoverot</gray>"
+        - "<gray>suojakaupunkipankkiisi.</gray>"
+        - "<yellow>Vain pormestari toimintaa.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Kaupunginjohtajan pääsy vaaditaan</gradient>"
+      lore:
+        - "<gray>Sinun täytyy olla kaupungin nykyinen pormestari</gray>"
+        - "<gray>siirtää kerätyt varastoverot.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Jääkaapit</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Jäädytetty varastointivelka</gradient>"
+    lore:
+      - "<gray>Pakastevarastot:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Napsauta merkintää maksaaksesi velan ja vapauttaaksesi sen.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Tämä varasto on jäädytetty maksamattomien velkojen vuoksi.</gray>"
+      - "<gray>Napsauta kokeillaksesi maksua ja avaa se.</gray>"
+      - "<gray>Maksamaton velka:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Ei jäädytettyjä varastoja</gradient>"
+    lore:
+      - "<gray>Sinulla ei ole tällä hetkellä jäädytettyjä varastoja.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Kaupunki] Tax Transfer</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Kaupunkiverokirja</gradient>"
+    lore:
+      - "<gray>Kaupunki:</gray> <white>{town_name}</white>"
+      - "<gray>Suojaus:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Reskontramerkinnät:</gray> <white>{entry_count}</white>"
+      - "<yellow>Napsauta siirrettävää valuuttaa siirtääksesi sitä.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Saatavilla:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Napsauta siirtääksesi tämän summan.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Siirrettävä]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ei tuettu]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Kaupunginjohtajan pääsy vaaditaan</gradient>"
+    lore:
+      - "<gray>Sinun täytyy olla aktiivinen kaupunginjohtaja</gray>"
+      - "<gray>käyttää veronsiirtojen valvontaa.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ei kirjanpitomerkintöjä</gradient>"
+    lore:
+      - "<gray>Mitään kerättyjä varastointiveroja ei odota</gray>"
+      - "<gray>kaupunki-pankkisiirtoa varten.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> ei voi siirtää kaupungin pankkiin. Kaupunki-pankkisiirtoja tuetaan tällä hetkellä Vault vain.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Siirto epäonnistui <white>{currency}</white><gray> kaupunkisi pankkiin.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Siirretty <white>{amount}</white><gray> sisään <white>{currency}</white><gray> paikkakuntasi pankkiin.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}on jo auki toisessa istunnossa.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}ei voitu avata juuri nyt.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Sinulla ei ole pääsyä<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> vaatii suojaustarkistuksia, mutta tuettua suojauslaajennussiltaa ei ole saatavilla.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sinun on seisottava omassasi <white>{protection_plugin}</white> väittää avaavansa <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Varastointiveron valuutta <white>{currency}</white><gray> ei ole saatavilla juuri nyt kohteelle <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tarvitset <white>{amount}</white><gray> sisään <white>{currency}</white> maksamaan varastoveroa <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Keräys epäonnistui <white>{amount}</white><gray> sisään <white>{currency}</white> varten <white>{storage_key}</white><gray>. Veroa ei peritty.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Varastointivero veloitetaan <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> on jäädytetty, koska maksu erääntyy.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Maksamaton velka <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Maksettu erääntynyt velka <white>{storage_key}</white><gray>. Säilytys pakastettuna.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Velanmaksuyhteenveto:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Toistuvat varastointiverot veloitetaan <white>{taxed_storages}</white> täytetyt varastot:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Toistuva tallennusvero ohitettu <white>{taxed_storages}</white> täynnä varastoja, koska <white>{currency}</white> ei ole saatavilla.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Toistuva tallennusvero epäonnistui kohteelle <white>{taxed_storages}</white> täytetyt varastot: tarve <white>{amount}</white> sisään <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Toistuvaa varastointiveroa ei voitu veloittaa <white>{taxed_storages}</white> täynnä varastoja <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>on maailmanlaajuisesti mustalla listallaRDR-tallennustilasta.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Muokkausistuntosi kohteelle{storage_key}on vanhentunut tai siirretty muualle. Muutoksia ei tallennettu.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}ei voitu tallentaa. Katso lisätietoja konsolista.</gray>"

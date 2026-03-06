@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>أدخل مادة صالحة مثل Diamond_block. الإدخال: {input}</red>"
     processing_failed: "<red>فشل في البحث عن المادة. الإدخال: {input}</red>"
 
+# واجهة المستخدم الخاصة بحماية المدينة ونقل الضرائب /rs الضرائب.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[المدينة] متجر بنك الضرائب</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] دفتر ضريبة المدينة</gradient>"
+    lore:
+      - "<gray>بلدة:</gray> <white>{town_name}</white>"
+      - "<gray>حماية:</gray> <white>{protection_plugin}</white>"
+      - "<gray>إدخالات دفتر الأستاذ:</gray> <white>{entry_count}</white>"
+      - "<gray>تم تفعيل نقل العمدة:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>انقر فوق الإدخال أدناه لتحويل العملات المدعومة.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>متاح:</gray> <white>{amount}</white>"
+      - "<gray>حالة:</gray> <white>{transfer_status}</white>"
+      - "<yellow>انقر لتحويل هذا الرصيد.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[قابل للتحويل]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[مطلوب عمدة]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[غير مدعوم]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] المدينة مطلوبة</gradient>"
+    lore:
+      - "<gray>يجب أن تنتمي إلى مدينة مدعومة</gray>"
+      - "<gray>لعرض ونقل ضرائب الحماية.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول العمدة</gradient>"
+    lore:
+      - "<gray>يجب أن تكون عمدة المدينة النشط</gray>"
+      - "<gray>لنقل ضرائب حماية المحل.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] لا توجد إدخالات دفتر الأستاذ</gradient>"
+    lore:
+      - "<gray>لا توجد ضرائب حماية مجمعة في انتظارك</gray>"
+      - "<gray>للتحويل إلى بنك مدينتك.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>يمكن لعمدة المدن فقط تحويل ضرائب الحماية.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> لا يمكن نقلها. يتم دعم التحويلات بين البنوك حاليًا Vault فقط.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>فشل النقل <white>{currency}</white><gray> إلى بنك مدينتك.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>منقول <white>{amount}</white><gray> في <white>{currency}</white><gray> إلى بنك مدينتك.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

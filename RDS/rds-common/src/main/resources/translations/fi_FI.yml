@@ -1178,6 +1178,49 @@ shop_material_search_anvil_ui:
 # SIVUNUMEROINTI
 # ============================================
 # Jaetut sivutuskohteiden tunnisteet, joita käytetään luetteloiden käyttöliittymissä.
+
+# Kaupungin suojelu-veronsiirtokäyttöliittymä /rs verot.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Kaupunki] Shop Tax Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Kaupunkiverokirja</gradient>"
+    lore:
+      - "<gray>Kaupunki:</gray> <white>{town_name}</white>"
+      - "<gray>Suojaus:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Reskontramerkinnät:</gray> <white>{entry_count}</white>"
+      - "<gray>Kaupunginjohtajan siirto käytössä:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Napsauta alla olevaa merkintää siirtääksesi tuetut valuutat.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Saatavilla:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Napsauta siirtääksesi tämän saldon.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Siirrettävä]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[pormestari vaaditaan]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ei tuettu]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Pakollinen kaupunki</gradient>"
+    lore:
+      - "<gray>Sinun on kuuluttava tuettuun paikkaan</gray>"
+      - "<gray>tarkastella ja siirtää suojaveroja.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Kaupunginjohtajan pääsy vaaditaan</gradient>"
+    lore:
+      - "<gray>Sinun täytyy olla aktiivinen kaupunginjohtaja</gray>"
+      - "<gray>siirtää kauppasuojaverot.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ei kirjanpitomerkintöjä</gradient>"
+    lore:
+      - "<gray>Mitään kerättyjä suojaveroja ei odoteta</gray>"
+      - "<gray>siirtoa varten kaupungin pankkiin.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Vain kaupunginjohtajat voivat siirtää suojeluveroja.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> ei voida siirtää. Kaupunki-pankkisiirtoja tuetaan tällä hetkellä Vault vain.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Siirto epäonnistui <white>{currency}</white><gray> kaupunkisi pankkiin.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Siirretty <white>{amount}</white><gray> sisään <white>{currency}</white><gray> paikkakuntasi pankkiin.</gray>"
+
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Sivu%current_page%</gradient>"
   lore:

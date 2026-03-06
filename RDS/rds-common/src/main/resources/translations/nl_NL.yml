@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Voer een geldig materiaal in, zoals diamant_blok. Invoer: {input}</red>"
     processing_failed: "<red>Kan niet naar materiaal zoeken. Invoer: {input}</red>"
 
+# UI voor stadsbescherming en belastingoverdracht /rs belastingen.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Stad] Winkelbelastingbank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Grootboek stadsbelasting</gradient>"
+    lore:
+      - "<gray>Dorp:</gray> <white>{town_name}</white>"
+      - "<gray>Bescherming:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Grootboekposten:</gray> <white>{entry_count}</white>"
+      - "<gray>Burgemeesteroverdracht ingeschakeld:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Klik op een item hieronder om ondersteunde valuta's over te dragen.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Beschikbaar:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klik om dit saldo over te dragen.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Overdraagbaar]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Burgemeester vereist]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Niet ondersteund]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Plaats vereist</gradient>"
+    lore:
+      - "<gray>Je moet tot een ondersteunde stad behoren</gray>"
+      - "<gray>om beschermingsbelastingen te bekijken en over te dragen.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Burgemeestertoegang vereist</gradient>"
+    lore:
+      - "<gray>U moet de actieve burgemeester zijn</gray>"
+      - "<gray>om winkelbeschermingsbelastingen over te dragen.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Geen grootboekposten</gradient>"
+    lore:
+      - "<gray>Er wachten geen geïnde beschermingsbelastingen</gray>"
+      - "<gray>voor overschrijving naar uw stadsbank.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Alleen burgemeesters kunnen beschermingsbelastingen overdragen.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan niet worden overgedragen. Overschrijvingen per stadsbank worden momenteel ondersteund Vault alleen.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Overdracht mislukt <white>{currency}</white><gray> naar uw stadsbank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Overgedragen <white>{amount}</white><gray> in <white>{currency}</white><gray> naar uw stadsbank.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

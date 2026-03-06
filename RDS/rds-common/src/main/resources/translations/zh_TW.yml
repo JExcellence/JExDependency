@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>輸入有效材料，例如 Diamond_block。輸入：{input}</red>"
     processing_failed: "<red>無法搜尋資料。輸入：{input}</red>"
 
+# 鎮保護稅轉移UI /rs 稅。
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[鎮] 店稅銀行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 城鎮稅賬</gradient>"
+    lore:
+      - "<gray>鎮：</gray> <white>{town_name}</white>"
+      - "<gray>保護：</gray> <white>{protection_plugin}</white>"
+      - "<gray>分類帳分錄：</gray> <white>{entry_count}</white>"
+      - "<gray>啟用市長轉移：</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>點擊下面的條目可轉移支援的貨幣。</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>可用的：</gray> <white>{amount}</white>"
+      - "<gray>地位：</gray> <white>{transfer_status}</white>"
+      - "<yellow>點擊以轉移此餘額。</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[可轉讓]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[市長必填]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[不支持]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] 城鎮 必填</gradient>"
+    lore:
+      - "<gray>您必須屬於受支持的城鎮</gray>"
+      - "<gray>查看和轉移保護稅。</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 需要市長訪問權限</gradient>"
+    lore:
+      - "<gray>你必須是活躍的鎮長</gray>"
+      - "<gray>轉移商店保護稅。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 沒有分類帳項目</gradient>"
+    lore:
+      - "<gray>沒有徵收保護稅等待</gray>"
+      - "<gray>轉帳到您的城鎮銀行。</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>只有鎮長才能轉移保護稅。</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 無法轉移。目前支援村鎮銀行轉賬 Vault 僅有的。</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>轉帳失敗 <white>{currency}</white><gray> 存入您的城鎮銀行。</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已轉入 <white>{amount}</white><gray> 在 <white>{currency}</white><gray> 到你的城鎮銀行。</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

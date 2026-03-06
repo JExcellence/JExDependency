@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Используйте число от<white>1</white>до<white>{max_hotkeys}</white><gray>. Ввод:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Налог на хранение</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Обзор налогов</gradient>"
+    lore:
+      - "<gray>Замороженные склады:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Валюты долга:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Ознакомьтесь с контролем задолженности и трансфертов ниже.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Сводная информация о долге</gradient>"
+      lore:
+        - "<gray>Платные склады:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Детали долга по валютам:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[ХОРОШО]</gradient> <gray>Отсутствие непогашенной задолженности по замороженному хранению.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Непогашенный долг:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Замороженные хранилища</gradient>"
+      lore:
+        - "<gray>Замороженные склады:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Нажмите, чтобы открыть список замороженных хранилищ.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Город] Налоги на передачу</gradient>"
+      lore:
+        - "<gray>Город:</gray> <white>{town_name}</white>"
+        - "<gray>Переместить собранные налоги за хранение</gray>"
+        - "<gray>в ваш защитный городской банк.</gray>"
+        - "<yellow>Акция только для мэра.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Требуется доступ мэра</gradient>"
+      lore:
+        - "<gray>Вы, должно быть, нынешний мэр города</gray>"
+        - "<gray>для перечисления собранных налогов за хранение.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Замороженные хранилища</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Замороженный долг по хранению</gradient>"
+    lore:
+      - "<gray>Замороженные склады:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Нажмите на запись, чтобы оплатить долг и разморозить его.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Данное хранилище заморожено из-за неоплаченного долга.</gray>"
+      - "<gray>Нажмите, чтобы попытаться совершить платеж, и откройте его.</gray>"
+      - "<gray>Непогашенный долг:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[ОК] Нет замороженных хранилищ</gradient>"
+    lore:
+      - "<gray>У вас сейчас нет замороженных хранилищ.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Город] Передача налогов</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Городская налоговая книга</gradient>"
+    lore:
+      - "<gray>Город:</gray> <white>{town_name}</white>"
+      - "<gray>Защита:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Записи в бухгалтерской книге:</gray> <white>{entry_count}</white>"
+      - "<yellow>Нажмите на переводную валюту, чтобы переместить ее.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Доступный:</gray> <white>{amount}</white>"
+      - "<gray>Статус:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Нажмите, чтобы перевести эту сумму.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Передаваемый]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Не поддерживается]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Требуется доступ мэра</gradient>"
+    lore:
+      - "<gray>Вы должны быть активным мэром города</gray>"
+      - "<gray>использовать контроль за перечислением налогов.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Нет записей в книге</gradient>"
+    lore:
+      - "<gray>Никакие собранные налоги за хранение не ждут</gray>"
+      - "<gray>за перевод город-банк.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray><white>{currency}</white><gray> нельзя перевести в городской банк. В настоящее время поддерживаются городские банковские переводы Vault только.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Не удалось перенести <white>{currency}</white><gray> в ваш городской банк.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Переведено <white>{amount}</white><gray> в <white>{currency}</white><gray> в ваш городской банк.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}уже открыт в другом сеансе.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}сейчас не удалось открыть.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>У вас нет доступа к<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> требует проверок защиты, но поддерживаемый мост подключаемого модуля защиты недоступен.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Вы должны стоять на своем <white>{protection_plugin}</white> требовать открытия <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Валюта налога на хранение <white>{currency}</white><gray> сейчас недоступен для <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Вам нужно <white>{amount}</white><gray> в <white>{currency}</white> платить налог за хранение <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Не удалось собрать <white>{amount}</white><gray> в <white>{currency}</white> для <white>{storage_key}</white><gray>. Налог не взимался.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Налог на хранение взимается за <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray><white>{storage_key}</white><gray> заморожен, поскольку наступил срок оплаты.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Непогашенный долг за <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Оплачена непогашенная задолженность за <white>{storage_key}</white><gray>. Хранение размороженное.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Сводка по выплате долга:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Регулярные налоги за хранение, взимаемые за <white>{taxed_storages}</white> заполненные хранилища:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Регулярный налог за хранение пропущен для <white>{taxed_storages}</white> заполнены хранилища, потому что <white>{currency}</white> недоступен.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Не удалось внести периодический налог за хранение <white>{taxed_storages}</white> заполненные хранилища: нужно <white>{amount}</white> в <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Не удалось взимать периодический налог за хранение. <white>{taxed_storages}</white> заполненные хранилища в <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>занесен в глобальный черный список хранилищаRDR.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Ваш сеанс редактирования{storage_key}истек или перенесен в другое место. Изменения не сохранились.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}не удалось сохранить. Подробности проверьте в консоли.</gray>."

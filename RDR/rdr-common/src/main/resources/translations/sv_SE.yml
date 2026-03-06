@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Använd ett nummer mellan<white>1</white>och<white>{max_hotkeys}</white><gray>. Ingång:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Förvaringsskatter</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Skatteöversikt</gradient>"
+    lore:
+      - "<gray>Frysta förråd:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Skuldvalutor:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Granska skuld- och överföringskontroller nedan.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Skuldsammanfattning</gradient>"
+      lore:
+        - "<gray>Lagring som kräver betalning:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Skuldinformation per valuta:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Ingen utestående fryst lagringsskuld.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Utestående skuld:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Frysta lager</gradient>"
+      lore:
+        - "<gray>Frysta förråd:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Klicka för att öppna den frysta lagringslistan.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Stad] Överföringsskatter</gradient>"
+      lore:
+        - "<gray>Stad:</gray> <white>{town_name}</white>"
+        - "<gray>Flytta insamlade lagringsskatter</gray>"
+        - "<gray>till din skyddsstadsbank.</gray>"
+        - "<yellow>Enbart borgmästare.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Borgmästaråtkomst krävs</gradient>"
+      lore:
+        - "<gray>Du måste vara stadens nuvarande borgmästare</gray>"
+        - "<gray>att överföra insamlade lagringsskatter.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Frysta lager</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Fryst lagringsskuld</gradient>"
+    lore:
+      - "<gray>Frysta förråd:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Klicka på en post för att betala skulden och låsa upp.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Detta förråd är fruset på grund av obetald skuld.</gray>"
+      - "<gray>Klicka för att försöka betala och öppna den.</gray>"
+      - "<gray>Utestående skuld:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Inga frysta lagringar</gradient>"
+    lore:
+      - "<gray>Du har inga frysta lager just nu.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Stad] Skatteöverföring</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Stadsskattebok</gradient>"
+    lore:
+      - "<gray>Stad:</gray> <white>{town_name}</white>"
+      - "<gray>Skydd:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Ledger poster:</gray> <white>{entry_count}</white>"
+      - "<yellow>Klicka på en överförbar valuta för att flytta den.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Tillgänglig:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klicka för att överföra detta belopp.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Överförbar]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Utan stöd]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Borgmästaråtkomst krävs</gradient>"
+    lore:
+      - "<gray>Du måste vara den aktiva stadsborgmästaren</gray>"
+      - "<gray>att använda kontroller av skatteöverföringar.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Inga bokföringsposter</gradient>"
+    lore:
+      - "<gray>Inga insamlade lagringsskatter väntar</gray>"
+      - "<gray>för stad-banköverföring.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan inte överföras till stadsbanken. Stad-banköverföringar stöds för närvarande Vault endast.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Det gick inte att överföra <white>{currency}</white><gray> till din stadsbank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Överförd <white>{amount}</white><gray> i <white>{currency}</white><gray> till din stadsbank.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}är redan öppen i en annan session.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kunde inte öppnas just nu.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Du har inte tillgång till<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> kräver skyddskontroller, men ingen skyddsplugin-brygga som stöds är tillgänglig.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du måste stå i din egen <white>{protection_plugin}</white> göra anspråk på att öppna <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Valuta för lagringsskatt <white>{currency}</white><gray> är inte tillgänglig just nu för <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du behöver <white>{amount}</white><gray> i <white>{currency}</white> att betala lagerskatt för <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Det gick inte att samla in <white>{amount}</white><gray> i <white>{currency}</white> för <white>{storage_key}</white><gray>. Ingen skatt togs ut.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Lagringsskatt tas ut för <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> är fryst eftersom betalning ska ske.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Utestående skuld för <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Betalas utestående skuld för <white>{storage_key}</white><gray>. Förvaring ofryst.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Sammanfattning av skuldbetalning:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Återkommande lagringsskatter debiteras för <white>{taxed_storages}</white> fyllda förråd:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Återkommande lagringsskatt hoppades över för <white>{taxed_storages}</white> fyllda förråd pga <white>{currency}</white> är inte tillgänglig.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Återkommande lagringsskatt misslyckades för <white>{taxed_storages}</white> fyllda förråd: behov <white>{amount}</white> i <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Återkommande lagringsskatt kunde inte tas ut för <white>{taxed_storages}</white> fyllda förråd <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>är globalt svartlistad frånRDRlagring.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Din redigeringssession för{storage_key}löpte ut eller flyttades någon annanstans. Ändringarna sparades inte.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kunde inte sparas. Kontrollera konsolen för detaljer.</gray>"

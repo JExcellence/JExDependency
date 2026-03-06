@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>1</white>から<white>{max_hotkeys}</white><gray>までの数値を使用します。入力:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 保管税</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 税金の概要</gradient>"
+    lore:
+      - "<gray>冷凍保管:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>負債通貨:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>以下の債務と譲渡の管理を確認してください。</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] 負債の概要</gradient>"
+      lore:
+        - "<gray>支払いが必要なストレージ:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>通貨ごとの負債の詳細:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[わかりました]</gradient> <gray>未払いの冷凍保管債務はありません。</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>負債残高:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] 冷凍保管</gradient>"
+      lore:
+        - "<gray>冷凍保管:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>クリックすると、凍結ストレージのリストが開きます。</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>【町】譲渡税</gradient>"
+      lore:
+        - "<gray>町：</gray> <white>{town_name}</white>"
+        - "<gray>徴収された保管税を移動する</gray>"
+        - "<gray>あなたの保護都市銀行に。</gray>"
+        - "<yellow>市長のみの行動。</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 市長へのアクセスが必要です</gradient>"
+      lore:
+        - "<gray>あなたは現在の町長に違いありません</gray>"
+        - "<gray>徴収した保管税を移管するため。</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] 冷凍保管</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[情報] 保管債務の凍結について</gradient>"
+    lore:
+      - "<gray>冷凍保管:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>エントリをクリックして借金を支払い、凍結を解除します。</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>このストレージは未払いの借金のため凍結されています。</gray>"
+      - "<gray>クリックして支払いを試み、開きます。</gray>"
+      - "<gray>負債残高:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] 冷凍保管は禁止です</gradient>"
+    lore:
+      - "<gray>現在、凍結されたストレージはありません。</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>【町】税金移譲</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>【情報】町税台帳</gradient>"
+    lore:
+      - "<gray>町：</gray> <white>{town_name}</white>"
+      - "<gray>保護：</gray> <white>{protection_plugin}</white>"
+      - "<gray>台帳エントリ:</gray> <white>{entry_count}</white>"
+      - "<yellow>移動可能な通貨をクリックして移動します。</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>利用可能：</gray> <white>{amount}</white>"
+      - "<gray>状態：</gray> <white>{transfer_status}</white>"
+      - "<yellow>クリックしてこの金額を送金します。</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>【譲渡可能】</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>【未対応】</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 市長へのアクセスが必要です</gradient>"
+    lore:
+      - "<gray>あなたは現役の町長でなければなりません</gray>"
+      - "<gray>税移転制御を使用するため。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 元帳エントリがありません</gradient>"
+    lore:
+      - "<gray>徴収された保管税は待っていません</gray>"
+      - "<gray>都市銀行振込の場合。</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{currency}</white><gray> 都市銀行への振込はできません。現在、都市銀行振込がサポートされています Vault のみ。</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>転送に失敗しました <white>{currency}</white><gray> あなたの街の銀行に。</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>転送されました <white>{amount}</white><gray> で <white>{currency}</white><gray> あなたの街の銀行へ。</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}は別のセッションですでに開かれています。</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}を現在開けませんでした。</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{storage_key}</white><gray>.</gray>へのアクセス権がありません。"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> 保護チェックが必要ですが、サポートされている保護プラグイン ブリッジが使用できません。</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>あなたは自分自身の立場に立たなければなりません <white>{protection_plugin}</white> 開けると主張する <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>保管税通貨 <white>{currency}</white><gray> は現在利用できません <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>必要です <white>{amount}</white><gray> で <white>{currency}</white> ～の保管税を支払う <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>収集に失敗しました <white>{amount}</white><gray> で <white>{currency}</white> のために <white>{storage_key}</white><gray>。税金はかかりませんでした。</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>保管税が課せられる <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[×]</gradient> <gray><white>{storage_key}</white><gray> 支払い期限があるため凍結されています。</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>債務残高 <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>未払いの借金を支払った <white>{storage_key}</white><gray>。凍結していない状態で保管します。</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>借金返済の概要:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>定期的に課される保管税 <white>{taxed_storages}</white> いっぱいになったストレージ:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>経常保管税の省略 <white>{taxed_storages}</white> ストレージがいっぱいになったので、 <white>{currency}</white> は利用できません。</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[×]</gradient> <gray>経常保管税が失敗しました <white>{taxed_storages}</white> いっぱいになったストレージ: 必要 <white>{amount}</white> で <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>経常保管税を請求できませんでした <white>{taxed_storages}</white> ストレージをいっぱいにしました <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>は、RDRストレージからグローバルにブラックリストに登録されています。</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}の編集セッションが期限切れになったか、別の場所に移動されました。変更は保存されませんでした。</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}を保存できませんでした。詳細については、コンソールを確認してください。</gray>"

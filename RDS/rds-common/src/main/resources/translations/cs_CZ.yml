@@ -1178,6 +1178,49 @@ shop_material_search_anvil_ui:
 # STRÁNKOVÁNÍ
 # ============================================
 # Sdílené štítky položek stránkování používané napříč uživatelskými rozhraními seznamu.
+
+# Ochrana města-daňový převod UI pro /rs daně.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Město] Banka daně z obchodů</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Městská daňová kniha</gradient>"
+    lore:
+      - "<gray>Město:</gray> <white>{town_name}</white>"
+      - "<gray>Ochrana:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Záznamy v hlavní knize:</gray> <white>{entry_count}</white>"
+      - "<gray>Přenos starosty povolen:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Kliknutím na záznam níže převedete podporované měny.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>K dispozici:</gray> <white>{amount}</white>"
+      - "<gray>Postavení:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Kliknutím převedete tento zůstatek.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Přenosný]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[vyžadován starosta]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nepodporováno]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Vyžaduje se město</gradient>"
+    lore:
+      - "<gray>Musíte patřit do podporovaného města</gray>"
+      - "<gray>prohlížet a převádět ochranné daně.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup starosty</gradient>"
+    lore:
+      - "<gray>Musíte být aktivním starostou města</gray>"
+      - "<gray>převést daně na ochranu obchodu.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Žádné položky hlavní knihy</gradient>"
+    lore:
+      - "<gray>Žádné vybrané ochranné daně nečekají</gray>"
+      - "<gray>pro převod do vaší městské banky.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ochranné daně mohou převádět pouze starostové měst.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nelze přenést. V současné době jsou podporovány převody na městské banky Vault pouze.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Přenos se nezdařil <white>{currency}</white><gray> do vaší městské banky.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Převedeno <white>{amount}</white><gray> v <white>{currency}</white><gray> do vaší městské banky.</gray>"
+
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Stránka %current_page%</gradient>"
   lore:

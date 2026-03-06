@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>使用<white>1</white>和<white>{max_hotkeys}</white><gray>之間的數字。輸入：</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 倉儲稅</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 稅務概覽</gradient>"
+    lore:
+      - "<gray>冷凍儲存：</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>債務貨幣：</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>請參閱下面的債務和轉移控制。</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] 債務摘要</gradient>"
+      lore:
+        - "<gray>需要付費的存儲：</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>按幣種列出的債務明細：</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[好的]</gradient> <gray>沒有未償還的冷凍儲存債務。</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>未償債務：</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] 冷凍儲存</gradient>"
+      lore:
+        - "<gray>冷凍儲存：</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>按一下可開啟凍結儲存清單。</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[城鎮] 轉讓稅</gradient>"
+      lore:
+        - "<gray>鎮：</gray> <white>{town_name}</white>"
+        - "<gray>轉移徵收的倉儲稅</gray>"
+        - "<gray>進入你的保護城鎮銀行。</gray>"
+        - "<yellow>僅限市長的行動。</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要市長訪問權限</gradient>"
+      lore:
+        - "<gray>你必須是現任鎮長</gray>"
+        - "<gray>轉移徵收的倉儲稅。</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] 冷凍儲存</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 凍結儲存債務</gradient>"
+    lore:
+      - "<gray>冷凍儲存：</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>點擊條目即可償還債務並解凍。</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>由於未償還債務，該儲存空間被凍結。</gray>"
+      - "<gray>點擊嘗試付款並打開它。</gray>"
+      - "<gray>未償債務：</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[確定] 無凍結存儲</gradient>"
+    lore:
+      - "<gray>您現在沒有冷凍儲存。</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[城鎮] 稅收轉移</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[資訊] 城鎮稅賬</gradient>"
+    lore:
+      - "<gray>鎮：</gray> <white>{town_name}</white>"
+      - "<gray>保護：</gray> <white>{protection_plugin}</white>"
+      - "<gray>分類帳分錄：</gray> <white>{entry_count}</white>"
+      - "<yellow>點選可轉移貨幣進行移動。</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>可用的：</gray> <white>{amount}</white>"
+      - "<gray>地位：</gray> <white>{transfer_status}</white>"
+      - "<yellow>點擊以轉移此金額。</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[可轉讓]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[不支持]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 需要市長訪問權限</gradient>"
+    lore:
+      - "<gray>你必須是活躍的鎮長</gray>"
+      - "<gray>使用稅收轉移控制。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 沒有分類帳項目</gradient>"
+    lore:
+      - "<gray>沒有收取的存儲稅正在等待</gray>"
+      - "<gray>用於城鎮銀行轉帳。</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 不能轉入鎮銀行。目前支援村鎮銀行轉賬 Vault 僅有的。</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>轉帳失敗 <white>{currency}</white><gray> 存入您的城鎮銀行。</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已轉入 <white>{amount}</white><gray> 在 <white>{currency}</white><gray> 到你的城鎮銀行。</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}已在另一個會話中開啟。</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}現在無法開啟.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>您無權存取<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> 需要保護檢查，但沒有支援的保護插件橋可用。</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你必須站在自己的立場上 <white>{protection_plugin}</white> 聲稱要打開 <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>倉儲稅幣種 <white>{currency}</white><gray> 目前不可用 <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你需要 <white>{amount}</white><gray> 在 <white>{currency}</white> 繳納倉儲稅 <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>採集失敗 <white>{amount}</white><gray> 在 <white>{currency}</white> 為了 <white>{storage_key}</white><gray>。沒有繳稅。</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>收取倉儲稅 <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> 由於付款到期而被凍結。</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>未償債務 <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已償還未償債務 <white>{storage_key}</white><gray>。儲存未凍結。</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>債務償還概要：</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>定期收取倉儲稅 <white>{taxed_storages}</white> 已滿的儲存：</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>跳過了經常性倉儲稅 <white>{taxed_storages}</white> 儲存空間已滿，因為 <white>{currency}</white> 不可用。</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>定期倉儲稅失敗 <white>{taxed_storages}</white> 已滿的儲存空間：需要 <white>{amount}</white> 在 <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>無法收取經常性倉儲稅 <white>{taxed_storages}</white> 已滿的儲存空間 <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>已從RDR儲存全域列入黑名單。</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>您對{storage_key}的編輯工作階段已過期或移至其他地方。更改未儲存。</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}無法儲存。檢查控制台以了解詳細資訊。</gray>"

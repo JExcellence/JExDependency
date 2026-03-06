@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Enter a valid material such as diamond_block. Input: {input}</red>"
     processing_failed: "<red>Failed to search for material. Input: {input}</red>"
 
+# Town protection-tax transfer UI for /rs taxes.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Town] Shop Tax Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Town Tax Ledger</gradient>"
+    lore:
+      - "<gray>Town:</gray> <white>{town_name}</white>"
+      - "<gray>Protection:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Ledger entries:</gray> <white>{entry_count}</white>"
+      - "<gray>Mayor transfer enabled:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Click an entry below to transfer supported currencies.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Available:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Click to transfer this balance.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Transferable]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Mayor Required]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Unsupported]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Town Required</gradient>"
+    lore:
+      - "<gray>You must belong to a supported town</gray>"
+      - "<gray>to view and transfer protection taxes.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Mayor Access Required</gradient>"
+    lore:
+      - "<gray>You must be the active town mayor</gray>"
+      - "<gray>to transfer shop protection taxes.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] No Ledger Entries</gradient>"
+    lore:
+      - "<gray>No collected protection taxes are waiting</gray>"
+      - "<gray>for transfer to your town bank.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Only town mayors can transfer protection taxes.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> cannot be transferred. Town-bank transfers currently support Vault only.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Failed to transfer <white>{currency}</white><gray> into your town bank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Transferred <white>{amount}</white><gray> in <white>{currency}</white><gray> to your town bank.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Geben Sie ein gültiges Material ein, z. B. Diamond_Block. Eingabe: {input}</red>"
     processing_failed: "<red>Fehler beim Suchen nach Material. Eingabe: {input}</red>"
 
+# Benutzeroberfläche für die Übertragung von Stadtschutzsteuern für /rs Steuern.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Stadt] Shop Tax Bank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Gemeindesteuerbuch</gradient>"
+    lore:
+      - "<gray>Stadt:</gray> <white>{town_name}</white>"
+      - "<gray>Schutz:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Hauptbucheinträge:</gray> <white>{entry_count}</white>"
+      - "<gray>Bürgermeistertransfer aktiviert:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Klicken Sie unten auf einen Eintrag, um unterstützte Währungen zu übertragen.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Verfügbar:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klicken Sie hier, um dieses Guthaben zu übertragen.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Übertragbar]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Bürgermeister gesucht]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nicht unterstützt]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Stadt erforderlich</gradient>"
+    lore:
+      - "<gray>Sie müssen einer unterstützten Stadt angehören</gray>"
+      - "<gray>Schutzsteuern einsehen und übertragen.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Bürgermeisterzugang erforderlich</gradient>"
+    lore:
+      - "<gray>Sie müssen der aktive Bürgermeister der Stadt sein</gray>"
+      - "<gray>Ladenschutzsteuern zu übertragen.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Keine Hauptbucheinträge</gradient>"
+    lore:
+      - "<gray>Es warten keine eingezogenen Schutzsteuern</gray>"
+      - "<gray>zur Überweisung an Ihre Stadtbank.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nur Bürgermeister können Schutzsteuern übertragen.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nicht übertragbar. Derzeit werden Überweisungen von der Stadt zur Bank unterstützt Vault nur.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Übertragung fehlgeschlagen <white>{currency}</white><gray> in Ihre Stadtbank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Übertragen <white>{amount}</white><gray> In <white>{currency}</white><gray> an Ihre Stadtbank.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

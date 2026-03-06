@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Verwenden Sie eine Zahl zwischen<white>1</white>und<white>{max_hotkeys}</white><gray>. Eingabe:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Lagersteuern</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Steuerübersicht</gradient>"
+    lore:
+      - "<gray>Tiefkühllager:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Schuldenwährungen:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Sehen Sie sich unten die Schulden- und Transferkontrollen an.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Schuldenübersicht</gradient>"
+      lore:
+        - "<gray>Zahlungspflichtige Lagerplätze:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Schuldendetails nach Währung:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Keine ausstehenden Schulden aus dem Tiefkühllager.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Ausstehende Schulden:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Tiefkühllager</gradient>"
+      lore:
+        - "<gray>Tiefkühllager:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Klicken Sie hier, um die Liste der gefrorenen Speicher zu öffnen.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Stadt] Übertragungssteuern</gradient>"
+      lore:
+        - "<gray>Stadt:</gray> <white>{town_name}</white>"
+        - "<gray>Eingezogene Lagersteuern verschieben</gray>"
+        - "<gray>in Ihre Schutzstadtbank.</gray>"
+        - "<yellow>Aktion nur für den Bürgermeister.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Bürgermeisterzugang erforderlich</gradient>"
+      lore:
+        - "<gray>Sie müssen der aktuelle Bürgermeister der Stadt sein</gray>"
+        - "<gray>eingezogene Lagersteuern zu überweisen.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Tiefkühllager</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Eingefrorene Lagerschulden</gradient>"
+    lore:
+      - "<gray>Tiefkühllager:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Klicken Sie auf einen Eintrag, um Schulden zu begleichen und die Sperrung aufzuheben.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Dieser Speicher ist aufgrund unbezahlter Schulden eingefroren.</gray>"
+      - "<gray>Klicken Sie hier, um die Zahlung zu versuchen und zu öffnen.</gray>"
+      - "<gray>Ausstehende Schulden:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Keine gefrorenen Speicher</gradient>"
+    lore:
+      - "<gray>Sie haben derzeit keine Tiefkühllager.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Stadt] Steuerübertragung</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Gemeindesteuerbuch</gradient>"
+    lore:
+      - "<gray>Stadt:</gray> <white>{town_name}</white>"
+      - "<gray>Schutz:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Hauptbucheinträge:</gray> <white>{entry_count}</white>"
+      - "<yellow>Klicken Sie auf eine übertragbare Währung, um sie zu verschieben.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Verfügbar:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klicken Sie hier, um diesen Betrag zu überweisen.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Übertragbar]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nicht unterstützt]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Bürgermeisterzugang erforderlich</gradient>"
+    lore:
+      - "<gray>Sie müssen der aktive Bürgermeister der Stadt sein</gray>"
+      - "<gray>Steuerübertragungskontrollen anzuwenden.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Keine Hauptbucheinträge</gradient>"
+    lore:
+      - "<gray>Es warten keine eingezogenen Lagergebühren</gray>"
+      - "<gray>für Stadt-Bank-Überweisung.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> Eine Überweisung auf die Stadtbank ist nicht möglich. Derzeit werden Überweisungen von der Stadt zur Bank unterstützt Vault nur.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Übertragung fehlgeschlagen <white>{currency}</white><gray> in Ihre Stadtbank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Übertragen <white>{amount}</white><gray> In <white>{currency}</white><gray> an Ihre Stadtbank.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}ist bereits in einer anderen Sitzung geöffnet.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}konnte momentan nicht geöffnet werden.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Sie haben keinen Zugriff auf<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> erfordert Schutzprüfungen, es ist jedoch keine unterstützte Schutz-Plugin-Brücke verfügbar.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du musst für dich selbst stehen <white>{protection_plugin}</white> Anspruch auf Öffnung <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Währung der Lagersteuer <white>{currency}</white><gray> ist derzeit nicht verfügbar für <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Du brauchst <white>{amount}</white><gray> In <white>{currency}</white> Lagersteuer zu entrichten <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Das Sammeln ist fehlgeschlagen <white>{amount}</white><gray> In <white>{currency}</white> für <white>{storage_key}</white><gray>. Es wurde keine Steuer erhoben.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Es wird Lagersteuer erhoben <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> ist eingefroren, da die Zahlung fällig ist.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Ausstehende Schulden für <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Ausstehende Schulden beglichen <white>{storage_key}</white><gray>. Lagerung ungefroren.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zusammenfassung der Schuldenzahlung:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Es fallen wiederkehrende Lagergebühren an <white>{taxed_storages}</white> gefüllte Speicher:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Wiederkehrende Lagersteuer entfällt <white>{taxed_storages}</white> Gefüllte Speicher, weil <white>{currency}</white> ist nicht verfügbar.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Die wiederkehrende Lagersteuer ist fehlgeschlagen <white>{taxed_storages}</white> Gefüllte Speicher: Bedarf <white>{amount}</white> In <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Eine wiederkehrende Lagersteuer konnte nicht erhoben werden <white>{taxed_storages}</white> gefüllte Speicher ein <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>wird global aus dem SpeicherRDRauf die schwarze Liste gesetzt.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Ihre Bearbeitungssitzung für{storage_key}ist abgelaufen oder wurde an einen anderen Ort verschoben. Änderungen wurden nicht gespeichert.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}konnte nicht gespeichert werden. Weitere Informationen finden Sie in der Konsole.</gray>"

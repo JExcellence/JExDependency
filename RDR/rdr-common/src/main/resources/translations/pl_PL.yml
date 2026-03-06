@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Użyj liczby z zakresu od<white>1</white>do<white>{max_hotkeys}</white><gray>. Wejście:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Podatki za przechowywanie</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Przegląd podatków</gradient>"
+    lore:
+      - "<gray>Zamrożone magazyny:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Waluty zadłużenia:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Zapoznaj się z poniższymi informacjami dotyczącymi kontroli zadłużenia i transferów.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Podsumowanie zadłużenia</gradient>"
+      lore:
+        - "<gray>Magazyny wymagające zapłaty:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Szczegóły zadłużenia według waluty:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Brak zaległych długów związanych z mroźniami.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Zaległy dług:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Zamrożone Magazyny</gradient>"
+      lore:
+        - "<gray>Zamrożone magazyny:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Kliknij, aby otworzyć listę zamrożonych magazynów.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Miasto] Podatki transferowe</gradient>"
+      lore:
+        - "<gray>Miasto:</gray> <white>{town_name}</white>"
+        - "<gray>Przenieś zebrane podatki za przechowywanie</gray>"
+        - "<gray>do banku twojego miasta ochrony.</gray>"
+        - "<yellow>Akcja wyłącznie burmistrza.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp burmistrza</gradient>"
+      lore:
+        - "<gray>Musisz być obecnym burmistrzem miasta</gray>"
+        - "<gray>do przekazania pobranych podatków za składowanie.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Zamrożone Magazyny</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Dług w zakresie zamrożonych magazynów</gradient>"
+    lore:
+      - "<gray>Zamrożone magazyny:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Kliknij wpis, aby spłacić dług i odblokować.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Magazyn ten jest zamrożony z powodu niespłaconego zadłużenia.</gray>"
+      - "<gray>Kliknij, aby spróbować dokonać płatności i otwórz ją.</gray>"
+      - "<gray>Zaległy dług:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Brak zamrożonych magazynów</gradient>"
+    lore:
+      - "<gray>Nie masz obecnie żadnych zamrożonych magazynów.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Miasto] Przelew podatkowy</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Miejska Księga Podatkowa</gradient>"
+    lore:
+      - "<gray>Miasto:</gray> <white>{town_name}</white>"
+      - "<gray>Ochrona:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Wpisy do księgi:</gray> <white>{entry_count}</white>"
+      - "<yellow>Kliknij walutę zbywalną, aby ją przenieść.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Dostępny:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Kliknij, aby przelać tę kwotę.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Przenośny]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nieobsługiwane]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp burmistrza</gradient>"
+    lore:
+      - "<gray>Musisz być aktywnym burmistrzem miasta</gray>"
+      - "<gray>korzystać z kontroli transferu podatków.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Brak wpisów do księgi</gradient>"
+    lore:
+      - "<gray>Nie czekają żadne pobrane podatki za składowanie</gray>"
+      - "<gray>do przelewu miasto-bank.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nie można przenieść do banku miejskiego. Obecnie obsługiwane są przelewy miejskie-bankowe Vault tylko.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nie udało się przenieść <white>{currency}</white><gray> do swojego banku miejskiego.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Przeniesiony <white>{amount}</white><gray> W <white>{currency}</white><gray> do swojego banku miejskiego.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}jest już otwarty w innej sesji.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}nie można teraz otworzyć.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Nie masz dostępu do<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> wymaga sprawdzenia ochrony, ale nie jest dostępny obsługiwany mostek wtyczki zabezpieczającej.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Musisz stanąć w swoim <white>{protection_plugin}</white> żądać otwarcia <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Waluta podatku od składowania <white>{currency}</white><gray> nie jest obecnie dostępny dla <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Potrzebujesz <white>{amount}</white><gray> W <white>{currency}</white> zapłacić podatek od składowania <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nie udało się zebrać <white>{amount}</white><gray> W <white>{currency}</white> Do <white>{storage_key}</white><gray>. Nie naliczono żadnego podatku.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Opłata za składowanie pobierana za <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> zostaje zamrożony ze względu na termin płatności.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Niespłacany dług za <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Spłacił zaległy dług za <white>{storage_key}</white><gray>. Przechowywanie niezamrożone.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Podsumowanie spłaty zadłużenia:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Naliczane cyklicznie podatki za przechowywanie <white>{taxed_storages}</white> wypełnione magazyny:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Pominięto cykliczny podatek za przechowywanie <white>{taxed_storages}</white> wypełnione magazyny, ponieważ <white>{currency}</white> jest niedostępny.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Nie udało się naliczyć cyklicznego podatku za przechowywanie <white>{taxed_storages}</white> wypełnione magazyny: potrzeba <white>{amount}</white> W <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nie można naliczyć cyklicznego podatku za przechowywanie <white>{taxed_storages}</white> zapełnione magazyny <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>znajduje się na globalnej czarnej liście zRDRmagazynu.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Twoja sesja edycji dla{storage_key}wygasła lub została przeniesiona gdzie indziej. Zmiany nie zostały zapisane.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}nie można zapisać. Sprawdź szczegóły w konsoli.</gray>"

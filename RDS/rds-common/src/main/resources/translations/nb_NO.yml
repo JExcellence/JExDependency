@@ -1178,6 +1178,49 @@ shop_material_search_anvil_ui:
 # PAGINERING
 # ============================================
 # Delte pagineringselementetiketter brukt på tvers av listegrensesnitt.
+
+# Bybeskyttelse-skatteoverføring UI for /rs skatter.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Ty] Butikkskattebank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Byskattebok</gradient>"
+    lore:
+      - "<gray>By:</gray> <white>{town_name}</white>"
+      - "<gray>Beskyttelse:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Ledgeroppføringer:</gray> <white>{entry_count}</white>"
+      - "<gray>Ordføreroverføring aktivert:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Klikk på en oppføring nedenfor for å overføre støttede valutaer.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Tilgjengelig:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klikk for å overføre denne saldoen.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Overførbar]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[ordfører påkrevd]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Støttes ikke]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] By påkrevd</gradient>"
+    lore:
+      - "<gray>Du må tilhøre en støttet by</gray>"
+      - "<gray>for å se og overføre beskyttelsesskatter.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Ordførertilgang kreves</gradient>"
+    lore:
+      - "<gray>Du må være den aktive byordføreren</gray>"
+      - "<gray>å overføre butikkvernavgifter.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ingen hovedbokoppføringer</gradient>"
+    lore:
+      - "<gray>Ingen innkrevde verneavgifter venter</gray>"
+      - "<gray>for overføring til din bybank.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bare byordførere kan overføre beskyttelsesavgifter.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan ikke overføres. By-bankoverføringer støttes for øyeblikket Vault bare.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kunne ikke overføre <white>{currency}</white><gray> inn i byens bank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Overført <white>{amount}</white><gray> i <white>{currency}</white><gray> til din bybank.</gray>"
+
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Side%current_page%</gradient>"
   lore:

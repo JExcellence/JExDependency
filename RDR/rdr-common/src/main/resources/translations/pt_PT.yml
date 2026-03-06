@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Use um número entre<white>1</white>e<white>{max_hotkeys}</white><gray>. Entrada:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Impostos de armazenamento</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informações] Visão geral fiscal</gradient>"
+    lore:
+      - "<gray>Armazenamentos congelados:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Moedas de dívida:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Revise os controles de dívida e transferência abaixo.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Resumo da dívida</gradient>"
+      lore:
+        - "<gray>Armazenamentos que exigem pagamento:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Detalhes da dívida por moeda:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Nenhuma dívida pendente de armazenamento congelado.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Dívida pendente:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Armazenagens Congeladas</gradient>"
+      lore:
+        - "<gray>Armazenamentos congelados:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Clique para abrir a lista de armazenamento congelado.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Cidade] Impostos de transferência</gradient>"
+      lore:
+        - "<gray>Cidade:</gray> <white>{town_name}</white>"
+        - "<gray>Mover impostos de armazenamento coletados</gray>"
+        - "<gray>no banco da sua cidade de proteção.</gray>"
+        - "<yellow>Ação exclusiva do prefeito.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Acesso do prefeito necessário</gradient>"
+      lore:
+        - "<gray>Você deve ser o atual prefeito da cidade</gray>"
+        - "<gray>para transferir impostos de armazenamento arrecadados.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Armazenagens Congeladas</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Dívida de armazenamento congelada</gradient>"
+    lore:
+      - "<gray>Armazenamentos congelados:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Clique em uma entrada para pagar a dívida e descongelar.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Este armazenamento está congelado devido a dívidas não pagas.</gray>"
+      - "<gray>Clique para tentar o pagamento e abri-lo.</gray>"
+      - "<gray>Dívida pendente:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Sem armazenamento congelado</gradient>"
+    lore:
+      - "<gray>Você não tem armazenamentos congelados no momento.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Cidade] Transferência de impostos</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informações] Livro fiscal municipal</gradient>"
+    lore:
+      - "<gray>Cidade:</gray> <white>{town_name}</white>"
+      - "<gray>Proteção:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Entradas do razão:</gray> <white>{entry_count}</white>"
+      - "<yellow>Clique em uma moeda transferível para movê-la.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Disponível:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Clique para transferir esse valor.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Transferível]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Não suportado]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Acesso do prefeito necessário</gradient>"
+    lore:
+      - "<gray>Você deve ser o prefeito ativo da cidade</gray>"
+      - "<gray>usar controles de transferência de impostos.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Sem entradas no razão</gradient>"
+    lore:
+      - "<gray>Nenhum imposto de armazenamento cobrado está esperando</gray>"
+      - "<gray>para transferência bancária municipal.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> não pode ser transferido para o banco da cidade. Atualmente, as transferências bancárias municipais suportam Vault apenas.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Falha ao transferir <white>{currency}</white><gray> no banco da sua cidade.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Transferido <white>{amount}</white><gray> em <white>{currency}</white><gray> para o banco da sua cidade.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}já está aberto em outra sessão.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}não pôde ser aberto no momento.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Você não tem acesso a<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> requer verificações de proteção, mas nenhuma ponte de plug-in de proteção compatível está disponível.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Você deve permanecer por conta própria <white>{protection_plugin}</white> reivindicar a abertura <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Moeda do imposto de armazenamento <white>{currency}</white><gray> não está disponível no momento para <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Você precisa <white>{amount}</white><gray> em <white>{currency}</white> pagar imposto de armazenamento para <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Falha ao coletar <white>{amount}</white><gray> em <white>{currency}</white> para <white>{storage_key}</white><gray>. Nenhum imposto foi cobrado.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Taxa de armazenamento cobrada <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> está congelado porque o pagamento é devido.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Dívida pendente para <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Pagou dívida pendente de <white>{storage_key}</white><gray>. Armazenamento descongelado.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Resumo do pagamento da dívida:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Impostos recorrentes de armazenamento cobrados <white>{taxed_storages}</white> depósitos cheios:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Imposto recorrente sobre armazenamento ignorado <white>{taxed_storages}</white> depósitos cheios porque <white>{currency}</white> está indisponível.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Falha no imposto de armazenamento recorrente para <white>{taxed_storages}</white> armazenamentos cheios: necessidade <white>{amount}</white> em <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Não foi possível cobrar imposto de armazenamento recorrente <white>{taxed_storages}</white> depósitos cheios em <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>está globalmente na lista negra do armazenamentoRDR.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Sua sessão de edição para{storage_key}expirou ou foi movida para outro lugar. As alterações não foram salvas.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}não pôde ser salvo. Verifique o console para obter detalhes.</gray>"

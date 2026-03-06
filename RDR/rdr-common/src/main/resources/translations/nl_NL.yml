@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Gebruik een nummer tussen<white>1</white>en<white>{max_hotkeys}</white><gray>. Invoer:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Opslagbelastingen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Belastingoverzicht</gradient>"
+    lore:
+      - "<gray>Diepvriesopslag:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Schuldvaluta's:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Bekijk hieronder de schulden- en overdrachtscontroles.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Schuldenoverzicht</gradient>"
+      lore:
+        - "<gray>Opslagplaatsen waarvoor betaling vereist is:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Schuldgegevens per valuta:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Geen uitstaande bevroren opslagschuld.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Uitstaande schulden:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Diepvriesopslagplaatsen</gradient>"
+      lore:
+        - "<gray>Diepvriesopslag:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Klik om de bevroren opslaglijst te openen.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Stad] Overdrachtsbelastingen</gradient>"
+      lore:
+        - "<gray>Dorp:</gray> <white>{town_name}</white>"
+        - "<gray>Verplaats geïnde opslagbelastingen</gray>"
+        - "<gray>naar de bank van uw beschermingsstad.</gray>"
+        - "<yellow>Actie alleen voor burgemeester.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Burgemeestertoegang vereist</gradient>"
+      lore:
+        - "<gray>U moet de huidige burgemeester zijn</gray>"
+        - "<gray>geïnde opslagbelastingen over te dragen.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Diepvriesopslagplaatsen</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Bevroren opslagschuld</gradient>"
+    lore:
+      - "<gray>Diepvriesopslag:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Klik op een item om schulden te betalen en de bevriezing op te heffen.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Deze opslag is bevroren vanwege onbetaalde schulden.</gray>"
+      - "<gray>Klik om te proberen te betalen en open het.</gray>"
+      - "<gray>Uitstaande schulden:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Geen bevroren opslagplaatsen</gradient>"
+    lore:
+      - "<gray>Je hebt momenteel geen bevroren opslagruimte.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Stad] Belastingoverdracht</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Grootboek stadsbelasting</gradient>"
+    lore:
+      - "<gray>Dorp:</gray> <white>{town_name}</white>"
+      - "<gray>Bescherming:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Grootboekposten:</gray> <white>{entry_count}</white>"
+      - "<yellow>Klik op een overdraagbare valuta om deze te verplaatsen.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Beschikbaar:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klik om dit bedrag over te maken.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Overdraagbaar]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Niet ondersteund]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Burgemeestertoegang vereist</gradient>"
+    lore:
+      - "<gray>U moet de actieve burgemeester zijn</gray>"
+      - "<gray>gebruik te maken van controles op belastingoverdrachten.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Geen grootboekposten</gradient>"
+    lore:
+      - "<gray>Er wachten geen geïnde opslagbelastingen</gray>"
+      - "<gray>voor stadsbankoverschrijving.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan niet worden overgemaakt naar de stadsbank. Overschrijvingen per stadsbank worden momenteel ondersteund Vault alleen.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Overdracht mislukt <white>{currency}</white><gray> naar uw stadsbank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Overgedragen <white>{amount}</white><gray> in <white>{currency}</white><gray> naar uw stadsbank.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}is al geopend in een andere sessie.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kan momenteel niet worden geopend.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Je hebt geen toegang tot<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> vereist beschermingscontroles, maar er is geen ondersteunde brug voor beschermingsplug-ins beschikbaar.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je moet op eigen benen staan <white>{protection_plugin}</white> beweren te openen <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Valuta opslagbelasting <white>{currency}</white><gray> is momenteel niet beschikbaar voor <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Je hebt nodig <white>{amount}</white><gray> in <white>{currency}</white> opslagbelasting voor te betalen <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kan niet verzamelen <white>{amount}</white><gray> in <white>{currency}</white> voor <white>{storage_key}</white><gray>. Er werd geen belasting geheven.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Er wordt opslagbelasting in rekening gebracht <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> is bevroren omdat betaling verschuldigd is.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Uitstaande schulden voor <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Openstaande schuld betaald voor <white>{storage_key}</white><gray>. Opslag ontdooid.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Samenvatting van de schuldbetalingen:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Terugkerende opslagbelastingen die in rekening worden gebracht <white>{taxed_storages}</white> gevulde opslagruimtes:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Terugkerende opslagbelasting overgeslagen <white>{taxed_storages}</white> gevulde opslagruimtes omdat <white>{currency}</white> is niet beschikbaar.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Terugkerende opslagbelasting is mislukt <white>{taxed_storages}</white> gevulde opslagruimtes: behoefte <white>{amount}</white> in <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Terugkerende opslagbelasting kon niet in rekening worden gebracht <white>{taxed_storages}</white> gevulde opslagruimtes in <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>staat wereldwijd op de zwarte lijst vanRDRopslag.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Je bewerkingssessie voor{storage_key}is verlopen of verplaatst. Wijzigingen zijn niet opgeslagen.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kan niet worden opgeslagen. Controleer de console voor details.</gray>"

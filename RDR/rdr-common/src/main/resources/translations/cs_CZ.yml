@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Použijte číslo mezi<white>1</white>a<white>{max_hotkeys}</white><gray>. Vstup:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Daně za skladování</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Přehled daní</gradient>"
+    lore:
+      - "<gray>Mražené sklady:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Dluhové měny:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Kontrola dluhů a převodů níže.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Přehled dluhu</gradient>"
+      lore:
+        - "<gray>Úložiště vyžadující platbu:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Podrobnosti o dluhu podle měny:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[OK]</gradient> <gray>Žádný nesplacený dluh za zmrazené úložiště.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Nesplacený dluh:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Zmrazené sklady</gradient>"
+      lore:
+        - "<gray>Mražené sklady:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Klepnutím otevřete seznam zmrazených úložišť.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Město] Daně z převodu</gradient>"
+      lore:
+        - "<gray>Město:</gray> <white>{town_name}</white>"
+        - "<gray>Přesunout vybrané skladovací daně</gray>"
+        - "<gray>do vaší ochranné městské banky.</gray>"
+        - "<yellow>Akce pouze pro starostu.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup starosty</gradient>"
+      lore:
+        - "<gray>Musíte být současný starosta města</gray>"
+        - "<gray>převést vybrané skladovací daně.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Zmrazené sklady</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Zmrazený skladovací dluh</gradient>"
+    lore:
+      - "<gray>Mražené sklady:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Kliknutím na záznam zaplatíte dluh a rozmrazíte.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Toto úložiště je zmrazeno kvůli nezaplacenému dluhu.</gray>"
+      - "<gray>Klikněte pro pokus o platbu a otevřete ji.</gray>"
+      - "<gray>Nesplacený dluh:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Žádná zmrazená úložiště</gradient>"
+    lore:
+      - "<gray>Momentálně nemáte žádná zmrazená úložiště.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Město] Převod daně</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Městská daňová kniha</gradient>"
+    lore:
+      - "<gray>Město:</gray> <white>{town_name}</white>"
+      - "<gray>Ochrana:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Záznamy v hlavní knize:</gray> <white>{entry_count}</white>"
+      - "<yellow>Kliknutím na převoditelnou měnu ji přesunete.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>K dispozici:</gray> <white>{amount}</white>"
+      - "<gray>Postavení:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Kliknutím převedete tuto částku.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Přenosný]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nepodporováno]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Je vyžadován přístup starosty</gradient>"
+    lore:
+      - "<gray>Musíte být aktivním starostou města</gray>"
+      - "<gray>používat kontroly převodu daní.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Žádné položky hlavní knihy</gradient>"
+    lore:
+      - "<gray>Žádné vybrané skladovací poplatky nečekají</gray>"
+      - "<gray>na bankovní převod město.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nelze převést do městské banky. V současné době jsou podporovány převody na městské banky Vault pouze.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Přenos se nezdařil <white>{currency}</white><gray> do vaší městské banky.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Převedeno <white>{amount}</white><gray> v <white>{currency}</white><gray> do vaší městské banky.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}je již otevřeno v jiné relaci.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}právě teď nelze otevřít.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Nemáte přístup k<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> vyžaduje kontroly ochrany, ale není k dispozici žádný podporovaný ochranný zásuvný most.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Musíte stát ve svém <white>{protection_plugin}</white> nárok na otevření <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Měna skladovací daně <white>{currency}</white><gray> není momentálně k dispozici pro <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Potřebujete <white>{amount}</white><gray> v <white>{currency}</white> platit skladovací daň <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nepodařilo se shromáždit <white>{amount}</white><gray> v <white>{currency}</white> pro <white>{storage_key}</white><gray>. Nebyla účtována žádná daň.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Účtována skladovací daň <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> je zmrazen, protože je splatná platba.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Nesplacený dluh za <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Zaplacený nesplacený dluh za <white>{storage_key}</white><gray>. Skladování nezmrazené.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Přehled plateb dluhu:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Opakované poplatky za skladování účtované <white>{taxed_storages}</white> naplněné sklady:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Opakovaná skladovací daň byla přeskočena pro <white>{taxed_storages}</white> naplněné sklady, protože <white>{currency}</white> je nedostupný.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Opakovaná daň z úložiště se nezdařila pro <white>{taxed_storages}</white> naplněné sklady: potřeba <white>{amount}</white> v <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Opakovanou skladovací daň nebylo možné účtovat <white>{taxed_storages}</white> naplněné sklady <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>je celosvětově na černé listině z úložištěRDR.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Vaše relace úprav pro{storage_key}vypršela nebo byla přesunuta jinam. Změny nebyly uloženy.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}nelze uložit. Podrobnosti najdete v konzole.</gray>"

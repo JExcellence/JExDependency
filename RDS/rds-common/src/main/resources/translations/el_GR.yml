@@ -1178,6 +1178,49 @@ shop_material_search_anvil_ui:
 # ΣΕΛΙΔΟΠΟΙΗΣΗ
 # ============================================
 # Κοινόχρηστες ετικέτες στοιχείων σελιδοποίησης που χρησιμοποιούνται σε διεπαφές χρήστη λιστών.
+
+# Διεπαφή χρήστη μεταφοράς προστασίας πόλης-φόρου για /rs φόρους.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Πόλη] Κατάστημα Φορολογική Τράπεζα</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Βιβλίο Φορολογίας Πόλης</gradient>"
+    lore:
+      - "<gray>Πόλη:</gray> <white>{town_name}</white>"
+      - "<gray>Προστασία:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Εγγραφές στο καθολικό:</gray> <white>{entry_count}</white>"
+      - "<gray>Η μεταφορά δημάρχου ενεργοποιήθηκε:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Κάντε κλικ σε μια καταχώριση παρακάτω για να μεταφέρετε υποστηριζόμενα νομίσματα.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Διαθέσιμος:</gray> <white>{amount}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Κάντε κλικ για να μεταφέρετε αυτό το υπόλοιπο.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Μεταβιβάσιμος]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Ζητείται Δήμαρχος]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ανυποστήρικτος]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πόλη</gradient>"
+    lore:
+      - "<gray>Πρέπει να ανήκεις σε μια υποστηριζόμενη πόλη</gray>"
+      - "<gray>για προβολή και μεταφορά φόρων προστασίας.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση Δημάρχου</gradient>"
+    lore:
+      - "<gray>Πρέπει να είστε ο ενεργός δήμαρχος της πόλης</gray>"
+      - "<gray>για μεταφορά φόρων προστασίας καταστημάτων.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Δεν υπάρχουν καταχωρήσεις στο καθολικό</gradient>"
+    lore:
+      - "<gray>Δεν περιμένουν εισπραχθέντες φόρους προστασίας</gray>"
+      - "<gray>για μεταφορά στην τράπεζα της πόλης σας.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Μόνο οι δήμαρχοι των πόλεων μπορούν να μεταφέρουν φόρους προστασίας.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> δεν μπορεί να μεταφερθεί. Επί του παρόντος υποστηρίζονται οι μεταφορές από την πόλη Vault μόνο.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Αποτυχία μεταφοράς <white>{currency}</white><gray> στην τράπεζα της πόλης σας.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Μεταφέρθηκε <white>{amount}</white><gray> σε <white>{currency}</white><gray> στην τράπεζα της πόλης σας.</gray>"
+
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Σελίδα%current_page%</gradient>"
   lore:

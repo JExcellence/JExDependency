@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Inserisci un materiale valido come Diamond_block. Input: {input}</red>"
     processing_failed: "<red>Impossibile cercare il materiale. Input: {input}</red>"
 
+# UI per il trasferimento dell'imposta sulla protezione della città /rs tasse.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Città] Negozio Banca delle imposte</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Registro delle imposte comunali</gradient>"
+    lore:
+      - "<gray>Città:</gray> <white>{town_name}</white>"
+      - "<gray>Protezione:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Voci contabili:</gray> <white>{entry_count}</white>"
+      - "<gray>Trasferimento sindaco abilitato:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Fai clic su una voce di seguito per trasferire le valute supportate.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Disponibile:</gray> <white>{amount}</white>"
+      - "<gray>Stato:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Fare clic per trasferire questo saldo.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Trasferibile]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Sindaco richiesto]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Non supportato]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Città Obbligatorio</gradient>"
+    lore:
+      - "<gray>Devi appartenere a una città supportata</gray>"
+      - "<gray>per visualizzare e trasferire le tasse di protezione.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Accesso sindaco richiesto</gradient>"
+    lore:
+      - "<gray>Devi essere il sindaco attivo della città</gray>"
+      - "<gray>trasferire le tasse di protezione del negozio.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Nessuna voce del registro</gradient>"
+    lore:
+      - "<gray>Nessuna tassa di protezione riscossa è in attesa</gray>"
+      - "<gray>per il bonifico alla banca della tua città.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Solo i sindaci delle città possono trasferire le tasse di protezione.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> non può essere trasferito. Attualmente sono supportati i bonifici bancari comunali Vault soltanto.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Trasferimento non riuscito <white>{currency}</white><gray> nella banca della tua città.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Trasferito <white>{amount}</white><gray> In <white>{currency}</white><gray> alla banca della tua città.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

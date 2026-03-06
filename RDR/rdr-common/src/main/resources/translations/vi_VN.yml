@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Sử dụng một số giữa <white>1</white> và <white>{max_hotkeys}</white><gray>. Đầu vào:</gray> <white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Thuế lưu trữ</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Tổng quan về thuế</gradient>"
+    lore:
+      - "<gray>Kho đông lạnh:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Đồng tiền nợ:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Xem lại các biện pháp kiểm soát nợ và chuyển khoản dưới đây.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Tóm tắt nợ</gradient>"
+      lore:
+        - "<gray>Kho yêu cầu thanh toán:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Chi tiết khoản nợ theo loại tiền:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[ĐƯỢC RỒI]</gradient> <gray>Không có nợ kho đông lạnh tồn đọng.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Nợ chưa trả:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Kho đông lạnh</gradient>"
+      lore:
+        - "<gray>Kho đông lạnh:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Bấm để mở danh sách lưu trữ đông lạnh.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Thị trấn] Thuế chuyển nhượng</gradient>"
+      lore:
+        - "<gray>Thị trấn:</gray> <white>{town_name}</white>"
+        - "<gray>Di chuyển thuế lưu trữ đã thu</gray>"
+        - "<gray>vào ngân hàng thị trấn bảo vệ của bạn.</gray>"
+        - "<yellow>Hành động chỉ dành cho thị trưởng.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của Thị trưởng</gradient>"
+      lore:
+        - "<gray>Bạn phải là thị trưởng thị trấn hiện tại</gray>"
+        - "<gray>để chuyển thuế lưu kho đã thu.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Kho đông lạnh</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Nợ kho đông lạnh</gradient>"
+    lore:
+      - "<gray>Kho đông lạnh:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Nhấp vào một mục để trả nợ và giải phóng.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Kho lưu trữ này đang bị đóng băng do nợ chưa trả được.</gray>"
+      - "<gray>Nhấp để thử thanh toán và mở nó.</gray>"
+      - "<gray>Nợ chưa trả:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Không có kho đông lạnh</gradient>"
+    lore:
+      - "<gray>Hiện tại bạn không có kho đông lạnh nào.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Thị trấn] Chuyển thuế</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Sổ cái thuế thị trấn</gradient>"
+    lore:
+      - "<gray>Thị trấn:</gray> <white>{town_name}</white>"
+      - "<gray>Sự bảo vệ:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Các mục sổ cái:</gray> <white>{entry_count}</white>"
+      - "<yellow>Nhấp vào một loại tiền tệ có thể chuyển nhượng để di chuyển nó.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Có sẵn:</gray> <white>{amount}</white>"
+      - "<gray>Trạng thái:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Bấm để chuyển số tiền này.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Có thể chuyển nhượng]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Không được hỗ trợ]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của Thị trưởng</gradient>"
+    lore:
+      - "<gray>Bạn phải là thị trưởng năng động của thị trấn</gray>"
+      - "<gray>sử dụng các biện pháp kiểm soát chuyển thuế.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Không có mục sổ cái</gradient>"
+    lore:
+      - "<gray>Không có thuế lưu trữ đã thu đang chờ</gray>"
+      - "<gray>để chuyển khoản ngân hàng thành phố.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> không thể chuyển vào ngân hàng thị trấn. Chuyển khoản ngân hàng thị trấn hiện đang hỗ trợ Vault chỉ một.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể chuyển <white>{currency}</white><gray> vào ngân hàng thị trấn của bạn.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã chuyển <white>{amount}</white><gray> TRONG <white>{currency}</white><gray> đến ngân hàng thị trấn của bạn.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>{storage_key} đã được mở trong một phiên khác.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} không thể mở được ngay bây giờ.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn không có quyền truy cập vào <white>{storage_key}</white><gray>?.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> yêu cầu kiểm tra bảo vệ, nhưng không có cầu nối plugin bảo vệ được hỗ trợ.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn phải tự đứng vững <white>{protection_plugin}</white> yêu cầu mở <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Đồng tiền thuế lưu trữ <white>{currency}</white><gray> hiện không có sẵn cho <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Bạn cần <white>{amount}</white><gray> TRONG <white>{currency}</white> nộp thuế lưu kho cho <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể thu thập <white>{amount}</white><gray> TRONG <white>{currency}</white> vì <white>{storage_key}</white><gray>. Không có thuế bị tính phí.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Thuế lưu trữ được tính cho <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> bị đóng băng vì đến hạn thanh toán.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Nợ chưa trả cho <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã thanh toán nợ tồn đọng cho <white>{storage_key}</white><gray>. Lưu trữ không bị đóng băng.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Tóm tắt trả nợ:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Thuế lưu kho định kỳ được tính cho <white>{taxed_storages}</white> kho chứa đầy:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Thuế lưu trữ định kỳ được bỏ qua cho <white>{taxed_storages}</white> kho đầy vì <white>{currency}</white> không có sẵn.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Thuế lưu trữ định kỳ không thành công cho <white>{taxed_storages}</white> kho chứa đầy: cần <white>{amount}</white> TRONG <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể tính thuế lưu trữ định kỳ cho <white>{taxed_storages}</white> kho chứa đầy trong <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{item}</white><gray> bị đưa vào danh sách đen toàn cục của kho lưu trữ RDR.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Phiên chỉnh sửa của bạn cho {storage_key} hết hạn hoặc chuyển đi nơi khác. Các thay đổi chưa được lưu.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>{storage_key} không thể cứu được. Kiểm tra bảng điều khiển để biết chi tiết.</gray>"

@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>1</white>ile<white>{max_hotkeys}</white><gray>arasında bir sayı kullanın. Giriş:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Depolama Vergileri</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Vergiye Genel Bakış</gradient>"
+    lore:
+      - "<gray>Dondurulmuş depolar:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Borç para birimleri:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Aşağıdaki borç ve transfer kontrollerini inceleyin.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Borç Özeti</gradient>"
+      lore:
+        - "<gray>Ödeme gerektiren depolar:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Para birimine göre borç ayrıntıları:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[TAMAM]</gradient> <gray>Ödenmemiş donmuş depolama borcu yok.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Ödenmemiş borç:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Dondurulmuş Depolar</gradient>"
+      lore:
+        - "<gray>Dondurulmuş depolar:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Dondurulmuş depolama listesini açmak için tıklayın.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Kasaba] Transfer Vergileri</gradient>"
+      lore:
+        - "<gray>Şehir:</gray> <white>{town_name}</white>"
+        - "<gray>Toplanan depolama vergilerini taşıyın</gray>"
+        - "<gray>koruma kasabası bankanıza.</gray>"
+        - "<yellow>Yalnızca belediye başkanına özel eylem.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Belediye Başkanı Erişimi Gerekli</gradient>"
+      lore:
+        - "<gray>Şu anki belediye başkanı olmalısınız</gray>"
+        - "<gray>Toplanan depolama vergilerini aktarmak için.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Dondurulmuş Depolar</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Dondurulmuş Depolama Borcu</gradient>"
+    lore:
+      - "<gray>Dondurulmuş depolar:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Borcunu ödemek ve dondurmayı çözmek için bir girişi tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Ödenmeyen borç nedeniyle bu depo donduruldu.</gray>"
+      - "<gray>Ödemeyi denemek ve açmak için tıklayın.</gray>"
+      - "<gray>Ödenmemiş borç:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] Dondurulmuş Depolama Yok</gradient>"
+    lore:
+      - "<gray>Şu anda dondurulmuş deponuz bulunmamaktadır.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Kasaba] Vergi Transferi</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Kasaba Vergi Defteri</gradient>"
+    lore:
+      - "<gray>Şehir:</gray> <white>{town_name}</white>"
+      - "<gray>Koruma:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Defter girişleri:</gray> <white>{entry_count}</white>"
+      - "<yellow>Aktarılabilir bir para birimini taşımak için tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Mevcut:</gray> <white>{amount}</white>"
+      - "<gray>Durum:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Bu tutarı aktarmak için tıklayın.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Aktarılabilir]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Desteklenmiyor]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Belediye Başkanı Erişimi Gerekli</gradient>"
+    lore:
+      - "<gray>Aktif kasaba belediye başkanı olmalısınız</gray>"
+      - "<gray>vergi transferi kontrollerini kullanmak.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Defter Girişi Yok</gradient>"
+    lore:
+      - "<gray>Toplanan depolama vergisi yok</gray>"
+      - "<gray>şehir bankası transferi için.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> şehir bankasına devredilemez. Şehir bankası transferleri şu anda destekleniyor Vault sadece.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Aktarılamadı <white>{currency}</white><gray> şehir bankasına.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktarıldı <white>{amount}</white><gray> içinde <white>{currency}</white><gray> şehir bankasına.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}zaten başka bir oturumda açık.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}şu anda açılamıyor.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{storage_key}</white><gray>.</gray>'ye erişiminiz yok"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> koruma kontrolleri gerektirir ancak desteklenen koruma eklentisi köprüsü yoktur.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kendi ayakları üzerinde durmalısın <white>{protection_plugin}</white> açıldığını iddia <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Depolama vergisi para birimi <white>{currency}</white><gray> şu anda mevcut değil <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>ihtiyacın var <white>{amount}</white><gray> içinde <white>{currency}</white> için depolama vergisi ödemek <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Toplanamadı <white>{amount}</white><gray> içinde <white>{currency}</white> için <white>{storage_key}</white><gray>. Herhangi bir vergi alınmadı.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Depolama vergisi tahsil edildi <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> Ödeme zamanı geldiği için dondurulmuştur.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>için ödenmemiş borç <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Ödenmemiş borcunu ödedi <white>{storage_key}</white><gray>. Dondurulmamış depolama.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Borç ödeme özeti:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Ücretlendirilen yinelenen depolama vergileri <white>{taxed_storages}</white> dolu depolar:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Şunun için yinelenen depolama vergisi atlandı: <white>{taxed_storages}</white> depolar doldu çünkü <white>{currency}</white> mevcut değil.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Yinelenen depolama vergisi şunun için başarısız oldu: <white>{taxed_storages}</white> dolu depolar: ihtiyaç <white>{amount}</white> içinde <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Yinelenen depolama vergisi şu amaçlarla tahsil edilemedi: <white>{taxed_storages}</white> depolar doldu <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>,RDRdepolama alanından genel olarak kara listeye alındı.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}için düzenleme oturumunuzun süresi doldu veya başka bir yere taşındı. Değişiklikler kaydedilmedi.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}kaydedilemedi. Ayrıntılar için konsolu kontrol edin.</gray>"

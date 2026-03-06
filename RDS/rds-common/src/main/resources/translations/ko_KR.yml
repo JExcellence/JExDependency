@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>diamond_block과 같은 유효한 재료를 입력하세요. 입력: {input}</red>"
     processing_failed: "<red>자재를 검색하지 못했습니다. 입력: {input}</red>"
 
+# 마을보호세 이전 UI /rs 구실.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[타운] 상점 세금 은행</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 마을세 장부</gradient>"
+    lore:
+      - "<gray>도시:</gray> <white>{town_name}</white>"
+      - "<gray>보호:</gray> <white>{protection_plugin}</white>"
+      - "<gray>원장 항목:</gray> <white>{entry_count}</white>"
+      - "<gray>시장 이전 활성화됨:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>지원되는 통화를 전송하려면 아래 항목을 클릭하세요.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>사용 가능:</gray> <white>{amount}</white>"
+      - "<gray>상태:</gray> <white>{transfer_status}</white>"
+      - "<yellow>이 잔액을 이체하려면 클릭하세요.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[양도 가능]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[시장 필수]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[지원되지 않음]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] 마을 필수</gradient>"
+    lore:
+      - "<gray>지원되는 도시에 속해 있어야 합니다.</gray>"
+      - "<gray>보호세를 확인하고 양도할 수 있습니다.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 시장 액세스 필요</gradient>"
+    lore:
+      - "<gray>당신은 활동적인 마을 시장이어야합니다</gray>"
+      - "<gray>상점 보호세를 양도합니다.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 원장 항목 없음</gradient>"
+    lore:
+      - "<gray>징수된 보호세가 기다리고 있지 않습니다.</gray>"
+      - "<gray>마을 은행으로 이체하려면</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>보호세는 마을 시장만이 양도할 수 있습니다.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray><white>{currency}</white><gray> 양도할 수 없습니다. 현재 마을 은행 송금이 지원됩니다. Vault 오직.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>전송하지 못했습니다. <white>{currency}</white><gray> 당신의 마을 은행에.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>전송됨 <white>{amount}</white><gray> ~에 <white>{currency}</white><gray> 당신의 마을 은행에.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>diamond_block gibi geçerli bir malzeme girin. Giriş: {input}</red>"
     processing_failed: "<red>Malzeme aranamadı. Giriş: {input}</red>"
 
+# Kasaba koruma-vergi aktarımı kullanıcı arayüzü /rs vergiler.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Kasaba] Mağaza Vergi Bankası</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Bilgi] Kasaba Vergi Defteri</gradient>"
+    lore:
+      - "<gray>Şehir:</gray> <white>{town_name}</white>"
+      - "<gray>Koruma:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Defter girişleri:</gray> <white>{entry_count}</white>"
+      - "<gray>Belediye başkanı aktarımı etkinleştirildi:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Desteklenen para birimlerini aktarmak için aşağıdaki girişlerden birine tıklayın.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Mevcut:</gray> <white>{amount}</white>"
+      - "<gray>Durum:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Bu bakiyeyi aktarmak için tıklayın.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Aktarılabilir]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Belediye Başkanı Gerekli]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Desteklenmiyor]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Şehir Gerekli</gradient>"
+    lore:
+      - "<gray>Desteklenen bir şehre ait olmalısınız</gray>"
+      - "<gray>koruma vergilerini görüntülemek ve aktarmak için.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Belediye Başkanı Erişimi Gerekli</gradient>"
+    lore:
+      - "<gray>Aktif kasaba belediye başkanı olmalısınız</gray>"
+      - "<gray>mağaza koruma vergilerini aktarmak.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Defter Girişi Yok</gradient>"
+    lore:
+      - "<gray>Toplanan koruma vergisi yok</gray>"
+      - "<gray>şehir bankasına transfer için.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Koruma vergilerini yalnızca belediye başkanları aktarabilir.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> transfer edilemez. Şehir bankası transferleri şu anda destekleniyor Vault sadece.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Aktarılamadı <white>{currency}</white><gray> şehir bankasına.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Aktarıldı <white>{amount}</white><gray> içinde <white>{currency}</white><gray> şehir bankasına.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

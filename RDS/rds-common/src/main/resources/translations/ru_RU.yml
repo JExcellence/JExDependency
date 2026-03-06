@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Введите допустимый материал, например Diamond_block. Ввод: {input}</red>"
     processing_failed: "<red>Не удалось выполнить поиск материала. Ввод: {input}</red>"
 
+# Интерфейс перевода налога на защиту города для /rs налоги.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Город] Магазин Налоговый банк</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Информация] Городская налоговая книга</gradient>"
+    lore:
+      - "<gray>Город:</gray> <white>{town_name}</white>"
+      - "<gray>Защита:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Записи в бухгалтерской книге:</gray> <white>{entry_count}</white>"
+      - "<gray>Перенос мэра включен:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Нажмите на запись ниже, чтобы перевести поддерживаемые валюты.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Доступный:</gray> <white>{amount}</white>"
+      - "<gray>Статус:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Нажмите, чтобы перенести этот баланс.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Передаваемый]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Требуется мэр]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Не поддерживается]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Требуется город</gradient>"
+    lore:
+      - "<gray>Вы должны принадлежать к поддерживаемому городу</gray>"
+      - "<gray>для просмотра и перевода налогов на защиту.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Требуется доступ мэра</gradient>"
+    lore:
+      - "<gray>Вы должны быть активным мэром города</gray>"
+      - "<gray>перечислить налоги на охрану магазинов.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Нет записей в книге</gradient>"
+    lore:
+      - "<gray>Никакие собранные налоги на защиту не ждут</gray>"
+      - "<gray>для перевода в городской банк.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray>Только мэры городов могут перечислять налоги на защиту.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[Х]</gradient> <gray><white>{currency}</white><gray> нельзя передать. В настоящее время поддерживаются городские банковские переводы Vault только.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Не удалось перенести <white>{currency}</white><gray> в ваш городской банк.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Переведено <white>{amount}</white><gray> в <white>{currency}</white><gray> в ваш городской банк.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

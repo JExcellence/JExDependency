@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Insira um material válido, como diamante_block. Entrada: {input}</red>"
     processing_failed: "<red>Falha ao pesquisar material. Entrada: {input}</red>"
 
+# UI de transferência de imposto de proteção municipal para /rs impostos.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Cidade] Banco Fiscal da Loja</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informações] Livro fiscal municipal</gradient>"
+    lore:
+      - "<gray>Cidade:</gray> <white>{town_name}</white>"
+      - "<gray>Proteção:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Entradas do razão:</gray> <white>{entry_count}</white>"
+      - "<gray>Transferência de prefeito habilitada:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Clique em uma entrada abaixo para transferir moedas suportadas.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Disponível:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Clique para transferir este saldo.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Transferível]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Prefeito necessário]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Não suportado]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Cidade necessária</gradient>"
+    lore:
+      - "<gray>Você deve pertencer a uma cidade apoiada</gray>"
+      - "<gray>para visualizar e transferir impostos de proteção.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Acesso do prefeito necessário</gradient>"
+    lore:
+      - "<gray>Você deve ser o prefeito ativo da cidade</gray>"
+      - "<gray>para transferir impostos de proteção de lojas.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Sem entradas no razão</gradient>"
+    lore:
+      - "<gray>Nenhum imposto de proteção coletado está esperando</gray>"
+      - "<gray>para transferência para o banco da sua cidade.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Somente os prefeitos das cidades podem transferir impostos de proteção.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> não pode ser transferido. Atualmente, as transferências bancárias municipais suportam Vault apenas.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Falha ao transferir <white>{currency}</white><gray> no banco da sua cidade.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Transferido <white>{amount}</white><gray> em <white>{currency}</white><gray> para o banco da sua cidade.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

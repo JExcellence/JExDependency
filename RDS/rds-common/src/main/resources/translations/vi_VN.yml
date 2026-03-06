@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Nhập vật liệu hợp lệ, chẳng hạn như Diamond_block. Đầu vào: {input}</red>"
     processing_failed: "<red>Không thể tìm kiếm tài liệu. Đầu vào: {input}</red>"
 
+# Giao diện người dùng chuyển thuế bảo vệ thị trấn cho /rs thuế.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Thị trấn] Ngân hàng thuế cửa hàng</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Thông tin] Sổ cái thuế thị trấn</gradient>"
+    lore:
+      - "<gray>Thị trấn:</gray> <white>{town_name}</white>"
+      - "<gray>Sự bảo vệ:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Các mục sổ cái:</gray> <white>{entry_count}</white>"
+      - "<gray>Đã kích hoạt chuyển nhượng thị trưởng:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Nhấp vào mục bên dưới để chuyển các loại tiền tệ được hỗ trợ.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Có sẵn:</gray> <white>{amount}</white>"
+      - "<gray>Trạng thái:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Nhấp để chuyển số dư này.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Có thể chuyển nhượng]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Yêu cầu thị trưởng]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Không được hỗ trợ]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Thị trấn bắt buộc</gradient>"
+    lore:
+      - "<gray>Bạn phải thuộc về một thị trấn được hỗ trợ</gray>"
+      - "<gray>để xem và chuyển thuế bảo vệ.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Yêu cầu quyền truy cập của Thị trưởng</gradient>"
+    lore:
+      - "<gray>Bạn phải là thị trưởng năng động của thị trấn</gray>"
+      - "<gray>chuyển thuế bảo vệ cửa hàng.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Không có mục sổ cái</gradient>"
+    lore:
+      - "<gray>Không có thuế bảo vệ thu được đang chờ đợi</gray>"
+      - "<gray>để chuyển đến ngân hàng thị trấn của bạn.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Chỉ có thị trưởng thị trấn mới có thể chuyển thuế bảo vệ.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> không thể được chuyển giao. Chuyển khoản ngân hàng thị trấn hiện đang hỗ trợ Vault chỉ một.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Không thể chuyển <white>{currency}</white><gray> vào ngân hàng thị trấn của bạn.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Đã chuyển <white>{amount}</white><gray> TRONG <white>{currency}</white><gray> đến ngân hàng thị trấn của bạn.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Χρησιμοποιήστε έναν αριθμό μεταξύ<white>1</white>και<white>{max_hotkeys}</white><gray>. Είσοδος:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] Φόροι αποθήκευσης</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Επισκόπηση φόρου</gradient>"
+    lore:
+      - "<gray>Κατεψυγμένες αποθήκες:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>Νομίσματα χρέους:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>Δείτε παρακάτω τους ελέγχους χρέους και μεταβιβάσεων.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] Περίληψη Οφειλών</gradient>"
+      lore:
+        - "<gray>Αποθηκευτικοί χώροι που απαιτούν πληρωμή:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>Στοιχεία χρέους ανά νόμισμα:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[ΕΝΤΑΞΕΙ]</gradient> <gray>Δεν υπάρχει ανεξόφλητο χρέος παγωμένης αποθήκευσης.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Ανεξόφλητο χρέος:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] Κατεψυγμένες αποθήκες</gradient>"
+      lore:
+        - "<gray>Κατεψυγμένες αποθήκες:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>Κάντε κλικ για να ανοίξετε τη λίστα παγωμένης αποθήκευσης.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[Πόλη] Φόροι μεταβίβασης</gradient>"
+      lore:
+        - "<gray>Πόλη:</gray> <white>{town_name}</white>"
+        - "<gray>Μετακίνηση εισπραχθέντων φόρων αποθήκευσης</gray>"
+        - "<gray>στην προστατευτική τράπεζα της πόλης σας.</gray>"
+        - "<yellow>Δράση μόνο για δήμαρχο.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση Δημάρχου</gradient>"
+      lore:
+        - "<gray>Πρέπει να είστε ο σημερινός δήμαρχος της πόλης</gray>"
+        - "<gray>για τη μεταφορά εισπραχθέντων φόρων αποθήκευσης.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] Κατεψυγμένες αποθήκες</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Παγωμένο χρέος αποθήκευσης</gradient>"
+    lore:
+      - "<gray>Κατεψυγμένες αποθήκες:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>Κάντε κλικ σε μια καταχώριση για να πληρώσετε το χρέος και να καταργήσετε το πάγωμα.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>Αυτή η αποθήκευση έχει παγώσει λόγω απλήρωτης οφειλής.</gray>"
+      - "<gray>Κάντε κλικ για να επιχειρήσετε πληρωμή και ανοίξτε το.</gray>"
+      - "<gray>Ανεξόφλητο χρέος:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[ΟΚ] Χωρίς παγωμένες αποθήκες</gradient>"
+    lore:
+      - "<gray>Δεν έχετε παγωμένους αποθηκευτικούς χώρους αυτήν τη στιγμή.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[Πόλη] Μεταφορά φόρου</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Πληροφορίες] Βιβλίο Φορολογίας Πόλης</gradient>"
+    lore:
+      - "<gray>Πόλη:</gray> <white>{town_name}</white>"
+      - "<gray>Προστασία:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Εγγραφές στο καθολικό:</gray> <white>{entry_count}</white>"
+      - "<yellow>Κάντε κλικ σε ένα μεταβιβάσιμο νόμισμα για να το μετακινήσετε.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Διαθέσιμος:</gray> <white>{amount}</white>"
+      - "<gray>Κατάσταση:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Κάντε κλικ για να μεταφέρετε αυτό το ποσό.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Μεταβιβάσιμος]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ανυποστήρικτος]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Απαιτείται πρόσβαση Δημάρχου</gradient>"
+    lore:
+      - "<gray>Πρέπει να είστε ο ενεργός δήμαρχος της πόλης</gray>"
+      - "<gray>να χρησιμοποιήσει ελέγχους μεταβίβασης φόρου.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Δεν υπάρχουν καταχωρήσεις στο καθολικό</gradient>"
+    lore:
+      - "<gray>Δεν αναμένονται εισπραχθέντες φόροι αποθήκευσης</gray>"
+      - "<gray>για τραπεζικό έμβασμα.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> δεν μπορεί να μεταφερθεί στην τράπεζα της πόλης. Επί του παρόντος υποστηρίζονται οι μεταφορές από την πόλη Vault μόνο.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Αποτυχία μεταφοράς <white>{currency}</white><gray> στην τράπεζα της πόλης σας.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Μεταφέρθηκε <white>{amount}</white><gray> σε <white>{currency}</white><gray> στην τράπεζα της πόλης σας.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}είναι ήδη ανοιχτό σε άλλη περίοδο λειτουργίας.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}δεν ήταν δυνατό να ανοίξει αυτήν τη στιγμή.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>Δεν έχετε πρόσβαση στο<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> απαιτεί ελέγχους προστασίας, αλλά δεν υπάρχει διαθέσιμη γέφυρα προσθηκών προστασίας που υποστηρίζεται.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Πρέπει να σταθείς στα δικά σου <white>{protection_plugin}</white> διεκδίκηση ανοίγματος <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Νόμισμα φόρου αποθήκευσης <white>{currency}</white><gray> δεν είναι διαθέσιμο αυτή τη στιγμή για <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>χρειάζεσαι <white>{amount}</white><gray> σε <white>{currency}</white> να πληρώσει φόρο αποθήκευσης για <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Αποτυχία συλλογής <white>{amount}</white><gray> σε <white>{currency}</white> για <white>{storage_key}</white><gray>. Δεν χρεώθηκε φόρος.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Χρεώνεται φόρος αποθήκευσης για <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> έχει παγώσει γιατί είναι ληξιπρόθεσμη η πληρωμή.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>Ανεξόφλητο χρέος για <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Πληρωμένη ανεξόφλητη οφειλή για <white>{storage_key}</white><gray>. Αποθήκευση ξεπαγωμένη.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Περίληψη πληρωμής χρέους:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Χρεώνονται επαναλαμβανόμενοι φόροι αποθήκευσης <white>{taxed_storages}</white> γεμάτες αποθήκες:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Παράβλεψη επαναλαμβανόμενου φόρου αποθήκευσης <white>{taxed_storages}</white> γεμάτες αποθήκες γιατί <white>{currency}</white> είναι μη διαθέσιμο.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Ο επαναλαμβανόμενος φόρος αποθήκευσης απέτυχε για <white>{taxed_storages}</white> γεμάτες αποθήκες: ανάγκη <white>{amount}</white> σε <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Δεν ήταν δυνατή η χρέωση επαναλαμβανόμενου φόρου αποθήκευσης <white>{taxed_storages}</white> γεμάτες αποθήκες <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>είναι παγκοσμίως μαύρη λίστα απόRDRχώρο αποθήκευσης.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>Η συνεδρία επεξεργασίας για{storage_key}έληξε ή μετακινήθηκε αλλού. Οι αλλαγές δεν αποθηκεύτηκαν.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}δεν ήταν δυνατή η αποθήκευση. Ελέγξτε την κονσόλα για λεπτομέρειες.</gray>"

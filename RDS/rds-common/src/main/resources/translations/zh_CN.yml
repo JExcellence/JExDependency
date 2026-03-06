@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>输入有效材料，例如 Diamond_block。输入：{input}</red>"
     processing_failed: "<red>无法搜索材料。输入：{input}</red>"
 
+# 城镇保护税转移UI /rs 税。
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[镇] 店税银行</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息] 城镇税账</gradient>"
+    lore:
+      - "<gray>镇：</gray> <white>{town_name}</white>"
+      - "<gray>保护：</gray> <white>{protection_plugin}</white>"
+      - "<gray>分类帐分录：</gray> <white>{entry_count}</white>"
+      - "<gray>启用市长转移：</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>单击下面的条目可转移支持的货币。</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>可用的：</gray> <white>{amount}</white>"
+      - "<gray>地位：</gray> <white>{transfer_status}</white>"
+      - "<yellow>单击以转移此余额。</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[可转让]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[市长必填]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[不支持]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] 城镇 必填</gradient>"
+    lore:
+      - "<gray>您必须属于受支持的城镇</gray>"
+      - "<gray>查看和转移保护税。</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 需要市长访问权限</gradient>"
+    lore:
+      - "<gray>你必须是活跃的镇长</gray>"
+      - "<gray>转移商店保护税。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 没有分类帐条目</gradient>"
+    lore:
+      - "<gray>没有征收保护税等待</gray>"
+      - "<gray>转帐到您的城镇银行。</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>只有镇长才能转移保护税。</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 无法转移。目前支持村镇银行转账 Vault 仅有的。</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>转账失败 <white>{currency}</white><gray> 存入您的城镇银行。</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已转入 <white>{amount}</white><gray> 在 <white>{currency}</white><gray> 到你的城镇银行。</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

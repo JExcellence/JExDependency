@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>1</white>에서<white>{max_hotkeys}</white><gray>사이의 숫자를 사용합니다. 입력:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 보관세</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[안내] 세금 개요</gradient>"
+    lore:
+      - "<gray>냉동 보관:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>부채 통화:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>아래에서 부채 및 이전 통제를 검토하세요.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] 부채 요약</gradient>"
+      lore:
+        - "<gray>결제가 필요한 보관소:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>통화별 부채 세부정보:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[좋아요]</gradient> <gray>미결제 냉동 보관 부채가 없습니다.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>미결제 부채:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] 냉동창고</gradient>"
+      lore:
+        - "<gray>냉동 보관:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>클릭하면 냉동 보관 목록이 열립니다.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[타운] 양도세</gradient>"
+      lore:
+        - "<gray>도시:</gray> <white>{town_name}</white>"
+        - "<gray>징수된 보관세 이동</gray>"
+        - "<gray>당신의 보호 도시 은행에.</gray>"
+        - "<yellow>시장만의 행동.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 시장 액세스 필요</gradient>"
+      lore:
+        - "<gray>당신이 현 시장이어야 합니다.</gray>"
+        - "<gray>징수된 보관세를 이전합니다.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] 냉동창고</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 동결 보관 부채</gradient>"
+    lore:
+      - "<gray>냉동 보관:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>부채를 지불하고 동결을 해제하려면 항목을 클릭하세요.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>이 저장 공간은 미지급 부채로 인해 동결되었습니다.</gray>"
+      - "<gray>결제를 시도하고 열려면 클릭하세요.</gray>"
+      - "<gray>미결제 부채:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[OK] 냉동보관 불가</gradient>"
+    lore:
+      - "<gray>현재 냉동된 저장공간이 없습니다.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[타운] 세금 이전</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[정보] 마을세 장부</gradient>"
+    lore:
+      - "<gray>도시:</gray> <white>{town_name}</white>"
+      - "<gray>보호:</gray> <white>{protection_plugin}</white>"
+      - "<gray>원장 항목:</gray> <white>{entry_count}</white>"
+      - "<yellow>이동하려면 이동 가능한 통화를 클릭하세요.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>사용 가능:</gray> <white>{amount}</white>"
+      - "<gray>상태:</gray> <white>{transfer_status}</white>"
+      - "<yellow>이 금액을 이체하려면 클릭하세요.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[양도 가능]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[지원되지 않음]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 시장 액세스 필요</gradient>"
+    lore:
+      - "<gray>당신은 활동적인 마을 시장이어야합니다</gray>"
+      - "<gray>세금 이전 통제를 사용합니다.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 원장 항목 없음</gradient>"
+    lore:
+      - "<gray>징수된 보관세가 기다리고 있지 않습니다.</gray>"
+      - "<gray>마을 은행 송금을 위해.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray><white>{currency}</white><gray> 타운뱅크로 이체할 수 없습니다. 현재 마을 은행 송금이 지원됩니다. Vault 오직.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>전송하지 못했습니다. <white>{currency}</white><gray> 당신의 마을 은행에.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>전송됨 <white>{amount}</white><gray> ~에 <white>{currency}</white><gray> 당신의 마을 은행에.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}은(는) 이미 다른 세션에서 열려 있습니다.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}을(를) 지금 열 수 없습니다.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{storage_key}</white><gray>.</gray>에 대한 액세스 권한이 없습니다."
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> 보호 확인이 필요하지만 지원되는 보호 플러그인 브리지를 사용할 수 없습니다.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>당신은 스스로 서야합니다 <white>{protection_plugin}</white> 열어야 한다고 주장하다 <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>보관세 통화 <white>{currency}</white><gray> 지금은 사용할 수 없습니다 <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>당신은 필요 <white>{amount}</white><gray> ~에 <white>{currency}</white> 보관세를 지불하다 <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>수집 실패 <white>{amount}</white><gray> ~에 <white>{currency}</white> ~을 위한 <white>{storage_key}</white><gray>. 세금이 부과되지 않았습니다.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>보관세 부과 대상 <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray><white>{storage_key}</white><gray> 결제 기한이 다가와서 동결되었습니다.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>다음에 대한 미결제 부채 <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>다음에 대한 미결제 부채를 지불했습니다. <white>{storage_key}</white><gray>. 냉동되지 않은 상태로 보관하세요.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>부채 지불 요약:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>반복적으로 부과되는 보관세 <white>{taxed_storages}</white> 채워진 저장소:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>에 대한 반복 보관세 건너뛰기 <white>{taxed_storages}</white> 가득 찬 저장고 때문에 <white>{currency}</white> 사용할 수 없습니다.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[엑스]</gradient> <gray>다음에 대한 반복 보관세가 실패했습니다. <white>{taxed_storages}</white> 채워진 저장고: 필요 <white>{amount}</white> ~에 <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>반복 보관세를 청구할 수 없습니다. <white>{taxed_storages}</white> 가득 찬 창고 <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>은(는)RDR저장소에서 전역적으로 블랙리스트에 추가되었습니다.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}에 대한 편집 세션이 만료되었거나 다른 곳으로 이동되었습니다. 변경 사항이 저장되지 않았습니다.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}을(를) 저장할 수 없습니다. 자세한 내용은 콘솔을 확인하세요.</gray>"

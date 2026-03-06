@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Entrez un matériau valide tel que Diamond_block. Entrée : {input}</red>"
     processing_failed: "<red>Échec de la recherche de matériel. Entrée : {input}</red>"
 
+# Interface utilisateur de transfert de taxe de protection de la ville pour /rs les impôts.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Ville] Banque d'impôts pour les magasins</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Registre des taxes municipales</gradient>"
+    lore:
+      - "<gray>Ville:</gray> <white>{town_name}</white>"
+      - "<gray>Protection:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Écritures au grand livre :</gray> <white>{entry_count}</white>"
+      - "<gray>Transfert de maire activé :</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Cliquez sur une entrée ci-dessous pour transférer les devises prises en charge.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Disponible:</gray> <white>{amount}</white>"
+      - "<gray>Statut:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Cliquez pour transférer ce solde.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Transférable]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Maire requis]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Non pris en charge]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Ville requise</gradient>"
+    lore:
+      - "<gray>Vous devez appartenir à une commune soutenue</gray>"
+      - "<gray>pour consulter et transférer les taxes de protection.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Accès au maire requis</gradient>"
+    lore:
+      - "<gray>Vous devez être le maire actif de la ville</gray>"
+      - "<gray>transférer les taxes de protection des magasins.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Aucune écriture au grand livre</gradient>"
+    lore:
+      - "<gray>Aucune taxe de protection collectée n'attend</gray>"
+      - "<gray>pour virement à la banque de votre ville.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Seuls les maires des villes peuvent transférer les taxes de protection.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> ne peut être transféré. Les transferts ville-banque prennent actuellement en charge Vault seulement.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Échec du transfert <white>{currency}</white><gray> à la banque de votre ville.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Transféré <white>{amount}</white><gray> dans <white>{currency}</white><gray> à la banque de votre ville.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

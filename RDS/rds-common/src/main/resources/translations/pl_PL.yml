@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Wprowadź prawidłowy materiał, np. diament_blok. Dane wejściowe: {input}</red>"
     processing_failed: "<red>Nie udało się wyszukać materiału. Dane wejściowe: {input}</red>"
 
+# Interfejs transferu podatku na rzecz ochrony miasta dla /rs podatki.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[Miasto] Sklepowy Bank Podatkowy</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Informacje] Miejska Księga Podatkowa</gradient>"
+    lore:
+      - "<gray>Miasto:</gray> <white>{town_name}</white>"
+      - "<gray>Ochrona:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Wpisy do księgi:</gray> <white>{entry_count}</white>"
+      - "<gray>Transfer burmistrza włączony:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Kliknij wpis poniżej, aby przenieść obsługiwane waluty.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Dostępny:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Kliknij, aby przenieść saldo.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Przenośny]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[Wymagany burmistrz]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Nieobsługiwane]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] Miasto Wymagane</gradient>"
+    lore:
+      - "<gray>Musisz należeć do obsługiwanego miasta</gray>"
+      - "<gray>aby przeglądać i przesyłać podatki ochronne.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Wymagany dostęp burmistrza</gradient>"
+    lore:
+      - "<gray>Musisz być aktywnym burmistrzem miasta</gray>"
+      - "<gray>przenieść podatki na ochronę sklepów.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Brak wpisów do księgi</gradient>"
+    lore:
+      - "<gray>Żadne zebrane podatki ochronne nie czekają</gray>"
+      - "<gray>do przelewu do banku miejskiego.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Tylko burmistrzowie miast mogą przenosić podatki ochronne.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> nie można przenieść. Obecnie obsługiwane są przelewy miejskie-bankowe Vault tylko.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Nie udało się przenieść <white>{currency}</white><gray> do swojego banku miejskiego.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Przeniesiony <white>{amount}</white><gray> W <white>{currency}</white><gray> do swojego banku miejskiego.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

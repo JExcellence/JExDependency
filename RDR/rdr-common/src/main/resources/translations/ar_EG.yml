@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>استخدم رقمًا بين<white>1</white>و<white>{max_hotkeys}</white><gray>. الإدخال:</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] ضرائب التخزين</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] نظرة عامة على الضرائب</gradient>"
+    lore:
+      - "<gray>المخازن المجمدة:</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>عملات الدين:</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>قم بمراجعة ضوابط الديون والتحويل أدناه.</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] ملخص الديون</gradient>"
+      lore:
+        - "<gray>المخازن التي تتطلب الدفع:</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>تفاصيل الديون حسب العملة:</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[نعم]</gradient> <gray>لا يوجد ديون تخزين مجمدة مستحقة.</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>الديون المستحقة:</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] المخازن المجمدة</gradient>"
+      lore:
+        - "<gray>المخازن المجمدة:</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>انقر لفتح قائمة التخزين المجمدة.</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[المدينة] ضرائب النقل</gradient>"
+      lore:
+        - "<gray>بلدة:</gray> <white>{town_name}</white>"
+        - "<gray>نقل ضرائب التخزين المجمعة</gray>"
+        - "<gray>في البنك مدينة الحماية الخاصة بك.</gray>"
+        - "<yellow>عمل العمدة فقط.</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول العمدة</gradient>"
+      lore:
+        - "<gray>يجب أن تكون عمدة المدينة الحالي</gray>"
+        - "<gray>لنقل ضرائب التخزين المحصلة.</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] المخازن المجمدة</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] ديون التخزين المجمدة</gradient>"
+    lore:
+      - "<gray>المخازن المجمدة:</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>انقر فوق إدخال لسداد الديون وإلغاء التجميد.</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>تم تجميد هذا التخزين بسبب الديون غير المدفوعة.</gray>"
+      - "<gray>انقر لمحاولة الدفع وفتحه.</gray>"
+      - "<gray>الديون المستحقة:</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[موافق] لا توجد مخازن مجمدة</gradient>"
+    lore:
+      - "<gray>ليس لديك أي مخازن مجمدة في الوقت الحالي.</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[المدينة] تحويل الضرائب</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[معلومات] دفتر ضريبة المدينة</gradient>"
+    lore:
+      - "<gray>بلدة:</gray> <white>{town_name}</white>"
+      - "<gray>حماية:</gray> <white>{protection_plugin}</white>"
+      - "<gray>إدخالات دفتر الأستاذ:</gray> <white>{entry_count}</white>"
+      - "<yellow>انقر فوق العملة القابلة للتحويل لتحريكها.</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>متاح:</gray> <white>{amount}</white>"
+      - "<gray>حالة:</gray> <white>{transfer_status}</white>"
+      - "<yellow>انقر لتحويل هذا المبلغ.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[قابل للتحويل]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[غير مدعوم]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] مطلوب وصول العمدة</gradient>"
+    lore:
+      - "<gray>يجب أن تكون عمدة المدينة النشط</gray>"
+      - "<gray>لاستخدام ضوابط تحويل الضرائب.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] لا توجد إدخالات دفتر الأستاذ</gradient>"
+    lore:
+      - "<gray>لا توجد ضرائب تخزين مجمعة في انتظارك</gray>"
+      - "<gray>للتحويل بين المدينة والبنك.</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> لا يمكن تحويلها إلى بنك المدينة. يتم دعم التحويلات بين البنوك حاليًا Vault فقط.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>فشل النقل <white>{currency}</white><gray> إلى بنك مدينتك.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>منقول <white>{amount}</white><gray> في <white>{currency}</white><gray> إلى بنك مدينتك.</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}مفتوح بالفعل في جلسة أخرى.</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}لا يمكن فتحه الآن.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>ليس لديك حق الوصول إلى<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> يتطلب فحوصات الحماية، ولكن لا يتوفر جسر مكون إضافي للحماية مدعوم.</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>يجب أن تقف بمفردك <white>{protection_plugin}</white> المطالبة بفتح <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>عملة ضريبة التخزين <white>{currency}</white><gray> غير متوفر الآن ل <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>تحتاج <white>{amount}</white><gray> في <white>{currency}</white> لدفع ضريبة التخزين ل <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>فشل في جمع <white>{amount}</white><gray> في <white>{currency}</white> ل <white>{storage_key}</white><gray>. لم يتم فرض أي ضريبة.</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>ضريبة التخزين المفروضة على <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> تم تجميده بسبب استحقاق الدفع.</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>الديون المستحقة ل <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>سداد الديون المستحقة عليه <white>{storage_key}</white><gray>. تم إلغاء تجميد التخزين.</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>ملخص سداد الديون:</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>ضرائب التخزين المتكررة المفروضة على <white>{taxed_storages}</white> المخازن المملوءة:</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>تم تخطي ضريبة التخزين المتكررة ل <white>{taxed_storages}</white> المخازن مليئة بسبب <white>{currency}</white> غير متوفر.</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>فشل ضريبة التخزين المتكررة ل <white>{taxed_storages}</white> المخازن المملوءة: الحاجة <white>{amount}</white> في <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>لا يمكن تحصيل ضريبة التخزين المتكررة <white>{taxed_storages}</white> المخازن المملوءة في <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>مدرج في القائمة السوداء عالميًا من تخزينRDR.</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>انتهت صلاحية جلسة التعديل الخاصة بـ{storage_key}أو تم نقلها إلى مكان آخر. لم يتم حفظ التغييرات.</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}لا يمكن حفظه. تحقق من وحدة التحكم للحصول على التفاصيل.</gray>"

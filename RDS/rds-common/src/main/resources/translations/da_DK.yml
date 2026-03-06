@@ -1174,6 +1174,49 @@ shop_material_search_anvil_ui:
     invalid_material: "<red>Indtast et gyldigt materiale såsom diamantblok. Input:{input}</red>"
     processing_failed: "<red>Kunne ikke søge efter materiale. Input:{input}</red>"
 
+# Bybeskyttelse-skatteoverførsel UI til /rs skatter.
+shop_tax_ui:
+  title: "<gradient:#22c55e:#16a34a>[By] Butiksskattebank</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[Info] Byskattebog</gradient>"
+    lore:
+      - "<gray>By:</gray> <white>{town_name}</white>"
+      - "<gray>Beskyttelse:</gray> <white>{protection_plugin}</white>"
+      - "<gray>Regnskabsposter:</gray> <white>{entry_count}</white>"
+      - "<gray>Borgmesteroverførsel aktiveret:</gray> <white>{mayor_transfer_enabled}</white>"
+      - "<yellow>Klik på en post nedenfor for at overføre understøttede valutaer.</yellow>"
+  entry:
+    name: "<gradient:#22c55e:#16a34a>[$] {currency}</gradient>"
+    lore:
+      - "<gray>Tilgængelig:</gray> <white>{amount}</white>"
+      - "<gray>Status:</gray> <white>{transfer_status}</white>"
+      - "<yellow>Klik for at overføre denne saldo.</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[Overførbar]</gradient>"
+      mayor_required: "<gradient:#f59e0b:#fbbf24>[borgmester påkrævet]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[Ikke understøttet]</gradient>"
+  no_town:
+    name: "<gradient:#ef4444:#f87171>[X] By påkrævet</gradient>"
+    lore:
+      - "<gray>Du skal tilhøre en støttet by</gray>"
+      - "<gray>at se og overføre beskyttelsesskatter.</gray>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] Borgmesteradgang påkrævet</gradient>"
+    lore:
+      - "<gray>Du skal være den aktive byborgmester</gray>"
+      - "<gray>at overføre butiksbeskyttelsesafgifter.</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] Ingen regnskabsposteringer</gradient>"
+    lore:
+      - "<gray>Ingen opkrævede beskyttelsesafgifter venter</gray>"
+      - "<gray>til overførsel til din bybank.</gray>"
+  feedback:
+    mayor_required: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>Kun byens borgmestre kan overføre beskyttelsesafgifter.</gray>"
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> kan ikke overføres. By-bankoverførsler understøtter i øjeblikket Vault kun.</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>Kunne ikke overføres <white>{currency}</white><gray> ind i din bybank.</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>Overført <white>{amount}</white><gray> i <white>{currency}</white><gray> til din bybank.</gray>"
+
+
 # ============================================
 # PAGINATION
 # ============================================

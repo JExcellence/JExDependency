@@ -427,11 +427,116 @@ storage_hotkey_anvil_ui:
   error:
     invalid_hotkey: "<gradient:#ef4444:#f87171>[X]</gradient><gray>使用<white>1</white>和<white>{max_hotkeys}</white><gray>之间的数字。输入：</gray><white>{input}</white>"
 
+storage_tax_ui:
+  title: "<gradient:#38bdf8:#60a5fa>[$] 仓储税</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息] 税务概览</gradient>"
+    lore:
+      - "<gray>冷冻储存：</gray> <white>{frozen_storage_count}</white>"
+      - "<gray>债务货币：</gray> <white>{debt_currency_count}</white>"
+      - "<yellow>查看下面的债务和转移控制。</yellow>"
+  actions:
+    info:
+      name: "<gradient:#22c55e:#86efac>[i] 债务摘要</gradient>"
+      lore:
+        - "<gray>需要付费的存储：</gray> <white>{frozen_storage_count}</white>"
+        - "<gray>按币种列出的债务明细：</gray>"
+      no_debt_line: "<gradient:#10b981:#34d399>[好的]</gradient> <gray>没有未偿还的冷冻存储债务。</gray>"
+      debt_header_line: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>未偿债务：</gray>"
+      debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen:
+      name: "<gradient:#60a5fa:#93c5fd>[*] 冷冻储存</gradient>"
+      lore:
+        - "<gray>冷冻储存：</gray> <white>{frozen_storage_count}</white>"
+        - "<yellow>单击可打开冻结存储列表。</yellow>"
+    transfer:
+      name: "<gradient:#10b981:#34d399>[城镇] 转让税</gradient>"
+      lore:
+        - "<gray>镇：</gray> <white>{town_name}</white>"
+        - "<gray>转移征收的仓储税</gray>"
+        - "<gray>进入你的保护城镇银行。</gray>"
+        - "<yellow>仅限市长的行动。</yellow>"
+    transfer_locked:
+      name: "<gradient:#ef4444:#f87171>[X] 需要市长访问权限</gradient>"
+      lore:
+        - "<gray>你必须是现任镇长</gray>"
+        - "<gray>转移征收的仓储税。</gray>"
+
+storage_frozen_ui:
+  title: "<gradient:#60a5fa:#93c5fd>[*] 冷冻储存</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息] 冻结存储债务</gradient>"
+    lore:
+      - "<gray>冷冻储存：</gray> <white>{frozen_storage_count}</white>"
+      - "<yellow>单击条目即可偿还债务并解冻。</yellow>"
+  entry:
+    name: "<gradient:#60a5fa:#93c5fd>[*] {storage_key}</gradient>"
+    lore:
+      - "<gray>由于未偿还债务，该存储空间被冻结。</gray>"
+      - "<gray>单击尝试付款并打开它。</gray>"
+      - "<gray>未偿债务：</gray>"
+    debt_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+  empty:
+    name: "<gradient:#10b981:#34d399>[确定] 无冻结存储</gradient>"
+    lore:
+      - "<gray>您现在没有冷冻储存。</gray>"
+
+storage_tax_town_bank_ui:
+  title: "<gradient:#10b981:#34d399>[城镇] 税收转移</gradient>"
+  summary:
+    name: "<gradient:#f59e0b:#fbbf24>[信息] 城镇税账</gradient>"
+    lore:
+      - "<gray>镇：</gray> <white>{town_name}</white>"
+      - "<gray>保护：</gray> <white>{protection_plugin}</white>"
+      - "<gray>分类帐分录：</gray> <white>{entry_count}</white>"
+      - "<yellow>单击可转移货币进行移动。</yellow>"
+  entry:
+    name: "<gradient:#10b981:#34d399>[$] {currency}</gradient>"
+    lore:
+      - "<gray>可用的：</gray> <white>{amount}</white>"
+      - "<gray>地位：</gray> <white>{transfer_status}</white>"
+      - "<yellow>单击以转移此金额。</yellow>"
+    status:
+      transferable: "<gradient:#10b981:#34d399>[可转让]</gradient>"
+      unavailable: "<gradient:#ef4444:#f87171>[不支持]</gradient>"
+  locked:
+    name: "<gradient:#ef4444:#f87171>[X] 需要市长访问权限</gradient>"
+    lore:
+      - "<gray>你必须是活跃的镇长</gray>"
+      - "<gray>使用税收转移控制。</gray>"
+  empty:
+    name: "<gradient:#6b7280:#9ca3af>[~] 没有分类帐条目</gradient>"
+    lore:
+      - "<gray>没有收取的存储税正在等待</gray>"
+      - "<gray>用于城镇银行转账。</gray>"
+  feedback:
+    currency_unsupported: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{currency}</white><gray> 不能转入镇银行。目前支持村镇银行转账 Vault 仅有的。</gray>"
+    transfer_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>转账失败 <white>{currency}</white><gray> 存入您的城镇银行。</gray>"
+    transfer_success: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已转入 <white>{amount}</white><gray> 在 <white>{currency}</white><gray> 到你的城镇银行。</gray>"
+
 storage:
   message:
     locked: "<gradient:#ef4444:#f87171>[X]</gradient><gray>{storage_key}已在另一个会话中打开。</gray>"
     unavailable: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}现在无法打开.</gray>"
     access_denied: "<gradient:#ef4444:#f87171>[X]</gradient><gray>您无权访问<white>{storage_key}</white><gray>.</gray>"
+    protection_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray><white>{storage_key}</white><gray> 需要保护检查，但没有支持的保护插件桥可用。</gray>"
+    protection_denied: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你必须站在自己的立场上 <white>{protection_plugin}</white> 声称要打开 <white>{storage_key}</white><gray>.</gray>"
+    tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>仓储税币种 <white>{currency}</white><gray> 目前不可用 <white>{storage_key}</white><gray>.</gray>"
+    tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>你需要 <white>{amount}</white><gray> 在 <white>{currency}</white> 缴纳仓储税 <white>{storage_key}</white><gray>.</gray>"
+    tax_withdraw_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>采集失败 <white>{amount}</white><gray> 在 <white>{currency}</white> 为了 <white>{storage_key}</white><gray>。没有缴税。</gray>"
+    tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>收取仓储税 <white>{storage_key}</white><gray>:</gray>"
+    tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_due: "<gradient:#ef4444:#f87171>[X]</gradient> <gray><white>{storage_key}</white><gray> 由于付款到期而被冻结。</gray>"
+    frozen_payment_due_header: "<gradient:#f59e0b:#fbbf24>[!]</gradient> <gray>未偿债务 <white>{storage_key}</white><gray>:</gray>"
+    frozen_payment_due_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    frozen_payment_paid: "<gradient:#10b981:#34d399>[+]</gradient> <gray>已偿还未偿债务 <white>{storage_key}</white><gray>。储存未冻结。</gray>"
+    frozen_payment_paid_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>债务偿还概要：</gray>"
+    frozen_payment_paid_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_charged_header: "<gradient:#10b981:#34d399>[+]</gradient> <gray>定期收取仓储税 <white>{taxed_storages}</white> 已满的存储：</gray>"
+    filled_tax_charged_line: "<gradient:#38bdf8:#60a5fa>•</gradient> <white>{currency}</white><gray>:</gray> <white>{amount}</white>"
+    filled_tax_currency_unavailable: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>跳过了经常性仓储税 <white>{taxed_storages}</white> 存储空间已满，因为 <white>{currency}</white> 不可用。</gray>"
+    filled_tax_insufficient: "<gradient:#ef4444:#f87171>[X]</gradient> <gray>定期仓储税失败 <white>{taxed_storages}</white> 已满的存储空间：需要 <white>{amount}</white> 在 <white>{currency}</white><gray>.</gray>"
+    filled_tax_charge_failed: "<gradient:#ef4444:#f87171>[!]</gradient> <gray>无法收取经常性仓储税 <white>{taxed_storages}</white> 已满的存储空间 <white>{currency}</white> (<white>{amount}</white>).</gray>"
     blacklisted_item: "<gradient:#ef4444:#f87171>[X]</gradient><gray><white>{item}</white><gray>已从RDR存储全局列入黑名单。</gray>"
     lease_lost: "<gradient:#ef4444:#f87171>[!]</gradient><gray>您对{storage_key}的编辑会话已过期或移至其他地方。更改未保存。</gray>"
     save_failed: "<gradient:#ef4444:#f87171>[!]</gradient><gray>{storage_key}无法保存。检查控制台了解详细信息。</gray>"
