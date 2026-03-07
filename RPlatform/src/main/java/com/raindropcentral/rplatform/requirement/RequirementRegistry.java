@@ -51,11 +51,6 @@ public final class RequirementRegistry {
         String key = type.id().toUpperCase();
         requirementTypes.put(key, type);
         
-        LOGGER.info(String.format(
-            "Registered requirement type: %s (plugin: %s)",
-            type.id(), type.pluginId()
-        ));
-        
         if (objectMapper != null) {
             objectMapper.registerSubtypes(new NamedType(type.implementationClass(), type.id()));
         }
@@ -68,7 +63,6 @@ public final class RequirementRegistry {
      */
     public void unregisterType(@NotNull String typeName) {
         requirementTypes.remove(typeName.toUpperCase());
-        LOGGER.info("Unregistered requirement type: " + typeName);
     }
 
     /**

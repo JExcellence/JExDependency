@@ -496,14 +496,14 @@ public class PerkDetailView extends BaseView {
 	
 	private @NotNull String formatPerkCategory(@NotNull final com.raindropcentral.rdq.database.entity.perk.PerkCategory category) {
 		return switch (category) {
-			case COMBAT -> "⚔️ Combat";
-			case MOVEMENT -> "🏃 Movement";
-			case UTILITY -> "🔧 Utility";
-			case SURVIVAL -> "🛡️ Survival";
-			case ECONOMY -> "💰 Economy";
-			case SOCIAL -> "👥 Social";
-			case COSMETIC -> "✨ Cosmetic";
-			case SPECIAL -> "⭐ Special";
+			case COMBAT -> "Combat";
+			case MOVEMENT -> "Movement";
+			case UTILITY -> "Utility";
+			case SURVIVAL -> " Survival";
+			case ECONOMY -> "Economy";
+			case SOCIAL -> "Social";
+			case COSMETIC -> "Cosmetic";
+			case SPECIAL -> "Special";
 		};
 	}
 	

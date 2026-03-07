@@ -1,0 +1,192 @@
+# Builder's Dream Quest
+# Building quest with sequential tasks requiring creative construction
+identifier: "builders_dream"
+category: "building"
+difficulty: "NORMAL"
+enabled: true
+displayOrder: 3
+
+# Quest metadata
+repeatable: false  # One-time quest
+maxCompletions: 1
+cooldownSeconds: 0  # No cooldown (one-time only)
+timeLimitSeconds: 0  # No time limit
+
+# Icon configuration
+icon:
+  type: "BRICKS"
+  displayNameKey: "quest.builders_dream.name"
+  descriptionKey: "quest.builders_dream.description"
+
+# Quest requirements
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 10
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  currency_requirement:
+    type: "CURRENCY"
+    currency: "raindrops"
+    amount: 200.0
+    consumable: true  # Consume currency on quest start
+    icon:
+      type: "GOLD_INGOT"
+  
+  materials_requirement:
+    type: "ITEM_POSSESSION"
+    requiredItems:
+      bricks:
+        material: "BRICKS"
+        amount: 64
+      oak_planks:
+        material: "OAK_PLANKS"
+        amount: 64
+      glass:
+        material: "GLASS"
+        amount: 32
+    icon:
+      type: "CHEST"
+
+# Quest tasks (sequential - must complete in order)
+tasks:
+  place_foundation:
+    identifier: "place_foundation"
+    nameKey: "quest.builders_dream.task.foundation.name"
+    descriptionKey: "quest.builders_dream.task.foundation.description"
+    orderIndex: 1
+    difficulty: "EASY"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_PLACE"
+      blockType: "BRICKS"
+      amount: 50
+      icon:
+        type: "BRICKS"
+    
+    reward:
+      type: "CURRENCY"
+      currency: "raindrops"
+      amount: 50.0
+      icon:
+        type: "GOLD_NUGGET"
+  
+  build_walls:
+    identifier: "build_walls"
+    nameKey: "quest.builders_dream.task.walls.name"
+    descriptionKey: "quest.builders_dream.task.walls.description"
+    orderIndex: 2
+    difficulty: "NORMAL"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_PLACE"
+      blockType: "OAK_PLANKS"
+      amount: 40
+      icon:
+        type: "OAK_PLANKS"
+    
+    reward:
+      type: "CURRENCY"
+      currency: "raindrops"
+      amount: 75.0
+      icon:
+        type: "GOLD_NUGGET"
+  
+  add_windows:
+    identifier: "add_windows"
+    nameKey: "quest.builders_dream.task.windows.name"
+    descriptionKey: "quest.builders_dream.task.windows.description"
+    orderIndex: 3
+    difficulty: "NORMAL"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_PLACE"
+      blockType: "GLASS"
+      amount: 20
+      icon:
+        type: "GLASS"
+    
+    reward:
+      type: "EXPERIENCE"
+      experienceAmount: 300
+      experienceType: "POINTS"
+      icon:
+        type: "EXPERIENCE_BOTTLE"
+  
+  complete_roof:
+    identifier: "complete_roof"
+    nameKey: "quest.builders_dream.task.roof.name"
+    descriptionKey: "quest.builders_dream.task.roof.description"
+    orderIndex: 4
+    difficulty: "NORMAL"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_PLACE"
+      blockType: "OAK_STAIRS"
+      amount: 30
+      icon:
+        type: "OAK_STAIRS"
+    
+    reward:
+      type: "COMPOSITE"
+      rewards:
+        - type: "CURRENCY"
+          currency: "raindrops"
+          amount: 100.0
+        - type: "EXPERIENCE"
+          experienceAmount: 200
+          experienceType: "POINTS"
+      icon:
+        type: "GOLD_INGOT"
+
+# Quest completion rewards
+rewards:
+  completion_currency:
+    type: "CURRENCY"
+    currency: "raindrops"
+    amount: 750.0
+    icon:
+      type: "GOLD_BLOCK"
+  
+  completion_experience:
+    type: "EXPERIENCE"
+    experienceAmount: 1500
+    experienceType: "POINTS"
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  builder_title:
+    type: "COMMAND"
+    command: "lp user {player} permission set rdq.title.builder true"
+    executeAsPlayer: false
+    icon:
+      type: "NAME_TAG"
+  
+  building_materials:
+    type: "COMPOSITE"
+    rewards:
+      - type: "ITEM"
+        item:
+          material: "BRICKS"
+          amount: 128
+      - type: "ITEM"
+        item:
+          material: "OAK_PLANKS"
+          amount: 128
+      - type: "ITEM"
+        item:
+          material: "GLASS"
+          amount: 64
+    icon:
+      type: "CHEST"
+  
+  unlock_next_quest:
+    type: "QUEST"
+    questId: "master_architect"
+    icon:
+      type: "WRITABLE_BOOK"

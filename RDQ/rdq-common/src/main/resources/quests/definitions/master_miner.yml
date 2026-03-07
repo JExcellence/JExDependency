@@ -1,0 +1,156 @@
+# Master Miner Quest
+# Mining quest with time limit requiring players to mine various ores
+identifier: "master_miner"
+category: "mining"
+difficulty: "NORMAL"
+enabled: true
+displayOrder: 2
+
+# Quest metadata
+repeatable: true
+maxCompletions: 5  # Can complete 5 times total
+cooldownSeconds: 7200  # 2 hour cooldown
+timeLimitSeconds: 3600  # 1 hour time limit
+
+# Icon configuration
+icon:
+  type: "DIAMOND_PICKAXE"
+  displayNameKey: "quest.master_miner.name"
+  descriptionKey: "quest.master_miner.description"
+
+# Quest requirements
+requirements:
+  level_requirement:
+    type: "EXPERIENCE_LEVEL"
+    level: 15
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  rank_requirement:
+    type: "RANK"
+    rankTree: "warrior"
+    rankId: "soldier"
+    icon:
+      type: "IRON_SWORD"
+  
+  tool_requirement:
+    type: "ITEM_POSSESSION"
+    requiredItems:
+      pickaxe:
+        material: "IRON_PICKAXE"
+        amount: 1
+    icon:
+      type: "IRON_PICKAXE"
+
+# Quest tasks (sequential - must complete in order)
+tasks:
+  mine_coal:
+    identifier: "mine_coal"
+    nameKey: "quest.master_miner.task.mine_coal.name"
+    descriptionKey: "quest.master_miner.task.mine_coal.description"
+    orderIndex: 1
+    difficulty: "EASY"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_BREAK"
+      blockType: "COAL_ORE"
+      amount: 32
+      icon:
+        type: "COAL_ORE"
+    
+    reward:
+      type: "CURRENCY"
+      currency: "raindrops"
+      amount: 50.0
+      icon:
+        type: "GOLD_NUGGET"
+  
+  mine_iron:
+    identifier: "mine_iron"
+    nameKey: "quest.master_miner.task.mine_iron.name"
+    descriptionKey: "quest.master_miner.task.mine_iron.description"
+    orderIndex: 2
+    difficulty: "NORMAL"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_BREAK"
+      blockType: "IRON_ORE"
+      amount: 16
+      icon:
+        type: "IRON_ORE"
+    
+    reward:
+      type: "CURRENCY"
+      currency: "raindrops"
+      amount: 75.0
+      icon:
+        type: "GOLD_NUGGET"
+  
+  mine_diamond:
+    identifier: "mine_diamond"
+    nameKey: "quest.master_miner.task.mine_diamond.name"
+    descriptionKey: "quest.master_miner.task.mine_diamond.description"
+    orderIndex: 3
+    difficulty: "HARD"
+    sequential: true
+    
+    requirement:
+      type: "BLOCK_BREAK"
+      blockType: "DIAMOND_ORE"
+      amount: 5
+      icon:
+        type: "DIAMOND_ORE"
+    
+    reward:
+      type: "COMPOSITE"
+      rewards:
+        - type: "CURRENCY"
+          currency: "raindrops"
+          amount: 150.0
+        - type: "EXPERIENCE"
+          experienceAmount: 250
+          experienceType: "POINTS"
+      icon:
+        type: "DIAMOND"
+
+# Quest completion rewards
+rewards:
+  completion_currency:
+    type: "CURRENCY"
+    currency: "raindrops"
+    amount: 500.0
+    icon:
+      type: "GOLD_BLOCK"
+  
+  completion_experience:
+    type: "EXPERIENCE"
+    experienceAmount: 1000
+    experienceType: "POINTS"
+    icon:
+      type: "EXPERIENCE_BOTTLE"
+  
+  efficiency_pickaxe:
+    type: "ITEM"
+    item:
+      material: "DIAMOND_PICKAXE"
+      amount: 1
+      displayName: "<gradient:#6b7280:#9ca3af>Master Miner's Pickaxe</gradient>"
+      lore:
+        - "<gray>A pickaxe blessed by the</gray>"
+        - "<gray>mining gods themselves</gray>"
+        - ""
+        - "<dark_gray>Efficiency: <white>IV</white></dark_gray>"
+        - "<dark_gray>Unbreaking: <white>III</white></dark_gray>"
+      enchantments:
+        DIG_SPEED: 4
+        DURABILITY: 3
+    icon:
+      type: "DIAMOND_PICKAXE"
+  
+  unlock_perk:
+    type: "PERK"
+    perkId: "haste"
+    icon:
+      type: "POTION"

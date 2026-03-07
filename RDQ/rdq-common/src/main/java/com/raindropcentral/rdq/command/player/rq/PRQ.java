@@ -142,6 +142,14 @@ public class PRQ extends PlayerCommand {
                 )) {
                     return;
                 }
+                this.rdq.getViewFrame().open(
+                    com.raindropcentral.rdq.view.quest.QuestCategoryView.class,
+                    player,
+                    Map.of(
+                        "plugin",
+                        this.rdq
+                    )
+                );
             }
             case RANKS -> {
                 if (this.hasNoPermission(
