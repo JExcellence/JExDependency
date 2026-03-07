@@ -428,7 +428,7 @@ ranks:
           - type: "ITEM"
             item:
               material: "GLOWSTONE"
-              amount: 64
+              amount: 128
       high_priest_light_experience:
         type: "EXPERIENCE"
         icon:
@@ -450,7 +450,7 @@ ranks:
               amount: 64
             item3:
               type: "GLOWSTONE"
-              amount: 64
+              amount: 128
             item5:
               type: "BEACON"
               amount: 1

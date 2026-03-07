@@ -457,7 +457,7 @@ ranks:
               amount: 48
             item2:
               type: "LAPIS_LAZULI"
-              amount: 64
+              amount: 128
             item3:
               type: "BLAZE_ROD"
               amount: 24

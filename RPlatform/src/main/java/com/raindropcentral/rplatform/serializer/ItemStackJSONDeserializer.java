@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.*;
@@ -99,7 +100,12 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
                 map.put(entry.getKey(), convertJsonNodeToObject(value));
             });
             
-            return ItemStack.deserialize(map);
+            final int amount = resolveAmount(map.get("amount"));
+            map.put("amount", 1);
+
+            final ItemStack itemStack = ItemStack.deserialize(map);
+            itemStack.setAmount(amount);
+            return itemStack;
         } catch (Exception e) {
             throw new RuntimeException("Failed to deserialize ItemStack from map data", e);
         }
@@ -147,12 +153,35 @@ public class ItemStackJSONDeserializer extends StdDeserializer<ItemStack> {
             try {
                 org.bukkit.Material material = org.bukkit.Material.valueOf(typeStr);
                 int amount = node.has("amount") ? node.get("amount").asInt(1) : 1;
-                return new ItemStack(material, amount);
+                return createItemStack(material, amount);
             } catch (IllegalArgumentException e) {
                 throw new RuntimeException("Invalid material type: " + typeStr, e);
             }
         }
         
         throw new RuntimeException("Unable to deserialize ItemStack: missing required fields");
+    }
+
+    private int resolveAmount(@Nullable Object rawAmount) {
+        if (rawAmount instanceof Number number) {
+            return Math.max(1, number.intValue());
+        }
+        if (rawAmount instanceof String text) {
+            try {
+                return Math.max(1, Integer.parseInt(text));
+            } catch (NumberFormatException ignored) {
+                return 1;
+            }
+        }
+        return 1;
+    }
+
+    private @NotNull ItemStack createItemStack(
+            @NotNull org.bukkit.Material material,
+            int amount
+    ) {
+        final ItemStack itemStack = new ItemStack(material, 1);
+        itemStack.setAmount(Math.max(1, amount));
+        return itemStack;
     }
 }

@@ -462,7 +462,7 @@ ranks:
               amount: 1
             item2:
               type: "DIAMOND"
-              amount: 16
+              amount: 128
             item3:
               type: "ENDER_PEARL"
               amount: 32
@@ -507,7 +507,7 @@ ranks:
           - type: "ITEM"
             item:
               material: "FIREWORK_ROCKET"
-              amount: 64
+              amount: 128
           - type: "ITEM"
             item:
               material: "CROSSBOW"
@@ -533,7 +533,7 @@ ranks:
               amount: 1
             item3:
               type: "FIREWORK_ROCKET"
-              amount: 64
+              amount: 128
             item4:
               type: "REDSTONE_BLOCK"
               amount: 8

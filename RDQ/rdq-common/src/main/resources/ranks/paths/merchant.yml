@@ -422,7 +422,7 @@ ranks:
               amount: 16
             item4:
               type: "EMERALD_BLOCK"
-              amount: 24
+              amount: 128
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -490,7 +490,7 @@ ranks:
               amount: 24
             item4:
               type: "EMERALD_BLOCK"
-              amount: 24
+              amount: 128
       experience_req:
         icon:
           type: "EXPERIENCE_BOTTLE"
@@ -533,7 +533,7 @@ ranks:
           - type: "ITEM"
             item:
               material: "GOLD_BLOCK"
-              amount: 16
+              amount: 128
       tycoon_trade_experience:
         type: "EXPERIENCE"
         icon:

@@ -36,16 +36,18 @@ public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
             return;
         }
 
+        final ItemStack normalizedItemStack = normalizeForSerialization(itemStack);
+
         jsonGenerator.writeStartObject();
 
         // Try binary serialization first (preserves ALL metadata)
         try {
-            String binaryData = serializeToBinary(itemStack);
+            String binaryData = serializeToBinary(normalizedItemStack);
             jsonGenerator.writeStringField("binaryData", binaryData);
             jsonGenerator.writeStringField("serializationType", "binary");
         } catch (Exception e) {
             // Fallback to Map serialization
-            Map<String, Object> serialized = itemStack.serialize();
+            Map<String, Object> serialized = normalizedItemStack.serialize();
             jsonGenerator.writeFieldName("mapData");
             serializerProvider.defaultSerializeValue(serialized, jsonGenerator);
             jsonGenerator.writeStringField("serializationType", "map");
@@ -64,5 +66,11 @@ public class ItemStackJSONSerializer extends StdSerializer<ItemStack> {
     private String serializeToBinary(@NotNull ItemStack itemStack) {
         byte[] data = itemStack.serializeAsBytes();
         return Base64.getEncoder().encodeToString(data);
+    }
+
+    private @NotNull ItemStack normalizeForSerialization(@NotNull ItemStack itemStack) {
+        final ItemStack normalized = itemStack.clone();
+        normalized.setAmount(1);
+        return normalized;
     }
 }

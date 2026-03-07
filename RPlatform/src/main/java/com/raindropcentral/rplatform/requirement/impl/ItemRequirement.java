@@ -11,7 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 
@@ -21,6 +23,9 @@ public final class ItemRequirement extends AbstractRequirement {
 
     @JsonProperty("requiredItems")
     private final List<ItemStack> requiredItems;
+
+    @JsonProperty("requiredAmounts")
+    private final List<Integer> requiredAmounts;
 
     @JsonProperty("itemBuilders")
     private final List<ItemBuilder> itemBuilders;
@@ -37,29 +42,54 @@ public final class ItemRequirement extends AbstractRequirement {
     protected ItemRequirement() {
         super("ITEM");
         this.requiredItems = new ArrayList<>();
+        this.requiredAmounts = new ArrayList<>();
         this.itemBuilders = new ArrayList<>();
         this.consumeOnComplete = true;
         this.description = null;
         this.exactMatch = true;
     }
 
+    public ItemRequirement(
+            @JsonProperty("requiredItems") @Nullable final List<ItemStack> requiredItems,
+            @JsonProperty("itemBuilders") @Nullable final List<ItemBuilder> itemBuilders,
+            @JsonProperty("consumeOnComplete") @Nullable final Boolean consumeOnComplete,
+            @JsonProperty("description") @Nullable final String description,
+            @JsonProperty("exactMatch") @Nullable final Boolean exactMatch
+    ) {
+        this(requiredItems, null, itemBuilders, consumeOnComplete, description, exactMatch);
+    }
+
     @JsonCreator
-    public ItemRequirement(@JsonProperty("requiredItems") @Nullable List<ItemStack> requiredItems,
-                          @JsonProperty("itemBuilders") @Nullable List<ItemBuilder> itemBuilders,
-                          @JsonProperty("consumeOnComplete") @Nullable Boolean consumeOnComplete,
-                          @JsonProperty("description") @Nullable String description,
-                          @JsonProperty("exactMatch") @Nullable Boolean exactMatch) {
+    public ItemRequirement(
+            @JsonProperty("requiredItems") @Nullable final List<ItemStack> requiredItems,
+            @JsonProperty("requiredAmounts") @Nullable final List<Integer> requiredAmounts,
+            @JsonProperty("itemBuilders") @Nullable final List<ItemBuilder> itemBuilders,
+            @JsonProperty("consumeOnComplete") @Nullable final Boolean consumeOnComplete,
+            @JsonProperty("description") @Nullable final String description,
+            @JsonProperty("exactMatch") @Nullable final Boolean exactMatch
+    ) {
         super("ITEM");
 
-        var items = requiredItems != null ? requiredItems : new ArrayList<ItemStack>();
-        var builders = itemBuilders != null ? itemBuilders : new ArrayList<ItemBuilder>();
+        final List<ItemStack> items = requiredItems != null ? requiredItems : new ArrayList<>();
+        final List<ItemBuilder> builders = itemBuilders != null ? itemBuilders : new ArrayList<>();
+        this.requiredItems = new ArrayList<>();
+        this.requiredAmounts = new ArrayList<>();
+        this.itemBuilders = new ArrayList<>(builders);
 
         if (!items.isEmpty()) {
-            this.requiredItems = new ArrayList<>(items);
-            this.itemBuilders = new ArrayList<>(builders);
+            for (int index = 0; index < items.size(); index++) {
+                final Integer explicitAmount = requiredAmounts != null && index < requiredAmounts.size()
+                        ? requiredAmounts.get(index)
+                        : null;
+                this.addRequiredItem(items.get(index), explicitAmount);
+            }
         } else if (!builders.isEmpty()) {
-            this.itemBuilders = new ArrayList<>(builders);
-            this.requiredItems = builders.stream().map(ItemBuilder::build).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+            for (final ItemBuilder builder : builders) {
+                if (builder == null) {
+                    throw new IllegalArgumentException("Item builder in requirements cannot be null.");
+                }
+                this.addRequiredItem(builder.build(), null);
+            }
         } else {
             throw new IllegalArgumentException("At least one required item or item builder must be specified.");
         }
@@ -72,8 +102,10 @@ public final class ItemRequirement extends AbstractRequirement {
             throw new IllegalArgumentException("At least one required item must be specified.");
         }
 
-        for (var item : this.requiredItems) {
-            if (item == null || item.getType().isAir() || item.getAmount() <= 0) {
+        for (int index = 0; index < this.requiredItems.size(); index++) {
+            final ItemStack item = this.requiredItems.get(index);
+            final int requiredAmount = this.requiredAmounts.get(index);
+            if (item == null || item.getType().isAir() || requiredAmount <= 0) {
                 throw new IllegalArgumentException("Invalid item in requirements: " + item);
             }
         }
@@ -82,19 +114,25 @@ public final class ItemRequirement extends AbstractRequirement {
 
     @Override
     public boolean isMet(@NotNull Player player) {
-        return requiredItems.stream().allMatch(item -> hasEnoughItems(player, item));
+        return IntStream.range(0, this.requiredItems.size())
+                .allMatch(index -> this.hasEnoughItems(
+                        player,
+                        this.requiredItems.get(index),
+                        this.requiredAmounts.get(index)
+                ));
     }
 
     @Override
     public double calculateProgress(@NotNull Player player) {
-        if (requiredItems.isEmpty()) return 1.0;
+        if (this.requiredItems.isEmpty()) return 1.0;
 
-        var totalCollected = 0.0;
-        var totalRequired = 0.0;
+        double totalCollected = 0.0;
+        double totalRequired = 0.0;
 
-        for (var requiredItem : requiredItems) {
-            var actualAmount = countItems(player, requiredItem);
-            var requiredAmount = requiredItem.getAmount();
+        for (int index = 0; index < this.requiredItems.size(); index++) {
+            final ItemStack requiredItem = this.requiredItems.get(index);
+            final int requiredAmount = this.requiredAmounts.get(index);
+            final int actualAmount = this.countItems(player, requiredItem);
             totalCollected += Math.min(actualAmount, requiredAmount);
             totalRequired += requiredAmount;
         }
@@ -104,8 +142,10 @@ public final class ItemRequirement extends AbstractRequirement {
 
     @Override
     public void consume(@NotNull Player player) {
-        if (!consumeOnComplete) return;
-        requiredItems.forEach(item -> removeItems(player, item));
+        if (!this.consumeOnComplete) return;
+        for (int index = 0; index < this.requiredItems.size(); index++) {
+            this.removeItems(player, this.requiredItems.get(index), this.requiredAmounts.get(index));
+        }
     }
 
     @Override
@@ -114,7 +154,9 @@ public final class ItemRequirement extends AbstractRequirement {
     }
 
     public List<ItemStack> getRequiredItems() {
-        return requiredItems.stream().map(ItemStack::clone).collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+        return IntStream.range(0, this.requiredItems.size())
+                .mapToObj(this::createRequiredItemCopy)
+                .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
     }
 
     public List<ItemBuilder> getItemBuilders() { return new ArrayList<>(itemBuilders); }
@@ -128,8 +170,8 @@ public final class ItemRequirement extends AbstractRequirement {
         return IntStream.range(0, this.requiredItems.size())
                 .mapToObj(index -> {
                     final ItemStack requiredItem = this.requiredItems.get(index);
+                    final int requiredAmount = this.requiredAmounts.get(index);
                     final int currentAmount = this.countItems(player, requiredItem);
-                    final int requiredAmount = requiredItem.getAmount();
                     final double progress = requiredAmount > 0
                             ? Math.min(1.0, (double) currentAmount / requiredAmount)
                             : 1.0;
@@ -143,9 +185,11 @@ public final class ItemRequirement extends AbstractRequirement {
     @NotNull
     public List<ItemStack> getMissingItems(final @NotNull Player player) {
         final List<ItemStack> missing = new ArrayList<>();
-        for (final ItemStack requiredItem : this.requiredItems) {
+        for (int index = 0; index < this.requiredItems.size(); index++) {
+            final ItemStack requiredItem = this.requiredItems.get(index);
+            final int requiredAmount = this.requiredAmounts.get(index);
             final int currentAmount = this.countItems(player, requiredItem);
-            final int shortage = Math.max(0, requiredItem.getAmount() - currentAmount);
+            final int shortage = Math.max(0, requiredAmount - currentAmount);
             if (shortage > 0) {
                 final ItemStack missingItem = requiredItem.clone();
                 missingItem.setAmount(shortage);
@@ -169,35 +213,45 @@ public final class ItemRequirement extends AbstractRequirement {
             if (item.getType().isAir()) {
                 throw new IllegalStateException("Required item at index " + i + " is air.");
             }
-            if (item.getAmount() <= 0) {
-                throw new IllegalStateException("Required item at index " + i + " has invalid amount: " + item.getAmount());
+            if (this.requiredAmounts.get(i) <= 0) {
+                throw new IllegalStateException("Required item at index " + i + " has invalid amount: " + this.requiredAmounts.get(i));
             }
         }
     }
 
-    private boolean hasEnoughItems(@NotNull Player player, @NotNull ItemStack requiredItem) {
+    private boolean hasEnoughItems(
+            @NotNull final Player player,
+            @NotNull final ItemStack requiredItem,
+            final int requiredAmount
+    ) {
         if (exactMatch) {
-            return player.getInventory().containsAtLeast(requiredItem, requiredItem.getAmount());
+            return player.getInventory().containsAtLeast(requiredItem, requiredAmount);
         } else {
             var totalAmount = player.getInventory().all(requiredItem.getType()).values().stream()
                 .mapToInt(ItemStack::getAmount).sum();
-            return totalAmount >= requiredItem.getAmount();
+            return totalAmount >= requiredAmount;
         }
     }
 
     private int countItems(@NotNull Player player, @NotNull ItemStack requiredItem) {
         if (exactMatch) {
-            return player.getInventory().all(requiredItem).values().stream()
-                .filter(stack -> stack.isSimilar(requiredItem))
-                .mapToInt(ItemStack::getAmount).sum();
+            return Arrays.stream(player.getInventory().getContents())
+                    .filter(Objects::nonNull)
+                    .filter(stack -> stack.isSimilar(requiredItem))
+                    .mapToInt(ItemStack::getAmount)
+                    .sum();
         } else {
             return player.getInventory().all(requiredItem.getType()).values().stream()
                 .mapToInt(ItemStack::getAmount).sum();
         }
     }
 
-    private void removeItems(final @NotNull Player player, final @NotNull ItemStack requiredItem) {
-        int remaining = requiredItem.getAmount();
+    private void removeItems(
+            final @NotNull Player player,
+            final @NotNull ItemStack requiredItem,
+            final int requiredAmount
+    ) {
+        int remaining = requiredAmount;
         final ItemStack[] contents = player.getInventory().getContents();
 
         for (int i = 0; i < contents.length && remaining > 0; i++) {
@@ -220,6 +274,32 @@ public final class ItemRequirement extends AbstractRequirement {
         }
 
         player.getInventory().setContents(contents);
+    }
+
+    private void addRequiredItem(
+            @Nullable final ItemStack item,
+            @Nullable final Integer explicitAmount
+    ) {
+        if (item == null || item.getType().isAir()) {
+            throw new IllegalArgumentException("Invalid item in requirements: " + item);
+        }
+
+        final int requiredAmount = explicitAmount != null ? explicitAmount : item.getAmount();
+        if (requiredAmount <= 0) {
+            throw new IllegalArgumentException("Invalid required item amount: " + requiredAmount);
+        }
+
+        final ItemStack template = item.clone();
+        template.setAmount(1);
+
+        this.requiredItems.add(template);
+        this.requiredAmounts.add(requiredAmount);
+    }
+
+    private @NotNull ItemStack createRequiredItemCopy(final int index) {
+        final ItemStack item = this.requiredItems.get(index).clone();
+        item.setAmount(this.requiredAmounts.get(index));
+        return item;
     }
 
     public record ItemProgress(

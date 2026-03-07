@@ -721,8 +721,10 @@ public final class RequirementFactory {
             if (typeStr == null) return null;
 
             org.bukkit.Material material = org.bukkit.Material.valueOf(typeStr.toUpperCase());
-            int amount = getInt(map, "amount", 1);
-            return new ItemStack(material, amount);
+            int amount = Math.max(1, getInt(map, "amount", 1));
+            final ItemStack itemStack = new ItemStack(material, 1);
+            itemStack.setAmount(amount);
+            return itemStack;
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Failed to parse ItemStack from map", e);
             return null;
