@@ -11,6 +11,10 @@ import com.raindropcentral.rdq.database.entity.bounty.BountyHunter;
 import com.raindropcentral.rdq.database.entity.perk.Perk;
 import com.raindropcentral.rdq.database.entity.perk.PlayerPerk;
 import com.raindropcentral.rdq.database.entity.player.RDQPlayer;
+import com.raindropcentral.rdq.database.entity.quest.Quest;
+import com.raindropcentral.rdq.database.entity.quest.QuestCategory;
+import com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory;
+import com.raindropcentral.rdq.database.entity.quest.QuestUser;
 import com.raindropcentral.rdq.database.entity.rank.*;
 import com.raindropcentral.rdq.database.entity.requirement.BaseRequirement;
 import com.raindropcentral.rdq.database.entity.reward.BaseReward;
@@ -119,6 +123,18 @@ public abstract class RDQ {
 	@InjectRepository
 	private PlayerPerkRepository playerPerkRepository;
 
+	@InjectRepository
+	private com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository questCategoryRepository;
+
+	@InjectRepository
+	private com.raindropcentral.rdq.database.repository.quest.QuestRepository questRepository;
+
+	@InjectRepository
+	private com.raindropcentral.rdq.database.repository.quest.QuestUserRepository questUserRepository;
+
+	@InjectRepository
+	private com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository questCompletionHistoryRepository;
+
 	private LuckPermsService luckPermsService;
 	private IBountyService bountyService;
 	private IRankSystemService rankSystemService;
@@ -133,6 +149,12 @@ public abstract class RDQ {
 	private com.raindropcentral.rdq.perk.cache.SimplePerkCache playerPerkCache;
     private PerkSidebarScoreboardService perkSidebarScoreboardService;
 	private BStatsMetrics metrics;
+
+	// Quest system components
+	private com.raindropcentral.rdq.quest.QuestSystemFactory questSystemFactory;
+	private com.raindropcentral.rdq.quest.service.QuestService questService;
+	private com.raindropcentral.rdq.quest.service.QuestProgressTracker questProgressTracker;
+	private com.raindropcentral.rdq.quest.cache.QuestCacheManager questCacheManager;
 
 	public RDQ(
 			@NotNull JavaPlugin plugin,
@@ -179,6 +201,8 @@ public abstract class RDQ {
 					initializePerkSystem();
 					perkSidebarScoreboardService = new PerkSidebarScoreboardService(this);
 					perkSidebarScoreboardService.start();
+
+					initializeQuestSystem();
 
 					initializeComponents();
 
@@ -248,6 +272,20 @@ public abstract class RDQ {
 		repositoryManager.register(RRewardRepository.class, BaseReward.class, BaseReward::getId);
 		repositoryManager.register(PerkRepository.class, Perk.class, Perk::getIdentifier);
 		repositoryManager.register(PlayerPerkRepository.class, PlayerPerk.class, PlayerPerk::getId);
+		
+		// Quest system repositories
+		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestCategoryRepository.class, 
+			com.raindropcentral.rdq.database.entity.quest.QuestCategory.class, 
+			com.raindropcentral.rdq.database.entity.quest.QuestCategory::getIdentifier);
+		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestRepository.class, 
+			com.raindropcentral.rdq.database.entity.quest.Quest.class, 
+			com.raindropcentral.rdq.database.entity.quest.Quest::getIdentifier);
+		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestUserRepository.class, 
+			com.raindropcentral.rdq.database.entity.quest.QuestUser.class, 
+			com.raindropcentral.rdq.database.entity.quest.QuestUser::getId);
+		repositoryManager.register(com.raindropcentral.rdq.database.repository.quest.QuestCompletionHistoryRepository.class, 
+			com.raindropcentral.rdq.database.entity.quest.QuestCompletionHistory.class,
+			qch -> qch.getPlayerId().toString() + ":" + qch.getQuestIdentifier());
 
 		repositoryManager.injectInto(this);
 	}
@@ -299,7 +337,10 @@ public abstract class RDQ {
 						new MainOverviewView(),
 						new RankRewardsDetailView(),
 						new PerkOverviewView(),
-						new PerkDetailView()
+						new PerkDetailView(),
+						new com.raindropcentral.rdq.view.quest.QuestCategoryView(),
+						new com.raindropcentral.rdq.view.quest.QuestListView(),
+						new com.raindropcentral.rdq.view.quest.QuestDetailView()
 				)
 				.defaultConfig(config -> {
 					config.cancelOnClick();
@@ -363,11 +404,42 @@ public abstract class RDQ {
 	}
 
 	/**
+	 * Initializes the quest system components.
+	 * Creates the quest factory, service, progress tracker, and cache manager.
+	 */
+	private void initializeQuestSystem() {
+		try {
+			LOGGER.info("Initializing quest system...");
+
+			questService = new com.raindropcentral.rdq.quest.service.QuestServiceImpl(this);
+			questProgressTracker = new com.raindropcentral.rdq.quest.service.QuestProgressTrackerImpl(this);
+			questCacheManager = new com.raindropcentral.rdq.quest.cache.QuestCacheManager(this, false);
+			questSystemFactory = new com.raindropcentral.rdq.quest.QuestSystemFactory(this);
+			
+			questSystemFactory.initialize().join();
+
+			LOGGER.info("Quest system initialized successfully!");
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE, "Failed to initialize quest system", e);
+		}
+	}
+
+	/**
 	 * Called when the plugin is being disabled.
 	 * Shuts down the visual indicator manager and other resources.
 	 */
 	public void onDisable() {
 		disabling = true;
+
+		if (questCacheManager != null) {
+			try {
+				LOGGER.info("Saving all quest caches before shutdown...");
+				questCacheManager.autoSaveAll();
+				LOGGER.info("Quest caches saved successfully");
+			} catch (Exception e) {
+				LOGGER.log(Level.SEVERE, "Failed to save quest caches during shutdown", e);
+			}
+		}
 
 		if (playerPerkCache != null) {
 			try {

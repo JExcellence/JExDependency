@@ -36,7 +36,6 @@ public final class ValidationRegistry {
         @NotNull RequirementValidator<T> validator
     ) {
         validators.put(typeId.toUpperCase(), validator);
-        LOGGER.info("Registered validator for requirement type: " + typeId);
     }
 
     /**
@@ -72,6 +71,5 @@ public final class ValidationRegistry {
      */
     public void unregisterValidator(@NotNull String typeId) {
         validators.remove(typeId.toUpperCase());
-        LOGGER.info("Unregistered validator for requirement type: " + typeId);
     }
 }
