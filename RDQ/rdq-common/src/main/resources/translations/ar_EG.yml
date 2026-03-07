@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 لا توجد مكافآت</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>إضافة عناصر لإنشاء المكافآت</gradient>"
+  - "<gradient:#6b7280:#9ca3af>إضافة عناصر لإنشاء المكافآت</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ إضافة عنصر</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>ضع العناصر هنا لإضافتها كمكافآت</gradient>"
-    - "<gradient:#6b7280:#9ca3af>اضغط كليك شمال لوضع العنصر</gradient>"
-    - "<gradient:#6b7280:#9ca3af>اضغط كليك يمين لإزالة العنصر</gradient>"
+  - "<gradient:#6b7280:#9ca3af>ضع العناصر هنا لإضافتها كمكافآت</gradient>"
+  - "<gradient:#6b7280:#9ca3af>اضغط كليك شمال لوضع العنصر</gradient>"
+  - "<gradient:#6b7280:#9ca3af>اضغط كليك يمين لإزالة العنصر</gradient>"
 
 # ============================================
 # شجرة الترتيب تعرض الأسماء والأوصاف
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 كشّاف</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اتقن فن الرماية والتتبع</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ابقى واحد مع الطبيعة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اتقن فن الرماية والتتبع</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ابقى واحد مع الطبيعة</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ المحارب</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اتقن فن القتال</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ابقى مقاتل أسطوري</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اتقن فن القتال</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ابقى مقاتل أسطوري</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ ساحر</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>سخّر قوة السحر</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ابقى سيد الفنون الغامضة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>سخّر قوة السحر</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ابقى سيد الفنون الغامضة</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 مارق</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اتقن التخفي والمكر</gradient>"
-      - "<gradient:#6b7280:#9ca3af>اضرب من بين الظلال</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اتقن التخفي والمكر</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضرب من بين الظلال</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ كاهن</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>استمد القوة الإلهية</gradient>"
-      - "<gradient:#6b7280:#9ca3af>عالِج واحمِ حلفاءك</gradient>"
+    - "<gradient:#6b7280:#9ca3af>استمد القوة الإلهية</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عالِج واحمِ حلفاءك</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 تاجر</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اتقن فن التجارة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ابنِ ثروتك</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اتقن فن التجارة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ابنِ ثروتك</gradient>"
 
 # ============================================
 # رتبة عرض الأسماء والأوصاف
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>بدون رتبة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اختار مسار رتبة علشان تبدأ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اختار مسار رتبة علشان تبدأ</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>بدون رتبة</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>الرتبة الافتراضية</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>مافيش رتبة متحددة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>مافيش رتبة متحددة</gradient>"
   # صفوف شجرة الحارس
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 كشاف الدروب</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يقرأ بصمات الحوافر وتحولات الرياح.</gradient>
-        - <gradient:#10b981:#34d399>➤ المستوى الأول • مبادرة الطبيعة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يقرأ بصمات الحوافر وتحولات الرياح.</gradient>
+      - <gradient:#10b981:#34d399>➤ المستوى الأول • مبادرة الطبيعة</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 صياد البراري</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ سيقان الفريسة بدقة المريض.</gradient>
-        - <gradient:#10b981:#34d399>➤ المستوى الثاني • المطاردة البرية</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ سيقان الفريسة بدقة المريض.</gradient>
+      - <gradient:#10b981:#34d399>➤ المستوى الثاني • المطاردة البرية</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 تعقب العلامات</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يتبع المسارات التي لا يمكن لعاصفة أن تمحوها.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ المستوى الثالث • اختيار المسار للأمام</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يتبع المسارات التي لا يمكن لعاصفة أن تمحوها.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ المستوى الثالث • اختيار المسار للأمام</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 حارس الوحوش</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ الروابط مع المخلوقات العليا في العالم.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ المستوى الرابع • الفرع البدائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ الروابط مع المخلوقات العليا في العالم.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ المستوى الرابع • الفرع البدائي</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ آمر العواصف</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ الحرائق الحقيقية من خلال الرعد والمطر.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع العاصفة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ الحرائق الحقيقية من خلال الرعد والمطر.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع العاصفة</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿حارس البرية</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يحرس الحدود المقدسة والمساحات المخفية.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ المستوى الرابع • الفرع البري</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يحرس الحدود المقدسة والمساحات المخفية.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ المستوى الرابع • الفرع البري</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 سيد الوحوش البدائي</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يأمر الوحوش الأسطورية دون خوف.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يأمر الوحوش الأسطورية دون خوف.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑عاصفة سيد الوحوش</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ كل مسمار يوجه تسديدتك المتواصلة.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ كل مسمار يوجه تسديدتك المتواصلة.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ المستوى الخامس • الترتيب النهائي</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 بيست ماستر وايلد</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ الطبيعة نفسها تنهض لتستجيب لندائك.</gradient>
-        - <gradient:#15803d:#22c55e>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ الطبيعة نفسها تنهض لتستجيب لندائك.</gradient>
+      - <gradient:#15803d:#22c55e>➤ المستوى الخامس • الترتيب النهائي</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ تجنيد</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ شفرة جديدة ذات عزم غير مجرب.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • ملاعب التدريب</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ شفرة جديدة ذات عزم غير مجرب.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • ملاعب التدريب</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ جندي</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ تم تقويته بالتدريبات وواجبات الخطوط الأمامية.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ المستوى الثاني • الانضباط الميداني</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ تم تقويته بالتدريبات وواجبات الخطوط الأمامية.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ المستوى الثاني • الانضباط الميداني</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ المخضرم</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ندوب المعركة تشير إلى حكمتك المكتسبة.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ المستوى الثالث • اختر المسار الخاص بك</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ندوب المعركة تشير إلى حكمتك المكتسبة.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ المستوى الثالث • اختر المسار الخاص بك</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥هائج</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يتاجر بالدفاع عن الهجوم المدمر.</gradient>
-        - <gradient:#ef4444:#f87171>➤ المستوى الرابع • فرع الغضب</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يتاجر بالدفاع عن الهجوم المدمر.</gradient>
+      - <gradient:#ef4444:#f87171>➤ المستوى الرابع • فرع الغضب</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡حارس</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يقف بثبات حيث ينكسر الآخرون.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع الدرع</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يقف بثبات حيث ينكسر الآخرون.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع الدرع</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 المصارع</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ أسياد حرب الساحة المتوازنة.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ المستوى الرابع • فرع الساحة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ أسياد حرب الساحة المتوازنة.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ المستوى الرابع • فرع الساحة</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 أمير الحرب الغضب</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ محرك الدمار الذي لا يمكن إيقافه.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ محرك الدمار الذي لا يمكن إيقافه.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ المستوى الخامس • الترتيب النهائي</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 أمير الحرب الدرع</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ الجدار الأخير بين الحياة والخراب.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ الجدار الأخير بين الحياة والخراب.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 أمير الحرب في الساحة</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ توج بطلاً لكل مدرج.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ توج بطلاً لكل مدرج.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨المتدرب</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ استيقظت شرارات القوة الغامضة.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ المستوى الأول • أسس غامضة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ استيقظت شرارات القوة الغامضة.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ المستوى الأول • أسس غامضة</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ ماهر</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ينسج التعويذات المسيطر عليها والمركزة.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • ممارسة غامضة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ينسج التعويذات المسيطر عليها والمركزة.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • ممارسة غامضة</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ ساحر</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يأمر بأنماط معقدة من السحر.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر مذهبك</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يأمر بأنماط معقدة من السحر.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر مذهبك</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 ساحر أركانا</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ينقي القوة الخام إلى قوة أنيقة.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • فرع غامض</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ينقي القوة الخام إلى قوة أنيقة.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • فرع غامض</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜ساحر الرقى</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يوسع التحكم في السحر والدقة.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ المستوى الرابع • فرع الإملائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يوسع التحكم في السحر والدقة.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ المستوى الرابع • فرع الإملائي</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌ساحر الفراغ</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يحني الطاقات السحيقة لإرادتك.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ المستوى الرابع • فرع باطل</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يحني الطاقات السحيقة لإرادتك.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ المستوى الرابع • فرع باطل</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 ساحر أركانا</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ المهندس الأعلى للقوة الغامضة النقية.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ المهندس الأعلى للقوة الغامضة النقية.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 ساحر التعاويذ</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ كل تعويذة تجيب على الفور.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ كل تعويذة تجيب على الفور.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 ساحر الفراغ</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ قواعد الحواف بين العوالم.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ قواعد الحواف بين العوالم.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 النشال</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يتعلم التوقيت والتوجيه الخاطئ والسرعة.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • Streetcraft</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يتعلم التوقيت والتوجيه الخاطئ والسرعة.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • Streetcraft</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 لص</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ينزلق عبر الأقفال وخطوط المراقبة.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • الدخول الصامت</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ينزلق عبر الأقفال وخطوط المراقبة.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • الدخول الصامت</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 قاتل</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يضرب مرة واحدة ويختفي دون أن يترك أثرا.</gradient>
-        - <gradient:#ef4444:#f87171>➤ المستوى الثالث • اختر طريقتك</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يضرب مرة واحدة ويختفي دون أن يترك أثرا.</gradient>
+      - <gradient:#ef4444:#f87171>➤ المستوى الثالث • اختر طريقتك</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒ظل الشبح</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ حركة رئيسية لا يمكن للعين أن تتبعها.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ المستوى الرابع • فرع التخفي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ حركة رئيسية لا يمكن للعين أن تتبعها.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ المستوى الرابع • فرع التخفي</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 ظل الليل</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يحول الظلام إلى ميزة فتاكة.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ المستوى الرابع • الفرع الليلي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يحول الظلام إلى ميزة فتاكة.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ المستوى الرابع • الفرع الليلي</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣ظل التخريب</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يفكك الخطط قبل رد فعل الأعداء.</gradient>
-        - <gradient:#f97316:#fb923c>➤ المستوى الرابع • فرع التخريب</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يفكك الخطط قبل رد فعل الأعداء.</gradient>
+      - <gradient:#f97316:#fb923c>➤ المستوى الرابع • فرع التخريب</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 شبح التخفي</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ تصبح أسطورة حضرية لا يمكن المساس بها.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ تصبح أسطورة حضرية لا يمكن المساس بها.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ المستوى الخامس • الترتيب النهائي</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 شبح الليل</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يمتلك ساعة منتصف الليل تماماً.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يمتلك ساعة منتصف الليل تماماً.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ المستوى الخامس • الترتيب النهائي</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 شبح التخريب</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ينهي المعارك قبل أن تبدأ.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ينهي المعارك قبل أن تبدأ.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ المستوى الخامس • الترتيب النهائي</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ مساعد</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يبدأ طريق الخدمة المقدسة.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ المستوى الأول • الإخلاص</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يبدأ طريق الخدمة المقدسة.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ المستوى الأول • الإخلاص</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ معالج</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يستعيد الحلفاء تحت ضغط شديد.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ المستوى الثاني • الترميم</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يستعيد الحلفاء تحت ضغط شديد.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ المستوى الثاني • الترميم</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ كاهن</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يرشد الأحزاب بالانضباط المقدس.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثالث • اختر مكالمتك</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يرشد الأحزاب بالانضباط المقدس.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ المستوى الثالث • اختر مكالمتك</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ أسقف اللاهوت</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ قنوات السلطة الإشعاعية المباشرة.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • الفرع الإلهي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ قنوات السلطة الإشعاعية المباشرة.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • الفرع الإلهي</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ أسقف النور</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يعمي الفساد بالتألق المقدس.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ المستوى الرابع • الفرع الخفيف</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يعمي الفساد بالتألق المقدس.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ المستوى الرابع • الفرع الخفيف</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 أسقف النفوس</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يحرس عتبة الحياة والموت.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع الروح</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يحرس عتبة الحياة والموت.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع الروح</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 رئيس كهنة اللاهوت</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يعلن المعجزات في قلب الفوضى.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يعلن المعجزات في قلب الفوضى.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑 رئيس كهنة النور</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يستحم الحلفاء في فجر لا يتزعزع.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يستحم الحلفاء في فجر لا يتزعزع.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ المستوى الخامس • الترتيب النهائي</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 كاهن النفوس الأعظم</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ أرواح الرعاة تتجاوز الخوف المميت.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ أرواح الرعاة تتجاوز الخوف المميت.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يبدأ بالمثابرة والسحر والصفقات الصغيرة.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • التجارة في الشوارع</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يبدأ بالمثابرة والسحر والصفقات الصغيرة.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • التجارة في الشوارع</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 تاجر</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يوسع الطرق والاتصالات الموثوقة.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • التواجد في السوق</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يوسع الطرق والاتصالات الموثوقة.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • التواجد في السوق</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 وسيط</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ إغلاق الصفقات ذات القيمة العالية بدقة.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر إمبراطوريتك</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ إغلاق الصفقات ذات القيمة العالية بدقة.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر إمبراطوريتك</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 قطب الثروة</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يبني رأس مال خالص بوتيرة لا مثيل لها.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ المستوى الرابع • فرع الثروة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يبني رأس مال خالص بوتيرة لا مثيل لها.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ المستوى الرابع • فرع الثروة</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 قطب الأسواق</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ينظم دورات العرض والطلب.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع السوق</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ينظم دورات العرض والطلب.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع السوق</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 قطب التجارة</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يهيمن على ممرات القوافل والخدمات اللوجستية.</gradient>
-        - <gradient:#f97316:#fdba74>➤ المستوى الرابع • فرع التجارة</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يهيمن على ممرات القوافل والخدمات اللوجستية.</gradient>
+      - <gradient:#f97316:#fdba74>➤ المستوى الرابع • فرع التجارة</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 قطب الثروة</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ يقلب الاقتصادات بقرار واحد.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ يقلب الاقتصادات بقرار واحد.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ المستوى الخامس • الترتيب النهائي</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 قطب الأسواق</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ تحديد الأسعار التي يجب على كل نقابة احترامها.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ تحديد الأسعار التي يجب على كل نقابة احترامها.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 قطب التجارة</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ تمتلك الطرق والموانئ والأرباح.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ تمتلك الطرق والموانئ والأرباح.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ المستوى الخامس • الترتيب النهائي</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>لديك مكافأة نشطة على رأسك!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ لوحة الإدارة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>الوصول إلى الأدوات الإدارية</gradient>"
-      - "<gradient:#6b7280:#9ca3af>وخيارات التكوين</gradient>"
+    - "<gradient:#6b7280:#9ca3af>الوصول إلى الأدوات الإدارية</gradient>"
+    - "<gradient:#6b7280:#9ca3af>وخيارات التكوين</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 باونتي</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>عرض وإدارة المكافآت</gradient>"
-      - "<gradient:#6b7280:#9ca3af>اصطياد اللاعبين للحصول على المكافآت!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عرض وإدارة المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اصطياد اللاعبين للحصول على المكافآت!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ الامتيازات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>عرض الامتيازات المتاحة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>والقدرات الخاصة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عرض الامتيازات المتاحة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>والقدرات الخاصة</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 أسئلة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>عرض المهام المتاحة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>وتتبع التقدم المحرز الخاص بك</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عرض المهام المتاحة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>وتتبع التقدم المحرز الخاص بك</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ الرتب</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>عرض تقدم الرتبة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>وفتح قدرات جديدة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عرض تقدم الرتبة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>وفتح قدرات جديدة</gradient>"
 
 # ============================================
 # ترتيب واجهة المستخدم الرئيسية
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 ترتيب الأشجار</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>تصفح أشجار الرتبة المتاحة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>واختر طريقك</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تصفح أشجار الرتبة المتاحة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>واختر طريقك</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 كشّاف</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اتقن فن الرماية والتتبع</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ابقى واحد مع الطبيعة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اتقن فن الرماية والتتبع</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابقى واحد مع الطبيعة</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ المحارب</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اتقن فن القتال</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ابقى مقاتل أسطوري</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اتقن فن القتال</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابقى مقاتل أسطوري</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ ساحر</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>سخّر قوة السحر</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ابقى سيد الفنون الغامضة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>سخّر قوة السحر</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابقى سيد الفنون الغامضة</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 مارق</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اتقن التخفي والمكر</gradient>"
-        - "<gradient:#6b7280:#9ca3af>اضرب من بين الظلال</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اتقن التخفي والمكر</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضرب من بين الظلال</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ كاهن</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>استمد القوة الإلهية</gradient>"
-        - "<gradient:#6b7280:#9ca3af>عالِج واحمِ حلفاءك</gradient>"
+      - "<gradient:#6b7280:#9ca3af>استمد القوة الإلهية</gradient>"
+      - "<gradient:#6b7280:#9ca3af>عالِج واحمِ حلفاءك</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 تاجر</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اتقن فن التجارة</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ابنِ ثروتك</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اتقن فن التجارة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ابنِ ثروتك</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
-      - "<gradient:#10b981:#34d399>اضغط كليك يمين للتحديد</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
+    - "<gradient:#10b981:#34d399>اضغط كليك يمين للتحديد</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 شجرة الرتب هذه مقفلة</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>مكتمل %minimum_rank_paths_to_be_absolved_needed% رتبة الأشجار أولا</gradient>"
+    - "<gradient:#6b7280:#9ca3af>مكتمل %minimum_rank_paths_to_be_absolved_needed% رتبة الأشجار أولا</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>المتطلبات الأساسية:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 مسار الرتبة هذا مغلق!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ نشط حاليا</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ إنشاء شجرة الرتب</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>إنشاء شجرة رتب جديدة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(المشرف فقط)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إنشاء شجرة رتب جديدة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(المشرف فقط)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ لم يتم العثور على رتبة البداية لهذا المسار!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ مسار الترتيب المحدد:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(رتبة البداية: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ سيتم إنشاء شجرة الترتيب قريبًا!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ نسخة مجانية - للمعاينة فقط</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>شجرة الرتب هذه متاحة للمعاينة فقط.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>الترقية إلى Premium لفتح!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
+  - "<gradient:#6b7280:#9ca3af>شجرة الرتب هذه متاحة للمعاينة فقط.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>الترقية إلى Premium لفتح!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للمعاينة</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium مطلوب:</gradient> <gradient:#6b7280:#9ca3af>الترقية إلى Premium لتحديد أشجار رتبة إضافية!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>انتقل %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 إطلالة على المركز</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لتوسيط العرض</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لتوسيط العرض</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>عرض المركز</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 وضع المعاينة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>أنت تشاهد في وضع المعاينة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>لن يتم حفظ التغييرات</gradient>"
+    - "<gradient:#6b7280:#9ca3af>أنت تشاهد في وضع المعاينة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لن يتم حفظ التغييرات</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>وضع المعاينة</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ خطأ في عرض الترتيب</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ لا توجد شجرة رتبة</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل شجرة الترتيب</gradient>"
+    - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل شجرة الترتيب</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ خطأ فادح</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>حدث خطأ أثناء العرض</gradient>"
+    - "<gradient:#6b7280:#9ca3af>حدث خطأ أثناء العرض</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>حدث خطأ أثناء العرض</gradient>"
+    - "<gradient:#6b7280:#9ca3af>حدث خطأ أثناء العرض</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌فشل في فتح متطلبات</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ حدث خطأ. يرجى المحاولة مرة أخرى.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 كشاف الدروب</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يقرأ بصمات الحوافر وتحولات الرياح.</gradient>
-          - <gradient:#10b981:#34d399>➤ المستوى الأول • مبادرة الطبيعة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يقرأ بصمات الحوافر وتحولات الرياح.</gradient>
+        - <gradient:#10b981:#34d399>➤ المستوى الأول • مبادرة الطبيعة</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 صياد البراري</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ سيقان الفريسة بدقة المريض.</gradient>
-          - <gradient:#10b981:#34d399>➤ المستوى الثاني • المطاردة البرية</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ سيقان الفريسة بدقة المريض.</gradient>
+        - <gradient:#10b981:#34d399>➤ المستوى الثاني • المطاردة البرية</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 تعقب العلامات</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يتبع المسارات التي لا يمكن لعاصفة أن تمحوها.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ المستوى الثالث • اختيار المسار للأمام</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يتبع المسارات التي لا يمكن لعاصفة أن تمحوها.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ المستوى الثالث • اختيار المسار للأمام</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 حارس الوحوش</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ الروابط مع المخلوقات العليا في العالم.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ المستوى الرابع • الفرع البدائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ الروابط مع المخلوقات العليا في العالم.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ المستوى الرابع • الفرع البدائي</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ آمر العواصف</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ الحرائق الحقيقية من خلال الرعد والمطر.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع العاصفة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ الحرائق الحقيقية من خلال الرعد والمطر.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع العاصفة</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿حارس البرية</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يحرس الحدود المقدسة والمساحات المخفية.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ المستوى الرابع • الفرع البري</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يحرس الحدود المقدسة والمساحات المخفية.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ المستوى الرابع • الفرع البري</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 سيد الوحوش البدائي</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يأمر الوحوش الأسطورية دون خوف.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يأمر الوحوش الأسطورية دون خوف.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑عاصفة سيد الوحوش</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ كل مسمار يوجه تسديدتك المتواصلة.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ كل مسمار يوجه تسديدتك المتواصلة.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ المستوى الخامس • الترتيب النهائي</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 بيست ماستر وايلد</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ الطبيعة نفسها تنهض لتستجيب لندائك.</gradient>
-          - <gradient:#15803d:#22c55e>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ الطبيعة نفسها تنهض لتستجيب لندائك.</gradient>
+        - <gradient:#15803d:#22c55e>➤ المستوى الخامس • الترتيب النهائي</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ تجنيد</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ شفرة جديدة ذات عزم غير مجرب.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • ملاعب التدريب</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ شفرة جديدة ذات عزم غير مجرب.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • ملاعب التدريب</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ جندي</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ تم تقويته بالتدريبات وواجبات الخطوط الأمامية.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ المستوى الثاني • الانضباط الميداني</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ تم تقويته بالتدريبات وواجبات الخطوط الأمامية.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ المستوى الثاني • الانضباط الميداني</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ المخضرم</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ندوب المعركة تشير إلى حكمتك المكتسبة.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ المستوى الثالث • اختر المسار الخاص بك</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ندوب المعركة تشير إلى حكمتك المكتسبة.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ المستوى الثالث • اختر المسار الخاص بك</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥هائج</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يتاجر بالدفاع عن الهجوم المدمر.</gradient>
-          - <gradient:#ef4444:#f87171>➤ المستوى الرابع • فرع الغضب</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يتاجر بالدفاع عن الهجوم المدمر.</gradient>
+        - <gradient:#ef4444:#f87171>➤ المستوى الرابع • فرع الغضب</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡حارس</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يقف بثبات حيث ينكسر الآخرون.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع الدرع</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يقف بثبات حيث ينكسر الآخرون.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ المستوى الرابع • فرع الدرع</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 المصارع</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ أسياد حرب الساحة المتوازنة.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ المستوى الرابع • فرع الساحة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ أسياد حرب الساحة المتوازنة.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ المستوى الرابع • فرع الساحة</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 أمير الحرب الغضب</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ محرك الدمار الذي لا يمكن إيقافه.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ محرك الدمار الذي لا يمكن إيقافه.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ المستوى الخامس • الترتيب النهائي</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 أمير الحرب الدرع</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ الجدار الأخير بين الحياة والخراب.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ الجدار الأخير بين الحياة والخراب.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 أمير الحرب في الساحة</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ توج بطلاً لكل مدرج.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ توج بطلاً لكل مدرج.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨المتدرب</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ استيقظت شرارات القوة الغامضة.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ المستوى الأول • أسس غامضة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ استيقظت شرارات القوة الغامضة.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ المستوى الأول • أسس غامضة</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ ماهر</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ينسج التعويذات المسيطر عليها والمركزة.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • ممارسة غامضة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ينسج التعويذات المسيطر عليها والمركزة.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • ممارسة غامضة</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ ساحر</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يأمر بأنماط معقدة من السحر.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر مذهبك</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يأمر بأنماط معقدة من السحر.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر مذهبك</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 ساحر أركانا</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ينقي القوة الخام إلى قوة أنيقة.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • فرع غامض</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ينقي القوة الخام إلى قوة أنيقة.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • فرع غامض</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜ساحر الرقى</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يوسع التحكم في السحر والدقة.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ المستوى الرابع • فرع الإملائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يوسع التحكم في السحر والدقة.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ المستوى الرابع • فرع الإملائي</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌ساحر الفراغ</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يحني الطاقات السحيقة لإرادتك.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ المستوى الرابع • فرع باطل</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يحني الطاقات السحيقة لإرادتك.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ المستوى الرابع • فرع باطل</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 ساحر أركانا</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ المهندس الأعلى للقوة الغامضة النقية.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ المهندس الأعلى للقوة الغامضة النقية.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 ساحر التعاويذ</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ كل تعويذة تجيب على الفور.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ كل تعويذة تجيب على الفور.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 ساحر الفراغ</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ قواعد الحواف بين العوالم.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ قواعد الحواف بين العوالم.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ المستوى الخامس • الترتيب النهائي</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 النشال</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يتعلم التوقيت والتوجيه الخاطئ والسرعة.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • Streetcraft</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يتعلم التوقيت والتوجيه الخاطئ والسرعة.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • Streetcraft</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 لص</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ينزلق عبر الأقفال وخطوط المراقبة.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • الدخول الصامت</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ينزلق عبر الأقفال وخطوط المراقبة.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • الدخول الصامت</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 قاتل</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يضرب مرة واحدة ويختفي دون أن يترك أثرا.</gradient>
-          - <gradient:#ef4444:#f87171>➤ المستوى الثالث • اختر طريقتك</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يضرب مرة واحدة ويختفي دون أن يترك أثرا.</gradient>
+        - <gradient:#ef4444:#f87171>➤ المستوى الثالث • اختر طريقتك</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒ظل الشبح</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ حركة رئيسية لا يمكن للعين أن تتبعها.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ المستوى الرابع • فرع التخفي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ حركة رئيسية لا يمكن للعين أن تتبعها.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ المستوى الرابع • فرع التخفي</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 ظل الليل</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يحول الظلام إلى ميزة فتاكة.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ المستوى الرابع • الفرع الليلي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يحول الظلام إلى ميزة فتاكة.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ المستوى الرابع • الفرع الليلي</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣ظل التخريب</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يفكك الخطط قبل رد فعل الأعداء.</gradient>
-          - <gradient:#f97316:#fb923c>➤ المستوى الرابع • فرع التخريب</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يفكك الخطط قبل رد فعل الأعداء.</gradient>
+        - <gradient:#f97316:#fb923c>➤ المستوى الرابع • فرع التخريب</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 شبح التخفي</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ تصبح أسطورة حضرية لا يمكن المساس بها.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ تصبح أسطورة حضرية لا يمكن المساس بها.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ المستوى الخامس • الترتيب النهائي</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 شبح الليل</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يمتلك ساعة منتصف الليل تماماً.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يمتلك ساعة منتصف الليل تماماً.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ المستوى الخامس • الترتيب النهائي</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 شبح التخريب</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ينهي المعارك قبل أن تبدأ.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ينهي المعارك قبل أن تبدأ.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ المستوى الخامس • الترتيب النهائي</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ مساعد</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يبدأ طريق الخدمة المقدسة.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ المستوى الأول • الإخلاص</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يبدأ طريق الخدمة المقدسة.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ المستوى الأول • الإخلاص</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ معالج</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يستعيد الحلفاء تحت ضغط شديد.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ المستوى الثاني • الترميم</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يستعيد الحلفاء تحت ضغط شديد.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ المستوى الثاني • الترميم</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ كاهن</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يرشد الأحزاب بالانضباط المقدس.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثالث • اختر مكالمتك</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يرشد الأحزاب بالانضباط المقدس.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثالث • اختر مكالمتك</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ أسقف اللاهوت</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ قنوات السلطة الإشعاعية المباشرة.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • الفرع الإلهي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ قنوات السلطة الإشعاعية المباشرة.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ المستوى الرابع • الفرع الإلهي</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ أسقف النور</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يعمي الفساد بالتألق المقدس.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ المستوى الرابع • الفرع الخفيف</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يعمي الفساد بالتألق المقدس.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ المستوى الرابع • الفرع الخفيف</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 أسقف النفوس</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يحرس عتبة الحياة والموت.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع الروح</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يحرس عتبة الحياة والموت.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع الروح</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 رئيس كهنة اللاهوت</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يعلن المعجزات في قلب الفوضى.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يعلن المعجزات في قلب الفوضى.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ المستوى الخامس • الترتيب النهائي</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑 رئيس كهنة النور</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يستحم الحلفاء في فجر لا يتزعزع.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يستحم الحلفاء في فجر لا يتزعزع.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ المستوى الخامس • الترتيب النهائي</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 كاهن النفوس الأعظم</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ أرواح الرعاة تتجاوز الخوف المميت.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ أرواح الرعاة تتجاوز الخوف المميت.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يبدأ بالمثابرة والسحر والصفقات الصغيرة.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • التجارة في الشوارع</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يبدأ بالمثابرة والسحر والصفقات الصغيرة.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ المستوى الأول • التجارة في الشوارع</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 تاجر</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يوسع الطرق والاتصالات الموثوقة.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • التواجد في السوق</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يوسع الطرق والاتصالات الموثوقة.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ المستوى الثاني • التواجد في السوق</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 وسيط</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ إغلاق الصفقات ذات القيمة العالية بدقة.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر إمبراطوريتك</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ إغلاق الصفقات ذات القيمة العالية بدقة.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ المستوى الثالث • اختر إمبراطوريتك</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 قطب الثروة</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يبني رأس مال خالص بوتيرة لا مثيل لها.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ المستوى الرابع • فرع الثروة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يبني رأس مال خالص بوتيرة لا مثيل لها.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ المستوى الرابع • فرع الثروة</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 قطب الأسواق</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ينظم دورات العرض والطلب.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع السوق</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ينظم دورات العرض والطلب.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ المستوى الرابع • فرع السوق</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 قطب التجارة</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يهيمن على ممرات القوافل والخدمات اللوجستية.</gradient>
-          - <gradient:#f97316:#fdba74>➤ المستوى الرابع • فرع التجارة</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يهيمن على ممرات القوافل والخدمات اللوجستية.</gradient>
+        - <gradient:#f97316:#fdba74>➤ المستوى الرابع • فرع التجارة</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 قطب الثروة</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ يقلب الاقتصادات بقرار واحد.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ يقلب الاقتصادات بقرار واحد.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ المستوى الخامس • الترتيب النهائي</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 قطب الأسواق</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ تحديد الأسعار التي يجب على كل نقابة احترامها.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ تحديد الأسعار التي يجب على كل نقابة احترامها.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ المستوى الخامس • الترتيب النهائي</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 قطب التجارة</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ تمتلك الطرق والموانئ والأرباح.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ المستوى الخامس • الترتيب النهائي</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ تمتلك الطرق والموانئ والأرباح.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ المستوى الخامس • الترتيب النهائي</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 لص</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 قاتل مأجور</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 متسلل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
+        - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 سيد الظل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
+        - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ مساعد</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>خادم مخلص للإله</gradient>"
+        - "<gradient:#6b7280:#9ca3af>خادم مخلص للإله</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ المحب</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>المتبع المخلص للطريق الإلهي</gradient>"
+        - "<gradient:#6b7280:#9ca3af>المتبع المخلص للطريق الإلهي</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ كاهن</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>شافي وحامي المؤمنين</gradient>"
+        - "<gradient:#6b7280:#9ca3af>شافي وحامي المؤمنين</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ معالج</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>خبير في فنون التعافي</gradient>"
+        - "<gradient:#6b7280:#9ca3af>خبير في فنون التعافي</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ الأسقف</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>زعيم المؤمنين</gradient>"
+        - "<gradient:#6b7280:#9ca3af>زعيم المؤمنين</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ أوراكل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>عراف الرؤى الإلهية</gradient>"
+        - "<gradient:#6b7280:#9ca3af>عراف الرؤى الإلهية</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ رئيس الكهنة</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>الصوت الإلهي الأعلى</gradient>"
+        - "<gradient:#6b7280:#9ca3af>الصوت الإلهي الأعلى</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� النشل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
+        - "<gradient:#6b7280:#9ca3af>أصابع سريعة، هروب أسرع</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 لص</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>سيد التخفي والسرقة</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 كشّاف</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>عيون وآذان الظلال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>عيون وآذان الظلال</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 قاتل مأجور</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>القاتل الصامت، الموت من الظلال</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 متسلل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
+        - "<gradient:#6b7280:#9ca3af>خبير في الدخول والخروج دون أن يتم اكتشافها</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 نصل الظل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>محارب الليل القاتل</gradient>"
+        - "<gradient:#6b7280:#9ca3af>محارب الليل القاتل</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 سيد الجواسيس</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>مراقب شبكات المعلومات</gradient>"
+        - "<gradient:#6b7280:#9ca3af>مراقب شبكات المعلومات</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 سيد الظل</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
+        - "<gradient:#6b7280:#9ca3af>واحد مع الظلام نفسه</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 سيد الظلال</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>الحاكم الأعلى لجميع الظلال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>الحاكم الأعلى لجميع الظلال</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 بائع متجول</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>بيع السلع في الشارع</gradient>"
+        - "<gradient:#6b7280:#9ca3af>بيع السلع في الشارع</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 تاجر</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>تاجر مؤسس وله اتصالات</gradient>"
+        - "<gradient:#6b7280:#9ca3af>تاجر مؤسس وله اتصالات</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 بائع</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>بائع ماهر للبضائع</gradient>"
+        - "<gradient:#6b7280:#9ca3af>بائع ماهر للبضائع</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 صانع</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>صانع الأواني الجميلة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>صانع الأواني الجميلة</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 الخيميائي</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>سيد الجرعات والإكسير</gradient>"
+        - "<gradient:#6b7280:#9ca3af>سيد الجرعات والإكسير</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 تاجر</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>صاحب عمل ناجح</gradient>"
+        - "<gradient:#6b7280:#9ca3af>صاحب عمل ناجح</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 حرفي ماهر</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>الحرفي الأعلى للمملكة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>الحرفي الأعلى للمملكة</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 أمير التجار</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>ملوكية التجارة</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ملوكية التجارة</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 قطب</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>سيد التجارة والأعمال</gradient>"
+        - "<gradient:#6b7280:#9ca3af>سيد التجارة والأعمال</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 سيد النقابة</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>زعيم نقابة التجار</gradient>"
+        - "<gradient:#6b7280:#9ca3af>زعيم نقابة التجار</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 المعاينة:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 المعاينة:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>متطلبات #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل تفاصيل المتطلبات</gradient>"
+    - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل تفاصيل المتطلبات</gradient>"
     type: "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>أغراض:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>تقدم:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تقدم:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>اضغط علشان تشوف التفاصيل</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 تفاصيل المتطلبات</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ ليس لديك كل العناصر المطلوبة!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ تم إرسال العناصر بنجاح!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>المستويات المطلوبة:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ تم استيفاء متطلبات المستوى!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>يكسب XP عن طريق التعدين، وقتل الغوغاء،</gradient>"
-      - "<gradient:#6b7280:#9ca3af>صهر العناصر، وأكثر!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>يكسب XP عن طريق التعدين، وقتل الغوغاء،</gradient>"
+    - "<gradient:#6b7280:#9ca3af>صهر العناصر، وأكثر!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>وقت اللعب الخاص بك:</gradient> <gradient:#10b981:#34d399>%hours%ح %minutes%م</gradient>"
     required: "<gradient:#6b7280:#9ca3af>وقت اللعب المطلوب:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ح %minutes%م</gradient>"
     remaining: "<gradient:#ef4444:#f87171>الوقت المتبقي:</gradient> <gradient:#f59e0b:#fbbf24>%hours%ح %minutes%م</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ تم استيفاء متطلبات وقت اللعب!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>استمر في اللعب على الخادم</gradient>"
-      - "<gradient:#6b7280:#9ca3af>لتجميع وقت اللعب!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>استمر في اللعب على الخادم</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لتجميع وقت اللعب!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>تقدم</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>حاضِر:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>انتهاء:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ مكتمل</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>لقد اكتمل هذا المطلب بالفعل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لقد اكتمل هذا المطلب بالفعل</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅المتطلبات كاملة</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لإكمال هذا المطلب</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لإكمال هذا المطلب</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 تحديث التقدم</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لتحديث التقدم المحرز الخاص بك</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لتحديث التقدم المحرز الخاص بك</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>العناصر المكتملة:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>يكتب:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>جمع العناصر المطلوبة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>والعودة هنا لإكمال</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>جمع العناصر المطلوبة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>والعودة هنا لإكمال</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>كسب العملة المطلوبة</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>كسب العملة المطلوبة</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>اكتساب مستويات الخبرة</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اكتساب مستويات الخبرة</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>العب على الخادم</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>العب على الخادم</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>أكمل المتطلبات</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 نصيحة:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>أكمل المتطلبات</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 عرض الملخص...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡عرض النصائح...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ اكتمل!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ اكتمل!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ جاهز للاكتمال!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>اضغط للانتهاء</gradient>"
+    - "<gradient:#10b981:#34d399>✅ جاهز للاكتمال!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط للانتهاء</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ قيد التقدم</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>لم يبدأ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لم يبدأ</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>حالة: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>تقدم</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>متطلبات غير معروفة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل التفاصيل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>غير قادر على تحميل التفاصيل</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ خطأ</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>فشل تحميل المتطلبات</gradient>"
+    - "<gradient:#ef4444:#f87171>فشل تحميل المتطلبات</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 التقدم:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 الحالة:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>اكتمل بالفعل!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 إنشاء فضله</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان تنشئ باونتي جديدة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>على لاعب آخر</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان تنشئ باونتي جديدة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>على لاعب آخر</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 عرض الخيرات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>عرض جميع المكافآت النشطة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عرض جميع المكافآت النشطة</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 خيراتي</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>عرض المكافآت التي قمت بإنشائها</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عرض المكافآت التي قمت بإنشائها</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 المتصدرين</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>كبار صائدي الجوائز</gradient>"
+    - "<gradient:#6b7280:#9ca3af>كبار صائدي الجوائز</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 مكافأة على</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>هدف:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>مفوض:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>مخلوق:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>اضغط علشان تشوف التفاصيل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>هدف:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>مفوض:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>مخلوق:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>اضغط علشان تشوف التفاصيل</gradient>"
 
 # ============================================
 # واجهة إنشاء المكافأة
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 حدد الهدف</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 الهدف: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لاختيار لاعب</gradient>"
-      - "<gradient:#6b7280:#9ca3af>حاضِر: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لاختيار لاعب</gradient>"
+    - "<gradient:#6b7280:#9ca3af>حاضِر: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 إنشاء فضله</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان تنشئ باونتي جديدة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>على لاعب آخر</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان تنشئ باونتي جديدة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>على لاعب آخر</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 أضف مكافآت العناصر</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 أضف مكافآت العناصر</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>اضغط لإضافة مكافآت العنصر</gradient>"
-      - "<gradient:#6b7280:#9ca3af>العناصر الحالية:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لإضافة مكافآت العنصر</gradient>"
+    - "<gradient:#6b7280:#9ca3af>العناصر الحالية:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 إضافة مكافآت العملة</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 إضافة مكافآت العملة</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>اضغط لإضافة مكافآت العملة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>العملات الحالية:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لإضافة مكافآت العملة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>العملات الحالية:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ حدد الهدف أولاً!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ إنشاء مكافأة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لإنشاء المكافأة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>مع المكافآت المختارة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لإنشاء المكافأة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>مع المكافآت المختارة</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ لم يتم اختيار أي لاعب!</gradient> <gradient:#6b7280:#9ca3af>الرجاء تحديد الهدف أولاً.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ لم تتم إضافة أي مكافآت!</gradient> <gradient:#6b7280:#9ca3af>يرجى إضافة بعض المكافآت أولا.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 لا توجد مكافآت</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>إضافة عناصر لإنشاء المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إضافة عناصر لإنشاء المكافآت</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ إضافة عنصر</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ضع العناصر هنا لإضافتها كمكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ضع العناصر هنا لإضافتها كمكافآت</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 الهدف: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>يتم وضع هذه المكافأة على</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>يتم وضع هذه المكافأة على</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰مكافأة مكافأة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>سيتم إعطاء هذا البند ل</gradient>"
-      - "<gradient:#6b7280:#9ca3af>من يدعي المكافأة</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰مكافأة مكافأة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>سيتم إعطاء هذا البند ل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>من يدعي المكافأة</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ لم تتم إضافة أي عناصر جديدة!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ تم إسقاط بعض العناصر نظرًا لامتلاء مخزونك!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>الهدف من هذه المكافأة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>الهدف من هذه المكافأة</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ المزيد من المعلومات قريباً...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 عرض المكافآت</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لرؤية جميع المكافآت</gradient>"
-      - "<gradient:#6b7280:#9ca3af>إجمالي المكافآت:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لرؤية جميع المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إجمالي المكافآت:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 حذف المكافأة</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ تحذير: لا يمكن التراجع!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>اضغط لحذف هذه المكافأة</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ تحذير: لا يمكن التراجع!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لحذف هذه المكافأة</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ المكافأة على</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>تم حذفه!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>هل أنت متأكد أنك تريد حذف هذه المكافأة؟</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 مدير الأذونات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>إدارة أذونات البرنامج المساعد</gradient>"
-      - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>إجمالي الأذونات:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إدارة أذونات البرنامج المساعد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إجمالي الأذونات:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ فشل في فتح مدير الأذونات!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 تكامل البرنامج المساعد</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>إدارة عمليات تكامل المكونات الإضافية للمشرف في مكان واحد</gradient>"
-      - "<gradient:#6b7280:#9ca3af>يتضمن طرق عرض العملة والمهارات والكشف عن الوظائف</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إدارة عمليات تكامل المكونات الإضافية للمشرف في مكان واحد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>يتضمن طرق عرض العملة والمهارات والكشف عن الوظائف</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات تكامل المكونات الإضافية!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ إنشاء LuckPerms المجموعات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>يخلق LuckPerms مجموعات من الرتب</gradient>"
+    - "<gradient:#6b7280:#9ca3af>يخلق LuckPerms مجموعات من الرتب</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms مش متثبت!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ لم يتم العثور على رتب لإنشاء مجموعات لها!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ تم إنشاؤها</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms مجموعات!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 مركز التكامل</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>افتح لوحات معلومات تكامل المكونات الإضافية RDQ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>تتوفر هنا العملات واكتشاف المهارات/الوظائف وأدوات PlaceholderAPI</gradient>"
+    - "<gradient:#6b7280:#9ca3af>افتح لوحات معلومات تكامل المكونات الإضافية RDQ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تتوفر هنا العملات واكتشاف المهارات/الوظائف وأدوات PlaceholderAPI</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 تكامل العملات</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>إدارة مزود العملة المفتوحة</gradient>"
-        - "<gradient:#6b7280:#9ca3af>مراجعة عملات Vault وJExEconomy المكتشفة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إدارة مزود العملة المفتوحة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>مراجعة عملات Vault وJExEconomy المكتشفة</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات تكامل العملات!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 تكامل المهارات</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>عرض حالة الدعم لـ mcMMO وAura وEcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>اكتشاف المكونات الإضافية للمهارة الممكّنة حاليًا</gradient>"
+      - "<gradient:#6b7280:#9ca3af>عرض حالة الدعم لـ mcMMO وAura وEcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اكتشاف المكونات الإضافية للمهارة الممكّنة حاليًا</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات تكامل المهارات!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ التكامل الوظيفي</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>عرض حالة الدعم لـ EcoJobs وJobsReborn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>اكتشاف المكونات الإضافية للوظيفة الممكّنة حاليًا</gradient>"
+      - "<gradient:#6b7280:#9ca3af>عرض حالة الدعم لـ EcoJobs وJobsReborn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اكتشاف المكونات الإضافية للوظيفة الممكّنة حاليًا</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ فشل في فتح عمليات التكامل الوظيفي!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اكتشاف دعم PlaceholderAPI وإدارة التوسعات</gradient>"
-        - "<gradient:#6b7280:#9ca3af>قم بتثبيت التوسعة Player وأعد تحميل PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اكتشاف دعم PlaceholderAPI وإدارة التوسعات</gradient>"
+      - "<gradient:#6b7280:#9ca3af>قم بتثبيت التوسعة Player وأعد تحميل PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ فشل في فتح أدوات PlaceholderAPI!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 التكامل PlaceholderAPI</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI المدعومة:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>التوسع المستهدف:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>التثبيت وإعادة التحميل مباشرة من هذه اللوحة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI المدعومة:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>التوسع المستهدف:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>التثبيت وإعادة التحميل مباشرة من هذه اللوحة</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ تم اكتشاف PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>تم تثبيت PlaceholderAPI وتمكينه</gradient>"
+      - "<gradient:#6b7280:#9ca3af>تم تثبيت PlaceholderAPI وتمكينه</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI مفقود</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>قم بتثبيت وتمكين PlaceholderAPI لاستخدام هذا الإجراء</gradient>"
+      - "<gradient:#6b7280:#9ca3af>قم بتثبيت وتمكين PlaceholderAPI لاستخدام هذا الإجراء</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 قم بتثبيت التوسعة %expansion_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>أشواط:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>ثم يجري:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>انقر لتنفيذ كلا الأمرين PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>أشواط:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ثم يجري:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>انقر لتنفيذ كلا الأمرين PlaceholderAPI</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI مطلوب</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>هذا الإجراء غير متاح حتى يتم تثبيت PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>هذا الإجراء غير متاح حتى يتم تثبيت PlaceholderAPI</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ مطلوب وصول المسؤول</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>ليس لديك إذن لاستخدام أدوات إدارة PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ليس لديك إذن لاستخدام أدوات إدارة PlaceholderAPI</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ ليس لديك إذن لإدارة عمليات تكامل PlaceholderAPI.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI غير متوفر على هذا الخادم.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ فشل تنزيل التوسعة:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 حالة البرنامج المساعد للمهارة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>تكامل المهارات المدعومة:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>تم الكشف عنه الآن:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>التحقق من دعم mcMMO وAura وEcoSkills</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تكامل المهارات المدعومة:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تم الكشف عنه الآن:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>التحقق من دعم mcMMO وAura وEcoSkills</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>مُكتَشَف</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>معرف التكامل:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>معرف التكامل:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ لم يتم تكوين عمليات تكامل المهارات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين أي عمليات تكامل للمكونات الإضافية للمهارة حاليًا</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لم يتم تكوين أي عمليات تكامل للمكونات الإضافية للمهارة حاليًا</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 حالة البرنامج المساعد للوظيفة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>تكامل الوظائف المدعومة:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>تم الكشف عنه الآن:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>التحقق من دعم EcoJobs وJobsReborn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تكامل الوظائف المدعومة:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تم الكشف عنه الآن:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>التحقق من دعم EcoJobs وJobsReborn</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>مُكتَشَف</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>معرف التكامل:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>معرف التكامل:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ لم يتم تكوين عمليات تكامل الوظائف</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين أي عمليات تكامل للمكونات الإضافية للوظيفة حاليًا</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لم يتم تكوين أي عمليات تكامل للمكونات الإضافية للوظيفة حاليًا</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>مزود:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>رمز:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>بادئة:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>لاحقة:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>مزود:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>رمز:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>بادئة:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لاحقة:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ إنشاء %currency_id%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>قم بإنشاء العملة الافتراضية لـ RDQ</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>انقر لإنشاء %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>قم بإنشاء العملة الافتراضية لـ RDQ</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>انقر لإنشاء %currency_id%</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy مطلوب</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>يتطلب هذا الإجراء JExEconomy</gradient>"
-        - "<gradient:#6b7280:#9ca3af>قم بتثبيته قبل إنشاء الإعدادات الافتراضية</gradient>"
+      - "<gradient:#6b7280:#9ca3af>يتطلب هذا الإجراء JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>قم بتثبيته قبل إنشاء الإعدادات الافتراضية</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% جاهز</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>العملة الافتراضية موجودة بالفعل</gradient>"
-        - "<gradient:#6b7280:#9ca3af>لا حاجة لمزيد من الإعداد</gradient>"
+      - "<gradient:#6b7280:#9ca3af>العملة الافتراضية موجودة بالفعل</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لا حاجة لمزيد من الإعداد</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ العملة الافتراضية التي تم إنشاؤها:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ فشل في إنشاء العملة:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ لم يتم اكتشاف أي عملات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>تعذر على RDQ اكتشاف عملات Vault أو JExEconomy</gradient>"
-      - "<gradient:#6b7280:#9ca3af>قم بتثبيت أو تمكين موفر الاقتصاد أولاً</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تعذر على RDQ اكتشاف عملات Vault أو JExEconomy</gradient>"
+    - "<gradient:#6b7280:#9ca3af>قم بتثبيت أو تمكين موفر الاقتصاد أولاً</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>الأذونات:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>الأذونات:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>حالة:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للتحديد</gradient>"
-        - "<gradient:#10b981:#34d399>اضغط كليك يمين لتعيين الكل</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>اضغط كليك شمال للتحديد</gradient>"
+      - "<gradient:#10b981:#34d399>اضغط كليك يمين لتعيين الكل</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>فارغ</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>العقدة:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>اضغط لتعيين هذا الإذن</gradient>"
+      - "<gradient:#10b981:#34d399>اضغط لتعيين هذا الإذن</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>لم يتم تحديد البرنامج المساعد</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>حدد البرنامج المساعد أعلاه</gradient>"
-        - "<gradient:#6b7280:#9ca3af>لعرض أذوناتها</gradient>"
+      - "<gradient:#6b7280:#9ca3af>حدد البرنامج المساعد أعلاه</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لعرض أذوناتها</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>فارغ</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ تعيين %plugin_name% الأذونات</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>تعيين كافة الأذونات من</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% الأذونات)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>تعيين كافة الأذونات من</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% الأذونات)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>لا يوجد اختيار</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 مختارة: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>الأذونات:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>البرنامج المساعد:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>الأذونات:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 نظرة عامة</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>حدد مكونًا إضافيًا لعرض الأذونات</gradient>"
+      - "<gradient:#6b7280:#9ca3af>إجمالي الإضافات:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>حدد مكونًا إضافيًا لعرض الأذونات</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 تحديث البيانات</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اضغط لتحديث بيانات الأذونات</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضغط لتحديث بيانات الأذونات</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ مسح التحديد</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لإلغاء تحديد البرنامج المساعد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لإلغاء تحديد البرنامج المساعد</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ تعيين %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>تعيين كافة الأذونات من البرنامج المساعد المحدد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تعيين كافة الأذونات من البرنامج المساعد المحدد</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ تعيين كافة الأذونات</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>تعيين الأذونات من الجميع</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>الإضافات</gradient>"
+    - "<gradient:#6b7280:#9ca3af>تعيين الأذونات من الجميع</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>الإضافات</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ تحديث البيانات!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 الصفحة %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>الصفحة الحالية:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>إجمالي الصفحات:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>الصفحة الحالية:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>إجمالي الصفحات:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 الصفحة %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 العودة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان ترجع</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ تابع</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط علشان تكمل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط علشان تكمل</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ السابقة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>الصفحة السابقة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>الصفحة السابقة</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ التالي</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>الصفحة التالية</gradient>"
+    - "<gradient:#6b7280:#9ca3af>الصفحة التالية</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ فوق</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اصعد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اصعد</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ للأسفل</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>النزول</gradient>"
+    - "<gradient:#6b7280:#9ca3af>النزول</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ إلغاء</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>إلغاء الإجراء</gradient>"
+    - "<gradient:#6b7280:#9ca3af>إلغاء الإجراء</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ أدخل القيمة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اكتب مدخلاتك أعلاه</gradient>"
-      - "<gradient:#6b7280:#9ca3af>واضغط للتأكيد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اكتب مدخلاتك أعلاه</gradient>"
+    - "<gradient:#6b7280:#9ca3af>واضغط للتأكيد</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌فشلت معالجة الإدخال:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ تأكيد</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط للتأكيد</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط للتأكيد</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ إلغاء</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط للإلغاء</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط للإلغاء</gradient>"
 
 # ============================================
 # قيود النسخة المجانية
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ نسخة مجانية</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>أنت تستخدم النسخة المجانية</gradient>"
-      - "<gradient:#6b7280:#9ca3af>مع ميزات محدودة.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>الترقية إلى Premium ل:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• أشجار رتبة غير محدودة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• صفوف غير محدودة لكل شجرة</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• مسارات نشطة متعددة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>أنت تستخدم النسخة المجانية</gradient>"
+    - "<gradient:#6b7280:#9ca3af>مع ميزات محدودة.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>الترقية إلى Premium ل:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• أشجار رتبة غير محدودة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• صفوف غير محدودة لكل شجرة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• مسارات نشطة متعددة</gradient>"
 
 # ============================================
 # رسائل الإصدار المميز
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Premium إصدار</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>جميع الميزات مقفلة!</gradient>"
+    - "<gradient:#10b981:#34d399>جميع الميزات مقفلة!</gradient>"
 
 # ============================================
 # عرض تفصيلي لعنصر المتطلبات (المبسطة)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 إرسال العناصر</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>جميع العناصر جاهزة!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>◀ اضغط للإرسال</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>جميع العناصر جاهزة!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>◀ اضغط للإرسال</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 إرسال العناصر</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>العناصر المطلوبة مفقودة</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>جمع كافة العناصر أولا</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>العناصر المطلوبة مفقودة</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>جمع كافة العناصر أولا</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← العودة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>العودة إلى المتطلبات</gradient>"
+    - "<gradient:#6b7280:#9ca3af>العودة إلى المتطلبات</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 التقدم الشامل</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>انتهاء:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>متطلبات:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>انتهاء:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>متطلبات:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
-      - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>🏆 استلام بالرتبة!</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>تم الانتهاء من جميع المتطلبات!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>◀ اضغط للمطالبة برتبتك</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>تم الانتهاء من جميع المتطلبات!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>◀ اضغط للمطالبة برتبتك</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒الرتبة مقفلة</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
-        - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒مقفل</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
-        - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>استكمال جميع المتطلبات</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لفتح هذه الرتبة.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← العودة</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>العودة إلى نظرة عامة على الرتبة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>العودة إلى نظرة عامة على الرتبة</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ اكتملت المتطلبات!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 تم الانتهاء من جميع المتطلبات! اضغط فوق زر استلام للحصول على رتبتك!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>لا توجد مكافآت</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
       type_label: "<gray>النوع:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>قيمة:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 عرض جميع المكافآت</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>اضغط لرؤية الكل %count% المكافآت</gradient>"
-        - "<gradient:#6b7280:#9ca3af>لهذه المرتبة بالتفصيل</gradient>"
+      - "<gradient:#6b7280:#9ca3af>اضغط لرؤية الكل %count% المكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>لهذه المرتبة بالتفصيل</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>عرض المكافآت التفصيلية قريبا!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 لا توجد مكافآت</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>هذه الرتبة ليس لها مكافآت</gradient>"
+        - "<gradient:#6b7280:#9ca3af>هذه الرتبة ليس لها مكافآت</gradient>"
         message: "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 مكافآت الرتبة</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>سوف تتلقى %count% المكافآت</gradient>"
-      - "<gradient:#6b7280:#9ca3af>عندما تطالب بهذه المرتبة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>سوف تتلقى %count% المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>عندما تطالب بهذه المرتبة</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>لا توجد مكافآت</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة</gradient>"
     type_label: "<gray>النوع:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>قيمة:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 عرض جميع المكافآت</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>اضغط لرؤية الكل %count% المكافآت</gradient>"
-      - "<gradient:#6b7280:#9ca3af>لهذه المرتبة بالتفصيل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط لرؤية الكل %count% المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>لهذه المرتبة بالتفصيل</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>عرض المكافآت التفصيلية قريبا!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 لا توجد مكافآت</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>هذه الرتبة ليس لها مكافآت</gradient>"
+      - "<gradient:#6b7280:#9ca3af>هذه الرتبة ليس لها مكافآت</gradient>"
       message: "<gradient:#6b7280:#9ca3af>لم يتم تكوين هذه الرتبة.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 مكافآت الرتبة</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>سوف تتلقى %count% المكافآت</gradient>"
-    - "<gradient:#6b7280:#9ca3af>عندما تطالب بهذه المرتبة</gradient>"
+  - "<gradient:#6b7280:#9ca3af>سوف تتلقى %count% المكافآت</gradient>"
+  - "<gradient:#6b7280:#9ca3af>عندما تطالب بهذه المرتبة</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>هذه المرتبة لديها %count% المكافآت</gradient>"
-      - "<gradient:#6b7280:#9ca3af>اضغط على أي مكافأة للحصول على التفاصيل</gradient>"
+    - "<gradient:#6b7280:#9ca3af>هذه المرتبة لديها %count% المكافآت</gradient>"
+    - "<gradient:#6b7280:#9ca3af>اضغط على أي مكافأة للحصول على التفاصيل</gradient>"
 
 # ============================================
 # نظرة عامة على الامتيازات واجهة المستخدم
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>مكافحة الشفاء</gradient>"
     description: "<gradient:#6b7280:#9ca3af>شفاء عند التعامل مع الضرر للأعداء</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>قاتل الزومبي</gradient>
+    description: اهزم الزومبي واجمع قطراتهم لإثبات براعتك القتالية
+    task:
+      kill_zombies:
+        name: <white>هزيمة الزومبي</white>
+        description: قتل %amount% الكسالى
+      collect_flesh:
+        name: <white>جمع اللحم الفاسد</white>
+        description: يجتمع %amount% اللحم الفاسد من الزومبي المهزومين
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>سيد مينر</gradient>
+    description: قم بتعدين الخامات المختلفة خلال المهلة الزمنية لتصبح عامل منجم رئيسي
+    task:
+      mine_coal:
+        name: <white>منجم الفحم</white>
+        description: مِلكِي %amount% كتل خام الفحم
+      mine_iron:
+        name: <white>حديد منجم</white>
+        description: مِلكِي %amount% كتل خام الحديد
+      mine_diamond:
+        name: <white>منجم الماس</white>
+        description: مِلكِي %amount% كتل خام الماس
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>حلم البناء</gradient>
+    description: قم ببناء مبنى باتباع الخطوات المتسلسلة لعرض مهاراتك في البناء
+    task:
+      foundation:
+        name: <white>مؤسسة لاي</white>
+        description: مكان %amount% كتل من الطوب للمؤسسة
+      walls:
+        name: <white>بناء الجدران</white>
+        description: مكان %amount% كتل من خشب البلوط للجدران
+      windows:
+        name: <white>أضف ويندوز</white>
+        description: مكان %amount% كتل زجاجية للنوافذ
+      roof:
+        name: <white>سقف كامل</white>
+        description: مكان %amount% كتل الدرج من خشب البلوط للسقف
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>فئات كويست</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% أسئلة</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>المهمة: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>المهام النشطة</gradient>
+    items:
+      back:
+        name: <gray>خلف</gray>
+        lore:
+        - <gray>العودة إلى القائمة السابقة</gray>
+      start:
+        name: <green>ابدأ المهمة</green>
+        lore:
+        - <gray>انقر لبدء هذا المسعى</gray>
+        - ''
+        - <dark_gray>متطلبات:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>التخلي عن السعي</red>
+        lore:
+        - <gray>انقر للتخلي عن هذا المسعى</gray>
+        - ''
+        - '<yellow>تحذير: سيتم فقدان التقدم</yellow>'
+      info:
+        name: <yellow>معلومات المهمة</yellow>
+        lore:
+        - <gray>انقر لعرض تفاصيل المهمة</gray>
+      progress:
+        name: <aqua>عرض التقدم</aqua>
+        lore:
+        - <gray>انقر لعرض تقدم المهمة</gray>
+        - ''
+        - '<dark_gray>تقدم: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>يغلق</gray>
+        lore:
+        - <gray>أغلق هذه القائمة</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>صعوبة: %difficulty%</dark_gray>'
+        - '<dark_gray>حالة: %status%</dark_gray>'
+        - '<dark_gray>المهام: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>تقدم: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>حالة: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>انقر لبدء هذا المسعى</green>
+      click_to_view: <yellow>انقر لعرض تفاصيل المهمة</yellow>
+      click_to_abandon: <red>انقر للتخلي عن هذا المسعى</red>
+      already_completed: <green>اكتملت بالفعل</green>
+      requirements_not_met: <red>لم يتم استيفاء المتطلبات</red>
+      on_cooldown: '<red>عند التهدئة: %time%</red>'
+      time_remaining: '<yellow>الوقت المتبقي: %time%</yellow>'
+      repeatable: <aqua>السعي المتكرر</aqua>
+      one_time: <gray>مهمة لمرة واحدة</gray>
+    progress:
+      overall: <yellow>التقدم الشامل</yellow>
+      percentage: '<gray>تقدم: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>المهام: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>الوقت المنقضي: <white>%time%</white></gray>'
+      time_remaining: '<gray>الوقت المتبقي: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>تقدم: <white>%current%/%required%</white></gray>'
+      completed: <green>مكتمل</green>
+      remaining: '<gray>متبقي: <white>%remaining%</white></gray>'
+      locked: <red>مغلق</red>
+      sequential: <yellow>أكمل المهام السابقة أولاً</yellow>
+    rewards:
+      header: <yellow>المكافآت</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% خبرة</aqua>
+      item: <white>%amount%س %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>ميزة: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>المهمة: %quest%</gradient>'
+    requirements:
+      header: <yellow>متطلبات</yellow>
+      level: <aqua>مستوى %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>مكتمل: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>رتبة: %rank%</gradient>'
+      permission: '<gray>إذن: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>تافه</gradient>
+  easy: <gradient:#10b981:#34d399>سهل</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>طبيعي</gradient>
+  hard: <gradient:#ef4444:#f87171>صعب</gradient>
+  extreme: <gradient:#a855f7:#c084fc>أقصى</gradient>

@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 보상 없음</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>아이템을 추가하여 보상 생성</gradient>"
+  - "<gradient:#6b7280:#9ca3af>아이템을 추가하여 보상 생성</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ 아이템 추가</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>여기에 아이템을 놓아 보상으로 추가</gradient>"
-    - "<gradient:#6b7280:#9ca3af>아이템을 배치하려면 마우스 왼쪽 버튼을 클릭하세요.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>항목을 제거하려면 마우스 오른쪽 버튼을 클릭하세요.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>여기에 아이템을 놓아 보상으로 추가</gradient>"
+  - "<gradient:#6b7280:#9ca3af>아이템을 배치하려면 마우스 왼쪽 버튼을 클릭하세요.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>항목을 제거하려면 마우스 오른쪽 버튼을 클릭하세요.</gradient>"
 
 # ============================================
 # 순위 트리 표시 이름 및 설명
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 레인저</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>궁술과 추적의 기술을 마스터</gradient>"
-      - "<gradient:#6b7280:#9ca3af>자연과 하나가 되다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>궁술과 추적의 기술을 마스터</gradient>"
+    - "<gradient:#6b7280:#9ca3af>자연과 하나가 되다</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ 전사</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>전투의 기술을 마스터</gradient>"
-      - "<gradient:#6b7280:#9ca3af>전설적인 파이터가 되어보세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>전투의 기술을 마스터</gradient>"
+    - "<gradient:#6b7280:#9ca3af>전설적인 파이터가 되어보세요</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ 마법사</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>마법의 힘을 다루다</gradient>"
-      - "<gradient:#6b7280:#9ca3af>비전의 달인이 되어보세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>마법의 힘을 다루다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>비전의 달인이 되어보세요</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 도적</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>은신과 교활함을 마스터</gradient>"
-      - "<gradient:#6b7280:#9ca3af>그림자로부터의 공격</gradient>"
+    - "<gradient:#6b7280:#9ca3af>은신과 교활함을 마스터</gradient>"
+    - "<gradient:#6b7280:#9ca3af>그림자로부터의 공격</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ 성직자</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>신성한 힘을 인도</gradient>"
-      - "<gradient:#6b7280:#9ca3af>아군을 치유하고 보호하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>신성한 힘을 인도</gradient>"
+    - "<gradient:#6b7280:#9ca3af>아군을 치유하고 보호하세요</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 상인</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>상업의 기술을 마스터</gradient>"
-      - "<gradient:#6b7280:#9ca3af>당신의 재산을 쌓아보세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>상업의 기술을 마스터</gradient>"
+    - "<gradient:#6b7280:#9ca3af>당신의 재산을 쌓아보세요</gradient>"
 
 # ============================================
 # 순위 표시 이름 및 설명
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>무랭크</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>시작하려면 순위 경로를 선택하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>시작하려면 순위 경로를 선택하세요.</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>무랭크</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>기본 랭크</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>선택된 랭크가 없습니다</gradient>"
+      - "<gradient:#6b7280:#9ca3af>선택된 랭크가 없습니다</gradient>"
   # 레인저 트리 순위
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 트레일 스카우트</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 발굽 자국과 바람의 변화를 읽습니다.</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier I • 자연 입문자</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 발굽 자국과 바람의 변화를 읽습니다.</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier I • 자연 입문자</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 야생의 사냥꾼</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 인내심 있게 먹이를 추적합니다.</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier II • 와일드 추격</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 인내심 있게 먹이를 추적합니다.</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier II • 와일드 추격</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 표지판 추적기</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 어떤 폭풍도 지울 수 없는 길을 따라갑니다.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Tier III • 향후 경로 선택</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 어떤 폭풍도 지울 수 없는 길을 따라갑니다.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Tier III • 향후 경로 선택</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 짐승의 감시자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 왕국의 정점에 있는 생물과 유대를 맺습니다.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • 기본 분기</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 왕국의 정점에 있는 생물과 유대를 맺습니다.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • 기본 분기</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ 폭풍 감시자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 천둥과 비를 통해서도 진정한 불이 일어납니다.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ 4단계 • 폭풍 가지</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 천둥과 비를 통해서도 진정한 불이 일어납니다.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ 4단계 • 폭풍 가지</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>❤️ 야생의 감시자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 신성한 국경과 숨겨진 공터를 보호합니다.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Tier IV • 와일드 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 신성한 국경과 숨겨진 공터를 보호합니다.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Tier IV • 와일드 브랜치</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>😘 비스트마스터 프라이멀</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 전설의 짐승들에게 두려움 없이 명령을 내립니다.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 전설의 짐승들에게 두려움 없이 명령을 내립니다.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>😘 비스트마스터 스톰</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 모든 볼트가 끊임없는 발리슛을 유도합니다.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 모든 볼트가 끊임없는 발리슛을 유도합니다.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ 5단계 • 최종 순위</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>😘 비스트마스터 와일드</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 자연 그 자체가 당신의 부름에 응답하기 위해 일어납니다.</gradient>
-        - <gradient:#15803d:#22c55e>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 자연 그 자체가 당신의 부름에 응답하기 위해 일어납니다.</gradient>
+      - <gradient:#15803d:#22c55e>➤ 5단계 • 최종 순위</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ 모집</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 검증되지 않은 결의를 지닌 신선한 칼날입니다.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 훈련장</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 검증되지 않은 결의를 지닌 신선한 칼날입니다.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 훈련장</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ 군인</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 훈련과 최전선 임무를 통해 단련되었습니다.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Tier II • 현장 규율</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 훈련과 최전선 임무를 통해 단련되었습니다.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Tier II • 현장 규율</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ 베테랑</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 전투 상처는 당신이 얻은 지혜를 나타냅니다.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ Tier III • 경로 선택</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 전투 상처는 당신이 얻은 지혜를 나타냅니다.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ Tier III • 경로 선택</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥 버서커</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 파괴적인 공격을 위해 방어를 선택합니다.</gradient>
-        - <gradient:#ef4444:#f87171>➤ 4단계 • 퓨리 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 파괴적인 공격을 위해 방어를 선택합니다.</gradient>
+      - <gradient:#ef4444:#f87171>➤ 4단계 • 퓨리 브랜치</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 수호자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 남들이 부러지는 곳에도 굳건히 서 있습니다.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Tier IV • 실드 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 남들이 부러지는 곳에도 굳건히 서 있습니다.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Tier IV • 실드 브랜치</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 검투사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 마스터는 균형 잡힌 경기장 전쟁을 벌입니다.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ 4단계 • 아레나 지점</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 마스터는 균형 잡힌 경기장 전쟁을 벌입니다.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ 4단계 • 아레나 지점</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>⭐ 분노의 전쟁군주</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 멈출 수 없는 파괴의 엔진.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 멈출 수 없는 파괴의 엔진.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ 5단계 • 최종 순위</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>⭐ 방패의 전쟁군주</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 삶과 파멸 사이의 마지막 벽.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 삶과 파멸 사이의 마지막 벽.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ 5단계 • 최종 순위</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>😘 아레나의 전쟁군주</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 모든 콜로세움의 챔피언으로 선정되었습니다.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 모든 콜로세움의 챔피언으로 선정되었습니다.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨ 견습생</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 신비한 힘의 불꽃이 깨어납니다.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Tier I • 비전 기초</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 신비한 힘의 불꽃이 깨어납니다.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Tier I • 비전 기초</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ 능숙하다</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 통제되고 집중된 주문을 엮습니다.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 비전 연습</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 통제되고 집중된 주문을 엮습니다.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • 비전 연습</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ 마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 복잡한 패턴의 마법을 구사합니다.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Tier III • 교리를 선택하세요</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 복잡한 패턴의 마법을 구사합니다.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Tier III • 교리를 선택하세요</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 아르카나의 마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 순수한 힘을 우아한 힘으로 정제합니다.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ 4단계 • 비전 가지</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 순수한 힘을 우아한 힘으로 정제합니다.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ 4단계 • 비전 가지</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 주문의 마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 그리모어 제어 및 정밀도를 확장합니다.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Tier IV • 주문 계열</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 그리모어 제어 및 정밀도를 확장합니다.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Tier IV • 주문 계열</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 공허의 마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 당신의 의지에 따라 심연의 에너지를 구부립니다.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • 공허 지점</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 당신의 의지에 따라 심연의 에너지를 구부립니다.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • 공허 지점</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>😘 아르카나의 대마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 순수한 비전 힘의 최고 건축가.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 순수한 비전 힘의 최고 건축가.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>😘 주문의 대마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 모든 주문은 즉시 응답됩니다.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 모든 주문은 즉시 응답됩니다.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ 5단계 • 최종 순위</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>😘 공허의 대마법사</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 세계 사이의 가장자리를 지배합니다.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 세계 사이의 가장자리를 지배합니다.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ 5단계 • 최종 순위</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 소매치기</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 타이밍, 잘못된 방향 및 속도를 배웁니다.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 스트리트크래프트</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 타이밍, 잘못된 방향 및 속도를 배웁니다.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 스트리트크래프트</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 도둑</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 자물쇠와 감시선을 통과하여 미끄러집니다.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 자동 입장</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 자물쇠와 감시선을 통과하여 미끄러집니다.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • 자동 입장</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 암살자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 한 번 공격을 가하면 흔적도 없이 사라집니다.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Tier III • 방법 선택</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 한 번 공격을 가하면 흔적도 없이 사라집니다.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Tier III • 방법 선택</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 스텔스의 그림자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 마스터의 움직임은 눈으로 따라갈 수 없습니다.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • 스텔스 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 마스터의 움직임은 눈으로 따라갈 수 없습니다.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • 스텔스 브랜치</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 밤의 그림자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 어둠을 치명적인 이점으로 바꿉니다.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 야간 분기</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 어둠을 치명적인 이점으로 바꿉니다.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 야간 분기</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 사보타주의 그림자</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 적들이 반응하기 전에 계획을 해체합니다.</gradient>
-        - <gradient:#f97316:#fb923c>➤ Tier IV • 사보타주 지점</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 적들이 반응하기 전에 계획을 해체합니다.</gradient>
+      - <gradient:#f97316:#fb923c>➤ Tier IV • 사보타주 지점</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>⭐ 스텔스의 유령</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 불가촉천민의 도시신화가 된다.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 불가촉천민의 도시신화가 된다.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ 5단계 • 최종 순위</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>😘 밤의 유령</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 자정 시간을 완전히 소유합니다.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 자정 시간을 완전히 소유합니다.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ 5단계 • 최종 순위</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>😘 사보타지의 유령</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 전투가 시작되기도 전에 종료됩니다.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 전투가 시작되기도 전에 종료됩니다.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ 5단계 • 최종 순위</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ 수행사제</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 신성한 봉사의 길을 시작합니다.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Tier I • 헌신</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 신성한 봉사의 길을 시작합니다.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Tier I • 헌신</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ 힐러</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 큰 압박을 받고 있는 아군을 회복시킵니다.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier II • 복원</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 큰 압박을 받고 있는 아군을 회복시킵니다.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier II • 복원</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ 신부</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 거룩한 규율로 파티를 인도합니다.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier III • 소명을 선택하세요</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 거룩한 규율로 파티를 인도합니다.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier III • 소명을 선택하세요</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ 신성의 주교</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 채널은 복사 권한을 지시합니다.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 디바인 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 채널은 복사 권한을 지시합니다.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 디바인 브랜치</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ 빛의 주교</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 신성한 광채로 부패를 눈멀게 합니다.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ 4단계 • 라이트 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 신성한 광채로 부패를 눈멀게 합니다.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ 4단계 • 라이트 브랜치</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 영혼의 주교</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 삶과 죽음의 문턱을 지킨다.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 소울 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 삶과 죽음의 문턱을 지킨다.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 소울 브랜치</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>🌻 신성의 대제사장</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 혼돈의 중심에서 기적을 선포합니다.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 혼돈의 중심에서 기적을 선포합니다.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ 5단계 • 최종 순위</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>😘 빛의 대제사장</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 흔들리지 않는 새벽에 아군을 목욕시킵니다.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 흔들리지 않는 새벽에 아군을 목욕시킵니다.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ 5단계 • 최종 순위</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>😘 영혼의 대제사장</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 필멸의 두려움을 뛰어넘는 영혼을 목양합니다.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 필멸의 두려움을 뛰어넘는 영혼을 목양합니다.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 행상인</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 투지, 매력, 작은 거래로 시작합니다.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 거리 상업</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 투지, 매력, 작은 거래로 시작합니다.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 거리 상업</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 상인</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 경로와 신뢰할 수 있는 연락처를 확장합니다.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 시장 입지</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 경로와 신뢰할 수 있는 연락처를 확장합니다.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • 시장 입지</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 브로커</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 높은 가치의 거래를 정확하게 성사시킵니다.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Tier III • 제국을 선택하세요</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 높은 가치의 거래를 정확하게 성사시킵니다.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Tier III • 제국을 선택하세요</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 부의 거물</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 비교할 수 없는 속도로 순수 자본을 구축합니다.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier IV • 자산 부문</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 비교할 수 없는 속도로 순수 자본을 구축합니다.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier IV • 자산 부문</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 시장의 거물</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 공급과 수요 주기를 조율합니다.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 마켓 브랜치</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 공급과 수요 주기를 조율합니다.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 마켓 브랜치</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 무역의 거물</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 캐러밴 차선과 물류를 장악합니다.</gradient>
-        - <gradient:#f97316:#fdba74>➤ Tier IV • 무역 부문</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 캐러밴 차선과 물류를 장악합니다.</gradient>
+      - <gradient:#f97316:#fdba74>➤ Tier IV • 무역 부문</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>😘 부의 거물</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 한 번의 결정으로 경제를 바꾼다.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 한 번의 결정으로 경제를 바꾼다.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ 5단계 • 최종 순위</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>😘 시장의 거물</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 모든 길드가 존중해야 하는 가격을 설정합니다.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 모든 길드가 존중해야 하는 가격을 설정합니다.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>😘 무역의 거물</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 도로, 항구, 수익을 소유합니다.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ 5단계 • 최종 순위</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 도로, 항구, 수익을 소유합니다.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ 5단계 • 최종 순위</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>당신의 머리에 현상금이 걸려 있습니다!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ 관리자 패널</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>관리 도구에 접근</gradient>"
-      - "<gradient:#6b7280:#9ca3af>및 구성 옵션</gradient>"
+    - "<gradient:#6b7280:#9ca3af>관리 도구에 접근</gradient>"
+    - "<gradient:#6b7280:#9ca3af>및 구성 옵션</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 현상금</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>현상금 보기 및 관리</gradient>"
-      - "<gradient:#6b7280:#9ca3af>보상을 위해 플레이어를 사냥하세요!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>현상금 보기 및 관리</gradient>"
+    - "<gradient:#6b7280:#9ca3af>보상을 위해 플레이어를 사냥하세요!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ 특전</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>사용 가능한 특전 보기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>그리고 특별한 능력</gradient>"
+    - "<gradient:#6b7280:#9ca3af>사용 가능한 특전 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>그리고 특별한 능력</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 퀘스트</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>사용 가능한 퀘스트 보기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>진행 상황을 추적하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>사용 가능한 퀘스트 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>진행 상황을 추적하세요</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ 랭크</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>랭크 진행 보기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>그리고 새로운 능력을 잠금 해제하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>랭크 진행 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>그리고 새로운 능력을 잠금 해제하세요</gradient>"
 
 # ============================================
 # 순위 메인 UI
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 랭크 트리</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>사용 가능한 랭크 트리 탐색</gradient>"
-      - "<gradient:#6b7280:#9ca3af>그리고 당신의 길을 선택하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>사용 가능한 랭크 트리 탐색</gradient>"
+    - "<gradient:#6b7280:#9ca3af>그리고 당신의 길을 선택하세요</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 레인저</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>궁술과 추적의 기술을 마스터</gradient>"
-        - "<gradient:#6b7280:#9ca3af>자연과 하나가 되다</gradient>"
+      - "<gradient:#6b7280:#9ca3af>궁술과 추적의 기술을 마스터</gradient>"
+      - "<gradient:#6b7280:#9ca3af>자연과 하나가 되다</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ 전사</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>전투의 기술을 마스터</gradient>"
-        - "<gradient:#6b7280:#9ca3af>전설적인 파이터가 되어보세요</gradient>"
+      - "<gradient:#6b7280:#9ca3af>전투의 기술을 마스터</gradient>"
+      - "<gradient:#6b7280:#9ca3af>전설적인 파이터가 되어보세요</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ 마법사</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>마법의 힘을 다루다</gradient>"
-        - "<gradient:#6b7280:#9ca3af>비전의 달인이 되어보세요</gradient>"
+      - "<gradient:#6b7280:#9ca3af>마법의 힘을 다루다</gradient>"
+      - "<gradient:#6b7280:#9ca3af>비전의 달인이 되어보세요</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 도적</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>은신과 교활함을 마스터</gradient>"
-        - "<gradient:#6b7280:#9ca3af>그림자로부터의 공격</gradient>"
+      - "<gradient:#6b7280:#9ca3af>은신과 교활함을 마스터</gradient>"
+      - "<gradient:#6b7280:#9ca3af>그림자로부터의 공격</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ 성직자</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>신성한 힘을 인도</gradient>"
-        - "<gradient:#6b7280:#9ca3af>아군을 치유하고 보호하세요</gradient>"
+      - "<gradient:#6b7280:#9ca3af>신성한 힘을 인도</gradient>"
+      - "<gradient:#6b7280:#9ca3af>아군을 치유하고 보호하세요</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 상인</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>상업의 기술을 마스터</gradient>"
-        - "<gradient:#6b7280:#9ca3af>당신의 재산을 쌓아보세요</gradient>"
+      - "<gradient:#6b7280:#9ca3af>상업의 기술을 마스터</gradient>"
+      - "<gradient:#6b7280:#9ca3af>당신의 재산을 쌓아보세요</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>좌클릭으로 미리보기</gradient>"
-      - "<gradient:#10b981:#34d399>우클릭으로 선택</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>좌클릭으로 미리보기</gradient>"
+    - "<gradient:#10b981:#34d399>우클릭으로 선택</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 이 랭크 트리는 잠겨 있습니다</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>먼저 %minimum_rank_paths_to_be_absolved_needed%개의 랭크 트리를 완료하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>먼저 %minimum_rank_paths_to_be_absolved_needed%개의 랭크 트리를 완료하세요</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>선행 조건:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 이 랭크 경로는 잠겨 있습니다!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ 현재 활성</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ 랭크 트리 생성</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>새 랭크 트리 생성</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(관리자 전용)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>새 랭크 트리 생성</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(관리자 전용)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ 이 경로의 시작 랭크를 찾을 수 없습니다!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ 랭크 경로 선택:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(시작 랭크: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 랭크 트리 생성 곧 출시!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ 무료 버전 - 미리보기만 가능</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>이 순위 트리는 미리 보기로만 사용할 수 있습니다.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>잠금을 해제하려면 프리미엄으로 업그레이드하세요!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>미리 보려면 마우스 왼쪽 버튼을 클릭하세요.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>이 순위 트리는 미리 보기로만 사용할 수 있습니다.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>잠금을 해제하려면 프리미엄으로 업그레이드하세요!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>미리 보려면 마우스 왼쪽 버튼을 클릭하세요.</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ 프리미엄 필수:</gradient> <gradient:#6b7280:#9ca3af>추가 랭크 트리를 선택하려면 프리미엄으로 업그레이드하세요!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>%direction%으로 이동</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 뷰 중앙 정렬</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 뷰 중앙 정렬</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 뷰 중앙 정렬</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>뷰 중앙 정렬</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 미리보기 모드</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>미리보기 모드로 보고 있습니다</gradient>"
-      - "<gradient:#6b7280:#9ca3af>변경사항은 저장되지 않습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>미리보기 모드로 보고 있습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>변경사항은 저장되지 않습니다</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>미리보기 모드</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ 랭크 렌더링 오류</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ 랭크 트리 없음</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>랭크 트리를 로드할 수 없습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>랭크 트리를 로드할 수 없습니다</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ 치명적 오류</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>렌더링 중 오류가 발생했습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>렌더링 중 오류가 발생했습니다</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>렌더링 중 오류가 발생했습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>렌더링 중 오류가 발생했습니다</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ 요구사항을 열지 못했습니다.</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ 오류가 발생했습니다. 다시 시도해 주세요.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 트레일 스카우트</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 발굽 자국과 바람의 변화를 읽습니다.</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier I • 자연 입문자</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 발굽 자국과 바람의 변화를 읽습니다.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier I • 자연 입문자</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 야생의 사냥꾼</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 인내심 있게 먹이를 추적합니다.</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier II • 와일드 추격</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 인내심 있게 먹이를 추적합니다.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • 와일드 추격</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 표지판 추적기</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 어떤 폭풍도 지울 수 없는 길을 따라갑니다.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Tier III • 향후 경로 선택</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 어떤 폭풍도 지울 수 없는 길을 따라갑니다.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Tier III • 향후 경로 선택</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 짐승의 감시자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 왕국의 정점에 있는 생물과 유대를 맺습니다.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • 기본 분기</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 왕국의 정점에 있는 생물과 유대를 맺습니다.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • 기본 분기</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ 폭풍 감시자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 천둥과 비를 통해서도 진정한 불이 일어납니다.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ 4단계 • 폭풍 가지</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 천둥과 비를 통해서도 진정한 불이 일어납니다.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ 4단계 • 폭풍 가지</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>❤️ 야생의 감시자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 신성한 국경과 숨겨진 공터를 보호합니다.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Tier IV • 와일드 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 신성한 국경과 숨겨진 공터를 보호합니다.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Tier IV • 와일드 브랜치</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>😘 비스트마스터 프라이멀</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 전설의 짐승들에게 두려움 없이 명령을 내립니다.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 전설의 짐승들에게 두려움 없이 명령을 내립니다.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>😘 비스트마스터 스톰</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 모든 볼트가 끊임없는 발리슛을 유도합니다.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 모든 볼트가 끊임없는 발리슛을 유도합니다.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ 5단계 • 최종 순위</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>😘 비스트마스터 와일드</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 자연 그 자체가 당신의 부름에 응답하기 위해 일어납니다.</gradient>
-          - <gradient:#15803d:#22c55e>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 자연 그 자체가 당신의 부름에 응답하기 위해 일어납니다.</gradient>
+        - <gradient:#15803d:#22c55e>➤ 5단계 • 최종 순위</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ 모집</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 검증되지 않은 결의를 지닌 신선한 칼날입니다.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 훈련장</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 검증되지 않은 결의를 지닌 신선한 칼날입니다.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 훈련장</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ 군인</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 훈련과 최전선 임무를 통해 단련되었습니다.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Tier II • 현장 규율</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 훈련과 최전선 임무를 통해 단련되었습니다.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Tier II • 현장 규율</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ 베테랑</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 전투 상처는 당신이 얻은 지혜를 나타냅니다.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ Tier III • 경로 선택</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 전투 상처는 당신이 얻은 지혜를 나타냅니다.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Tier III • 경로 선택</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥 버서커</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 파괴적인 공격을 위해 방어를 선택합니다.</gradient>
-          - <gradient:#ef4444:#f87171>➤ 4단계 • 퓨리 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 파괴적인 공격을 위해 방어를 선택합니다.</gradient>
+        - <gradient:#ef4444:#f87171>➤ 4단계 • 퓨리 브랜치</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 수호자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 남들이 부러지는 곳에도 굳건히 서 있습니다.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Tier IV • 실드 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 남들이 부러지는 곳에도 굳건히 서 있습니다.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • 실드 브랜치</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 검투사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 마스터는 균형 잡힌 경기장 전쟁을 벌입니다.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ 4단계 • 아레나 지점</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 마스터는 균형 잡힌 경기장 전쟁을 벌입니다.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ 4단계 • 아레나 지점</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>⭐ 분노의 전쟁군주</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 멈출 수 없는 파괴의 엔진.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 멈출 수 없는 파괴의 엔진.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ 5단계 • 최종 순위</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>⭐ 방패의 전쟁군주</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 삶과 파멸 사이의 마지막 벽.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 삶과 파멸 사이의 마지막 벽.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ 5단계 • 최종 순위</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>😘 아레나의 전쟁군주</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 모든 콜로세움의 챔피언으로 선정되었습니다.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 모든 콜로세움의 챔피언으로 선정되었습니다.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨ 견습생</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 신비한 힘의 불꽃이 깨어납니다.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Tier I • 비전 기초</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 신비한 힘의 불꽃이 깨어납니다.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Tier I • 비전 기초</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ 능숙하다</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 통제되고 집중된 주문을 엮습니다.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 비전 연습</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 통제되고 집중된 주문을 엮습니다.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 비전 연습</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ 마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 복잡한 패턴의 마법을 구사합니다.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Tier III • 교리를 선택하세요</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 복잡한 패턴의 마법을 구사합니다.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier III • 교리를 선택하세요</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 아르카나의 마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 순수한 힘을 우아한 힘으로 정제합니다.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ 4단계 • 비전 가지</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 순수한 힘을 우아한 힘으로 정제합니다.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ 4단계 • 비전 가지</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 주문의 마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 그리모어 제어 및 정밀도를 확장합니다.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Tier IV • 주문 계열</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 그리모어 제어 및 정밀도를 확장합니다.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Tier IV • 주문 계열</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 공허의 마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 당신의 의지에 따라 심연의 에너지를 구부립니다.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • 공허 지점</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 당신의 의지에 따라 심연의 에너지를 구부립니다.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • 공허 지점</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>😘 아르카나의 대마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 순수한 비전 힘의 최고 건축가.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 순수한 비전 힘의 최고 건축가.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ 5단계 • 최종 순위</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>😘 주문의 대마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 모든 주문은 즉시 응답됩니다.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 모든 주문은 즉시 응답됩니다.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ 5단계 • 최종 순위</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>😘 공허의 대마법사</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 세계 사이의 가장자리를 지배합니다.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 세계 사이의 가장자리를 지배합니다.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ 5단계 • 최종 순위</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 소매치기</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 타이밍, 잘못된 방향 및 속도를 배웁니다.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 스트리트크래프트</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 타이밍, 잘못된 방향 및 속도를 배웁니다.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 스트리트크래프트</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 도둑</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 자물쇠와 감시선을 통과하여 미끄러집니다.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 자동 입장</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 자물쇠와 감시선을 통과하여 미끄러집니다.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 자동 입장</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 암살자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 한 번 공격을 가하면 흔적도 없이 사라집니다.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Tier III • 방법 선택</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 한 번 공격을 가하면 흔적도 없이 사라집니다.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Tier III • 방법 선택</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 스텔스의 그림자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 마스터의 움직임은 눈으로 따라갈 수 없습니다.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • 스텔스 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 마스터의 움직임은 눈으로 따라갈 수 없습니다.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • 스텔스 브랜치</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 밤의 그림자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 어둠을 치명적인 이점으로 바꿉니다.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 야간 분기</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 어둠을 치명적인 이점으로 바꿉니다.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 야간 분기</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 사보타주의 그림자</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 적들이 반응하기 전에 계획을 해체합니다.</gradient>
-          - <gradient:#f97316:#fb923c>➤ Tier IV • 사보타주 지점</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 적들이 반응하기 전에 계획을 해체합니다.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Tier IV • 사보타주 지점</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>⭐ 스텔스의 유령</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 불가촉천민의 도시신화가 된다.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 불가촉천민의 도시신화가 된다.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ 5단계 • 최종 순위</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>😘 밤의 유령</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 자정 시간을 완전히 소유합니다.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 자정 시간을 완전히 소유합니다.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ 5단계 • 최종 순위</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>😘 사보타지의 유령</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 전투가 시작되기도 전에 종료됩니다.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 전투가 시작되기도 전에 종료됩니다.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ 5단계 • 최종 순위</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ 수행사제</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 신성한 봉사의 길을 시작합니다.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Tier I • 헌신</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 신성한 봉사의 길을 시작합니다.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier I • 헌신</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ 힐러</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 큰 압박을 받고 있는 아군을 회복시킵니다.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier II • 복원</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 큰 압박을 받고 있는 아군을 회복시킵니다.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier II • 복원</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ 신부</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 거룩한 규율로 파티를 인도합니다.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier III • 소명을 선택하세요</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 거룩한 규율로 파티를 인도합니다.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier III • 소명을 선택하세요</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ 신성의 주교</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 채널은 복사 권한을 지시합니다.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 디바인 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 채널은 복사 권한을 지시합니다.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 디바인 브랜치</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ 빛의 주교</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 신성한 광채로 부패를 눈멀게 합니다.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ 4단계 • 라이트 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 신성한 광채로 부패를 눈멀게 합니다.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ 4단계 • 라이트 브랜치</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 영혼의 주교</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 삶과 죽음의 문턱을 지킨다.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 소울 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 삶과 죽음의 문턱을 지킨다.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 소울 브랜치</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>🌻 신성의 대제사장</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 혼돈의 중심에서 기적을 선포합니다.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 혼돈의 중심에서 기적을 선포합니다.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ 5단계 • 최종 순위</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>😘 빛의 대제사장</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 흔들리지 않는 새벽에 아군을 목욕시킵니다.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 흔들리지 않는 새벽에 아군을 목욕시킵니다.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ 5단계 • 최종 순위</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>😘 영혼의 대제사장</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 필멸의 두려움을 뛰어넘는 영혼을 목양합니다.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 필멸의 두려움을 뛰어넘는 영혼을 목양합니다.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 행상인</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 투지, 매력, 작은 거래로 시작합니다.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 거리 상업</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 투지, 매력, 작은 거래로 시작합니다.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 거리 상업</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 상인</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 경로와 신뢰할 수 있는 연락처를 확장합니다.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 시장 입지</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 경로와 신뢰할 수 있는 연락처를 확장합니다.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 시장 입지</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 브로커</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 높은 가치의 거래를 정확하게 성사시킵니다.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Tier III • 제국을 선택하세요</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 높은 가치의 거래를 정확하게 성사시킵니다.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier III • 제국을 선택하세요</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 부의 거물</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 비교할 수 없는 속도로 순수 자본을 구축합니다.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier IV • 자산 부문</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 비교할 수 없는 속도로 순수 자본을 구축합니다.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier IV • 자산 부문</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 시장의 거물</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 공급과 수요 주기를 조율합니다.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 마켓 브랜치</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 공급과 수요 주기를 조율합니다.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • 마켓 브랜치</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 무역의 거물</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 캐러밴 차선과 물류를 장악합니다.</gradient>
-          - <gradient:#f97316:#fdba74>➤ Tier IV • 무역 부문</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 캐러밴 차선과 물류를 장악합니다.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Tier IV • 무역 부문</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>😘 부의 거물</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 한 번의 결정으로 경제를 바꾼다.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 한 번의 결정으로 경제를 바꾼다.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ 5단계 • 최종 순위</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>😘 시장의 거물</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 모든 길드가 존중해야 하는 가격을 설정합니다.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 모든 길드가 존중해야 하는 가격을 설정합니다.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ 5단계 • 최종 순위</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>😘 무역의 거물</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 도로, 항구, 수익을 소유합니다.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ 5단계 • 최종 순위</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 도로, 항구, 수익을 소유합니다.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ 5단계 • 최종 순위</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 도둑</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>은신과 절도의 달인</gradient>"
+        - "<gradient:#6b7280:#9ca3af>은신과 절도의 달인</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 암살자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>침묵의 살인자, 그림자로부터의 죽음</gradient>"
+        - "<gradient:#6b7280:#9ca3af>침묵의 살인자, 그림자로부터의 죽음</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 침입자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>들키지 않고 들어오고 나가는 전문가</gradient>"
+        - "<gradient:#6b7280:#9ca3af>들키지 않고 들어오고 나가는 전문가</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 섀도우 마스터</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>어둠 그 자체와 하나</gradient>"
+        - "<gradient:#6b7280:#9ca3af>어둠 그 자체와 하나</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ 수행사제</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>신의 헌신적인 종</gradient>"
+        - "<gradient:#6b7280:#9ca3af>신의 헌신적인 종</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ 신봉자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>신성한 길을 충실히 따르는 사람</gradient>"
+        - "<gradient:#6b7280:#9ca3af>신성한 길을 충실히 따르는 사람</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ 신부</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>신자들의 치유자요 보호자</gradient>"
+        - "<gradient:#6b7280:#9ca3af>신자들의 치유자요 보호자</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ 힐러</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>복원 예술 석사</gradient>"
+        - "<gradient:#6b7280:#9ca3af>복원 예술 석사</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ 비숍</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>충실한 지도자</gradient>"
+        - "<gradient:#6b7280:#9ca3af>충실한 지도자</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ 오라클</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>신성한 비전의 선견자</gradient>"
+        - "<gradient:#6b7280:#9ca3af>신성한 비전의 선견자</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ 대제사장</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>신의 최고의 목소리</gradient>"
+        - "<gradient:#6b7280:#9ca3af>신의 최고의 목소리</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� 소매치기</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>빠른 손가락, 더 빠른 탈출</gradient>"
+        - "<gradient:#6b7280:#9ca3af>빠른 손가락, 더 빠른 탈출</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 도둑</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>은신과 절도의 달인</gradient>"
+        - "<gradient:#6b7280:#9ca3af>은신과 절도의 달인</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 스카우트</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>그림자의 눈과 귀</gradient>"
+        - "<gradient:#6b7280:#9ca3af>그림자의 눈과 귀</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 암살자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>침묵의 살인자, 그림자로부터의 죽음</gradient>"
+        - "<gradient:#6b7280:#9ca3af>침묵의 살인자, 그림자로부터의 죽음</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 침입자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>들키지 않고 들어오고 나가는 전문가</gradient>"
+        - "<gradient:#6b7280:#9ca3af>들키지 않고 들어오고 나가는 전문가</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 섀도우블레이드</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>밤의 치명적인 전사</gradient>"
+        - "<gradient:#6b7280:#9ca3af>밤의 치명적인 전사</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 스파이마스터</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>정보 네트워크 컨트롤러</gradient>"
+        - "<gradient:#6b7280:#9ca3af>정보 네트워크 컨트롤러</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 섀도우 마스터</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>어둠 그 자체와 하나</gradient>"
+        - "<gradient:#6b7280:#9ca3af>어둠 그 자체와 하나</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 섀도우마스터</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>모든 그림자의 최고 통치자</gradient>"
+        - "<gradient:#6b7280:#9ca3af>모든 그림자의 최고 통치자</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 행상인</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>길거리에서 물건을 파는 중</gradient>"
+        - "<gradient:#6b7280:#9ca3af>길거리에서 물건을 파는 중</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 상인</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>인연이 있는 창업가맹점</gradient>"
+        - "<gradient:#6b7280:#9ca3af>인연이 있는 창업가맹점</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 공급업체</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>숙련된 상품 판매자</gradient>"
+        - "<gradient:#6b7280:#9ca3af>숙련된 상품 판매자</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 기술자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>훌륭한 제품을 만드는 사람</gradient>"
+        - "<gradient:#6b7280:#9ca3af>훌륭한 제품을 만드는 사람</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 연금술사</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>물약과 비약의 달인</gradient>"
+        - "<gradient:#6b7280:#9ca3af>물약과 비약의 달인</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 판매자</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>성공한 사업주</gradient>"
+        - "<gradient:#6b7280:#9ca3af>성공한 사업주</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 마스터 크래프터</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>왕국의 최고 장인</gradient>"
+        - "<gradient:#6b7280:#9ca3af>왕국의 최고 장인</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 상인왕</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>상업의 로열티</gradient>"
+        - "<gradient:#6b7280:#9ca3af>상업의 로열티</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 타이쿤</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>상업 및 무역 석사</gradient>"
+        - "<gradient:#6b7280:#9ca3af>상업 및 무역 석사</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 길드 마스터</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>상인 길드의 리더</gradient>"
+        - "<gradient:#6b7280:#9ca3af>상인 길드의 리더</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 미리보기:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 미리보기:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>요구사항 #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>요구사항 세부정보를 로드할 수 없습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>요구사항 세부정보를 로드할 수 없습니다</gradient>"
     type: "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>아이템:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>진행:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>진행:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>클릭하여 세부정보 보기</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 요구사항 상세</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 돌아가기</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ 필요한 아이템이 모두 없습니다!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ 아이템 제출 성공!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>부족한 레벨:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ 레벨 요구사항 달성!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>채굴, 몹 처치, XP 획득,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>제련 아이템 등!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>채굴, 몹 처치, XP 획득,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>제련 아이템 등!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>플레이 시간:</gradient> <gradient:#10b981:#34d399>%hours%시간 %minutes%분</gradient>"
     required: "<gradient:#6b7280:#9ca3af>필요 플레이 시간:</gradient> <gradient:#f59e0b:#fbbf24>%hours%시간 %minutes%분</gradient>"
     remaining: "<gradient:#ef4444:#f87171>남은 시간:</gradient> <gradient:#f59e0b:#fbbf24>%hours%시간 %minutes%분</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ 플레이 시간 요구사항 달성!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>서버에서 계속 플레이하세요</gradient>"
-      - "<gradient:#6b7280:#9ca3af>플레이 시간을 축적하기 위해!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>서버에서 계속 플레이하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>플레이 시간을 축적하기 위해!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>진행</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>현재:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>완료율:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ 완료됨</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>이 요구사항은 이미 완료되었습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 요구사항은 이미 완료되었습니다</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ 요구사항 완료</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 이 요구사항 완료</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 이 요구사항 완료</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 진행 새로고침</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 진행 새로고침</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 진행 새로고침</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>완료된 아이템:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>유형:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>필요한 아이템을 수집하고</gradient>"
-      - "<gradient:#6b7280:#9ca3af>여기로 돌아와 완료하세요</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>필요한 아이템을 수집하고</gradient>"
+    - "<gradient:#6b7280:#9ca3af>여기로 돌아와 완료하세요</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>필요한 화폐를 획득하세요</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>필요한 화폐를 획득하세요</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>경험치 레벨을 획득하세요</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>경험치 레벨을 획득하세요</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>서버에서 플레이하세요</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>서버에서 플레이하세요</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>요구사항을 완료하세요</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 팁:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>요구사항을 완료하세요</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 요약 보기...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 팁 보기...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ 완료!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ 완료!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ 완료 준비됨!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>클릭하여 완료</gradient>"
+    - "<gradient:#10b981:#34d399>✅ 완료 준비됨!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 완료</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ 진행 중</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>시작되지 않음</gradient>"
+    - "<gradient:#6b7280:#9ca3af>시작되지 않음</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>상태: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>진행</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>알 수 없는 요구사항</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>세부정보를 로드할 수 없습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>세부정보를 로드할 수 없습니다</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ 오류</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>요구사항 로드 실패</gradient>"
+    - "<gradient:#ef4444:#f87171>요구사항 로드 실패</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 진행:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 상태:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>은(는) 이미 완료되었습니다!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 현상금 생성</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 새 현상금 생성</gradient>"
-      - "<gradient:#6b7280:#9ca3af>다른 플레이어에서</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 새 현상금 생성</gradient>"
+    - "<gradient:#6b7280:#9ca3af>다른 플레이어에서</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 현상금 보기</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>모든 활성 현상금 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>모든 활성 현상금 보기</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 내 현상금</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>생성한 현상금 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>생성한 현상금 보기</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 리더보드</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>최고의 현상금 사냥꾼</gradient>"
+    - "<gradient:#6b7280:#9ca3af>최고의 현상금 사냥꾼</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 대상 현상금:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>대상:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>의뢰인:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>생성일:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>클릭하여 세부정보 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>대상:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>의뢰인:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>생성일:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>클릭하여 세부정보 보기</gradient>"
 
 # ============================================
 # 현상금 생성 UI
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 대상 선택</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 대상: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 플레이어 선택</gradient>"
-      - "<gradient:#6b7280:#9ca3af>현재: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 플레이어 선택</gradient>"
+    - "<gradient:#6b7280:#9ca3af>현재: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 현상금 생성</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 새 현상금 생성</gradient>"
-      - "<gradient:#6b7280:#9ca3af>다른 플레이어에서</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 새 현상금 생성</gradient>"
+    - "<gradient:#6b7280:#9ca3af>다른 플레이어에서</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 아이템 보상 추가</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 아이템 보상 추가</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 아이템 보상 추가</gradient>"
-      - "<gradient:#6b7280:#9ca3af>현재 아이템:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 아이템 보상 추가</gradient>"
+    - "<gradient:#6b7280:#9ca3af>현재 아이템:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 화폐 보상 추가</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 화폐 보상 추가</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 화폐 보상 추가</gradient>"
-      - "<gradient:#6b7280:#9ca3af>현재 화폐:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 화폐 보상 추가</gradient>"
+    - "<gradient:#6b7280:#9ca3af>현재 화폐:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ 먼저 대상을 선택하세요!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ 현상금 생성</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 현상금 생성</gradient>"
-      - "<gradient:#6b7280:#9ca3af>선택한 보상으로</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 현상금 생성</gradient>"
+    - "<gradient:#6b7280:#9ca3af>선택한 보상으로</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ 플레이어가 선택되지 않았습니다!</gradient> <gradient:#6b7280:#9ca3af>먼저 대상을 선택하세요.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 보상이 추가되지 않았습니다!</gradient> <gradient:#6b7280:#9ca3af>먼저 보상을 추가하세요.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 보상 없음</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>아이템을 추가하여 보상 생성</gradient>"
+    - "<gradient:#6b7280:#9ca3af>아이템을 추가하여 보상 생성</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ 아이템 추가</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>여기에 아이템을 놓아 보상으로 추가</gradient>"
+    - "<gradient:#6b7280:#9ca3af>여기에 아이템을 놓아 보상으로 추가</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 대상: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>이 현상금 대상:</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 현상금 대상:</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 현상금 보상</gradient>"
-      - "<gradient:#6b7280:#9ca3af>이 아이템은 현상금을</gradient>"
-      - "<gradient:#6b7280:#9ca3af>획득한 사람에게 주어집니다</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 현상금 보상</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 아이템은 현상금을</gradient>"
+    - "<gradient:#6b7280:#9ca3af>획득한 사람에게 주어집니다</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 새 아이템이 추가되지 않았습니다!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 인벤토리가 가득 차서 일부 아이템이 떨어졌습니다!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>이 현상금의 대상</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 현상금의 대상</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 더 많은 정보가 곧 제공될 예정입니다...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 보상 보기</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>클릭하여 모든 보상 보기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>총 보상:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 모든 보상 보기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>총 보상:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 현상금 삭제</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ 경고: 되돌릴 수 없습니다!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>클릭하여 이 현상금 삭제</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ 경고: 되돌릴 수 없습니다!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>클릭하여 이 현상금 삭제</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>현상금이 삭제되었습니다!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>이 현상금을 삭제하시겠습니까?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 권한 관리자</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>플러그인 권한 관리</gradient>"
-      - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>총 권한:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>플러그인 권한 관리</gradient>"
+    - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>총 권한:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 권한 관리자를 열 수 없습니다!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 플러그인 통합</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>관리 플러그인 통합을 한 곳에서 관리</gradient>"
-      - "<gradient:#6b7280:#9ca3af>통화, 기술 및 작업 감지 보기 포함</gradient>"
+    - "<gradient:#6b7280:#9ca3af>관리 플러그인 통합을 한 곳에서 관리</gradient>"
+    - "<gradient:#6b7280:#9ca3af>통화, 기술 및 작업 감지 보기 포함</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 플러그인 통합을 열지 못했습니다!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms 그룹 생성</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>랭크에서 LuckPerms 그룹 생성</gradient>"
+    - "<gradient:#6b7280:#9ca3af>랭크에서 LuckPerms 그룹 생성</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms가 설치되어 있지 않습니다!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ 그룹을 생성할 랭크를 찾을 수 없습니다!</gradient>"
     created: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>개의 LuckPerms 그룹이 생성되었습니다!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 통합 허브</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ 플러그인 통합 대시보드 열기</gradient>"
-      - "<gradient:#6b7280:#9ca3af>통화, 기술/작업 감지 및 PlaceholderAPI 도구는 여기에서 사용할 수 있습니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ 플러그인 통합 대시보드 열기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>통화, 기술/작업 감지 및 PlaceholderAPI 도구는 여기에서 사용할 수 있습니다</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 통화 통합</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>통화 제공자 관리 공개</gradient>"
-        - "<gradient:#6b7280:#9ca3af>감지된 Vault 및 JExEconomy 통화 검토</gradient>"
+      - "<gradient:#6b7280:#9ca3af>통화 제공자 관리 공개</gradient>"
+      - "<gradient:#6b7280:#9ca3af>감지된 Vault 및 JExEconomy 통화 검토</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ 통화 통합을 열지 못했습니다!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 스킬 통합</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>mcMMO, Aura 및 EcoSkills에 대한 지원 상태 보기</gradient>"
-        - "<gradient:#6b7280:#9ca3af>현재 활성화된 스킬 플러그인 감지</gradient>"
+      - "<gradient:#6b7280:#9ca3af>mcMMO, Aura 및 EcoSkills에 대한 지원 상태 보기</gradient>"
+      - "<gradient:#6b7280:#9ca3af>현재 활성화된 스킬 플러그인 감지</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ 스킬 통합을 열지 못했습니다!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ 작업 통합</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>EcoJobs 및 JobsReborn에 대한 지원 상태 보기</gradient>"
-        - "<gradient:#6b7280:#9ca3af>현재 활성화된 작업 플러그인 감지</gradient>"
+      - "<gradient:#6b7280:#9ca3af>EcoJobs 및 JobsReborn에 대한 지원 상태 보기</gradient>"
+      - "<gradient:#6b7280:#9ca3af>현재 활성화된 작업 플러그인 감지</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ 작업 통합을 열지 못했습니다!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 지원 감지 및 확장 관리</gradient>"
-        - "<gradient:#6b7280:#9ca3af>설치 Player 확장 및 다시 로드 PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 지원 감지 및 확장 관리</gradient>"
+      - "<gradient:#6b7280:#9ca3af>설치 Player 확장 및 다시 로드 PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 도구를 열지 못했습니다!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI 통합</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 지원:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>대상 확장:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>여기에서 직접 설치 및 다시 로드 패널</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 지원:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>대상 확장:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>여기에서 직접 설치 및 다시 로드 패널</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI 감지됨</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI가 설치되고 활성화되었습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI가 설치되고 활성화되었습니다.</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 누락</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>이 작업을 사용하려면 PlaceholderAPI를 설치하고 활성화하세요</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 작업을 사용하려면 PlaceholderAPI를 설치하고 활성화하세요</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 %expansion_name% 확장 설치</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>실행:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>그런 다음 실행:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>둘 다 실행하려면 클릭하세요. PlaceholderAPI 명령</gradient>"
+      - "<gradient:#6b7280:#9ca3af>실행:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>그런 다음 실행:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>둘 다 실행하려면 클릭하세요. PlaceholderAPI 명령</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI 필수</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>이 작업은 PlaceholderAPI가 설치될 때까지 사용할 수 없습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 작업은 PlaceholderAPI가 설치될 때까지 사용할 수 없습니다.</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ 관리자 액세스 필요</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 관리 도구를 사용할 권한이 없습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 관리 도구를 사용할 권한이 없습니다.</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 통합을 관리할 권한이 없습니다.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI는 이 서버에서 사용할 수 없습니다.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ 확장 다운로드 실패:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 스킬 플러그인 상태</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>지원되는 스킬 통합:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>오른쪽 감지됨 지금:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>mcMMO, Aura 및 EcoSkills 지원 확인</gradient>"
+    - "<gradient:#6b7280:#9ca3af>지원되는 스킬 통합:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>오른쪽 감지됨 지금:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>mcMMO, Aura 및 EcoSkills 지원 확인</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>감지됨</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>통합 ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>통합 ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ 구성된 기술 통합 없음</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>현재 구성된 기술 플러그인 통합 없음</gradient>"
+    - "<gradient:#6b7280:#9ca3af>현재 구성된 기술 플러그인 통합 없음</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 작업 플러그인 상태</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>지원되는 작업 통합:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>오른쪽 감지됨 지금:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>EcoJobs 및 JobsReborn 지원 확인</gradient>"
+    - "<gradient:#6b7280:#9ca3af>지원되는 작업 통합:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>오른쪽 감지됨 지금:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>EcoJobs 및 JobsReborn 지원 확인</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>감지됨</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>통합 ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>통합 ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ 구성된 작업 통합 없음</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>현재 구성된 작업 플러그인 통합이 없습니다.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>현재 구성된 작업 플러그인 통합이 없습니다.</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>공급자:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>상징:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>접두사:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>접미사:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>공급자:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>상징:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>접두사:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>접미사:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ %currency_id% 생성</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ에 대한 기본 통화를 생성합니다.</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%currency_id%을(를) 생성하려면 클릭하세요.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ에 대한 기본 통화를 생성합니다.</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%currency_id%을(를) 생성하려면 클릭하세요.</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy 필수</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>이 작업에는 JExEconomy이 필요합니다.</gradient>"
-        - "<gradient:#6b7280:#9ca3af>기본값을 만들기 전에 설치하세요.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 작업에는 JExEconomy이 필요합니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>기본값을 만들기 전에 설치하세요.</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% 준비됨</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>기본 통화가 이미 존재합니다.</gradient>"
-        - "<gradient:#6b7280:#9ca3af>추가 설정이 필요하지 않습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>기본 통화가 이미 존재합니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>추가 설정이 필요하지 않습니다.</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ 생성된 기본 통화:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ 통화 생성 실패:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ 감지된 통화가 없습니다.</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ는 Vault 또는 JExEconomy 통화를 감지할 수 없습니다.</gradient>"
-      - "<gradient:#6b7280:#9ca3af>경제적인 공급자를 먼저 설치하거나 활성화하십시오.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ는 Vault 또는 JExEconomy 통화를 감지할 수 없습니다.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>경제적인 공급자를 먼저 설치하거나 활성화하십시오.</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>권한:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>권한:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>상태:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>좌클릭으로 선택</gradient>"
-        - "<gradient:#10b981:#34d399>우클릭으로 모두 할당</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>좌클릭으로 선택</gradient>"
+      - "<gradient:#10b981:#34d399>우클릭으로 모두 할당</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>비어 있음</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>노드:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>클릭하여 이 권한 할당</gradient>"
+      - "<gradient:#10b981:#34d399>클릭하여 이 권한 할당</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>플러그인 선택되지 않음</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>위에서 플러그인을 선택하여</gradient>"
-        - "<gradient:#6b7280:#9ca3af>권한 보기</gradient>"
+      - "<gradient:#6b7280:#9ca3af>위에서 플러그인을 선택하여</gradient>"
+      - "<gradient:#6b7280:#9ca3af>권한 보기</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>비어 있음</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ %plugin_name% 권한 할당</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>모든 권한 할당</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% 권한)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>모든 권한 할당</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% 권한)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>선택 없음</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 선택됨: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>권한:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>권한:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 개요</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>플러그인을 선택하여 권한 보기</gradient>"
+      - "<gradient:#6b7280:#9ca3af>총 플러그인:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>플러그인을 선택하여 권한 보기</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 데이터 새로고침</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>클릭하여 권한 데이터 새로고침</gradient>"
+      - "<gradient:#6b7280:#9ca3af>클릭하여 권한 데이터 새로고침</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ 선택 지우기</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>플러그인을 선택 취소하려면 클릭하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>플러그인을 선택 취소하려면 클릭하세요.</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ 할당 %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>선택한 플러그인의 모든 권한 할당</gradient>"
+    - "<gradient:#6b7280:#9ca3af>선택한 플러그인의 모든 권한 할당</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ 모든 권한 할당</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>모든 사람에게 권한 할당</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>플러그인</gradient>"
+    - "<gradient:#6b7280:#9ca3af>모든 사람에게 권한 할당</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>플러그인</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ 데이터가 새로워졌습니다!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 페이지 %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>현재 페이지:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>총 페이지 수:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>현재 페이지:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>총 페이지 수:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 페이지 %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 복귀</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>뒤로 돌아가려면 클릭하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>뒤로 돌아가려면 클릭하세요.</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ 계속하기</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>계속하려면 클릭하세요</gradient>"
+    - "<gradient:#6b7280:#9ca3af>계속하려면 클릭하세요</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ 이전</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>이전 페이지</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이전 페이지</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ 다음</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>다음 페이지</gradient>"
+    - "<gradient:#6b7280:#9ca3af>다음 페이지</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ 위로</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>올라가다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>올라가다</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ 아래로</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>내려가다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>내려가다</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ 취소</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>작업 취소</gradient>"
+    - "<gradient:#6b7280:#9ca3af>작업 취소</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ 값 입력</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>위에 입력 내용을 입력하세요.</gradient>"
-      - "<gradient:#6b7280:#9ca3af>확인을 클릭하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>위에 입력 내용을 입력하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>확인을 클릭하세요.</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ 입력 처리 실패:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ 확인</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>확인하려면 클릭하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>확인하려면 클릭하세요.</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ 취소</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>취소하려면 클릭하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>취소하려면 클릭하세요.</gradient>"
 
 # ============================================
 # 무료 버전 제한 사항
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ 무료 버전</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>무료 버전을 사용하고 계십니다</gradient>"
-      - "<gradient:#6b7280:#9ca3af>제한된 기능으로.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>프리미엄으로 업그레이드:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• 무제한 순위 트리</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• 나무당 무제한 순위</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• 다중 활성 경로</gradient>"
+    - "<gradient:#6b7280:#9ca3af>무료 버전을 사용하고 계십니다</gradient>"
+    - "<gradient:#6b7280:#9ca3af>제한된 기능으로.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>프리미엄으로 업그레이드:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• 무제한 순위 트리</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• 나무당 무제한 순위</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• 다중 활성 경로</gradient>"
 
 # ============================================
 # 프리미엄 버전 메시지
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ 프리미엄 버전</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>모든 기능이 잠금 해제되었습니다!</gradient>"
+    - "<gradient:#10b981:#34d399>모든 기능이 잠금 해제되었습니다!</gradient>"
 
 # ============================================
 # 요구사항 항목 상세보기(단순화)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 항목 제출</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>모든 물품 준비 완료!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ 제출하기를 클릭하세요.</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>모든 물품 준비 완료!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ 제출하기를 클릭하세요.</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 항목 제출</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>필수 항목이 누락되었습니다.</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>먼저 모든 아이템을 수집하세요</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>필수 항목이 누락되었습니다.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>먼저 모든 아이템을 수집하세요</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← 뒤로</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>요구사항으로 돌아가기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>요구사항으로 돌아가기</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 전체 진행률</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>완료율:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>요구사항:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>완료율:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>요구사항:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>모든 요구사항을 완료하여</gradient>"
-      - "<gradient:#6b7280:#9ca3af>이 랭크를 잠금 해제하세요!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>모든 요구사항을 완료하여</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 랭크를 잠금 해제하세요!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>✅ 랭크 획득</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>모든 요구사항이 완료되었습니다!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ 클릭하여 랭크를 획득하세요</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>모든 요구사항이 완료되었습니다!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ 클릭하여 랭크를 획득하세요</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 순위 잠김</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>모든 요구 사항을 완료하세요</gradient>"
-        - "<gradient:#6b7280:#9ca3af>이 순위를 잠금 해제하려면</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>모든 요구 사항을 완료하세요</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 순위를 잠금 해제하려면</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 잠김</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>모든 요구사항을 완료하여</gradient>"
-        - "<gradient:#6b7280:#9ca3af>이 랭크를 잠금 해제하세요.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>모든 요구사항을 완료하여</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 랭크를 잠금 해제하세요.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← 뒤로</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>순위 개요로 돌아가기</gradient>"
+    - "<gradient:#6b7280:#9ca3af>순위 개요로 돌아가기</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ 요구사항 완료!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 모든 요구사항 완료! 이제 랭크를 획득할 수 있습니다!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>보상 없음</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>이 순위에는 구성된 보상이 없습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 순위에는 구성된 보상이 없습니다.</gradient>"
       type_label: "<gray>유형:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>값:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 모든 보상 보기</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>모두 보려면 클릭하세요. %count% 보상</gradient>"
-        - "<gradient:#6b7280:#9ca3af>이 순위에 대해 자세히</gradient>"
+      - "<gradient:#6b7280:#9ca3af>모두 보려면 클릭하세요. %count% 보상</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 순위에 대해 자세히</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>자세한 보상 보기가 곧 제공됩니다!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 보상 없음</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>이 등급에는 보상이 없습니다.</gradient>"
+        - "<gradient:#6b7280:#9ca3af>이 등급에는 보상이 없습니다.</gradient>"
         message: "<gradient:#6b7280:#9ca3af>이 순위에는 구성된 보상이 없습니다.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 순위 보상</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>당신은 받게됩니다 %count% 보상</gradient>"
-      - "<gradient:#6b7280:#9ca3af>이 순위를 주장하면</gradient>"
+    - "<gradient:#6b7280:#9ca3af>당신은 받게됩니다 %count% 보상</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 순위를 주장하면</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>보상 없음</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>이 순위에는 구성된 보상이 없습니다.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 순위에는 구성된 보상이 없습니다.</gradient>"
     type_label: "<gray>유형:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>값:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 모든 보상 보기</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>모두 보려면 클릭하세요. %count% 보상</gradient>"
-      - "<gradient:#6b7280:#9ca3af>이 순위에 대해 자세히</gradient>"
+    - "<gradient:#6b7280:#9ca3af>모두 보려면 클릭하세요. %count% 보상</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 순위에 대해 자세히</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>자세한 보상 보기가 곧 제공됩니다!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 보상 없음</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>이 등급에는 보상이 없습니다.</gradient>"
+      - "<gradient:#6b7280:#9ca3af>이 등급에는 보상이 없습니다.</gradient>"
       message: "<gradient:#6b7280:#9ca3af>이 순위에는 구성된 보상이 없습니다.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 순위 보상</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>당신은 받게됩니다 %count% 보상</gradient>"
-    - "<gradient:#6b7280:#9ca3af>이 순위를 주장하면</gradient>"
+  - "<gradient:#6b7280:#9ca3af>당신은 받게됩니다 %count% 보상</gradient>"
+  - "<gradient:#6b7280:#9ca3af>이 순위를 주장하면</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>이 순위에는 %count% 보상</gradient>"
-      - "<gradient:#6b7280:#9ca3af>자세한 내용을 보려면 보상을 클릭하세요.</gradient>"
+    - "<gradient:#6b7280:#9ca3af>이 순위에는 %count% 보상</gradient>"
+    - "<gradient:#6b7280:#9ca3af>자세한 내용을 보려면 보상을 클릭하세요.</gradient>"
 
 # ============================================
 # 특전 개요 UI
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>전투 치유</gradient>"
     description: "<gradient:#6b7280:#9ca3af>적에게 피해를 줄 때 치유</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>좀비 슬레이어</gradient>
+    description: 좀비를 처치하고 드롭을 수집하여 전투 능력을 증명하세요.
+    task:
+      kill_zombies:
+        name: <white>좀비 처치</white>
+        description: '죽이다 %amount% 좀비'
+      collect_flesh:
+        name: <white>썩은 살점 수집</white>
+        description: '모으다 %amount% 패배한 좀비의 썩은 살점'
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>마스터 마이너</gradient>
+    description: 제한 시간 내에 다양한 광석을 채굴하여 마스터 마이너가 되세요
+    task:
+      mine_coal:
+        name: <white>광산 석탄</white>
+        description: 내 거 %amount% 석탄 광석 블록
+      mine_iron:
+        name: <white>광산 철</white>
+        description: 내 거 %amount% 철광석 블록
+      mine_diamond:
+        name: <white>광산 다이아몬드</white>
+        description: 내 거 %amount% 다이아몬드 광석 블록
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>빌더의 꿈</gradient>
+    description: 당신의 건축 기술을 보여주기 위해 순차적인 단계에 따라 건물을 건설하세요
+    task:
+      foundation:
+        name: <white>재단을 하다</white>
+        description: 장소 %amount% 기초용 벽돌 블록
+      walls:
+        name: <white>벽을 쌓다</white>
+        description: 장소 %amount% 벽용 참나무 판자 블록
+      windows:
+        name: <white>창 추가</white>
+        description: '장소 %amount% 창문용 유리 블록'
+      roof:
+        name: <white>완전한 지붕</white>
+        description: 장소 %amount% 지붕용 오크 계단 블록
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>퀘스트 카테고리</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% 퀘스트</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>탐구: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>활성 퀘스트</gradient>
+    items:
+      back:
+        name: <gray>뒤쪽에</gray>
+        lore:
+        - <gray>이전 메뉴로 돌아가기</gray>
+      start:
+        name: <green>퀘스트 시작</green>
+        lore:
+        - <gray>이 퀘스트를 시작하려면 클릭하세요.</gray>
+        - ''
+        - <dark_gray>요구사항:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>퀘스트 포기</red>
+        lore:
+        - <gray>이 퀘스트를 포기하려면 클릭하세요.</gray>
+        - ''
+        - '<yellow>경고: 진행 상황이 손실됩니다</yellow>'
+      info:
+        name: <yellow>퀘스트 정보</yellow>
+        lore:
+        - <gray>퀘스트 세부정보를 보려면 클릭하세요.</gray>
+      progress:
+        name: <aqua>진행상황 보기</aqua>
+        lore:
+        - <gray>퀘스트 진행 상황을 보려면 클릭하세요.</gray>
+        - ''
+        - '<dark_gray>진전: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>닫다</gray>
+        lore:
+        - <gray>이 메뉴 닫기</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>어려움: %difficulty%</dark_gray>'
+        - '<dark_gray>상태: %status%</dark_gray>'
+        - '<dark_gray>작업: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>진전: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>상태: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>이 퀘스트를 시작하려면 클릭하세요.</green>
+      click_to_view: <yellow>퀘스트 세부정보를 보려면 클릭하세요.</yellow>
+      click_to_abandon: <red>이 퀘스트를 포기하려면 클릭하세요.</red>
+      already_completed: <green>이미 완료됨</green>
+      requirements_not_met: <red>요구사항이 충족되지 않음</red>
+      on_cooldown: '<red>쿨타임 시: %time%</red>'
+      time_remaining: '<yellow>남은 시간: %time%</yellow>'
+      repeatable: <aqua>반복 가능한 퀘스트</aqua>
+      one_time: <gray>일회성 퀘스트</gray>
+    progress:
+      overall: <yellow>전반적인 진행 상황</yellow>
+      percentage: '<gray>진전: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>작업: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>경과 시간: <white>%time%</white></gray>'
+      time_remaining: '<gray>남은 시간: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>진전: <white>%current%/%required%</white></gray>'
+      completed: <green>완전한</green>
+      remaining: '<gray>남은 금액: <white>%remaining%</white></gray>'
+      locked: <red>잠김</red>
+      sequential: <yellow>이전 작업을 먼저 완료하세요.</yellow>
+    rewards:
+      header: <yellow>보상</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% 경험</aqua>
+      item: <white>%amount%엑스 %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>여과기: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>탐구: %quest%</gradient>'
+    requirements:
+      header: <yellow>요구사항</yellow>
+      level: <aqua>수준 %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>완벽한: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>계급: %rank%</gradient>'
+      permission: '<gray>허가: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>하찮은</gradient>
+  easy: <gradient:#10b981:#34d399>쉬운</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>정상</gradient>
+  hard: <gradient:#ef4444:#f87171>딱딱한</gradient>
+  extreme: <gradient:#a855f7:#c084fc>극심한</gradient>

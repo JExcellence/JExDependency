@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Ei palkkioita</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Lisää esineitä luodaksesi palkintoja</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Lisää esineitä luodaksesi palkintoja</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Lisää esine</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Aseta esineet tähän lisätäksesi ne palkinnoiksi</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Aseta esine vasemmalla napsautuksella</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Poista esine oikealla napsautuksella</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Aseta esineet tähän lisätäksesi ne palkinnoiksi</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Aseta esine vasemmalla napsautuksella</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Poista esine oikealla napsautuksella</gradient>"
 
 # ============================================
 # ARVOPUUN NÄYTTÖNIMET JA KUVAUKSET
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Eränkävijä</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hallitse jousiammunta ja jäljitys</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tule yhdeksi luonnon kanssa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hallitse jousiammunta ja jäljitys</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tule yhdeksi luonnon kanssa</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Soturi</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hallitse taistelun taito</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ryhdy legendaariseksi taistelijaksi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hallitse taistelun taito</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ryhdy legendaariseksi taistelijaksi</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Maagi</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Valjasta taikuuden voima</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ryhdy arkaanien mestariksi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Valjasta taikuuden voima</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ryhdy arkaanien mestariksi</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Roisto</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hallitse hiiviskelyn ja viekkauden taito</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Lyö varjoista</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hallitse hiiviskelyn ja viekkauden taito</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Lyö varjoista</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Klerikki</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kanavoi jumalallista voimaa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Paranna ja suojele liittolaisiasi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kanavoi jumalallista voimaa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Paranna ja suojele liittolaisiasi</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Kauppias</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hallitse kaupan taito</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Rakenna omaisuutesi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hallitse kaupan taito</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Rakenna omaisuutesi</gradient>"
 
 # ============================================
 # ARVON NÄYTTÖNIMET JA KUVAUKSET
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Arvoton</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aloita valitsemalla arvopolku</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aloita valitsemalla arvopolku</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Arvoton</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Oletusarvoinen arvo</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Arvoa ei ole valittu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Arvoa ei ole valittu</gradient>"
   # Eränkävijä-puun arvot
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Lukee sorkkajäljet ​​ja tuulenvaihdot.</gradient>
-        - <gradient:#10b981:#34d399>➤ Taso I • Nature Initiate</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Lukee sorkkajäljet ​​ja tuulenvaihdot.</gradient>
+      - <gradient:#10b981:#34d399>➤ Taso I • Nature Initiate</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 Wilds metsästäjä</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Varret saalistavat potilaan tarkasti.</gradient>
-        - <gradient:#10b981:#34d399>➤ Taso II • Villi takaa-ajo</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Varret saalistavat potilaan tarkasti.</gradient>
+      - <gradient:#10b981:#34d399>➤ Taso II • Villi takaa-ajo</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 Merkkien jäljittäjä</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Seuraa jälkiä, joita mikään myrsky ei voi pyyhkiä.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Taso III • Polun valinta edessä</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Seuraa jälkiä, joita mikään myrsky ei voi pyyhkiä.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Taso III • Polun valinta edessä</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 Petojen vartija</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Sitoutuu valtakunnan huippuolentoihin.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Taso IV • Primal Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Sitoutuu valtakunnan huippuolentoihin.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Taso IV • Primal Branch</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ Myrskyjen vartija</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Syttyy tosi ukkosen ja sateen läpi.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Taso IV • Storm Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Syttyy tosi ukkosen ja sateen läpi.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Taso IV • Storm Branch</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿 Luonnonvartija</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vartioi pyhiä rajoja ja piilotettuja aukkoja.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Taso IV • Wild Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vartioi pyhiä rajoja ja piilotettuja aukkoja.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Taso IV • Wild Branch</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Komensee legendaarisia petoja ilman pelkoa.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Komensee legendaarisia petoja ilman pelkoa.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Jokainen pultti ohjaa säälimätöntä volleytasi.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Jokainen pultti ohjaa säälimätöntä volleytasi.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ Taso V • Lopullinen sijoitus</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Luonto itse nousee vastaamaan puheluusi.</gradient>
-        - <gradient:#15803d:#22c55e>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Luonto itse nousee vastaamaan puheluusi.</gradient>
+      - <gradient:#15803d:#22c55e>➤ Taso V • Lopullinen sijoitus</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ Rekrytoi</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Uusi terä, jolla on testaamaton ratkaisu.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Harjoittelualueet</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Uusi terä, jolla on testaamaton ratkaisu.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Harjoittelualueet</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ Sotilas</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Karkaissut porat ja etulinjatyöt.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Taso II • Kenttäkuri</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Karkaissut porat ja etulinjatyöt.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Taso II • Kenttäkuri</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ Veteraani</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Taisteluarvet merkitsevät ansaitsemaasi viisautta.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ Taso III • Valitse polkusi</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Taisteluarvet merkitsevät ansaitsemaasi viisautta.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ Taso III • Valitse polkusi</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vaihtaa puolustuksen tuhoisaan hyökkäykseen.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Taso IV • Fury Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vaihtaa puolustuksen tuhoisaan hyökkäykseen.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Taso IV • Fury Branch</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 Vartija</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Seisoo lujasti siellä, missä muut rikkoutuisivat.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Taso IV • Shield Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Seisoo lujasti siellä, missä muut rikkoutuisivat.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Taso IV • Shield Branch</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 Gladiaattori</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hallitsee tasapainoisen areenasodan.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ Taso IV • Arena Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hallitsee tasapainoisen areenasodan.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ Taso IV • Arena Branch</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 Furyn sotalordi</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Pysäyttämätön tuhon moottori.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Pysäyttämätön tuhon moottori.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ Taso V • Lopullinen sijoitus</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 Kilven sotapäällikkö</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Viimeinen muuri elämän ja tuhon välillä.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Viimeinen muuri elämän ja tuhon välillä.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 Areenan sotapäällikkö</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Jokaisen coliseumin kruunattu mestari.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Jokaisen coliseumin kruunattu mestari.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨ Oppipoika</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Arkaanisen voiman kipinät heräävät.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Taso I • Arcane Foundations</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Arkaanisen voiman kipinät heräävät.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Taso I • Arcane Foundations</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ Taitava</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kutoa hallittuja ja keskittyneitä loitsuja.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Arcane Practice</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kutoa hallittuja ja keskittyneitä loitsuja.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Taso II • Arcane Practice</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ Velho</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Komensee monimutkaisia ​​taikuuden kuvioita.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse oppisi</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Komensee monimutkaisia ​​taikuuden kuvioita.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse oppisi</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 Arcanan velho</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Jalostaa raakaa voimaa tyylikkääksi voimaksi.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Arcane Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Jalostaa raakaa voimaa tyylikkääksi voimaksi.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Arcane Branch</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 Loitsujen velho</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Laajentaa grimoire-hallintaa ja tarkkuutta.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Taso IV • Spell Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Laajentaa grimoire-hallintaa ja tarkkuutta.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Taso IV • Spell Branch</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 Tyhjyyden velho</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Taivuttaa syvyysenergiat tahtosi mukaan.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Taso IV • Void Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Taivuttaa syvyysenergiat tahtosi mukaan.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Taso IV • Void Branch</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 Arcanan arkkimies</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ylivoimainen arkkitehti.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ylivoimainen arkkitehti.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 Loitsujen arkkimies</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Jokainen loitsu vastaa välittömästi.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Jokainen loitsu vastaa välittömästi.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ Taso V • Lopullinen sijoitus</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 Tyhjyyden arkkimaage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hallitsee maailmojen välisiä reunoja.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hallitsee maailmojen välisiä reunoja.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Oppii ajoituksen, väärän suunnan ja nopeuden.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Streetcraft</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Oppii ajoituksen, väärän suunnan ja nopeuden.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Streetcraft</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 Varas</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Liikkuu lukkojen ja näkölinjojen läpi.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Hiljainen sisäänkäynti</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Liikkuu lukkojen ja näkölinjojen läpi.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Taso II • Hiljainen sisäänkäynti</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Iskee kerran ja katoaa jälkiä jättämättä.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Taso III • Valitse menetelmäsi</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Iskee kerran ja katoaa jälkiä jättämättä.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Taso III • Valitse menetelmäsi</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hallitsee liikettä, jota silmä ei voi seurata.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Taso IV • Stealth Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hallitsee liikettä, jota silmä ei voi seurata.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Taso IV • Stealth Branch</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 Yön varjo</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Muuttaa pimeyden tappavaksi eduksi.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Taso IV • Night Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Muuttaa pimeyden tappavaksi eduksi.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Taso IV • Night Branch</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Purkaa suunnitelmat ennen kuin viholliset reagoivat.</gradient>
-        - <gradient:#f97316:#fb923c>➤ Taso IV • Sabotage Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Purkaa suunnitelmat ennen kuin viholliset reagoivat.</gradient>
+      - <gradient:#f97316:#fb923c>➤ Taso IV • Sabotage Branch</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Siitä tulee koskematon kaupunkimyytti.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Siitä tulee koskematon kaupunkimyytti.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ Taso V • Lopullinen sijoitus</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 Yön haamu</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Omistaa keskiyön tunnin kokonaan.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Omistaa keskiyön tunnin kokonaan.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ Taso V • Lopullinen sijoitus</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Päättää taistelut ennen kuin ne edes alkavat.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Päättää taistelut ennen kuin ne edes alkavat.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ Taso V • Lopullinen sijoitus</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ Akolyytti</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Aloittaa pyhän palvelupolun.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Taso I • Omistautuminen</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Aloittaa pyhän palvelupolun.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Taso I • Omistautuminen</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ parantaja</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Palauttaa liittolaiset raskaan paineen alla.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Taso II • Restaurointi</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Palauttaa liittolaiset raskaan paineen alla.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Taso II • Restaurointi</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ Pappi</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ohjaa juhlia pyhällä kurilla.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Taso III • Valitse kutsumuksesi</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ohjaa juhlia pyhällä kurilla.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Taso III • Valitse kutsumuksesi</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ Jumaluuden piispa</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kanavat suorat säteilevät auktoriteetit.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Jumalallinen haara</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kanavat suorat säteilevät auktoriteetit.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Jumalallinen haara</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ Valon piispa</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Sokeuttaa korruption pyhällä loistolla.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ Taso IV • Kevyt haara</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Sokeuttaa korruption pyhällä loistolla.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ Taso IV • Kevyt haara</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 Sielun piispa</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vartioi elämän ja kuoleman kynnystä.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Soul Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vartioi elämän ja kuoleman kynnystä.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Soul Branch</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 Jumaluuden ylipappi</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Julistaa ihmeitä kaaoksen sydämessä.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Julistaa ihmeitä kaaoksen sydämessä.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ Taso V • Lopullinen sijoitus</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑 Valon ylipappi</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kylpee liittolaisia ​​horjumattomassa aamunkoitteessa.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kylpee liittolaisia ​​horjumattomassa aamunkoitteessa.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ Taso V • Lopullinen sijoitus</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 sielujen ylipappi</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Paimen henkiä yli kuolevaisen pelon.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Paimen henkiä yli kuolevaisen pelon.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 Kauppias</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Alkaa karkeudella, viehätysvoimalla ja pienillä kaupoilla.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Street Commerce</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Alkaa karkeudella, viehätysvoimalla ja pienillä kaupoilla.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Street Commerce</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 Kauppias</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Laajentaa reittejä ja luotettavia kontakteja.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Läsnäolo markkinoilla</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Laajentaa reittejä ja luotettavia kontakteja.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Taso II • Läsnäolo markkinoilla</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 Välittäjä</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Sulkee arvokkaat kaupat tarkasti.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse imperiumisi</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Sulkee arvokkaat kaupat tarkasti.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse imperiumisi</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 Rikkauden magnaatti</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Rakentaa puhdasta pääomaa vertaansa vailla olevaan tahtiin.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Taso IV • Varallisuushaara</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Rakentaa puhdasta pääomaa vertaansa vailla olevaan tahtiin.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Taso IV • Varallisuushaara</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 Markkinoiden Magnate</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Orkesteroi kysynnän ja tarjonnan syklit.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Market Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Orkesteroi kysynnän ja tarjonnan syklit.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Market Branch</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 Kaupan magnaatti</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hallitsee matkailuvaunukaistaa ja logistiikkaa.</gradient>
-        - <gradient:#f97316:#fdba74>➤ Taso IV • Kaupan haara</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hallitsee matkailuvaunukaistaa ja logistiikkaa.</gradient>
+      - <gradient:#f97316:#fdba74>➤ Taso IV • Kaupan haara</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 Rikkauden Tycoon</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kääntää talouksia yhdellä päätöksellä.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kääntää talouksia yhdellä päätöksellä.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ Taso V • Lopullinen sijoitus</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 Markkinoiden Tycoon</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Asettaa hinnat, joita jokaisen killan tulee kunnioittaa.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Asettaa hinnat, joita jokaisen killan tulee kunnioittaa.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 Kaupan tycoon</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Omistaa tiet, satamat ja voitot.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ Taso V • Lopullinen sijoitus</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Omistaa tiet, satamat ja voitot.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ Taso V • Lopullinen sijoitus</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Sinun päällesi on asetettu aktiivinen palkkio!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Ylläpitopaneeli</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Käytä hallintatyökaluja</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja asetukset</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Käytä hallintatyökaluja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja asetukset</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Palkkiot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tarkastele ja hallinnoi palkkioita</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Etsi pelaajista palkintoja!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tarkastele ja hallinnoi palkkioita</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Etsi pelaajista palkintoja!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Edut</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Katso saatavilla olevat edut</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja erityisiä kykyjä</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Katso saatavilla olevat edut</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja erityisiä kykyjä</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Tehtävät</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Katso käytettävissä olevat tehtävät</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja seuraa edistymistäsi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Katso käytettävissä olevat tehtävät</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja seuraa edistymistäsi</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Arvot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Näytä arvojen eteneminen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja avaa uusia kykyjä</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Näytä arvojen eteneminen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja avaa uusia kykyjä</gradient>"
 
 # ============================================
 # ARVOJEN PÄÄNÄKYMÄ
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Arvopuut</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Selaa saatavilla olevia arvopuita</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja valitse polkusi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Selaa saatavilla olevia arvopuita</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja valitse polkusi</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Eränkävijä</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hallitse jousiammunta ja jäljitys</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tule yhdeksi luonnon kanssa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hallitse jousiammunta ja jäljitys</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tule yhdeksi luonnon kanssa</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Soturi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hallitse taistelun taito</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ryhdy legendaariseksi taistelijaksi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hallitse taistelun taito</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ryhdy legendaariseksi taistelijaksi</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Maagi</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Valjasta taikuuden voima</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ryhdy arkaanien mestariksi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Valjasta taikuuden voima</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ryhdy arkaanien mestariksi</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Roisto</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hallitse hiiviskelyn ja viekkauden taito</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Lyö varjoista</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hallitse hiiviskelyn ja viekkauden taito</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Lyö varjoista</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Klerikki</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kanavoi jumalallista voimaa</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Paranna ja suojele liittolaisiasi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kanavoi jumalallista voimaa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Paranna ja suojele liittolaisiasi</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Kauppias</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Hallitse kaupan taito</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Rakenna omaisuutesi</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Hallitse kaupan taito</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Rakenna omaisuutesi</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>Napsauta hiiren vasemmalla esikatsellaksesi</gradient>"
-      - "<gradient:#10b981:#34d399>Napsauta hiiren kakkospainikkeella valitaksesi</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>Napsauta hiiren vasemmalla esikatsellaksesi</gradient>"
+    - "<gradient:#10b981:#34d399>Napsauta hiiren kakkospainikkeella valitaksesi</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Tämä arvopuu on lukittu</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Suorita ensin %minimum_rank_paths_to_be_absolved_needed% arvopuuta</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Suorita ensin %minimum_rank_paths_to_be_absolved_needed% arvopuuta</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Edellytykset:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Tämä arvopolku on lukittu!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Tällä hetkellä aktiivinen</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Luo arvopuu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Luo uusi arvopuu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(Vain ylläpitäjille)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Luo uusi arvopuu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(Vain ylläpitäjille)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Aloitusarvoa ei löydy tälle polulle!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Valittu arvopolku:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Aloitusarvo: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Arvopuun luominen tulossa pian!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Ilmaisversio - vain esikatselu</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Tämä arvopuu on käytettävissä vain esikatseluun.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Päivitä Premium-versioon avataksesi lukituksen!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Napsauta hiiren vasemmalla esikatsellaksesi</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Tämä arvopuu on käytettävissä vain esikatseluun.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Päivitä Premium-versioon avataksesi lukituksen!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Napsauta hiiren vasemmalla esikatsellaksesi</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium vaaditaan:</gradient> <gradient:#6b7280:#9ca3af>Päivitä Premium-versioon valitaksesi lisää arvopuita!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Navigoida %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Keskitä näkymä</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta keskittääksesi näkymän</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta keskittääksesi näkymän</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Keskitä näkymä</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Esikatselutila</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Katselet esikatselutilassa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Muutoksia ei tallenneta</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Katselet esikatselutilassa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Muutoksia ei tallenneta</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Esikatselutila</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Virhe luokittelussa</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Ei arvopuuta</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Arvopuuta ei voi ladata</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Arvopuuta ei voi ladata</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Kriittinen virhe</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Renderöinnin aikana tapahtui virhe</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Renderöinnin aikana tapahtui virhe</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Renderöinnin aikana tapahtui virhe</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Renderöinnin aikana tapahtui virhe</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Kohteen vaatimusten avaaminen epäonnistui</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Tapahtui virhe. Yritä uudelleen.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Lukee sorkkajäljet ​​ja tuulenvaihdot.</gradient>
-          - <gradient:#10b981:#34d399>➤ Taso I • Nature Initiate</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Lukee sorkkajäljet ​​ja tuulenvaihdot.</gradient>
+        - <gradient:#10b981:#34d399>➤ Taso I • Nature Initiate</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 Wilds metsästäjä</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Varret saalistavat potilaan tarkasti.</gradient>
-          - <gradient:#10b981:#34d399>➤ Taso II • Villi takaa-ajo</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Varret saalistavat potilaan tarkasti.</gradient>
+        - <gradient:#10b981:#34d399>➤ Taso II • Villi takaa-ajo</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 Merkkien jäljittäjä</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Seuraa jälkiä, joita mikään myrsky ei voi pyyhkiä.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Taso III • Polun valinta edessä</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Seuraa jälkiä, joita mikään myrsky ei voi pyyhkiä.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Taso III • Polun valinta edessä</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 Petojen vartija</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Sitoutuu valtakunnan huippuolentoihin.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Taso IV • Primal Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Sitoutuu valtakunnan huippuolentoihin.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Taso IV • Primal Branch</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ Myrskyjen vartija</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Syttyy tosi ukkosen ja sateen läpi.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Taso IV • Storm Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Syttyy tosi ukkosen ja sateen läpi.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Taso IV • Storm Branch</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿 Luonnonvartija</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vartioi pyhiä rajoja ja piilotettuja aukkoja.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Taso IV • Wild Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vartioi pyhiä rajoja ja piilotettuja aukkoja.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Taso IV • Wild Branch</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Komensee legendaarisia petoja ilman pelkoa.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Komensee legendaarisia petoja ilman pelkoa.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Jokainen pultti ohjaa säälimätöntä volleytasi.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Jokainen pultti ohjaa säälimätöntä volleytasi.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Taso V • Lopullinen sijoitus</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Luonto itse nousee vastaamaan puheluusi.</gradient>
-          - <gradient:#15803d:#22c55e>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Luonto itse nousee vastaamaan puheluusi.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Taso V • Lopullinen sijoitus</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ Rekrytoi</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Uusi terä, jolla on testaamaton ratkaisu.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Harjoittelualueet</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Uusi terä, jolla on testaamaton ratkaisu.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Harjoittelualueet</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ Sotilas</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Karkaissut porat ja etulinjatyöt.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Taso II • Kenttäkuri</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Karkaissut porat ja etulinjatyöt.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Taso II • Kenttäkuri</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ Veteraani</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Taisteluarvet merkitsevät ansaitsemaasi viisautta.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ Taso III • Valitse polkusi</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Taisteluarvet merkitsevät ansaitsemaasi viisautta.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Taso III • Valitse polkusi</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vaihtaa puolustuksen tuhoisaan hyökkäykseen.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Taso IV • Fury Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vaihtaa puolustuksen tuhoisaan hyökkäykseen.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Taso IV • Fury Branch</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 Vartija</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Seisoo lujasti siellä, missä muut rikkoutuisivat.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Taso IV • Shield Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Seisoo lujasti siellä, missä muut rikkoutuisivat.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Taso IV • Shield Branch</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 Gladiaattori</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hallitsee tasapainoisen areenasodan.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ Taso IV • Arena Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee tasapainoisen areenasodan.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Taso IV • Arena Branch</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 Furyn sotalordi</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Pysäyttämätön tuhon moottori.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Pysäyttämätön tuhon moottori.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Taso V • Lopullinen sijoitus</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 Kilven sotapäällikkö</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Viimeinen muuri elämän ja tuhon välillä.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Viimeinen muuri elämän ja tuhon välillä.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 Areenan sotapäällikkö</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Jokaisen coliseumin kruunattu mestari.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Jokaisen coliseumin kruunattu mestari.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨ Oppipoika</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Arkaanisen voiman kipinät heräävät.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Taso I • Arcane Foundations</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Arkaanisen voiman kipinät heräävät.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Taso I • Arcane Foundations</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ Taitava</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kutoa hallittuja ja keskittyneitä loitsuja.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Taso II • Arcane Practice</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kutoa hallittuja ja keskittyneitä loitsuja.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Arcane Practice</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ Velho</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Komensee monimutkaisia ​​taikuuden kuvioita.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse oppisi</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Komensee monimutkaisia ​​taikuuden kuvioita.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse oppisi</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 Arcanan velho</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Jalostaa raakaa voimaa tyylikkääksi voimaksi.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Arcane Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Jalostaa raakaa voimaa tyylikkääksi voimaksi.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Arcane Branch</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 Loitsujen velho</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Laajentaa grimoire-hallintaa ja tarkkuutta.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Taso IV • Spell Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Laajentaa grimoire-hallintaa ja tarkkuutta.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Taso IV • Spell Branch</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 Tyhjyyden velho</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Taivuttaa syvyysenergiat tahtosi mukaan.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Taso IV • Void Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Taivuttaa syvyysenergiat tahtosi mukaan.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Taso IV • Void Branch</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 Arcanan arkkimies</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ylivoimainen arkkitehti.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ylivoimainen arkkitehti.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Taso V • Lopullinen sijoitus</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 Loitsujen arkkimies</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Jokainen loitsu vastaa välittömästi.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Jokainen loitsu vastaa välittömästi.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Taso V • Lopullinen sijoitus</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 Tyhjyyden arkkimaage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hallitsee maailmojen välisiä reunoja.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee maailmojen välisiä reunoja.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Taso V • Lopullinen sijoitus</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Oppii ajoituksen, väärän suunnan ja nopeuden.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Streetcraft</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Oppii ajoituksen, väärän suunnan ja nopeuden.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Streetcraft</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 Varas</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Liikkuu lukkojen ja näkölinjojen läpi.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Taso II • Hiljainen sisäänkäynti</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Liikkuu lukkojen ja näkölinjojen läpi.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Hiljainen sisäänkäynti</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Iskee kerran ja katoaa jälkiä jättämättä.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Taso III • Valitse menetelmäsi</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Iskee kerran ja katoaa jälkiä jättämättä.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Taso III • Valitse menetelmäsi</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hallitsee liikettä, jota silmä ei voi seurata.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Taso IV • Stealth Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee liikettä, jota silmä ei voi seurata.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Taso IV • Stealth Branch</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 Yön varjo</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Muuttaa pimeyden tappavaksi eduksi.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Taso IV • Night Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Muuttaa pimeyden tappavaksi eduksi.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Taso IV • Night Branch</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Purkaa suunnitelmat ennen kuin viholliset reagoivat.</gradient>
-          - <gradient:#f97316:#fb923c>➤ Taso IV • Sabotage Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Purkaa suunnitelmat ennen kuin viholliset reagoivat.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Taso IV • Sabotage Branch</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Siitä tulee koskematon kaupunkimyytti.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Siitä tulee koskematon kaupunkimyytti.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Taso V • Lopullinen sijoitus</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 Yön haamu</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Omistaa keskiyön tunnin kokonaan.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Omistaa keskiyön tunnin kokonaan.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Taso V • Lopullinen sijoitus</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Päättää taistelut ennen kuin ne edes alkavat.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Päättää taistelut ennen kuin ne edes alkavat.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Taso V • Lopullinen sijoitus</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ Akolyytti</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Aloittaa pyhän palvelupolun.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Taso I • Omistautuminen</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Aloittaa pyhän palvelupolun.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Taso I • Omistautuminen</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ parantaja</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Palauttaa liittolaiset raskaan paineen alla.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Taso II • Restaurointi</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Palauttaa liittolaiset raskaan paineen alla.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Taso II • Restaurointi</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ Pappi</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ohjaa juhlia pyhällä kurilla.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Taso III • Valitse kutsumuksesi</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ohjaa juhlia pyhällä kurilla.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso III • Valitse kutsumuksesi</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ Jumaluuden piispa</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kanavat suorat säteilevät auktoriteetit.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Jumalallinen haara</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kanavat suorat säteilevät auktoriteetit.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Taso IV • Jumalallinen haara</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ Valon piispa</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Sokeuttaa korruption pyhällä loistolla.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ Taso IV • Kevyt haara</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Sokeuttaa korruption pyhällä loistolla.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Taso IV • Kevyt haara</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 Sielun piispa</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vartioi elämän ja kuoleman kynnystä.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Soul Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vartioi elämän ja kuoleman kynnystä.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Soul Branch</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 Jumaluuden ylipappi</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Julistaa ihmeitä kaaoksen sydämessä.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Julistaa ihmeitä kaaoksen sydämessä.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Taso V • Lopullinen sijoitus</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑 Valon ylipappi</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kylpee liittolaisia ​​horjumattomassa aamunkoitteessa.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kylpee liittolaisia ​​horjumattomassa aamunkoitteessa.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Taso V • Lopullinen sijoitus</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 sielujen ylipappi</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Paimen henkiä yli kuolevaisen pelon.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Paimen henkiä yli kuolevaisen pelon.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 Kauppias</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Alkaa karkeudella, viehätysvoimalla ja pienillä kaupoilla.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Street Commerce</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Alkaa karkeudella, viehätysvoimalla ja pienillä kaupoilla.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Taso I • Street Commerce</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 Kauppias</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Laajentaa reittejä ja luotettavia kontakteja.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Taso II • Läsnäolo markkinoilla</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Laajentaa reittejä ja luotettavia kontakteja.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Taso II • Läsnäolo markkinoilla</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 Välittäjä</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Sulkee arvokkaat kaupat tarkasti.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse imperiumisi</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Sulkee arvokkaat kaupat tarkasti.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Taso III • Valitse imperiumisi</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 Rikkauden magnaatti</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Rakentaa puhdasta pääomaa vertaansa vailla olevaan tahtiin.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Taso IV • Varallisuushaara</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Rakentaa puhdasta pääomaa vertaansa vailla olevaan tahtiin.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Taso IV • Varallisuushaara</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 Markkinoiden Magnate</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Orkesteroi kysynnän ja tarjonnan syklit.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Market Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Orkesteroi kysynnän ja tarjonnan syklit.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Taso IV • Market Branch</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 Kaupan magnaatti</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hallitsee matkailuvaunukaistaa ja logistiikkaa.</gradient>
-          - <gradient:#f97316:#fdba74>➤ Taso IV • Kaupan haara</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hallitsee matkailuvaunukaistaa ja logistiikkaa.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Taso IV • Kaupan haara</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 Rikkauden Tycoon</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kääntää talouksia yhdellä päätöksellä.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kääntää talouksia yhdellä päätöksellä.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Taso V • Lopullinen sijoitus</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 Markkinoiden Tycoon</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Asettaa hinnat, joita jokaisen killan tulee kunnioittaa.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Asettaa hinnat, joita jokaisen killan tulee kunnioittaa.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Taso V • Lopullinen sijoitus</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 Kaupan tycoon</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Omistaa tiet, satamat ja voitot.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ Taso V • Lopullinen sijoitus</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Omistaa tiet, satamat ja voitot.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Taso V • Lopullinen sijoitus</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Varas</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hiivinnän ja varkauden mestari</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hiivinnän ja varkauden mestari</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hiljainen tappaja, kuolema varjoista</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hiljainen tappaja, kuolema varjoista</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Soluttautuja</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Asiantuntija sisään- ja ulospääsyssä huomaamatta</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Asiantuntija sisään- ja ulospääsyssä huomaamatta</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Varjojen mestari</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Yhtä itse pimeyden kanssa</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Yhtä itse pimeyden kanssa</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Akolyytti</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Omistautunut jumalan palvelija</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Omistautunut jumalan palvelija</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Harras seuraaja</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Uskollinen jumalallisen polun seuraaja</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Uskollinen jumalallisen polun seuraaja</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Pappi</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Uskovien parantaja ja suojelija</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Uskovien parantaja ja suojelija</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Parantaja</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Parantavien taitojen mestari</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Parantavien taitojen mestari</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Piispa</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Uskovien johtaja</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Uskovien johtaja</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Oraakkeli</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Jumalallisten näkyjen näkijä</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Jumalallisten näkyjen näkijä</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ Ylipappi</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Jumalan ylin ääni</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Jumalan ylin ääni</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>🗡 Taskuvaras</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nopeat sormet, nopeampi pako</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nopeat sormet, nopeampi pako</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Varas</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hiivinnän ja varkauden mestari</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hiivinnän ja varkauden mestari</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 Tiedustelija</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Varjojen silmät ja korvat</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Varjojen silmät ja korvat</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Salamurhaaja</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hiljainen tappaja, kuolema varjoista</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hiljainen tappaja, kuolema varjoista</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Soluttautuja</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Asiantuntija sisään- ja ulospääsyssä huomaamatta</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Asiantuntija sisään- ja ulospääsyssä huomaamatta</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Varjoterä</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Yön tappava soturi</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Yön tappava soturi</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Vakoojien mestari</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tietoverkostojen hallitsija</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tietoverkostojen hallitsija</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Varjojen mestari</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Yhtä itse pimeyden kanssa</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Yhtä itse pimeyden kanssa</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 Varjojen mestari</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kaikkien varjojen korkein hallitsija</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kaikkien varjojen korkein hallitsija</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Kiertokauppias</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tavaroiden myynti kadulla</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tavaroiden myynti kadulla</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 Kauppias</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vakiintunut kauppias, jolla on yhteyksiä</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vakiintunut kauppias, jolla on yhteyksiä</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 Myyjä</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Osaava tavaroiden myyjä</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Osaava tavaroiden myyjä</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Seppä</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hienojen tavaroiden valmistaja</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hienojen tavaroiden valmistaja</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 Alkemisti</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Juomien ja eliksiirien mestari</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Juomien ja eliksiirien mestari</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 Kauppias</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Menestyvä yrittäjä</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Menestyvä yrittäjä</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Mestarikäsityöläinen</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Valtakunnan ylin käsityöläinen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Valtakunnan ylin käsityöläinen</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Kauppiassäätyläinen</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kaupan aatelia</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kaupan aatelia</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 Liikemiesmahti</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kaupan ja kaupankäynnin mestari</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kaupan ja kaupankäynnin mestari</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Killan mestari</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Kauppiaskillan johtaja</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Kauppiaskillan johtaja</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Esikatselu:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Esikatselu:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Vaatimus #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Vaatimustietoja ei voi ladata</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vaatimustietoja ei voi ladata</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Tyyppi:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Tuotteet:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tyyppi:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Edistyminen:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tyyppi:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Edistyminen:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Napsauta nähdäksesi tiedot</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Vaatimustiedot</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ Sinulla ei ole kaikkia tarvittavia kohteita!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Kohteet lähetetty onnistuneesti!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Tarvittavat tasot:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Tasovaatimus täyttyy!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Hanki XP:tä louhimalla, tappamalla väkijoukkoja,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>esineiden sulatus ja paljon muuta!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hanki XP:tä louhimalla, tappamalla väkijoukkoja,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>esineiden sulatus ja paljon muuta!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Peliaikasi:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Vaadittu peliaika:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Aikaa jäljellä:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Peliaikavaatimus täytetty!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Jatka pelaamista palvelimella</gradient>"
-      - "<gradient:#6b7280:#9ca3af>keräämään peliaikaa!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Jatka pelaamista palvelimella</gradient>"
+    - "<gradient:#6b7280:#9ca3af>keräämään peliaikaa!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Edistyminen</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Nykyinen:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Valmistuminen:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Suoritettu</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Tämä vaatimus on jo täytetty</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tämä vaatimus on jo täytetty</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Täydellinen vaatimus</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta suorittaaksesi tämän vaatimuksen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta suorittaaksesi tämän vaatimuksen</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Päivitä edistyminen</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta päivittääksesi edistymisesi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta päivittääksesi edistymisesi</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Valmiit kohteet:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Tyyppi:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Tila:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kerää tarvittavat esineet</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja palaa tähän loppuun suorittamaan</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kerää tarvittavat esineet</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja palaa tähän loppuun suorittamaan</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ansaitse vaadittu valuutta</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ansaitse vaadittu valuutta</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Hanki kokemustasoja</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hanki kokemustasoja</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Pelaa palvelimella</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Pelaa palvelimella</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Täytä vaatimus</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Kärki:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Täytä vaatimus</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Katsotaan yhteenvetoa...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Katsotaan vinkkejä...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Valmis!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Valmis!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Valmis suorittamaan!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Lopeta napsauttamalla</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Valmis suorittamaan!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Lopeta napsauttamalla</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ Kesken</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ Kesken</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Ei aloitettu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ei aloitettu</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Virhe</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Virhe</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Tila: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>Edistyminen</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Tuntematon vaatimus</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tietoja ei voi ladata</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tietoja ei voi ladata</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Virhe</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Vaatimuksen lataaminen epäonnistui</gradient>"
+    - "<gradient:#ef4444:#f87171>Vaatimuksen lataaminen epäonnistui</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 Edistyminen:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Tila:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>on jo valmis!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Luo palkkio</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Luo uusi palkkio napsauttamalla</gradient>"
-      - "<gradient:#6b7280:#9ca3af>toiselle pelaajalle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Luo uusi palkkio napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>toiselle pelaajalle</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Näytä palkkiot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Näytä kaikki aktiiviset palkkiot</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Näytä kaikki aktiiviset palkkiot</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Omat palkkioni</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Katso luomiasi palkkioita</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Katso luomiasi palkkioita</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Tulostaulukko</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Huippupalkkionmetsästäjät</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Huippupalkkionmetsästäjät</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Palkkio pelaajalle</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kohde:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tilaaja:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Luotu:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Napsauta nähdäksesi tiedot</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kohde:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tilaaja:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Luotu:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Napsauta nähdäksesi tiedot</gradient>"
 
 # ============================================
 # PALKKION LUONTINÄKYMÄ
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Valitse kohde</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Kohde: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Valitse pelaaja napsauttamalla</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nykyinen: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Valitse pelaaja napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nykyinen: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Luo palkkio</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Luo uusi palkkio napsauttamalla</gradient>"
-      - "<gradient:#6b7280:#9ca3af>toiselle pelaajalle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Luo uusi palkkio napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>toiselle pelaajalle</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Lisää esinepalkkioita</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Lisää esinepalkkioita</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Napsauta lisätäksesi esinepalkkioita</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nykyiset esineet:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta lisätäksesi esinepalkkioita</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nykyiset esineet:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Valitse ensin kohde!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Valitse ensin kohde!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Valitse ensin kohde!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Lisää valuuttapalkkioita</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Lisää valuuttapalkkioita</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Napsauta lisätäksesi valuuttapalkkiot</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nykyiset valuutat:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta lisätäksesi valuuttapalkkiot</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nykyiset valuutat:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Valitse ensin kohde!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Valitse ensin kohde!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Luo palkkio</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta luodaksesi palkkion</gradient>"
-      - "<gradient:#6b7280:#9ca3af>valituilla palkinnoilla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta luodaksesi palkkion</gradient>"
+    - "<gradient:#6b7280:#9ca3af>valituilla palkinnoilla</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Pelaajaa ei ole valittu!</gradient> <gradient:#6b7280:#9ca3af>Valitse ensin kohde.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Palkintoja ei ole lisätty!</gradient> <gradient:#6b7280:#9ca3af>Lisää ensin palkintoja.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Ei palkkioita</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Lisää esineitä luodaksesi palkintoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Lisää esineitä luodaksesi palkintoja</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Lisää esine</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aseta esineet tähän lisätäksesi ne palkinnoiksi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aseta esineet tähän lisätäksesi ne palkinnoiksi</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Kohde: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tämä palkkio asetetaan päälle</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tämä palkkio asetetaan päälle</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Palkkiopalkinto</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tämä esine annetaan</gradient>"
-      - "<gradient:#6b7280:#9ca3af>kuka tahansa palkkion vaatii</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Palkkiopalkinto</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tämä esine annetaan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>kuka tahansa palkkion vaatii</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Uusia kohteita ei lisätty!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Jotkut tuotteet hylättiin, koska varastosi oli täynnä!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tämän palkkion tavoite</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tämän palkkion tavoite</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Lisätietoa tulossa pian...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Näytä palkkiot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta nähdäksesi kaikki palkinnot</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Palkinnot yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta nähdäksesi kaikki palkinnot</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palkinnot yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Poista palkkio</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Varoitus: Ei voi kumota!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Napsauta poistaaksesi tämän palkkion</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Varoitus: Ei voi kumota!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta poistaaksesi tämän palkkion</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Kohteelle</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>asetettu palkkio on poistettu!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Haluatko varmasti poistaa tämän palkkion?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 Oikeuksien hallinta</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hallinnoi laajennuksen käyttöoikeuksia</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hallinnoi laajennuksen käyttöoikeuksia</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Käyttöoikeuksien hallinnan avaaminen epäonnistui!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Plugin-integraatiot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hallinnoi järjestelmänvalvojan laajennusten integraatioita yhdessä paikassa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sisältää valuutan, taitojen ja töiden havaitsemisnäkymät</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hallinnoi järjestelmänvalvojan laajennusten integraatioita yhdessä paikassa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sisältää valuutan, taitojen ja töiden havaitsemisnäkymät</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Lisäosien integraatioiden avaaminen epäonnistui!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Luo LuckPerms-ryhmät</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Luo LuckPerms-ryhmiä riveistä</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Luo LuckPerms-ryhmiä riveistä</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms ei ole asennettu!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Ristejä ei löytynyt ryhmien luomiseksi!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ Luotu</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms ryhmät!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Integraatiokeskus</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Avaa RDQ-laajennuksen integroinnin kojelaudat</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Valuutta-, taitojen/työnhavainnointi- ja PlaceholderAPI-työkalut ovat saatavilla täältä</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Avaa RDQ-laajennuksen integroinnin kojelaudat</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Valuutta-, taitojen/työnhavainnointi- ja PlaceholderAPI-työkalut ovat saatavilla täältä</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Valuuttaintegraatiot</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Avoin valuutantarjoajan hallinta</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tarkista havaitut valuutat Vault ja JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Avoin valuutantarjoajan hallinta</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tarkista havaitut valuutat Vault ja JExEconomy</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Valuuttaintegraatioiden avaaminen epäonnistui!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Taitojen integraatiot</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Katso tuen tila: mcMMO, Aura ja EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tunnista tällä hetkellä käytössä olevat taitolaajennukset</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Katso tuen tila: mcMMO, Aura ja EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tunnista tällä hetkellä käytössä olevat taitolaajennukset</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Taitointegraatioiden avaaminen epäonnistui!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ Työintegraatiot</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Katso EcoJobs- ja JobsReborn-tuen tila</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tunnista tällä hetkellä käytössä olevat työlaajennukset</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Katso EcoJobs- ja JobsReborn-tuen tila</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tunnista tällä hetkellä käytössä olevat työlaajennukset</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Työintegraatioiden avaaminen epäonnistui!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tunnista PlaceholderAPI-tuki ja hallitse laajennuksia</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Asenna Player-laajennus ja lataa PlaceholderAPI uudelleen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tunnista PlaceholderAPI-tuki ja hallitse laajennuksia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Asenna Player-laajennus ja lataa PlaceholderAPI uudelleen</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI-työkalujen avaaminen epäonnistui!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Integrointi</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI tuettu:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kohteen laajennus:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Asenna ja lataa uudelleen suoraan tästä paneelista</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI tuettu:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kohteen laajennus:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Asenna ja lataa uudelleen suoraan tästä paneelista</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI havaittu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI on asennettu ja otettu käyttöön</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI on asennettu ja otettu käyttöön</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI puuttuu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Asenna ja ota käyttöön PlaceholderAPI käyttääksesi tätä toimintoa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Asenna ja ota käyttöön PlaceholderAPI käyttääksesi tätä toimintoa</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 Asenna %expansion_name%-laajennus</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Juoksu:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Sitten juoksee:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Napsauta suorittaaksesi molemmat PlaceholderAPI-komennot</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Juoksu:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sitten juoksee:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Napsauta suorittaaksesi molemmat PlaceholderAPI-komennot</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Pakollinen</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tämä toiminto ei ole käytettävissä, ennen kuin PlaceholderAPI on asennettu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tämä toiminto ei ole käytettävissä, ennen kuin PlaceholderAPI on asennettu</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Edellyttää järjestelmänvalvojan oikeuksia</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Sinulla ei ole lupaa käyttää PlaceholderAPI-hallintatyökaluja</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sinulla ei ole lupaa käyttää PlaceholderAPI-hallintatyökaluja</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ Sinulla ei ole oikeutta hallita PlaceholderAPI-integraatioita.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI ei ole saatavilla tällä palvelimella.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Laajennuksen lataaminen epäonnistui:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Skill Pluginin tila</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tuetut taitojen integraatiot:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Havaittu juuri nyt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tarkistaa mcMMO-, Aura- ja EcoSkills-tuen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tuetut taitojen integraatiot:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Havaittu juuri nyt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tarkistaa mcMMO-, Aura- ja EcoSkills-tuen</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Havaittu</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integrointitunnus:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integrointitunnus:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Taitojen integraatioita ei ole määritetty</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mitään taitolaajennusten integraatioita ei ole tällä hetkellä määritetty</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mitään taitolaajennusten integraatioita ei ole tällä hetkellä määritetty</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 Työlaajennuksen tila</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tuetut työintegraatiot:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Havaittu juuri nyt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tarkistaa EcoJobs- ja JobsReborn-tuen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tuetut työintegraatiot:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Havaittu juuri nyt:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tarkistaa EcoJobs- ja JobsReborn-tuen</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Havaittu</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integrointitunnus:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integrointitunnus:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Työintegraatioita ei ole määritetty</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Työlaajennusten integraatioita ei ole tällä hetkellä määritetty</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Työlaajennusten integraatioita ei ole tällä hetkellä määritetty</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Palveluntarjoaja:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Symboli:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Etuliite:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Suffiksi:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palveluntarjoaja:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Symboli:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Etuliite:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Suffiksi:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ Luo %currency_id%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Luo oletusvaluutta kohteelle RDQ</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>Luo %currency_id% napsauttamalla</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Luo oletusvaluutta kohteelle RDQ</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>Luo %currency_id% napsauttamalla</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Pakollinen</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tämä toiminto vaatii JExEconomy</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Asenna se ennen oletusarvojen luomista</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tämä toiminto vaatii JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Asenna se ennen oletusarvojen luomista</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Valmis</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Oletusvaluutta on jo olemassa</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Lisäasetuksia ei tarvita</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Oletusvaluutta on jo olemassa</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Lisäasetuksia ei tarvita</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Luotu oletusvaluutta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Valuutan luominen epäonnistui:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Valuuttoja ei havaittu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ ei voinut havaita Vault tai JExEconomy valuuttoja</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Asenna tai ota käyttöön taloudellinen palveluntarjoaja ensin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ ei voinut havaita Vault tai JExEconomy valuuttoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Asenna tai ota käyttöön taloudellinen palveluntarjoaja ensin</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Lisäosa:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tila:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Lisäosa:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tila:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>Napsauta vasenta painiketta valitaksesi</gradient>"
-        - "<gradient:#10b981:#34d399>Napsauta hiiren kakkospainikkeella määrittääksesi kaikki</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>Napsauta vasenta painiketta valitaksesi</gradient>"
+      - "<gradient:#10b981:#34d399>Napsauta hiiren kakkospainikkeella määrittääksesi kaikki</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Tyhjä</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Lisäosa:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Solmu:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Napsauta määrittääksesi tämän luvan</gradient>"
+      - "<gradient:#10b981:#34d399>Napsauta määrittääksesi tämän luvan</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Lisäosaa ei ole valittu</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Valitse ylhäältä laajennus</gradient>"
-        - "<gradient:#6b7280:#9ca3af>nähdäksesi sen käyttöoikeudet</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Valitse ylhäältä laajennus</gradient>"
+      - "<gradient:#6b7280:#9ca3af>nähdäksesi sen käyttöoikeudet</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Tyhjä</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Määritä %plugin_name% Käyttöoikeudet</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Määritä kaikki käyttöoikeudet käyttäjältä</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% luvat)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Määritä kaikki käyttöoikeudet käyttäjältä</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% luvat)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Ei valintaa</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Valittu: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Lisäosa:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Lisäosa:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Käyttöoikeudet:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Yleiskatsaus</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Valitse laajennus nähdäksesi käyttöoikeudet</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugins yhteensä:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Valitse laajennus nähdäksesi käyttöoikeudet</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Päivitä tiedot</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Napsauta päivittääksesi käyttöoikeustiedot</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Napsauta päivittääksesi käyttöoikeustiedot</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Tyhjennä valinta</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta poistaaksesi laajennuksen valinnan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta poistaaksesi laajennuksen valinnan</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Määritä %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Määritä valitun laajennuksen kaikki käyttöoikeudet</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Määritä valitun laajennuksen kaikki käyttöoikeudet</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Määritä kaikki käyttöoikeudet</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Määritä käyttöoikeudet kaikilta</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>laajennuksia</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Määritä käyttöoikeudet kaikilta</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>laajennuksia</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Tiedot päivitetty!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Sivu %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Nykyinen sivu:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Sivuja yhteensä:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Nykyinen sivu:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Sivuja yhteensä:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Sivu %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Palaa</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palaa takaisin napsauttamalla</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Jatka</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta jatkaaksesi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta jatkaaksesi</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Edellinen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Edellinen sivu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Edellinen sivu</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Seuraava</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Seuraava sivu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Seuraava sivu</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Ylös</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mene ylös</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mene ylös</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Alas</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mene alas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mene alas</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Peruuta</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Peruuta toiminto</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Peruuta toiminto</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Syötä arvo</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kirjoita syötteesi yllä</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ja vahvista napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kirjoita syötteesi yllä</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ja vahvista napsauttamalla</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Syötteen käsittely epäonnistui:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Vahvistaa</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vahvista napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vahvista napsauttamalla</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Peruuta</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Peruuta napsauttamalla</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Peruuta napsauttamalla</gradient>"
 
 # ============================================
 # ILMAISVERSION RAJOITUKSET
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Ilmaisversio</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Käytät ilmaista versiota</gradient>"
-      - "<gradient:#6b7280:#9ca3af>rajoitetuilla ominaisuuksilla.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Päivitä Premium-versioon:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Rajattomasti arvopuita</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Rajattomasti arvoja per puu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Useita aktiivisia polkuja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Käytät ilmaista versiota</gradient>"
+    - "<gradient:#6b7280:#9ca3af>rajoitetuilla ominaisuuksilla.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Päivitä Premium-versioon:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Rajattomasti arvopuita</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Rajattomasti arvoja per puu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Useita aktiivisia polkuja</gradient>"
 
 # ============================================
 # PREMIUM-VERSION VIESTIT
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Premium-versio</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Kaikki ominaisuudet on avattu!</gradient>"
+    - "<gradient:#10b981:#34d399>Kaikki ominaisuudet on avattu!</gradient>"
 
 # ============================================
 # VAATIMUSESINEEN YKSITYISKOHTANÄKYMÄ (yksinkertaistettu)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Palauta esineet</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Kaikki tuotteet valmiina!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Lähetä napsauttamalla</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Kaikki tuotteet valmiina!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Lähetä napsauttamalla</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Palauta esineet</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Pakolliset kohteet puuttuvat</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Kerää ensin kaikki tavarat</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Pakolliset kohteet puuttuvat</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Kerää ensin kaikki tavarat</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Takaisin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Paluu vaatimuksiin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Paluu vaatimuksiin</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Kokonaisedistyminen</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Valmistuminen:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Vaatimukset:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Valmistuminen:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Vaatimukset:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Täytä kaikki vaatimukset</gradient>"
-      - "<gradient:#6b7280:#9ca3af>avataksesi tämän arvon!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Täytä kaikki vaatimukset</gradient>"
+    - "<gradient:#6b7280:#9ca3af>avataksesi tämän arvon!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>🏆 Lunasta arvo!</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Kaikki vaatimukset täytetty!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Napsauta lunastaaksesi arvosi</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Kaikki vaatimukset täytetty!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Napsauta lunastaaksesi arvosi</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Arvo lukittu</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Täytä kaikki vaatimukset</gradient>"
-        - "<gradient:#6b7280:#9ca3af>avataksesi tämän arvon.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Täytä kaikki vaatimukset</gradient>"
+      - "<gradient:#6b7280:#9ca3af>avataksesi tämän arvon.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Lukittu</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Täytä kaikki vaatimukset</gradient>"
-        - "<gradient:#6b7280:#9ca3af>avataksesi tämän arvon.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Täytä kaikki vaatimukset</gradient>"
+      - "<gradient:#6b7280:#9ca3af>avataksesi tämän arvon.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Takaisin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Palaa arvoyhteenvetoon</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Palaa arvoyhteenvetoon</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Vaatimus täytetty!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Kaikki vaatimukset täytetty! Napsauta vaatimuspainiketta saadaksesi arvon!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Ei palkkioita</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja</gradient>"
       type_label: "<gray>Tyyppi:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Arvo:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Näytä kaikki palkinnot</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Napsauta nähdäksesi kaikki %count% palkintoja</gradient>"
-        - "<gradient:#6b7280:#9ca3af>tätä arvoa varten yksityiskohtaisesti</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Napsauta nähdäksesi kaikki %count% palkintoja</gradient>"
+      - "<gradient:#6b7280:#9ca3af>tätä arvoa varten yksityiskohtaisesti</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Yksityiskohtainen palkintonäkymä tulossa pian!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Ei palkkioita</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tällä arvolla ei ole palkintoja</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tällä arvolla ei ole palkintoja</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Arvopalkkiot</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Saat %count% palkintoja</gradient>"
-      - "<gradient:#6b7280:#9ca3af>kun vaadit tämän arvon</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Saat %count% palkintoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>kun vaadit tämän arvon</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Ei palkkioita</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja</gradient>"
     type_label: "<gray>Tyyppi:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Arvo:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Näytä kaikki palkinnot</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Napsauta nähdäksesi kaikki %count% palkintoja</gradient>"
-      - "<gradient:#6b7280:#9ca3af>tätä arvoa varten yksityiskohtaisesti</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta nähdäksesi kaikki %count% palkintoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>tätä arvoa varten yksityiskohtaisesti</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Yksityiskohtainen palkintonäkymä tulossa pian!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Ei palkkioita</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tällä arvolla ei ole palkintoja</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tällä arvolla ei ole palkintoja</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Tälle sijalle ei ole määritetty palkintoja.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Arvopalkkiot</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Saat %count% palkintoja</gradient>"
-    - "<gradient:#6b7280:#9ca3af>kun vaadit tämän arvon</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Saat %count% palkintoja</gradient>"
+  - "<gradient:#6b7280:#9ca3af>kun vaadit tämän arvon</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tällä arvolla on %count% palkintoja</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Napsauta mitä tahansa palkintoa saadaksesi lisätietoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tällä arvolla on %count% palkintoja</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Napsauta mitä tahansa palkintoa saadaksesi lisätietoja</gradient>"
 
 # ============================================
 # EDUN YLEISNÄKYMÄ
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Taisteluparannus</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Parantua tehdessään vahinkoa vihollisille</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Zombie Slayer</gradient>
+    description: Voita zombit ja kerää heidän pisaransa todistaaksesi taistelukykysi
+    task:
+      kill_zombies:
+        name: <white>Päihitä zombit</white>
+        description: Tappaa %amount% zombeja
+      collect_flesh:
+        name: <white>Kerää Rotten Flesh</white>
+        description: Kerätä %amount% mätä lihaa lyötyiltä zombeilta
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Mestari kaivosmies</gradient>
+    description: Louhi erilaisia ​​malmeja määräajassa tullaksesi mestarikaivostyöläiseksi
+    task:
+      mine_coal:
+        name: <white>Kaivos kivihiiltä</white>
+        description: Minun %amount% kivihiilimalmilohkot
+      mine_iron:
+        name: <white>Rauta kaivos</white>
+        description: Minun %amount% rautamalmilohkot
+      mine_diamond:
+        name: <white>Kaivos timantteja</white>
+        description: Minun %amount% timanttimalmilohkot
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Rakentajan unelma</gradient>
+    description: Rakenna rakennus noudattamalla peräkkäisiä vaiheita esitelläksesi rakennustaitosi
+    task:
+      foundation:
+        name: <white>Lay Foundation</white>
+        description: Paikka %amount% tiiliharkot perustukseen
+      walls:
+        name: <white>Rakenna muurit</white>
+        description: Paikka %amount% tammilaudat seiniin
+      windows:
+        name: <white>Lisää Windows</white>
+        description: Paikka %amount% lasiharkot ikkunoihin
+      roof:
+        name: <white>Täydellinen katto</white>
+        description: Paikka %amount% tammiportaat katolle
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Tehtäväkategoriat</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Tehtävät</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Tehtävä: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Aktiiviset tehtävät</gradient>
+    items:
+      back:
+        name: <gray>Takaisin</gray>
+        lore:
+        - <gray>Paluu edelliseen valikkoon</gray>
+      start:
+        name: <green>Aloita Quest</green>
+        lore:
+        - <gray>Napsauta aloittaaksesi tämän tehtävän</gray>
+        - ''
+        - <dark_gray>Vaatimukset:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Hylkää Quest</red>
+        lore:
+        - <gray>Napsauta hylätäksesi tämän tehtävän</gray>
+        - ''
+        - '<yellow>Varoitus: Edistyminen menetetään</yellow>'
+      info:
+        name: <yellow>Quest Info</yellow>
+        lore:
+        - <gray>Napsauta nähdäksesi seikkailun tiedot</gray>
+      progress:
+        name: <aqua>Näytä edistyminen</aqua>
+        lore:
+        - <gray>Napsauta nähdäksesi seikkailun edistymisen</gray>
+        - ''
+        - '<dark_gray>Edistyminen: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Lähellä</gray>
+        lore:
+        - <gray>Sulje tämä valikko</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Vaikeusaste: %difficulty%</dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+        - '<dark_gray>Tehtävät: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Edistyminen: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Napsauta aloittaaksesi tämän tehtävän</green>
+      click_to_view: <yellow>Napsauta nähdäksesi seikkailun tiedot</yellow>
+      click_to_abandon: <red>Napsauta hylätäksesi tämän tehtävän</red>
+      already_completed: <green>jo valmis</green>
+      requirements_not_met: <red>Vaatimukset eivät täyty</red>
+      on_cooldown: '<red>Jäähdytyksen aikana: %time%</red>'
+      time_remaining: '<yellow>Jäljellä oleva aika: %time%</yellow>'
+      repeatable: <aqua>Toistettava tehtävä</aqua>
+      one_time: <gray>Kertaluonteinen tehtävä</gray>
+    progress:
+      overall: <yellow>Kokonaiskehitys</yellow>
+      percentage: '<gray>Edistyminen: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Tehtävät: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Kulunut aika: <white>%time%</white></gray>'
+      time_remaining: '<gray>Aikaa jäljellä: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Edistyminen: <white>%current%/%required%</white></gray>'
+      completed: <green>Valmis</green>
+      remaining: '<gray>Jäljellä: <white>%remaining%</white></gray>'
+      locked: <red>Lukittu</red>
+      sequential: <yellow>Suorita ensin edelliset tehtävät</yellow>
+    rewards:
+      header: <yellow>Palkinnot</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Kokea</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Lisäansiot: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Tehtävä: %quest%</gradient>'
+    requirements:
+      header: <yellow>Vaatimukset</yellow>
+      level: <aqua>Taso %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Täydellinen: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Sijoitus: %rank%</gradient>'
+      permission: '<gray>Lupa: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Triviaali</gradient>
+  easy: <gradient:#10b981:#34d399>Helppo</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normaali</gradient>
+  hard: <gradient:#ef4444:#f87171>Kovaa</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Äärimmäistä</gradient>

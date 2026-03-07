@@ -2222,3 +2222,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>战斗治疗</gradient>"
     description: "<gradient:#6b7280:#9ca3af>对敌人造成伤害时治疗</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>僵尸杀手</gradient>
+    description: 击败僵尸并收集他们的掉落物以证明你的战斗能力
+    task:
+      kill_zombies:
+        name: <white>击败僵尸</white>
+        description: 杀 %amount% 僵尸
+      collect_flesh:
+        name: <white>收集腐肉</white>
+        description: 收集 %amount% 被击败的僵尸的腐肉
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>矿工大师</gradient>
+    description: 在限定时间内开采各种矿石，成为矿工大师
+    task:
+      mine_coal:
+        name: <white>煤矿</white>
+        description: 矿 %amount% 煤矿石块
+      mine_iron:
+        name: <white>矿铁</white>
+        description: 矿 %amount% 铁矿石块
+      mine_diamond:
+        name: <white>开采钻石</white>
+        description: 矿 %amount% 金刚石矿石块
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>建设者的梦想</gradient>
+    description: 按照顺序步骤建造一座建筑物，以展示您的建筑技能
+    task:
+      foundation:
+        name: <white>奠定基础</white>
+        description: 地方 %amount% 地基用砖块
+      walls:
+        name: <white>筑墙</white>
+        description: 地方 %amount% 墙壁用橡木板块
+      windows:
+        name: <white>添加窗口</white>
+        description: 地方 %amount% 窗户玻璃块
+      roof:
+        name: <white>完整的屋顶</white>
+        description: 地方 %amount% 屋顶的橡木楼梯块
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>任务类别</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% 任务</gradient>
+    detail:
+      title: <gradient:#f59e0b:#fbbf24>寻求： %quest%</gradient>
+    active:
+      title: <gradient:#f59e0b:#fbbf24>主动任务</gradient>
+    items:
+      back:
+        name: <gray>后退</gray>
+        lore:
+        - <gray>返回上一级菜单</gray>
+      start:
+        name: <green>开始任务</green>
+        lore:
+        - <gray>点击开始此任务</gray>
+        - ''
+        - <dark_gray>要求：</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>放弃任务</red>
+        lore:
+        - <gray>点击放弃该任务</gray>
+        - ''
+        - <yellow>警告：进度将会丢失</yellow>
+      info:
+        name: <yellow>任务信息</yellow>
+        lore:
+        - <gray>点击查看任务详情</gray>
+      progress:
+        name: <aqua>查看进度</aqua>
+        lore:
+        - <gray>点击查看任务进度</gray>
+        - ''
+        - <dark_gray>进步： <white>%progress%%</white></dark_gray>
+      close:
+        name: <gray>关闭</gray>
+        lore:
+        - <gray>关闭此菜单</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - <dark_gray>困难： %difficulty%</dark_gray>
+        - <dark_gray>地位： %status%</dark_gray>
+        - <dark_gray>任务： <white>%task_count%</white></dark_gray>
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - <dark_gray>进步： <white>%current%/%required%</white></dark_gray>
+        - <dark_gray>地位： %status%</dark_gray>
+    lore:
+      click_to_start: <green>点击开始此任务</green>
+      click_to_view: <yellow>点击查看任务详情</yellow>
+      click_to_abandon: <red>点击放弃该任务</red>
+      already_completed: <green>已经完成</green>
+      requirements_not_met: <red>未满足要求</red>
+      on_cooldown: <red>冷却时： %time%</red>
+      time_remaining: <yellow>剩余时间： %time%</yellow>
+      repeatable: <aqua>可重复的任务</aqua>
+      one_time: <gray>一次性任务</gray>
+    progress:
+      overall: <yellow>总体进展</yellow>
+      percentage: <gray>进步： <white>%progress%%</white></gray>
+      tasks_completed: <gray>任务： <white>%completed%/%total%</white></gray>
+      time_elapsed: <gray>已用时间： <white>%time%</white></gray>
+      time_remaining: <gray>剩余时间： <white>%time%</white></gray>
+    task:
+      progress: <gray>进步： <white>%current%/%required%</white></gray>
+      completed: <green>完全的</green>
+      remaining: <gray>其余的： <white>%remaining%</white></gray>
+      locked: <red>锁定</red>
+      sequential: <yellow>先完成前面的任务</yellow>
+    rewards:
+      header: <yellow>奖励</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% 经验</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: <gradient:#a855f7:#c084fc>福利： %perk%</gradient>
+      quest: <gradient:#f59e0b:#fbbf24>寻求： %quest%</gradient>
+    requirements:
+      header: <yellow>要求</yellow>
+      level: <aqua>等级 %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: <gradient:#f59e0b:#fbbf24>完全的： %quest%</gradient>
+      rank: <gradient:#a855f7:#c084fc>秩： %rank%</gradient>
+      permission: <gray>允许： %permission%</gray>
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>琐碎的</gradient>
+  easy: <gradient:#10b981:#34d399>简单的</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>普通的</gradient>
+  hard: <gradient:#ef4444:#f87171>难的</gradient>
+  extreme: <gradient:#a855f7:#c084fc>极端</gradient>

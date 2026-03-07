@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Sem Recompensas</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Adicione itens para criar recompensas</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Adicione itens para criar recompensas</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Adicionar Item</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Coloque itens aqui para adicionar como recompensas</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Clique com o botão esquerdo para colocar o item</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Clique com o botão direito para remover o item</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Coloque itens aqui para adicionar como recompensas</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Clique com o botão esquerdo para colocar o item</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Clique com o botão direito para remover o item</gradient>"
 
 # ============================================
 # NOMES E DESCRIÇÕES DE EXIBIÇÃO DA ÁRVORE DE RANK
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Patrulheiro</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Domine a arte do arco e rastreamento</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Torne-se um com a natureza</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Domine a arte do arco e rastreamento</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Torne-se um com a natureza</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Guerreiro</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Domine a arte do combate</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Torne-se um lutador lendário</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Domine a arte do combate</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Torne-se um lutador lendário</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Mago</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aproveite o poder da magia</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Torne-se um mestre do arcano</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aproveite o poder da magia</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Torne-se um mestre do arcano</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Ladino</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Domine furtividade e astúcia</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ataque das sombras</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Domine furtividade e astúcia</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ataque das sombras</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Clérigo</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Canalize o poder divino</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Cure e proteja seus aliados</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Canalize o poder divino</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Cure e proteja seus aliados</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Mercador</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Domine a arte do comércio</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Construa sua fortuna</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Domine a arte do comércio</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Construa sua fortuna</gradient>"
 
 # ============================================
 # NOMES E DESCRIÇÕES DE EXIBIÇÃO DE RANK
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Sem classificação</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Selecione um caminho de classificação para começar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Selecione um caminho de classificação para começar</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Sem classificação</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Classificação padrão</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nenhuma classificação selecionada</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nenhuma classificação selecionada</gradient>"
   # Classificações da Árvore Ranger
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 Escoteiro de Trilhas</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Lê pegadas e mudanças de vento.</gradient>
-        - <gradient:#10b981:#34d399>➤ Nível I • Iniciado na Natureza</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Lê pegadas e mudanças de vento.</gradient>
+      - <gradient:#10b981:#34d399>➤ Nível I • Iniciado na Natureza</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 Caçador da Natureza</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Persegue a presa com precisão paciente.</gradient>
-        - <gradient:#10b981:#34d399>➤ Nível II • Perseguição Selvagem</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Persegue a presa com precisão paciente.</gradient>
+      - <gradient:#10b981:#34d399>➤ Nível II • Perseguição Selvagem</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 Rastreador de Sinais</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Segue trilhas que nenhuma tempestade pode apagar.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Nível III • Escolha do caminho a seguir</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Segue trilhas que nenhuma tempestade pode apagar.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Nível III • Escolha do caminho a seguir</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 Guardião das Feras</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Laços com criaturas de ponta do reino.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Nível IV • Ramo Primordial</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Laços com criaturas de ponta do reino.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Nível IV • Ramo Primordial</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ Guardião das Tempestades</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Disparos certeiros através de trovões e chuva.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Nível IV • Ramo Tempestade</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Disparos certeiros através de trovões e chuva.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Nível IV • Ramo Tempestade</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿 Guardião da Natureza</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Guarda fronteiras sagradas e clareiras escondidas.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Nível IV • Ramo Selvagem</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Guarda fronteiras sagradas e clareiras escondidas.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Nível IV • Ramo Selvagem</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 Mestre das Feras Primordial</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Comanda feras lendárias sem medo.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Comanda feras lendárias sem medo.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑 Tempestade Mestre das Feras</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Cada raio guia seu voleio implacável.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Cada raio guia seu voleio implacável.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ Nível V • Classificação Final</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 Mestre das Feras Selvagem</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ A própria natureza surge para atender ao seu chamado.</gradient>
-        - <gradient:#15803d:#22c55e>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ A própria natureza surge para atender ao seu chamado.</gradient>
+      - <gradient:#15803d:#22c55e>➤ Nível V • Classificação Final</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ Recrutar</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Uma lâmina nova com determinação não testada.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Campos de Treinamento</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Uma lâmina nova com determinação não testada.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Campos de Treinamento</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ Soldado</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Endurecido por exercícios e serviço na linha de frente.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Nível II • Disciplina de Campo</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Endurecido por exercícios e serviço na linha de frente.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Nível II • Disciplina de Campo</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ Veterano</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Cicatrizes de batalha marcam sua sabedoria conquistada.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ Nível III • Escolha seu caminho</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Cicatrizes de batalha marcam sua sabedoria conquistada.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ Nível III • Escolha seu caminho</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Troca defesa por ataque devastador.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Nível IV • Ramo Fúria</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Troca defesa por ataque devastador.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Nível IV • Ramo Fúria</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 Guardião</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Permanece firme onde outros quebrariam.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Nível IV • Filial de Escudo</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Permanece firme onde outros quebrariam.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Nível IV • Filial de Escudo</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 Gladiador</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Domine a guerra de arena equilibrada.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ Nível IV • Filial da Arena</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Domine a guerra de arena equilibrada.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ Nível IV • Filial da Arena</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 Senhor da Guerra da Fúria</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Um motor de destruição imparável.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Um motor de destruição imparável.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ Nível V • Classificação Final</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 Senhor da Guerra do Escudo</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ O último muro entre a vida e a ruína.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ O último muro entre a vida e a ruína.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Nível V • Classificação Final</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 Senhor da Guerra da Arena</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Campeão coroado de todos os coliseu.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Campeão coroado de todos os coliseu.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨ Aprendiz</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Despertam faíscas de poder arcano.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Nível I • Fundações Arcanas</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Despertam faíscas de poder arcano.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Nível I • Fundações Arcanas</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ Adepto</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Cria feitiços controlados e focados.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Prática Arcana</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Cria feitiços controlados e focados.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Nível II • Prática Arcana</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ Assistente</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Comanda padrões complexos de magia.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha sua doutrina</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Comanda padrões complexos de magia.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha sua doutrina</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 Feiticeiro dos Arcanos</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Refina a potência bruta em uma força elegante.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Arcano</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Refina a potência bruta em uma força elegante.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Arcano</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 Feiticeiro de Feitiços</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Expande o controle e a precisão do grimório.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Nível IV • Ramo de Feitiço</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Expande o controle e a precisão do grimório.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Nível IV • Ramo de Feitiço</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 Feiticeiro do Vazio</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Dobra as energias abissais à sua vontade.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Nível IV • Filial Anulada</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Dobra as energias abissais à sua vontade.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Nível IV • Filial Anulada</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 Arquimago dos Arcanos</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Arquiteto supremo de puro poder arcano.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Arquiteto supremo de puro poder arcano.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 Arquimago dos Feitiços</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Cada encantamento responde instantaneamente.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Cada encantamento responde instantaneamente.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ Nível V • Classificação Final</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 Arquimago do Vazio</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Governa as fronteiras entre os mundos.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Governa as fronteiras entre os mundos.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ Nível V • Classificação Final</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Aprende tempo, desorientação e velocidade.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Artesanato de rua</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Aprende tempo, desorientação e velocidade.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Artesanato de rua</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 Ladrão</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Desliza através de fechaduras e linhas de vigia.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Entrada Silenciosa</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Desliza através de fechaduras e linhas de vigia.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Nível II • Entrada Silenciosa</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 Assassino</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ataca uma vez e desaparece sem deixar rastros.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Nível III • Escolha seu método</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ataca uma vez e desaparece sem deixar rastros.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Nível III • Escolha seu método</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 Sombra da Furtividade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Domina o movimento que nenhum olho pode acompanhar.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Nível IV • Ramo Furtivo</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Domina o movimento que nenhum olho pode acompanhar.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Nível IV • Ramo Furtivo</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 Sombra da Noite</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Transforma a escuridão em vantagem letal.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Nível IV • Filial Noturna</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Transforma a escuridão em vantagem letal.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Nível IV • Filial Noturna</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 Sombra da Sabotagem</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Desmonta planos antes que os inimigos reajam.</gradient>
-        - <gradient:#f97316:#fb923c>➤ Nível IV • Ramo de Sabotagem</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Desmonta planos antes que os inimigos reajam.</gradient>
+      - <gradient:#f97316:#fb923c>➤ Nível IV • Ramo de Sabotagem</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 Fantasma da Furtividade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Torna-se um mito urbano intocável.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Torna-se um mito urbano intocável.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ Nível V • Classificação Final</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 Fantasma da Noite</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Possui completamente a meia-noite.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Possui completamente a meia-noite.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ Nível V • Classificação Final</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 Fantasma da Sabotagem</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Termina as batalhas antes mesmo de começarem.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Termina as batalhas antes mesmo de começarem.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ Nível V • Classificação Final</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ Acólito</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Inicia o caminho sagrado do serviço.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Nível I • Devoção</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Inicia o caminho sagrado do serviço.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Nível I • Devoção</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ Curador</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Restaura aliados sob forte pressão.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Nível II • Restauração</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Restaura aliados sob forte pressão.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Nível II • Restauração</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ Sacerdote</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Guia os grupos com disciplina sagrada.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Nível III • Escolha sua vocação</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Guia os grupos com disciplina sagrada.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Nível III • Escolha sua vocação</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ Bispo da Divindade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Canaliza autoridade radiante direta.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Divino</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Canaliza autoridade radiante direta.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Divino</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ Bispo da Luz</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Cega a corrupção com brilho sagrado.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ Nível IV • Filial Leve</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Cega a corrupção com brilho sagrado.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ Nível IV • Filial Leve</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 Bispo das Almas</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Guarda o limiar da vida e da morte.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Ramo da Alma</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Guarda o limiar da vida e da morte.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Ramo da Alma</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 Sumo Sacerdote da Divindade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Declara milagres no coração do caos.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Declara milagres no coração do caos.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ Nível V • Classificação Final</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑 Sumo Sacerdote da Luz</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Banha aliados em um amanhecer inabalável.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Banha aliados em um amanhecer inabalável.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ Nível V • Classificação Final</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 Sumo Sacerdote das Almas</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Pastoreia os espíritos além do medo mortal.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Pastoreia os espíritos além do medo mortal.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 Mascate</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Começa com coragem, charme e pequenos negócios.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Comércio Ambulante</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Começa com coragem, charme e pequenos negócios.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Comércio Ambulante</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 Comerciante</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Amplia rotas e contatos confiáveis.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Presença no Mercado</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Amplia rotas e contatos confiáveis.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Nível II • Presença no Mercado</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 Corretor</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Fecha negócios de alto valor com precisão.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha seu império</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Fecha negócios de alto valor com precisão.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha seu império</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 Magnata da Riqueza</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Constrói capital puro em ritmo incomparável.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Nível IV • Ramo de Riqueza</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Constrói capital puro em ritmo incomparável.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Nível IV • Ramo de Riqueza</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 Magnata dos Mercados</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Orquestra os ciclos de oferta e demanda.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Filial de Mercado</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Orquestra os ciclos de oferta e demanda.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Filial de Mercado</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 Magnata do Comércio</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Domina rotas de caravanas e logística.</gradient>
-        - <gradient:#f97316:#fdba74>➤ Nível IV • Filial Comercial</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Domina rotas de caravanas e logística.</gradient>
+      - <gradient:#f97316:#fdba74>➤ Nível IV • Filial Comercial</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 Magnata da Riqueza</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Transforma economias com uma única decisão.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Transforma economias com uma única decisão.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ Nível V • Classificação Final</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 Magnata dos Mercados</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Define preços que toda guilda deve respeitar.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Define preços que toda guilda deve respeitar.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 Magnata do Comércio</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Possui estradas, portos e lucros.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ Nível V • Classificação Final</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Possui estradas, portos e lucros.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ Nível V • Classificação Final</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Você tem uma recompensa ativa na sua cabeça!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Painel Admin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Acessar ferramentas administrativas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e opções de configuração</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Acessar ferramentas administrativas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e opções de configuração</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Recompensas</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver e gerenciar recompensas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Caça jogadores por recompensas!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ver e gerenciar recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Caça jogadores por recompensas!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Vantagens</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver vantagens disponíveis</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e habilidades especiais</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ver vantagens disponíveis</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e habilidades especiais</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Missões</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver missões disponíveis</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e acompanhe seu progresso</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ver missões disponíveis</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e acompanhe seu progresso</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Ranks</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver progressão de ranks</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e desbloquear novas habilidades</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ver progressão de ranks</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e desbloquear novas habilidades</gradient>"
 
 # ============================================
 # UI PRINCIPAL DE CLASSIFICAÇÃO
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Árvores de Ranks</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Navegar pelas árvores de ranks disponíveis</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e escolha seu caminho</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Navegar pelas árvores de ranks disponíveis</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e escolha seu caminho</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Patrulheiro</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Domine a arte do arco e rastreamento</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Torne-se um com a natureza</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Domine a arte do arco e rastreamento</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Torne-se um com a natureza</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Guerreiro</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Domine a arte do combate</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Torne-se um lutador lendário</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Domine a arte do combate</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Torne-se um lutador lendário</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Mago</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Aproveite o poder da magia</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Torne-se um mestre do arcano</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Aproveite o poder da magia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Torne-se um mestre do arcano</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Ladino</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Domine furtividade e astúcia</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ataque das sombras</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Domine furtividade e astúcia</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ataque das sombras</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Clérigo</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Canalize o poder divino</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Cure e proteja seus aliados</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Canalize o poder divino</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Cure e proteja seus aliados</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Mercador</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Domine a arte do comércio</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Construa sua fortuna</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Domine a arte do comércio</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Construa sua fortuna</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>Clique esquerdo para visualizar</gradient>"
-      - "<gradient:#10b981:#34d399>Clique direito para selecionar</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>Clique esquerdo para visualizar</gradient>"
+    - "<gradient:#10b981:#34d399>Clique direito para selecionar</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Esta árvore de ranks está bloqueada</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Complete primeiro %minimum_rank_paths_to_be_absolved_needed% árvores de ranks</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Complete primeiro %minimum_rank_paths_to_be_absolved_needed% árvores de ranks</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Pré-requisitos:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Este caminho de rank está bloqueado!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Atualmente Ativo</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Criar Árvore de Ranks</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Criar uma nova árvore de ranks</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(Apenas Admin)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Criar uma nova árvore de ranks</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(Apenas Admin)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Rank inicial não encontrado para este caminho!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Caminho de rank selecionado:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Rank inicial: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Criação de árvore de ranks em breve!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Versão gratuita - somente visualização</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Esta árvore de classificação está disponível apenas para visualização.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Atualize para Premium para desbloquear!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Clique com o botão esquerdo para visualizar</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Esta árvore de classificação está disponível apenas para visualização.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Atualize para Premium para desbloquear!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Clique com o botão esquerdo para visualizar</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Prêmio necessário:</gradient> <gradient:#6b7280:#9ca3af>Atualize para Premium para selecionar árvores de classificação adicionais!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Navegar %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Centralizar Vista</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para centralizar a vista</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para centralizar a vista</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Centralizar Vista</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Modo de Visualização</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Você está visualizando em modo de visualização</gradient>"
-      - "<gradient:#6b7280:#9ca3af>As alterações não serão salvas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Você está visualizando em modo de visualização</gradient>"
+    - "<gradient:#6b7280:#9ca3af>As alterações não serão salvas</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Modo de Visualização</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Erro ao renderizar rank</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Sem Árvore de Ranks</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Não foi possível carregar a árvore de ranks</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Não foi possível carregar a árvore de ranks</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Erro Crítico</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Ocorreu um erro durante a renderização</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ocorreu um erro durante a renderização</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Ocorreu um erro durante a renderização</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ocorreu um erro durante a renderização</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Falha ao abrir requisitos para</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Ocorreu um erro. Por favor, tente novamente.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 Escoteiro de Trilhas</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Lê pegadas e mudanças de vento.</gradient>
-          - <gradient:#10b981:#34d399>➤ Nível I • Iniciado na Natureza</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Lê pegadas e mudanças de vento.</gradient>
+        - <gradient:#10b981:#34d399>➤ Nível I • Iniciado na Natureza</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 Caçador da Natureza</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Persegue a presa com precisão paciente.</gradient>
-          - <gradient:#10b981:#34d399>➤ Nível II • Perseguição Selvagem</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Persegue a presa com precisão paciente.</gradient>
+        - <gradient:#10b981:#34d399>➤ Nível II • Perseguição Selvagem</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 Rastreador de Sinais</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Segue trilhas que nenhuma tempestade pode apagar.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Nível III • Escolha do caminho a seguir</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Segue trilhas que nenhuma tempestade pode apagar.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Nível III • Escolha do caminho a seguir</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 Guardião das Feras</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Laços com criaturas de ponta do reino.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Nível IV • Ramo Primordial</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Laços com criaturas de ponta do reino.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Nível IV • Ramo Primordial</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ Guardião das Tempestades</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Disparos certeiros através de trovões e chuva.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Nível IV • Ramo Tempestade</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Disparos certeiros através de trovões e chuva.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Nível IV • Ramo Tempestade</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿 Guardião da Natureza</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Guarda fronteiras sagradas e clareiras escondidas.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Nível IV • Ramo Selvagem</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Guarda fronteiras sagradas e clareiras escondidas.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Nível IV • Ramo Selvagem</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 Mestre das Feras Primordial</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Comanda feras lendárias sem medo.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Comanda feras lendárias sem medo.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑 Tempestade Mestre das Feras</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Cada raio guia seu voleio implacável.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Cada raio guia seu voleio implacável.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Nível V • Classificação Final</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 Mestre das Feras Selvagem</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ A própria natureza surge para atender ao seu chamado.</gradient>
-          - <gradient:#15803d:#22c55e>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ A própria natureza surge para atender ao seu chamado.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Nível V • Classificação Final</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ Recrutar</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Uma lâmina nova com determinação não testada.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Campos de Treinamento</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Uma lâmina nova com determinação não testada.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Campos de Treinamento</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ Soldado</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Endurecido por exercícios e serviço na linha de frente.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Nível II • Disciplina de Campo</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Endurecido por exercícios e serviço na linha de frente.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Nível II • Disciplina de Campo</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ Veterano</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Cicatrizes de batalha marcam sua sabedoria conquistada.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ Nível III • Escolha seu caminho</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Cicatrizes de batalha marcam sua sabedoria conquistada.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Nível III • Escolha seu caminho</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Troca defesa por ataque devastador.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Nível IV • Ramo Fúria</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Troca defesa por ataque devastador.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Nível IV • Ramo Fúria</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 Guardião</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Permanece firme onde outros quebrariam.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Nível IV • Filial de Escudo</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Permanece firme onde outros quebrariam.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Nível IV • Filial de Escudo</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 Gladiador</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Domine a guerra de arena equilibrada.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ Nível IV • Filial da Arena</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Domine a guerra de arena equilibrada.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Nível IV • Filial da Arena</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 Senhor da Guerra da Fúria</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Um motor de destruição imparável.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Um motor de destruição imparável.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Nível V • Classificação Final</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 Senhor da Guerra do Escudo</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ O último muro entre a vida e a ruína.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ O último muro entre a vida e a ruína.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Nível V • Classificação Final</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 Senhor da Guerra da Arena</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Campeão coroado de todos os coliseu.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Campeão coroado de todos os coliseu.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨ Aprendiz</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Despertam faíscas de poder arcano.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Nível I • Fundações Arcanas</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Despertam faíscas de poder arcano.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Nível I • Fundações Arcanas</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ Adepto</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Cria feitiços controlados e focados.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Nível II • Prática Arcana</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Cria feitiços controlados e focados.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Prática Arcana</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ Assistente</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Comanda padrões complexos de magia.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha sua doutrina</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Comanda padrões complexos de magia.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha sua doutrina</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 Feiticeiro dos Arcanos</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Refina a potência bruta em uma força elegante.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Arcano</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Refina a potência bruta em uma força elegante.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Arcano</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 Feiticeiro de Feitiços</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Expande o controle e a precisão do grimório.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Nível IV • Ramo de Feitiço</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Expande o controle e a precisão do grimório.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Nível IV • Ramo de Feitiço</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 Feiticeiro do Vazio</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Dobra as energias abissais à sua vontade.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Nível IV • Filial Anulada</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Dobra as energias abissais à sua vontade.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Nível IV • Filial Anulada</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 Arquimago dos Arcanos</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Arquiteto supremo de puro poder arcano.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Arquiteto supremo de puro poder arcano.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Nível V • Classificação Final</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 Arquimago dos Feitiços</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Cada encantamento responde instantaneamente.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Cada encantamento responde instantaneamente.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Nível V • Classificação Final</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 Arquimago do Vazio</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Governa as fronteiras entre os mundos.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Governa as fronteiras entre os mundos.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Nível V • Classificação Final</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 Batedor de carteiras</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Aprende tempo, desorientação e velocidade.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Artesanato de rua</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Aprende tempo, desorientação e velocidade.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Artesanato de rua</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 Ladrão</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Desliza através de fechaduras e linhas de vigia.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Nível II • Entrada Silenciosa</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Desliza através de fechaduras e linhas de vigia.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Entrada Silenciosa</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 Assassino</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ataca uma vez e desaparece sem deixar rastros.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Nível III • Escolha seu método</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ataca uma vez e desaparece sem deixar rastros.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Nível III • Escolha seu método</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 Sombra da Furtividade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Domina o movimento que nenhum olho pode acompanhar.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Nível IV • Ramo Furtivo</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Domina o movimento que nenhum olho pode acompanhar.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Nível IV • Ramo Furtivo</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 Sombra da Noite</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Transforma a escuridão em vantagem letal.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Nível IV • Filial Noturna</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Transforma a escuridão em vantagem letal.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Nível IV • Filial Noturna</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 Sombra da Sabotagem</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Desmonta planos antes que os inimigos reajam.</gradient>
-          - <gradient:#f97316:#fb923c>➤ Nível IV • Ramo de Sabotagem</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Desmonta planos antes que os inimigos reajam.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Nível IV • Ramo de Sabotagem</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 Fantasma da Furtividade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Torna-se um mito urbano intocável.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Torna-se um mito urbano intocável.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Nível V • Classificação Final</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 Fantasma da Noite</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Possui completamente a meia-noite.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Possui completamente a meia-noite.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Nível V • Classificação Final</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 Fantasma da Sabotagem</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Termina as batalhas antes mesmo de começarem.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Termina as batalhas antes mesmo de começarem.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Nível V • Classificação Final</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ Acólito</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Inicia o caminho sagrado do serviço.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Nível I • Devoção</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Inicia o caminho sagrado do serviço.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nível I • Devoção</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ Curador</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Restaura aliados sob forte pressão.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Nível II • Restauração</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Restaura aliados sob forte pressão.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Nível II • Restauração</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ Sacerdote</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Guia os grupos com disciplina sagrada.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Nível III • Escolha sua vocação</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Guia os grupos com disciplina sagrada.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível III • Escolha sua vocação</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ Bispo da Divindade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Canaliza autoridade radiante direta.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Divino</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Canaliza autoridade radiante direta.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Nível IV • Ramo Divino</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ Bispo da Luz</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Cega a corrupção com brilho sagrado.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ Nível IV • Filial Leve</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Cega a corrupção com brilho sagrado.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Nível IV • Filial Leve</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 Bispo das Almas</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Guarda o limiar da vida e da morte.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Ramo da Alma</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Guarda o limiar da vida e da morte.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Ramo da Alma</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 Sumo Sacerdote da Divindade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Declara milagres no coração do caos.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Declara milagres no coração do caos.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Nível V • Classificação Final</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑 Sumo Sacerdote da Luz</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Banha aliados em um amanhecer inabalável.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Banha aliados em um amanhecer inabalável.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Nível V • Classificação Final</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 Sumo Sacerdote das Almas</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Pastoreia os espíritos além do medo mortal.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Pastoreia os espíritos além do medo mortal.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 Mascate</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Começa com coragem, charme e pequenos negócios.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Comércio Ambulante</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Começa com coragem, charme e pequenos negócios.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Nível I • Comércio Ambulante</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 Comerciante</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Amplia rotas e contatos confiáveis.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Nível II • Presença no Mercado</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Amplia rotas e contatos confiáveis.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Nível II • Presença no Mercado</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 Corretor</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Fecha negócios de alto valor com precisão.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha seu império</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Fecha negócios de alto valor com precisão.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Nível III • Escolha seu império</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 Magnata da Riqueza</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Constrói capital puro em ritmo incomparável.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Nível IV • Ramo de Riqueza</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Constrói capital puro em ritmo incomparável.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Nível IV • Ramo de Riqueza</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 Magnata dos Mercados</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Orquestra os ciclos de oferta e demanda.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Filial de Mercado</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Orquestra os ciclos de oferta e demanda.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Nível IV • Filial de Mercado</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 Magnata do Comércio</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Domina rotas de caravanas e logística.</gradient>
-          - <gradient:#f97316:#fdba74>➤ Nível IV • Filial Comercial</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Domina rotas de caravanas e logística.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Nível IV • Filial Comercial</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 Magnata da Riqueza</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Transforma economias com uma única decisão.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Transforma economias com uma única decisão.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Nível V • Classificação Final</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 Magnata dos Mercados</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Define preços que toda guilda deve respeitar.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Define preços que toda guilda deve respeitar.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Nível V • Classificação Final</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 Magnata do Comércio</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Possui estradas, portos e lucros.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ Nível V • Classificação Final</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Possui estradas, portos e lucros.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Nível V • Classificação Final</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Ladrão</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre da furtividade e do roubo</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mestre da furtividade e do roubo</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Assassino</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Assassino silencioso, morte nas sombras</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Assassino silencioso, morte nas sombras</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Infiltrador</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Especialista em entrar e sair sem ser detectado</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Especialista em entrar e sair sem ser detectado</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Mestre das Sombras</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Um com a própria escuridão</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Um com a própria escuridão</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Acólito</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Servo devotado do divino</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Servo devotado do divino</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Devoto</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Fiel seguidor do caminho divino</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Fiel seguidor do caminho divino</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Sacerdote</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Curador e protetor dos fiéis</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Curador e protetor dos fiéis</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Curador</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre em artes restaurativas</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mestre em artes restaurativas</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Bispo</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Líder dos fiéis</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Líder dos fiéis</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Oráculo</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vidente de visões divinas</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vidente de visões divinas</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ Sumo Sacerdote</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Voz suprema do divino</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Voz suprema do divino</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� Boleador de carteiras</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Dedos rápidos, fuga mais rápida</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Dedos rápidos, fuga mais rápida</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Ladrão</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre da furtividade e do roubo</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mestre da furtividade e do roubo</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 Escoteiro</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Olhos e ouvidos das sombras</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Olhos e ouvidos das sombras</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Assassino</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Assassino silencioso, morte nas sombras</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Assassino silencioso, morte nas sombras</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Infiltrador</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Especialista em entrar e sair sem ser detectado</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Especialista em entrar e sair sem ser detectado</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Lâmina Sombria</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Guerreiro mortal da noite</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Guerreiro mortal da noite</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Espião Mestre</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Controlador de redes de informação</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Controlador de redes de informação</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Mestre das Sombras</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Um com a própria escuridão</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Um com a própria escuridão</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 Mestre das Sombras</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Governante supremo de todas as sombras</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Governante supremo de todas as sombras</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Mascate</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vendendo mercadorias na rua</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vendendo mercadorias na rua</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 Comerciante</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Comerciante estabelecido com conexões</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Comerciante estabelecido com conexões</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 Fornecedor</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vendedor qualificado de mercadorias</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vendedor qualificado de mercadorias</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Artífice</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Artesão de mercadorias finas</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Artesão de mercadorias finas</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 Alquimista</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre de poções e elixires</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mestre de poções e elixires</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 Comerciante</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Empresário de sucesso</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Empresário de sucesso</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Mestre Artesão</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Supremo artesão do reino</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Supremo artesão do reino</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Príncipe Mercador</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Realeza do comércio</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Realeza do comércio</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 Magnata</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mestre em comércio e comércio</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mestre em comércio e comércio</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Mestre da Guilda</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Líder da guilda mercantil</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Líder da guilda mercantil</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Visualização:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Visualização:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Requisito #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Não foi possível carregar os detalhes do requisito</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Não foi possível carregar os detalhes do requisito</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Itens:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Progresso:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Progresso:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Clique para ver detalhes</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Detalhes do Requisito</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ Você não tem todos os itens necessários!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Itens enviados com sucesso!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Níveis Faltando:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Requisito de nível atingido!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ganhe XP minerando, matando mobs,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>itens de fundição e muito mais!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ganhe XP minerando, matando mobs,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>itens de fundição e muito mais!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Seu Tempo de Jogo:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Tempo de Jogo Necessário:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Tempo Restante:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Requisito de tempo de jogo atingido!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Continue jogando no servidor</gradient>"
-      - "<gradient:#6b7280:#9ca3af>para acumular tempo de jogo!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Continue jogando no servidor</gradient>"
+    - "<gradient:#6b7280:#9ca3af>para acumular tempo de jogo!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Progresso</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Atual:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Conclusão:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Completado</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Este requisito já está completado</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Este requisito já está completado</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Completar Requisito</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para completar este requisito</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para completar este requisito</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Atualizar Progresso</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para atualizar seu progresso</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para atualizar seu progresso</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Itens Completados:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Tipo:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Colete os itens necessários</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e volte aqui para completar</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Colete os itens necessários</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e volte aqui para completar</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ganhe a moeda necessária</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ganhe a moeda necessária</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ganhe níveis de experiência</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ganhe níveis de experiência</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Jogue no servidor</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Jogue no servidor</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Complete o requisito</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Dica:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Complete o requisito</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Visualizando resumo...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Visualizando dicas...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Completado!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Completado!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Pronto para completar!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Clique para finalizar</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Pronto para completar!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para finalizar</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ Em Progresso</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ Em Progresso</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Não Iniciado</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Não Iniciado</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Erro</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Erro</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Status: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>Progresso</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Requisito Desconhecido</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Não foi possível carregar os detalhes</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Não foi possível carregar os detalhes</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Erro</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Falha ao carregar requisito</gradient>"
+    - "<gradient:#ef4444:#f87171>Falha ao carregar requisito</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 Progresso:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Status:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>já está completado!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Criar Recompensa</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para criar uma nova recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>em outro jogador</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para criar uma nova recompensa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>em outro jogador</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Ver Recompensas</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver todas as recompensas ativas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ver todas as recompensas ativas</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Minhas Recompensas</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ver recompensas que você criou</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ver recompensas que você criou</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Classificação</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Melhores caçadores de recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Melhores caçadores de recompensas</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Alvo:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Comissionado:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Criado:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Clique para ver detalhes</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Alvo:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Comissionado:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Criado:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Clique para ver detalhes</gradient>"
 
 # ============================================
 # UI DE CRIAÇÃO DE RECOMPENSAS
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Selecionar Alvo</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Alvo: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para escolher um jogador</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Atual: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para escolher um jogador</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Atual: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Criar Recompensa</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para criar uma nova recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>em outro jogador</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para criar uma nova recompensa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>em outro jogador</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Adicionar Prêmios de Itens</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Adicionar Prêmios de Itens</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Clique para adicionar prêmios de itens</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Itens atuais:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para adicionar prêmios de itens</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Itens atuais:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Adicionar Prêmios de Moeda</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Adicionar Prêmios de Moeda</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Clique para adicionar prêmios de moeda</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Moedas atuais:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para adicionar prêmios de moeda</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Moedas atuais:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Selecione um alvo primeiro!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Criar Recompensa</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para criar a recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>com os prêmios selecionados</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para criar a recompensa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>com os prêmios selecionados</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Nenhum jogador selecionado!</gradient> <gradient:#6b7280:#9ca3af>Por favor, selecione um alvo primeiro.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Nenhum prêmio adicionado!</gradient> <gradient:#6b7280:#9ca3af>Por favor, adicione alguns prêmios primeiro.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Sem Prêmios</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Adicione itens para criar prêmios</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Adicione itens para criar prêmios</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Adicionar Item</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Coloque itens aqui para adicionar como prêmios</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Coloque itens aqui para adicionar como prêmios</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Alvo: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Esta recompensa está colocada em</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Esta recompensa está colocada em</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Prêmio da Recompensa</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Este item será dado a</gradient>"
-      - "<gradient:#6b7280:#9ca3af>quem reivindicar a recompensa</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Prêmio da Recompensa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Este item será dado a</gradient>"
+    - "<gradient:#6b7280:#9ca3af>quem reivindicar a recompensa</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Nenhum novo item adicionado!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Alguns itens foram jogados porque seu inventário estava cheio!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Alvo desta recompensa</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Alvo desta recompensa</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳Mais informações em breve...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Ver Prêmios</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para ver todos os prêmios</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Recompensas totais:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para ver todos os prêmios</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Recompensas totais:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Excluir Recompensa</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Aviso: Não pode ser desfeito!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Clique para excluir esta recompensa</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Aviso: Não pode ser desfeito!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para excluir esta recompensa</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Recompensa por</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>foi excluída!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Tem certeza de que deseja excluir esta recompensa?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 Gerenciador de Permissões</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gerenciar permissões de plugins</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Total de permissões:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gerenciar permissões de plugins</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Total de permissões:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Falha ao abrir o gerenciador de permissões!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Integrações de plug-ins </gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gerenciar integrações de plug-ins de administração em um só lugar</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Inclui visualizações de moeda, habilidades e detecção de empregos</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gerenciar integrações de plug-ins de administração em um só lugar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Inclui visualizações de moeda, habilidades e detecção de empregos</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Falha ao abrir integrações de plug-ins!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Criar Grupos LuckPerms</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Criar grupos LuckPerms a partir de ranks</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Criar grupos LuckPerms a partir de ranks</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms não está instalado!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Nenhum rank encontrado para criar grupos!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ Criados</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>grupos LuckPerms!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Integration Hub</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Abrir painéis de integração de plug-ins RDQ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Moeda, detecção de habilidades/trabalhos e ferramentas PlaceholderAPI estão disponíveis aqui</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Abrir painéis de integração de plug-ins RDQ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Moeda, detecção de habilidades/trabalhos e ferramentas PlaceholderAPI estão disponíveis aqui</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Moeda Integrações</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Gerenciamento de provedor de moeda aberta</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Revisar moedas Vault e JExEconomy detectadas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gerenciamento de provedor de moeda aberta</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Revisar moedas Vault e JExEconomy detectadas</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Falha ao abrir integrações de moeda!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Integrações de habilidade</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ver status de suporte para mcMMO, Aura e EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Detectar plug-ins de habilidade ativados no momento</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ver status de suporte para mcMMO, Aura e EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detectar plug-ins de habilidade ativados no momento</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Falha ao abrir habilidade integrações!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ Integrações de trabalho</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ver status de suporte para EcoJobs e JobsReborn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Detectar plug-ins de trabalho atualmente ativados</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ver status de suporte para EcoJobs e JobsReborn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detectar plug-ins de trabalho atualmente ativados</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Falha ao abrir integrações de trabalho!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Detectar suporte a PlaceholderAPI e gerenciar expansões</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Instale a expansão Player e recarregue PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detectar suporte a PlaceholderAPI e gerenciar expansões</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Instale a expansão Player e recarregue PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Falha ao abrir ferramentas PlaceholderAPI!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 Integração PlaceholderAPI</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI suportada:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Expansão de destino:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Instalar e recarregar diretamente deste painel</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI suportada:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Expansão de destino:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Instalar e recarregar diretamente deste painel</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI detectado</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI está instalado e habilitado</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI está instalado e habilitado</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI ausente</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Instale e habilite PlaceholderAPI para usar esta ação</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Instale e habilite PlaceholderAPI para usar esta ação</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 Instale a expansão %expansion_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Executa:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Em seguida, executa:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Clique para executar ambos os comandos PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Executa:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Em seguida, executa:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clique para executar ambos os comandos PlaceholderAPI</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Obrigatório</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Esta ação está indisponível até PlaceholderAPI está instalado</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Esta ação está indisponível até PlaceholderAPI está instalado</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Acesso de administrador necessário</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Você não tem permissão para usar as ferramentas de administração do PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Você não tem permissão para usar as ferramentas de administração do PlaceholderAPI</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ Você não tem permissão para gerenciar integrações do PlaceholderAPI.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI não está disponível neste servidor.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Falha ao baixar a expansão:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Status do plug-in de habilidades</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Integrações de habilidades suportadas:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Detectadas agora:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verifica mcMMO, Aura e EcoSkills suporte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integrações de habilidades suportadas:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Detectadas agora:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Verifica mcMMO, Aura e EcoSkills suporte</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Detectado</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integration id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integration id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Nenhuma integração de habilidade configurada</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Nenhuma integração de plugin de habilidade está configurada no momento</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nenhuma integração de plugin de habilidade está configurada no momento</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 Status do plugin de trabalho</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Integrações de trabalho suportadas:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Detectadas agora:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verifica o suporte EcoJobs e JobsReborn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integrações de trabalho suportadas:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Detectadas agora:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Verifica o suporte EcoJobs e JobsReborn</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Detectado</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integration id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integration id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Sem integrações de trabalho Configurado</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Nenhuma integração de plugin de trabalho está configurada no momento</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nenhuma integração de plugin de trabalho está configurada no momento</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Provedor:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Símbolo:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Prefixo:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sufixo:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Provedor:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Símbolo:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Prefixo:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sufixo:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ Criar %currency_id%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Crie a moeda padrão para RDQ</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>Clique para criar %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Crie a moeda padrão para RDQ</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>Clique para criar %currency_id%</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Obrigatório</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Esta ação requer JExEconomy</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Instale-o antes de criar padrões</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Esta ação requer JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Instale-o antes de criar padrões</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Pronto</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>A moeda padrão já existe</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Nenhuma configuração adicional necessária</gradient>"
+      - "<gradient:#6b7280:#9ca3af>A moeda padrão já existe</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nenhuma configuração adicional necessária</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Moeda padrão criada:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Falha ao criar moeda:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Nenhuma moeda detectada</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ não conseguiu detectar moedas Vault ou JExEconomy</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Instale ou habilite um provedor econômico primeiro</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ não conseguiu detectar moedas Vault ou JExEconomy</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Instale ou habilite um provedor econômico primeiro</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Permissões:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Permissões:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>Clique esquerdo para selecionar</gradient>"
-        - "<gradient:#10b981:#34d399>Clique direito para atribuir todos</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>Clique esquerdo para selecionar</gradient>"
+      - "<gradient:#10b981:#34d399>Clique direito para atribuir todos</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Vazio</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Nó:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Clique para atribuir esta permissão</gradient>"
+      - "<gradient:#10b981:#34d399>Clique para atribuir esta permissão</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Nenhum Plugin Selecionado</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Selecione um plugin acima</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para ver suas permissões</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Selecione um plugin acima</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para ver suas permissões</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Vazio</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Atribuir Permissões de %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Atribuir todas as permissões de</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% permissões)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Atribuir todas as permissões de</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% permissões)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Nenhuma Seleção</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Selecionado: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Permissões:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Permissões:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Visão Geral</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Selecione um plugin para ver permissões</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Total de plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Selecione um plugin para ver permissões</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Atualizar Dados</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Clique para atualizar dados de permissões</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clique para atualizar dados de permissões</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Limpar seleção</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para desmarcar o plugin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para desmarcar o plugin</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Atribuir %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Atribua todas as permissões do plugin selecionado</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Atribua todas as permissões do plugin selecionado</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Atribuir todas as permissões</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Atribuir permissões de todos</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plug-ins</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Atribuir permissões de todos</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plug-ins</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Dados atualizados!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Página %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Página atual:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Total de páginas:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Página atual:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Total de páginas:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Página %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Retorno</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para voltar</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Prossiga</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para continuar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para continuar</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Anterior</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Página anterior</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Página anterior</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Próximo</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Próxima página</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Próxima página</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Para cima</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Subir</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Subir</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Baixo</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Desça</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Desça</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Cancelar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Cancelar ação</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Cancelar ação</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Insira o valor</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Digite sua entrada acima</gradient>"
-      - "<gradient:#6b7280:#9ca3af>e clique para confirmar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Digite sua entrada acima</gradient>"
+    - "<gradient:#6b7280:#9ca3af>e clique para confirmar</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Falha ao processar entrada:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Confirmar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para confirmar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para confirmar</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Cancelar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para cancelar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para cancelar</gradient>"
 
 # ============================================
 # RESTRIÇÕES DE VERSÃO GRATUITA
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Versão gratuita</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Você está usando a versão gratuita</gradient>"
-      - "<gradient:#6b7280:#9ca3af>com recursos limitados.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Atualize para Premium para:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Árvores de classificação ilimitadas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Classificações ilimitadas por árvore</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Vários caminhos ativos</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Você está usando a versão gratuita</gradient>"
+    - "<gradient:#6b7280:#9ca3af>com recursos limitados.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Atualize para Premium para:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Árvores de classificação ilimitadas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Classificações ilimitadas por árvore</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Vários caminhos ativos</gradient>"
 
 # ============================================
 # MENSAGENS DA VERSÃO PREMIUM
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Versão Premium</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Todos os recursos desbloqueados!</gradient>"
+    - "<gradient:#10b981:#34d399>Todos os recursos desbloqueados!</gradient>"
 
 # ============================================
 # VISUALIZAÇÃO DE DETALHES DO ITEM DE REQUISITO (Simplificado)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Enviar itens</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Todos os itens prontos!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Clique para enviar</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Todos os itens prontos!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Clique para enviar</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Enviar itens</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Faltando itens obrigatórios</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Colete todos os itens primeiro</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Faltando itens obrigatórios</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Colete todos os itens primeiro</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Voltar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Voltar aos requisitos</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voltar aos requisitos</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Progresso geral</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Conclusão:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Requisitos:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Conclusão:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Requisitos:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
-      - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
+    - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>✅ Reivindicar Rank</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Todos os requisitos concluídos!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Clique para reivindicar sua classificação</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Todos os requisitos concluídos!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Clique para reivindicar sua classificação</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Classificação bloqueada</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Preencha todos os requisitos</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Preencha todos os requisitos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Bloqueado</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Complete todos os requisitos</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para desbloquear esta classificação.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Voltar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Retornar à visão geral da classificação</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Retornar à visão geral da classificação</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Requisito completado!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Todos os requisitos completados! Agora você pode reivindicar o rank!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Sem recompensas</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
       type_label: "<gray>Tipo:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Valor:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Ver todas as recompensas</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Clique para ver tudo %count% recompensas</gradient>"
-        - "<gradient:#6b7280:#9ca3af>para esta classificação em detalhes</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Clique para ver tudo %count% recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>para esta classificação em detalhes</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Visualização detalhada das recompensas em breve!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Sem recompensas</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Esta classificação não possui recompensas configuradas.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Recompensas de classificação</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Você receberá %count% recompensas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>quando você reivindica esta classificação</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Você receberá %count% recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>quando você reivindica esta classificação</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Sem recompensas</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas configuradas</gradient>"
     type_label: "<gray>Tipo:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Valor:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Ver todas as recompensas</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Clique para ver tudo %count% recompensas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>para esta classificação em detalhes</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique para ver tudo %count% recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>para esta classificação em detalhes</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Visualização detalhada das recompensas em breve!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Sem recompensas</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Esta classificação não tem recompensas</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Esta classificação não possui recompensas configuradas.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Recompensas de classificação</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Você receberá %count% recompensas</gradient>"
-    - "<gradient:#6b7280:#9ca3af>quando você reivindica esta classificação</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Você receberá %count% recompensas</gradient>"
+  - "<gradient:#6b7280:#9ca3af>quando você reivindica esta classificação</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Esta classificação tem %count% recompensas</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Clique em qualquer recompensa para obter detalhes</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Esta classificação tem %count% recompensas</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Clique em qualquer recompensa para obter detalhes</gradient>"
 
 # ============================================
 # IU DE VISÃO GERAL DO BENEFÍCIO
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Cura de Combate</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Cure ao causar dano aos inimigos</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Matador de Zumbis</gradient>
+    description: Derrote zumbis e colete seus itens para provar sua habilidade em combate
+    task:
+      kill_zombies:
+        name: <white>Derrote Zumbis</white>
+        description: Matar %amount% zumbis
+      collect_flesh:
+        name: <white>Colete carne podre</white>
+        description: Juntar %amount% carne podre de zumbis derrotados
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Mestre Mineiro</gradient>
+    description: Extraia vários minérios dentro do prazo para se tornar um minerador mestre
+    task:
+      mine_coal:
+        name: <white>Carvão mineral</white>
+        description: Meu %amount% blocos de minério de carvão
+      mine_iron:
+        name: <white>Meu Ferro</white>
+        description: Meu %amount% blocos de minério de ferro
+      mine_diamond:
+        name: <white>Meus diamantes</white>
+        description: Meu %amount% blocos de minério de diamante
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Sonho do Construtor</gradient>
+    description: Construa um edifício seguindo as etapas sequenciais para mostrar suas habilidades de construção
+    task:
+      foundation:
+        name: <white>Fundação Leiga</white>
+        description: Lugar %amount% blocos de tijolos para a fundação
+      walls:
+        name: <white>Construir paredes</white>
+        description: Lugar %amount% blocos de tábuas de carvalho para as paredes
+      windows:
+        name: <white>Adicionar janelas</white>
+        description: Lugar %amount% blocos de vidro para janelas
+      roof:
+        name: <white>Telhado Completo</white>
+        description: Lugar %amount% blocos de escada de carvalho para o telhado
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Categorias de missões</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Missões</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Busca: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Missões ativas</gradient>
+    items:
+      back:
+        name: <gray>Voltar</gray>
+        lore:
+        - <gray>Voltar ao menu anterior</gray>
+      start:
+        name: <green>Iniciar missão</green>
+        lore:
+        - <gray>Clique para iniciar esta missão</gray>
+        - ''
+        - <dark_gray>Requisitos:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Abandonar missão</red>
+        lore:
+        - <gray>Clique para abandonar esta missão</gray>
+        - ''
+        - '<yellow>Aviso: o progresso será perdido</yellow>'
+      info:
+        name: <yellow>Informações da missão</yellow>
+        lore:
+        - <gray>Clique para ver detalhes da missão</gray>
+      progress:
+        name: <aqua>Ver progresso</aqua>
+        lore:
+        - <gray>Clique para ver o progresso da missão</gray>
+        - ''
+        - '<dark_gray>Progresso: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Fechar</gray>
+        lore:
+        - <gray>Fechar este menu</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Dificuldade: %difficulty%</dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+        - '<dark_gray>Tarefas: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Progresso: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Clique para iniciar esta missão</green>
+      click_to_view: <yellow>Clique para ver detalhes da missão</yellow>
+      click_to_abandon: <red>Clique para abandonar esta missão</red>
+      already_completed: <green>Já concluído</green>
+      requirements_not_met: <red>Requisitos não atendidos</red>
+      on_cooldown: '<red>No resfriamento: %time%</red>'
+      time_remaining: '<yellow>Tempo restante: %time%</yellow>'
+      repeatable: <aqua>Missão repetível</aqua>
+      one_time: <gray>Missão única</gray>
+    progress:
+      overall: <yellow>Progresso geral</yellow>
+      percentage: '<gray>Progresso: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Tarefas: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Tempo decorrido: <white>%time%</white></gray>'
+      time_remaining: '<gray>Tempo restante: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Progresso: <white>%current%/%required%</white></gray>'
+      completed: <green>Concluído</green>
+      remaining: '<gray>Restante: <white>%remaining%</white></gray>'
+      locked: <red>Bloqueado</red>
+      sequential: <yellow>Conclua as tarefas anteriores primeiro</yellow>
+    rewards:
+      header: <yellow>Recompensas</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Experiência</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Vantagem: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Busca: %quest%</gradient>'
+    requirements:
+      header: <yellow>Requisitos</yellow>
+      level: <aqua>Nível %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Completo: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Classificação: %rank%</gradient>'
+      permission: '<gray>Permissão: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Trivial</gradient>
+  easy: <gradient:#10b981:#34d399>Fácil</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
+  hard: <gradient:#ef4444:#f87171>Duro</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Extremo</gradient>

@@ -2222,3 +2222,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Боевое лечение</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Исцеление при нанесении урона врагам</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>убийца зомби</gradient>
+    description: Побеждайте зомби и собирайте их капли, чтобы доказать свое боевое мастерство.
+    task:
+      kill_zombies:
+        name: <white>Победить зомби</white>
+        description: Убийство %amount% зомби
+      collect_flesh:
+        name: <white>Собрать гнилую плоть</white>
+        description: Собирать %amount% гнилая плоть побеждённых зомби
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Мастер Шахтер</gradient>
+    description: Добывайте различные руды за отведенное время, чтобы стать мастером-шахтером.
+    task:
+      mine_coal:
+        name: <white>шахтный уголь</white>
+        description: Мой %amount% блоки угольной руды
+      mine_iron:
+        name: <white>Шахта Железо</white>
+        description: Мой %amount% железорудные блоки
+      mine_diamond:
+        name: <white>Мои алмазы</white>
+        description: Мой %amount% блоки алмазной руды
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Мечта строителя</gradient>
+    description: Постройте здание, следуя последовательным шагам, чтобы продемонстрировать свои строительные навыки.
+    task:
+      foundation:
+        name: <white>Фонд Лай</white>
+        description: Место %amount% кирпичные блоки для фундамента
+      walls:
+        name: <white>Строить стены</white>
+        description: Место %amount% дубовые доски для стен
+      windows:
+        name: <white>Добавить Windows</white>
+        description: Место %amount% стеклоблоки для окон
+      roof:
+        name: <white>Полная крыша</white>
+        description: Место %amount% дубовые лестничные блоки на крышу
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Категории квестов</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Квесты</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Квест: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Активные квесты</gradient>
+    items:
+      back:
+        name: <gray>Назад</gray>
+        lore:
+        - <gray>Вернуться в предыдущее меню</gray>
+      start:
+        name: <green>Начать квест</green>
+        lore:
+        - <gray>Нажмите, чтобы начать этот квест</gray>
+        - ''
+        - <dark_gray>Требования:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Отказаться от квеста</red>
+        lore:
+        - <gray>Нажмите, чтобы отказаться от этого квеста</gray>
+        - ''
+        - '<yellow>Внимание: прогресс будет утерян.</yellow>'
+      info:
+        name: <yellow>Информация о квесте</yellow>
+        lore:
+        - <gray>Нажмите, чтобы просмотреть подробности квеста</gray>
+      progress:
+        name: <aqua>Посмотреть прогресс</aqua>
+        lore:
+        - <gray>Нажмите, чтобы просмотреть ход выполнения квеста</gray>
+        - ''
+        - '<dark_gray>Прогресс: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Закрывать</gray>
+        lore:
+        - <gray>Закрыть это меню</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Сложность: %difficulty%</dark_gray>'
+        - '<dark_gray>Статус: %status%</dark_gray>'
+        - '<dark_gray>Задачи: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Прогресс: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Статус: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Нажмите, чтобы начать этот квест</green>
+      click_to_view: <yellow>Нажмите, чтобы просмотреть подробности квеста</yellow>
+      click_to_abandon: <red>Нажмите, чтобы отказаться от этого квеста</red>
+      already_completed: <green>Уже завершено</green>
+      requirements_not_met: <red>Требования не выполнены</red>
+      on_cooldown: '<red>По перезарядке: %time%</red>'
+      time_remaining: '<yellow>Оставшееся время: %time%</yellow>'
+      repeatable: <aqua>Повторяемый квест</aqua>
+      one_time: <gray>Одноразовый квест</gray>
+    progress:
+      overall: <yellow>Общий прогресс</yellow>
+      percentage: '<gray>Прогресс: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Задачи: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Прошедшее время: <white>%time%</white></gray>'
+      time_remaining: '<gray>Оставшееся время: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Прогресс: <white>%current%/%required%</white></gray>'
+      completed: <green>Завершенный</green>
+      remaining: '<gray>Оставшийся: <white>%remaining%</white></gray>'
+      locked: <red>Заблокировано</red>
+      sequential: <yellow>Сначала выполните предыдущие задания</yellow>
+    rewards:
+      header: <yellow>Награды</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Опыт</aqua>
+      item: <white>%amount%х %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Перк: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Квест: %quest%</gradient>'
+    requirements:
+      header: <yellow>Требования</yellow>
+      level: <aqua>Уровень %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Полный: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Классифицировать: %rank%</gradient>'
+      permission: '<gray>Разрешение: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Тривиальный</gradient>
+  easy: <gradient:#10b981:#34d399>Легкий</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Нормальный</gradient>
+  hard: <gradient:#ef4444:#f87171>Жесткий</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Экстрим</gradient>

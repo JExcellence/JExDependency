@@ -2222,3 +2222,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Hồi máu chiến đấu</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Hồi máu khi gây sát thương lên kẻ địch</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Kẻ giết zombie</gradient>
+    description: Đánh bại zombie và thu thập chiến lợi phẩm của chúng để chứng tỏ năng lực chiến đấu của bạn
+    task:
+      kill_zombies:
+        name: <white>Đánh bại Zombie</white>
+        description: Giết %amount% xác sống
+      collect_flesh:
+        name: <white>Thu thập thịt thối</white>
+        description: Tập trung %amount% thịt thối từ thây ma bị đánh bại
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Thợ mỏ bậc thầy</gradient>
+    description: Khai thác nhiều loại quặng khác nhau trong thời gian giới hạn để trở thành thợ mỏ bậc thầy
+    task:
+      mine_coal:
+        name: <white>Mỏ than</white>
+        description: Của tôi %amount% khối quặng than
+      mine_iron:
+        name: <white>Mỏ sắt</white>
+        description: Của tôi %amount% khối quặng sắt
+      mine_diamond:
+        name: <white>Khai thác kim cương</white>
+        description: Của tôi %amount% khối quặng kim cương
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Giấc mơ của thợ xây</gradient>
+    description: Xây dựng một tòa nhà theo các bước tuần tự để thể hiện kỹ năng xây dựng của bạn
+    task:
+      foundation:
+        name: <white>Đặt nền tảng</white>
+        description: Địa điểm %amount% khối gạch cho nền móng
+      walls:
+        name: <white>Xây tường</white>
+        description: Địa điểm %amount% khối ván gỗ sồi cho các bức tường
+      windows:
+        name: <white>Thêm Windows</white>
+        description: Địa điểm %amount% khối kính cho cửa sổ
+      roof:
+        name: <white>Mái nhà hoàn chỉnh</white>
+        description: Địa điểm %amount% khối cầu thang gỗ sồi cho mái nhà
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Danh mục nhiệm vụ</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Nhiệm vụ</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Nhiệm vụ: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Nhiệm vụ đang hoạt động</gradient>
+    items:
+      back:
+        name: <gray>Mặt sau</gray>
+        lore:
+        - <gray>Quay lại menu trước</gray>
+      start:
+        name: <green>Bắt đầu nhiệm vụ</green>
+        lore:
+        - <gray>Bấm để bắt đầu nhiệm vụ này</gray>
+        - ''
+        - <dark_gray>Yêu cầu:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Nhiệm vụ từ bỏ</red>
+        lore:
+        - <gray>Bấm để từ bỏ nhiệm vụ này</gray>
+        - ''
+        - '<yellow>Cảnh báo: Tiến trình sẽ bị mất</yellow>'
+      info:
+        name: <yellow>Thông tin nhiệm vụ</yellow>
+        lore:
+        - <gray>Bấm vào để xem chi tiết nhiệm vụ</gray>
+      progress:
+        name: <aqua>Xem tiến độ</aqua>
+        lore:
+        - <gray>Bấm vào để xem tiến độ nhiệm vụ</gray>
+        - ''
+        - '<dark_gray>Tiến triển: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Đóng</gray>
+        lore:
+        - <gray>Đóng menu này</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Khó khăn: %difficulty%</dark_gray>'
+        - '<dark_gray>Trạng thái: %status%</dark_gray>'
+        - '<dark_gray>Nhiệm vụ: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Tiến triển: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Trạng thái: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Bấm để bắt đầu nhiệm vụ này</green>
+      click_to_view: <yellow>Bấm vào để xem chi tiết nhiệm vụ</yellow>
+      click_to_abandon: <red>Bấm để từ bỏ nhiệm vụ này</red>
+      already_completed: <green>Đã hoàn thành</green>
+      requirements_not_met: <red>Yêu cầu không được đáp ứng</red>
+      on_cooldown: '<red>Đang hồi chiêu: %time%</red>'
+      time_remaining: '<yellow>Thời gian còn lại: %time%</yellow>'
+      repeatable: <aqua>Nhiệm vụ lặp lại</aqua>
+      one_time: <gray>Nhiệm vụ một lần</gray>
+    progress:
+      overall: <yellow>Tiến độ chung</yellow>
+      percentage: '<gray>Tiến triển: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Nhiệm vụ: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Thời gian đã trôi qua: <white>%time%</white></gray>'
+      time_remaining: '<gray>Thời gian còn lại: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Tiến triển: <white>%current%/%required%</white></gray>'
+      completed: <green>Hoàn thành</green>
+      remaining: '<gray>Còn lại: <white>%remaining%</white></gray>'
+      locked: <red>Đã khóa</red>
+      sequential: <yellow>Hoàn thành nhiệm vụ trước đó trước</yellow>
+    rewards:
+      header: <yellow>Phần thưởng</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Kinh nghiệm</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Đặc quyền: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Nhiệm vụ: %quest%</gradient>'
+    requirements:
+      header: <yellow>Yêu cầu</yellow>
+      level: <aqua>Mức độ %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Hoàn thành: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Thứ hạng: %rank%</gradient>'
+      permission: '<gray>Sự cho phép: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>tầm thường</gradient>
+  easy: <gradient:#10b981:#34d399>Dễ</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Bình thường</gradient>
+  hard: <gradient:#ef4444:#f87171>Cứng</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Vô cùng</gradient>

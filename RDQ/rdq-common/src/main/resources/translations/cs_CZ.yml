@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Žádné odměny</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Přidáním položek vytvoříte odměny</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Přidáním položek vytvoříte odměny</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Přidat položku</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Sem umístěte položky, které chcete přidat jako odměny</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Kliknutím levým tlačítkem umístíte položku</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Kliknutím pravým tlačítkem odeberete položku</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Sem umístěte položky, které chcete přidat jako odměny</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Kliknutím levým tlačítkem umístíte položku</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Kliknutím pravým tlačítkem odeberete položku</gradient>"
 
 # ============================================
 # ZOBRAZOVANÁ JMÉNA A POPISY STROMŮ HODNOSTÍ
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Hraničář</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ovládněte umění lukostřelby a stopování</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Staňte se jedním s přírodou</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ovládněte umění lukostřelby a stopování</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Staňte se jedním s přírodou</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Válečník</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ovládněte umění boje</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Staňte se legendárním bojovníkem</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ovládněte umění boje</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Staňte se legendárním bojovníkem</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Mág</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ovládněte sílu magie</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Staňte se mistrem tajemna</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ovládněte sílu magie</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Staňte se mistrem tajemna</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Tulák</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ovládněte tajnost a mazanost</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Úder ze stínů</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ovládněte tajnost a mazanost</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Úder ze stínů</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Klerik</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Veďte božskou sílu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Uzdravujte a chraňte své spojence</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Veďte božskou sílu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Uzdravujte a chraňte své spojence</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Obchodník</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ovládněte umění obchodu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Vybudujte si své bohatství</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ovládněte umění obchodu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vybudujte si své bohatství</gradient>"
 
 # ============================================
 # ZOBRAZOVANÁ JMÉNA A POPISY HODNOSTÍ
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Bez hodnosti</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Začněte výběrem hodnostní cesty</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Začněte výběrem hodnostní cesty</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Bez hodnosti</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Výchozí hodnost</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Není vybrána žádná hodnost</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Není vybrána žádná hodnost</gradient>"
   # Hodnosti stromu hraničáře
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Čte otisky kopyt a změny větru.</gradient>
-        - <gradient:#10b981:#34d399>➤ Úroveň I • Příroda Iniciovat</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Čte otisky kopyt a změny větru.</gradient>
+      - <gradient:#10b981:#34d399>➤ Úroveň I • Příroda Iniciovat</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ S trpělivou přesností sleduje kořist.</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier II • Divoké pronásledování</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ S trpělivou přesností sleduje kořist.</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier II • Divoké pronásledování</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 Sledovač znamení</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Sleduje stopy, které žádná bouře nemůže vymazat.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Úroveň III • Volba cesty vpřed</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Sleduje stopy, které žádná bouře nemůže vymazat.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Úroveň III • Volba cesty vpřed</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 Strážce šelem</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vazby s vrcholnými tvory říše.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Úroveň IV • Primární větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vazby s vrcholnými tvory říše.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Úroveň IV • Primární větev</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Požáry skutečně přes hromy a déšť.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Bouřková větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Požáry skutečně přes hromy a déšť.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Bouřková větev</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿 Strážce divočiny</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Stráží posvátné hranice a skryté mýtiny.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Úroveň IV • Divoká větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Stráží posvátné hranice a skryté mýtiny.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Úroveň IV • Divoká větev</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Beze strachu velí legendárním zvířatům.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Beze strachu velí legendárním zvířatům.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Každý šroub vede vaši neúprosnou salvu.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Každý šroub vede vaši neúprosnou salvu.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ Úroveň V • Konečné pořadí</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Příroda sama povstane, aby odpověděla na vaše volání.</gradient>
-        - <gradient:#15803d:#22c55e>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Příroda sama povstane, aby odpověděla na vaše volání.</gradient>
+      - <gradient:#15803d:#22c55e>➤ Úroveň V • Konečné pořadí</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ Nábor</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Čerstvá čepel s nevyzkoušenou rozhodností.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Tréninková hřiště</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Čerstvá čepel s nevyzkoušenou rozhodností.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Tréninková hřiště</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ Voják</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Tvrzené vrtáním a předním nasazením.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Úroveň II • Disciplína v terénu</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Tvrzené vrtáním a předním nasazením.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Úroveň II • Disciplína v terénu</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ Veterán</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bojové jizvy označují vaši získanou moudrost.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ Úroveň III • Vyberte si svou cestu</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bojové jizvy označují vaši získanou moudrost.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ Úroveň III • Vyberte si svou cestu</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vyměňuje obranu za zničující útok.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vyměňuje obranu za zničující útok.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 Strážce</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Stojí pevně tam, kde by se ostatní zlomili.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Větev štítu</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Stojí pevně tam, kde by se ostatní zlomili.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Větev štítu</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 Gladiátor</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Masters vyvážené arénové válčení.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ Úroveň IV • Pobočka Arena</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Masters vyvážené arénové válčení.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ Úroveň IV • Pobočka Arena</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Nezastavitelný motor ničení.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Nezastavitelný motor ničení.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ Úroveň V • Konečné pořadí</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Poslední zeď mezi životem a zmarem.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Poslední zeď mezi životem a zmarem.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Korunovaný šampion každého kolosea.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Korunovaný šampion každého kolosea.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨ Učeň</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Probouzejí se jiskry tajemné síly.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Úroveň I • Tajemné základy</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Probouzejí se jiskry tajemné síly.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Úroveň I • Tajemné základy</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Tká kontrolovaná a soustředěná kouzla.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tajemná praxe</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Tká kontrolovaná a soustředěná kouzla.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tajemná praxe</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ Čaroděj</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Přikazuje složité vzorce magie.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si svou doktrínu</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Přikazuje složité vzorce magie.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si svou doktrínu</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 Čaroděj z Arkány</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Rafinuje syrovou sílu na elegantní sílu.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Tajemná větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Rafinuje syrovou sílu na elegantní sílu.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Tajemná větev</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 Čaroděj kouzel</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje ovládání a přesnost grimoáru.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Úroveň IV • Větev kouzla</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje ovládání a přesnost grimoáru.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Úroveň IV • Větev kouzla</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 Čaroděj prázdnoty</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ohýbá propastné energie vaší vůli.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Úroveň IV • Prázdná větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ohýbá propastné energie vaší vůli.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Úroveň IV • Prázdná větev</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 Arcana Arcana</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Nejvyšší architekt čisté tajemné síly.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Nejvyšší architekt čisté tajemné síly.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 Arcimág kouzel</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Každé zaklínadlo odpovídá okamžitě.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Každé zaklínadlo odpovídá okamžitě.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ Úroveň V • Konečné pořadí</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 Arcimág prázdnoty</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vládne na hranách mezi světy.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vládne na hranách mezi světy.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 Kapsář</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Učí se načasování, nesprávné nasměrování a rychlost.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Streetcraft</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Učí se načasování, nesprávné nasměrování a rychlost.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Streetcraft</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 Zloděj</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Proklouzne zámky a vyhlídkovými liniemi.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tichý vstup</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Proklouzne zámky a vyhlídkovými liniemi.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tichý vstup</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 Vrah</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Zasáhne jednou a zmizí beze stopy.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Úroveň III • Vyberte si svou metodu</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Zasáhne jednou a zmizí beze stopy.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Úroveň III • Vyberte si svou metodu</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Mistrovský pohyb nemůže sledovat žádné oko.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Úroveň IV • Stealth Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Mistrovský pohyb nemůže sledovat žádné oko.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Úroveň IV • Stealth Branch</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 Stín noci</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Promění temnotu ve smrtící výhodu.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Úroveň IV • Noční větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Promění temnotu ve smrtící výhodu.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Úroveň IV • Noční větev</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Rozkládá plány dříve, než nepřátelé zareagují.</gradient>
-        - <gradient:#f97316:#fb923c>➤ Úroveň IV • Odvětví sabotáže</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Rozkládá plány dříve, než nepřátelé zareagují.</gradient>
+      - <gradient:#f97316:#fb923c>➤ Úroveň IV • Odvětví sabotáže</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Stává se nedotknutelným městským mýtem.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Stává se nedotknutelným městským mýtem.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ Úroveň V • Konečné pořadí</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 Fantom noci</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vlastní půlnoční hodinu úplně.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vlastní půlnoční hodinu úplně.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ Úroveň V • Konečné pořadí</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 Fantom sabotáže</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ukončí bitvy dříve, než vůbec začnou.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ukončí bitvy dříve, než vůbec začnou.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ Úroveň V • Konečné pořadí</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ Akolytka</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Začíná posvátnou cestu služby.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Úroveň I • Oddanost</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Začíná posvátnou cestu služby.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Úroveň I • Oddanost</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ Léčitel</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Obnovuje spojence pod velkým tlakem.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurování</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Obnovuje spojence pod velkým tlakem.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurování</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ Kněz</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vede strany svatou disciplínou.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Úroveň III • Vyberte si své povolání</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vede strany svatou disciplínou.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Úroveň III • Vyberte si své povolání</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ Biskup božství</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kanály přímo vyzařují autoritu.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Božská větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kanály přímo vyzařují autoritu.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Božská větev</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ Biskup světla</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Oslepuje korupci posvátnou brilancí.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ Úroveň IV • Lehká větev</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Oslepuje korupci posvátnou brilancí.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ Úroveň IV • Lehká větev</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 Biskup duší</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hlídá práh života a smrti.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Úroveň IV • Větev duše</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hlídá práh života a smrti.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Úroveň IV • Větev duše</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 Velekněz božství</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Prohlašuje zázraky v srdci chaosu.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Prohlašuje zázraky v srdci chaosu.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ Úroveň V • Konečné pořadí</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑 Velekněz světla</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Zaplaví spojence v neochvějném úsvitu.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Zaplaví spojence v neochvějném úsvitu.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ Úroveň V • Konečné pořadí</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 Velekněz duší</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Pastýře duchů mimo smrtelný strach.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Pastýře duchů mimo smrtelný strach.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 Podomní obchodník</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Začíná s pískem, šarmem a drobnými obchody.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Pouliční obchod</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Začíná s pískem, šarmem a drobnými obchody.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Pouliční obchod</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 Obchodník</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje trasy a spolehlivé kontakty.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Přítomnost na trhu</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje trasy a spolehlivé kontakty.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • Přítomnost na trhu</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 Makléř</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Přesné uzavírání obchodů s vysokou hodnotou.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si své impérium</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Přesné uzavírání obchodů s vysokou hodnotou.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si své impérium</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 Magnát bohatství</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Buduje čistý kapitál bezkonkurenčním tempem.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Úroveň IV • Pobočka bohatství</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Buduje čistý kapitál bezkonkurenčním tempem.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Úroveň IV • Pobočka bohatství</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 Magnát z trhů</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Organizuje cykly nabídky a poptávky.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Tržní odvětví</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Organizuje cykly nabídky a poptávky.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Tržní odvětví</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 Obchodní magnát</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Dominuje karavanovým pruhům a logistice.</gradient>
-        - <gradient:#f97316:#fdba74>➤ Tier IV • Obchodní odvětví</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Dominuje karavanovým pruhům a logistice.</gradient>
+      - <gradient:#f97316:#fdba74>➤ Tier IV • Obchodní odvětví</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 Tycoon bohatství</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Otočí ekonomiku jediným rozhodnutím.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Otočí ekonomiku jediným rozhodnutím.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ Úroveň V • Konečné pořadí</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Stanovuje ceny, které musí každý cech respektovat.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Stanovuje ceny, které musí každý cech respektovat.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vlastní silnice, přístavy a zisky.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ Úroveň V • Konečné pořadí</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vlastní silnice, přístavy a zisky.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ Úroveň V • Konečné pořadí</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Máte aktivní odměnu na vaší hlavě!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Panel administrátora</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Přístup k nástrojům pro správu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a možnosti konfigurace</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Přístup k nástrojům pro správu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a možnosti konfigurace</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 odměny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zobrazení a správa odměn</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Lovte hráče za odměnami!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zobrazení a správa odměn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Lovte hráče za odměnami!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Výhody</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zobrazit dostupné výhody</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a speciální schopnosti</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zobrazit dostupné výhody</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a speciální schopnosti</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Úkoly</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zobrazit dostupné questy</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a sledujte svůj pokrok</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zobrazit dostupné questy</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a sledujte svůj pokrok</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Hodnosti</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zobrazit postup hodnocení</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a odemkněte nové schopnosti</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zobrazit postup hodnocení</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a odemkněte nové schopnosti</gradient>"
 
 # ============================================
 # HODNOTIT HLAVNÍ ROZHRANÍ
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Hodnotící stromy</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Procházet dostupné stromy hodnocení</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a vyberte si cestu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Procházet dostupné stromy hodnocení</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a vyberte si cestu</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Hraničář</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ovládněte umění lukostřelby a stopování</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Staňte se jedním s přírodou</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ovládněte umění lukostřelby a stopování</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Staňte se jedním s přírodou</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Válečník</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ovládněte umění boje</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Staňte se legendárním bojovníkem</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ovládněte umění boje</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Staňte se legendárním bojovníkem</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Mág</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Využij sílu magie</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Staňte se mistrem tajemna</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Využij sílu magie</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Staňte se mistrem tajemna</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Tulák</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ovládněte tajnost a mazanost</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Úder ze stínů</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ovládněte tajnost a mazanost</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Úder ze stínů</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Klerik</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kanál božské síly</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Uzdravujte a chraňte své spojence</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kanál božské síly</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Uzdravujte a chraňte své spojence</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Obchodník</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ovládněte umění obchodu</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Vybudujte si své bohatství</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ovládněte umění obchodu</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vybudujte si své bohatství</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>Kliknutím levým tlačítkem zobrazíte náhled</gradient>"
-      - "<gradient:#10b981:#34d399>Kliknutím pravým tlačítkem vyberte</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>Kliknutím levým tlačítkem zobrazíte náhled</gradient>"
+    - "<gradient:#10b981:#34d399>Kliknutím pravým tlačítkem vyberte</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Tento strom hodností je uzamčen</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Dokončit %minimum_rank_paths_to_be_absolved_needed% zařadit stromy jako první</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Dokončit %minimum_rank_paths_to_be_absolved_needed% zařadit stromy jako první</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Předpoklady:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Tato hodnostní cesta je uzamčena!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Aktuálně aktivní</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Vytvořit strom hodností</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vytvořit nový strom hodností</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(pouze správce)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vytvořit nový strom hodností</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(pouze správce)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Počáteční pozice pro tuto cestu nebyla nalezena!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Vybraná cesta hodnosti:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Počáteční hodnost: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Vytvoření stromu hodnocení již brzy!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Bezplatná verze – pouze náhled</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Tento strom hodností je k dispozici pouze pro náhled.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Upgradujte na Premium a odemkněte!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Kliknutím levým tlačítkem zobrazíte náhled</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Tento strom hodností je k dispozici pouze pro náhled.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Upgradujte na Premium a odemkněte!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Kliknutím levým tlačítkem zobrazíte náhled</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Vyžaduje se prémie:</gradient> <gradient:#6b7280:#9ca3af>Upgradujte na prémiovou verzi a vyberte další stromy hodností!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Navigovat %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Středové zobrazení</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím vycentrujete pohled</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím vycentrujete pohled</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Centrální zobrazení</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Režim náhledu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Prohlížíte v režimu náhledu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Změny nebudou uloženy</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Prohlížíte v režimu náhledu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Změny nebudou uloženy</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Režim náhledu</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Chyba při vykreslování hodnocení</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Žádný strom pořadí</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Nelze načíst strom hodností</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nelze načíst strom hodností</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Kritická chyba</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Při vykreslování došlo k chybě</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Při vykreslování došlo k chybě</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Při vykreslování došlo k chybě</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Při vykreslování došlo k chybě</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít požadavky pro </gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Došlo k chybě. Zkuste to prosím znovu.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Čte otisky kopyt a změny větru.</gradient>
-          - <gradient:#10b981:#34d399>➤ Úroveň I • Příroda Iniciovat</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Čte otisky kopyt a změny větru.</gradient>
+        - <gradient:#10b981:#34d399>➤ Úroveň I • Příroda Iniciovat</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ S trpělivou přesností sleduje kořist.</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier II • Divoké pronásledování</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ S trpělivou přesností sleduje kořist.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • Divoké pronásledování</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 Sledovač znamení</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Sleduje stopy, které žádná bouře nemůže vymazat.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Úroveň III • Volba cesty vpřed</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Sleduje stopy, které žádná bouře nemůže vymazat.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Úroveň III • Volba cesty vpřed</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 Strážce šelem</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vazby s vrcholnými tvory říše.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Úroveň IV • Primární větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vazby s vrcholnými tvory říše.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Úroveň IV • Primární větev</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Požáry skutečně přes hromy a déšť.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Bouřková větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Požáry skutečně přes hromy a déšť.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Bouřková větev</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿 Strážce divočiny</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Stráží posvátné hranice a skryté mýtiny.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Úroveň IV • Divoká větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Stráží posvátné hranice a skryté mýtiny.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Úroveň IV • Divoká větev</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Beze strachu velí legendárním zvířatům.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Beze strachu velí legendárním zvířatům.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Každý šroub vede vaši neúprosnou salvu.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Každý šroub vede vaši neúprosnou salvu.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Úroveň V • Konečné pořadí</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Příroda sama povstane, aby odpověděla na vaše volání.</gradient>
-          - <gradient:#15803d:#22c55e>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Příroda sama povstane, aby odpověděla na vaše volání.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Úroveň V • Konečné pořadí</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ Nábor</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Čerstvá čepel s nevyzkoušenou rozhodností.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Tréninková hřiště</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Čerstvá čepel s nevyzkoušenou rozhodností.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Tréninková hřiště</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ Voják</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Tvrzené vrtáním a předním nasazením.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Úroveň II • Disciplína v terénu</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Tvrzené vrtáním a předním nasazením.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Úroveň II • Disciplína v terénu</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ Veterán</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bojové jizvy označují vaši získanou moudrost.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ Úroveň III • Vyberte si svou cestu</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bojové jizvy označují vaši získanou moudrost.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Úroveň III • Vyberte si svou cestu</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥 Berserker</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vyměňuje obranu za zničující útok.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vyměňuje obranu za zničující útok.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 Strážce</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Stojí pevně tam, kde by se ostatní zlomili.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Větev štítu</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Stojí pevně tam, kde by se ostatní zlomili.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Úroveň IV • Větev štítu</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 Gladiátor</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Masters vyvážené arénové válčení.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ Úroveň IV • Pobočka Arena</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Masters vyvážené arénové válčení.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Úroveň IV • Pobočka Arena</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Nezastavitelný motor ničení.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Nezastavitelný motor ničení.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Úroveň V • Konečné pořadí</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Poslední zeď mezi životem a zmarem.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Poslední zeď mezi životem a zmarem.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Korunovaný šampion každého kolosea.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Korunovaný šampion každého kolosea.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨ Učeň</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Probouzejí se jiskry tajemné síly.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Úroveň I • Tajemné základy</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Probouzejí se jiskry tajemné síly.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Úroveň I • Tajemné základy</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Tká kontrolovaná a soustředěná kouzla.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tajemná praxe</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Tká kontrolovaná a soustředěná kouzla.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tajemná praxe</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ Čaroděj</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Přikazuje složité vzorce magie.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si svou doktrínu</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Přikazuje složité vzorce magie.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si svou doktrínu</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 Čaroděj z Arkány</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Rafinuje syrovou sílu na elegantní sílu.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Tajemná větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Rafinuje syrovou sílu na elegantní sílu.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Tajemná větev</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 Čaroděj kouzel</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje ovládání a přesnost grimoáru.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Úroveň IV • Větev kouzla</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje ovládání a přesnost grimoáru.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Úroveň IV • Větev kouzla</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 Čaroděj prázdnoty</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ohýbá propastné energie vaší vůli.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Úroveň IV • Prázdná větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ohýbá propastné energie vaší vůli.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Úroveň IV • Prázdná větev</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 Arcana Arcana</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Nejvyšší architekt čisté tajemné síly.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Nejvyšší architekt čisté tajemné síly.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Úroveň V • Konečné pořadí</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 Arcimág kouzel</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Každé zaklínadlo odpovídá okamžitě.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Každé zaklínadlo odpovídá okamžitě.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Úroveň V • Konečné pořadí</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 Arcimág prázdnoty</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vládne na hranách mezi světy.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vládne na hranách mezi světy.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Úroveň V • Konečné pořadí</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 Kapsář</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Učí se načasování, nesprávné nasměrování a rychlost.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Streetcraft</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Učí se načasování, nesprávné nasměrování a rychlost.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Streetcraft</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 Zloděj</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Proklouzne zámky a vyhlídkovými liniemi.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tichý vstup</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Proklouzne zámky a vyhlídkovými liniemi.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Úroveň II • Tichý vstup</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 Vrah</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Zasáhne jednou a zmizí beze stopy.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Úroveň III • Vyberte si svou metodu</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Zasáhne jednou a zmizí beze stopy.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Úroveň III • Vyberte si svou metodu</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Mistrovský pohyb nemůže sledovat žádné oko.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Úroveň IV • Stealth Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Mistrovský pohyb nemůže sledovat žádné oko.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Úroveň IV • Stealth Branch</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 Stín noci</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Promění temnotu ve smrtící výhodu.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Úroveň IV • Noční větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Promění temnotu ve smrtící výhodu.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Úroveň IV • Noční větev</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Rozkládá plány dříve, než nepřátelé zareagují.</gradient>
-          - <gradient:#f97316:#fb923c>➤ Úroveň IV • Odvětví sabotáže</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Rozkládá plány dříve, než nepřátelé zareagují.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Úroveň IV • Odvětví sabotáže</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Stává se nedotknutelným městským mýtem.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Stává se nedotknutelným městským mýtem.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Úroveň V • Konečné pořadí</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 Fantom noci</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vlastní půlnoční hodinu úplně.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vlastní půlnoční hodinu úplně.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Úroveň V • Konečné pořadí</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 Fantom sabotáže</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ukončí bitvy dříve, než vůbec začnou.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ukončí bitvy dříve, než vůbec začnou.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Úroveň V • Konečné pořadí</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ Akolytka</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Začíná posvátnou cestu služby.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Úroveň I • Oddanost</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Začíná posvátnou cestu služby.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Úroveň I • Oddanost</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ Léčitel</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Obnovuje spojence pod velkým tlakem.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurování</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Obnovuje spojence pod velkým tlakem.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurování</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ Kněz</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vede strany svatou disciplínou.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Úroveň III • Vyberte si své povolání</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vede strany svatou disciplínou.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Úroveň III • Vyberte si své povolání</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ Biskup božství</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kanály přímo vyzařují autoritu.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Božská větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kanály přímo vyzařují autoritu.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Úroveň IV • Božská větev</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ Biskup světla</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Oslepuje korupci posvátnou brilancí.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ Úroveň IV • Lehká větev</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Oslepuje korupci posvátnou brilancí.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Úroveň IV • Lehká větev</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 Biskup duší</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hlídá práh života a smrti.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Úroveň IV • Větev duše</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hlídá práh života a smrti.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Úroveň IV • Větev duše</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 Velekněz božství</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Prohlašuje zázraky v srdci chaosu.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Prohlašuje zázraky v srdci chaosu.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Úroveň V • Konečné pořadí</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑 Velekněz světla</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Zaplaví spojence v neochvějném úsvitu.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Zaplaví spojence v neochvějném úsvitu.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Úroveň V • Konečné pořadí</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 Velekněz duší</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Pastýře duchů mimo smrtelný strach.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Pastýře duchů mimo smrtelný strach.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 Podomní obchodník</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Začíná s pískem, šarmem a drobnými obchody.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Pouliční obchod</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Začíná s pískem, šarmem a drobnými obchody.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Úroveň I • Pouliční obchod</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 Obchodník</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje trasy a spolehlivé kontakty.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Přítomnost na trhu</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Rozšiřuje trasy a spolehlivé kontakty.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Přítomnost na trhu</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 Makléř</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Přesné uzavírání obchodů s vysokou hodnotou.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si své impérium</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Přesné uzavírání obchodů s vysokou hodnotou.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Úroveň III • Vyberte si své impérium</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 Magnát bohatství</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Buduje čistý kapitál bezkonkurenčním tempem.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Úroveň IV • Pobočka bohatství</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Buduje čistý kapitál bezkonkurenčním tempem.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Úroveň IV • Pobočka bohatství</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 Magnát z trhů</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Organizuje cykly nabídky a poptávky.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Tržní odvětví</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Organizuje cykly nabídky a poptávky.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Tržní odvětví</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 Obchodní magnát</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Dominuje karavanovým pruhům a logistice.</gradient>
-          - <gradient:#f97316:#fdba74>➤ Tier IV • Obchodní odvětví</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Dominuje karavanovým pruhům a logistice.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Tier IV • Obchodní odvětví</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 Tycoon bohatství</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Otočí ekonomiku jediným rozhodnutím.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Otočí ekonomiku jediným rozhodnutím.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Úroveň V • Konečné pořadí</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Stanovuje ceny, které musí každý cech respektovat.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Stanovuje ceny, které musí každý cech respektovat.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Úroveň V • Konečné pořadí</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vlastní silnice, přístavy a zisky.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ Úroveň V • Konečné pořadí</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vlastní silnice, přístavy a zisky.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Úroveň V • Konečné pořadí</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Thief</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistr tajnosti a krádeží</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mistr tajnosti a krádeží</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Atentátník</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tichý zabiják, smrt ze stínů</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tichý zabiják, smrt ze stínů</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Infiltrátor</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Odborník na nepozorované nastupování a vystupování</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Odborník na nepozorované nastupování a vystupování</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Shadow Master</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Jedno se samotnou temnotou</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Jedno se samotnou temnotou</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Akolyt</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Oddaný služebník božského</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Oddaný služebník božského</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Oddaný</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Věrný následovník božské cesty</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Věrný následovník božské cesty</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Kněz</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Léčitel a ochránce věřících</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Léčitel a ochránce věřících</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Léčitel</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistr restaurátorských umění</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mistr restaurátorských umění</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Bishop</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vůdce věřících</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vůdce věřících</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Orákulum</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Věštec božských vizí</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Věštec božských vizí</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ velekněz</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nejvyšší hlas božského</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nejvyšší hlas božského</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� TPickpocket</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Rychlé prsty, rychlejší únik</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Rychlé prsty, rychlejší únik</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Thief</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistr tajnosti a krádeží</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mistr tajnosti a krádeží</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 Scout</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Oči a uši stínů</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Oči a uši stínů</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Atentátník</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tichý zabiják, smrt ze stínů</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tichý zabiják, smrt ze stínů</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Infiltrátor</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Odborník na nepozorované nastupování a vystupování</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Odborník na nepozorované nastupování a vystupování</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Shadowblade</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Smrtící válečník noci</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Smrtící válečník noci</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Řídič informačních sítí</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Řídič informačních sítí</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Shadow Master</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Jedno se samotnou temnotou</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Jedno se samotnou temnotou</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 Shadowmaster</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nejvyšší vládce všech stínů</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nejvyšší vládce všech stínů</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Podomní obchodník</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Prodej zboží na ulici</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Prodej zboží na ulici</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 Obchodník</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Zavedený obchodník se spojeními</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Zavedený obchodník se spojeními</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 Prodejce</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Šikovný prodejce zboží</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Šikovný prodejce zboží</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Artificer</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Výrobce kvalitního zboží</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Výrobce kvalitního zboží</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 Alchymista</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistr lektvarů a elixírů</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mistr lektvarů a elixírů</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 Obchodník</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Úspěšný vlastník firmy</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Úspěšný vlastník firmy</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Master Crafter</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Nejvyšší umělec říše</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Nejvyšší umělec říše</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Kníže obchodu</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Royality of commerce</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Royality of commerce</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mistr obchodu a obchodu</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mistr obchodu a obchodu</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Guild Master</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Vůdce cechu obchodníků</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Vůdce cechu obchodníků</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Náhled:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Náhled:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Požadavek č. %index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Nelze načíst podrobnosti požadavku</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nelze načíst podrobnosti požadavku</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Typ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Typ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Pokrok:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Typ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Pokrok:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Kliknutím zobrazíte podrobnosti</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Podrobnosti požadavku</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ Nemáte všechny požadované položky!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Položky byly úspěšně odeslány!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Potřebné úrovně:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Požadavek na úroveň splněn!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Získejte XP těžbou, zabíjením mobů,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>tavení předmětů a další!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Získejte XP těžbou, zabíjením mobů,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>tavení předmětů a další!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Vaše doba hraní:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%m</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Požadovaná doba přehrávání:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Zbývající čas:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%m</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Požadavek na herní dobu splněn!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Pokračujte v hraní na serveru</gradient>"
-      - "<gradient:#6b7280:#9ca3af>akumulujte čas hraní!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Pokračujte v hraní na serveru</gradient>"
+    - "<gradient:#6b7280:#9ca3af>akumulujte čas hraní!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Pokrok</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Aktuální:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Dokončení:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Dokončeno</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Tento požadavek je již splněn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tento požadavek je již splněn</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Kompletní požadavek</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím dokončíte tento požadavek</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím dokončíte tento požadavek</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Obnovit průběh</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím obnovíte svůj postup</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím obnovíte svůj postup</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Dokončené položky:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Typ:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Shromážděte požadované položky</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a vraťte se sem a dokončete</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Shromážděte požadované položky</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a vraťte se sem a dokončete</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Vydělejte požadovanou měnu</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vydělejte požadovanou měnu</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Získejte úrovně zkušeností</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Získejte úrovně zkušeností</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Hrajte na serveru</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hrajte na serveru</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Vyplňte požadavek</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vyplňte požadavek</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Zobrazení souhrnu...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Tipy k prohlížení...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Dokončeno!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Dokončeno!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Připraveno k dokončení!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Dokončete kliknutím</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Připraveno k dokončení!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Dokončete kliknutím</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ Probíhá</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ Probíhá</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Nezahájeno</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nezahájeno</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Chyba</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Chyba</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Status: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>Pokrok</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Neznámý požadavek</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Nelze načíst podrobnosti</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nelze načíst podrobnosti</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Chyba</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Nepodařilo se načíst požadavek</gradient>"
+    - "<gradient:#ef4444:#f87171>Nepodařilo se načíst požadavek</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 Průběh:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Stav:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>je již dokončeno!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Vytvořit odměnu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím vytvoříte novou odměnu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>na jiném hráči</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím vytvoříte novou odměnu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>na jiném hráči</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Zobrazit odměny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zobrazit všechny aktivní odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zobrazit všechny aktivní odměny</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Moje odměny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zobrazit odměny, které jste vytvořili</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zobrazit odměny, které jste vytvořili</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Žebříček</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Hlavní lovci odměn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Hlavní lovci odměn</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 odměna na</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Target:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>komisař:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Vytvořeno:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Kliknutím zobrazíte podrobnosti</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Target:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>komisař:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vytvořeno:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Kliknutím zobrazíte podrobnosti</gradient>"
 
 # ============================================
 # UŽIVATELE PRO VYTVOŘENÍ BOUNTY
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Vyberte cíl</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Cíl: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím vyberte hráče</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Aktuální: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím vyberte hráče</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aktuální: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Vytvořit odměnu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím vytvoříte novou odměnu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>na jiném hráči</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím vytvoříte novou odměnu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>na jiném hráči</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Přidat odměny za položky</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Přidat odměny za položky</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím přidáte odměny za položky</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Aktuální položky:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím přidáte odměny za položky</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aktuální položky:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Nejprve vyberte cíl!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Nejprve vyberte cíl!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Nejprve vyberte cíl!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Přidat měnové odměny</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Přidat měnové odměny</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím přidáte měnové odměny</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Aktuální měny:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím přidáte měnové odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aktuální měny:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Nejprve vyberte cíl!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Nejprve vyberte cíl!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Vytvořit odměnu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím vytvoříte odměnu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>s vybranými odměnami</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím vytvoříte odměnu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>s vybranými odměnami</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Není vybrán žádný hráč!</gradient> <gradient:#6b7280:#9ca3af>Nejprve vyberte cíl.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Nebyly přidány žádné odměny!</gradient> <gradient:#6b7280:#9ca3af>Nejdříve prosím přidejte nějaké odměny.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Žádné odměny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Přidáním položek vytvoříte odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Přidáním položek vytvoříte odměny</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Přidat položku</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Sem umístěte položky, které chcete přidat jako odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sem umístěte položky, které chcete přidat jako odměny</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Cíl: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tato odměna je vypsána na</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tato odměna je vypsána na</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Odměna za odměnu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tato položka bude přidělena </gradient>"
-      - "<gradient:#6b7280:#9ca3af>kdo si nárokuje odměnu</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Odměna za odměnu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tato položka bude přidělena </gradient>"
+    - "<gradient:#6b7280:#9ca3af>kdo si nárokuje odměnu</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Nebyly přidány žádné nové položky!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Některé položky byly vyřazeny, protože váš inventář byl plný!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Cíl této odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Cíl této odměny</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Další informace již brzy...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Zobrazit odměny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím zobrazíte všechny odměny</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Celkové odměny:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím zobrazíte všechny odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Celkové odměny:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Smazat odměnu</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Upozornění: Nelze vrátit zpět!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kliknutím smažete tuto odměnu</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Upozornění: Nelze vrátit zpět!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím smažete tuto odměnu</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Odměna na</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>byl smazán!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Opravdu chcete smazat tuto odměnu?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 Správce oprávnění</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Spravovat oprávnění pluginu</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Celková oprávnění:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Spravovat oprávnění pluginu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Celková oprávnění:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít správce oprávnění!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Integrace pluginů</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Spravujte integrace pluginů pro správce na jednom místě</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Zahrnuje zobrazení detekce měny, dovedností a pracovních míst</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Spravujte integrace pluginů pro správce na jednom místě</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zahrnuje zobrazení detekce měny, dovedností a pracovních míst</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít integrace pluginů!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Vytvořte skupiny LuckPerms</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vytvořte skupiny LuckPerms z řad</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vytvořte skupiny LuckPerms z řad</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms není nainstalován!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Nebyly nalezeny žádné pozice pro vytvoření skupin!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ Vytvořeno</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms skupiny!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Integrační centrum</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Otevřete řídicí panely integrace zásuvných modulů RDQ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Detekce měn, dovedností/úkolů a nástroje PlaceholderAPI jsou k dispozici zde</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Otevřete řídicí panely integrace zásuvných modulů RDQ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Detekce měn, dovedností/úkolů a nástroje PlaceholderAPI jsou k dispozici zde</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Integrace měn</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Otevřená správa poskytovatelů měn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Kontrola zjistila měny Vault a JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Otevřená správa poskytovatelů měn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kontrola zjistila měny Vault a JExEconomy</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít měnové integrace!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Integrace dovedností</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Zobrazit stav podpory pro mcMMO, Aura a EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Zjistit aktuálně povolené pluginy dovedností</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zobrazit stav podpory pro mcMMO, Aura a EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zjistit aktuálně povolené pluginy dovedností</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít integraci dovedností!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ Pracovní integrace</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Zobrazit stav podpory pro EcoJobs a JobsReborn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Zjistit aktuálně povolené pluginy úloh</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zobrazit stav podpory pro EcoJobs a JobsReborn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zjistit aktuálně povolené pluginy úloh</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít pracovní integrace!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Zjistit podporu PlaceholderAPI a spravovat rozšíření</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Nainstalujte rozšíření Player a znovu načtěte PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Zjistit podporu PlaceholderAPI a spravovat rozšíření</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nainstalujte rozšíření Player a znovu načtěte PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Nepodařilo se otevřít nástroje PlaceholderAPI!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 Integrace PlaceholderAPI</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Podporováno PlaceholderAPI:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Cílová expanze:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nainstalujte a znovu načtěte přímo z tohoto panelu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Podporováno PlaceholderAPI:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Cílová expanze:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nainstalujte a znovu načtěte přímo z tohoto panelu</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ Bylo zjištěno PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI je nainstalován a povolen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI je nainstalován a povolen</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ Chybí PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Chcete-li použít tuto akci, nainstalujte a povolte PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Chcete-li použít tuto akci, nainstalujte a povolte PlaceholderAPI</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 Nainstalujte rozšíření %expansion_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Běží:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Poté běží:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Kliknutím spustíte oba příkazy PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Běží:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Poté běží:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kliknutím spustíte oba příkazy PlaceholderAPI</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 Vyžadováno PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tato akce není k dispozici, dokud není nainstalován PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tato akce není k dispozici, dokud není nainstalován PlaceholderAPI</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Je vyžadován přístup správce</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Nemáte oprávnění používat nástroje pro správu PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nemáte oprávnění používat nástroje pro správu PlaceholderAPI</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ Nemáte oprávnění ke správě integrací PlaceholderAPI.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI není na tomto serveru k dispozici.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Nepodařilo se stáhnout rozšíření:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Stav pluginu Skill</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Podporované integrace dovedností:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Zjištěno právě teď:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kontroluje podporu mcMMO, Aura a EcoSkills</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Podporované integrace dovedností:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zjištěno právě teď:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kontroluje podporu mcMMO, Aura a EcoSkills</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Zjištěno</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ID integrace:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Postavení:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ID integrace:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Postavení:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Nejsou nakonfigurovány žádné integrace dovedností</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aktuálně nejsou nakonfigurovány žádné integrace pluginu dovedností</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aktuálně nejsou nakonfigurovány žádné integrace pluginu dovedností</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 Stav pluginu Job</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Podporované integrace pracovních míst:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Zjištěno právě teď:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kontroluje podporu EcoJobs a JobsReborn</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Podporované integrace pracovních míst:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zjištěno právě teď:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kontroluje podporu EcoJobs a JobsReborn</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Zjištěno</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ID integrace:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Postavení:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ID integrace:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Postavení:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Nejsou nakonfigurovány žádné integrace úloh</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aktuálně nejsou nakonfigurovány žádné integrace pluginů úloh</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aktuálně nejsou nakonfigurovány žádné integrace pluginů úloh</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Poskytovatel:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Symbol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Předpona:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Přípona:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Poskytovatel:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Symbol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Předpona:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Přípona:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ Vytvořit %currency_id%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vytvořit výchozí měnu pro RDQ</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>Kliknutím vytvoříte %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vytvořit výchozí měnu pro RDQ</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>Kliknutím vytvoříte %currency_id%</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Povinné</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tato akce vyžaduje JExEconomy</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Nainstalujte jej před vytvořením výchozích nastavení</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tato akce vyžaduje JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Nainstalujte jej před vytvořením výchozích nastavení</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Připraveno</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Výchozí měna již existuje</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Není potřeba žádné další nastavení</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Výchozí měna již existuje</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Není potřeba žádné další nastavení</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Vytvořená výchozí měna:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Nepodařilo se vytvořit měnu:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Nebyly zjištěny žádné měny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ nedokázal detekovat měny Vault nebo JExEconomy</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nejprve nainstalujte nebo povolte ekonomického poskytovatele</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ nedokázal detekovat měny Vault nebo JExEconomy</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nejprve nainstalujte nebo povolte ekonomického poskytovatele</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Oprávnění:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Oprávnění:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>Kliknutím levým tlačítkem vyberte</gradient>"
-        - "<gradient:#10b981:#34d399>Kliknutím pravým tlačítkem přiřadíte vše</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>Kliknutím levým tlačítkem vyberte</gradient>"
+      - "<gradient:#10b981:#34d399>Kliknutím pravým tlačítkem přiřadíte vše</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Prázdné</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Uzel:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Kliknutím přidělte toto oprávnění</gradient>"
+      - "<gradient:#10b981:#34d399>Kliknutím přidělte toto oprávnění</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Není vybrán žádný plugin</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vyberte plugin výše</gradient>"
-        - "<gradient:#6b7280:#9ca3af>pro zobrazení jeho oprávnění</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vyberte plugin výše</gradient>"
+      - "<gradient:#6b7280:#9ca3af>pro zobrazení jeho oprávnění</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Prázdné</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Přiřadit %plugin_name% oprávnění</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Přiřadit všechna oprávnění od </gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(oprávnění %permission_count%)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Přiřadit všechna oprávnění od </gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(oprávnění %permission_count%)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Žádný výběr</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Vybráno: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Oprávnění:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Oprávnění:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Přehled</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Vyberte plugin pro zobrazení oprávnění</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Celkový počet pluginů:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vyberte plugin pro zobrazení oprávnění</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Obnovit data</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kliknutím obnovíte data oprávnění</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kliknutím obnovíte data oprávnění</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Vymazat výběr</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím zrušte výběr pluginu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím zrušte výběr pluginu</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Přiřadit %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Přiřadit všechna oprávnění z vybraného pluginu</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Přiřadit všechna oprávnění z vybraného pluginu</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Přiřadit všechna oprávnění</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Přidělit oprávnění od všech</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plugins</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Přidělit oprávnění od všech</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plugins</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Data obnovena!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Stránka %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Aktuální stránka:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Celkový počet stran:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Aktuální stránka:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Celkový počet stran:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Stránka %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Návrat</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím se vrátíte zpět</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Pokračovat</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Pokračujte kliknutím</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Pokračujte kliknutím</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Předchozí</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Předchozí stránka</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Předchozí stránka</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Další</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Další stránka</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Další stránka</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Nahoru</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Jít nahoru</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Jít nahoru</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Dolů</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Jít dolů</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Jít dolů</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Zrušit</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zrušit akci</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zrušit akci</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Zadejte hodnotu</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zadejte svůj vstup výše</gradient>"
-      - "<gradient:#6b7280:#9ca3af>a kliknutím potvrďte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zadejte svůj vstup výše</gradient>"
+    - "<gradient:#6b7280:#9ca3af>a kliknutím potvrďte</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Vstup se nezdařil:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Potvrdit</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím potvrďte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím potvrďte</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Zrušit</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím zrušíte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím zrušíte</gradient>"
 
 # ============================================
 # OMEZENÍ BEZPLATNÉ VERZE
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Bezplatná verze</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Používáte bezplatnou verzi</gradient>"
-      - "<gradient:#6b7280:#9ca3af>s omezenými funkcemi.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Upgradujte na Premium a získejte:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Neomezené stromy hodností</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Neomezené hodnosti na strom</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Více aktivních cest</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Používáte bezplatnou verzi</gradient>"
+    - "<gradient:#6b7280:#9ca3af>s omezenými funkcemi.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Upgradujte na Premium a získejte:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Neomezené stromy hodností</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Neomezené hodnosti na strom</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Více aktivních cest</gradient>"
 
 # ============================================
 # ZPRÁVY PREMIUM VERZE
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Prémiová verze</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Všechny funkce odemčeny!</gradient>"
+    - "<gradient:#10b981:#34d399>Všechny funkce odemčeny!</gradient>"
 
 # ============================================
 # POŽADOVANÉ ZOBRAZENÍ PODROBNOSTÍ POLOŽKY (zjednodušené)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Odeslat položky</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Všechny položky připraveny!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Kliknutím odešlete</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Všechny položky připraveny!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Kliknutím odešlete</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Odeslat položky</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Chybí požadované položky</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Nejprve shromážděte všechny položky</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Chybí požadované položky</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Nejprve shromážděte všechny položky</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Zpět</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zpět na požadavky</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zpět na požadavky</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Celkový pokrok</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Dokončení:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Požadavky:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Dokončení:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Požadavky:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Splňte všechny požadavky</gradient>"
-      - "<gradient:#6b7280:#9ca3af>pro odemknutí této pozice!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Splňte všechny požadavky</gradient>"
+    - "<gradient:#6b7280:#9ca3af>pro odemknutí této pozice!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>🏆 Pořadí nároku!</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Všechny požadavky splněny!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Kliknutím získáte svou hodnost</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Všechny požadavky splněny!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Kliknutím získáte svou hodnost</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Hodnost uzamčena</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Splňte všechny požadavky</gradient>"
-        - "<gradient:#6b7280:#9ca3af>pro odemknutí této pozice.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Splňte všechny požadavky</gradient>"
+      - "<gradient:#6b7280:#9ca3af>pro odemknutí této pozice.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Uzamčeno</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Splňte všechny požadavky</gradient>"
-        - "<gradient:#6b7280:#9ca3af>pro odemknutí této pozice.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Splňte všechny požadavky</gradient>"
+      - "<gradient:#6b7280:#9ca3af>pro odemknutí této pozice.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Zpět</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Zpět na přehled hodnocení</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Zpět na přehled hodnocení</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Požadavek splněn!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Všechny požadavky splněny! Kliknutím na tlačítko nároku získáte své hodnocení!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Žádné odměny</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá nakonfigurované žádné odměny</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá nakonfigurované žádné odměny</gradient>"
       type_label: "<gray>Typ:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Hodnota:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Zobrazit všechny odměny</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kliknutím zobrazíte všechny %count% odměny</gradient>"
-        - "<gradient:#6b7280:#9ca3af>pro tuto hodnost podrobně</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kliknutím zobrazíte všechny %count% odměny</gradient>"
+      - "<gradient:#6b7280:#9ca3af>pro tuto hodnost podrobně</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Podrobné zobrazení odměn již brzy!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Žádné odměny</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá žádné odměny</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá žádné odměny</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Tato hodnost nemá nakonfigurovány žádné odměny.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Odměny za hodnocení</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Obdržíte %count% odměny</gradient>"
-      - "<gradient:#6b7280:#9ca3af>když si nárokujete tuto hodnost</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Obdržíte %count% odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>když si nárokujete tuto hodnost</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Žádné odměny</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá nakonfigurované žádné odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá nakonfigurované žádné odměny</gradient>"
     type_label: "<gray>Typ:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Hodnota:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Zobrazit všechny odměny</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kliknutím zobrazíte všechny %count% odměny</gradient>"
-      - "<gradient:#6b7280:#9ca3af>pro tuto hodnost podrobně</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím zobrazíte všechny %count% odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>pro tuto hodnost podrobně</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Podrobné zobrazení odměn již brzy!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Žádné odměny</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá žádné odměny</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tato hodnost nemá žádné odměny</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Tato hodnost nemá nakonfigurovány žádné odměny.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Odměny za hodnocení</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Obdržíte %count% odměny</gradient>"
-    - "<gradient:#6b7280:#9ca3af>když si nárokujete tuto hodnost</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Obdržíte %count% odměny</gradient>"
+  - "<gradient:#6b7280:#9ca3af>když si nárokujete tuto hodnost</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tato hodnost má %count% odměny</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kliknutím na jakoukoli odměnu zobrazíte podrobnosti</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tato hodnost má %count% odměny</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kliknutím na jakoukoli odměnu zobrazíte podrobnosti</gradient>"
 
 # ============================================
 # UŽIVATELSKÁ PŘÍRUČKA PŘEHLED VÝHOD
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Heal, když způsobíte poškození nepřátel</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Zombie Slayer</gradient>
+    description: Porazte zombie a sbírejte jejich kapky, abyste prokázali svou bojovou zdatnost
+    task:
+      kill_zombies:
+        name: <white>Porazte zombie</white>
+        description: Zabít %amount% zombie
+      collect_flesh:
+        name: <white>Sbírejte Rotten Flesh</white>
+        description: Shromáždit %amount% shnilé maso z poražených zombie
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Mistr horník</gradient>
+    description: Vytěžte různé rudy v časovém limitu, abyste se stali mistrem horníků
+    task:
+      mine_coal:
+        name: <white>Důlní uhlí</white>
+        description: Moje %amount% bloky uhelné rudy
+      mine_iron:
+        name: <white>Důlní železo</white>
+        description: Moje %amount% bloky železné rudy
+      mine_diamond:
+        name: <white>Těžte diamanty</white>
+        description: Moje %amount% bloky diamantové rudy
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Stavitelův sen</gradient>
+    description: Postavte budovu podle následujících kroků, abyste předvedli své stavitelské dovednosti
+    task:
+      foundation:
+        name: <white>Laický základ</white>
+        description: Místo %amount% cihelné bloky pro základ
+      walls:
+        name: <white>Postavte zdi</white>
+        description: Místo %amount% bloky z dubových prken na stěny
+      windows:
+        name: <white>Přidejte Windows</white>
+        description: Místo %amount% skleněné tvárnice do oken
+      roof:
+        name: <white>Kompletní střecha</white>
+        description: Místo %amount% dubové schodišťové bloky na střechu
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Kategorie hledání</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Úkoly</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Hledání: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Aktivní questy</gradient>
+    items:
+      back:
+        name: <gray>Zadní</gray>
+        lore:
+        - <gray>Návrat do předchozí nabídky</gray>
+      start:
+        name: <green>Spustit Quest</green>
+        lore:
+        - <gray>Kliknutím spustíte tento quest</gray>
+        - ''
+        - <dark_gray>Požadavky:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Opustit Quest</red>
+        lore:
+        - <gray>Kliknutím tento úkol opustíte</gray>
+        - ''
+        - '<yellow>Upozornění: Pokrok bude ztracen</yellow>'
+      info:
+        name: <yellow>Informace o hledání</yellow>
+        lore:
+        - <gray>Kliknutím zobrazíte podrobnosti o úkolu</gray>
+      progress:
+        name: <aqua>Zobrazit průběh</aqua>
+        lore:
+        - <gray>Kliknutím zobrazíte průběh úkolu</gray>
+        - ''
+        - '<dark_gray>Pokrok: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Blízko</gray>
+        lore:
+        - <gray>Zavřete tuto nabídku</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Obtížnost: %difficulty%</dark_gray>'
+        - '<dark_gray>Postavení: %status%</dark_gray>'
+        - '<dark_gray>úkoly: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Pokrok: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Postavení: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Kliknutím spustíte tento quest</green>
+      click_to_view: <yellow>Kliknutím zobrazíte podrobnosti o úkolu</yellow>
+      click_to_abandon: <red>Kliknutím tento úkol opustíte</red>
+      already_completed: <green>Již dokončeno</green>
+      requirements_not_met: <red>Požadavky nejsou splněny</red>
+      on_cooldown: '<red>Při ochlazení: %time%</red>'
+      time_remaining: '<yellow>Zbývající čas: %time%</yellow>'
+      repeatable: <aqua>Opakovatelný quest</aqua>
+      one_time: <gray>Jednorázové hledání</gray>
+    progress:
+      overall: <yellow>Celkový pokrok</yellow>
+      percentage: '<gray>Pokrok: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>úkoly: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Uplynulý čas: <white>%time%</white></gray>'
+      time_remaining: '<gray>Zbývající čas: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Pokrok: <white>%current%/%required%</white></gray>'
+      completed: <green>Dokončeno</green>
+      remaining: '<gray>Zbývající: <white>%remaining%</white></gray>'
+      locked: <red>Zamčeno</red>
+      sequential: <yellow>Nejprve dokončete předchozí úkoly</yellow>
+    rewards:
+      header: <yellow>Odměny</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Zažít</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Vyzdobit: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Hledání: %quest%</gradient>'
+    requirements:
+      header: <yellow>Požadavky</yellow>
+      level: <aqua>Úroveň %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Kompletní: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Pořadí: %rank%</gradient>'
+      permission: '<gray>Povolení: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Triviální</gradient>
+  easy: <gradient:#10b981:#34d399>Snadný</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normální</gradient>
+  hard: <gradient:#ef4444:#f87171>Tvrdý</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Extrémní</gradient>

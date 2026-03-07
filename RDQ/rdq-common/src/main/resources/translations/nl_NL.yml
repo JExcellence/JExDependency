@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Geen Beloningen</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen te maken</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen te maken</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Item Toevoegen</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Klik met de linkermuisknop om het item te plaatsen</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Klik met de rechtermuisknop om het item te verwijderen</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Klik met de linkermuisknop om het item te plaatsen</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Klik met de rechtermuisknop om het item te verwijderen</gradient>"
 
 # ============================================
 # RANG BOOM WEERGAVENAMEN & BESCHRIJVINGEN
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Word één met de natuur</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Word één met de natuur</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Krijger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Word een legendarische vechter</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Word een legendarische vechter</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Magiër</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Word een meester van het geheimzinnige</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Word een meester van het geheimzinnige</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Schurk</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Sla toe vanuit de schaduw</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Sla toe vanuit de schaduw</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Geestelijke</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Genees en bescherm je bondgenoten</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Genees en bescherm je bondgenoten</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Handelaar</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bouw uw fortuin op</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bouw uw fortuin op</gradient>"
 
 # ============================================
 # RANG WEERGAVENAMEN & BESCHRIJVINGEN
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Niet gerangschikt</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Selecteer een rangschikkingspad om te beginnen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Selecteer een rangschikkingspad om te beginnen</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Niet gerangschikt</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Standaardrang</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Geen rang geselecteerd</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Geen rang geselecteerd</gradient>"
   # Ranger Tree-rangen
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 Verkenner van paden</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Leest hoefafdrukken en windverschuivingen.</gradient>
-        - <gradient:#10b981:#34d399>➤ Niveau I • Natuurinitiatief</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Leest hoefafdrukken en windverschuivingen.</gradient>
+      - <gradient:#10b981:#34d399>➤ Niveau I • Natuurinitiatief</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 Jager van de wildernis</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Besluipt prooien met geduldige precisie.</gradient>
-        - <gradient:#10b981:#34d399>➤ Niveau II • Wilde achtervolging</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Besluipt prooien met geduldige precisie.</gradient>
+      - <gradient:#10b981:#34d399>➤ Niveau II • Wilde achtervolging</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 Tracker van tekens</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Volgt sporen die geen enkele storm kan uitwissen.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Padkeuze vooruit</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Volgt sporen die geen enkele storm kan uitwissen.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Padkeuze vooruit</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 Bewaker van de dieren</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Banden met topwezens van het rijk.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Niveau IV • Primaire tak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Banden met topwezens van het rijk.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Niveau IV • Primaire tak</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ Bewaker van Stormen</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Branden door onweer en regen.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Stormtak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Branden door onweer en regen.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Stormtak</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿 Bewaker van het Wild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bewaakt heilige grenzen en verborgen open plekken.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Niveau IV • Wilde tak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bewaakt heilige grenzen en verborgen open plekken.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Niveau IV • Wilde tak</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 Beestmeester Primal</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Voer het bevel over legendarische beesten zonder angst.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Voer het bevel over legendarische beesten zonder angst.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑 Beestmeester Storm</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Elke pijl begeleidt je meedogenloze salvo.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Elke pijl begeleidt je meedogenloze salvo.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ Niveau V • Eindrang</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 Beestmeester Wild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ De natuur zelf staat op om jouw oproep te beantwoorden.</gradient>
-        - <gradient:#15803d:#22c55e>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ De natuur zelf staat op om jouw oproep te beantwoorden.</gradient>
+      - <gradient:#15803d:#22c55e>➤ Niveau V • Eindrang</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ Rekruteer</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Een fris mes met ongeteste vastberadenheid.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Oefenterreinen</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Een fris mes met ongeteste vastberadenheid.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Oefenterreinen</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ Soldaat</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Gehard door boren en eerstelijnswerk.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Velddiscipline</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Gehard door boren en eerstelijnswerk.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Velddiscipline</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ Veteraan</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Gevechtslittekens markeren je verdiende wijsheid.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Kies je pad</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Gevechtslittekens markeren je verdiende wijsheid.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Kies je pad</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥Berserker</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ruilt verdediging in voor verwoestende aanval.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Niveau IV • Furytak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ruilt verdediging in voor verwoestende aanval.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Niveau IV • Furytak</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 Bewaker</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Staat standvastig waar anderen zouden breken.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Schildtak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Staat standvastig waar anderen zouden breken.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Schildtak</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Beheerst evenwichtige arenaoorlogvoering.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ Niveau IV • Arenafiliaal</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Beheerst evenwichtige arenaoorlogvoering.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ Niveau IV • Arenafiliaal</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 Krijgsheer van woede</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Een niet te stoppen motor van vernietiging.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Een niet te stoppen motor van vernietiging.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ Niveau V • Eindrang</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 Krijgsheer van het Schild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ De laatste muur tussen leven en ondergang.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ De laatste muur tussen leven en ondergang.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Niveau V • Eindrang</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 Krijgsheer van de Arena</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Gekroond tot kampioen van elk Colosseum.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Gekroond tot kampioen van elk Colosseum.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨ Leerling</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vonken van mysterieuze kracht ontwaken.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Niveau I • Arcane Foundations</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vonken van mysterieuze kracht ontwaken.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Niveau I • Arcane Foundations</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Weeft gecontroleerde en gerichte spreuken.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Arcane praktijk</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Weeft gecontroleerde en gerichte spreuken.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Arcane praktijk</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ Tovenaar</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bestuurt complexe magische patronen.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies uw leerstelling</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bestuurt complexe magische patronen.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies uw leerstelling</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 Tovenaar van Arcana</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Verfijnt brute kracht tot elegante kracht.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Arcane tak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Verfijnt brute kracht tot elegante kracht.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Arcane tak</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 Tovenaar van spreuken</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vergroot de grimoire-controle en precisie.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Spreukentak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vergroot de grimoire-controle en precisie.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Spreukentak</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 Tovenaar van de Leegte</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Buigt energieën uit de afgrond naar jouw wil.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Niveau IV • Ongeldige tak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Buigt energieën uit de afgrond naar jouw wil.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Niveau IV • Ongeldige tak</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 Aartsmagiër van Arcana</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Opperste architect van pure geheimzinnige macht.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Opperste architect van pure geheimzinnige macht.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 Aartsmagiër van spreuken</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Elke bezwering antwoordt onmiddellijk.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Elke bezwering antwoordt onmiddellijk.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ Niveau V • Eindrang</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 Aartsmagiër van de Leegte</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Heerst over de grenzen tussen werelden.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Heerst over de grenzen tussen werelden.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ Niveau V • Eindrang</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Leert timing, misleiding en snelheid.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straatkunst</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Leert timing, misleiding en snelheid.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straatkunst</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 Dief</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Glipt door sluizen en uitkijklijnen.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Stille toegang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Glipt door sluizen en uitkijklijnen.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Stille toegang</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ slaat één keer toe en verdwijnt spoorloos.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Niveau III • Kies uw methode</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ slaat één keer toe en verdwijnt spoorloos.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Niveau III • Kies uw methode</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 Schaduw van stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Beheers bewegingen die geen enkel oog kan volgen.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Niveau IV • Stealth-filiaal</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Beheers bewegingen die geen enkel oog kan volgen.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Niveau IV • Stealth-filiaal</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 Schaduw van de nacht</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Verandert duisternis in dodelijk voordeel.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Niveau IV • Nachttak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Verandert duisternis in dodelijk voordeel.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Niveau IV • Nachttak</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 Schaduw van sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ontmantelt plannen voordat vijanden reageren.</gradient>
-        - <gradient:#f97316:#fb923c>➤ Niveau IV • Sabotagefiliaal</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ontmantelt plannen voordat vijanden reageren.</gradient>
+      - <gradient:#f97316:#fb923c>➤ Niveau IV • Sabotagefiliaal</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 Spook van Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Wordt een onaantastbare stedelijke mythe.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Wordt een onaantastbare stedelijke mythe.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ Niveau V • Eindrang</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 Spook van de Nacht</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Is volledig eigenaar van het middernachtuur.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Is volledig eigenaar van het middernachtuur.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ Niveau V • Eindrang</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 Spook van Sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Beëindigt gevechten voordat ze zelfs maar beginnen.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Beëindigt gevechten voordat ze zelfs maar beginnen.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ Niveau V • Eindrang</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ Acoliet</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Begint het heilige pad van dienstbaarheid.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Niveau I • Toewijding</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Begint het heilige pad van dienstbaarheid.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Niveau I • Toewijding</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ Genezer</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Herstelt bondgenoten onder zware druk.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Niveau II • Restauratie</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Herstelt bondgenoten onder zware druk.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Niveau II • Restauratie</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ Priester</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Begeleidt partijen met heilige discipline.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Kies uw oproep</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Begeleidt partijen met heilige discipline.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Kies uw oproep</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ Bisschop van Goddelijkheid</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kanalen sturen stralende autoriteit.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Goddelijke tak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kanalen sturen stralende autoriteit.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Goddelijke tak</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ Bisschop van het Licht</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Verblindt corruptie met heilige schittering.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ Niveau IV • Lichte tak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Verblindt corruptie met heilige schittering.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ Niveau IV • Lichte tak</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 Bisschop van Zielen</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bewaakt de drempel van leven en dood.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Zieltak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bewaakt de drempel van leven en dood.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Zieltak</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 Hogepriester van de goddelijkheid</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Verklaart wonderen in het hart van de chaos.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Verklaart wonderen in het hart van de chaos.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ Niveau V • Eindrang</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑Hogepriester van het Licht</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Baadt bondgenoten in een onwrikbare dageraad.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Baadt bondgenoten in een onwrikbare dageraad.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ Niveau V • Eindrang</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 Hogepriester van de Zielen</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Herdersgeesten die de doodsangst te boven gaan.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Herdersgeesten die de doodsangst te boven gaan.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 Venter</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Begint met lef, charme en kleine transacties.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straathandel</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Begint met lef, charme en kleine transacties.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straathandel</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰Handelaar</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Breidt routes en betrouwbare contacten uit.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Aanwezigheid op de markt</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Breidt routes en betrouwbare contacten uit.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Aanwezigheid op de markt</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 Makelaar</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Sluit waardevolle deals met precisie.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies je rijk</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Sluit waardevolle deals met precisie.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies je rijk</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 Magnaat van rijkdom</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bouwt puur kapitaal op in een ongeëvenaard tempo.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Niveau IV • Vermogenstak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bouwt puur kapitaal op in een ongeëvenaard tempo.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Niveau IV • Vermogenstak</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 Magnaat van markten</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Organiseert vraag- en aanbodcycli.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Markttak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Organiseert vraag- en aanbodcycli.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Markttak</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 Handelsmagnaat</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Domineert karavaanbanen en logistiek.</gradient>
-        - <gradient:#f97316:#fdba74>➤ Niveau IV • Handelstak</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Domineert karavaanbanen en logistiek.</gradient>
+      - <gradient:#f97316:#fdba74>➤ Niveau IV • Handelstak</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 Tycoon van rijkdom</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bezuinigingen met één enkele beslissing.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bezuinigingen met één enkele beslissing.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ Niveau V • Eindrang</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 Tycoon van markten</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Stelt prijzen vast die elk gilde moet respecteren.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Stelt prijzen vast die elk gilde moet respecteren.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 Handelstycoon</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Eigenaar van de wegen, havens en winsten.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ Niveau V • Eindrang</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Eigenaar van de wegen, havens en winsten.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ Niveau V • Eindrang</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Er staat een premie op je hoofd!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Admin Paneel</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Toegang tot beheertools</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en configuratie-opties</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Toegang tot beheertools</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en configuratie-opties</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Premies</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk en beheer premies</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Jaag op spelers voor beloningen!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bekijk en beheer premies</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Jaag op spelers voor beloningen!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Voordelen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare voordelen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en speciale vaardigheden</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare voordelen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en speciale vaardigheden</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare quests</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en volg je voortgang</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bekijk beschikbare quests</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en volg je voortgang</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Rangen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk rang voortgang</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en ontgrendel nieuwe vaardigheden</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bekijk rang voortgang</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en ontgrendel nieuwe vaardigheden</gradient>"
 
 # ============================================
 # RANG HOOFDUI
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Rang Bomen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Blader door beschikbare rang bomen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en kies je pad</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Blader door beschikbare rang bomen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en kies je pad</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Word één met de natuur</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van boogschieten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Word één met de natuur</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Krijger</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Word een legendarische vechter</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van het gevecht</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Word een legendarische vechter</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Magiër</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Word een meester van het geheimzinnige</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Benut de kracht van magie</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Word een meester van het geheimzinnige</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Schurk</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Sla toe vanuit de schaduw</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beheers stealth en sluwheid</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Sla toe vanuit de schaduw</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Geestelijke</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Genees en bescherm je bondgenoten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kanaliseer goddelijke kracht</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Genees en bescherm je bondgenoten</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Handelaar</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bouw uw fortuin op</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beheers de kunst van de handel</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bouw uw fortuin op</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>Linksklik voor voorbeeld</gradient>"
-      - "<gradient:#10b981:#34d399>Rechtsklik om te selecteren</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>Linksklik voor voorbeeld</gradient>"
+    - "<gradient:#10b981:#34d399>Rechtsklik om te selecteren</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Deze rang boom is vergrendeld</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Voltooi eerst %minimum_rank_paths_to_be_absolved_needed% rang bomen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voltooi eerst %minimum_rank_paths_to_be_absolved_needed% rang bomen</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Voorwaarden:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Dit rang pad is vergrendeld!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Momenteel Actief</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Rang Boom Maken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Maak een nieuwe rang boom</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(Alleen admin)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Maak een nieuwe rang boom</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(Alleen admin)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Start rang niet gevonden voor dit pad!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Rang pad geselecteerd:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Start rang: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Rang boom creatie komt binnenkort!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Gratis versie - alleen voorbeeld</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Deze rangboom is alleen beschikbaar als voorbeeld.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Upgrade naar Premium om te ontgrendelen!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Klik met de linkermuisknop om een ​​voorbeeld te bekijken</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Deze rangboom is alleen beschikbaar als voorbeeld.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Upgrade naar Premium om te ontgrendelen!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Klik met de linkermuisknop om een ​​voorbeeld te bekijken</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premie vereist:</gradient> <gradient:#6b7280:#9ca3af>Upgrade naar Premium om extra rangbomen te selecteren!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Navigeer %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Centreer Weergave</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om de weergave te centreren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om de weergave te centreren</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Centreer Weergave</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeldmodus</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Je bekijkt in voorbeeldmodus</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Wijzigingen worden niet opgeslagen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Je bekijkt in voorbeeldmodus</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Wijzigingen worden niet opgeslagen</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Voorbeeldmodus</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Fout bij renderen rang</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Geen Rang Boom</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Kon rang boom niet laden</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kon rang boom niet laden</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Kritieke Fout</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Er is een fout opgetreden tijdens renderen</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Kan vereisten niet openen voor</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Er is een fout opgetreden. Probeer het opnieuw.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 Verkenner van paden</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Leest hoefafdrukken en windverschuivingen.</gradient>
-          - <gradient:#10b981:#34d399>➤ Niveau I • Natuurinitiatief</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Leest hoefafdrukken en windverschuivingen.</gradient>
+        - <gradient:#10b981:#34d399>➤ Niveau I • Natuurinitiatief</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 Jager van de wildernis</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Besluipt prooien met geduldige precisie.</gradient>
-          - <gradient:#10b981:#34d399>➤ Niveau II • Wilde achtervolging</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Besluipt prooien met geduldige precisie.</gradient>
+        - <gradient:#10b981:#34d399>➤ Niveau II • Wilde achtervolging</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 Tracker van tekens</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Volgt sporen die geen enkele storm kan uitwissen.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Padkeuze vooruit</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Volgt sporen die geen enkele storm kan uitwissen.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Padkeuze vooruit</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 Bewaker van de dieren</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Banden met topwezens van het rijk.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Niveau IV • Primaire tak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Banden met topwezens van het rijk.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Niveau IV • Primaire tak</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ Bewaker van Stormen</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Branden door onweer en regen.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Stormtak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Branden door onweer en regen.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Stormtak</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿 Bewaker van het Wild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bewaakt heilige grenzen en verborgen open plekken.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Niveau IV • Wilde tak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bewaakt heilige grenzen en verborgen open plekken.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Niveau IV • Wilde tak</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 Beestmeester Primal</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Voer het bevel over legendarische beesten zonder angst.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Voer het bevel over legendarische beesten zonder angst.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑 Beestmeester Storm</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Elke pijl begeleidt je meedogenloze salvo.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Elke pijl begeleidt je meedogenloze salvo.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Niveau V • Eindrang</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 Beestmeester Wild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ De natuur zelf staat op om jouw oproep te beantwoorden.</gradient>
-          - <gradient:#15803d:#22c55e>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ De natuur zelf staat op om jouw oproep te beantwoorden.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Niveau V • Eindrang</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ Rekruteer</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Een fris mes met ongeteste vastberadenheid.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Oefenterreinen</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Een fris mes met ongeteste vastberadenheid.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Oefenterreinen</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ Soldaat</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Gehard door boren en eerstelijnswerk.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Velddiscipline</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Gehard door boren en eerstelijnswerk.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Velddiscipline</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ Veteraan</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Gevechtslittekens markeren je verdiende wijsheid.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Kies je pad</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Gevechtslittekens markeren je verdiende wijsheid.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Kies je pad</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥Berserker</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ruilt verdediging in voor verwoestende aanval.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Niveau IV • Furytak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ruilt verdediging in voor verwoestende aanval.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Niveau IV • Furytak</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 Bewaker</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Staat standvastig waar anderen zouden breken.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Schildtak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Staat standvastig waar anderen zouden breken.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Niveau IV • Schildtak</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Beheerst evenwichtige arenaoorlogvoering.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ Niveau IV • Arenafiliaal</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Beheerst evenwichtige arenaoorlogvoering.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Niveau IV • Arenafiliaal</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 Krijgsheer van woede</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Een niet te stoppen motor van vernietiging.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Een niet te stoppen motor van vernietiging.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Niveau V • Eindrang</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 Krijgsheer van het Schild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ De laatste muur tussen leven en ondergang.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ De laatste muur tussen leven en ondergang.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Niveau V • Eindrang</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 Krijgsheer van de Arena</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Gekroond tot kampioen van elk Colosseum.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Gekroond tot kampioen van elk Colosseum.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨ Leerling</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vonken van mysterieuze kracht ontwaken.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Niveau I • Arcane Foundations</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vonken van mysterieuze kracht ontwaken.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Niveau I • Arcane Foundations</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Weeft gecontroleerde en gerichte spreuken.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Arcane praktijk</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Weeft gecontroleerde en gerichte spreuken.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Arcane praktijk</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ Tovenaar</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bestuurt complexe magische patronen.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies uw leerstelling</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bestuurt complexe magische patronen.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies uw leerstelling</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 Tovenaar van Arcana</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Verfijnt brute kracht tot elegante kracht.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Arcane tak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Verfijnt brute kracht tot elegante kracht.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Arcane tak</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 Tovenaar van spreuken</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vergroot de grimoire-controle en precisie.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Spreukentak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vergroot de grimoire-controle en precisie.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Spreukentak</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 Tovenaar van de Leegte</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Buigt energieën uit de afgrond naar jouw wil.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Niveau IV • Ongeldige tak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Buigt energieën uit de afgrond naar jouw wil.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Niveau IV • Ongeldige tak</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 Aartsmagiër van Arcana</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Opperste architect van pure geheimzinnige macht.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Opperste architect van pure geheimzinnige macht.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Niveau V • Eindrang</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 Aartsmagiër van spreuken</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Elke bezwering antwoordt onmiddellijk.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Elke bezwering antwoordt onmiddellijk.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Niveau V • Eindrang</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 Aartsmagiër van de Leegte</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Heerst over de grenzen tussen werelden.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Heerst over de grenzen tussen werelden.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Niveau V • Eindrang</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 Zakkenroller</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Leert timing, misleiding en snelheid.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straatkunst</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Leert timing, misleiding en snelheid.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straatkunst</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 Dief</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Glipt door sluizen en uitkijklijnen.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Stille toegang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Glipt door sluizen en uitkijklijnen.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Stille toegang</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ slaat één keer toe en verdwijnt spoorloos.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Niveau III • Kies uw methode</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ slaat één keer toe en verdwijnt spoorloos.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Niveau III • Kies uw methode</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 Schaduw van stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Beheers bewegingen die geen enkel oog kan volgen.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Niveau IV • Stealth-filiaal</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Beheers bewegingen die geen enkel oog kan volgen.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Niveau IV • Stealth-filiaal</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 Schaduw van de nacht</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Verandert duisternis in dodelijk voordeel.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Niveau IV • Nachttak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Verandert duisternis in dodelijk voordeel.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Niveau IV • Nachttak</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 Schaduw van sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ontmantelt plannen voordat vijanden reageren.</gradient>
-          - <gradient:#f97316:#fb923c>➤ Niveau IV • Sabotagefiliaal</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ontmantelt plannen voordat vijanden reageren.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Niveau IV • Sabotagefiliaal</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 Spook van Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Wordt een onaantastbare stedelijke mythe.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Wordt een onaantastbare stedelijke mythe.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Niveau V • Eindrang</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 Spook van de Nacht</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Is volledig eigenaar van het middernachtuur.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Is volledig eigenaar van het middernachtuur.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Niveau V • Eindrang</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 Spook van Sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Beëindigt gevechten voordat ze zelfs maar beginnen.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Beëindigt gevechten voordat ze zelfs maar beginnen.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Niveau V • Eindrang</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ Acoliet</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Begint het heilige pad van dienstbaarheid.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Niveau I • Toewijding</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Begint het heilige pad van dienstbaarheid.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau I • Toewijding</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ Genezer</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Herstelt bondgenoten onder zware druk.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Niveau II • Restauratie</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Herstelt bondgenoten onder zware druk.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Niveau II • Restauratie</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ Priester</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Begeleidt partijen met heilige discipline.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Kies uw oproep</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Begeleidt partijen met heilige discipline.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Kies uw oproep</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ Bisschop van Goddelijkheid</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kanalen sturen stralende autoriteit.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Goddelijke tak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kanalen sturen stralende autoriteit.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Niveau IV • Goddelijke tak</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ Bisschop van het Licht</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Verblindt corruptie met heilige schittering.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ Niveau IV • Lichte tak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Verblindt corruptie met heilige schittering.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Niveau IV • Lichte tak</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 Bisschop van Zielen</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bewaakt de drempel van leven en dood.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Zieltak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bewaakt de drempel van leven en dood.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Zieltak</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 Hogepriester van de goddelijkheid</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Verklaart wonderen in het hart van de chaos.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Verklaart wonderen in het hart van de chaos.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Niveau V • Eindrang</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑Hogepriester van het Licht</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Baadt bondgenoten in een onwrikbare dageraad.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Baadt bondgenoten in een onwrikbare dageraad.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Niveau V • Eindrang</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 Hogepriester van de Zielen</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Herdersgeesten die de doodsangst te boven gaan.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Herdersgeesten die de doodsangst te boven gaan.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 Venter</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Begint met lef, charme en kleine transacties.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straathandel</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Begint met lef, charme en kleine transacties.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Niveau I • Straathandel</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰Handelaar</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Breidt routes en betrouwbare contacten uit.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Aanwezigheid op de markt</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Breidt routes en betrouwbare contacten uit.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau II • Aanwezigheid op de markt</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 Makelaar</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Sluit waardevolle deals met precisie.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies je rijk</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Sluit waardevolle deals met precisie.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Kies je rijk</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 Magnaat van rijkdom</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bouwt puur kapitaal op in een ongeëvenaard tempo.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Niveau IV • Vermogenstak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bouwt puur kapitaal op in een ongeëvenaard tempo.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Niveau IV • Vermogenstak</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 Magnaat van markten</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Organiseert vraag- en aanbodcycli.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Markttak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Organiseert vraag- en aanbodcycli.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Niveau IV • Markttak</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 Handelsmagnaat</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Domineert karavaanbanen en logistiek.</gradient>
-          - <gradient:#f97316:#fdba74>➤ Niveau IV • Handelstak</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Domineert karavaanbanen en logistiek.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Niveau IV • Handelstak</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 Tycoon van rijkdom</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bezuinigingen met één enkele beslissing.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bezuinigingen met één enkele beslissing.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Niveau V • Eindrang</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 Tycoon van markten</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Stelt prijzen vast die elk gilde moet respecteren.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Stelt prijzen vast die elk gilde moet respecteren.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Niveau V • Eindrang</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 Handelstycoon</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Eigenaar van de wegen, havens en winsten.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ Niveau V • Eindrang</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Eigenaar van de wegen, havens en winsten.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Niveau V • Eindrang</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Dief</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡Infiltrant</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Acoliet</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Toegewijde dienaar van het goddelijke</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Toegewijde dienaar van het goddelijke</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Liefhebber</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Trouwe volger van het goddelijke pad</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trouwe volger van het goddelijke pad</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Priester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Genezer en beschermer van de gelovigen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Genezer en beschermer van de gelovigen</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Genezer</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van restauratieve kunsten</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Meester van restauratieve kunsten</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Bisschop</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Leider van de gelovigen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Leider van de gelovigen</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Orakel</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ziener van goddelijke visioenen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ziener van goddelijke visioenen</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ Hogepriester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Allerhoogste stem van het goddelijke</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Allerhoogste stem van het goddelijke</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� Zakkenroller</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Snelle vingers, snellere ontsnapping</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Dief</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Meester van stealth en diefstal</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 Verkenner</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ogen en oren van de schaduwen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ogen en oren van de schaduwen</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 Moordenaar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Stille moordenaar, dood door schaduwen</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡Infiltrant</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Expert in het ongemerkt in- en uitstappen</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Schaduwblad</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Dodelijke krijger van de nacht</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Dodelijke krijger van de nacht</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Beheerder van informatienetwerken</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Beheerder van informatienetwerken</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Eén met de duisternis zelf</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 Schaduwmeester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Opperheerser van alle schaduwen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Opperheerser van alle schaduwen</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Venter</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Verkoop van waren op straat</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Verkoop van waren op straat</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰Handelaar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Gevestigde handelaar met connecties</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Gevestigde handelaar met connecties</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰Verkoper</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ervaren verkoper van goederen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ervaren verkoper van goederen</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Kunstmaker</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ambachtsman van fijne waren</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ambachtsman van fijne waren</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰Alchemist</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van drankjes en elixers</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Meester van drankjes en elixers</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰Handelaar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Succesvolle ondernemer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Succesvolle ondernemer</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Meesterknutselaar</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>De hoogste ambachtsman van het rijk</gradient>"
+        - "<gradient:#6b7280:#9ca3af>De hoogste ambachtsman van het rijk</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Koopman Prins</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Royalty van handel</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Royalty van handel</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Meester van handel en handel</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Meester van handel en handel</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Gildemeester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Leider van het koopmansgilde</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Leider van het koopmansgilde</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Voorbeeld:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Vereiste #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Kon vereiste details niet laden</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kon vereiste details niet laden</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Klik om details te bekijken</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Vereiste Details</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ Je hebt niet alle benodigde items!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Items succesvol ingediend!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Levels Nodig:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Level vereiste behaald!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verdien XP door te minen, mobs te doden,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>smeltartikelen en meer!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Verdien XP door te minen, mobs te doden,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>smeltartikelen en meer!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Jouw Speeltijd:</gradient> <gradient:#10b981:#34d399>%hours%u %minutes%m</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Vereiste Speeltijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Resterende Tijd:</gradient> <gradient:#f59e0b:#fbbf24>%hours%u %minutes%m</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Speeltijd vereiste behaald!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Blijf spelen op de server</gradient>"
-      - "<gradient:#6b7280:#9ca3af>om speeltijd te verzamelen!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Blijf spelen op de server</gradient>"
+    - "<gradient:#6b7280:#9ca3af>om speeltijd te verzamelen!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Voortgang</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Huidig:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Voltooiing:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Voltooid</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Deze vereiste is al voltooid</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Deze vereiste is al voltooid</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Vereiste Voltooien</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om deze vereiste te voltooien</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om deze vereiste te voltooien</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Voortgang Vernieuwen</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om je voortgang te vernieuwen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om je voortgang te vernieuwen</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Items Voltooid:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verzamel de vereiste items</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en keer hier terug om te voltooien</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Verzamel de vereiste items</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en keer hier terug om te voltooien</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Verdien de vereiste valuta</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Verdien de vereiste valuta</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Krijg ervaringsniveaus</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Krijg ervaringsniveaus</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Speel op de server</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Speel op de server</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Voltooi de vereiste</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voltooi de vereiste</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Samenvatting bekijken...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Tips bekijken...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Voltooid!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Voltooid!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Klaar om te voltooien!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik om af te ronden</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Klaar om te voltooien!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om af te ronden</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ Bezig</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Niet Gestart</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Niet Gestart</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Status: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>Voortgang</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Onbekende Vereiste</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kon details niet laden</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kon details niet laden</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Fout</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Kon vereiste niet laden</gradient>"
+    - "<gradient:#ef4444:#f87171>Kon vereiste niet laden</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 Voortgang:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Status:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>is al voltooid!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Premie Maken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
-      - "<gradient:#6b7280:#9ca3af>op een andere speler</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
+    - "<gradient:#6b7280:#9ca3af>op een andere speler</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Premies Bekijken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk alle actieve premies</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bekijk alle actieve premies</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Mijn Premies</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Bekijk premies die je hebt gemaakt</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bekijk premies die je hebt gemaakt</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Ranglijst</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Top premiejagers</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Top premiejagers</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Premie op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Doelwit:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Opdrachtgever:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Gemaakt:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Klik voor details</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Doelwit:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Opdrachtgever:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gemaakt:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Klik voor details</gradient>"
 
 # ============================================
 # BOUNTY CREATIE-UI
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Doelwit Selecteren</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Doelwit: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om een speler te kiezen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Huidig: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om een speler te kiezen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Huidig: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Premie Maken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
-      - "<gradient:#6b7280:#9ca3af>op een andere speler</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om een nieuwe premie te maken</gradient>"
+    - "<gradient:#6b7280:#9ca3af>op een andere speler</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Item Beloningen Toevoegen</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Item Beloningen Toevoegen</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Klik om item beloningen toe te voegen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Huidige items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om item beloningen toe te voegen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Huidige items:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Valuta Beloningen Toevoegen</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Valuta Beloningen Toevoegen</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Klik om valuta beloningen toe te voegen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Huidige valuta's:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om valuta beloningen toe te voegen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Huidige valuta's:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Selecteer eerst een doelwit!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Premie Maken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om de premie te maken</gradient>"
-      - "<gradient:#6b7280:#9ca3af>met de geselecteerde beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om de premie te maken</gradient>"
+    - "<gradient:#6b7280:#9ca3af>met de geselecteerde beloningen</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Geen speler geselecteerd!</gradient> <gradient:#6b7280:#9ca3af>Selecteer eerst een doelwit.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Geen beloningen toegevoegd!</gradient> <gradient:#6b7280:#9ca3af>Voeg eerst beloningen toe.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Geen Beloningen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen te maken</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voeg items toe om beloningen te maken</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Item Toevoegen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plaats items hier als beloningen</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Doelwit: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Deze premie is geplaatst op</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Deze premie is geplaatst op</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Premie Beloning</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Dit item wordt gegeven aan</gradient>"
-      - "<gradient:#6b7280:#9ca3af>degene die de premie claimt</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Premie Beloning</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Dit item wordt gegeven aan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>degene die de premie claimt</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Geen nieuwe items toegevoegd!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Sommige items zijn gevallen omdat je inventory vol was!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Doelwit van deze premie</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Doelwit van deze premie</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Binnenkort meer informatie...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Beloningen Bekijken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om alle beloningen te zien</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Totale beloningen:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om alle beloningen te zien</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totale beloningen:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Premie Verwijderen</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Waarschuwing: Kan niet ongedaan worden!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik om deze premie te verwijderen</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Waarschuwing: Kan niet ongedaan worden!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om deze premie te verwijderen</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Premie op</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>is verwijderd!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Weet je zeker dat je deze premie wilt verwijderen?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 Rechten Beheerder</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Beheer plugin rechten</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Totaal plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Totaal rechten:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Beheer plugin rechten</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totaal plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totaal rechten:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kon rechten beheerder niet openen!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Plugin-integraties</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Beheer plugin-integraties voor beheerders op één plek</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Omvat valuta-, vaardigheden- en banendetectieweergaven</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Beheer plugin-integraties voor beheerders op één plek</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Omvat valuta-, vaardigheden- en banendetectieweergaven</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kan plugin-integraties niet openen!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms Groepen Maken</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Maak LuckPerms groepen van rangen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Maak LuckPerms groepen van rangen</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms is niet geïnstalleerd!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Geen rangen gevonden om groepen voor te maken!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ Gemaakt</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms groepen!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Integratiehub</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Open RDQ plugin-integratiedashboards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Detectie van valuta, vaardigheden/banen en PlaceholderAPI-tools zijn hier beschikbaar</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Open RDQ plugin-integratiedashboards</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Detectie van valuta, vaardigheden/banen en PlaceholderAPI-tools zijn hier beschikbaar</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Valuta-integraties</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Open beheer van valutaprovider</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Beoordeling gedetecteerde Vault- en JExEconomy-valuta's</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Open beheer van valutaprovider</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Beoordeling gedetecteerde Vault- en JExEconomy-valuta's</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kan valuta-integraties niet openen!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Vaardigheidsintegraties</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ondersteuningsstatus bekijken voor mcMMO, Aura en EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Detecteer momenteel ingeschakelde vaardigheidsplug-ins</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ondersteuningsstatus bekijken voor mcMMO, Aura en EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detecteer momenteel ingeschakelde vaardigheidsplug-ins</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kan vaardigheid niet openen integraties!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ Taakintegraties</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ondersteuningsstatus bekijken voor EcoJobs en JobsReborn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Detecteer momenteel ingeschakelde taakplug-ins</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ondersteuningsstatus bekijken voor EcoJobs en JobsReborn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detecteer momenteel ingeschakelde taakplug-ins</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kan taakintegraties niet openen!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Detecteer PlaceholderAPI-ondersteuning en beheer uitbreidingen</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Installeer de Player-uitbreiding en laad opnieuw PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Detecteer PlaceholderAPI-ondersteuning en beheer uitbreidingen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installeer de Player-uitbreiding en laad opnieuw PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kan PlaceholderAPI-tools niet openen!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI-integratie</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI ondersteund:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Doeluitbreiding:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Installeer en herlaad rechtstreeks vanuit dit paneel</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI ondersteund:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Doeluitbreiding:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Installeer en herlaad rechtstreeks vanuit dit paneel</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI Gedetecteerd</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI is geïnstalleerd en ingeschakeld</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI is geïnstalleerd en ingeschakeld</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI Ontbreekt</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Installeer en schakel PlaceholderAPI in om deze actie te gebruiken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installeer en schakel PlaceholderAPI in om deze actie te gebruiken</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 Installeer %expansion_name%-uitbreiding</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Uitgevoerd:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Vervolgens uitgevoerd:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Klik om beide PlaceholderAPI-opdrachten uit te voeren</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Uitgevoerd:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vervolgens uitgevoerd:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik om beide PlaceholderAPI-opdrachten uit te voeren</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI Vereist</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Deze actie is niet beschikbaar totdat PlaceholderAPI is geïnstalleerd</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Deze actie is niet beschikbaar totdat PlaceholderAPI is geïnstalleerd</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Beheerderstoegang vereist</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Je hebt geen toestemming om de PlaceholderAPI-beheertools te gebruiken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Je hebt geen toestemming om de PlaceholderAPI-beheertools te gebruiken</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ Je hebt geen toestemming om PlaceholderAPI-integraties te beheren.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI is niet beschikbaar op deze server.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Kan uitbreiding niet downloaden:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Status van vaardigheidsplug-in</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ondersteunde vaardigheidsintegraties:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nu gedetecteerd:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Controleert mcMMO, Aura en EcoSkills support</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ondersteunde vaardigheidsintegraties:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nu gedetecteerd:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Controleert mcMMO, Aura en EcoSkills support</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Gedetecteerd</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integratie-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integratie-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Geen vaardigheidsintegraties geconfigureerd</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Er zijn momenteel geen vaardigheidsplug-in-integraties geconfigureerd</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Er zijn momenteel geen vaardigheidsplug-in-integraties geconfigureerd</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 Functieplug-instatus</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ondersteunde taakintegraties:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nu gedetecteerd:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Controleert EcoJobs- en JobsReborn-ondersteuning</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ondersteunde taakintegraties:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nu gedetecteerd:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Controleert EcoJobs- en JobsReborn-ondersteuning</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Gedetecteerd</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integratie-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integratie-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Geen taakintegraties Geconfigureerd</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Er zijn momenteel geen jobplug-in-integraties geconfigureerd</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Er zijn momenteel geen jobplug-in-integraties geconfigureerd</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Aanbieder:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Symbool:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Voorvoegsel:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Achtervoegsel:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Aanbieder:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Symbool:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voorvoegsel:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Achtervoegsel:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ Maak %currency_id% aan</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Creëer de standaardvaluta voor RDQ</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>Klik om %currency_id% aan te maken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Creëer de standaardvaluta voor RDQ</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>Klik om %currency_id% aan te maken</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Vereist</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Voor deze actie is JExEconomy vereist</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Installeer het voordat u standaardinstellingen maakt</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voor deze actie is JExEconomy vereist</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installeer het voordat u standaardinstellingen maakt</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Klaar</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>De standaardvaluta bestaat al</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Geen verdere configuratie nodig</gradient>"
+      - "<gradient:#6b7280:#9ca3af>De standaardvaluta bestaat al</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Geen verdere configuratie nodig</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Standaardvaluta gemaakt:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Kan valuta niet maken:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Geen valuta gedetecteerd</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ kan de valuta's Vault of JExEconomy niet detecteren</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Installeer of schakel eerst een economy-provider in</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ kan de valuta's Vault of JExEconomy niet detecteren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Installeer of schakel eerst een economy-provider in</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Machtigingen:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Machtigingen:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>Klik met de linkermuisknop om te selecteren</gradient>"
-        - "<gradient:#10b981:#34d399>Klik met de rechtermuisknop om alles toe te wijzen</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>Klik met de linkermuisknop om te selecteren</gradient>"
+      - "<gradient:#10b981:#34d399>Klik met de rechtermuisknop om alles toe te wijzen</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Leeg</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Knooppunt:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Klik om deze toestemming toe te wijzen</gradient>"
+      - "<gradient:#10b981:#34d399>Klik om deze toestemming toe te wijzen</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Geen plug-in geselecteerd</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Selecteer hierboven een plug-in</gradient>"
-        - "<gradient:#6b7280:#9ca3af>om de machtigingen te bekijken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Selecteer hierboven een plug-in</gradient>"
+      - "<gradient:#6b7280:#9ca3af>om de machtigingen te bekijken</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Leeg</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Toewijzen %plugin_name% Machtigingen</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Wijs alle rechten toe van</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% rechten)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Wijs alle rechten toe van</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% rechten)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Geen selectie</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Geselecteerd: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Machtigingen:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Totaal plug-ins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plug-in:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Machtigingen:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totaal plug-ins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Overzicht</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Totaal plug-ins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Selecteer een plug-in om machtigingen te bekijken</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totaal plug-ins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Selecteer een plug-in om machtigingen te bekijken</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Gegevens vernieuwen</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Klik om de machtigingsgegevens te vernieuwen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik om de machtigingsgegevens te vernieuwen</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Selectie wissen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om de plug-in te deselecteren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om de plug-in te deselecteren</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Toewijzen %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Wijs alle machtigingen van de geselecteerde plug-in toe</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Wijs alle machtigingen van de geselecteerde plug-in toe</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Wijs alle machtigingen toe</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Wijs machtigingen toe aan iedereen</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plug-ins</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Wijs machtigingen toe aan iedereen</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plug-ins</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Gegevens vernieuwd!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Pagina %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Huidige pagina:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Totaal pagina's:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Pagina %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Terug</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om terug te gaan</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Doorgaan</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om door te gaan</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om door te gaan</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Vorige</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vorige pagina</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vorige pagina</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Volgende</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Volgende pagina</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Volgende pagina</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Omhoog</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ga omhoog</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ga omhoog</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Omlaag</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ga omlaag</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ga omlaag</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Actie annuleren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Actie annuleren</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Waarde Invoeren</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Typ je invoer hierboven</gradient>"
-      - "<gradient:#6b7280:#9ca3af>en klik om te bevestigen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Typ je invoer hierboven</gradient>"
+    - "<gradient:#6b7280:#9ca3af>en klik om te bevestigen</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Kon invoer niet verwerken:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Bevestigen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om te bevestigen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om te bevestigen</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuleren</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om te annuleren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om te annuleren</gradient>"
 
 # ============================================
 # BEPERKINGEN VOOR DE GRATIS VERSIE
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Gratis versie</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Je gebruikt de gratis versie</gradient>"
-      - "<gradient:#6b7280:#9ca3af>met beperkte functies.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Upgrade naar Premium voor:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Onbeperkte rangbomen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Onbeperkt aantal rangen per boom</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Meerdere actieve paden</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Je gebruikt de gratis versie</gradient>"
+    - "<gradient:#6b7280:#9ca3af>met beperkte functies.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Upgrade naar Premium voor:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Onbeperkte rangbomen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Onbeperkt aantal rangen per boom</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Meerdere actieve paden</gradient>"
 
 # ============================================
 # PREMIUM VERSIE BERICHTEN
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Premium-versie</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Alle functies ontgrendeld!</gradient>"
+    - "<gradient:#10b981:#34d399>Alle functies ontgrendeld!</gradient>"
 
 # ============================================
 # VEREISTE ARTIKEL DETAILWEERGAVE (vereenvoudigd)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Artikelen indienen</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Alle artikelen klaar!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Klik om te verzenden</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Alle artikelen klaar!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Klik om te verzenden</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Artikelen indienen</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Er ontbreken vereiste items</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Verzamel eerst alle items</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Er ontbreken vereiste items</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Verzamel eerst alle items</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Terug</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Keer terug naar de vereisten</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Keer terug naar de vereisten</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Totale voortgang</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Voltooiing:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Vereisten:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Voltooiing:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Vereisten:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
-      - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+    - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>✅ Rang Claimen</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Alle vereisten voltooid!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Klik om je rang te claimen</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Alle vereisten voltooid!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Klik om je rang te claimen</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Rang vergrendeld</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Vergrendeld</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
-        - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Voltooi alle vereisten</gradient>"
+      - "<gradient:#6b7280:#9ca3af>om deze rang te ontgrendelen.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Terug</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Keer terug naar het rangoverzicht</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Keer terug naar het rangoverzicht</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Vereiste voltooid!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Alle vereisten voltooid! Je kunt nu de rang claimen!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Geen beloningen</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
       type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Waarde:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Bekijk alle beloningen</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Klik om alles te zien %count% beloningen</gradient>"
-        - "<gradient:#6b7280:#9ca3af>voor deze rang in detail</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik om alles te zien %count% beloningen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>voor deze rang in detail</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Gedetailleerde beloningenweergave volgt binnenkort!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Geen beloningen</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Deze rang kent geen beloningen</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Deze rang kent geen beloningen</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Rangbeloningen</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Je zult ontvangen %count% beloningen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>wanneer je deze rang claimt</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Je zult ontvangen %count% beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>wanneer je deze rang claimt</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Geen beloningen</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd</gradient>"
     type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Waarde:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Bekijk alle beloningen</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik om alles te zien %count% beloningen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>voor deze rang in detail</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik om alles te zien %count% beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>voor deze rang in detail</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Gedetailleerde beloningenweergave volgt binnenkort!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Geen beloningen</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Deze rang kent geen beloningen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Deze rang kent geen beloningen</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Voor deze rang zijn geen beloningen geconfigureerd.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Rangbeloningen</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Je zult ontvangen %count% beloningen</gradient>"
-    - "<gradient:#6b7280:#9ca3af>wanneer je deze rang claimt</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Je zult ontvangen %count% beloningen</gradient>"
+  - "<gradient:#6b7280:#9ca3af>wanneer je deze rang claimt</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Deze rang heeft %count% beloningen</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik op een beloning voor meer informatie</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Deze rang heeft %count% beloningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik op een beloning voor meer informatie</gradient>"
 
 # ============================================
 # PERK OVERZICHT UI
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Gevecht genezen</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Genees wanneer je schade toebrengt aan vijanden</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Zombie-moordenaar</gradient>
+    description: Versla zombies en verzamel hun druppels om je gevechtsvaardigheid te bewijzen
+    task:
+      kill_zombies:
+        name: <white>Versla zombies</white>
+        description: Doden %amount% zombies
+      collect_flesh:
+        name: <white>Verzamel rot vlees</white>
+        description: Bijeenkomen %amount% rot vlees van verslagen zombies
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Meester Mijnwerker</gradient>
+    description: Mijn verschillende ertsen binnen de tijdslimiet om een ​​meestermijnwerker te worden
+    task:
+      mine_coal:
+        name: <white>Mijn steenkool</white>
+        description: De mijne %amount% steenkoolertsblokken
+      mine_iron:
+        name: <white>Mijn ijzer</white>
+        description: De mijne %amount% ijzerertsblokken
+      mine_diamond:
+        name: <white>Mijn diamanten</white>
+        description: De mijne %amount% diamantertsblokken
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>De droom van de bouwer</gradient>
+    description: Bouw een gebouw door de opeenvolgende stappen te volgen om je bouwvaardigheden te demonstreren
+    task:
+      foundation:
+        name: <white>Stichting leggen</white>
+        description: Plaats %amount% baksteenblokken voor de fundering
+      walls:
+        name: <white>Bouw muren</white>
+        description: Plaats %amount% eiken plankblokken voor de muren
+      windows:
+        name: <white>Voeg Windows toe</white>
+        description: Plaats %amount% glazen blokken voor ramen
+      roof:
+        name: <white>Compleet dak</white>
+        description: Plaats %amount% eiken trapblokken voor het dak
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Quest-categorieën</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Zoektochten</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Speurtocht: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Actieve zoektochten</gradient>
+    items:
+      back:
+        name: <gray>Rug</gray>
+        lore:
+        - <gray>Keer terug naar het vorige menu</gray>
+      start:
+        name: <green>Zoektocht starten</green>
+        lore:
+        - <gray>Klik om deze zoektocht te starten</gray>
+        - ''
+        - <dark_gray>Vereisten:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Verlaat de zoektocht</red>
+        lore:
+        - <gray>Klik om deze zoektocht te verlaten</gray>
+        - ''
+        - '<yellow>Waarschuwing: de voortgang zal verloren gaan</yellow>'
+      info:
+        name: <yellow>Zoektochtinformatie</yellow>
+        lore:
+        - <gray>Klik om de details van de zoektocht te bekijken</gray>
+      progress:
+        name: <aqua>Bekijk de voortgang</aqua>
+        lore:
+        - <gray>Klik om de voortgang van de missie te bekijken</gray>
+        - ''
+        - '<dark_gray>Voortgang: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Dichtbij</gray>
+        lore:
+        - <gray>Sluit dit menu</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Moeilijkheidsgraad: %difficulty%</dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+        - '<dark_gray>Taken: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Voortgang: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Klik om deze zoektocht te starten</green>
+      click_to_view: <yellow>Klik om de details van de zoektocht te bekijken</yellow>
+      click_to_abandon: <red>Klik om deze zoektocht te verlaten</red>
+      already_completed: <green>Al voltooid</green>
+      requirements_not_met: <red>Vereisten niet voldaan</red>
+      on_cooldown: '<red>Bij afkoelen: %time%</red>'
+      time_remaining: '<yellow>Resterende tijd: %time%</yellow>'
+      repeatable: <aqua>Herhaalbare zoektocht</aqua>
+      one_time: <gray>Eenmalige zoektocht</gray>
+    progress:
+      overall: <yellow>Algemene vooruitgang</yellow>
+      percentage: '<gray>Voortgang: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Taken: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Verstreken tijd: <white>%time%</white></gray>'
+      time_remaining: '<gray>Resterende tijd: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Voortgang: <white>%current%/%required%</white></gray>'
+      completed: <green>Voltooid</green>
+      remaining: '<gray>Overig: <white>%remaining%</white></gray>'
+      locked: <red>Vergrendeld</red>
+      sequential: <yellow>Voltooi eerst eerdere taken</yellow>
+    rewards:
+      header: <yellow>Beloningen</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Ervaring</aqua>
+      item: <white>%amount%X %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Voordeel: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Speurtocht: %quest%</gradient>'
+    requirements:
+      header: <yellow>Vereisten</yellow>
+      level: <aqua>Niveau %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Compleet: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Rang: %rank%</gradient>'
+      permission: '<gray>Toestemming: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Triviaal</gradient>
+  easy: <gradient:#10b981:#34d399>Eenvoudig</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normaal</gradient>
+  hard: <gradient:#ef4444:#f87171>Moeilijk</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Extreem</gradient>

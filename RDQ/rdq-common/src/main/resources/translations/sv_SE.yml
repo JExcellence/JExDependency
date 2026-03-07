@@ -2222,3 +2222,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Läk när du skadar fiender</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Zombie Slayer</gradient>
+    description: Besegra zombies och samla deras droppar för att bevisa din stridsförmåga
+    task:
+      kill_zombies:
+        name: <white>Besegra zombies</white>
+        description: Döda %amount% zombies
+      collect_flesh:
+        name: <white>Samla ruttet kött</white>
+        description: Samla %amount% ruttet kött från besegrade zombies
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Gruvarbetare</gradient>
+    description: Bryt olika malmer inom tidsfristen för att bli gruvarbetare
+    task:
+      mine_coal:
+        name: <white>Min kol</white>
+        description: Mina %amount% kolmalmsblock
+      mine_iron:
+        name: <white>Min järn</white>
+        description: Mina %amount% järnmalmsblock
+      mine_diamond:
+        name: <white>Mina diamanter</white>
+        description: Mina %amount% diamantmalmsblock
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Byggarens dröm</gradient>
+    description: Bygg en byggnad genom att följa de sekventiella stegen för att visa upp dina byggkunskaper
+    task:
+      foundation:
+        name: <white>Lekmannastiftelse</white>
+        description: Plats %amount% tegelblock till grunden
+      walls:
+        name: <white>Bygga väggar</white>
+        description: Plats %amount% ekplankblock för väggarna
+      windows:
+        name: <white>Lägg till Windows</white>
+        description: Plats %amount% glasblock för fönster
+      roof:
+        name: <white>Komplett tak</white>
+        description: Plats %amount% trappblock i ek till taket
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Uppdragskategorier</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Uppdrag</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Sökande: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Aktiva uppdrag</gradient>
+    items:
+      back:
+        name: <gray>Tillbaka</gray>
+        lore:
+        - <gray>Återgå till föregående meny</gray>
+      start:
+        name: <green>Starta Quest</green>
+        lore:
+        - <gray>Klicka för att starta detta uppdrag</gray>
+        - ''
+        - <dark_gray>Krav:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Överge Quest</red>
+        lore:
+        - <gray>Klicka för att överge det här uppdraget</gray>
+        - ''
+        - '<yellow>Varning: Framstegen kommer att gå förlorade</yellow>'
+      info:
+        name: <yellow>Quest Info</yellow>
+        lore:
+        - <gray>Klicka för att se uppdragsinformation</gray>
+      progress:
+        name: <aqua>Visa framsteg</aqua>
+        lore:
+        - <gray>Klicka för att se uppdragets framsteg</gray>
+        - ''
+        - '<dark_gray>Framsteg: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Nära</gray>
+        lore:
+        - <gray>Stäng den här menyn</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Svårighet: %difficulty%</dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+        - '<dark_gray>Uppgifter: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Framsteg: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Klicka för att starta detta uppdrag</green>
+      click_to_view: <yellow>Klicka för att se uppdragsinformation</yellow>
+      click_to_abandon: <red>Klicka för att överge det här uppdraget</red>
+      already_completed: <green>Redan klar</green>
+      requirements_not_met: <red>Kraven inte uppfyllda</red>
+      on_cooldown: '<red>Vid nedkylning: %time%</red>'
+      time_remaining: '<yellow>Återstående tid: %time%</yellow>'
+      repeatable: <aqua>Upprepad quest</aqua>
+      one_time: <gray>Engångsuppdrag</gray>
+    progress:
+      overall: <yellow>Övergripande framsteg</yellow>
+      percentage: '<gray>Framsteg: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Uppgifter: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Förfluten tid: <white>%time%</white></gray>'
+      time_remaining: '<gray>Återstående tid: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Framsteg: <white>%current%/%required%</white></gray>'
+      completed: <green>Avslutad</green>
+      remaining: '<gray>Återstående: <white>%remaining%</white></gray>'
+      locked: <red>Låst</red>
+      sequential: <yellow>Slutför tidigare uppgifter först</yellow>
+    rewards:
+      header: <yellow>Belöningar</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Uppleva</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Förmån: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Sökande: %quest%</gradient>'
+    requirements:
+      header: <yellow>Krav</yellow>
+      level: <aqua>Nivå %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Komplett: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Rang: %rank%</gradient>'
+      permission: '<gray>Tillstånd: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Trivial</gradient>
+  easy: <gradient:#10b981:#34d399>Lätt</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
+  hard: <gradient:#ef4444:#f87171>Hård</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Extrem</gradient>

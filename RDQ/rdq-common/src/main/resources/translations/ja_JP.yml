@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 報酬なし</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成する</gradient>"
+  - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成する</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ アイテムの追加</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>報酬として追加するアイテムをここに配置します</gradient>"
-    - "<gradient:#6b7280:#9ca3af>左クリックしてアイテムを配置します</gradient>"
-    - "<gradient:#6b7280:#9ca3af>右クリックして項目を削除します</gradient>"
+  - "<gradient:#6b7280:#9ca3af>報酬として追加するアイテムをここに配置します</gradient>"
+  - "<gradient:#6b7280:#9ca3af>左クリックしてアイテムを配置します</gradient>"
+  - "<gradient:#6b7280:#9ca3af>右クリックして項目を削除します</gradient>"
 
 # ============================================
 # ランクツリーの表示名と説明
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹レンジャー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>アーチェリーと追跡の技術をマスターする</gradient>"
-      - "<gradient:#6b7280:#9ca3af>自然と一体になる</gradient>"
+    - "<gradient:#6b7280:#9ca3af>アーチェリーと追跡の技術をマスターする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>自然と一体になる</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ 戦士</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>戦闘術をマスターする</gradient>"
-      - "<gradient:#6b7280:#9ca3af>伝説の戦士になろう</gradient>"
+    - "<gradient:#6b7280:#9ca3af>戦闘術をマスターする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>伝説の戦士になろう</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨メイジ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>魔法の力を利用する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>秘術のマスターになろう</gradient>"
+    - "<gradient:#6b7280:#9ca3af>魔法の力を利用する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>秘術のマスターになろう</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 ローグ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ステルスと狡猾さをマスターする</gradient>"
-      - "<gradient:#6b7280:#9ca3af>影からの攻撃</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ステルスと狡猾さをマスターする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>影からの攻撃</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝クレリック</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>神の力を伝える</gradient>"
-      - "<gradient:#6b7280:#9ca3af>味方を癒して守る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>神の力を伝える</gradient>"
+    - "<gradient:#6b7280:#9ca3af>味方を癒して守る</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 販売者</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>貿易の技術をマスターする</gradient>"
-      - "<gradient:#6b7280:#9ca3af>財産を築く</gradient>"
+    - "<gradient:#6b7280:#9ca3af>貿易の技術をマスターする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>財産を築く</gradient>"
 
 # ============================================
 # ランクの表示名と説明
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>ランクなし</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>開始するランクパスを選択してください</gradient>"
+    - "<gradient:#6b7280:#9ca3af>開始するランクパスを選択してください</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>ランクなし</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>デフォルトランク</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>ランクが選択されていません</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ランクが選択されていません</gradient>"
   # レンジャーツリーのランク
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 トレイルのスカウト</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 蹄跡と風の変化を読み取​​ります。</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier I • ネイチャー・イニシエイト</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 蹄跡と風の変化を読み取​​ります。</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier I • ネイチャー・イニシエイト</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 荒野の狩人</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 忍耐強く正確に獲物を捕らえます。</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier II • ワイルド・パースート</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 忍耐強く正確に獲物を捕らえます。</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier II • ワイルド・パースート</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 兆候の追跡者</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 嵐が消し去ることのできない道をたどります。</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Tier III • 今後の道の選択</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 嵐が消し去ることのできない道をたどります。</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Tier III • 今後の道の選択</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 獣の番人</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 王国の頂点に立つ生き物との絆。</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • プライマルブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 王国の頂点に立つ生き物との絆。</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • プライマルブランチ</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ 嵐の番人</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 雷や雨でも確実に発火します。</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Tier IV • ストームブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 雷や雨でも確実に発火します。</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Tier IV • ストームブランチ</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿 野生の監視者</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 神聖な辺境と隠れた空き地を守ります。</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Tier IV • 野生の枝</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 神聖な辺境と隠れた空き地を守ります。</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Tier IV • 野生の枝</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 ビーストマスタープライマル</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 恐れることなく伝説の獣を指揮します。</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 恐れることなく伝説の獣を指揮します。</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑 ビーストマスター・ストーム</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ あらゆるボルトがあなたの容赦ないボレーを導きます。</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ あらゆるボルトがあなたの容赦ないボレーを導きます。</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ Tier V • 最終ランク</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 ビーストマスターワイルド</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 自然そのものがあなたの呼びかけに応えようと立ち上がります。</gradient>
-        - <gradient:#15803d:#22c55e>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 自然そのものがあなたの呼びかけに応えようと立ち上がります。</gradient>
+      - <gradient:#15803d:#22c55e>➤ Tier V • 最終ランク</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ 採用する</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 試されていない決意を持った新鮮な刃。</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 訓練場</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 試されていない決意を持った新鮮な刃。</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 訓練場</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ 兵士</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 訓練と前線での任務によって鍛えられる。</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Tier II • 現場規律</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 訓練と前線での任務によって鍛えられる。</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Tier II • 現場規律</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ ベテラン</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 戦いの傷跡は、あなたが獲得した知恵を示すものです。</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ レベル III • パスを選択してください</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 戦いの傷跡は、あなたが獲得した知恵を示すものです。</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ レベル III • パスを選択してください</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥 バーサーカー</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 防御を破壊的な攻撃と交換します。</gradient>
-        - <gradient:#ef4444:#f87171>➤ Tier IV • フューリーブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 防御を破壊的な攻撃と交換します。</gradient>
+      - <gradient:#ef4444:#f87171>➤ Tier IV • フューリーブランチ</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 ガーディアン</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 他の人が折れそうな場所でもしっかりと立ちます。</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Tier IV • シールド支部</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 他の人が折れそうな場所でもしっかりと立ちます。</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Tier IV • シールド支部</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 剣闘士</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ バランスのとれたアリーナ戦争をマスターします。</gradient>
-        - <gradient:#a855f7:#c084fc>➤ Tier IV • アリーナブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ バランスのとれたアリーナ戦争をマスターします。</gradient>
+      - <gradient:#a855f7:#c084fc>➤ Tier IV • アリーナブランチ</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 怒りのウォーロード</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 止まらない破壊エンジン。</gradient>
-        - <gradient:#dc2626:#fb7185>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 止まらない破壊エンジン。</gradient>
+      - <gradient:#dc2626:#fb7185>➤ Tier V • 最終ランク</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 盾の将軍</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 人生と破滅の間の最後の壁。</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 人生と破滅の間の最後の壁。</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Tier V • 最終ランク</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 アリーナの将軍</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 各コロシアムのチャンピオンに輝いた。</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 各コロシアムのチャンピオンに輝いた。</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨見習い</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 神秘的な力の火花が目覚めます。</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Tier I • 秘術の基礎</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 神秘的な力の火花が目覚めます。</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Tier I • 秘術の基礎</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨達人</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 制御され、集中した呪文を織り交ぜます。</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 難解な実践</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 制御され、集中した呪文を織り交ぜます。</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • 難解な実践</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ウィザード</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 複雑な魔法のパターンを制御します。</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Tier III • ドクトリンを選択してください</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 複雑な魔法のパターンを制御します。</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Tier III • ドクトリンを選択してください</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 アルカナの魔術師</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 生の力をエレガントな力に磨きます。</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 秘術の枝</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 生の力をエレガントな力に磨きます。</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 秘術の枝</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 呪文の魔術師</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ グリモアの制御と精度を拡張します。</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Tier IV • スペルブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ グリモアの制御と精度を拡張します。</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Tier IV • スペルブランチ</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 虚空の魔術師</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 深淵のエネルギーをあなたの意志に曲げます。</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • ボイドブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 深淵のエネルギーをあなたの意志に曲げます。</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • ボイドブランチ</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 アルカナの大魔道士</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 純粋な不可解な力の最高の建築家。</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 純粋な不可解な力の最高の建築家。</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 呪文の大魔道士</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ すべての呪文は即座に答えられます。</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ すべての呪文は即座に答えられます。</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ Tier V • 最終ランク</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 ヴォイドの大魔道士</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 世界間の境界を支配します。</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 世界間の境界を支配します。</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ Tier V • 最終ランク</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 スリ</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ タイミング、方向ミス、スピードを学びます。</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートクラフト</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ タイミング、方向ミス、スピードを学びます。</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートクラフト</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡泥棒</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 水門や監視線をすり抜けます。</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • サイレントエントリー</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 水門や監視線をすり抜けます。</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • サイレントエントリー</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡暗殺者</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 一度攻撃すると跡形もなく消えます。</gradient>
-        - <gradient:#ef4444:#f87171>➤ レベル III • 方法を選択してください</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 一度攻撃すると跡形もなく消えます。</gradient>
+      - <gradient:#ef4444:#f87171>➤ レベル III • 方法を選択してください</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 ステルスの影</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ マスターの動きは誰も追うことができません。</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • ステルスブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ マスターの動きは誰も追うことができません。</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • ステルスブランチ</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 夜の影</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 暗闇を致命的な利点に変えます。</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 夜間ブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 暗闇を致命的な利点に変えます。</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 夜間ブランチ</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 妨害行為の影</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 敵が反応する前に計画を破棄します。</gradient>
-        - <gradient:#f97316:#fb923c>➤ Tier IV • 妨害ブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 敵が反応する前に計画を破棄します。</gradient>
+      - <gradient:#f97316:#fb923c>➤ Tier IV • 妨害ブランチ</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 ステルスのファントム</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 触れられない都市伝説となる。</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 触れられない都市伝説となる。</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ Tier V • 最終ランク</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 ファントム・オブ・ナイト</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 真夜中の時間を完全に所有します。</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 真夜中の時間を完全に所有します。</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ Tier V • 最終ランク</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 サボタージュの怪人</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 戦闘が始まる前に終了します。</gradient>
-        - <gradient:#ea580c:#fdba74>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 戦闘が始まる前に終了します。</gradient>
+      - <gradient:#ea580c:#fdba74>➤ Tier V • 最終ランク</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ アコライト</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 神聖な奉仕の道を歩み始めます。</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Tier I • 献身</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 神聖な奉仕の道を歩み始めます。</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Tier I • 献身</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ ヒーラー</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 重圧下で味方を回復します。</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier II • 修復</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 重圧下で味方を回復します。</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier II • 修復</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ 司祭</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 神聖な規律をもってパーティーを導きます。</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier III • 自分の使命を選択してください</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 神聖な規律をもってパーティーを導きます。</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier III • 自分の使命を選択してください</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ 神性司教</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 輝く権威を直接伝えるチャネル。</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 神の枝</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 輝く権威を直接伝えるチャネル。</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 神の枝</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ 光の司教</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 神聖な輝きで腐敗を盲目にします。</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ Tier IV • ライトブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 神聖な輝きで腐敗を盲目にします。</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ Tier IV • ライトブランチ</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 魂の司教</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 生と死の境界を守ります。</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • ソウルブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 生と死の境界を守ります。</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • ソウルブランチ</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 神性の大祭司</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 混沌の中心で奇跡を宣言します。</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 混沌の中心で奇跡を宣言します。</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ Tier V • 最終ランク</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑 光の大司祭</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 揺るぎない夜明けを味方に浴びせます。</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 揺るぎない夜明けを味方に浴びせます。</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ Tier V • 最終ランク</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 魂の大祭司</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 死の恐怖を超えて霊を羊飼いにします。</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 死の恐怖を超えて霊を羊飼いにします。</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰行商人</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 根性、魅力、そして小さな取引から始まります。</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートコマース</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 根性、魅力、そして小さな取引から始まります。</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートコマース</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 トレーダー</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ ルートと信頼できる連絡先を拡大します。</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 市場での存在感</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ ルートと信頼できる連絡先を拡大します。</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • 市場での存在感</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 ブローカー</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 高額な取引を正確に成立させます。</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Tier III • 帝国を選択してください</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 高額な取引を正確に成立させます。</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Tier III • 帝国を選択してください</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 富豪</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 比類のないペースで純粋な資本を構築します。</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier IV • ウェルスブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 比類のないペースで純粋な資本を構築します。</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier IV • ウェルスブランチ</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 市場の大御所</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 需要と供給のサイクルを調整します。</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • マーケットブランチ</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 需要と供給のサイクルを調整します。</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • マーケットブランチ</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 貿易王</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ キャラバンレーンと物流を支配します。</gradient>
-        - <gradient:#f97316:#fdba74>➤ Tier IV • 貿易部門</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ キャラバンレーンと物流を支配します。</gradient>
+      - <gradient:#f97316:#fdba74>➤ Tier IV • 貿易部門</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 富豪</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ たった一度の決断で経済を変える。</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ たった一度の決断で経済を変える。</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ Tier V • 最終ランク</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 市場の大物</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ すべてのギルドが尊重しなければならない価格を設定します。</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ すべてのギルドが尊重しなければならない価格を設定します。</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 貿易王</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ 道路、港、利益を所有します。</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ Tier V • 最終ランク</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ 道路、港、利益を所有します。</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ Tier V • 最終ランク</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>あなたにはアクティブな賞金がかかっています!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ 管理パネル</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>管理ツールにアクセスする</gradient>"
-      - "<gradient:#6b7280:#9ca3af>および構成オプション</gradient>"
+    - "<gradient:#6b7280:#9ca3af>管理ツールにアクセスする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>および構成オプション</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 報奨金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>報奨金の表示と管理</gradient>"
-      - "<gradient:#6b7280:#9ca3af>報酬を求めてプレイヤーを狩りましょう！</gradient>"
+    - "<gradient:#6b7280:#9ca3af>報奨金の表示と管理</gradient>"
+    - "<gradient:#6b7280:#9ca3af>報酬を求めてプレイヤーを狩りましょう！</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨特典</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>利用可能な特典を表示する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>そして特殊能力</gradient>"
+    - "<gradient:#6b7280:#9ca3af>利用可能な特典を表示する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>そして特殊能力</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜クエスト</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>利用可能なクエストを表示する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>進捗状況を追跡します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>利用可能なクエストを表示する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>進捗状況を追跡します</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ ランク</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ランクの進行状況を表示する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>そして新たな能力を解き放つ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ランクの進行状況を表示する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>そして新たな能力を解き放つ</gradient>"
 
 # ============================================
 # ランクメインUI
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 ランクツリー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>利用可能なランクツリーを参照する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>そして自分の道を選択してください</gradient>"
+    - "<gradient:#6b7280:#9ca3af>利用可能なランクツリーを参照する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>そして自分の道を選択してください</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹レンジャー</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>アーチェリーと追跡の技術をマスターする</gradient>"
-        - "<gradient:#6b7280:#9ca3af>自然と一体になる</gradient>"
+      - "<gradient:#6b7280:#9ca3af>アーチェリーと追跡の技術をマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>自然と一体になる</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ 戦士</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>戦闘術をマスターする</gradient>"
-        - "<gradient:#6b7280:#9ca3af>伝説の戦士になろう</gradient>"
+      - "<gradient:#6b7280:#9ca3af>戦闘術をマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>伝説の戦士になろう</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨メイジ</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>魔法の力を利用する</gradient>"
-        - "<gradient:#6b7280:#9ca3af>秘術のマスターになろう</gradient>"
+      - "<gradient:#6b7280:#9ca3af>魔法の力を利用する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>秘術のマスターになろう</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 ローグ</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>ステルスと狡猾さをマスターする</gradient>"
-        - "<gradient:#6b7280:#9ca3af>影からの攻撃</gradient>"
+      - "<gradient:#6b7280:#9ca3af>ステルスと狡猾さをマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>影からの攻撃</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝クレリック</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>神の力を伝える</gradient>"
-        - "<gradient:#6b7280:#9ca3af>味方を癒して守る</gradient>"
+      - "<gradient:#6b7280:#9ca3af>神の力を伝える</gradient>"
+      - "<gradient:#6b7280:#9ca3af>味方を癒して守る</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 販売者</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>貿易の技術をマスターする</gradient>"
-        - "<gradient:#6b7280:#9ca3af>財産を築く</gradient>"
+      - "<gradient:#6b7280:#9ca3af>貿易の技術をマスターする</gradient>"
+      - "<gradient:#6b7280:#9ca3af>財産を築く</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
-      - "<gradient:#10b981:#34d399>右クリックして選択します</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
+    - "<gradient:#10b981:#34d399>右クリックして選択します</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 このランクツリーはロックされています</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>完了 %minimum_rank_paths_to_be_absolved_needed% 木を最初にランク付けする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>完了 %minimum_rank_paths_to_be_absolved_needed% 木を最初にランク付けする</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>前提条件:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 このランクパスはロックされています!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ 現在活動中</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ ランクツリーの作成</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>新しいランクツリーを作成する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(管理者のみ)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>新しいランクツリーを作成する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(管理者のみ)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ このパスの開始ランクが見つかりません!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ 選択されたランクパス:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(開始ランク: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ ランクツリーの作成は近日開始予定です!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ 無料版 - プレビューのみ</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>このランク ツリーはプレビューのみ利用できます。</gradient>"
-    - "<gradient:#6b7280:#9ca3af>プレミアムにアップグレードしてロックを解除しましょう!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
+  - "<gradient:#6b7280:#9ca3af>このランク ツリーはプレビューのみ利用できます。</gradient>"
+  - "<gradient:#6b7280:#9ca3af>プレミアムにアップグレードしてロックを解除しましょう!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>左クリックしてプレビューします</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ プレミアムが必要:</gradient> <gradient:#6b7280:#9ca3af>プレミアムにアップグレードして、追加のランク ツリーを選択してください!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>ナビゲート %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 センタービュー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてビューを中央に配置します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてビューを中央に配置します</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>センタービュー</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 プレビューモード</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プレビューモードで表示しています</gradient>"
-      - "<gradient:#6b7280:#9ca3af>変更は保存されません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プレビューモードで表示しています</gradient>"
+    - "<gradient:#6b7280:#9ca3af>変更は保存されません</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>プレビューモード</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ エラーレンダリングランク</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ ランクツリーなし</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>ランクツリーをロードできません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ランクツリーをロードできません</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ 重大なエラー</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>レンダリング中にエラーが発生しました</gradient>"
+    - "<gradient:#6b7280:#9ca3af>レンダリング中にエラーが発生しました</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>レンダリング中にエラーが発生しました</gradient>"
+    - "<gradient:#6b7280:#9ca3af>レンダリング中にエラーが発生しました</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ 要件を開くことができませんでした</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ エラーが発生しました。もう一度試してください。</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 トレイルのスカウト</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 蹄跡と風の変化を読み取​​ります。</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier I • ネイチャー・イニシエイト</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 蹄跡と風の変化を読み取​​ります。</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier I • ネイチャー・イニシエイト</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 荒野の狩人</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 忍耐強く正確に獲物を捕らえます。</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier II • ワイルド・パースート</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 忍耐強く正確に獲物を捕らえます。</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • ワイルド・パースート</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 兆候の追跡者</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 嵐が消し去ることのできない道をたどります。</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Tier III • 今後の道の選択</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 嵐が消し去ることのできない道をたどります。</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Tier III • 今後の道の選択</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 獣の番人</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 王国の頂点に立つ生き物との絆。</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • プライマルブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 王国の頂点に立つ生き物との絆。</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • プライマルブランチ</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ 嵐の番人</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 雷や雨でも確実に発火します。</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Tier IV • ストームブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 雷や雨でも確実に発火します。</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • ストームブランチ</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿 野生の監視者</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 神聖な辺境と隠れた空き地を守ります。</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Tier IV • 野生の枝</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な辺境と隠れた空き地を守ります。</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Tier IV • 野生の枝</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 ビーストマスタープライマル</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 恐れることなく伝説の獣を指揮します。</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 恐れることなく伝説の獣を指揮します。</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑 ビーストマスター・ストーム</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ あらゆるボルトがあなたの容赦ないボレーを導きます。</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ あらゆるボルトがあなたの容赦ないボレーを導きます。</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Tier V • 最終ランク</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 ビーストマスターワイルド</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 自然そのものがあなたの呼びかけに応えようと立ち上がります。</gradient>
-          - <gradient:#15803d:#22c55e>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 自然そのものがあなたの呼びかけに応えようと立ち上がります。</gradient>
+        - <gradient:#15803d:#22c55e>➤ Tier V • 最終ランク</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ 採用する</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 試されていない決意を持った新鮮な刃。</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 訓練場</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 試されていない決意を持った新鮮な刃。</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • 訓練場</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ 兵士</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 訓練と前線での任務によって鍛えられる。</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Tier II • 現場規律</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 訓練と前線での任務によって鍛えられる。</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Tier II • 現場規律</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ ベテラン</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 戦いの傷跡は、あなたが獲得した知恵を示すものです。</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ レベル III • パスを選択してください</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 戦いの傷跡は、あなたが獲得した知恵を示すものです。</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ レベル III • パスを選択してください</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥 バーサーカー</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 防御を破壊的な攻撃と交換します。</gradient>
-          - <gradient:#ef4444:#f87171>➤ Tier IV • フューリーブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 防御を破壊的な攻撃と交換します。</gradient>
+        - <gradient:#ef4444:#f87171>➤ Tier IV • フューリーブランチ</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 ガーディアン</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 他の人が折れそうな場所でもしっかりと立ちます。</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Tier IV • シールド支部</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 他の人が折れそうな場所でもしっかりと立ちます。</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • シールド支部</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 剣闘士</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ バランスのとれたアリーナ戦争をマスターします。</gradient>
-          - <gradient:#a855f7:#c084fc>➤ Tier IV • アリーナブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ バランスのとれたアリーナ戦争をマスターします。</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Tier IV • アリーナブランチ</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 怒りのウォーロード</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 止まらない破壊エンジン。</gradient>
-          - <gradient:#dc2626:#fb7185>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 止まらない破壊エンジン。</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Tier V • 最終ランク</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 盾の将軍</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 人生と破滅の間の最後の壁。</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 人生と破滅の間の最後の壁。</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier V • 最終ランク</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 アリーナの将軍</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 各コロシアムのチャンピオンに輝いた。</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 各コロシアムのチャンピオンに輝いた。</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨見習い</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 神秘的な力の火花が目覚めます。</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Tier I • 秘術の基礎</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 神秘的な力の火花が目覚めます。</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Tier I • 秘術の基礎</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨達人</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 制御され、集中した呪文を織り交ぜます。</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 難解な実践</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 制御され、集中した呪文を織り交ぜます。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 難解な実践</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ウィザード</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 複雑な魔法のパターンを制御します。</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Tier III • ドクトリンを選択してください</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 複雑な魔法のパターンを制御します。</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier III • ドクトリンを選択してください</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 アルカナの魔術師</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 生の力をエレガントな力に磨きます。</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 秘術の枝</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 生の力をエレガントな力に磨きます。</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 秘術の枝</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 呪文の魔術師</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ グリモアの制御と精度を拡張します。</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Tier IV • スペルブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ グリモアの制御と精度を拡張します。</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Tier IV • スペルブランチ</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 虚空の魔術師</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 深淵のエネルギーをあなたの意志に曲げます。</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • ボイドブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 深淵のエネルギーをあなたの意志に曲げます。</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • ボイドブランチ</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 アルカナの大魔道士</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 純粋な不可解な力の最高の建築家。</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 純粋な不可解な力の最高の建築家。</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • 最終ランク</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 呪文の大魔道士</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ すべての呪文は即座に答えられます。</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ すべての呪文は即座に答えられます。</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Tier V • 最終ランク</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 ヴォイドの大魔道士</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 世界間の境界を支配します。</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 世界間の境界を支配します。</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Tier V • 最終ランク</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 スリ</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ タイミング、方向ミス、スピードを学びます。</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートクラフト</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ タイミング、方向ミス、スピードを学びます。</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートクラフト</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡泥棒</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 水門や監視線をすり抜けます。</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • サイレントエントリー</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 水門や監視線をすり抜けます。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • サイレントエントリー</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡暗殺者</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 一度攻撃すると跡形もなく消えます。</gradient>
-          - <gradient:#ef4444:#f87171>➤ レベル III • 方法を選択してください</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 一度攻撃すると跡形もなく消えます。</gradient>
+        - <gradient:#ef4444:#f87171>➤ レベル III • 方法を選択してください</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 ステルスの影</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ マスターの動きは誰も追うことができません。</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • ステルスブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ マスターの動きは誰も追うことができません。</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • ステルスブランチ</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 夜の影</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 暗闇を致命的な利点に変えます。</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 夜間ブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 暗闇を致命的な利点に変えます。</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • 夜間ブランチ</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 妨害行為の影</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 敵が反応する前に計画を破棄します。</gradient>
-          - <gradient:#f97316:#fb923c>➤ Tier IV • 妨害ブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 敵が反応する前に計画を破棄します。</gradient>
+        - <gradient:#f97316:#fb923c>➤ Tier IV • 妨害ブランチ</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 ステルスのファントム</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 触れられない都市伝説となる。</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 触れられない都市伝説となる。</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Tier V • 最終ランク</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 ファントム・オブ・ナイト</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 真夜中の時間を完全に所有します。</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 真夜中の時間を完全に所有します。</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Tier V • 最終ランク</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 サボタージュの怪人</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 戦闘が始まる前に終了します。</gradient>
-          - <gradient:#ea580c:#fdba74>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 戦闘が始まる前に終了します。</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Tier V • 最終ランク</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ アコライト</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 神聖な奉仕の道を歩み始めます。</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Tier I • 献身</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な奉仕の道を歩み始めます。</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier I • 献身</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ ヒーラー</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 重圧下で味方を回復します。</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier II • 修復</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 重圧下で味方を回復します。</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier II • 修復</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ 司祭</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 神聖な規律をもってパーティーを導きます。</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier III • 自分の使命を選択してください</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な規律をもってパーティーを導きます。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier III • 自分の使命を選択してください</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ 神性司教</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 輝く権威を直接伝えるチャネル。</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 神の枝</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 輝く権威を直接伝えるチャネル。</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • 神の枝</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ 光の司教</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 神聖な輝きで腐敗を盲目にします。</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ Tier IV • ライトブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 神聖な輝きで腐敗を盲目にします。</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Tier IV • ライトブランチ</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 魂の司教</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 生と死の境界を守ります。</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • ソウルブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 生と死の境界を守ります。</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • ソウルブランチ</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 神性の大祭司</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 混沌の中心で奇跡を宣言します。</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 混沌の中心で奇跡を宣言します。</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Tier V • 最終ランク</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑 光の大司祭</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 揺るぎない夜明けを味方に浴びせます。</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 揺るぎない夜明けを味方に浴びせます。</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Tier V • 最終ランク</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 魂の大祭司</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 死の恐怖を超えて霊を羊飼いにします。</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 死の恐怖を超えて霊を羊飼いにします。</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰行商人</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 根性、魅力、そして小さな取引から始まります。</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートコマース</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 根性、魅力、そして小さな取引から始まります。</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • ストリートコマース</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 トレーダー</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ ルートと信頼できる連絡先を拡大します。</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • 市場での存在感</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ ルートと信頼できる連絡先を拡大します。</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • 市場での存在感</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 ブローカー</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 高額な取引を正確に成立させます。</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Tier III • 帝国を選択してください</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 高額な取引を正確に成立させます。</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Tier III • 帝国を選択してください</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 富豪</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 比類のないペースで純粋な資本を構築します。</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier IV • ウェルスブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 比類のないペースで純粋な資本を構築します。</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier IV • ウェルスブランチ</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 市場の大御所</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 需要と供給のサイクルを調整します。</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • マーケットブランチ</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 需要と供給のサイクルを調整します。</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • マーケットブランチ</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 貿易王</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ キャラバンレーンと物流を支配します。</gradient>
-          - <gradient:#f97316:#fdba74>➤ Tier IV • 貿易部門</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ キャラバンレーンと物流を支配します。</gradient>
+        - <gradient:#f97316:#fdba74>➤ Tier IV • 貿易部門</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 富豪</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ たった一度の決断で経済を変える。</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ たった一度の決断で経済を変える。</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Tier V • 最終ランク</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 市場の大物</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ すべてのギルドが尊重しなければならない価格を設定します。</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ すべてのギルドが尊重しなければならない価格を設定します。</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Tier V • 最終ランク</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 貿易王</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ 道路、港、利益を所有します。</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ Tier V • 最終ランク</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ 道路、港、利益を所有します。</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Tier V • 最終ランク</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡泥棒</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡暗殺者</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
+        - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 侵入者</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
+        - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
+        - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ アコライト</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>神の献身的な僕</gradient>"
+        - "<gradient:#6b7280:#9ca3af>神の献身的な僕</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ 信者</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>神の道の忠実な信者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>神の道の忠実な信者</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ 司祭</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>信者の治癒者および保護者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>信者の治癒者および保護者</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ ヒーラー</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>修復芸術のマスター</gradient>"
+        - "<gradient:#6b7280:#9ca3af>修復芸術のマスター</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ビショップ</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>信者のリーダー</gradient>"
+        - "<gradient:#6b7280:#9ca3af>信者のリーダー</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝オラクル</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>神聖なビジョンの先見者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>神聖なビジョンの先見者</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝大祭司</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>至高の神の声</gradient>"
+        - "<gradient:#6b7280:#9ca3af>至高の神の声</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>�TPスリ</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
+        - "<gradient:#6b7280:#9ca3af>素早い指で素早く脱出</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡泥棒</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ステルスと窃盗の達人</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 スカウト</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>影の目と耳</gradient>"
+        - "<gradient:#6b7280:#9ca3af>影の目と耳</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡暗殺者</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
+        - "<gradient:#6b7280:#9ca3af>サイレントキラー、影からの死</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 侵入者</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
+        - "<gradient:#6b7280:#9ca3af>気づかれずに出入りする専門家</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 シャドウブレード</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>夜の致命的な戦士</gradient>"
+        - "<gradient:#6b7280:#9ca3af>夜の致命的な戦士</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 スパイマスター</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>情報ネットワークのコントローラー</gradient>"
+        - "<gradient:#6b7280:#9ca3af>情報ネットワークのコントローラー</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
+        - "<gradient:#6b7280:#9ca3af>闇そのものと一つになる</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 シャドウマスター</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>全ての影の至高の支配者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>全ての影の至高の支配者</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰行商人</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>路上で商品を販売する</gradient>"
+        - "<gradient:#6b7280:#9ca3af>路上で商品を販売する</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 トレーダー</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>コネクションのある老舗商人</gradient>"
+        - "<gradient:#6b7280:#9ca3af>コネクションのある老舗商人</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 ベンダー</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>熟練した商品販売者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>熟練した商品販売者</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 工匠</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>高級品の製作者</gradient>"
+        - "<gradient:#6b7280:#9ca3af>高級品の製作者</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰錬金術師</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>ポーションとエリクサーの達人</gradient>"
+        - "<gradient:#6b7280:#9ca3af>ポーションとエリクサーの達人</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 販売者</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>成功したビジネスオーナー</gradient>"
+        - "<gradient:#6b7280:#9ca3af>成功したビジネスオーナー</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 マスタークラフター</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>王国の最高の職人</gradient>"
+        - "<gradient:#6b7280:#9ca3af>王国の最高の職人</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 商人の王子</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>商業ロイヤルティ</gradient>"
+        - "<gradient:#6b7280:#9ca3af>商業ロイヤルティ</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 タイクーン</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>商業および貿易のマスター</gradient>"
+        - "<gradient:#6b7280:#9ca3af>商業および貿易のマスター</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 ギルドマスター</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>商人ギルドのリーダー</gradient>"
+        - "<gradient:#6b7280:#9ca3af>商人ギルドのリーダー</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 プレビュー:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 プレビュー:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>要件 ＃%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>要件の詳細をロードできません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>要件の詳細をロードできません</gradient>"
     type: "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>アイテム:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>進捗：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>進捗：</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>クリックして詳細を表示</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 要件の詳細</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ 必要なアイテムがすべてありません!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ アイテムは正常に送信されました!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>必要なレベル:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ レベル要件を満たしました!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>採掘したり、Mob を倒したりして XP を獲得します。</gradient>"
-      - "<gradient:#6b7280:#9ca3af>精錬アイテムなど！</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>採掘したり、Mob を倒したりして XP を獲得します。</gradient>"
+    - "<gradient:#6b7280:#9ca3af>精錬アイテムなど！</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>あなたのプレイ時間:</gradient> <gradient:#10b981:#34d399>%hours%h %minutes%メートル</gradient>"
     required: "<gradient:#6b7280:#9ca3af>必要なプレイ時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%メートル</gradient>"
     remaining: "<gradient:#ef4444:#f87171>残り時間:</gradient> <gradient:#f59e0b:#fbbf24>%hours%h %minutes%メートル</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ プレイ時間要件を満たしました!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>サーバー上でプレイし続ける</gradient>"
-      - "<gradient:#6b7280:#9ca3af>プレイタイムを貯めるために！</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>サーバー上でプレイし続ける</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プレイタイムを貯めるために！</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>進捗</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>現在：</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>完了：</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ 完了</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>この要件はすでに完了しています</gradient>"
+    - "<gradient:#6b7280:#9ca3af>この要件はすでに完了しています</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ 要件を満たしている</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてこの要件を完了してください</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてこの要件を完了してください</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 進行状況を更新</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして進行状況を更新します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして進行状況を更新します</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>完了した項目:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>タイプ：</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>必要なアイテムを集める</gradient>"
-      - "<gradient:#6b7280:#9ca3af>ここに戻って完了します</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>必要なアイテムを集める</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ここに戻って完了します</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>必要な通貨を獲得する</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>必要な通貨を獲得する</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>経験レベルを獲得する</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>経験レベルを獲得する</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>サーバー上でプレイする</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>サーバー上でプレイする</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>要件を満たしてください</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡ヒント:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>要件を満たしてください</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 概要を表示中...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 閲覧のヒント...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅完成しました！</gradient>"
+    - "<gradient:#10b981:#34d399>✅完成しました！</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ 完成する準備ができました!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>クリックして終了</gradient>"
+    - "<gradient:#10b981:#34d399>✅ 完成する準備ができました!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして終了</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳進行中</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>未開始</gradient>"
+    - "<gradient:#6b7280:#9ca3af>未開始</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>状態： %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>進捗</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>不明な要件</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>詳細を読み込めません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>詳細を読み込めません</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ エラー</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>要件の読み込みに失敗しました</gradient>"
+    - "<gradient:#ef4444:#f87171>要件の読み込みに失敗しました</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 進捗状況:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 ステータス:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>すでに完成しています！</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 報奨金を作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして新しい報奨金を作成します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>別のプレーヤーで</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして新しい報奨金を作成します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>別のプレーヤーで</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 報奨金を表示</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>すべてのアクティブな報奨金を表示する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>すべてのアクティブな報奨金を表示する</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 私の賞金</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>作成した報奨金を表示する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>作成した報奨金を表示する</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆リーダーボード</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>トップバウンティハンター</gradient>"
+    - "<gradient:#6b7280:#9ca3af>トップバウンティハンター</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 報奨金</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ターゲット：</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>コミッショナー：</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>作成:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>クリックして詳細を表示</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ターゲット：</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>コミッショナー：</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>作成:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>クリックして詳細を表示</gradient>"
 
 # ============================================
 # 報奨金作成 UI
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 ターゲットを選択</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯対象: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてプレーヤーを選択します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>現在： %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてプレーヤーを選択します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在： %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 報奨金を作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして新しい報奨金を作成します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>別のプレーヤーで</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして新しい報奨金を作成します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>別のプレーヤーで</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 アイテム報酬を追加</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 アイテム報酬を追加</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>クリックしてアイテム報酬を追加します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>現在のアイテム:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてアイテム報酬を追加します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在のアイテム:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 通貨特典を追加</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 通貨特典を追加</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>クリックして通貨特典を追加します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>現在の通貨:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして通貨特典を追加します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在の通貨:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ 最初にターゲットを選択してください!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ 報奨金を作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして報奨金を作成します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>選択した報酬で</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして報奨金を作成します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>選択した報酬で</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ プレイヤーが選択されていません!</gradient> <gradient:#6b7280:#9ca3af>最初にターゲットを選択してください。</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ 報酬は追加されません!</gradient> <gradient:#6b7280:#9ca3af>まずは報酬を追加してください。</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 報酬なし</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>アイテムを追加して報酬を作成する</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ アイテムの追加</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>報酬として追加するアイテムをここに配置します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>報酬として追加するアイテムをここに配置します</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯対象: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>この賞金がかけられるのは、</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>この賞金がかけられるのは、</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 報奨金報酬</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このアイテムは以下に贈られます</gradient>"
-      - "<gradient:#6b7280:#9ca3af>誰が賞金を請求​​しても</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 報奨金報酬</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このアイテムは以下に贈られます</gradient>"
+    - "<gradient:#6b7280:#9ca3af>誰が賞金を請求​​しても</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ 新しいアイテムは追加されませんでした。</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ 在庫がいっぱいになったため、一部のアイテムがドロップされました。</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>この報奨金の対象者</gradient>"
+    - "<gradient:#6b7280:#9ca3af>この報奨金の対象者</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ 詳細は近日公開予定...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 報酬を見る</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてすべての報酬を表示します</gradient>"
-      - "<gradient:#6b7280:#9ca3af>合計報酬:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてすべての報酬を表示します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>合計報酬:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 報奨金を削除</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ 警告: 元に戻すことはできません。</gradient>"
-      - "<gradient:#6b7280:#9ca3af>クリックしてこの報奨金を削除します</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ 警告: 元に戻すことはできません。</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてこの報奨金を削除します</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ 報奨金あり</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>削除されました！</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>この報奨金を削除してもよろしいですか?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 権限マネージャー</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プラグインの権限を管理する</gradient>"
-      - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>合計権限:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プラグインの権限を管理する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>合計権限:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ 権限マネージャーを開けませんでした!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 プラグインの統合</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>管理プラグインの統合を 1 か所で管理</gradient>"
-      - "<gradient:#6b7280:#9ca3af>通貨、スキル、ジョブ検出ビューが含まれます</gradient>"
+    - "<gradient:#6b7280:#9ca3af>管理プラグインの統合を 1 か所で管理</gradient>"
+    - "<gradient:#6b7280:#9ca3af>通貨、スキル、ジョブ検出ビューが含まれます</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ プラグイン統合を開けませんでした!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ LuckPerms グループを作成する</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ランクから LuckPerms グループを作成する</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ランクから LuckPerms グループを作成する</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms がインストールされていません!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ グループを作成するためのランクが見つかりません!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ 作成されました</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>ラックパーマグループ！</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 統合ハブ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ プラグイン統合ダッシュボードを開く</gradient>"
-      - "<gradient:#6b7280:#9ca3af>通貨、スキル/ジョブ検出、PlaceholderAPI ツールはここから入手できます</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ プラグイン統合ダッシュボードを開く</gradient>"
+    - "<gradient:#6b7280:#9ca3af>通貨、スキル/ジョブ検出、PlaceholderAPI ツールはここから入手できます</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 通貨の統合</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>オープンな通貨プロバイダー管理</gradient>"
-        - "<gradient:#6b7280:#9ca3af>検出された Vault および JExEconomy 通貨を確認します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>オープンな通貨プロバイダー管理</gradient>"
+      - "<gradient:#6b7280:#9ca3af>検出された Vault および JExEconomy 通貨を確認します</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ 通貨統合を開くことができませんでした!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 スキルの統合</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>mcMMO、Aura、および EcoSkills のサポート ステータスを表示する</gradient>"
-        - "<gradient:#6b7280:#9ca3af>現在有効になっているスキルプラグインを検出します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>mcMMO、Aura、および EcoSkills のサポート ステータスを表示する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>現在有効になっているスキルプラグインを検出します</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ スキル統合を開けませんでした!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ ジョブの統合</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>EcoJobs および JobsReborn のサポート ステータスを表示する</gradient>"
-        - "<gradient:#6b7280:#9ca3af>現在有効なジョブ プラグインを検出する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>EcoJobs および JobsReborn のサポート ステータスを表示する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>現在有効なジョブ プラグインを検出する</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ ジョブ統合を開けませんでした!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 プリザーブ0トークン</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI サポートを検出し、拡張を管理する</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Player 拡張をインストールし、PlaceholderAPI をリロードします</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI サポートを検出し、拡張を管理する</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Player 拡張をインストールし、PlaceholderAPI をリロードします</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI ツールを開けませんでした!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI の統合</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI がサポートされています:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>対象拡大:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このパネルから直接インストールしてリロードします</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI がサポートされています:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>対象拡大:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このパネルから直接インストールしてリロードします</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI が検出されました</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI がインストールされ有効になっている</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI がインストールされ有効になっている</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI がありません</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI をインストールして有効にし、このアクションを使用できるようにします</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI をインストールして有効にし、このアクションを使用できるようにします</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 %expansion_name% 拡張をインストールする</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>実行:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>次に実行します:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>クリックして両方の PlaceholderAPI コマンドを実行します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>実行:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>次に実行します:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして両方の PlaceholderAPI コマンドを実行します</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI が必要です</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>このアクションは、PlaceholderAPI がインストールされるまで使用できません。</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このアクションは、PlaceholderAPI がインストールされるまで使用できません。</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ 管理者アクセスが必要です</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 管理ツールを使用する権限がありません</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI 管理ツールを使用する権限がありません</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI 統合を管理する権限がありません。</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI はこのサーバーでは使用できません。</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ 拡張のダウンロードに失敗しました:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 スキルプラグインのステータス</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>サポートされているスキル統合:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>現在検出されているのは:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>mcMMO、Aura、および EcoSkills のサポートを確認します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>サポートされているスキル統合:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在検出されているのは:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>mcMMO、Aura、および EcoSkills のサポートを確認します</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>検出されました</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>統合ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>統合ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ スキル統合が構成されていません</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>現在設定されているスキル プラグイン統合はありません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在設定されているスキル プラグイン統合はありません</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 ジョブプラグインのステータス</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>サポートされているジョブ統合:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>現在検出されているのは:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>EcoJobs および JobsReborn のサポートを確認します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>サポートされているジョブ統合:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在検出されているのは:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>EcoJobs および JobsReborn のサポートを確認します</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>検出されました</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>統合ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>統合ID:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ ジョブ統合が構成されていません</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>現在設定されているジョブ プラグイン統合はありません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>現在設定されているジョブ プラグイン統合はありません</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>プロバイダー:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>シンボル：</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>プレフィックス:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>サフィックス：</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プロバイダー:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>シンボル：</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>プレフィックス:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>サフィックス：</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ %currency_id% を作成します</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ のデフォルト通貨を作成する</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>クリックして %currency_id% を作成します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ のデフォルト通貨を作成する</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>クリックして %currency_id% を作成します</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy 必須</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>このアクションには JExEconomy が必要です</gradient>"
-        - "<gradient:#6b7280:#9ca3af>デフォルトを作成する前にインストールしてください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このアクションには JExEconomy が必要です</gradient>"
+      - "<gradient:#6b7280:#9ca3af>デフォルトを作成する前にインストールしてください</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% 準備完了</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>デフォルトの通貨はすでに存在します</gradient>"
-        - "<gradient:#6b7280:#9ca3af>それ以上の設定は必要ありません</gradient>"
+      - "<gradient:#6b7280:#9ca3af>デフォルトの通貨はすでに存在します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>それ以上の設定は必要ありません</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ 作成されたデフォルト通貨:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ 通貨の作成に失敗しました:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ 通貨が検出されませんでした</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ は Vault または JExEconomy 通貨を検出できませんでした</gradient>"
-      - "<gradient:#6b7280:#9ca3af>最初にエコノミープロバイダーをインストールまたは有効化します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ は Vault または JExEconomy 通貨を検出できませんでした</gradient>"
+    - "<gradient:#6b7280:#9ca3af>最初にエコノミープロバイダーをインストールまたは有効化します</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>権限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>権限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>状態：</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>左クリックして選択します</gradient>"
-        - "<gradient:#10b981:#34d399>右クリックしてすべてを割り当てます</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>左クリックして選択します</gradient>"
+      - "<gradient:#10b981:#34d399>右クリックしてすべてを割り当てます</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>空の</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>ノード：</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>クリックしてこの権限を割り当てます</gradient>"
+      - "<gradient:#10b981:#34d399>クリックしてこの権限を割り当てます</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>プラグインが選択されていません</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>上のプラグインを選択してください</gradient>"
-        - "<gradient:#6b7280:#9ca3af>その権限を表示するには</gradient>"
+      - "<gradient:#6b7280:#9ca3af>上のプラグインを選択してください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>その権限を表示するには</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>空の</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ 割り当てる %plugin_name% 権限</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>すべての権限を次から割り当てます</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% 許可)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>すべての権限を次から割り当てます</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% 許可)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>選択なし</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 選択済み: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>権限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグイン:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>権限:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 概要</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>プラグインを選択して権限を表示します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグインの合計:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>プラグインを選択して権限を表示します</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 データを更新</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>クリックして権限データを更新します</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックして権限データを更新します</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ 選択をクリア</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてプラグインの選択を解除します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてプラグインの選択を解除します</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ 割り当てる %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>選択したプラグインからすべての権限を割り当てます</gradient>"
+    - "<gradient:#6b7280:#9ca3af>選択したプラグインからすべての権限を割り当てます</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ すべての権限を割り当てる</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>すべての権限を割り当てる</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>プラグイン</gradient>"
+    - "<gradient:#6b7280:#9ca3af>すべての権限を割り当てる</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>プラグイン</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ データが更新されました!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 ページ %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>現在のページ:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>総ページ数:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>現在のページ:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>総ページ数:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 ページ %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙戻る</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして戻る</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️続行</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして続行します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして続行します</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️前へ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>前のページへ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>前のページへ</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️次へ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>次のページ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>次のページ</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ 上へ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>上がる</gradient>"
+    - "<gradient:#6b7280:#9ca3af>上がる</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ダウン</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>下に行く</gradient>"
+    - "<gradient:#6b7280:#9ca3af>下に行く</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ キャンセル</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>アクションをキャンセルする</gradient>"
+    - "<gradient:#6b7280:#9ca3af>アクションをキャンセルする</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ 値を入力してください</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>上に入力を入力してください</gradient>"
-      - "<gradient:#6b7280:#9ca3af>クリックして確認します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>上に入力を入力してください</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして確認します</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ 入力の処理に失敗しました:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ 確認</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックして確認します</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックして確認します</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ キャンセル</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてキャンセルします</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてキャンセルします</gradient>"
 
 # ============================================
 # 無料版の制限事項
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ 無料版</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>無料版を使用しています</gradient>"
-      - "<gradient:#6b7280:#9ca3af>機能が制限されています。</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>プレミアムにアップグレードすると、次のことが可能になります。</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• 無制限のランクツリー</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• ツリーごとの無制限のランク</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• 複数のアクティブパス</gradient>"
+    - "<gradient:#6b7280:#9ca3af>無料版を使用しています</gradient>"
+    - "<gradient:#6b7280:#9ca3af>機能が制限されています。</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>プレミアムにアップグレードすると、次のことが可能になります。</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• 無制限のランクツリー</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• ツリーごとの無制限のランク</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• 複数のアクティブパス</gradient>"
 
 # ============================================
 # プレミアムバージョンのメッセージ
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐プレミアムバージョン</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>すべての機能がロック解除されました!</gradient>"
+    - "<gradient:#10b981:#34d399>すべての機能がロック解除されました!</gradient>"
 
 # ============================================
 # 要件項目詳細図（簡略化）
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 アイテムを送信する</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>全てのアイテムが準備完了！</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶クリックして送信</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>全てのアイテムが準備完了！</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶クリックして送信</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 アイテムを送信する</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>必須項目が不足しています</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>まずはすべてのアイテムを集めましょう</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>必須項目が不足しています</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>まずはすべてのアイテムを集めましょう</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← 戻る</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>要件に戻る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>要件に戻る</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 全体的な進捗状況</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>完了：</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>要件：</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>完了：</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>要件：</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このランクを解除するには！</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このランクを解除するには！</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>🏆ランクを主張しましょう！</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>すべての要件が完了しました!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ クリックしてランクを獲得してください</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>すべての要件が完了しました!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ クリックしてランクを獲得してください</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 ランクがロックされました</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
-        - "<gradient:#6b7280:#9ca3af>このランクのロックを解除するには、</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクのロックを解除するには、</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒ロックされています</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
-        - "<gradient:#6b7280:#9ca3af>このランクのロックを解除するには、</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>すべての要件を満たしてください</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクのロックを解除するには、</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← 戻る</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>ランク概要に戻る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>ランク概要に戻る</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ 要件は完了しました!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 すべての要件が完了しました!請求ボタンをクリックしてランクを取得してください。</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>報酬なし</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
       type_label: "<gray>タイプ：</gray> <yellow>%type%</yellow>"
       value_label: "<gray>価値：</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 すべての報酬を見る</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>クリックしてすべてを表示 %count% 報酬</gradient>"
-        - "<gradient:#6b7280:#9ca3af>このランクについて詳しく見る</gradient>"
+      - "<gradient:#6b7280:#9ca3af>クリックしてすべてを表示 %count% 報酬</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクについて詳しく見る</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>報酬の詳細は近日公開予定です！</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 報酬なし</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>このランクには報酬はありません</gradient>"
+        - "<gradient:#6b7280:#9ca3af>このランクには報酬はありません</gradient>"
         message: "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません。</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 ランク報酬</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>受け取ります %count% 報酬</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このランクを獲得すると</gradient>"
+    - "<gradient:#6b7280:#9ca3af>受け取ります %count% 報酬</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このランクを獲得すると</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>報酬なし</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません</gradient>"
     type_label: "<gray>タイプ：</gray> <yellow>%type%</yellow>"
     value_label: "<gray>価値：</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 すべての報酬を見る</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>クリックしてすべてを表示 %count% 報酬</gradient>"
-      - "<gradient:#6b7280:#9ca3af>このランクについて詳しく見る</gradient>"
+    - "<gradient:#6b7280:#9ca3af>クリックしてすべてを表示 %count% 報酬</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このランクについて詳しく見る</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>報酬の詳細は近日公開予定です！</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 報酬なし</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>このランクには報酬はありません</gradient>"
+      - "<gradient:#6b7280:#9ca3af>このランクには報酬はありません</gradient>"
       message: "<gradient:#6b7280:#9ca3af>このランクには報酬が設定されていません。</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 ランク報酬</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>受け取ります %count% 報酬</gradient>"
-    - "<gradient:#6b7280:#9ca3af>このランクを獲得すると</gradient>"
+  - "<gradient:#6b7280:#9ca3af>受け取ります %count% 報酬</gradient>"
+  - "<gradient:#6b7280:#9ca3af>このランクを獲得すると</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>このランクには、 %count% 報酬</gradient>"
-      - "<gradient:#6b7280:#9ca3af>詳細については報酬をクリックしてください</gradient>"
+    - "<gradient:#6b7280:#9ca3af>このランクには、 %count% 報酬</gradient>"
+    - "<gradient:#6b7280:#9ca3af>詳細については報酬をクリックしてください</gradient>"
 
 # ============================================
 # パーク概要UI
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>戦闘ヒール</gradient>"
     description: "<gradient:#6b7280:#9ca3af>敵にダメージを与えると回復する</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>ゾンビスレイヤー</gradient>
+    description: ゾンビを倒し、そのドロップを集めて戦闘能力を証明しましょう
+    task:
+      kill_zombies:
+        name: <white>ゾンビを倒す</white>
+        description: '殺す %amount% ゾンビ'
+      collect_flesh:
+        name: <white>腐った肉を集める</white>
+        description: 集める %amount% 倒したゾンビの腐った肉
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>マスターマイナー</gradient>
+    description: 制限時間内にさまざまな鉱石を採掘してマスターマイナーを目指しましょう
+    task:
+      mine_coal:
+        name: <white>鉱山石炭</white>
+        description: '私の %amount% 石炭鉱石ブロック'
+      mine_iron:
+        name: <white>鉱山鉄</white>
+        description: 私の %amount% 鉄鉱石ブロック
+      mine_diamond:
+        name: <white>ダイヤモンドの鉱山</white>
+        description: 私の %amount% ダイヤモンド鉱石ブロック
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>ビルダーズ・ドリーム</gradient>
+    description: 一連の手順に従って建物を建設し、建築スキルを披露しましょう
+    task:
+      foundation:
+        name: <white>信徒財団</white>
+        description: 場所 %amount% 基礎用のレンガブロック
+      walls:
+        name: <white>壁を築く</white>
+        description: '場所 %amount% 壁用オーク板ブロック'
+      windows:
+        name: <white>ウィンドウの追加</white>
+        description: 場所 %amount% 窓用ガラスブロック
+      roof:
+        name: <white>屋根一式</white>
+        description: '場所 %amount% 屋根用オーク材階段ブロック'
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>クエストのカテゴリ</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% クエスト</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>クエスト: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>アクティブなクエスト</gradient>
+    items:
+      back:
+        name: <gray>戻る</gray>
+        lore:
+        - <gray>前のメニューに戻る</gray>
+      start:
+        name: <green>クエスト開始</green>
+        lore:
+        - <gray>クリックしてこのクエストを開始します</gray>
+        - ''
+        - <dark_gray>要件：</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>クエストを放棄する</red>
+        lore:
+        - <gray>クリックしてこのクエストを放棄します</gray>
+        - ''
+        - '<yellow>警告: 進行状況は失われます</yellow>'
+      info:
+        name: <yellow>クエスト情報</yellow>
+        lore:
+        - <gray>クリックするとクエストの詳細が表示されます</gray>
+      progress:
+        name: <aqua>進行状況の表示</aqua>
+        lore:
+        - <gray>クリックするとクエストの進行状況が表示されます</gray>
+        - ''
+        - <dark_gray>進捗： <white>%progress%%</white></dark_gray>
+      close:
+        name: <gray>近い</gray>
+        lore:
+        - <gray>このメニューを閉じる</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - <dark_gray>困難： %difficulty%</dark_gray>
+        - <dark_gray>状態： %status%</dark_gray>
+        - '<dark_gray>タスク: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - <dark_gray>進捗： <white>%current%/%required%</white></dark_gray>
+        - <dark_gray>状態： %status%</dark_gray>
+    lore:
+      click_to_start: <green>クリックしてこのクエストを開始します</green>
+      click_to_view: <yellow>クリックするとクエストの詳細が表示されます</yellow>
+      click_to_abandon: <red>クリックしてこのクエストを放棄します</red>
+      already_completed: <green>すでに完了しています</green>
+      requirements_not_met: <red>要件が満たされていません</red>
+      on_cooldown: '<red>クールダウン中: %time%</red>'
+      time_remaining: '<yellow>残り時間: %time%</yellow>'
+      repeatable: <aqua>繰り返し可能なクエスト</aqua>
+      one_time: <gray>ワンタイムクエスト</gray>
+    progress:
+      overall: <yellow>全体的な進捗状況</yellow>
+      percentage: '<gray>進捗： <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>タスク: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>経過時間: <white>%time%</white></gray>'
+      time_remaining: '<gray>残り時間: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>進捗： <white>%current%/%required%</white></gray>'
+      completed: <green>完了しました</green>
+      remaining: '<gray>残り： <white>%remaining%</white></gray>'
+      locked: <red>ロックされています</red>
+      sequential: <yellow>最初に前のタスクを完了してください</yellow>
+    rewards:
+      header: <yellow>報酬</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% 経験</aqua>
+      item: <white>%amount%× %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>特典: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>クエスト: %quest%</gradient>'
+    requirements:
+      header: <yellow>要件</yellow>
+      level: <aqua>レベル %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>完了： %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>ランク: %rank%</gradient>'
+      permission: '<gray>許可： %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>つまらない</gradient>
+  easy: <gradient:#10b981:#34d399>簡単</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>普通</gradient>
+  hard: <gradient:#ef4444:#f87171>難しい</gradient>
+  extreme: <gradient:#a855f7:#c084fc>過激</gradient>

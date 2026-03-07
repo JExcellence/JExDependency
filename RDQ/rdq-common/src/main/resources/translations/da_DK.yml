@@ -13,14 +13,14 @@ prefix: "<gradient:#a855f7:#c084fc>[RDQ]</gradient> "
 pseudo:
   name: "<gradient:#6b7280:#9ca3af>📦 Ingen Belønninger</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Tilføj genstande for at oprette belønninger</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Tilføj genstande for at oprette belønninger</gradient>"
 
 input_slot:
   name: "<gradient:#10b981:#34d399>➕ Tilføj Genstand</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Placer genstande her som belønninger</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Venstreklik for at placere</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Højreklik for at fjerne</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Placer genstande her som belønninger</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Venstreklik for at placere</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Højreklik for at fjerne</gradient>"
 
 # ============================================
 # RANGTRÆ-VISNINGSNAVNE OG BESKRIVELSER
@@ -29,33 +29,33 @@ tree:
   ranger:
     name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mester kunsten at skyde med bue og spore</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bliv ét med naturen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mester kunsten at skyde med bue og spore</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bliv ét med naturen</gradient>"
   warrior:
     name: "<gradient:#ef4444:#f87171>⚔ Kriger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mester kunsten at kæmpe</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bliv en legendarisk kriger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mester kunsten at kæmpe</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bliv en legendarisk kriger</gradient>"
   mage:
     name: "<gradient:#a855f7:#c084fc>✨ Magiker</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Udnyt magiens kraft</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bliv en mester i de arkane kunster</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Udnyt magiens kraft</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bliv en mester i de arkane kunster</gradient>"
   rogue:
     name: "<gradient:#6b7280:#9ca3af>🗡 Slyngel</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mester snighed og list</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Slå til fra skyggerne</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mester snighed og list</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Slå til fra skyggerne</gradient>"
   cleric:
     name: "<gradient:#f59e0b:#fbbf24>✝ Kleriker</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kanaliser guddommelig kraft</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Helbred og beskyt dine allierede</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kanaliser guddommelig kraft</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Helbred og beskyt dine allierede</gradient>"
   merchant:
     name: "<gradient:#10b981:#34d399>💰 Handelsmand</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mester kunsten at handle</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Opbyg din formue</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mester kunsten at handle</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Opbyg din formue</gradient>"
 
 # ============================================
 # RANG-VISNINGSNAVNE OG BESKRIVELSER
@@ -72,291 +72,291 @@ rank:
   default:
     name: "<gradient:#6b7280:#9ca3af>Uden Rang</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vælg en rangsti for at begynde</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vælg en rangsti for at begynde</gradient>"
     unselected:
       name: "<gradient:#6b7280:#9ca3af>Uden Rang</gradient>"
   icon:
     default:
       name: "<gradient:#6b7280:#9ca3af>Standard Rang</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Ingen rang valgt</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ingen rang valgt</gradient>"
   # Rangertræ-ranger
   ranger:
     scout:
       name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Læser hovaftryk og vindskift.</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Læser hovaftryk og vindskift.</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>
     hunter:
       name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Forfølger byttedyr med tålmodig præcision.</gradient>
-        - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Forfølger byttedyr med tålmodig præcision.</gradient>
+      - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
     tracker:
       name: <gradient:#0ea5e9:#38bdf8>🏹 Tracker of Signs</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Følger stier, ingen storm kan slette.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Vejvalg forude</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Følger stier, ingen storm kan slette.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Vejvalg forude</gradient>
     warden_primal:
       name: <gradient:#14b8a6:#2dd4bf>🛡 Dyrenes vogter</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bindes med apex-væsner fra riget.</gradient>
-        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bindes med apex-væsner fra riget.</gradient>
+      - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>
     warden_storm:
       name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Brander sandt gennem torden og regn.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Brander sandt gennem torden og regn.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>
     warden_wild:
       name: <gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bevogter hellige grænser og skjulte lysninger.</gradient>
-        - <gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bevogter hellige grænser og skjulte lysninger.</gradient>
+      - <gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>
     beastmaster_primal:
       name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kommandoer legendariske bæster uden frygt.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kommandoer legendariske bæster uden frygt.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
     beastmaster_storm:
       name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hver bolt styrer din ubarmhjertige volley.</gradient>
-        - <gradient:#1d4ed8:#3b82f6>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hver bolt styrer din ubarmhjertige volley.</gradient>
+      - <gradient:#1d4ed8:#3b82f6>➤ Tier V • Endelig rangering</gradient>
     beastmaster_wild:
       name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Naturen selv rejser sig for at besvare dit opkald.</gradient>
-        - <gradient:#15803d:#22c55e>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Naturen selv rejser sig for at besvare dit opkald.</gradient>
+      - <gradient:#15803d:#22c55e>➤ Tier V • Endelig rangering</gradient>
   warrior:
     recruit:
       name: <gradient:#6b7280:#9ca3af>⚔ Rekrutér</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ En frisk klinge med uprøvet beslutsomhed.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Træningspladser</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ En frisk klinge med uprøvet beslutsomhed.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Træningspladser</gradient>
     soldier:
       name: <gradient:#3b82f6:#60a5fa>⚔ Soldat</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hærdet af boremaskiner og frontlinjetjeneste.</gradient>
-        - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Feltdisciplin</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hærdet af boremaskiner og frontlinjetjeneste.</gradient>
+      - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Feltdisciplin</gradient>
     veteran:
       name: <gradient:#f59e0b:#fbbf24>⚔ Veteran</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kamp-ar markerer din optjente visdom.</gradient>
-        - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Vælg din vej</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kamp-ar markerer din optjente visdom.</gradient>
+      - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Vælg din vej</gradient>
     berserker:
       name: <gradient:#ef4444:#f87171>🔥 Bersærker</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bytter forsvar for ødelæggende angreb.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bytter forsvar for ødelæggende angreb.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
     guardian:
       name: <gradient:#2563eb:#60a5fa>🛡 Værge</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Står fast, hvor andre ville gå i stykker.</gradient>
-        - <gradient:#2563eb:#60a5fa>➤ Tier IV • Skjoldgren</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Står fast, hvor andre ville gå i stykker.</gradient>
+      - <gradient:#2563eb:#60a5fa>➤ Tier IV • Skjoldgren</gradient>
     gladiator:
       name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Mestrer balanceret arenakrigsførelse.</gradient>
-        - <gradient:#a855f7:#c084fc>➤ Tier IV • Arena filial</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Mestrer balanceret arenakrigsførelse.</gradient>
+      - <gradient:#a855f7:#c084fc>➤ Tier IV • Arena filial</gradient>
     warlord_fury:
       name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ En ustoppelig ødelæggelsesmotor.</gradient>
-        - <gradient:#dc2626:#fb7185>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ En ustoppelig ødelæggelsesmotor.</gradient>
+      - <gradient:#dc2626:#fb7185>➤ Tier V • Endelig rangering</gradient>
     warlord_shield:
       name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Den sidste mur mellem liv og ruin.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Den sidste mur mellem liv og ruin.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Tier V • Endelig rangering</gradient>
     warlord_arena:
       name: <gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kronet mester for hvert colosseum.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kronet mester for hvert colosseum.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
   mage:
     apprentice:
       name: <gradient:#a855f7:#d8b4fe>✨ Lærling</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Gnister af mystisk kraft vågner.</gradient>
-        - <gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Gnister af mystisk kraft vågner.</gradient>
+      - <gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>
     adept:
       name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Væver kontrollerede og fokuserede besværgelser.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Væver kontrollerede og fokuserede besværgelser.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>
     wizard:
       name: <gradient:#f59e0b:#fde68a>✨ Troldmand</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kommandoer komplekse mønstre af magi.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg din doktrin</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kommandoer komplekse mønstre af magi.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg din doktrin</gradient>
     sorcerer_arcane:
       name: <gradient:#8b5cf6:#c4b5fd>🔮 Troldmand fra Arcana</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Forfiner rå kraft til elegant kraft.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Forfiner rå kraft til elegant kraft.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>
     sorcerer_spell:
       name: <gradient:#d946ef:#f0abfc>📜 Troldmand</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Udvider grimoire kontrol og præcision.</gradient>
-        - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Stave gren</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Udvider grimoire kontrol og præcision.</gradient>
+      - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Stave gren</gradient>
     sorcerer_void:
       name: <gradient:#1d4ed8:#60a5fa>🌌 Tommens troldmand</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bøjer afgrundsenergier til din vilje.</gradient>
-        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • Ugyldig filial</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bøjer afgrundsenergier til din vilje.</gradient>
+      - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • Ugyldig filial</gradient>
     archmage_arcane:
       name: <gradient:#7c3aed:#c084fc>👑 Archmage of Arcana</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Supreme arkitekt af ren mystisk magt.</gradient>
-        - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Supreme arkitekt af ren mystisk magt.</gradient>
+      - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
     archmage_spell:
       name: <gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hver besværgelse svarer øjeblikkeligt.</gradient>
-        - <gradient:#d946ef:#f5d0fe>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hver besværgelse svarer øjeblikkeligt.</gradient>
+      - <gradient:#d946ef:#f5d0fe>➤ Tier V • Endelig rangering</gradient>
     archmage_void:
       name: <gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Styrer kanterne mellem verdener.</gradient>
-        - <gradient:#1e3a8a:#60a5fa>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Styrer kanterne mellem verdener.</gradient>
+      - <gradient:#1e3a8a:#60a5fa>➤ Tier V • Endelig rangering</gradient>
   rogue:
     pickpocket:
       name: <gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Lærer timing, fejlretning og hastighed.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Streetcraft</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Lærer timing, fejlretning og hastighed.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Streetcraft</gradient>
     thief:
       name: <gradient:#3b82f6:#93c5fd>🗡 Tyv</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Glider gennem låse og udkigslinjer.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Lydløs indtastning</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Glider gennem låse og udkigslinjer.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • Lydløs indtastning</gradient>
     assassin:
       name: <gradient:#ef4444:#f87171>🗡 snigmorder</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Slår én gang og forsvinder sporløst.</gradient>
-        - <gradient:#ef4444:#f87171>➤ Niveau III • Vælg din metode</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Slår én gang og forsvinder sporløst.</gradient>
+      - <gradient:#ef4444:#f87171>➤ Niveau III • Vælg din metode</gradient>
     shadow_stealth:
       name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Mestrer bevægelse, som intet øje kan følge.</gradient>
-        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Mestrer bevægelse, som intet øje kan følge.</gradient>
+      - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>
     shadow_night:
       name: <gradient:#7c3aed:#c4b5fd>🌘 Shadow of Night</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Forvandler mørke til dødelig fordel.</gradient>
-        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • Natgren</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Forvandler mørke til dødelig fordel.</gradient>
+      - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • Natgren</gradient>
     shadow_sabotage:
       name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Demonterer planer, før fjender reagerer.</gradient>
-        - <gradient:#f97316:#fb923c>➤ Tier IV • Sabotagegren</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Demonterer planer, før fjender reagerer.</gradient>
+      - <gradient:#f97316:#fb923c>➤ Tier IV • Sabotagegren</gradient>
     phantom_stealth:
       name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bliver en urørlig bymyte.</gradient>
-        - <gradient:#14b8a6:#5eead4>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bliver en urørlig bymyte.</gradient>
+      - <gradient:#14b8a6:#5eead4>➤ Tier V • Endelig rangering</gradient>
     phantom_night:
       name: <gradient:#9333ea:#e9d5ff>👑 Phantom of Night</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ejer fuldstændig midnatstimen.</gradient>
-        - <gradient:#9333ea:#e9d5ff>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ejer fuldstændig midnatstimen.</gradient>
+      - <gradient:#9333ea:#e9d5ff>➤ Tier V • Endelig rangering</gradient>
     phantom_sabotage:
       name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Afslutter kampe, før de overhovedet begynder.</gradient>
-        - <gradient:#ea580c:#fdba74>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Afslutter kampe, før de overhovedet begynder.</gradient>
+      - <gradient:#ea580c:#fdba74>➤ Tier V • Endelig rangering</gradient>
   cleric:
     acolyte:
       name: <gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Begynder tjenestens hellige vej.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Niveau I • Hengivenhed</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Begynder tjenestens hellige vej.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Niveau I • Hengivenhed</gradient>
     healer:
       name: <gradient:#10b981:#6ee7b7>✝ Healer</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Genopretter allierede under hårdt pres.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Genopretter allierede under hårdt pres.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurering</gradient>
     priest:
       name: <gradient:#3b82f6:#93c5fd>✝ Præst</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vejleder fester med hellig disciplin.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Vælg dit opkald</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vejleder fester med hellig disciplin.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Vælg dit opkald</gradient>
     bishop_divine:
       name: <gradient:#8b5cf6:#c4b5fd>⛪ Guddommelighedens Biskop</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Kanaler direkte strålende autoritet.</gradient>
-        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Divine Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Kanaler direkte strålende autoritet.</gradient>
+      - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Divine Branch</gradient>
     bishop_light:
       name: <gradient:#f59e0b:#fef08a>☀ Lysets Biskop</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Blænder korruption med hellig glans.</gradient>
-        - <gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Blænder korruption med hellig glans.</gradient>
+      - <gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>
     bishop_soul:
       name: <gradient:#06b6d4:#67e8f9>🕊 Biskop af sjæle</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bevogter tærsklen til liv og død.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Soul Branch</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bevogter tærsklen til liv og død.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Soul Branch</gradient>
     high_priest_divine:
       name: <gradient:#7c3aed:#ddd6fe>👑 Guddommelighedens Ypperstepræst</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Erklærer mirakler i hjertet af kaos.</gradient>
-        - <gradient:#7c3aed:#ddd6fe>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Erklærer mirakler i hjertet af kaos.</gradient>
+      - <gradient:#7c3aed:#ddd6fe>➤ Tier V • Endelig rangering</gradient>
     high_priest_light:
       name: <gradient:#f59e0b:#fef3c7>👑 Lysets Ypperstepræst</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Bader allierede i urokkelig daggry.</gradient>
-        - <gradient:#f59e0b:#fef3c7>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Bader allierede i urokkelig daggry.</gradient>
+      - <gradient:#f59e0b:#fef3c7>➤ Tier V • Endelig rangering</gradient>
     high_priest_soul:
       name: <gradient:#0891b2:#a5f3fc>👑 Sjælenes Ypperstepræst</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Hyrder ånder ud over dødelig frygt.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Hyrder ånder ud over dødelig frygt.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
   merchant:
     peddler:
       name: <gradient:#6b7280:#9ca3af>💰 Smugler</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Starter med grus, charme og små handler.</gradient>
-        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Gadehandel</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Starter med grus, charme og små handler.</gradient>
+      - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Gadehandel</gradient>
     trader:
       name: <gradient:#3b82f6:#93c5fd>💰 Forhandler</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Udvider ruter og pålidelige kontakter.</gradient>
-        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Markedstilstedeværelse</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Udvider ruter og pålidelige kontakter.</gradient>
+      - <gradient:#3b82f6:#93c5fd>➤ Tier II • Markedstilstedeværelse</gradient>
     broker:
       name: <gradient:#f59e0b:#fde68a>💰 Mægler</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Lukker aftaler med høj værdi med præcision.</gradient>
-        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg dit imperium</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Lukker aftaler med høj værdi med præcision.</gradient>
+      - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg dit imperium</gradient>
     magnate_wealth:
       name: <gradient:#10b981:#6ee7b7>📈 Magnat of Wealth</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Opbygger ren kapital i et uovertruffent tempo.</gradient>
-        - <gradient:#10b981:#6ee7b7>➤ Tier IV • Formueafdeling</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Opbygger ren kapital i et uovertruffent tempo.</gradient>
+      - <gradient:#10b981:#6ee7b7>➤ Tier IV • Formueafdeling</gradient>
     magnate_market:
       name: <gradient:#06b6d4:#67e8f9>🏛 Magnat of Markets</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Organiserer udbuds- og efterspørgselscyklusser.</gradient>
-        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Markedsafdeling</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Organiserer udbuds- og efterspørgselscyklusser.</gradient>
+      - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Markedsafdeling</gradient>
     magnate_trade:
       name: <gradient:#f97316:#fdba74>🚚 Magnat of Trade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Dominerer campingvognsbaner og logistik.</gradient>
-        - <gradient:#f97316:#fdba74>➤ Tier IV • Handelsafdeling</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Dominerer campingvognsbaner og logistik.</gradient>
+      - <gradient:#f97316:#fdba74>➤ Tier IV • Handelsafdeling</gradient>
     tycoon_wealth:
       name: <gradient:#22c55e:#bbf7d0>👑 Rigdommens Tycoon</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Vender økonomier med en enkelt beslutning.</gradient>
-        - <gradient:#22c55e:#bbf7d0>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Vender økonomier med en enkelt beslutning.</gradient>
+      - <gradient:#22c55e:#bbf7d0>➤ Tier V • Endelig rangering</gradient>
     tycoon_market:
       name: <gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Sætter priser, som enhver guild skal respektere.</gradient>
-        - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Sætter priser, som enhver guild skal respektere.</gradient>
+      - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
     tycoon_trade:
       name: <gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>
       lore:
-        - <gradient:#6b7280:#9ca3af>✦ Ejer vejene, havne og overskud.</gradient>
-        - <gradient:#ea580c:#fed7aa>➤ Tier V • Endelig rangering</gradient>
+      - <gradient:#6b7280:#9ca3af>✦ Ejer vejene, havne og overskud.</gradient>
+      - <gradient:#ea580c:#fed7aa>➤ Tier V • Endelig rangering</gradient>
 bounty_listener:
   bounty_active:
     warning: "<gradient:#ff6b6b:#ff8e8e>⚠</gradient> <gradient:#a855f7:#c084fc>Du har en aktiv dusør på dit hoved!</gradient>"
@@ -426,28 +426,28 @@ main_overview_ui:
   admin_overview:
     name: "<gradient:#ef4444:#f87171>⚙ Admin Panel</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Adgang til administrationsværktøjer</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og konfigurationsmuligheder</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Adgang til administrationsværktøjer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og konfigurationsmuligheder</gradient>"
   bounty_overview:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Dusører</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vis og administrer dusører</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Jagt spillere for belønninger!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vis og administrer dusører</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Jagt spillere for belønninger!</gradient>"
   perk_overview:
     name: "<gradient:#10b981:#34d399>✨ Fordele</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vis tilgængelige fordele</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og specielle evner</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vis tilgængelige fordele</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og specielle evner</gradient>"
   quest_overview:
     name: "<gradient:#3b82f6:#60a5fa>📜 Quests</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vis tilgængelige quests</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og spor din fremgang</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vis tilgængelige quests</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og spor din fremgang</gradient>"
   rank_overview:
     name: "<gradient:#a855f7:#c084fc>⚔ Ranger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vis rangfremskridt</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og lås nye evner op</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vis rangfremskridt</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og lås nye evner op</gradient>"
 
 # ============================================
 # HOVED-UI FOR RANG
@@ -457,8 +457,8 @@ rank_main_ui:
   rank_tree:
     name: "<gradient:#f59e0b:#fbbf24>🌳 Rangtræer</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gennemse tilgængelige rangtræer</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og vælg din vej</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gennemse tilgængelige rangtræer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og vælg din vej</gradient>"
 
 
 # ============================================
@@ -470,40 +470,40 @@ rank_tree_overview_ui:
     ranger:
       name: "<gradient:#10b981:#34d399>🏹 Ranger</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester kunsten at skyde med bue og spore</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bliv ét med naturen</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Mester kunsten at skyde med bue og spore</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bliv ét med naturen</gradient>"
     warrior:
       name: "<gradient:#ef4444:#f87171>⚔ Kriger</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester kunsten at kæmpe</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bliv en legendarisk kriger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Mester kunsten at kæmpe</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bliv en legendarisk kriger</gradient>"
     mage:
       name: "<gradient:#a855f7:#c084fc>✨ Magiker</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Udnyt magiens kraft</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Bliv en mester i de arkane kunster</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Udnyt magiens kraft</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Bliv en mester i de arkane kunster</gradient>"
     rogue:
       name: "<gradient:#6b7280:#9ca3af>🗡 Slyngel</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester snighed og list</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Slå til fra skyggerne</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Mester snighed og list</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Slå til fra skyggerne</gradient>"
     cleric:
       name: "<gradient:#f59e0b:#fbbf24>✝ Kleriker</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kanaliser guddommelig kraft</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Helbred og beskyt dine allierede</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kanaliser guddommelig kraft</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Helbred og beskyt dine allierede</gradient>"
     merchant:
       name: "<gradient:#10b981:#34d399>💰 Handelsmand</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Mester kunsten at handle</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Opbyg din formue</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Mester kunsten at handle</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Opbyg din formue</gradient>"
   click:
     preview_rank_path:
-      - "<gradient:#3b82f6:#60a5fa>Venstreklik for forhåndsvisning</gradient>"
-      - "<gradient:#10b981:#34d399>Højreklik for at vælge</gradient>"
+    - "<gradient:#3b82f6:#60a5fa>Venstreklik for forhåndsvisning</gradient>"
+    - "<gradient:#10b981:#34d399>Højreklik for at vælge</gradient>"
     locked: "<gradient:#ef4444:#f87171>🔒 Dette rangtræ er låst</gradient>"
     locked.required:
-      - "<gradient:#6b7280:#9ca3af>Fuldfør %minimum_rank_paths_to_be_absolved_needed% rangtræer først</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Fuldfør %minimum_rank_paths_to_be_absolved_needed% rangtræer først</gradient>"
     pre_requisites: "<gradient:#f59e0b:#fbbf24>Forudsætninger:</gradient>"
     rank_path_locked: "<gradient:#ef4444:#f87171>🔒 Denne rangsti er låst!</gradient>"
   currently_active: "<gradient:#10b981:#34d399>✅ Aktuelt Aktiv</gradient>"
@@ -515,8 +515,8 @@ rank_tree_overview_ui:
   create_rank_tree:
     name: "<gradient:#10b981:#34d399>➕ Opret Rangtræ</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Opret et nyt rangtræ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>(Kun admin)</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Opret et nyt rangtræ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>(Kun admin)</gradient>"
   select:
     rank_path_starting_rank_not_found: "<gradient:#ef4444:#f87171>❌ Startrang ikke fundet for denne sti!</gradient>"
     rank_path_selected: "<gradient:#10b981:#34d399>✅ Valgt rangsti:</gradient> <gradient:#f59e0b:#fbbf24>%rank_path%</gradient> <gradient:#6b7280:#9ca3af>(Startrang: %rank%)</gradient>"
@@ -526,10 +526,10 @@ rank_tree_overview_ui:
     rank_tree_creation_coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Rangtræ oprettelse kommer snart!</gradient>"
   free_version_preview_only: "<gradient:#f59e0b:#fbbf24>⭐ Gratis version - Kun forhåndsvisning</gradient>"
   free_version_preview_only_lore:
-    - "<gradient:#6b7280:#9ca3af>Dette rangeringstræ er kun tilgængeligt til forhåndsvisning.</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Opgrader til Premium for at låse op!</gradient>"
-    - ""
-    - "<gradient:#3b82f6:#60a5fa>Venstre-klik for at få vist</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Dette rangeringstræ er kun tilgængeligt til forhåndsvisning.</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Opgrader til Premium for at låse op!</gradient>"
+  - ""
+  - "<gradient:#3b82f6:#60a5fa>Venstre-klik for at få vist</gradient>"
   free_version_upgrade_required: "<gradient:#f59e0b:#fbbf24>⭐ Premium påkrævet:</gradient> <gradient:#6b7280:#9ca3af>Opgrader til Premium for at vælge yderligere rangtræer!</gradient>"
 
 # ============================================
@@ -547,17 +547,17 @@ rank_path_overview_ui:
     fallback: "<gradient:#6b7280:#9ca3af>Naviger %direction%</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
   center_view:
     name: "<gradient:#3b82f6:#60a5fa>🎯 Centrer Visning</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at centrere visningen</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at centrere visningen</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Centrer Visning</gradient>"
   preview_mode:
     name: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisningstilstand</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Du ser i forhåndsvisningstilstand</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Ændringer gemmes ikke</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Du ser i forhåndsvisningstilstand</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ændringer gemmes ikke</gradient>"
     fallback: "<gradient:#6b7280:#9ca3af>Forhåndsvisningstilstand</gradient>"
   background:
     name: " "
@@ -565,12 +565,12 @@ rank_path_overview_ui:
     render_rank: "<gradient:#ef4444:#f87171>❌ Fejl ved rendering af rang</gradient>"
     no_rank_tree: "<gradient:#ef4444:#f87171>❌ Intet Rangtræ</gradient>"
     no_rank_tree_lore:
-      - "<gradient:#6b7280:#9ca3af>Kunne ikke indlæse rangtræ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kunne ikke indlæse rangtræ</gradient>"
     critical: "<gradient:#ef4444:#f87171>❌ Kritisk Fejl</gradient>"
     critical_lore:
-      - "<gradient:#6b7280:#9ca3af>Der opstod en fejl under rendering</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Der opstod en fejl under rendering</gradient>"
     critical.lore:
-      - "<gradient:#6b7280:#9ca3af>Der opstod en fejl under rendering</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Der opstod en fejl under rendering</gradient>"
     requirements_view_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne krav til</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     general: "<gradient:#ef4444:#f87171>❌ Der opstod en fejl. Prøv venligst igen.</gradient>"
   status:
@@ -605,278 +605,278 @@ rank_path_overview_ui:
       scout:
         name: <gradient:#22c55e:#86efac>🏹 Scout of Trails</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Læser hovaftryk og vindskift.</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Læser hovaftryk og vindskift.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier I • Nature Initiate</gradient>
       hunter:
         name: <gradient:#16a34a:#4ade80>🏹 Hunter of the Wilds</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Forfølger byttedyr med tålmodig præcision.</gradient>
-          - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Forfølger byttedyr med tålmodig præcision.</gradient>
+        - <gradient:#10b981:#34d399>➤ Tier II • Wild Pursuit</gradient>
       tracker:
         name: <gradient:#0ea5e9:#38bdf8>🏹 Tracker of Signs</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Følger stier, ingen storm kan slette.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Vejvalg forude</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Følger stier, ingen storm kan slette.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Niveau III • Vejvalg forude</gradient>
       warden_primal:
         name: <gradient:#14b8a6:#2dd4bf>🛡 Dyrenes vogter</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bindes med apex-væsner fra riget.</gradient>
-          - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bindes med apex-væsner fra riget.</gradient>
+        - <gradient:#14b8a6:#2dd4bf>➤ Tier IV • Primal Branch</gradient>
       warden_storm:
         name: <gradient:#2563eb:#60a5fa>⚡ Warden of Storms</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Brander sandt gennem torden og regn.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Brander sandt gennem torden og regn.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • Storm Branch</gradient>
       warden_wild:
         name: <gradient:#16a34a:#84cc16>🌿 Warden of the Wild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bevogter hellige grænser og skjulte lysninger.</gradient>
-          - <gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bevogter hellige grænser og skjulte lysninger.</gradient>
+        - <gradient:#16a34a:#84cc16>➤ Tier IV • Wild Branch</gradient>
       beastmaster_primal:
         name: <gradient:#7c3aed:#c084fc>👑 Beastmaster Primal</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kommandoer legendariske bæster uden frygt.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kommandoer legendariske bæster uden frygt.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
       beastmaster_storm:
         name: <gradient:#1d4ed8:#3b82f6>👑 Beastmaster Storm</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hver bolt styrer din ubarmhjertige volley.</gradient>
-          - <gradient:#1d4ed8:#3b82f6>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hver bolt styrer din ubarmhjertige volley.</gradient>
+        - <gradient:#1d4ed8:#3b82f6>➤ Tier V • Endelig rangering</gradient>
       beastmaster_wild:
         name: <gradient:#15803d:#22c55e>👑 Beastmaster Wild</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Naturen selv rejser sig for at besvare dit opkald.</gradient>
-          - <gradient:#15803d:#22c55e>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Naturen selv rejser sig for at besvare dit opkald.</gradient>
+        - <gradient:#15803d:#22c55e>➤ Tier V • Endelig rangering</gradient>
     warrior:
       recruit:
         name: <gradient:#6b7280:#9ca3af>⚔ Rekrutér</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ En frisk klinge med uprøvet beslutsomhed.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Træningspladser</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ En frisk klinge med uprøvet beslutsomhed.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Træningspladser</gradient>
       soldier:
         name: <gradient:#3b82f6:#60a5fa>⚔ Soldat</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hærdet af boremaskiner og frontlinjetjeneste.</gradient>
-          - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Feltdisciplin</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hærdet af boremaskiner og frontlinjetjeneste.</gradient>
+        - <gradient:#3b82f6:#60a5fa>➤ Niveau II • Feltdisciplin</gradient>
       veteran:
         name: <gradient:#f59e0b:#fbbf24>⚔ Veteran</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kamp-ar markerer din optjente visdom.</gradient>
-          - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Vælg din vej</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kamp-ar markerer din optjente visdom.</gradient>
+        - <gradient:#f59e0b:#fbbf24>➤ Niveau III • Vælg din vej</gradient>
       berserker:
         name: <gradient:#ef4444:#f87171>🔥 Bersærker</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bytter forsvar for ødelæggende angreb.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bytter forsvar for ødelæggende angreb.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Tier IV • Fury Branch</gradient>
       guardian:
         name: <gradient:#2563eb:#60a5fa>🛡 Værge</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Står fast, hvor andre ville gå i stykker.</gradient>
-          - <gradient:#2563eb:#60a5fa>➤ Tier IV • Skjoldgren</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Står fast, hvor andre ville gå i stykker.</gradient>
+        - <gradient:#2563eb:#60a5fa>➤ Tier IV • Skjoldgren</gradient>
       gladiator:
         name: <gradient:#a855f7:#c084fc>🏟 Gladiator</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Mestrer balanceret arenakrigsførelse.</gradient>
-          - <gradient:#a855f7:#c084fc>➤ Tier IV • Arena filial</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Mestrer balanceret arenakrigsførelse.</gradient>
+        - <gradient:#a855f7:#c084fc>➤ Tier IV • Arena filial</gradient>
       warlord_fury:
         name: <gradient:#dc2626:#fb7185>👑 Warlord of Fury</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ En ustoppelig ødelæggelsesmotor.</gradient>
-          - <gradient:#dc2626:#fb7185>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ En ustoppelig ødelæggelsesmotor.</gradient>
+        - <gradient:#dc2626:#fb7185>➤ Tier V • Endelig rangering</gradient>
       warlord_shield:
         name: <gradient:#1d4ed8:#60a5fa>👑 Warlord of the Shield</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Den sidste mur mellem liv og ruin.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Den sidste mur mellem liv og ruin.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier V • Endelig rangering</gradient>
       warlord_arena:
         name: <gradient:#7c3aed:#c084fc>👑 Warlord of the Arena</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kronet mester for hvert colosseum.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kronet mester for hvert colosseum.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
     mage:
       apprentice:
         name: <gradient:#a855f7:#d8b4fe>✨ Lærling</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Gnister af mystisk kraft vågner.</gradient>
-          - <gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Gnister af mystisk kraft vågner.</gradient>
+        - <gradient:#a855f7:#d8b4fe>➤ Tier I • Arcane Foundations</gradient>
       adept:
         name: <gradient:#3b82f6:#93c5fd>✨ Adept</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Væver kontrollerede og fokuserede besværgelser.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Væver kontrollerede og fokuserede besværgelser.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Arcane Practice</gradient>
       wizard:
         name: <gradient:#f59e0b:#fde68a>✨ Troldmand</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kommandoer komplekse mønstre af magi.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg din doktrin</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kommandoer komplekse mønstre af magi.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg din doktrin</gradient>
       sorcerer_arcane:
         name: <gradient:#8b5cf6:#c4b5fd>🔮 Troldmand fra Arcana</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Forfiner rå kraft til elegant kraft.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Forfiner rå kraft til elegant kraft.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Arcane Branch</gradient>
       sorcerer_spell:
         name: <gradient:#d946ef:#f0abfc>📜 Troldmand</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Udvider grimoire kontrol og præcision.</gradient>
-          - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Stave gren</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Udvider grimoire kontrol og præcision.</gradient>
+        - <gradient:#d946ef:#f0abfc>➤ Niveau IV • Stave gren</gradient>
       sorcerer_void:
         name: <gradient:#1d4ed8:#60a5fa>🌌 Tommens troldmand</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bøjer afgrundsenergier til din vilje.</gradient>
-          - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • Ugyldig filial</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bøjer afgrundsenergier til din vilje.</gradient>
+        - <gradient:#1d4ed8:#60a5fa>➤ Tier IV • Ugyldig filial</gradient>
       archmage_arcane:
         name: <gradient:#7c3aed:#c084fc>👑 Archmage of Arcana</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Supreme arkitekt af ren mystisk magt.</gradient>
-          - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Supreme arkitekt af ren mystisk magt.</gradient>
+        - <gradient:#7c3aed:#c084fc>➤ Tier V • Endelig rangering</gradient>
       archmage_spell:
         name: <gradient:#d946ef:#f5d0fe>👑 Archmage of Spells</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hver besværgelse svarer øjeblikkeligt.</gradient>
-          - <gradient:#d946ef:#f5d0fe>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hver besværgelse svarer øjeblikkeligt.</gradient>
+        - <gradient:#d946ef:#f5d0fe>➤ Tier V • Endelig rangering</gradient>
       archmage_void:
         name: <gradient:#1e3a8a:#60a5fa>👑 Archmage of the Void</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Styrer kanterne mellem verdener.</gradient>
-          - <gradient:#1e3a8a:#60a5fa>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Styrer kanterne mellem verdener.</gradient>
+        - <gradient:#1e3a8a:#60a5fa>➤ Tier V • Endelig rangering</gradient>
     rogue:
       pickpocket:
         name: <gradient:#6b7280:#9ca3af>🗡 Lommetyv</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Lærer timing, fejlretning og hastighed.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Streetcraft</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Lærer timing, fejlretning og hastighed.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Streetcraft</gradient>
       thief:
         name: <gradient:#3b82f6:#93c5fd>🗡 Tyv</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Glider gennem låse og udkigslinjer.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Lydløs indtastning</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Glider gennem låse og udkigslinjer.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Lydløs indtastning</gradient>
       assassin:
         name: <gradient:#ef4444:#f87171>🗡 snigmorder</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Slår én gang og forsvinder sporløst.</gradient>
-          - <gradient:#ef4444:#f87171>➤ Niveau III • Vælg din metode</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Slår én gang og forsvinder sporløst.</gradient>
+        - <gradient:#ef4444:#f87171>➤ Niveau III • Vælg din metode</gradient>
       shadow_stealth:
         name: <gradient:#0ea5e9:#67e8f9>🌒 Shadow of Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Mestrer bevægelse, som intet øje kan følge.</gradient>
-          - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Mestrer bevægelse, som intet øje kan følge.</gradient>
+        - <gradient:#0ea5e9:#67e8f9>➤ Tier IV • Stealth Branch</gradient>
       shadow_night:
         name: <gradient:#7c3aed:#c4b5fd>🌘 Shadow of Night</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Forvandler mørke til dødelig fordel.</gradient>
-          - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • Natgren</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Forvandler mørke til dødelig fordel.</gradient>
+        - <gradient:#7c3aed:#c4b5fd>➤ Tier IV • Natgren</gradient>
       shadow_sabotage:
         name: <gradient:#f97316:#fb923c>💣 Shadow of Sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Demonterer planer, før fjender reagerer.</gradient>
-          - <gradient:#f97316:#fb923c>➤ Tier IV • Sabotagegren</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Demonterer planer, før fjender reagerer.</gradient>
+        - <gradient:#f97316:#fb923c>➤ Tier IV • Sabotagegren</gradient>
       phantom_stealth:
         name: <gradient:#14b8a6:#5eead4>👑 Phantom of Stealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bliver en urørlig bymyte.</gradient>
-          - <gradient:#14b8a6:#5eead4>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bliver en urørlig bymyte.</gradient>
+        - <gradient:#14b8a6:#5eead4>➤ Tier V • Endelig rangering</gradient>
       phantom_night:
         name: <gradient:#9333ea:#e9d5ff>👑 Phantom of Night</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ejer fuldstændig midnatstimen.</gradient>
-          - <gradient:#9333ea:#e9d5ff>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ejer fuldstændig midnatstimen.</gradient>
+        - <gradient:#9333ea:#e9d5ff>➤ Tier V • Endelig rangering</gradient>
       phantom_sabotage:
         name: <gradient:#ea580c:#fdba74>👑 Phantom of Sabotage</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Afslutter kampe, før de overhovedet begynder.</gradient>
-          - <gradient:#ea580c:#fdba74>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Afslutter kampe, før de overhovedet begynder.</gradient>
+        - <gradient:#ea580c:#fdba74>➤ Tier V • Endelig rangering</gradient>
     cleric:
       acolyte:
         name: <gradient:#f59e0b:#fde68a>✝ Acolyte</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Begynder tjenestens hellige vej.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Niveau I • Hengivenhed</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Begynder tjenestens hellige vej.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau I • Hengivenhed</gradient>
       healer:
         name: <gradient:#10b981:#6ee7b7>✝ Healer</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Genopretter allierede under hårdt pres.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Genopretter allierede under hårdt pres.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier II • Restaurering</gradient>
       priest:
         name: <gradient:#3b82f6:#93c5fd>✝ Præst</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vejleder fester med hellig disciplin.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Vælg dit opkald</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vejleder fester med hellig disciplin.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Niveau III • Vælg dit opkald</gradient>
       bishop_divine:
         name: <gradient:#8b5cf6:#c4b5fd>⛪ Guddommelighedens Biskop</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Kanaler direkte strålende autoritet.</gradient>
-          - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Divine Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Kanaler direkte strålende autoritet.</gradient>
+        - <gradient:#8b5cf6:#c4b5fd>➤ Tier IV • Divine Branch</gradient>
       bishop_light:
         name: <gradient:#f59e0b:#fef08a>☀ Lysets Biskop</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Blænder korruption med hellig glans.</gradient>
-          - <gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Blænder korruption med hellig glans.</gradient>
+        - <gradient:#f59e0b:#fef08a>➤ Tier IV • Light Branch</gradient>
       bishop_soul:
         name: <gradient:#06b6d4:#67e8f9>🕊 Biskop af sjæle</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bevogter tærsklen til liv og død.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Soul Branch</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bevogter tærsklen til liv og død.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Soul Branch</gradient>
       high_priest_divine:
         name: <gradient:#7c3aed:#ddd6fe>👑 Guddommelighedens Ypperstepræst</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Erklærer mirakler i hjertet af kaos.</gradient>
-          - <gradient:#7c3aed:#ddd6fe>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Erklærer mirakler i hjertet af kaos.</gradient>
+        - <gradient:#7c3aed:#ddd6fe>➤ Tier V • Endelig rangering</gradient>
       high_priest_light:
         name: <gradient:#f59e0b:#fef3c7>👑 Lysets Ypperstepræst</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Bader allierede i urokkelig daggry.</gradient>
-          - <gradient:#f59e0b:#fef3c7>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Bader allierede i urokkelig daggry.</gradient>
+        - <gradient:#f59e0b:#fef3c7>➤ Tier V • Endelig rangering</gradient>
       high_priest_soul:
         name: <gradient:#0891b2:#a5f3fc>👑 Sjælenes Ypperstepræst</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Hyrder ånder ud over dødelig frygt.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Hyrder ånder ud over dødelig frygt.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
     merchant:
       peddler:
         name: <gradient:#6b7280:#9ca3af>💰 Smugler</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Starter med grus, charme og små handler.</gradient>
-          - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Gadehandel</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Starter med grus, charme og små handler.</gradient>
+        - <gradient:#94a3b8:#cbd5e1>➤ Tier I • Gadehandel</gradient>
       trader:
         name: <gradient:#3b82f6:#93c5fd>💰 Forhandler</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Udvider ruter og pålidelige kontakter.</gradient>
-          - <gradient:#3b82f6:#93c5fd>➤ Tier II • Markedstilstedeværelse</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Udvider ruter og pålidelige kontakter.</gradient>
+        - <gradient:#3b82f6:#93c5fd>➤ Tier II • Markedstilstedeværelse</gradient>
       broker:
         name: <gradient:#f59e0b:#fde68a>💰 Mægler</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Lukker aftaler med høj værdi med præcision.</gradient>
-          - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg dit imperium</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Lukker aftaler med høj værdi med præcision.</gradient>
+        - <gradient:#f59e0b:#fde68a>➤ Niveau III • Vælg dit imperium</gradient>
       magnate_wealth:
         name: <gradient:#10b981:#6ee7b7>📈 Magnat of Wealth</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Opbygger ren kapital i et uovertruffent tempo.</gradient>
-          - <gradient:#10b981:#6ee7b7>➤ Tier IV • Formueafdeling</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Opbygger ren kapital i et uovertruffent tempo.</gradient>
+        - <gradient:#10b981:#6ee7b7>➤ Tier IV • Formueafdeling</gradient>
       magnate_market:
         name: <gradient:#06b6d4:#67e8f9>🏛 Magnat of Markets</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Organiserer udbuds- og efterspørgselscyklusser.</gradient>
-          - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Markedsafdeling</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Organiserer udbuds- og efterspørgselscyklusser.</gradient>
+        - <gradient:#06b6d4:#67e8f9>➤ Tier IV • Markedsafdeling</gradient>
       magnate_trade:
         name: <gradient:#f97316:#fdba74>🚚 Magnat of Trade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Dominerer campingvognsbaner og logistik.</gradient>
-          - <gradient:#f97316:#fdba74>➤ Tier IV • Handelsafdeling</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Dominerer campingvognsbaner og logistik.</gradient>
+        - <gradient:#f97316:#fdba74>➤ Tier IV • Handelsafdeling</gradient>
       tycoon_wealth:
         name: <gradient:#22c55e:#bbf7d0>👑 Rigdommens Tycoon</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Vender økonomier med en enkelt beslutning.</gradient>
-          - <gradient:#22c55e:#bbf7d0>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Vender økonomier med en enkelt beslutning.</gradient>
+        - <gradient:#22c55e:#bbf7d0>➤ Tier V • Endelig rangering</gradient>
       tycoon_market:
         name: <gradient:#0891b2:#a5f3fc>👑 Tycoon of Markets</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Sætter priser, som enhver guild skal respektere.</gradient>
-          - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Sætter priser, som enhver guild skal respektere.</gradient>
+        - <gradient:#0891b2:#a5f3fc>➤ Tier V • Endelig rangering</gradient>
       tycoon_trade:
         name: <gradient:#ea580c:#fed7aa>👑 Tycoon of Trade</gradient>
         lore:
-          - <gradient:#6b7280:#9ca3af>✦ Ejer vejene, havne og overskud.</gradient>
-          - <gradient:#ea580c:#fed7aa>➤ Tier V • Endelig rangering</gradient>
+        - <gradient:#6b7280:#9ca3af>✦ Ejer vejene, havne og overskud.</gradient>
+        - <gradient:#ea580c:#fed7aa>➤ Tier V • Endelig rangering</gradient>
 requirement:
 
   # ============================================
@@ -936,126 +936,126 @@ requirement:
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Tyv</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mester over tyveri og tyveri</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mester over tyveri og tyveri</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 snigmorder</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ekspert i at komme ind og ud uopdaget</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ekspert i at komme ind og ud uopdaget</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Skyggemester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Et med selve mørket</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Et med selve mørket</gradient>"
     cleric:
       acolyte:
         name: "<gradient:#f59e0b:#fbbf24>✝ Acolyte</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hengiven tjener af det guddommelige</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hengiven tjener af det guddommelige</gradient>"
       devotee:
         name: "<gradient:#f59e0b:#fbbf24>✝ Hengiven</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Trofast tilhænger af den guddommelige vej</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Trofast tilhænger af den guddommelige vej</gradient>"
       priest:
         name: "<gradient:#10b981:#34d399>✝ Præst</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Healer og beskytter af de troende</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Healer og beskytter af de troende</gradient>"
       healer:
         name: "<gradient:#10b981:#34d399>✝ Healer</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Master i genoprettende kunst</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Master i genoprettende kunst</gradient>"
       bishop:
         name: "<gradient:#a855f7:#c084fc>✝ Biskop</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Leder af de troende</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Leder af de troende</gradient>"
       oracle:
         name: "<gradient:#3b82f6:#60a5fa>✝ Oracle</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Seer af guddommelige visioner</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Seer af guddommelige visioner</gradient>"
       high_priest:
         name: "<gradient:#ef4444:#f87171>✝ Ypperstepræst</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Det guddommeliges højeste stemme</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Det guddommeliges højeste stemme</gradient>"
     rogue:
       pickpocket:
         name: "<gradient:#6b7280:#9ca3af>� TPlomme</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Hurtige fingre, hurtigere flugt</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Hurtige fingre, hurtigere flugt</gradient>"
       thief:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Tyv</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mester over tyveri og tyveri</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mester over tyveri og tyveri</gradient>"
       scout:
         name: "<gradient:#10b981:#34d399>🗡 Spejder</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Skyggernes øjne og ører</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Skyggernes øjne og ører</gradient>"
       assassin:
         name: "<gradient:#ef4444:#f87171>🗡 snigmorder</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Stille morder, død fra skygger</gradient>"
       infiltrator:
         name: "<gradient:#a855f7:#c084fc>🗡 Infiltrator</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Ekspert i at komme ind og ud uopdaget</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Ekspert i at komme ind og ud uopdaget</gradient>"
       shadowblade:
         name: "<gradient:#6b7280:#9ca3af>🗡 Shadowblade</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>nattens dødbringende kriger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>nattens dødbringende kriger</gradient>"
       spymaster:
         name: "<gradient:#3b82f6:#60a5fa>🗡 Spymaster</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Controller af informationsnetværk</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Controller af informationsnetværk</gradient>"
       shadow_master:
         name: "<gradient:#1f2937:#374151>🗡 Skyggemester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Et med selve mørket</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Et med selve mørket</gradient>"
       shadowmaster:
         name: "<gradient:#1f2937:#374151>🗡 Shadowmaster</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Øverste hersker over alle skygger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Øverste hersker over alle skygger</gradient>"
     merchant:
       peddler:
         name: "<gradient:#6b7280:#9ca3af>💰 Smugler</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Sælger varer på gaden</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Sælger varer på gaden</gradient>"
       trader:
         name: "<gradient:#3b82f6:#60a5fa>💰 Forhandler</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Etableret købmand med forbindelser</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Etableret købmand med forbindelser</gradient>"
       vendor:
         name: "<gradient:#10b981:#34d399>💰 Sælger</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Dygtig sælger af varer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Dygtig sælger af varer</gradient>"
       artificer:
         name: "<gradient:#f59e0b:#fbbf24>💰 Kunstner</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Håndværker af fine varer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Håndværker af fine varer</gradient>"
       alchemist:
         name: "<gradient:#a855f7:#c084fc>💰 Alkymist</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Mester af potions og eliksirer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Mester af potions og eliksirer</gradient>"
       merchant:
         name: "<gradient:#f59e0b:#fbbf24>💰 Købmand</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Succesfuld virksomhedsejer</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Succesfuld virksomhedsejer</gradient>"
       master_crafter:
         name: "<gradient:#ef4444:#f87171>💰 Master Crafter</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Rigets øverste håndværker</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Rigets øverste håndværker</gradient>"
       merchant_prince:
         name: "<gradient:#a855f7:#c084fc>💰 Købmandsprins</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Handelskongelighed</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Handelskongelighed</gradient>"
       tycoon:
         name: "<gradient:#a855f7:#c084fc>💰 Tycoon</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Master i handel og handel</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Master i handel og handel</gradient>"
       guild_master:
         name: "<gradient:#ef4444:#f87171>💰 Laugmester</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Leder af købmandslauget</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Leder af købmandslauget</gradient>"
   messages:
     preview_rank_click: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisning:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
     preview_rank_click_fallback: "<gradient:#3b82f6:#60a5fa>👁 Forhåndsvisning:</gradient> <gradient:#f59e0b:#fbbf24>%rank_name%</gradient>"
@@ -1092,7 +1092,7 @@ rank_requirements_overview_ui:
   requirement:
     fallback: "<gradient:#6b7280:#9ca3af>Krav #%index%</gradient>"
     fallback_lore:
-      - "<gradient:#6b7280:#9ca3af>Kunne ikke indlæse kravdetaljer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kunne ikke indlæse kravdetaljer</gradient>"
     type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
     lore: "<gradient:#6b7280:#9ca3af>%description%</gradient>"
     item_count: "<gradient:#6b7280:#9ca3af>Genstande:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
@@ -1136,12 +1136,12 @@ rank_requirements_overview_ui:
     name: " "
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
   requirement_entry:
     name: "<gradient:#a855f7:#c084fc>📋 %requirement_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Fremskridt:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Fremskridt:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient>"
     click_to_view: "<gradient:#3b82f6:#60a5fa>Klik for at se detaljer</gradient>"
 
 # ============================================
@@ -1151,7 +1151,7 @@ rank_requirement_detail_ui:
   title: "<gradient:#a855f7:#c084fc>📋 Kravdetaljer</gradient>"
   back:
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
   submit:
     missing_items: "<gradient:#ef4444:#f87171>❌ Du har ikke alle de nødvendige genstande!</gradient>"
     success: "<gradient:#10b981:#34d399>✅ Genstande indsendt!</gradient>"
@@ -1164,18 +1164,18 @@ rank_requirement_detail_ui:
     levels_needed: "<gradient:#ef4444:#f87171>Manglende Niveauer:</gradient> <gradient:#f59e0b:#fbbf24>%needed%</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Niveaukrav opfyldt!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Få XP ved at minedrift, dræbe mobs,</gradient>"
-      - "<gradient:#6b7280:#9ca3af>smeltegenstande og mere!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Få XP ved at minedrift, dræbe mobs,</gradient>"
+    - "<gradient:#6b7280:#9ca3af>smeltegenstande og mere!</gradient>"
   playtime:
     current: "<gradient:#6b7280:#9ca3af>Din Spilletid:</gradient> <gradient:#10b981:#34d399>%hours%t %minutes%m</gradient>"
     required: "<gradient:#6b7280:#9ca3af>Påkrævet Spilletid:</gradient> <gradient:#f59e0b:#fbbf24>%hours%t %minutes%m</gradient>"
     remaining: "<gradient:#ef4444:#f87171>Resterende Tid:</gradient> <gradient:#f59e0b:#fbbf24>%hours%t %minutes%m</gradient>"
     completed: "<gradient:#10b981:#34d399>✅ Spilletidskrav opfyldt!</gradient>"
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Fortsæt med at spille på serveren</gradient>"
-      - "<gradient:#6b7280:#9ca3af>at akkumulere spilletid!</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Fortsæt med at spille på serveren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>at akkumulere spilletid!</gradient>"
   progress_text: "<gradient:#3b82f6:#60a5fa>Fremskridt</gradient>"
   current_progress: "<gradient:#6b7280:#9ca3af>Nuværende:</gradient> <gradient:#10b981:#34d399>%current_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#f59e0b:#fbbf24>%required_amount%</gradient>"
   current_progress_percentage: "<gradient:#3b82f6:#60a5fa>Fuldførelse:</gradient> <gradient:#10b981:#34d399>%progress_percentage%</gradient>"
@@ -1187,13 +1187,13 @@ rank_requirement_detail_ui:
   action_button:
     completed_name: "<gradient:#10b981:#34d399>✅ Fuldført</gradient>"
     completed_lore:
-      - "<gradient:#6b7280:#9ca3af>Dette krav er allerede fuldført</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Dette krav er allerede fuldført</gradient>"
     complete_name: "<gradient:#10b981:#34d399>✅ Fuldfør Krav</gradient>"
     complete_lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at fuldføre dette krav</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at fuldføre dette krav</gradient>"
     refresh_name: "<gradient:#3b82f6:#60a5fa>🔄 Opdater Fremskridt</gradient>"
     refresh_lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at opdatere dit fremskridt</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at opdatere dit fremskridt</gradient>"
   summary:
     items_completed: "<gradient:#10b981:#34d399>Genstande Fuldført:</gradient> <gradient:#f59e0b:#fbbf24>%completed_item_amount%</gradient> <gradient:#6b7280:#9ca3af>/</gradient> <gradient:#3b82f6:#60a5fa>%total_item_amount%</gradient>"
     requirement_type: "<gradient:#6b7280:#9ca3af>Type:</gradient> <gradient:#f59e0b:#fbbf24>%type%</gradient>"
@@ -1207,22 +1207,22 @@ rank_requirement_detail_ui:
   current_progress_status: "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#f59e0b:#fbbf24>%progress_status%</gradient>"
   item_requirement:
     tip:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Saml de krævede genstande</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og vend tilbage her for at fuldføre</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Saml de krævede genstande</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og vend tilbage her for at fuldføre</gradient>"
   requirement_tip:
     currency:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Tjen den krævede valuta</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tjen den krævede valuta</gradient>"
     experience_level:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Få erfaringsniveauer</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Få erfaringsniveauer</gradient>"
     playtime:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Spil på serveren</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Spil på serveren</gradient>"
     other:
-      - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Fuldfør kravet</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>💡 Tip:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Fuldfør kravet</gradient>"
   summary_clicked: "<gradient:#3b82f6:#60a5fa>📊 Viser oversigt...</gradient>"
   tips_clicked: "<gradient:#f59e0b:#fbbf24>💡 Viser tips...</gradient>"
   item_detail:
@@ -1241,16 +1241,16 @@ rank_requirement_detail_ui:
     name: "<gradient:#a855f7:#c084fc>%requirement_name%</gradient>"
   requirement:
     completed:
-      - "<gradient:#10b981:#34d399>✅ Fuldført!</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Fuldført!</gradient>"
     ready_to_complete:
-      - "<gradient:#10b981:#34d399>✅ Klar til fuldførelse!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik for at afslutte</gradient>"
+    - "<gradient:#10b981:#34d399>✅ Klar til fuldførelse!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at afslutte</gradient>"
     in_progress:
-      - "<gradient:#f59e0b:#fbbf24>⏳ I Gang</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>⏳ I Gang</gradient>"
     not_started:
-      - "<gradient:#6b7280:#9ca3af>Ikke Startet</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ikke Startet</gradient>"
     error:
-      - "<gradient:#ef4444:#f87171>❌ Fejl</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Fejl</gradient>"
     status_name: "<gradient:#a855f7:#c084fc>Status: %requirement_status%</gradient>"
   progress_item: "<gradient:#3b82f6:#60a5fa>Fremskridt</gradient>"
   progress_item_completion: "<gradient:#10b981:#34d399>%progress_item_percentage%%</gradient>"
@@ -1260,11 +1260,11 @@ rank_requirement_detail_ui:
   fallback:
     name: "<gradient:#6b7280:#9ca3af>Ukendt Krav</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Kunne ikke indlæse detaljer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kunne ikke indlæse detaljer</gradient>"
   error:
     name: "<gradient:#ef4444:#f87171>❌ Fejl</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>Kunne ikke indlæse krav</gradient>"
+    - "<gradient:#ef4444:#f87171>Kunne ikke indlæse krav</gradient>"
   progress_info: "<gradient:#3b82f6:#60a5fa>📊 Fremskridt:</gradient> <gradient:#10b981:#34d399>%progress%%</gradient> <gradient:#6b7280:#9ca3af>(%formatted_progress%)</gradient>"
   status_update: "<gradient:#3b82f6:#60a5fa>📊 Status:</gradient> <gradient:#f59e0b:#fbbf24>%status%</gradient> <gradient:#6b7280:#9ca3af>(%progress%%)</gradient>"
   already_completed: "<gradient:#10b981:#34d399>✅</gradient> <gradient:#f59e0b:#fbbf24>%requirement_name%</gradient> <gradient:#10b981:#34d399>er allerede fuldført!</gradient>"
@@ -1284,28 +1284,28 @@ bounty_overview_ui:
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Opret Dusør</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at oprette en ny dusør</gradient>"
-      - "<gradient:#6b7280:#9ca3af>på en anden spiller</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at oprette en ny dusør</gradient>"
+    - "<gradient:#6b7280:#9ca3af>på en anden spiller</gradient>"
   view_bounties:
     name: "<gradient:#3b82f6:#60a5fa>👁 Vis Dusører</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vis alle aktive dusører</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vis alle aktive dusører</gradient>"
   my_bounties:
     name: "<gradient:#f59e0b:#fbbf24>📋 Mine Dusører</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vis dusører du har oprettet</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vis dusører du har oprettet</gradient>"
   leaderboard:
     name: "<gradient:#ef4444:#f87171>🏆 Rangliste</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Top dusørjægere</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Top dusørjægere</gradient>"
   bounty:
     name: "<gradient:#a855f7:#c084fc>🎯 Dusør på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mål:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Bestiller:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Oprettet:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
-      - ""
-      - "<gradient:#a855f7:#c084fc>Klik for at se detaljer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mål:</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Bestiller:</gradient> <gradient:#3b82f6:#60a5fa>%commissioner_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Oprettet:</gradient> <gradient:#10b981:#34d399>%created_at%</gradient>"
+    - ""
+    - "<gradient:#a855f7:#c084fc>Klik for at se detaljer</gradient>"
 
 # ============================================
 # BUNTY CREATION UI
@@ -1316,35 +1316,35 @@ bounty_creation_ui:
     title: "<gradient:#a855f7:#c084fc>🎯 Vælg Mål</gradient>"
     name: "<gradient:#f59e0b:#fbbf24>🎯 Mål: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at vælge en spiller</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nuværende: %target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at vælge en spiller</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nuværende: %target_name%</gradient>"
   create_bounty:
     name: "<gradient:#10b981:#34d399>📝 Opret Dusør</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at oprette en ny dusør</gradient>"
-      - "<gradient:#6b7280:#9ca3af>på en anden spiller</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at oprette en ny dusør</gradient>"
+    - "<gradient:#6b7280:#9ca3af>på en anden spiller</gradient>"
   add_items:
     name: "<gradient:#10b981:#34d399>💰 Tilføj Genstandsbelønninger</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💰 Tilføj Genstandsbelønninger</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Klik for at tilføje genstandsbelønninger</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nuværende genstande:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at tilføje genstandsbelønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nuværende genstande:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Vælg et mål først!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Vælg et mål først!</gradient>"
     disabled: "<gradient:#ef4444:#f87171>❌ Vælg et mål først!</gradient>"
   add_currency:
     name: "<gradient:#f59e0b:#fbbf24>💎 Tilføj Valutabelønninger</gradient>"
     name_disabled: "<gradient:#6b7280:#9ca3af>💎 Tilføj Valutabelønninger</gradient>"
     description:
-      - "<gradient:#6b7280:#9ca3af>Klik for at tilføje valutabelønninger</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Nuværende valutaer:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at tilføje valutabelønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Nuværende valutaer:</gradient> <gradient:#f59e0b:#fbbf24>%count%</gradient>"
     description_disabled:
-      - "<gradient:#ef4444:#f87171>❌ Vælg et mål først!</gradient>"
+    - "<gradient:#ef4444:#f87171>❌ Vælg et mål først!</gradient>"
   confirm_bounty:
     name: "<gradient:#10b981:#34d399>✅ Opret Dusør</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at oprette dusøren</gradient>"
-      - "<gradient:#6b7280:#9ca3af>med de valgte belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at oprette dusøren</gradient>"
+    - "<gradient:#6b7280:#9ca3af>med de valgte belønninger</gradient>"
   confirm:
     no_player_selected: "<gradient:#ef4444:#f87171>❌ Ingen spiller valgt!</gradient> <gradient:#6b7280:#9ca3af>Vælg venligst et mål først.</gradient>"
     no_rewards_selected: "<gradient:#ef4444:#f87171>❌ Ingen belønninger tilføjet!</gradient> <gradient:#6b7280:#9ca3af>Tilføj venligst nogle belønninger først.</gradient>"
@@ -1367,21 +1367,21 @@ bounty_reward_ui:
   pseudo:
     name: "<gradient:#6b7280:#9ca3af>📦 Ingen Belønninger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tilføj genstande for at oprette belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tilføj genstande for at oprette belønninger</gradient>"
   input_slot:
     name: "<gradient:#10b981:#34d399>➕ Tilføj Genstand</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Placer genstande her som belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Placer genstande her som belønninger</gradient>"
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 Mål: %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Denne dusør er placeret på</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Denne dusør er placeret på</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%target_name%</gradient>"
   reward_item:
     lore:
-      - "<gradient:#a855f7:#c084fc>💰 Dusørbelønning</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Denne genstand gives til</gradient>"
-      - "<gradient:#6b7280:#9ca3af>den der indløser dusøren</gradient>"
+    - "<gradient:#a855f7:#c084fc>💰 Dusørbelønning</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Denne genstand gives til</gradient>"
+    - "<gradient:#6b7280:#9ca3af>den der indløser dusøren</gradient>"
   no_new_items_inserted: "<gradient:#ef4444:#f87171>❌ Ingen nye genstande tilføjet!</gradient>"
   left_overs: "<gradient:#f59e0b:#fbbf24>⚠ Nogle genstande blev tabt da din inventory var fuld!</gradient>"
 
@@ -1393,18 +1393,18 @@ bounty_player_info_ui:
   target:
     name: "<gradient:#f59e0b:#fbbf24>🎯 %target_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Mål for denne dusør</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Mål for denne dusør</gradient>"
     coming_soon: "<gradient:#f59e0b:#fbbf24>⏳ Mere info kommer snart...</gradient>"
   rewards:
     name: "<gradient:#10b981:#34d399>💰 Vis Belønninger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at se alle belønninger</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Samlede belønninger:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at se alle belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Samlede belønninger:</gradient> <gradient:#f59e0b:#fbbf24>%reward_count%</gradient>"
   delete:
     name: "<gradient:#ef4444:#f87171>🗑 Slet Dusør</gradient>"
     lore:
-      - "<gradient:#ef4444:#f87171>⚠ Advarsel: Kan ikke fortrydes!</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik for at slette denne dusør</gradient>"
+    - "<gradient:#ef4444:#f87171>⚠ Advarsel: Kan ikke fortrydes!</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at slette denne dusør</gradient>"
   deleted_bounty_successfully: "<gradient:#10b981:#34d399>✅ Dusør på</gradient> <gradient:#f59e0b:#fbbf24>%target_name%</gradient> <gradient:#10b981:#34d399>er blevet slettet!</gradient>"
   confirm:
     message: "<gradient:#f59e0b:#fbbf24>Er du sikker på, at du vil slette denne dusør?</gradient>"
@@ -1417,20 +1417,20 @@ admin_overview_ui:
   view_permissions:
     name: "<gradient:#3b82f6:#60a5fa>🔑 Tilladelsesadministrator</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Administrer plugin-tilladelser</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Totale plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Totale tilladelser:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Administrer plugin-tilladelser</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totale plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Totale tilladelser:</gradient> <gradient:#f59e0b:#fbbf24>%total_permissions%</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne tilladelsesadministrator!</gradient>"
   view_integrations:
     name: "<gradient:#10b981:#34d399>🔌 Plugin-integrationer</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Administrer admin plugin integrationer ét sted</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Indeholder visninger for registrering af valuta, færdigheder og job</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Administrer admin plugin integrationer ét sted</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Indeholder visninger for registrering af valuta, færdigheder og job</gradient>"
     error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne plugin-integrationer!</gradient>"
   create_ranks:
     name: "<gradient:#a855f7:#c084fc>⚔ Opret LuckPerms Grupper</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Opret LuckPerms grupper fra ranger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Opret LuckPerms grupper fra ranger</gradient>"
     no_luckperms: "<gradient:#ef4444:#f87171>❌ LuckPerms er ikke installeret!</gradient>"
     no_ranks_found: "<gradient:#f59e0b:#fbbf24>⚠ Ingen ranger fundet at oprette grupper for!</gradient>"
     created: "<gradient:#10b981:#34d399>✅ Oprettet</gradient> <gradient:#f59e0b:#fbbf24>%groups_created%</gradient> <gradient:#10b981:#34d399>LuckPerms grupper!</gradient>"
@@ -1445,32 +1445,32 @@ plugin_integration_management_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>🧭 Integrationshub</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Åbn RDQ-plugin-integrationsdashboards</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Detektion af valuta, færdigheder/job og PlaceholderAPI-værktøjer er tilgængelige her</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Åbn RDQ-plugin-integrationsdashboards</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Detektion af valuta, færdigheder/job og PlaceholderAPI-værktøjer er tilgængelige her</gradient>"
   actions:
     currency:
       name: "<gradient:#22c55e:#86efac>💱 Valuta integrationer</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Åben valutaudbyderstyring</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Gennemgå fundet Vault og JExEconomy valutaer</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Åben valutaudbyderstyring</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Gennemgå fundet Vault og JExEconomy valutaer</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne valutaintegrationer!</gradient>"
     skills:
       name: "<gradient:#38bdf8:#60a5fa>📘 Færdighedsintegrationer</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Se supportstatus for mcMMO, Aura og EcoSkills</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Find aktuelt aktiverede færdighedsplugins</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Se supportstatus for mcMMO, Aura og EcoSkills</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Find aktuelt aktiverede færdighedsplugins</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne færdighedsintegrationer!</gradient>"
     jobs:
       name: "<gradient:#f59e0b:#fbbf24>⛏ Jobintegrationer</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Se supportstatus for EcoJobs og JobsReborn</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Find aktuelt aktiverede job-plugins</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Se supportstatus for EcoJobs og JobsReborn</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Find aktuelt aktiverede job-plugins</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne jobintegrationer!</gradient>"
     placeholder_api:
       name: "<gradient:#38bdf8:#60a5fa>🏷 PlaceholderAPI</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Opdag PlaceholderAPI-understøttelse og administrer udvidelser</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Installer Player-udvidelsen og genindlæs PlaceholderAPI</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Opdag PlaceholderAPI-understøttelse og administrer udvidelser</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installer Player-udvidelsen og genindlæs PlaceholderAPI</gradient>"
       error: "<gradient:#ef4444:#f87171>❌ Kunne ikke åbne PlaceholderAPI-værktøjer!</gradient>"
 
 # ============================================
@@ -1481,34 +1481,34 @@ placeholder_api_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📘 PlaceholderAPI Integration</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI understøttet:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Måludvidelse:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Installer og genindlæs direkte fra dette panel</gradient>"
+    - "<gradient:#6b7280:#9ca3af>PlaceholderAPI understøttet:</gradient> <gradient:#10b981:#34d399>%supported%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Måludvidelse:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Installer og genindlæs direkte fra dette panel</gradient>"
   detection:
     supported:
       name: "<gradient:#22c55e:#86efac>✅ PlaceholderAPI fundet</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>PlaceholderAPI er installeret og aktiveret</gradient>"
+      - "<gradient:#6b7280:#9ca3af>PlaceholderAPI er installeret og aktiveret</gradient>"
     missing:
       name: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI mangler</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Installer og aktiver PlaceholderAPI for at bruge denne handling</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installer og aktiver PlaceholderAPI for at bruge denne handling</gradient>"
   action:
     install:
       name: "<gradient:#22c55e:#86efac>📥 Installer %expansion_name% Expansion</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Kører:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Derefter kører:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Klik for at udføre begge PlaceholderAPI-kommandoer</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Kører:</gradient> <gradient:#f59e0b:#fbbf24>papi ecloud download %expansion_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Derefter kører:</gradient> <gradient:#f59e0b:#fbbf24>papi reload</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik for at udføre begge PlaceholderAPI-kommandoer</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>🚫 PlaceholderAPI påkrævet</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Denne handling er ikke tilgængelig, før PlaceholderAPI er installeret</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Denne handling er ikke tilgængelig, før PlaceholderAPI er installeret</gradient>"
   feedback:
     locked:
       name: "<gradient:#ef4444:#f87171>❌ Adminadgang påkrævet</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Du har ikke tilladelse til at bruge PlaceholderAPI admin værktøjer</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Du har ikke tilladelse til at bruge PlaceholderAPI admin værktøjer</gradient>"
     locked_message: "<gradient:#ef4444:#f87171>❌ Du har ikke tilladelse til at administrere PlaceholderAPI integrationer.</gradient>"
     unsupported_message: "<gradient:#ef4444:#f87171>❌ PlaceholderAPI er ikke tilgængelig på denne server.</gradient>"
     download_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke downloade udvidelse:</gradient> <gradient:#f59e0b:#fbbf24>%expansion_name%</gradient>"
@@ -1523,9 +1523,9 @@ admin_skills_ui:
   summary:
     name: "<gradient:#f59e0b:#fbbf24>📊 Status for færdighedsplugin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Understøttede færdighedsintegrationer:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Opdaget lige nu:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kontrollerer mcMMO, Aura og EcoSkills support</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Understøttede færdighedsintegrationer:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Opdaget lige nu:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kontrollerer mcMMO, Aura og EcoSkills support</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Opdaget</gradient>"
@@ -1536,13 +1536,13 @@ admin_skills_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integrations-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integrations-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Ingen færdighedsintegrationer konfigureret</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ingen færdighedsplugin-integrationer er i øjeblikket konfigureret</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ingen færdighedsplugin-integrationer er i øjeblikket konfigureret</gradient>"
 
 # ============================================
 # ADMIN JOBS INTEGRATION UI
@@ -1557,9 +1557,9 @@ admin_jobs_ui:
   summary:
     name: "<gradient:#38bdf8:#60a5fa>📊 Status for jobplugin</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Understøttede jobintegrationer:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Opdaget lige nu:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Kontrollerer EcoJobs og JobsReborn understøttelse</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Understøttede jobintegrationer:</gradient> <gradient:#38bdf8:#60a5fa>%supported_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Opdaget lige nu:</gradient> <gradient:#10b981:#34d399>%detected_count%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Kontrollerer EcoJobs og JobsReborn understøttelse</gradient>"
   plugin_entry:
     status:
       detected: "<gradient:#22c55e:#86efac>Opdaget</gradient>"
@@ -1570,13 +1570,13 @@ admin_jobs_ui:
     missing:
       name: "<gradient:#ef4444:#f87171>❌ %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Integrations-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Integrations-id:</gradient> <gradient:#3b82f6:#60a5fa>%integration_id%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#10b981:#34d399>%detection_status%</gradient>"
   empty:
     name: "<gradient:#ef4444:#f87171>❌ Ingen jobintegrationer konfigureret</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Ingen jobplugin-integrationer er i øjeblikket konfigureret</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Ingen jobplugin-integrationer er i øjeblikket konfigureret</gradient>"
 
 # ============================================
 # ADMIN CURRENCY OVERVIEW UI
@@ -1591,26 +1591,26 @@ admin_currency_ui:
   currency_entry:
     name: "<gradient:#f59e0b:#fbbf24>💧 %currency_id%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Udbyder:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Symbol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Præfiks:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Suffiks:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Udbyder:</gradient> <gradient:#a855f7:#c084fc>%provider%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Symbol:</gradient> <gradient:#3b82f6:#60a5fa>%symbol%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Præfiks:</gradient> <gradient:#10b981:#34d399>%prefix%</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Suffiks:</gradient> <gradient:#10b981:#34d399>%suffix%</gradient>"
   default_currency:
     create:
       name: "<gradient:#10b981:#34d399>✨ Opret %currency_id%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Opret standardvalutaen for RDQ</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>Klik for at oprette %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Opret standardvalutaen for RDQ</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>Klik for at oprette %currency_id%</gradient>"
     unavailable:
       name: "<gradient:#ef4444:#f87171>❌ JExEconomy Påkrævet</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Denne handling kræver JExEconomy</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Installer det, før du opretter standardindstillinger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Denne handling kræver JExEconomy</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Installer det, før du opretter standardindstillinger</gradient>"
     already_exists:
       name: "<gradient:#10b981:#34d399>✅ %currency_id% Klar</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Standardvalutaen findes allerede</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Ingen yderligere opsætning nødvendig</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Standardvalutaen findes allerede</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Ingen yderligere opsætning nødvendig</gradient>"
     messages:
       created: "<gradient:#10b981:#34d399>✅ Oprettet standardvaluta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
       failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke oprette valuta:</gradient> <gradient:#f59e0b:#fbbf24>%currency_id%</gradient>"
@@ -1619,18 +1619,18 @@ admin_currency_ui:
   empty:
     name: "<gradient:#f59e0b:#fbbf24>⚠ Ingen valutaer fundet</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>RDQ kunne ikke registrere Vault eller JExEconomy valutaer</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Installer eller aktiver først en økonomiudbyder</gradient>"
+    - "<gradient:#6b7280:#9ca3af>RDQ kunne ikke registrere Vault eller JExEconomy valutaer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Installer eller aktiver først en økonomiudbyder</gradient>"
     jex_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] JExEconomy Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
-        - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>RDQ detected JExEconomy but no currencies exist yet</gradient>"
+      - "<gradient:#10b981:#34d399>Use the top button to create %currency_id%</gradient>"
     vault_detected:
       name: "<gradient:#3b82f6:#60a5fa>[i] Vault Detected</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vault is available but no currency entries were listed</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Check your economy provider configuration</gradient>"
   decoration:
     border:
       name: " "
@@ -1651,12 +1651,12 @@ admin_permissions_overview_ui:
     entry:
       name: "<gradient:#a855f7:#c084fc>📦 %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tilladelser:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tilladelser:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Status:</gradient> <gradient:#3b82f6:#60a5fa>%status%</gradient>"
       click_instructions:
-        - "<gradient:#3b82f6:#60a5fa>Venstreklik for at vælge</gradient>"
-        - "<gradient:#10b981:#34d399>Højreklik for at tildele alle</gradient>"
+      - "<gradient:#3b82f6:#60a5fa>Venstreklik for at vælge</gradient>"
+      - "<gradient:#10b981:#34d399>Højreklik for at tildele alle</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Tom</gradient>"
   permissions:
@@ -1668,40 +1668,40 @@ admin_permissions_overview_ui:
       plugin: "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#a855f7:#c084fc>%plugin_name%</gradient>"
       node: "<gradient:#6b7280:#9ca3af>Node:</gradient> <gradient:#f59e0b:#fbbf24>%permission%</gradient>"
       click_instructions:
-        - "<gradient:#10b981:#34d399>Klik for at tildele denne tilladelse</gradient>"
+      - "<gradient:#10b981:#34d399>Klik for at tildele denne tilladelse</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Intet Plugin Valgt</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Vælg et plugin ovenfor</gradient>"
-        - "<gradient:#6b7280:#9ca3af>for at se dets tilladelser</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vælg et plugin ovenfor</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for at se dets tilladelser</gradient>"
     empty_slot:
       name: "<gradient:#6b7280:#9ca3af>Tom</gradient>"
   actions:
     assign_selected:
       name: "<gradient:#10b981:#34d399>✅ Tildel %plugin_name% Tilladelser</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Tildel alle tilladelser fra</gradient>"
-        - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>(%permission_count% tilladelser)</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tildel alle tilladelser fra</gradient>"
+      - "<gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>(%permission_count% tilladelser)</gradient>"
     no_selection:
       name: "<gradient:#6b7280:#9ca3af>Intet Valg</gradient>"
   status:
     selected_plugin:
       name: "<gradient:#a855f7:#c084fc>📊 Valgt: %plugin_name%</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Tilladelser:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Totale plugins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Plugin:</gradient> <gradient:#f59e0b:#fbbf24>%plugin_name%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Tilladelser:</gradient> <gradient:#10b981:#34d399>%permission_count%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totale plugins:</gradient> <gradient:#3b82f6:#60a5fa>%total_plugins%</gradient>"
     overview:
       name: "<gradient:#a855f7:#c084fc>📊 Oversigt</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Totale plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
-        - "<gradient:#6b7280:#9ca3af>Vælg et plugin for at se tilladelser</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Totale plugins:</gradient> <gradient:#f59e0b:#fbbf24>%total_plugins%</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Vælg et plugin for at se tilladelser</gradient>"
   controls:
     refresh:
       name: "<gradient:#10b981:#34d399>🔄 Opdater Data</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Klik for at opdatere tilladelsesdata</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik for at opdatere tilladelsesdata</gradient>"
   decoration:
     header:
       name: " "
@@ -1710,16 +1710,16 @@ admin_permissions_overview_ui:
   clear_selection:
     name: "<gradient:#ef4444:#f87171>❌ Ryd Valg</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at fravælge plugin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at fravælge plugin</gradient>"
   assign_selected_plugin_permissions:
     name: "<gradient:#10b981:#34d399>✅ Tildel %plugin_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tildel alle tilladelser fra valgt plugin</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tildel alle tilladelser fra valgt plugin</gradient>"
   assign_all_permissions:
     name: "<gradient:#10b981:#34d399>✅ Tildel Alle Tilladelser</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Tildel tilladelser fra alle</gradient>"
-      - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plugins</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Tildel tilladelser fra alle</gradient>"
+    - "<gradient:#f59e0b:#fbbf24>%total_plugins%</gradient> <gradient:#6b7280:#9ca3af>plugins</gradient>"
   feedback:
     data_refreshed: "<gradient:#10b981:#34d399>✅ Data opdateret!</gradient>"
     permissions_assigned:
@@ -1736,8 +1736,8 @@ admin_permissions_overview_ui:
 page:
   name: "<gradient:#6b7280:#9ca3af>📄 Side %current_page%</gradient>"
   lore:
-    - "<gradient:#6b7280:#9ca3af>Nuværende side:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
-    - "<gradient:#6b7280:#9ca3af>Totale sider:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Nuværende side:</gradient> <gradient:#3b82f6:#60a5fa>%current_page%</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Totale sider:</gradient> <gradient:#3b82f6:#60a5fa>%total_pages%</gradient>"
   fallback: "<gradient:#6b7280:#9ca3af>📄 Side %direction%</gradient>"
 
 # ============================================
@@ -1747,31 +1747,31 @@ head:
   return:
     name: "<gradient:#f59e0b:#fbbf24>🔙 Tilbage</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at gå tilbage</gradient>"
   proceed:
     name: "<gradient:#10b981:#34d399>➡️ Fortsæt</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at fortsætte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at fortsætte</gradient>"
   previous:
     name: "<gradient:#3b82f6:#60a5fa>⬅️ Forrige</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Forrige side</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Forrige side</gradient>"
   next:
     name: "<gradient:#3b82f6:#60a5fa>➡️ Næste</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Næste side</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Næste side</gradient>"
   up:
     name: "<gradient:#a855f7:#c084fc>⬆️ Op</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gå op</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gå op</gradient>"
   down:
     name: "<gradient:#a855f7:#c084fc>⬇️ Ned</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Gå ned</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Gå ned</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuller</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Annuller handling</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Annuller handling</gradient>"
 
 
 
@@ -1798,8 +1798,8 @@ abstract_anvil_ui:
   input:
     name: "<gradient:#f59e0b:#fbbf24>✏️ Indtast Værdi</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Skriv dit input ovenfor</gradient>"
-      - "<gradient:#6b7280:#9ca3af>og klik for at bekræfte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Skriv dit input ovenfor</gradient>"
+    - "<gradient:#6b7280:#9ca3af>og klik for at bekræfte</gradient>"
   error:
     processing_failed: "<gradient:#ef4444:#f87171>❌ Kunne ikke behandle input:</gradient> <gradient:#6b7280:#9ca3af>%input%</gradient>"
 
@@ -1811,11 +1811,11 @@ confirmation_ui:
   confirm:
     name: "<gradient:#10b981:#34d399>✅ Bekræft</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at bekræfte</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at bekræfte</gradient>"
   cancel:
     name: "<gradient:#ef4444:#f87171>❌ Annuller</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at annullere</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at annullere</gradient>"
 
 # ============================================
 # GRATIS VERSIONSBEGRÆNSNINGER
@@ -1830,13 +1830,13 @@ free:
   indicator:
     name: "<gradient:#f59e0b:#fbbf24>⭐ Gratis version</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Du bruger den gratis version</gradient>"
-      - "<gradient:#6b7280:#9ca3af>med begrænsede funktioner.</gradient>"
-      - ""
-      - "<gradient:#10b981:#34d399>Opgrader til Premium for:</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Ubegrænsede rangtræer</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Ubegrænsede rækker pr. træ</gradient>"
-      - "<gradient:#6b7280:#9ca3af>• Flere aktive stier</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Du bruger den gratis version</gradient>"
+    - "<gradient:#6b7280:#9ca3af>med begrænsede funktioner.</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Opgrader til Premium for:</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Ubegrænsede rangtræer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Ubegrænsede rækker pr. træ</gradient>"
+    - "<gradient:#6b7280:#9ca3af>• Flere aktive stier</gradient>"
 
 # ============================================
 # MEDDELELSER FOR PREMIUMVERSION
@@ -1846,7 +1846,7 @@ premium:
   indicator:
     name: "<gradient:#a855f7:#c084fc>⭐ Premium version</gradient>"
     lore:
-      - "<gradient:#10b981:#34d399>Alle funktioner er låst op!</gradient>"
+    - "<gradient:#10b981:#34d399>Alle funktioner er låst op!</gradient>"
 
 # ============================================
 # KRAV VARE DETALJVISNING (forenklet)
@@ -1861,21 +1861,21 @@ rank_requirement_item_detail_ui:
     enabled:
       name: "<gradient:#10b981:#34d399>📥 Indsend varer</gradient>"
       lore:
-        - ""
-        - "<gradient:#10b981:#34d399>Alle varer er klar!</gradient>"
-        - ""
-        - "<gradient:#f59e0b:#fbbf24>▶ Klik for at indsende</gradient>"
+      - ""
+      - "<gradient:#10b981:#34d399>Alle varer er klar!</gradient>"
+      - ""
+      - "<gradient:#f59e0b:#fbbf24>▶ Klik for at indsende</gradient>"
     disabled:
       name: "<gradient:#6b7280:#9ca3af>📥 Indsend varer</gradient>"
       lore:
-        - ""
-        - "<gradient:#ef4444:#f87171>Mangler nødvendige varer</gradient>"
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Saml alle genstande først</gradient>"
+      - ""
+      - "<gradient:#ef4444:#f87171>Mangler nødvendige varer</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Saml alle genstande først</gradient>"
   back:
     name: "<gradient:#ef4444:#f87171>← Tilbage</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vend tilbage til kravene</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vend tilbage til kravene</gradient>"
 
 
 # ============================================
@@ -1894,35 +1894,35 @@ rank_requirements_journey_ui:
   overall_progress:
     name: "<gradient:#a855f7:#c084fc>📊 Samlet fremgang</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Fuldførelse:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Krav:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Fuldførelse:</gradient> <gradient:#f59e0b:#fbbf24>%percentage%%</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Krav:</gradient> <gradient:#10b981:#34d399>%completed%</gradient><gradient:#6b7280:#9ca3af>/</gradient><gradient:#f59e0b:#fbbf24>%total%</gradient>"
   rank_info:
     name: "<gradient:#a855f7:#c084fc>⚔ %rank_name%</gradient>"
     lore:
-      - ""
-      - "<gradient:#6b7280:#9ca3af>Opfyld alle krav</gradient>"
-      - "<gradient:#6b7280:#9ca3af>for at låse denne rang op!</gradient>"
+    - ""
+    - "<gradient:#6b7280:#9ca3af>Opfyld alle krav</gradient>"
+    - "<gradient:#6b7280:#9ca3af>for at låse denne rang op!</gradient>"
   claim_button:
     name: "<gradient:#10b981:#34d399>🏆 Hent rang!</gradient>"
     lore:
-      - ""
-      - "<gradient:#10b981:#34d399>Alle krav er opfyldt!</gradient>"
-      - ""
-      - "<gradient:#f59e0b:#fbbf24>▶ Klik for at hente din rang</gradient>"
+    - ""
+    - "<gradient:#10b981:#34d399>Alle krav er opfyldt!</gradient>"
+    - ""
+    - "<gradient:#f59e0b:#fbbf24>▶ Klik for at hente din rang</gradient>"
     hidden:
       name: "<gradient:#6b7280:#9ca3af>🔒 Rang låst</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Opfyld alle krav</gradient>"
-        - "<gradient:#6b7280:#9ca3af>for at låse denne rang op.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Opfyld alle krav</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for at låse denne rang op.</gradient>"
     locked:
       name: "<gradient:#ef4444:#f87171>🔒 Låst</gradient>"
       lore:
-        - ""
-        - "<gradient:#6b7280:#9ca3af>Opfyld alle krav</gradient>"
-        - "<gradient:#6b7280:#9ca3af>for at låse denne rang op.</gradient>"
+      - ""
+      - "<gradient:#6b7280:#9ca3af>Opfyld alle krav</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for at låse denne rang op.</gradient>"
   requirement_card:
     name: "<gradient:#f59e0b:#fbbf24>%name%</gradient>"
     progress_bar: "%bar% <gradient:#6b7280:#9ca3af>%percentage%%</gradient>"
@@ -1932,7 +1932,7 @@ rank_requirements_journey_ui:
   back:
     name: "<gradient:#ef4444:#f87171>← Tilbage</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Vend tilbage til rangoversigt</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Vend tilbage til rangoversigt</gradient>"
   messages:
     requirement_completed: "<gradient:#10b981:#34d399>✅ Krav opfyldt!</gradient>"
     all_completed: "<gradient:#10b981:#34d399>🎉 Alle krav opfyldt! Du kan nu hente rangen!</gradient>"
@@ -1947,7 +1947,7 @@ rank_requirements_journey_ui:
       compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
       no_rewards: "<gradient:#6b7280:#9ca3af>Ingen belønninger</gradient>"
       no_rewards_lore:
-        - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger konfigureret</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger konfigureret</gradient>"
       type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
       value_label: "<gray>Værdi:</gray> <gold>%value%</gold>"
 
@@ -1978,18 +1978,18 @@ rank_requirements_journey_ui:
     view_all:
       name: "<gradient:#a855f7:#c084fc>📋 Se alle belønninger</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Klik for at se alle %count% belønninger</gradient>"
-        - "<gradient:#6b7280:#9ca3af>for denne rang i detaljer</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Klik for at se alle %count% belønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>for denne rang i detaljer</gradient>"
       coming_soon: "<gradient:#fbbf24:#fcd34d>Detaljeret belønningsvisning kommer snart!</gradient>"
       empty:
         name: "<gradient:#6b7280:#9ca3af>📋 Ingen belønninger</gradient>"
         lore:
-          - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger</gradient>"
+        - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger</gradient>"
         message: "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger konfigureret.</gradient>"
     label: "<gradient:#fbbf24:#fcd34d>🎁 Ranger belønninger</gradient>"
     label_lore:
-      - "<gradient:#6b7280:#9ca3af>Du vil modtage %count% belønninger</gradient>"
-      - "<gradient:#6b7280:#9ca3af>når du hævder denne rang</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Du vil modtage %count% belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>når du hævder denne rang</gradient>"
 
 reward:
   card:
@@ -1997,7 +1997,7 @@ reward:
     compact_name: "<gradient:#fbbf24:#fcd34d>%type%</gradient>"
     no_rewards: "<gradient:#6b7280:#9ca3af>Ingen belønninger</gradient>"
     no_rewards_lore:
-      - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger konfigureret</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger konfigureret</gradient>"
     type_label: "<gray>Type:</gray> <yellow>%type%</yellow>"
     value_label: "<gray>Værdi:</gray> <gold>%value%</gold>"
   perk:
@@ -2030,18 +2030,18 @@ rewards:
   view_all:
     name: "<gradient:#a855f7:#c084fc>📋 Se alle belønninger</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Klik for at se alle %count% belønninger</gradient>"
-      - "<gradient:#6b7280:#9ca3af>for denne rang i detaljer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik for at se alle %count% belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>for denne rang i detaljer</gradient>"
     coming_soon: "<gradient:#fbbf24:#fcd34d>Detaljeret belønningsvisning kommer snart!</gradient>"
     empty:
       name: "<gradient:#6b7280:#9ca3af>📋 Ingen belønninger</gradient>"
       lore:
-        - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger</gradient>"
+      - "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger</gradient>"
       message: "<gradient:#6b7280:#9ca3af>Denne rang har ingen belønninger konfigureret.</gradient>"
   label: "<gradient:#fbbf24:#fcd34d>🎁 Ranger belønninger</gradient>"
   label_lore:
-    - "<gradient:#6b7280:#9ca3af>Du vil modtage %count% belønninger</gradient>"
-    - "<gradient:#6b7280:#9ca3af>når du hævder denne rang</gradient>"
+  - "<gradient:#6b7280:#9ca3af>Du vil modtage %count% belønninger</gradient>"
+  - "<gradient:#6b7280:#9ca3af>når du hævder denne rang</gradient>"
 
 
 # ============================================
@@ -2052,8 +2052,8 @@ rank_rewards_detail_ui:
   rank_info:
     name: "<gradient:#fbbf24:#fcd34d>%rank_name%</gradient>"
     lore:
-      - "<gradient:#6b7280:#9ca3af>Denne rang har %count% belønninger</gradient>"
-      - "<gradient:#6b7280:#9ca3af>Klik på en belønning for detaljer</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Denne rang har %count% belønninger</gradient>"
+    - "<gradient:#6b7280:#9ca3af>Klik på en belønning for detaljer</gradient>"
 
 # ============================================
 # PERK OVERSIGT UI
@@ -2205,3 +2205,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Combat Heal</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Helbred, når du gør skade på fjender</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Zombie Slayer</gradient>
+    description: Besejr zombier og saml deres dråber for at bevise din kampdygtighed
+    task:
+      kill_zombies:
+        name: <white>Besejr zombier</white>
+        description: Dræbe %amount% zombier
+      collect_flesh:
+        name: <white>Saml Rotten Flesh</white>
+        description: Samle %amount% råddent kød fra besejrede zombier
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Minemester</gradient>
+    description: Mine forskellige malme inden for tidsfristen for at blive en mester minearbejder
+    task:
+      mine_coal:
+        name: <white>Mine kul</white>
+        description: Mine %amount% kulmalmblokke
+      mine_iron:
+        name: <white>Mine jern</white>
+        description: Mine %amount% jernmalmblokke
+      mine_diamond:
+        name: <white>Mine diamanter</white>
+        description: Mine %amount% diamantmalmblokke
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>Bygmesterdrøm</gradient>
+    description: Konstruer en bygning ved at følge de sekventielle trin for at vise dine byggefærdigheder
+    task:
+      foundation:
+        name: <white>Læg Fonden</white>
+        description: Placere %amount% murstensblokke til fundamentet
+      walls:
+        name: <white>Byg vægge</white>
+        description: Placere %amount% egeplankeblokke til væggene
+      windows:
+        name: <white>Tilføj Windows</white>
+        description: Placere %amount% glasblokke til vinduer
+      roof:
+        name: <white>Komplet tag</white>
+        description: Placere %amount% egetræs trappeklodser til taget
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Quest kategorier</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Quests</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Søgen: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Aktive Quests</gradient>
+    items:
+      back:
+        name: <gray>Tilbage</gray>
+        lore:
+        - <gray>Vend tilbage til forrige menu</gray>
+      start:
+        name: <green>Start Quest</green>
+        lore:
+        - <gray>Klik for at starte denne opgave</gray>
+        - ''
+        - <dark_gray>Krav:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Forlad Quest</red>
+        lore:
+        - <gray>Klik for at forlade denne opgave</gray>
+        - ''
+        - '<yellow>Advarsel: Fremskridt vil gå tabt</yellow>'
+      info:
+        name: <yellow>Quest info</yellow>
+        lore:
+        - <gray>Klik for at se questdetaljer</gray>
+      progress:
+        name: <aqua>Se fremskridt</aqua>
+        lore:
+        - <gray>Klik for at se missionens fremskridt</gray>
+        - ''
+        - '<dark_gray>Fremskridt: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Tæt</gray>
+        lore:
+        - <gray>Luk denne menu</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Vanskelighed: %difficulty%</dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+        - '<dark_gray>Opgaver: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>Fremskridt: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Status: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Klik for at starte denne opgave</green>
+      click_to_view: <yellow>Klik for at se questdetaljer</yellow>
+      click_to_abandon: <red>Klik for at forlade denne opgave</red>
+      already_completed: <green>Allerede afsluttet</green>
+      requirements_not_met: <red>Krav ikke opfyldt</red>
+      on_cooldown: '<red>Ved nedkøling: %time%</red>'
+      time_remaining: '<yellow>Resterende tid: %time%</yellow>'
+      repeatable: <aqua>Gentagelig quest</aqua>
+      one_time: <gray>Engangsopgave</gray>
+    progress:
+      overall: <yellow>Samlet fremskridt</yellow>
+      percentage: '<gray>Fremskridt: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Opgaver: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Forløbet tid: <white>%time%</white></gray>'
+      time_remaining: '<gray>Resterende tid: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>Fremskridt: <white>%current%/%required%</white></gray>'
+      completed: <green>Færdiggjort</green>
+      remaining: '<gray>Tilbage: <white>%remaining%</white></gray>'
+      locked: <red>Låst</red>
+      sequential: <yellow>Fuldfør tidligere opgaver først</yellow>
+    rewards:
+      header: <yellow>Belønninger</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Erfaring</aqua>
+      item: <white>%amount%x %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Frynsegoder: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Søgen: %quest%</gradient>'
+    requirements:
+      header: <yellow>Krav</yellow>
+      level: <aqua>Niveau %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Komplet: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Rang: %rank%</gradient>'
+      permission: '<gray>Tilladelse: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Trivielt</gradient>
+  easy: <gradient:#10b981:#34d399>Let</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
+  hard: <gradient:#ef4444:#f87171>Hård</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Ekstrem</gradient>

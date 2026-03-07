@@ -2222,3 +2222,144 @@ perk:
   combat_heal:
     name: "<gradient:#10b981:#34d399>Savaş İyileştirmesi</gradient>"
     description: "<gradient:#6b7280:#9ca3af>Düşmanlara hasar verirken iyileşin</gradient>"
+quest:
+  zombie_slayer:
+    name: <gradient:#ef4444:#f87171>Zombi Avcısı</gradient>
+    description: Savaş yeteneğinizi kanıtlamak için zombileri yenin ve onların damlalarını toplayın
+    task:
+      kill_zombies:
+        name: <white>Zombileri alt et</white>
+        description: 'Öldürmek %amount% zombiler'
+      collect_flesh:
+        name: <white>Çürük Et Topla</white>
+        description: Toplamak %amount% mağlup zombilerin çürük eti
+  master_miner:
+    name: <gradient:#6b7280:#9ca3af>Usta Madenci</gradient>
+    description: Usta bir madenci olmak için zaman sınırı içinde çeşitli cevherleri kazın
+    task:
+      mine_coal:
+        name: <white>Maden Kömürü</white>
+        description: Bana ait %amount% kömür cevheri blokları
+      mine_iron:
+        name: <white>Maden Demiri</white>
+        description: Bana ait %amount% demir cevheri blokları
+      mine_diamond:
+        name: <white>Elmas Madeni</white>
+        description: Bana ait %amount% elmas cevheri blokları
+  builders_dream:
+    name: <gradient:#f59e0b:#fbbf24>İnşaatçının Rüyası</gradient>
+    description: İnşaat becerilerinizi sergilemek için sıralı adımları takip ederek bir bina inşa edin
+    task:
+      foundation:
+        name: <white>Lay Vakfı</white>
+        description: Yer %amount% temel için tuğla bloklar
+      walls:
+        name: <white>Duvarlar İnşa Edin</white>
+        description: Yer %amount% duvarlar için meşe tahta bloklar
+      windows:
+        name: <white>Windows Ekle</white>
+        description: Yer %amount% pencereler için cam bloklar
+      roof:
+        name: <white>Komple Çatı</white>
+        description: Yer %amount% çatı için meşe merdiven blokları
+view:
+  quest:
+    categories:
+      title: <gradient:#f59e0b:#fbbf24>Görev Kategorileri</gradient>
+    list:
+      title: <gradient:#f59e0b:#fbbf24>%category% Görevler</gradient>
+    detail:
+      title: '<gradient:#f59e0b:#fbbf24>Görev: %quest%</gradient>'
+    active:
+      title: <gradient:#f59e0b:#fbbf24>Aktif Görevler</gradient>
+    items:
+      back:
+        name: <gray>Geri</gray>
+        lore:
+        - <gray>Önceki menüye dön</gray>
+      start:
+        name: <green>Görevi Başlat</green>
+        lore:
+        - <gray>Bu göreve başlamak için tıklayın</gray>
+        - ''
+        - <dark_gray>Gereksinimler:</dark_gray>
+        - <dark_gray>- %requirements%</dark_gray>
+      abandon:
+        name: <red>Görevden Vazgeç</red>
+        lore:
+        - <gray>Bu görevden vazgeçmek için tıklayın</gray>
+        - ''
+        - '<yellow>Uyarı: İlerleme kaybı yaşanacak</yellow>'
+      info:
+        name: <yellow>Görev Bilgisi</yellow>
+        lore:
+        - <gray>Görev ayrıntılarını görüntülemek için tıklayın</gray>
+      progress:
+        name: <aqua>İlerlemeyi Görüntüle</aqua>
+        lore:
+        - <gray>Görev ilerlemesini görüntülemek için tıklayın</gray>
+        - ''
+        - '<dark_gray>İlerlemek: <white>%progress%%</white></dark_gray>'
+      close:
+        name: <gray>Kapalı</gray>
+        lore:
+        - <gray>Bu menüyü kapat</gray>
+      quest_item:
+        name: <gradient:#f59e0b:#fbbf24>%quest_name%</gradient>
+        lore:
+        - <gray>%quest_description%</gray>
+        - ''
+        - '<dark_gray>Zorluk: %difficulty%</dark_gray>'
+        - '<dark_gray>Durum: %status%</dark_gray>'
+        - '<dark_gray>Görevler: <white>%task_count%</white></dark_gray>'
+        - ''
+        - '%action_hint%'
+      task_item:
+        name: <white>%task_name%</white>
+        lore:
+        - <gray>%task_description%</gray>
+        - ''
+        - '<dark_gray>İlerlemek: <white>%current%/%required%</white></dark_gray>'
+        - '<dark_gray>Durum: %status%</dark_gray>'
+    lore:
+      click_to_start: <green>Bu göreve başlamak için tıklayın</green>
+      click_to_view: <yellow>Görev ayrıntılarını görüntülemek için tıklayın</yellow>
+      click_to_abandon: <red>Bu görevden vazgeçmek için tıklayın</red>
+      already_completed: <green>Zaten tamamlandı</green>
+      requirements_not_met: <red>Gereksinimler karşılanmadı</red>
+      on_cooldown: '<red>Bekleme süresinde: %time%</red>'
+      time_remaining: '<yellow>Kalan süre: %time%</yellow>'
+      repeatable: <aqua>Tekrarlanabilir görev</aqua>
+      one_time: <gray>Tek seferlik görev</gray>
+    progress:
+      overall: <yellow>Genel İlerleme</yellow>
+      percentage: '<gray>İlerlemek: <white>%progress%%</white></gray>'
+      tasks_completed: '<gray>Görevler: <white>%completed%/%total%</white></gray>'
+      time_elapsed: '<gray>Geçen Süre: <white>%time%</white></gray>'
+      time_remaining: '<gray>Kalan Süre: <white>%time%</white></gray>'
+    task:
+      progress: '<gray>İlerlemek: <white>%current%/%required%</white></gray>'
+      completed: <green>Tamamlanmış</green>
+      remaining: '<gray>Geriye kalan: <white>%remaining%</white></gray>'
+      locked: <red>Kilitli</red>
+      sequential: <yellow>Önce önceki görevleri tamamlayın</yellow>
+    rewards:
+      header: <yellow>Ödüller</yellow>
+      currency: <gold>%amount% %currency%</gold>
+      experience: <aqua>%amount% Deneyim</aqua>
+      item: <white>%amount%X %item%</white>
+      perk: '<gradient:#a855f7:#c084fc>Dikmek: %perk%</gradient>'
+      quest: '<gradient:#f59e0b:#fbbf24>Görev: %quest%</gradient>'
+    requirements:
+      header: <yellow>Gereksinimler</yellow>
+      level: <aqua>Seviye %level%</aqua>
+      currency: <gold>%amount% %currency%</gold>
+      quest_completion: '<gradient:#f59e0b:#fbbf24>Tamamlamak: %quest%</gradient>'
+      rank: '<gradient:#a855f7:#c084fc>Rütbe: %rank%</gradient>'
+      permission: '<gray>İzin: %permission%</gray>'
+difficulty:
+  trivial: <gradient:#84cc16:#a3e635>Önemsiz</gradient>
+  easy: <gradient:#10b981:#34d399>Kolay</gradient>
+  normal: <gradient:#f59e0b:#fbbf24>Normal</gradient>
+  hard: <gradient:#ef4444:#f87171>Zor</gradient>
+  extreme: <gradient:#a855f7:#c084fc>Aşırı</gradient>
