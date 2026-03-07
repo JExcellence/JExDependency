@@ -9,6 +9,9 @@ website: https://raindropcentral.com
 folia-supported: true
 dependencies:
   server:
+    RCore:
+      load: AFTER
+      required: true
     Vault:
       load: BEFORE
       required: false
